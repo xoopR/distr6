@@ -1,0 +1,10 @@
+Package:
+Title: 
+Version: 0.0.0.9000
+Authors@R: 
+Description: 
+Depends: 
+Imports: checkmate, R6, data.table, R62S3, magrittr
+License: 
+Encoding:
+LazyData:
