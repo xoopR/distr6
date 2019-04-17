@@ -128,6 +128,8 @@ Distribution <- R6Class("Distribution",
                                         support = c(-Inf,Inf)
                          )
 )
+Distribution$set("public","initialize",function() stop("Distribution is an abstract class that cannot be initialized."))
 
+                                  
 rm(list = ls()[grepl("f_",ls())])
 R62S3(Distribution)
