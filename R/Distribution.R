@@ -1,30 +1,40 @@
-library(distrMod)
 library(R6)
 library(checkmate)
 library(data.table)
 #devtools::install_github("RaphaelS1/R62S3")
 library(R62S3)
+#devtools::install_github("RaphaelS1/dictionaryR6")
+library(dictionaryR6)
 
 #-------------------------------------------------------------
-# Distribution Definition
+# Distribution R6Class Definition
 #-------------------------------------------------------------
+Distribution <- R6Class("Distribution")
 
-f_setParams <- function(x){
+#-------------------------------------------------------------
+# Distribution Private Methods
+#-------------------------------------------------------------
+Distribution$set("private","setParams",function(x){
   assert(inherits(x,c("data.frame","data.table","list")))
   if(testList(x)){
     x <- data.frame(x,stringsAsFactors = FALSE)
     private$param.set <- rbind(private$param.set,x)
   }
   return(invisible(self))
-}
-f_getParams <- function(x) return(private$param.set)
-f_getParamByName <- function(name){
+})
+
+#-------------------------------------------------------------
+# Distribution Public Methods
+#-------------------------------------------------------------
+Distribution$set("public","getParams",function(x){
+  return(private$param.set)})
+Distribution$set("public","getParamByName",function(name){
   return(self$getParams()[self$getParams()[,1] %in% name,])
-}
-f_getParamValueByName <- function(name){
+})
+Distribution$set("public","getParamValueByName",function(name){
   return(self$getParamByName(name)["value"][[1]])
-}
-f_setParamByName <- function(name,value){
+})
+Distribution$set("public","setParamByName",function(name,value){
   param <- self$getParams()[self$getParams()[,1] %in% name,]
   if(param$Class=="numeric")
     assertNumeric(value,lower = param$Lower, upper = param$Upper)
@@ -34,27 +44,27 @@ f_setParamByName <- function(name,value){
   }
   private$param.set[private$param.set[,1] %in% name,2] <- value
   return(invisible(self))
-}
-f_print <- function(...){
+})
+Distribution$set("public","print",function(...){
   cat(self$strprint())
   invisible(self)
-}
-f_strprint <- function(){
+})
+Distribution$set("public","strprint",function(){
   string = paste(apply(self$getParams(),1,function(x) paste(x[1],trimws(x[2]),sep="=")),
                  collapse=", ")
   string = paste0(self$short.name,"(",string,")")
   return(string)
-}
-f_getSupport <- function(){
+})
+Distribution$set("public","getSupport",function(){
   return(private$support)
-}
-f_getType <- function(){
-  return(self$getTraits()["Type"])
-}
-f_getDataType <- function(){
-  return(self$getTraits()["DataType"])
-}
-f_getKurtosisType <- function(){
+})
+Distribution$set("public","getType",function(){
+  return(self$getTraits()$get("Type"))
+})
+Distribution$set("public","getDataType",function(){
+  return(self$getTraits()$get("DataType"))
+})
+Distribution$set("public","getKurtosis",function(){
   Kurtosis = self$kurtosis()
   if(Kurtosis > 0)
     return("Leptokurtic")
@@ -62,8 +72,8 @@ f_getKurtosisType <- function(){
     return("Mesokurtic")
   else
     return("Platykurtic")
-}
-f_getSkew <- function(){
+})
+Distribution$set("public","getSkew",function(){
   Skew = self$skewness()
   if(Skew > 0)
     return("Positive Skew")
@@ -71,15 +81,15 @@ f_getSkew <- function(){
     return("Symmetric")
   else
     return("Negative Skew")
-}
-f_summary <- function(full=T){
+})
+Distribution$set("public","summary",function(full=T){
   if(full){
     cat(self$name,"with parameterisation:\n")
-    cat("\t",paste(B$getParams()["Long_Name"][[1]], B$getParams()["value"][[1]],
+    cat("\t",paste(self$getParams()["Long_Name"][[1]], self$getParams()["value"][[1]],
                    sep = " = ", collapse = "; "))
     cat("\n\n Quick Statistics: \n")
     cat("\tMean \tVar \tSkewness \tExcess Kurtosis \n")
-    cat("  ",self$mean(), self$var(), self$skewness(), self$kurtosis(), "\n", sep = "\t")
+    cat("  ",self$mean(), self$variance(), self$skewness(), " ", self$kurtosis(), "\n", sep = "\t")
     cat("\n Support:",self$getSupport())
     cat("\n Traits: ",self$getType()[[1]],"; ",self$getDataType()[[1]],"\n\t See getTraits() for more",sep="")
     cat("\n Properties: ",self$getKurtosis()[[1]],"; ",self$getSkew()[[1]],"\n\t See getProperties() for more",sep="")
@@ -91,45 +101,27 @@ f_summary <- function(full=T){
     cat("\n Traits:",self$getType()[[1]],";",self$getDataType()[[1]],"\t\t See getTraits() for more")
     cat("\n Properties:",self$getKurtosis()[[1]],";",self$getSkew()[[1]],"\t See getProperties() for more")
   }
-}
-f_getProperties <- function() {
+})
+Distribution$set("public","getProperties",function() {
   return(private$properties)
-}
-f_getTraits <- function() {
+})
+Distribution$set("public","getTraits",function() {
   return(private$traits)
-}
-Distribution <- R6Class("Distribution",
-                         public = list(getParams = f_getParams,
-                                       name = character(),
-                                       symmetry = list(),
-                                       image = list(),
-                                       getParamValueByName = f_getParamValueByName,
-                                       getParamByName = f_getParamByName,
-                                       setParamByName = f_setParamByName,
-                                       L2Deriv = list(),
-                                       FisherInfo = list(),
-                                       print = f_print,
-                                       strprint = f_strprint,
-                                       short.name = character(),
-                                       summary = f_summary,
-                                       getSupport = f_getSupport,
-                                       getType = f_getType,
-                                       getDataType = f_getDataType,
-                                       getKurtosis = f_getKurtosisType,
-                                       getSkew = f_getSkew,
-                                       getProperties = f_getProperties,
-                                       getTraits = f_getTraits
-                         ),
-                         private = list(param.set = data.frame(),
-                                        setParams = f_setParams,
-                                        private.properties = list(),
-                                        properties = list(),
-                                        traits = list(),
-                                        support = c(-Inf,Inf)
-                         )
-)
-Distribution$set("public","initialize",function() stop("Distribution is an abstract class that cannot be initialized."))
+})
 
-                                  
-rm(list = ls()[grepl("f_",ls())])
-R62S3(Distribution)
+#-------------------------------------------------------------
+# Distribution Private Variables
+#-------------------------------------------------------------
+Distribution$set("private",".param.set",data.frame())
+Distribution$set("private",".privateproperties",Dictionary$new())
+Distribution$set("private",".properties",Dictionary$new())
+Distribution$set("private",".traits",Dictionary$new())
+Distribution$set("private",".support",c(-Inf,Inf))
+
+#-------------------------------------------------------------
+# Distribution Public Variables
+#-------------------------------------------------------------
+Distribution$set("public","name",character())
+Distribution$set("public","short.name",character())
+Distribution$set("public","symmetry",Dictionary$new())
+Distribution$set("public","image",Dictionary$new())
