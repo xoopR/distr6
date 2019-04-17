@@ -8,7 +8,7 @@ BinomialDistribution <- R6Class("BinomialDistribution",
 #-------------------------------------------------------------
 # BinomialDistribution Private Methods
 #-------------------------------------------------------------
-BinomialDistribution$set("private","traits",{
+BinomialDistribution$set("private",".traits",{
   Dictionary$new(list(Type = "Discrete", DataType = "Univariate"))})
 
 #-------------------------------------------------------------
@@ -27,18 +27,18 @@ BinomialDistribution$set("public","initialize",function(size=NULL,prob=NULL){
     value = size
   private$setParams(list(name="size",value=value,Nuisance=FALSE,Fixed=TRUE,
                          Default=1,Class="integer",Lower=0,Upper=Inf,Long_Name = "Number of trials"))
-  private$private.properties = Dictionary$new(list(withEvalAsVar = TRUE,
+  private$.privateproperties = Dictionary$new(list(withEvalAsVar = TRUE,
                                                    withMDE = TRUE,
                                                    withEvalL2derivDistr = TRUE,
                                                    withSim = FALSE,
                                                    withArith = FALSE,
                                                    logExact = TRUE,
                                                    lowerExact = TRUE))
-  private$properties = Dictionary$new(list(KurtosisType = self$getKurtosis(),
+  private$.properties = Dictionary$new(list(KurtosisType = self$getKurtosis(),
                                            Skew =  self$getSkew()))
   self$name = "Binomial Distribution"
   self$symmetry = Dictionary$new(list(Type = "Spherical",Center=0.5))
-  private$support = c(0,1)
+  private$.support = c(0,1)
   self$short.name = "Binomial"
   invisible(self)
 })
@@ -61,10 +61,12 @@ BinomialDistribution$set("public","skewness",function() {(1-(2*self$getParamValu
     sqrt(self$getParamValueByName("prob") *
            self$getParamValueByName("size") *
            (1-self$getParamValueByName("prob")))})
-BinomialDistribution$set("public","kurtosis",function() {(1 - (6 * self$getParamValueByName("prob") *
-                                                                 (1-self$getParamValueByName("prob"))))/
+BinomialDistribution$set("public","kurtosis",function() {
+  (1 - (6 * self$getParamValueByName("prob") *
+          (1-self$getParamValueByName("prob"))))/
     (self$getParamValueByName("prob")*self$getParamValueByName("size")*
-       (1-self$getParamValueByName("prob")))})
+       (1-self$getParamValueByName("prob")))
+  })
 
 #-------------------------------------------------------------
 # BinomialDistribution Private Variables

@@ -18,16 +18,19 @@ Distribution$set("private","setParams",function(x){
   assert(inherits(x,c("data.frame","data.table","list")))
   if(testList(x)){
     x <- data.frame(x,stringsAsFactors = FALSE)
-    private$param.set <- rbind(private$param.set,x)
+    private$.param.set <- rbind(private$.param.set,x)
   }
-  return(invisible(self))
+  invisible(self)
 })
 
 #-------------------------------------------------------------
 # Distribution Public Methods
 #-------------------------------------------------------------
+Distribution$set("public","initialize",function(){
+  stop("Distribution is an abstract class that can't be initialized.")
+})
 Distribution$set("public","getParams",function(x){
-  return(private$param.set)})
+  return(private$.param.set)})
 Distribution$set("public","getParamByName",function(name){
   return(self$getParams()[self$getParams()[,1] %in% name,])
 })
@@ -42,7 +45,7 @@ Distribution$set("public","setParamByName",function(name,value){
     value = as.integer(value)
     assertInteger(value,lower = param$Lower, upper = param$Upper)
   }
-  private$param.set[private$param.set[,1] %in% name,2] <- value
+  private$.param.set[private$.param.set[,1] %in% name,2] <- value
   return(invisible(self))
 })
 Distribution$set("public","print",function(...){
@@ -56,7 +59,7 @@ Distribution$set("public","strprint",function(){
   return(string)
 })
 Distribution$set("public","getSupport",function(){
-  return(private$support)
+  return(private$.support)
 })
 Distribution$set("public","getType",function(){
   return(self$getTraits()$get("Type"))
@@ -103,10 +106,10 @@ Distribution$set("public","summary",function(full=T){
   }
 })
 Distribution$set("public","getProperties",function() {
-  return(private$properties)
+  return(private$.properties)
 })
 Distribution$set("public","getTraits",function() {
-  return(private$traits)
+  return(private$.traits)
 })
 
 #-------------------------------------------------------------
