@@ -4,7 +4,7 @@ library(data.table)
 #devtools::install_github("RaphaelS1/R62S3")
 library(R62S3)
 #devtools::install_github("RaphaelS1/dictionaryR6")
-library(dictionaryR6)
+#library(dictionaryR6)
 
 #-------------------------------------------------------------
 # Distribution R6Class Definition
@@ -27,7 +27,7 @@ Distribution$set("private","setParams",function(x){
 # Distribution Public Methods
 #-------------------------------------------------------------
 Distribution$set("public","initialize",function(){
-  stop("Distribution is an abstract class that can't be initialized.")
+  stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 })
 Distribution$set("public","getParams",function(x){
   return(private$.param.set)})
@@ -116,9 +116,9 @@ Distribution$set("public","getTraits",function() {
 # Distribution Private Variables
 #-------------------------------------------------------------
 Distribution$set("private",".param.set",data.frame())
-Distribution$set("private",".privateproperties",Dictionary$new())
-Distribution$set("private",".properties",Dictionary$new())
-Distribution$set("private",".traits",Dictionary$new())
+Distribution$set("private",".privateproperties",list())
+Distribution$set("private",".properties",list())
+Distribution$set("private",".traits",list())
 Distribution$set("private",".support",c(-Inf,Inf))
 
 #-------------------------------------------------------------
@@ -126,5 +126,5 @@ Distribution$set("private",".support",c(-Inf,Inf))
 #-------------------------------------------------------------
 Distribution$set("public","name",character())
 Distribution$set("public","short.name",character())
-Distribution$set("public","symmetry",Dictionary$new())
-Distribution$set("public","image",Dictionary$new())
+Distribution$set("public","symmetry",list())
+Distribution$set("public","image",list())

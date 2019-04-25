@@ -36,6 +36,7 @@ testClass$set("public","initialize",function(decorators=NULL){
 })
 testClass$set("public","decorators",list())
 
+
 testClass$new()$printClass()
 x = testClass$new(list(testDecoratorB))
 testDecoratorA$new(x)
