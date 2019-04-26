@@ -42,6 +42,13 @@ getR6Class <- function(x){
 liesInDistrDomain <- function(distribution, x){}
 liesInSupport <- function(distribution, x){}
 liesInType <- function(distribution, x){}
+addition <- function(...){}
+subtraction <- function(...){}
+multiplication <- function(...){}
+division <- function(...){}
+exponentiation <- function(...){}
+
+
 
 # Checkmate template as follows:
 #  test - TRUE/FALSE

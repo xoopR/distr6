@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
 Description: 
 Depends: 
-Imports: checkmate, R6, data.table, R62S3, magrittr, dictionaryR6, sets
+Imports: checkmate, R6, R62S3, magrittr
 License: 
 Encoding:
 LazyData:
