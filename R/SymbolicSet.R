@@ -58,6 +58,11 @@ sets$set("public","inf",function(){
 sets$set("public","strprint",function(){
   return(private$.setSymbol)
 })
+sets$set("public","power",function(x){
+  private$.dimension <- private$.dimension*x
+  private$.setSymbol <- paste0(setSymbol(paste0(getR6Class(self))),"^",self$dimension())
+  invisible(self)
+})
 
 SymbolicSet <- R6Class("SymbolicSet", inherit = sets)
 SymbolicSet$set("private",".setSymbol",NULL)
@@ -97,37 +102,37 @@ naturals$set("public", "initialize", function(dim = 1){
 })
 posNaturals <- R6Class("posNaturals",inherit = specialSet)
 posNaturals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, lower = 1, type = "[)")
+  super$initialize(dim, lower = 1e-09, type = "[)")
 })
 
 integers <- R6Class("integers",inherit = specialSet)
 posIntegers <- R6Class("posIntegers",inherit = specialSet)
 posIntegers$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, lower = 1, type = "[)")
+  super$initialize(dim, lower = 1e-09, type = "[)")
 })
 negIntegers <- R6Class("negIntegers",inherit = specialSet)
 negIntegers$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, upper = -1, type = "(]")
+  super$initialize(dim, upper = -1e-09, type = "(]")
 })
 
 rationals <- R6Class("rationals",inherit = specialSet)
 posRationals <- R6Class("posRationals",inherit = rationals)
 posRationals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, lower = 1, type = "[)")
+  super$initialize(dim, lower = 1e-09, type = "[)")
 })
 negRationals <- R6Class("negRationals",inherit = rationals)
 negRationals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, upper = -1, type = "(]")
+  super$initialize(dim, upper = -1e-09, type = "(]")
 })
 
 reals <- R6Class("reals",inherit = specialSet)
 posReals <- R6Class("posReals",inherit = reals)
 posReals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, lower = 1, type = "[)")
+  super$initialize(dim, lower = 1e-09, type = "[)")
 })
 negReals <- R6Class("negReals",inherit = reals)
 negReals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, upper = -1, type = "(]")
+  super$initialize(dim, upper = -1e-09, type = "(]")
 })
 extendedReals <- R6Class("extendedReals",inherit = reals)
 extendedReals$set("public", "initialize", function(dim = 1){
@@ -136,7 +141,7 @@ extendedReals$set("public", "initialize", function(dim = 1){
 
 complex <- R6Class("complex",inherit = specialSet)
 
-interval <- R6Class("interval")
+interval <- R6Class("interval", inherit = sets)
 interval$set("private",".setSymbol",NULL)
 interval$set("public","getSymbol",function() return(private$.setSymbol))
 interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]"){
@@ -181,6 +186,10 @@ interval$set("public","sup",function(){
 interval$set("public","inf",function(){
   return(self$lower())
 })
+interval$set("public","numeric",function(){
+  if(self$type() == "[]")
+    return(seq.int(self$lower(),self$upper(),1))
+})
 
 operation <- function(unicode,...){
   dots = list(...)
@@ -203,4 +212,14 @@ product <- function(...){
 }
 union <- function(...){
   operation("\u222A",...)
+}
+
+`^.sets` <- function(x, power){
+  x$power(power)
+}
+`+.sets` <- function(x, y){
+  union(x, y)
+}
+`*.sets` <- function(x, y){
+  product(x, y)
 }

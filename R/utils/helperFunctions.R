@@ -40,14 +40,15 @@ getR6Class <- function(x){
 
 # To do
 liesInDistrDomain <- function(distribution, x){}
-liesInSupport <- function(distribution, x){}
 liesInType <- function(distribution, x){}
-addition <- function(...){}
+addition <- function(...){
+  dots = list(...)
+  assertDistributionList(dots)
+}
 subtraction <- function(...){}
 multiplication <- function(...){}
 division <- function(...){}
 exponentiation <- function(...){}
-
 
 
 # Checkmate template as follows:
@@ -94,7 +95,7 @@ checkDistributionFeature <- function(distribution, accessor, feature){
     return(paste("Distribution is not",feature))
 }
 testDistributionFeature <- function(distribution, accessor, feature){
-  if(distribution[[accessor]] == feature)
+  if(distribution[[accessor]]() == feature)
     return(TRUE)
   else
     return(FALSE)
@@ -104,223 +105,223 @@ isDistributionFeature <- function(distribution, accessor, feature){
 }
 
 assertVariateForm <- function(distribution, type){
-  assertDistributionFeature(distribution, variateForm, type)
+  assertDistributionFeature(distribution, "variateForm", type)
 }
 checkVariateForm <- function(distribution, type){
-  checkDistributionFeature(distribution, variateForm, type)
+  checkDistributionFeature(distribution, "variateForm", type)
 }
 testVariateForm <- function(distribution, type){
-  testDistributionFeature(distribution, variateForm, type)
+  testDistributionFeature(distribution, "variateForm", type)
 }
 isVariateForm <- function(distribution, type){
-  isDistributionFeature(distribution, variateForm, type)
+  isDistributionFeature(distribution, "variateForm", type)
 }
 
 assertUnivariate <- function(distribution){
-  assertVariateForm(distribution, "Univariate")
+  assertVariateForm(distribution, "univariate")
 }
 checkUnivariate <- function(distribution){
-  checkVariateForm(distribution, "Univariate")
+  checkVariateForm(distribution, "univariate")
 }
 testUnivariate <- function(distribution){
-  testVariateForm(distribution, "Univariate")
+  testVariateForm(distribution, "univariate")
 }
 isUnivariate <- function(distribution){
-  isVariateForm(distribution, "Univariate")
+  isVariateForm(distribution, "univariate")
 }
 
 assertMultivariate <- function(distribution){
-  assertVariateForm(distribution, "Multivariate")
+  assertVariateForm(distribution, "multivariate")
 }
 checkMultivariate <- function(distribution){
-  checkVariateForm(distribution, "Multivariate")
+  checkVariateForm(distribution, "multivariate")
 }
 testMultivariate <- function(distribution){
-  testVariateForm(distribution, "Multivariate")
+  testVariateForm(distribution, "multivariate")
 }
 isMultivariate <- function(distribution){
-  isVariateForm(distribution, "Multivariate")
+  isVariateForm(distribution, "multivariate")
 }
 
 assertMatrixvariate <- function(distribution){
-  assertVariateForm(distribution, "Matrixvariate")
+  assertVariateForm(distribution, "matrixvariate")
 }
 checkMatrixvariate <- function(distribution){
-  checkVariateForm(distribution, "Matrixvariate")
+  checkVariateForm(distribution, "matrixvariate")
 }
 testMatrixvariate <- function(distribution){
-  testVariateForm(distribution, "Matrixvariate")
+  testVariateForm(distribution, "matrixvariate")
 }
 isMatrixvariate <- function(distribution){
-  isVariateForm(distribution, "Matrixvariate")
+  isVariateForm(distribution, "matrixvariate")
 }
 
 assertValueSupport <- function(distribution, type){
-  assertDistributionFeature(distribution, valueSupport, type)
+  assertDistributionFeature(distribution, "valueSupport", type)
 }
 checkValueSupport <- function(distribution, type){
-  checkDistributionFeature(distribution, valueSupport, type)
+  checkDistributionFeature(distribution, "valueSupport", type)
 }
 testValueSupport <- function(distribution, type){
-  testDistributionFeature(distribution, valueSupport, type)
+  testDistributionFeature(distribution, "valueSupport", type)
 }
 isValueSupport <- function(distribution, type){
-  isDistributionFeature(distribution, valueSupport, type)
+  isDistributionFeature(distribution, "valueSupport", type)
 }
 
 assertContinuous <- function(distribution){
-  assertValueSupport(distribution, "Continuous")
+  assertValueSupport(distribution, "continuous")
 }
 checkContinuous <- function(distribution){
-  checkValueSupport(distribution, "Continuous")
+  checkValueSupport(distribution, "continuous")
 }
 testContinuous <- function(distribution){
-  testValueSupport(distribution, "Continuous")
+  testValueSupport(distribution, "continuous")
 }
 isContinuous <- function(distribution){
-  isValueSupport(distribution, "Continuous")
+  isValueSupport(distribution, "continuous")
 }
 
 assertDiscrete <- function(distribution){
-  assertValueSupport(distribution, "Discrete")
+  assertValueSupport(distribution, "discrete")
 }
 checkDiscrete <- function(distribution){
-  checkValueSupport(distribution, "Discrete")
+  checkValueSupport(distribution, "discrete")
 }
 testDiscrete <- function(distribution){
-  testValueSupport(distribution, "Discrete")
+  testValueSupport(distribution, "discrete")
 }
 isDiscrete <- function(distribution){
-  isValueSupport(distribution, "Discrete")
+  isValueSupport(distribution, "discrete")
 }
 
 assertMixture <- function(distribution){
-  assertValueSupport(distribution, "Mixture")
+  assertValueSupport(distribution, "mixture")
 }
 checkMixture <- function(distribution){
-  checkValueSupport(distribution, "Mixture")
+  checkValueSupport(distribution, "mixture")
 }
 testMixture <- function(distribution){
-  testValueSupport(distribution, "Mixture")
+  testValueSupport(distribution, "mixture")
 }
 isMixture <- function(distribution){
-  isValueSupport(distribution, "Mixture")
+  isValueSupport(distribution, "mixture")
 }
 
 assertSymmetric <- function(distribution){
-  assertDistributionFeature(distribution, symmetry, "Symmetric")
+  assertDistributionFeature(distribution, "symmetry", "Symmetric")
 }
 checkSymmetric <- function(distribution){
-  checkDistributionFeature(distribution, symmetry, "Symmetric")
+  checkDistributionFeature(distribution, "symmetry", "Symmetric")
 }
 testSymmetric <- function(distribution){
-  testDistributionFeature(distribution, symmetry, "Symmetric")
+  testDistributionFeature(distribution, "symmetry", "Symmetric")
 }
 isSymmetric <- function(distribution){
-  isDistributionFeature(distribution, symmetry, "Symmetric")
+  isDistributionFeature(distribution, "symmetry", "Symmetric")
 }
 
 assertSkewness <- function(distribution, feature){
-  assertDistributionFeature(distribution, skewnessType, feature)
+  assertDistributionFeature(distribution, "skewnessType", feature)
 }
 checkSkewness <- function(distribution, feature){
-  checkDistributionFeature(distribution, skewnessType, feature)
+  checkDistributionFeature(distribution, "skewnessType", feature)
 }
 testSkewness <- function(distribution, feature){
-  testDistributionFeature(distribution, skewnessType, feature)
+  testDistributionFeature(distribution, "skewnessType", feature)
 }
 isSkewness <- function(distribution, feature){
-  isDistributionFeature(distribution, skewnessType, feature)
+  isDistributionFeature(distribution, "skewnessType", feature)
 }
 
 assertNegativeSkew <- function(distribution){
-  assertSkewness(distribution, "Negative Skew")
+  assertSkewness(distribution, "negative skew")
 }
 checkNegativeSkew <- function(distribution){
-  checkSkewness(distribution, "Negative Skew")
+  checkSkewness(distribution, "negative skew")
 }
 testNegativeSkew <- function(distribution){
-  testSkewness(distribution, "Negative Skew")
+  testSkewness(distribution, "negative skew")
 }
 isNegativeSkew <- function(distribution){
-  isSkewness(distribution, "Negative Skew")
+  isSkewness(distribution, "negative skew")
 }
 
 assertPositiveSkew <- function(distribution){
-  assertSkewness(distribution, "Positive Skew")
+  assertSkewness(distribution, "positive skew")
 }
 checkPositiveSkew <- function(distribution){
-  checkSkewness(distribution, "Positive Skew")
+  checkSkewness(distribution, "positive skew")
 }
 testPositiveSkew <- function(distribution){
-  testSkewness(distribution, "Positive Skew")
+  testSkewness(distribution, "positive skew")
 }
 isPositiveSkew <- function(distribution){
-  isSkewness(distribution, "Positive Skew")
+  isSkewness(distribution, "positive skew")
 }
 
 assertNoSkew <- function(distribution){
-  assertSkewness(distribution, "No Skew")
+  assertSkewness(distribution, "no skew")
 }
 checkNoSkew <- function(distribution){
-  checkSkewness(distribution, "No Skew")
+  checkSkewness(distribution, "no skew")
 }
 testNoSkew <- function(distribution){
-  testSkewness(distribution, "No Skew")
+  testSkewness(distribution, "no skew")
 }
 isNoSkew <- function(distribution){
-  isSkewness(distribution, "No Skew")
+  isSkewness(distribution, "no skew")
 }
 
 
 assertKurtosis <- function(distribution, feature){
-  assertDistributionFeature(distribution, kurtosisType, feature)
+  assertDistributionFeature(distribution, "kurtosisType", feature)
 }
 checkKurtosis <- function(distribution, feature){
-  checkDistributionFeature(distribution, kurtosisType, feature)
+  checkDistributionFeature(distribution, "kurtosisType", feature)
 }
 testKurtosis <- function(distribution, feature){
-  testDistributionFeature(distribution, kurtosisType, feature)
+  testDistributionFeature(distribution, "kurtosisType", feature)
 }
 isKurtosis <- function(distribution, feature){
-  isDistributionFeature(distribution, kurtosisType, feature)
+  isDistributionFeature(distribution, "kurtosisType", feature)
 }
 
 assertPlatykurtic <- function(distribution){
-  assertKurtosis(distribution, "Platykurtic")
+  assertKurtosis(distribution, "platykurtic")
 }
 checkPlatykurtic <- function(distribution){
-  checkKurtosis(distribution, "Platykurtic")
+  checkKurtosis(distribution, "platykurtic")
 }
 testPlatykurtic <- function(distribution){
-  testKurtosis(distribution, "Platykurtic")
+  testKurtosis(distribution, "platykurtic")
 }
 isPlatykurtic <- function(distribution){
-  testKurtosis(distribution, "Platykurtic")
+  testKurtosis(distribution, "platykurtic")
 }
 
 assertMesokurtic <- function(distribution){
-  assertKurtosis(distribution, "Mesokurtic")
+  assertKurtosis(distribution, "mesokurtic")
 }
 checkMesokurtic <- function(distribution){
-  checkKurtosis(distribution, "Mesokurtic")
+  checkKurtosis(distribution, "mesokurtic")
 }
 testMesokurtic <- function(distribution){
-  testKurtosis(distribution, "Mesokurtic")
+  testKurtosis(distribution, "mesokurtic")
 }
 isMesokurtic <- function(distribution){
-  testKurtosis(distribution, "Mesokurtic")
+  testKurtosis(distribution, "mesokurtic")
 }
 
 assertLeptokurtic <- function(distribution){
-  assertKurtosis(distribution, "Leptokurtic")
+  assertKurtosis(distribution, "leptokurtic")
 }
 checkLeptokurtic <- function(distribution){
-  checkKurtosis(distribution, "Leptokurtic")
+  checkKurtosis(distribution, "leptokurtic")
 }
 testLeptokurtic <- function(distribution){
-  testKurtosis(distribution, "Leptokurtic")
+  testKurtosis(distribution, "leptokurtic")
 }
 isLeptokurtic <- function(distribution){
-  testKurtosis(distribution, "Leptokurtic")
+  testKurtosis(distribution, "leptokurtic")
 }
