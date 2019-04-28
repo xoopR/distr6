@@ -41,287 +41,191 @@ getR6Class <- function(x){
 # To do
 liesInDistrDomain <- function(distribution, x){}
 liesInType <- function(distribution, x){}
-addition <- function(...){
-  dots = list(...)
-  assertDistributionList(dots)
+addition <- function(distribution1, distribution2,
+                     name = "CustomDistribution"){
+  assertDistributionList(list(distribution1, distribution2))
+
+  paramset <- rbind(distribution1$parameters(), distribution2$parameters())
+  paramset$id[duplicated(paramset$id)]
+
+  distr = Distribution$new(pdf = distribution1$convolution(distribution2), name,
+                           parameters = distribution1$parameters)
+  formals(distr$.__enclos_env__$private$.pdf)$self = distr
+  return(distr)
 }
 subtraction <- function(...){}
 multiplication <- function(...){}
 division <- function(...){}
 exponentiation <- function(...){}
 
+exkurtosisType <- function(kurtosis){
+  if(kurtosis < 0)
+    return("platykurtic")
+  else if(kurtosis == 0)
+    return("mesokurtic")
+  else
+    return("leptokurtic")
+}
+skewType <- function(skew){
+  if(skew < 0)
+    return("negative skew")
+  else if(skew == 0)
+    return("no skew")
+  else
+    return("positive skew")
+}
 
 # Checkmate template as follows:
 #  test - TRUE/FALSE
 #  is - TRUE/FALSE
 #  assert - invisible(x)/stop
 #  check - TRUE/message
-
-assertDistributionList <- function(list){
-  cond = all(unlist(lapply(list,inherits,"Distribution")))
+assertThat <- function(x, cond, errormsg){
   if(cond)
-    invisible(list)
+    invisible(x)
   else
-    stop("One or more items in the list are not Distributions")
+    stop(errormsg)
 }
-checkDistributionList <- function(list){
-  cond = all(unlist(lapply(list,inherits,"Distribution")))
+checkThat <- function(cond, errormsg){
   if(cond)
     return(TRUE)
   else
-    return("One or more items in the list are not Distributions")
+    return(errormsg)
 }
-testDistributionList <- function(list){
-  cond = all(unlist(lapply(list,inherits,"Distribution")))
+testThat <- function(cond){
   if(cond)
     return(TRUE)
   else
     return(FALSE)
 }
-isDistributionList <- function(list){
-  testDistributionList(list)
+isThat <- function(cond){
+  return(testThat(cond))
 }
 
-assertDistributionFeature <- function(distribution, accessor, feature){
-  if(distribution[[accessor]] == feature)
-    invisible(distribution)
-  else
-    stop(paste("Distribution is not",feature))
-}
-checkDistributionFeature <- function(distribution, accessor, feature){
-  if(distribution[[accessor]] == feature)
-    return(TRUE)
-  else
-    return(paste("Distribution is not",feature))
-}
-testDistributionFeature <- function(distribution, accessor, feature){
-  if(distribution[[accessor]]() == feature)
-    return(TRUE)
-  else
-    return(FALSE)
-}
-isDistributionFeature <- function(distribution, accessor, feature){
-  testDistributionFeature(distribution, accessor, feature)
+# Auto-generation of validation checks
+makeChecks <- function(assertionName, cond, errormsg, args = alist(x=)){
+  cond = substitute(cond)
+  errormsg = substitute(errormsg)
+  value = function(x){}
+  formals(value) = args
+  body(value) = substitute(assertThat(x,arg1,arg2),list(arg1=cond,arg2=errormsg))
+  assign(paste0("assert",assertionName), value = value,
+         pos = parent.env(environment()))
+
+  body(value) = substitute(checkThat(arg1,arg2),list(arg1=cond,arg2=errormsg))
+  assign(paste0("check",assertionName), value = value,
+         pos = parent.env(environment()))
+
+  body(value) = substitute(testThat(arg1),list(arg1=cond))
+  assign(paste0("test",assertionName), value = value,
+         pos = parent.env(environment()))
+
+  body(value) = substitute(isThat(arg1),list(arg1=cond))
+  assign(paste0("is",assertionName), value = value,
+         pos = parent.env(environment()))
 }
 
-assertVariateForm <- function(distribution, type){
-  assertDistributionFeature(distribution, "variateForm", type)
-}
-checkVariateForm <- function(distribution, type){
-  checkDistributionFeature(distribution, "variateForm", type)
-}
-testVariateForm <- function(distribution, type){
-  testDistributionFeature(distribution, "variateForm", type)
-}
-isVariateForm <- function(distribution, type){
-  isDistributionFeature(distribution, "variateForm", type)
-}
+# assertDistribution
+makeChecks(assertionName = "Distribution",
+           cond = inherits(x,"Distribution"),
+           errormsg = paste(x,"is not an R6 Distribution object"))
 
-assertUnivariate <- function(distribution){
-  assertVariateForm(distribution, "univariate")
-}
-checkUnivariate <- function(distribution){
-  checkVariateForm(distribution, "univariate")
-}
-testUnivariate <- function(distribution){
-  testVariateForm(distribution, "univariate")
-}
-isUnivariate <- function(distribution){
-  isVariateForm(distribution, "univariate")
-}
+# assertDistributionList
+makeChecks(assertionName =  "DistributionList",
+           cond = all(unlist(lapply(x,inherits,"Distribution"))),
+           errormsg = "One or more items in the list are not Distributions")
 
-assertMultivariate <- function(distribution){
-  assertVariateForm(distribution, "multivariate")
-}
-checkMultivariate <- function(distribution){
-  checkVariateForm(distribution, "multivariate")
-}
-testMultivariate <- function(distribution){
-  testVariateForm(distribution, "multivariate")
-}
-isMultivariate <- function(distribution){
-  isVariateForm(distribution, "multivariate")
-}
+# assertDistributionFeature
+makeChecks(assertionName =  "DistributionFeature",
+           cond = x[[accessor]]() == feature,
+           errormsg = paste(x$short_name(),"is not",feature),
+           args = alist(x=, accessor=, feature=))
 
-assertMatrixvariate <- function(distribution){
-  assertVariateForm(distribution, "matrixvariate")
-}
-checkMatrixvariate <- function(distribution){
-  checkVariateForm(distribution, "matrixvariate")
-}
-testMatrixvariate <- function(distribution){
-  testVariateForm(distribution, "matrixvariate")
-}
-isMatrixvariate <- function(distribution){
-  isVariateForm(distribution, "matrixvariate")
-}
+# assertVariateForm
+makeChecks(assertionName =  "VariateForm",
+           cond = x[["variateForm"]]() == type,
+           errormsg = paste(x$short_name(),"is not",type),
+           args = alist(x=, type=))
 
-assertValueSupport <- function(distribution, type){
-  assertDistributionFeature(distribution, "valueSupport", type)
-}
-checkValueSupport <- function(distribution, type){
-  checkDistributionFeature(distribution, "valueSupport", type)
-}
-testValueSupport <- function(distribution, type){
-  testDistributionFeature(distribution, "valueSupport", type)
-}
-isValueSupport <- function(distribution, type){
-  isDistributionFeature(distribution, "valueSupport", type)
-}
+# assertUnivariate
+makeChecks(assertionName =  "Univariate",
+           cond = x[["variateForm"]]() == "univariate",
+           errormsg = paste(x$short_name(),"is not univariate"))
 
-assertContinuous <- function(distribution){
-  assertValueSupport(distribution, "continuous")
-}
-checkContinuous <- function(distribution){
-  checkValueSupport(distribution, "continuous")
-}
-testContinuous <- function(distribution){
-  testValueSupport(distribution, "continuous")
-}
-isContinuous <- function(distribution){
-  isValueSupport(distribution, "continuous")
-}
+# assertMultivariate
+makeChecks(assertionName =  "Multivariate",
+           cond = x[["variateForm"]]() == "multivariate",
+           errormsg = paste(x$short_name(),"is not multivariate"))
 
-assertDiscrete <- function(distribution){
-  assertValueSupport(distribution, "discrete")
-}
-checkDiscrete <- function(distribution){
-  checkValueSupport(distribution, "discrete")
-}
-testDiscrete <- function(distribution){
-  testValueSupport(distribution, "discrete")
-}
-isDiscrete <- function(distribution){
-  isValueSupport(distribution, "discrete")
-}
+# assertMatrixvariate
+makeChecks(assertionName =  "Matrixvariate",
+           cond = x[["variateForm"]]() == "matrixvariate",
+           errormsg = paste(x$short_name(),"is not matrixvariate"))
 
-assertMixture <- function(distribution){
-  assertValueSupport(distribution, "mixture")
-}
-checkMixture <- function(distribution){
-  checkValueSupport(distribution, "mixture")
-}
-testMixture <- function(distribution){
-  testValueSupport(distribution, "mixture")
-}
-isMixture <- function(distribution){
-  isValueSupport(distribution, "mixture")
-}
+# assertValueSupport
+makeChecks(assertionName =  "ValueSupport",
+           cond = x[["valueSupport"]]() == type,
+           errormsg = paste(x$short_name(),"is not",type),
+           args = alist(x=, type=))
 
-assertSymmetric <- function(distribution){
-  assertDistributionFeature(distribution, "symmetry", "Symmetric")
-}
-checkSymmetric <- function(distribution){
-  checkDistributionFeature(distribution, "symmetry", "Symmetric")
-}
-testSymmetric <- function(distribution){
-  testDistributionFeature(distribution, "symmetry", "Symmetric")
-}
-isSymmetric <- function(distribution){
-  isDistributionFeature(distribution, "symmetry", "Symmetric")
-}
+# assertContinuous
+makeChecks(assertionName =  "Continuous",
+           cond = x[["valueSupport"]]() == "continuous",
+           errormsg = paste(x$short_name(),"is not continuous"))
 
-assertSkewness <- function(distribution, feature){
-  assertDistributionFeature(distribution, "skewnessType", feature)
-}
-checkSkewness <- function(distribution, feature){
-  checkDistributionFeature(distribution, "skewnessType", feature)
-}
-testSkewness <- function(distribution, feature){
-  testDistributionFeature(distribution, "skewnessType", feature)
-}
-isSkewness <- function(distribution, feature){
-  isDistributionFeature(distribution, "skewnessType", feature)
-}
+# assertDiscrete
+makeChecks(assertionName =  "Discrete",
+           cond = x[["valueSupport"]]() == "discrete",
+           errormsg = paste(x$short_name(),"is not discrete"))
 
-assertNegativeSkew <- function(distribution){
-  assertSkewness(distribution, "negative skew")
-}
-checkNegativeSkew <- function(distribution){
-  checkSkewness(distribution, "negative skew")
-}
-testNegativeSkew <- function(distribution){
-  testSkewness(distribution, "negative skew")
-}
-isNegativeSkew <- function(distribution){
-  isSkewness(distribution, "negative skew")
-}
+# assertMixture
+makeChecks(assertionName =  "Mixture",
+           cond = x[["valueSupport"]]() == "mixture",
+           errormsg = paste(x$short_name(),"is not mixture"))
 
-assertPositiveSkew <- function(distribution){
-  assertSkewness(distribution, "positive skew")
-}
-checkPositiveSkew <- function(distribution){
-  checkSkewness(distribution, "positive skew")
-}
-testPositiveSkew <- function(distribution){
-  testSkewness(distribution, "positive skew")
-}
-isPositiveSkew <- function(distribution){
-  isSkewness(distribution, "positive skew")
-}
+# assertSymmetric
+makeChecks(assertionName =  "Symmetric",
+           cond = x[["symmetry"]](),
+           errormsg = paste(x$short_name(),"is not symmetric"))
 
-assertNoSkew <- function(distribution){
-  assertSkewness(distribution, "no skew")
-}
-checkNoSkew <- function(distribution){
-  checkSkewness(distribution, "no skew")
-}
-testNoSkew <- function(distribution){
-  testSkewness(distribution, "no skew")
-}
-isNoSkew <- function(distribution){
-  isSkewness(distribution, "no skew")
-}
+# assertSkewness
+makeChecks(assertionName =  "Skewness",
+           cond = x[["skewnessType"]]() == type,
+           errormsg = paste(x$short_name(),"is not",type),
+           args = alist(x=, type=))
 
+# assertNegativeSkew
+makeChecks(assertionName =  "NegativeSkew",
+           cond = x[["skewnessType"]]() == "Negative Skew",
+           errormsg = paste(x$short_name(),"is not negative skew"))
 
-assertKurtosis <- function(distribution, feature){
-  assertDistributionFeature(distribution, "kurtosisType", feature)
-}
-checkKurtosis <- function(distribution, feature){
-  checkDistributionFeature(distribution, "kurtosisType", feature)
-}
-testKurtosis <- function(distribution, feature){
-  testDistributionFeature(distribution, "kurtosisType", feature)
-}
-isKurtosis <- function(distribution, feature){
-  isDistributionFeature(distribution, "kurtosisType", feature)
-}
+# assertPositiveSkew
+makeChecks(assertionName =  "PositiveSkew",
+           cond = x[["skewnessType"]]() == "Positive Skew",
+           errormsg = paste(x$short_name(),"is not positive skew"))
 
-assertPlatykurtic <- function(distribution){
-  assertKurtosis(distribution, "platykurtic")
-}
-checkPlatykurtic <- function(distribution){
-  checkKurtosis(distribution, "platykurtic")
-}
-testPlatykurtic <- function(distribution){
-  testKurtosis(distribution, "platykurtic")
-}
-isPlatykurtic <- function(distribution){
-  testKurtosis(distribution, "platykurtic")
-}
+# assertNoSkew
+makeChecks(assertionName =  "NoSkew",
+           cond = x[["skewnessType"]]() == "No Skew",
+           errormsg = paste(x$short_name(),"is not no skew"))
 
-assertMesokurtic <- function(distribution){
-  assertKurtosis(distribution, "mesokurtic")
-}
-checkMesokurtic <- function(distribution){
-  checkKurtosis(distribution, "mesokurtic")
-}
-testMesokurtic <- function(distribution){
-  testKurtosis(distribution, "mesokurtic")
-}
-isMesokurtic <- function(distribution){
-  testKurtosis(distribution, "mesokurtic")
-}
+# assertKurtosis
+makeChecks(assertionName =  "Kurtosis",
+           cond = x[["kurtosisType"]]() == type,
+           errormsg = paste(x$short_name(),"is not",type),
+           args = alist(x=, type=))
 
-assertLeptokurtic <- function(distribution){
-  assertKurtosis(distribution, "leptokurtic")
-}
-checkLeptokurtic <- function(distribution){
-  checkKurtosis(distribution, "leptokurtic")
-}
-testLeptokurtic <- function(distribution){
-  testKurtosis(distribution, "leptokurtic")
-}
-isLeptokurtic <- function(distribution){
-  testKurtosis(distribution, "leptokurtic")
-}
+# assertPlatykurtic
+makeChecks(assertionName =  "Platykurtic",
+           cond = x[["kurtosisType"]]() == "platykurtic",
+           errormsg = paste(x$short_name(),"is not platykurtic"))
+
+# assertMesokurtic
+makeChecks(assertionName =  "Mesokurtic",
+           cond = x[["kurtosisType"]]() == "mesokurtic",
+           errormsg = paste(x$short_name(),"is not mesokurtic"))
+
+# assertLeptokurtic
+makeChecks(assertionName =  "Leptokurtic",
+           cond = x[["kurtosisType"]]() == "leptokurtic",
+           errormsg = paste(x$short_name(),"is not leptokurtic"))

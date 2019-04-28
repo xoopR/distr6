@@ -4,7 +4,7 @@ dbin = function(x, log,...){
  m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
  return(m1 * m2 * m3)
 }
-discreteTester = Distribution$new("TestDistr","Test",support=interval$new(1,100),
+discreteTester = Distribution$new("TestDistr","Discrete Test",support=interval$new(0,100),
                           symmetric=T, type = posNaturals$new(),
                           distrDomain=posNaturals$new(),
                           pdf = dbin,
@@ -31,6 +31,17 @@ discreteTester = Distribution$new("TestDistr","Test",support=interval$new(1,100)
                           paramvalues = list(size = 100)
                           )
 
+discreteTester$setParameterValue(list(prob = 0.9, size = 2))
+discreteTester$kurtosis(); discreteTester$properties()$kurtosis
+discreteTester$kurtosisType()
+discreteTester$skewness(); discreteTester$skewnessType()
+discreteTester$setParameterValue(list(prob = 0.1))
+discreteTester$kurtosis(); discreteTester$properties()$kurtosis
+discreteTester$kurtosisType()
+discreteTester$skewness(); discreteTester$skewnessType()
+discreteTester$properties()
+
+discreteTester$mode()
 discreteTester$expectation()
 discreteTester$var()
 discreteTester$kthmoment(2)
@@ -44,3 +55,7 @@ discreteTester$kthmoment(3, type = "standard")
 discreteTester$skewness()
 discreteTester$kurtosis(F)
 discreteTester$kurtosisType()
+
+discreteTester2 = discreteTester$clone()
+discreteTester2$convolution(discreteTester)(1:3); dbinom(x = 1:3, size = 4, prob = 0.1)
+discreteTester2$convolution(discreteTester, add = F)(1:3)

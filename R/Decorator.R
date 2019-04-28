@@ -18,11 +18,11 @@ DistributionDecorator$set("public","initialize",function(distribution){
                           support = distribution$support(),
                           distrDomain = distribution$distrDomain(),
                           symmetric = as.logical(distribution$symmetry()),
-                          pdf = distribution$pdf,
-                          cdf = distribution$cdf,
-                          quantile = distribution$quantile,
-                          rand = distribution$rand,
-                          parameters = list(as.list(distribution$.__enclos_env__$private$.parameters)),
+                          pdf = distribution$.__enclos_env__$private$.pdf,
+                          cdf = distribution$.__enclos_env__$private$.cdf,
+                          quantile = distribution$.__enclos_env__$private$.quantile,
+                          rand = distribution$.__enclos_env__$private$.rand,
+                          parameters = distribution$.__enclos_env__$private$.parameters,
                           decorators = decorators,
                           valueSupport = distribution$valueSupport(),
                           variateForm = distribution$variateForm(),
@@ -69,12 +69,7 @@ CoreStatistics$set("public", "skewness", function() {
   return(self$kthmoment(k = 3, type = "standard"))
 }) # DONE
 CoreStatistics$set("public", "skewnessType", function() {
-  if(self$skewness() < 0)
-    return("Negative Skew")
-  else if(self$skewness() == 0)
-    return("No Skew")
-  else
-    return("Positive Skew")
+  return(self$.__enclos_env__$private$.properties$skewness)
 }) # DONE
 CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
   kurtosis = self$kthmoment(k = 4, type = "standard")
@@ -84,12 +79,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
     return(kurtosis)
 }) # DONE
 CoreStatistics$set("public", "kurtosisType", function() {
-  if(self$kurtosis() < 0)
-    return("Platykurtic")
-  else if(self$kurtosis() == 0)
-    return("Mesokurtic")
-  else
-    return("Leptokurtic")
+  return(self$.__enclos_env__$private$.properties$kurtosis)
 }) # DONE
 CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 

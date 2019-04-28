@@ -1,7 +1,6 @@
 #install.packages("checkmate"); install.packages("R6");
 library(R6)
 
-
 #-------------------------------------------------------------
 # Distribution R6Class Definition
 #-------------------------------------------------------------
@@ -12,7 +11,17 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE)
 #-------------------------------------------------------------
 Distribution$set("private",".addParameter",
                  function(id, name, default, settable, fittable, class,
-                          lower, upper, description, paramlist = NULL){
+                          lower, upper, description, paramlist = NULL,
+                          paramSet = NULL){
+  if(!is.null(paramSet)){
+    if(is(paramSet,"ParameterSet")){
+      private$.parameters <- data.frame(private$.parameters, paramSet,
+                                        stringsAsFactors = FALSE)
+      class(private$.parameters) <- append(class(private$.parameters),"ParameterSet")
+      invisible(self)
+    } else
+      stop("paramSet must be of class 'ParameterSet'")
+  }
   if(!is.null(paramlist)){
     id = paramlist$id
     name = paramlist$name
@@ -45,20 +54,23 @@ Distribution$set("private",".addParameter",
                                     fittable = fittable, class = class,
                                     lower = lower, upper = upper,
                                     description = description,
-                                    stringsAsFactors = FALSE)
-  )
+                                    stringsAsFactors = FALSE))
+  class(private$.parameters) <- append(class(private$.parameters),"ParameterSet")
+  invisible(self)
 }) # NEEDS TESTING
 #-------------------------------------------------------------
 # Distribution Public Methods
 #-------------------------------------------------------------
 Distribution$set("public","initialize",function(name, short_name,
-                      type = reals$new(), support, distrDomain, symmetric,
+                      type = reals$new(), support = reals$new(),
+                      distrDomain = reals$new(), symmetric = logical(0),
                       pdf, cdf, quantile, rand, parameters, paramvalues,
                       decorators = NULL, valueSupport = NULL, variateForm = NULL,
                       description=NULL
                       ){
 
   # Validation checks
+  if(missing(short_name)) short_name = name
   checkmate::assertCharacter(c(name, short_name),
                              .var.name = "'name' and 'short_name' must be of class 'character'.")
   checkmate::assert(inherits(type,"sets"), .var.name = "type should be class 'sets'.")
@@ -100,10 +112,11 @@ Distribution$set("public","initialize",function(name, short_name,
   private$.properties <- c(private$.properties, symmetric = symmetric)
 
   if(!missing(pdf)){
-    private$.pdf <- function(...){
-      formals(pdf) = c(formals(pdf),alist(self=self))
-      pdf(...)
-    }
+    if(!is.null(formals(pdf)$self))
+      formals(pdf)$self = self
+    else
+      formals(pdf) = c(formals(pdf),list(self=self))
+    private$.pdf <- pdf
   } else
     private$.pdf <- function(...){
       warning("Density/mass function is missing.")
@@ -111,10 +124,11 @@ Distribution$set("public","initialize",function(name, short_name,
     }
 
   if(!missing(cdf)){
-    private$.cdf <- function(...){
-      formals(cdf) = c(formals(cdf),alist(self=self))
-      cdf(...)
-      }
+    if(!is.null(formals(cdf)$self))
+      formals(cdf)$self = self
+    else
+      formals(cdf) = c(formals(cdf),list(self=self))
+    private$.cdf <- cdf
   } else
     private$.cdf <- function(...){
       warning("Distribution function is missing.")
@@ -122,10 +136,11 @@ Distribution$set("public","initialize",function(name, short_name,
     }
 
   if(!missing(quantile)){
-    private$.quantile <- function(...){
-      formals(quantile) = c(formals(quantile),alist(self=self))
-      quantile(...)
-    }
+    if(!is.null(formals(quantile)$self))
+      formals(quantile)$self = self
+    else
+      formals(quantile) = c(formals(quantile),list(self=self))
+    private$.quantile <- quantile
   } else
     private$.quantile <- function(...){
       warning("Quantile function is missing.")
@@ -133,10 +148,11 @@ Distribution$set("public","initialize",function(name, short_name,
     }
 
   if(!missing(rand)){
-    private$.rand <- function(...){
-      formals(rand) = c(formals(rand),alist(self=self))
-      rand(...)
-    }
+    if(!is.null(formals(rand)$self))
+      formals(rand)$self = self
+    else
+      formals(rand) = c(formals(rand),list(self=self))
+    private$.rand <- rand
   } else
     private$.rand <- function(...){
       warning("Random generation function is missing.")
@@ -145,9 +161,14 @@ Distribution$set("public","initialize",function(name, short_name,
 
 
   if(!missing(parameters)){
-    checkmate::assertList(parameters)
-    lapply(parameters, function(x) {private$.addParameter(paramlist = x)})
+    if(is(parameters,"ParameterSet")){
+      private$.parameters <- parameters
+    } else {
+      checkmate::assertList(parameters)
+      lapply(parameters, function(x) {private$.addParameter(paramlist = x)})
+    }
   }
+
   if(!missing(paramvalues)){
     checkmate::assertList(paramvalues)
     self$setParameterValue(paramvalues)
@@ -157,14 +178,27 @@ Distribution$set("public","initialize",function(name, short_name,
     lapply(decorators,function(x){
       methods <- c(x$public_methods, get(paste0(x$inherit))$public_methods)
       methods <- methods[!(names(methods) %in% c("initialize","clone"))]
-      aself <- self
+
       for(i in 1:length(methods)){
-          formals(methods[[i]] ) = c(formals(methods[[i]]),list(self=aself))
+          formals(methods[[i]] ) = c(formals(methods[[i]]),list(self=self))
           assign(names(methods)[[i]],methods[[i]],envir=as.environment(self))
       }
     })
   }
   private$.decorators = unlist(lapply(decorators,function(x) x[["classname"]]))
+
+  # Update skewness and kurtosis
+  x = try(self$kurtosis(excess = TRUE), silent = TRUE)
+  if(class(x) == "try-error")
+    private$.properties$kurtosis <- NULL
+  else
+    private$.properties$kurtosis <- exkurtosisType(x)
+
+  x = try(self$skewness(), silent = TRUE)
+  if(class(x) == "try-error")
+    private$.properties$skewness <- NULL
+  else
+    private$.properties$skewness <- skewType(x)
 
   invisible(self)
 }) # IN PROGRESS/NEEDS TESTING
@@ -262,13 +296,7 @@ Distribution$set("public","distrDomain",function(){
   return(private$.properties[["distrDomain"]])
 }) # NEEDS TESTING
 Distribution$set("public","symmetry",function(){
-  return(private$.properties[["symmetry"]])
-}) # NEEDS TESTING
-Distribution$set("public","getSkewness",function(){
-  return(private$.properties[["skewness"]])
-}) # NEEDS TESTING
-Distribution$set("public","getKurtosis",function(){
-  return(private$.properties[["kurtosis"]])
+  return(private$.properties[["symmetric"]])
 }) # NEEDS TESTING
 
 # Parameter Accessors
@@ -344,6 +372,21 @@ Distribution$set("public","setParameterValue",function(value, id, name){
       checkmate::assertInteger(value,lower = param$lower, upper = param$upper)
     }
     private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
+  }
+
+  # Update skewness and kurtosis
+  x = try(self$kurtosis(excess = TRUE), silent = TRUE)
+  if(class(x) == "try-error")
+    private$.properties$kurtosis <- NULL
+  else
+    private$.properties$kurtosis <- exkurtosisType(x)
+
+  x = try(self$skewness(), silent = TRUE)
+  if(class(x) == "try-error")
+    private$.properties$skewness <- NULL
+  else{
+    private$.properties$skewness <- skewType(x)
+
     invisible(self)
   }
 }) # NEEDS TESTING
@@ -354,9 +397,9 @@ Distribution$set("public","pdf",function(x, log = FALSE){
     if(log)
       return(log(private$.pdf(x, self = self)))
     else
-      return(private$.pdf(x, log = FALSE,self = self))
+      return(private$.pdf(x, self = self))
   }else
-    warning(sprintf("%s does not lie in the support of %s",x,getR6Class(self)))
+    return(0)
 }) # NEEDS TESTING
 Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE){
   if(self$liesInSupport(q)){
@@ -371,8 +414,6 @@ Distribution$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALS
 Distribution$set("public","rand",function(n){
   return(private$.rand(n, self = self))
 }) # NEEDS TESTING
-
-
 Distribution$set("public","expectation",function(trafo){
   if(missing(trafo)){
     trafo = function(x) return(x)
@@ -408,9 +449,9 @@ Distribution$set("public","median",function(){
 Distribution$set("public","mode",function(which = 1){
   if(which==1){
     if(testDiscrete(self))
-      return(self$support$numeric()[which.max(self$pdf(self$support$numeric()))])
+      return(self$support()$numeric()[which.max(self$pdf(self$support()$numeric()))])
     else if(testContinuous(self))
-      return(optimize(self$pdf,self$support$numeric()))
+      return(optimize(self$pdf,c(self$inf(),1e08), maximum = TRUE))
   }
 }) # IN PROGRESS
 Distribution$set("public","sup",function(){
@@ -430,6 +471,51 @@ Distribution$set("public","liesInType",function(x){
 Distribution$set("public","liesInDistrDomain",function(x){
   return(all(x >= self$distrDomain()$lower()) & all(x <= self$distrDomain()$upper))
 }) # NEEDS TESTING
+
+# Mathematical Operations
+Distribution$set("public","convolution",function(distribution, add = TRUE){
+  assertDistribution(distribution)
+  subpdf1 <- self$.__enclos_env__$private$.pdf
+  subpdf2 <- distribution$.__enclos_env__$private$.pdf
+  sublower <- distribution$inf()
+
+  if(testContinuous(distribution)){
+    fnc <- function(x) {}
+    if(add){
+      body(fnc) <- substitute({
+          return(sapply(x,function(z){
+            integrate(f = function(y){pdf1(z - y)*pdf2(y)},
+                      lower = alower, upper = z)$value
+            }))
+      },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
+    } else {
+      body(fnc) <- substitute({
+        return(sapply(x,function(z){
+            integrate(f = function(y){pdf1(y - z)*pdf2(y)},
+                      lower = alower, upper = z)$value
+        }))
+      },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
+    }
+  } else if(testDiscrete(distribution)){
+    fnc <- function(x) {}
+    if(add){
+      body(fnc) <- substitute({
+        return(sapply(x,function(z){
+          support <- seq.int(alower, z, by = 1)
+          sum(pdf1(z - support) * pdf2(support))
+        }))
+      },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
+    } else {
+      body(fnc) <- substitute({
+        return(sapply(x,function(z){
+          support <- seq.int(alower, z, by = 1)
+            sum(pdf1(support - z) * pdf2(support))
+          }))
+        },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
+    }
+  }
+    return(fnc)
+})
 
 #-------------------------------------------------------------
 # Distribution Private Variables
