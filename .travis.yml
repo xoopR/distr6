@@ -1,0 +1,9 @@
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+  
+  warnings_are_errors: true
+  
+  sudo: required
