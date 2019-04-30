@@ -1,10 +1,11 @@
-Package:
-Title: 
+Package: distr6
+Title: An R6 object oriented Distributions package in R
 Version: 0.0.0.9000
 Authors@R: 
 Description: 
 Depends: 
 Imports: checkmate, R6, R62S3, magrittr
+Remotes: RaphaelS1/R62S3
 License: 
 Encoding:
 LazyData:
