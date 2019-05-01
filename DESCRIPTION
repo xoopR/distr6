@@ -19,8 +19,8 @@ Authors@R:
              role = "aut",
              email = "Matthias.Kohl@stamats.de"))
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
-commonly used probabilty distributions and functionality for multiple scientific types.
-Additionally classes for symbolic representation of sets.
+  commonly used probabilty distributions and functionality for multiple scientific types.
+  Additionally classes for symbolic representation of sets.
 
 Depends: 
 Imports: checkmate, R6, R62S3, magrittr
