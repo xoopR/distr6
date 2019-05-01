@@ -1,10 +1,7 @@
-#install.packages("checkmate"); install.packages("R6");
-library(R6)
-
 #-------------------------------------------------------------
 # Distribution R6Class Definition
 #-------------------------------------------------------------
-Distribution <- R6Class("Distribution", lock_objects = FALSE)
+Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 
 #-------------------------------------------------------------
 # Distribution Private Methods
