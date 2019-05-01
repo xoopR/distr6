@@ -54,6 +54,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
     logs = log(self$pdf(self$support()$numeric()), base)
     return(-sum(probs * logs))
   } else if(testContinuous(self)){
+    warning("Results from numerical integration are approximate only, better results may be available.")
     return(-integrate(function(x) {
       probs = self$pdf(x)
       logs = log(self$pdf(x), base)
@@ -130,9 +131,10 @@ ExoticStatistics$set("public", "cumHazard", function(x, log=FALSE) {
 }) # IN PROGRESS
 ExoticStatistics$set("public", "generalPNorm", function(fun, p, lower, upper){
   if(testContinuous(self)){
+    warning("Results from numerical integration are approximate only, better results may be available.")
     return((integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
   }
-})
+}) # NEEDS TESTING
 ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = self$inf(),
                                                     upper = self$sup()) {
   return(self$generalPNorm(self$cdf, p, lower, upper))

@@ -45,8 +45,8 @@ Distribution$set("private",".addParameter",
   checkmate::assertLogical(c(settable, fittable))
   checkmate::assert(class == "numeric", class == "integer",
     .var.name = "'class' must be one of: 'numeric' or 'integer'")
-  checkmate::assert(!(id %in% private$.parameters$id), .var.name = "'id' must be unique")
-  checkmate::assert(!(name %in% private$.parameters$name), .var.name = "'name' must be unique")
+  checkmate::assert(!(id %in% private$.parameters$id), .var.name = "parameter IDs must be unique")
+  checkmate::assert(!(name %in% private$.parameters$name), .var.name = "parameter names must be unique")
 
   private$.parameters <- rbind(private$.parameters,
                                data.frame(id = id, name = name, value = value,
@@ -55,7 +55,9 @@ Distribution$set("private",".addParameter",
                                     lower = lower, upper = upper,
                                     description = description,
                                     stringsAsFactors = FALSE))
-  class(private$.parameters) <- append(class(private$.parameters),"ParameterSet")
+
+  if(!("ParameterSet" %in% class(private$.parameters)))
+    class(private$.parameters) <- append(class(private$.parameters),"ParameterSet")
   invisible(self)
 }) # NEEDS TESTING
 #-------------------------------------------------------------
@@ -73,6 +75,9 @@ Distribution$set("public","initialize",function(name, short_name,
   if(missing(short_name)) short_name = name
   checkmate::assertCharacter(c(name, short_name),
                              .var.name = "'name' and 'short_name' must be of class 'character'.")
+  checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
+                    .var.name = "'short_name' must be one word only.")
+
   checkmate::assert(inherits(type,"sets"), .var.name = "type should be class 'sets'.")
   checkmate::assert(inherits(support,"sets"), inherits(distrDomain,"sets"),
                     .var.name = "'support' and 'distrDomain' should be class 'sets'.")
@@ -88,7 +93,7 @@ Distribution$set("public","initialize",function(name, short_name,
            valueSupport == "mixture",
            .var.name = "valueSupport should be one of: 'continuous', 'discrete',
            'mixture'.")
-  else if(class(type)[[1]] %in% c("reals","posReals","negReals"))
+  else if(class(support)[[1]] %in% c("reals","posReals","negReals"))
     valueSupport = "continuous"
   else
     valueSupport = "discrete"
@@ -300,67 +305,40 @@ Distribution$set("public","symmetry",function(){
 }) # NEEDS TESTING
 
 # Parameter Accessors
-Distribution$set("public","parameters",function(id, name){
+Distribution$set("public","parameters",function(id){
   if(length(private$.parameters)==0)
     return("There are no parameters in this distribution.")
 
   if(!missing(id)){
     id0 = id
+    if(length(dplyr::filter(private$.parameters, id == id0))==0)
+      return(private$.parameters)
     return(dplyr::filter(private$.parameters, id == id0))
-  } else if(!missing(name)) {
-    name0 = id
-    return(dplyr::filter(private$.parameters, name == name0))
   } else
     return(private$.parameters)
 }) # NEEDS TESTING
-Distribution$set("public","getParameterValue",function(id, name){
+Distribution$set("public","getParameterValue",function(id){
   if(length(private$.parameters)==0)
     return("There are no parameters in this distribution.")
 
-  if(!missing(id))
-    return(self$parameters(id = id)["value"][[1]])
-  else if(!missing(name))
-    return(self$parameters(name = name)["value"][[1]])
+  val = self$parameters(id = id)[["value"]]
+  if(length(val)==0)
+    return(paste(id, "is not a parameter in this distribution."))
   else
-    stop("One of 'id' or 'name' must be given.")
+    return(val[[1]])
 }) # NEEDS TESTING
-Distribution$set("public","setParameterValue",function(value, id, name){
+Distribution$set("public","setParameterValue",function(lst){
   if(length(private$.parameters)==0)
     return("There are no parameters in this distribution.")
+  checkmate::assertList(lst)
 
-  if(checkmate::testList(value)){
-    lst <- value
-    for(i in 1:length(lst)){
-      id <- names(lst)[[i]]
-      value <- lst[[i]]
+  for(i in 1:length(lst)){
+    id <- names(lst)[[i]]
+    value <- lst[[i]]
 
-      if(!missing(id))
-        param <- self$parameters()[self$parameters()[,1] %in% id,]
-      else if(!missing(name))
-        param <- self$parameters()[self$parameters()[,1] %in% name,]
-      else
-        stop("One of 'id' or 'name' must be given.")
-
-      if(!param$settable)
-        stop(sprintf("%s is not settable.",param$name))
-
-      if(param$class=="numeric")
-        checkmate::assertNumeric(value,lower = param$lower, upper = param$upper)
-      if(param$class=="integer"){
-        value = as.integer(value)
-        checkmate::assertInteger(value,lower = param$lower, upper = param$upper)
-      }
-      private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
-      invisible(self)
-    }
-  } else {
-
-    if(!missing(id))
-      param <- self$parameters()[self$parameters()[,1] %in% id,]
-    else if(!missing(name))
-      param <- self$parameters()[self$parameters()[,1] %in% name,]
-    else
-      stop("One of 'id' or 'name' must be given.")
+    param <- self$parameters()[self$parameters()[,"id"] %in% id,]
+    if(length(param)==0)
+      stop(sprintf("%s is not in the parameter set.",id))
 
     if(!param$settable)
       stop(sprintf("%s is not settable.",param$name))
@@ -373,6 +351,8 @@ Distribution$set("public","setParameterValue",function(value, id, name){
     }
     private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
   }
+  invisible(self)
+
 
   # Update skewness and kurtosis
   x = try(self$kurtosis(excess = TRUE), silent = TRUE)
@@ -393,13 +373,17 @@ Distribution$set("public","setParameterValue",function(value, id, name){
 
 # Basic maths/stats
 Distribution$set("public","pdf",function(x, log = FALSE){
-  if(self$liesInSupport(x)){
-    if(log)
-      return(log(private$.pdf(x, self = self)))
-    else
-      return(private$.pdf(x, self = self))
-  }else
-    return(0)
+
+  y = x
+
+  y[!self$liesInSupport(x, F)] = 0
+
+  if(log)
+    y[self$liesInSupport(x, F)] = log(private$.pdf(x[self$liesInSupport(x, F)], self = self))
+  else
+    y[self$liesInSupport(x, F)] = private$.pdf(x[self$liesInSupport(x, F)], self = self)
+
+  return(y)
 }) # NEEDS TESTING
 Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE){
   if(self$liesInSupport(q)){
@@ -425,6 +409,7 @@ Distribution$set("public","expectation",function(trafo){
     return(sum(pdfs * xs))
   } else if(testContinuous(self)){
     return(integrate(function(x) {
+      warning("Results from numerical integration are approximate only, better results may be available.")
       pdfs = self$pdf(x)
       xs = trafo(x)
       xs[pdfs==0] = 0
@@ -462,8 +447,11 @@ Distribution$set("public","inf",function(){
 }) # DONE
 
 # Validation Checks
-Distribution$set("public","liesInSupport",function(x){
-  return(all(x >= self$inf()) & all(x <= self$sup()))
+Distribution$set("public","liesInSupport",function(x, all = TRUE){
+  if(all)
+    return(all(x >= self$inf()) & all(x <= self$sup()))
+  else
+    return(x >= self$inf() & x <= self$sup())
 }) # DONE
 Distribution$set("public","liesInType",function(x){
   return(all(x >= self$type()$lower()) & all(x <= self$type()$upper))
@@ -483,6 +471,7 @@ Distribution$set("public","convolution",function(distribution, add = TRUE){
     fnc <- function(x) {}
     if(add){
       body(fnc) <- substitute({
+        warning("Results from numerical integration are approximate only, better results may be available.")
           return(sapply(x,function(z){
             integrate(f = function(y){pdf1(z - y)*pdf2(y)},
                       lower = alower, upper = z)$value
@@ -490,6 +479,7 @@ Distribution$set("public","convolution",function(distribution, add = TRUE){
       },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
     } else {
       body(fnc) <- substitute({
+        warning("Results from numerical integration are approximate only, better results may be available.")
         return(sapply(x,function(z){
             integrate(f = function(y){pdf1(y - z)*pdf2(y)},
                       lower = alower, upper = z)$value
@@ -527,3 +517,7 @@ Distribution$set("private",".short_name",character(0)) # DONE
 Distribution$set("private",".description",NULL) # DONE
 Distribution$set("private",".parameters",data.frame()) # DONE
 Distribution$set("private",".decorators",list()) # DONE
+Distribution$set("private",".pdf",NULL) # DONE
+Distribution$set("private",".cdf",NULL) # DONE
+Distribution$set("private",".rand",NULL) # DONE
+Distribution$set("private",".quantile",NULL) # DONE

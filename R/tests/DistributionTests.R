@@ -4,7 +4,7 @@ dbin = function(x, log,...){
  m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
  return(m1 * m2 * m3)
 }
-discreteTester = Distribution$new("TestDistr","Discrete Test",support=interval$new(0,100),
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=interval$new(0,100),
                           symmetric=T, type = posNaturals$new(),
                           distrDomain=posNaturals$new(),
                           pdf = dbin,
@@ -57,5 +57,19 @@ discreteTester$kurtosis(F)
 discreteTester$kurtosisType()
 
 discreteTester2 = discreteTester$clone()
-discreteTester2$convolution(discreteTester)(1:3); dbinom(x = 1:3, size = 4, prob = 0.1)
-discreteTester2$convolution(discreteTester, add = F)(1:3)
+discreteTester2$.__enclos_env__$private$.short_name = "TestDistr2"
+
+convTest = Convolution$new(discreteTester, discreteTester2, support = interval$new(0,10))
+convTest$parameters()
+convTest$setParameterValue(list(TestDistr_prob = 0.3))
+convTest$getInternalModel("TestDistr")$getParameterValue("prob")
+convTest$parameters()
+convTest$setParameterValue(list(TestDistr_prob = 0.1))
+
+convTest2 = Convolution$new(convTest, discreteTester2, support = interval$new(0,10))
+convTest2$pdf(1:12); dbinom(1:12, size = 6, prob = 0.1)
+convTest2$expectation(); print(6 * 0.1)
+
+convTest2$parameters()
+convTest2$setParameterValue(list(TestDistrTestDistr2_TestDistr_size = 5))
+convTest2$parameters()
