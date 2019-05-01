@@ -1,9 +1,37 @@
 language: r
+sudo: false
+dist: trusty
+
 r:
   - oldrel
   - release
   - devel
+  - bioc-devel
+
+cache:
+  - packages
+
+latex: true
+
+r_github_packages:
+  - r-lib/pkgdown
   
-  warnings_are_errors: true
-  
-  sudo: required
+addons:
+  apt:
+    update: true
+    packages:
+     - libgs-dev
+     - gpdf
+     - ghostscript
+     
+after_success:
+  - Rscript -e 'pkgdown::build_site()'
+      
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  local-dir: docs
+  on:
+    branch: master
