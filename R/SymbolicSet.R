@@ -1,5 +1,3 @@
-library(R6)
-
 setSymbol <- function(set){
   if(!inherits(set,"character"))
     set = paste0(substitute(set))
@@ -20,7 +18,7 @@ setSymbol <- function(set){
   ))
 }
 
-sets <- R6Class("sets")
+sets <- R6::R6Class("sets")
 sets$set("private",".lower",NULL)
 sets$set("private",".upper",NULL)
 sets$set("private",".type",NULL)
@@ -64,7 +62,7 @@ sets$set("public","power",function(x){
   invisible(self)
 })
 
-SymbolicSet <- R6Class("SymbolicSet", inherit = sets)
+SymbolicSet <- R6::R6Class("SymbolicSet", inherit = sets)
 SymbolicSet$set("private",".setSymbol",NULL)
 SymbolicSet$set("public","getSymbol",function() return(private$.setSymbol))
 SymbolicSet$set("public","initialize",function(...){
@@ -82,7 +80,7 @@ SymbolicSet$set("public","print",function(){
   print(self$getSymbol())
 })
 
-specialSet <- R6Class("specialSet", inherit = SymbolicSet)
+specialSet <- R6::R6Class("specialSet", inherit = SymbolicSet)
 specialSet$set("public","initialize",function(dim = 1, lower = -Inf,
                                               upper = Inf, type = "()", ...){
   if(dim!=1)
@@ -96,52 +94,52 @@ specialSet$set("public","initialize",function(dim = 1, lower = -Inf,
   invisible(self)
 })
 
-naturals <- R6Class("naturals",inherit = specialSet)
+naturals <- R6::R6Class("naturals",inherit = specialSet)
 naturals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 0, type = "[)")
 })
-posNaturals <- R6Class("posNaturals",inherit = specialSet)
+posNaturals <- R6::R6Class("posNaturals",inherit = specialSet)
 posNaturals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1e-09, type = "[)")
 })
 
-integers <- R6Class("integers",inherit = specialSet)
-posIntegers <- R6Class("posIntegers",inherit = specialSet)
+integers <- R6::R6Class("integers",inherit = specialSet)
+posIntegers <- R6::R6Class("posIntegers",inherit = specialSet)
 posIntegers$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1e-09, type = "[)")
 })
-negIntegers <- R6Class("negIntegers",inherit = specialSet)
+negIntegers <- R6::R6Class("negIntegers",inherit = specialSet)
 negIntegers$set("public", "initialize", function(dim = 1){
   super$initialize(dim, upper = -1e-09, type = "(]")
 })
 
-rationals <- R6Class("rationals",inherit = specialSet)
-posRationals <- R6Class("posRationals",inherit = rationals)
+rationals <- R6::R6Class("rationals",inherit = specialSet)
+posRationals <- R6::R6Class("posRationals",inherit = rationals)
 posRationals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1e-09, type = "[)")
 })
-negRationals <- R6Class("negRationals",inherit = rationals)
+negRationals <- R6::R6Class("negRationals",inherit = rationals)
 negRationals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, upper = -1e-09, type = "(]")
 })
 
-reals <- R6Class("reals",inherit = specialSet)
-posReals <- R6Class("posReals",inherit = reals)
+reals <- R6::R6Class("reals",inherit = specialSet)
+posReals <- R6::R6Class("posReals",inherit = reals)
 posReals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1e-09, type = "[)")
 })
-negReals <- R6Class("negReals",inherit = reals)
+negReals <- R6::R6Class("negReals",inherit = reals)
 negReals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, upper = -1e-09, type = "(]")
 })
-extendedReals <- R6Class("extendedReals",inherit = reals)
+extendedReals <- R6::R6Class("extendedReals",inherit = reals)
 extendedReals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
 })
 
-complex <- R6Class("complex",inherit = specialSet)
+complex <- R6::R6Class("complex",inherit = specialSet)
 
-interval <- R6Class("interval", inherit = sets)
+interval <- R6::R6Class("interval", inherit = sets)
 interval$set("private",".setSymbol",NULL)
 interval$set("public","getSymbol",function() return(private$.setSymbol))
 interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]"){
