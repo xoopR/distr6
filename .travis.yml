@@ -9,14 +9,6 @@ latex: true
 
 r_github_packages:
   - r-lib/pkgdown
-  
-addons:
-  apt:
-    update: true
-    packages:
-     - libgs-dev
-     - gpdf
-     - ghostscript
      
 after_success:
   - Rscript -e 'pkgdown::build_site()'
