@@ -1,11 +1,33 @@
 Package: distr6
-Title: An R6 object oriented Distributions package in R
+Title: Object Oriented Distributions in R
 Version: 0.0.0.9000
 Authors@R: 
-Description: 
+    c(person(given = "Raphael",
+             family = "Sonabend",
+             role = c("aut","cre"),
+             email = "raphael.sonabend.15@ucl.ac.uk"),
+      person(given = "Franz",
+             family = "Kiraly",
+             role = "aut",
+             email = "f.kiraly@ucl.ac.uk"),
+      person(given = "Peter",
+             family = "Ruckdeschel",
+             role = "aut",
+             email = "peter.ruckdeschel@uni-oldenburg.de"),
+      person(given = "Matthias",
+             family = "Kohl",
+             role = "aut",
+             email = "Matthias.Kohl@stamats.de"))
+Description: An R6 object oriented Distributions package in R. Unified interface for 60
+commonly used probabilty distributions and functionality for multiple scientific types.
+Additionally classes for symbolic representation of sets.
+
 Depends: 
 Imports: checkmate, R6, R62S3, magrittr
 Remotes: RaphaelS1/R62S3
-License: 
-Encoding:
-LazyData:
+
+License: MIT
+LazyData: true
+BugReports: https://github.com/RaphaelS1/distr6/issues
+VignetteBuilder: 
+    knitr
