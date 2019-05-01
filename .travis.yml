@@ -2,12 +2,6 @@ language: r
 sudo: false
 dist: trusty
 
-r:
-  - oldrel
-  - release
-  - devel
-  - bioc-devel
-
 cache:
   - packages
 
