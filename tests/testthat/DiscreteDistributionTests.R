@@ -1,3 +1,5 @@
+library(testthat)
+
 dbin = function(x, log,...){
  m1 = choose(self$getParameterValue(id="size"), x)
  m2 = self$getParameterValue(id="prob")^x

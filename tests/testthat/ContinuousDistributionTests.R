@@ -1,3 +1,5 @@
+library(testthat)
+
 dexpo = function(x, log,...){
   m1 = self$getParameterValue("lambda")
   m2 = exp(-1 * self$getParameterValue("lambda") * x)
