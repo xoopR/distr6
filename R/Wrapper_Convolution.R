@@ -52,3 +52,10 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,...){
   super$initialize(distlist = distlist, pdf = fnc, name = name,
                    short_name = short_name, ...)
 }) # IN PROGRESS
+
+`+.Distribution` <- function(dist1, dist2){
+  Convolution$new(dist1, dist2, add = TRUE)
+}
+`-.Distribution` <- function(dist1, dist2){
+  Convolution$new(dist1, dist2, add = FALSE)
+}

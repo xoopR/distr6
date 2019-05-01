@@ -1,3 +1,4 @@
+devtools::load_all("/users/raphael/github/distr6")
 dbin = function(x, log,...){
  m1 = choose(self$getParameterValue(id="size"), x)
  m2 = self$getParameterValue(id="prob")^x
@@ -69,6 +70,9 @@ convTest$setParameterValue(list(TestDistr_prob = 0.1))
 convTest2 = Convolution$new(convTest, discreteTester2, support = interval$new(0,10))
 convTest2$pdf(1:12); dbinom(1:12, size = 6, prob = 0.1)
 convTest2$expectation(); print(6 * 0.1)
+
+discreteTester3 = discreteTester + discreteTester2
+discreteTester4 = discreteTester - discreteTester2
 
 convTest2$parameters()
 convTest2$setParameterValue(list(TestDistrTestDistr2_TestDistr_size = 5))

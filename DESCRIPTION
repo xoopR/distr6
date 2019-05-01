@@ -21,13 +21,13 @@ Authors@R:
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
   commonly used probabilty distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
-
 Depends: 
 Imports: checkmate, R6, R62S3, magrittr
 Remotes: RaphaelS1/R62S3
-
 License: MIT
 LazyData: true
 BugReports: https://github.com/RaphaelS1/distr6/issues
 VignetteBuilder: 
     knitr
+Encoding: UTF-8
+RoxygenNote: 6.1.1
