@@ -6,16 +6,11 @@
 #'
 #' @usage \code{SetInterval$new(symbol, type, lower, upper, dimension)}
 #'
-#' @section Constructor Arguments:
-#' \code{symbol} string representation of set/interval.
-#'
-#' \code{type} string for interval type, one of (), (], [), []
-#'
-#' \code{lower} numeric lower limit of set/interval
-#'
-#' \code{upper} numeric upper limit of set/interval
-#'
-#' \code{dimension} numeric dimension of set/interval
+#' @param \code{symbol} string representation of set/interval.
+#' @param \code{type} string for interval type, one of (), (], [), []
+#' @param \code{lower} numeric lower limit of set/interval
+#' @param \code{upper} numeric upper limit of set/interval
+#' @param \code{dimension} numeric dimension of set/interval
 #'
 #' @section Methods:
 #'

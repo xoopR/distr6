@@ -1,23 +1,16 @@
 #' @title Special Mathematical Sets
 #'
 #' @description R6 representations of the 'special' mathematical sets.
-#' @return An R6 object of class SpecialSet
+#' @return An R6 object of class SpecialSet.
 #' @name SpecialSet
 #'
-#' @usage
-#'   \code{SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)}
+#' @usage \code{SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)}
 #'
-#' @section Constructor Arguments:
-#'
-#' \code{dim} numeric dimension of set.
-#'
-#' \code{lower} lower limit of the set.
-#'
-#' \code{upper} upper limit of the set.
-#'
-#' \code{type} interval type, one of "()","(]","[)","[]".
-#'
-#' \code{zero} logical; if FALSE (default), zero is not included in the set.
+#' @param \code{dim} numeric dimension of set.
+#' @param \code{lower} lower limit of the set.
+#' @param \code{upper} upper limit of the set.
+#' @param \code{type} interval type, one of "()","(]","[)","[]".
+#' @param \code{zero} logical; if FALSE (default), zero is not included in the set.
 #'
 #'
 #' @details All arguments passed to the constructor are elements in the set. See
@@ -26,8 +19,6 @@
 #' @inheritSection SetInterval Methods
 #'
 #' @seealso The parent classes \code{\link{set}} and \code{\link{SetInterval}}.
-#'
-#' @rdname
 NULL
 
 

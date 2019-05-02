@@ -6,22 +6,19 @@
 \usage{
 \code{Interval$new(lower = -Inf, upper = Inf, type = "[]")}
 }
+\arguments{
+\item{\code{lower}}{lower limit of the interval.}
+
+\item{\code{upper}}{upper limit of the interval.}
+
+\item{\code{type}}{endpoint type of the interval.}
+}
 \value{
 An R6 object of class Interval.
 }
 \description{
 An R6 set object for symbolic representation of mathematical intervals.
 }
-\section{Constructor Arguments}{
-
-
-\code{lower} lower limit of the interval.
-
-\code{upper} upper limit of the interval.
-
-\code{type} endpoint type of the interval.
-}
-
 \section{Methods}{
 
 \code{numeric} get numeric vector of the interval range.

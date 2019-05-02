@@ -6,13 +6,9 @@
 #'
 #' @usage \code{Interval$new(lower = -Inf, upper = Inf, type = "[]")}
 #'
-#' @section Constructor Arguments:
-#'
-#' \code{lower} lower limit of the interval.
-#'
-#' \code{upper} upper limit of the interval.
-#'
-#' \code{type} endpoint type of the interval.
+#' @param \code{lower} lower limit of the interval.
+#' @param \code{upper} upper limit of the interval.
+#' @param \code{type} endpoint type of the interval.
 #'
 #' @section  Methods:
 #' \code{numeric} get numeric vector of the interval range.

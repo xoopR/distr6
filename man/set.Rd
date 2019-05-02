@@ -6,6 +6,9 @@
 \usage{
 \code{Set$new(...)}
 }
+\arguments{
+\item{\code{...}}{objects of any type to pass as set elements.}
+}
 \value{
 An R6 object of class set.
 }
@@ -16,11 +19,6 @@ An R6 set object for symbolic representation of mathematical sets.
 All arguments passed to the constructor are elements in the set. See
   \code{\link{SetInterval}} for inherited methods and variables.
 }
-\section{Constructor Arguments}{
-
-\code{...} objects of any type to pass as set elements.
-}
-
 \section{Methods}{
 
 

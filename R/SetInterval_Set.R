@@ -6,8 +6,7 @@
 #'
 #' @usage \code{Set$new(...)}
 #'
-#' @section Constructor Arguments:
-#' \code{...} objects of any type to pass as set elements.
+#' @param \code{...} objects of any type to pass as set elements.
 #'
 #' @inheritSection SetInterval Methods
 #'

@@ -6,6 +6,17 @@
 \usage{
 \code{SetInterval$new(symbol, type, lower, upper, dimension)}
 }
+\arguments{
+\item{\code{symbol}}{string representation of set/interval.}
+
+\item{\code{type}}{string for interval type, one of (), (], [), []}
+
+\item{\code{lower}}{numeric lower limit of set/interval}
+
+\item{\code{upper}}{numeric upper limit of set/interval}
+
+\item{\code{dimension}}{numeric dimension of set/interval}
+}
 \value{
 An R6 object of class SetInterval.
 }
@@ -16,19 +27,6 @@ The parent class to sets and intervals in R6.
 Whilst this is not an abstract class, direct construction is generally not advised.
   Construction should instead be called on 'sets' or 'interval'
 }
-\section{Constructor Arguments}{
-
-\code{symbol} string representation of set/interval.
-
-\code{type} string for interval type, one of (), (], [), []
-
-\code{lower} numeric lower limit of set/interval
-
-\code{upper} numeric upper limit of set/interval
-
-\code{dimension} numeric dimension of set/interval
-}
-
 \section{Methods}{
 
 
