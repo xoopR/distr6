@@ -39,6 +39,7 @@ getR6Class <- function(x){
 }
 
 
+
 liesInType <- function(distribution, x){
   if(x <= distribution$type()$sup() & x >= distribution$type()$inf())
     return(TRUE)
