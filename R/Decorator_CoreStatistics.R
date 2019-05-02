@@ -15,8 +15,11 @@ CoreStatistics$set("public", "iqr", function() {
 }) # DONE
 CoreStatistics$set("public", "entropy", function(base = 2) {
   if(testDiscrete(self)){
-    probs = self$pdf(self$support()$numeric())
-    logs = log(self$pdf(self$support()$numeric()), base)
+    rng = try(self$inf():self$sup(),silent = T)
+    if(inherits(rng,"try-error"))
+      rng = getWorkingSupport(self)
+    probs = self$pdf(rng)
+    logs = log(self$pdf(rng), base)
     return(-sum(probs * logs))
   } else if(testContinuous(self)){
     warning("Results from numerical integration are approximate only, better results may be available.")
@@ -28,9 +31,6 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
     }, lower = self$inf(), upper = self$sup())$value)
   }
 }) # DONE
-CoreStatistics$set("public", "scale", function() {
-  return((self - self$expectation())/ self$sd())
-}) # NEEDS TESTING ONCE ARITHS WRITTEN
 CoreStatistics$set("public", "skewness", function() {
   return(self$kthmoment(k = 3, type = "standard"))
 }) # DONE

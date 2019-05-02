@@ -72,18 +72,3 @@ test_that("check exotic functions silent",{
   expect_silent(discreteTester$pgf(z=2))
   expect_silent(discreteTester$entropy())
 })
-
-test_that("check convolution functions",{
-  discreteTester2 = discreteTester$clone()
-  discreteTester2$.__enclos_env__$private$.short_name = "TestDistr2"
-  convTest = Convolution$new(discreteTester, discreteTester2, support = interval$new(0,10))
-  expect_silent(convTest$setParameterValue(list(TestDistr_prob = 0.3)))
-  expect_equal(convTest$getInternalModel("TestDistr")$getParameterValue("prob"),0.3)
-  expect_silent(convTest$setParameterValue(list(TestDistr_prob = 0.9)))
-  convTest2 = Convolution$new(convTest, discreteTester2, support = interval$new(0,10))
-  expect_equal(convTest2$pdf(1:12), dbinom(1:12, size = 6, prob = 0.9))
-  expect_equal(convTest2$expectation(), 6*0.9)
-  discreteTester3 = discreteTester + discreteTester2
-  discreteTester4 = discreteTester - discreteTester2
-  expect_silent(convTest2$setParameterValue(list(TestDistrTestDistr2_TestDistr_size = 5)))
-})

@@ -10,7 +10,7 @@ cexpo = function(x, lower.tail = T, log.p = F,...){
   return(1 - m1)
 }
 continuousTester = Distribution$new("Continuous Test","ContTest",support=posReals$new(),
-                                  symmetric=TRUE, type = posReals$new(),
+                                  symmetric=TRUE, type = posReals$new(zero=T),
                                   distrDomain=posReals$new(),
                                   pdf = dexpo, cdf = cexpo,
                                   parameters = list(list(id = "lambda",
@@ -57,16 +57,6 @@ test_that("check exotic statistics", {
   expect_equal(round(continuousTester$expectation(), 5), round(continuousTester$survivalPNorm(p = 1), 5))
   expect_equal(continuousTester$hazard(3), continuousTester$pdf(3)/continuousTester$survival(3))
   expect_equal(-log(continuousTester$survival(3)), continuousTester$cumHazard(3))
-})
-
-test_that("check convolution functions", {
-  expect_warning(continuousTester$setParameterValue(list(lambda = 1)))
-  continuousTester2 = continuousTester$clone()
-  continuousTester2$.__enclos_env__$private$.short_name = "ContTest2"
-  continuousTester3 = Convolution$new(continuousTester, continuousTester2, support = posReals$new())
-  expect_equal(continuousTester3$pdf(1), dgamma(x = 1, shape = 2))
-  expect_equal(continuousTester3$expectation(), 2)
-  expect_equal(continuousTester3$var(), 2)
 })
 
 

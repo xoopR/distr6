@@ -37,13 +37,13 @@ sets$set("public","dimension",function(){
 })
 sets$set("public","max",function(){
   if(private$.type %in% c("()","[)"))
-    return("Interval is not bounded above.")
+    return(self$upper()-.Machine$double.eps)
   else
     return(self$upper())
 })
 sets$set("public","min",function(){
   if(private$.type %in% c("()","(]"))
-    return("Interval is not bounded below.")
+    return(self$lower()+.Machine$double.eps)
   else
     return(self$lower())
 })
@@ -125,12 +125,18 @@ negRationals$set("public", "initialize", function(dim = 1){
 
 reals <- R6::R6Class("reals",inherit = specialSet)
 posReals <- R6::R6Class("posReals",inherit = reals)
-posReals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, lower = 1e-09, type = "[)")
+posReals$set("public", "initialize", function(dim = 1, zero = FALSE){
+  if(zero)
+    super$initialize(dim, lower = 0, type = "[)")
+  else
+    super$initialize(dim, lower = 0, type = "()")
 })
 negReals <- R6::R6Class("negReals",inherit = reals)
-negReals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, upper = -1e-09, type = "(]")
+negReals$set("public", "initialize", function(dim = 1, zero = FALSE){
+  if(zero)
+    super$initialize(dim, upper = 0, type = "(]")
+  else
+    super$initialize(dim, upper = 0, type = "()")
 })
 extendedReals <- R6::R6Class("extendedReals",inherit = reals)
 extendedReals$set("public", "initialize", function(dim = 1){
@@ -168,13 +174,13 @@ interval$set("public","type",function(){
 })
 interval$set("public","max",function(){
   if(type %in% c("()","[)"))
-    return("Interval is not bounded above.")
+    return(self$upper()-.Machine$double.eps)
   else
     return(self$upper())
 })
 interval$set("public","min",function(){
   if(type %in% c("()","(]"))
-    return("Interval is not bounded below.")
+    return(self$lower()+.Machine$double.eps)
   else
     return(self$lower())
 })
@@ -187,7 +193,7 @@ interval$set("public","inf",function(){
 interval$set("public","numeric",function(){
   if(self$type() == "[]")
     return(seq.int(self$lower(),self$upper(),1))
-})
+}) # IN PROGRESS
 
 operation <- function(unicode,...){
   dots = list(...)

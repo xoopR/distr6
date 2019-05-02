@@ -57,13 +57,73 @@ Distribution$set("private",".addParameter",
     class(private$.parameters) <- append(class(private$.parameters),"ParameterSet")
   invisible(self)
 }) # NEEDS TESTING
+Distribution$set("private",".setWorkingSupport",function(){
+  suppressMessages({
+    rands = self$rand(20)
+
+    if(self$sup() != Inf)
+      newsup = self$sup()
+    else{
+      newsup = max(rands)
+      while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
+      newsup = ceiling(newsup - 1)
+    }
+
+    inf = self$inf()
+    if(inf != -Inf)
+      newinf = inf
+    else{
+      newinf = min(rands)
+      while(self$pdf(newinf) > .Machine$double.eps) newinf = newinf - 1
+      newinf = floor(newinf + 1)
+    }
+
+    private$.workingSupport <- list(inf = newinf, sup = newsup)
+  })
+}) # NEEDS TESTING
+Distribution$set("private",".getWorkingSupportRange",function(){
+  return(private$.workingSupport$inf:private$.workingSupport$sup)
+}) # NEEDS TESTING
+Distribution$set("private",".genQ2R",function(){
+  private$.rand <- function(n){}
+  formals(private$.rand)$self = self
+  body(private$.rand) = substitute({
+    COMMENT <- aComment
+    return(sapply(1:n, function(x) self$quantile(runif(1))))
+  }, list(aComment = "Sampling derived from quantile function"))
+}) # NEEDS TESTING
+Distribution$set("private",".genC2R",function(){
+  private$.rand <- function(n){}
+  formals(private$.rand)$self = self
+  body(private$.rand) = substitute({
+    COMMENT <- aComment
+    message("Results from numerical inversion may not be exact.")
+    return(sapply(1:n, function(x) GoFKernel::inverse(private$.cdf)(runif(1))))
+  }, list(aComment = "Sampling derived from cumulative distribution function via inverse transform sampling using `inverse` function from GoFKernel"))
+}) # NEEDS TESTING
+Distribution$set("private",".genP2R",function(){
+  private$.rand <- function(n){}
+  formals(private$.rand)$self = self
+  body(private$.rand) = substitute({
+    COMMENT <- aComment
+    if(testDiscrete(self))
+      cdf = function(x) sum(self$pdf(self$inf():self$pdf(x)))
+    else if(testContinuous(self)){
+      message("Results from numerical integration are approximate only.")
+      cdf = function(x) integrate(self$pdf, lower = self$inf(), upper = x)$value
+    }
+    message("Results from numerical inversion may not be exact.")
+    return(sapply(1:n,function(x) GoFKernel::inverse(cdf)(runif(1))))
+  }, list(aComment = "Sampling derived from numerical approximation of distribution function and inverse transform sampling using `inverse` function from GoFKernel"))
+}) # NEEDS TESTING
 #-------------------------------------------------------------
 # Distribution Public Methods
 #-------------------------------------------------------------
 Distribution$set("public","initialize",function(name, short_name,
-                      type = reals$new(), support = reals$new(),
-                      distrDomain = reals$new(), symmetric = logical(0),
-                      pdf, cdf, quantile, rand, parameters, paramvalues,
+                      type = reals$new(), support, distrDomain,
+                      symmetric = logical(0),
+                      pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+                      parameters, paramvalues,
                       decorators = NULL, valueSupport = NULL, variateForm = NULL,
                       description=NULL
                       ){
@@ -75,15 +135,21 @@ Distribution$set("public","initialize",function(name, short_name,
   checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
                     .var.name = "'short_name' must be one word only.")
 
-  checkmate::assert(inherits(type,"sets"), .var.name = "type should be class 'sets'.")
-  checkmate::assert(inherits(support,"sets"), inherits(distrDomain,"sets"),
-                    .var.name = "'support' and 'distrDomain' should be class 'sets'.")
   checkmate::assertLogical(symmetric)
 
   private$.name <- name
   private$.short_name <- short_name
   if(!is.null(description))
     private$.description <- description
+
+  if(missing(support))
+    support = type
+  if(missing(distrDomain))
+    distrDomain = type
+
+  checkmate::assert(inherits(type,"sets"), .var.name = "type should be class 'sets'.")
+  checkmate::assert(inherits(support,"sets"), inherits(distrDomain,"sets"),
+                    .var.name = "'support' and 'distrDomain' should be class 'sets'.")
 
   if(!is.null(valueSupport))
     checkmate::assert(valueSupport == "continuous", valueSupport == "discrete",
@@ -113,7 +179,7 @@ Distribution$set("public","initialize",function(name, short_name,
   private$.properties <- c(private$.properties, distrDomain = distrDomain)
   private$.properties <- c(private$.properties, symmetric = symmetric)
 
-  if(!missing(pdf)){
+  if(!is.null(pdf)){
     if(!is.null(formals(pdf)$self))
       formals(pdf)$self = self
     else
@@ -125,7 +191,7 @@ Distribution$set("public","initialize",function(name, short_name,
       return(NULL)
     }
 
-  if(!missing(cdf)){
+  if(!is.null(cdf)){
     if(!is.null(formals(cdf)$self))
       formals(cdf)$self = self
     else
@@ -137,7 +203,7 @@ Distribution$set("public","initialize",function(name, short_name,
       return(NULL)
     }
 
-  if(!missing(quantile)){
+  if(!is.null(quantile)){
     if(!is.null(formals(quantile)$self))
       formals(quantile)$self = self
     else
@@ -149,18 +215,20 @@ Distribution$set("public","initialize",function(name, short_name,
       return(NULL)
     }
 
-  if(!missing(rand)){
+  if(!is.null(rand)){
     if(!is.null(formals(rand)$self))
       formals(rand)$self = self
     else
       formals(rand) = c(formals(rand),list(self=self))
     private$.rand <- rand
-  } else
-    private$.rand <- function(...){
-      warning("Random generation function is missing.")
-      return(NULL)
-    }
-
+  } else {
+    if(!is.null(quantile))
+      private$.genQ2R()
+    else if(!is.null(cdf))
+      private$.genC2R()
+    else if(!is.null(pdf))
+      private$.genP2R()
+  }
 
   if(!missing(parameters)){
     if(is(parameters,"ParameterSet")){
@@ -182,7 +250,7 @@ Distribution$set("public","initialize",function(name, short_name,
       methods <- methods[!(names(methods) %in% c("initialize","clone"))]
 
       for(i in 1:length(methods)){
-          formals(methods[[i]] ) = c(formals(methods[[i]]),list(self=self))
+          formals(methods[[i]]) = c(formals(methods[[i]]),list(self=self))
           assign(names(methods)[[i]],methods[[i]],envir=as.environment(self))
       }
     })
@@ -201,6 +269,8 @@ Distribution$set("public","initialize",function(name, short_name,
     private$.properties$skewness <- NULL
   else
     private$.properties$skewness <- skewType(x)
+
+ # private$.setWorkingSupport()
 
   invisible(self)
 }) # IN PROGRESS/NEEDS TESTING
@@ -348,8 +418,6 @@ Distribution$set("public","setParameterValue",function(lst){
     }
     private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
   }
-  invisible(self)
-
 
   # Update skewness and kurtosis
   x = try(self$kurtosis(excess = TRUE), silent = TRUE)
@@ -361,11 +429,12 @@ Distribution$set("public","setParameterValue",function(lst){
   x = try(self$skewness(), silent = TRUE)
   if(class(x) == "try-error")
     private$.properties$skewness <- NULL
-  else{
+  else
     private$.properties$skewness <- skewType(x)
 
-    invisible(self)
-  }
+
+  #private$.setWorkingSupport()
+  invisible(self)
 }) # NEEDS TESTING
 
 # Basic maths/stats
@@ -393,25 +462,28 @@ Distribution$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALS
   return(private$.quantile(p, lower.tail = TRUE, log.p = FALSE, self = self))
 }) # NEEDS TESTING
 Distribution$set("public","rand",function(n){
-  return(private$.rand(n, self = self))
+  return(private$.rand(n))
 }) # NEEDS TESTING
 Distribution$set("public","expectation",function(trafo){
   if(missing(trafo)){
     trafo = function(x) return(x)
   }
   if(testDiscrete(self)){
-    pdfs = self$pdf(self$support()$numeric())
-    xs = trafo(self$support()$numeric())
+    rng = try(self$inf():self$sup(),silent = T)
+    if(inherits(rng,"try-error"))
+      rng = private$.getWorkingSupportRange()
+    pdfs = self$pdf(rng)
+    xs = trafo(rng)
     xs[pdfs==0] = 0
     return(sum(pdfs * xs))
   } else if(testContinuous(self)){
-    return(integrate(function(x) {
-      warning("Results from numerical integration are approximate only, better results may be available.")
+    warning("Results from numerical integration are approximate only, better results may be available.")
+    return(suppressMessages(integrate(function(x) {
       pdfs = self$pdf(x)
       xs = trafo(x)
       xs[pdfs==0] = 0
       return(xs * pdfs)
-      }, lower = self$inf(), upper = self$sup())$value)
+      }, lower = self$inf(), upper = self$sup())$value))
   }
 }) # IN PROGRESS
 Distribution$set("public","var",function(show.error = FALSE){
@@ -430,10 +502,13 @@ Distribution$set("public","median",function(){
 }) # DONE
 Distribution$set("public","mode",function(which = 1){
   if(which==1){
-    if(testDiscrete(self))
-      return(self$support()$numeric()[which.max(self$pdf(self$support()$numeric()))])
-    else if(testContinuous(self))
-      return(optimize(self$pdf,c(self$inf(),1e08), maximum = TRUE))
+    if(testDiscrete(self)){
+      rng = try(self$inf():self$sup(),silent = T)
+      if(inherits(rng,"try-error"))
+        rng = self$getWorkingSupport()
+      return(rng[which.max(self$pdf(rng))])
+    } else if(testContinuous(self))
+        return(optimize(self$pdf,c(self$inf(),1e08), maximum = TRUE))
   }
 }) # IN PROGRESS
 Distribution$set("public","sup",function(){
@@ -457,53 +532,6 @@ Distribution$set("public","liesInDistrDomain",function(x){
   return(all(x >= self$distrDomain()$lower()) & all(x <= self$distrDomain()$upper))
 }) # NEEDS TESTING
 
-# Mathematical Operations
-Distribution$set("public","convolution",function(distribution, add = TRUE){
-  assertDistribution(distribution)
-  subpdf1 <- self$.__enclos_env__$private$.pdf
-  subpdf2 <- distribution$.__enclos_env__$private$.pdf
-  sublower <- distribution$inf()
-
-  if(testContinuous(distribution)){
-    fnc <- function(x) {}
-    if(add){
-      body(fnc) <- substitute({
-        warning("Results from numerical integration are approximate only, better results may be available.")
-          return(sapply(x,function(z){
-            integrate(f = function(y){pdf1(z - y)*pdf2(y)},
-                      lower = alower, upper = z)$value
-            }))
-      },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
-    } else {
-      body(fnc) <- substitute({
-        warning("Results from numerical integration are approximate only, better results may be available.")
-        return(sapply(x,function(z){
-            integrate(f = function(y){pdf1(y - z)*pdf2(y)},
-                      lower = alower, upper = z)$value
-        }))
-      },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
-    }
-  } else if(testDiscrete(distribution)){
-    fnc <- function(x) {}
-    if(add){
-      body(fnc) <- substitute({
-        return(sapply(x,function(z){
-          support <- seq.int(alower, z, by = 1)
-          sum(pdf1(z - support) * pdf2(support))
-        }))
-      },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
-    } else {
-      body(fnc) <- substitute({
-        return(sapply(x,function(z){
-          support <- seq.int(alower, z, by = 1)
-            sum(pdf1(support - z) * pdf2(support))
-          }))
-        },list(pdf1 = subpdf1, pdf2 = subpdf2, alower = sublower))
-    }
-  }
-    return(fnc)
-})
-
 #-------------------------------------------------------------
 # Distribution Private Variables
 #-------------------------------------------------------------
@@ -518,3 +546,4 @@ Distribution$set("private",".pdf",NULL) # DONE
 Distribution$set("private",".cdf",NULL) # DONE
 Distribution$set("private",".rand",NULL) # DONE
 Distribution$set("private",".quantile",NULL) # DONE
+Distribution$set("private",".workingSupport",NULL) # DONE

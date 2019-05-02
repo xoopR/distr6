@@ -38,25 +38,14 @@ getR6Class <- function(x){
   return(get(class(x)[[1]])$classname)
 }
 
-# To do
-liesInDistrDomain <- function(distribution, x){}
-liesInType <- function(distribution, x){}
-addition <- function(distribution1, distribution2,
-                     name = "CustomDistribution"){
-  assertDistributionList(list(distribution1, distribution2))
 
-  paramset <- rbind(distribution1$parameters(), distribution2$parameters())
-  paramset$id[duplicated(paramset$id)]
-
-  distr = Distribution$new(pdf = distribution1$convolution(distribution2), name,
-                           parameters = distribution1$parameters)
-  formals(distr$.__enclos_env__$private$.pdf)$self = distr
-  return(distr)
+liesInType <- function(distribution, x){
+  if(x <= distribution$type()$sup() & x >= distribution$type()$inf())
+    return(TRUE)
+  else
+    return(FALSE)
 }
-subtraction <- function(...){}
-multiplication <- function(...){}
-division <- function(...){}
-exponentiation <- function(...){}
+
 
 exkurtosisType <- function(kurtosis){
   if(kurtosis < 0)
