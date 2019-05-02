@@ -5,12 +5,12 @@
 \alias{+.SetInterval}
 \title{Symbolic Union for SetInterval}
 \usage{
-\code{union(...)}
+union(...)
 
 x+y
 }
 \arguments{
-\item{\code{...}}{sets and/or intervals to take the union of.}
+\item{...}{sets and/or intervals to take the union of.}
 }
 \value{
 An R6 object of class SetInterval.

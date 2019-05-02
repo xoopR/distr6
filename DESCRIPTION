@@ -25,7 +25,7 @@ Depends:
 Imports: checkmate, R6, R62S3, magrittr, GoFKernel
 Suggests: knitr, testthat, devtools
 Remotes: RaphaelS1/R62S3
-License: MIT
+License: MIT + file LICENSE
 LazyData: true
 BugReports: https://github.com/RaphaelS1/distr6/issues
 VignetteBuilder: 

@@ -3,7 +3,10 @@ CoreStatistics$set("public", "mgf", function(t) {
   return(self$expectation(trafo = function(x) {return(exp(x*t))}))
 }) # DONE
 CoreStatistics$set("public", "cf", function(t) {
-}) # TO DO
+  if(testDiscrete(self)){
+    return(self$expectation(trafo = function(x) {return(exp(x*t*(1+0i)))}))
+  }
+}) # DONE
 CoreStatistics$set("public", "pgf", function(z) {
   if(testDiscrete(self)){
     x = self$expectation(trafo = function(x) {return(z^x)})

@@ -4,13 +4,13 @@
 #' @return An R6 object of class SpecialSet.
 #' @name SpecialSet
 #'
-#' @usage \code{SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)}
+#' @usage SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)
 #'
-#' @param \code{dim} numeric dimension of set.
-#' @param \code{lower} lower limit of the set.
-#' @param \code{upper} upper limit of the set.
-#' @param \code{type} interval type, one of "()","(]","[)","[]".
-#' @param \code{zero} logical; if FALSE (default), zero is not included in the set.
+#' @param dim numeric dimension of set.
+#' @param lower lower limit of the set.
+#' @param upper upper limit of the set.
+#' @param type interval type, one of "()","(]","[)","[]".
+#' @param zero logical; if FALSE (default), zero is not included in the set.
 #'
 #'
 #' @details All arguments passed to the constructor are elements in the set. See
@@ -23,7 +23,7 @@ NULL
 
 
 #' @export
-SpecialSet <- R6::R6Class("SpecialSet", inherit = set)
+SpecialSet <- R6::R6Class("SpecialSet", inherit = Set)
 SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
                                               upper = Inf, type = "()", ...){
   if(dim!=1)

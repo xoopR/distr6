@@ -4,18 +4,18 @@
 \alias{SetInterval}
 \title{R6 Generalised Class for Symbolic Sets and Intervals}
 \usage{
-\code{SetInterval$new(symbol, type, lower, upper, dimension)}
+SetInterval$new(symbol, type, lower, upper, dimension)
 }
 \arguments{
-\item{\code{symbol}}{string representation of set/interval.}
+\item{symbol}{string representation of set/interval.}
 
-\item{\code{type}}{string for interval type, one of (), (], [), []}
+\item{type}{string for interval type, one of (), (], [), []}
 
-\item{\code{lower}}{numeric lower limit of set/interval}
+\item{lower}{numeric lower limit of set/interval}
 
-\item{\code{upper}}{numeric upper limit of set/interval}
+\item{upper}{numeric upper limit of set/interval}
 
-\item{\code{dimension}}{numeric dimension of set/interval}
+\item{dimension}{numeric dimension of set/interval}
 }
 \value{
 An R6 object of class SetInterval.

@@ -6,7 +6,7 @@ dbin = function(x, log,...){
  m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
  return(m1 * m2 * m3)
 }
-discreteTester = Distribution$new("Discrete Test","TestDistr",support=interval$new(0,100),
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=Interval$new(0,100),
                           symmetric=T, type = posNaturals$new(),
                           distrDomain=posNaturals$new(),
                           pdf = dbin,
@@ -71,4 +71,10 @@ test_that("check exotic functions silent",{
   expect_silent(discreteTester$kthmoment(3, type = "standard"))
   expect_silent(discreteTester$pgf(z=2))
   expect_silent(discreteTester$entropy())
+})
+
+test_that("check mgf, cf, pgf",{
+  expect_equal(discreteTester$mgf(4), (1 - 0.9 + 0.9*exp(4))^2)
+  expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4)*1+0i)^2)
+  expect_equal(discreteTester$pgf(2), (1 - 0.9 + 0.9*2)^2)
 })

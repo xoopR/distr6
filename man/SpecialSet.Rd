@@ -19,7 +19,7 @@
 \title{Special Mathematical Sets}
 \format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
-\code{SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)}
+SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)
 
 naturals$new(dim = 1)
 
@@ -48,15 +48,15 @@ extendedReals$new(dim = 1)
 complex$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
 }
 \arguments{
-\item{\code{dim}}{numeric dimension of set.}
+\item{dim}{numeric dimension of set.}
 
-\item{\code{lower}}{lower limit of the set.}
+\item{lower}{lower limit of the set.}
 
-\item{\code{upper}}{upper limit of the set.}
+\item{upper}{upper limit of the set.}
 
-\item{\code{type}}{interval type, one of "()","(]","[)","[]".}
+\item{type}{interval type, one of "()","(]","[)","[]".}
 
-\item{\code{zero}}{logical; if FALSE (default), zero is not included in the set.}
+\item{zero}{logical; if FALSE (default), zero is not included in the set.}
 }
 \value{
 An R6 object of class SpecialSet.

@@ -4,14 +4,14 @@
 \alias{Interval}
 \title{Symbolic Interval Object}
 \usage{
-\code{Interval$new(lower = -Inf, upper = Inf, type = "[]")}
+Interval$new(lower = -Inf, upper = Inf, type = "[]")
 }
 \arguments{
-\item{\code{lower}}{lower limit of the interval.}
+\item{lower}{lower limit of the interval.}
 
-\item{\code{upper}}{upper limit of the interval.}
+\item{upper}{upper limit of the interval.}
 
-\item{\code{type}}{endpoint type of the interval.}
+\item{type}{endpoint type of the interval.}
 }
 \value{
 An R6 object of class Interval.

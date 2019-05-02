@@ -4,13 +4,13 @@
 #' @return An R6 object of class SetInterval.
 #' @name SetInterval
 #'
-#' @usage \code{SetInterval$new(symbol, type, lower, upper, dimension)}
+#' @usage SetInterval$new(symbol, type, lower, upper, dimension)
 #'
-#' @param \code{symbol} string representation of set/interval.
-#' @param \code{type} string for interval type, one of (), (], [), []
-#' @param \code{lower} numeric lower limit of set/interval
-#' @param \code{upper} numeric upper limit of set/interval
-#' @param \code{dimension} numeric dimension of set/interval
+#' @param symbol string representation of set/interval.
+#' @param type string for interval type, one of (), (], [), []
+#' @param lower numeric lower limit of set/interval
+#' @param upper numeric upper limit of set/interval
+#' @param dimension numeric dimension of set/interval
 #'
 #' @section Methods:
 #'

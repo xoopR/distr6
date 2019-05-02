@@ -147,9 +147,9 @@ Distribution$set("public","initialize",function(name, short_name,
   if(missing(distrDomain))
     distrDomain = type
 
-  checkmate::assert(inherits(type,"sets"), .var.name = "type should be class 'sets'.")
-  checkmate::assert(inherits(support,"sets"), inherits(distrDomain,"sets"),
-                    .var.name = "'support' and 'distrDomain' should be class 'sets'.")
+  checkmate::assert(inherits(type,"Set"), .var.name = "type should be class 'Set'.")
+  checkmate::assert(inherits(support,"Set"), inherits(distrDomain,"Set"),
+                    .var.name = "'support' and 'distrDomain' should be class 'Set'.")
 
   if(!is.null(valueSupport))
     checkmate::assert(valueSupport == "continuous", valueSupport == "discrete",

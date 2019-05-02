@@ -4,10 +4,10 @@
 #' @return An R6 object of class SetInterval.
 #' @name operation
 #'
-#' @usage \code{operation(unicode,...)}
+#' @usage operation(unicode,...)
 #'
-#' @param \code{unicode} unicode symbol for the operation.
-#' @param \code{...} sets and/or intervals to combine via the operation.
+#' @param unicode unicode symbol for the operation.
+#' @param ... sets and/or intervals to combine via the operation.
 #'
 #' @details Generally not recommended to use this function directly but instead
 #'   via \code{\link{product}} or \code{\link{union}}.
@@ -39,9 +39,9 @@ operation <- function(unicode,...){
 #' @return An R6 object of class SetInterval.
 #' @name product
 #'
-#' @usage \code{product(...)}
+#' @usage product(...)
 #'
-#' @param \code{...} sets and/or intervals to take the cartesian prodcut of.
+#' @param ... sets and/or intervals to take the cartesian prodcut of.
 #'
 #' @details This does not calculate the cartesian product of the arguments but
 #'   is just a symbolic representation using unicode.
@@ -58,10 +58,10 @@ product <- function(...){
 #' @return An R6 object of class SetInterval.
 #' @name operation
 #'
-#' @usage \code{operation(unicode,...)}
+#' @usage operation(unicode,...)
 #'
-#' @param \code{unicode} unicode symbol for the operation.
-#' @param \code{...} sets and/or intervals to combine via the operation.
+#' @param unicode unicode symbol for the operation.
+#' @param ... sets and/or intervals to combine via the operation.
 #'
 #' @details Generally not recommended to use this function directly but instead
 #'   via \code{\link{product}} or \code{\link{union}}.
@@ -93,9 +93,9 @@ operation <- function(unicode,...){
 #' @return An R6 object of class SetInterval.
 #' @name union
 #'
-#' @usage \code{union(...)}
+#' @usage union(...)
 #'
-#' @param \code{...} sets and/or intervals to take the union of.
+#' @param ... sets and/or intervals to take the union of.
 #'
 #' @details This does not calculate the union of the arguments but
 #'   is just a symbolic representation using unicode.
@@ -113,10 +113,10 @@ union <- function(...){
 #' @return An R6 object of class SetInterval.
 #' @name power
 #'
-#' @usage \code{power(x, power)}
+#' @usage power(x, power)
 #'
-#' @param \code{x} set or interval
-#' @param \code{power} power
+#' @param x set or interval
+#' @param power power
 #'
 #' @details This does not calculate the value of exponentiation but
 #'   is just a symbolic representation using unicode.
@@ -154,9 +154,9 @@ power <- function(x, power){
 #' @description Gets the unicode symbol for standard mathematical special sets.
 #' @name setSymbol
 #'
-#' @usage \code{setSymbol(set)}
+#' @usage setSymbol(set)
 #'
-#' @param \code{set} special set
+#' @param set special set
 #'
 #' @details Special set should be supplied as a character string.
 #'   See \code{\link{SpecialSet}} for full list of currently supported sets.

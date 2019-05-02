@@ -4,18 +4,18 @@
 \alias{operation}
 \title{Symbolic Operations for SetInterval}
 \usage{
-\code{operation(unicode,...)}
+operation(unicode,...)
 
-\code{operation(unicode,...)}
+operation(unicode,...)
 }
 \arguments{
-\item{\code{unicode}}{unicode symbol for the operation.}
+\item{unicode}{unicode symbol for the operation.}
 
-\item{\code{...}}{sets and/or intervals to combine via the operation.}
+\item{...}{sets and/or intervals to combine via the operation.}
 
-\item{\code{unicode}}{unicode symbol for the operation.}
+\item{unicode}{unicode symbol for the operation.}
 
-\item{\code{...}}{sets and/or intervals to combine via the operation.}
+\item{...}{sets and/or intervals to combine via the operation.}
 }
 \value{
 An R6 object of class SetInterval.

@@ -2,11 +2,11 @@
 #'
 #' @description An R6 set object for symbolic representation of mathematical sets.
 #' @return An R6 object of class set.
-#' @name set
+#' @name Set
 #'
-#' @usage \code{Set$new(...)}
+#' @usage Set$new(...)
 #'
-#' @param \code{...} objects of any type to pass as set elements.
+#' @param ... objects of any type to pass as set elements.
 #'
 #' @inheritSection SetInterval Methods
 #'

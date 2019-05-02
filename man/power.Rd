@@ -5,14 +5,14 @@
 \alias{^.SetInterval}
 \title{Symbolic Exponentiation for SetInterval}
 \usage{
-\code{power(x, power)}
+power(x, power)
 
 x^power
 }
 \arguments{
-\item{\code{x}}{set or interval}
+\item{x}{set or interval}
 
-\item{\code{power}}{power}
+\item{power}{power}
 }
 \value{
 An R6 object of class SetInterval.

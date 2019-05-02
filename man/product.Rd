@@ -5,12 +5,12 @@
 \alias{*.SetInterval}
 \title{Symbolic Cartesian Product for SetInterval}
 \usage{
-\code{product(...)}
+product(...)
 
 x*y
 }
 \arguments{
-\item{\code{...}}{sets and/or intervals to take the cartesian prodcut of.}
+\item{...}{sets and/or intervals to take the cartesian prodcut of.}
 }
 \value{
 An R6 object of class SetInterval.

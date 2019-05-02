@@ -4,10 +4,10 @@
 \alias{setSymbol}
 \title{Unicode Symbol of Special Sets}
 \usage{
-\code{setSymbol(set)}
+setSymbol(set)
 }
 \arguments{
-\item{\code{set}}{special set}
+\item{set}{special set}
 }
 \description{
 Gets the unicode symbol for standard mathematical special sets.
