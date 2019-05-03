@@ -7,7 +7,7 @@
 \usage{
 power(x, power)
 
-x^power
+\method{^}{SetInterval}(x, power)
 }
 \arguments{
 \item{x}{set or interval}

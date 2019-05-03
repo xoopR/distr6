@@ -1,10 +1,10 @@
 #' @title Symbolic Interval Object
 #'
 #' @description An R6 set object for symbolic representation of mathematical intervals.
-#' @return \code{new} constructs an R6 object of class Interval
+#' @return \code{Interval$new} constructs an R6 object of class Interval
 #' @name Interval
 #'
-#' @usage $new(lower = -Inf, upper = Inf, type = "[]")
+#' @section Usage: Interval$new(lower = -Inf, upper = Inf, type = "[]")
 #'
 #' @param lower lower limit of the interval.
 #' @param upper upper limit of the interval.
@@ -32,7 +32,7 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
 
 #' @rdname Interval
 #' @name numeric
-#' @usage $numeric()
+#' @section Usage: $numeric()
 #' @return \code{numeric} gets numeric vector of the interval range.
 Interval$set("public","numeric",function(){
   return(seq.int(self$min(),self$max(),1))

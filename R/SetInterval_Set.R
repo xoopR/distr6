@@ -1,10 +1,10 @@
 #' @title Symbolic Set Object
 #'
 #' @description An R6 set object for symbolic representation of mathematical sets.
-#' @return \code{new} constructs an R6 object of class Set.
+#' @return \code{Set$new} constructs an R6 object of class Set.
 #' @name Set
 #'
-#' @usage $new(...)
+#' @section Usage: Set$new(...)
 #'
 #' @param ... objects of any type to pass as set elements.
 #'

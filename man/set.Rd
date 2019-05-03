@@ -3,14 +3,11 @@
 \name{Set}
 \alias{Set}
 \title{Symbolic Set Object}
-\usage{
-$new(...)
-}
 \arguments{
 \item{...}{objects of any type to pass as set elements.}
 }
 \value{
-\code{new} constructs an R6 object of class Set.
+\code{Set$new} constructs an R6 object of class Set.
 }
 \description{
 An R6 set object for symbolic representation of mathematical sets.
@@ -18,6 +15,10 @@ An R6 set object for symbolic representation of mathematical sets.
 \details{
 All arguments passed to the constructor are elements in the set.
 }
+\section{Usage}{
+ Set$new(...)
+}
+
 \seealso{
 The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 }

@@ -4,11 +4,6 @@
 \alias{Interval}
 \alias{numeric}
 \title{Symbolic Interval Object}
-\usage{
-$new(lower = -Inf, upper = Inf, type = "[]")
-
-$numeric()
-}
 \arguments{
 \item{lower}{lower limit of the interval.}
 
@@ -17,13 +12,19 @@ $numeric()
 \item{type}{endpoint type of the interval.}
 }
 \value{
-\code{new} constructs an R6 object of class Interval
+\code{Interval$new} constructs an R6 object of class Interval
 
 \code{numeric} gets numeric vector of the interval range.
 }
 \description{
 An R6 set object for symbolic representation of mathematical intervals.
 }
+\section{Usage}{
+ Interval$new(lower = -Inf, upper = Inf, type = "[]")
+
+ $numeric()
+}
+
 \seealso{
 The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 }

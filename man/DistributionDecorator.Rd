@@ -5,6 +5,8 @@
 \title{Abstract Decorator for Distribution}
 \arguments{
 \item{distribution}{distribution object}
+
+\item{pos}{position of environment to assign decorated distribution}
 }
 \value{
 error

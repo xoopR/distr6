@@ -3,8 +3,8 @@
 #' @description The parent class to sets and intervals in R6.
 #' @name SetInterval
 #'
-#' @usage $new(symbol, type, lower, upper, dimension)
-#' @return \code{new} constructs an R6 object of class SetInterval.
+#' @section Usage: SetInterval$new(symbol, type, lower, upper, dimension)
+#' @return \code{SetInterval$new} constructs an R6 object of class SetInterval.
 #'
 #' @param symbol string representation of set/interval.
 #' @param type string for interval type, one of (), (], [), []
@@ -32,7 +32,7 @@ SetInterval$set("public","initialize",function(symbol, type, lower, upper, dimen
 
 #' @rdname SetInterval
 #' @name lower
-#' @usage $lower()
+#' @section Usage: $lower()
 #' @return \code{lower} gets lower limit of set/interval
 SetInterval$set("public","lower",function(){
   return(private$.lower)
@@ -40,7 +40,7 @@ SetInterval$set("public","lower",function(){
 
 #' @rdname SetInterval
 #' @name upper
-#' @usage $upper()
+#' @section Usage: $upper()
 #' @return \code{upper} gets upper limit of set/interval
 SetInterval$set("public","upper",function(){
   return(private$.upper)
@@ -48,7 +48,7 @@ SetInterval$set("public","upper",function(){
 
 #' @rdname SetInterval
 #' @name type
-#' @usage $type()
+#' @section Usage: $type()
 #' @return \code{type} gets closed/open interval type
 SetInterval$set("public","type",function(){
   return(private$.type)
@@ -56,7 +56,7 @@ SetInterval$set("public","type",function(){
 
 #' @rdname SetInterval
 #' @name dimension
-#' @usage $dimension()
+#' @section Usage: $dimension()
 #' @return \code{dimension} gets dimension of set/interval
 SetInterval$set("public","dimension",function(){
   return(private$.dimension)
@@ -64,7 +64,7 @@ SetInterval$set("public","dimension",function(){
 
 #' @rdname SetInterval
 #' @name max
-#' @usage $max()
+#' @section Usage: $max()
 #' @return \code{max} gets maximum of set/interval
 SetInterval$set("public","max",function(){
   if(private$.type %in% c("()","[)"))
@@ -75,7 +75,7 @@ SetInterval$set("public","max",function(){
 
 #' @rdname SetInterval
 #' @name min
-#' @usage $min()
+#' @section Usage: $min()
 #' @return \code{min} gets minimum of set/interval
 SetInterval$set("public","min",function(){
   if(private$.type %in% c("()","(]"))
@@ -86,7 +86,7 @@ SetInterval$set("public","min",function(){
 
 #' @rdname SetInterval
 #' @name sup
-#' @usage $sup()
+#' @section Usage: $sup()
 #' @return \code{sup} gets supremum of set/interval
 SetInterval$set("public","sup",function(){
   return(self$upper())
@@ -94,7 +94,7 @@ SetInterval$set("public","sup",function(){
 
 #' @rdname SetInterval
 #' @name inf
-#' @usage $inf()
+#' @section Usage: inf()
 #' @return \code{inf} gets infimum of set/interval
 SetInterval$set("public","inf",function(){
   return(self$lower())
@@ -102,13 +102,13 @@ SetInterval$set("public","inf",function(){
 
 #' @rdname SetInterval
 #' @name getSymbol
-#' @usage $getSymbol()
+#' @section Usage: $getSymbol()
 #' @return \code{getSymbol} gets symbolic representation of set/interval
 SetInterval$set("public","getSymbol",function() return(private$.setSymbol))
 
 #' @rdname SetInterval
-#' @name print
-#' @usage $print()
+#' @name print.SetInterval
+#' @section Usage: $print()
 #' @return \code{print} prints symbolic representation of set/interval
 SetInterval$set("public","print",function(){
   print(self$getSymbol())

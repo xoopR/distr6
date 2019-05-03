@@ -96,20 +96,24 @@ power <- function(x, power){
                   upper = upper, dimension = power)
 }
 
-#' @usage x^power
+#' @usage \method{^}{SetInterval}(x, power)
 #' @rdname power
 `^.SetInterval` <- function(x, power){
   power(x, power)
 }
 
-#' @usage x+y
+#' @usage \method{+}{SetInterval}(x, y)
 #' @rdname union
+#' @param x distribution
+#' @param y distribution
 `+.SetInterval` <- function(x, y){
   union(x, y)
 }
 
-#' @usage x*y
+#' @usage \method{*}{SetInterval}(x, y)
 #' @rdname product
+#' @param x distribution
+#' @param y distribution
 `*.SetInterval` <- function(x, y){
   product(x, y)
 }

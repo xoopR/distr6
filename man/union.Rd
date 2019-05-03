@@ -7,10 +7,14 @@
 \usage{
 union(...)
 
-x+y
+\method{+}{SetInterval}(x, y)
 }
 \arguments{
 \item{...}{sets and/or intervals to take the union of.}
+
+\item{x}{distribution}
+
+\item{y}{distribution}
 }
 \value{
 An R6 object of class SetInterval.

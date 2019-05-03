@@ -13,29 +13,6 @@
 \alias{kurtosisType}
 \alias{kthmoment}
 \title{Core Statistics Methods for Distributions}
-\usage{
-$new(distribution)
-
-$mgf(t)
-
-$cf(t)
-
-$pgf(t)
-
-$iqr()
-
-$entropy(base = 2)
-
-$skewness()
-
-$skewnessType()
-
-$kurtosis(excess = TRUE)
-
-$kurtosisType()
-
-$kthmoment(k, type = "central")
-}
 \arguments{
 \item{distribution}{distribution object.}
 
@@ -50,7 +27,7 @@ $kthmoment(k, type = "central")
 \item{type}{string. One of "central" or "standard".}
 }
 \value{
-\code{new} constructs an R6 object of class Distribution.
+\code{CoreStatistics$new} constructs an R6 object of class Distribution.
 
 \code{mgf} gives the moment generating function evaluated at t
 
@@ -95,14 +72,42 @@ Decorator objects add functionality to the given Distribution object
   Many functions rely on the expectation of a distribution and therefore results may be
   approximate when numerical integration is used.
 }
+\section{Usage}{
+ CoreStatistics$new(distribution)
+
+ $mgf(t)
+
+ $cf(t)
+
+ $pgf(t)
+
+ $iqr()
+
+ entropy(base = 2)
+
+ $skewness()
+
+ $skewnessType()
+
+ $kurtosis(excess = TRUE)
+
+ $kurtosisType()
+
+ $kthmoment(k, type = "central")
+}
+
 \examples{
+\dontrun{
 X = Binomial$new(decorator = "CoreStatistics")
 X$iqr()
 X$kurtosis()
+}
 
+\dontrun{
 X = Binomial$new()
 CoreStatistics$new(X)
 X$kthmoment(4)
+}
 }
 \seealso{
 \code{\link{ExoticStatistics}} for more available methods.

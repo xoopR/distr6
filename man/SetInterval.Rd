@@ -11,31 +11,8 @@
 \alias{sup}
 \alias{inf}
 \alias{getSymbol}
-\alias{print}
+\alias{print.SetInterval}
 \title{R6 Generalised Class for Symbolic Sets and Intervals}
-\usage{
-$new(symbol, type, lower, upper, dimension)
-
-$lower()
-
-$upper()
-
-$type()
-
-$dimension()
-
-$max()
-
-$min()
-
-$sup()
-
-$inf()
-
-$getSymbol()
-
-$print()
-}
 \arguments{
 \item{symbol}{string representation of set/interval.}
 
@@ -48,7 +25,7 @@ $print()
 \item{dimension}{numeric dimension of set/interval}
 }
 \value{
-\code{new} constructs an R6 object of class SetInterval.
+\code{SetInterval$new} constructs an R6 object of class SetInterval.
 
 \code{lower} gets lower limit of set/interval
 
@@ -77,6 +54,30 @@ The parent class to sets and intervals in R6.
 Whilst this is not an abstract class, direct construction is generally not advised.
   Construction should instead be called on 'Set' or 'Interval'
 }
+\section{Usage}{
+ SetInterval$new(symbol, type, lower, upper, dimension)
+
+ $lower()
+
+ $upper()
+
+ $type()
+
+ $dimension()
+
+ $max()
+
+ $min()
+
+ $sup()
+
+ inf()
+
+ $getSymbol()
+
+ $print()
+}
+
 \seealso{
 \code{\link{Set}} for R6 set objects and \code{\link{Interval}} for R6 interval objects.
 }

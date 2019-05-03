@@ -1,3 +1,42 @@
+#' @title Exotic Statistics Methods for Distributions
+#'
+#' @description Further functionality to distribution objects for statistical
+#'   methods that can be considered more exotic than core, such as survival modelling
+#'   and p-norms.
+#' @name ExoticStatistics
+#'
+#' @section Usage: ExoticStatistics$new(distribution)
+#' @return \code{ExoticStatistics$new} constructs an R6 object of class Distribution.
+#'
+#' @param distribution distribution object.
+#'
+#' @details Decorator objects add functionality to the given Distribution object
+#'  by overwriting the object in the Global Environment. They can be specified
+#'  in construction of the Distribution or by constructing the given Decorator.
+#'
+#'  Methods act on the distribution and not the constructor therefore method chaining of the form
+#'  \code{ExoticStatistics$new(distribution)$hazard(1)} is not supported but \code{distribution$new(decorator=ExoticStatistics)$hazard(1)} is.
+#'
+#'
+#' @seealso \code{\link{CoreStatistics}} for more available methods.
+#'
+#' @examples
+#' \dontrun{
+#' X = Binomial$new(decorator = "ExoticStatistics")
+#' X$survival(1)
+#' X$pdfPNorm()
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' X = Binomial$new()
+#' ExoticStatistics$new(X)
+#' X$pdfPNorm(4)
+#' }
+NULL
+
+
+#' @export
 ExoticStatistics <- R6::R6Class("ExoticStatistics", inherit = DistributionDecorator)
 ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = self$inf(),
                                                         upper = self$sup()){
