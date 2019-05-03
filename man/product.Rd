@@ -10,7 +10,7 @@ product(...)
 x*y
 }
 \arguments{
-\item{...}{sets and/or intervals to take the cartesian prodcut of.}
+\item{...}{sets and/or intervals to take the cartesian product of.}
 }
 \value{
 An R6 object of class SetInterval.

@@ -3,49 +3,49 @@
 \docType{data}
 \name{SpecialSet}
 \alias{SpecialSet}
-\alias{naturals}
-\alias{posNaturals}
-\alias{integers}
-\alias{posIntegers}
-\alias{negIntegers}
-\alias{rationals}
-\alias{posRationals}
-\alias{negRationals}
-\alias{reals}
-\alias{posReals}
-\alias{negReals}
-\alias{extendedReals}
-\alias{complex}
+\alias{Naturals}
+\alias{PosNaturals}
+\alias{Integers}
+\alias{PosIntegers}
+\alias{NegIntegers}
+\alias{Rationals}
+\alias{PosRationals}
+\alias{NegRationals}
+\alias{Reals}
+\alias{PosReals}
+\alias{NegReals}
+\alias{ExtendedReals}
+\alias{Complex}
 \title{Special Mathematical Sets}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
+\format{}
 \usage{
-SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)
+$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)
 
-naturals$new(dim = 1)
+Naturals$new(dim = 1)
 
-posNaturals$new(dim = 1)
+PosNaturals$new(dim = 1)
 
-integers$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
+Integers$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
 
-posIntegers$new(dim = 1)
+PosIntegers$new(dim = 1)
 
-negIntegers$new(dim = 1)
+NegIntegers$new(dim = 1)
 
-rationals$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
+Rationals$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
 
-posRationals$new(dim = 1)
+PosRationals$new(dim = 1)
 
-negRationals$new(dim = 1)
+NegRationals$new(dim = 1)
 
-reals$new(dim = 1, lower = -Inf, upper = Inf, type=  "()")
+Reals$new(dim = 1, lower = -Inf, upper = Inf, type=  "()")
 
-posReals$new(dim = 1, zero = FALSE)
+PosReals$new(dim = 1, zero = FALSE)
 
-negReals$new(dim = 1, zero = FALSE)
+NegReals$new(dim = 1, zero = FALSE)
 
-extendedReals$new(dim = 1)
+ExtendedReals$new(dim = 1)
 
-complex$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
+Complex$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
 }
 \arguments{
 \item{dim}{numeric dimension of set.}
@@ -59,40 +59,15 @@ complex$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
 \item{zero}{logical; if FALSE (default), zero is not included in the set.}
 }
 \value{
-An R6 object of class SpecialSet.
+Returns an R6 object of the given class.
 }
 \description{
 R6 representations of the 'special' mathematical sets.
 }
 \details{
-All arguments passed to the constructor are elements in the set. See
-  \code{\link{SetInterval}} for inherited methods and variables.
+Whilst these could all inherit from the class Interval. By convention we instead use Set.
 }
-\section{Methods}{
-
-
-\code{$lower()} Get lower limit of set/interval
-
-\code{$upper()} Get upper limit of set/interval
-
-\code{$type()} Get closed/open interval type
-
-\code{$dimension()} Get dimension of set/interval
-
-\code{$max()} Get maximum of set/interval
-
-\code{$min()} Get minimum of set/interval
-
-\code{$sup()} Get supremum of set/interval
-
-\code{$inf()} Get infimum of set/interval
-
-\code{$getSymbol()} Get symbolic representation of set/interval
-
-\code{$print()} Print symbolic representation of set/interval
-}
-
 \seealso{
-The parent classes \code{\link{set}} and \code{\link{SetInterval}}.
+The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 }
 \keyword{datasets}

@@ -1,19 +1,16 @@
 #' @title Symbolic Set Object
 #'
 #' @description An R6 set object for symbolic representation of mathematical sets.
-#' @return An R6 object of class set.
+#' @return \code{new} constructs an R6 object of class Set.
 #' @name Set
 #'
-#' @usage Set$new(...)
+#' @usage $new(...)
 #'
 #' @param ... objects of any type to pass as set elements.
 #'
-#' @inheritSection SetInterval Methods
+#' @details All arguments passed to the constructor are elements in the set.
 #'
-#' @details All arguments passed to the constructor are elements in the set. See
-#'   \code{\link{SetInterval}} for inherited methods and variables.
-#'
-#' @seealso The parent class \code{\link{SetInterval}}.
+#' @seealso The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 NULL
 
 

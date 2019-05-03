@@ -4,45 +4,20 @@
 \alias{Set}
 \title{Symbolic Set Object}
 \usage{
-Set$new(...)
+$new(...)
 }
 \arguments{
 \item{...}{objects of any type to pass as set elements.}
 }
 \value{
-An R6 object of class set.
+\code{new} constructs an R6 object of class Set.
 }
 \description{
 An R6 set object for symbolic representation of mathematical sets.
 }
 \details{
-All arguments passed to the constructor are elements in the set. See
-  \code{\link{SetInterval}} for inherited methods and variables.
+All arguments passed to the constructor are elements in the set.
 }
-\section{Methods}{
-
-
-\code{$lower()} Get lower limit of set/interval
-
-\code{$upper()} Get upper limit of set/interval
-
-\code{$type()} Get closed/open interval type
-
-\code{$dimension()} Get dimension of set/interval
-
-\code{$max()} Get maximum of set/interval
-
-\code{$min()} Get minimum of set/interval
-
-\code{$sup()} Get supremum of set/interval
-
-\code{$inf()} Get infimum of set/interval
-
-\code{$getSymbol()} Get symbolic representation of set/interval
-
-\code{$print()} Print symbolic representation of set/interval
-}
-
 \seealso{
-The parent class \code{\link{SetInterval}}.
+The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 }

@@ -5,37 +5,22 @@
 \title{Symbolic Operations for SetInterval}
 \usage{
 operation(unicode,...)
-
-operation(unicode,...)
 }
 \arguments{
-\item{unicode}{unicode symbol for the operation.}
-
-\item{...}{sets and/or intervals to combine via the operation.}
-
 \item{unicode}{unicode symbol for the operation.}
 
 \item{...}{sets and/or intervals to combine via the operation.}
 }
 \value{
 An R6 object of class SetInterval.
-
-An R6 object of class SetInterval.
 }
 \description{
-Operations for SetInterval objects and subclasses, symbolic only.
-
 Operations for SetInterval objects and subclasses, symbolic only.
 }
 \details{
 Generally not recommended to use this function directly but instead
   via \code{\link{product}} or \code{\link{union}}.
-
-Generally not recommended to use this function directly but instead
-  via \code{\link{product}} or \code{\link{union}}.
 }
 \seealso{
-The parent class \code{\link{SetInterval}}.
-
-The parent class \code{\link{SetInterval}}.
+\code{\link{SetInterval}}.
 }

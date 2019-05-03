@@ -11,7 +11,7 @@
 #'
 #' @details Generally not recommended to use this function directly but instead
 #'   via \code{\link{product}} or \code{\link{union}}.
-#' @seealso The parent class \code{\link{SetInterval}}.
+#' @seealso \code{\link{SetInterval}}.
 #' @export
 operation <- function(unicode,...){
   dots = list(...)
@@ -41,7 +41,7 @@ operation <- function(unicode,...){
 #'
 #' @usage product(...)
 #'
-#' @param ... sets and/or intervals to take the cartesian prodcut of.
+#' @param ... sets and/or intervals to take the cartesian product of.
 #'
 #' @details This does not calculate the cartesian product of the arguments but
 #'   is just a symbolic representation using unicode.
@@ -50,41 +50,6 @@ operation <- function(unicode,...){
 #' @export
 product <- function(...){
   operation("\u00D7",...)
-}
-
-#' @title Symbolic Operations for SetInterval
-#'
-#' @description Operations for SetInterval objects and subclasses, symbolic only.
-#' @return An R6 object of class SetInterval.
-#' @name operation
-#'
-#' @usage operation(unicode,...)
-#'
-#' @param unicode unicode symbol for the operation.
-#' @param ... sets and/or intervals to combine via the operation.
-#'
-#' @details Generally not recommended to use this function directly but instead
-#'   via \code{\link{product}} or \code{\link{union}}.
-#' @seealso The parent class \code{\link{SetInterval}}.
-#' @export
-operation <- function(unicode,...){
-  dots = list(...)
-  symbols = lapply(dots,function(x){
-    if(inherits(x,"R6ClassGenerator"))
-      x <- x[["new"]]()
-    x <- x[["getSymbol"]]()
-    if(!grepl("\\{.",x))
-      x <- paste0("{", x)
-    if(!grepl(".\\}",x))
-      x <- paste0(x,"}")
-    return(x)
-  })
-  lower = as.numeric(lapply(dots, function(x) x$lower()))
-  upper = as.numeric(lapply(dots, function(x) x$upper()))
-
-  setSymbol <- paste(unlist(symbols), collapse = paste0(" ",unicode," "))
-  return(SetInterval$new(symbol = setSymbol, type = "{}", lower = lower,
-                         upper = upper, dimension = length(dots)))
 }
 
 #' @title Symbolic Union for SetInterval
@@ -168,18 +133,18 @@ setSymbol <- function(set){
   if(!inherits(set,"character"))
     set = paste0(substitute(set))
   return(switch(set,
-                naturals = "\u2115",
-                posNaturals = "\u2115+",
-                integers = "\u2124",
-                posIntegers = "\u2124+",
-                negIntegers = "\u2124-",
-                rationals = "\u211A",
-                posRationals = "\u211A+",
-                negRationals = "\u211A-",
-                reals = "\u211D",
-                posReals = "\u211D+",
-                negReals = "\u211D-",
-                extendedReals = "\u211D \u222A {-\u221E, +\u221E}",
-                complex = "\u2102"
+                Naturals = "\u2115",
+                PosNaturals = "\u2115+",
+                Integers = "\u2124",
+                PosIntegers = "\u2124+",
+                NegIntegers = "\u2124-",
+                Rationals = "\u211A",
+                PosRationals = "\u211A+",
+                NegRationals = "\u211A-",
+                Reals = "\u211D",
+                PosReals = "\u211D+",
+                NegReals = "\u211D-",
+                ExtendedReals = "\u211D \u222A {-\u221E, +\u221E}",
+                Complex = "\u2102"
   ))
 }

@@ -1,3 +1,19 @@
+#' @title Abstract Decorator for Distribution
+#'
+#' @description An abstract decorator object for distributions to enhance functionality.
+#' @return error
+#' @name DistributionDecorator
+#'
+#' @param distribution distribution object
+#'
+#' @details This is an abstract class that cannot be directly constructed.
+#'   See the concete child classes for initializable statistical decorators.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
+NULL
+
+
+#' @export
 DistributionDecorator <- R6::R6Class("DistributionDecorator")
 
 DistributionDecorator$set("public","initialize",function(distribution){

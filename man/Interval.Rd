@@ -2,9 +2,12 @@
 % Please edit documentation in R/SetInterval_Interval.R
 \name{Interval}
 \alias{Interval}
+\alias{numeric}
 \title{Symbolic Interval Object}
 \usage{
-Interval$new(lower = -Inf, upper = Inf, type = "[]")
+$new(lower = -Inf, upper = Inf, type = "[]")
+
+$numeric()
 }
 \arguments{
 \item{lower}{lower limit of the interval.}
@@ -14,38 +17,13 @@ Interval$new(lower = -Inf, upper = Inf, type = "[]")
 \item{type}{endpoint type of the interval.}
 }
 \value{
-An R6 object of class Interval.
+\code{new} constructs an R6 object of class Interval
+
+\code{numeric} gets numeric vector of the interval range.
 }
 \description{
 An R6 set object for symbolic representation of mathematical intervals.
 }
-\section{Methods}{
-
-\code{numeric} get numeric vector of the interval range.
-
-
-
-\code{$lower()} Get lower limit of set/interval
-
-\code{$upper()} Get upper limit of set/interval
-
-\code{$type()} Get closed/open interval type
-
-\code{$dimension()} Get dimension of set/interval
-
-\code{$max()} Get maximum of set/interval
-
-\code{$min()} Get minimum of set/interval
-
-\code{$sup()} Get supremum of set/interval
-
-\code{$inf()} Get infimum of set/interval
-
-\code{$getSymbol()} Get symbolic representation of set/interval
-
-\code{$print()} Print symbolic representation of set/interval
-}
-
 \seealso{
-The parent class \code{\link{SetInterval}}.
+The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 }

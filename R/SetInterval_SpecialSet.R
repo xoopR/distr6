@@ -1,7 +1,7 @@
 #' @title Special Mathematical Sets
 #'
 #' @description R6 representations of the 'special' mathematical sets.
-#' @return An R6 object of class SpecialSet.
+#' @return Returns an R6 object of the given class.
 #' @name SpecialSet
 #'
 #' @usage SpecialSet$new(dim = 1, lower = -Inf, upper = Inf, type = "()", ...)
@@ -12,13 +12,11 @@
 #' @param type interval type, one of "()","(]","[)","[]".
 #' @param zero logical; if FALSE (default), zero is not included in the set.
 #'
+#' @format
 #'
-#' @details All arguments passed to the constructor are elements in the set. See
-#'   \code{\link{SetInterval}} for inherited methods and variables.
+#' @details Whilst these could all inherit from the class Interval. By convention we instead use Set.
 #'
-#' @inheritSection SetInterval Methods
-#'
-#' @seealso The parent classes \code{\link{set}} and \code{\link{SetInterval}}.
+#' @seealso The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 NULL
 
 
@@ -38,63 +36,63 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
 })
 
 #' @rdname SpecialSet
-#' @usage naturals$new(dim = 1)
-naturals <- R6::R6Class("naturals",inherit = SpecialSet)
-naturals$set("public", "initialize", function(dim = 1){
+#' @usage Naturals$new(dim = 1)
+Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
+Naturals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 0, type = "[)")
 })
 
 #' @rdname SpecialSet
-#' @usage posNaturals$new(dim = 1)
-posNaturals <- R6::R6Class("posNaturals",inherit = SpecialSet)
-posNaturals$set("public", "initialize", function(dim = 1){
+#' @usage PosNaturals$new(dim = 1)
+PosNaturals <- R6::R6Class("PosNaturals",inherit = SpecialSet)
+PosNaturals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1e-09, type = "[)")
 })
 
 #' @rdname SpecialSet
-#' @usage integers$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
-integers <- R6::R6Class("integers",inherit = SpecialSet)
+#' @usage Integers$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
+Integers <- R6::R6Class("Integers",inherit = SpecialSet)
 
 #' @rdname SpecialSet
-#' @usage posIntegers$new(dim = 1)
-posIntegers <- R6::R6Class("posIntegers",inherit = SpecialSet)
-posIntegers$set("public", "initialize", function(dim = 1){
+#' @usage PosIntegers$new(dim = 1)
+PosIntegers <- R6::R6Class("PosIntegers",inherit = SpecialSet)
+PosIntegers$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1e-09, type = "[)")
 })
 
 #' @rdname SpecialSet
-#' @usage negIntegers$new(dim = 1)
-negIntegers <- R6::R6Class("negIntegers",inherit = SpecialSet)
-negIntegers$set("public", "initialize", function(dim = 1){
+#' @usage NegIntegers$new(dim = 1)
+NegIntegers <- R6::R6Class("NegIntegers",inherit = SpecialSet)
+NegIntegers$set("public", "initialize", function(dim = 1){
   super$initialize(dim, upper = -1e-09, type = "(]")
 })
 
 #' @rdname SpecialSet
-#' @usage rationals$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
-rationals <- R6::R6Class("rationals",inherit = SpecialSet)
+#' @usage Rationals$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
+Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
 
 #' @rdname SpecialSet
-#' @usage posRationals$new(dim = 1)
-posRationals <- R6::R6Class("posRationals",inherit = rationals)
-posRationals$set("public", "initialize", function(dim = 1){
+#' @usage PosRationals$new(dim = 1)
+PosRationals <- R6::R6Class("PosRationals",inherit = Rationals)
+PosRationals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1e-09, type = "[)")
 })
 
 #' @rdname SpecialSet
-#' @usage negRationals$new(dim = 1)
-negRationals <- R6::R6Class("negRationals",inherit = rationals)
-negRationals$set("public", "initialize", function(dim = 1){
+#' @usage NegRationals$new(dim = 1)
+NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
+NegRationals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, upper = -1e-09, type = "(]")
 })
 
 #' @rdname SpecialSet
-#' @usage reals$new(dim = 1, lower = -Inf, upper = Inf, type=  "()")
-reals <- R6::R6Class("reals",inherit = SpecialSet)
+#' @usage Reals$new(dim = 1, lower = -Inf, upper = Inf, type=  "()")
+Reals <- R6::R6Class("Reals",inherit = SpecialSet)
 
 #' @rdname SpecialSet
-#' @usage posReals$new(dim = 1, zero = FALSE)
-posReals <- R6::R6Class("posReals",inherit = reals)
-posReals$set("public", "initialize", function(dim = 1, zero = FALSE){
+#' @usage PosReals$new(dim = 1, zero = FALSE)
+PosReals <- R6::R6Class("PosReals",inherit = Reals)
+PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, lower = 0, type = "[)")
   else
@@ -102,9 +100,9 @@ posReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @rdname SpecialSet
-#' @usage negReals$new(dim = 1, zero = FALSE)
-negReals <- R6::R6Class("negReals",inherit = reals)
-negReals$set("public", "initialize", function(dim = 1, zero = FALSE){
+#' @usage NegReals$new(dim = 1, zero = FALSE)
+NegReals <- R6::R6Class("NegReals",inherit = Reals)
+NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, upper = 0, type = "(]")
   else
@@ -112,12 +110,12 @@ negReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @rdname SpecialSet
-#' @usage extendedReals$new(dim = 1)
-extendedReals <- R6::R6Class("extendedReals",inherit = reals)
-extendedReals$set("public", "initialize", function(dim = 1){
+#' @usage ExtendedReals$new(dim = 1)
+ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
+ExtendedReals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
 })
 
 #' @rdname SpecialSet
-#' @usage complex$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
-complex <- R6::R6Class("complex",inherit = SpecialSet)
+#' @usage Complex$new(dim = 1, lower = -Inf, upper = Inf, type = "()")
+Complex <- R6::R6Class("Complex",inherit = SpecialSet)

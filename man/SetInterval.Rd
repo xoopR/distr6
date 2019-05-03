@@ -2,9 +2,39 @@
 % Please edit documentation in R/SetInterval.R
 \name{SetInterval}
 \alias{SetInterval}
+\alias{lower}
+\alias{upper}
+\alias{type}
+\alias{dimension}
+\alias{max}
+\alias{min}
+\alias{sup}
+\alias{inf}
+\alias{getSymbol}
+\alias{print}
 \title{R6 Generalised Class for Symbolic Sets and Intervals}
 \usage{
-SetInterval$new(symbol, type, lower, upper, dimension)
+$new(symbol, type, lower, upper, dimension)
+
+$lower()
+
+$upper()
+
+$type()
+
+$dimension()
+
+$max()
+
+$min()
+
+$sup()
+
+$inf()
+
+$getSymbol()
+
+$print()
 }
 \arguments{
 \item{symbol}{string representation of set/interval.}
@@ -18,39 +48,35 @@ SetInterval$new(symbol, type, lower, upper, dimension)
 \item{dimension}{numeric dimension of set/interval}
 }
 \value{
-An R6 object of class SetInterval.
+\code{new} constructs an R6 object of class SetInterval.
+
+\code{lower} gets lower limit of set/interval
+
+\code{upper} gets upper limit of set/interval
+
+\code{type} gets closed/open interval type
+
+\code{dimension} gets dimension of set/interval
+
+\code{max} gets maximum of set/interval
+
+\code{min} gets minimum of set/interval
+
+\code{sup} gets supremum of set/interval
+
+\code{inf} gets infimum of set/interval
+
+\code{getSymbol} gets symbolic representation of set/interval
+
+\code{print} prints symbolic representation of set/interval
 }
 \description{
 The parent class to sets and intervals in R6.
 }
 \details{
 Whilst this is not an abstract class, direct construction is generally not advised.
-  Construction should instead be called on 'sets' or 'interval'
+  Construction should instead be called on 'Set' or 'Interval'
 }
-\section{Methods}{
-
-
-\code{$lower()} Get lower limit of set/interval
-
-\code{$upper()} Get upper limit of set/interval
-
-\code{$type()} Get closed/open interval type
-
-\code{$dimension()} Get dimension of set/interval
-
-\code{$max()} Get maximum of set/interval
-
-\code{$min()} Get minimum of set/interval
-
-\code{$sup()} Get supremum of set/interval
-
-\code{$inf()} Get infimum of set/interval
-
-\code{$getSymbol()} Get symbolic representation of set/interval
-
-\code{$print()} Print symbolic representation of set/interval
-}
-
 \seealso{
-\code{\link{set}} for R6 set objects and \code{\link{interval}} for R6 interval objects.
+\code{\link{Set}} for R6 set objects and \code{\link{Interval}} for R6 interval objects.
 }
