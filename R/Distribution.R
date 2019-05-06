@@ -9,27 +9,29 @@
 #'   calculations (as opposed to analytical results).
 #'
 #
-#' @return \code{Distribution$new} constructs an R6 object of class Distribution.
 #' @name Distribution
 #'
-#' @param name full name of distribution.
-#' @param short_name short name to identify distribution.
-#' @param type R6 Set; the scientific type.
-#' @param support R6 Set; distribution support. See Details.
-#' @param distrDomain R6 Set; distribution domain See Details.
-#' @param symmetric logical; is distribution symmetric?
-#' @param pdf function. See Details.
-#' @param cdf function. See Details.
-#' @param quantile function. See Details.
-#' @param rand function. See Details.
-#' @param parameters S3 ParameterSet. See Details.
-#' @param paramValues list. See Details.
-#' @param decorators list of decorators to add in construction.
-#' @param valueSupport continuous, discrete, mixture. See Details.
-#' @param variateForm univariate, multivariate, matrixvariate. See Details.
-#' @param description short description of distribution.
+#' @section Constructor Arguments:
+#' \tabular{ll}{
+#' \code{name} \tab full name of distribution. \cr
+#' \code{short_name} \tab short name to identify distribution. \cr
+#' \code{type} \tab R6 Set; the scientific type. \cr
+#' \code{support} \tab R6 Set; distribution support. See Details. \cr
+#' \code{distrDomain} \tab R6 Set; distribution domain See Details. \cr
+#' \code{symmetric} \tab logical; is distribution symmetric? \cr
+#' \code{pdf} \tab function. See Details. \cr
+#' \code{cdf} \tab function. See Details. \cr
+#' \code{quantile} \tab function. See Details. \cr
+#' \code{rand} \tab function. See Details. \cr
+#' \code{parameters} \tab S3 ParameterSet. See Details. \cr
+#' \code{paramValues} \tab list. See Details. \cr
+#' \code{decorators} \tab list of decorators to add in construction. \cr
+#' \code{valueSupport} \tab continuous, discrete, mixture. See Details. \cr
+#' \code{variateForm} \tab univariate, multivariate, matrixvariate. See Details. \cr
+#' \code{description} \tab short description of distribution.
+#' }
 #'
-#' @details The primary purpose of the Distribution object is to serve as the parent class
+#' @section Constructor Details: The primary purpose of the Distribution object is to serve as the parent class
 #'   to all other distributions, therefore all methods are approximate numeric calculations
 #'   and the user may prefer to utilise decorators to improve accuracy.
 #'
@@ -55,9 +57,57 @@
 #'   \code{valueSupport} and \code{variateForm} if not given are automatically filled from
 #'   \code{type} and \code{support}.
 #'
-#' @seealso \code{\link{SetInteval}} and \code{\link{SpecialSet}} for details on Sets and
-#' Intervals. See \code{\link{makeParameterSet}} for parameter details. See \code{\link{DistributionDecorator}} for
-#' Decorator details.
+#' @section Public Methods:
+#'  \tabular{ll}{
+#'   \code{strprint()} \tab Character representation of print \cr
+#'   \code{print()} \tab Print method \cr
+#'   \code{summary(full = T)} \tab Summary method \cr
+#'   \code{plot()} \tab Plotting method \cr
+#'   \code{qqplot()} \tab QQ-Plots \cr
+#'   \code{name()} \tab Name accessor \cr
+#'   \code{short_name()} \tab Short name accessor \cr
+#'   \code{description()} \tab Description accessor \cr
+#'   \code{decorators()} \tab Decorators accessor \cr
+#'   \code{traits()} \tab Traits accessor \cr
+#'   \code{valueSupport()} \tab Value support accessor \cr
+#'   \code{variateForm()} \tab Variate form accessor \cr
+#'   \code{type()} \tab Type accessor \cr
+#'   \code{properties()} \tab Properties accessor \cr
+#'   \code{support()} \tab Support accessor \cr
+#'   \code{distrDomain()} \tab Distribution domain accessor \cr
+#'   \code{symmetry()} \tab Symmetry accessor \cr
+#'   \code{parameters(id,as.df = FALSE)} \tab Parameters accessor. See \code{\link{ParameterSet}}. \cr
+#'   \code{getParameterValue(id)} \tab Parameter value accessor. See \code{\link{ParameterSet}}. \cr
+#'   \code{setParameterValue(lst)} \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
+#'   \code{pdf(x, log = F)} \tab Evaluate density/mass at x. \cr
+#'   \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q. \cr
+#'   \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p. \cr
+#'   \code{rand(n)} \tab Randomly simulate n draws from distribution. \cr
+#'   \code{expectation(trafo)} \tab Calculate expectation of distribution. \cr
+#'   \code{var()} \tab Calculate variance of distribution. \cr
+#'   \code{sd()} \tab Calculate standard deviation of distribution. \cr
+#'   \code{cov()} \tab Calculate covariance of distribution. See Details. \cr
+#'   \code{cor()} \tab Calculate correlation of distribution. See Details. \cr
+#'   \code{median()} \tab Calculate median of distribution. \cr
+#'   \code{mode(which = 1)} \tab Calculate mode of distribution. See Details. \cr
+#'   \code{sup()} \tab Get supremum of distribution. \cr
+#'   \code{inf()} \tab Get infimum of distribution. \cr
+#'   \code{liesInSupport(x, all = TRUE)} \tab Does x lie in the support of distribution? \cr
+#'   \code{liesInType(x)} \tab Does x lie in the type of distribution? \cr
+#'   \code{liesInDistrDomain(x)} \tab Does x lie in the domain of distribution? \cr
+#' }
+#'
+#'
+#' @section Public Methods Details:
+#' \code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
+#' \code{mode} returns by default the first mode of the distribution where applicable, otherwise a specified
+#' integer or all.
+#'
+#'
+#' @seealso See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
+#' Intervals. See \code{\link{ParameterSet}} for parameter details. See
+#' \code{\link{DistributionDecorator}} for Decorator details. See \code{\link[stats]{Binomial}} for
+#' details on the arguments to \code{pdf}/\code{cdf}/\code{quantile}/\code{rand}.
 NULL
 #-------------------------------------------------------------
 
@@ -187,7 +237,8 @@ Distribution$set("public","initialize",function(name, short_name,
 
   private$.properties <- c(private$.properties, support = support)
   private$.properties <- c(private$.properties, distrDomain = distrDomain)
-  private$.properties <- c(private$.properties, symmetric = symmetric)
+  symm = ifelse(symmetric,"Symmetric","Asymmetric")
+  private$.properties <- c(private$.properties, symmetric = symm)
 
   if(!is.null(pdf)){
     if(!is.null(formals(pdf)$self))
@@ -280,6 +331,8 @@ Distribution$set("public","initialize",function(name, short_name,
 
   invisible(self)
 }) # IN PROGRESS/NEEDS TESTING
+
+
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
     string = paste(apply(self$parameters(as.df = T)[self$parameters(as.df = T)$settable,],1,
@@ -297,41 +350,59 @@ Distribution$set("public","print",function(...){
   invisible(self)
 }) # DONE
 Distribution$set("public","summary",function(full=T){
+
+  which_params = self$parameters(as.df = T)$settable
+
   if(full){
     if(length(private$.parameters)!=0){
       cat(self$name(),"with parameterisation:\n")
-      cat("\t",paste(self$parameters()["name"][[1]], self$parameters()["value"][[1]],
+      cat("\t",paste(self$parameters(as.df = T)[which_params, "id"][[1]],
+                     self$parameters(as.df = T)[which_params,"value"][[1]],
                      sep = " = ", collapse = "; "))
     } else
       cat(self$name(),"\n")
     cat("\n\n Quick Statistics: \n")
 
-    if(!is.null(self$expectation())) cat("\tMean")
-    if(!is.null(self$var())) cat("\tVariance")
-    if(!is.null(self$getSkewness())) cat("\tSkewness")
-    if(!is.null(self$getKurtosis())) cat("\tExcess Kurtosis")
+    a_exp = suppressMessages(try(self$expectation(), silent = T))
+    a_var = suppressMessages(try(self$var(), silent = T))
+    a_skew = suppressMessages(try(self$skewness(), silent = T))
+    a_kurt = suppressMessages(try(self$kurtosis(), silent = T))
+
+    if(!inherits(a_exp,"try-error")) cat("\tMean")
+    if(!inherits(a_var,"try-error")) cat("\tVariance")
+    if(!inherits(a_skew,"try-error")) cat("\tSkewness")
+    if(!inherits(a_kurt,"try-error")) cat("\tExcess Kurtosis")
     cat("\n")
 
-    if(!is.null(self$expectation())) cat(self$expectation())
-    if(!is.null(self$var())) cat(self$var())
-    if(!is.null(self$getSkewness())) cat(self$getSkewness())
-    if(!is.null(self$getKurtosis())) cat(self$getKurtosis())
+    if(!inherits(a_exp,"try-error")) cat("\t", a_exp, sep = "")
+    if(!inherits(a_var,"try-error")) cat("\t", a_var, sep = "")
+    if(!inherits(a_skew,"try-error")) cat("\t\t", a_skew, sep = "")
+    if(!inherits(a_kurt,"try-error")) cat("\t\t", a_kurt, sep = "")
     cat("\n")
 
-    cat("Support:",self$support()$strprint())
+    cat(" Support:",self$support()$getSymbol())
     cat("\n Traits: ",self$valueSupport(),"; ",self$variateForm(),"\n\t See getTraits() for more",sep="")
-    cat("\n Properties: ",self$getKurtosis(),"; ",self$getSkewness(),"; ",self$symmetry(),"\n\t See getProperties() for more",sep="")
 
-    cat("\n\n Decorated with: ", unlist(private$.decorators))
+    if(inherits(a_kurt,"try-error"))
+      cat("\n Properties: ", self$distrDomain()$getSymbol(), "; ", self$symmetry(),
+          "\n\t See getProperties() for more", sep="")
+    else
+      cat("\n Properties: ", self$kurtosisType(), "; ", self$skewnessType(),"; ", self$symmetry(),
+          "\n\t See getProperties() for more", sep="")
+
+    if(!is.null(self$decorators()))
+      cat("\n\n Decorated with: ", paste0(self$decorators(),collapse=", "))
+
   } else {
     if(length(private$.parameters)!=0){
       cat(self$short_name(),"distribution with parameterisation: ")
-      cat(paste(self$parameters()["name"][[1]], self$parameters()["value"][[1]],
+      cat(paste(self$parameters(as.df = T)[which_params,"id"][[1]],
+                self$parameters(as.df = T)[which_params,"value"][[1]],
                 sep = " = ", collapse = "; "))
     } else
         cat(self$name())
-    cat("\n Scientific Type:",self$type()$strprint(),"\t See getTraits() for more")
-    cat("\n Support:",self$support()$strprint(),"\t See getProperties() for more")
+    cat("\n Scientific Type:",self$type()$getSymbol(),"\t See getTraits() for more")
+    cat("\n Support:",self$support()$getSymbol(),"\t\t See getProperties() for more")
   }
 }) # NEEDS TESTING
 Distribution$set("public","plot",function(){}) # TO DO
@@ -457,7 +528,7 @@ Distribution$set("public","expectation",function(trafo){
       }, lower = self$inf(), upper = self$sup())$value))
   }
 }) # IN PROGRESS
-Distribution$set("public","var",function(show.error = FALSE){
+Distribution$set("public","var",function(){
   return(self$expectation(trafo = function(x) x^2) - self$expectation()^2)
 }) # IN PROGRESS
 Distribution$set("public","sd",function(){

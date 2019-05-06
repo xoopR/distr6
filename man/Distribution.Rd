@@ -3,50 +3,36 @@
 \name{Distribution}
 \alias{Distribution}
 \title{Generalised Distribution Object}
-\arguments{
-\item{name}{full name of distribution.}
-
-\item{short_name}{short name to identify distribution.}
-
-\item{type}{R6 Set; the scientific type.}
-
-\item{support}{R6 Set; distribution support. See Details.}
-
-\item{distrDomain}{R6 Set; distribution domain See Details.}
-
-\item{symmetric}{logical; is distribution symmetric?}
-
-\item{pdf}{function. See Details.}
-
-\item{cdf}{function. See Details.}
-
-\item{quantile}{function. See Details.}
-
-\item{rand}{function. See Details.}
-
-\item{parameters}{S3 ParameterSet. See Details.}
-
-\item{paramValues}{list. See Details.}
-
-\item{decorators}{list of decorators to add in construction.}
-
-\item{valueSupport}{continuous, discrete, mixture. See Details.}
-
-\item{variateForm}{univariate, multivariate, matrixvariate. See Details.}
-
-\item{description}{short description of distribution.}
-}
-\value{
-\code{Distribution$new} constructs an R6 object of class Distribution.
-}
 \description{
 A generalised distribution object for defining custom probability distributions
   as well as serving as the parent class to specific, familiar distributions. Common
   mathematical and statistical methods for distributions are defined here with approximate numerical
   calculations (as opposed to analytical results).
 }
-\details{
-The primary purpose of the Distribution object is to serve as the parent class
+\section{Constructor Arguments}{
+
+\tabular{ll}{
+\code{name} \tab full name of distribution. \cr
+\code{short_name} \tab short name to identify distribution. \cr
+\code{type} \tab R6 Set; the scientific type. \cr
+\code{support} \tab R6 Set; distribution support. See Details. \cr
+\code{distrDomain} \tab R6 Set; distribution domain See Details. \cr
+\code{symmetric} \tab logical; is distribution symmetric? \cr
+\code{pdf} \tab function. See Details. \cr
+\code{cdf} \tab function. See Details. \cr
+\code{quantile} \tab function. See Details. \cr
+\code{rand} \tab function. See Details. \cr
+\code{parameters} \tab S3 ParameterSet. See Details. \cr
+\code{paramValues} \tab list. See Details. \cr
+\code{decorators} \tab list of decorators to add in construction. \cr
+\code{valueSupport} \tab continuous, discrete, mixture. See Details. \cr
+\code{variateForm} \tab univariate, multivariate, matrixvariate. See Details. \cr
+\code{description} \tab short description of distribution.
+}
+}
+
+\section{Constructor Details}{
+ The primary purpose of the Distribution object is to serve as the parent class
   to all other distributions, therefore all methods are approximate numeric calculations
   and the user may prefer to utilise decorators to improve accuracy.
 
@@ -72,8 +58,59 @@ The primary purpose of the Distribution object is to serve as the parent class
   \code{valueSupport} and \code{variateForm} if not given are automatically filled from
   \code{type} and \code{support}.
 }
+
+\section{Public Methods}{
+
+ \tabular{ll}{
+  \code{strprint()} \tab Character representation of print \cr
+  \code{print()} \tab Print method \cr
+  \code{summary(full = T)} \tab Summary method \cr
+  \code{plot()} \tab Plotting method \cr
+  \code{qqplot()} \tab QQ-Plots \cr
+  \code{name()} \tab Name accessor \cr
+  \code{short_name()} \tab Short name accessor \cr
+  \code{description()} \tab Description accessor \cr
+  \code{decorators()} \tab Decorators accessor \cr
+  \code{traits()} \tab Traits accessor \cr
+  \code{valueSupport()} \tab Value support accessor \cr
+  \code{variateForm()} \tab Variate form accessor \cr
+  \code{type()} \tab Type accessor \cr
+  \code{properties()} \tab Properties accessor \cr
+  \code{support()} \tab Support accessor \cr
+  \code{distrDomain()} \tab Distribution domain accessor \cr
+  \code{symmetry()} \tab Symmetry accessor \cr
+  \code{parameters(id,as.df = FALSE)} \tab Parameters accessor. See \code{\link{ParameterSet}}. \cr
+  \code{getParameterValue(id)} \tab Parameter value accessor. See \code{\link{ParameterSet}}. \cr
+  \code{setParameterValue(lst)} \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
+  \code{pdf(x, log = F)} \tab Evaluate density/mass at x. \cr
+  \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q. \cr
+  \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p. \cr
+  \code{rand(n)} \tab Randomly simulate n draws from distribution. \cr
+  \code{expectation(trafo)} \tab Calculate expectation of distribution. \cr
+  \code{var()} \tab Calculate variance of distribution. \cr
+  \code{sd()} \tab Calculate standard deviation of distribution. \cr
+  \code{cov()} \tab Calculate covariance of distribution. See Details. \cr
+  \code{cor()} \tab Calculate correlation of distribution. See Details. \cr
+  \code{median()} \tab Calculate median of distribution. \cr
+  \code{mode(which = 1)} \tab Calculate mode of distribution. See Details. \cr
+  \code{sup()} \tab Get supremum of distribution. \cr
+  \code{inf()} \tab Get infimum of distribution. \cr
+  \code{liesInSupport(x, all = TRUE)} \tab Does x lie in the support of distribution? \cr
+  \code{liesInType(x)} \tab Does x lie in the type of distribution? \cr
+  \code{liesInDistrDomain(x)} \tab Does x lie in the domain of distribution? \cr
+}
+}
+
+\section{Public Methods Details}{
+
+\code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
+\code{mode} returns by default the first mode of the distribution where applicable, otherwise a specified
+integer or all.
+}
+
 \seealso{
-\code{\link{SetInteval}} and \code{\link{SpecialSet}} for details on Sets and
-Intervals. See \code{\link{makeParameterSet}} for parameter details. See \code{\link{DistributionDecorator}} for
-Decorator details.
+See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
+Intervals. See \code{\link{ParameterSet}} for parameter details. See
+\code{\link{DistributionDecorator}} for Decorator details. See \code{\link[stats]{Binomial}} for
+details on the arguments to \code{pdf}/\code{cdf}/\code{quantile}/\code{rand}.
 }

@@ -1,3 +1,28 @@
+#' @name DistributionWrapper
+#' @title Abstract Wrapper for Distributions
+#' @description An R6 abstract wrapper class with methods implemented for child classes.
+#' @seealso \code{\link{TruncatedDistribution}}, \code{\link{HuberizedDistribution}}
+#' @details Cannot be implemented directly.
+#' @section Public Methods:
+#' \tabular{ll}{
+#' \code{getWrappedModels(model = NULL)} \tab Get internally wrapped model by name. Or list of all models if model = NULL. \cr
+#' \code{setParameterValue(lst)} \tab Sets the value of an internal models parameter. See Details.
+#' }
+#' @section Public Method Arguments:
+#' \tabular{ll}{
+#' \code{model} \tab Wrapped model to access. \cr
+#' \code{lst} \tab list. Names are parameter IDs, values are values to set parameters.
+#' }
+#'
+#' @section Public Methods Details:
+#' Wrapped models overload the minimum number of functions necessary. The abstract class overloads
+#' the \code{setParameterValue} method only as wrapped models alter paramater IDs. After wrapping
+#' a model, parameter IDs are altered by prefixing the ID with "model_". For example wrapping Model1 with
+#' a parameter 'param1' results in 'Model1_param1'.
+#'
+NULL
+
+#' @export
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
 DistributionWrapper$set("public","initialize",function(distlist, ...){
   if(getR6Class(self) == "DistributionWrapper")
@@ -18,16 +43,12 @@ DistributionWrapper$set("public","initialize",function(distlist, ...){
 })
 
 DistributionWrapper$set("private", ".wrappedModels", list())
-DistributionWrapper$set("public", "wrappedModels", function(model=NULL){
+DistributionWrapper$set("public", "getWrappedModels", function(model=NULL){
   if(!is.null(model))
     return(private$.wrappedModels[[model]])
   else
     return(private$.wrappedModels)
 })
-DistributionWrapper$set("public", "getInternalModel", function(model){
-  return(private$.wrappedModels[[model]])
-})
-
 DistributionWrapper$set("public","setParameterValue",function(lst){
   for(i in 1:length(lst)){
     id = names(lst)[[i]]

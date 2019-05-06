@@ -1,5 +1,15 @@
-listDistributions <- function(simplify=FALSE,traits=NULL){
-  y = sapply(ls(name=".GlobalEnv"),function(x){
+#' @title Lists Implemented R6 Distributions
+#' @description Lists R6 distributions, either all in a data.frame or filtered by chosen
+#' traits and/or properties.
+#' @param simplify logical.
+#' @param traits list of traits to filter distributions by.
+#' @param properties list of traits to filter distributions by.
+#' @examples
+#' listDistributions()
+#' listDistributions(traits = list(variateForm = "univariate"))
+#' listDistributions(properties = list(symmetry = FALSE))
+listDistributions <- function(simplify=FALSE, traits=NULL, properties = NULL){
+  y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "Distribution_generator")
         return(get(x)$classname)
@@ -30,14 +40,11 @@ listDistributions <- function(simplify=FALSE,traits=NULL){
   }
 }
 
-liesInType <- function(distribution, x){
-  if(x <= distribution$type()$sup() & x >= distribution$type()$inf())
-    return(TRUE)
-  else
-    return(FALSE)
-}
-
-
+#' @title Kurtosis Type
+#' @description Gets the type of (excess) kurtosis#' @usage skewType(skew)
+#' @param kurtosis numeric.
+#' @examples
+#' exkurtosisType(1)
 exkurtosisType <- function(kurtosis){
   if(kurtosis < 0)
     return("platykurtic")
@@ -46,6 +53,13 @@ exkurtosisType <- function(kurtosis){
   else
     return("leptokurtic")
 }
+
+#' @title Skewness Type
+#' @description Gets the type of skewness
+#' @usage skewType(skew)
+#' @param skew numeric.
+#' @examples
+#' skewType(1)
 skewType <- function(skew){
   if(skew < 0)
     return("negative skew")
