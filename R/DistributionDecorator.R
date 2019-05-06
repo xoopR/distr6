@@ -27,18 +27,21 @@ DistributionDecorator$set("public","initialize",function(distribution, pos = 1){
   }
   decorators = unique(c(decorators,get(getR6Class(self))))
 
+  distname = paste0(substitute(distribution))
+
   if(inherits(distribution,"DistributionWrapper"))
-    assign_wrappedDistribution(distribution, pos)
+    assign_wrappedDistribution(distribution, pos, decorators, distname)
   else
-    assign_distribution(distribution, pos)
+    assign_distribution(distribution, pos, decorators, distname)
 
 
   cat(paste(substitute(distribution),"is now decorated with",
             getR6Class(self),"\n"))
 })
 
-assign_wrappedDistribution <- function(distribution, pos){
-  assign(paste0(substitute(distribution)),
+assign_wrappedDistribution <- function(distribution, pos, decorators, distname){
+
+  assign(distname,
          ConcreteWrapper$new(name = distribution$name(),
                              short_name = distribution$short_name(),
                              type = distribution$type(),
@@ -56,8 +59,9 @@ assign_wrappedDistribution <- function(distribution, pos){
                              distlist = distribution$.__enclos_env__$private$.wrappedModels
          ), pos = as.environment(pos))
 }
-assign_distribution <- function(distribution, pos){
-  assign(paste0(substitute(distribution)),
+
+assign_distribution <- function(distribution, pos, decorators, distname){
+  assign(distname,
          Distribution$new(name = distribution$name(),
                           short_name = distribution$short_name(),
                           type = distribution$type(),
@@ -68,7 +72,7 @@ assign_distribution <- function(distribution, pos){
                           cdf = distribution$.__enclos_env__$private$.cdf,
                           quantile = distribution$.__enclos_env__$private$.quantile,
                           rand = distribution$.__enclos_env__$private$.rand,
-                          parameters = distribution$.__enclos_env__$private$.parameters,
+                          parameters = distribution$parameters(),
                           decorators = decorators,
                           valueSupport = distribution$valueSupport(),
                           variateForm = distribution$variateForm(),

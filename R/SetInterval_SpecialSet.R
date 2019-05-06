@@ -46,7 +46,7 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
 NULL
 #' @export
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
-Naturals$set("public", "initialize", function(dim = 1){
+Naturals$set("public", "initialize", function(dim = 1,...){
   super$initialize(dim, lower = 0, type = "[)")
 })
 
@@ -82,7 +82,7 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 NULL
 #' @export
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
-Integers$set("public", "initialize", function(dim = 1){
+Integers$set("public", "initialize", function(dim = 1,...){
   super$initialize(dim, type = "[]")
 })
 
@@ -142,7 +142,7 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 NULL
 #' @export
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
-Rationals$set("public", "initialize", function(dim = 1){
+Rationals$set("public", "initialize", function(dim = 1,...){
   super$initialize(dim, type = "()")
 })
 
@@ -202,8 +202,8 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 NULL
 #' @export
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
-Reals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, type = "()")
+Reals$set("public", "initialize", function(dim = 1,type, ...){
+  super$initialize(dim, type = "()",...)
 })
 
 #' @title Set of Positive Reals

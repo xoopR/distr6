@@ -1,62 +1,72 @@
 #-------------------------------------------------------------
 # Distribution R6Class Definition
 #-------------------------------------------------------------
+#' @title Generalised Distribution Object
+#'
+#' @description A generalised distribution object for defining custom probability distributions
+#'   as well as serving as the parent class to specific, familiar distributions. Common
+#'   mathematical and statistical methods for distributions are defined here with approximate numerical
+#'   calculations (as opposed to analytical results).
+#'
+#
+#' @return \code{Distribution$new} constructs an R6 object of class Distribution.
+#' @name Distribution
+#'
+#' @param name full name of distribution.
+#' @param short_name short name to identify distribution.
+#' @param type R6 Set; the scientific type.
+#' @param support R6 Set; distribution support. See Details.
+#' @param distrDomain R6 Set; distribution domain See Details.
+#' @param symmetric logical; is distribution symmetric?
+#' @param pdf function. See Details.
+#' @param cdf function. See Details.
+#' @param quantile function. See Details.
+#' @param rand function. See Details.
+#' @param parameters S3 ParameterSet. See Details.
+#' @param paramValues list. See Details.
+#' @param decorators list of decorators to add in construction.
+#' @param valueSupport continuous, discrete, mixture. See Details.
+#' @param variateForm univariate, multivariate, matrixvariate. See Details.
+#' @param description short description of distribution.
+#'
+#' @details The primary purpose of the Distribution object is to serve as the parent class
+#'   to all other distributions, therefore all methods are approximate numeric calculations
+#'   and the user may prefer to utilise decorators to improve accuracy.
+#'
+#'   \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
+#'   object. If none are supplied then the set of Reals is taken to be the type, support and domain
+#'   of the distribution. If only \code{type} is supplied then this is taken to also be the support
+#'   and domain.
+#'
+#'   By default, missing \code{pdf}, \code{cdf} and \code{quantile} are not automatically imputed.
+#'   Use the imputation wrappers (see below) to geenrate these with a selected method.
+#'   The \code{rand} function is automatically generated depending on which of the above are supplied.
+#'   The generation for this is performed according to the hierarchy: quantile -> rand, cdf -> rand, pdf -> rand.
+#'
+#'   \code{parameters} should be supplied as a ParameterSet. The distribution parameterisation
+#'   is taken to be whichever parameters are flagged as 'settable', any others in the ParameterSet
+#'   are automatically updated by a given function. \code{paramValues} is an optional list giving the
+#'   values to set the parameters (if not default or given in the ParameterSet.
+#'
+#'   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
+#'   Distribution with in construction. Decorators can also be added after construction. See
+#'   \code{\link{DistributionDecorator}} for more details.
+#'
+#'   \code{valueSupport} and \code{variateForm} if not given are automatically filled from
+#'   \code{type} and \code{support}.
+#'
+#' @seealso \code{\link{SetInteval}} and \code{\link{SpecialSet}} for details on Sets and
+#' Intervals. See \code{\link{makeParameterSet}} for parameter details. See \code{\link{DistributionDecorator}} for
+#' Decorator details.
+NULL
+#-------------------------------------------------------------
+
+#' @export
 Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 
 #-------------------------------------------------------------
 # Distribution Private Methods
 #-------------------------------------------------------------
-Distribution$set("private",".addParameter",
-                 function(id, name, default, settable, fittable, class,
-                          lower, upper, description, paramlist = NULL,
-                          paramSet = NULL){
-  if(!is.null(paramSet)){
-    if(is(paramSet,"ParameterSet")){
-      private$.parameters <- data.frame(private$.parameters, paramSet,
-                                        stringsAsFactors = FALSE)
-      class(private$.parameters) <- append(class(private$.parameters),"ParameterSet")
-      invisible(self)
-    } else
-      stop("paramSet must be of class 'ParameterSet'")
-  }
-  if(!is.null(paramlist)){
-    id = paramlist$id
-    name = paramlist$name
-    if(!is.null(paramlist$value))
-      value = paramlist$value
-    else
-      value = paramlist$default
-    default = paramlist$default
-    settable = paramlist$settable
-    fittable = paramlist$fittable
-    class = paramlist$class
-    lower = paramlist$lower
-    upper = paramlist$upper
-    description = paramlist$description
-  }
-
-  checkmate::assertCharacter(c(id, name, class, description),
-    .var.name = "'id', 'name', 'class' and 'description' must be
-                  characters")
-  checkmate::assertNumeric(c(default, value, lower, upper))
-  checkmate::assertLogical(c(settable, fittable))
-  checkmate::assert(class == "numeric", class == "integer",
-    .var.name = "'class' must be one of: 'numeric' or 'integer'")
-  checkmate::assert(!(id %in% private$.parameters$id), .var.name = "parameter IDs must be unique")
-  checkmate::assert(!(name %in% private$.parameters$name), .var.name = "parameter names must be unique")
-
-  private$.parameters <- rbind(private$.parameters,
-                               data.frame(id = id, name = name, value = value,
-                                    default = default, settable = settable,
-                                    fittable = fittable, class = class,
-                                    lower = lower, upper = upper,
-                                    description = description,
-                                    stringsAsFactors = FALSE))
-
-  if(!("ParameterSet" %in% class(private$.parameters)))
-    class(private$.parameters) <- append(class(private$.parameters),"ParameterSet")
-  invisible(self)
-}) # NEEDS TESTING
 Distribution$set("private",".setWorkingSupport",function(){
   suppressMessages({
     rands = self$rand(20)
@@ -120,10 +130,10 @@ Distribution$set("private",".genP2R",function(){
 # Distribution Public Methods
 #-------------------------------------------------------------
 Distribution$set("public","initialize",function(name, short_name,
-                      type = reals$new(), support, distrDomain,
+                      type = Reals$new(), support, distrDomain,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-                      parameters, paramvalues,
+                      parameters, paramValues = NULL,
                       decorators = NULL, valueSupport = NULL, variateForm = NULL,
                       description=NULL
                       ){
@@ -156,7 +166,7 @@ Distribution$set("public","initialize",function(name, short_name,
            valueSupport == "mixture",
            .var.name = "valueSupport should be one of: 'continuous', 'discrete',
            'mixture'.")
-  else if(class(support)[[1]] %in% c("reals","posReals","negReals"))
+  else if(class(support)[[1]] %in% c("Reals","PosReals","NegReals"))
     valueSupport = "continuous"
   else
     valueSupport = "discrete"
@@ -231,17 +241,13 @@ Distribution$set("public","initialize",function(name, short_name,
   }
 
   if(!missing(parameters)){
-    if(is(parameters,"ParameterSet")){
-      private$.parameters <- parameters
-    } else {
-      checkmate::assertList(parameters)
-      lapply(parameters, function(x) {private$.addParameter(paramlist = x)})
-    }
+    checkmate::assertClass(parameters,"ParameterSet")
+    private$.parameters <- parameters$clone()$update()
   }
 
-  if(!missing(paramvalues)){
-    checkmate::assertList(paramvalues)
-    self$setParameterValue(paramvalues)
+  if(!is.null(paramValues)){
+    checkmate::assertList(paramValues)
+    self$setParameterValue(paramValues)
   }
 
   if(!is.null(decorators)){
@@ -276,7 +282,9 @@ Distribution$set("public","initialize",function(name, short_name,
 }) # IN PROGRESS/NEEDS TESTING
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
-    string = paste(apply(self$parameters(),1,function(x) paste(x[1],trimws(x[3]),sep=" = ")),
+    string = paste(apply(self$parameters(as.df = T)[self$parameters(as.df = T)$settable,],1,
+                         function(x) paste(x[1],trimws(x[2]),sep=" = ")
+                         ),
                    collapse=", ")
     string = paste0(self$short_name(),"(",string,")")
   } else {
@@ -372,52 +380,15 @@ Distribution$set("public","symmetry",function(){
 }) # NEEDS TESTING
 
 # Parameter Accessors
-Distribution$set("public","parameters",function(id){
-  if(length(private$.parameters)==0)
-    return("There are no parameters in this distribution.")
-
-  if(!missing(id)){
-    id0 = id
-    if(length(dplyr::filter(private$.parameters, id == id0))==0)
-      return(private$.parameters)
-    return(dplyr::filter(private$.parameters, id == id0))
-  } else
-    return(private$.parameters)
-}) # NEEDS TESTING
+Distribution$set("public","parameters",function(id,as.df = F){
+  return(private$.parameters$parameters(id, as.df))
+}) # DONE
 Distribution$set("public","getParameterValue",function(id){
-  if(length(private$.parameters)==0)
-    return("There are no parameters in this distribution.")
-
-  val = self$parameters(id = id)[["value"]]
-  if(length(val)==0)
-    return(paste(id, "is not a parameter in this distribution."))
-  else
-    return(val[[1]])
-}) # NEEDS TESTING
+  return(private$.parameters$getParameterValue(id))
+}) # DONE
 Distribution$set("public","setParameterValue",function(lst){
-  if(length(private$.parameters)==0)
-    return("There are no parameters in this distribution.")
-  checkmate::assertList(lst)
 
-  for(i in 1:length(lst)){
-    id <- names(lst)[[i]]
-    value <- lst[[i]]
-
-    param <- self$parameters()[self$parameters()[,"id"] %in% id,]
-    if(length(param)==0)
-      stop(sprintf("%s is not in the parameter set.",id))
-
-    if(!param$settable)
-      stop(sprintf("%s is not settable.",param$name))
-
-    if(param$class=="numeric")
-      checkmate::assertNumeric(value,lower = param$lower, upper = param$upper)
-    if(param$class=="integer"){
-      value = as.integer(value)
-      checkmate::assertInteger(value,lower = param$lower, upper = param$upper)
-    }
-    private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
-  }
+  self$parameters()$setParameterValue(lst)
 
   # Update skewness and kurtosis
   x = try(self$kurtosis(excess = TRUE), silent = TRUE)
@@ -435,7 +406,7 @@ Distribution$set("public","setParameterValue",function(lst){
 
   #private$.setWorkingSupport()
   invisible(self)
-}) # NEEDS TESTING
+}) # DONE
 
 # Basic maths/stats
 Distribution$set("public","pdf",function(x, log = FALSE){
@@ -477,7 +448,7 @@ Distribution$set("public","expectation",function(trafo){
     xs[pdfs==0] = 0
     return(sum(pdfs * xs))
   } else if(testContinuous(self)){
-    warning("Results from numerical integration are approximate only, better results may be available.")
+    message("Results from numerical integration are approximate only, better results may be available.")
     return(suppressMessages(integrate(function(x) {
       pdfs = self$pdf(x)
       xs = trafo(x)
