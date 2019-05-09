@@ -8,9 +8,13 @@ latex: true
 
 r_github_packages:
   - r-lib/pkgdown
+  
+r_packages:
+  - covr
      
 after_success:
   - Rscript -e 'pkgdown::build_site()'
+  - Rscript -e 'library(covr); codecov()'
       
 deploy:
   provider: pages
