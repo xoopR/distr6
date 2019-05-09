@@ -1,5 +1,5 @@
-#' @name TruncatedDistribution
-#' @title Distribution Truncation Wrapper
+#' @name ProductDistribution
+#' @title Product Distribution
 #' @description A wrapper for truncating any probability distribution at given limits.
 #' @seealso \code{\link{HuberizedDistribution}} and \code{\link{DistributionWrapper}} for wrapper details.
 #' See \code{\link{Distribution}} for a list of public methods.
@@ -27,7 +27,7 @@
 NULL
 
 #' @export
-ProductDistribution <- R6::R6Class("TruncatedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+ProductDistribution <- R6::R6Class("ProductDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 ProductDistribution$set("public","initialize",function(distribution, lower, upper){
 
   assertDistribution(distribution)

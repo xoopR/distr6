@@ -1,4 +1,7 @@
+#' @title Exponential Distribution
+#'
 #' @include SetInterval_SpecialSet.R ParameterSet.R
+#' @export
 Exponential <- R6::R6Class("Exponential", inherit = Distribution, lock_objects = F)
 Exponential$set("public","name","Exponential")
 Exponential$set("public","short_name","Exp")

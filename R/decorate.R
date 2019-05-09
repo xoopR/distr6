@@ -1,3 +1,8 @@
+#' @title Decorate Distributions
+#'
+#' @param distribution distribution to decorate
+#' @param decorators list of decorators
+#'
 #' @export
 decorate <- function(distribution, decorators){
   if(!checkmate::testList(decorators))

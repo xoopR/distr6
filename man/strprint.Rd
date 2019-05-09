@@ -22,7 +22,3 @@ Gets the result of a print method as a character string without printing. Useful
 methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
 parse R6 objects into data-frames.
 }
-\examples{
-strprint(Binomial$new())
-
-}

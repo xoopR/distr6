@@ -8,9 +8,6 @@
 #' @param ... Additional arguments
 #' @usage strprint(x,...)
 #'
-#' @examples
-#' strprint(Binomial$new())
-#'
 #' @export
 strprint <- function(x,...){
   UseMethod("strprint", x)

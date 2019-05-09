@@ -1,4 +1,7 @@
+#' @title Binomial Distribution
+#'
 #' @include SetInterval_SpecialSet.R ParameterSet.R
+#' @export
 Binomial <- R6::R6Class("Binomial", inherit = Distribution, lock_objects = F)
 Binomial$set("public","name","Binomial")
 Binomial$set("public","short_name","Binom")
@@ -76,6 +79,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = 
 
   self$setParameterValue(list(size = size, prob = prob))
 
+  unlockBinding("properties", self)
   self$properties$support <- Set$new(0:size)
 
   self$properties$distrDomain = PosIntegers$new(zero = T)
@@ -84,6 +88,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = 
     self$properties$symmetry <- "symmetric"
   else
     self$properties$symmetry <- "asymmetric"
+  lockBinding("properties", self)
 
   super$initialize(decorators = decorators)
   invisible(self)

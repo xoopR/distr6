@@ -28,7 +28,7 @@ they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall 
 }
 
 \examples{
-mixture <- MixtureDistribution$new(Binomial$new(prob = 0.5, size = 10), Binomial$new())
+mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()))
 mixture$pdf(1)
 mixture$cdf(1)
 }

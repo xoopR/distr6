@@ -24,7 +24,7 @@
 #' }
 #'
 #' @examples
-#' mixture <- MixtureDistribution$new(Binomial$new(prob = 0.5, size = 10), Binomial$new())
+#' mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()))
 #' mixture$pdf(1)
 #' mixture$cdf(1)
 NULL
@@ -33,10 +33,8 @@ NULL
 MixtureDistribution <- R6::R6Class("MixtureDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 MixtureDistribution$set("public","initialize",function(distlist, weights, ...){
 
-  assertDistributionList(distlist)
-  distlist = lapply(distlist, function(x) return(x$clone()))
-  distnames = unlist(sapply(distlist, function(x) return(x$short_name())))
-  names(distlist) = distnames
+  distlist = makeUniqueDistributions(distlist)
+  distnames = names(distlist)
 
   if(missing(weights))
     weights = rep(1/length(distlist), length(distlist))

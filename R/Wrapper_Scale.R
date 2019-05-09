@@ -27,8 +27,8 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   assertDistribution(dist)
   dist = dist$clone()
 
-  name = dist$name()
-  short_name = dist$short_name()
+  name = dist$name
+  short_name = dist$short_name
 
   distlist = list(dist)
   names(distlist) = short_name
@@ -51,7 +51,7 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   name = paste("Scaled",name)
   short_name = paste0("Scaled",short_name)
 
-  type = reals$new()
+  type = Reals$new()
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
                    short_name = short_name, type = type, ...)

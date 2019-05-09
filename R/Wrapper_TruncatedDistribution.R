@@ -56,13 +56,20 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower, up
     formals(pdf)$self <- self
   }
 
-  name = paste("Truncated",distribution$name())
-  short_name = paste0("Truncated",distribution$short_name())
+  name = paste("Truncated",distribution$name)
+  short_name = paste0("Truncated",distribution$short_name)
 
   distlist = list(distribution)
-  names(distlist) = distribution$short_name()
+  names(distlist) = distribution$short_name
 
   super$initialize(distlist = distlist, pdf = pdf, name = name,
                    short_name = short_name, support = Interval$new(lower, upper),
                    type = distribution$type())
 }) # IN PROGRESS
+
+truncate <- function(x,lower,upper,...){
+  UseMethod("truncate", x)
+}
+truncate.Distribution <- function(x, lower, upper,...){
+  TruncatedDistribution$new(x, lower, upper)
+}

@@ -179,7 +179,7 @@ Distribution$set("public","initialize",function(name, short_name,
                       description=NULL, additionalMethods = NULL
                       ){
 
-  if(getR6Class(self) == "Distribution"){
+  if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
     # Validation checks
     if(missing(short_name)) short_name = name
@@ -427,7 +427,7 @@ Distribution$set("public","distrDomain",function(){
   return(self$properties[["distrDomain"]])
 })
 Distribution$set("public","symmetry",function(){
-  return(self$properties[["symmetric"]])
+  return(self$properties[["symmetry"]])
 })
 
 # Parameter Accessors

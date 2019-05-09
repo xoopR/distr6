@@ -29,10 +29,9 @@
 #' \code{getUpperLimit()} \tab Gets upper limit of huberization. \cr
 #' }
 #'
-#'
 #' @examples
 #' hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
-#' hubBin$getParameterValue("hubBin_prob")
+#' hubBin$getParameterValue("Binom_prob")
 #' hubBin$getLowerLimit()
 #' hubBin$pdf(2)
 NULL
@@ -62,14 +61,22 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower, up
       return(self$wrappedModels()[[1]]$pdf(x))
   }
 
-  name = paste("Huberized",distribution$name())
-  short_name = paste0("Huberized",distribution$short_name())
+  name = paste("Huberized",distribution$name)
+  short_name = paste0("Huberized",distribution$short_name)
 
   distlist = list(distribution)
-  names(distlist) = distribution$short_name()
+  names(distlist) = distribution$short_name
 
   private$.cutoffInterval = c(lower, upper)
 
   super$initialize(distlist = distlist, pdf = pdf, name = name,
-                   short_name = short_name, type = reals$new())
+                   short_name = short_name, type = distribution$type(),
+                   support = distribution$support(), distrDomain = distribution$distrDomain())
 }) # IN PROGRESS
+
+huberize <- function(x,lower,upper,...){
+  UseMethod("huberize", x)
+}
+huberize.Distribution <- function(x, lower, upper,...){
+  HuberizedDistribution$new(x, lower, upper)
+}

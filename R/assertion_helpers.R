@@ -121,10 +121,10 @@ makeChecks <- function(assertionName, cond, errormsg, args = alist(x=),
 }
 
 #' @title assert/check/test/isDistribution
-#' @name assertDistribution
+#' @name testDistribution
 #' @aliases
 #'   checkDistribution
-#'   testDistribution
+#'   assertDistribution
 #'   isDistribution
 #' @description Validation checks to test if a given object is an R6 Distribution
 #' @param x object to test
@@ -138,17 +138,19 @@ makeChecks <- function(assertionName, cond, errormsg, args = alist(x=),
 #' isDistribution(x)
 #'
 #' @examples
-#' isDistribution(5) # FALSE
-#' isDistribution(Binomial$new()) # TRUE
+#' testDistribution(5) # FALSE
+#' testDistribution(Binomial$new()) # TRUE
+#'
+#' @export
 makeChecks(assertionName = "Distribution",
            cond = inherits(x,"Distribution"),
            errormsg = paste(x,"is not an R6 Distribution object"))
 
 #' @title assert/check/test/isDistributionList
-#' @name assertDistributionList
+#' @name testDistributionList
 #' @aliases
 #'   checkDistributionList
-#'   testDistributionList
+#'   assertDistributionList
 #'   isDistributionList
 #' @description Validation checks to test if a given object is a list of R6 Distributions
 #' @param x object to test
@@ -162,17 +164,19 @@ makeChecks(assertionName = "Distribution",
 #' isDistributionList(x)
 #'
 #' @examples
-#' isDistributionList(list(Binomial$new(),5)) # FALSE
-#' isDistributionList(list(Binomial$new(),Exponential$new())) # TRUE
+#' testDistributionList(list(Binomial$new(),5)) # FALSE
+#' testDistributionList(list(Binomial$new(),Exponential$new())) # TRUE
+#'
+#' @export
 makeChecks(assertionName =  "DistributionList",
            cond = all(unlist(lapply(x,inherits,"Distribution"))),
            errormsg = "One or more items in the list are not Distributions")
 
 #' @title assert/check/test/isDistributionFeature
-#' @name assertDistributionFeature
+#' @name testDistributionFeature
 #' @aliases
 #'   checkDistributionFeature
-#'   testDistributionFeature
+#'   assertDistributionFeature
 #'   isDistributionFeature
 #' @description Validation checks to test for a given feature in a Distribution
 #' @param x Distribution
@@ -190,16 +194,18 @@ makeChecks(assertionName =  "DistributionList",
 #' @examples
 #' testDistributionFeature(Binomial$new(), "variateForm", "multivariate") # TRUE
 #' testDistributionFeature(Exponential$new(), "valueSupport", "discrete") # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "DistributionFeature",
            cond = x[[accessor]]() == feature,
-           errormsg = paste(x$short_name(),"is not",feature),
+           errormsg = paste(x$short_name,"is not",feature),
            args = alist(x=, accessor=, feature=))
 
 #' @title assert/check/test/VariateForm
-#' @name assertVariateForm
+#' @name testVariateForm
 #' @aliases
 #'   checkVariateForm
-#'   testVariateForm
+#'   assertVariateForm
 #'   isVariateForm
 #' @description Validation checks to test the variate form of a Distribution
 #' @param x Distribution
@@ -214,18 +220,20 @@ makeChecks(assertionName =  "DistributionFeature",
 #' isVariateForm(x, type)
 #'
 #' @examples
-#' assertVariateForm(Binomial$new(), "univariate") # silent
+#' testVariateForm(Binomial$new(), "univariate") # silent
 #' testVariateForm(Exponential$new(), "multivariate") # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "VariateForm",
            cond = x[["variateForm"]]() == type,
-           errormsg = paste(x$short_name(),"is not",type),
+           errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=))
 
 #' @title assert/check/test/Univariate
-#' @name assertUnivariate
+#' @name testUnivariate
 #' @aliases
 #'   checkUnivariate
-#'   testUnivariate
+#'   assertUnivariate
 #'   isUnivariate
 #' @description Validation checks to test if Distribution is univariate
 #' @param x Distribution
@@ -239,16 +247,18 @@ makeChecks(assertionName =  "VariateForm",
 #' isUnivariate(x)
 #'
 #' @examples
-#' isUnivariate(Binomial$new()) # TRUE
+#' testUnivariate(Binomial$new()) # TRUE
+#'
+#' @export
 makeChecks(assertionName =  "Univariate",
            cond = x[["variateForm"]]() == "univariate",
-           errormsg = paste(x$short_name(),"is not univariate"))
+           errormsg = paste(x$short_name,"is not univariate"))
 
 #' @title assert/check/test/Multivariate
-#' @name assertMultivariate
+#' @name testMultivariate
 #' @aliases
 #'   checkMultivariate
-#'   testMultivariate
+#'   assertMultivariate
 #'   isMultivariate
 #' @description Validation checks to test if Distribution is multivariate.
 #' @param x Distribution
@@ -262,16 +272,18 @@ makeChecks(assertionName =  "Univariate",
 #' isMultivariate(x)
 #'
 #' @examples
-#' isMultivariate(Binomial$new()) # FALSE
+#' testMultivariate(Binomial$new()) # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "Multivariate",
            cond = x[["variateForm"]]() == "multivariate",
-           errormsg = paste(x$short_name(),"is not multivariate"))
+           errormsg = paste(x$short_name,"is not multivariate"))
 
 #' @title assert/check/test/Matrixvariate
-#' @name assertMatrixvariate
+#' @name testMatrixvariate
 #' @aliases
 #'   checkMatrixvariate
-#'   testMatrixvariate
+#'   assertMatrixvariate
 #'   isMatrixvariate
 #' @description Validation checks to test if Distribution is matrixvariate.
 #' @param x Distribution
@@ -285,16 +297,18 @@ makeChecks(assertionName =  "Multivariate",
 #' isMatrixvariate(x)
 #'
 #' @examples
-#' isMatrixvariate(Binomial$new()) # FALSE
+#' testMatrixvariate(Binomial$new()) # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "Matrixvariate",
            cond = x[["variateForm"]]() == "matrixvariate",
-           errormsg = paste(x$short_name(),"is not matrixvariate"))
+           errormsg = paste(x$short_name,"is not matrixvariate"))
 
 #' @title assert/check/test/ValueSupport
-#' @name assertValueSupport
+#' @name testValueSupport
 #' @aliases
 #'   checkValueSupport
-#'   testValueSupport
+#'   assertValueSupport
 #'   isValueSupport
 #' @description Validation checks to test the value support of a Distribution
 #' @param x Distribution
@@ -309,18 +323,20 @@ makeChecks(assertionName =  "Matrixvariate",
 #' isValueSupport(x, type)
 #'
 #' @examples
-#' assertValueSupport(Binomial$new(), "discrete") # silent
+#' testValueSupport(Binomial$new(), "discrete") # silent
 #' testValueSupport(Exponential$new(), "discrete") # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "ValueSupport",
            cond = x[["valueSupport"]]() == type,
-           errormsg = paste(x$short_name(),"is not",type),
+           errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=))
 
 #' @title assert/check/test/Continuous
-#' @name assertContinuous
+#' @name testContinuous
 #' @aliases
 #'   checkContinuous
-#'   testContinuous
+#'   assertContinuous
 #'   isContinuous
 #' @description Validation checks to test if Distribution is continuous
 #' @param x Distribution
@@ -334,16 +350,18 @@ makeChecks(assertionName =  "ValueSupport",
 #' isContinuous(x)
 #'
 #' @examples
-#' checkContinuous(Binomial$new()) # FALSE
+#' testContinuous(Binomial$new()) # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "Continuous",
            cond = x[["valueSupport"]]() == "continuous",
-           errormsg = paste(x$short_name(),"is not continuous"))
+           errormsg = paste(x$short_name,"is not continuous"))
 
 #' @title assert/check/test/Discrete
-#' @name assertDiscrete
+#' @name testDiscrete
 #' @aliases
 #'   checkDiscrete
-#'   testDiscrete
+#'   assertDiscrete
 #'   isDiscrete
 #' @description Validation checks to test if Distribution is discrete
 #' @param x Distribution
@@ -357,16 +375,18 @@ makeChecks(assertionName =  "Continuous",
 #' isDiscrete(x)
 #'
 #' @examples
-#' isDiscrete(Binomial$new()) # FALSE
+#' testDiscrete(Binomial$new()) # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "Discrete",
            cond = x[["valueSupport"]]() == "discrete",
-           errormsg = paste(x$short_name(),"is not discrete"))
+           errormsg = paste(x$short_name,"is not discrete"))
 
 #' @title assert/check/test/Mixture
-#' @name assertMixture
+#' @name testMixture
 #' @aliases
 #'   checkMixture
-#'   testMixture
+#'   assertMixture
 #'   isMixture
 #' @description Validation checks to test if Distribution is mixture
 #' @param x Distribution
@@ -380,16 +400,18 @@ makeChecks(assertionName =  "Discrete",
 #' isMixture(x)
 #'
 #' @examples
-#' isMixture(Binomial$new()) # FALSE
+#' testMixture(Binomial$new()) # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "Mixture",
            cond = x[["valueSupport"]]() == "mixture",
-           errormsg = paste(x$short_name(),"is not mixture"))
+           errormsg = paste(x$short_name,"is not mixture"))
 
 #' @title assert/check/test/Symmetric
-#' @name assertSymmetric
+#' @name testSymmetric
 #' @aliases
 #'   checkSymmetric
-#'   testSymmetric
+#'   assertSymmetric
 #'   isSymmetric
 #' @description Validation checks to test if Distribution is symmetric
 #' @param x Distribution
@@ -403,16 +425,18 @@ makeChecks(assertionName =  "Mixture",
 #' isSymmetric(x)
 #'
 #' @examples
-#' isSymmetric(Binomial$new()) # FALSE
+#' testSymmetric(Binomial$new()) # FALSE
+#'
+#' @export
 makeChecks(assertionName =  "Symmetric",
-           cond = x[["symmetry"]](),
-           errormsg = paste(x$short_name(),"is not symmetric"))
+           cond = x[["symmetry"]]()=="symmetric",
+           errormsg = paste(x$short_name,"is not symmetric"))
 
 #' @title assert/check/test/Skewness
-#' @name assertSkewness
+#' @name testSkewness
 #' @aliases
 #'   checkSkewness
-#'   testSkewness
+#'   assertSkewness
 #'   isSkewness
 #' @description Validation checks to test the skewnewss of a Distribution
 #' @param x Distribution
@@ -429,16 +453,18 @@ makeChecks(assertionName =  "Symmetric",
 #' @examples
 #' testSkewness(Binomial$new(), "Negative Skew")
 #' testSkewness(Binomial$new(), "Positive Skew")
+#'
+#' @export
 makeChecks(assertionName =  "Skewness",
            cond = x[["skewnessType"]]() == type,
-           errormsg = paste(x$short_name(),"is not",type),
+           errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=))
 
 #' @title assert/check/test/NegativeSkew
-#' @name assertNegativeSkew
+#' @name testNegativeSkew
 #' @aliases
 #'   checkNegativeSkew
-#'   testNegativeSkew
+#'   assertNegativeSkew
 #'   isNegativeSkew
 #' @description Validation checks to test if Distribution is negative skew.
 #' @param x Distribution
@@ -452,16 +478,18 @@ makeChecks(assertionName =  "Skewness",
 #' isNegativeSkew(x)
 #'
 #' @examples
-#' isNegativeSkew(Binomial$new())
+#' testNegativeSkew(Binomial$new())
+#'
+#' @export
 makeChecks(assertionName =  "NegativeSkew",
            cond = x[["skewnessType"]]() == "Negative Skew",
-           errormsg = paste(x$short_name(),"is not negative skew"))
+           errormsg = paste(x$short_name,"is not negative skew"))
 
 #' @title assert/check/test/PositiveSkew
-#' @name assertPositiveSkew
+#' @name testPositiveSkew
 #' @aliases
 #'   checkPositiveSkew
-#'   testPositiveSkew
+#'   assertPositiveSkew
 #'   isPositiveSkew
 #' @description Validation checks to test if Distribution is positive skew.
 #' @param x Distribution
@@ -475,16 +503,18 @@ makeChecks(assertionName =  "NegativeSkew",
 #' isPositiveSkew(x)
 #'
 #' @examples
-#' isPositiveSkew(Binomial$new())
+#' testPositiveSkew(Binomial$new())
+#'
+#' @export
 makeChecks(assertionName =  "PositiveSkew",
            cond = x[["skewnessType"]]() == "Positive Skew",
-           errormsg = paste(x$short_name(),"is not positive skew"))
+           errormsg = paste(x$short_name,"is not positive skew"))
 
 #' @title assert/check/test/NoSkew
-#' @name assertNoSkew
+#' @name testNoSkew
 #' @aliases
 #'   checkNoSkew
-#'   testNoSkew
+#'   assertNoSkew
 #'   isNoSkew
 #' @description Validation checks to test if Distribution is no skew.
 #' @param x Distribution
@@ -498,16 +528,18 @@ makeChecks(assertionName =  "PositiveSkew",
 #' isNoSkew(x)
 #'
 #' @examples
-#' isNoSkew(Binomial$new())
+#' testNoSkew(Binomial$new())
+#'
+#' @export
 makeChecks(assertionName =  "NoSkew",
            cond = x[["skewnessType"]]() == "No Skew",
-           errormsg = paste(x$short_name(),"is not no skew"))
+           errormsg = paste(x$short_name,"is not no skew"))
 
 #' @title assert/check/test/Kurtosis
-#' @name assertKurtosis
+#' @name testKurtosis
 #' @aliases
 #'   checkKurtosis
-#'   testKurtosis
+#'   assertKurtosis
 #'   isKurtosis
 #' @description Validation checks to test the kurtosis of a Distribution
 #' @param x Distribution
@@ -524,16 +556,18 @@ makeChecks(assertionName =  "NoSkew",
 #' @examples
 #' testKurtosis(Binomial$new(), "leptokurtic")
 #' testKurtosis(Binomial$new(), "platykurtic")
+#'
+#' @export
 makeChecks(assertionName =  "Kurtosis",
            cond = x[["kurtosisType"]]() == type,
-           errormsg = paste(x$short_name(),"is not",type),
+           errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=))
 
 #' @title assert/check/test/Platykurtic
-#' @name assertPlatykurtic
+#' @name testPlatykurtic
 #' @aliases
 #'   checkPlatykurtic
-#'   testPlatykurtic
+#'   assertPlatykurtic
 #'   isPlatykurtic
 #' @description Validation checks to test if Distribution is platykurtic.
 #' @param x Distribution
@@ -547,16 +581,18 @@ makeChecks(assertionName =  "Kurtosis",
 #' isPlatykurtic(x)
 #'
 #' @examples
-#' isPlatykurtic(Binomial$new())
+#' testPlatykurtic(Binomial$new())
+#'
+#' @export
 makeChecks(assertionName =  "Platykurtic",
            cond = x[["kurtosisType"]]() == "platykurtic",
-           errormsg = paste(x$short_name(),"is not platykurtic"))
+           errormsg = paste(x$short_name,"is not platykurtic"))
 
 #' @title assert/check/test/Mesokurtic
-#' @name assertMesokurtic
+#' @name testMesokurtic
 #' @aliases
 #'   checkMesokurtic
-#'   testMesokurtic
+#'   assertMesokurtic
 #'   isMesokurtic
 #' @description Validation checks to test if Distribution is mesokurtic.
 #' @param x Distribution
@@ -570,16 +606,18 @@ makeChecks(assertionName =  "Platykurtic",
 #' isMesokurtic(x)
 #'
 #' @examples
-#' isMesokurtic(Binomial$new())
+#' testMesokurtic(Binomial$new())
+#'
+#' @export
 makeChecks(assertionName =  "Mesokurtic",
            cond = x[["kurtosisType"]]() == "mesokurtic",
-           errormsg = paste(x$short_name(),"is not mesokurtic"))
+           errormsg = paste(x$short_name,"is not mesokurtic"))
 
 #' @title assert/check/test/Leptokurtic
-#' @name assertLeptokurtic
+#' @name testLeptokurtic
 #' @aliases
 #'   checkLeptokurtic
-#'   testLeptokurtic
+#'   assertLeptokurtic
 #'   isLeptokurtic
 #' @description Validation checks to test if Distribution is leptokurtic.
 #' @param x Distribution
@@ -593,7 +631,9 @@ makeChecks(assertionName =  "Mesokurtic",
 #' isLeptokurtic(x)
 #'
 #' @examples
-#' isLeptokurtic(Binomial$new())
+#' testLeptokurtic(Binomial$new())
+#'
+#' @export
 makeChecks(assertionName =  "Leptokurtic",
            cond = x[["kurtosisType"]]() == "leptokurtic",
-           errormsg = paste(x$short_name(),"is not leptokurtic"))
+           errormsg = paste(x$short_name,"is not leptokurtic"))

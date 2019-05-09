@@ -12,7 +12,7 @@ Cannot be implemented directly.
 \section{Public Methods}{
 
 \tabular{ll}{
-\code{getWrappedModels(model = NULL)} \tab Get internally wrapped model by name. Or list of all models if model = NULL. \cr
+\code{wrappedModels(model = NULL)} \tab Get internally wrapped model by name. Or list of all models if model = NULL. \cr
 \code{setParameterValue(lst)} \tab Sets the value of an internal models parameter. See Details.
 }
 }

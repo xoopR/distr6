@@ -4,14 +4,12 @@
 \alias{listDistributions}
 \title{Lists Implemented R6 Distributions}
 \usage{
-listDistributions(simplify = FALSE, traits = NULL, properties = NULL)
+listDistributions(simplify = FALSE, traits = NULL)
 }
 \arguments{
 \item{simplify}{logical.}
 
 \item{traits}{list of traits to filter distributions by.}
-
-\item{properties}{list of traits to filter distributions by.}
 }
 \description{
 Lists R6 distributions, either all in a data.frame or filtered by chosen
@@ -19,6 +17,6 @@ traits and/or properties.
 }
 \examples{
 listDistributions()
-listDistributions(traits = list(variateForm = "univariate"))
-listDistributions(properties = list(symmetry = FALSE))
+listDistributions(traits = list(VariateForm = "univariate"))
+listDistributions(traits = list(ValueSupport = "discrete"))
 }

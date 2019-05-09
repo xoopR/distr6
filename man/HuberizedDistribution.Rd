@@ -39,7 +39,7 @@ If lower or upper are missing they are taken to be \code{self$inf()} and \code{s
 
 \examples{
 hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
-hubBin$getParameterValue("hubBin_prob")
+hubBin$getParameterValue("Binom_prob")
 hubBin$getLowerLimit()
 hubBin$pdf(2)
 }
