@@ -13,7 +13,7 @@
 #' @seealso The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 NULL
 
-
+#' @include SetInterval.R
 #' @export
 Set <- R6::R6Class("Set", inherit = SetInterval)
 Set$set("public","initialize",function(...){

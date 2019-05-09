@@ -53,6 +53,9 @@ ExoticStatistics$set("public", "generalisedIntegral", function() {
 ExoticStatistics$set("public", "survival", function(x, log.p=FALSE) {
   if(!log.p){
     return(1 - self$cdf(x))
+  } else {
+    message("Results from numerical integration may not be exact.")
+    integrate()
   }
 }) # IN PROGRESS
 ExoticStatistics$set("public", "hazard", function(x, log=FALSE) {

@@ -1,3 +1,6 @@
+
+
+
 #' @title Core Statistics Methods for Distributions
 #'
 #' @description Added functionality to distribution objects for statistical
@@ -56,7 +59,7 @@ CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 #' @section Usage: $mgf(t)
 #' @return \code{mgf} gives the moment generating function evaluated at t
 CoreStatistics$set("public", "mgf", function(t) {
-  return(self$expectation(trafo = function(x) {return(exp(x*t))}))
+  return(self$genExp(trafo = function(x) {return(exp(x*t))}))
 })
 
 #' @rdname CoreStatistics
@@ -65,7 +68,7 @@ CoreStatistics$set("public", "mgf", function(t) {
 #' @return \code{cf} gives the characteristic function evaluated at t
 CoreStatistics$set("public", "cf", function(t) {
   if(testDiscrete(self)){
-    return(self$expectation(trafo = function(x) {return(exp(x*t*(1+0i)))}))
+    return(self$genExp(trafo = function(x) {return(exp(x*t*(1+0i)))}))
   }
 })
 
@@ -75,7 +78,7 @@ CoreStatistics$set("public", "cf", function(t) {
 #' @return \code{pgf} gives the probability generating function evaluated at t
 CoreStatistics$set("public", "pgf", function(z) {
   if(testDiscrete(self)){
-    x = self$expectation(trafo = function(x) {return(z^x)})
+    x = self$genExp(trafo = function(x) {return(z^x)})
     return(x)
   }
 })
@@ -121,14 +124,6 @@ CoreStatistics$set("public", "skewness", function() {
 })
 
 #' @rdname CoreStatistics
-#' @name skewnessType
-#' @section Usage: $skewnessType()
-#' @return \code{skewnessType} is an accessor for the type of Skewness
-CoreStatistics$set("public", "skewnessType", function() {
-  return(self$.__enclos_env__$private$.properties$skewness)
-})
-
-#' @rdname CoreStatistics
 #' @name kurtosis
 #' @section Usage: $kurtosis(excess = TRUE)
 #' @return \code{kurtosis} gives the 4th standardised moment of a distribution.
@@ -141,13 +136,6 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
     return(kurtosis)
 })
 
-#' @rdname CoreStatistics
-#' @name kurtosisType
-#' @section Usage: $kurtosisType()
-#' @return \code{kurtosisType} is an accessor for the type of Kurtosis
-CoreStatistics$set("public", "kurtosisType", function() {
-  return(self$.__enclos_env__$private$.properties$kurtosis)
-})
 
 #' @rdname CoreStatistics
 #' @name kthmoment
@@ -163,7 +151,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
         return(0)
     }
 
-    centralMoment = self$expectation(trafo = function(x) return((x - self$expectation())^k))
+    centralMoment = self$genExp(trafo = function(x) return((x - self$genExp())^k))
 
     if(type == "central")
       return(centralMoment)
@@ -173,10 +161,10 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 })
 
 #' @rdname CoreStatistics
-#' @name expectation
-#' @section Usage: $expectation(trafo)
-#' @return \code{expectation} gives the expectation (default)
-CoreStatistics$set("public","expectation",function(trafo){
+#' @name genExp
+#' @section Usage: $genExp(trafo)
+#' @return \code{genExp} gives the expectation (default)
+CoreStatistics$set("public","genExp",function(trafo){
   if(missing(trafo)){
     trafo = function(x) return(x)
   }
@@ -205,7 +193,7 @@ CoreStatistics$set("public","expectation",function(trafo){
 #' @section Usage: $var()
 #' @return \code{var} gives the variance
 CoreStatistics$set("public","var",function(){
-  return(self$expectation(trafo = function(x) x^2) - self$expectation()^2)
+  return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
 }) # IN PROGRESS
 
 #' @rdname CoreStatistics

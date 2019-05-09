@@ -13,7 +13,7 @@
 #'   \code{\link{ExtendedReals}}, \code{\link{Complex}}.
 NULL
 
-
+#' @include SetInterval_Set.R
 #' @export
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Set)
 SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,

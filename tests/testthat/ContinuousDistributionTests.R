@@ -5,7 +5,7 @@ dexpo = function(x, log,...){
   m2 = exp(-1 * self$getParameterValue("rate") * x)
   return(m1 * m2)
 }
-cexpo = function(x, lower.tail = T, log.p = F,...){
+cexpo = function(x, ...){
   m1 = exp(-1 * self$getParameterValue("rate") * x)
   return(1 - m1)
 }
@@ -23,27 +23,25 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                   symmetric=TRUE, type = PosReals$new(zero=T),
                                   distrDomain=PosReals$new(),
                                   pdf = dexpo,
-                                  #cdf = cexpo,
-                                  parameters = ps, decorators = list(CoreStatistics)
+                                  cdf = cexpo,
+                                  decorators = list(CoreStatistics),
+                                  parameters = ps
 )
 
 test_that("check all accessors are working", {
-  expect_equal(continuousTester$decorators(), NULL)
+  expect_equal(continuousTester$decorators, NULL)
   expect_equal(continuousTester$valueSupport(), "continuous")
   expect_equal(continuousTester$variateForm(), "univariate")
-  expect_true(continuousTester$symmetry())
+  expect_equal(continuousTester$symmetry(), "symmetric")
   expect_is(continuousTester$getParameterValue("size"), "character")
 })
 
-test_that("check basic maths and stats", {
+test_that("check core statistics", {
   expect_silent(continuousTester$setParameterValue(list(rate = 6)))
+  expect_message(CoreStatistics$new(continuousTester))
   expect_equal(continuousTester$expectation(), 1/6)
   expect_equal(continuousTester$var(), 1/36)
   expect_equal(continuousTester$sd(), 1/6)
-})
-
-test_that("check core statistics", {
-  expect_message(CoreStatistics$new(continuousTester))
   expect_equal(continuousTester$kthmoment(2), continuousTester$var())
   expect_equal(continuousTester$kthmoment(3, type = "standard"), continuousTester$skewness())
   expect_equal(continuousTester$kthmoment(4, type = "standard"), continuousTester$kurtosis(FALSE))

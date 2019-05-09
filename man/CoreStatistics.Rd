@@ -8,10 +8,13 @@
 \alias{iqr}
 \alias{entropy}
 \alias{skewness}
-\alias{skewnessType}
 \alias{kurtosis}
-\alias{kurtosisType}
 \alias{kthmoment}
+\alias{genExp}
+\alias{var}
+\alias{cov}
+\alias{cor}
+\alias{mode}
 \title{Core Statistics Methods for Distributions}
 \arguments{
 \item{distribution}{distribution object.}
@@ -42,14 +45,20 @@
 
 \code{skewness} gives the 3rd standardised moment of a distribution.
 
-\code{skewnessType} is an accessor for the type of Skewness
-
 \code{kurtosis} gives the 4th standardised moment of a distribution.
   Excess (kurtosis - 3) is default.
 
-\code{kurtosisType} is an accessor for the type of Kurtosis
-
 \code{kthmoment} gives the kth central (default) or standardized moment
+
+\code{genExp} gives the expectation (default)
+
+\code{var} gives the variance
+
+\code{cov} gives the covariance
+
+\code{cor} gives the correlation
+
+\code{mode} gives the mode
 }
 \description{
 Added functionality to distribution objects for statistical
@@ -87,13 +96,19 @@ Decorator objects add functionality to the given Distribution object
 
  $skewness()
 
- $skewnessType()
-
  $kurtosis(excess = TRUE)
 
- $kurtosisType()
-
  $kthmoment(k, type = "central")
+
+ $genExp(trafo)
+
+ $var()
+
+ $cov()
+
+ $cor()
+
+ $mode()
 }
 
 \examples{
