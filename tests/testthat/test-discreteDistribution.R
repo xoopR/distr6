@@ -6,43 +6,32 @@ dbin = function(x, log,...){
  m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
  return(m1 * m2 * m3)
 }
+
+ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0.8),
+                      lower = list(0, 1, 0), upper = list(1, Inf, 1),
+                      class = list("numeric","integer","numeric"),
+                      settable = list(TRUE, TRUE, FALSE), fittable = list(TRUE, FALSE, FALSE),
+                      updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
+                      description = list("Probability of Success", "Number of trials",
+                                         "Probability of failure"))
 discreteTester = Distribution$new("Discrete Test","TestDistr",support=Interval$new(0,100),
-                          symmetric=T, type = posNaturals$new(),
-                          distrDomain=posNaturals$new(),
+                          symmetric=TRUE, type = PosNaturals$new(),
+                          distrDomain=PosNaturals$new(),
                           pdf = dbin,
-                          parameters = list(list(id = "prob",
-                                                 name = "Probability of Success",
-                                                 default = 0.5,
-                                                 value = 0.2,
-                                                 settable = TRUE,
-                                                 fittable = TRUE,
-                                                 class = "numeric",
-                                                 lower = 0,
-                                                 upper = 1,
-                                                 description = "None"),
-                                            list(id = "size",
-                                                 name = "Number of trials",
-                                                 default = 10,
-                                                 settable = TRUE,
-                                                 fittable = TRUE,
-                                                 class = "integer",
-                                                 lower = 0,
-                                                 upper = Inf,
-                                                 description = "None")),
-                          decorators = list(CoreStatistics),
-                          paramvalues = list(size = 100)
+                          parameters = ps,
+                          decorators = list(CoreStatistics)
                           )
 
 
 test_that("check all accessors are working", {
   expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100.0)")
-  expect_equal(discreteTester$name(), "Discrete Test")
-  expect_equal(discreteTester$short_name(), "TestDistr")
-  expect_equal(discreteTester$description(), NULL)
-  expect_equal(discreteTester$decorators(), "CoreStatistics")
+  expect_equal(discreteTester$name, "Discrete Test")
+  expect_equal(discreteTester$short_name, "TestDistr")
+  expect_equal(discreteTester$description, NULL)
+  expect_equal(discreteTester$decorators, "CoreStatistics")
   expect_equal(discreteTester$valueSupport(), "discrete")
   expect_equal(discreteTester$variateForm(), "univariate")
-  expect_true(discreteTester$symmetry())
+  expect_equal(discreteTester$symmetry(),"symmetric")
   expect_equal(discreteTester$getParameterValue("size"), 100)
 })
 
@@ -54,7 +43,7 @@ test_that("check parameter getting/setting", {
 
 test_that("check basic maths functions as expected", {
   expect_equal(discreteTester$pdf(1), dbinom(1,2,0.9))
-  expect_equal(discreteTester$expectation(), 2*0.9)
+  expect_equal(discreteTester$genExp(), 2*0.9)
   expect_equal(discreteTester$var(), 2*0.9*0.1)
 })
 

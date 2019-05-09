@@ -234,7 +234,7 @@ Distribution$set("public","initialize",function(name, short_name,
     self$properties <- c(self$properties, support = support)
     self$properties <- c(self$properties, distrDomain = distrDomain)
     symm = ifelse(symmetric,"symmetric","asymmetric")
-    self$properties <- c(self$properties, symmetric = symm)
+    self$properties <- c(self$properties, symmetry = symm)
 
 
     if(!is.null(pdf)){
@@ -468,12 +468,17 @@ Distribution$set("public","pdf",function(x, log = FALSE){
 
   y[!self$liesInSupport(x, F)] = 0
 
-  if(log)
-    y[self$liesInSupport(x, F)] = log(private$.pdf(x[self$liesInSupport(x, F)], self = self))
-  else
-    y[self$liesInSupport(x, F)] = private$.pdf(x[self$liesInSupport(x, F)], self = self)
+  if(all(y == 0))
+    return(y)
+  else{
 
-  return(y)
+    if(log)
+      y[self$liesInSupport(x, F)] = log(private$.pdf(x[self$liesInSupport(x, F)], self = self))
+    else
+      y[self$liesInSupport(x, F)] = private$.pdf(x[self$liesInSupport(x, F)], self = self)
+
+    return(y)
+  }
 }) # NEEDS TESTING
 Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE){
   if(self$liesInSupport(q)){
