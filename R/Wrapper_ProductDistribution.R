@@ -27,8 +27,8 @@
 NULL
 
 #' @export
-TruncatedDistribution <- R6::R6Class("TruncatedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
-TruncatedDistribution$set("public","initialize",function(distribution, lower, upper){
+ProductDistribution <- R6::R6Class("TruncatedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+ProductDistribution$set("public","initialize",function(distribution, lower, upper){
 
   assertDistribution(distribution)
 

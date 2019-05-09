@@ -1,27 +1,31 @@
 library(testthat)
 
 dexpo = function(x, log,...){
-  m1 = self$getParameterValue("lambda")
-  m2 = exp(-1 * self$getParameterValue("lambda") * x)
+  m1 = self$getParameterValue("rate")
+  m2 = exp(-1 * self$getParameterValue("rate") * x)
   return(m1 * m2)
 }
 cexpo = function(x, lower.tail = T, log.p = F,...){
-  m1 = exp(-1 * self$getParameterValue("lambda") * x)
+  m1 = exp(-1 * self$getParameterValue("rate") * x)
   return(1 - m1)
 }
-continuousTester = Distribution$new("Continuous Test","ContTest",support=posReals$new(),
-                                    symmetric=TRUE, type = posReals$new(zero=T),
-                                    distrDomain=posReals$new(),
+
+ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
+                      lower = list(0, 0, 0), upper = list(Inf, Inf, Inf),
+                      class = list("numeric","numeric","numeric"),
+                      settable = list(TRUE, FALSE, FALSE),
+                      fittable = list(TRUE, FALSE, FALSE),
+                      updateFunc = list(NULL, "1/self$getParameterValue('rate')",
+                                        "exp(self$getParameterValue('rate'))"),
+                      description = list("Arrival rate","Scale parameter","testpar"))
+
+continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
+                                    symmetric=TRUE, type = PosReals$new(zero=T),
+                                    distrDomain=PosReals$new(),
                                     pdf = dexpo, cdf = cexpo,
-                                    parameters = list(list(id = "lambda",
-                                                           name = "Rate",
-                                                           default = 1,
-                                                           settable = TRUE,
-                                                           fittable = TRUE,
-                                                           class = "numeric",
-                                                           lower = 0,
-                                                           upper = Inf,
-                                                           description = "None")))
+                                    parameters = ps
+)
+
 
 
 dbin = function(x, log,...){

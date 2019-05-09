@@ -228,3 +228,48 @@ ParameterSet$set("public","setParameterValue",function(lst){
 
   invisible(self)
 }) # NEEDS TESTING
+
+#' @name as.ParameterSet
+#' @title Coerce to a ParameterSet
+#' @description Coerces objects to ParameterSet.
+#' @return ParameterSet
+#' @usage as.ParameterSet(x,...)
+#' @param x object
+#' @param ... additional arguments
+#' @details Currently supported coercions are from data frames, data tables and lists. Function assumes
+#' that the data frame and data table columns are the correct inputs to a ParameterSet, see the constructor
+#' for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken to be
+#' arguments.
+#' @seealso \code{\link{ParameterSet}}
+#'
+#' @export
+as.ParameterSet <- function(x,...){
+  UseMethod("as.ParameterSet", x)
+}
+
+#' @rdname as.ParameterSet
+#' @export
+as.ParameterSet.data.frame <- function(x,...){
+  return(ParameterSet$new(id = x$id, value = x$value, lower = x$lower,
+                          upper = x$upper, class = x$class, settable = x$settable,
+                          fittable = x$fittable, updateFunc = x$updateFunc,
+                          description = x$description))
+}
+
+#' @rdname as.ParameterSet
+#' @export
+as.ParameterSet.data.table <- function(x,...){
+  return(ParameterSet$new(id = x$id, value = x$value, lower = x$lower,
+                          upper = x$upper, class = x$class, settable = x$settable,
+                          fittable = x$fittable, updateFunc = x$updateFunc,
+                          description = x$description))
+}
+
+#' @rdname as.ParameterSet
+#' @export
+as.ParameterSet.list <- function(x,...){
+  return(ParameterSet$new(id = x$id, value = x$value, lower = x$lower,
+                          upper = x$upper, class = x$class, settable = x$settable,
+                          fittable = x$fittable, updateFunc = x$updateFunc,
+                          description = x$description))
+}

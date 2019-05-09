@@ -2,51 +2,8 @@
 % Please edit documentation in R/SetInterval.R
 \name{SetInterval}
 \alias{SetInterval}
-\alias{lower}
-\alias{upper}
-\alias{type}
-\alias{dimension}
-\alias{max}
-\alias{min}
-\alias{sup}
-\alias{inf}
-\alias{getSymbol}
-\alias{print.SetInterval}
 \title{R6 Generalised Class for Symbolic Sets and Intervals}
-\arguments{
-\item{symbol}{string representation of set/interval.}
-
-\item{type}{string for interval type, one of (), (], [), []}
-
-\item{lower}{numeric lower limit of set/interval}
-
-\item{upper}{numeric upper limit of set/interval}
-
-\item{dimension}{numeric dimension of set/interval}
-}
-\value{
-\code{SetInterval$new} constructs an R6 object of class SetInterval.
-
-\code{lower} gets lower limit of set/interval
-
-\code{upper} gets upper limit of set/interval
-
-\code{type} gets closed/open interval type
-
-\code{dimension} gets dimension of set/interval
-
-\code{max} gets maximum of set/interval
-
-\code{min} gets minimum of set/interval
-
-\code{sup} gets supremum of set/interval
-
-\code{inf} gets infimum of set/interval
-
-\code{getSymbol} gets symbolic representation of set/interval
-
-\code{print} prints symbolic representation of set/interval
-}
+\format{An \code{\link[R6]{R6}} object.}
 \description{
 The parent class to sets and intervals in R6.
 }
@@ -54,30 +11,43 @@ The parent class to sets and intervals in R6.
 Whilst this is not an abstract class, direct construction is generally not advised.
   Construction should instead be called on 'Set' or 'Interval'
 }
-\section{Usage}{
+\section{Construction}{
  SetInterval$new(symbol, type, lower, upper, dimension)
+}
 
- $lower()
+\section{Constructor Arguments}{
 
- $upper()
+ \tabular{lr}{
+symbol \tab character. Representation of set/interval. \cr
+type \tab character. Interval type, one of (), (], [), [] \cr
+lower \tab numeric. Lower limit of set/interval \cr
+upper \tab numeric. Upper limit of set/interval \cr
+dimension \tab integer. Dimension of set/interval \cr
+}
+}
 
- $type()
+\section{Accessor Methods}{
 
- $dimension()
+\tabular{lr}{
+\code{lower} \tab numeric. Lower limit of set/interval \cr
+\code{upper} \tab numeric. Upper limit of set/interval \cr
+\code{type} \tab  character. Closed/open interval type \cr
+\code{dimension} \tab integer. Dimension of set/interval \cr
+\code{max} \tab  numeric. Maximum of set/interval \cr
+\code{min} \tab  numeric. Minimum of set/interval \cr
+\code{sup} \tab  numeric. Supremum of set/interval \cr
+\code{inf} \tab  numeric. Infimum of set/interval \cr
+\code{getSymbol} \tab  character. Symbolic representation of set/interval \cr
+}
+}
 
- $max()
+\section{Representation Methods}{
 
- $min()
-
- $sup()
-
- inf()
-
- $getSymbol()
-
- $print()
+\tabular{lr}{
+\code{print} \tab  Prints symbolic representation of set/interval \cr
+}
 }
 
 \seealso{
-\code{\link{Set}} for R6 set objects and \code{\link{Interval}} for R6 interval objects.
+\code{\link{Set}} for R6 Set objects and \code{\link{Interval}} for R6 Interval objects.
 }

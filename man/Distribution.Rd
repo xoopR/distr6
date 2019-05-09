@@ -11,23 +11,24 @@ A generalised distribution object for defining custom probability distributions
 }
 \section{Constructor Arguments}{
 
-\tabular{ll}{
-\code{name} \tab full name of distribution. \cr
-\code{short_name} \tab short name to identify distribution. \cr
-\code{type} \tab R6 Set; the scientific type. \cr
-\code{support} \tab R6 Set; distribution support. See Details. \cr
-\code{distrDomain} \tab R6 Set; distribution domain See Details. \cr
-\code{symmetric} \tab logical; is distribution symmetric? \cr
-\code{pdf} \tab function. See Details. \cr
-\code{cdf} \tab function. See Details. \cr
-\code{quantile} \tab function. See Details. \cr
-\code{rand} \tab function. See Details. \cr
-\code{parameters} \tab S3 ParameterSet. See Details. \cr
-\code{paramValues} \tab list. See Details. \cr
-\code{decorators} \tab list of decorators to add in construction. \cr
-\code{valueSupport} \tab continuous, discrete, mixture. See Details. \cr
-\code{variateForm} \tab univariate, multivariate, matrixvariate. See Details. \cr
-\code{description} \tab short description of distribution.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{name} \tab character \tab Full name of distribution. \cr
+\code{short_name} \tab character \tab Short name to identify distribution. \cr
+\code{type} \tab SetInterval \tab Scientific type. \cr
+\code{support} \tab SetInterval \tab Distribution support. See Details. \cr
+\code{distrDomain} \tab SetInterval \tab Distribution domain See Details. \cr
+\code{symmetric} \tab logical \tab Is distribution symmetric? \cr
+\code{pdf} \tab function \tab See Details. \cr
+\code{cdf} \tab function \tab See Details. \cr
+\code{quantile} \tab function \tab See Details. \cr
+\code{rand} \tab function \tab See Details. \cr
+\code{parameters} \tab ParameterSet \tab See Details. \cr
+\code{paramValues} \tab list \tab See Details. \cr
+\code{decorators} \tab list \tab R6 decorators to add in construction. \cr
+\code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
+\code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
+\code{description} \tab character \tab short description of distribution.
 }
 }
 
@@ -42,7 +43,7 @@ A generalised distribution object for defining custom probability distributions
   and domain.
 
   By default, missing \code{pdf}, \code{cdf} and \code{quantile} are not automatically imputed.
-  Use the imputation wrappers (see below) to geenrate these with a selected method.
+  Use the imputation wrappers (see below) to generate these with a selected method.
   The \code{rand} function is automatically generated depending on which of the above are supplied.
   The generation for this is performed according to the hierarchy: quantile -> rand, cdf -> rand, pdf -> rand.
 
@@ -55,49 +56,72 @@ A generalised distribution object for defining custom probability distributions
   Distribution with in construction. Decorators can also be added after construction. See
   \code{\link{DistributionDecorator}} for more details.
 
-  \code{valueSupport} and \code{variateForm} if not given are automatically filled from
-  \code{type} and \code{support}.
+  \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
+  \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
+  If not given these are automatically filled from \code{type} and \code{support}.
 }
 
-\section{Public Methods}{
+\section{Accessor Methods}{
+
+ \tabular{lrr}{
+  \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
+  \code{name()} \tab character \cr
+  \code{short_name()} \tab character \cr
+  \code{description()} \tab character \cr
+  \code{decorators()} \tab character \cr
+  \code{traits()} \tab list \cr
+  \code{valueSupport()} \tab character \cr
+  \code{variateForm()} \tab character \cr
+  \code{type()} \tab Set \tab \code{\link{Set}} \cr
+  \code{properties()} \tab list \cr
+  \code{support()} \tab Set \tab \code{\link{Set}} \cr
+  \code{distrDomain()} \tab Set \tab \code{\link{Set}} \cr
+  \code{symmetry()} \tab character \cr
+  \code{parameters(id,as.df = FALSE)} \tab ParameterSet or data.frame \tab \code{\link{ParameterSet}} \cr
+  \code{getParameterValue(id)} \tab numeric \tab \code{\link{ParameterSet}} \cr
+  \code{sup()} \tab numeric \tab supremum of distribution \cr
+  \code{inf()} \tab numeric \tab infimum of distribution \cr
+  }
+}
+
+\section{Math/Stats Methods}{
 
  \tabular{ll}{
+  \strong{Method} \tab \strong{Details} \cr
+  \code{pdf(x, log = F)} \tab Evaluate density/mass at x \cr
+  \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q.\cr
+  \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p \cr
+  \code{rand(n)} \tab Simulate n draws from distribution \cr
+  \code{expectation(trafo)} \tab Calculate expectation \cr
+  \code{var()} \tab Calculate variance \cr
+  \code{sd()} \tab Calculate standard deviation \cr
+  \code{cov()} \tab Calculate covariance. See Details \cr
+  \code{cor()} \tab Calculate correlation. See Details \cr
+  \code{median()} \tab Calculate median \cr
+  \code{mode(which = 1)} \tab Calculate mode. See Details \cr
+ }
+}
+
+\section{Other Methods}{
+
+ \tabular{lrr}{
+  \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+  \code{setParameterValue(lst)} \tab list -> invisible(self) \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
+  \code{liesInSupport(x, all = TRUE)} \tab numeric x logical -> logical \tab Does x lie in the support of distribution? See Details. \cr
+  \code{liesInType(x)} \tab numeric -> logical \tab Does x lie in the type of distribution? \cr
+  \code{liesInDistrDomain(x)} \tab numeric -> logical \tab Does x lie in the domain of distribution? \cr
+}
+}
+
+\section{Representation Methods}{
+
+\tabular{ll}{
+  \strong{Method} \tab \strong{Details} \cr
   \code{strprint()} \tab Character representation of print \cr
   \code{print()} \tab Print method \cr
   \code{summary(full = T)} \tab Summary method \cr
   \code{plot()} \tab Plotting method \cr
   \code{qqplot()} \tab QQ-Plots \cr
-  \code{name()} \tab Name accessor \cr
-  \code{short_name()} \tab Short name accessor \cr
-  \code{description()} \tab Description accessor \cr
-  \code{decorators()} \tab Decorators accessor \cr
-  \code{traits()} \tab Traits accessor \cr
-  \code{valueSupport()} \tab Value support accessor \cr
-  \code{variateForm()} \tab Variate form accessor \cr
-  \code{type()} \tab Type accessor \cr
-  \code{properties()} \tab Properties accessor \cr
-  \code{support()} \tab Support accessor \cr
-  \code{distrDomain()} \tab Distribution domain accessor \cr
-  \code{symmetry()} \tab Symmetry accessor \cr
-  \code{parameters(id,as.df = FALSE)} \tab Parameters accessor. See \code{\link{ParameterSet}}. \cr
-  \code{getParameterValue(id)} \tab Parameter value accessor. See \code{\link{ParameterSet}}. \cr
-  \code{setParameterValue(lst)} \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
-  \code{pdf(x, log = F)} \tab Evaluate density/mass at x. \cr
-  \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q. \cr
-  \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p. \cr
-  \code{rand(n)} \tab Randomly simulate n draws from distribution. \cr
-  \code{expectation(trafo)} \tab Calculate expectation of distribution. \cr
-  \code{var()} \tab Calculate variance of distribution. \cr
-  \code{sd()} \tab Calculate standard deviation of distribution. \cr
-  \code{cov()} \tab Calculate covariance of distribution. See Details. \cr
-  \code{cor()} \tab Calculate correlation of distribution. See Details. \cr
-  \code{median()} \tab Calculate median of distribution. \cr
-  \code{mode(which = 1)} \tab Calculate mode of distribution. See Details. \cr
-  \code{sup()} \tab Get supremum of distribution. \cr
-  \code{inf()} \tab Get infimum of distribution. \cr
-  \code{liesInSupport(x, all = TRUE)} \tab Does x lie in the support of distribution? \cr
-  \code{liesInType(x)} \tab Does x lie in the type of distribution? \cr
-  \code{liesInDistrDomain(x)} \tab Does x lie in the domain of distribution? \cr
 }
 }
 
@@ -106,6 +130,9 @@ A generalised distribution object for defining custom probability distributions
 \code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
 \code{mode} returns by default the first mode of the distribution where applicable, otherwise a specified
 integer or all.
+
+If \code{liesInSupport(x, all = TRUE)} then returns TRUE only if every numeric in vector \code{x} lies
+in the support of the distribution, otherwise returns a vector of logicals.
 }
 
 \seealso{

@@ -22,8 +22,9 @@ ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                   symmetric=TRUE, type = PosReals$new(zero=T),
                                   distrDomain=PosReals$new(),
-                                  pdf = dexpo, cdf = cexpo,
-                                  parameters = ps
+                                  pdf = dexpo,
+                                  #cdf = cexpo,
+                                  parameters = ps, decorators = list(CoreStatistics)
 )
 
 test_that("check all accessors are working", {

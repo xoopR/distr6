@@ -30,14 +30,16 @@ DistributionWrapper$set("public","initialize",function(distlist, ...){
 
   assertDistributionList(distlist)
 
+  lapply(distlist, function(x) x$parameters()$update())
   private$.wrappedModels <- distlist
 
   params <- do.call(rbind,lapply(distlist, function(x){
-    params = x[["parameters"]]()
+    params = x[["parameters"]](as.df = T)
     params[,1] = paste(x[["short_name"]](),params[,1],sep="_")
     return(params)
     }))
   row.names(params) <- NULL
+  params <- as.ParameterSet(params)
 
   super$initialize(parameters = params, ...)
 })
@@ -59,21 +61,30 @@ DistributionWrapper$set("public","setParameterValue",function(lst){
     value = lst[[i]]
     newlst = list(value)
     names(newlst) = parameter
-
-    self$getInternalModel(model)$setParameterValue(newlst)
+    self$getWrappedModels(model)$setParameterValue(newlst)
   }
 
   params <- do.call(rbind,lapply(private$.wrappedModels, function(x){
-    params = x[["parameters"]]()
+    params = x[["parameters"]](as.df = T)
     params[,1] = paste(x[["short_name"]](),params[,1],sep="_")
     return(params)
   }))
   row.names(params) <- NULL
-  private$.parameters <- params
+  private$.parameters <- as.ParameterSet(params)
 
   invisible(self)
 }) # NEEDS TESTING
 
+#' @name ConcreteWrapper
+#' @title Concrete Wrapper for Distributions
+#' @description An R6 concrete wrapper class for use with decorators.
+#' @seealso \code{\link{DistributionWrapper}}
+#' @details Should not be constructed by the user. The purpose of this class is to provide a non-abstract
+#' interface that can be initialized by decorators when required.
+#'
+NULL
+
+#' @export
 ConcreteWrapper <- R6::R6Class("ConcreteWrapper", inherit = DistributionWrapper, lock_objects = FALSE)
 ConcreteWrapper$set("public","initialize",function(...){
   super$initialize(...)

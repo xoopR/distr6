@@ -171,3 +171,70 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
       return(centralMoment / self$sd()^k)
   }
 })
+
+#' @rdname CoreStatistics
+#' @name expectation
+#' @section Usage: $expectation(trafo)
+#' @return \code{expectation} gives the expectation (default)
+CoreStatistics$set("public","expectation",function(trafo){
+  if(missing(trafo)){
+    trafo = function(x) return(x)
+  }
+  if(testDiscrete(self)){
+    rng = try(self$inf():self$sup(),silent = T)
+    if(inherits(rng,"try-error"))
+      rng = private$.getWorkingSupportRange()
+    pdfs = self$pdf(rng)
+    xs = trafo(rng)
+    xs[pdfs==0] = 0
+    return(sum(pdfs * xs))
+  } else if(testContinuous(self)){
+    message("Results from numerical integration are approximate only, better results may be available.")
+    return(suppressMessages(integrate(function(x) {
+      pdfs = self$pdf(x)
+      xs = trafo(x)
+      xs[pdfs==0] = 0
+      return(xs * pdfs)
+    }, lower = self$inf(), upper = self$sup())$value))
+  }
+}) # IN PROGRESS
+
+
+#' @rdname CoreStatistics
+#' @name var
+#' @section Usage: $var()
+#' @return \code{var} gives the variance
+CoreStatistics$set("public","var",function(){
+  return(self$expectation(trafo = function(x) x^2) - self$expectation()^2)
+}) # IN PROGRESS
+
+#' @rdname CoreStatistics
+#' @name cov
+#' @section Usage: $cov()
+#' @return \code{cov} gives the covariance
+CoreStatistics$set("public","cov",function(){
+  if(testUnivariate(self))
+    return(self$var())
+}) # TO DO
+
+#' @rdname CoreStatistics
+#' @name cor
+#' @section Usage: $cor()
+#' @return \code{cor} gives the correlation
+CoreStatistics$set("public","cor",function(){}) # TO DO
+
+#' @rdname CoreStatistics
+#' @name mode
+#' @section Usage: $mode()
+#' @return \code{mode} gives the mode
+CoreStatistics$set("public","mode",function(which = 1){
+  if(which==1){
+    if(testDiscrete(self)){
+      rng = try(self$inf():self$sup(),silent = T)
+      if(inherits(rng,"try-error"))
+        rng = self$getWorkingSupport()
+      return(rng[which.max(self$pdf(rng))])
+    } else if(testContinuous(self))
+      return(optimize(self$pdf,c(self$inf(),1e08), maximum = TRUE))
+  }
+}) # IN PROGRESS

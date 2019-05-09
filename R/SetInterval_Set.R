@@ -21,10 +21,17 @@ Set$set("public","initialize",function(...){
     invisible(self)
   else{
     dots <- list(...)
-    private$.setSymbol <- paste0("{",paste(dots,collapse = ", "),"}")
-    private$.type <- "{}"
-    private$.lower <- dots[[1]]
-    private$.upper <- dots[[length(dots)]]
+    if(length(dots[[1]]) > 1 & is.numeric(dots[[1]])){
+      private$.type <- "{}"
+      private$.lower <- min(dots[[1]])
+      private$.upper <- max(dots[[1]])
+      private$.setSymbol <- paste0("{",private$.lower,",...,",private$.upper,"}")
+    } else {
+      private$.setSymbol <- paste0("{",paste(dots,collapse = ", "),"}")
+      private$.type <- "{}"
+      private$.lower <- dots[[1]]
+      private$.upper <- dots[[length(dots)]]
+    }
   }
   invisible(self)
 })
