@@ -25,7 +25,6 @@
 #' \code{quantile} \tab function \tab See Details. \cr
 #' \code{rand} \tab function \tab See Details. \cr
 #' \code{parameters} \tab ParameterSet \tab See Details. \cr
-#' \code{paramValues} \tab list \tab See Details. \cr
 #' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 #' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 #' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
@@ -48,8 +47,7 @@
 #'
 #'   \code{parameters} should be supplied as a ParameterSet. The distribution parameterisation
 #'   is taken to be whichever parameters are flagged as 'settable', any others in the ParameterSet
-#'   are automatically updated by a given function. \code{paramValues} is an optional list giving the
-#'   values to set the parameters (if not default or given in the ParameterSet.
+#'   are automatically updated by a given function.
 #'
 #'   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
 #'   Distribution with in construction. Decorators can also be added after construction. See
@@ -174,15 +172,14 @@ Distribution$set("public","initialize",function(name, short_name,
                       type = Reals$new(), support, distrDomain,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-                      parameters, paramValues = NULL,
-                      decorators = NULL, valueSupport = NULL, variateForm = NULL,
+                      parameters, decorators = NULL, valueSupport = NULL, variateForm = NULL,
                       description=NULL, additionalMethods = NULL
                       ){
 
   if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
     # Validation checks
-    if(missing(short_name)) short_name = name
+    if(missing(short_name)) short_name = gsub(" ","",name,fixed = T)
     checkmate::assertCharacter(c(name, short_name),
                                .var.name = "'name' and 'short_name' must be of class 'character'.")
     checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
@@ -287,12 +284,6 @@ Distribution$set("public","initialize",function(name, short_name,
         private$.parameters <- parameters$clone()$update()
       else
         private$.parameters <- parameters$clone()
-    }
-
-
-    if(!is.null(paramValues)){
-      checkmate::assertList(paramValues)
-      self$setParameterValue(paramValues)
     }
   }
 
@@ -464,6 +455,9 @@ Distribution$set("public","setParameterValue",function(lst){
 # p/d/q/r
 Distribution$set("public","pdf",function(x, log = FALSE){
 
+  if(is.null(private$.pdf(1)))
+    return(NULL)
+
   y = x
 
   y[!self$liesInSupport(x, F)] = 0
@@ -481,16 +475,25 @@ Distribution$set("public","pdf",function(x, log = FALSE){
   }
 }) # NEEDS TESTING
 Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE){
+  if(is.null(private$.cdf(1)))
+    return(NULL)
+
   if(self$liesInSupport(q)){
       return(private$.cdf(q, self = self, lower.tail = TRUE, log.p = FALSE))
   }else
     warning(sprintf("%s does not lie in the support of %s",x,getR6Class(self)))
 }) # NEEDS TESTING
 Distribution$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE){
+  if(is.null(private$.quantile(1)))
+    return(NULL)
+
   checkmate::assertNumeric(p, lower = 0, upper = 1)
   return(private$.quantile(p, self = self, lower.tail = TRUE, log.p = FALSE))
 }) # NEEDS TESTING
 Distribution$set("public","rand",function(n){
+  if(is.null(private$.rand(1)))
+    return(NULL)
+
   return(private$.rand(n))
 }) # NEEDS TESTING
 

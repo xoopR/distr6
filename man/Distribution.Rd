@@ -24,7 +24,6 @@ A generalised distribution object for defining custom probability distributions
 \code{quantile} \tab function \tab See Details. \cr
 \code{rand} \tab function \tab See Details. \cr
 \code{parameters} \tab ParameterSet \tab See Details. \cr
-\code{paramValues} \tab list \tab See Details. \cr
 \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
@@ -49,8 +48,7 @@ A generalised distribution object for defining custom probability distributions
 
   \code{parameters} should be supplied as a ParameterSet. The distribution parameterisation
   is taken to be whichever parameters are flagged as 'settable', any others in the ParameterSet
-  are automatically updated by a given function. \code{paramValues} is an optional list giving the
-  values to set the parameters (if not default or given in the ParameterSet.
+  are automatically updated by a given function.
 
   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
   Distribution with in construction. Decorators can also be added after construction. See

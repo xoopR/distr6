@@ -59,4 +59,5 @@ Collate:
     'decorate.R'
     'distr6_globals.R'
     'measures.R'
+    'misc_helpers.R'
     'zzz.R'

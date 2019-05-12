@@ -20,7 +20,7 @@ Exponential$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE)
   pexp(q, self$getParameterValue("rate"), lower.tail, log.p))
 
 Exponential$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE)
-  qexp(p, self$getParameterValue("rate"), log.p))
+  qexp(p, self$getParameterValue("rate"), lower.tail, log.p))
 
 Exponential$set("public","rand",function(n)
   rexp(n, self$getParameterValue("rate")))
@@ -61,7 +61,7 @@ Exponential$set("public","survival",function(q, log.p = FALSE)
 Exponential$set("public","hazard",function(x)
   self$pdf(x)/self$survival(x))
 
-Exponential$set("public","cumhazard",function(x)
+Exponential$set("public","cumHazard",function(x)
   -self$cdf(x, log.p = TRUE))
 
 Exponential$set("private",".parameters",

@@ -1,5 +1,7 @@
 library(testthat)
 
+context("Custom continuous distributions")
+
 dexpo = function(x, log,...){
   m1 = self$getParameterValue("rate")
   m2 = exp(-1 * self$getParameterValue("rate") * x)

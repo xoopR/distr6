@@ -49,6 +49,9 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower, up
 
   assertDistribution(distribution)
 
+  if(is.null(distribution$cdf(1)))
+    stop("cdf is required for huberization. Try decorate(Distribution, FunctionImputation) first.")
+
   if(missing(lower)) lower = distribution$inf()
   if(missing(upper)) upper = distribution$sup()
 

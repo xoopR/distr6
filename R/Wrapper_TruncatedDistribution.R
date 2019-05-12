@@ -32,6 +32,9 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower, up
 
   assertDistribution(distribution)
 
+  if(is.null(distribution$cdf(1)))
+    stop("cdf is required for truncation. Try decorate(Distribution, FunctionImputation) first.")
+
   if(!missing(lower) & !missing(upper)){
     pdf <- function(x,...) {
       self$wrappedModels()[[1]]$pdf(x) / (self$wrappedModels()[[1]]$cdf(upper) - self$wrappedModels()[[1]]$cdf(lower))

@@ -33,17 +33,24 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   distlist = list(dist)
   names(distlist) = short_name
 
+  self$setScaleMean(mean)
+  self$setScaleSd(sd)
+
   if(!is.null(dist$pdf(1))){
     pdf <- function(x) {}
     body(pdf) <- substitute({
-      dist$pdf((x - self$getInternalModel(name)$sd()) + self$getInternalModel(name)$expectation())
+      locationTrafo <- self$wrappedModels(name)$expectation() - self$getScaleMean()
+      scaleTrafo <- self$wrappedModels(name)$sd() / self$getScaleSd()
+      self$wrappedModels(name)$pdf(x * scaleTrafo + locationTrafo) / scaleTrafo
     }, list(name = short_name))
   } else
     pdf <- NULL
   if(!is.null(dist$cdf(1))){
     cdf <- function(x) {}
     body(cdf) <- substitute({
-      dist$cdf((x*self$getInternalModel(name)$sd()) + self$getInternalModel(name)$expectation())
+      locationTrafo <- self$wrappedModels(name)$expectation() - self$getScaleMean()
+      scaleTrafo <- self$wrappedModels(name)$sd() / self$getScaleSd()
+      self$wrappedModels(name)$cdf(x * scaleTrafo + locationTrafo)
     }, list(name = short_name))
   } else
     cdf <- NULL
@@ -56,3 +63,20 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
                    short_name = short_name, type = type, prefixParams = FALSE,...)
 }) # IN PROGRESS
+
+Scale$set("public","getScaleMean",function(){
+  return(private$.scaleMean)
+})
+Scale$set("public","getScaleSd",function(){
+  return(private$.scaleSd)
+})
+Scale$set("public","setScaleMean",function(mean){
+  private$.scaleMean <- mean
+  invisible(self)
+})
+Scale$set("public","setScaleSd",function(sd){
+  private$.scaleSd <- sd
+  invisible(self)
+})
+Scale$set("private",".scaleMean",0)
+Scale$set("private",".scaleSd",1)

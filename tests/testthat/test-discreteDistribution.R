@@ -1,5 +1,7 @@
 library(testthat)
 
+context("Custom discrete distributions")
+
 dbin = function(x, log,...){
  m1 = choose(self$getParameterValue(id="size"), x)
  m2 = self$getParameterValue(id="prob")^x
@@ -14,14 +16,34 @@ ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0
                       updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
                       description = list("Probability of Success", "Number of trials",
                                          "Probability of failure"))
-discreteTester = Distribution$new("Discrete Test","TestDistr",support=Interval$new(0,100),
-                          symmetric=TRUE, type = PosNaturals$new(),
-                          distrDomain=PosNaturals$new(),
-                          pdf = dbin,
-                          parameters = ps,
-                          decorators = list(CoreStatistics)
-                          )
 
+
+test_that("check validations", {
+  expect_silent(Distribution$new("Discrete Test","TestDistr",support=Interval$new(0,100),
+                                 symmetric=TRUE, type = PosNaturals$new(),
+                                 distrDomain=PosNaturals$new(),pdf = dbin))
+  expect_silent(Distribution$new("Discrete Test","TestDistr"))
+  expect_error(Distribution$new("Discrete Test","Test Distr"))
+  expect_error(Distribution$new(short_name = "Test Distr"))
+  expect_silent(Distribution$new("Discrete Test"))
+  expect_silent(Distribution$new("Discrete Test", description = "A test"))
+  expect_silent(Distribution$new("Discrete Test",valueSupport = "continuous"))
+  expect_error(Distribution$new("Discrete Test",valueSupport = "con"))
+  expect_equal(Distribution$new("Discrete Test",type = Reals$new(dim = 2))$variateForm(),
+               "multivariate")
+  expect_null(Distribution$new("Discrete Test")$pdf(1))
+  expect_null(Distribution$new("Discrete Test")$cdf(1))
+  expect_null(Distribution$new("Discrete Test")$quantile(1))
+  expect_null(Distribution$new("Discrete Test")$rand(1))
+})
+
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=Interval$new(0,100),
+                                  symmetric=TRUE, type = PosNaturals$new(),
+                                  distrDomain=PosNaturals$new(),
+                                  pdf = dbin,
+                                  parameters = ps,
+                                  decorators = list(CoreStatistics)
+)
 
 test_that("check all accessors are working", {
   expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100.0)")
