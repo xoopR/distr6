@@ -24,7 +24,7 @@ Description: An R6 object oriented Distributions package in R. Unified interface
 Depends: 
 Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr
 Suggests: knitr, testthat, devtools
-Remotes: RaphaelS1/R62S3 (> 1.0.0)
+Remotes: RaphaelS1/R62S3
 License: MIT + file LICENSE
 LazyData: true
 BugReports: https://github.com/RaphaelS1/distr6/issues
