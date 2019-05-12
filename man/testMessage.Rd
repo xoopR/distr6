@@ -15,3 +15,9 @@ TRUE if a message is prodcued, FALSE otherwise.
 \description{
 Tests if a given expression produces a message.
 }
+\examples{
+msgFun <- function() message("Test Function")
+noMsgFun <- function() message("Test Function")
+testMessage(msgFun) # TRUE
+testMessage(noMsgFun) # FALSE
+}

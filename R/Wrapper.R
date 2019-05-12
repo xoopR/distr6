@@ -60,18 +60,24 @@ DistributionWrapper$set("public", "wrappedModels", function(model=NULL){
 })
 DistributionWrapper$set("public","setParameterValue",function(lst){
   for(i in 1:length(lst)){
-    id = names(lst)[[i]]
-    underscore = gregexpr("_",id,fixed=T)[[1]][1]
-    model = substr(id,1,underscore-1)
-    parameter = substr(id,underscore+1,1000)
+    if(grepl("_",lst[[i]],fixed = T)){
+      id = names(lst)[[i]]
+      underscore = gregexpr("_",id,fixed=T)[[1]][1]
+      model = substr(id,1,underscore-1)
+      parameter = substr(id,underscore+1,1000)
 
-    value = lst[[i]]
-    newlst = list(value)
-    names(newlst) = parameter
+      value = lst[[i]]
+      newlst = list(value)
+      names(newlst) = parameter
+    } else{
+      model = self$wrappedModels()[[1]]$short_name
+      newlst = lst
+    }
     self$wrappedModels(model)$setParameterValue(newlst)
   }
+  rm(i)
 
-  params <- do.call(rbind,lapply(private$.wrappedModels, function(x){
+  params <- do.call(rbind.data.frame,lapply(private$.wrappedModels, function(x){
     params = x[["parameters"]](as.df = T)
     params[,1] = paste(x[["short_name"]],params[,1],sep="_")
     return(params)

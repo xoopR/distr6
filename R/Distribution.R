@@ -448,7 +448,6 @@ Distribution$set("public","setParameterValue",function(lst){
     self$properties$skewness <- skewType(x)
   lockBinding("properties", self)
 
-
   #private$.setWorkingSupport()
   invisible(self)
 }) # DONE

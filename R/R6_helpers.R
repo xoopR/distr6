@@ -26,9 +26,11 @@ strprint.list <- function(x,...){
 }
 
 #' @title Get R6 Class Name
-#' @description Gets the name of the given R6 class.
+#' @description Gets the name of the given R6 object
 #' @param x R6 object.
 #' @return string giving R6 class name.
+#' @details The function works for R6 objects not classes. If the function fails make sure the
+#' class is constructed.
 #'
 #' @examples
 #' getR6Class(Binomial$new())

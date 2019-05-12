@@ -18,3 +18,15 @@ test_that("check discrete Truncated wrapper", {
   expect_equal(hubBin$pdf(3), Binomial$new()$pdf(3))
 })
 
+test_that("check huberization constructor",{
+  expect_silent(huberize(Binomial$new(),lower = 1, upper = 5))
+  expect_silent(huberize.Distribution(Binomial$new(), upper = 5))
+  expect_silent(huberize(Binomial$new(),lower = 1))
+  expect_silent(huberize(Binomial$new()))
+})
+
+test_that("check cdf",{
+  expect_error(huberize(Distribution$new("Test"),1,2))
+})
+
+

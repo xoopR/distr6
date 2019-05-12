@@ -149,7 +149,6 @@ ParameterSet$set("public","update", function(){
     })
     private$.parameters[!is.na(private$.parameters$updateFunc),"value"] = as.numeric(newvals)
   }
-
   invisible(self)
 })
 
@@ -184,14 +183,18 @@ ParameterSet$set("public","parameters",function(id, as.df = F){
 #' @return \code{$getParameterValue} returns the value of a parameter.
 #' @section Usage: $getParameterValue(id)
 ParameterSet$set("public","getParameterValue",function(id){
+
   if(length(private$.parameters)==0)
     return("There are no parameters in this distribution.")
-
-  val = self$parameters(id = id, as.df = T)[["value"]]
-  if(length(val)==0)
-    return(paste(id, "is not a parameter in this distribution."))
-  else
+  if(missing(id))
+    stop('argument "id" is missing, with no default')
+  val = self$parameters(id, TRUE)[["value"]]
+  if(length(val)==0){
+    warning(paste(id, "is not a parameter in this distribution."))
+    return(NULL)
+  }else
     return(val[[1]])
+
 }) # NEEDS TESTING
 
 #' @name setParameterValue
@@ -209,11 +212,12 @@ ParameterSet$set("public","setParameterValue",function(lst){
     value <- lst[[i]]
 
     param <- self$parameters(as.df = T)[self$parameters(as.df = T)[,"id"] %in% id,]
-    if(length(param)==0)
+
+    if(nrow(param)==0)
       stop(sprintf("%s is not in the parameter set.",id))
 
     if(!param$settable)
-      stop(sprintf("%s is not settable.",param$name))
+      stop(sprintf("%s is not settable.",param$id))
 
     if(param$class=="numeric")
       checkmate::assertNumeric(value,lower = param$lower, upper = param$upper)
@@ -224,6 +228,7 @@ ParameterSet$set("public","setParameterValue",function(lst){
     private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
   }
 
+  rm(id, value, i)
   self$update()
 
   invisible(self)

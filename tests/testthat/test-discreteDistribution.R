@@ -29,6 +29,8 @@ test_that("check validations", {
   expect_silent(Distribution$new("Discrete Test", description = "A test"))
   expect_silent(Distribution$new("Discrete Test",valueSupport = "continuous"))
   expect_error(Distribution$new("Discrete Test",valueSupport = "con"))
+  expect_silent(Distribution$new("Discrete Test",variateForm = "univariate"))
+  expect_error(Distribution$new("Discrete Test",valueSupport = "univ"))
   expect_equal(Distribution$new("Discrete Test",type = Reals$new(dim = 2))$variateForm(),
                "multivariate")
   expect_null(Distribution$new("Discrete Test")$pdf(1))
@@ -67,6 +69,7 @@ test_that("check basic maths functions as expected", {
   expect_equal(discreteTester$pdf(1), dbinom(1,2,0.9))
   expect_equal(discreteTester$genExp(), 2*0.9)
   expect_equal(discreteTester$var(), 2*0.9*0.1)
+  expect_null(discreteTester$median())
 })
 
 test_that("check kurtosis and skewness", {
@@ -88,4 +91,11 @@ test_that("check mgf, cf, pgf",{
   expect_equal(discreteTester$mgf(4), (1 - 0.9 + 0.9*exp(4))^2)
   expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4)*1+0i)^2)
   expect_equal(discreteTester$pgf(2), (1 - 0.9 + 0.9*2)^2)
+})
+
+test_that("representations",{
+  expect_output(discreteTester$print())
+  expect_silent(discreteTester$strprint())
+  expect_output(discreteTester$summary(T))
+  expect_output(discreteTester$summary(F))
 })

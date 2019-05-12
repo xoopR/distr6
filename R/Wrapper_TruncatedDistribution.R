@@ -41,11 +41,13 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower, up
     }
     formals(pdf)$self <- self
   } else if(!missing(lower) & missing(upper)){
+    upper = distribution$sup()
     pdf <- function(x,...) {
       self$wrappedModels()[[1]]$pdf(x) / (1 - self$wrappedModels()[[1]]$cdf(lower))
     }
     formals(pdf)$self <- self
   } else if(missing(lower) & !missing(upper)){
+    lower = distribution$inf()
     pdf <- function(x,...) {
       self$wrappedModels()[[1]]$pdf(x) / self$wrappedModels()[[1]]$cdf(lower)
     }
