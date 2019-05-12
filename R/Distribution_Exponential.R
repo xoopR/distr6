@@ -73,10 +73,10 @@ Exponential$set("private",".parameters",
                               description = list("Arrival Rate", "Scale"))
 )
 
-Exponential$set("public","initialize",function(rate = 1, decorators = NULL){
+Exponential$set("public","initialize",function(rate = 1, decorators = NULL,...){
 
   self$setParameterValue(list(rate = rate))
 
-  super$initialize(decorators = decorators)
+  super$initialize(decorators = decorators,...)
   invisible(self)
 })

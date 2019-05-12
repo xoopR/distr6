@@ -75,7 +75,7 @@ Binomial$set("private",".parameters",
                                       "Probability of failure"))
   )
 
-Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL){
+Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL, ...){
 
   self$setParameterValue(list(size = size, prob = prob))
 
@@ -90,6 +90,6 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = 
     self$properties$symmetry <- "asymmetric"
   lockBinding("properties", self)
 
-  super$initialize(decorators = decorators)
+  super$initialize(decorators = decorators, ...)
   invisible(self)
 })

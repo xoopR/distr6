@@ -27,7 +27,8 @@ A generalised distribution object for defining custom probability distributions
 \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-\code{description} \tab character \tab short description of distribution.
+\code{description} \tab character \tab short description of distribution. \cr
+\code{R62S3} \tab logical \tab if TRUE (default), S3 methods are added for decorators in construction.
 }
 }
 

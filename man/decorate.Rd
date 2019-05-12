@@ -10,7 +10,14 @@ decorate(distribution, decorators, R62S3 = TRUE)
 \item{distribution}{distribution to decorate}
 
 \item{decorators}{list of decorators}
+
+\item{R62S3}{logical. If TRUE (default) S3 methods are generated for R6 methods}
 }
 \description{
-Decorate Distributions
+A convenient S3 function to decorate R6 distributions
+}
+\seealso{
+\code{\link{DistributionDecorator}} for the abstract decorator class and
+\code{\link{CoreStatistics}}, \code{\link{ExoticStatistics}}, \code{\link{FunctionImputation}} for
+available decorators.
 }

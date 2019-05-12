@@ -70,11 +70,20 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower, up
                    type = distribution$type(), prefixParams = FALSE)
 }) # IN PROGRESS
 
+#' @title Truncate a Distribution
+#' @description S3 functionality to truncate an R6 distribution.
+#'
+#' @param x distribution to truncate
+#' @param lower lower limit for truncation.
+#' @param upper upper limit for truncation.
+#'
+#' @seealso \code{\link{TruncatedDistribution}}
+#'
 #' @export
-truncate <- function(x,lower,upper,...){
+truncate <- function(x,lower,upper){
   UseMethod("truncate", x)
 }
 #' @export
-truncate.Distribution <- function(x, lower, upper,...){
+truncate.Distribution <- function(x, lower, upper){
   TruncatedDistribution$new(x, lower, upper)
 }

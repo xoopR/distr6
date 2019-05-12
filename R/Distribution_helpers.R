@@ -23,7 +23,7 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
   if(simplify)
     return(y)
   else{
-    distrs = do.call(rbind,lapply(y, function(x){
+    distrs = do.call(rbind.data.frame,lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
       x = x$new()

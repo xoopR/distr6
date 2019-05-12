@@ -1,3 +1,31 @@
+#' @title Numerical Pdf/Cdf/Quantile/Rand Functions
+#'
+#' @description Numeric statistical functions including density/mass function, distribution function,
+#' inverse distribution and simulation.
+#' @name FunctionImputation
+#'
+#' @details Decorator objects add functionality to the given Distribution object
+#'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
+#'  \code{\link{decorate}} function to decorate a Distribution. See the help pages for the individual
+#'  CoreStatistics methods to learn more.
+#'
+#'  All methods in this decorator use numerical approximations and therefore better results may be available
+#'  from analytic computations.
+#'
+#' @seealso \code{\link{DistributionDecorator}}
+#'
+#' @examples
+#' x = Exponential$new()
+#' decorate(x, ExoticStatistics, R62S3 = FALSE)
+#' x$survival(1)
+#'
+#' @examples
+#' x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+#' x$survival(4)
+NULL
+
+
+#' @export
 FunctionImputation <- R6::R6Class("FunctionImputation", inherit = DistributionDecorator)
 
 FunctionImputation$set("public","pdf",function(x, log = FALSE){

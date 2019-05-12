@@ -1,7 +1,13 @@
 #' @title Decorate Distributions
+#' @description A convenient S3 function to decorate R6 distributions
 #'
 #' @param distribution distribution to decorate
 #' @param decorators list of decorators
+#' @param R62S3 logical. If TRUE (default) S3 methods are generated for R6 methods
+#'
+#' @seealso \code{\link{DistributionDecorator}} for the abstract decorator class and
+#' \code{\link{CoreStatistics}}, \code{\link{ExoticStatistics}}, \code{\link{FunctionImputation}} for
+#' available decorators.
 #'
 #' @export
 decorate <- function(distribution, decorators, R62S3 = TRUE){
@@ -34,7 +40,7 @@ decorate <- function(distribution, decorators, R62S3 = TRUE){
 
     if(R62S3){
       lapply(decorators, function(y){
-        R62S3(y, list(get(getR6Class(x))), as.environment("package:distr6"), as.environment("package:distr6"))
+        R62S3::R62S3(y, list(get(getR6Class(distribution))), as.environment("package:distr6"), as.environment("package:distr6"))
       })
     }
 

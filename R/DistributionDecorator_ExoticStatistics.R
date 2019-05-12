@@ -6,28 +6,24 @@
 #' @name ExoticStatistics
 #'
 #' @details Decorator objects add functionality to the given Distribution object
-#'  by overwriting the object in the Global Environment. They can be specified
-#'  in construction of the Distribution or by constructing the given Decorator.
+#'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
+#'  \code{\link{decorate}} function to decorate a Distribution. See the help pages for the individual
+#'  CoreStatistics methods to learn more.
 #'
-#'  Methods act on the distribution and not the constructor therefore method chaining of the form
-#'  \code{ExoticStatistics$new(distribution)$hazard(1)} is not supported but \code{distribution$new(decorator=ExoticStatistics)$hazard(1)} is.
+#'  All methods in this decorator use numerical approximations and therefore better results may be available
+#'  from analytic computations.
 #'
-#'
-#' @seealso \code{\link{CoreStatistics}} for more available methods.
-#'
-#' @examples
-#' \dontrun{
-#' X = Binomial$new(decorator = "ExoticStatistics")
-#' X$survival(1)
-#' X$pdfPNorm()
-#' }
+#' @seealso \code{\link{decorate}} for the decorate function and \code{\link{CoreStatistics}} for
+#' more available methods.
 #'
 #' @examples
-#' \dontrun{
-#' X = Binomial$new()
-#' ExoticStatistics$new(X)
-#' X$pdfPNorm(4)
-#' }
+#' x = Exponential$new()
+#' decorate(x, ExoticStatistics, R62S3 = FALSE)
+#' x$survival(1)
+#'
+#' @examples
+#' x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+#' x$survival(4)
 NULL
 
 

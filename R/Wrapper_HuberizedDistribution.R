@@ -78,11 +78,20 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower, up
                    prefixParams = FALSE)
 }) # IN PROGRESS
 
+#' @title Huberize a Distribution
+#' @description S3 functionality to huberize an R6 distribution.
+#'
+#' @param x distribution to huberize.
+#' @param lower lower limit for huberization.
+#' @param upper upper limit for huberization.
+#'
+#' @seealso \code{\link{HuberizedDistribution}}
+#'
 #' @export
-huberize <- function(x,lower,upper,...){
+huberize <- function(x,lower,upper){
   UseMethod("huberize", x)
 }
 #' @export
-huberize.Distribution <- function(x, lower, upper,...){
+huberize.Distribution <- function(x, lower, upper){
   HuberizedDistribution$new(x, lower, upper)
 }

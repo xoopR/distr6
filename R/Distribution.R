@@ -28,7 +28,8 @@
 #' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 #' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 #' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-#' \code{description} \tab character \tab short description of distribution.
+#' \code{description} \tab character \tab short description of distribution. \cr
+#' \code{R62S3} \tab logical \tab if TRUE (default), S3 methods are added for decorators in construction.
 #' }
 #'
 #' @section Constructor Details: The primary purpose of the Distribution object is to serve as the parent class
@@ -173,7 +174,7 @@ Distribution$set("public","initialize",function(name, short_name,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                       parameters, decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                      description=NULL, additionalMethods = NULL
+                      description=NULL, additionalMethods = NULL, R62S3 = TRUE
                       ){
 
   if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
@@ -288,7 +289,7 @@ Distribution$set("public","initialize",function(name, short_name,
   }
 
     if(!is.null(decorators))
-      suppressMessages(decorate(self, decorators))
+      suppressMessages(decorate(self, decorators, R62S3))
 
     # Update skewness and kurtosis
   unlockBinding("properties",self)
