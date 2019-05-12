@@ -4,7 +4,7 @@
 \alias{decorate}
 \title{Decorate Distributions}
 \usage{
-decorate(distribution, decorators)
+decorate(distribution, decorators, R62S3 = TRUE)
 }
 \arguments{
 \item{distribution}{distribution to decorate}

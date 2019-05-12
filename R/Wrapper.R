@@ -24,7 +24,7 @@ NULL
 
 #' @export
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
-DistributionWrapper$set("public","initialize",function(distlist, ...){
+DistributionWrapper$set("public","initialize",function(distlist, prefixParams = TRUE,...){
   if(getR6Class(self) == "DistributionWrapper")
     stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
@@ -33,14 +33,20 @@ DistributionWrapper$set("public","initialize",function(distlist, ...){
   lapply(distlist, function(x) x$parameters()$update())
   private$.wrappedModels <- distlist
 
-  params <- do.call(rbind,lapply(distlist, function(x){
-    params = x[["parameters"]](as.df = T)
-    params[,1] = paste(x[["short_name"]],params[,1],sep="_")
-    return(params)
+  if(prefixParams){
+    params <- do.call(rbind.data.frame,lapply(distlist, function(x){
+      params = x[["parameters"]](as.df = T)
+      params[,1] = paste(x[["short_name"]],params[,1],sep="_")
+      return(params)
     }))
-  duplicated(params["id"])
-  row.names(params) <- NULL
-  params <- as.ParameterSet(params)
+    row.names(params) <- NULL
+    params <- as.ParameterSet(params)
+  } else{
+    if(length(distlist) == 1)
+      params <- distlist[[1]]$parameters()
+    else
+      params <- do.call(rbind,lapply(distlist, function(x) x$parameters()))
+  }
 
   super$initialize(parameters = params, ...)
 })

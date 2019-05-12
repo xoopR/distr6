@@ -4,7 +4,7 @@
 #' @param decorators list of decorators
 #'
 #' @export
-decorate <- function(distribution, decorators){
+decorate <- function(distribution, decorators, R62S3 = TRUE){
   if(!checkmate::testList(decorators))
     decorators = list(decorators)
   dist_decors = distribution$decorators
@@ -31,6 +31,13 @@ decorate <- function(distribution, decorators){
     unlockBinding("decorators", distribution)
     distribution$decorators = unlist(decors_names)
     lockBinding("decorators", distribution)
+
+    if(R62S3){
+      lapply(decorators, function(y){
+        R62S3(y, list(get(getR6Class(x))), as.environment("package:distr6"), as.environment("package:distr6"))
+      })
+    }
+
 
     message(paste(dist_name,"is now decorated with",
                   paste0(decors_names,collapse = ",")))

@@ -54,5 +54,5 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   type = Reals$new()
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                   short_name = short_name, type = type, ...)
+                   short_name = short_name, type = type, prefixParams = FALSE,...)
 }) # IN PROGRESS

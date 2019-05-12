@@ -62,7 +62,7 @@ Binomial$set("public","survival",function(q, log.p = FALSE)
 Binomial$set("public","hazard",function(x)
   self$pdf(x)/self$survival(x))
 
-Binomial$set("public","cumhazard",function(x)
+Binomial$set("public","cumHazard",function(x)
   -self$cdf(x, log.p = TRUE))
 
 Binomial$set("private",".parameters",

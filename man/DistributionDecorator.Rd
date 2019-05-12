@@ -3,21 +3,15 @@
 \name{DistributionDecorator}
 \alias{DistributionDecorator}
 \title{Abstract Decorator for Distribution}
-\arguments{
-\item{distribution}{distribution object}
-
-\item{pos}{position of environment to assign decorated distribution}
-}
-\value{
-error
-}
 \description{
 An abstract decorator object for distributions to enhance functionality.
 }
 \details{
 This is an abstract class that cannot be directly constructed.
-  See the concete child classes for initializable statistical decorators.
+  See \code{\link{decorate}} for the function to decorate Distributions.
 }
 \seealso{
-\code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
+\code{\link{decorate}} for the decorating function. \code{\link{CoreStatistics}} and
+\code{\link{ExoticStatistics}} for available decorators. \code{\link{Distribution}} for decoratable
+distributions.
 }

@@ -1,14 +1,9 @@
-#' @title Exotic Statistics Methods for Distributions
+#' @title Exotic Statistical Methods for Distributions
 #'
-#' @description Further functionality to distribution objects for statistical
+#' @description Further functionality to distribution objects for numerical statistical
 #'   methods that can be considered more exotic than core, such as survival modelling
 #'   and p-norms.
 #' @name ExoticStatistics
-#'
-#' @section Usage: ExoticStatistics$new(distribution)
-#' @return \code{ExoticStatistics$new} constructs an R6 object of class Distribution.
-#'
-#' @param distribution distribution object.
 #'
 #' @details Decorator objects add functionality to the given Distribution object
 #'  by overwriting the object in the Global Environment. They can be specified

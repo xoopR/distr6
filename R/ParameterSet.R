@@ -229,6 +229,15 @@ ParameterSet$set("public","setParameterValue",function(lst){
   invisible(self)
 }) # NEEDS TESTING
 
+ParameterSet$set("public","rbind",function(...){
+  newpar = rbind(self$parameters(as.df = T),
+                 do.call(rbind,lapply(list(...), function(x) x$parameters(as.df = T))))
+  if(any(table(newpar$id)>1))
+    stop("IDs must be unique. Try using makeUniqueDistributions first.")
+  else
+    return(as.ParameterSet(newpar))
+})
+
 #' @name as.ParameterSet
 #' @title Coerce to a ParameterSet
 #' @description Coerces objects to ParameterSet.

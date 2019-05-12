@@ -71,12 +71,15 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower, up
 
   super$initialize(distlist = distlist, pdf = pdf, name = name,
                    short_name = short_name, type = distribution$type(),
-                   support = distribution$support(), distrDomain = distribution$distrDomain())
+                   support = distribution$support(), distrDomain = distribution$distrDomain(),
+                   prefixParams = FALSE)
 }) # IN PROGRESS
 
+#' @export
 huberize <- function(x,lower,upper,...){
   UseMethod("huberize", x)
 }
+#' @export
 huberize.Distribution <- function(x, lower, upper,...){
   HuberizedDistribution$new(x, lower, upper)
 }

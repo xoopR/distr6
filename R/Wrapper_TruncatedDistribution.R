@@ -64,12 +64,14 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower, up
 
   super$initialize(distlist = distlist, pdf = pdf, name = name,
                    short_name = short_name, support = Interval$new(lower, upper),
-                   type = distribution$type())
+                   type = distribution$type(), prefixParams = FALSE)
 }) # IN PROGRESS
 
+#' @export
 truncate <- function(x,lower,upper,...){
   UseMethod("truncate", x)
 }
+#' @export
 truncate.Distribution <- function(x, lower, upper,...){
   TruncatedDistribution$new(x, lower, upper)
 }

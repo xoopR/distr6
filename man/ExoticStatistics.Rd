@@ -2,15 +2,9 @@
 % Please edit documentation in R/DistributionDecorator_ExoticStatistics.R
 \name{ExoticStatistics}
 \alias{ExoticStatistics}
-\title{Exotic Statistics Methods for Distributions}
-\arguments{
-\item{distribution}{distribution object.}
-}
-\value{
-\code{ExoticStatistics$new} constructs an R6 object of class Distribution.
-}
+\title{Exotic Statistical Methods for Distributions}
 \description{
-Further functionality to distribution objects for statistical
+Further functionality to distribution objects for numerical statistical
   methods that can be considered more exotic than core, such as survival modelling
   and p-norms.
 }
@@ -22,10 +16,6 @@ Decorator objects add functionality to the given Distribution object
  Methods act on the distribution and not the constructor therefore method chaining of the form
  \code{ExoticStatistics$new(distribution)$hazard(1)} is not supported but \code{distribution$new(decorator=ExoticStatistics)$hazard(1)} is.
 }
-\section{Usage}{
- ExoticStatistics$new(distribution)
-}
-
 \examples{
 \dontrun{
 X = Binomial$new(decorator = "ExoticStatistics")
