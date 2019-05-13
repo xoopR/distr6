@@ -14,7 +14,7 @@ test_that("initialize",{
 
 
 test_that("getters",{
-  expect_warning(Binomial$new()$getParameterValue("prob"))
+  expect_silent(Binomial$new()$getParameterValue("prob"))
   expect_silent(Binomial$new()$parameters("prob"))
   expect_silent(Binomial$new()$parameters())
   expect_warning(Binomial$new()$getParameterValue("prob2"))
