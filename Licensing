@@ -1,0 +1,4 @@
+distr6 is based on the distrXXX family of packages, specifically distr, distrMod and distrEx.
+The distrXXX family of packages are released under LGPL-3 by Peter Ruckdeschel and Matthias Kohl.
+distr6 does not use any code or documentation from distr and Peter Ruckdeschel and Matthias Kohl have agreed for all code and
+documentation in distr6, including their contributions, to be released under the MIT licence + file LICENCE.
