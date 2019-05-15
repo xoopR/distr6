@@ -29,8 +29,9 @@ Binomial$set("public","expectation",function()
 Binomial$set("public","var",function()
   self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob"))
 
-Binomial$set("public","skewness",function()
-  (1 - (2*self$getParameterValue("prob"))) / self$sd())
+Binomial$set("public","skewness",function(){
+  (1 - (2*self$getParameterValue("prob"))) / self$sd()
+})
 
 Binomial$set("public","kurtosis",function(excess = TRUE){
   exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$var()
@@ -62,10 +63,21 @@ Binomial$set("public","survival",function(q, log.p = FALSE)
 Binomial$set("public","hazard",function(x)
   self$pdf(x)/self$survival(x))
 
-Binomial$set("public","cumHazard",function(x)
-  -self$cdf(x, log.p = TRUE))
+Binomial$set("public","cumHazard",function(x){
+  -self$cdf(x, log.p = TRUE)
+})
+
+Binomial$set("public","setParameterValue",function(lst){
+  super$setParameterValue(lst)
+  unlockBinding("properties", self)
+  self$properties$support <- Set$new(0:self$getParameterValue("size"))
+  lockBinding("properties", self)
+})
 
 Binomial$set("private",".parameters", NULL)
+Binomial$set("private",".setSupport", function(support){
+
+})
 
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL, ...){
 

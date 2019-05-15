@@ -4,34 +4,31 @@
 \alias{ProductDistribution}
 \title{Product Distribution}
 \description{
-A wrapper for truncating any probability distribution at given limits.
+A wrapper for creating the joint distribution of two indepdendent probability distributions.
 }
 \details{
-Truncates a distribution at lower and upper limits, using the formulae
-\deqn{f_T = f_X(x) / (F_X(upper) - F_X(lower))}
-\deqn{F_T = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
-where f_T/F_T is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and f_X, F_X is the
-pdf/cdf of the original distribution.
+Exploits the following relationships of independent distributions
+\deqn{f_P(x, y) = f_X(x) * f_Y(y)}
+\deqn{F_P(x, y) = F_X(x) * F_Y(y)}
+where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X,Y are independent distributions.
 
-If lower or upper are missing they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
-The support of the new distribution is the interval of points between lower and upper.
-
-\code{TruncatedDistribution} inherits all methods from \code{Distribution}.
+\code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 \section{Constructor Arguments}{
 
 \tabular{ll}{
-\code{distribution} \tab Distribution to truncate. \cr
-\code{lower} \tab Lower limit for truncation. \cr
-\code{upper} \tab Upper limit for truncation.
+\code{dist1} \tab Distribution. \cr
+\code{dist2} \tab Distribution. \cr
 }
 }
 
 \examples{
-truncBin <- TruncatedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
-truncBin$getParameterValue("truncBin_prob")
+prodBin <- ProductDistribution$new(Binomial$new(prob = 0.5, size = 10),
+Binomial$new(prob = 0.5, size = 20))
+prodBin$pdf(2, y =3)
+prodBin$cdf(5, y = 10)
 }
 \seealso{
-\code{\link{HuberizedDistribution}} and \code{\link{DistributionWrapper}} for wrapper details.
-See \code{\link{Distribution}} for a list of public methods.
+\code{\link{ArrayDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}
+for wrapper details.
 }

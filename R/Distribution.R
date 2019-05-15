@@ -240,12 +240,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     symm = ifelse(symmetric,"symmetric","asymmetric")
     self$properties <- c(self$properties, symmetry = symm)
 
-
-    unlockBinding("pdf", self)
-    unlockBinding("cdf", self)
-    unlockBinding("quantile", self)
-    unlockBinding("rand", self)
-
     if(!is.null(pdf)){
       checkmate::assert(sum(nchar(names(formals(pdf)))==1) == type$dimension(),
                         .var.name = "Dimension of type should equal number of pdf arguments.")
@@ -253,7 +247,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(pdf)$self = self
       else
         formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
-      self$pdf <- pdf
+      private$.pdf <- pdf
     }
 
     if(!is.null(cdf)){
@@ -263,7 +257,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(cdf)$self = self
       else
         formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-      self$cdf <- cdf
+      private$.cdf <- cdf
     }
 
     if(!is.null(pdf) & !is.null(cdf))
@@ -276,7 +270,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(quantile)$self = self
       else
         formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-      self$quantile <- quantile
+      private$.quantile <- quantile
     }
 
     if(!is.null(rand)){
@@ -284,7 +278,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(rand)$self = self
       else
         formals(rand) = c(formals(rand),list(self=self),alist(...=))
-      self$rand <- rand
+      private$.rand <- rand
     }
 
     if(!missing(parameters)){
@@ -321,10 +315,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     lockBinding("properties",self)
     lockBinding("parameters",self)
     lockBinding("decorators",self)
-    lockBinding("pdf",self)
-    lockBinding("cdf",self)
-    lockBinding("quantile",self)
-    lockBinding("rand",self)
 
   invisible(self)
 }) # IN PROGRESS/NEEDS TESTING
@@ -422,7 +412,7 @@ Distribution$set("public","type",function(){
   return(self$traits[["type"]])
 })
 
-# Properties Accessors
+# `Properties` Accessors
 Distribution$set("public","properties",list())
 Distribution$set("public","support",function(){
   return(self$properties[["support"]])
@@ -465,10 +455,40 @@ Distribution$set("public","setParameterValue",function(lst){
 }) # DONE
 
 # p/d/q/r
-Distribution$set("public","pdf",function(...) return(NULL))
-Distribution$set("public","cdf",function(...) return(NULL))
-Distribution$set("public","quantile",function(...) return(NULL))
-Distribution$set("public","rand",function(...) return(NULL))
+Distribution$set("public","pdf",function(x, ..., log = FALSE){
+  if(is.null(private$.pdf))
+    return(NULL)
+  else{
+    if(log)
+      return(log(private$.pdf(x,...)))
+    else
+      return(private$.pdf(x,...))
+  }
+}) # NEEDS TESTING
+Distribution$set("public","cdf",function(q, ..., lower.tail = TRUE, log.p = FALSE){
+  if(is.null(private$.cdf))
+    return(NULL)
+  else{
+    if(log.p & lower.tail) return(log(private$.cdf(q,...)))
+    else if(log.p & !lower.tail) return(log(1 - private$.cdf(q,...)))
+    else if(!log.p & lower.tail) return(private$.cdf(q,...))
+    else return(1 - private$.cdf(q,...))
+  }
+}) # NEEDS TESTING
+Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE){
+  if(is.null(private$.quantile))
+    return(NULL)
+  else{
+    if(lower.tail) return(private$.quantile(p,...))
+    else return(private$.quantile(1 - p,...))
+  }
+}) # NEEDS TESTING
+Distribution$set("public","rand",function(n){
+  if(is.null(private$.rand))
+    return(NULL)
+  else
+    return(private$.rand(n))
+}) # NEEDS TESTING
 
 # Analytic Maths/stats
 Distribution$set("public","sd",function(){
@@ -516,7 +536,10 @@ Distribution$set("public","liesInDistrDomain",function(x){
 #-------------------------------------------------------------
 # Distribution Private Variables
 #-------------------------------------------------------------
-
+Distribution$set("private",".pdf", NULL)
+Distribution$set("private",".cdf", NULL)
+Distribution$set("private",".quantile", NULL)
+Distribution$set("private",".rand", NULL)
 Distribution$set("private",".parameters",data.frame())
 Distribution$set("private",".workingSupport",NULL) # DONE
 

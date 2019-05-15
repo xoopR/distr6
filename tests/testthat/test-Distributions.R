@@ -41,8 +41,23 @@ test_that("check multivariate", {
                                  cdf = function(x,y) return("Test")))
 })
 
+dbin = function(x, log,...){
+  m1 = choose(self$getParameterValue("size"), x)
+  m2 = self$getParameterValue("prob")^x
+  m3 = (1-self$getParameterValue("prob"))^(self$getParameterValue("size") - x)
+  return(m1 * m2 * m3)
+}
+
+ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0.8),
+                      lower = list(0, 1, 0), upper = list(1, Inf, 1),
+                      class = list("numeric","integer","numeric"),
+                      settable = list(TRUE, TRUE, FALSE), fittable = list(TRUE, FALSE, FALSE),
+                      updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
+                      description = list("Probability of Success", "Number of trials",
+                                         "Probability of failure"))
+
 test_that("check r/d/p/q", {
-  expect_error(Distribution$new("Test", pdf = dbinom)$pdf(1))
+  expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps)$pdf(1))
   expect_null(Distribution$new("Test", pdf = dbinom)$cdf(1))
   expect_null(Distribution$new("Test", pdf = dbinom)$quantile(1))
   expect_null(Distribution$new("Test", pdf = dbinom)$rand(1))

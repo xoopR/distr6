@@ -1,3 +1,7 @@
+library(testthat)
+
+context("Truncation")
+
 test_that("check continuous Truncated wrapper", {
   TruncExp = TruncatedDistribution$new(Exponential$new(), lower = 1, upper = 5)
   expect_equal(TruncExp$support()$numeric(), 1:5)
