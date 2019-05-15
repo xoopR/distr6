@@ -4,6 +4,7 @@
 ![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 ![CRAN Version](http://www.r-pkg.org/badges/version/distr6)
 [![codecov](https://codecov.io/gh/RaphaelS1/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/distr6)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 distr6 is the R6 upgrade to the distr family of packages, full details of which can be found via the [sourceforge page](http://distr.r-forge.r-project.org/).
