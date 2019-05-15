@@ -13,7 +13,11 @@ getR6Class(x)
 string giving R6 class name.
 }
 \description{
-Gets the name of the given R6 class.
+Gets the name of the given R6 object
+}
+\details{
+The function works for R6 objects not classes. If the function fails make sure the
+class is constructed.
 }
 \examples{
 getR6Class(Binomial$new())

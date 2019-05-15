@@ -2,43 +2,30 @@
 % Please edit documentation in R/DistributionDecorator_ExoticStatistics.R
 \name{ExoticStatistics}
 \alias{ExoticStatistics}
-\title{Exotic Statistics Methods for Distributions}
-\arguments{
-\item{distribution}{distribution object.}
-}
-\value{
-\code{ExoticStatistics$new} constructs an R6 object of class Distribution.
-}
+\title{Exotic Statistical Methods for Distributions}
 \description{
-Further functionality to distribution objects for statistical
+Further functionality to distribution objects for numerical statistical
   methods that can be considered more exotic than core, such as survival modelling
   and p-norms.
 }
 \details{
 Decorator objects add functionality to the given Distribution object
- by overwriting the object in the Global Environment. They can be specified
- in construction of the Distribution or by constructing the given Decorator.
+ by copying methods in the decorator environment to the chosen Distribution environment. Use the
+ \code{\link{decorate}} function to decorate a Distribution. See the help pages for the individual
+ CoreStatistics methods to learn more.
 
- Methods act on the distribution and not the constructor therefore method chaining of the form
- \code{ExoticStatistics$new(distribution)$hazard(1)} is not supported but \code{distribution$new(decorator=ExoticStatistics)$hazard(1)} is.
+ All methods in this decorator use numerical approximations and therefore better results may be available
+ from analytic computations.
 }
-\section{Usage}{
- ExoticStatistics$new(distribution)
-}
-
 \examples{
-\dontrun{
-X = Binomial$new(decorator = "ExoticStatistics")
-X$survival(1)
-X$pdfPNorm()
-}
+x = Exponential$new()
+decorate(x, ExoticStatistics, R62S3 = FALSE)
+x$survival(1)
 
-\dontrun{
-X = Binomial$new()
-ExoticStatistics$new(X)
-X$pdfPNorm(4)
-}
+x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+x$survival(4)
 }
 \seealso{
-\code{\link{CoreStatistics}} for more available methods.
+\code{\link{decorate}} for the decorate function and \code{\link{CoreStatistics}} for
+more available methods.
 }

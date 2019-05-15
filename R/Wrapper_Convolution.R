@@ -5,7 +5,7 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
   distlist = makeUniqueDistributions(distlist)
 
 
-  if(testContinuous(dist1) & testContinuous(dist2)){
+  if(testContinuous(distlist$dist1) & testContinuous(distlist$dist2)){
     fnc <- function(x) {}
     if(add){
       body(fnc) <- substitute({
@@ -15,7 +15,7 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
               self$getInternalModel(name2)$pdf(y)},
               lower = self$getInternalModel(name2)$inf(), upper = z)$value
         }))
-      },list(name1 = dist1$short_name, name2 = dist2$short_name))
+      },list(name1 = distlist$dist1$short_name, name2 = distlist$dist2$short_name))
     } else {
       body(fnc) <- substitute({
         message("Results from numerical integration are approximate only, better results may be available.")
@@ -25,9 +25,9 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
               lower = self$getInternalModel(name2)$inf(),
               upper = z)$value
         }))
-      },list(name1 = dist1$short_name, name2 = dist2$short_name))
+      },list(name1 = distlist$dist1$short_name, name2 = distlist$dist2$short_name))
     }
-  } else if(testDiscrete(dist1) & testDiscrete(dist2)){
+  } else if(testDiscrete(distlist$dist1) & testDiscrete(distlist$dist2)){
     fnc <- function(x) {}
     if(add){
       body(fnc) <- substitute({
@@ -38,7 +38,7 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
           sum(self$getInternalModel(name1)$pdf(z - support) *
                 self$getInternalModel(name2)$pdf(support))
         }))
-      },list(name1 = dist1$short_name, name2 = dist2$short_name))
+      },list(name1 = distlist$dist1$short_name, name2 = distlist$dist2$short_name))
     } else {
       body(fnc) <- substitute({
         return(sapply(x,function(z){
@@ -47,14 +47,14 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
             support <- self$getInternalModel(name2)$.__enclos_env__$private$.getWorkingSupportRange()
           sum(self$getInternalModel(name1)$pdf(support - z) * self$getInternalModel(name2)$pdf(support))
         }))
-      },list(name1 = dist1$short_name, name2 = dist2$short_name))
+      },list(name1 = distlist$dist1$short_name, name2 = distlist$dist2$short_name))
     }
   }
 
-  name = paste("Convolution of",dist1$short_name,"and",dist2$short_name)
-  short_name = paste0(dist1$short_name,dist2$short_name)
+  name = paste("Convolution of",distlist$dist1$short_name,"and",distlist$dist2$short_name)
+  short_name = paste0(distlist$dist1$short_name,distlist$dist2$short_name)
 
-  if(testDiscrete(dist1) & testDiscrete(dist2))
+  if(testDiscrete(distlist$dist1) & testDiscrete(distlist$dist2))
     type = Naturals$new()
   else
     type = Reals$new()
@@ -63,9 +63,9 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
                    short_name = short_name, type = type, ...)
 }) # IN PROGRESS
 
-`+.Distribution` <- function(dist1, dist2){
+`Distribution+Distribution` <- function(dist1, dist2){
   Convolution$new(dist1, dist2, add = TRUE)
 }
-`-.Distribution` <- function(dist1, dist2){
+`Distribution-Distribution` <- function(dist1, dist2){
   Convolution$new(dist1, dist2, add = FALSE)
 }

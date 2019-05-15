@@ -29,8 +29,9 @@ Binomial$set("public","expectation",function()
 Binomial$set("public","var",function()
   self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob"))
 
-Binomial$set("public","skewness",function()
-  (1 - (2*self$getParameterValue("prob"))) / self$sd())
+Binomial$set("public","skewness",function(){
+  (1 - (2*self$getParameterValue("prob"))) / self$sd()
+})
 
 Binomial$set("public","kurtosis",function(excess = TRUE){
   exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$var()
@@ -62,20 +63,31 @@ Binomial$set("public","survival",function(q, log.p = FALSE)
 Binomial$set("public","hazard",function(x)
   self$pdf(x)/self$survival(x))
 
-Binomial$set("public","cumhazard",function(x)
-  -self$cdf(x, log.p = TRUE))
+Binomial$set("public","cumHazard",function(x){
+  -self$cdf(x, log.p = TRUE)
+})
 
-Binomial$set("private",".parameters",
-  ParameterSet$new(id = list("prob","size","qprob"), value = list(0.5, 10, 0.5),
-                   lower = list(0, 1, 0), upper = list(1, Inf, 1),
-                   class = list("numeric","integer","numeric"),
-                   settable = list(TRUE, TRUE, FALSE), fittable = list(TRUE, FALSE, FALSE),
-                   updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
-                   description = list("Probability of Success", "Number of trials",
-                                      "Probability of failure"))
-  )
+Binomial$set("public","setParameterValue",function(lst){
+  super$setParameterValue(lst)
+  unlockBinding("properties", self)
+  self$properties$support <- Set$new(0:self$getParameterValue("size"))
+  lockBinding("properties", self)
+})
 
-Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL){
+Binomial$set("private",".parameters", NULL)
+Binomial$set("private",".setSupport", function(support){
+
+})
+
+Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL, ...){
+
+  private$.parameters <- ParameterSet$new(id = list("prob","size","qprob"), value = list(0.5, 10, 0.5),
+                                          lower = list(0, 1, 0), upper = list(1, Inf, 1),
+                                          class = list("numeric","integer","numeric"),
+                                          settable = list(TRUE, TRUE, FALSE), fittable = list(TRUE, FALSE, FALSE),
+                                          updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
+                                          description = list("Probability of Success", "Number of trials",
+                                                             "Probability of failure"))
 
   self$setParameterValue(list(size = size, prob = prob))
 
@@ -90,6 +102,6 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = 
     self$properties$symmetry <- "asymmetric"
   lockBinding("properties", self)
 
-  super$initialize(decorators = decorators)
+  super$initialize(decorators = decorators, ...)
   invisible(self)
 })

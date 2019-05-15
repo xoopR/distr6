@@ -1,5 +1,7 @@
 library(testthat)
 
+context("Custom continuous distributions")
+
 dexpo = function(x, log,...){
   m1 = self$getParameterValue("rate")
   m2 = exp(-1 * self$getParameterValue("rate") * x)
@@ -32,15 +34,19 @@ test_that("check all accessors are working", {
   expect_equal(continuousTester$valueSupport(), "continuous")
   expect_equal(continuousTester$variateForm(), "univariate")
   expect_equal(continuousTester$symmetry(), "symmetric")
-  expect_is(continuousTester$getParameterValue("size"), "character")
+  expect_warning(continuousTester$getParameterValue("size"))
 })
 
 test_that("check core statistics", {
   expect_silent(continuousTester$setParameterValue(list(rate = 6)))
-  expect_message(decorate(continuousTester, CoreStatistics))
+  expect_message(decorate(continuousTester, CoreStatistics, FALSE))
   expect_equal(continuousTester$genExp(), 1/6)
   expect_equal(continuousTester$var(), 1/36)
   expect_equal(continuousTester$sd(), 1/6)
+  expect_silent(continuousTester$iqr())
+  expect_equal(continuousTester$kthmoment(0), 1)
+  expect_equal(continuousTester$kthmoment(1), 0)
+  expect_equal(continuousTester$cov(),continuousTester$var())
   expect_equal(continuousTester$kthmoment(2), continuousTester$var())
   expect_equal(continuousTester$kthmoment(3, type = "standard"), continuousTester$skewness())
   expect_equal(continuousTester$kthmoment(4, type = "standard"), continuousTester$kurtosis(FALSE))
@@ -51,7 +57,7 @@ test_that("check core statistics", {
 })
 
 test_that("check exotic statistics", {
-  expect_message(decorate(continuousTester, ExoticStatistics))
+  expect_message(decorate(continuousTester, ExoticStatistics, FALSE))
   expect_equal(continuousTester$survival(1), 1-continuousTester$cdf(1))
   expect_equal(round(continuousTester$survivalAntiDeriv(), 5), round(continuousTester$survivalPNorm(p = 1), 5))
   expect_equal(round(continuousTester$genExp(), 5), round(continuousTester$survivalPNorm(p = 1), 5))

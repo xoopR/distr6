@@ -49,6 +49,9 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower, up
 
   assertDistribution(distribution)
 
+  if(is.null(distribution$cdf(1)))
+    stop("cdf is required for huberization. Try decorate(Distribution, FunctionImputation) first.")
+
   if(missing(lower)) lower = distribution$inf()
   if(missing(upper)) upper = distribution$sup()
 
@@ -71,12 +74,24 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower, up
 
   super$initialize(distlist = distlist, pdf = pdf, name = name,
                    short_name = short_name, type = distribution$type(),
-                   support = distribution$support(), distrDomain = distribution$distrDomain())
+                   support = distribution$support(), distrDomain = distribution$distrDomain(),
+                   prefixParams = FALSE)
 }) # IN PROGRESS
 
-huberize <- function(x,lower,upper,...){
+#' @title Huberize a Distribution
+#' @description S3 functionality to huberize an R6 distribution.
+#'
+#' @param x distribution to huberize.
+#' @param lower lower limit for huberization.
+#' @param upper upper limit for huberization.
+#'
+#' @seealso \code{\link{HuberizedDistribution}}
+#'
+#' @export
+huberize <- function(x,lower,upper){
   UseMethod("huberize", x)
 }
-huberize.Distribution <- function(x, lower, upper,...){
+#' @export
+huberize.Distribution <- function(x, lower, upper){
   HuberizedDistribution$new(x, lower, upper)
 }

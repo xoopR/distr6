@@ -20,7 +20,7 @@ Exponential$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE)
   pexp(q, self$getParameterValue("rate"), lower.tail, log.p))
 
 Exponential$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE)
-  qexp(p, self$getParameterValue("rate"), log.p))
+  qexp(p, self$getParameterValue("rate"), lower.tail, log.p))
 
 Exponential$set("public","rand",function(n)
   rexp(n, self$getParameterValue("rate")))
@@ -61,22 +61,23 @@ Exponential$set("public","survival",function(q, log.p = FALSE)
 Exponential$set("public","hazard",function(x)
   self$pdf(x)/self$survival(x))
 
-Exponential$set("public","cumhazard",function(x)
+Exponential$set("public","cumHazard",function(x)
   -self$cdf(x, log.p = TRUE))
 
-Exponential$set("private",".parameters",
-             ParameterSet$new(id = list("rate","scale"), value = list(1, 1),
-                              lower = list(0, 0), upper = list(Inf, Inf),
-                              class = list("numeric","numeric"),
-                              settable = list(TRUE, FALSE), fittable = list(TRUE, FALSE),
-                              updateFunc = list(NULL, "1 / self$getParameterValue('rate')"),
-                              description = list("Arrival Rate", "Scale"))
-)
+Exponential$set("private",".parameters", NULL)
 
-Exponential$set("public","initialize",function(rate = 1, decorators = NULL){
+
+Exponential$set("public","initialize",function(rate = 1, decorators = NULL,...){
+
+  private$.parameters <- ParameterSet$new(id = list("rate","scale"), value = list(1, 1),
+                   lower = list(0, 0), upper = list(Inf, Inf),
+                   class = list("numeric","numeric"),
+                   settable = list(TRUE, FALSE), fittable = list(TRUE, FALSE),
+                   updateFunc = list(NULL, "1 / self$getParameterValue('rate')"),
+                   description = list("Arrival Rate", "Scale"))
 
   self$setParameterValue(list(rate = rate))
 
-  super$initialize(decorators = decorators)
+  super$initialize(decorators = decorators,...)
   invisible(self)
 })

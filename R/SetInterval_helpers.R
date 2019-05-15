@@ -49,7 +49,11 @@ operation <- function(unicode,...){
 #' @seealso \code{\link{union}} for the union of two or more intervals/sets.
 #' @export
 product <- function(...){
-  operation("\u00D7",...)
+  dots = list(...)
+  if(length(unique(sapply(dots,function(x) x$getSymbol()))) == 1 & length(dots)==2)
+    return(power(dots[[1]], length(dots)))
+  else
+    return(operation("\u00D7",...))
 }
 
 #' @title Symbolic Union for SetInterval
@@ -127,28 +131,32 @@ power <- function(x, power){
 #'
 #' @param set special set
 #'
-#' @details Special set should be supplied as a character string.
+#' @details Special set can be supplied as a character string or class, case-insensitive.
 #'   See \code{\link{SpecialSet}} for full list of currently supported sets.
 #'
 #' @seealso \code{\link{SpecialSet}}
 #'
 #' @export
 setSymbol <- function(set){
-  if(!inherits(set,"character"))
+  x = try(class(set),silent = T)
+  if(inherits(x, "try-error"))
     set = paste0(substitute(set))
+  else if(!inherits(set,"character"))
+    set = paste0(substitute(set))
+  set = tolower(set)
   return(switch(set,
-                Naturals = "\u2115",
-                PosNaturals = "\u2115+",
-                Integers = "\u2124",
-                PosIntegers = "\u2124+",
-                NegIntegers = "\u2124-",
-                Rationals = "\u211A",
-                PosRationals = "\u211A+",
-                NegRationals = "\u211A-",
-                Reals = "\u211D",
-                PosReals = "\u211D+",
-                NegReals = "\u211D-",
-                ExtendedReals = "\u211D \u222A {-\u221E, +\u221E}",
-                Complex = "\u2102"
+                naturals = "\u2115",
+                posnaturals = "\u2115+",
+                integers = "\u2124",
+                posintegers = "\u2124+",
+                negintegers = "\u2124-",
+                rationals = "\u211A",
+                posrationals = "\u211A+",
+                negrationals = "\u211A-",
+                reals = "\u211D",
+                posreals = "\u211D+",
+                negreals = "\u211D-",
+                extendedreals = "\u211D \u222A {-\u221E, +\u221E}",
+                complex = "\u2102"
   ))
 }

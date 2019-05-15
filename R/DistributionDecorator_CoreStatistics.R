@@ -1,15 +1,8 @@
-
-
-
-#' @title Core Statistics Methods for Distributions
+#' @title Core Statistical Methods for Distributions
 #'
-#' @description Added functionality to distribution objects for statistical
-#'   methods that can be considered core but lie outside of the p/d/q/r generation
-#'   functions.
+#' @description Added functionality to distribution objects for numerical statistical
+#'   methods. Including a generalised expectation function for more complex numerical calculations
 #' @name CoreStatistics
-#'
-#' @section Usage: CoreStatistics$new(distribution)
-#' @return \code{CoreStatistics$new} constructs an R6 object of class Distribution.
 #'
 #' @param distribution distribution object.
 #' @param t integer. Input for function evaluation.
@@ -19,42 +12,37 @@
 #' @param type string. One of "central" or "standard".
 #'
 #' @details Decorator objects add functionality to the given Distribution object
-#'  by overwriting the object in the Global Environment. They can be specified
-#'  in construction of the Distribution or by constructing the given Decorator.
+#'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
+#'  \code{\link{decorate}} function to decorate a Distribution. See the help pages for the individual
+#'  CoreStatistics methods to learn more.
 #'
-#'  Methods act on the distribution and not the constructor therefore method chaining of the form
-#'  \code{CoreStatistics$new(distribution)$iqr()} is not supported but \code{distribution$new(decorator=CoreStatistics)$iqr()} is.
+#'  All methods in this decorator use numerical approximations and therefore better results may be available
+#'  from analytic computations.
+#'
 #'
 #'  Generating functions are evaluated at a particular point \code{t} and do not
 #'   give specific analytic generating functions. \code{type} of moment is one of,
 #'   "central" for the kth moment about the mean, or "standard" for the central moment
 #'   standardised by, kthCentralMoment / standard deviation^k.
 #'
-#'   Many functions rely on the expectation of a distribution and therefore results may be
-#'   approximate when numerical integration is used.
-#'
-#' @seealso \code{\link{ExoticStatistics}} for more available methods.
+#' @seealso \code{\link{decorate}} for the decorate function and \code{\link{ExoticStatistics}} for
+#' more available methods.
 #'
 #' @examples
-#' \dontrun{
-#' X = Binomial$new(decorator = "CoreStatistics")
-#' X$iqr()
-#' X$kurtosis()
-#' }
+#' x = Binomial$new()
+#' decorate(x, CoreStatistics, R62S3 = FALSE)
+#' x$iqr()
 #'
 #' @examples
-#' \dontrun{
-#' X = Binomial$new()
-#' CoreStatistics$new(X)
-#' X$kthmoment(4)
-#' }
+#' x = Binomial$new(decorators = CoreStatistics, R62S3 = FALSE)
+#' x$kthmoment(4)
 NULL
 
 
 #' @export
 CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 
-#' @rdname CoreStatistics
+#' @title Moment Generating Function
 #' @name mgf
 #' @section Usage: $mgf(t)
 #' @return \code{mgf} gives the moment generating function evaluated at t

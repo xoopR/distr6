@@ -43,19 +43,21 @@ MixtureDistribution$set("public","initialize",function(distlist, weights, ...){
     checkmate::assert(sum(weights)==1)
   }
 
+  private$.weights <- weights
+
   pdf <- function(x,...) {
     if(length(x)==1)
-      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x)) * weights)))
+      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x)) * self$weights())))
     else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x)) * weights)))
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x)) * self$weights())))
   }
   formals(pdf)$self <- self
 
   cdf <- function(x,...) {
     if(length(x)==1)
-      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x)) * weights)))
+      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x)) * self$weights())))
     else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x)) * weights)))
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x)) * self$weights())))
   }
   formals(cdf)$self <- self
 
@@ -65,3 +67,9 @@ MixtureDistribution$set("public","initialize",function(distlist, weights, ...){
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
                    short_name = short_name, ...)
 }) # IN PROGRESS
+
+
+MixtureDistribution$set("public","weights",function(){
+  return(private$.weights)
+})
+MixtureDistribution$set("private",".weights",numeric(0))

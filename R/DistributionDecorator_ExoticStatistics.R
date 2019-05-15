@@ -1,38 +1,29 @@
-#' @title Exotic Statistics Methods for Distributions
+#' @title Exotic Statistical Methods for Distributions
 #'
-#' @description Further functionality to distribution objects for statistical
+#' @description Further functionality to distribution objects for numerical statistical
 #'   methods that can be considered more exotic than core, such as survival modelling
 #'   and p-norms.
 #' @name ExoticStatistics
 #'
-#' @section Usage: ExoticStatistics$new(distribution)
-#' @return \code{ExoticStatistics$new} constructs an R6 object of class Distribution.
-#'
-#' @param distribution distribution object.
-#'
 #' @details Decorator objects add functionality to the given Distribution object
-#'  by overwriting the object in the Global Environment. They can be specified
-#'  in construction of the Distribution or by constructing the given Decorator.
+#'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
+#'  \code{\link{decorate}} function to decorate a Distribution. See the help pages for the individual
+#'  CoreStatistics methods to learn more.
 #'
-#'  Methods act on the distribution and not the constructor therefore method chaining of the form
-#'  \code{ExoticStatistics$new(distribution)$hazard(1)} is not supported but \code{distribution$new(decorator=ExoticStatistics)$hazard(1)} is.
+#'  All methods in this decorator use numerical approximations and therefore better results may be available
+#'  from analytic computations.
 #'
-#'
-#' @seealso \code{\link{CoreStatistics}} for more available methods.
-#'
-#' @examples
-#' \dontrun{
-#' X = Binomial$new(decorator = "ExoticStatistics")
-#' X$survival(1)
-#' X$pdfPNorm()
-#' }
+#' @seealso \code{\link{decorate}} for the decorate function and \code{\link{CoreStatistics}} for
+#' more available methods.
 #'
 #' @examples
-#' \dontrun{
-#' X = Binomial$new()
-#' ExoticStatistics$new(X)
-#' X$pdfPNorm(4)
-#' }
+#' x = Exponential$new()
+#' decorate(x, ExoticStatistics, R62S3 = FALSE)
+#' x$survival(1)
+#'
+#' @examples
+#' x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+#' x$survival(4)
 NULL
 
 
@@ -50,18 +41,35 @@ ExoticStatistics$set("public", "logCdf", function(x) {
 }) # TO DO
 ExoticStatistics$set("public", "generalisedIntegral", function() {
 }) # TO DO
-ExoticStatistics$set("public", "survival", function(x, log.p=FALSE) {
-  if(!log.p){
-    return(1 - self$cdf(x))
+ExoticStatistics$set("public", "survival", function(x, log = FALSE) {
+  if(!is.null(self$cdf(x))){
+    if(log)
+      return(log(1 - self$cdf(x)))
+    else
+      return(1 - self$cdf(x))
   } else {
-    message("Results from numerical integration may not be exact.")
-    integrate()
+    message(.distr6$message_numeric)
+    surv = integrate(self$pdf, x, Inf)$value
+    if(log)
+      return(log(surv))
+    else
+      return(surv)
   }
-}) # IN PROGRESS
+}) # DONE
 ExoticStatistics$set("public", "hazard", function(x, log=FALSE) {
-  if(!log){
-    return(self$pdf(x) / self$survival(x))
-  }
+  if(!is.null(self$pdf(x)))
+    pdf = self$pdf(x)
+  else if(!is.null(self$cdf(x)))
+    pdf = deriv(y~self$cdf(x),"x")
+
+  surv = self$survival(x)
+
+  haz = pdf/surv
+
+  if(log)
+    return(log(haz))
+  else
+    return(haz)
 }) # IN PROGRESS
 ExoticStatistics$set("public", "cumHazard", function(x, log=FALSE) {
   if(!log){
