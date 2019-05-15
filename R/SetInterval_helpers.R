@@ -49,7 +49,11 @@ operation <- function(unicode,...){
 #' @seealso \code{\link{union}} for the union of two or more intervals/sets.
 #' @export
 product <- function(...){
-  operation("\u00D7",...)
+  dots = list(...)
+  if(length(unique(sapply(dots,function(x) x$getSymbol()))) == 1 & length(dots)==2)
+    return(power(dots[[1]], length(dots)))
+  else
+    return(operation("\u00D7",...))
 }
 
 #' @title Symbolic Union for SetInterval

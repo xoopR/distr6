@@ -169,8 +169,8 @@ Distribution$set("private",".getWorkingSupportRange",function(){
 #-------------------------------------------------------------
 # Distribution Public Methods
 #-------------------------------------------------------------
-Distribution$set("public","initialize",function(name, short_name,
-                      type = Reals$new(), support, distrDomain,
+Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
+                      type = Reals$new(), support = NULL, distrDomain = NULL,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                       parameters, decorators = NULL, valueSupport = NULL, variateForm = NULL,
@@ -179,8 +179,14 @@ Distribution$set("public","initialize",function(name, short_name,
 
   if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
+    if(is.null(pdf) & is.null(cdf))
+      stop("One of pdf or cdf must be provided.")
+
     # Validation checks
+    if(is.null(name) & is.null(short_name))
+      checkmate::assert("One of 'name' or 'short_name' must be provided.")
     if(missing(short_name)) short_name = gsub(" ","",name,fixed = T)
+    if(missing(name)) name = short_name
     checkmate::assertCharacter(c(name, short_name),
                                .var.name = "'name' and 'short_name' must be of class 'character'.")
     checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
@@ -195,31 +201,32 @@ Distribution$set("public","initialize",function(name, short_name,
     if(!is.null(description))
       self$description <- description
 
-    if(missing(support))
-      support = type
-    if(missing(distrDomain))
-      distrDomain = type
+    if(is.null(support)) support <- type
+    if(is.null(distrDomain)) distrDomain <- type
+    checkmate::assert(inherits(type,"SetInterval"), inherits(support,"SetInterval"),
+                      inherits(distrDomain,"SetInterval"),
+                      .var.name = "'type', 'support' and 'distrDomain' should be class 'SetInterval'.")
 
-    checkmate::assert(inherits(type,"Set"), .var.name = "type should be class 'Set'.")
-    checkmate::assert(inherits(support,"Set"), inherits(distrDomain,"Set"),
-                      .var.name = "'support' and 'distrDomain' should be class 'Set'.")
-
-    if(!is.null(valueSupport))
-      checkmate::assert(valueSupport == "continuous", valueSupport == "discrete",
-                        valueSupport == "mixture",
-                        .var.name = "valueSupport should be one of: 'continuous', 'discrete',
-                        'mixture'.")
-    else if(class(support)[[1]] %in% c("Reals","PosReals","NegReals"))
+    if(!is.null(valueSupport)){
+      if(grepl("^c",valueSupport))
+        valueSupport = "continuous"
+      else if(grepl("^d",valueSupport))
+        valueSupport = "discrete"
+      else if(grepl("^m",valueSupport))
+        valueSupport = "mixture"
+      else
+        stop("valueSupport should be one of: 'continuous', 'discrete','mixture'.")
+    } else if(class(support)[[1]] %in% c("Reals","PosReals","NegReals","Rationals","PosRationals","NegRationals"))
       valueSupport = "continuous"
     else
       valueSupport = "discrete"
 
-    if(!is.null(variateForm))
-      checkmate::assert(variateForm == "univariate", variateForm == "multivariate",
-                        variateForm == "matrixvariate",
-                        .var.name = "variateForm should be one of: 'univariate', 'multivariate',
-                        'matrixvariate'.")
-    else if(type$dimension() == 1)
+    if(!is.null(variateForm)){
+      if(grepl("^u",variateForm)) variateForm = "univariate"
+      else if(grepl("^mu",variateForm)) variateForm = "multivariate"
+      else if(grepl("^ma",variateForm)) variateForm = "matrixvariate"
+      else stop("variateForm should be one of: 'univariate', 'multivariate','matrixvariate'.")
+    } else if(type$dimension() == 1)
       variateForm = "univariate"
     else
       variateForm = "multivariate"
@@ -228,56 +235,57 @@ Distribution$set("public","initialize",function(name, short_name,
     self$traits <- c(self$traits, valueSupport = valueSupport)
     self$traits <- c(self$traits, variateForm = variateForm)
 
-
     self$properties <- c(self$properties, support = support)
     self$properties <- c(self$properties, distrDomain = distrDomain)
     symm = ifelse(symmetric,"symmetric","asymmetric")
     self$properties <- c(self$properties, symmetry = symm)
 
 
+    unlockBinding("pdf", self)
+    unlockBinding("cdf", self)
+    unlockBinding("quantile", self)
+    unlockBinding("rand", self)
+
     if(!is.null(pdf)){
+      checkmate::assert(sum(nchar(names(formals(pdf)))==1) == type$dimension(),
+                        .var.name = "Dimension of type should equal number of pdf arguments.")
       if(!is.null(formals(pdf)$self))
         formals(pdf)$self = self
       else
         formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
-      private$.pdf <- pdf
-    } else
-      private$.pdf <- function(...){
-        return(NULL)
-      }
+      self$pdf <- pdf
+    }
 
     if(!is.null(cdf)){
+      checkmate::assert(sum(nchar(names(formals(cdf)))==1) == type$dimension(),
+                        .var.name = "Dimension of type should equal number of cdf arguments.")
       if(!is.null(formals(cdf)$self))
         formals(cdf)$self = self
       else
         formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-      private$.cdf <- cdf
-    } else
-      private$.cdf <- function(...){
-        return(NULL)
-      }
+      self$cdf <- cdf
+    }
+
+    if(!is.null(pdf) & !is.null(cdf))
+      checkmate::assert(all(names(formals(pdf)[nchar(names(formals(pdf)))==1]) ==
+                              names(formals(cdf)[nchar(names(formals(cdf)))==1])),
+                        .var.name = "'pdf' and 'cdf' maust take the same arguments.")
 
     if(!is.null(quantile)){
       if(!is.null(formals(quantile)$self))
         formals(quantile)$self = self
       else
         formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-      private$.quantile <- quantile
-    } else
-      private$.quantile <- function(...){
-        return(NULL)
-      }
+      self$quantile <- quantile
+    }
 
     if(!is.null(rand)){
       if(!is.null(formals(rand)$self))
         formals(rand)$self = self
       else
         formals(rand) = c(formals(rand),list(self=self),alist(...=))
-      private$.rand <- rand
-    } else
-      private$.rand <- function(...){
-        return(NULL)
-      }
+      self$rand <- rand
+    }
 
     if(!missing(parameters)){
       checkmate::assertClass(parameters,"ParameterSet")
@@ -313,6 +321,10 @@ Distribution$set("public","initialize",function(name, short_name,
     lockBinding("properties",self)
     lockBinding("parameters",self)
     lockBinding("decorators",self)
+    lockBinding("pdf",self)
+    lockBinding("cdf",self)
+    lockBinding("quantile",self)
+    lockBinding("rand",self)
 
   invisible(self)
 }) # IN PROGRESS/NEEDS TESTING
@@ -453,49 +465,10 @@ Distribution$set("public","setParameterValue",function(lst){
 }) # DONE
 
 # p/d/q/r
-Distribution$set("public","pdf",function(x, log = FALSE){
-
-  if(is.null(private$.pdf(1)))
-    return(NULL)
-
-  y = x
-
-  y[!self$liesInSupport(x, F)] = 0
-
-  if(all(y == 0))
-    return(y)
-  else{
-
-    if(log)
-      y[self$liesInSupport(x, F)] = log(private$.pdf(x[self$liesInSupport(x, F)], self = self))
-    else
-      y[self$liesInSupport(x, F)] = private$.pdf(x[self$liesInSupport(x, F)], self = self)
-
-    return(y)
-  }
-}) # NEEDS TESTING
-Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE){
-  if(is.null(private$.cdf(1)))
-    return(NULL)
-
-  if(self$liesInSupport(q)){
-      return(private$.cdf(q, self = self, lower.tail = TRUE, log.p = FALSE))
-  }else
-    warning(sprintf("%s does not lie in the support of %s",x,getR6Class(self)))
-}) # NEEDS TESTING
-Distribution$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE){
-  if(is.null(private$.quantile(1)))
-    return(NULL)
-
-  checkmate::assertNumeric(p, lower = 0, upper = 1)
-  return(private$.quantile(p, self = self, lower.tail = TRUE, log.p = FALSE))
-}) # NEEDS TESTING
-Distribution$set("public","rand",function(n){
-  if(is.null(private$.rand(1)))
-    return(NULL)
-
-  return(private$.rand(n))
-}) # NEEDS TESTING
+Distribution$set("public","pdf",function(...) return(NULL))
+Distribution$set("public","cdf",function(...) return(NULL))
+Distribution$set("public","quantile",function(...) return(NULL))
+Distribution$set("public","rand",function(...) return(NULL))
 
 # Analytic Maths/stats
 Distribution$set("public","sd",function(){
@@ -545,9 +518,5 @@ Distribution$set("public","liesInDistrDomain",function(x){
 #-------------------------------------------------------------
 
 Distribution$set("private",".parameters",data.frame())
-Distribution$set("private",".pdf",NULL) # DONE
-Distribution$set("private",".cdf",NULL) # DONE
-Distribution$set("private",".rand",NULL) # DONE
-Distribution$set("private",".quantile",NULL) # DONE
 Distribution$set("private",".workingSupport",NULL) # DONE
 

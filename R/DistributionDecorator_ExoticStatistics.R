@@ -41,18 +41,35 @@ ExoticStatistics$set("public", "logCdf", function(x) {
 }) # TO DO
 ExoticStatistics$set("public", "generalisedIntegral", function() {
 }) # TO DO
-ExoticStatistics$set("public", "survival", function(x, log.p=FALSE) {
-  if(!log.p){
-    return(1 - self$cdf(x))
+ExoticStatistics$set("public", "survival", function(x, log = FALSE) {
+  if(!is.null(self$cdf(x))){
+    if(log)
+      return(log(1 - self$cdf(x)))
+    else
+      return(1 - self$cdf(x))
   } else {
-    message("Results from numerical integration may not be exact.")
-    integrate()
+    message(.distr6$message_numeric)
+    surv = integrate(self$pdf, x, Inf)$value
+    if(log)
+      return(log(surv))
+    else
+      return(surv)
   }
-}) # IN PROGRESS
+}) # DONE
 ExoticStatistics$set("public", "hazard", function(x, log=FALSE) {
-  if(!log){
-    return(self$pdf(x) / self$survival(x))
-  }
+  if(!is.null(self$pdf(x)))
+    pdf = self$pdf(x)
+  else if(!is.null(self$cdf(x)))
+    pdf = deriv(y~self$cdf(x),"x")
+
+  surv = self$survival(x)
+
+  haz = pdf/surv
+
+  if(log)
+    return(log(haz))
+  else
+    return(haz)
 }) # IN PROGRESS
 ExoticStatistics$set("public", "cumHazard", function(x, log=FALSE) {
   if(!log){

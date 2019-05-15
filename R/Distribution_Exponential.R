@@ -64,16 +64,17 @@ Exponential$set("public","hazard",function(x)
 Exponential$set("public","cumHazard",function(x)
   -self$cdf(x, log.p = TRUE))
 
-Exponential$set("private",".parameters",
-             ParameterSet$new(id = list("rate","scale"), value = list(1, 1),
-                              lower = list(0, 0), upper = list(Inf, Inf),
-                              class = list("numeric","numeric"),
-                              settable = list(TRUE, FALSE), fittable = list(TRUE, FALSE),
-                              updateFunc = list(NULL, "1 / self$getParameterValue('rate')"),
-                              description = list("Arrival Rate", "Scale"))
-)
+Exponential$set("private",".parameters", NULL)
+
 
 Exponential$set("public","initialize",function(rate = 1, decorators = NULL,...){
+
+  private$.parameters <- ParameterSet$new(id = list("rate","scale"), value = list(1, 1),
+                   lower = list(0, 0), upper = list(Inf, Inf),
+                   class = list("numeric","numeric"),
+                   settable = list(TRUE, FALSE), fittable = list(TRUE, FALSE),
+                   updateFunc = list(NULL, "1 / self$getParameterValue('rate')"),
+                   description = list("Arrival Rate", "Scale"))
 
   self$setParameterValue(list(rate = rate))
 

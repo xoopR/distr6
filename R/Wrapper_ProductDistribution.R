@@ -28,41 +28,29 @@ NULL
 
 #' @export
 ProductDistribution <- R6::R6Class("ProductDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
-ProductDistribution$set("public","initialize",function(distribution, lower, upper){
+ProductDistribution$set("public","initialize",function(dist1, dist2){
 
-  assertDistribution(distribution)
+  distlist = list(dist1$clone(), dist2$clone())
+  distlist = makeUniqueDistributions(distlist)
 
-  if(!missing(lower) & !missing(upper)){
-    pdf <- function(x,...) {
-      self$wrappedModels()[[1]]$pdf(x) / (self$wrappedModels()[[1]]$cdf(upper) - self$wrappedModels()[[1]]$cdf(lower))
-    }
-    formals(pdf)$self <- self
-  } else if(!missing(lower) & missing(upper)){
-    pdf <- function(x,...) {
-      self$wrappedModels()[[1]]$pdf(x) / (1 - self$wrappedModels()[[1]]$cdf(lower))
-    }
-    formals(pdf)$self <- self
-  } else if(missing(lower) & !missing(upper)){
-    pdf <- function(x,...) {
-      self$wrappedModels()[[1]]$pdf(x) / self$wrappedModels()[[1]]$cdf(lower)
-    }
-    formals(pdf)$self <- self
-  } else{
-    lower = distribution$inf()
-    upper = distribution$sup()
-    pdf <- function(x,...) {
-      self$wrappedModels()[[1]]$pdf(x) / (self$wrappedModels()[[1]]$cdf(upper) - self$wrappedModels()[[1]]$cdf(lower))
-    }
-    formals(pdf)$self <- self
-  }
+  name = paste("Product of",distlist[[1]]$short_name,"and",distlist[[2]]$short_name)
+  short_name = paste0(distlist[[1]]$short_name,"X",distlist[[2]]$short_name)
 
-  name = paste("Truncated",distribution$name())
-  short_name = paste0("Truncated",distribution$short_name())
+  pdf = function(x,y) {}
+  body(pdf) = substitute({
+    return(self$wrappedModels(dist1)$pdf(x) * self$wrappedModels(dist2)$pdf(y))
+  },list(dist1 = distlist[[1]]$short_name, dist2 = distlist[[2]]$short_name))
 
-  distlist = list(distribution)
-  names(distlist) = distribution$short_name()
+  cdf = function(x,y) {}
+  body(cdf) = substitute({
+    return(self$wrappedModels(dist1)$cdf(x) * self$wrappedModels(dist2)$cdf(y))
+  },list(dist1 = distlist[[1]]$short_name, dist2 = distlist[[2]]$short_name))
 
-  super$initialize(distlist = distlist, pdf = pdf, name = name,
-                   short_name = short_name, support = Interval$new(lower, upper),
-                   type = distribution$type())
+  type = distlist[[1]]$type() * distlist[[2]]$type()
+  support = distlist[[1]]$support() * distlist[[2]]$support()
+  distrDomain = distlist[[1]]$distrDomain() * distlist[[2]]$distrDomain()
+
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
+                   short_name = short_name, support = support, type = type,
+                   distrDomain = distrDomain)
 }) # IN PROGRESS
