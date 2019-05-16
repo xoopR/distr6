@@ -2,16 +2,12 @@ library(testthat)
 
 context("Exotic Statistics")
 
-library(testthat)
-
-context("Custom continuous distributions")
-
-dexpo = function(x, log,...){
+dexpo = function(x){
   m1 = self$getParameterValue("rate")
   m2 = exp(-1 * self$getParameterValue("rate") * x)
   return(m1 * m2)
 }
-cexpo = function(x, ...){
+cexpo = function(x){
   m1 = exp(-1 * self$getParameterValue("rate") * x)
   return(1 - m1)
 }

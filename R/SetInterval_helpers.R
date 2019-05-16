@@ -25,8 +25,8 @@ operation <- function(unicode,...){
       x <- paste0(x,"}")
     return(x)
   })
-  lower = as.numeric(lapply(dots, function(x) x$lower()))
-  upper = as.numeric(lapply(dots, function(x) x$upper()))
+  lower = as.numeric(unlist(lapply(dots, function(x) x$lower())),recursive=T)
+  upper = as.numeric(unlist(lapply(dots, function(x) x$upper()),recursive = T))
 
   setSymbol <- paste(unlist(symbols), collapse = paste0(" ",unicode," "))
   return(SetInterval$new(symbol = setSymbol, type = "{}", lower = lower,
@@ -50,7 +50,7 @@ operation <- function(unicode,...){
 #' @export
 product <- function(...){
   dots = list(...)
-  if(length(unique(sapply(dots,function(x) x$getSymbol()))) == 1 & length(dots)==2)
+  if(length(unique(sapply(dots,function(x) x$getSymbol()))) == 1 & length(dots)>1)
     return(power(dots[[1]], length(dots)))
   else
     return(operation("\u00D7",...))

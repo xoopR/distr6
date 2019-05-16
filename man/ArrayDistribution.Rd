@@ -4,32 +4,30 @@
 \alias{ArrayDistribution}
 \title{Product ArrayDistribution}
 \description{
-A special case joint distribution where each indepdent distribution is the same Distribution
-but not necessarily with the same parameters.
+A special case joint distribution where each independent distribution is the same
+Distribution class but not necessarily with the same parameters.
 }
 \details{
 Exploits the following relationships of independent distributions
-\deqn{f_P(x, y) = f_X(x) * f_Y(y)}
-\deqn{F_P(x, y) = F_X(x) * F_Y(y)}
-where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X,Y are independent distributions.
+\deqn{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
+\deqn{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
+where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
 
-\code{JointDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+\code{ArrayDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 \section{Constructor Arguments}{
 
 \tabular{ll}{
 \code{distribution} \tab Distribution. \cr
-\code{paramVector} \tab vector of parameters, see details. \cr
+\code{paramList} \tab list of parameters, see examples. \cr
 }
 }
 
 \examples{
-\dontrun{
-prodBin <- ArrayDistribution$new(Binomial$new(prob = 0.5, size = 10),
-Binomial$new(prob = 0.5, size = 20))
-prodBin$pdf(2)
-prodBin$cdf(5)
-}
+a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                        list(prob = 0.2, size = 6)))
+a$pdf(1,2,3)
+a$cdf(1,2,3)
 }
 \seealso{
 \code{\link{ProductDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}

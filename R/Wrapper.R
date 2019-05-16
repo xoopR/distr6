@@ -77,13 +77,17 @@ DistributionWrapper$set("public","setParameterValue",function(lst){
   }
   rm(i)
 
-  params <- do.call(rbind.data.frame,lapply(private$.wrappedModels, function(x){
+  params <- do.call(rbind,lapply(self$wrappedModels(), function(x){
     params = x[["parameters"]](as.df = T)
     params[,1] = paste(x[["short_name"]],params[,1],sep="_")
     return(params)
   }))
   row.names(params) <- NULL
   private$.parameters <- as.ParameterSet(params)
+
+  unlockBinding("properties",self)
+  self$properties$support <- do.call(product,lapply(self$wrappedModels(),function(x) x$support()))
+  lockBinding("properties",self)
 
   invisible(self)
 }) # NEEDS TESTING

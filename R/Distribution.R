@@ -167,7 +167,7 @@ Distribution$set("private",".getWorkingSupportRange",function(){
 # Distribution Public Methods
 #-------------------------------------------------------------
 Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
-                      type = Reals$new(), support = NULL, distrDomain = NULL,
+                      type = NULL, support = NULL, distrDomain = NULL,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                       parameters, decorators = NULL, valueSupport = NULL, variateForm = NULL,
@@ -198,6 +198,10 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     if(!is.null(description))
       self$description <- description
 
+    if(is.null(type)){
+      if(!is.null(pdf)) type <- Reals$new(dim = length(formals(pdf)))
+      else type <- Reals$new(dim = length(formals(cdf)))
+    }
     if(is.null(support)) support <- type
     if(is.null(distrDomain)) distrDomain <- type
     checkmate::assert(inherits(type,"SetInterval"), inherits(support,"SetInterval"),
@@ -238,8 +242,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     self$properties <- c(self$properties, symmetry = symm)
 
     if(!is.null(pdf)){
-      checkmate::assert(sum(nchar(names(formals(pdf)))==1) == type$dimension(),
-                        .var.name = "Dimension of type should equal number of pdf arguments.")
       if(!is.null(formals(pdf)$self))
         formals(pdf)$self = self
       else
@@ -248,8 +250,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     }
 
     if(!is.null(cdf)){
-      checkmate::assert(sum(nchar(names(formals(cdf)))==1) == type$dimension(),
-                        .var.name = "Dimension of type should equal number of cdf arguments.")
       if(!is.null(formals(cdf)$self))
         formals(cdf)$self = self
       else
@@ -257,10 +257,13 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       private$.cdf <- cdf
     }
 
-    if(!is.null(pdf) & !is.null(cdf))
-      checkmate::assert(all(names(formals(pdf)[nchar(names(formals(pdf)))==1]) ==
-                              names(formals(cdf)[nchar(names(formals(cdf)))==1])),
+    if(!is.null(pdf) & !is.null(cdf)){
+      checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
                         .var.name = "'pdf' and 'cdf' maust take the same arguments.")
+      checkmate::assert(all(names(formals(pdf)) == names(formals(cdf))),
+                        .var.name = "'pdf' and 'cdf' maust take the same arguments.")
+    }
+
 
     if(!is.null(quantile)){
       if(!is.null(formals(quantile)$self))

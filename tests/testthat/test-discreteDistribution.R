@@ -2,7 +2,7 @@ library(testthat)
 
 context("Custom discrete distributions")
 
-dbin = function(x, log,...){
+dbin = function(x){
  m1 = choose(self$getParameterValue(id="size"), x)
  m2 = self$getParameterValue(id="prob")^x
  m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
