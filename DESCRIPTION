@@ -6,6 +6,7 @@ Authors@R:
              family = "Sonabend",
              role = c("aut","cre"),
              email = "raphael.sonabend.15@ucl.ac.uk"),
+             comment = c(ORCID = "0000-0001-9225-4654")),
       person(given = "Franz",
              family = "Kiraly",
              role = "aut",
