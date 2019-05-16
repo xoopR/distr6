@@ -1,5 +1,65 @@
 #' @title Binomial Distribution
+#' @description Mathematical and statistical functions for the Binomial distribution parameterised
+#' with probability of success and size (number of trials).
+#' @name Binomial
 #'
+#' @section Constructor Arguments:
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{size} \tab numeric \tab number of trials, default = 10. \cr
+#' \code{prob} \tab numeric \tab probability of success, default = 0.5. \cr
+#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{...} \tab ANY \tab additional arguments for Distribution constructor. See details. \cr
+#' }
+#'
+#' @section Constructor Details: The Binomial distribution is parameterised with size (number of trials)
+#' as an integer and prob (probability of success) as a number between 0 and 1.
+#'
+#' The CoreStatistics and ExoticStatistics decorators can be added to the distribution for further
+#' numeric functionality, but these are approximate calculations only. Additional arguments can be passed
+#' to the Distribution constructor, including R62S3 to determine if S3 methods should be added for
+#' the Binomial distribution.
+#'
+#'
+#' @section Public Variables:
+#'  \tabular{lr}{
+#'   \strong{Method} \tab \strong{Return} \cr
+#'   \code{name} \tab "Binomial" \cr
+#'   \code{short_name} \tab "Binom" \cr
+#'   \code{traits} \tab List of Binomial distribution traits. \cr
+#'   \code{properties} \tab List of Binomial distribution properties. \cr
+#'   }
+#'
+#' @section Public Methods:
+#'  \tabular{lrr}{
+#'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
+#'   \code{pdf(x, log = FALSE)} \tab character \tab Evaluates density at x. \cr
+#'   \code{cdf(q, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at q. \cr
+#'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
+#'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
+#'   \code{expectation()} \tab numeric \tab Expectation.  \cr
+#'   \code{var()} \tab numeric \tab Variance.  \cr
+#'   \code{skewness()} \tab numeric \tab Skewness. \cr
+#'   \code{kurtosis(excess = TRUE)} \tab numeric \tab Kurtosis. Kurtosis - 3 if excess = TRUE. \cr
+#'   \code{entropy(base = 2)} \tab numeric \tab Entropy. Shannon if base = 2. \cr
+#'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
+#'   \code{pgf(t)} \tab numeric \tab Evaluates probability generating function at t. \cr
+#'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
+#'   \code{survival(q, log.p = FALSE)} \tab numeric \tab Evaluates survival function at q. \cr
+#'   \code{hazard(x)} \tab numeric \tab Evaluates hazard function at t. \cr
+#'   \code{cumHazard(x)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
+#'   }
+#'
+#' @section Public Methods Details:
+#' If \code{log.p} is TRUE then the natural logarithm of probabilities is returned. If \code{lower.tail}
+#' is TRUE then distribution functions are evaluated at the lower tail of the distribution, otherwise
+#' the upper tail (1 - p).
+#'
+#'
+#' @seealso See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
+#' for Decorator details as well as \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
+NULL
+
 #' @include SetInterval_SpecialSet.R ParameterSet.R
 #' @export
 Binomial <- R6::R6Class("Binomial", inherit = Distribution, lock_objects = F)

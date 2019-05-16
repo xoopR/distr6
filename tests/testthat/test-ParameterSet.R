@@ -28,5 +28,5 @@ test_that("setters",{
 
 test_that("rbind",{
   expect_error(rbind(Binomial$new()$parameters(),Binomial$new()$parameters()))
-  expect_silent(Binomial$new()$parameters()$rbind(Exponential$new()$parameters()))
+  expect_silent(Binomial$new()$parameters()$rbind(Exponential$new(rate=1)$parameters()))
 })

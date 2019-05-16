@@ -141,13 +141,14 @@ ParameterSet$set("public","print", function(){
 })
 ParameterSet$set("public","update", function(){
   if(any(!is.na(private$.parameters$updateFunc))){
-    updates = private$.parameters[!is.na(private$.parameters$updateFunc),]
+    update_filter = !is.na(private$.parameters$updateFunc) & !private$.parameters$settable
+    updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       fnc = function(self){}
       body(fnc) = parse(text = x[[9]])
       newval = fnc(self)
     })
-    private$.parameters[!is.na(private$.parameters$updateFunc),"value"] = as.numeric(newvals)
+    private$.parameters[update_filter,"value"] = as.numeric(newvals)
   }
   invisible(self)
 })
@@ -225,6 +226,7 @@ ParameterSet$set("public","setParameterValue",function(lst){
       value = as.integer(value)
       checkmate::assertInteger(value,lower = param$lower, upper = param$upper)
     }
+
     private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
   }
 

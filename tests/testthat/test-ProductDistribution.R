@@ -4,7 +4,7 @@ context("Product Distribution")
 
 test_that("constructor",{
   expect_silent(ProductDistribution$new(Binomial$new(),Binomial$new(size = 20, prob = 0.6)))
-  expect_silent(ProductDistribution$new(Binomial$new(),Exponential$new()))
+  expect_silent(ProductDistribution$new(Binomial$new(),Exponential$new(rate=1)))
 })
 
 test_that("type/support/distrDomain",{

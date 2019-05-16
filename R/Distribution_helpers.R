@@ -26,7 +26,7 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
     distrs = do.call(rbind.data.frame,lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
-      x = x$new()
+      x = suppressMessages(x$new())
       ShortName = x$short_name
       Type =  getR6Class(x$type())
       ValueSupport = x$valueSupport()

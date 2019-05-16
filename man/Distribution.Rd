@@ -97,7 +97,6 @@ A generalised distribution object for defining custom probability distributions
   \code{cov()} \tab Calculate covariance. See Details \cr
   \code{cor()} \tab Calculate correlation. See Details \cr
   \code{median()} \tab Calculate median \cr
-  \code{mode(which = 1)} \tab Calculate mode. See Details \cr
  }
 }
 
@@ -127,8 +126,6 @@ A generalised distribution object for defining custom probability distributions
 \section{Public Methods Details}{
 
 \code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
-\code{mode} returns by default the first mode of the distribution where applicable, otherwise a specified
-integer or all.
 
 If \code{liesInSupport(x, all = TRUE)} then returns TRUE only if every numeric in vector \code{x} lies
 in the support of the distribution, otherwise returns a vector of logicals.
