@@ -74,16 +74,16 @@ Exponential$set("public","properties",list(support = PosReals$new(zero = T),
                                            distrDomain = PosReals$new(zero = T),
                                            symmetry  = "asymmetric"))
 
-Exponential$set("public","pdf",function(x, log = FALSE)
+Exponential$set("private",".pdf",function(x, log = FALSE)
   dexp(x, self$getParameterValue("rate"), log))
 
-Exponential$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE)
+Exponential$set("private",".cdf",function(q, lower.tail = TRUE, log.p = FALSE)
   pexp(q, self$getParameterValue("rate"), lower.tail, log.p))
 
-Exponential$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE)
+Exponential$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE)
   qexp(p, self$getParameterValue("rate"), lower.tail, log.p))
 
-Exponential$set("public","rand",function(n)
+Exponential$set("private",".rand",function(n)
   rexp(n, self$getParameterValue("rate")))
 
 Exponential$set("public","expectation",function()

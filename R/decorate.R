@@ -24,13 +24,38 @@ decorate <- function(distribution, decorators, R62S3 = TRUE){
                   paste0(decors_names,collapse=",")))
   else{
     lapply(decorators, function(a_decorator){
-      methods <- c(a_decorator$public_methods, get(paste0(a_decorator$inherit))$public_methods)
-      methods <- methods[!(names(methods) %in% c("initialize","clone"))]
-      methods <- methods[!(names(methods) %in% ls(distribution))]
+      if(a_decorator$classname == "FunctionImputation"){
+        if(is.null(distribution$pdf(1))){
+          pdf = FunctionImputation$public_methods$pdf
+          formals(pdf)$self = distribution
+          distribution$.__enclos_env__$private$.setPdf(pdf)
+        }
+        if(is.null(distribution$cdf(1))){
+          cdf = FunctionImputation$public_methods$cdf
+          formals(cdf)$self = distribution
+          distribution$.__enclos_env__$private$.setCdf(cdf)
+        }
+        if(is.null(distribution$quantile(1))){
+          quantile = FunctionImputation$public_methods$quantile
+          formals(quantile)$self = distribution
+          distribution$.__enclos_env__$private$.setQuantile(quantile)
+        }
+        if(is.null(distribution$rand(1))){
+          rand = FunctionImputation$public_methods$rand
+          formals(rand)$self = distribution
+          distribution$.__enclos_env__$private$.setRand(rand)
+        }
+      } else{
+        methods <- c(a_decorator$public_methods, get(paste0(a_decorator$inherit))$public_methods)
+        methods <- methods[!(names(methods) %in% c("initialize","clone"))]
+        methods <- methods[!(names(methods) %in% ls(distribution))]
 
-      for(i in 1:length(methods)){
-        formals(methods[[i]]) = c(formals(methods[[i]]),list(self=distribution))
-        assign(names(methods)[[i]],methods[[i]],envir=as.environment(distribution))
+        if(length(methods) > 0){
+          for(i in 1:length(methods)){
+            formals(methods[[i]]) = c(formals(methods[[i]]),list(self=distribution))
+            assign(names(methods)[[i]],methods[[i]],envir=as.environment(distribution))
+          }
+        }
       }
     })
 
@@ -43,9 +68,6 @@ decorate <- function(distribution, decorators, R62S3 = TRUE){
         R62S3::R62S3(y, list(get(getR6Class(distribution))), as.environment("package:distr6"))
       })
     }
-
-
-    message(paste(dist_name,"is now decorated with",
-                  paste0(decors_names,collapse = ",")))
+    message(paste(dist_name,"is now decorated with", paste0(decors_names,collapse = ",")))
   }
 }

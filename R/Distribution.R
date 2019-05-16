@@ -217,7 +217,8 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         valueSupport = "mixture"
       else
         stop("valueSupport should be one of: 'continuous', 'discrete','mixture'.")
-    } else if(class(support)[[1]] %in% c("Reals","PosReals","NegReals","Rationals","PosRationals","NegRationals"))
+    } else if(class(support)[[1]] %in% c("Reals","PosReals","NegReals","Rationals","PosRationals",
+                                         "NegRationals","Interval"))
       valueSupport = "continuous"
     else
       valueSupport = "discrete"
@@ -246,7 +247,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(pdf)$self = self
       else
         formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
-      private$.pdf <- pdf
+      private$.setPdf(pdf)
     }
 
     if(!is.null(cdf)){
@@ -254,7 +255,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(cdf)$self = self
       else
         formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-      private$.cdf <- cdf
+      private$.setCdf(cdf)
     }
 
     if(!is.null(pdf) & !is.null(cdf)){
@@ -270,7 +271,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(quantile)$self = self
       else
         formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-      private$.quantile <- quantile
+      private$.setQuantile(quantile)
     }
 
     if(!is.null(rand)){
@@ -278,7 +279,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(rand)$self = self
       else
         formals(rand) = c(formals(rand),list(self=self),alist(...=))
-      private$.rand <- rand
+      private$.setRand(rand)
     }
 
     if(!missing(parameters)){
@@ -456,38 +457,56 @@ Distribution$set("public","setParameterValue",function(lst){
 
 # p/d/q/r
 Distribution$set("public","pdf",function(x, ..., log = FALSE){
-  if(is.null(private$.pdf))
-    return(NULL)
-  else{
-    if(log)
-      return(log(private$.pdf(x,...)))
-    else
-      return(private$.pdf(x,...))
+  if(testUnivariate(self)){
+    pdf = x
+    pdf[!self$liesInSupport(x, all = F)] = 0
+
+    if(all(pdf==0)) return(0)
+
+    pdf.in = sapply(pdf[self$liesInSupport(x, all = F)], function(x0) private$.pdf(x0,...))
+
+    pdf[self$liesInSupport(x, all = F)] = pdf.in
+  } else {
+    if(missing(x)) pdf = private$.pdf(...)
+    else pdf = private$.pdf(x, ...)
   }
+
+  pdf = unlist(pdf)
+
+  if(log) return(log(pdf))
+  else return(pdf)
 }) # NEEDS TESTING
-Distribution$set("public","cdf",function(q, ..., lower.tail = TRUE, log.p = FALSE){
-  if(is.null(private$.cdf))
-    return(NULL)
-  else{
-    if(log.p & lower.tail) return(log(private$.cdf(q,...)))
-    else if(log.p & !lower.tail) return(log(1 - private$.cdf(q,...)))
-    else if(!log.p & lower.tail) return(private$.cdf(q,...))
-    else return(1 - private$.cdf(q,...))
+Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE,...){
+
+  if(testUnivariate(self)){
+    cdf = q
+    cdf[q >= self$sup()] = 1
+    cdf[q < self$inf()] = 0
+
+    cdf.in = sapply(cdf[q < self$sup() & q >= self$inf()], function(q0) private$.cdf(q0,...))
+
+    cdf[q < self$sup() & q >= self$inf()] = cdf.in
+  } else {
+    if(missing(q)) cdf = private$.cdf(...)
+    else cdf = private$.cdf(q, ...)
   }
+
+  cdf = unlist(cdf)
+
+  if(log.p & lower.tail) return(log(cdf))
+  else if(log.p & !lower.tail) return(log(1 - cdf))
+  else if(!log.p & lower.tail) return(cdf)
+  else return(1 - cdf)
 }) # NEEDS TESTING
 Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE){
-  if(is.null(private$.quantile))
-    return(NULL)
-  else{
-    if(lower.tail) return(private$.quantile(p,...))
-    else return(private$.quantile(1 - p,...))
-  }
+    if(lower.tail){
+      return(unlist(sapply(p, function(p0) private$.quantile(p0,...))))
+    } else{
+      return(unlist(sapply(p, function(p0) private$.quantile(1 - p0,...))))
+    }
 }) # NEEDS TESTING
 Distribution$set("public","rand",function(n){
-  if(is.null(private$.rand))
-    return(NULL)
-  else
-    return(private$.rand(n))
+  return(private$.rand(n))
 }) # NEEDS TESTING
 
 # Analytic Maths/stats
@@ -536,10 +555,30 @@ Distribution$set("public","liesInDistrDomain",function(x){
 #-------------------------------------------------------------
 # Distribution Private Variables
 #-------------------------------------------------------------
-Distribution$set("private",".pdf", NULL)
-Distribution$set("private",".cdf", NULL)
-Distribution$set("private",".quantile", NULL)
-Distribution$set("private",".rand", NULL)
+Distribution$set("private",".pdf", function(...) return(NULL))
+Distribution$set("private",".cdf", function(...) return(NULL))
+Distribution$set("private",".quantile", function(...) return(NULL))
+Distribution$set("private",".rand", function(...) return(NULL))
+Distribution$set("private",".setPdf",function(pdf){
+  unlockBinding(".pdf",private)
+  private$.pdf <- pdf
+  lockBinding(".pdf",private)
+})
+Distribution$set("private",".setCdf",function(cdf){
+  unlockBinding(".cdf",private)
+  private$.cdf <- cdf
+  lockBinding(".cdf",private)
+})
+Distribution$set("private",".setQuantile",function(quantile){
+  unlockBinding(".quantile",private)
+  private$.quantile <- quantile
+  lockBinding(".quantile",private)
+})
+Distribution$set("private",".setRand",function(rand){
+  unlockBinding(".rand",private)
+  private$.rand <- rand
+  lockBinding(".rand",private)
+})
 Distribution$set("private",".parameters",data.frame())
 Distribution$set("private",".workingSupport",NULL) # DONE
 

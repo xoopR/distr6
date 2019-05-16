@@ -10,19 +10,24 @@ inverse distribution and simulation.
 \details{
 Decorator objects add functionality to the given Distribution object
  by copying methods in the decorator environment to the chosen Distribution environment. Use the
- \code{\link{decorate}} function to decorate a Distribution. See the help pages for the individual
- CoreStatistics methods to learn more.
+ \code{\link{decorate}} function to decorate a Distribution. The functions are imputed based on
+ which are already available in the distribution. For example if the pdf is known then this is used
+ to generate the cdf, quantile and rand. But if the cdf and pdf are both known, then cdf is used to
+ generate the quantile.
 
  All methods in this decorator use numerical approximations and therefore better results may be available
  from analytic computations.
 }
 \examples{
-x = Exponential$new()
-decorate(x, ExoticStatistics, R62S3 = FALSE)
-x$survival(1)
+x = Distribution$new("Test", pdf = function(x) 1/(4-1), support = Interval$new(1,4),
+type = Reals$new())
+decorate(x, FunctionImputation, R62S3 = FALSE)
+plot(x$pdf(0:5))
+plot(x$cdf(0:5))
 
-x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
-x$survival(4)
+x = Distribution$new("Test", pdf = function(x) 1/(4-1), decorators = ExoticStatistics,
+R62S3 = FALSE)
+x$cdf(1)
 }
 \seealso{
 \code{\link{DistributionDecorator}}

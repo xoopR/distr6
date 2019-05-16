@@ -26,8 +26,8 @@ where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN
 \examples{
 a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                         list(prob = 0.2, size = 6)))
-a$pdf(1,2,3)
-a$cdf(1,2,3)
+a$pdf(x1=1,x2=2,x3=3)
+a$cdf(x1=1,x2=2,x3=3)
 }
 \seealso{
 \code{\link{ProductDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}

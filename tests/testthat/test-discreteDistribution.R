@@ -17,7 +17,7 @@ ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0
                       description = list("Probability of Success", "Number of trials",
                                          "Probability of failure"))
 
-discreteTester = Distribution$new("Discrete Test","TestDistr",support=Interval$new(0,100),
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0,10),
                                   symmetric=TRUE, type = PosNaturals$new(),
                                   distrDomain=PosNaturals$new(),
                                   pdf = dbin,

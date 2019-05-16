@@ -71,17 +71,21 @@ Binomial$set("public","traits",list(type = PosIntegers$new(zero = T),
 
 Binomial$set("public","properties",list())
 
-Binomial$set("public","pdf",function(x, log = FALSE)
-  dbinom(x, self$getParameterValue("size"), self$getParameterValue("prob"),log))
+Binomial$set("private",".pdf",function(x){
+  dbinom(x, self$getParameterValue("size"), self$getParameterValue("prob"))
+})
 
-Binomial$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE)
-  pbinom(q, self$getParameterValue("size"), self$getParameterValue("prob"), lower.tail, log.p))
+Binomial$set("private",".cdf",function(q){
+  pbinom(q, self$getParameterValue("size"), self$getParameterValue("prob"))
+})
 
-Binomial$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE)
-  qbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"),log.p))
+Binomial$set("private",".quantile",function(p){
+  qbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
+})
 
-Binomial$set("public","rand",function(n)
-  rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob")))
+Binomial$set("private",".rand",function(n){
+  rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
+})
 
 Binomial$set("public","expectation",function()
   self$getParameterValue("size") * self$getParameterValue("prob"))
@@ -117,11 +121,13 @@ Binomial$set("public","pgf",function(z){
   (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
 })
 
-Binomial$set("public","survival",function(q, log.p = FALSE)
-  self$cdf(q, lower.tail = FALSE, log.p))
+Binomial$set("public","survival",function(q, log.p = FALSE){
+  self$cdf(q = q, lower.tail = FALSE, log.p = log.p)
+})
 
-Binomial$set("public","hazard",function(x)
-  self$pdf(x)/self$survival(x))
+Binomial$set("public","hazard",function(x){
+  self$pdf(x)/self$survival(x)
+})
 
 Binomial$set("public","cumHazard",function(x){
   -self$cdf(x, log.p = TRUE)

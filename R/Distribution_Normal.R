@@ -78,16 +78,16 @@ Normal$set("public","traits",list(type = Reals$new(), valueSupport = "continuous
 Normal$set("public","properties",list(support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
                                            symmetry  = "symmetric"))
 
-Normal$set("public","pdf",function(x, log = FALSE)
+Normal$set("private",".pdf",function(x, log = FALSE)
   dnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"), log))
 
-Normal$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE)
+Normal$set("private",".cdf",function(q, lower.tail = TRUE, log.p = FALSE)
   pnorm(q, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p))
 
-Normal$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE)
+Normal$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE)
   qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p))
 
-Normal$set("public","rand",function(n)
+Normal$set("private",".rand",function(n)
   rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd")))
 
 Normal$set("public","expectation",function()
