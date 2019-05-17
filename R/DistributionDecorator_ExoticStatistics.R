@@ -37,32 +37,32 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = self$inf(),
                                                              upper = self$sup()) {
   return(self$survivalPNorm(p = 1, lower, upper))
 }) # NEEDS TESTING (p-norm)
-ExoticStatistics$set("public", "logCdf", function(x) {
+ExoticStatistics$set("public", "logCdf", function(x1) {
 }) # TO DO
 ExoticStatistics$set("public", "generalisedIntegral", function() {
 }) # TO DO
-ExoticStatistics$set("public", "survival", function(x, log = FALSE) {
-  if(!is.null(self$cdf(x))){
+ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
+  if(!is.null(self$cdf(x1))){
     if(log)
-      return(log(1 - self$cdf(x)))
+      return(log(1 - self$cdf(x1)))
     else
-      return(1 - self$cdf(x))
+      return(1 - self$cdf(x1))
   } else {
     message(.distr6$message_numeric)
-    surv = integrate(self$pdf, x, Inf)$value
+    surv = integrate(self$pdf, x1, Inf)$value
     if(log)
       return(log(surv))
     else
       return(surv)
   }
 }) # DONE
-ExoticStatistics$set("public", "hazard", function(x, log=FALSE) {
-  if(!is.null(self$pdf(x)))
-    pdf = self$pdf(x)
-  else if(!is.null(self$cdf(x)))
-    pdf = deriv(y~self$cdf(x),"x")
+ExoticStatistics$set("public", "hazard", function(x1, log=FALSE) {
+  if(!is.null(self$pdf(x1)))
+    pdf = self$pdf(x1)
+  else if(!is.null(self$cdf(x1)))
+    pdf = deriv(y~self$cdf(x1),"x1")
 
-  surv = self$survival(x)
+  surv = self$survival(x1)
 
   haz = pdf/surv
 
@@ -71,9 +71,9 @@ ExoticStatistics$set("public", "hazard", function(x, log=FALSE) {
   else
     return(haz)
 }) # IN PROGRESS
-ExoticStatistics$set("public", "cumHazard", function(x, log=FALSE) {
+ExoticStatistics$set("public", "cumHazard", function(x1, log=FALSE) {
   if(!log){
-    return(-log(self$survival(x)))
+    return(-log(self$survival(x1)))
   }
 }) # IN PROGRESS
 ExoticStatistics$set("public", "generalPNorm", function(fun, p, lower, upper){

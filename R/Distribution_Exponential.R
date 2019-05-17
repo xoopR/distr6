@@ -34,8 +34,8 @@
 #' @section Public Methods:
 #'  \tabular{lrr}{
 #'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{pdf(x, log = FALSE)} \tab character \tab Evaluates density at x. \cr
-#'   \code{cdf(q, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at q. \cr
+#'   \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
+#'   \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
 #'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
 #'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
 #'   \code{expectation()} \tab numeric \tab Expectation.  \cr
@@ -46,9 +46,9 @@
 #'   \code{mode()} \tab numeric \tab Mode. \cr
 #'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
 #'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-#'   \code{survival(q, log.p = FALSE)} \tab numeric \tab Evaluates survival function at q. \cr
-#'   \code{hazard(x)} \tab numeric \tab Evaluates hazard function at t. \cr
-#'   \code{cumHazard(x)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
+#'   \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
+#'   \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
+#'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
 #'   }
 #'
 #' @section Public Methods Details:
@@ -74,11 +74,11 @@ Exponential$set("public","properties",list(support = PosReals$new(zero = T),
                                            distrDomain = PosReals$new(zero = T),
                                            symmetry  = "asymmetric"))
 
-Exponential$set("private",".pdf",function(x, log = FALSE)
-  dexp(x, self$getParameterValue("rate"), log))
+Exponential$set("private",".pdf",function(x1, log = FALSE)
+  dexp(x1, self$getParameterValue("rate"), log))
 
-Exponential$set("private",".cdf",function(q, lower.tail = TRUE, log.p = FALSE)
-  pexp(q, self$getParameterValue("rate"), lower.tail, log.p))
+Exponential$set("private",".cdf",function(x1, lower.tail = TRUE, log.p = FALSE)
+  pexp(x1, self$getParameterValue("rate"), lower.tail, log.p))
 
 Exponential$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE)
   qexp(p, self$getParameterValue("rate"), lower.tail, log.p))
@@ -116,14 +116,14 @@ Exponential$set("public", "cf", function(t){
   return(self$getParameterValue("rate") / (self$getParameterValue("rate") -  ((0+1i) * t)))
 })
 
-Exponential$set("public","survival",function(q, log.p = FALSE)
-  self$cdf(q, lower.tail = FALSE, log.p))
+Exponential$set("public","survival",function(x1, log.p = FALSE)
+  self$cdf(x1, lower.tail = FALSE, log.p))
 
-Exponential$set("public","hazard",function(x)
-  self$pdf(x)/self$survival(x))
+Exponential$set("public","hazard",function(x1)
+  self$pdf(x1)/self$survival(x1))
 
-Exponential$set("public","cumHazard",function(x)
-  -self$cdf(x, log.p = TRUE))
+Exponential$set("public","cumHazard",function(x1)
+  -self$cdf(x1, log.p = TRUE))
 
 Exponential$set("public","mode",function() return(0))
 

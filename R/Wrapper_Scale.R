@@ -37,20 +37,20 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   self$setScaleSd(sd)
 
   if(!is.null(dist$pdf(1))){
-    pdf <- function(x) {}
+    pdf <- function(x1) {}
     body(pdf) <- substitute({
       locationTrafo <- self$wrappedModels(name)$expectation() - self$getScaleMean()
       scaleTrafo <- self$wrappedModels(name)$sd() / self$getScaleSd()
-      self$wrappedModels(name)$pdf(x * scaleTrafo + locationTrafo) / scaleTrafo
+      self$wrappedModels(name)$pdf(x1 * scaleTrafo + locationTrafo) / scaleTrafo
     }, list(name = short_name))
   } else
     pdf <- NULL
   if(!is.null(dist$cdf(1))){
-    cdf <- function(x) {}
+    cdf <- function(x1) {}
     body(cdf) <- substitute({
       locationTrafo <- self$wrappedModels(name)$expectation() - self$getScaleMean()
       scaleTrafo <- self$wrappedModels(name)$sd() / self$getScaleSd()
-      self$wrappedModels(name)$cdf(x * scaleTrafo + locationTrafo)
+      self$wrappedModels(name)$cdf(x1 * scaleTrafo + locationTrafo)
     }, list(name = short_name))
   } else
     cdf <- NULL

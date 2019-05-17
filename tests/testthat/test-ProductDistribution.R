@@ -15,10 +15,10 @@ test_that("type/support/distrDomain",{
 })
 
 test_that("pdf/cdf",{
-  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(x1=4,x2=8),
+  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(4,x2=8),
                Binomial$new(size = 40, prob = 0.2)$pdf(4) * Binomial$new(size = 5, prob = 0.9)$pdf(8))
-  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(x1=4,x2=3),
+  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(4,x2=3),
                Binomial$new(size = 40, prob = 0.2)$pdf(4) * Binomial$new(size = 5, prob = 0.9)$pdf(3))
-  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$cdf(x1=4,x2=8),
+  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$cdf(4,x2=8),
                Binomial$new(size = 40, prob = 0.2)$cdf(4) * Binomial$new(size = 5, prob = 0.9)$cdf(8))
 })

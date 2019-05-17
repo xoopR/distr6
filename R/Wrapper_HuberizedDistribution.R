@@ -55,13 +55,13 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower, up
   if(missing(lower)) lower = distribution$inf()
   if(missing(upper)) upper = distribution$sup()
 
-  pdf <- function(x, ...){
-    if(x <= self$getLowerLimit())
+  pdf <- function(x1, ...){
+    if(x1 <= self$getLowerLimit())
       return(self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
-    else if(x >= self$getUpperLimit())
+    else if(x1 >= self$getUpperLimit())
       return(1-self$wrappedModels()[[1]]$cdf(self$getUpperLimit()))
     else
-      return(self$wrappedModels()[[1]]$pdf(x))
+      return(self$wrappedModels()[[1]]$pdf(x1))
   }
 
   name = paste("Huberized",distribution$name)

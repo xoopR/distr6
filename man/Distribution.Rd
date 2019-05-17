@@ -87,8 +87,8 @@ A generalised distribution object for defining custom probability distributions
 
  \tabular{ll}{
   \strong{Method} \tab \strong{Details} \cr
-  \code{pdf(x, log = F)} \tab Evaluate density/mass at x \cr
-  \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q.\cr
+  \code{pdf(x1, log = F)} \tab Evaluate density/mass at x1 \cr
+  \code{cdf(x1, lower.tail = T, log.p = F)} \tab Evaluate distribution function at x1.\cr
   \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p \cr
   \code{rand(n)} \tab Simulate n draws from distribution \cr
   \code{expectation(trafo)} \tab Calculate expectation \cr

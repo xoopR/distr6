@@ -82,8 +82,8 @@
 #' @section Math/Stats Methods:
 #'  \tabular{ll}{
 #'   \strong{Method} \tab \strong{Details} \cr
-#'   \code{pdf(x, log = F)} \tab Evaluate density/mass at x \cr
-#'   \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q.\cr
+#'   \code{pdf(x1, log = F)} \tab Evaluate density/mass at x1 \cr
+#'   \code{cdf(x1, lower.tail = T, log.p = F)} \tab Evaluate distribution function at x1.\cr
 #'   \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p \cr
 #'   \code{rand(n)} \tab Simulate n draws from distribution \cr
 #'   \code{expectation(trafo)} \tab Calculate expectation \cr
@@ -456,19 +456,19 @@ Distribution$set("public","setParameterValue",function(lst){
 }) # DONE
 
 # p/d/q/r
-Distribution$set("public","pdf",function(x, ..., log = FALSE){
+Distribution$set("public","pdf",function(x1, ..., log = FALSE){
   if(testUnivariate(self)){
-    pdf = x
-    pdf[!self$liesInSupport(x, all = F)] = 0
+    pdf = x1
+    pdf[!self$liesInSupport(x1, all = F)] = 0
 
     if(all(pdf==0)) return(0)
 
-    pdf.in = sapply(pdf[self$liesInSupport(x, all = F)], function(x0) private$.pdf(x0,...))
+    pdf.in = sapply(pdf[self$liesInSupport(x1, all = F)], function(x0) private$.pdf(x0,...))
 
-    pdf[self$liesInSupport(x, all = F)] = pdf.in
+    pdf[self$liesInSupport(x1, all = F)] = pdf.in
   } else {
-    if(missing(x)) pdf = private$.pdf(...)
-    else pdf = private$.pdf(x, ...)
+    if(missing(x1)) pdf = private$.pdf(...)
+    else pdf = private$.pdf(x1, ...)
   }
 
   pdf = unlist(pdf)
@@ -476,19 +476,19 @@ Distribution$set("public","pdf",function(x, ..., log = FALSE){
   if(log) return(log(pdf))
   else return(pdf)
 }) # NEEDS TESTING
-Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE,...){
+Distribution$set("public","cdf",function(x1, lower.tail = TRUE, log.p = FALSE,...){
 
   if(testUnivariate(self)){
-    cdf = q
-    cdf[q >= self$sup()] = 1
-    cdf[q < self$inf()] = 0
+    cdf = x1
+    cdf[x1 >= self$sup()] = 1
+    cdf[x1 < self$inf()] = 0
 
-    cdf.in = sapply(cdf[q < self$sup() & q >= self$inf()], function(q0) private$.cdf(q0,...))
+    cdf.in = sapply(cdf[x1 < self$sup() & x1 >= self$inf()], function(q0) private$.cdf(q0,...))
 
-    cdf[q < self$sup() & q >= self$inf()] = cdf.in
+    cdf[x1 < self$sup() & x1 >= self$inf()] = cdf.in
   } else {
-    if(missing(q)) cdf = private$.cdf(...)
-    else cdf = private$.cdf(q, ...)
+    if(missing(x1)) cdf = private$.cdf(...)
+    else cdf = private$.cdf(x1, ...)
   }
 
   cdf = unlist(cdf)

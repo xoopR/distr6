@@ -33,14 +33,14 @@ NULL
 #' @export
 FunctionImputation <- R6::R6Class("FunctionImputation", inherit = DistributionDecorator)
 
-FunctionImputation$set("public","pdf",function(x){
+FunctionImputation$set("public","pdf",function(x1){
   # CDF2PDF
   if(testUnivariate(self)){
       if(testDiscrete(self)){
-        return(self$cdf(x) - self$cdf(x-1))
+        return(self$cdf(x1) - self$cdf(x1-1))
       } else if(testContinuous(self)){
         message(.distr6$message_numeric)
-        return(as.numeric(attr(deriv(y~self$cdf(x),"x", func = TRUE)(x),"gradient")))
+        return(as.numeric(attr(deriv(y~self$cdf(x1),"x1", func = TRUE)(x1),"gradient")))
       }
   } else
     return("FunctionImputation is currently only supported for univariate distributions.")
@@ -64,13 +64,13 @@ FunctionImputation$set("public","quantile",function(p){
     if(testDiscrete(self)){
       to = ifelse(self$sup() == Inf, 1e+08, self$sup())
       from = ifelse(self$inf() == -Inf, -1e+08, self$inf())
-      x = seq.int(from,to,by = 1)
-      y = self$cdf(x)
+      x1 = seq.int(from,to,by = 1)
+      y = self$cdf(x1)
 
       message(.distr6$message_numeric)
 
       return(sapply(p, function(p0){
-        return(x[min(which(y == min(y[y>p0])))])
+        return(x1[min(which(y == min(y[y>p0])))])
       }))
 
     } else if(testContinuous(self)){

@@ -33,8 +33,8 @@
 #' @section Public Methods:
 #'  \tabular{lrr}{
 #'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{pdf(x, log = FALSE)} \tab character \tab Evaluates density at x. \cr
-#'   \code{cdf(q, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at q. \cr
+#'   \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
+#'   \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
 #'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
 #'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
 #'   \code{expectation()} \tab numeric \tab Expectation.  \cr
@@ -45,9 +45,9 @@
 #'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
 #'   \code{pgf(t)} \tab numeric \tab Evaluates probability generating function at t. \cr
 #'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-#'   \code{survival(q, log.p = FALSE)} \tab numeric \tab Evaluates survival function at q. \cr
-#'   \code{hazard(x)} \tab numeric \tab Evaluates hazard function at t. \cr
-#'   \code{cumHazard(x)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
+#'   \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
+#'   \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at t. \cr
+#'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
 #'   }
 #'
 #' @section Public Methods Details:
@@ -71,12 +71,12 @@ Binomial$set("public","traits",list(type = PosIntegers$new(zero = T),
 
 Binomial$set("public","properties",list())
 
-Binomial$set("private",".pdf",function(x){
-  dbinom(x, self$getParameterValue("size"), self$getParameterValue("prob"))
+Binomial$set("private",".pdf",function(x1){
+  dbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
 })
 
-Binomial$set("private",".cdf",function(q){
-  pbinom(q, self$getParameterValue("size"), self$getParameterValue("prob"))
+Binomial$set("private",".cdf",function(x1){
+  pbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
 })
 
 Binomial$set("private",".quantile",function(p){
@@ -121,16 +121,16 @@ Binomial$set("public","pgf",function(z){
   (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
 })
 
-Binomial$set("public","survival",function(q, log.p = FALSE){
-  self$cdf(q = q, lower.tail = FALSE, log.p = log.p)
+Binomial$set("public","survival",function(x1, log.p = FALSE){
+  self$cdf(x1 = x1, lower.tail = FALSE, log.p = log.p)
 })
 
-Binomial$set("public","hazard",function(x){
-  self$pdf(x)/self$survival(x)
+Binomial$set("public","hazard",function(x1){
+  self$pdf(x1)/self$survival(x1)
 })
 
-Binomial$set("public","cumHazard",function(x){
-  -self$cdf(x, log.p = TRUE)
+Binomial$set("public","cumHazard",function(x1){
+  -self$cdf(x1, log.p = TRUE)
 })
 
 Binomial$set("public","setParameterValue",function(lst){

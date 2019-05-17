@@ -40,8 +40,8 @@
 #' @section Public Methods:
 #'  \tabular{lrr}{
 #'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{pdf(x, log = FALSE)} \tab character \tab Evaluates density at x. \cr
-#'   \code{cdf(q, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at q. \cr
+#'   \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
+#'   \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
 #'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
 #'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
 #'   \code{normectation()} \tab numeric \tab normectation.  \cr
@@ -52,9 +52,9 @@
 #'   \code{mode()} \tab numeric \tab Mode. \cr
 #'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
 #'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-#'   \code{survival(q, log.p = FALSE)} \tab numeric \tab Evaluates survival function at q. \cr
-#'   \code{hazard(x)} \tab numeric \tab Evaluates hazard function at t. \cr
-#'   \code{cumHazard(x)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
+#'   \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
+#'   \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
+#'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
 #'   }
 #'
 #' @section Public Methods Details:
@@ -78,11 +78,11 @@ Normal$set("public","traits",list(type = Reals$new(), valueSupport = "continuous
 Normal$set("public","properties",list(support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
                                            symmetry  = "symmetric"))
 
-Normal$set("private",".pdf",function(x, log = FALSE)
-  dnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"), log))
+Normal$set("private",".pdf",function(x1, log = FALSE)
+  dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"), log))
 
-Normal$set("private",".cdf",function(q, lower.tail = TRUE, log.p = FALSE)
-  pnorm(q, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p))
+Normal$set("private",".cdf",function(x1, lower.tail = TRUE, log.p = FALSE)
+  pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p))
 
 Normal$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE)
   qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p))
@@ -117,14 +117,14 @@ Normal$set("public", "cf", function(t){
   return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
 })
 
-Normal$set("public","survival",function(q, log.p = FALSE)
-  self$cdf(q, lower.tail = FALSE, log.p))
+Normal$set("public","survival",function(x1, log.p = FALSE)
+  self$cdf(x1, lower.tail = FALSE, log.p))
 
-Normal$set("public","hazard",function(x)
-  self$pdf(x)/self$survival(x))
+Normal$set("public","hazard",function(x1)
+  self$pdf(x1)/self$survival(x1))
 
-Normal$set("public","cumHazard",function(x)
-  -self$cdf(x, log.p = TRUE))
+Normal$set("public","cumHazard",function(x1)
+  -self$cdf(x1, log.p = TRUE))
 
 Normal$set("public","mode",function() return(self$getParameterValue("mean")))
 

@@ -44,42 +44,42 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower, up
 
   if(!missing(lower) & !missing(upper)){
     # Top and bottom truncation
-    pdf <- function(x,...) {
-      if(x <= self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 <= self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x) / (self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
+        self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
     }
     formals(pdf)$self <- self
   } else if(!missing(lower) & missing(upper)){
     # Bottom truncation
     upper = distribution$sup()
-    pdf <- function(x,...) {
-      if(x <= self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 <= self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x) / (1 - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
+        self$wrappedModels()[[1]]$pdf(x1) / (1 - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
     }
     formals(pdf)$self <- self
   } else if(missing(lower) & !missing(upper)){
     # Top truncation
     lower = distribution$inf()
-    pdf <- function(x,...) {
-      if(x <= self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 <= self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x) / self$wrappedModels()[[1]]$cdf(self$getUpperLimit())
+        self$wrappedModels()[[1]]$pdf(x1) / self$wrappedModels()[[1]]$cdf(self$getUpperLimit())
     }
     formals(pdf)$self <- self
   } else{
     # No truncation
     lower = distribution$inf()
     upper = distribution$sup()
-    pdf <- function(x,...) {
-      if(x < self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 < self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x,...)
+        self$wrappedModels()[[1]]$pdf(x1,...)
     }
     formals(pdf)$self <- self
   }

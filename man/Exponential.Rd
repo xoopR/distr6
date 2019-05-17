@@ -44,8 +44,8 @@ the exponential distribution.
 
  \tabular{lrr}{
   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-  \code{pdf(x, log = FALSE)} \tab character \tab Evaluates density at x. \cr
-  \code{cdf(q, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at q. \cr
+  \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
+  \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
   \code{expectation()} \tab numeric \tab Expectation.  \cr
@@ -56,9 +56,9 @@ the exponential distribution.
   \code{mode()} \tab numeric \tab Mode. \cr
   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-  \code{survival(q, log.p = FALSE)} \tab numeric \tab Evaluates survival function at q. \cr
-  \code{hazard(x)} \tab numeric \tab Evaluates hazard function at t. \cr
-  \code{cumHazard(x)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
+  \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
+  \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
+  \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
   }
 }
 
