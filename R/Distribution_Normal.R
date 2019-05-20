@@ -72,29 +72,37 @@ NULL
 Normal <- R6::R6Class("Normal", inherit = Distribution, lock_objects = F)
 Normal$set("public","name","Normal")
 Normal$set("public","short_name","Norm")
-Normal$set("public","traits",list(type = Reals$new(), valueSupport = "continuous",
+Normal$set("public","traits",list(type = Reals$new(),
+                                  valueSupport = "continuous",
                                   variateForm = "univariate"))
 
-Normal$set("public","properties",list(support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
-                                           symmetry  = "symmetric"))
+Normal$set("public","properties",list(support = Reals$new(zero = T),
+                                      distrDomain = Reals$new(zero = T),
+                                      symmetry  = "symmetric"))
 
-Normal$set("private",".pdf",function(x1, log = FALSE)
+Normal$set("private",".pdf",function(x1, log = FALSE){
   dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"), log))
+}
 
-Normal$set("private",".cdf",function(x1, lower.tail = TRUE, log.p = FALSE)
+Normal$set("private",".cdf",function(x1, lower.tail = TRUE, log.p = FALSE){
   pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p))
+}
 
-Normal$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE)
+Normal$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
   qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p))
+}
 
-Normal$set("private",".rand",function(n)
+Normal$set("private",".rand",function(n){
   rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd")))
+}
 
-Normal$set("public","expectation",function()
+Normal$set("public","expectation",function(){
   self$getParameterValue("mean"))
+}
 
-Normal$set("public","var",function()
+Normal$set("public","var",function(){
   self$getParameterValue("var"))
+}
 
 Normal$set("public","skewness",function() return(0))
 
@@ -117,19 +125,21 @@ Normal$set("public", "cf", function(t){
   return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
 })
 
-Normal$set("public","survival",function(x1, log.p = FALSE)
+Normal$set("public","survival",function(x1, log.p = FALSE){
   self$cdf(x1, lower.tail = FALSE, log.p))
+}
 
-Normal$set("public","hazard",function(x1)
+Normal$set("public","hazard",function(x1){
   self$pdf(x1)/self$survival(x1))
+}
 
-Normal$set("public","cumHazard",function(x1)
+Normal$set("public","cumHazard",function(x1){
   -self$cdf(x1, log.p = TRUE))
+}
 
 Normal$set("public","mode",function() return(self$getParameterValue("mean")))
 
 Normal$set("private",".parameters", NULL)
-
 
 Normal$set("public","initialize",function(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL,...){
 

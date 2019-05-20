@@ -13,6 +13,7 @@
 decorate <- function(distribution, decorators, R62S3 = TRUE){
   if(!checkmate::testList(decorators))
     decorators = list(decorators)
+
   dist_decors = distribution$decorators
   decors_names = lapply(decorators, function(x) x$classname)
   decorators = decorators[!(decors_names %in% dist_decors)]
@@ -24,6 +25,7 @@ decorate <- function(distribution, decorators, R62S3 = TRUE){
                   paste0(decors_names,collapse=",")))
   else{
     lapply(decorators, function(a_decorator){
+
       if(a_decorator$classname == "FunctionImputation"){
         if(is.null(distribution$pdf(1))){
           pdf = FunctionImputation$public_methods$pdf
