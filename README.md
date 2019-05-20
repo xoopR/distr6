@@ -1,4 +1,4 @@
-# distr6
+# distr6 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![Build Status](https://travis-ci.com/RaphaelS1/distr6.svg?branch=master)](https://travis-ci.com/RaphaelS1/distr6)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
