@@ -3,9 +3,9 @@ reference:
     desc: "Functions for Distribution constructor and helpers."
     contents: 
       - Distribution
-      - exkurtosisType()
-      - skewType()
-      - listDistributions()
+      - exkurtosisType
+      - skewType
+      - listDistributions
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
@@ -13,8 +13,8 @@ reference:
       - CoreStatistics
       - ExoticStatistics
       - FunctionImputation
-      - decorate()
-      - listDecorators()
+      - decorate
+      - listDecorators
   - title: "Wrappers"
     desc: "Functionality for composite modelling including joint and conditional distributions."
     contents:
@@ -23,9 +23,9 @@ reference:
       - ArrayDistribution
       - ProductDistribution
       - HuberizedDistribution
-      - huberize()
+      - huberize
       - TruncatedDistribution
-      - truncate()
+      - truncate
       - MixtureDistribution
       - Scale
   - title: "Discrete Distributions"
@@ -55,22 +55,22 @@ reference:
       - Complex
       - starts_with("Pos")
       - starts_with("Neg")
-      - setSymbol()
-      - operation()
-      - power()
-      - product()
-      - union()
-      - listSpecialSets()
+      - setSymbol
+      - operation
+      - power
+      - product
+      - union
+      - listSpecialSets
   - title: "Helper Functions"
     desc: "Miscellaneous functions for use in distr6."
     contents: 
-      - testMessage()
-      - strprint()
-      - makeUniqueDistributions()
-      - makeChecks()
-      - getR6Class()
+      - testMessage
+      - strprint
+      - makeUniqueDistributions
+      - makeChecks
+      - getR6Class
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
       - ParameterSet
-      - as.ParameterSet()
+      - as.ParameterSet
