@@ -1,0 +1,76 @@
+reference:
+  - title: "Distributions"
+    desc: "Functions for Distribution constructor and helpers."
+    contents: 
+      - Distribution
+      - exkurtosisType()
+      - skewType()
+      - listDistributions()
+  - title: "Decorators"
+    desc: "Decorators for extending functionality of distributions with numerical calculations."
+    contents: 
+      - DistributionDecorator
+      - CoreStatistics
+      - ExoticStatistics
+      - FunctionImputation
+      - decorate()
+      - listDecorators()
+  - title: "Wrappers"
+    desc: "Functionality for composite modelling including joint and conditional distributions."
+    contents:
+      - DistributionWrapper
+      - ConcreteWrapper
+      - ArrayDistribution
+      - ProductDistribution
+      - HuberizedDistribution
+      - huberize()
+      - TruncatedDistribution
+      - truncate()
+      - MixtureDistribution
+      - Scale
+  - title: "Discrete Distributions"
+    desc: "Discrete probability distributions."
+    contents:
+      - Binomial
+  - title: "Continuous Distributions"
+    desc: "Continuous probability distributions."
+    contents:
+      - Exponential
+  - title: "Assertions"
+    desc: "Validation checks for Distributions."
+    contents:
+      - starts_with("assert")
+  - title: "Symbolic Sets"
+    desc: "Functions and classes relating to symbolic representation of mathematical sets."
+    contents:
+      - SetInterval
+      - Interval
+      - Set
+      - SpecialSet
+      - Naturals
+      - Integers
+      - Rationals
+      - Reals
+      - ExtendedReals
+      - Complex
+      - starts_with("Pos")
+      - starts_with("Neg")
+      - setSymbol()
+      - operation()
+      - power()
+      - product()
+      - union()
+      - listSpecialSets()
+  - title: "Helper Functions"
+    desc: "Miscellaneous functions for use in distr6."
+    contents: 
+      - testMessage()
+      - strprint()
+      - makeUniqueDistributions()
+      - makeChecks()
+      - getR6Class()
+  - title: "Parameter Sets"
+    desc: "Functions and classes for creating Parameter Sets for use in Distributions."
+    contents: 
+      - ParameterSet
+      - as.ParameterSet()
