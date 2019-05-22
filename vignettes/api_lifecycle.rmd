@@ -7,10 +7,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# API Lifecycle
-
-## Introduction
-
 distr6 is still in development and the lifecycle of the package can be considered 'experimental'. Whilst we welcome users to install and experiment with distr6, much of the functionality is still in development and therefore may not function as expected. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. If for any reason you think some of these should be moved around (particular from stable to experimental or maturing, please log this as a [pull request here](https://github.com/RaphaelS1/distr6/issues).
 
 [Click here](https://raphaels1.github.io/distr6/reference/index.html) for the full reference list of classes and methods.
@@ -18,17 +14,17 @@ All information regarding future developments and roadmaps is in the [distr6 wik
 
 We split implemented functions into:
 1. [Experimental](#experimental-classes-and-methods) - In development.
-1. [Maturing](#maturing-classes-and-methods) - Functioning but needs tweaking.
-1. [Stable](#maturing-classes-and-methods) - Functioning as expected.
+2. [Maturing](#maturing-classes-and-methods) - Functioning but needs tweaking.
+3. [Stable](#maturing-classes-and-methods) - Functioning as expected.
 
-# Experimental Classes and Methods
-[https://img.shields.io/badge/lifecycle-experimental-orange.svg](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+### Experimental Classes and Methods
+![https://img.shields.io/badge/lifecycle-experimental-orange.svg](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 * FunctionImputation
 * Scale
 
-# Maturing Classes and Methods
-[https://img.shields.io/badge/lifecycle-maturing-blue.svg](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+### Maturing Classes and Methods
+![https://img.shields.io/badge/lifecycle-maturing-blue.svg](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
 * Distribution
 * ArrayDistribution
@@ -37,8 +33,8 @@ We split implemented functions into:
 * TruncatedDistribution
 * MixtureDistribution
 
-# Stable Classes and Methods
-[https://img.shields.io/badge/lifecycle-stable-brightgreen.svg](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
+### Stable Classes and Methods
+![https://img.shields.io/badge/lifecycle-stable-brightgreen.svg](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 
 * exKurtosisType
 * skewType
