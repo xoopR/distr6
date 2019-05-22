@@ -24,4 +24,4 @@ We have three decorators:
 
 When a decorator is constructed, either in construction of a `Distribution` or after, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `expectation` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator. However if `expectation` is missing, then a numeric method is added as a public method. Similarly where possible an analytic method is always preferred. For example, if an analytic `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated.
 
-![](decorators and methods.png)
+<img src="man/figures/decorators.png" />
