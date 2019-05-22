@@ -27,15 +27,17 @@ Instead of providing a comprehensive glossary of OOP terms (of which many exist)
 Design Patterns were collated, formalised and introduced in the seminal Design Patterns book (Gamma et al.) and the authors are commonly referred to as the Gang of Four (GoF).
 
 By far the most common design patterns in R toolboxes are the *strategy* and *visitor* design patterns. From GoF:
-* The *strategy* pattern is a behavioural pattern that "encapsulates a family of algorithms and makes them interchangeable."
-* The *visitor* pattern is a behavioural pattern that "lets you define a new operation without changing the classes of the elements on which it operates"
 
-Both of these patterns can be achieved via single or multiple dispatch and the S3 generic system is essentially a work-around for both of them. In many toolboxes, the concept of 'wrappers' and 'composites' are discussed. This is especially confusing as 'wrapper' may refer to one of two design patterns and 'composite' is a pattern in itself. The term wrapper usually refers to either the *decorator* or *adapter* design pattern, again from GoF:
-* The *decorator* pattern is a structural pattern than "attaches additional responsibilities to an object dynamically"
-* The *adapter* pattern is a structural pattern "converts the interface of a class into another interface clients expect"
-* The *composite* pattern is a structral pattern that "composes objects into tree structures to represent part-whole hierarchies".
+* The **strategy** pattern is a behavioural pattern that "encapsulates a family of algorithms and makes them interchangeable."
+* The **visitor** pattern is a behavioural pattern that "lets you define a new operation without changing the classes of the elements on which it operates"
 
-The key difference is that *adapters* change the class interface, *decorators* adds methods to the interface and *composites* allows individuals and their composites to be treated the same.
+Both of these patterns can be achieved via single or multiple dispatch and the S3 generic system is essentially a work-around for both of them. In many toolboxes, the concept of 'wrappers' and 'composites' are discussed. This is especially confusing as 'wrapper' may refer to one of two design patterns and 'composite' is a pattern in itself. The term wrapper usually refers to either the **decorator** or **adapter** design pattern, again from GoF:
+
+* The **decorator** pattern is a structural pattern than "attaches additional responsibilities to an object dynamically"
+* The **adapter** pattern is a structural pattern "converts the interface of a class into another interface clients expect"
+* The **composite** pattern is a structral pattern that "composes objects into tree structures to represent part-whole hierarchies".
+
+The key difference is that **adapters** change the class interface, **decorators** add methods to the interface and **composites** allow individuals and their composites to be treated the same.
 
 ***
 
