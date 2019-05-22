@@ -16,19 +16,6 @@ distr6 is the R6 upgrade to the distr family of packages. For full details of th
 
 For full details of distr6's design and implementation see the project [wiki page](https://github.com/RaphaelS1/distr6/wiki) and the [distr6 website](https://RaphaelS1.github.io/distr6/).
 
-## Why Object-Oriented Programming?
-
-There are many advantages to OOP over functional programming (which is more commmon in R). For probability distributions, the biggest advantages is in the ability to quickly construct and recall any number of required distributions, each with mathematical and statistical methods. There are currently no methods in base R that interact with Distributions to obtain basic properties, for example the mean of a distribution. In distr6 this is made possible as every probability distribution is its own class with specific methods. So to get mathematical properties of the Binomial distribution:
-1. `B = Binomial$new(prob, size)`
-1. `B$mean()`
-1. `B$sd()`
-
-Or try using `B$summary()` for a range of common mathematical and statistical results. With the `listDistributions()` command you can see every Distribution currently implemented in distr6, along with their traits.
-
-Another advantage of OOP is making use of inheritance to implement more complex distributions from base distributions. For example any distribution can be easily truncated with a call to `truncate(distribution, lower, upper)` which produces an object of class `TruncatedDistribution` which inherits all methods from `Distribution`. 
-
-We discuss further advantages of OOP including Design Patterns in the help-pages of the website.
-
 ## Installation
 
 Before publication to CRAN, the latest stable release is available via:
