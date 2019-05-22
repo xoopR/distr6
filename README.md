@@ -20,5 +20,5 @@ For full details of distr6's design and implementation see the project [wiki pag
 
 Before publication to CRAN, the latest stable release is available via:
 ````R
-devtools::install_github(RaphaelS1/distr6, dependencies = TRUE)
+devtools::install_github("RaphaelS1/distr6", dependencies = TRUE)
 ````
