@@ -13,6 +13,7 @@ distr6 is still in development and the lifecycle of the package can be considere
 All information regarding future developments and roadmaps is in the [distr6 wiki](https://github.com/RaphaelS1/distr6/wiki).
 
 We split implemented functions into:
+
 1. [Experimental](#experimental-classes-and-methods) - In development.
 2. [Maturing](#maturing-classes-and-methods) - Functioning but needs tweaking.
 3. [Stable](#maturing-classes-and-methods) - Functioning as expected.
