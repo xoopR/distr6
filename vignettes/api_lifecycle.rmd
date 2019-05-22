@@ -11,10 +11,10 @@ vignette: >
 
 ## Introduction
 
-distr6 is still in development and the lifecycle of the package can be considered `experimental'. Whilst we welcome users to install and experiment with distr6, much of the functionality is still in development and therefore may not function as expected. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. If for any reason you think some of these should be moved around (particular from stable to experimental or maturing, please log this as a [pull request here](https://github.com/RaphaelS1/distr6/issues).
+distr6 is still in development and the lifecycle of the package can be considered 'experimental'. Whilst we welcome users to install and experiment with distr6, much of the functionality is still in development and therefore may not function as expected. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. If for any reason you think some of these should be moved around (particular from stable to experimental or maturing, please log this as a [pull request here](https://github.com/RaphaelS1/distr6/issues).
 
 [Click here](https://raphaels1.github.io/distr6/reference/index.html) for the full reference list of classes and methods.
-[And here](https://raphaels1.github.io/distr6/articles/distr6.html) for functions and classes coming soon.
+All information regarding future developments and roadmaps is in the [distr6 wiki](https://github.com/RaphaelS1/distr6/wiki).
 
 We split implemented functions into:
 1. [Experimental](#experimental-classes-and-methods) - In development.
