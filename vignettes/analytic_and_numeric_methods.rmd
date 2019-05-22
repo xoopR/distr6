@@ -1,0 +1,27 @@
+---
+title: "Analytic and Numeric Methods"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analytic and Numeric Methods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+To keep all Distribution results as precise as possibly and to ensure optimal efficiency, we separate out all analytic and numerical calculations using decorators. The image below gives a visual representation of how this looks for a custom Distribution object. All public methods inside the Distribution are analytic only, i.e. no approximations or numerical integration take place. So if a user wants to define a custom application and calculate the analytic representation, then they can supply this to the constructor, otherwise they use decorators for numeric approximation.
+
+We have three decorators:
+
+1. `CoreStatistics`
+2. `ExoticStatistics`
+3. `FunctionImputation`
+
+`CoreStatistics` contains all commonly used mathematical and statistical functions used to describe a probability distribution. These include expectation, variance, kurtosis and skewness. `ExoticStatistics` contains less commonly used functions for the general user but useful functions for modelling and survival analysis. These included survival, hazard and p-norm of pdf. `FunctionImputation` imputes the pdf/cdf/quantile/random using numerical methods, depending which are provided. These follow a strict hierarchy to maximise efficiency and minimise error from numerical approximations. The hierarchy is as follows:
+
+* To impute the pdf: `cdf2pdf`; `rand2pdf`; `quantile2pdf`
+* To impute the cdf: `quantile2cdf`; `pdf2cdf`; `rand2cdf`
+* To impute the quantile: `cdf2quantile`; `pdf2quantile`; `rand2quantile`
+* To impute the rand: `quantile2rand`; `cdf2rand`; `pdf2rand`
+
+When a decorator is constructed, either in construction of a `Distribution` or after, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `expectation` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator. However if `expectation` is missing, then a numeric method is added as a public method. Similarly where possible an analytic method is always preferred. For example, if an analytic `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated.
+
+[[images/decorators and methods.png]]
