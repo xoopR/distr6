@@ -18,8 +18,8 @@ Our short-term aims are to implement all distributions in the R stats package as
 
 There are many advantages to OOP over functional programming (which is more commmon in R). For probability distributions, the biggest advantages is in the ability to quickly construct and recall any number of required distributions, each with mathematical and statistical methods. There are currently no methods in base R that interact with Distributions to obtain basic properties, for example the mean of a distribution. In distr6 this is made possible as every probability distribution is its own class with specific methods. So to get mathematical properties of the Binomial distribution:
 1. `B = Binomial$new(prob, size)`
-1. `B$mean()`
-1. `B$sd()`
+2. `B$mean()`
+3. `B$sd()`
 
 Or try using `B$summary()` for a range of common mathematical and statistical results. With the `listDistributions()` command you can see every Distribution currently implemented in distr6, along with their traits.
 
