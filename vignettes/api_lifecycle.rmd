@@ -17,14 +17,12 @@ We split implemented functions into:
 2. [Maturing](#maturing-classes-and-methods) - Functioning but needs tweaking.
 3. [Stable](#maturing-classes-and-methods) - Functioning as expected.
 
-### Experimental Classes and Methods
-![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+### Experimental Classes and Methods ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 * FunctionImputation
 * Scale
 
-### Maturing Classes and Methods
-![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+### Maturing Classes and Methods ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
 * Distribution
 * ArrayDistribution
@@ -33,8 +31,7 @@ We split implemented functions into:
 * TruncatedDistribution
 * MixtureDistribution
 
-### Stable Classes and Methods
-![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
+### Stable Classes and Methods ![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 
 * exKurtosisType
 * skewType
