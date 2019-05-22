@@ -1,0 +1,279 @@
+---
+title: "R6 Best Practices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{R6 Best Practices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Despite R6 becoming more commonplace in R packages, we have found no documentation of best practices for using R6 and object-oriented programming (OOP) methods and design patterns. Hence we propose our own R6 snippets and workarounds for common design patterns and other OOP methods. This article is split into:
+
+1. [Common practices and their definitions in OOP](#oop-practices-and-definitions)
+2. [Common Design Patterns in R](#design-patterns)
+3. [How to implement patterns in R6](#design-patterns-and-oop-in-r6)
+4. [Best practices for R6 documentation with roxygen](#roxygen-and-r6)
+
+## OOP Practices and Definitions
+
+Instead of providing a comprehensive glossary of OOP terms (of which many exist) we instead give a very brief overview of the most common OOP practices found in R. Firstly it should be noted that R is a functional language that makes use of dispatch and is not primarily for OOP. Functional programming and dispatch lends it's hand very naturally to the *Strategy* and *Visitor* design patterns (which we will return to later), the first of R's OOP style 'sub-languages', S3, should not be taken for granted therefore as it provides very powerful workaronds to strict OOP methods. R's update to S3, S4, formally introduces the fundamentals of OOP: encapsulation, abstraction and inheritence. Combined abstraction and encapsulation refer to only giving the user access to methods and data that they require and hiding everything else, it is the principle of minimising the user-interface (UI) and keeping as much uniformity and efficiency as possible. Inheritance is the process of one class (the child-class) 'copying' methods and variables from another (the parent-class). R6 formalises these methods further by clearly defining the notion of a class and creating methods to construct the class (and thereby creating an object). R6 also introduces notions of method chaining and cloning, to allow a chain of methods to be called and removing the need to re-create and duplicate an object each time). More concretely, if a user wants to add the variable `y` to `x` and save the result then they would call `x = x + y` but if x is an R6 object then the user simply calls `x + y`. Finally, an *abstract* class is defined as a class that cannot be constructed, i.e. an object or instance of the class cannot be created. The purpose of an abstract class is to have multiple child classes all inherit common methods/variables. 
+
+
+
+***
+
+## Design Patterns
+
+Design Patterns were collated, formalised and introduced in the seminal Design Patterns book (Gamma et al.) and the authors are commonly referred to as the Gang of Four (GoF).
+
+By far the most common design patterns in R toolboxes are the *strategy* and *visitor* design patterns. From GoF:
+* The *strategy* pattern is a behavioural pattern that "encapsulates a family of algorithms and makes them interchangeable."
+* The *visitor* pattern is a behavioural pattern that "lets you define a new operation without changing the classes of the elements on which it operates"
+
+Both of these patterns can be achieved via single or multiple dispatch and the S3 generic system is essentially a work-around for both of them. In many toolboxes, the concept of 'wrappers' and 'composites' are discussed. This is especially confusing as 'wrapper' may refer to one of two design patterns and 'composite' is a pattern in itself. The term wrapper usually refers to either the *decorator* or *adapter* design pattern, again from GoF:
+* The *decorator* pattern is a structural pattern than "attaches additional responsibilities to an object dynamically"
+* The *adapter* pattern is a structural pattern "converts the interface of a class into another interface clients expect"
+* The *composite* pattern is a structral pattern that "composes objects into tree structures to represent part-whole hierarchies".
+
+The key difference is that *adapters* change the class interface, *decorators* adds methods to the interface and *composites* allows individuals and their composites to be treated the same.
+
+***
+
+
+## Design Patterns and OOP in R6
+
+### Abstract Classes
+
+Abstract classes are classes that cannot be instantiated. They are useful for defining hierarchical structures and inheritance in OOP. As well as for the Abstract Factory design pattern.
+
+Implementation: In R6, all classes are concrete and by default have an `initialize` method for construction. Therefore to make a class abstract we overload the `initialize` method as follows:
+````R
+> AbstractClass$set("public","initialize",function(){
++   stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
++ })
+
+# So on construction
+> AbstractClass$new()
+````
+````
+Error in .subset2(public_bind_env, "initialize")(...) : 
+  AbstractClass is an abstract class that can't be initialized.
+````
+where `getR6Class` is one of our helper functions that gets the classname of a given R6 object.
+
+***
+
+### Decorators
+
+From Design Patterns:
+> (Decorators) Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+
+Implementation: Decorators are particularly complex in R6 for a number of reasons. Firstly inheritance occurs in the class definition and not object definition, therefore we cannot dynamically choose which class to inherit from. Secondly, methods and variables should only be defined before initializing an object and any defined after do not have access to the object itself (i.e. the 'self' and 'private' accessors). And finally there is no simple way to reference one object dynamically from another without this being hardcoded. Implementation has two key methods, the first via construction of the class to be decorated and secondly via construction of the decorator assuming an object has already been instantiated to decorate it.
+
+**Method 1)** In the class to decorate we copy every public method from the decorators of interest to the class and we add `self` as an argument to ensure that the decorator methods have the same access level as 'standard' methods.
+
+````R
+if(!is.null(decorators)){
+    lapply(decorators,function(x){
+      methods <- c(x$public_methods, get(paste0(x$inherit))$public_methods) # Combines decorator methods and any parent methods
+      methods <- methods[!(names(methods) %in% c("initialize","clone"))] # Ensures initialize and clone aren't copied
+      aself <- self
+      for(i in 1:length(methods)){
+          formals(methods[[i]] ) = c(formals(methods[[i]]),list(self=aself)) # Adds self as default to every decorator ensuring access to the object
+          assign(names(methods)[[i]],methods[[i]],envir=as.environment(self)) # Copies every method from the decorator to the object
+      }
+    })
+  }
+  private$.decorators = unlist(lapply(decorators,function(x) x[["classname"]]))
+```` 
+where we assume `decorators` is an argument to the constructor given as a list naming the decorator classes and that a private variable called `.decorators` is a list of decorators already present in the object.
+
+**Method 2)** On construction of a particular decorator, the original object is overwritten with whichever decorators were already added and the new decorator that is being constructed. The decorator object is not saved to local memory.
+
+````R
+DistributionDecorator$set("public","initialize",function(distribution){
+  if(getR6Class(self) == "DistributionDecorator")
+    stop(paste(getR6Class(self), "is an abstract class that can't be initialized.")) # Defines the Abstract Decorator parent class as abstract.
+
+  decorators = distribution$decorators() # Gets decorator list from object.
+  if(!is.null(decorators)){
+    decorators = lapply(decorators,get)
+  }
+  decorators = unique(c(decorators,get(getR6Class(self)))) # Combines decorators present in the object with the current decorator to be added.
+
+  assign(paste0(substitute(distribution)), Distribution$new(distribution)), pos = .GlobalEnv) # Constructs a new object via Method 1) and assigns this to the environment with the same name as the undecorated object.
+
+  cat(paste(substitute(distribution),"is now decorated with",getR6Class(self),"\n"))
+})
+````
+
+***
+
+## Roxygen and R6
+
+***
+There are currently no standard best practices for documentation in R6 and it is not supported directly by roxygen documentation. We document the practices that we use for consistency and as a reference for other coders. We welcome feedback and discussion about whether these are the 'best' practices for R6 documentation.
+
+We use a reduced version of the Distributions R6 object for example. Each class definition is written in a separate R script with the filenames in the form "ParentClassName_ClassName.R".
+***
+
+### Custom Sections
+
+We document all R6 classes using the following Roxygen tags:
+
+* @title - Documentation title, short and descriptive of class. Title Case.
+* @name - Name of class
+* @description - Description of class
+* @format -  "An \code{\link[R6]{R6}} object."
+* @section Construction: - Initialize method, includes parameters and defaults.
+* @section Constructor Arguments: - Tabular. Describes arguments to constructors, including type.
+* @section Accessor Methods: - Tabular. Lists all public accessor methods, brief description and return type.
+* @section Maths/Stats Methods: - Tabular. Lists all mathematical/statistical methods (e.g. exp/var), brief description.
+* @section Other Methods: - Tabular. Lists all other methods, brief description and return type.
+* @section Representation Methods: - Tabular. Lists all representation methods (e.g. print/summary), brief description and return type
+* @details - Details of class. Can be split into sections "@section Constructor Details:" and "@section Public Method Details:" but only if strictly necessary.
+* @seealso - Referencing other classes
+
+When a class has relatively few methods we instead replace the different sections with
+* @section Public Methods:
+* @section Public Methods Details:
+
+### Example
+````R
+#-------------------------------------------------------------
+# Distribution R6Class Definition
+#-------------------------------------------------------------
+#' @title Generalised Distribution Object
+#'
+#' @description A generalised distribution object for defining custom probability distributions
+#'   as well as serving as the parent class to specific, familiar distributions. Common
+#'   mathematical and statistical methods for distributions are defined here with approximate numerical
+#'   calculations (as opposed to analytical results).
+#'
+#
+#' @name Distribution
+#'
+#' @section Constructor Arguments:
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{name} \tab character \tab Full name of distribution. \cr
+#' \code{short_name} \tab character \tab Short name to identify distribution. \cr
+#' \code{type} \tab SetInterval \tab Scientific type. \cr
+#' \code{support} \tab SetInterval \tab Distribution support. See Details. \cr
+#' \code{distrDomain} \tab SetInterval \tab Distribution domain See Details. \cr
+#' \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
+#' \code{pdf} \tab function \tab See Details. \cr
+#' \code{cdf} \tab function \tab See Details. \cr
+#' \code{quantile} \tab function \tab See Details. \cr
+#' \code{rand} \tab function \tab See Details. \cr
+#' \code{parameters} \tab ParameterSet \tab See Details. \cr
+#' \code{paramValues} \tab list \tab See Details. \cr
+#' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
+#' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
+#' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
+#' \code{description} \tab character \tab short description of distribution.
+#' }
+#'
+#' @section Constructor Details: The primary purpose of the Distribution object is to serve as the parent class
+#'   to all other distributions, therefore all methods are approximate numeric calculations
+#'   and the user may prefer to utilise decorators to improve accuracy.
+#'
+#'   \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
+#'   object. If none are supplied then the set of Reals is taken to be the type, support and domain
+#'   of the distribution. If only \code{type} is supplied then this is taken to also be the support
+#'   and domain.
+#'
+#'   By default, missing \code{pdf}, \code{cdf} and \code{quantile} are not automatically imputed.
+#'   Use the imputation wrappers (see below) to generate these with a selected method.
+#'   The \code{rand} function is automatically generated depending on which of the above are supplied.
+#'   The generation for this is performed according to the hierarchy: quantile -> rand, cdf -> rand, pdf -> rand.
+#'
+#'   \code{parameters} should be supplied as a ParameterSet. The distribution parameterisation
+#'   is taken to be whichever parameters are flagged as 'settable', any others in the ParameterSet
+#'   are automatically updated by a given function. \code{paramValues} is an optional list giving the
+#'   values to set the parameters (if not default or given in the ParameterSet.
+#'
+#'   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
+#'   Distribution with in construction. Decorators can also be added after construction. See
+#'   \code{\link{DistributionDecorator}} for more details.
+#'
+#'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
+#'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
+#'   If not given these are automatically filled from \code{type} and \code{support}.
+#'
+#' @section Accessor Methods:
+#'  \tabular{lrr}{
+#'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
+#'   \code{name()} \tab character \cr
+#'   \code{short_name()} \tab character \cr
+#'   \code{description()} \tab character \cr
+#'   \code{decorators()} \tab character \cr
+#'   \code{traits()} \tab list \cr
+#'   \code{valueSupport()} \tab character \cr
+#'   \code{variateForm()} \tab character \cr
+#'   \code{type()} \tab Set \tab \code{\link{Set}} \cr
+#'   \code{properties()} \tab list \cr
+#'   \code{support()} \tab Set \tab \code{\link{Set}} \cr
+#'   \code{distrDomain()} \tab Set \tab \code{\link{Set}} \cr
+#'   \code{symmetry()} \tab character \cr
+#'   \code{parameters(id,as.df = FALSE)} \tab ParameterSet or data.frame \tab \code{\link{ParameterSet}} \cr
+#'   \code{getParameterValue(id)} \tab numeric \tab \code{\link{ParameterSet}} \cr
+#'   \code{sup()} \tab numeric \tab supremum of distribution \cr
+#'   \code{inf()} \tab numeric \tab infimum of distribution \cr
+#'   }
+#'
+#' @section Math/Stats Methods:
+#'  \tabular{ll}{
+#'   \strong{Method} \tab \strong{Details} \cr
+#'   \code{pdf(x, log = F)} \tab Evaluate density/mass at x \cr
+#'   \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q.\cr
+#'   \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p \cr
+#'   \code{rand(n)} \tab Simulate n draws from distribution \cr
+#'   \code{expectation(trafo)} \tab Calculate expectation \cr
+#'   \code{var()} \tab Calculate variance \cr
+#'   \code{sd()} \tab Calculate standard deviation \cr
+#'   \code{cov()} \tab Calculate covariance. See Details \cr
+#'   \code{cor()} \tab Calculate correlation. See Details \cr
+#'   \code{median()} \tab Calculate median \cr
+#'   \code{mode(which = 1)} \tab Calculate mode. See Details \cr
+#'  }
+#'
+#' @section Other Methods:
+#'  \tabular{lrr}{
+#'   \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+#'   \code{setParameterValue(lst)} \tab list -> invisible(self) \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
+#'   \code{liesInSupport(x, all = TRUE)} \tab numeric x logical -> logical \tab Does x lie in the support of distribution? See Details. \cr
+#'   \code{liesInType(x)} \tab numeric -> logical \tab Does x lie in the type of distribution? \cr
+#'   \code{liesInDistrDomain(x)} \tab numeric -> logical \tab Does x lie in the domain of distribution? \cr
+#' }
+#'
+#' @section Representation Methods:
+#' \tabular{ll}{
+#'   \strong{Method} \tab \strong{Details} \cr
+#'   \code{strprint()} \tab Character representation of print \cr
+#'   \code{print()} \tab Print method \cr
+#'   \code{summary(full = T)} \tab Summary method \cr
+#'   \code{plot()} \tab Plotting method \cr
+#'   \code{qqplot()} \tab QQ-Plots \cr
+#' }
+#'
+#'
+#' @section Public Methods Details:
+#' \code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
+#' \code{mode} returns by default the first mode of the distribution where applicable, otherwise a specified
+#' integer or all.
+#'
+#' If \code{liesInSupport(x, all = TRUE)} then returns TRUE only if every numeric in vector \code{x} lies
+#' in the support of the distribution, otherwise returns a vector of logicals.
+#'
+#'
+#' @seealso See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
+#' Intervals. See \code{\link{ParameterSet}} for parameter details. See
+#' \code{\link{DistributionDecorator}} for Decorator details. See \code{\link[stats]{Binomial}} for
+#' details on the arguments to \code{pdf}/\code{cdf}/\code{quantile}/\code{rand}.
+NULL
+#-------------------------------------------------------------
+
+#' @export
+Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
+````
