@@ -1,3 +1,7 @@
+template:
+  params:
+    bootswatch: spacelab
+
 navbar:
   title:
   type: default
@@ -19,6 +23,10 @@ navbar:
     - text: API Lifecycle
       href: articles/api_lifecycle.html
   right:
+  - text: News
+    href: news/
+  - text: Reference
+    href: reference/
   - icon: fa-github fa-lg
     href: https://github.com/mlr-org/mlr
  # - icon: fa-slack
