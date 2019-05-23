@@ -1,48 +1,16 @@
 ---
-title: "R6 Best Practices"
+title: "R6 and Design Patterns"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{R6 Best Practices}
+  %\VignetteIndexEntry{R6 and Design Patterns}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-Despite R6 becoming more commonplace in R packages, we have found no documentation of best practices for using R6 and object-oriented programming (OOP) methods and design patterns. Hence we propose our own R6 snippets and workarounds for common design patterns and other OOP methods. This article is split into:
+Despite R6 becoming more commonplace in R packages, we have found no documentation of best practices for using R6 and object-oriented programming (OOP) methods and design patterns. Hence we propose our own R6 snippets and workarounds for common design patterns and other OOP methods. We have implemented the following OOP processes and design patterns thus far:
 
-1. [Common practices and their definitions in OOP](#oop-practices-and-definitions)
-2. [Common Design Patterns in R](#design-patterns)
-3. [How to implement patterns in R6](#design-patterns-and-oop-in-r6)
-4. [Best practices for R6 documentation with roxygen](#roxygen-and-r6)
-
-## OOP Practices and Definitions
-
-Instead of providing a comprehensive glossary of OOP terms (of which many exist) we instead give a very brief overview of the most common OOP practices found in R. Firstly it should be noted that R is a functional language that makes use of dispatch and is not primarily for OOP. Functional programming and dispatch lends it's hand very naturally to the *Strategy* and *Visitor* design patterns (which we will return to later), the first of R's OOP style 'sub-languages', S3, should not be taken for granted therefore as it provides very powerful workaronds to strict OOP methods. R's update to S3, S4, formally introduces the fundamentals of OOP: encapsulation, abstraction and inheritence. Combined abstraction and encapsulation refer to only giving the user access to methods and data that they require and hiding everything else, it is the principle of minimising the user-interface (UI) and keeping as much uniformity and efficiency as possible. Inheritance is the process of one class (the child-class) 'copying' methods and variables from another (the parent-class). R6 formalises these methods further by clearly defining the notion of a class and creating methods to construct the class (and thereby creating an object). R6 also introduces notions of method chaining and cloning, to allow a chain of methods to be called and removing the need to re-create and duplicate an object each time). More concretely, if a user wants to add the variable `y` to `x` and save the result then they would call `x = x + y` but if x is an R6 object then the user simply calls `x + y`. Finally, an *abstract* class is defined as a class that cannot be constructed, i.e. an object or instance of the class cannot be created. The purpose of an abstract class is to have multiple child classes all inherit common methods/variables. 
-
-
-
-***
-
-## Design Patterns
-
-Design Patterns were collated, formalised and introduced in the seminal Design Patterns book (Gamma et al.) and the authors are commonly referred to as the Gang of Four (GoF).
-
-By far the most common design patterns in R toolboxes are the *strategy* and *visitor* design patterns. From GoF:
-
-* The **strategy** pattern is a behavioural pattern that "encapsulates a family of algorithms and makes them interchangeable."
-* The **visitor** pattern is a behavioural pattern that "lets you define a new operation without changing the classes of the elements on which it operates"
-
-Both of these patterns can be achieved via single or multiple dispatch and the S3 generic system is essentially a work-around for both of them. In many toolboxes, the concept of 'wrappers' and 'composites' are discussed. This is especially confusing as 'wrapper' may refer to one of two design patterns and 'composite' is a pattern in itself. The term wrapper usually refers to either the **decorator** or **adapter** design pattern, again from GoF:
-
-* The **decorator** pattern is a structural pattern than "attaches additional responsibilities to an object dynamically"
-* The **adapter** pattern is a structural pattern "converts the interface of a class into another interface clients expect"
-* The **composite** pattern is a structral pattern that "composes objects into tree structures to represent part-whole hierarchies".
-
-The key difference is that **adapters** change the class interface, **decorators** add methods to the interface and **composites** allow individuals and their composites to be treated the same.
-
-***
-
-
-## Design Patterns and OOP in R6
+1. [Abstract Classes](#abstract-classes)
+2. [Decorators](#decorators)
 
 ### Abstract Classes
 
