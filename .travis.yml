@@ -33,7 +33,7 @@ deploy:
     branch: master
     
 notifications:
-  slack:
+  slack: distr6:IcBmMQxhN01OILBOggRT4Tge
     on_success: change
     on_failure: always
   email:
