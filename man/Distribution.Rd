@@ -33,27 +33,25 @@ A generalised distribution object for defining custom probability distributions
 }
 
 \section{Constructor Details}{
- The primary purpose of the Distribution object is to serve as the parent class
-  to all other distributions, therefore all methods are approximate numeric calculations
-  and the user may prefer to utilise decorators to improve accuracy.
+ The most basic Distribution object consists of a name and one of pdf/cdf.
 
-  \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
+  If supplied, \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
   object. If none are supplied then the set of Reals is taken to be the type, support and domain
   of the distribution. If only \code{type} is supplied then this is taken to also be the support
   and domain.
 
-  By default, missing \code{pdf}, \code{cdf} and \code{quantile} are not automatically imputed.
-  Use the imputation wrappers (see below) to generate these with a selected method.
-  The \code{rand} function is automatically generated depending on which of the above are supplied.
-  The generation for this is performed according to the hierarchy: quantile -> rand, cdf -> rand, pdf -> rand.
+  By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
+  Use the \code{\link{FunctionImputation}} decorator to generate these with a selected method.
 
-  \code{parameters} should be supplied as a ParameterSet. The distribution parameterisation
-  is taken to be whichever parameters are flagged as 'settable', any others in the ParameterSet
-  are automatically updated by a given function.
+  If the distribution has parameters, then these should be supplied as a ParameterSet.
+  The distribution parameterisation is taken to be whichever parameters are flagged as 'settable',
+  any others in the ParameterSet are automatically updated by a given function. See \code{\link{ParameterSet}}
+  for more details on construction of a ParameterSet.
 
   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
   Distribution with in construction. Decorators can also be added after construction. See
-  \code{\link{DistributionDecorator}} for more details.
+  \code{\link{DistributionDecorator}} for more details. The \code{R62S3} determines if S3 methods
+  should be added for the given decorator, it is ignored if \code{decorators = NULL}.
 
   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
@@ -62,7 +60,7 @@ A generalised distribution object for defining custom probability distributions
 
 \section{Accessor Methods}{
 
- \tabular{lrr}{
+ \tabular{lll}{
   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
   \code{name()} \tab character \cr
   \code{short_name()} \tab character \cr
@@ -102,7 +100,7 @@ A generalised distribution object for defining custom probability distributions
 
 \section{Other Methods}{
 
- \tabular{lrr}{
+ \tabular{lll}{
   \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
   \code{setParameterValue(lst)} \tab list -> invisible(self) \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
   \code{liesInSupport(x, all = TRUE)} \tab numeric x logical -> logical \tab Does x lie in the support of distribution? See Details. \cr

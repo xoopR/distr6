@@ -1,6 +1,11 @@
+#-------------------------------------------------------------
+# Binomial Distribution Documentation
+#-------------------------------------------------------------
 #' @title Binomial Distribution
+#'
 #' @description Mathematical and statistical functions for the Binomial distribution parameterised
 #' with probability of success and size (number of trials).
+#'
 #' @name Binomial
 #'
 #' @section Constructor Arguments:
@@ -59,7 +64,9 @@
 #' @seealso See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
 #' for Decorator details as well as \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
 NULL
-
+#-------------------------------------------------------------
+# Binomial Distribution Definition
+#-------------------------------------------------------------
 #' @include SetInterval_SpecialSet.R ParameterSet.R
 #' @export
 Binomial <- R6::R6Class("Binomial", inherit = Distribution, lock_objects = F)
@@ -87,11 +94,13 @@ Binomial$set("private",".rand",function(n){
   rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
 })
 
-Binomial$set("public","expectation",function()
-  self$getParameterValue("size") * self$getParameterValue("prob"))
+Binomial$set("public","expectation",function(){
+  self$getParameterValue("size") * self$getParameterValue("prob")
+})
 
-Binomial$set("public","var",function()
-  self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob"))
+Binomial$set("public","var",function(){
+  self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob")
+})
 
 Binomial$set("public","skewness",function(){
   (1 - (2*self$getParameterValue("prob"))) / self$sd()
@@ -141,9 +150,6 @@ Binomial$set("public","setParameterValue",function(lst){
 })
 
 Binomial$set("private",".parameters", NULL)
-Binomial$set("private",".setSupport", function(support){
-
-})
 
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL, ...){
 

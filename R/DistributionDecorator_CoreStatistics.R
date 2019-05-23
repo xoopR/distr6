@@ -1,7 +1,8 @@
 #' @title Core Statistical Methods for Distributions
 #'
 #' @description Added functionality to distribution objects for numerical statistical
-#'   methods. Including a generalised expectation function for more complex numerical calculations
+#'   methods. Including a generalised expectation function for more complex numerical calculations.
+#'
 #' @name CoreStatistics
 #'
 #' @param distribution distribution object.

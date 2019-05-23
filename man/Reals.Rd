@@ -3,17 +3,15 @@
 \name{Reals}
 \alias{Reals}
 \title{Set of Reals}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class Reals.
-}
 \description{
 The mathematical set of reals.
 }
-\section{Usage}{
- Reals$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+}
 }
 
 \seealso{

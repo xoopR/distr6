@@ -1,36 +1,40 @@
+#-------------------------------------------------------------
+# SetInterval Documentation
+#-------------------------------------------------------------
 #' @title R6 Generalised Class for Symbolic Sets and Intervals
 #'
-#' @description The parent class to sets and intervals in R6.
+#' @description The parent class to sets and intervals in R6. Primarily used for inheriting methods.
+#'
 #' @name SetInterval
 #'
-#' @format An \code{\link[R6]{R6}} object.
-#'
-#' @section Construction: SetInterval$new(symbol, type, lower, upper, dimension)
 #' @section Constructor Arguments:
-#'  \tabular{lr}{
-#' symbol \tab character. Representation of set/interval. \cr
-#' type \tab character. Interval type, one of (), (], [), [] \cr
-#' lower \tab numeric. Lower limit of set/interval \cr
-#' upper \tab numeric. Upper limit of set/interval \cr
-#' dimension \tab integer. Dimension of set/interval \cr
+#'  \tabular{lll}{
+#'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#'    \code{symbol} \tab character \tab Representation of set/interval. \cr
+#'    \code{type} \tab character \tab Interval type, one of (), (], [), []. \cr
+#'    \code{lower} \tab numeric \tab Lower limit of set/interval. \cr
+#'    \code{upper} \tab numeric \tab Upper limit of set/interval. \cr
+#'    \code{dimension} \tab integer \tab Dimension of set/interval.
 #'}
 #'
 #' @section Accessor Methods:
-#' \tabular{lr}{
-#' \code{lower} \tab numeric. Lower limit of set/interval \cr
-#' \code{upper} \tab numeric. Upper limit of set/interval \cr
-#' \code{type} \tab  character. Closed/open interval type \cr
-#' \code{dimension} \tab integer. Dimension of set/interval \cr
-#' \code{max} \tab  numeric. Maximum of set/interval \cr
-#' \code{min} \tab  numeric. Minimum of set/interval \cr
-#' \code{sup} \tab  numeric. Supremum of set/interval \cr
-#' \code{inf} \tab  numeric. Infimum of set/interval \cr
-#' \code{getSymbol} \tab  character. Symbolic representation of set/interval \cr
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
+#' \code{lower} \tab numeric \tab Lower limit of set/interval. \cr
+#' \code{upper} \tab numeric \tab Upper limit of set/interval. \cr
+#' \code{type} \tab  character \tab Closed/open interval type. \cr
+#' \code{dimension} \tab integer \tab Dimension of set/interval. \cr
+#' \code{max} \tab  numeric \tab Maximum of set/interval. \cr
+#' \code{min} \tab  numeric \tab Minimum of set/interval. \cr
+#' \code{sup} \tab  numeric \tab Supremum of set/interval. \cr
+#' \code{inf} \tab  numeric \tab Infimum of set/interval. \cr
+#' \code{getSymbol} \tab  character \tab Symbolic representation of set/interval.
 #' }
 #'
 #' @section Representation Methods:
-#' \tabular{lr}{
-#' \code{print} \tab  Prints symbolic representation of set/interval \cr
+#' \tabular{ll}{
+#'   \strong{Method} \tab \strong{Details} \cr
+#'   \code{print} \tab  Prints symbolic representation of set/interval \cr
 #' }
 #'
 #' @details Whilst this is not an abstract class, direct construction is generally not advised.
@@ -38,11 +42,12 @@
 #'
 #' @seealso \code{\link{Set}} for R6 Set objects and \code{\link{Interval}} for R6 Interval objects.
 NULL
-
-
+#-------------------------------------------------------------
+# SetInterval Definition
+#-------------------------------------------------------------
 #' @export
 SetInterval <- R6::R6Class("SetInterval")
-SetInterval$set("public","initialize",function(symbol, type, lower, upper, dimension){
+SetInterval$set("public","initialize",function(symbol, lower, upper, type, dimension){
   private$.lower = lower
   private$.upper = upper
   private$.type = type

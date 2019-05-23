@@ -3,17 +3,15 @@
 \name{Integers}
 \alias{Integers}
 \title{Set of Integers}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class Integers.
-}
 \description{
 The mathematical set of integers.
 }
-\section{Usage}{
- Integers$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+}
 }
 
 \seealso{

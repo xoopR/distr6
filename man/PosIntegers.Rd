@@ -3,17 +3,16 @@
 \name{PosIntegers}
 \alias{PosIntegers}
 \title{Set of Positive Integers}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class PosIntegers.
-}
 \description{
 The mathematical set of positive integers.
 }
-\section{Usage}{
- PosIntegers$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+}
 }
 
 \seealso{

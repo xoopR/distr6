@@ -3,17 +3,15 @@
 \name{Complex}
 \alias{Complex}
 \title{Set of Complex Numbers}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class Complex.
-}
 \description{
 The mathematical set of complex numbers.
 }
-\section{Usage}{
- Complex$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+}
 }
 
 \seealso{

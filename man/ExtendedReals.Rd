@@ -3,17 +3,15 @@
 \name{ExtendedReals}
 \alias{ExtendedReals}
 \title{Set of Extended Reals}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class ExtendedReals.
-}
 \description{
 The mathematical set of extended reals.
 }
-\section{Usage}{
- ExtendedReals$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+}
 }
 
 \seealso{

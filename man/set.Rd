@@ -3,20 +3,21 @@
 \name{Set}
 \alias{Set}
 \title{Symbolic Set Object}
-\arguments{
-\item{...}{objects of any type to pass as set elements.}
-}
-\value{
-\code{Set$new} constructs an R6 object of class Set.
-}
 \description{
 An R6 set object for symbolic representation of mathematical sets.
 }
-\details{
-All arguments passed to the constructor are elements in the set.
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{...} \tab ANY \tab See constructor details. \cr
 }
-\section{Usage}{
- Set$new(...)
+}
+
+\section{Constructor Details}{
+ Objects of any class can be passed to the set constructor. If a numeric
+vector is passed then a discrete set of integers is created in the range from the minimum to the
+maximum input. Otherwise all arguments are parsed as elements in a mathematical set.
 }
 
 \seealso{

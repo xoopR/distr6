@@ -3,17 +3,15 @@
 \name{PosNaturals}
 \alias{PosNaturals}
 \title{Set of Positive Natural Numbers}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class PosNaturals.
-}
 \description{
 The mathematical set of positive natural numbers.
 }
-\section{Usage}{
- PosNaturals$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+}
 }
 
 \seealso{

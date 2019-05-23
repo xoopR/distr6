@@ -3,19 +3,16 @@
 \name{PosReals}
 \alias{PosReals}
 \title{Set of Positive Reals}
-\arguments{
-\item{dim}{numeric dimension of set.}
-
-\item{zero}{logical; if FALSE (default) zero is not included in the set.}
-}
-\value{
-Returns an R6 object of class PosReals.
-}
 \description{
 The mathematical set of positive reals.
 }
-\section{Usage}{
- PosReals$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+}
 }
 
 \seealso{

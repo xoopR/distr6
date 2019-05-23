@@ -3,17 +3,15 @@
 \name{Rationals}
 \alias{Rationals}
 \title{Set of Rationals}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class Rationals.
-}
 \description{
 The mathematical set of rationals.
 }
-\section{Usage}{
- Rationals$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+}
 }
 
 \seealso{
