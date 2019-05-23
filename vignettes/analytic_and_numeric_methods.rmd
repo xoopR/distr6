@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-To keep all Distribution results as precise as possibly and to ensure optimal efficiency, we separate out all analytic and numerical calculations using decorators. The image below gives a visual representation of how this looks for a custom Distribution object. All public methods inside the Distribution are analytic only, i.e. no approximations or numerical integration take place. So if a user wants to define a custom application and calculate the analytic representation, then they can supply this to the constructor, otherwise they use decorators for numeric approximation.
+To keep all Distribution results as precise as possible and to ensure optimal efficiency, we separate out all analytic and numerical calculations using decorators. The image below gives a visual representation of how this looks for a custom Distribution object. All public methods inside the Distribution are analytic only, i.e. no approximations or numerical integration take place. So if a user wants to define a custom application and calculate the analytic representation, then they can supply this to the constructor, otherwise they use decorators for numeric approximation.
 
 We have three decorators:
 
