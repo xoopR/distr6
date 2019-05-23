@@ -23,8 +23,8 @@ navbar:
     - text: API Lifecycle
       href: articles/api_lifecycle.html
   right:
-  - text: News
-    href: news/
+ # - text: News
+ #   href: news/
   - text: Reference
     href: reference/
   - icon: fa-github fa-lg
