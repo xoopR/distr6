@@ -33,7 +33,8 @@ deploy:
     branch: master
     
 notifications:
-  slack: distr6:IcBmMQxhN01OILBOggRT4Tge
+  slack:
+    secure: ku+dUw89qP0GjzLcww6R39f1EGTrgj5q+b3LAVBFdo+6hV0OCVvC+XfBxWqOssU2mCxsk7n4C2ZcILMyuokSC3oI1cWvtBfJjolNLunDQJagH3HuBf8ZEowhV9hyGhf+nZ+ygdFLPBrvbjBTa7CsNSwmMR/WsIlq28urDvYvx/7FRQUdTaHnAhXeYOohcCBfwRabN3HFDL1usRL8sswq7cLQB0jfH447WnUw8sU2Yjh4hU7xsPI1p0M7GltLvihuLaT7Gmv4sXyX10mU0BIjtVS6ohntzgQwqOD0977sg6FZIrWIQmWCsyjcoLoGtZLDucF+TU7CSJ+Z0H2/ltP0oVU+AgK+9WkOJXpuLHlJxGqPqCSGgcDpUh8G1AMJs8xk6O2mzNfwJ3+4qRnsgCkUzbIdQjJicjnawWqtkRsXQ0De9qa9zwv+4gHy/cQ7ztXCtBRUEdCp7VzieVSAlvNnzlsBOptXpwNjqOMVa85LSe11SRsDvyeX/hkCVOf+nWDz9wajHhrVVyG+U+TUktVwn2xxQio2Vp1cfwOQ5G1dRivi4OCkoYc/RKEGoZIj8m+UVoJ+68mQ4sP6ZElCR5aEfP1CEHxYB7aKs8QmX6DLkhdaKT5SJ5tttfhYb6ujvzqPmVHrIQTpbLFWTdjSJLPOl2+gkeFr8DTLn9OqyN0qV3g=
     on_success: change
     on_failure: always
   email:
