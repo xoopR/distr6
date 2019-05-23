@@ -6,8 +6,8 @@ navbar:
   title:
   type: default
   left:
-  - icon: fa-home
-    href: index.html
+#  - icon: fa-home
+#    href: index.html
   - text: OOP and R6
     menu:
     - text: R6 and Design Patterns
