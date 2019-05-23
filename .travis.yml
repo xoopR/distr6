@@ -31,3 +31,12 @@ deploy:
   local-dir: docs
   on:
     branch: master
+    
+notifications:
+  slack:
+    on_success: change
+    on_failure: always
+  email:
+    on_success: change
+    on_failure: change
+    on_failure: change
