@@ -46,7 +46,7 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
   }
 }
 
-#' @title Lists Implemented R6 Decorators
+#' @title Lists Implemented Distribution Decorators
 #' @description Lists decorators that can decorate an R6 Distribution.
 #' @param simplify logical. If FALSE (default) returns result as decorator, otherwise character.
 #' @examples
@@ -70,12 +70,36 @@ listDecorators <- function(simplify=FALSE){
     return(lapply(y, get))
 }
 
+#' @title Lists Implemented Distribution Decorators
+#' @description Lists wrappers that can wrap an R6 Distribution.
+#' @param simplify logical. If FALSE (default) returns result as wrapper, otherwise character.
+#' @examples
+#' listWrappers()
+#' listWrappers(TRUE)
+#' @export
+listWrappers <- function(simplify=FALSE){
+  y = sapply(ls(name="package:distr6"),function(x){
+    if(inherits(get(x),"R6ClassGenerator")){
+      if(environmentName(get(x)$get_inherit()) == "DistributionWrapper_generator")
+        return(get(x)$classname)
+      else
+        return(FALSE)
+    } else
+      return(FALSE)
+  })
+  y = y[y!="FALSE" & y!="ConcreteWrapper"]
+  if(simplify)
+    return(as.character(y))
+  else
+    return(lapply(y, get))
+}
+
 #' @title Lists Implemented R6 Special Sets
 #' @description Lists special sets that can be used in SetInterval.
 #' @param simplify logical. If FALSE (default) returns data.frame of set name and symbol, otherwise character.
 #' @examples
 #' listSpecialSets()
-#' listSpecialSets(FALSE)
+#' listSpecialSets(TRUE)
 #' @export
 listSpecialSets <- function(simplify=FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
@@ -106,6 +130,8 @@ listSpecialSets <- function(simplify=FALSE){
     return(symbols)
   }
 }
+
+
 
 #' @title De-Duplicate Distributions
 #' @description From a list of Distributions with the same short_name, suffix each with a consecutive

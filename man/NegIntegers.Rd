@@ -16,8 +16,5 @@ The mathematical set of negative integers.
 }
 
 \seealso{
-\code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-  \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-  \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-  \code{\link{ExtendedReals}}, \code{\link{Complex}}.
+\code{\link{listSpecialSets}}
 }

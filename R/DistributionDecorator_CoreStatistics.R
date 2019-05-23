@@ -26,8 +26,7 @@
 #'   "central" for the kth moment about the mean, or "standard" for the central moment
 #'   standardised by, kthCentralMoment / standard deviation^k.
 #'
-#' @seealso \code{\link{decorate}} for the decorate function and \code{\link{ExoticStatistics}} for
-#' more available methods.
+#' @seealso \code{\link{DistributionDecorator}}
 #'
 #' @examples
 #' x = Binomial$new()

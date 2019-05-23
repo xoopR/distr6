@@ -26,6 +26,5 @@ x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
 x$survival(4)
 }
 \seealso{
-\code{\link{decorate}} for the decorate function and \code{\link{CoreStatistics}} for
-more available methods.
+\code{\link{DistributionDecorator}}
 }

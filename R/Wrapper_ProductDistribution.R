@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' prodBin <- ProductDistribution$new(Binomial$new(prob = 0.5, size = 10),
-#' Binomial$new(prob = 0.5, size = 20))
+#'                                    Binomial$new(prob = 0.5, size = 20))
 #' prodBin$pdf(x1 = 2, x2 =3)
 #' prodBin$cdf(x1 = 5, x2 = 10)
 NULL

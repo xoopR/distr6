@@ -109,6 +109,5 @@ x = Binomial$new(decorators = CoreStatistics, R62S3 = FALSE)
 x$kthmoment(4)
 }
 \seealso{
-\code{\link{decorate}} for the decorate function and \code{\link{ExoticStatistics}} for
-more available methods.
+\code{\link{DistributionDecorator}}
 }

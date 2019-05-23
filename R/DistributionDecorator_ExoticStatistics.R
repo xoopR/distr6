@@ -13,8 +13,7 @@
 #'  All methods in this decorator use numerical approximations and therefore better results may be available
 #'  from analytic computations.
 #'
-#' @seealso \code{\link{decorate}} for the decorate function and \code{\link{CoreStatistics}} for
-#' more available methods.
+#' @seealso \code{\link{DistributionDecorator}}
 #'
 #' @examples
 #' x = Exponential$new()

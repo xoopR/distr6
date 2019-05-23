@@ -11,7 +11,6 @@ This is an abstract class that cannot be directly constructed.
   See \code{\link{decorate}} for the function to decorate Distributions.
 }
 \seealso{
-\code{\link{decorate}} for the decorating function. \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for available decorators. \code{\link{Distribution}} for decoratable
-distributions.
+\code{\link{decorate}} for the decorating function and \code{\link{listDecorators}}
+ for available decorators.
 }

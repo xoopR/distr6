@@ -7,10 +7,7 @@
 #' @details This is an abstract class that cannot be constructed, instead construct one of the child classes,
 #' see below.
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 
 #' @include SetInterval_Set.R
@@ -41,10 +38,7 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
 #'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
@@ -61,10 +55,7 @@ Naturals$set("public", "initialize", function(dim = 1,...){
 #'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 PosNaturals <- R6::R6Class("PosNaturals",inherit = SpecialSet)
@@ -81,10 +72,7 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 #'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
@@ -102,10 +90,7 @@ Integers$set("public", "initialize", function(dim = 1,...){
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 PosIntegers <- R6::R6Class("PosIntegers",inherit = SpecialSet)
@@ -126,10 +111,7 @@ PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 NegIntegers <- R6::R6Class("NegIntegers",inherit = SpecialSet)
@@ -149,10 +131,7 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
@@ -170,10 +149,7 @@ Rationals$set("public", "initialize", function(dim = 1,...){
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 PosRationals <- R6::R6Class("PosRationals",inherit = Rationals)
@@ -194,10 +170,7 @@ PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
@@ -217,10 +190,7 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
@@ -238,10 +208,7 @@ Reals$set("public", "initialize", function(dim = 1,type, ...){
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 PosReals <- R6::R6Class("PosReals",inherit = Reals)
@@ -262,10 +229,7 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 NegReals <- R6::R6Class("NegReals",inherit = Reals)
@@ -285,10 +249,7 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
@@ -305,10 +266,7 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 #'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
-#' @seealso \code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-#'   \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-#'   \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-#'   \code{\link{ExtendedReals}}, \code{\link{Complex}}, \code{\link{SpecialSet}}.
+#' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
 Complex <- R6::R6Class("Complex",inherit = SpecialSet)

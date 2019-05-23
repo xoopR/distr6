@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution_helpers.R
 \name{listDecorators}
 \alias{listDecorators}
-\title{Lists Implemented R6 Decorators}
+\title{Lists Implemented Distribution Decorators}
 \usage{
 listDecorators(simplify = FALSE)
 }

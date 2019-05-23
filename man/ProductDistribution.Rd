@@ -24,7 +24,7 @@ where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X1,X2 are
 
 \examples{
 prodBin <- ProductDistribution$new(Binomial$new(prob = 0.5, size = 10),
-Binomial$new(prob = 0.5, size = 20))
+                                   Binomial$new(prob = 0.5, size = 20))
 prodBin$pdf(x1 = 2, x2 =3)
 prodBin$cdf(x1 = 5, x2 = 10)
 }
