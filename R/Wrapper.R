@@ -35,7 +35,7 @@ DistributionWrapper$set("public","initialize",function(distlist, prefixParams = 
 
   if(prefixParams){
     params <- do.call(rbind.data.frame,lapply(distlist, function(x){
-      params = x[["parameters"]](as.df = T)
+      params = x[["parameters"]]()$as.data.frame()
       params[,1] = paste(x[["short_name"]],params[,1],sep="_")
       return(params)
     }))
@@ -78,7 +78,7 @@ DistributionWrapper$set("public","setParameterValue",function(lst){
   rm(i)
 
   params <- do.call(rbind,lapply(self$wrappedModels(), function(x){
-    params = x[["parameters"]](as.df = T)
+    params = x[["parameters"]]()$as.data.frame()
     params[,1] = paste(x[["short_name"]],params[,1],sep="_")
     return(params)
   }))

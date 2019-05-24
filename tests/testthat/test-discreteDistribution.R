@@ -12,7 +12,7 @@ dbin = function(x){
 ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0.8),
                       lower = list(0, 1, 0), upper = list(1, Inf, 1),
                       class = list("numeric","integer","numeric"),
-                      settable = list(TRUE, TRUE, FALSE), fittable = list(TRUE, FALSE, FALSE),
+                      settable = list(TRUE, TRUE, FALSE),
                       updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
                       description = list("Probability of Success", "Number of trials",
                                          "Probability of failure"))

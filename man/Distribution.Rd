@@ -74,7 +74,7 @@ A generalised distribution object for defining custom probability distributions
   \code{support()} \tab Set \tab \code{\link{Set}} \cr
   \code{distrDomain()} \tab Set \tab \code{\link{Set}} \cr
   \code{symmetry()} \tab character \cr
-  \code{parameters(id,as.df = FALSE)} \tab ParameterSet or data.frame \tab \code{\link{ParameterSet}} \cr
+  \code{parameters(id)} \tab ParameterSet or data.frame. \tab \code{\link{ParameterSet}} \cr
   \code{getParameterValue(id)} \tab numeric \tab \code{\link{ParameterSet}} \cr
   \code{sup()} \tab numeric \tab supremum of distribution \cr
   \code{inf()} \tab numeric \tab infimum of distribution \cr

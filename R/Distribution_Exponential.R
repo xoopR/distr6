@@ -171,7 +171,6 @@ Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decora
                    lower = list(0, 0), upper = list(Inf, Inf),
                    class = list("numeric","numeric"),
                    settable = list(rate.bool, scale.bool),
-                   fittable = list(rate.bool, scale.bool),
                    updateFunc = list(rate.update, scale.update),
                    description = list("Arrival Rate", "Scale"))
 

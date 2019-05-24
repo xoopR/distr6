@@ -8,7 +8,6 @@
 #'   mathematical and statistical methods for distributions are defined here with approximate numerical
 #'   calculations (as opposed to analytical results).
 #'
-#
 #' @name Distribution
 #'
 #' @section Constructor Arguments:
@@ -71,7 +70,7 @@
 #'   \code{support()} \tab Set \tab \code{\link{Set}} \cr
 #'   \code{distrDomain()} \tab Set \tab \code{\link{Set}} \cr
 #'   \code{symmetry()} \tab character \cr
-#'   \code{parameters(id,as.df = FALSE)} \tab ParameterSet or data.frame \tab \code{\link{ParameterSet}} \cr
+#'   \code{parameters(id)} \tab ParameterSet or data.frame. \tab \code{\link{ParameterSet}} \cr
 #'   \code{getParameterValue(id)} \tab numeric \tab \code{\link{ParameterSet}} \cr
 #'   \code{sup()} \tab numeric \tab supremum of distribution \cr
 #'   \code{inf()} \tab numeric \tab infimum of distribution \cr
@@ -322,7 +321,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
-    string = paste(apply(self$parameters(as.df = T)[self$parameters(as.df = T)$settable,],1,
+    string = paste(apply(self$parameters()$as.data.frame()[self$parameters()$as.data.frame()$settable,],1,
                          function(x) paste(x[1],trimws(x[2]),sep=" = ")
                          ),
                    collapse=", ")
@@ -338,13 +337,13 @@ Distribution$set("public","print",function(...){
 }) # DONE
 Distribution$set("public","summary",function(full=T){
 
-  which_params = self$parameters(as.df = T)$settable
+  which_params = self$parameters()$as.data.frame()$settable
 
   if(full){
     if(length(private$.parameters)!=0){
       cat(self$name,"with parameterisation:\n")
-      cat("\t",paste(self$parameters(as.df = T)[which_params, "id"][[1]],
-                     self$parameters(as.df = T)[which_params,"value"][[1]],
+      cat("\t",paste(self$parameters()$as.data.frame()[which_params, "id"][[1]],
+                     self$parameters()$as.data.frame()[which_params,"value"][[1]],
                      sep = " = ", collapse = "; "))
     } else
       cat(self$name(),"\n")
@@ -383,8 +382,8 @@ Distribution$set("public","summary",function(full=T){
   } else {
     if(length(private$.parameters)!=0){
       cat(self$short_name,"distribution with parameterisation: ")
-      cat(paste(self$parameters(as.df = T)[which_params,"id"][[1]],
-                self$parameters(as.df = T)[which_params,"value"][[1]],
+      cat(paste(self$parameters()$as.data.frame()[which_params,"id"][[1]],
+                self$parameters()$as.data.frame()[which_params,"value"][[1]],
                 sep = " = ", collapse = "; "))
     } else
         cat(self$name)
@@ -426,8 +425,8 @@ Distribution$set("public","symmetry",function(){
 })
 
 # Parameter Accessors
-Distribution$set("public","parameters",function(id,as.df = F){
-  return(private$.parameters$parameters(id, as.df))
+Distribution$set("public","parameters",function(id = NULL){
+  return(private$.parameters$parameters(id))
 }) # DONE
 Distribution$set("public","getParameterValue",function(id){
   return(private$.parameters$getParameterValue(id))

@@ -190,7 +190,6 @@ Normal$set("public","initialize",function(mean = 0, var = NULL, sd = NULL, prec 
                                           upper = list(Inf, Inf, Inf, Inf),
                                           class = list("numeric","numeric","numeric","numeric"),
                                           settable = list(TRUE, var.bool, sd.bool, prec.bool),
-                                          fittable = list(TRUE, var.bool, sd.bool, prec.bool),
                                           updateFunc = list(NA, var.update, sd.update, prec.update),
                                           description = list("Mean - Location Parameter",
                                                              "Variance - Squared Scale Parameter",

@@ -12,7 +12,6 @@ ps = ParameterSet$new(id = list("rate", "scale"), value = list(1, 1),
                       lower = list(0, 0), upper = list(Inf, Inf),
                       class = list("numeric","numeric"),
                       settable = list(TRUE, FALSE),
-                      fittable = list(TRUE, FALSE),
                       updateFunc = list(NULL, "1/self$getParameterValue('rate')"),
                       description = list("Arrival rate","Scale parameter"))
 
