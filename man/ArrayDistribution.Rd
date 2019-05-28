@@ -17,9 +17,10 @@ where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN
 }
 \section{Constructor Arguments}{
 
-\tabular{ll}{
-\code{distribution} \tab Distribution. \cr
-\code{paramList} \tab list of parameters, see examples. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{distribution} \tab distribution \tab Distribution to wrap. \cr
+\code{paramList} \tab list \tab List of parameters, see examples. \cr
 }
 }
 

@@ -190,3 +190,24 @@ skewType <- function(skew){
   else
     return("positive skew")
 }
+
+#' @title Generalised P-Norm
+#' @description Calculate the p-norm of any function between given limits. Given by,
+#' \deqn{(int_S |f|^p d\mu)^1/p}
+#' @usage generalPNorm(fun, p, lower, upper)
+#' @param fun function to calculate the p-norm of.
+#' @param p the pth norm to calculate
+#' @param lower lower bound for the integral
+#' @param upper upper bounde for the integral
+#'
+#' @examples
+#' generalPNorm(Binomial$new(),2,0,10)
+#'
+#' @export
+generalPNorm <- function(fun, p, lower, upper){
+  if(testContinuous(self)){
+    warning("Results from numerical integration are approximate only, better results may be available.")
+    return((integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
+  }
+}
+"222B"

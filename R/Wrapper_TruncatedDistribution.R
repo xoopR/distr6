@@ -15,10 +15,11 @@
 #' \code{TruncatedDistribution} inherits all methods from \code{Distribution}.
 #'
 #' @section Constructor Arguments:
-#' \tabular{ll}{
-#' \code{distribution} \tab Distribution to truncate. \cr
-#' \code{lower} \tab Lower limit for truncation. \cr
-#' \code{upper} \tab Upper limit for truncation.
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{distribution} \tab distribution \tab Distribution to truncate. \cr
+#' \code{lower} \tab numeric \tab Lower limit for truncation. \cr
+#' \code{upper} \tab numeric \tab Upper limit for truncation.
 #' }
 #'
 #' @examples

@@ -2,7 +2,7 @@
 % Please edit documentation in R/DistributionDecorator_FunctionImputation.R
 \name{FunctionImputation}
 \alias{FunctionImputation}
-\title{Numerical Pdf/Cdf/Quantile/Rand Functions}
+\title{Numeric Pdf/Cdf/Quantile/Rand Functions}
 \description{
 Numeric statistical functions including density/mass function, distribution function,
 inverse distribution and simulation.
@@ -18,6 +18,26 @@ Decorator objects add functionality to the given Distribution object
  All methods in this decorator use numerical approximations and therefore better results may be available
  from analytic computations.
 }
+\section{Constructor Arguments}{
+
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
+}
+}
+
+\section{Public Methods}{
+
+\tabular{lll}{
+\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+\code{pdf(x1)} \tab numeric x numeric -> numeric \tab Numeric pdf evaluated at x1. \cr
+\code{cdf(x1)} \tab numeric x numeric -> numeric \tab Numeric cdf evaluated at x1. \cr
+\code{quantile(p)} \tab numeric x numeric -> numeric \tab Numeric inverse cdf evaluated at x1. \cr
+\code{rand(n)} \tab integer x numeric -> numeric \tab n simulations from distribution. \cr
+}
+}
+
 \examples{
 x = Distribution$new("Test", pdf = function(x) 1/(4-1), support = Interval$new(1,4),
 type = Reals$new())

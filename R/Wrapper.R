@@ -1,24 +1,25 @@
 #' @name DistributionWrapper
 #' @title Abstract Wrapper for Distributions
+#'
+#' @details This wrapper is an abstract class and cannot be implemented directly.
+#' See \code{\link{listWrappers}} for a list of wrappers that can be constructed. After wrapping multiple models, parameter IDs are altered by prefixing the ID with "model_".
+#' For example wrapping Model1 with a parameter 'param1' results in 'Model1_param1'.
+#' See \code{parameters} to find the parameter IDs.
+#
 #' @description An R6 abstract wrapper class with methods implemented for child classes.
 #' @seealso \code{\link{TruncatedDistribution}}, \code{\link{HuberizedDistribution}}
-#' @details Cannot be implemented directly.
-#' @section Public Methods:
-#' \tabular{ll}{
-#' \code{wrappedModels(model = NULL)} \tab Get internally wrapped model by name. Or list of all models if model = NULL. \cr
-#' \code{setParameterValue(lst)} \tab Sets the value of an internal models parameter. See Details.
-#' }
-#' @section Public Method Arguments:
-#' \tabular{ll}{
-#' \code{model} \tab Wrapped model to access. \cr
-#' \code{lst} \tab list. Names are parameter IDs, values are values to set parameters.
-#' }
 #'
-#' @section Public Methods Details:
-#' Wrapped models overload the minimum number of functions necessary. The abstract class overloads
-#' the \code{setParameterValue} method only as wrapped models alter paramater IDs. After wrapping
-#' a model, parameter IDs are altered by prefixing the ID with "model_". For example wrapping Model1 with
-#' a parameter 'param1' results in 'Model1_param1'.
+#'
+#' @section Public Methods:
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+#' \code{wrappedModels(model = NULL)} \tab character -> distribution \tab See public method details.\cr
+#'}
+#'
+#' @section Public Method Details:
+#' If a name is given to \code{wrappedModels}, returns the wrapped distribution otherwise returns a list
+#' of all wrapped distributions.
+#'
 #'
 NULL
 

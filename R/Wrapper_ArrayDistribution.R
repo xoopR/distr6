@@ -12,9 +12,10 @@
 #' \code{ArrayDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 #'
 #' @section Constructor Arguments:
-#' \tabular{ll}{
-#' \code{distribution} \tab Distribution. \cr
-#' \code{paramList} \tab list of parameters, see examples. \cr
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{distribution} \tab distribution \tab Distribution to wrap. \cr
+#' \code{paramList} \tab list \tab List of parameters, see examples. \cr
 #' }
 #'
 #'

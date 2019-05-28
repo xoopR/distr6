@@ -1,4 +1,4 @@
-#' @title Numerical Pdf/Cdf/Quantile/Rand Functions
+#' @title Numeric Pdf/Cdf/Quantile/Rand Functions
 #'
 #' @description Numeric statistical functions including density/mass function, distribution function,
 #' inverse distribution and simulation.
@@ -13,6 +13,22 @@
 #'
 #'  All methods in this decorator use numerical approximations and therefore better results may be available
 #'  from analytic computations.
+#'
+#' @section Constructor Arguments:
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{dist} \tab distribution \tab Distribution to decorate. \cr
+#' \code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
+#' }
+#'
+#' @section Public Methods:
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+#' \code{pdf(x1)} \tab numeric x numeric -> numeric \tab Numeric pdf evaluated at x1. \cr
+#' \code{cdf(x1)} \tab numeric x numeric -> numeric \tab Numeric cdf evaluated at x1. \cr
+#' \code{quantile(p)} \tab numeric x numeric -> numeric \tab Numeric inverse cdf evaluated at x1. \cr
+#' \code{rand(n)} \tab integer x numeric -> numeric \tab n simulations from distribution. \cr
+#' }
 #'
 #' @seealso \code{\link{DistributionDecorator}}
 #'
@@ -45,14 +61,14 @@ FunctionImputation$set("public","pdf",function(x1){
   } else
     return("FunctionImputation is currently only supported for univariate distributions.")
 })
-FunctionImputation$set("public","cdf",function(q){
+FunctionImputation$set("public","cdf",function(x1){
   # PDF2CDF
   if(testUnivariate(self)){
     if(testDiscrete(self)){
-      return(sum(self$pdf(self$inf():q)))
+      return(sum(self$pdf(self$inf():x1)))
     } else if(testContinuous(self)){
       message(.distr6$message_numeric)
-      return(integrate(self$pdf, lower = self$inf(), upper = q)$value)
+      return(integrate(self$pdf, lower = self$inf(), upper = x1)$value)
     }
   } else
     return("FunctionImputation is currently only supported for univariate distributions.")

@@ -17,14 +17,16 @@
 #' \code{HuberizedDistribution} inherits all methods from \code{Distribution}.
 #'
 #' @section Constructor Arguments:
-#' \tabular{ll}{
-#' \code{distribution} \tab Distribution to huberize. \cr
-#' \code{lower} \tab Lower limit for huberization. \cr
-#' \code{upper} \tab Upper limit for huberization.
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{distribution} \tab distribution \tab Distribution to huberize. \cr
+#' \code{lower} \tab numeric \tab Lower limit for huberization. \cr
+#' \code{upper} \tab numeric \tab Upper limit for huberization.
 #' }
 #'
 #' @section Public Methods:
 #' \tabular{ll}{
+#' \strong{Method} \tab \strong{Details} \cr
 #' \code{getLowerLimit()} \tab Gets lower limit of huberization. \cr
 #' \code{getUpperLimit()} \tab Gets upper limit of huberization. \cr
 #' }

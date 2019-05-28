@@ -20,10 +20,11 @@ The support of the new distribution is the interval of points between lower and 
 }
 \section{Constructor Arguments}{
 
-\tabular{ll}{
-\code{distribution} \tab Distribution to truncate. \cr
-\code{lower} \tab Lower limit for truncation. \cr
-\code{upper} \tab Upper limit for truncation.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{distribution} \tab distribution \tab Distribution to truncate. \cr
+\code{lower} \tab numeric \tab Lower limit for truncation. \cr
+\code{upper} \tab numeric \tab Upper limit for truncation.
 }
 }
 

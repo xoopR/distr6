@@ -19,6 +19,10 @@ Matches error type to stop or warning and produces the respective error and
 returns NULL.
 }
 \examples{
+
+\dontrun{
 if(2 > 1) stopwarn("warn", "This number is too big")
 if(2 < 3) stopwarn("stop", "This number is too small")
+}
+
 }

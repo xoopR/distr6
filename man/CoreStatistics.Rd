@@ -2,59 +2,7 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{CoreStatistics}
 \alias{CoreStatistics}
-\alias{cf}
-\alias{pgf}
-\alias{iqr}
-\alias{entropy}
-\alias{skewness}
-\alias{kurtosis}
-\alias{kthmoment}
-\alias{genExp}
-\alias{var}
-\alias{cov}
-\alias{cor}
-\alias{mode}
 \title{Core Statistical Methods for Distributions}
-\arguments{
-\item{distribution}{distribution object.}
-
-\item{t}{integer. Input for function evaluation.}
-
-\item{base}{integer. Logarithmic base for entropy}
-
-\item{excess}{logical. If TRUE (default) Excess Kurtosis is calculated}
-
-\item{k}{integer. Moment to calculate.}
-
-\item{type}{string. One of "central" or "standard".}
-}
-\value{
-\code{cf} gives the characteristic function evaluated at t
-
-\code{pgf} gives the probability generating function evaluated at t
-
-\code{iqr} gives the interquartile range of the distribution
-
-\code{entropy} gives the (information) entropy of a distribution,
-  default is Shannon entropy (base = 2)
-
-\code{skewness} gives the 3rd standardised moment of a distribution.
-
-\code{kurtosis} gives the 4th standardised moment of a distribution.
-  Excess (kurtosis - 3) is default.
-
-\code{kthmoment} gives the kth central (default) or standardized moment
-
-\code{genExp} gives the expectation (default)
-
-\code{var} gives the variance
-
-\code{cov} gives the covariance
-
-\code{cor} gives the correlation
-
-\code{mode} gives the mode
-}
 \description{
 Added functionality to distribution objects for numerical statistical
   methods. Including a generalised expectation function for more complex numerical calculations.
@@ -62,42 +10,39 @@ Added functionality to distribution objects for numerical statistical
 \details{
 Decorator objects add functionality to the given Distribution object
  by copying methods in the decorator environment to the chosen Distribution environment. Use the
- \code{\link{decorate}} function to decorate a Distribution. See the help pages for the individual
- CoreStatistics methods to learn more.
+ \code{\link{decorate}} function to decorate a Distribution.
 
  All methods in this decorator use numerical approximations and therefore better results may be available
  from analytic computations.
-
-
- Generating functions are evaluated at a particular point \code{t} and do not
-  give specific analytic generating functions. \code{type} of moment is one of,
-  "central" for the kth moment about the mean, or "standard" for the central moment
-  standardised by, kthCentralMoment / standard deviation^k.
 }
-\section{Usage}{
- $cf(t)
+\section{Constructor Arguments}{
 
- $pgf(t)
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
+}
+}
 
- $iqr()
+\section{Public Methods}{
 
- entropy(base = 2)
-
- $skewness()
-
- $kurtosis(excess = TRUE)
-
- $kthmoment(k, type = "central")
-
- $genExp(trafo)
-
- $var()
-
- $cov()
-
- $cor()
-
- $mode()
+\tabular{lll}{
+\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+\code{mgf(t)} \tab numeric -> numeric \tab Moment generating function evaluated at t. \cr
+\code{pgf(t)} \tab numeric -> numeric \tab Probability generating function evaluated at t. \cr
+\code{cf(t)} \tab numeric -> numeric \tab Characteristic function evaluated at t. \cr
+\code{iqr()} \tab -> numeric \tab Interquartile range of the distribution. \cr
+\code{entropy(base = 2)} \tab integer -> numeric \tab Distribution entropy, Shannon by default. \cr
+\code{skewness()} \tab -> numeric \tab Third stndardised moment of the distribution. \cr
+\code{kurtosis(excess = TRUE)} \tab logical -> numeric \tab Fourth standardised moment of the distribution. \cr
+By default excess kurtosis (kurtosis - 3). \cr
+\code{kthmoment(type = "central")} \tab character -> numeric \tab Central (default) or standardised kth moment (type = "standard"). \cr
+\code{genExp(trafo)} \tab function -> numeric \tab Generalised expectation formula. If trafo = NULL, returns arithmetic mean. \cr
+\code{var()} \tab -> numeric \tab Numeric variance of distribution. \cr
+\code{cov()} \tab -> numeric \tab Covariance of distribution. \cr
+\code{cor()} \tab -> numeric \tab Correlation of distribution. \cr
+\code{mode(which = 1)} \tab integer -> numeric \tab Mode of distribution, if which = 1, returns first, otherwise all.
+}
 }
 
 \examples{
