@@ -12,7 +12,7 @@
 #' and the cdf, F_M is given by
 #' \deqn{F_M = sum_i (F_i)(w_i)}
 #'
-#' If weights are given, they should be provided as a list of numerics summing to one. If missing,
+#' If weights are given, they should be provided as a list of numerics summing to one. If NULL,
 #' they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 #'
 #'
@@ -38,12 +38,12 @@ NULL
 
 #' @export
 MixtureDistribution <- R6::R6Class("MixtureDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
-MixtureDistribution$set("public","initialize",function(distlist, weights, ...){
+MixtureDistribution$set("public","initialize",function(distlist, weights = NULL, ...){
 
   distlist = makeUniqueDistributions(distlist)
   distnames = names(distlist)
 
-  if(missing(weights))
+  if(is.null(weights))
     weights = rep(1/length(distlist), length(distlist))
   else{
     checkmate::assert(length(weights)==length(distlist))

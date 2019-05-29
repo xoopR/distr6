@@ -12,7 +12,7 @@
 #' where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X, F_X is the
 #' pdf/cdf of the original distribution.
 #'
-#' If lower or upper are missing they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+#' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 #'
 #' \code{HuberizedDistribution} inherits all methods from \code{Distribution}.
 #'
@@ -47,15 +47,15 @@ HuberizedDistribution$set("public", "getLowerLimit", function(){
 HuberizedDistribution$set("public", "getUpperLimit", function(){
   return(private$.cutoffInterval[[2]])
 })
-HuberizedDistribution$set("public","initialize",function(distribution, lower, upper){
+HuberizedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){
 
   assertDistribution(distribution)
 
   if(is.null(distribution$cdf(1)))
     stop("cdf is required for huberization. Try decorate(Distribution, FunctionImputation) first.")
 
-  if(missing(lower)) lower = distribution$inf()
-  if(missing(upper)) upper = distribution$sup()
+  if(is.null(lower)) lower = distribution$inf()
+  if(is.null(upper)) upper = distribution$sup()
 
   pdf <- function(x1, ...){
     if(x1 <= self$getLowerLimit())
@@ -94,6 +94,6 @@ huberize <- function(x,lower,upper){
   UseMethod("huberize", x)
 }
 #' @export
-huberize.Distribution <- function(x, lower, upper){
+huberize.Distribution <- function(x, lower = NULL, upper = NULL){
   HuberizedDistribution$new(x, lower, upper)
 }

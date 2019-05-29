@@ -16,7 +16,7 @@ Huberizes a distribution at lower and upper limits, using the formula
 where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X, F_X is the
 pdf/cdf of the original distribution.
 
-If lower or upper are missing they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 
 \code{HuberizedDistribution} inherits all methods from \code{Distribution}.
 }

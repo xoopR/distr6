@@ -169,7 +169,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       type = NULL, support = NULL, distrDomain = NULL,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-                      parameters, decorators = NULL, valueSupport = NULL, variateForm = NULL,
+                      parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
                       description=NULL, additionalMethods = NULL, R62S3 = TRUE
                       ){
 
@@ -181,8 +181,8 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     # Validation checks
     if(is.null(name) & is.null(short_name))
       checkmate::assert("One of 'name' or 'short_name' must be provided.")
-    if(missing(short_name)) short_name = gsub(" ","",name,fixed = T)
-    if(missing(name)) name = short_name
+    if(is.null(short_name)) short_name = gsub(" ","",name,fixed = T)
+    if(is.null(name)) name = short_name
     checkmate::assertCharacter(c(name, short_name),
                                .var.name = "'name' and 'short_name' must be of class 'character'.")
     checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
@@ -281,7 +281,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       private$.setRand(rand)
     }
 
-    if(!missing(parameters)){
+    if(!is.null(parameters)){
       checkmate::assertClass(parameters,"ParameterSet")
       if(!inherits(self, "DistributionWrapper"))
         private$.parameters <- parameters$clone()$update()
@@ -466,7 +466,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
 
     pdf[self$liesInSupport(x1, all = F)] = pdf.in
   } else {
-    if(missing(x1)) pdf = private$.pdf(...)
+    if(is.null(x1)) pdf = private$.pdf(...)
     else pdf = private$.pdf(x1, ...)
   }
 
@@ -486,7 +486,7 @@ Distribution$set("public","cdf",function(x1, lower.tail = TRUE, log.p = FALSE,..
 
     cdf[x1 < self$sup() & x1 >= self$inf()] = cdf.in
   } else {
-    if(missing(x1)) cdf = private$.cdf(...)
+    if(is.null(x1)) cdf = private$.cdf(...)
     else cdf = private$.cdf(x1, ...)
   }
 

@@ -15,7 +15,7 @@ w_1,...,w_n. The pdf of the mixture distribution M(X1,...,XN), f_M is given by
 and the cdf, F_M is given by
 \deqn{F_M = sum_i (F_i)(w_i)}
 
-If weights are given, they should be provided as a list of numerics summing to one. If missing,
+If weights are given, they should be provided as a list of numerics summing to one. If NULL,
 they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 }
 \section{Constructor Arguments}{
