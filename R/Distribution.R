@@ -127,7 +127,7 @@ NULL
 #-------------------------------------------------------------
 # Distribution Definition
 #-------------------------------------------------------------
-#' @include R6_helpers.R Distribution_helpers.R SetInterval_helpers.R
+#' @include Distribution_helpers.R SetInterval_helpers.R
 #' @export
 Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 
@@ -173,7 +173,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       description=NULL, additionalMethods = NULL, R62S3 = TRUE
                       ){
 
-  if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+  if(RSmisc::getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
     if(is.null(pdf) & is.null(cdf))
       stop("One of pdf or cdf must be provided.")

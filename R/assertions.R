@@ -1,125 +1,3 @@
-#' @title Generalised Validaton Functions
-#'
-#' @description These functions are generalised and simplified based on the package \code{checkmate}.
-#'   They are used primarily for the function \code{\link{makeChecks}} that automatically generates
-#'   checkmate-style custom validation functions.
-#'
-#' @return \code{assertThat} returns self invisibly if checks pass, otherwise error
-#' @usage assertThat(x, cond, errormsg)
-#'
-#' @param x Object to perform checks on
-#' @param cond Boolean condition to check
-#' @param errormsg Error message to produce
-#'
-#' @seealso \code{\link[checkmate]{assert}}
-#'
-#' @examples
-#' x = 1:10
-#' cond = inherits(x, "integer")
-#' errormsg = "Not integer"
-#' assertThat(x, cond, errormsg)
-#' checkThat(cond, errormsg)
-#' testThat(cond)
-#' isThat(cond)
-#'
-#' @export
-assertThat <- function(x, cond, errormsg){
-  if(cond)
-    invisible(x)
-  else
-    stop(errormsg)
-}
-
-#' @name checkThat
-#' @rdname assertThat
-#' @return \code{checkThat} returns TRUE if checks pass, otherwise error message as string
-#' @usage checkThat(cond, errormsg)
-#' @export
-checkThat <- function(cond, errormsg){
-  if(cond)
-    return(TRUE)
-  else
-    return(errormsg)
-}
-
-#' @name testThat
-#' @rdname assertThat
-#' @return \code{testThat} returns TRUE if checks pass, otherwise FALSE
-#' @usage testThat(cond)
-#' @export
-testThat <- function(cond){
-  if(cond)
-    return(TRUE)
-  else
-    return(FALSE)
-}
-
-#' @name isThat
-#' @rdname assertThat
-#' @return \code{isThat} returns TRUE if checks pass, otherwise FALSE
-#' @usage isThat(cond)
-#' @export
-isThat <- function(cond){
-  return(testThat(cond))
-}
-
-#' @title Automatic Generation of Validaton Functions
-#'
-#' @description This function uses the generalised assertion functions to assign assert/check/test/is
-#' functions to the given environment for quick deployment of validation checks. See examples
-#' for how it is used in distr6.
-#'
-#' @usage makeChecks(assertionName, cond, errormsg, args = alist(x=),
-#'   pos = parent.env(environment()))
-#'
-#' @param assertionName name that follows assert/check/test/is
-#' @param cond Boolean condition to check
-#' @param errormsg Error message to produce
-#' @param args Generic argument names for object to validate. See Details.
-#' @param pos Environment position to assign functions to. See Details.
-#'
-#' @examples
-#'  makeChecks(assertionName = "Numeric",
-#'      cond = inherits(x,"numeric"),
-#'      errormsg = paste(x,"is not numeric"), pos = 1)
-#'  assertNumeric(as.numeric(0)) # silent
-#'  checkNumeric(as.numeric(1)) # TRUE
-#'  testNumeric("a") # FALSE
-#'  isNumeric("2") # FALSE
-#'
-#' @details This generates simplified version of more complex assertion and validation
-#'   functions that can be found in libraries such as \code{\link{checkmate}}. The purpose
-#'   of which is to easily define validation checks that are used throughout distr6.
-#'
-#'   By default, validations are only made in relation to one argument however this can be
-#'    extended by adding arguments to the \code{args} parameter. For example, \code{args = alist(x=, y=,...)}.
-#'    Validation functions are assigned to the current parent environment, which is often .GlobalEnv
-#'    however when loading and attaching libraries, it is the current library being loaded.
-#'
-#' @export
-makeChecks <- function(assertionName, cond, errormsg, args = alist(x=),
-                       pos = parent.env(environment())){
-  cond = substitute(cond)
-  errormsg = substitute(errormsg)
-  value = function(x){}
-  formals(value) = args
-  body(value) = substitute(assertThat(x,arg1,arg2),list(arg1=cond,arg2=errormsg))
-  assign(paste0("assert",assertionName), value = value,
-         pos = pos)
-
-  body(value) = substitute(checkThat(arg1,arg2),list(arg1=cond,arg2=errormsg))
-  assign(paste0("check",assertionName), value = value,
-         pos = pos)
-
-  body(value) = substitute(testThat(arg1),list(arg1=cond))
-  assign(paste0("test",assertionName), value = value,
-         pos = pos)
-
-  body(value) = substitute(isThat(arg1),list(arg1=cond))
-  assign(paste0("is",assertionName), value = value,
-         pos = pos)
-}
-
 #' @title assert/check/test/isDistribution
 #' @name testDistribution
 #' @aliases
@@ -142,9 +20,10 @@ makeChecks <- function(assertionName, cond, errormsg, args = alist(x=),
 #' testDistribution(Binomial$new()) # TRUE
 #'
 #' @export
-makeChecks(assertionName = "Distribution",
+RSmisc::makeChecks(assertionName = "Distribution",
            cond = inherits(x,"Distribution"),
-           errormsg = paste(x,"is not an R6 Distribution object"))
+           errormsg = paste(x,"is not an R6 Distribution object"),
+           pos = environment())
 
 #' @title assert/check/test/isDistributionList
 #' @name testDistributionList
@@ -168,9 +47,10 @@ makeChecks(assertionName = "Distribution",
 #' testDistributionList(list(Binomial$new(),Exponential$new())) # TRUE
 #'
 #' @export
-makeChecks(assertionName =  "DistributionList",
+RSmisc::makeChecks(assertionName =  "DistributionList",
            cond = all(unlist(lapply(x,inherits,"Distribution"))),
-           errormsg = "One or more items in the list are not Distributions")
+           errormsg = "One or more items in the list are not Distributions",
+           pos = environment())
 
 #' @title assert/check/test/isDistributionFeature
 #' @name testDistributionFeature
@@ -196,10 +76,11 @@ makeChecks(assertionName =  "DistributionList",
 #' testDistributionFeature(Exponential$new(), "valueSupport", "discrete") # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "DistributionFeature",
+RSmisc::makeChecks(assertionName =  "DistributionFeature",
            cond = x[[accessor]]() == feature,
            errormsg = paste(x$short_name,"is not",feature),
-           args = alist(x=, accessor=, feature=))
+           args = alist(x=, accessor=, feature=),
+           pos = environment())
 
 #' @title assert/check/test/VariateForm
 #' @name testVariateForm
@@ -224,10 +105,11 @@ makeChecks(assertionName =  "DistributionFeature",
 #' testVariateForm(Exponential$new(), "multivariate") # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "VariateForm",
+RSmisc::makeChecks(assertionName =  "VariateForm",
            cond = x[["variateForm"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
-           args = alist(x=, type=))
+           args = alist(x=, type=),
+           pos = environment())
 
 #' @title assert/check/test/Univariate
 #' @name testUnivariate
@@ -250,9 +132,10 @@ makeChecks(assertionName =  "VariateForm",
 #' testUnivariate(Binomial$new()) # TRUE
 #'
 #' @export
-makeChecks(assertionName =  "Univariate",
+RSmisc::makeChecks(assertionName =  "Univariate",
            cond = x[["variateForm"]]() == "univariate",
-           errormsg = paste(x$short_name,"is not univariate"))
+           errormsg = paste(x$short_name,"is not univariate"),
+           pos = environment())
 
 #' @title assert/check/test/Multivariate
 #' @name testMultivariate
@@ -275,9 +158,10 @@ makeChecks(assertionName =  "Univariate",
 #' testMultivariate(Binomial$new()) # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "Multivariate",
+RSmisc::makeChecks(assertionName =  "Multivariate",
            cond = x[["variateForm"]]() == "multivariate",
-           errormsg = paste(x$short_name,"is not multivariate"))
+           errormsg = paste(x$short_name,"is not multivariate"),
+           pos = environment())
 
 #' @title assert/check/test/Matrixvariate
 #' @name testMatrixvariate
@@ -300,9 +184,10 @@ makeChecks(assertionName =  "Multivariate",
 #' testMatrixvariate(Binomial$new()) # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "Matrixvariate",
+RSmisc::makeChecks(assertionName =  "Matrixvariate",
            cond = x[["variateForm"]]() == "matrixvariate",
-           errormsg = paste(x$short_name,"is not matrixvariate"))
+           errormsg = paste(x$short_name,"is not matrixvariate"),
+           pos = environment())
 
 #' @title assert/check/test/ValueSupport
 #' @name testValueSupport
@@ -327,10 +212,11 @@ makeChecks(assertionName =  "Matrixvariate",
 #' testValueSupport(Exponential$new(), "discrete") # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "ValueSupport",
+RSmisc::makeChecks(assertionName =  "ValueSupport",
            cond = x[["valueSupport"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
-           args = alist(x=, type=))
+           args = alist(x=, type=),
+           pos = environment())
 
 #' @title assert/check/test/Continuous
 #' @name testContinuous
@@ -353,9 +239,10 @@ makeChecks(assertionName =  "ValueSupport",
 #' testContinuous(Binomial$new()) # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "Continuous",
+RSmisc::makeChecks(assertionName =  "Continuous",
            cond = x[["valueSupport"]]() == "continuous",
-           errormsg = paste(x$short_name,"is not continuous"))
+           errormsg = paste(x$short_name,"is not continuous"),
+           pos = environment())
 
 #' @title assert/check/test/Discrete
 #' @name testDiscrete
@@ -378,9 +265,10 @@ makeChecks(assertionName =  "Continuous",
 #' testDiscrete(Binomial$new()) # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "Discrete",
+RSmisc::makeChecks(assertionName =  "Discrete",
            cond = x[["valueSupport"]]() == "discrete",
-           errormsg = paste(x$short_name,"is not discrete"))
+           errormsg = paste(x$short_name,"is not discrete"),
+           pos = environment())
 
 #' @title assert/check/test/Mixture
 #' @name testMixture
@@ -403,9 +291,10 @@ makeChecks(assertionName =  "Discrete",
 #' testMixture(Binomial$new()) # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "Mixture",
+RSmisc::makeChecks(assertionName =  "Mixture",
            cond = x[["valueSupport"]]() == "mixture",
-           errormsg = paste(x$short_name,"is not mixture"))
+           errormsg = paste(x$short_name,"is not mixture"),
+           pos = environment())
 
 #' @title assert/check/test/Symmetric
 #' @name testSymmetric
@@ -428,9 +317,10 @@ makeChecks(assertionName =  "Mixture",
 #' testSymmetric(Binomial$new()) # FALSE
 #'
 #' @export
-makeChecks(assertionName =  "Symmetric",
+RSmisc::makeChecks(assertionName =  "Symmetric",
            cond = x[["symmetry"]]()=="symmetric",
-           errormsg = paste(x$short_name,"is not symmetric"))
+           errormsg = paste(x$short_name,"is not symmetric"),
+           pos = environment())
 
 #' @title assert/check/test/Skewness
 #' @name testSkewness
@@ -455,10 +345,11 @@ makeChecks(assertionName =  "Symmetric",
 #' testSkewness(Binomial$new(), "Positive Skew")
 #'
 #' @export
-makeChecks(assertionName =  "Skewness",
+RSmisc::makeChecks(assertionName =  "Skewness",
            cond = x[["skewnessType"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
-           args = alist(x=, type=))
+           args = alist(x=, type=),
+           pos = environment())
 
 #' @title assert/check/test/NegativeSkew
 #' @name testNegativeSkew
@@ -481,9 +372,10 @@ makeChecks(assertionName =  "Skewness",
 #' testNegativeSkew(Binomial$new())
 #'
 #' @export
-makeChecks(assertionName =  "NegativeSkew",
+RSmisc::makeChecks(assertionName =  "NegativeSkew",
            cond = x[["skewnessType"]]() == "Negative Skew",
-           errormsg = paste(x$short_name,"is not negative skew"))
+           errormsg = paste(x$short_name,"is not negative skew"),
+           pos = environment())
 
 #' @title assert/check/test/PositiveSkew
 #' @name testPositiveSkew
@@ -506,9 +398,10 @@ makeChecks(assertionName =  "NegativeSkew",
 #' testPositiveSkew(Binomial$new())
 #'
 #' @export
-makeChecks(assertionName =  "PositiveSkew",
+RSmisc::makeChecks(assertionName =  "PositiveSkew",
            cond = x[["skewnessType"]]() == "Positive Skew",
-           errormsg = paste(x$short_name,"is not positive skew"))
+           errormsg = paste(x$short_name,"is not positive skew"),
+           pos = environment())
 
 #' @title assert/check/test/NoSkew
 #' @name testNoSkew
@@ -531,9 +424,10 @@ makeChecks(assertionName =  "PositiveSkew",
 #' testNoSkew(Binomial$new())
 #'
 #' @export
-makeChecks(assertionName =  "NoSkew",
+RSmisc::makeChecks(assertionName =  "NoSkew",
            cond = x[["skewnessType"]]() == "No Skew",
-           errormsg = paste(x$short_name,"is not no skew"))
+           errormsg = paste(x$short_name,"is not no skew"),
+           pos = environment())
 
 #' @title assert/check/test/Kurtosis
 #' @name testKurtosis
@@ -558,10 +452,11 @@ makeChecks(assertionName =  "NoSkew",
 #' testKurtosis(Binomial$new(), "platykurtic")
 #'
 #' @export
-makeChecks(assertionName =  "Kurtosis",
+RSmisc::makeChecks(assertionName =  "Kurtosis",
            cond = x[["kurtosisType"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
-           args = alist(x=, type=))
+           args = alist(x=, type=),
+           pos = environment())
 
 #' @title assert/check/test/Platykurtic
 #' @name testPlatykurtic
@@ -584,9 +479,10 @@ makeChecks(assertionName =  "Kurtosis",
 #' testPlatykurtic(Binomial$new())
 #'
 #' @export
-makeChecks(assertionName =  "Platykurtic",
+RSmisc::makeChecks(assertionName =  "Platykurtic",
            cond = x[["kurtosisType"]]() == "platykurtic",
-           errormsg = paste(x$short_name,"is not platykurtic"))
+           errormsg = paste(x$short_name,"is not platykurtic"),
+           pos = environment())
 
 #' @title assert/check/test/Mesokurtic
 #' @name testMesokurtic
@@ -609,9 +505,10 @@ makeChecks(assertionName =  "Platykurtic",
 #' testMesokurtic(Binomial$new())
 #'
 #' @export
-makeChecks(assertionName =  "Mesokurtic",
+RSmisc::makeChecks(assertionName =  "Mesokurtic",
            cond = x[["kurtosisType"]]() == "mesokurtic",
-           errormsg = paste(x$short_name,"is not mesokurtic"))
+           errormsg = paste(x$short_name,"is not mesokurtic"),
+           pos = environment())
 
 #' @title assert/check/test/Leptokurtic
 #' @name testLeptokurtic
@@ -634,6 +531,7 @@ makeChecks(assertionName =  "Mesokurtic",
 #' testLeptokurtic(Binomial$new())
 #'
 #' @export
-makeChecks(assertionName =  "Leptokurtic",
+RSmisc::makeChecks(assertionName =  "Leptokurtic",
            cond = x[["kurtosisType"]]() == "leptokurtic",
-           errormsg = paste(x$short_name,"is not leptokurtic"))
+           errormsg = paste(x$short_name,"is not leptokurtic"),
+           pos = environment())

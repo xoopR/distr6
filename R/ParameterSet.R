@@ -49,7 +49,7 @@
 #' }
 #'
 #' @section Public Method Details:
-#' Argument 'error' is passed to \code{\link{stopwarn}} to determine if the code should break or if a
+#' Argument 'error' is passed to \code{\link[RSmisc]{stopwarn}} to determine if the code should break or if a
 #' warning should be returned when an error occurs.
 #'
 #' \code{setParameterValue} takes a named list where the list names, \code{names(lst)}, should match
@@ -169,7 +169,7 @@ ParameterSet$set("public","update", function(){
 })
 ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
   if(length(private$.parameters)==0)
-    stopwarn(error, "There are no parameters in this distribution.")
+    RSmisc::stopwarn(error, "There are no parameters in this distribution.")
 
   if(!is.null(id)){
     id0 = id
@@ -184,12 +184,12 @@ ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 
   if(length(private$.parameters)==0)
-    stopwarn(error, "There are no parameters in this distribution.")
+    RSmisc::stopwarn(error, "There are no parameters in this distribution.")
   if(missing(id))
-    stopwarn(error, "Argument 'id' is missing, with no default.")
+    RSmisc::stopwarn(error, "Argument 'id' is missing, with no default.")
   val = self$parameters(id, TRUE)[["value"]]
   if(length(val)==0){
-    stopwarn(error, paste(id, "is not a parameter in this distribution."))
+    RSmisc::stopwarn(error, paste(id, "is not a parameter in this distribution."))
   }else
     return(val[[1]])
 
@@ -206,10 +206,10 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       param <- self$as.data.frame()[self$as.data.frame()[,"id"] %in% id,]
 
       if(nrow(param)==0)
-        stopwarn(error, sprintf("%s is not in the parameter set.",id))
+        RSmisc::stopwarn(error, sprintf("%s is not in the parameter set.",id))
 
       if(!param$settable)
-        stopwarn(error, sprintf("%s is not settable.",param$id))
+        RSmisc::stopwarn(error, sprintf("%s is not settable.",param$id))
 
       if(param$class=="numeric")
         checkmate::assertNumeric(value,lower = param$lower, upper = param$upper)

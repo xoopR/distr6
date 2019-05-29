@@ -100,13 +100,16 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log=FALSE) {
 }) # IN PROGRESS
 ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = self$inf(),
                                                     upper = self$sup()) {
-  return(generalPNorm(self$cdf, p, lower, upper))
+  if(testContinuous(self))
+    return(generalPNorm(self$cdf, p, lower, upper))
 }) # NEEDS TESTING
 ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = self$inf(),
                                                     upper = self$sup()) {
-  return(generalPNorm(self$pdf, p, lower, upper))
+  if(testContinuous(self))
+    return(generalPNorm(self$pdf, p, lower, upper))
 }) # NEEDS TESTING
 ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = self$inf(),
                                                          upper = self$sup()) {
-  return(generalPNorm(self$survival, p, lower, upper))
+  if(testContinuous(self))
+    return(generalPNorm(self$survival, p, lower, upper))
 }) # NEEDS TESTING

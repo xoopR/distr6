@@ -15,13 +15,13 @@ NULL
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Set)
 SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
                                               upper = Inf, type = "()", ...){
-  if(getR6Class(self) == "SpecialSet")
-    stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
+  if(RSmisc::getR6Class(self, pos = environment()) == "SpecialSet")
+    stop(paste(RSmisc::getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
   if(dim!=1)
-    private$.setSymbol <- paste0(setSymbol(paste0(getR6Class(self))),"^",dim)
+    private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim)
   else
-    private$.setSymbol <- setSymbol(paste0(getR6Class(self)))
+    private$.setSymbol <- setSymbol(paste0(RSmisc::getR6Class(self, pos = environment())))
   private$.lower <- lower
   private$.upper <- upper
   private$.type <- type

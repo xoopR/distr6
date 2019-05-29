@@ -20,6 +20,6 @@ Calculate the p-norm of any function between given limits. Given by,
 \deqn{(int_S |f|^p d\mu)^1/p}
 }
 \examples{
-generalPNorm(Binomial$new(),2,0,10)
+generalPNorm(Exponential$new()$pdf,2,0,10)
 
 }

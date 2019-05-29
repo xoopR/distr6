@@ -28,7 +28,7 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
       ClassName = x$classname
       x = suppressMessages(x$new())
       ShortName = x$short_name
-      Type =  getR6Class(x$type())
+      Type =  RSmisc::getR6Class(x$type())
       ValueSupport = x$valueSupport()
       VariateForm = x$variateForm()
       return(cbind(ShortName, ClassName, Type, ValueSupport, VariateForm))
@@ -201,13 +201,10 @@ skewType <- function(skew){
 #' @param upper upper bounde for the integral
 #'
 #' @examples
-#' generalPNorm(Binomial$new(),2,0,10)
+#' generalPNorm(Exponential$new()$pdf,2,0,10)
 #'
 #' @export
 generalPNorm <- function(fun, p, lower, upper){
-  if(testContinuous(self)){
-    warning("Results from numerical integration are approximate only, better results may be available.")
-    return((integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
-  }
+  warning("Results from numerical integration are approximate only, better results may be available.")
+  return((stats::integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
 }
-"222B"
