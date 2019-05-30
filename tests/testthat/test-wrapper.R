@@ -9,7 +9,7 @@ test_that("constructors",{
 
 test_that("parameters",{
   truncbin = truncate(Binomial$new(),1,5)
-  expect_error(truncbin$getParameterValue())
+  expect_condition(truncbin$getParameterValue())
   expect_warning(truncbin$getParameterValue("Binom_prob"))
   expect_equal(truncbin$getParameterValue("prob"),0.5)
   expect_silent(truncbin$setParameterValue(list(prob = 0.8)))

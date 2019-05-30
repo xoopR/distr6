@@ -2,72 +2,68 @@
 % Please edit documentation in R/ParameterSet.R
 \name{ParameterSet}
 \alias{ParameterSet}
-\alias{parameters}
-\alias{getParameterValue}
-\alias{setParameterValue}
 \title{Make an R6 Parameter Set for Distributions}
-\arguments{
-\item{id}{unique identifier for parameter. See Details.}
-
-\item{value}{initial value}
-
-\item{lower}{minimum value parameter can take}
-
-\item{upper}{maximum value parameter can take}
-
-\item{class}{parameter class, one of "numeric" or "integer"}
-
-\item{settable}{logical; if TRUE the parameter can be updated. See Details.}
-
-\item{fittable}{logical; if TRUE the parameter can be estimated. See Details.}
-
-\item{updateFunc}{string to be parsed and evaluated as function. See Details.}
-
-\item{description}{description of parameter}
-
-\item{as.df}{logical; if FALSE (default) parameters returned as ParameterSet, otherwise data.frame}
-
-\item{lst}{list; list names are parameter IDs, list values are values to set parameters}
-}
-\value{
-\code{ParameterSet$new} returns an R6 ParameterSet.
-
-\code{$parameters} either returns an R6 ParameterSet, a data.frame or a row.
-
-\code{$getParameterValue} returns the value of a parameter.
-
-\code{$setParameterValue} returns ParameterSet invisibly.
-}
 \description{
 ParameterSets are passed to a \code{Distribution$new} constructor when
  creating a custom probability distribution that takes parameters.
 }
-\details{
-An R6 ParameterSet is required to construct a custom Probability Distribution
- that takes parameters. This constructor ensures that the correct format of parameters
- is supplied to the disitribution.
+\section{Constructor Arguments}{
 
- Each parameter requires a unique one-word \code{id} that is used to get and set parameters
- after construction. A parameter can be \code{settable} and \code{fittable}. A \code{settable}
- parameter is one that can be updated after construction of a distribution via \code{$setParameterValue}.
- The Distribution is parameterised by whichever parameters are given as settable.
- Non-settable parameters are either constant or can be automatically update if an \code{updateFunc} is
- provided. \code{updateFunc} should be provided as a string that could be understood in the
- body of a function by a Distribution object, i.e. by naming parameters via \code{$getParameterValue}, see examples.
- A \code{fittable} parameter is one that can be estimated via inference methods, see examples.
-
- Internally after calling \code{$setParameterValue}, \code{$update} is called to update the
- value of non-settable functions.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{id} \tab character \tab unique one-word identifier. \cr
+\code{value} \tab numeric \tab initial parameter value. \cr
+\code{lower} \tab numeric \tab minimum value parameter can take. \cr
+\code{upper} \tab numeric \tab maximum value parameter can take. \cr
+\code{class} \tab character \tab parameter class; "numeric" or "integer". \cr
+\code{settable} \tab logical \tab if TRUE the parameter can be updated. See Details. \cr
+\code{updateFunc = NULL} \tab character \tab string to be parsed and evaluated as function. See Details. \cr
+\code{description = NULL} \tab character \tab optional description of parameter.
 }
-\section{Usage}{
- ParameterSet$new(id, value, lower, upper, class, settable, fittable,
-   updateFunc = NULL, description = NULL)
+}
 
- $parameters(id, as.df = F)
+\section{Constructor Details}{
 
- $getParameterValue(id)
+An R6 ParameterSet is required to construct a custom Probability Distribution that takes parameters.
+This constructor ensures that the correct format of parameters is supplied to the disitribution.
 
- $setParameterValue(lst)
+Every argument can either be given as the correct type (as listed above) or as a list of that type.
+If arguments are provided as a list, then each argument must be of the same length list, with values
+as NULL where appropriate. See examples for more.
+
+Each parameter requires a unique one-word \code{id} that is used to get and set parameters
+after construction. A \code{settable} parameter is one that can be updated after construction of
+a distribution via \code{$setParameterValue}. The Distribution is parameterised by whichever parameters
+are given as \code{settable}. Non-settable parameters are either constant or can be automatically updated
+if an \code{updateFunc} is provided. \code{updateFunc} should be provided as a string that could be
+understood in the body of a function by a Distribution object, i.e. by naming parameters via
+\code{$getParameterValue}, see examples.
+
+Internally after calling \code{$setParameterValue}, \code{$update} is called to update the
+value of non-settable functions.
+}
+
+\section{Public Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Details} \cr
+  \code{print()} \tab Print ParameterSet as data.frame. \cr
+  \code{update()} \tab Updates unsettable parameters with supplied update functions. \cr
+  \code{parameters(id, error = "warn")} \tab If id given, returns specific parameter. Otherwise returns self. \cr
+  \code{getParameterValue(id, error = "warn")} \tab Returns value of parameter matching gven 'id'. \cr
+  \code{setParameterValue(lst, error = "warn")} \tab Set parameters in list names with respective values. See Details. \cr
+  \code{rbind()} \tab Combine the rows of multiple ParameterSets. \cr
+  \code{as.data.frame()} \tab Coerces ParameterSet to data.frame.
+}
+}
+
+\section{Public Method Details}{
+
+Argument 'error' is passed to \code{\link[RSmisc]{stopwarn}} to determine if the code should break or if a
+warning should be returned when an error occurs.
+
+\code{setParameterValue} takes a named list where the list names, \code{names(lst)}, should match
+the parameter IDs and the values, \code{as.numeric(lst)}, are used to set the corresponding parameter value.
 }
 
 \examples{
@@ -77,10 +73,9 @@ An R6 ParameterSet is required to construct a custom Probability Distribution
  upper = list(1, Inf)
  class = list("numeric","integer")
  settable = list(TRUE, TRUE)
- fittable = list(TRUE, FALSE)
  description = list("Probability of success",NULL)
- ps = ParameterSet$new(id, value, lower, upper, class, settable, fittable,
-    description = description)
+ ps = ParameterSet$new(id, value, lower, upper, class, settable,
+                       description = description)
  ps$parameters()
  ps$getParameterValue("prob")
 
@@ -91,11 +86,10 @@ An R6 ParameterSet is required to construct a custom Probability Distribution
  upper = list(Inf, Inf)
  class = list("numeric","numeric")
  settable = list(TRUE, FALSE)
- fittable = list(TRUE, FALSE)
  updateFunc = list(NULL, "1/self$getParameterValue('rate')")
  description = list("Arrival rate","Scale parameter")
- ps = ParameterSet$new(id, value, lower, upper, class, settable, fittable,
-   updateFunc, description)
+ ps = ParameterSet$new(id, value, lower, upper, class, settable,
+                       updateFunc, description)
  ps$parameters(id = "rate")
  ps$setParameterValue(list(rate = 2)) # Automatically calls $update
  ps$getParameterValue("scale") # Auto-updated to 1/2

@@ -26,9 +26,9 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
     distrs = do.call(rbind.data.frame,lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
-      x = x$new()
+      x = suppressMessages(x$new())
       ShortName = x$short_name
-      Type =  getR6Class(x$type())
+      Type =  RSmisc::getR6Class(x$type())
       ValueSupport = x$valueSupport()
       VariateForm = x$variateForm()
       return(cbind(ShortName, ClassName, Type, ValueSupport, VariateForm))
@@ -46,7 +46,7 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
   }
 }
 
-#' @title Lists Implemented R6 Decorators
+#' @title Lists Implemented Distribution Decorators
 #' @description Lists decorators that can decorate an R6 Distribution.
 #' @param simplify logical. If FALSE (default) returns result as decorator, otherwise character.
 #' @examples
@@ -70,12 +70,36 @@ listDecorators <- function(simplify=FALSE){
     return(lapply(y, get))
 }
 
+#' @title Lists Implemented Distribution Decorators
+#' @description Lists wrappers that can wrap an R6 Distribution.
+#' @param simplify logical. If FALSE (default) returns result as wrapper, otherwise character.
+#' @examples
+#' listWrappers()
+#' listWrappers(TRUE)
+#' @export
+listWrappers <- function(simplify=FALSE){
+  y = sapply(ls(name="package:distr6"),function(x){
+    if(inherits(get(x),"R6ClassGenerator")){
+      if(environmentName(get(x)$get_inherit()) == "DistributionWrapper_generator")
+        return(get(x)$classname)
+      else
+        return(FALSE)
+    } else
+      return(FALSE)
+  })
+  y = y[y!="FALSE" & y!="ConcreteWrapper"]
+  if(simplify)
+    return(as.character(y))
+  else
+    return(lapply(y, get))
+}
+
 #' @title Lists Implemented R6 Special Sets
 #' @description Lists special sets that can be used in SetInterval.
 #' @param simplify logical. If FALSE (default) returns data.frame of set name and symbol, otherwise character.
 #' @examples
 #' listSpecialSets()
-#' listSpecialSets(FALSE)
+#' listSpecialSets(TRUE)
 #' @export
 listSpecialSets <- function(simplify=FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
@@ -106,6 +130,8 @@ listSpecialSets <- function(simplify=FALSE){
     return(symbols)
   }
 }
+
+
 
 #' @title De-Duplicate Distributions
 #' @description From a list of Distributions with the same short_name, suffix each with a consecutive
@@ -163,4 +189,22 @@ skewType <- function(skew){
     return("no skew")
   else
     return("positive skew")
+}
+
+#' @title Generalised P-Norm
+#' @description Calculate the p-norm of any function between given limits. Given by,
+#' \deqn{(int_S |f|^p d\mu)^1/p}
+#' @usage generalPNorm(fun, p, lower, upper)
+#' @param fun function to calculate the p-norm of.
+#' @param p the pth norm to calculate
+#' @param lower lower bound for the integral
+#' @param upper upper bounde for the integral
+#'
+#' @examples
+#' generalPNorm(Exponential$new()$pdf,2,0,10)
+#'
+#' @export
+generalPNorm <- function(fun, p, lower, upper){
+  warning("Results from numerical integration are approximate only, better results may be available.")
+  return((stats::integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
 }

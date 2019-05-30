@@ -33,27 +33,25 @@ A generalised distribution object for defining custom probability distributions
 }
 
 \section{Constructor Details}{
- The primary purpose of the Distribution object is to serve as the parent class
-  to all other distributions, therefore all methods are approximate numeric calculations
-  and the user may prefer to utilise decorators to improve accuracy.
+ The most basic Distribution object consists of a name and one of pdf/cdf.
 
-  \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
+  If supplied, \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
   object. If none are supplied then the set of Reals is taken to be the type, support and domain
   of the distribution. If only \code{type} is supplied then this is taken to also be the support
   and domain.
 
-  By default, missing \code{pdf}, \code{cdf} and \code{quantile} are not automatically imputed.
-  Use the imputation wrappers (see below) to generate these with a selected method.
-  The \code{rand} function is automatically generated depending on which of the above are supplied.
-  The generation for this is performed according to the hierarchy: quantile -> rand, cdf -> rand, pdf -> rand.
+  By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
+  Use the \code{\link{FunctionImputation}} decorator to generate these with a selected method.
 
-  \code{parameters} should be supplied as a ParameterSet. The distribution parameterisation
-  is taken to be whichever parameters are flagged as 'settable', any others in the ParameterSet
-  are automatically updated by a given function.
+  If the distribution has parameters, then these should be supplied as a ParameterSet.
+  The distribution parameterisation is taken to be whichever parameters are flagged as 'settable',
+  any others in the ParameterSet are automatically updated by a given function. See \code{\link{ParameterSet}}
+  for more details on construction of a ParameterSet.
 
   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
   Distribution with in construction. Decorators can also be added after construction. See
-  \code{\link{DistributionDecorator}} for more details.
+  \code{\link{DistributionDecorator}} for more details. The \code{R62S3} determines if S3 methods
+  should be added for the given decorator, it is ignored if \code{decorators = NULL}.
 
   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
@@ -62,7 +60,7 @@ A generalised distribution object for defining custom probability distributions
 
 \section{Accessor Methods}{
 
- \tabular{lrr}{
+ \tabular{lll}{
   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
   \code{name()} \tab character \cr
   \code{short_name()} \tab character \cr
@@ -76,7 +74,7 @@ A generalised distribution object for defining custom probability distributions
   \code{support()} \tab Set \tab \code{\link{Set}} \cr
   \code{distrDomain()} \tab Set \tab \code{\link{Set}} \cr
   \code{symmetry()} \tab character \cr
-  \code{parameters(id,as.df = FALSE)} \tab ParameterSet or data.frame \tab \code{\link{ParameterSet}} \cr
+  \code{parameters(id)} \tab ParameterSet or data.frame. \tab \code{\link{ParameterSet}} \cr
   \code{getParameterValue(id)} \tab numeric \tab \code{\link{ParameterSet}} \cr
   \code{sup()} \tab numeric \tab supremum of distribution \cr
   \code{inf()} \tab numeric \tab infimum of distribution \cr
@@ -87,8 +85,8 @@ A generalised distribution object for defining custom probability distributions
 
  \tabular{ll}{
   \strong{Method} \tab \strong{Details} \cr
-  \code{pdf(x, log = F)} \tab Evaluate density/mass at x \cr
-  \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q.\cr
+  \code{pdf(x1, log = F)} \tab Evaluate density/mass at x1 \cr
+  \code{cdf(x1, lower.tail = T, log.p = F)} \tab Evaluate distribution function at x1.\cr
   \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p \cr
   \code{rand(n)} \tab Simulate n draws from distribution \cr
   \code{expectation(trafo)} \tab Calculate expectation \cr
@@ -97,13 +95,12 @@ A generalised distribution object for defining custom probability distributions
   \code{cov()} \tab Calculate covariance. See Details \cr
   \code{cor()} \tab Calculate correlation. See Details \cr
   \code{median()} \tab Calculate median \cr
-  \code{mode(which = 1)} \tab Calculate mode. See Details \cr
  }
 }
 
 \section{Other Methods}{
 
- \tabular{lrr}{
+ \tabular{lll}{
   \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
   \code{setParameterValue(lst)} \tab list -> invisible(self) \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
   \code{liesInSupport(x, all = TRUE)} \tab numeric x logical -> logical \tab Does x lie in the support of distribution? See Details. \cr
@@ -127,8 +124,6 @@ A generalised distribution object for defining custom probability distributions
 \section{Public Methods Details}{
 
 \code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
-\code{mode} returns by default the first mode of the distribution where applicable, otherwise a specified
-integer or all.
 
 If \code{liesInSupport(x, all = TRUE)} then returns TRUE only if every numeric in vector \code{x} lies
 in the support of the distribution, otherwise returns a vector of logicals.

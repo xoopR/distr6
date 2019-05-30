@@ -2,12 +2,12 @@ library(testthat)
 
 context("Custom continuous distributions")
 
-dexpo = function(x, log,...){
+dexpo = function(x){
   m1 = self$getParameterValue("rate")
   m2 = exp(-1 * self$getParameterValue("rate") * x)
   return(m1 * m2)
 }
-cexpo = function(x, ...){
+cexpo = function(x){
   m1 = exp(-1 * self$getParameterValue("rate") * x)
   return(1 - m1)
 }
@@ -16,7 +16,6 @@ ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
                       lower = list(0, 0, 0), upper = list(Inf, Inf, 5),
                       class = list("numeric","numeric","numeric"),
                       settable = list(TRUE, FALSE, FALSE),
-                      fittable = list(TRUE, FALSE, FALSE),
                       updateFunc = list(NULL, "1/self$getParameterValue('rate')",
                                         "exp(self$getParameterValue('rate'))"),
                       description = list("Arrival rate","Scale parameter","testpar"))

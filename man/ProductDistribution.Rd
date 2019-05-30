@@ -8,25 +8,26 @@ A wrapper for creating the joint distribution of two indepdendent probability di
 }
 \details{
 Exploits the following relationships of independent distributions
-\deqn{f_P(x, y) = f_X(x) * f_Y(y)}
-\deqn{F_P(x, y) = F_X(x) * F_Y(y)}
-where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X,Y are independent distributions.
+\deqn{f_P(x1, x2) = f_X1(x1) * f_X2(x2)}
+\deqn{F_P(x1, x2) = F_X1(x1) * F_X2(x2)}
+where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X1,X2 are independent distributions.
 
 \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 \section{Constructor Arguments}{
 
-\tabular{ll}{
-\code{dist1} \tab Distribution. \cr
-\code{dist2} \tab Distribution. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dist1} \tab distribution \tab First distribution for product. \cr
+\code{dist2} \tab distribution \tab Second distribution for product. \cr
 }
 }
 
 \examples{
 prodBin <- ProductDistribution$new(Binomial$new(prob = 0.5, size = 10),
-Binomial$new(prob = 0.5, size = 20))
-prodBin$pdf(2, y =3)
-prodBin$cdf(5, y = 10)
+                                   Binomial$new(prob = 0.5, size = 20))
+prodBin$pdf(x1 = 2, x2 =3)
+prodBin$cdf(x1 = 5, x2 = 10)
 }
 \seealso{
 \code{\link{ArrayDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}

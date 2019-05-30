@@ -7,12 +7,26 @@
 #' @name Scale
 #'
 #' @section Constructor Arguments:
-#' \tabular{ll}{
-#' \code{distribution} \tab Distribution object. \cr
-#' \code{mean} \tab desired mean after distribution shift. \cr
-#' \code{sd} \tab desired standard deviation after distribution scale.
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{distribution} \tab distribution \tab Distribution to scale. \cr
+#' \code{mean} \tab numeric \tab Desired mean after distribution shift. \cr
+#' \code{sd} \tab numeritc \tab Desired standard deviation after distribution scale.
 #' }
-#
+#'
+#' @section Getters:
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
+#' \code{getScaleMean()} \tab numeric \tab Return mean of scaled distribution. \cr
+#' \code{getScaleSd()} \tab numeric \tab Return standard deviation of scaled distribution. \cr
+#' }
+#'
+#'@section Setters:
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Input Type} \tab \strong{Details} \cr
+#' \code{setScaleMean(mean)} \tab numeric \tab Set mean to scale distribution to. \cr
+#' \code{setScaleSd(sd)} \tab numeric \tab Set standard deviation to scale distribution to. \cr
+#' }
 #'
 #' @examples
 #' Scale$new(Binomial$new())
@@ -37,20 +51,20 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   self$setScaleSd(sd)
 
   if(!is.null(dist$pdf(1))){
-    pdf <- function(x) {}
+    pdf <- function(x1) {}
     body(pdf) <- substitute({
       locationTrafo <- self$wrappedModels(name)$expectation() - self$getScaleMean()
       scaleTrafo <- self$wrappedModels(name)$sd() / self$getScaleSd()
-      self$wrappedModels(name)$pdf(x * scaleTrafo + locationTrafo) / scaleTrafo
+      self$wrappedModels(name)$pdf(x1 * scaleTrafo + locationTrafo) / scaleTrafo
     }, list(name = short_name))
   } else
     pdf <- NULL
   if(!is.null(dist$cdf(1))){
-    cdf <- function(x) {}
+    cdf <- function(x1) {}
     body(cdf) <- substitute({
       locationTrafo <- self$wrappedModels(name)$expectation() - self$getScaleMean()
       scaleTrafo <- self$wrappedModels(name)$sd() / self$getScaleSd()
-      self$wrappedModels(name)$cdf(x * scaleTrafo + locationTrafo)
+      self$wrappedModels(name)$cdf(x1 * scaleTrafo + locationTrafo)
     }, list(name = short_name))
   } else
     cdf <- NULL

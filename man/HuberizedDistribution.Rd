@@ -16,22 +16,24 @@ Huberizes a distribution at lower and upper limits, using the formula
 where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X, F_X is the
 pdf/cdf of the original distribution.
 
-If lower or upper are missing they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 
 \code{HuberizedDistribution} inherits all methods from \code{Distribution}.
 }
 \section{Constructor Arguments}{
 
-\tabular{ll}{
-\code{distribution} \tab Distribution to huberize. \cr
-\code{lower} \tab Lower limit for huberization. \cr
-\code{upper} \tab Upper limit for huberization.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{distribution} \tab distribution \tab Distribution to huberize. \cr
+\code{lower} \tab numeric \tab Lower limit for huberization. \cr
+\code{upper} \tab numeric \tab Upper limit for huberization.
 }
 }
 
 \section{Public Methods}{
 
 \tabular{ll}{
+\strong{Method} \tab \strong{Details} \cr
 \code{getLowerLimit()} \tab Gets lower limit of huberization. \cr
 \code{getUpperLimit()} \tab Gets upper limit of huberization. \cr
 }

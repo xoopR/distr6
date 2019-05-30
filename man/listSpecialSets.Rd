@@ -14,5 +14,5 @@ Lists special sets that can be used in SetInterval.
 }
 \examples{
 listSpecialSets()
-listSpecialSets(FALSE)
+listSpecialSets(TRUE)
 }

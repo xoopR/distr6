@@ -9,21 +9,22 @@
 #' where f_T/F_T is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and f_X, F_X is the
 #' pdf/cdf of the original distribution.
 #'
-#' If lower or upper are missing they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+#' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 #' The support of the new distribution is the interval of points between lower and upper.
 #'
 #' \code{TruncatedDistribution} inherits all methods from \code{Distribution}.
 #'
 #' @section Constructor Arguments:
-#' \tabular{ll}{
-#' \code{distribution} \tab Distribution to truncate. \cr
-#' \code{lower} \tab Lower limit for truncation. \cr
-#' \code{upper} \tab Upper limit for truncation.
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{distribution} \tab distribution \tab Distribution to truncate. \cr
+#' \code{lower} \tab numeric \tab Lower limit for truncation. \cr
+#' \code{upper} \tab numeric \tab Upper limit for truncation.
 #' }
 #'
 #' @examples
 #' truncBin <- TruncatedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
-#' truncBin$getParameterValue("truncBin_prob")
+#' truncBin$getParameterValue("prob")
 NULL
 
 #' @export
@@ -35,51 +36,52 @@ TruncatedDistribution$set("public", "getLowerLimit", function(){
 TruncatedDistribution$set("public", "getUpperLimit", function(){
   return(private$.cutoffInterval[[2]])
 })
-TruncatedDistribution$set("public","initialize",function(distribution, lower, upper){
+TruncatedDistribution$set("public","initialize",function(distribution, lower = NULL,
+                                                         upper = NULL){
 
   assertDistribution(distribution)
 
   if(is.null(distribution$cdf(1)))
     stop("cdf is required for truncation. Try decorate(Distribution, FunctionImputation) first.")
 
-  if(!missing(lower) & !missing(upper)){
+  if(!is.null(lower) & !is.null(upper)){
     # Top and bottom truncation
-    pdf <- function(x,...) {
-      if(x <= self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 <= self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x) / (self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
+        self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
     }
     formals(pdf)$self <- self
-  } else if(!missing(lower) & missing(upper)){
+  } else if(!is.null(lower) & is.null(upper)){
     # Bottom truncation
     upper = distribution$sup()
-    pdf <- function(x,...) {
-      if(x <= self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 <= self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x) / (1 - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
+        self$wrappedModels()[[1]]$pdf(x1) / (1 - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
     }
     formals(pdf)$self <- self
-  } else if(missing(lower) & !missing(upper)){
+  } else if(is.null(lower) & !is.null(upper)){
     # Top truncation
     lower = distribution$inf()
-    pdf <- function(x,...) {
-      if(x <= self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 <= self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x) / self$wrappedModels()[[1]]$cdf(self$getUpperLimit())
+        self$wrappedModels()[[1]]$pdf(x1) / self$wrappedModels()[[1]]$cdf(self$getUpperLimit())
     }
     formals(pdf)$self <- self
   } else{
     # No truncation
     lower = distribution$inf()
     upper = distribution$sup()
-    pdf <- function(x,...) {
-      if(x < self$getLowerLimit() | x > self$getUpperLimit())
+    pdf <- function(x1,...) {
+      if(x1 < self$getLowerLimit() | x1 > self$getUpperLimit())
         return(0)
       else
-        self$wrappedModels()[[1]]$pdf(x,...)
+        self$wrappedModels()[[1]]$pdf(x1,...)
     }
     formals(pdf)$self <- self
   }
@@ -111,6 +113,6 @@ truncate <- function(x,lower,upper){
   UseMethod("truncate", x)
 }
 #' @export
-truncate.Distribution <- function(x, lower, upper){
+truncate.Distribution <- function(x, lower = NULL, upper = NULL){
   TruncatedDistribution$new(x, lower, upper)
 }

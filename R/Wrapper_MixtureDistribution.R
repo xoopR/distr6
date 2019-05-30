@@ -10,17 +10,24 @@
 #' w_1,...,w_n. The pdf of the mixture distribution M(X1,...,XN), f_M is given by
 #' \deqn{f_M = sum_i (f_i)(w_i)}
 #' and the cdf, F_M is given by
-#' \deqn{F_M = sum_i (F_i)(w_i)}.
+#' \deqn{F_M = sum_i (F_i)(w_i)}
 #'
-#' If weights are given, they should be provided as a list of numeris summing to one. If missing,
+#' If weights are given, they should be provided as a list of numerics summing to one. If NULL,
 #' they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 #'
 #'
 #' @section Constructor Arguments:
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{distlist} \tab list \tab List of distributions. \cr
+#' \code{weights} \tab list \tab List of weights. See Details. \cr
+#' \code{...} \tab any \tab Additional arguments to pass to pdf/cdf.
+#' }
+#'
+#' @section Public Methods:
 #' \tabular{ll}{
-#' \code{distlist} \tab List of distributions. \cr
-#' \code{weights} \tab List of weights. See Details. \cr
-#' \code{...} \tab Additional arguments to pass to pdf/cdf.
+#' \strong{Method} \tab \strong{Details} \cr
+#' \code{weights()} \tab Returns the weights of the wrapped distributions.
 #' }
 #'
 #' @examples
@@ -31,12 +38,12 @@ NULL
 
 #' @export
 MixtureDistribution <- R6::R6Class("MixtureDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
-MixtureDistribution$set("public","initialize",function(distlist, weights, ...){
+MixtureDistribution$set("public","initialize",function(distlist, weights = NULL, ...){
 
   distlist = makeUniqueDistributions(distlist)
   distnames = names(distlist)
 
-  if(missing(weights))
+  if(is.null(weights))
     weights = rep(1/length(distlist), length(distlist))
   else{
     checkmate::assert(length(weights)==length(distlist))
@@ -45,19 +52,19 @@ MixtureDistribution$set("public","initialize",function(distlist, weights, ...){
 
   private$.weights <- weights
 
-  pdf <- function(x,...) {
-    if(length(x)==1)
-      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x)) * self$weights())))
+  pdf <- function(x1,...) {
+    if(length(x1)==1)
+      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * self$weights())))
     else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x)) * self$weights())))
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * self$weights())))
   }
   formals(pdf)$self <- self
 
-  cdf <- function(x,...) {
-    if(length(x)==1)
-      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x)) * self$weights())))
+  cdf <- function(x1,...) {
+    if(length(x1)==1)
+      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x1)) * self$weights())))
     else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x)) * self$weights())))
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x1)) * self$weights())))
   }
   formals(cdf)$self <- self
 

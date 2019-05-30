@@ -6,11 +6,11 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
 
 
   if(testContinuous(distlist$dist1) & testContinuous(distlist$dist2)){
-    fnc <- function(x) {}
+    fnc <- function(x1) {}
     if(add){
       body(fnc) <- substitute({
         message("Results from numerical integration are approximate only, better results may be available.")
-        return(sapply(x,function(z){
+        return(sapply(x1,function(z){
           integrate(f = function(y){self$getInternalModel(name1)$pdf(z - y)*
               self$getInternalModel(name2)$pdf(y)},
               lower = self$getInternalModel(name2)$inf(), upper = z)$value
@@ -19,7 +19,7 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
     } else {
       body(fnc) <- substitute({
         message("Results from numerical integration are approximate only, better results may be available.")
-        return(sapply(x,function(z){
+        return(sapply(x1,function(z){
           integrate(f = function(y){self$getInternalModel(name1)$pdf(y - z)*
               self$getInternalModel(name2)$pdf(y)},
               lower = self$getInternalModel(name2)$inf(),
@@ -28,10 +28,10 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
       },list(name1 = distlist$dist1$short_name, name2 = distlist$dist2$short_name))
     }
   } else if(testDiscrete(distlist$dist1) & testDiscrete(distlist$dist2)){
-    fnc <- function(x) {}
+    fnc <- function(x1) {}
     if(add){
       body(fnc) <- substitute({
-        return(sapply(x,function(z){
+        return(sapply(x1,function(z){
           support <- try(self$getInternalModel(name2)$inf():self$getInternalModel(name2)$sup())
           if(inherits(support,"try-error"))
             support <- self$getInternalModel(name2)$.__enclos_env__$private$.getWorkingSupportRange()
@@ -41,7 +41,7 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
       },list(name1 = distlist$dist1$short_name, name2 = distlist$dist2$short_name))
     } else {
       body(fnc) <- substitute({
-        return(sapply(x,function(z){
+        return(sapply(x1,function(z){
           support <- try(self$getInternalModel(name2)$inf():self$getInternalModel(name2)$sup())
           if(inherits(support,"try-error"))
             support <- self$getInternalModel(name2)$.__enclos_env__$private$.getWorkingSupportRange()

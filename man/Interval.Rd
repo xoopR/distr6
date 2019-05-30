@@ -2,27 +2,26 @@
 % Please edit documentation in R/SetInterval_Interval.R
 \name{Interval}
 \alias{Interval}
-\alias{numeric}
 \title{Symbolic Interval Object}
-\arguments{
-\item{lower}{lower limit of the interval.}
-
-\item{upper}{upper limit of the interval.}
-
-\item{type}{endpoint type of the interval.}
-}
-\value{
-\code{Interval$new} constructs an R6 object of class Interval
-
-\code{numeric} gets numeric vector of the interval range.
-}
 \description{
 An R6 set object for symbolic representation of mathematical intervals.
 }
-\section{Usage}{
- Interval$new(lower = -Inf, upper = Inf, type = "[]")
+\section{Constructor Arguments}{
 
- $numeric()
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{lower = -Inf} \tab numeric \tab Lower limit of set/interval. \cr
+   \code{upper = Inf} \tab numeric \tab Upper limit of set/interval. \cr
+   \code{type = "[]"} \tab character \tab Interval type, one of (), (], [), []. \cr
+}
+}
+
+\section{Coercion Methods}{
+
+\tabular{lll}{
+\strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
+\code{as.numeric} \tab numeric \tab Coerces interval range to numeric vector. \cr
+}
 }
 
 \seealso{

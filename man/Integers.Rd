@@ -3,22 +3,17 @@
 \name{Integers}
 \alias{Integers}
 \title{Set of Integers}
-\arguments{
-\item{dim}{numeric dimension of set.}
-}
-\value{
-Returns an R6 object of class Integers.
-}
 \description{
 The mathematical set of integers.
 }
-\section{Usage}{
- Integers$new(dim = 1)
+\section{Constructor Arguments}{
+
+ \tabular{lll}{
+   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+}
 }
 
 \seealso{
-\code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-  \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-  \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-  \code{\link{ExtendedReals}}, \code{\link{Complex}}.
+\code{\link{listSpecialSets}}
 }

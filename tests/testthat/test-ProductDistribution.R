@@ -4,7 +4,7 @@ context("Product Distribution")
 
 test_that("constructor",{
   expect_silent(ProductDistribution$new(Binomial$new(),Binomial$new(size = 20, prob = 0.6)))
-  expect_silent(ProductDistribution$new(Binomial$new(),Exponential$new()))
+  expect_silent(ProductDistribution$new(Binomial$new(),Exponential$new(rate=1)))
 })
 
 test_that("type/support/distrDomain",{
@@ -15,10 +15,10 @@ test_that("type/support/distrDomain",{
 })
 
 test_that("pdf/cdf",{
-  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(4,y=8),
+  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(4,x2=8),
                Binomial$new(size = 40, prob = 0.2)$pdf(4) * Binomial$new(size = 5, prob = 0.9)$pdf(8))
-  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(4,y=3),
+  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$pdf(4,x2=3),
                Binomial$new(size = 40, prob = 0.2)$pdf(4) * Binomial$new(size = 5, prob = 0.9)$pdf(3))
-  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$cdf(4,y=8),
+  expect_equal(ProductDistribution$new(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9))$cdf(4,x2=8),
                Binomial$new(size = 40, prob = 0.2)$cdf(4) * Binomial$new(size = 5, prob = 0.9)$cdf(8))
 })
