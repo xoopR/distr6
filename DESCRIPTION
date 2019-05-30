@@ -1,11 +1,12 @@
 Package: distr6
 Title: Object Oriented Distributions in R
-Version: 0.0.0.9000
+Version: 0.1.0.9000
 Authors@R: 
     c(person(given = "Raphael",
              family = "Sonabend",
              role = c("aut","cre"),
-             email = "raphael.sonabend.15@ucl.ac.uk"),
+             email = "raphael.sonabend.15@ucl.ac.uk",
+             comment = c(ORCID = "0000-0001-9225-4654")),
       person(given = "Franz",
              family = "Kiraly",
              role = "aut",
@@ -19,15 +20,15 @@ Authors@R:
              role = "aut",
              email = "Matthias.Kohl@stamats.de"))
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
-  commonly used probability distributions and functionality for multiple scientific types.
+  commonly used probabilty distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
 Depends: 
-Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats
+Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc
 Suggests: knitr, testthat, devtools
 Remotes: RaphaelS1/RSmisc
 License: MIT + file LICENSE
 LazyData: true
-URL: https://github.com/RaphaelS1/distr6/
+URL: https://raphaels1.github.io/distr6/, https://github.com/RaphaelS1/distr6/
 BugReports: https://github.com/RaphaelS1/distr6/issues
 VignetteBuilder: 
     knitr
@@ -36,6 +37,7 @@ RoxygenNote: 6.1.1
 Collate: 
     'SetInterval_helpers.R'
     'Distribution_helpers.R'
+    'R6_helpers.R'
     'Distribution.R'
     'DistributionDecorator.R'
     'DistributionDecorator_CoreStatistics.R'
@@ -47,7 +49,6 @@ Collate:
     'SetInterval_SpecialSet.R'
     'Distribution_Binomial.R'
     'Distribution_Exponential.R'
-    'Distribution_Normal.R'
     'SetInterval_Interval.R'
     'Wrapper.R'
     'Wrapper_ArrayDistribution.R'
@@ -57,8 +58,9 @@ Collate:
     'Wrapper_ProductDistribution.R'
     'Wrapper_Scale.R'
     'Wrapper_TruncatedDistribution.R'
-    'assertions.R'
+    'assertion_helpers.R'
     'decorate.R'
     'distr6_globals.R'
     'measures.R'
+    'misc_helpers.R'
     'zzz.R'
