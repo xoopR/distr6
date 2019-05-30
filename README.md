@@ -12,9 +12,7 @@ Currently there are two main ways to interact with probability distributions in 
 1. Using the base and stats package for functions such as `dnorm` \ `pnorm` \ `qnorm` \ `rnorm` for the pdf/cdf/quantile/simulation function of a distribution (in this case Normal).
 1. Using the distr family of packages for an object-oriented interface to distributions
 
-distr6 is the R6 upgrade to the distr family of packages. For full details of the distr family, please refer to the [sourceforge page](http://distr.r-forge.r-project.org/). We extend the functionality of distr by utilising R6 for increased speed and decreased computational cost. We have also introduced a new API and class structure, full details of which can be seen in the UML class diagram and API help pages.
-
-For full details of distr6's design and implementation see the project [wiki page](https://github.com/RaphaelS1/distr6/wiki) and the [distr6 website](https://RaphaelS1.github.io/distr6/).
+distr6 is the R6 upgrade to the distr family of packages. For full details of the distr family, please refer to the [sourceforge page](http://distr.r-forge.r-project.org/). We extend the functionality of distr by utilising R6 for increased speed and decreased computational cost. We have also introduced a new API and class structure, full details of which can be seen in the project [wiki page](https://github.com/RaphaelS1/distr6/wiki) and the [distr6 website](https://RaphaelS1.github.io/distr6/).
 
 ## Installation
 
@@ -22,6 +20,10 @@ Before publication to CRAN, the latest stable release is available via:
 ````R
 devtools::install_github("RaphaelS1/distr6", dependencies = TRUE)
 ````
+
+## Package Development and Contributing
+
+distr6 is now public on GitHub but developments will continue to be made internally by a team of researchers from UCL working at The Alan Turing Institute. All contributions are released under the [MIT licence](https://opensource.org/licenses/MIT) with acknowledgements to the [LGPL-3 licence of distr](https://github.com/RaphaelS1/distr6/blob/master/Licensing). We welcome external contributors to test our API and notify us of bugs and issues however we are not currently looking for feature requests as the API is still in development. See our roadmap for short- and long-term plans. Before raising an issue please read through our [contributing guidelines](https://github.com/RaphaelS1/distr6/blob/master/CONTRIBUTING.md) for details including our [code of conduct](https://github.com/RaphaelS1/distr6/blob/master/CODE_OF_CONDUCT.md).
 
 ## What is distr6?
 
@@ -43,4 +45,4 @@ Or try using `B$summary()` for a range of common mathematical and statistical re
 
 Another advantage of OOP is making use of inheritance to implement more complex distributions from base distributions. For example any distribution can be easily truncated with a call to `truncate(distribution, lower, upper)` which produces an object of class `TruncatedDistribution` which inherits all methods from `Distribution`. 
 
-We discuss further advantages of OOP including Design Patterns in the help-pages of the website.
+We discuss further advantages of OOP including Design Patterns in the help-pages of the [website](https://RaphaelS1.github.io/distr6/).
