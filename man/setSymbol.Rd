@@ -13,7 +13,7 @@ setSymbol(set)
 Gets the unicode symbol for standard mathematical special sets.
 }
 \details{
-Special set should be supplied as a character string.
+Special set can be supplied as a character string or class, case-insensitive.
   See \code{\link{SpecialSet}} for full list of currently supported sets.
 }
 \seealso{

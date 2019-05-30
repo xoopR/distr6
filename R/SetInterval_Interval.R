@@ -1,20 +1,31 @@
+#-------------------------------------------------------------
+# Interval Documentation
+#-------------------------------------------------------------
 #' @title Symbolic Interval Object
 #'
 #' @description An R6 set object for symbolic representation of mathematical intervals.
-#' @return \code{Interval$new} constructs an R6 object of class Interval
+#'
 #' @name Interval
 #'
-#' @section Usage: Interval$new(lower = -Inf, upper = Inf, type = "[]")
+#' @section Constructor Arguments:
+#'  \tabular{lll}{
+#'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#'    \code{lower = -Inf} \tab numeric \tab Lower limit of set/interval. \cr
+#'    \code{upper = Inf} \tab numeric \tab Upper limit of set/interval. \cr
+#'    \code{type = "[]"} \tab character \tab Interval type, one of (), (], [), []. \cr
+#' }
 #'
-#' @param lower lower limit of the interval.
-#' @param upper upper limit of the interval.
-#' @param type endpoint type of the interval.
-#'
+#' @section Coercion Methods:
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
+#' \code{as.numeric} \tab numeric \tab Coerces interval range to numeric vector. \cr
+#' }
 #'
 #' @seealso The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
 NULL
-
-
+#-------------------------------------------------------------
+# Interval Definition
+#-------------------------------------------------------------
 #' @export
 Interval <- R6::R6Class("Interval", inherit = SetInterval)
 Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]"){
@@ -30,10 +41,6 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   invisible(self)
 })
 
-#' @rdname Interval
-#' @name numeric
-#' @section Usage: $numeric()
-#' @return \code{numeric} gets numeric vector of the interval range.
-Interval$set("public","numeric",function(){
+Interval$set("public","as.numeric",function(){
   return(seq.int(self$min(),self$max(),1))
 })

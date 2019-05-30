@@ -19,14 +19,15 @@ Authors@R:
              role = "aut",
              email = "Matthias.Kohl@stamats.de"))
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
-  commonly used probabilty distributions and functionality for multiple scientific types.
+  commonly used probability distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
 Depends: 
-Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr
+Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats
 Suggests: knitr, testthat, devtools
-Remotes: RaphaelS1/R62S3
+Remotes: RaphaelS1/RSmisc
 License: MIT + file LICENSE
 LazyData: true
+URL: https://github.com/RaphaelS1/distr6/
 BugReports: https://github.com/RaphaelS1/distr6/issues
 VignetteBuilder: 
     knitr
@@ -35,27 +36,29 @@ RoxygenNote: 6.1.1
 Collate: 
     'SetInterval_helpers.R'
     'Distribution_helpers.R'
-    'R6_helpers.R'
     'Distribution.R'
     'DistributionDecorator.R'
     'DistributionDecorator_CoreStatistics.R'
     'DistributionDecorator_ExoticStatistics.R'
+    'DistributionDecorator_FunctionImputation.R'
     'ParameterSet.R'
     'SetInterval.R'
     'SetInterval_Set.R'
     'SetInterval_SpecialSet.R'
     'Distribution_Binomial.R'
     'Distribution_Exponential.R'
+    'Distribution_Normal.R'
     'SetInterval_Interval.R'
     'Wrapper.R'
+    'Wrapper_ArrayDistribution.R'
     'Wrapper_Convolution.R'
     'Wrapper_HuberizedDistribution.R'
-    'Wrapper_Imputation.R'
     'Wrapper_MixtureDistribution.R'
     'Wrapper_ProductDistribution.R'
     'Wrapper_Scale.R'
     'Wrapper_TruncatedDistribution.R'
-    'assertion_helpers.R'
+    'assertions.R'
     'decorate.R'
+    'distr6_globals.R'
     'measures.R'
     'zzz.R'

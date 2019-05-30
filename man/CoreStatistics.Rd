@@ -2,128 +2,57 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{CoreStatistics}
 \alias{CoreStatistics}
-\alias{mgf}
-\alias{cf}
-\alias{pgf}
-\alias{iqr}
-\alias{entropy}
-\alias{skewness}
-\alias{kurtosis}
-\alias{kthmoment}
-\alias{genExp}
-\alias{var}
-\alias{cov}
-\alias{cor}
-\alias{mode}
-\title{Core Statistics Methods for Distributions}
-\arguments{
-\item{distribution}{distribution object.}
-
-\item{t}{integer. Input for function evaluation.}
-
-\item{base}{integer. Logarithmic base for entropy}
-
-\item{excess}{logical. If TRUE (default) Excess Kurtosis is calculated}
-
-\item{k}{integer. Moment to calculate.}
-
-\item{type}{string. One of "central" or "standard".}
-}
-\value{
-\code{CoreStatistics$new} constructs an R6 object of class Distribution.
-
-\code{mgf} gives the moment generating function evaluated at t
-
-\code{cf} gives the characteristic function evaluated at t
-
-\code{pgf} gives the probability generating function evaluated at t
-
-\code{iqr} gives the interquartile range of the distribution
-
-\code{entropy} gives the (information) entropy of a distribution,
-  default is Shannon entropy (base = 2)
-
-\code{skewness} gives the 3rd standardised moment of a distribution.
-
-\code{kurtosis} gives the 4th standardised moment of a distribution.
-  Excess (kurtosis - 3) is default.
-
-\code{kthmoment} gives the kth central (default) or standardized moment
-
-\code{genExp} gives the expectation (default)
-
-\code{var} gives the variance
-
-\code{cov} gives the covariance
-
-\code{cor} gives the correlation
-
-\code{mode} gives the mode
-}
+\title{Core Statistical Methods for Distributions}
 \description{
-Added functionality to distribution objects for statistical
-  methods that can be considered core but lie outside of the p/d/q/r generation
-  functions.
+Added functionality to distribution objects for numerical statistical
+  methods. Including a generalised expectation function for more complex numerical calculations.
 }
 \details{
 Decorator objects add functionality to the given Distribution object
- by overwriting the object in the Global Environment. They can be specified
- in construction of the Distribution or by constructing the given Decorator.
+ by copying methods in the decorator environment to the chosen Distribution environment. Use the
+ \code{\link{decorate}} function to decorate a Distribution.
 
- Methods act on the distribution and not the constructor therefore method chaining of the form
- \code{CoreStatistics$new(distribution)$iqr()} is not supported but \code{distribution$new(decorator=CoreStatistics)$iqr()} is.
-
- Generating functions are evaluated at a particular point \code{t} and do not
-  give specific analytic generating functions. \code{type} of moment is one of,
-  "central" for the kth moment about the mean, or "standard" for the central moment
-  standardised by, kthCentralMoment / standard deviation^k.
-
-  Many functions rely on the expectation of a distribution and therefore results may be
-  approximate when numerical integration is used.
+ All methods in this decorator use numerical approximations and therefore better results may be available
+ from analytic computations.
 }
-\section{Usage}{
- CoreStatistics$new(distribution)
+\section{Constructor Arguments}{
 
- $mgf(t)
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
+}
+}
 
- $cf(t)
+\section{Public Methods}{
 
- $pgf(t)
-
- $iqr()
-
- entropy(base = 2)
-
- $skewness()
-
- $kurtosis(excess = TRUE)
-
- $kthmoment(k, type = "central")
-
- $genExp(trafo)
-
- $var()
-
- $cov()
-
- $cor()
-
- $mode()
+\tabular{lll}{
+\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+\code{mgf(t)} \tab numeric -> numeric \tab Moment generating function evaluated at t. \cr
+\code{pgf(t)} \tab numeric -> numeric \tab Probability generating function evaluated at t. \cr
+\code{cf(t)} \tab numeric -> numeric \tab Characteristic function evaluated at t. \cr
+\code{iqr()} \tab -> numeric \tab Interquartile range of the distribution. \cr
+\code{entropy(base = 2)} \tab integer -> numeric \tab Distribution entropy, Shannon by default. \cr
+\code{skewness()} \tab -> numeric \tab Third stndardised moment of the distribution. \cr
+\code{kurtosis(excess = TRUE)} \tab logical -> numeric \tab Fourth standardised moment of the distribution. \cr
+By default excess kurtosis (kurtosis - 3). \cr
+\code{kthmoment(type = "central")} \tab character -> numeric \tab Central (default) or standardised kth moment (type = "standard"). \cr
+\code{genExp(trafo)} \tab function -> numeric \tab Generalised expectation formula. If trafo = NULL, returns arithmetic mean. \cr
+\code{var()} \tab -> numeric \tab Numeric variance of distribution. \cr
+\code{cov()} \tab -> numeric \tab Covariance of distribution. \cr
+\code{cor()} \tab -> numeric \tab Correlation of distribution. \cr
+\code{mode(which = 1)} \tab integer -> numeric \tab Mode of distribution, if which = 1, returns first, otherwise all.
+}
 }
 
 \examples{
-\dontrun{
-X = Binomial$new(decorator = "CoreStatistics")
-X$iqr()
-X$kurtosis()
-}
+x = Binomial$new()
+decorate(x, CoreStatistics, R62S3 = FALSE)
+x$iqr()
 
-\dontrun{
-X = Binomial$new()
-CoreStatistics$new(X)
-X$kthmoment(4)
-}
+x = Binomial$new(decorators = CoreStatistics, R62S3 = FALSE)
+x$kthmoment(4)
 }
 \seealso{
-\code{\link{ExoticStatistics}} for more available methods.
+\code{\link{DistributionDecorator}}
 }

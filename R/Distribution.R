@@ -1,5 +1,5 @@
 #-------------------------------------------------------------
-# Distribution R6Class Definition
+# Distribution Documentation
 #-------------------------------------------------------------
 #' @title Generalised Distribution Object
 #'
@@ -8,7 +8,6 @@
 #'   mathematical and statistical methods for distributions are defined here with approximate numerical
 #'   calculations (as opposed to analytical results).
 #'
-#
 #' @name Distribution
 #'
 #' @section Constructor Arguments:
@@ -25,42 +24,39 @@
 #' \code{quantile} \tab function \tab See Details. \cr
 #' \code{rand} \tab function \tab See Details. \cr
 #' \code{parameters} \tab ParameterSet \tab See Details. \cr
-#' \code{paramValues} \tab list \tab See Details. \cr
 #' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 #' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 #' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-#' \code{description} \tab character \tab short description of distribution.
+#' \code{description} \tab character \tab short description of distribution. \cr
+#' \code{R62S3} \tab logical \tab if TRUE (default), S3 methods are added for decorators in construction.
 #' }
 #'
-#' @section Constructor Details: The primary purpose of the Distribution object is to serve as the parent class
-#'   to all other distributions, therefore all methods are approximate numeric calculations
-#'   and the user may prefer to utilise decorators to improve accuracy.
+#' @section Constructor Details: The most basic Distribution object consists of a name and one of pdf/cdf.
 #'
-#'   \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
+#'   If supplied, \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
 #'   object. If none are supplied then the set of Reals is taken to be the type, support and domain
 #'   of the distribution. If only \code{type} is supplied then this is taken to also be the support
 #'   and domain.
 #'
-#'   By default, missing \code{pdf}, \code{cdf} and \code{quantile} are not automatically imputed.
-#'   Use the imputation wrappers (see below) to generate these with a selected method.
-#'   The \code{rand} function is automatically generated depending on which of the above are supplied.
-#'   The generation for this is performed according to the hierarchy: quantile -> rand, cdf -> rand, pdf -> rand.
+#'   By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
+#'   Use the \code{\link{FunctionImputation}} decorator to generate these with a selected method.
 #'
-#'   \code{parameters} should be supplied as a ParameterSet. The distribution parameterisation
-#'   is taken to be whichever parameters are flagged as 'settable', any others in the ParameterSet
-#'   are automatically updated by a given function. \code{paramValues} is an optional list giving the
-#'   values to set the parameters (if not default or given in the ParameterSet.
+#'   If the distribution has parameters, then these should be supplied as a ParameterSet.
+#'   The distribution parameterisation is taken to be whichever parameters are flagged as 'settable',
+#'   any others in the ParameterSet are automatically updated by a given function. See \code{\link{ParameterSet}}
+#'   for more details on construction of a ParameterSet.
 #'
 #'   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
 #'   Distribution with in construction. Decorators can also be added after construction. See
-#'   \code{\link{DistributionDecorator}} for more details.
+#'   \code{\link{DistributionDecorator}} for more details. The \code{R62S3} determines if S3 methods
+#'   should be added for the given decorator, it is ignored if \code{decorators = NULL}.
 #'
 #'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
 #'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
 #'   If not given these are automatically filled from \code{type} and \code{support}.
 #'
 #' @section Accessor Methods:
-#'  \tabular{lrr}{
+#'  \tabular{lll}{
 #'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
 #'   \code{name()} \tab character \cr
 #'   \code{short_name()} \tab character \cr
@@ -74,7 +70,7 @@
 #'   \code{support()} \tab Set \tab \code{\link{Set}} \cr
 #'   \code{distrDomain()} \tab Set \tab \code{\link{Set}} \cr
 #'   \code{symmetry()} \tab character \cr
-#'   \code{parameters(id,as.df = FALSE)} \tab ParameterSet or data.frame \tab \code{\link{ParameterSet}} \cr
+#'   \code{parameters(id)} \tab ParameterSet or data.frame. \tab \code{\link{ParameterSet}} \cr
 #'   \code{getParameterValue(id)} \tab numeric \tab \code{\link{ParameterSet}} \cr
 #'   \code{sup()} \tab numeric \tab supremum of distribution \cr
 #'   \code{inf()} \tab numeric \tab infimum of distribution \cr
@@ -83,8 +79,8 @@
 #' @section Math/Stats Methods:
 #'  \tabular{ll}{
 #'   \strong{Method} \tab \strong{Details} \cr
-#'   \code{pdf(x, log = F)} \tab Evaluate density/mass at x \cr
-#'   \code{cdf(q, lower.tail = T, log.p = F)} \tab Evaluate distribution function at q.\cr
+#'   \code{pdf(x1, log = F)} \tab Evaluate density/mass at x1 \cr
+#'   \code{cdf(x1, lower.tail = T, log.p = F)} \tab Evaluate distribution function at x1.\cr
 #'   \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p \cr
 #'   \code{rand(n)} \tab Simulate n draws from distribution \cr
 #'   \code{expectation(trafo)} \tab Calculate expectation \cr
@@ -93,11 +89,10 @@
 #'   \code{cov()} \tab Calculate covariance. See Details \cr
 #'   \code{cor()} \tab Calculate correlation. See Details \cr
 #'   \code{median()} \tab Calculate median \cr
-#'   \code{mode(which = 1)} \tab Calculate mode. See Details \cr
 #'  }
 #'
 #' @section Other Methods:
-#'  \tabular{lrr}{
+#'  \tabular{lll}{
 #'   \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
 #'   \code{setParameterValue(lst)} \tab list -> invisible(self) \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
 #'   \code{liesInSupport(x, all = TRUE)} \tab numeric x logical -> logical \tab Does x lie in the support of distribution? See Details. \cr
@@ -118,8 +113,6 @@
 #'
 #' @section Public Methods Details:
 #' \code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
-#' \code{mode} returns by default the first mode of the distribution where applicable, otherwise a specified
-#' integer or all.
 #'
 #' If \code{liesInSupport(x, all = TRUE)} then returns TRUE only if every numeric in vector \code{x} lies
 #' in the support of the distribution, otherwise returns a vector of logicals.
@@ -131,8 +124,10 @@
 #' details on the arguments to \code{pdf}/\code{cdf}/\code{quantile}/\code{rand}.
 NULL
 #-------------------------------------------------------------
-
-#' @include R6_helpers.R Distribution_helpers.R SetInterval_helpers.R
+#-------------------------------------------------------------
+# Distribution Definition
+#-------------------------------------------------------------
+#' @include Distribution_helpers.R SetInterval_helpers.R
 #' @export
 Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 
@@ -170,19 +165,24 @@ Distribution$set("private",".getWorkingSupportRange",function(){
 #-------------------------------------------------------------
 # Distribution Public Methods
 #-------------------------------------------------------------
-Distribution$set("public","initialize",function(name, short_name,
-                      type = Reals$new(), support, distrDomain,
+Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
+                      type = NULL, support = NULL, distrDomain = NULL,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-                      parameters, paramValues = NULL,
-                      decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                      description=NULL, additionalMethods = NULL
+                      parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
+                      description=NULL, additionalMethods = NULL, R62S3 = TRUE
                       ){
 
-  if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+  if(RSmisc::getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+
+    if(is.null(pdf) & is.null(cdf))
+      stop("One of pdf or cdf must be provided.")
 
     # Validation checks
-    if(missing(short_name)) short_name = name
+    if(is.null(name) & is.null(short_name))
+      checkmate::assert("One of 'name' or 'short_name' must be provided.")
+    if(is.null(short_name)) short_name = gsub(" ","",name,fixed = T)
+    if(is.null(name)) name = short_name
     checkmate::assertCharacter(c(name, short_name),
                                .var.name = "'name' and 'short_name' must be of class 'character'.")
     checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
@@ -197,31 +197,37 @@ Distribution$set("public","initialize",function(name, short_name,
     if(!is.null(description))
       self$description <- description
 
-    if(missing(support))
-      support = type
-    if(missing(distrDomain))
-      distrDomain = type
+    if(is.null(type)){
+      if(!is.null(pdf)) type <- Reals$new(dim = length(formals(pdf)))
+      else type <- Reals$new(dim = length(formals(cdf)))
+    }
+    if(is.null(support)) support <- type
+    if(is.null(distrDomain)) distrDomain <- type
+    checkmate::assert(inherits(type,"SetInterval"), inherits(support,"SetInterval"),
+                      inherits(distrDomain,"SetInterval"),
+                      .var.name = "'type', 'support' and 'distrDomain' should be class 'SetInterval'.")
 
-    checkmate::assert(inherits(type,"Set"), .var.name = "type should be class 'Set'.")
-    checkmate::assert(inherits(support,"Set"), inherits(distrDomain,"Set"),
-                      .var.name = "'support' and 'distrDomain' should be class 'Set'.")
-
-    if(!is.null(valueSupport))
-      checkmate::assert(valueSupport == "continuous", valueSupport == "discrete",
-                        valueSupport == "mixture",
-                        .var.name = "valueSupport should be one of: 'continuous', 'discrete',
-                        'mixture'.")
-    else if(class(support)[[1]] %in% c("Reals","PosReals","NegReals"))
+    if(!is.null(valueSupport)){
+      if(grepl("^c",valueSupport))
+        valueSupport = "continuous"
+      else if(grepl("^d",valueSupport))
+        valueSupport = "discrete"
+      else if(grepl("^m",valueSupport))
+        valueSupport = "mixture"
+      else
+        stop("valueSupport should be one of: 'continuous', 'discrete','mixture'.")
+    } else if(class(support)[[1]] %in% c("Reals","PosReals","NegReals","Rationals","PosRationals",
+                                         "NegRationals","Interval"))
       valueSupport = "continuous"
     else
       valueSupport = "discrete"
 
-    if(!is.null(variateForm))
-      checkmate::assert(variateForm == "univariate", variateForm == "multivariate",
-                        variateForm == "matrixvariate",
-                        .var.name = "variateForm should be one of: 'univariate', 'multivariate',
-                        'matrixvariate'.")
-    else if(type$dimension() == 1)
+    if(!is.null(variateForm)){
+      if(grepl("^u",variateForm)) variateForm = "univariate"
+      else if(grepl("^mu",variateForm)) variateForm = "multivariate"
+      else if(grepl("^ma",variateForm)) variateForm = "matrixvariate"
+      else stop("variateForm should be one of: 'univariate', 'multivariate','matrixvariate'.")
+    } else if(type$dimension() == 1)
       variateForm = "univariate"
     else
       variateForm = "multivariate"
@@ -230,74 +236,62 @@ Distribution$set("public","initialize",function(name, short_name,
     self$traits <- c(self$traits, valueSupport = valueSupport)
     self$traits <- c(self$traits, variateForm = variateForm)
 
-
     self$properties <- c(self$properties, support = support)
     self$properties <- c(self$properties, distrDomain = distrDomain)
     symm = ifelse(symmetric,"symmetric","asymmetric")
     self$properties <- c(self$properties, symmetry = symm)
-
 
     if(!is.null(pdf)){
       if(!is.null(formals(pdf)$self))
         formals(pdf)$self = self
       else
         formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
-      private$.pdf <- pdf
-    } else
-      private$.pdf <- function(...){
-        return(NULL)
-      }
+      private$.setPdf(pdf)
+    }
 
     if(!is.null(cdf)){
       if(!is.null(formals(cdf)$self))
         formals(cdf)$self = self
       else
         formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-      private$.cdf <- cdf
-    } else
-      private$.cdf <- function(...){
-        return(NULL)
-      }
+      private$.setCdf(cdf)
+    }
+
+    if(!is.null(pdf) & !is.null(cdf)){
+      checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
+                        .var.name = "'pdf' and 'cdf' maust take the same arguments.")
+      checkmate::assert(all(names(formals(pdf)) == names(formals(cdf))),
+                        .var.name = "'pdf' and 'cdf' maust take the same arguments.")
+    }
+
 
     if(!is.null(quantile)){
       if(!is.null(formals(quantile)$self))
         formals(quantile)$self = self
       else
         formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-      private$.quantile <- quantile
-    } else
-      private$.quantile <- function(...){
-        return(NULL)
-      }
+      private$.setQuantile(quantile)
+    }
 
     if(!is.null(rand)){
       if(!is.null(formals(rand)$self))
         formals(rand)$self = self
       else
         formals(rand) = c(formals(rand),list(self=self),alist(...=))
-      private$.rand <- rand
-    } else
-      private$.rand <- function(...){
-        return(NULL)
-      }
+      private$.setRand(rand)
+    }
 
-    if(!missing(parameters)){
+    if(!is.null(parameters)){
       checkmate::assertClass(parameters,"ParameterSet")
       if(!inherits(self, "DistributionWrapper"))
         private$.parameters <- parameters$clone()$update()
       else
         private$.parameters <- parameters$clone()
     }
-
-
-    if(!is.null(paramValues)){
-      checkmate::assertList(paramValues)
-      self$setParameterValue(paramValues)
-    }
   }
 
     if(!is.null(decorators))
-      suppressMessages(decorate(self, decorators))
+      suppressMessages(decorate(self, decorators, R62S3))
 
     # Update skewness and kurtosis
   unlockBinding("properties",self)
@@ -327,7 +321,7 @@ Distribution$set("public","initialize",function(name, short_name,
 
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
-    string = paste(apply(self$parameters(as.df = T)[self$parameters(as.df = T)$settable,],1,
+    string = paste(apply(self$parameters()$as.data.frame()[self$parameters()$as.data.frame()$settable,],1,
                          function(x) paste(x[1],trimws(x[2]),sep=" = ")
                          ),
                    collapse=", ")
@@ -343,13 +337,13 @@ Distribution$set("public","print",function(...){
 }) # DONE
 Distribution$set("public","summary",function(full=T){
 
-  which_params = self$parameters(as.df = T)$settable
+  which_params = self$parameters()$as.data.frame()$settable
 
   if(full){
     if(length(private$.parameters)!=0){
       cat(self$name,"with parameterisation:\n")
-      cat("\t",paste(self$parameters(as.df = T)[which_params, "id"][[1]],
-                     self$parameters(as.df = T)[which_params,"value"][[1]],
+      cat("\t",paste(self$parameters()$as.data.frame()[which_params, "id"][[1]],
+                     self$parameters()$as.data.frame()[which_params,"value"][[1]],
                      sep = " = ", collapse = "; "))
     } else
       cat(self$name(),"\n")
@@ -388,8 +382,8 @@ Distribution$set("public","summary",function(full=T){
   } else {
     if(length(private$.parameters)!=0){
       cat(self$short_name,"distribution with parameterisation: ")
-      cat(paste(self$parameters(as.df = T)[which_params,"id"][[1]],
-                self$parameters(as.df = T)[which_params,"value"][[1]],
+      cat(paste(self$parameters()$as.data.frame()[which_params,"id"][[1]],
+                self$parameters()$as.data.frame()[which_params,"value"][[1]],
                 sep = " = ", collapse = "; "))
     } else
         cat(self$name)
@@ -418,7 +412,7 @@ Distribution$set("public","type",function(){
   return(self$traits[["type"]])
 })
 
-# Properties Accessors
+# `Properties` Accessors
 Distribution$set("public","properties",list())
 Distribution$set("public","support",function(){
   return(self$properties[["support"]])
@@ -431,8 +425,8 @@ Distribution$set("public","symmetry",function(){
 })
 
 # Parameter Accessors
-Distribution$set("public","parameters",function(id,as.df = F){
-  return(private$.parameters$parameters(id, as.df))
+Distribution$set("public","parameters",function(id = NULL){
+  return(private$.parameters$parameters(id))
 }) # DONE
 Distribution$set("public","getParameterValue",function(id){
   return(private$.parameters$getParameterValue(id))
@@ -456,39 +450,59 @@ Distribution$set("public","setParameterValue",function(lst){
     self$properties$skewness <- skewType(x)
   lockBinding("properties", self)
 
-
   #private$.setWorkingSupport()
   invisible(self)
 }) # DONE
 
 # p/d/q/r
-Distribution$set("public","pdf",function(x, log = FALSE){
+Distribution$set("public","pdf",function(x1, ..., log = FALSE){
+  if(testUnivariate(self)){
+    pdf = x1
+    pdf[!self$liesInSupport(x1, all = F)] = 0
 
-  y = x
+    if(all(pdf==0)) return(0)
 
-  y[!self$liesInSupport(x, F)] = 0
+    pdf.in = sapply(pdf[self$liesInSupport(x1, all = F)], function(x0) private$.pdf(x0,...))
 
-  if(all(y == 0))
-    return(y)
-  else{
-
-    if(log)
-      y[self$liesInSupport(x, F)] = log(private$.pdf(x[self$liesInSupport(x, F)], self = self))
-    else
-      y[self$liesInSupport(x, F)] = private$.pdf(x[self$liesInSupport(x, F)], self = self)
-
-    return(y)
+    pdf[self$liesInSupport(x1, all = F)] = pdf.in
+  } else {
+    if(is.null(x1)) pdf = private$.pdf(...)
+    else pdf = private$.pdf(x1, ...)
   }
+
+  pdf = unlist(pdf)
+
+  if(log) return(log(pdf))
+  else return(pdf)
 }) # NEEDS TESTING
-Distribution$set("public","cdf",function(q, lower.tail = TRUE, log.p = FALSE){
-  if(self$liesInSupport(q)){
-      return(private$.cdf(q, self = self, lower.tail = TRUE, log.p = FALSE))
-  }else
-    warning(sprintf("%s does not lie in the support of %s",x,getR6Class(self)))
+Distribution$set("public","cdf",function(x1, lower.tail = TRUE, log.p = FALSE,...){
+
+  if(testUnivariate(self)){
+    cdf = x1
+    cdf[x1 >= self$sup()] = 1
+    cdf[x1 < self$inf()] = 0
+
+    cdf.in = sapply(cdf[x1 < self$sup() & x1 >= self$inf()], function(q0) private$.cdf(q0,...))
+
+    cdf[x1 < self$sup() & x1 >= self$inf()] = cdf.in
+  } else {
+    if(is.null(x1)) cdf = private$.cdf(...)
+    else cdf = private$.cdf(x1, ...)
+  }
+
+  cdf = unlist(cdf)
+
+  if(log.p & lower.tail) return(log(cdf))
+  else if(log.p & !lower.tail) return(log(1 - cdf))
+  else if(!log.p & lower.tail) return(cdf)
+  else return(1 - cdf)
 }) # NEEDS TESTING
-Distribution$set("public","quantile",function(p, lower.tail = TRUE, log.p = FALSE){
-  checkmate::assertNumeric(p, lower = 0, upper = 1)
-  return(private$.quantile(p, self = self, lower.tail = TRUE, log.p = FALSE))
+Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE){
+    if(lower.tail){
+      return(unlist(sapply(p, function(p0) private$.quantile(p0,...))))
+    } else{
+      return(unlist(sapply(p, function(p0) private$.quantile(1 - p0,...))))
+    }
 }) # NEEDS TESTING
 Distribution$set("public","rand",function(n){
   return(private$.rand(n))
@@ -540,11 +554,30 @@ Distribution$set("public","liesInDistrDomain",function(x){
 #-------------------------------------------------------------
 # Distribution Private Variables
 #-------------------------------------------------------------
-
+Distribution$set("private",".pdf", function(...) return(NULL))
+Distribution$set("private",".cdf", function(...) return(NULL))
+Distribution$set("private",".quantile", function(...) return(NULL))
+Distribution$set("private",".rand", function(...) return(NULL))
+Distribution$set("private",".setPdf",function(pdf){
+  unlockBinding(".pdf",private)
+  private$.pdf <- pdf
+  lockBinding(".pdf",private)
+})
+Distribution$set("private",".setCdf",function(cdf){
+  unlockBinding(".cdf",private)
+  private$.cdf <- cdf
+  lockBinding(".cdf",private)
+})
+Distribution$set("private",".setQuantile",function(quantile){
+  unlockBinding(".quantile",private)
+  private$.quantile <- quantile
+  lockBinding(".quantile",private)
+})
+Distribution$set("private",".setRand",function(rand){
+  unlockBinding(".rand",private)
+  private$.rand <- rand
+  lockBinding(".rand",private)
+})
 Distribution$set("private",".parameters",data.frame())
-Distribution$set("private",".pdf",NULL) # DONE
-Distribution$set("private",".cdf",NULL) # DONE
-Distribution$set("private",".rand",NULL) # DONE
-Distribution$set("private",".quantile",NULL) # DONE
 Distribution$set("private",".workingSupport",NULL) # DONE
 

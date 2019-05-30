@@ -1,38 +1,55 @@
-#' @title Exotic Statistics Methods for Distributions
+#' @title Exotic Statistical Methods for Distributions
 #'
-#' @description Further functionality to distribution objects for statistical
+#' @description Further functionality to distribution objects for numerical statistical
 #'   methods that can be considered more exotic than core, such as survival modelling
 #'   and p-norms.
 #' @name ExoticStatistics
 #'
-#' @section Usage: ExoticStatistics$new(distribution)
-#' @return \code{ExoticStatistics$new} constructs an R6 object of class Distribution.
+#' @section Constructor Arguments:
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{dist} \tab distribution \tab Distribution to decorate. \cr
+#' \code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
+#' }
 #'
-#' @param distribution distribution object.
+#' @section Public Methods:
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+#' \code{cdfAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
+#' Anti-derivative of cdf evaluated between lower and upper. \cr
+#' \code{survivalAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
+#' Anti-derivative of survival function evaluated between lower and upper. \cr
+#' \code{survival(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
+#' Survival function evaluated at x1, log(survival) if log = TRUE. \cr
+#' \code{hazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
+#' Hazard function evaluated at x1, log(hazard) if log = TRUE. \cr
+#' \code{cumHazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
+#' Cumulative hazard function evaluated at x1, log(cumHazard) if log = TRUE. \cr
+#' \code{cdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
+#' The pth norm of the cumulative distribution function, evaluated between limits. \cr
+#' \code{pdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
+#' The pth norm of the probability density function, evaluated between limits. \cr
+#' \code{survivalPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
+#' The pth norm of the survival function, evaluated between limits.
+#' }
 #'
 #' @details Decorator objects add functionality to the given Distribution object
-#'  by overwriting the object in the Global Environment. They can be specified
-#'  in construction of the Distribution or by constructing the given Decorator.
+#'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
+#'  \code{\link{decorate}} function to decorate a Distribution.
 #'
-#'  Methods act on the distribution and not the constructor therefore method chaining of the form
-#'  \code{ExoticStatistics$new(distribution)$hazard(1)} is not supported but \code{distribution$new(decorator=ExoticStatistics)$hazard(1)} is.
+#'  All methods in this decorator use numerical approximations and therefore better results may be available
+#'  from analytic computations.
 #'
-#'
-#' @seealso \code{\link{CoreStatistics}} for more available methods.
-#'
-#' @examples
-#' \dontrun{
-#' X = Binomial$new(decorator = "ExoticStatistics")
-#' X$survival(1)
-#' X$pdfPNorm()
-#' }
+#' @seealso \code{\link{DistributionDecorator}}
 #'
 #' @examples
-#' \dontrun{
-#' X = Binomial$new()
-#' ExoticStatistics$new(X)
-#' X$pdfPNorm(4)
-#' }
+#' x = Exponential$new()
+#' decorate(x, ExoticStatistics, R62S3 = FALSE)
+#' x$survival(1)
+#'
+#' @examples
+#' x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+#' x$survival(4)
 NULL
 
 
@@ -46,43 +63,53 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = self$inf(),
                                                              upper = self$sup()) {
   return(self$survivalPNorm(p = 1, lower, upper))
 }) # NEEDS TESTING (p-norm)
-ExoticStatistics$set("public", "logCdf", function(x) {
-}) # TO DO
-ExoticStatistics$set("public", "generalisedIntegral", function() {
-}) # TO DO
-ExoticStatistics$set("public", "survival", function(x, log.p=FALSE) {
-  if(!log.p){
-    return(1 - self$cdf(x))
+ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
+  if(!is.null(self$cdf(x1))){
+    if(log)
+      return(log(1 - self$cdf(x1)))
+    else
+      return(1 - self$cdf(x1))
   } else {
-    message("Results from numerical integration may not be exact.")
-    integrate()
+    message(.distr6$message_numeric)
+    surv = integrate(self$pdf, x1, Inf)$value
+    if(log)
+      return(log(surv))
+    else
+      return(surv)
   }
+}) # DONE
+ExoticStatistics$set("public", "hazard", function(x1, log=FALSE) {
+  if(!is.null(self$pdf(x1)))
+    pdf = self$pdf(x1)
+  else if(!is.null(self$cdf(x1)))
+    pdf = deriv(y~self$cdf(x1),"x1")
+
+  surv = self$survival(x1)
+
+  haz = pdf/surv
+
+  if(log)
+    return(log(haz))
+  else
+    return(haz)
 }) # IN PROGRESS
-ExoticStatistics$set("public", "hazard", function(x, log=FALSE) {
+ExoticStatistics$set("public", "cumHazard", function(x1, log=FALSE) {
   if(!log){
-    return(self$pdf(x) / self$survival(x))
+    return(-log(self$survival(x1)))
   }
 }) # IN PROGRESS
-ExoticStatistics$set("public", "cumHazard", function(x, log=FALSE) {
-  if(!log){
-    return(-log(self$survival(x)))
-  }
-}) # IN PROGRESS
-ExoticStatistics$set("public", "generalPNorm", function(fun, p, lower, upper){
-  if(testContinuous(self)){
-    warning("Results from numerical integration are approximate only, better results may be available.")
-    return((integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
-  }
-}) # NEEDS TESTING
 ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = self$inf(),
                                                     upper = self$sup()) {
-  return(self$generalPNorm(self$cdf, p, lower, upper))
+  if(testContinuous(self))
+    return(generalPNorm(self$cdf, p, lower, upper))
 }) # NEEDS TESTING
 ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = self$inf(),
                                                     upper = self$sup()) {
-  return(self$generalPNorm(self$pdf, p, lower, upper))
+  if(testContinuous(self))
+    return(generalPNorm(self$pdf, p, lower, upper))
 }) # NEEDS TESTING
 ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = self$inf(),
                                                          upper = self$sup()) {
-  return(self$generalPNorm(self$survival, p, lower, upper))
+  if(testContinuous(self))
+    return(generalPNorm(self$survival, p, lower, upper))
 }) # NEEDS TESTING

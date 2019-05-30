@@ -1,46 +1,53 @@
 #' @name DistributionWrapper
 #' @title Abstract Wrapper for Distributions
+#'
+#' @details This wrapper is an abstract class and cannot be implemented directly.
+#' See \code{\link{listWrappers}} for a list of wrappers that can be constructed. After wrapping multiple models, parameter IDs are altered by prefixing the ID with "model_".
+#' For example wrapping Model1 with a parameter 'param1' results in 'Model1_param1'.
+#' See \code{parameters} to find the parameter IDs.
+#
 #' @description An R6 abstract wrapper class with methods implemented for child classes.
 #' @seealso \code{\link{TruncatedDistribution}}, \code{\link{HuberizedDistribution}}
-#' @details Cannot be implemented directly.
-#' @section Public Methods:
-#' \tabular{ll}{
-#' \code{wrappedModels(model = NULL)} \tab Get internally wrapped model by name. Or list of all models if model = NULL. \cr
-#' \code{setParameterValue(lst)} \tab Sets the value of an internal models parameter. See Details.
-#' }
-#' @section Public Method Arguments:
-#' \tabular{ll}{
-#' \code{model} \tab Wrapped model to access. \cr
-#' \code{lst} \tab list. Names are parameter IDs, values are values to set parameters.
-#' }
 #'
-#' @section Public Methods Details:
-#' Wrapped models overload the minimum number of functions necessary. The abstract class overloads
-#' the \code{setParameterValue} method only as wrapped models alter paramater IDs. After wrapping
-#' a model, parameter IDs are altered by prefixing the ID with "model_". For example wrapping Model1 with
-#' a parameter 'param1' results in 'Model1_param1'.
+#'
+#' @section Public Methods:
+#' \tabular{lll}{
+#' \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+#' \code{wrappedModels(model = NULL)} \tab character -> distribution \tab See public method details.\cr
+#'}
+#'
+#' @section Public Method Details:
+#' If a name is given to \code{wrappedModels}, returns the wrapped distribution otherwise returns a list
+#' of all wrapped distributions.
+#'
 #'
 NULL
 
 #' @export
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
-DistributionWrapper$set("public","initialize",function(distlist, ...){
-  if(getR6Class(self) == "DistributionWrapper")
-    stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
+DistributionWrapper$set("public","initialize",function(distlist, prefixParams = TRUE,...){
+  if(RSmisc::getR6Class(self) == "DistributionWrapper")
+    stop(paste(RSmisc::getR6Class(self), "is an abstract class that can't be initialized."))
 
   assertDistributionList(distlist)
 
   lapply(distlist, function(x) x$parameters()$update())
   private$.wrappedModels <- distlist
 
-  params <- do.call(rbind,lapply(distlist, function(x){
-    params = x[["parameters"]](as.df = T)
-    params[,1] = paste(x[["short_name"]],params[,1],sep="_")
-    return(params)
+  if(prefixParams){
+    params <- do.call(rbind.data.frame,lapply(distlist, function(x){
+      params = x[["parameters"]]()$as.data.frame()
+      params[,1] = paste(x[["short_name"]],params[,1],sep="_")
+      return(params)
     }))
-  duplicated(params["id"])
-  row.names(params) <- NULL
-  params <- as.ParameterSet(params)
+    row.names(params) <- NULL
+    params <- as.ParameterSet(params)
+  } else{
+    if(length(distlist) == 1)
+      params <- distlist[[1]]$parameters()
+    else
+      params <- do.call(rbind,lapply(distlist, function(x) x$parameters()))
+  }
 
   super$initialize(parameters = params, ...)
 })
@@ -54,24 +61,34 @@ DistributionWrapper$set("public", "wrappedModels", function(model=NULL){
 })
 DistributionWrapper$set("public","setParameterValue",function(lst){
   for(i in 1:length(lst)){
-    id = names(lst)[[i]]
-    underscore = gregexpr("_",id,fixed=T)[[1]][1]
-    model = substr(id,1,underscore-1)
-    parameter = substr(id,underscore+1,1000)
+    if(grepl("_",lst[[i]],fixed = T)){
+      id = names(lst)[[i]]
+      underscore = gregexpr("_",id,fixed=T)[[1]][1]
+      model = substr(id,1,underscore-1)
+      parameter = substr(id,underscore+1,1000)
 
-    value = lst[[i]]
-    newlst = list(value)
-    names(newlst) = parameter
+      value = lst[[i]]
+      newlst = list(value)
+      names(newlst) = parameter
+    } else{
+      model = self$wrappedModels()[[1]]$short_name
+      newlst = lst
+    }
     self$wrappedModels(model)$setParameterValue(newlst)
   }
+  rm(i)
 
-  params <- do.call(rbind,lapply(private$.wrappedModels, function(x){
-    params = x[["parameters"]](as.df = T)
+  params <- do.call(rbind,lapply(self$wrappedModels(), function(x){
+    params = x[["parameters"]]()$as.data.frame()
     params[,1] = paste(x[["short_name"]],params[,1],sep="_")
     return(params)
   }))
   row.names(params) <- NULL
   private$.parameters <- as.ParameterSet(params)
+
+  unlockBinding("properties",self)
+  self$properties$support <- do.call(product,lapply(self$wrappedModels(),function(x) x$support()))
+  lockBinding("properties",self)
 
   invisible(self)
 }) # NEEDS TESTING

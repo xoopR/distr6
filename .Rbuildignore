@@ -1,0 +1,5 @@
+^\.travis\.yml$
+cran-comments.md
+^CRAN-RELEASE$
+docs
+Licensing

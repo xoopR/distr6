@@ -2,43 +2,60 @@
 % Please edit documentation in R/DistributionDecorator_ExoticStatistics.R
 \name{ExoticStatistics}
 \alias{ExoticStatistics}
-\title{Exotic Statistics Methods for Distributions}
-\arguments{
-\item{distribution}{distribution object.}
-}
-\value{
-\code{ExoticStatistics$new} constructs an R6 object of class Distribution.
-}
+\title{Exotic Statistical Methods for Distributions}
 \description{
-Further functionality to distribution objects for statistical
+Further functionality to distribution objects for numerical statistical
   methods that can be considered more exotic than core, such as survival modelling
   and p-norms.
 }
 \details{
 Decorator objects add functionality to the given Distribution object
- by overwriting the object in the Global Environment. They can be specified
- in construction of the Distribution or by constructing the given Decorator.
+ by copying methods in the decorator environment to the chosen Distribution environment. Use the
+ \code{\link{decorate}} function to decorate a Distribution.
 
- Methods act on the distribution and not the constructor therefore method chaining of the form
- \code{ExoticStatistics$new(distribution)$hazard(1)} is not supported but \code{distribution$new(decorator=ExoticStatistics)$hazard(1)} is.
+ All methods in this decorator use numerical approximations and therefore better results may be available
+ from analytic computations.
 }
-\section{Usage}{
- ExoticStatistics$new(distribution)
+\section{Constructor Arguments}{
+
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
+}
+}
+
+\section{Public Methods}{
+
+\tabular{lll}{
+\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
+\code{cdfAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
+Anti-derivative of cdf evaluated between lower and upper. \cr
+\code{survivalAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
+Anti-derivative of survival function evaluated between lower and upper. \cr
+\code{survival(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
+Survival function evaluated at x1, log(survival) if log = TRUE. \cr
+\code{hazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
+Hazard function evaluated at x1, log(hazard) if log = TRUE. \cr
+\code{cumHazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
+Cumulative hazard function evaluated at x1, log(cumHazard) if log = TRUE. \cr
+\code{cdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
+The pth norm of the cumulative distribution function, evaluated between limits. \cr
+\code{pdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
+The pth norm of the probability density function, evaluated between limits. \cr
+\code{survivalPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
+The pth norm of the survival function, evaluated between limits.
+}
 }
 
 \examples{
-\dontrun{
-X = Binomial$new(decorator = "ExoticStatistics")
-X$survival(1)
-X$pdfPNorm()
-}
+x = Exponential$new()
+decorate(x, ExoticStatistics, R62S3 = FALSE)
+x$survival(1)
 
-\dontrun{
-X = Binomial$new()
-ExoticStatistics$new(X)
-X$pdfPNorm(4)
-}
+x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+x$survival(4)
 }
 \seealso{
-\code{\link{CoreStatistics}} for more available methods.
+\code{\link{DistributionDecorator}}
 }

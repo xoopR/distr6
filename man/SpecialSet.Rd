@@ -3,18 +3,13 @@
 \name{SpecialSet}
 \alias{SpecialSet}
 \title{Special Mathematical Sets}
-\value{
-error. Cannot be constructed.
-}
 \description{
 Abstract class for the representation of the 'special' mathematical sets.
 }
 \details{
-This is an abstract class that cannot be constructed, instead construct one of the child classes, see below.
+This is an abstract class that cannot be constructed, instead construct one of the child classes,
+see below.
 }
 \seealso{
-\code{\link{Naturals}}, \code{\link{PosNaturals}}, \code{\link{Integers}},
-  \code{\link{PosIntegers}}, \code{\link{NegIntegers}}, \code{\link{Rationals}}, \code{\link{PosRationals}},
-  \code{\link{NegRationals}}, \code{\link{Reals}}, \code{\link{PosReals}}, \code{\link{NegReals}},
-  \code{\link{ExtendedReals}}, \code{\link{Complex}}.
+\code{\link{listSpecialSets}}
 }
