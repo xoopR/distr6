@@ -6,8 +6,6 @@ navbar:
   title:
   type: default
   left:   
-  - icon: fa-home
-    href: index.html
   - text: OOP and R6
     menu:
     - text: R6 and Design Patterns
@@ -25,7 +23,7 @@ navbar:
     - text: Roadmap
       href: articles/roadmap.html  
   right:
-  - [news]
+#  - [news]
   - text: Reference
     href: reference/
   - icon: fa-github fa-lg
