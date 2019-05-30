@@ -30,7 +30,7 @@ navbar:
   - text: Reference
     href: reference/
   - icon: fa-github fa-lg
-    href: https://github.com/mlr-org/mlr
+    href: https://github.com/RaphaelS1/distr6
  # - icon: fa-slack
  #   href: https://distr6.slack.com
  # - icon: fa-stack-overflow
