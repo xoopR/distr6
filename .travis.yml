@@ -2,12 +2,9 @@ language: r
 sudo: false
 dist: trusty
 
-# whitelist
-branches:
-  only:
-    - master
-    - release
-    - dev
+os:
+  - linux
+  - osx
 
 cache: packages
 
