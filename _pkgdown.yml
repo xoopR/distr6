@@ -21,10 +21,10 @@ navbar:
     - text: Roadmap
       href: articles/roadmap.html  
   right:
-  - text: Changelog
-    href: news/index.html
   - text: Reference
     href: reference/
+  - text: Changelog
+    href: news/index.html
   - icon: fa-github fa-lg
     href: https://github.com/RaphaelS1/distr6
  # - icon: fa-slack
