@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-For a brief high-level overview of our goals before 01/09/2019 see the [project timeline](https://github.com/RaphaelS1/distr6/wiki/Timeline).
+For a brief high-level overview of our goals before 01/10/2019 see the [project timeline](https://github.com/RaphaelS1/distr6/wiki/Timeline).
 
 For a more in-depth look at our roadmap see the image below for short- and long-term goals. Given time we will also implement a Shiny app to complement the package for interactive use of probability distributions.
 
