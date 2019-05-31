@@ -57,11 +57,11 @@ max_jobs: 1
 #platform: x64
 #image: Visual Studio 2017
 
-#environment:
-#  global:
-#    USE_RTOOLS: true
+environment:
+  global:
+    USE_RTOOLS: true
 #    R_ARCH: x64
-#    WARNINGS_ARE_ERRORS: true
+    WARNINGS_ARE_ERRORS: true
 
 cache:
   - C:\RLibrary\
