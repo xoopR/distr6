@@ -10,8 +10,8 @@ install:
   - cmd: R -q -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes')"
   - cmd: R -q -e "if (!requireNamespace('curl', quietly = TRUE)) install.packages('curl')"
   - cmd: R -q -e "remotes::install_github('ropenscilabs/tic')"
-#  - cmd: R -q -e "tic::prepare_all_stages()"
-#  - cmd: R -q -e "tic::before_install()"
+  - cmd: R -q -e "tic::prepare_all_stages()"
+  - cmd: R -q -e "tic::before_install()"
 
 version: 1.0.{build}-{branch}
 
