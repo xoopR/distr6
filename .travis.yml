@@ -1,5 +1,7 @@
 language: r
+
 sudo: false
+
 dist: trusty
 
 branches:
