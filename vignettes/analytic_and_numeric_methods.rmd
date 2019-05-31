@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-To keep all Distribution results as precise as possible and to ensure optimal efficiency, we separate out all analytic and numerical calculations using decorators. The image below gives a visual representation of how this looks for a custom Distribution object. All public methods inside the Distribution are analytic only, i.e. no approximations or numerical integration take place. So if a user wants to define a custom application and calculate the analytic representation, then they can supply this to the constructor, otherwise they use decorators for numeric approximation.
+To keep all Distribution results as precise as possible and to ensure optimal efficiency, we separate out all analytic and numerical calculations using decorators. The image below gives a visual representation of how this looks for a custom Distribution object. All public methods inside the Distribution are analytic only, i.e. no approximations or numerical integration take place. So if a user wants to define a custom distribution and calculate the analytic representation, then they can supply this to the constructor, otherwise they use decorators for numeric approximation.
 
 We have three decorators:
 
@@ -22,6 +22,6 @@ We have three decorators:
 * To impute the quantile: `cdf2quantile`; `pdf2quantile`; `rand2quantile`
 * To impute the rand: `quantile2rand`; `cdf2rand`; `pdf2rand`
 
-When a decorator is constructed, either in construction of a `Distribution` or after, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `expectation` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator. However if `expectation` is missing, then a numeric method is added as a public method. Similarly where possible an analytic method is always preferred. For example, if an analytic `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated.
+When a decorator is constructed, either in construction of a `Distribution` or after, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `variance` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator. However if `variance` is missing, then a numeric method is added as a public method. Similarly where possible an analytic method is always preferred. For example, if an analytic `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated. Finally, even if an analytic expression for `expectation` exists, the `CoreStatitics` decorator always adds a `genExp` method for a generalised numerical expectation formula, this is required for numerical results for variance, moments, etc.
 
 ![](decorators.png)
