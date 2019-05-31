@@ -9,8 +9,8 @@ branches:
   - master
   - release
   
-#os:
-#  - linux
+os:
+  - linux
 #  - osx
 
 cache: packages
