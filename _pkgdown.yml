@@ -2,36 +2,24 @@ template:
   params:
     bootswatch: spacelab
 
-navbar:
-  title:
-  type: inverse
-  left:   
-  - text: OOP and R6
-    menu:
+components:
+  articles:
+    text: Articles
+    menu:   
+    - text: OOP and R6
     - text: R6 and Design Patterns
       href: articles/r6_and_design_patterns.html
     - text: OOP and Design Patterns
       href: articles/oop_and_design_patterns.html
     - text: Documentation in R6
       href: articles/documentation_in_r6.html
-  - text: API and Design
-    menu:
+    - text: API and Design
     - text: Analytic and Numeric Methods
       href: articles/analytic_and_numeric_methods.html
     - text: API Lifecycle
       href: articles/api_lifecycle.html
     - text: Roadmap
       href: articles/roadmap.html  
-  right:
-#  - [news]
-  - text: Reference
-    href: reference/
-  - icon: fa-github fa-lg
-    href: https://github.com/RaphaelS1/distr6
- # - icon: fa-slack
- #   href: https://distr6.slack.com
- # - icon: fa-stack-overflow
- #   href: https://stackoverflow.com/questions/tagged/distr6
       
 reference:
   - title: "Distributions"
