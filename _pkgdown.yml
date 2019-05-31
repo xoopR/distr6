@@ -3,8 +3,6 @@ template:
     bootswatch: spacelab
 
 navbar:
-#  title:
-  type: inverse
   left:   
   - text: OOP and R6
     menu:
