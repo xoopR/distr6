@@ -2,6 +2,11 @@ language: r
 sudo: false
 dist: trusty
 
+branches:
+  only:
+  - master
+  - release
+  
 os:
   - linux
   - osx
