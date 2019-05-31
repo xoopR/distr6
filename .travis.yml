@@ -38,7 +38,8 @@ deploy:
 
 notifications:
   slack:
-    distr6:Zu4kcCQzWYW9DLwCHumRTB0H
+    rooms:
+      - secure:
     on_success: always
     on_failure: always
     on_pull_requests: false
