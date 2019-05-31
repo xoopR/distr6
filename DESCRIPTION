@@ -14,12 +14,12 @@ Authors@R:
       person(given = "Peter",
              family = "Ruckdeschel",
              role = "ctb",
-             email = "peter.ruckdeschel@uni-oldenburg.de"),
+             email = "peter.ruckdeschel@uni-oldenburg.de",
              comment = c("Author of distr")),
       person(given = "Matthias",
              family = "Kohl",
              role = "ctb",
-             email = "Matthias.Kohl@stamats.de"),
+             email = "Matthias.Kohl@stamats.de",
              comment = c("Author of distr")))
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
   commonly used probabilty distributions and functionality for multiple scientific types.
