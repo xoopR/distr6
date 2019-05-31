@@ -35,11 +35,11 @@ deploy:
   local-dir: docs
   on:
     branch: master
-    
+
 notifications:
   slack:
     rooms:
-      - secure: "mfDcEz63wIRx/7+P1AdHiIv/NJqThbkIOgKx1M7TRmToLeXe9cd2aO3kdAE7STO3tL5sRZKvlAYxH17DsPC8KIAKMrAiWJUAMnZ6GZGw0AoGVUhDsom+DroUl4gTUYxqUT1ErjMJI8QQ9441JTdcny828pCwG8LEhh2c+8UZM42uJpurRJqx+dkMAKRCDeo3RGVu3FUxARypFvtAK7gA9YTMWuhamwXwXiNhY7TQv6E5zwU/HdHnkmAz4TsphZQ+ad49/7DHmdzG+OV8DG+/7J5LKf4AdeLfsmCOsYF2Qp9lyCbjG/z3jMfzf9cgpX8ysOW7zOOFYLBX+4Dfw6F0Xi1W2o60OrUo+gJimbsW/l9RXJ9ub/0/OAasCEsXWdRGO0T4B/do6Id1XmFB0e/uKX1UJG+oAzhjjHDKvUhtUj8iq4IOI5zoIZVN6mWCwU/4gUVGh03I5+GFFJbcIzCsqpE3V3znh15iKv+gcEEaLDOBZ0XhitPpZDHUz650OMyKUoFcTaBY11O0+nvVsgSerbEccyU286DiwA20x/3txgC6f63JCmR+bA6+y0Q1WepwjbCXLAPBOrykrmI23vqMiClM55twKyl+BFVeKwW7F9/W8O+ItOi+CCbcs4WScas6+rIUr8TKYG8znKgCNn0Bir+kiMrKhRVyROqivIEJLbc="
+      - secure: "aIjtJctYJjdp5v5vcFNrH4W3th/2SNNnGsv1S/OvaLK4Rn+CxKQrzkiN2pijBnw6LkscHkWmwPDVwIY0L5mGWYptMLDvfbvVIls5ktBqf7ttQsVnYFZM2v6ctVJ4rkO1GQQV7q8QIZqMjSlk/I2iLzp8TMaZ4+zHZ9DJti9P8TefBujODfxBtVvjTpGHRw4cr1TyiSxq+JVRn9M7fFr37mx13oBxC9FsFteyPiMC0OFWaNCZMTrjBCqGdpDl2ahDK4LMk2anKIM8Qhch34lg6c/79Vowm0cJrynyuLSADwiZ48ASsx4ci00ASOgpyJ9Lo0TmsdXZY/TYbXrUHW3fGexV9w3yIOZ/RWVrUCPqgp6CaeL/96n+Pw2NifNHT4jmXJrojwngWWGYkdQxmakW29u1LZyxzcApRwVZ7sI+efWvcoUGccY2rShUK0X70ppJCtqCdIsaaiTfPTmtmLuCRT7vUxO/+re7JKN9S8dB3W1V+QIHRq5s9J6zjV9Sci3P2EZ3ycV64fSaClIdjWnxd7HTdOfma+yxB9Ij2DN1o4vqSfGCxmTdyGYUbgQuTGbEwi/hLczyeg3PnHJ9ikQrtno2klaU5u88Oyi5E1pOJtx6FCugK2X9qf6p7+xQAYlyFsLj4uqkKyY60YzIwLBTYyuiOD4fiZz9FEuv+de9HDI="
     on_success: always
     on_failure: always
     on_pull_requests: false
