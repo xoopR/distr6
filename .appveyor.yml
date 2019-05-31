@@ -65,4 +65,4 @@ notifications:
   
   - provider: Slack
     incoming_webhook:
-      secure: B6xB+HL9BbAzIABcCOxdDHCBL1q3bSx5LGXnD+lprcLQOQQsqVU3g94BgP+otpnt+40N8UoAx8o0/eaDA4A3SXCMgLG/jVIlS0mtWxmM8Po=
+      secure: B6xB+HL9BbAzIABcCOxdDHCBL1q3bSx5LGXnD+lprcJACjK0ce7dumXIp6VHiDURtVmH6EjAUXSPYne3A8Dt2pQaimqwCBMDqhsn/rowDIM=
