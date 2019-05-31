@@ -18,7 +18,7 @@ distr6 is the R6 upgrade to the distr family of packages. For full details of th
 
 Before publication to CRAN, the latest stable release is available via:
 ````R
-devtools::install_github("RaphaelS1/distr6", dependencies = TRUE)
+remotes::install_github("RaphaelS1/distr6", dependencies = TRUE)
 ````
 
 ## Package Development and Contributing
