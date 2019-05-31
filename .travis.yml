@@ -37,7 +37,6 @@ deploy:
 notifications:
   slack:
     rooms:
-      secure: "JN5JXGomnd832rDW5dAO9Fk9piiBKt0v3KyAWt6ftmVXfgQmpW4+V/wkMAb4MMWPdSBC+NACeZmyXdz0yIT/vuUp21glMXAM4lI5ht8uwLrPW/K5CMSdPa/hqg4XNpK7iuCn+FJqAurbudqhRsz25bnJA0BD1JOM/lgE6TP9jhn6vdTrg3Yz74Bigba2JALGIkwYD3OmdNFvqlL1L80OUuajUP1PtdDEhjhP8EqXKA4Sr7SatxPchHh5UifLtLJvBnwq9St2JzZRcZvQTDfJui/D2TmEE971hIEwvFejrK8mR5151m/b01cWOEtE5vaKMbALEqngg2wySzQgzwc3CGqJwQxScDmFwzvddSaoc0c9lShCnVOV8g6uEa/OJjqFwy8glm53I3DoFw/GopH2UxQ3unvWmeWKjOLpwhu7vDqRj6nAokeSDmhkqCzIYTHSq/2Rx5QROdccT37s7HjrdyWj9ity52+fKQ0qAtwy0kgnX7fKjpSiyGb+rDvpHlST3UHPjXzDX2cfZglslsHW8ff98GwrYyNWsPuJQAjApA117d9q74inrSqqWQWGZ54FUok+76tX4BvLzUo3dfuVVJ5gpjAGzKfmM5usnvhp8/gC4RbMRHlKrffVDtoXpo1k8BOKuA6tj5uo9k0umulcIQ3W4oPQDWV/GI7iHYDgL+A="
     on_success: always
     on_failure: always
     on_pull_requests: false
