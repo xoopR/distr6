@@ -6,10 +6,10 @@ navbar:
   left:   
   - text: OOP and R6
     menu:
+    - text: OOP and Design Patterns
+      href: articles/oop_and_design_patterns.html  
     - text: R6 and Design Patterns
       href: articles/r6_and_design_patterns.html
-    - text: OOP and Design Patterns
-      href: articles/oop_and_design_patterns.html
     - text: Documentation in R6
       href: articles/documentation_in_r6.html
   - text: API and Design
