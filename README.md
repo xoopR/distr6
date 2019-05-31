@@ -43,6 +43,6 @@ There are many advantages to OOP over functional programming (which is more comm
 
 Or try using `B$summary()` for a range of common mathematical and statistical results. With the `listDistributions()` command you can see every Distribution currently implemented in distr6, along with their traits.
 
-Another advantage of OOP is making use of inheritance to implement more complex distributions from base distributions. For example any distribution can be easily truncated with a call to `truncate(distribution, lower, upper)` which produces an object of class `TruncatedDistribution` which inherits all methods from `Distribution`. 
+Another advantage of OOP is making use of inheritance to implement more complex distributions from base distributions. For example any distribution can be easily truncated with a call to `truncate(distribution, lower, upper)` which creates an object of class `TruncatedDistribution` that inherits all methods from the truncated distribution. Use `listWrappers()` to see the list of currently implemented wrappers including truncation, huberization and product distributions. 
 
-We discuss further advantages of OOP including Design Patterns in the help-pages of the [website](https://RaphaelS1.github.io/distr6/).
+We discuss further advantages of OOP including Design Patterns [here](https://raphaels1.github.io/distr6/articles/oop_and_design_patterns.html).
