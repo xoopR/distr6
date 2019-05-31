@@ -19,7 +19,7 @@ Abstract classes are classes that cannot be instantiated. They are useful for de
 Implementation: In R6, all classes are concrete and by default have an `initialize` method for construction. Therefore to make a class abstract we overload the `initialize` method as follows:
 ````R
 > AbstractClass$set("public","initialize",function(){
-+   stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
++   stop(paste(RSmisc::getR6Class(self), "is an abstract class that can't be initialized."))
 + })
 
 # So on construction
@@ -29,14 +29,15 @@ Implementation: In R6, all classes are concrete and by default have an `initiali
 Error in .subset2(public_bind_env, "initialize")(...) : 
   AbstractClass is an abstract class that can't be initialized.
 ````
-where `getR6Class` is one of our helper functions that gets the classname of a given R6 object.
 
 ***
 
 ### Decorators
 
-From Design Patterns:
-> (Decorators) Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+From Gamma et al.:
+
+> "(Decorators) Attach additional responsibilities to an objects dynamically. Decorators provide a flexible alternative to
+> subclassing for extending functionality."
 
 Implementation: Decorators are particularly complex in R6 for a number of reasons. Firstly inheritance occurs in the class definition and not object definition, therefore we cannot dynamically choose which class to inherit from. Secondly, methods and variables should only be defined before initializing an object and any defined after do not have access to the object itself (i.e. the 'self' and 'private' accessors). And finally there is no simple way to reference one object dynamically from another without this being hardcoded. Implementation has two key methods, the first via construction of the class to be decorated and secondly via construction of the decorator assuming an object has already been instantiated to decorate it.
 
