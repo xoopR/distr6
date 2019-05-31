@@ -1,0 +1,30 @@
+version: 1.0.{build}-{branch}
+
+branches:
+  only:
+    - master
+    - release
+    - dev
+
+skip_tags: true
+
+max_jobs: 1
+
+platform: Any CPU
+    
+environment:
+  R_ARCH: x64
+  WARNINGS_ARE_ERRORS: false
+
+cache:
+  - C:\RLibrary
+
+notifications:
+  - provider: Email
+    on_build_success: false
+    on_build_failure: false
+    on_build_status_changed: false
+  
+  - provider: Slack
+    incoming_webhook:
+      secure: B6xB+HL9BbAzIABcCOxdDHCBL1q3bSx5LGXnD+lprcLQOQQsqVU3g94BgP+otpnt+40N8UoAx8o0/eaDA4A3SXCMgLG/jVIlS0mtWxmM8Po=
