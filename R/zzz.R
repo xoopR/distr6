@@ -1,6 +1,6 @@
 .onLoad <- function(libname, pkgname){
-  R62S3::R62S3(Distribution, assignEnvir = -1)
-  R62S3::R62S3(ParameterSet, assignEnvir = -1)
+  R62S3::R62S3(Distribution)
+  R62S3::R62S3(ParameterSet)
 
   y = sapply(ls(name=".GlobalEnv"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
@@ -12,5 +12,5 @@
       return(FALSE)
   })
   y = (y[y!="FALSE"])
-  lapply(y,R62S3::R62S3, assignEnvir = -1)
+  lapply(y,R62S3::R62S3)
 }
