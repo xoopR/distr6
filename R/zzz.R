@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname){
-  R62S3::R62S3(Distribution, assignEnvir = environment())
-  R62S3::R62S3(ParameterSet, assignEnvir = environment())
+  R62S3::R62S3(Distribution, assignEnvir = as.environment("package:distr6"))
+  R62S3::R62S3(ParameterSet, assignEnvir = as.environment("package:distr6"))
 
   y = sapply(ls(name=".GlobalEnv"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
@@ -12,5 +12,5 @@
       return(FALSE)
   })
   y = (y[y!="FALSE"])
-  lapply(y,R62S3::R62S3, assignEnvir = environment())
+  lapply(y,R62S3::R62S3, assignEnvir = as.environment("package:distr6"))
 }
