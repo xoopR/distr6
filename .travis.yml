@@ -7,7 +7,7 @@ dist: trusty
 branches:
   only:
   - master
-  - release
+  - dev
   
 os:
   - linux
