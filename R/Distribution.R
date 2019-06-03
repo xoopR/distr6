@@ -376,7 +376,7 @@ Distribution$set("public","summary",function(full=T){
       cat("\n Properties: ", self$kurtosisType(), "; ", self$skewnessType(),"; ", self$symmetry(),
           "\n\t See getProperties() for more", sep="")
 
-    if(!is.null(self$decorators))
+    if(length(self$decorators)!=0)
       cat("\n\n Decorated with: ", paste0(self$decorators,collapse=", "))
 
   } else {
