@@ -41,6 +41,15 @@ distr6 is not intended to replace the base R distributions function but instead 
 * Wrappers including truncation and huberization for distribution manipulation and including product/joint distributions for distribution composition
 * Additionally we introduce a SetSymbol class for a purely symbolic representation of sets for Distribution typing
 
+## Usage
+
+distr6 has three primary use-cases:
+
+1. **Upgrading base** Extend the R distributions functions to classes so that each distribution additionally has basic statisical methods including expectation and variance and properties/traits including discrete/continuous, univariate/multivariate, etc.
+1. **Statistics** Implementing decorators and adaptors to manipulate distributions including distribution composition. Aditionally functionality for numeric calculations based on any arbitrary distribution.
+1. **Modelling** Probabilistic modelling using distr6 objects as the modelling targets. Objects as targets is an understood ML paradigm and introducing distributions as classes is the first step to implementing probabilistic modelling.
+ 
+
 ## Package Development and Contributing
 
 distr6 is now public on GitHub but developments will continue to be made internally by a team of researchers from UCL working at The Alan Turing Institute. All contributions are released under the [MIT licence](https://opensource.org/licenses/MIT) with acknowledgements to the [LGPL-3 licence of distr](https://github.com/RaphaelS1/distr6/blob/master/Licensing). We welcome external contributors to test our API and notify us of bugs and issues however we are not currently looking for feature requests as the API is still in development. See our [roadmap](https://raphaels1.github.io/distr6/articles/roadmap.html) for short- and long-term plans. Before raising an issue please read through our [contributing guidelines](https://github.com/RaphaelS1/distr6/blob/master/CONTRIBUTING.md) for details including our [code of conduct](https://github.com/RaphaelS1/distr6/blob/master/CODE_OF_CONDUCT.md).
