@@ -26,8 +26,8 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#")
 
 As distr6 is currently in development, there is no publication to CRAN and therefore it has to be installed via the `remotes` package. Either install the latest stable version from master or the latest dev version:
 
-```{r eval = FALSE}
-remotes::install_github("RaphaelS1/distr6") # Installs stable version from master
+```{r results = "hide"}
+# remotes::install_github("RaphaelS1/distr6") # Installs stable version from master
 remotes::install_github("RaphaelS1/distr6", ref = "dev") # Installs latest dev version
 ```
 
