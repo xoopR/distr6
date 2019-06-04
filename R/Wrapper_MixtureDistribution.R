@@ -12,7 +12,7 @@
 #' and the cdf, F_M is given by
 #' \deqn{F_M = sum_i (F_i)(w_i)}
 #'
-#' If weights are given, they should be provided as a list of numerics summing to one. If NULL,
+#' If weights are given, they should be provided as a vector of numerics summing to one. If NULL,
 #' they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 #'
 #'
@@ -20,7 +20,7 @@
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{distlist} \tab list \tab List of distributions. \cr
-#' \code{weights} \tab list \tab List of weights. See Details. \cr
+#' \code{weights} \tab list \tab Vector of weights. See Details. \cr
 #' \code{...} \tab any \tab Additional arguments to pass to pdf/cdf.
 #' }
 #'

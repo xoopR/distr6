@@ -36,7 +36,7 @@ devtools::document() # It's good practice to run this first
 devtools::load_all()
 ```
 
-## distr6 vs. R Stats vs. distr
+## distr6 vs. R Stats
 For any new package to be useful it either has to be a significant improvement on existing ones (if they exist) or introduce substantial and worthwhile contributions. It should also be easy to use or at the very least have sufficient documentation so that a user can learn how to work with the package. Many people come to R for statistics and probability distributions are a central part of this therefore distr6 should also be intuitive. With that in mind, let's look at how distr6 has advantages over R stats. First of all, let's say we want to evaluate the mass, distribution and inverse distributions functions for the Binomial distribution.
 
 ### R Stats
@@ -55,9 +55,7 @@ B$cdf(1:10)
 B$quantile(seq.int(0,1,length.out=10))
 
 # Option 2
-#pdf.Distribution(B, 1:10)
 cdf(B, 1:10)
-quantile(seq.int(0,1,length.out=10))
 
 # Option 3
 library(magrittr)
@@ -72,15 +70,68 @@ B$expectation() # via R6
 summary(B)
 ```
 
-### Listing functionality
-One of the advantages of defining classs, is how easy it is to list what has been implemented and available to the user. For example,
+### Listing Distributions
+
+Currently we are planning on implementing around 60 probability distributions for distr6 v1. At least 20 of these are essential. Another advantage of distr6 over R stats is in efficiency to list and choose distributions, this is especially useful for less-technical users who have come to R for distibutions only.
+
 ```{r}
 listDistributions()
+listDistributions(traits = list(valueSupport = "discrete"))
+```
+
+## Wrappers and Decorators
+
+Users familiar with OOP may be aware of Design Patterns, code templates used to solve recurring tasks. We make use of 'wrappers' and 'decorators' throughout distr6.
+* Decorators are used to add functionality to an object
+* Wrappers take this further by adapting the interface and changing the object name.
+
+```{r}
+N <- Normal$new()
+# N$survivalAntiDeriv() - Produces an error as it currently doesn't exist as a method
+decorate(N, ExoticStatistics) # Alternatively: ExoticStatistics$new(N)
+N$survivalAntiDeriv(lower = 1, upper = 4)
+```
+
+In distr6 we use the principle of minimising numeric results but when used always produce a warning. Finally an example of a wrapper is the truncated distribution:
+
+```{r}
+TN = TruncatedDistribution$new(N, lower = 0, upper = 5) # Alternatively: truncate(N, lower = 0, upper = 5)
+TN$pdf(6)
+TN$pdf(0)
+TN$pdf(2)
+print(TN)
+```
+
+### Listing wrappers and decorators
+Again so the user knows what is available, we have functionality to list available decorators and wrappers
+```{r}
 listWrappers(simplify = TRUE)
 listDecorators(simplify = TRUE)
 ```
 
+## Parameterisation
+distr6 assumes that the user knows which parameterisation they want to use for probability distributions but if they do not, an educated guess is made. All common parameterisations are possible, for example for the Normal distribution
+```{r}
+Normal$new(mean= 0, sd = 1)
+Normal$new(mean = 0, var = 1)
+Normal$new(mean = 0, prec = 2)
+```
 
-# Future plans
+In construction, the given parameters are taken to be the parameterisation, so in the above examples the Normal distribution is constructed with the mean and standard deviation, variance or precision respectively. In any case, the other options are automatically updated:
+```{r}
+N <- Normal$new(mean = 0, sd = 2)
+N$parameters()
+N$setParameterValue(list(sd = 3))
+N$parameters()
+```
 
+## Future Plans
 
+We plan on implementing the following in distr6 v1:
+* 60 probability distributions with the following:
+  * Analytic results for basic statistical results including mean, var and more complex modelling results including p-norms and anti-derivatives
+* Basic numeric results for the CoreStatistics and ExoticStatistics decorators
+* Basic imputation methods for pdf/cdf/quantile/rand
+* Wrappers for joint, product, array, truncated, huberized and conditional distributions
+
+## Slack and GitHub

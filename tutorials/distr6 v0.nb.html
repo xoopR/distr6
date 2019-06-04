@@ -1811,8 +1811,8 @@ devtools::load_all()</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="distr6-vs.r-stats-vs.distr" class="section level2">
-<h2>distr6 vs. R Stats vs. distr</h2>
+<div id="distr6-vs.r-stats" class="section level2">
+<h2>distr6 vs. R Stats</h2>
 <p>For any new package to be useful it either has to be a significant improvement on existing ones (if they exist) or introduce substantial and worthwhile contributions. It should also be easy to use or at the very least have sufficient documentation so that a user can learn how to work with the package. Many people come to R for statistics and probability distributions are a central part of this therefore distr6 should also be intuitive. With that in mind, let’s look at how distr6 has advantages over R stats. First of all, let’s say we want to evaluate the mass, distribution and inverse distributions functions for the Binomial distribution.</p>
 <div id="r-stats" class="section level3">
 <h3>R Stats</h3>
@@ -1867,21 +1867,13 @@ B$pdf(1:10)</code></pre>
 <!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgMCAgMyAgNCAgNCAgNSAgNSAgNiAgNiAgNyAxMFxuIn0= -->
 <pre><code> [1]  0  3  4  4  5  5  6  6  7 10</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBPcHRpb24gMlxuI3BkZi5EaXN0cmlidXRpb24oQiwgMToxMClcbmNkZihCLCAxOjEwKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBPcHRpb24gMlxuY2RmKEIsIDE6MTApXG5gYGAifQ== -->
 <pre class="r"><code># Option 2
-#pdf.Distribution(B, 1:10)
 cdf(B, 1:10)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAwLjAxMDc0MjE5IDAuMDU0Njg3NTAgMC4xNzE4NzUwMCAwLjM3Njk1MzEzIDAuNjIzMDQ2ODcgMC44MjgxMjUwMCAwLjk0NTMxMjUwXG4gWzhdIDAuOTg5MjU3ODEgMC45OTkwMjM0NCAxLjAwMDAwMDAwXG4ifQ== -->
 <pre><code> [1] 0.01074219 0.05468750 0.17187500 0.37695313 0.62304687 0.82812500 0.94531250
  [8] 0.98925781 0.99902344 1.00000000</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucXVhbnRpbGUoc2VxLmludCgwLDEsbGVuZ3RoLm91dD0xMCkpXG5gYGAifQ== -->
-<pre class="r"><code>quantile(seq.int(0,1,length.out=10))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAwJSAgMjUlICA1MCUgIDc1JSAxMDAlIFxuMC4wMCAwLjI1IDAuNTAgMC43NSAxLjAwIFxuIn0= -->
-<pre><code>  0%  25%  50%  75% 100% 
-0.00 0.25 0.50 0.75 1.00 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBPcHRpb24gM1xubGlicmFyeShtYWdyaXR0cilcbkIgJT4lIGNkZigxOjEwKVxuYGBgIn0= -->
 <pre class="r"><code># Option 3
@@ -1907,7 +1899,7 @@ B %&gt;% cdf(1:10)</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShCKVxuYGBgIn0= -->
 <pre class="r"><code>summary(B)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQmlub21pYWwgd2l0aCBwYXJhbWV0ZXJpc2F0aW9uOlxuXHQgcHJvYiA9IDAuNVxuXG4gUXVpY2sgU3RhdGlzdGljczogXG5cdE1lYW5cdFZhcmlhbmNlXHRTa2V3bmVzc1x0RXhjZXNzIEt1cnRvc2lzXG5cdDVcdDIuNVx0XHQwXHRcdC0wLjJcbiBTdXBwb3J0OiB7MCwuLi4sMTB9XG4gVHJhaXRzOiBkaXNjcmV0ZTsgdW5pdmFyaWF0ZVxuXHQgU2VlIGdldFRyYWl0cygpIGZvciBtb3JlXG4gUHJvcGVydGllczogcGxhdHlrdXJ0aWM7IG5vIHNrZXc7IHN5bW1ldHJpY1xuXHQgU2VlIGdldFByb3BlcnRpZXMoKSBmb3IgbW9yZVxuXG4gRGVjb3JhdGVkIHdpdGg6ICBcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiQmlub21pYWwgd2l0aCBwYXJhbWV0ZXJpc2F0aW9uOlxuXHQgcHJvYiA9IDAuNVxuXG4gUXVpY2sgU3RhdGlzdGljczogXG5cdE1lYW5cdFZhcmlhbmNlXHRTa2V3bmVzc1x0RXhjZXNzIEt1cnRvc2lzXG5cdDVcdDIuNVx0XHQwXHRcdC0wLjJcbiBTdXBwb3J0OiB7MCwuLi4sMTB9XG4gVHJhaXRzOiBkaXNjcmV0ZTsgdW5pdmFyaWF0ZVxuXHQgU2VlIGdldFRyYWl0cygpIGZvciBtb3JlXG4gUHJvcGVydGllczogcGxhdHlrdXJ0aWM7IG5vIHNrZXc7IHN5bW1ldHJpY1xuXHQgU2VlIGdldFByb3BlcnRpZXMoKSBmb3IgbW9yZVxuIn0= -->
 <pre><code>Binomial with parameterisation:
      prob = 0.5
 
@@ -1918,34 +1910,111 @@ B %&gt;% cdf(1:10)</code></pre>
  Traits: discrete; univariate
      See getTraits() for more
  Properties: platykurtic; no skew; symmetric
-     See getProperties() for more
-
- Decorated with:  </code></pre>
+     See getProperties() for more</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="listing-functionality" class="section level3">
-<h3>Listing functionality</h3>
-<p>One of the advantages of defining classs, is how easy it is to list what has been implemented and available to the user. For example,</p>
+<div id="listing-distributions" class="section level3">
+<h3>Listing Distributions</h3>
+<p>Currently we are planning on implementing around 60 probability distributions for distr6 v1. At least 20 of these are essential. Another advantage of distr6 over R stats is in efficiency to list and choose distributions, this is especially useful for less-technical users who have come to R for distibutions only.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlzdERpc3RyaWJ1dGlvbnMoKVxuYGBgIn0= -->
 <pre class="r"><code>listDistributions()</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE2MlUzMC9DTUJESHkzNmdESDhsL2gzc3haajQ3QThTWDRnQkpMeldVV0N4dEV2WEliNzVsNFBYcnAxc01qT05KTEM3NzIzWHo5M3VHTjVQcjRKcGdCQnlrZHVHWHg5TTVEK1ArNzBiaER3SG5CYnlVRWRkTnhDK1ZGRzRudW9uVkJBaEo3ZExOL3NNcjBnS3hvVU81bUpudE9SQ0RpRFNRQ2puYTFPeUpyU2EwTCtOR1Y4WngzM1lKTWIwQmx5c3FrUVJ4YWxOVUtTZDQwaHlBZGEydmloblY2M2pUcVhheC81QjBDbmNhb3BqVFI1amF2d3V3SE5HbVB5UzJxb0k4SFFDYi9jdjVONzRQU0cxOW1IVTdoTlBINWtrQ3lKU1N3L1NrR0JxZlQ5My9rTHExSkNlVERETnlDaExFaGlJeGxxNUFzZml6dUkwRWtUYWFvT0lRNk5aeHJQZk01dnZRZWJ1QklzWVM5SlgwOWRNS2dQYjQ0T014ZXY4cmlhQUpSaS9kcmVxUTdvL0FJZGEreDIwT0w0aitGdG9WMXkxeC9sQSt1UFc4QVl6TEhFNEYzb2pMSE1SUGVLSmpEbURaSTc1Z3lrOTNCSVY0VHhqNnZCWkwxcG03TFYzclE0dzd3WVpvSlo1WjliMmE5clVKbXdSTTlzR24rSVhZaGZ3RElyVU5ZYUppSm50U2dCcUdrb3VpMFdGY2FKVzBiV2g3U2NHTnZGNlZ3VUFBQT09In0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE2MlUzMC9DTUJESHk3YWlERFVrL2gwc01jYkVaMytRK0VJTUlPRzFqZ0tMcFYyNkR2SE52eHk5ZHV0a2s1bHBKSUhkZlcrN2Z1NTJ4K2h1ZHVuUGZJU1FpOXcyL0dJd0VYNmFEUHJYQ0hrT09DM2tvWTYrYmlGOHJxTndQVFZQNkNCQ1RtYVhic2FjckdrQ1JzOEVNN0V6WGdtcGhoQnBJSlR6dFJuZFVGWk5pRzhpTHRhNTQ5NXY0OXowaGtLdXEwUWhJNGxOVUtSZGtGQUpDZGF1dmlqbm8xckhyVTYxai8yRFlGSzQxUlRIaGp3aUxQZTdBQzg0NWVwTGF1c2l3RE1Kdkk5L0lmY21iekd0dFEramRoOUY4c0FWWFZLWldIcVFScFF3NitQTStRdXBVME42TWlVc3BlTTBqbUVnR212bENoeUxPNCtTVUZKbHEvVkRBWTNtcVVoL3o1eC9EekozcDBSR1JOR0JucjVtVWhuWUh1K25QTnBrZHpVQkxNSGcydDJxRHVuK0FCeHE3WGZRNHZpT0ZLK0JYWEhkSHVjZG1ZOWJ3K3ZQaVNMQlFwcU5zTXhGOUVqRUtoSWNram41SDB6cDRaYXNDTDJVNjhQbi9YQ1Y4cGYreFpVK0lYODVLQ2RxNVMvTjJyaW1UMjNLbHhHM2ZjQ01QRk83Z1dkUXBTa3lpR1hFYlZ0OFVKTkFDVlZzS3N3VHM0b3BEdTArQVZkWEJZbFlCUUFBIn0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["ShortName"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["ClassName"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["Type"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["ValueSupport"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["VariateForm"],"name":[5],"type":["fctr"],"align":["left"]}],"data":[{"1":"Binom","2":"Binomial","3":"PosIntegers","4":"discrete","5":"univariate"},{"1":"Exp","2":"Exponential","3":"PosReals","4":"continuous","5":"univariate"},{"1":"Norm","2":"Normal","3":"Reals","4":"continuous","5":"univariate"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlzdERpc3RyaWJ1dGlvbnModHJhaXRzID0gbGlzdCh2YWx1ZVN1cHBvcnQgPSBcImRpc2NyZXRlXCIpKVxuYGBgIn0= -->
+<pre class="r"><code>listDistributions(traits = list(valueSupport = &quot;discrete&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUE2MlQzVS9DTUJEQXk3Wk9HV3BJL0R0WVlveUp6MzZRK0VJTUlPRzFqZ0tOcFYyNkZ2R2ZSMjlqM2FDVFJCTWV0dDNYN241M3ZRNmZwcmZSTkVJSStjZ1A0WTFCUlBodDNPL2RJeFI0b0xSUWdOcjVkd1B1Njl3TDM4dkNVVHdIUVZpUUZjMUE2TzRaMjZPbFZIb0FIaWM2NUhSTnVRMzNiWTRISnVTcVZQem5UVnFLd1VDcWxWc3Y0U1J6NjRWemttaXBRTm8yVWIxdmwrNHhUMUhUK2Q4T3ozbkJ3d2d2OVE0Z1NVR0ZyazFoamdaYWtTQndLL3lQSnhoL3BjZFFPcTh5ZXhHYUxxaktMQjJZaHBSd3ErT2RjZ3FTaXduaGhvNU1tc0x4T1VTZUxUOWpXYUtvcHFVZUpSSUdJNHcwcDJIb1RJaGlSTk4rZGZhK0d4SVp3ZGE3cUwrVVBDaURteXZhMklyOVkvbHRNTWRBNncxVDhqTzJGOE5wdU1FYXpZZ204VndWKzJoNUsrK1pURFdUQWhKNTVWVTgrTG1sSEVQWGlMendySmNzamZqbzNkemxGV3FDZlpwS3hrZG1GRkt4WU1MT0FIUHlUdTMrWDBHSFJZTnhxcGl3STRuQW1zVmE2dXFld0had2F5bWFROXNmQVFYNTlvSUVBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["ShortName"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["ClassName"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["Type"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["ValueSupport"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["VariateForm"],"name":[5],"type":["fctr"],"align":["left"]}],"data":[{"1":"Binom","2":"Binomial","3":"PosIntegers","4":"discrete","5":"univariate","_rn_":"1","_row":"ShortName"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="wrappers-and-decorators" class="section level2">
+<h2>Wrappers and Decorators</h2>
+<p>Users familiar with OOP may be aware of Design Patterns, code templates used to solve recurring tasks. We make use of ‘wrappers’ and ‘decorators’ throughout distr6. * Decorators are used to add functionality to an object * Wrappers take this further by adapting the interface and changing the object name.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTiA8LSBOb3JtYWwkbmV3KClcbmBgYCJ9 -->
+<pre class="r"><code>N &lt;- Normal$new()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoidmFyLCBzZCBhbmQgcHJlYyBtaXNzaW5nLiB2YXIgPSAxIHBhcmFtZXRlcmlzYXRpb24gdXNlZC5cbiJ9 -->
+<pre><code>var, sd and prec missing. var = 1 parameterisation used.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBOJHN1cnZpdmFsQW50aURlcml2KCkgLSBQcm9kdWNlcyBhbiBlcnJvciBhcyBpdCBjdXJyZW50bHkgZG9lc24ndCBleGlzdCBhcyBhIG1ldGhvZFxuZGVjb3JhdGUoTiwgRXhvdGljU3RhdGlzdGljcykgIyBBbHRlcm5hdGl2ZWx5OiBFeG90aWNTdGF0aXN0aWNzJG5ldyhOKVxuYGBgIn0= -->
+<pre class="r"><code># N$survivalAntiDeriv() - Produces an error as it currently doesn't exist as a method
+decorate(N, ExoticStatistics) # Alternatively: ExoticStatistics$new(N)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTiBpcyBub3cgZGVjb3JhdGVkIHdpdGggRXhvdGljU3RhdGlzdGljc1xuIn0= -->
+<pre><code>N is now decorated with ExoticStatistics</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTiRzdXJ2aXZhbEFudGlEZXJpdihsb3dlciA9IDEsIHVwcGVyID0gNClcbmBgYCJ9 -->
+<pre class="r"><code>N$survivalAntiDeriv(lower = 1, upper = 4)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVzdWx0cyBmcm9tIG51bWVyaWNhbCBpbnRlZ3JhdGlvbiBhcmUgYXBwcm94aW1hdGUgb25seSwgYmV0dGVyIHJlc3VsdHMgbWF5IGJlIGF2YWlsYWJsZS5cbiJ9 -->
+<pre><code>Results from numerical integration are approximate only, better results may be available.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuMDgzMzA4MzNcbiJ9 -->
+<pre><code>[1] 0.08330833</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In distr6 we use the principle of minimising numeric results but when used always produce a warning. Finally an example of a wrapper is the truncated distribution:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVE4gPSBUcnVuY2F0ZWREaXN0cmlidXRpb24kbmV3KE4sIGxvd2VyID0gMCwgdXBwZXIgPSA1KSAjIEFsdGVybmF0aXZlbHk6IHRydW5jYXRlKE4sIGxvd2VyID0gMCwgdXBwZXIgPSA1KVxuVE4kcGRmKDYpXG5gYGAifQ== -->
+<pre class="r"><code>TN = TruncatedDistribution$new(N, lower = 0, upper = 5) # Alternatively: truncate(N, lower = 0, upper = 5)
+TN$pdf(6)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDBcbiJ9 -->
+<pre><code>[1] 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVE4kcGRmKDApXG5gYGAifQ== -->
+<pre class="r"><code>TN$pdf(0)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDBcbiJ9 -->
+<pre><code>[1] 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVE4kcGRmKDIpXG5gYGAifQ== -->
+<pre class="r"><code>TN$pdf(2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuMTA3OTgyXG4ifQ== -->
+<pre><code>[1] 0.107982</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoVE4pXG5gYGAifQ== -->
+<pre class="r"><code>print(TN)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiVHJ1bmNhdGVkTm9ybShtZWFuID0gMCwgdmFyID0gMSlcbiJ9 -->
+<pre><code>TruncatedNorm(mean = 0, var = 1)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="listing-wrappers-and-decorators" class="section level3">
+<h3>Listing wrappers and decorators</h3>
+<p>Again so the user knows what is available, we have functionality to list available decorators and wrappers</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlzdFdyYXBwZXJzKHNpbXBsaWZ5ID0gVFJVRSlcbmBgYCJ9 -->
 <pre class="r"><code>listWrappers(simplify = TRUE)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQXJyYXlEaXN0cmlidXRpb25cIiAgICAgXCJIdWJlcml6ZWREaXN0cmlidXRpb25cIiBcIk1peHR1cmVEaXN0cmlidXRpb25cIiAgXG5bNF0gXCJQcm9kdWN0RGlzdHJpYnV0aW9uXCIgICBcIlNjYWxlXCIgICAgICAgICAgICAgICAgIFwiVHJ1bmNhdGVkRGlzdHJpYnV0aW9uXCJcbiJ9 -->
-<pre><code>[1] &quot;ArrayDistribution&quot;     &quot;HuberizedDistribution&quot; &quot;MixtureDistribution&quot;  
-[4] &quot;ProductDistribution&quot;   &quot;Scale&quot;                 &quot;TruncatedDistribution&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQXJyYXlEaXN0cmlidXRpb25cIiAgICAgXCJDb252b2x1dGlvblwiICAgICAgICAgICBcIkh1YmVyaXplZERpc3RyaWJ1dGlvblwiXG5bNF0gXCJNaXh0dXJlRGlzdHJpYnV0aW9uXCIgICBcIlByb2R1Y3REaXN0cmlidXRpb25cIiAgIFwiU2NhbGVcIiAgICAgICAgICAgICAgICBcbls3XSBcIlRydW5jYXRlZERpc3RyaWJ1dGlvblwiXG4ifQ== -->
+<pre><code>[1] &quot;ArrayDistribution&quot;     &quot;Convolution&quot;           &quot;HuberizedDistribution&quot;
+[4] &quot;MixtureDistribution&quot;   &quot;ProductDistribution&quot;   &quot;Scale&quot;                
+[7] &quot;TruncatedDistribution&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlzdERlY29yYXRvcnMoc2ltcGxpZnkgPSBUUlVFKVxuYGBgIn0= -->
 <pre class="r"><code>listDecorators(simplify = TRUE)</code></pre>
@@ -1957,12 +2026,69 @@ B %&gt;% cdf(1:10)</code></pre>
 <!-- rnb-text-begin -->
 </div>
 </div>
-<div id="future-plans" class="section level1">
-<h1>Future plans</h1>
+<div id="parameterisation" class="section level2">
+<h2>Parameterisation</h2>
+<p>distr6 assumes that the user knows which parameterisation they want to use for probability distributions but if they do not, an educated guess is made. All common parameterisations are possible, for example for the Normal distribution</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTm9ybWFsJG5ldyhtZWFuPSAwLCBzZCA9IDEpXG5gYGAifQ== -->
+<pre class="r"><code>Normal$new(mean= 0, sd = 1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTm9ybShtZWFuID0gMCwgc2QgPSAxKVxuIn0= -->
+<pre><code>Norm(mean = 0, sd = 1)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTm9ybWFsJG5ldyhtZWFuID0gMCwgdmFyID0gMSlcbmBgYCJ9 -->
+<pre class="r"><code>Normal$new(mean = 0, var = 1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTm9ybShtZWFuID0gMCwgdmFyID0gMSlcbiJ9 -->
+<pre><code>Norm(mean = 0, var = 1)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTm9ybWFsJG5ldyhtZWFuID0gMCwgcHJlYyA9IDIpXG5gYGAifQ== -->
+<pre class="r"><code>Normal$new(mean = 0, prec = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTm9ybShtZWFuID0gMCwgcHJlYyA9IDIpXG4ifQ== -->
+<pre><code>Norm(mean = 0, prec = 2)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In construction, the given parameters are taken to be the parameterisation, so in the above examples the Normal distribution is constructed with the mean and standard deviation, variance or precision respectively. In any case, the other options are automatically updated:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTiA8LSBOb3JtYWwkbmV3KG1lYW4gPSAwLCBzZCA9IDIpXG5OJHBhcmFtZXRlcnMoKVxuYGBgIn0= -->
+<pre class="r"><code>N &lt;- Normal$new(mean = 0, sd = 2)
+N$parameters()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUE1VlRVVXZjUUJEZXUwdjBMcUljK09TTGhpS29sQnpsK3RLMytpQ0NvQ0M5Vm53cWpKdlJMczF0MHQzTjZaditSSCtLdjhCemtzeHFTVDJsQzhuT3pIN3o3VGVUeWJlRDg4L1JlU1NFNkluZUVyMURNa1g0NC90aDhrV0lvRXRPUndSaVVPMDNkTHhPUnArZUlUMEJId1JUQk0xMmJ3YUd6YTVOUGFBd0tHbGZxNU40N1E5NVovL3J2VDlwY1BNSDhkNnFjYmVNVzdTM3hDN3Jjb3BHeWY5emhZaFllNGM1TzY5d2I1eFFJK0lrUHM0bE9KWHIrQlFNVE5HaGI4bUhNekFLdEVRQ1RmNlVZRENOSnhJeS9BZTVQWEdnVXpCcGZJQXoxYkFsQzdBZlQ2bTl5amFRSXoxRFkzRWh2VmNzeEdCT2l5azJMV2FYMjFmb25vRm5rSlc0dTJQVG5iMmY0eFo2NjAxME1tNE5UcWdKWlBubXZwOE81YWNqbkZYSjNzbnk2K2ZDd3JJb1hoeVpnYlhzOUMwNkJ4ZVpUMXRKMFVxamlxcFBISXJLSWdXSGg2V1dMVDBEazErUHZLYlZTc3RkOHkyRHR2RG15a2E0RDBiRUNxUExxbkR5SGxzcHkzbXRnWks2MWE4U3RwSTdwaFVZbHJwU2tpYnlWNmwvSitOUFBHcCt2RmJaRHY2eSs4MmQzVGx6aGN5MWhQcEs2WmRPd2dWbTdLeFJ5WFhGbzhJbzdYd3BGTFVqbHp2d3VFam1tWS9VeFluSEozaXBDN2tpQkFBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["value"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["lower"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["upper"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["class"],"name":[5],"type":["chr"],"align":["left"]},{"label":["settable"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["description"],"name":[7],"type":["chr"],"align":["left"]},{"label":["updateFunc"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"mean","2":"0.00","3":"-Inf","4":"Inf","5":"numeric","6":"TRUE","7":"Mean - Location Parameter","8":"NA"},{"1":"var","2":"4.00","3":"0","4":"Inf","5":"numeric","6":"FALSE","7":"Variance - Squared Scale Parameter","8":"self$getParameterValue('sd')^2"},{"1":"sd","2":"2.00","3":"0","4":"Inf","5":"numeric","6":"TRUE","7":"Standard Deviation - Scale Parameter","8":"NA"},{"1":"prec","2":"0.25","3":"0","4":"Inf","5":"numeric","6":"FALSE","7":"Precision - Inverse Squared Scale Parameter","8":"self$getParameterValue('sd')^-2"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTiRzZXRQYXJhbWV0ZXJWYWx1ZShsaXN0KHNkID0gMykpXG5OJHBhcmFtZXRlcnMoKVxuYGBgIn0= -->
+<pre class="r"><code>N$setParameterValue(list(sd = 3))
+N$parameters()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUE1VlRYMHZjUUJEZnUwczBsNklJZlJMRUJoRnNLVG5LOWFWdjlVRUVvWUwwcXZoVUdEZWpYWnJieE4zTjZadCtNTi85T240Q3I1TmtWa3ZhczNUSlp2N3NiMlovTTVsODNUdjlHSi9HUW9pQkdDelJPeVJWaE1mZjl0TlBRZ1I5TW5vaUVNTmFYdFB4YTFJaTJtdTBBejRJcGdpYTljRU1ES3Q5bTNsQWFWQ1NYRzJDZU8xdXNZeGErZm51OG42REhvK2JQNGgvclFaM3c3aEZza04yV1ZkVE5FcitueWxFek54N25MUDNsOXpyaDlTSUpFMitGQktjS25SeUJBYW02TkMzWk9zRWpBSXRrVUNUeXdvTVpzbEVRbzUvSUxjbkRuUUdKa3YyY0tiYWJPa0M3UHNqYXEreUxlUkF6OUJZWEpqZU14WmlPS2ZGS1RZdDV1ZmJGK2llZ0NlUVYvaDJ4Mlk3Nzc2UE8rZzNMNkxUY1dkd1FrMGd5emRIZmpxVW40NXdWZ2Q3SXkrdW5nb0xxN0o4Tm1RTzFySVJXWFFPem5JZjlpcERLNDBxNno2eEs2N0tEQnp1VjFwMitBeE5jVFh5bkZacUxyZnR0d3k2eE5zclcrTGVHVk5XR0ozWGhaUDEyQWxaTGhvT0ZOU3ZmNVd3RTl3ekhjZGFwV3NtV1NwL1ZQcG5PdjdBbytiSGE0WDE0RGM5YXUvc3p6bFh5TG1XVUY4by9keEpPTU9jalZVcXVhbDRWQnFsblMrRnZIYmtDZ2NlRjhzaTk1Nm1PUEg0Q3dlNGtCa2lCQUFBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["value"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["lower"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["upper"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["class"],"name":[5],"type":["chr"],"align":["left"]},{"label":["settable"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["description"],"name":[7],"type":["chr"],"align":["left"]},{"label":["updateFunc"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"mean","2":"0.0000000","3":"-Inf","4":"Inf","5":"numeric","6":"TRUE","7":"Mean - Location Parameter","8":"NA"},{"1":"var","2":"9.0000000","3":"0","4":"Inf","5":"numeric","6":"FALSE","7":"Variance - Squared Scale Parameter","8":"self$getParameterValue('sd')^2"},{"1":"sd","2":"3.0000000","3":"0","4":"Inf","5":"numeric","6":"TRUE","7":"Standard Deviation - Scale Parameter","8":"NA"},{"1":"prec","2":"0.1111111","3":"0","4":"Inf","5":"numeric","6":"FALSE","7":"Precision - Inverse Squared Scale Parameter","8":"self$getParameterValue('sd')^-2"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="future-plans" class="section level2">
+<h2>Future Plans</h2>
+<p>We plan on implementing the following in distr6 v1: * 60 probability distributions with the following: * Analytic results for basic statistical results including mean, var and more complex modelling results including p-norms and anti-derivatives * Basic numeric results for the CoreStatistics and ExoticStatistics decorators * Basic imputation methods for pdf/cdf/quantile/rand * Wrappers for joint, product, array, truncated, huberized and conditional distributions</p>
+</div>
+<div id="slack-and-github" class="section level2">
+<h2>Slack and GitHub</h2>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm8gdG8gZGlzdHI2IHYxIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBXaGF0IGlzIGRpc3RyNj8KCiogZGlzdHI2IGlzIGludGVuZGVkIHRvIChpbiB0aGUgYmVzdC1jYXNlIHNjZW5hcmlvKSByZXBsYWNlIHByb2JhYmlsaXR5IGRpc3RyaWJ1dGlvbnMgaW4gUiBzdGF0cwoqIEl0IGFkZHMgdGhlIGZvbGxvd2luZyBmdW5jdGlvbmFsaXR5IHRvIGRpc3RyaWJ1dGlvbnM6CiAgKiBBIHVuaWZpZWQgT09QIGludGVyZmFjZQogICogQmFzaWMgc3RhdGlzdGljYWwgcHJvcGVydGllcyAobWVhbiwgdmFyaWFuY2UsLi4uKQogICogTW9yZSBhZHZhbmNlZCBudW1lcmljYWwgcHJvcGVydGllcyAocC1ub3Jtcywgc3Vydml2YWwgbW9kZWxsaW5nLC4uLikKICAqIFBhcmFtZXRlclNldHMgZm9yIGZsZXhpYmxlIHBhcmFtZXRlcmlzYXRpb24KICAqIFN5bWJvbGljU2V0cyBmb3IgZmxleGlibGUgZG9tYWluIHJlcHJlc2VudGF0aW9uCiAgKiBXcmFwcGVycyBmb3Igam9pbnQsIHByb2R1Y3QsIGFycmF5LCB0cnVuY2F0ZWQsLi4uIGRpc3RyaWJ1dGlvbnMKCiMjIEluc3RhbGxpbmcgZGlzdHI2CgpBcyBkaXN0cjYgaXMgY3VycmVudGx5IGluIGRldmVsb3BtZW50LCB0aGVyZSBpcyBubyBwdWJsaWNhdGlvbiB0byBDUkFOIGFuZCB0aGVyZWZvcmUgaXQgaGFzIHRvIGJlIGluc3RhbGxlZCB2aWEgdGhlIGByZW1vdGVzYCBwYWNrYWdlLiBFaXRoZXIgaW5zdGFsbCB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9uIGZyb20gbWFzdGVyIG9yIHRoZSBsYXRlc3QgZGV2IHZlcnNpb246CgpgYGB7ciBldmFsID0gRkFMU0V9CnJlbW90ZXM6Omluc3RhbGxfZ2l0aHViKCJSYXBoYWVsUzEvZGlzdHI2IikgIyBJbnN0YWxscyBzdGFibGUgdmVyc2lvbiBmcm9tIG1hc3RlcgpyZW1vdGVzOjppbnN0YWxsX2dpdGh1YigiUmFwaGFlbFMxL2Rpc3RyNiIsIHJlZiA9ICJkZXYiKSAjIEluc3RhbGxzIGxhdGVzdCBkZXYgdmVyc2lvbgpgYGAKClRoZW4gYXR0YWNoIHRoZSBsaWJyYXJ5IGFzIHVzdWFsOgoKYGBge3IgcmVzdWx0cyA9ICJoaWRlIn0KbGlicmFyeShkaXN0cjYpCmBgYAoKQWx0ZXJuYXRpdmVseSBpZiB0ZXN0aW5nIGNvZGUgdGhhdCB5b3UgYXJlIGN1cnJlbnRseSB3b3JraW5nIG9uLCB1c2UgYGRldnRvb2xzYCBvbmNlIHlvdXIgY29kZSBoYXMgYmVlbiBzYXZlZCBhbmQgeW91ciB3b3JraW5nIGRpcmVjdG9yeSBpcyBzZXQgdG8gYGRpc3RyNmA6CgpgYGB7ciBldmFsPUZBTFNFfQpkZXZ0b29sczo6ZG9jdW1lbnQoKSAjIEl0J3MgZ29vZCBwcmFjdGljZSB0byBydW4gdGhpcyBmaXJzdApkZXZ0b29sczo6bG9hZF9hbGwoKQpgYGAKCiMjIGRpc3RyNiB2cy4gUiBTdGF0cyB2cy4gZGlzdHIKRm9yIGFueSBuZXcgcGFja2FnZSB0byBiZSB1c2VmdWwgaXQgZWl0aGVyIGhhcyB0byBiZSBhIHNpZ25pZmljYW50IGltcHJvdmVtZW50IG9uIGV4aXN0aW5nIG9uZXMgKGlmIHRoZXkgZXhpc3QpIG9yIGludHJvZHVjZSBzdWJzdGFudGlhbCBhbmQgd29ydGh3aGlsZSBjb250cmlidXRpb25zLiBJdCBzaG91bGQgYWxzbyBiZSBlYXN5IHRvIHVzZSBvciBhdCB0aGUgdmVyeSBsZWFzdCBoYXZlIHN1ZmZpY2llbnQgZG9jdW1lbnRhdGlvbiBzbyB0aGF0IGEgdXNlciBjYW4gbGVhcm4gaG93IHRvIHdvcmsgd2l0aCB0aGUgcGFja2FnZS4gTWFueSBwZW9wbGUgY29tZSB0byBSIGZvciBzdGF0aXN0aWNzIGFuZCBwcm9iYWJpbGl0eSBkaXN0cmlidXRpb25zIGFyZSBhIGNlbnRyYWwgcGFydCBvZiB0aGlzIHRoZXJlZm9yZSBkaXN0cjYgc2hvdWxkIGFsc28gYmUgaW50dWl0aXZlLiBXaXRoIHRoYXQgaW4gbWluZCwgbGV0J3MgbG9vayBhdCBob3cgZGlzdHI2IGhhcyBhZHZhbnRhZ2VzIG92ZXIgUiBzdGF0cy4gRmlyc3Qgb2YgYWxsLCBsZXQncyBzYXkgd2Ugd2FudCB0byBldmFsdWF0ZSB0aGUgbWFzcywgZGlzdHJpYnV0aW9uIGFuZCBpbnZlcnNlIGRpc3RyaWJ1dGlvbnMgZnVuY3Rpb25zIGZvciB0aGUgQmlub21pYWwgZGlzdHJpYnV0aW9uLgoKIyMjIFIgU3RhdHMKYGBge3J9CmRiaW5vbSgxOjEwLCBzaXplID0gMTAsIHByb2IgPSAwLjUpCnBiaW5vbSgxOjEwLCBzaXplID0gMTAsIHByb2IgPSAwLjUpCnFiaW5vbShzZXEuaW50KDAsMSxsZW5ndGgub3V0PTEwKSxzaXplID0gMTAsIHByb2IgPSAwLjUpCmBgYAoKIyMjIGRpc3RyNgpgYGB7cn0KQiA8LSBCaW5vbWlhbCRuZXcoc2l6ZSA9IDEwLCBwcm9iID0gMC41KQojIE9wdGlvbiAxCkIkcGRmKDE6MTApCkIkY2RmKDE6MTApCkIkcXVhbnRpbGUoc2VxLmludCgwLDEsbGVuZ3RoLm91dD0xMCkpCgojIE9wdGlvbiAyCiNwZGYuRGlzdHJpYnV0aW9uKEIsIDE6MTApCmNkZihCLCAxOjEwKQpxdWFudGlsZShzZXEuaW50KDAsMSxsZW5ndGgub3V0PTEwKSkKCiMgT3B0aW9uIDMKbGlicmFyeShtYWdyaXR0cikKQiAlPiUgY2RmKDE6MTApCmBgYAoKZGlzdHI2IGFsbG93cyB0aGUgdXNlciB0byBjcmVhdGUgYSBkaXN0cmlidXRpb24gb2JqZWN0IGFuZCB0aGVuIGNhbGwgYW55IG1ldGhvZHMgb24gdGhpcyBvYmplY3QsIG1lYW5pbmcgdGhhdCB0aGUgZXhhY3QgcGFyYW1ldGVyaXNhdGlvbiBhbmQgcGFyYW1ldGVyIHZhbHVlcyBkb24ndCBoYXZlIHRvIGJlIHJlbWVtYmVyZWQuIFRoaXMgaXMgZXNwZWNpYWxseSB1c2VmdWwgYWZ0ZXIgc3RhdGlzdGljYWwgaW5mZXJlbmNlIHdoZW4gdGhlIHBhcmFtZXRlcnMgY2FuIGJlIGFyYml0cmFyaWx5IGhhcmQgdG8gcmVtZW1iZXIsIGUuZy4gYEJpbm9taWFsKHNpemUgPSAxMDAsIHByb2IgPSAwLjYyOTM4KWAuCgpNb3Jlb3ZlciBvbmNlIGFuIG9iamVjdCBpcyBjcmVhdGVkLCB0aGUgdXNlciBjYW4gY2FsbCBzdGF0aXN0aWNhbCBtZXRob2RzIHRvIGdldCBiYXNpYyAoYW5kIG1vcmUgY29tcGxleCkgcmVzdWx0cwpgYGB7cn0KQiRleHBlY3RhdGlvbigpICMgdmlhIFI2CnN1bW1hcnkoQikKYGBgCgojIyMgTGlzdGluZyBmdW5jdGlvbmFsaXR5Ck9uZSBvZiB0aGUgYWR2YW50YWdlcyBvZiBkZWZpbmluZyBjbGFzc3MsIGlzIGhvdyBlYXN5IGl0IGlzIHRvIGxpc3Qgd2hhdCBoYXMgYmVlbiBpbXBsZW1lbnRlZCBhbmQgYXZhaWxhYmxlIHRvIHRoZSB1c2VyLiBGb3IgZXhhbXBsZSwKYGBge3J9Cmxpc3REaXN0cmlidXRpb25zKCkKbGlzdFdyYXBwZXJzKHNpbXBsaWZ5ID0gVFJVRSkKbGlzdERlY29yYXRvcnMoc2ltcGxpZnkgPSBUUlVFKQpgYGAKCgojIEZ1dHVyZSBwbGFucwoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm8gdG8gZGlzdHI2IHYxIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBXaGF0IGlzIGRpc3RyNj8KCiogZGlzdHI2IGlzIGludGVuZGVkIHRvIChpbiB0aGUgYmVzdC1jYXNlIHNjZW5hcmlvKSByZXBsYWNlIHByb2JhYmlsaXR5IGRpc3RyaWJ1dGlvbnMgaW4gUiBzdGF0cwoqIEl0IGFkZHMgdGhlIGZvbGxvd2luZyBmdW5jdGlvbmFsaXR5IHRvIGRpc3RyaWJ1dGlvbnM6CiAgKiBBIHVuaWZpZWQgT09QIGludGVyZmFjZQogICogQmFzaWMgc3RhdGlzdGljYWwgcHJvcGVydGllcyAobWVhbiwgdmFyaWFuY2UsLi4uKQogICogTW9yZSBhZHZhbmNlZCBudW1lcmljYWwgcHJvcGVydGllcyAocC1ub3Jtcywgc3Vydml2YWwgbW9kZWxsaW5nLC4uLikKICAqIFBhcmFtZXRlclNldHMgZm9yIGZsZXhpYmxlIHBhcmFtZXRlcmlzYXRpb24KICAqIFN5bWJvbGljU2V0cyBmb3IgZmxleGlibGUgZG9tYWluIHJlcHJlc2VudGF0aW9uCiAgKiBXcmFwcGVycyBmb3Igam9pbnQsIHByb2R1Y3QsIGFycmF5LCB0cnVuY2F0ZWQsLi4uIGRpc3RyaWJ1dGlvbnMKCiMjIEluc3RhbGxpbmcgZGlzdHI2CgpBcyBkaXN0cjYgaXMgY3VycmVudGx5IGluIGRldmVsb3BtZW50LCB0aGVyZSBpcyBubyBwdWJsaWNhdGlvbiB0byBDUkFOIGFuZCB0aGVyZWZvcmUgaXQgaGFzIHRvIGJlIGluc3RhbGxlZCB2aWEgdGhlIGByZW1vdGVzYCBwYWNrYWdlLiBFaXRoZXIgaW5zdGFsbCB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9uIGZyb20gbWFzdGVyIG9yIHRoZSBsYXRlc3QgZGV2IHZlcnNpb246CgpgYGB7ciBldmFsID0gRkFMU0V9CnJlbW90ZXM6Omluc3RhbGxfZ2l0aHViKCJSYXBoYWVsUzEvZGlzdHI2IikgIyBJbnN0YWxscyBzdGFibGUgdmVyc2lvbiBmcm9tIG1hc3RlcgpyZW1vdGVzOjppbnN0YWxsX2dpdGh1YigiUmFwaGFlbFMxL2Rpc3RyNiIsIHJlZiA9ICJkZXYiKSAjIEluc3RhbGxzIGxhdGVzdCBkZXYgdmVyc2lvbgpgYGAKClRoZW4gYXR0YWNoIHRoZSBsaWJyYXJ5IGFzIHVzdWFsOgoKYGBge3IgcmVzdWx0cyA9ICJoaWRlIn0KbGlicmFyeShkaXN0cjYpCmBgYAoKQWx0ZXJuYXRpdmVseSBpZiB0ZXN0aW5nIGNvZGUgdGhhdCB5b3UgYXJlIGN1cnJlbnRseSB3b3JraW5nIG9uLCB1c2UgYGRldnRvb2xzYCBvbmNlIHlvdXIgY29kZSBoYXMgYmVlbiBzYXZlZCBhbmQgeW91ciB3b3JraW5nIGRpcmVjdG9yeSBpcyBzZXQgdG8gYGRpc3RyNmA6CgpgYGB7ciBldmFsPUZBTFNFfQpkZXZ0b29sczo6ZG9jdW1lbnQoKSAjIEl0J3MgZ29vZCBwcmFjdGljZSB0byBydW4gdGhpcyBmaXJzdApkZXZ0b29sczo6bG9hZF9hbGwoKQpgYGAKCiMjIGRpc3RyNiB2cy4gUiBTdGF0cwpGb3IgYW55IG5ldyBwYWNrYWdlIHRvIGJlIHVzZWZ1bCBpdCBlaXRoZXIgaGFzIHRvIGJlIGEgc2lnbmlmaWNhbnQgaW1wcm92ZW1lbnQgb24gZXhpc3Rpbmcgb25lcyAoaWYgdGhleSBleGlzdCkgb3IgaW50cm9kdWNlIHN1YnN0YW50aWFsIGFuZCB3b3J0aHdoaWxlIGNvbnRyaWJ1dGlvbnMuIEl0IHNob3VsZCBhbHNvIGJlIGVhc3kgdG8gdXNlIG9yIGF0IHRoZSB2ZXJ5IGxlYXN0IGhhdmUgc3VmZmljaWVudCBkb2N1bWVudGF0aW9uIHNvIHRoYXQgYSB1c2VyIGNhbiBsZWFybiBob3cgdG8gd29yayB3aXRoIHRoZSBwYWNrYWdlLiBNYW55IHBlb3BsZSBjb21lIHRvIFIgZm9yIHN0YXRpc3RpY3MgYW5kIHByb2JhYmlsaXR5IGRpc3RyaWJ1dGlvbnMgYXJlIGEgY2VudHJhbCBwYXJ0IG9mIHRoaXMgdGhlcmVmb3JlIGRpc3RyNiBzaG91bGQgYWxzbyBiZSBpbnR1aXRpdmUuIFdpdGggdGhhdCBpbiBtaW5kLCBsZXQncyBsb29rIGF0IGhvdyBkaXN0cjYgaGFzIGFkdmFudGFnZXMgb3ZlciBSIHN0YXRzLiBGaXJzdCBvZiBhbGwsIGxldCdzIHNheSB3ZSB3YW50IHRvIGV2YWx1YXRlIHRoZSBtYXNzLCBkaXN0cmlidXRpb24gYW5kIGludmVyc2UgZGlzdHJpYnV0aW9ucyBmdW5jdGlvbnMgZm9yIHRoZSBCaW5vbWlhbCBkaXN0cmlidXRpb24uCgojIyMgUiBTdGF0cwpgYGB7cn0KZGJpbm9tKDE6MTAsIHNpemUgPSAxMCwgcHJvYiA9IDAuNSkKcGJpbm9tKDE6MTAsIHNpemUgPSAxMCwgcHJvYiA9IDAuNSkKcWJpbm9tKHNlcS5pbnQoMCwxLGxlbmd0aC5vdXQ9MTApLHNpemUgPSAxMCwgcHJvYiA9IDAuNSkKYGBgCgojIyMgZGlzdHI2CmBgYHtyfQpCIDwtIEJpbm9taWFsJG5ldyhzaXplID0gMTAsIHByb2IgPSAwLjUpCiMgT3B0aW9uIDEKQiRwZGYoMToxMCkKQiRjZGYoMToxMCkKQiRxdWFudGlsZShzZXEuaW50KDAsMSxsZW5ndGgub3V0PTEwKSkKCiMgT3B0aW9uIDIKY2RmKEIsIDE6MTApCgojIE9wdGlvbiAzCmxpYnJhcnkobWFncml0dHIpCkIgJT4lIGNkZigxOjEwKQpgYGAKCmRpc3RyNiBhbGxvd3MgdGhlIHVzZXIgdG8gY3JlYXRlIGEgZGlzdHJpYnV0aW9uIG9iamVjdCBhbmQgdGhlbiBjYWxsIGFueSBtZXRob2RzIG9uIHRoaXMgb2JqZWN0LCBtZWFuaW5nIHRoYXQgdGhlIGV4YWN0IHBhcmFtZXRlcmlzYXRpb24gYW5kIHBhcmFtZXRlciB2YWx1ZXMgZG9uJ3QgaGF2ZSB0byBiZSByZW1lbWJlcmVkLiBUaGlzIGlzIGVzcGVjaWFsbHkgdXNlZnVsIGFmdGVyIHN0YXRpc3RpY2FsIGluZmVyZW5jZSB3aGVuIHRoZSBwYXJhbWV0ZXJzIGNhbiBiZSBhcmJpdHJhcmlseSBoYXJkIHRvIHJlbWVtYmVyLCBlLmcuIGBCaW5vbWlhbChzaXplID0gMTAwLCBwcm9iID0gMC42MjkzOClgLgoKTW9yZW92ZXIgb25jZSBhbiBvYmplY3QgaXMgY3JlYXRlZCwgdGhlIHVzZXIgY2FuIGNhbGwgc3RhdGlzdGljYWwgbWV0aG9kcyB0byBnZXQgYmFzaWMgKGFuZCBtb3JlIGNvbXBsZXgpIHJlc3VsdHMKYGBge3J9CkIkZXhwZWN0YXRpb24oKSAjIHZpYSBSNgpzdW1tYXJ5KEIpCmBgYAoKIyMjIExpc3RpbmcgRGlzdHJpYnV0aW9ucwoKQ3VycmVudGx5IHdlIGFyZSBwbGFubmluZyBvbiBpbXBsZW1lbnRpbmcgYXJvdW5kIDYwIHByb2JhYmlsaXR5IGRpc3RyaWJ1dGlvbnMgZm9yIGRpc3RyNiB2MS4gQXQgbGVhc3QgMjAgb2YgdGhlc2UgYXJlIGVzc2VudGlhbC4gQW5vdGhlciBhZHZhbnRhZ2Ugb2YgZGlzdHI2IG92ZXIgUiBzdGF0cyBpcyBpbiBlZmZpY2llbmN5IHRvIGxpc3QgYW5kIGNob29zZSBkaXN0cmlidXRpb25zLCB0aGlzIGlzIGVzcGVjaWFsbHkgdXNlZnVsIGZvciBsZXNzLXRlY2huaWNhbCB1c2VycyB3aG8gaGF2ZSBjb21lIHRvIFIgZm9yIGRpc3RpYnV0aW9ucyBvbmx5LgoKYGBge3J9Cmxpc3REaXN0cmlidXRpb25zKCkKbGlzdERpc3RyaWJ1dGlvbnModHJhaXRzID0gbGlzdCh2YWx1ZVN1cHBvcnQgPSAiZGlzY3JldGUiKSkKYGBgCgojIyBXcmFwcGVycyBhbmQgRGVjb3JhdG9ycwoKVXNlcnMgZmFtaWxpYXIgd2l0aCBPT1AgbWF5IGJlIGF3YXJlIG9mIERlc2lnbiBQYXR0ZXJucywgY29kZSB0ZW1wbGF0ZXMgdXNlZCB0byBzb2x2ZSByZWN1cnJpbmcgdGFza3MuIFdlIG1ha2UgdXNlIG9mICd3cmFwcGVycycgYW5kICdkZWNvcmF0b3JzJyB0aHJvdWdob3V0IGRpc3RyNi4KKiBEZWNvcmF0b3JzIGFyZSB1c2VkIHRvIGFkZCBmdW5jdGlvbmFsaXR5IHRvIGFuIG9iamVjdAoqIFdyYXBwZXJzIHRha2UgdGhpcyBmdXJ0aGVyIGJ5IGFkYXB0aW5nIHRoZSBpbnRlcmZhY2UgYW5kIGNoYW5naW5nIHRoZSBvYmplY3QgbmFtZS4KCmBgYHtyfQpOIDwtIE5vcm1hbCRuZXcoKQojIE4kc3Vydml2YWxBbnRpRGVyaXYoKSAtIFByb2R1Y2VzIGFuIGVycm9yIGFzIGl0IGN1cnJlbnRseSBkb2Vzbid0IGV4aXN0IGFzIGEgbWV0aG9kCmRlY29yYXRlKE4sIEV4b3RpY1N0YXRpc3RpY3MpICMgQWx0ZXJuYXRpdmVseTogRXhvdGljU3RhdGlzdGljcyRuZXcoTikKTiRzdXJ2aXZhbEFudGlEZXJpdihsb3dlciA9IDEsIHVwcGVyID0gNCkKYGBgCgpJbiBkaXN0cjYgd2UgdXNlIHRoZSBwcmluY2lwbGUgb2YgbWluaW1pc2luZyBudW1lcmljIHJlc3VsdHMgYnV0IHdoZW4gdXNlZCBhbHdheXMgcHJvZHVjZSBhIHdhcm5pbmcuIEZpbmFsbHkgYW4gZXhhbXBsZSBvZiBhIHdyYXBwZXIgaXMgdGhlIHRydW5jYXRlZCBkaXN0cmlidXRpb246CgpgYGB7cn0KVE4gPSBUcnVuY2F0ZWREaXN0cmlidXRpb24kbmV3KE4sIGxvd2VyID0gMCwgdXBwZXIgPSA1KSAjIEFsdGVybmF0aXZlbHk6IHRydW5jYXRlKE4sIGxvd2VyID0gMCwgdXBwZXIgPSA1KQpUTiRwZGYoNikKVE4kcGRmKDApClROJHBkZigyKQpwcmludChUTikKYGBgCgojIyMgTGlzdGluZyB3cmFwcGVycyBhbmQgZGVjb3JhdG9ycwpBZ2FpbiBzbyB0aGUgdXNlciBrbm93cyB3aGF0IGlzIGF2YWlsYWJsZSwgd2UgaGF2ZSBmdW5jdGlvbmFsaXR5IHRvIGxpc3QgYXZhaWxhYmxlIGRlY29yYXRvcnMgYW5kIHdyYXBwZXJzCmBgYHtyfQpsaXN0V3JhcHBlcnMoc2ltcGxpZnkgPSBUUlVFKQpsaXN0RGVjb3JhdG9ycyhzaW1wbGlmeSA9IFRSVUUpCmBgYAoKIyMgUGFyYW1ldGVyaXNhdGlvbgpkaXN0cjYgYXNzdW1lcyB0aGF0IHRoZSB1c2VyIGtub3dzIHdoaWNoIHBhcmFtZXRlcmlzYXRpb24gdGhleSB3YW50IHRvIHVzZSBmb3IgcHJvYmFiaWxpdHkgZGlzdHJpYnV0aW9ucyBidXQgaWYgdGhleSBkbyBub3QsIGFuIGVkdWNhdGVkIGd1ZXNzIGlzIG1hZGUuIEFsbCBjb21tb24gcGFyYW1ldGVyaXNhdGlvbnMgYXJlIHBvc3NpYmxlLCBmb3IgZXhhbXBsZSBmb3IgdGhlIE5vcm1hbCBkaXN0cmlidXRpb24KYGBge3J9Ck5vcm1hbCRuZXcobWVhbj0gMCwgc2QgPSAxKQpOb3JtYWwkbmV3KG1lYW4gPSAwLCB2YXIgPSAxKQpOb3JtYWwkbmV3KG1lYW4gPSAwLCBwcmVjID0gMikKYGBgCgpJbiBjb25zdHJ1Y3Rpb24sIHRoZSBnaXZlbiBwYXJhbWV0ZXJzIGFyZSB0YWtlbiB0byBiZSB0aGUgcGFyYW1ldGVyaXNhdGlvbiwgc28gaW4gdGhlIGFib3ZlIGV4YW1wbGVzIHRoZSBOb3JtYWwgZGlzdHJpYnV0aW9uIGlzIGNvbnN0cnVjdGVkIHdpdGggdGhlIG1lYW4gYW5kIHN0YW5kYXJkIGRldmlhdGlvbiwgdmFyaWFuY2Ugb3IgcHJlY2lzaW9uIHJlc3BlY3RpdmVseS4gSW4gYW55IGNhc2UsIHRoZSBvdGhlciBvcHRpb25zIGFyZSBhdXRvbWF0aWNhbGx5IHVwZGF0ZWQ6CmBgYHtyfQpOIDwtIE5vcm1hbCRuZXcobWVhbiA9IDAsIHNkID0gMikKTiRwYXJhbWV0ZXJzKCkKTiRzZXRQYXJhbWV0ZXJWYWx1ZShsaXN0KHNkID0gMykpCk4kcGFyYW1ldGVycygpCmBgYAoKIyMgRnV0dXJlIFBsYW5zCgpXZSBwbGFuIG9uIGltcGxlbWVudGluZyB0aGUgZm9sbG93aW5nIGluIGRpc3RyNiB2MToKKiA2MCBwcm9iYWJpbGl0eSBkaXN0cmlidXRpb25zIHdpdGggdGhlIGZvbGxvd2luZzoKICAqIEFuYWx5dGljIHJlc3VsdHMgZm9yIGJhc2ljIHN0YXRpc3RpY2FsIHJlc3VsdHMgaW5jbHVkaW5nIG1lYW4sIHZhciBhbmQgbW9yZSBjb21wbGV4IG1vZGVsbGluZyByZXN1bHRzIGluY2x1ZGluZyBwLW5vcm1zIGFuZCBhbnRpLWRlcml2YXRpdmVzCiogQmFzaWMgbnVtZXJpYyByZXN1bHRzIGZvciB0aGUgQ29yZVN0YXRpc3RpY3MgYW5kIEV4b3RpY1N0YXRpc3RpY3MgZGVjb3JhdG9ycwoqIEJhc2ljIGltcHV0YXRpb24gbWV0aG9kcyBmb3IgcGRmL2NkZi9xdWFudGlsZS9yYW5kCiogV3JhcHBlcnMgZm9yIGpvaW50LCBwcm9kdWN0LCBhcnJheSwgdHJ1bmNhdGVkLCBodWJlcml6ZWQgYW5kIGNvbmRpdGlvbmFsIGRpc3RyaWJ1dGlvbnMKCiMjIFNsYWNrIGFuZCBHaXRIdWIK</div>
 
 
 
