@@ -67,7 +67,8 @@ decorate <- function(distribution, decorators, R62S3 = FALSE){
 
     if(R62S3){
       lapply(decorators, function(y){
-        R62S3::R62S3(y, list(get(RSmisc::getR6Class(distribution))), -1)
+        R62S3::R62S3(y, list(get(RSmisc::getR6Class(distribution))),
+                     parent.env(environment()))
       })
     }
     message(paste(dist_name,"is now decorated with", paste0(decors_names,collapse = ",")))
