@@ -28,7 +28,6 @@
 #' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 #' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
 #' \code{description} \tab character \tab short description of distribution. \cr
-#' \code{R62S3} \tab logical \tab if TRUE (default), S3 methods are added for decorators in construction.
 #' }
 #'
 #' @section Constructor Details: The most basic Distribution object consists of a name and one of pdf/cdf.
@@ -48,8 +47,7 @@
 #'
 #'   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
 #'   Distribution with in construction. Decorators can also be added after construction. See
-#'   \code{\link{DistributionDecorator}} for more details. The \code{R62S3} determines if S3 methods
-#'   should be added for the given decorator, it is ignored if \code{decorators = NULL}.
+#'   \code{\link{DistributionDecorator}} for more details.
 #'
 #'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
 #'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
@@ -170,7 +168,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                       parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                      description=NULL, additionalMethods = NULL, R62S3 = TRUE
+                      description=NULL, additionalMethods = NULL
                       ){
 
   if(RSmisc::getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
@@ -291,7 +289,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   }
 
     if(!is.null(decorators))
-      suppressMessages(decorate(self, decorators, R62S3))
+      suppressMessages(decorate(self, decorators))
 
     # Update skewness and kurtosis
   unlockBinding("properties",self)
