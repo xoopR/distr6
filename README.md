@@ -31,19 +31,15 @@ Our short-term aims are to implement all distributions in the R stats package as
 distr6 extends the work of Peter Ruckdeschel, Matthias Kohl et al. who created the first object-oriented (OO) interface for distributions using S4. Their [distr package](http://distr.r-forge.r-project.org/) is currently the gold-standard in R for OO distribution handling. Using R6 we aim to take this even further and to create a scalable interface that can continue to grow with the community.
 
 
-## Why Object-Oriented Programming?
+## Main Features
 
-There are many advantages to OOP over functional programming (which is more commmon in R). For probability distributions, the biggest advantages is in the ability to quickly construct and recall any number of required distributions, each with mathematical and statistical methods. There are currently no methods in base R that interact with Distributions to obtain basic properties, for example the mean of a distribution. In distr6 this is made possible as every probability distribution is its own class with specific methods. So to get mathematical properties of the Binomial distribution:
-1. `B = Binomial$new(prob, size)`
-2. `B$mean()`
-3. `B$sd()`
-
-Or try using `B$summary()` for a range of common mathematical and statistical results.
-The `listDistributions()` command you can see every Distribution currently implemented in distr6, along with their traits.
-
-Another advantage of OOP is making use of inheritance to implement more complex distributions from base distributions. For example any distribution can be easily truncated with a call to `truncate(distribution, lower, upper)` which creates an object of class `TruncatedDistribution` that inherits all methods from the truncated distribution. Use `listWrappers()` to see the list of currently implemented wrappers including truncation, huberization and product distributions. 
-
-We discuss further advantages of OOP including Design Patterns [here](https://raphaels1.github.io/distr6/articles/oop_and_design_patterns.html).
+distr6 is not intended to replace the base R distributions function but instead to give an alternative that focuses on distributions as objects that can be manipulated and accessed as required. The main features therefore centre on OOP practices, design patterns and API design. Of particular note:
+* All distributions in base R introduced as objects with methods for common statistical functions including pdf, cdf, inverse cdf, simulation, mean, variance, skewness and kurtosis
+* Flexible construction of distributions for common parameterisations
+* Decorators for extending functionality of distributions to more complex modelling methods
+* S3 compatibility to make the interface more flexible for users who are less familiar with OOP
+* Wrappers including truncation and huberization for distribution manipulation and including product/joint distributions for distribution composition
+* Additionally we introduce a SetSymbol class for a purely symbolic representation of sets for Distribution typing
 
 ## Package Development and Contributing
 
