@@ -12,23 +12,22 @@
 #' \code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
 #' }
 #'
-#' @section Public Methods:
+#' @section Added Methods:
 #' \tabular{lll}{
-#' \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-#' \code{mgf(t)} \tab numeric -> numeric \tab Moment generating function evaluated at t. \cr
-#' \code{pgf(t)} \tab numeric -> numeric \tab Probability generating function evaluated at t. \cr
-#' \code{cf(t)} \tab numeric -> numeric \tab Characteristic function evaluated at t. \cr
-#' \code{iqr()} \tab -> numeric \tab Interquartile range of the distribution. \cr
-#' \code{entropy(base = 2)} \tab integer -> numeric \tab Distribution entropy, Shannon by default. \cr
-#' \code{skewness()} \tab -> numeric \tab Third stndardised moment of the distribution. \cr
-#' \code{kurtosis(excess = TRUE)} \tab logical -> numeric \tab Fourth standardised moment of the distribution. \cr
-#' By default excess kurtosis (kurtosis - 3). \cr
-#' \code{kthmoment(type = "central")} \tab character -> numeric \tab Central (default) or standardised kth moment (type = "standard"). \cr
-#' \code{genExp(trafo)} \tab function -> numeric \tab Generalised expectation formula. If trafo = NULL, returns arithmetic mean. \cr
-#' \code{var()} \tab -> numeric \tab Numeric variance of distribution. \cr
-#' \code{cov()} \tab -> numeric \tab Covariance of distribution. \cr
-#' \code{cor()} \tab -> numeric \tab Correlation of distribution. \cr
-#' \code{mode(which = 1)} \tab integer -> numeric \tab Mode of distribution, if which = 1, returns first, otherwise all.
+#' \strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
+#' \code{mgf(t)} \tab Moment generating function \tab \code{\link{mgf}} \cr
+#' \code{pgf(t)} \tab Probability generating function \tab \code{\link{pgf}} \cr
+#' \code{cf(t)} \tab Characteristic function \tab \code{\link{cf}} \cr
+#' \code{iqr()} \tab Interquartile Range \tab \code{\link{iqr}} \cr
+#' \code{entropy(base = 2)} \tab (Shannon) Entropy \tab \code{\link{entropy}} \cr
+#' \code{skewness()} \tab Skewness \tab \code{\link{skewness}} \cr
+#' \code{kurtosis(excess = TRUE)} \tab Kurtosis \tab \code{\link{kurtosis}} \cr
+#' \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
+#' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
+#' \code{mode(which = 1)} \tab Mode \tab \code{\link{mode}} \cr
+#' \code{var()} \tab Variance \tab \code{\link{var.Distribution}} \cr
+#' \code{cov()} \tab Covariance \tab \code{\link{cov.Distribution}} \cr
+#' \code{cor()} \tab Correlation \tab \code{\link{cor.Distribution}} \cr
 #' }
 #'
 #'
@@ -54,23 +53,141 @@ NULL
 
 #' @export
 CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
+
+#' @title Moment Generating Function
+#' @name mgf
+#' @description Moment generating function of a distribution
+#' @param x decorated distribution, see details.
+#' @param t integer to evaluate moment generating function at
+#' @usage mgf(x, t)
+#' @details The moment generating function is defined by
+#' \deqn{mgf_X(t) = E_X[exp(xt)]}
+#' where X is the distribution and E_X is the expectation of the distribution X.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name mgf.Distribution
+#' @rdname mgf
+#' @export
+NULL
 CoreStatistics$set("public", "mgf", function(t) {
   return(self$genExp(trafo = function(x) {return(exp(x*t))}))
 })
+
+#' @title Characteristic Function
+#' @name cf
+#' @description Characteristic function of a distribution
+#' @param x decorated distribution, see details.
+#' @param t integer to evaluate characteristic function at
+#' @usage cf(x, t)
+#' @details The characteristic function is defined by
+#' \deqn{cf_X(t) = E_X[exp(xti)]}
+#' where X is the distribution and E_X is the expectation of the distribution X.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name cf.Distribution
+#' @rdname cf
+#' @export
+NULL
 CoreStatistics$set("public", "cf", function(t) {
   if(testDiscrete(self)){
-    return(self$genExp(trafo = function(x) {return(exp(x*t*(1+0i)))}))
+    return(self$genExp(trafo = function(x) {return(exp(x*t*1i))}))
   }
 })
+
+#' @title Probability Generating Function
+#' @name pgf
+#' @description Probability generating function of a discrete distribution
+#' @param x decorated distribution, see details.
+#' @param z integer to evaluate probability generating function at
+#' @usage pgf(x, z)
+#' @details The probability generating function is defined by
+#' \deqn{cf_X(t) = E_X[exp(z^x)]}
+#' where X is the distribution and E_X is the expectation of the distribution X.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name pgf.Distribution
+#' @rdname pgf
+#' @export
+NULL
 CoreStatistics$set("public", "pgf", function(z) {
   if(testDiscrete(self)){
     x = self$genExp(trafo = function(x) {return(z^x)})
     return(x)
   }
 })
+
+#' @title Interquartile Range
+#' @name iqr
+#' @description Interquartile range of a distribution
+#' @usage iqr()
+#' @details The interquartile range of a distribution is defined by
+#' \deqn{iqr_X = q(0.75) - q(0.25)}
+#' where q is the quantile, or inverse distribution function.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name iqr.Distribution
+#' @rdname iqr
+#' @export
+NULL
 CoreStatistics$set("public", "iqr", function() {
   return(self$quantile(0.75) - self$quantile(0.25))
 })
+
+#' @title Entropy
+#' @name entropy
+#' @description (Information) Entropy of a distribution
+#' @usage entropy(base = 2)
+#' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
+#' @details The entropy of a distribution is defined by
+#' \deqn{- sum f_X * log(f_X)}
+#' where f_X is the pdf of distribution X. The base of the logarithm of the equation determines the
+#' type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name entropy.Distribution
+#' @rdname entropy
+#' @export
+NULL
 CoreStatistics$set("public", "entropy", function(base = 2) {
   if(testDiscrete(self)){
     rng = try(self$inf():self$sup(),silent = T)
@@ -89,9 +206,57 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
     }, lower = self$inf(), upper = self$sup())$value)
   }
 })
+
+#' @title Skewness
+#' @name skewness
+#' @description Skewness of a distribution
+#' @usage skewness()
+#' @details The skewness of a distribution is defined by the third standardised moment of the
+#' distribution,
+#' \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
+#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
+#' standard deviation of the distribution.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name skewness.Distribution
+#' @rdname skewness
+#' @export
+NULL
 CoreStatistics$set("public", "skewness", function() {
   return(self$kthmoment(k = 3, type = "standard"))
 })
+
+#' @title Kurtosis
+#' @name kurtosis
+#' @description Kurtosis of a distribution
+#' @usage kurtosis()
+#' @details The kurtosis of a distribution is defined by the fourth standardised moment of the
+#' distribution,
+#' \deqn{k_X = E_X[(x - \mu)^4]/\sigma^4}
+#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
+#' standard deviation of the distribution.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name kurtosis.Distribution
+#' @rdname kurtosis
+#' @export
+NULL
 CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
   kurtosis = self$kthmoment(k = 4, type = "standard")
   if(excess)
@@ -99,14 +264,59 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
   else
     return(kurtosis)
 })
+
+#' @title Kth Moment
+#' @name kthmoment
+#' @description Kth standardised or central moment of a distribution
+#' @usage kthmoment(k, type = "central")
+#' @param k the kth moment to calculate
+#' @param type one of 'central', 'standard' or 'zero', abbreviations allowed
+#' @details The kth central moment of a distribution is defined by
+#' \deqn{CM(k)_X = E_X[(x - \mu)^k]}
+#' the kth standardised moment of a distribution is defined by
+#' \deqn{SM(k)_X = CM(k)/\sigma^k}
+#' #' the kth zeroth moment of a distribution is defined by
+#' \deqn{ZM(k)_X = E_X[(x)^k]}
+#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
+#' standard deviation of the distribution.
+#'
+#' Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment
+#' is computed.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name kthmoment.Distribution
+#' @rdname kthmoment
+#' @export
+NULL
 CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 
   if(testUnivariate(self)){
+
+    if(grepl("^[c,C]", type)) type <- "central"
+    else if(grepl("^[s,S]", type)) type <- "standard"
+    else if(grepl("^[z,Z]", type)) type <- "zeroth"
+    else{
+      warning("Type not recognised, central used")
+      type <- "central"
+    }
+
     if(type == "central"){
       if(k == 0)
         return(1)
       if(k == 1)
         return(0)
+    }
+
+    if(type == "zeroth"){
+      return(self$genExp(trafo = function(x) return((x)^k)))
     }
 
     centralMoment = self$genExp(trafo = function(x) return((x - self$genExp())^k))
@@ -117,6 +327,34 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
       return(centralMoment / self$sd()^k)
   }
 })
+
+#' @title Generalised Expectation of a Distribution
+#' @name genExp
+#' @description A generalised expectation function for distributions, for arithmetic mean and more complex
+#' numeric calculations.
+#' @usage genExp(trafo = NULL)
+#' @param trafo transformation for expectation calculation, see details.
+#' @details The expectation of a probability distribution can be numerically calculated in a variety
+#' of different ways, some more efficient than others depending on what is available, this function first
+#' checks which analytic methods are present before selecting a numeric strategy.
+#'
+#' If trafo = NULL, then the arithmetic mean is calculated, i.e. the approximation to \eqn{E[X]}. Any
+#' transformation must be given as a function, for example \code{trafo = function(x) x^2}
+#' (which is the second moment).
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name genExp.Distribution
+#' @rdname genExp
+#' @export
+NULL
 CoreStatistics$set("public","genExp",function(trafo = NULL){
   if(is.null(trafo)){
     trafo = function(x) return(x)
@@ -139,14 +377,88 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     }, lower = self$inf(), upper = self$sup())$value))
   }
 })
+
+#' @title Numeric Variance of a Distribution
+#' @name var.Distribution
+#' @description A numerc variance calculation for distributions.
+#' @usage var()
+#' @details The variance of a probability distribution can be numerically calculated via the generalised
+#' expectation function and the formula
+#' \deqn{var_X = E[X^2] - E[X]^2}
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
 CoreStatistics$set("public","var",function(){
   return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
 })
+
+#' @title Numeric Covariance a Distribution
+#' @name cov
+#' @description A numeric calculation for the covariance of a (multivariate) distribution.
+#' @usage cov()
+#' @details If the distribution is univariate then the variance is returned, otherwise the
+#' covariance is calculated numerically.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
 CoreStatistics$set("public","cov",function(){
   if(testUnivariate(self))
     return(self$var())
 }) # TO DO
+
+#' @title Numeric Correlation a Distribution
+#' @name cor
+#' @description A numerc calculation for the correlation of a (multivariate) distribution.
+#' @usage cor()
+#' @details If the distribution is univariate then nothing is returned, otherwise the
+#' correlation is calculated numerically.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
 CoreStatistics$set("public","cor",function(){}) # TO DO
+
+#' @title Mode of a Distribution
+#' @name mode
+#' @description A numeric search for the mode(s) of a distribution.
+#' @usage mode(which = 1)
+#' @param which which mode of the distribution should be returned, default is the first.
+#' @details If the distribution has multiple modes, the first is returned by default, similarly if it has
+#' one only. Otherwise the index of the mode to return can be given or "All" if all should be returned.
+#'
+#' Documentation is for the S3 method, the first parameter can be omitted if calling as
+#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
+#' with \code{decorate(Distribution, CoreStatistics)}.
+#'
+#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
+#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#'
+#' @export
+NULL
+#' @name mode.Distribution
+#' @rdname mode
+#' @export
+NULL
 CoreStatistics$set("public","mode",function(which = 1){
   if(which==1){
     if(testDiscrete(self)){

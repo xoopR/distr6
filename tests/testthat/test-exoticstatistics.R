@@ -25,7 +25,7 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     distrDomain=PosReals$new(),
                                     pdf = dexpo,
                                     parameters = ps,
-                                    decorators = ExoticStatistics, R62S3 = FALSE
+                                    decorators = ExoticStatistics
 )
 
 test_that("numeric survival functions",{
@@ -41,7 +41,7 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     distrDomain=PosReals$new(),
                                     pdf = dexpo, cdf = cexpo,
                                     parameters = ps,
-                                    decorators = ExoticStatistics, R62S3 = FALSE
+                                    decorators = ExoticStatistics
 )
 
 test_that("analytic survival functions",{

@@ -20,7 +20,6 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     distrDomain=PosReals$new(),
                                     pdf = dexpo,
                                     parameters = ps,
-                                    R62S3 = FALSE
 )
 
 test_that("r/d/p/q null",{
@@ -31,7 +30,7 @@ test_that("r/d/p/q null",{
 })
 
 test_that("r/d/p/q not null",{
-  decorate(continuousTester, FunctionImputation, R62S3 = F)
+  decorate(continuousTester, FunctionImputation)
   expect_silent(continuousTester$pdf(1))
   expect_message(continuousTester$cdf(1))
   expect_message(continuousTester$quantile(1))

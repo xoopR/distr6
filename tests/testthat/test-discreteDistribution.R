@@ -22,7 +22,7 @@ discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0,
                                   distrDomain=PosNaturals$new(),
                                   pdf = dbin,
                                   parameters = ps,
-                                  decorators = list(CoreStatistics), R62S3 = FALSE
+                                  decorators = list(CoreStatistics)
 )
 
 test_that("check all accessors are working", {

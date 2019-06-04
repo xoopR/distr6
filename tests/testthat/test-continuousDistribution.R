@@ -56,7 +56,7 @@ test_that("check core statistics", {
 })
 
 test_that("check exotic statistics", {
-  expect_message(decorate(continuousTester, ExoticStatistics, FALSE))
+  expect_message(decorate(continuousTester, ExoticStatistics))
   expect_equal(continuousTester$survival(1), 1-continuousTester$cdf(1))
   expect_equal(round(continuousTester$survivalAntiDeriv(), 5), round(continuousTester$survivalPNorm(p = 1), 5))
   expect_equal(round(continuousTester$genExp(), 5), round(continuousTester$survivalPNorm(p = 1), 5))

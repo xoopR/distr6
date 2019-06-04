@@ -4,14 +4,12 @@
 \alias{decorate}
 \title{Decorate Distributions}
 \usage{
-decorate(distribution, decorators, R62S3 = TRUE)
+decorate(distribution, decorators)
 }
 \arguments{
 \item{distribution}{distribution to decorate}
 
 \item{decorators}{list of decorators}
-
-\item{R62S3}{logical. If TRUE (default) S3 methods are generated for R6 methods}
 }
 \description{
 A convenient S3 function to decorate R6 distributions

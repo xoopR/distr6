@@ -28,7 +28,6 @@ A generalised distribution object for defining custom probability distributions
 \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
 \code{description} \tab character \tab short description of distribution. \cr
-\code{R62S3} \tab logical \tab if TRUE (default), S3 methods are added for decorators in construction.
 }
 }
 
@@ -50,8 +49,7 @@ A generalised distribution object for defining custom probability distributions
 
   \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
   Distribution with in construction. Decorators can also be added after construction. See
-  \code{\link{DistributionDecorator}} for more details. The \code{R62S3} determines if S3 methods
-  should be added for the given decorator, it is ignored if \code{decorators = NULL}.
+  \code{\link{DistributionDecorator}} for more details.
 
   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.

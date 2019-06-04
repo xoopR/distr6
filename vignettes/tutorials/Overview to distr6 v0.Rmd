@@ -1,12 +1,16 @@
 ---
-title: "Intro to distr6 v1"
-output: html_notebook
+title: 'Tutorial: Overview to distr6 v0'
 ---
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#")
+```
 
 ## What is distr6?
 
-* distr6 is intended to (in the best-case scenario) replace probability distributions in R stats
-* It adds the following functionality to distributions:
+* distr6 is an object-oriented interface for probability distributions in R
+* It adds the following functionality to base R distributions:
   * A unified OOP interface
   * Basic statistical properties (mean, variance,...)
   * More advanced numerical properties (p-norms, survival modelling,...)
@@ -29,15 +33,9 @@ Then attach the library as usual:
 library(distr6)
 ```
 
-Alternatively if testing code that you are currently working on, use `devtools` once your code has been saved and your working directory is set to `distr6`:
-
-```{r eval=FALSE}
-devtools::document() # It's good practice to run this first
-devtools::load_all()
-```
-
 ## distr6 vs. R Stats
-For any new package to be useful it either has to be a significant improvement on existing ones (if they exist) or introduce substantial and worthwhile contributions. It should also be easy to use or at the very least have sufficient documentation so that a user can learn how to work with the package. Many people come to R for statistics and probability distributions are a central part of this therefore distr6 should also be intuitive. With that in mind, let's look at how distr6 has advantages over R stats. First of all, let's say we want to evaluate the mass, distribution and inverse distributions functions for the Binomial distribution.
+
+distr6 is the disruptive R packageto takeover base distributions functionality, or at least to add in a few new handy methods! We understand many people come to R for statistics, and probability distributions are a central part of this. With that in mind, let's look at how distr6 has advantages over R stats. First of all, let's say we want to evaluate the mass, distribution and inverse distributions functions for the Binomial distribution.
 
 ### R Stats
 ```{r}
@@ -66,7 +64,7 @@ distr6 allows the user to create a distribution object and then call any methods
 
 Moreover once an object is created, the user can call statistical methods to get basic (and more complex) results
 ```{r}
-B$expectation() # via R6
+B$expectation()
 summary(B)
 ```
 
@@ -104,6 +102,7 @@ print(TN)
 
 ### Listing wrappers and decorators
 Again so the user knows what is available, we have functionality to list available decorators and wrappers
+
 ```{r}
 listWrappers(simplify = TRUE)
 listDecorators(simplify = TRUE)
@@ -111,6 +110,7 @@ listDecorators(simplify = TRUE)
 
 ## Parameterisation
 distr6 assumes that the user knows which parameterisation they want to use for probability distributions but if they do not, an educated guess is made. All common parameterisations are possible, for example for the Normal distribution
+
 ```{r}
 Normal$new(mean= 0, sd = 1)
 Normal$new(mean = 0, var = 1)
@@ -121,6 +121,7 @@ In construction, the given parameters are taken to be the parameterisation, so i
 ```{r}
 N <- Normal$new(mean = 0, sd = 2)
 N$parameters()
+N$setParameterValue(list(prec = 2)) # Fails as precision isn't a settable parameter
 N$setParameterValue(list(sd = 3))
 N$parameters()
 ```
@@ -128,10 +129,9 @@ N$parameters()
 ## Future Plans
 
 We plan on implementing the following in distr6 v1:
+
 * 60 probability distributions with the following:
   * Analytic results for basic statistical results including mean, var and more complex modelling results including p-norms and anti-derivatives
 * Basic numeric results for the CoreStatistics and ExoticStatistics decorators
 * Basic imputation methods for pdf/cdf/quantile/rand
 * Wrappers for joint, product, array, truncated, huberized and conditional distributions
-
-## Slack and GitHub
