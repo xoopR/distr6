@@ -1,7 +1,11 @@
 ---
-title: 'Tutorial: Overview to distr6 v0'
+title: "Overview to distr6 v0"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Overview to distr6 v0}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
 
 ```{r include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#")
