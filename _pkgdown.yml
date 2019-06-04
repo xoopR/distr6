@@ -23,7 +23,7 @@ navbar:
   - text: Tutorials
     menu:
     - text: Overview to distr6 v0
-      href: articles/tutorial_overview_to_distr6_v0.rmd
+      href: articles/tutorial_overview_to_distr6_v0.html
   right:
   - text: Reference
     href: reference/
