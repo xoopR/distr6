@@ -11,6 +11,12 @@ assertMatrixvariate(x)
 checkMatrixvariate(x)
 testMatrixvariate(x)
 isMatrixvariate(x)
+
+checkMatrixvariate(x)
+
+assertMatrixvariate(x)
+
+isMatrixvariate(x)
 }
 \arguments{
 \item{x}{Distribution}

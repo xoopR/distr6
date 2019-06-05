@@ -11,6 +11,12 @@ assertNoSkew(x)
 checkNoSkew(x)
 testNoSkew(x)
 isNoSkew(x)
+
+checkNoSkew(x)
+
+assertNoSkew(x)
+
+isNoSkew(x)
 }
 \arguments{
 \item{x}{Distribution}

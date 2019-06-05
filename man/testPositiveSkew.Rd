@@ -11,6 +11,12 @@ assertPositiveSkew(x)
 checkPositiveSkew(x)
 testPositiveSkew(x)
 isPositiveSkew(x)
+
+checkPositiveSkew(x)
+
+assertPositiveSkew(x)
+
+isPositiveSkew(x)
 }
 \arguments{
 \item{x}{Distribution}

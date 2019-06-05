@@ -11,6 +11,12 @@ assertLeptokurtic(x)
 checkLeptokurtic(x)
 testLeptokurtic(x)
 isLeptokurtic(x)
+
+checkLeptokurtic(x)
+
+assertLeptokurtic(x)
+
+isLeptokurtic(x)
 }
 \arguments{
 \item{x}{Distribution}

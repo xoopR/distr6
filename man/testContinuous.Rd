@@ -11,6 +11,12 @@ assertContinuous(x)
 checkContinuous(x)
 testContinuous(x)
 isContinuous(x)
+
+checkContinuous(x)
+
+assertContinuous(x)
+
+isContinuous(x)
 }
 \arguments{
 \item{x}{Distribution}

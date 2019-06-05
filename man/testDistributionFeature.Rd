@@ -11,6 +11,12 @@ assertDistributionFeature(x, accessor, feature)
 checkDistributionFeature(x, accessor, feature)
 testDistributionFeature(x, accessor, feature)
 isDistributionFeature(x, accessor, feature)
+
+checkDistributionFeature(x, accessor, feature)
+
+assertDistributionFeature(x, accessor, feature)
+
+isDistributionFeature(x, accessor, feature)
 }
 \arguments{
 \item{x}{Distribution}

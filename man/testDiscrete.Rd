@@ -11,6 +11,12 @@ assertDiscrete(x)
 checkDiscrete(x)
 testDiscrete(x)
 isDiscrete(x)
+
+checkDiscrete(x)
+
+assertDiscrete(x)
+
+isDiscrete(x)
 }
 \arguments{
 \item{x}{Distribution}

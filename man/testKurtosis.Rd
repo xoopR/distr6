@@ -11,6 +11,12 @@ assertKurtosis(x, type)
 checkKurtosis(x, type)
 testKurtosis(x, type)
 isKurtosis(x, type)
+
+checkKurtosis(x, type)
+
+assertKurtosis(x, type)
+
+isKurtosis(x, type)
 }
 \arguments{
 \item{x}{Distribution}

@@ -11,6 +11,12 @@ assertMultivariate(x)
 checkMultivariate(x)
 testMultivariate(x)
 isMultivariate(x)
+
+checkMultivariate(x)
+
+assertMultivariate(x)
+
+isMultivariate(x)
 }
 \arguments{
 \item{x}{Distribution}
