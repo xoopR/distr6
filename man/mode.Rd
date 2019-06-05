@@ -5,7 +5,7 @@
 \alias{mode.Distribution}
 \title{Mode of a Distribution}
 \usage{
-\method{mode}{Distribution}(object, which = 1)
+\method{mode}{Distribution}(object, which = 1, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

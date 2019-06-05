@@ -5,7 +5,7 @@
 \alias{skewness.Distribution}
 \title{Skewness}
 \usage{
-\method{skewness}{Distribution}(object)
+\method{skewness}{Distribution}(object, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

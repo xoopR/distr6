@@ -5,7 +5,7 @@
 \alias{mgf.Distribution}
 \title{Moment Generating Function}
 \usage{
-\method{mgf}{Distribution}(object, t)
+\method{mgf}{Distribution}(object, t, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

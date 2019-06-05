@@ -5,7 +5,7 @@
 \alias{cf.Distribution}
 \title{Characteristic Function}
 \usage{
-\method{cf}{Distribution}(object, t)
+\method{cf}{Distribution}(object, t, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

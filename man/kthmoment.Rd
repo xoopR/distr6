@@ -5,7 +5,7 @@
 \alias{kthmoment.Distribution}
 \title{Kth Moment}
 \usage{
-\method{kthmoment}{Distribution}(object, k, type = "central")
+\method{kthmoment}{Distribution}(object, k, type = "central", ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

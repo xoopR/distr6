@@ -5,7 +5,7 @@
 \alias{pgf.Distribution}
 \title{Probability Generating Function}
 \usage{
-\method{pgf}{Distribution}(object, z)
+\method{pgf}{Distribution}(object, z, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

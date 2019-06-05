@@ -5,7 +5,7 @@
 \alias{kurtosis.Distribution}
 \title{Kurtosis}
 \usage{
-\method{kurtosis}{Distribution}(object, excess = TRUE)
+\method{kurtosis}{Distribution}(object, excess = TRUE, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

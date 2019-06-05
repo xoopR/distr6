@@ -5,7 +5,7 @@
 \alias{genExp.Distribution}
 \title{Generalised Expectation of a Distribution}
 \usage{
-\method{genExp}{Distribution}(object, trafo = NULL)
+\method{genExp}{Distribution}(object, trafo = NULL, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

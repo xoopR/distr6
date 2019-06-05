@@ -5,7 +5,7 @@
 \alias{iqr.Distribution}
 \title{Interquartile Range}
 \usage{
-\method{iqr}{Distribution}(object)
+\method{iqr}{Distribution}(object, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}

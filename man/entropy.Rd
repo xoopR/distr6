@@ -5,7 +5,7 @@
 \alias{entropy.Distribution}
 \title{Entropy}
 \usage{
-\method{entropy}{Distribution}(object, base = 2)
+\method{entropy}{Distribution}(object, base = 2, ...)
 }
 \arguments{
 \item{object}{an object used to select a method.}
