@@ -38,7 +38,7 @@ test_that("check all accessors are working", {
 
 test_that("check core statistics", {
   expect_silent(continuousTester$setParameterValue(list(rate = 6)))
-  expect_message(decorate(continuousTester, CoreStatistics, FALSE))
+  expect_message(decorate(continuousTester, CoreStatistics))
   expect_equal(continuousTester$genExp(), 1/6)
   expect_equal(continuousTester$var(), 1/36)
   expect_equal(continuousTester$sd(), 1/6)

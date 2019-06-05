@@ -5,10 +5,14 @@
 \alias{entropy.Distribution}
 \title{Entropy}
 \usage{
-entropy(base = 2)
+\method{entropy}{Distribution}(object, base = 2)
 }
 \arguments{
+\item{object}{an object used to select a method.}
+
 \item{base}{base of the entropy logarithm, default = 2 (Shannon entropy)}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 (Information) Entropy of a distribution

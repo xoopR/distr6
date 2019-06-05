@@ -5,7 +5,14 @@
 \alias{kurtosis.Distribution}
 \title{Kurtosis}
 \usage{
-kurtosis()
+\method{kurtosis}{Distribution}(object, excess = TRUE)
+}
+\arguments{
+\item{object}{an object used to select a method.}
+
+\item{excess}{logical, if TRUE (default) excess Kurtosis returned}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Kurtosis of a distribution
@@ -15,7 +22,7 @@ The kurtosis of a distribution is defined by the fourth standardised moment of t
 distribution,
 \deqn{k_X = E_X[(x - \mu)^4]/\sigma^4}
 where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-standard deviation of the distribution.
+standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 
 Documentation is for the S3 method, the first parameter can be omitted if calling as
 an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated

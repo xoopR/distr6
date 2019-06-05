@@ -5,12 +5,14 @@
 \alias{mgf.Distribution}
 \title{Moment Generating Function}
 \usage{
-mgf(x, t)
+\method{mgf}{Distribution}(object, t)
 }
 \arguments{
-\item{x}{decorated distribution, see details.}
+\item{object}{an object used to select a method.}
 
-\item{t}{integer to evaluate moment generating function at}
+\item{t}{integer to evaluate moment generating function at.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Moment generating function of a distribution

@@ -41,12 +41,11 @@ Decorator objects add functionality to the given Distribution object
 \examples{
 x = Distribution$new("Test", pdf = function(x) 1/(4-1), support = Interval$new(1,4),
 type = Reals$new())
-decorate(x, FunctionImputation, R62S3 = FALSE)
+decorate(x, FunctionImputation)
 plot(x$pdf(0:5))
 plot(x$cdf(0:5))
 
-x = Distribution$new("Test", pdf = function(x) 1/(4-1), decorators = ExoticStatistics,
-R62S3 = FALSE)
+x = Distribution$new("Test", pdf = function(x) 1/(4-1), decorators = ExoticStatistics)
 x$cdf(1)
 }
 \seealso{

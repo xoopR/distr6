@@ -5,10 +5,14 @@
 \alias{mode.Distribution}
 \title{Mode of a Distribution}
 \usage{
-mode(which = 1)
+\method{mode}{Distribution}(object, which = 1)
 }
 \arguments{
+\item{object}{an object used to select a method.}
+
 \item{which}{which mode of the distribution should be returned, default is the first.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 A numeric search for the mode(s) of a distribution.

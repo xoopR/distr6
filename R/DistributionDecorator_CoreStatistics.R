@@ -42,11 +42,11 @@
 #'
 #' @examples
 #' x = Binomial$new()
-#' decorate(x, CoreStatistics, R62S3 = FALSE)
+#' decorate(x, CoreStatistics)
 #' x$iqr()
 #'
 #' @examples
-#' x = Binomial$new(decorators = CoreStatistics, R62S3 = FALSE)
+#' x = Binomial$new(decorators = CoreStatistics)
 #' x$kthmoment(4)
 NULL
 
@@ -57,9 +57,10 @@ CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 #' @title Moment Generating Function
 #' @name mgf
 #' @description Moment generating function of a distribution
-#' @param x decorated distribution, see details.
-#' @param t integer to evaluate moment generating function at
-#' @usage mgf(x, t)
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details The moment generating function is defined by
 #' \deqn{mgf_X(t) = E_X[exp(xt)]}
 #' where X is the distribution and E_X is the expectation of the distribution X.
@@ -73,10 +74,10 @@ CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 #'
 #' @export
 NULL
-#' @name mgf.Distribution
 #' @rdname mgf
+#' @param t integer to evaluate moment generating function at.
 #' @export
-NULL
+mgf.Distribution <- function() {}
 CoreStatistics$set("public", "mgf", function(t) {
   return(self$genExp(trafo = function(x) {return(exp(x*t))}))
 })
@@ -84,9 +85,10 @@ CoreStatistics$set("public", "mgf", function(t) {
 #' @title Characteristic Function
 #' @name cf
 #' @description Characteristic function of a distribution
-#' @param x decorated distribution, see details.
-#' @param t integer to evaluate characteristic function at
-#' @usage cf(x, t)
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details The characteristic function is defined by
 #' \deqn{cf_X(t) = E_X[exp(xti)]}
 #' where X is the distribution and E_X is the expectation of the distribution X.
@@ -100,10 +102,10 @@ CoreStatistics$set("public", "mgf", function(t) {
 #'
 #' @export
 NULL
-#' @name cf.Distribution
 #' @rdname cf
+#' @param t integer to evaluate characteristic function at
 #' @export
-NULL
+cf.Distribution <- function() {}
 CoreStatistics$set("public", "cf", function(t) {
   if(testDiscrete(self)){
     return(self$genExp(trafo = function(x) {return(exp(x*t*1i))}))
@@ -112,12 +114,13 @@ CoreStatistics$set("public", "cf", function(t) {
 
 #' @title Probability Generating Function
 #' @name pgf
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @description Probability generating function of a discrete distribution
-#' @param x decorated distribution, see details.
-#' @param z integer to evaluate probability generating function at
-#' @usage pgf(x, z)
 #' @details The probability generating function is defined by
-#' \deqn{cf_X(t) = E_X[exp(z^x)]}
+#' \deqn{pgf_X(t) = E_X[exp(z^x)]}
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
@@ -129,10 +132,10 @@ CoreStatistics$set("public", "cf", function(t) {
 #'
 #' @export
 NULL
-#' @name pgf.Distribution
 #' @rdname pgf
+#' @param z integer to evaluate probability generating function at.
 #' @export
-NULL
+pgf.Distribution <- function() {}
 CoreStatistics$set("public", "pgf", function(z) {
   if(testDiscrete(self)){
     x = self$genExp(trafo = function(x) {return(z^x)})
@@ -142,8 +145,11 @@ CoreStatistics$set("public", "pgf", function(z) {
 
 #' @title Interquartile Range
 #' @name iqr
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @description Interquartile range of a distribution
-#' @usage iqr()
 #' @details The interquartile range of a distribution is defined by
 #' \deqn{iqr_X = q(0.75) - q(0.25)}
 #' where q is the quantile, or inverse distribution function.
@@ -157,19 +163,21 @@ CoreStatistics$set("public", "pgf", function(z) {
 #'
 #' @export
 NULL
-#' @name iqr.Distribution
 #' @rdname iqr
 #' @export
-NULL
+iqr.Distribution <- function() {}
 CoreStatistics$set("public", "iqr", function() {
   return(self$quantile(0.75) - self$quantile(0.25))
 })
 
 #' @title Entropy
 #' @name entropy
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @description (Information) Entropy of a distribution
-#' @usage entropy(base = 2)
-#' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
+#'
 #' @details The entropy of a distribution is defined by
 #' \deqn{- sum f_X * log(f_X)}
 #' where f_X is the pdf of distribution X. The base of the logarithm of the equation determines the
@@ -184,10 +192,10 @@ CoreStatistics$set("public", "iqr", function() {
 #'
 #' @export
 NULL
-#' @name entropy.Distribution
 #' @rdname entropy
+#' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
 #' @export
-NULL
+entropy.Distribution <- function() {}
 CoreStatistics$set("public", "entropy", function(base = 2) {
   if(testDiscrete(self)){
     rng = try(self$inf():self$sup(),silent = T)
@@ -210,7 +218,10 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #' @title Skewness
 #' @name skewness
 #' @description Skewness of a distribution
-#' @usage skewness()
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details The skewness of a distribution is defined by the third standardised moment of the
 #' distribution,
 #' \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
@@ -226,10 +237,10 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #'
 #' @export
 NULL
-#' @name skewness.Distribution
 #' @rdname skewness
 #' @export
-NULL
+skewness.Distribution <- function() {}
+
 CoreStatistics$set("public", "skewness", function() {
   return(self$kthmoment(k = 3, type = "standard"))
 })
@@ -237,12 +248,15 @@ CoreStatistics$set("public", "skewness", function() {
 #' @title Kurtosis
 #' @name kurtosis
 #' @description Kurtosis of a distribution
-#' @usage kurtosis()
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details The kurtosis of a distribution is defined by the fourth standardised moment of the
 #' distribution,
 #' \deqn{k_X = E_X[(x - \mu)^4]/\sigma^4}
 #' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-#' standard deviation of the distribution.
+#' standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
 #' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
@@ -253,10 +267,10 @@ CoreStatistics$set("public", "skewness", function() {
 #'
 #' @export
 NULL
-#' @name kurtosis.Distribution
 #' @rdname kurtosis
+#' @param excess logical, if TRUE (default) excess Kurtosis returned
 #' @export
-NULL
+kurtosis.Distribution <- function() {}
 CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
   kurtosis = self$kthmoment(k = 4, type = "standard")
   if(excess)
@@ -268,9 +282,10 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #' @title Kth Moment
 #' @name kthmoment
 #' @description Kth standardised or central moment of a distribution
-#' @usage kthmoment(k, type = "central")
-#' @param k the kth moment to calculate
-#' @param type one of 'central', 'standard' or 'zero', abbreviations allowed
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details The kth central moment of a distribution is defined by
 #' \deqn{CM(k)_X = E_X[(x - \mu)^k]}
 #' the kth standardised moment of a distribution is defined by
@@ -292,10 +307,11 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #'
 #' @export
 NULL
-#' @name kthmoment.Distribution
 #' @rdname kthmoment
+#' @param k the kth moment to calculate
+#' @param type one of 'central', 'standard' or 'zero', abbreviations allowed
 #' @export
-NULL
+kthmoment.Distribution <- function() {}
 CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 
   if(testUnivariate(self)){
@@ -330,10 +346,12 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 
 #' @title Generalised Expectation of a Distribution
 #' @name genExp
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @description A generalised expectation function for distributions, for arithmetic mean and more complex
 #' numeric calculations.
-#' @usage genExp(trafo = NULL)
-#' @param trafo transformation for expectation calculation, see details.
 #' @details The expectation of a probability distribution can be numerically calculated in a variety
 #' of different ways, some more efficient than others depending on what is available, this function first
 #' checks which analytic methods are present before selecting a numeric strategy.
@@ -351,10 +369,10 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 #'
 #' @export
 NULL
-#' @name genExp.Distribution
 #' @rdname genExp
+#' @param trafo transformation for expectation calculation, see details.
 #' @export
-NULL
+genExp.Distribution <- function() {}
 CoreStatistics$set("public","genExp",function(trafo = NULL){
   if(is.null(trafo)){
     trafo = function(x) return(x)
@@ -381,7 +399,10 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 #' @title Numeric Variance of a Distribution
 #' @name var.Distribution
 #' @description A numerc variance calculation for distributions.
-#' @usage var()
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details The variance of a probability distribution can be numerically calculated via the generalised
 #' expectation function and the formula
 #' \deqn{var_X = E[X^2] - E[X]^2}
@@ -400,9 +421,12 @@ CoreStatistics$set("public","var",function(){
 })
 
 #' @title Numeric Covariance a Distribution
-#' @name cov
+#' @name cov.Distribution
 #' @description A numeric calculation for the covariance of a (multivariate) distribution.
-#' @usage cov()
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details If the distribution is univariate then the variance is returned, otherwise the
 #' covariance is calculated numerically.
 #'
@@ -421,9 +445,12 @@ CoreStatistics$set("public","cov",function(){
 }) # TO DO
 
 #' @title Numeric Correlation a Distribution
-#' @name cor
-#' @description A numerc calculation for the correlation of a (multivariate) distribution.
-#' @usage cor()
+#' @name cor.Distribution
+#' @description A numeric calculation for the correlation of a (multivariate) distribution.
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details If the distribution is univariate then nothing is returned, otherwise the
 #' correlation is calculated numerically.
 #'
@@ -441,8 +468,10 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #' @title Mode of a Distribution
 #' @name mode
 #' @description A numeric search for the mode(s) of a distribution.
-#' @usage mode(which = 1)
-#' @param which which mode of the distribution should be returned, default is the first.
+#'
+#' @param object an object used to select a method.
+#' @param ... further arguments passed to or from other methods.
+#'
 #' @details If the distribution has multiple modes, the first is returned by default, similarly if it has
 #' one only. Otherwise the index of the mode to return can be given or "All" if all should be returned.
 #'
@@ -455,10 +484,10 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #'
 #' @export
 NULL
-#' @name mode.Distribution
 #' @rdname mode
+#' @param which which mode of the distribution should be returned, default is the first.
 #' @export
-NULL
+mode.Distribution <- function() {}
 CoreStatistics$set("public","mode",function(which = 1){
   if(which==1){
     if(testDiscrete(self)){

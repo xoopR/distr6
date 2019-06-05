@@ -5,12 +5,14 @@
 \alias{cf.Distribution}
 \title{Characteristic Function}
 \usage{
-cf(x, t)
+\method{cf}{Distribution}(object, t)
 }
 \arguments{
-\item{x}{decorated distribution, see details.}
+\item{object}{an object used to select a method.}
 
 \item{t}{integer to evaluate characteristic function at}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Characteristic function of a distribution

@@ -46,10 +46,10 @@ Decorator objects add functionality to the given Distribution object
 
 \examples{
 x = Binomial$new()
-decorate(x, CoreStatistics, R62S3 = FALSE)
+decorate(x, CoreStatistics)
 x$iqr()
 
-x = Binomial$new(decorators = CoreStatistics, R62S3 = FALSE)
+x = Binomial$new(decorators = CoreStatistics)
 x$kthmoment(4)
 }
 \seealso{

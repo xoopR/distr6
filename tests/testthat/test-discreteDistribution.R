@@ -67,7 +67,7 @@ test_that("check exotic functions silent",{
 
 test_that("check mgf, cf, pgf",{
   expect_equal(discreteTester$mgf(4), (1 - 0.9 + 0.9*exp(4))^2)
-  expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4)*1+0i)^2)
+  expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4i))^2)
   expect_equal(discreteTester$pgf(2), (1 - 0.9 + 0.9*2)^2)
 })
 

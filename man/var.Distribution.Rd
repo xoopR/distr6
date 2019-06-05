@@ -3,8 +3,10 @@
 \name{var.Distribution}
 \alias{var.Distribution}
 \title{Numeric Variance of a Distribution}
-\usage{
-var()
+\arguments{
+\item{object}{an object used to select a method.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 A numerc variance calculation for distributions.

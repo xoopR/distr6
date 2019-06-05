@@ -5,7 +5,12 @@
 \alias{skewness.Distribution}
 \title{Skewness}
 \usage{
-skewness()
+\method{skewness}{Distribution}(object)
+}
+\arguments{
+\item{object}{an object used to select a method.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Skewness of a distribution

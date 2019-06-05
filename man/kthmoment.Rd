@@ -5,12 +5,16 @@
 \alias{kthmoment.Distribution}
 \title{Kth Moment}
 \usage{
-kthmoment(k, type = "central")
+\method{kthmoment}{Distribution}(object, k, type = "central")
 }
 \arguments{
+\item{object}{an object used to select a method.}
+
 \item{k}{the kth moment to calculate}
 
 \item{type}{one of 'central', 'standard' or 'zero', abbreviations allowed}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Kth standardised or central moment of a distribution

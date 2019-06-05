@@ -5,19 +5,21 @@
 \alias{pgf.Distribution}
 \title{Probability Generating Function}
 \usage{
-pgf(x, z)
+\method{pgf}{Distribution}(object, z)
 }
 \arguments{
-\item{x}{decorated distribution, see details.}
+\item{object}{an object used to select a method.}
 
-\item{z}{integer to evaluate probability generating function at}
+\item{z}{integer to evaluate probability generating function at.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Probability generating function of a discrete distribution
 }
 \details{
 The probability generating function is defined by
-\deqn{cf_X(t) = E_X[exp(z^x)]}
+\deqn{pgf_X(t) = E_X[exp(z^x)]}
 where X is the distribution and E_X is the expectation of the distribution X.
 
 Documentation is for the S3 method, the first parameter can be omitted if calling as

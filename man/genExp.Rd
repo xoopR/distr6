@@ -5,10 +5,14 @@
 \alias{genExp.Distribution}
 \title{Generalised Expectation of a Distribution}
 \usage{
-genExp(trafo = NULL)
+\method{genExp}{Distribution}(object, trafo = NULL)
 }
 \arguments{
+\item{object}{an object used to select a method.}
+
 \item{trafo}{transformation for expectation calculation, see details.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 A generalised expectation function for distributions, for arithmetic mean and more complex

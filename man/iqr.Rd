@@ -5,7 +5,12 @@
 \alias{iqr.Distribution}
 \title{Interquartile Range}
 \usage{
-iqr()
+\method{iqr}{Distribution}(object)
+}
+\arguments{
+\item{object}{an object used to select a method.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Interquartile range of a distribution

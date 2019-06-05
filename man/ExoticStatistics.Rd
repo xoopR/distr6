@@ -50,10 +50,10 @@ The pth norm of the survival function, evaluated between limits.
 
 \examples{
 x = Exponential$new()
-decorate(x, ExoticStatistics, R62S3 = FALSE)
+decorate(x, ExoticStatistics)
 x$survival(1)
 
-x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+x = Exponential$new(decorators = ExoticStatistics)
 x$survival(4)
 }
 \seealso{
