@@ -1,7 +1,7 @@
-R62S3::R62S3(Distribution, assignEnvir = topenv(environment()))
-R62S3::R62S3(ParameterSet, assignEnvir = topenv(environment()))
-R62S3::R62S3(ExoticStatistics, list(Distribution), assignEnvir = topenv(environment()))
-R62S3::R62S3(CoreStatistics, list(Distribution), assignEnvir = topenv(environment()))
+R62S3::R62S3(Distribution, assignEnvir = parent.env(environment()))
+R62S3::R62S3(ParameterSet, assignEnvir = parent.env(environment()))
+R62S3::R62S3(ExoticStatistics, list(Distribution), assignEnvir = parent.env(environment()))
+R62S3::R62S3(CoreStatistics, list(Distribution), assignEnvir = parent.env(environment()))
 #
 #
 #   # y = sapply(ls(name=".GlobalEnv"),function(x){
