@@ -323,9 +323,9 @@ RSmisc::makeChecks(assertionName =  "Symmetric",
            pos = environment())
 
 #' @title assert/check/test/Skewness
-#' @name testSkewness
+#' @name checkSkewness
 #' @aliases
-#'   checkSkewness
+#'   testSkewness
 #'   assertSkewness
 #'   isSkewness
 #' @description Validation checks to test the skewnewss of a Distribution
@@ -341,8 +341,8 @@ RSmisc::makeChecks(assertionName =  "Symmetric",
 #' isSkewness(x, type)
 #'
 #' @examples
-#' testSkewness(Binomial$new(), "Negative Skew")
-#' testSkewness(Binomial$new(), "Positive Skew")
+#' checkSkewness(Binomial$new(), "Negative Skew")
+#' checkSkewness(Binomial$new(), "Positive Skew")
 #'
 #' @export
 RSmisc::makeChecks(assertionName =  "Skewness",
