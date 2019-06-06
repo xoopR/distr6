@@ -196,8 +196,14 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       self$description <- description
 
     if(is.null(type)){
-      if(!is.null(pdf)) type <- Reals$new(dim = length(formals(pdf)))
-      else type <- Reals$new(dim = length(formals(cdf)))
+      rm = c("...","self")
+      if(!is.null(pdf)){
+        lng = length(formals(pdf)[!(names(formals(pdf)) %in% rm)])
+        type <- Reals$new(dim = lng)
+      } else{
+        lng = length(formals(cdf)[!(names(formals(cdf)) %in% rm)])
+        type <- Reals$new(dim = length(formals(cdf)))
+      }
     }
     if(is.null(support)) support <- type
     if(is.null(distrDomain)) distrDomain <- type

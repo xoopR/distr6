@@ -53,6 +53,13 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
         self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
     }
     formals(pdf)$self <- self
+
+    cdf <- function(x1,...){
+      num = self$wrappedModels()[[1]]$cdf(x1) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit())
+      den = self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit())
+      return(num/den)
+    }
+    formals(cdf)$self <- self
   } else if(!is.null(lower) & is.null(upper)){
     # Bottom truncation
     upper = distribution$sup()
@@ -63,6 +70,13 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
         self$wrappedModels()[[1]]$pdf(x1) / (1 - self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
     }
     formals(pdf)$self <- self
+
+    cdf <- function(x1,...){
+      num = self$wrappedModels()[[1]]$cdf(x1) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit())
+      den = self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit())
+      return(num/den)
+    }
+    formals(cdf)$self <- self
   } else if(is.null(lower) & !is.null(upper)){
     # Top truncation
     lower = distribution$inf()
@@ -73,17 +87,26 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
         self$wrappedModels()[[1]]$pdf(x1) / self$wrappedModels()[[1]]$cdf(self$getUpperLimit())
     }
     formals(pdf)$self <- self
+
+    cdf <- function(x1,...){
+      num = self$wrappedModels()[[1]]$cdf(x1) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit())
+      den = self$wrappedModels()[[1]]$cdf(self$getUpperLimit()) - self$wrappedModels()[[1]]$cdf(self$getLowerLimit())
+      return(num/den)
+    }
+    formals(cdf)$self <- self
   } else{
     # No truncation
     lower = distribution$inf()
     upper = distribution$sup()
     pdf <- function(x1,...) {
-      if(x1 < self$getLowerLimit() | x1 > self$getUpperLimit())
-        return(0)
-      else
         self$wrappedModels()[[1]]$pdf(x1,...)
     }
     formals(pdf)$self <- self
+
+    cdf <- function(x1,...){
+      self$wrappedModels()[[1]]$cdf(x1,...)
+    }
+    formals(cdf)$self <- self
   }
 
   private$.cutoffInterval <- c(lower, upper)
@@ -94,7 +117,7 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
   distlist = list(distribution)
   names(distlist) = distribution$short_name
 
-  super$initialize(distlist = distlist, pdf = pdf, name = name,
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
                    short_name = short_name, support = Interval$new(lower, upper),
                    type = distribution$type(), prefixParams = FALSE)
 }) # IN PROGRESS
