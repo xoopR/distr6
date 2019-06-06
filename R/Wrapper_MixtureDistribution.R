@@ -56,7 +56,7 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL,
     if(length(x1)==1)
       return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * self$weights())))
     else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * self$weights())))
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) %*% diag(self$weights()))))
   }
   formals(pdf)$self <- self
 
