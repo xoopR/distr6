@@ -14,6 +14,14 @@ decorate(distribution, decorators)
 \description{
 A convenient S3 function to decorate R6 distributions
 }
+\examples{
+B <- Binomial$new()
+decorate(B, CoreStatistics)
+
+E <- Exponential$new()
+decorate(E, list(CoreStatistics, ExoticStatistics))
+
+}
 \seealso{
 \code{\link{DistributionDecorator}} for the abstract decorator class and
 \code{\link{CoreStatistics}}, \code{\link{ExoticStatistics}}, \code{\link{FunctionImputation}} for

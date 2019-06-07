@@ -75,26 +75,6 @@ Exponential$set("public","traits",list(type = PosReals$new(zero = T),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
 
-Exponential$set("public","properties",list(support = PosReals$new(zero = T),
-                                           distrDomain = PosReals$new(zero = T),
-                                           symmetry  = "asymmetric"))
-
-Exponential$set("private",".pdf",function(x1, log = FALSE){
-  dexp(x1, self$getParameterValue("rate"), log)
-})
-
-Exponential$set("private",".cdf",function(x1, lower.tail = TRUE, log.p = FALSE){
-  pexp(x1, self$getParameterValue("rate"), lower.tail, log.p)
-})
-
-Exponential$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
-  qexp(p, self$getParameterValue("rate"), lower.tail, log.p)
-})
-
-Exponential$set("private",".rand",function(n){
-  rexp(n, self$getParameterValue("rate"))
-})
-
 Exponential$set("public","expectation",function(){
   self$getParameterValue("scale")
 })
@@ -128,7 +108,7 @@ Exponential$set("public", "cf", function(t){
 })
 
 Exponential$set("public","survival",function(x1, log.p = FALSE){
-  self$cdf(x1, lower.tail = FALSE, log.p)
+  self$cdf(x1, lower.tail = FALSE, log.p = log.p)
 })
 
 Exponential$set("public","hazard",function(x1){
@@ -177,6 +157,14 @@ Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decora
   if(!is.null(rate)) self$setParameterValue(list(rate = rate))
   if(!is.null(scale)) self$setParameterValue(list(scale = scale))
 
-  super$initialize(decorators = decorators,...)
+  pdf <- function(x1) dexp(x1, self$getParameterValue("rate"))
+  cdf <- function(x1) pexp(x1, self$getParameterValue("rate"))
+  quantile <- function(p) qexp(p, self$getParameterValue("rate"))
+  rand <- function(n) rexp(n, self$getParameterValue("rate"))
+
+  private$.properties
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
+                   symmetric  = FALSE, ...)
   invisible(self)
 })

@@ -8,12 +8,19 @@
 #' \code{\link{CoreStatistics}}, \code{\link{ExoticStatistics}}, \code{\link{FunctionImputation}} for
 #' available decorators.
 #'
+#' @examples
+#' B <- Binomial$new()
+#' decorate(B, CoreStatistics)
+#'
+#' E <- Exponential$new()
+#' decorate(E, list(CoreStatistics, ExoticStatistics))
+#'
 #' @export
 decorate <- function(distribution, decorators){
   if(!checkmate::testList(decorators))
     decorators = list(decorators)
 
-  dist_decors = distribution$decorators
+  dist_decors = distribution$decorators()
   decors_names = lapply(decorators, function(x) x$classname)
   decorators = decorators[!(decors_names %in% dist_decors)]
 
@@ -29,22 +36,22 @@ decorate <- function(distribution, decorators){
         if(is.null(distribution$pdf(1))){
           pdf = FunctionImputation$public_methods$pdf
           formals(pdf)$self = distribution
-          distribution$.__enclos_env__$private$.setPdf(pdf)
+          distribution$.__enclos_env__$private$.pdf <- pdf
         }
         if(is.null(distribution$cdf(1))){
           cdf = FunctionImputation$public_methods$cdf
           formals(cdf)$self = distribution
-          distribution$.__enclos_env__$private$.setCdf(cdf)
+          distribution$.__enclos_env__$private$.cdf <- cdf
         }
         if(is.null(distribution$quantile(1))){
           quantile = FunctionImputation$public_methods$quantile
           formals(quantile)$self = distribution
-          distribution$.__enclos_env__$private$.setQuantile(quantile)
+          distribution$.__enclos_env__$private$.quantile <- quantile
         }
         if(is.null(distribution$rand(1))){
           rand = FunctionImputation$public_methods$rand
           formals(rand)$self = distribution
-          distribution$.__enclos_env__$private$.setRand(rand)
+          distribution$.__enclos_env__$private$.rand <- rand
         }
       } else{
         methods <- c(a_decorator$public_methods, get(paste0(a_decorator$inherit))$public_methods)
@@ -60,9 +67,7 @@ decorate <- function(distribution, decorators){
       }
     })
 
-    unlockBinding("decorators", distribution)
-    distribution$decorators = unlist(decors_names)
-    lockBinding("decorators", distribution)
+    distribution$.__enclos_env__$private$.updateDecorators(unlist(decors_names))
 
     message(paste(dist_name,"is now decorated with", paste0(decors_names,collapse = ",")))
   }

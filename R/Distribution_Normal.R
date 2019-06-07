@@ -81,26 +81,6 @@ Normal$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
 
-Normal$set("public","properties",list(support = Reals$new(zero = T),
-                                      distrDomain = Reals$new(zero = T),
-                                      symmetry  = "symmetric"))
-
-Normal$set("private",".pdf",function(x1, log = FALSE){
-  dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"), log)
-})
-
-Normal$set("private",".cdf",function(x1, lower.tail = TRUE, log.p = FALSE){
-  pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p)
-})
-
-Normal$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
-  qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"), lower.tail, log.p)
-})
-
-Normal$set("private",".rand",function(n){
-  rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
-})
-
 Normal$set("public","expectation",function(){
   self$getParameterValue("mean")
 })
@@ -131,7 +111,7 @@ Normal$set("public", "cf", function(t){
 })
 
 Normal$set("public","survival",function(x1, log.p = FALSE){
-  self$cdf(x1, lower.tail = FALSE, log.p)
+  self$cdf(x1, lower.tail = FALSE, log.p = log.p)
 })
 
 Normal$set("public","hazard",function(x1){
@@ -201,6 +181,13 @@ Normal$set("public","initialize",function(mean = 0, var = NULL, sd = NULL, prec 
   else if(!is.null(sd)) self$setParameterValue(list(sd = sd))
   else if(!is.null(prec)) self$setParameterValue(list(prec = prec))
 
-  super$initialize(decorators = decorators,...)
+  pdf <- function(x1) dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
+  cdf <- function(x1) pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
+  quantile <- function(p) qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"))
+  rand <- function(n) rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
+
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
+                   symmetric = TRUE, ...)
   invisible(self)
 })

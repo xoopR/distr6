@@ -30,7 +30,7 @@ test_that("check all accessors are working", {
   expect_equal(discreteTester$name, "Discrete Test")
   expect_equal(discreteTester$short_name, "TestDistr")
   expect_equal(discreteTester$description, NULL)
-  expect_equal(discreteTester$decorators, "CoreStatistics")
+  expect_equal(discreteTester$decorators(), "CoreStatistics")
   expect_equal(discreteTester$valueSupport(), "discrete")
   expect_equal(discreteTester$variateForm(), "univariate")
   expect_equal(discreteTester$symmetry(),"symmetric")

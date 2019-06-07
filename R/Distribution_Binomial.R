@@ -76,24 +76,6 @@ Binomial$set("public","traits",list(type = PosIntegers$new(zero = T),
                                     valueSupport = "discrete",
                                     variateForm = "univariate"))
 
-Binomial$set("public","properties",list())
-
-Binomial$set("private",".pdf",function(x1){
-  dbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-})
-
-Binomial$set("private",".cdf",function(x1){
-  pbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-})
-
-Binomial$set("private",".quantile",function(p){
-  qbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
-})
-
-Binomial$set("private",".rand",function(n){
-  rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
-})
-
 Binomial$set("public","expectation",function(){
   self$getParameterValue("size") * self$getParameterValue("prob")
 })
@@ -144,9 +126,7 @@ Binomial$set("public","cumHazard",function(x1){
 
 Binomial$set("public","setParameterValue",function(lst){
   super$setParameterValue(lst)
-  unlockBinding("properties", self)
-  self$properties$support <- Set$new(0:self$getParameterValue("size"))
-  lockBinding("properties", self)
+  private$.properties$support <- Set$new(0:self$getParameterValue("size"))
 })
 
 Binomial$set("private",".parameters", NULL)
@@ -163,17 +143,18 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = 
 
   self$setParameterValue(list(size = size, prob = prob))
 
-  unlockBinding("properties", self)
-  self$properties$support <- Set$new(0:size)
-
-  self$properties$distrDomain = PosIntegers$new(zero = T)
-
   if(prob == 0.5 | size >= 30)
-    self$properties$symmetry <- "symmetric"
+    symmetric <- TRUE
   else
-    self$properties$symmetry <- "asymmetric"
-  lockBinding("properties", self)
+    symmetric <- FALSE
 
-  super$initialize(decorators = decorators, ...)
+  pdf = function(x1) dbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
+  cdf = function(x1) pbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
+  quantile = function(p) qbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
+  rand = function(n) dbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
+
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = Set$new(0:size), distrDomain = PosIntegers$new(zero = T),
+                   symmetric = symmetric, ...)
   invisible(self)
 })

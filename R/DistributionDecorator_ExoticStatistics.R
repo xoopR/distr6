@@ -18,11 +18,11 @@
 #' \code{survival(x1, log = FALSE)} \tab Survival function \tab \code{\link{survival}} \cr
 #' \code{hazard(x1, log = FALSE)} \tab Hazard function \tab \code{\link{hazard}} \cr
 #' \code{cumHazard(x1, log = FALSE)} \tab Cumulative hazard function \tab \code{\link{cumHazard}} \cr
-#' \code{cdfAntiDeriv(lower = self$inf(), upper = self$sup())} \tab Anti-derivative of cdf \tab \code{\link{cdfAntiDeriv}} \cr
-#' \code{survivalAntiDeriv(lower = self$inf(), upper = self$sup())} \tab Anti-derivative of survival function \tab \code{\link{survivalAntiDeriv}} \cr
-#' \code{cdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab P-norm of cdf \tab \code{\link{cdfPNorm}} \cr
-#' \code{pdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab P-norm of pdf \tab \code{\link{pdfPNorm}} \cr
-#' \code{survivalPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
+#' \code{cdfAntiDeriv(lower = NULL, upper = NULL))} \tab Anti-derivative of cdf \tab \code{\link{cdfAntiDeriv}} \cr
+#' \code{survivalAntiDeriv(lower = NULL, upper = NULL)} \tab Anti-derivative of survival function \tab \code{\link{survivalAntiDeriv}} \cr
+#' \code{cdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of cdf \tab \code{\link{cdfPNorm}} \cr
+#' \code{pdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of pdf \tab \code{\link{pdfPNorm}} \cr
+#' \code{survivalPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
 #' }
 #'
 #'
@@ -67,10 +67,11 @@ ExoticStatistics <- R6::R6Class("ExoticStatistics", inherit = DistributionDecora
 #'
 #' @export
 NULL
-ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = self$inf(),
-                                                        upper = self$sup()){
+ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NULL){
+  if(is.null(lower)) lower <- self$inf()
+  if(is.null(upper)) upper <- self$sup()
   return(self$cdfPNorm(p = 1, lower, upper))
-}) # NEEDS TESTING (p-norm)
+})
 
 #' @title Survival Function Anti-Derivative
 #' @name survivalAntiDeriv
@@ -90,8 +91,9 @@ ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = self$inf(),
 #'
 #' @export
 NULL
-ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = self$inf(),
-                                                             upper = self$sup()) {
+ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper = NULL) {
+  if(is.null(lower)) lower <- self$inf()
+  if(is.null(upper)) upper <- self$sup()
   return(self$survivalPNorm(p = 1, lower, upper))
 }) # NEEDS TESTING (p-norm)
 
@@ -204,8 +206,10 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log=FALSE) {
 #' an R6 method.
 #'
 #' @export
-ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = self$inf(),
-                                                    upper = self$sup()) {
+ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
+  if(is.null(lower)) lower <- self$inf()
+  if(is.null(upper)) upper <- self$sup()
+
   if(testContinuous(self))
     return(generalPNorm(self$cdf, p, lower, upper))
 }) # NEEDS TESTING
@@ -228,8 +232,10 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = self$inf(),
 #' an R6 method.
 #'
 #' @export
-ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = self$inf(),
-                                                    upper = self$sup()) {
+ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
+  if(is.null(lower)) lower <- self$inf()
+  if(is.null(upper)) upper <- self$sup()
+
   if(testContinuous(self))
     return(generalPNorm(self$pdf, p, lower, upper))
 }) # NEEDS TESTING
@@ -252,8 +258,10 @@ ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = self$inf(),
 #' an R6 method.
 #'
 #' @export
-ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = self$inf(),
-                                                         upper = self$sup()) {
+ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, upper = NULL){
+  if(is.null(lower)) lower <- self$inf()
+  if(is.null(upper)) upper <- self$sup()
+
   if(testContinuous(self))
     return(generalPNorm(self$survival, p, lower, upper))
 }) # NEEDS TESTING

@@ -236,30 +236,32 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     else
       variateForm = "multivariate"
 
-    self$traits <- c(self$traits, type = type)
-    self$traits <- c(self$traits, valueSupport = valueSupport)
-    self$traits <- c(self$traits, variateForm = variateForm)
+    self$traits$type <- type
+    self$traits$valueSupport <- valueSupport
+    self$traits$variateForm <- variateForm
 
-    self$properties <- c(self$properties, support = support)
-    self$properties <- c(self$properties, distrDomain = distrDomain)
+    private$.properties$support <- support
+    private$.properties$distrDomain <- distrDomain
     symm = ifelse(symmetric,"symmetric","asymmetric")
-    self$properties <- c(self$properties, symmetry = symm)
+    private$.properties$symmetry <- symm
 
     if(!is.null(pdf)){
       if(!is.null(formals(pdf)$self))
         formals(pdf)$self = self
       else
         formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
-      private$.setPdf(pdf)
-    }
+      private$.pdf <- pdf
+    } else
+      private$.pdf <- function(...) return(NULL)
 
     if(!is.null(cdf)){
       if(!is.null(formals(cdf)$self))
         formals(cdf)$self = self
       else
         formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-      private$.setCdf(cdf)
-    }
+      private$.cdf <- cdf
+    } else
+      private$.cdf <- function(...) return(NULL)
 
     if(!is.null(pdf) & !is.null(cdf)){
       checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
@@ -274,16 +276,18 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(quantile)$self = self
       else
         formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-      private$.setQuantile(quantile)
-    }
+      private$.quantile <- quantile
+    } else
+      private$.quantile <- function(...) NULL
 
     if(!is.null(rand)){
       if(!is.null(formals(rand)$self))
         formals(rand)$self = self
       else
         formals(rand) = c(formals(rand),list(self=self),alist(...=))
-      private$.setRand(rand)
-    }
+      private$.rand <- rand
+    } else
+      private$.rand <- function(...) NULL
 
     if(!is.null(parameters)){
       checkmate::assertClass(parameters,"ParameterSet")
@@ -297,28 +301,38 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     if(!is.null(decorators))
       suppressMessages(decorate(self, decorators))
 
+    if(!is.null(pdf)) private$.pdf <- pdf
+    if(!is.null(cdf)) private$.cdf <- cdf
+    if(!is.null(quantile)) private$.quantile <- quantile
+    if(!is.null(rand)) private$.rand <- rand
+
+
+    if(!is.null(symmetry)){
+      symm = ifelse(symmetric,"symmetric","asymmetric")
+      private$.properties$symmetry <- symm
+    }
+    if(!is.null(support)) private$.properties$support <- support
+    if(!is.null(distrDomain)) private$.properties$distrDomain <- distrDomain
+
     # Update skewness and kurtosis
-  unlockBinding("properties",self)
     x = try(self$kurtosis(excess = TRUE), silent = TRUE)
     if(class(x) == "try-error")
-      self$properties$kurtosis <- NULL
+      private$.properties$kurtosis <- NULL
     else
-      self$properties$kurtosis <- exkurtosisType(x)
+      private$.properties$kurtosis <- exkurtosisType(x)
 
     x = try(self$skewness(), silent = TRUE)
     if(class(x) == "try-error")
-      self$properties$skewness <- NULL
+      private$.properties$skewness <- NULL
     else
-      self$properties$skewness <- skewType(x)
+      private$.properties$skewness <- skewType(x)
 
     # private$.setWorkingSupport()
     lockBinding("name",self)
     lockBinding("short_name",self)
     lockBinding("description",self)
     lockBinding("traits",self)
-    lockBinding("properties",self)
     lockBinding("parameters",self)
-    lockBinding("decorators",self)
 
   invisible(self)
 }) # IN PROGRESS/NEEDS TESTING
@@ -375,13 +389,13 @@ Distribution$set("public","summary",function(full=T){
 
     if(inherits(a_kurt,"try-error"))
       cat("\n Properties: ", self$distrDomain()$getSymbol(), "; ", self$symmetry(),
-          "\n\t See getProperties() for more", sep="")
+          "\n\t See properties() for more", sep="")
     else
       cat("\n Properties: ", self$kurtosisType(), "; ", self$skewnessType(),"; ", self$symmetry(),
-          "\n\t See getProperties() for more", sep="")
+          "\n\t See properties() for more", sep="")
 
-    if(length(self$decorators)!=0)
-      cat("\n\n Decorated with: ", paste0(self$decorators,collapse=", "))
+    if(length(self$decorators())!=0)
+      cat("\n\n Decorated with: ", paste0(self$decorators(),collapse=", "))
 
   } else {
     if(length(private$.parameters)!=0){
@@ -391,8 +405,8 @@ Distribution$set("public","summary",function(full=T){
                 sep = " = ", collapse = "; "))
     } else
         cat(self$name)
-    cat("\n Scientific Type:",self$type()$getSymbol(),"\t See getTraits() for more")
-    cat("\n Support:",self$support()$getSymbol(),"\t\t See getProperties() for more")
+    cat("\n Scientific Type:",self$type()$getSymbol(),"\t See traits for more")
+    cat("\n Support:",self$support()$getSymbol(),"\t\t See properties() for more")
   }
 }) # NEEDS TESTING
 Distribution$set("public","plot",function(){}) # TO DO
@@ -402,7 +416,9 @@ Distribution$set("public","qqplot",function(){}) # TO DO
 Distribution$set("public","name",character(0))
 Distribution$set("public","short_name",character(0))
 Distribution$set("public","description",NULL)
-Distribution$set("public","decorators",list())
+Distribution$set("private",".decorators", NULL)
+Distribution$set("public","decorators", function() return(private$.decorators))
+Distribution$set("private",".updateDecorators", function(decs) private$.decorators <- decs)
 
 # Traits Accessors
 Distribution$set("public","traits",list())
@@ -417,15 +433,16 @@ Distribution$set("public","type",function(){
 })
 
 # `Properties` Accessors
-Distribution$set("public","properties",list())
+Distribution$set("private",".properties",NULL)
+Distribution$set("public","properties",function() return(private$.properties))
 Distribution$set("public","support",function(){
-  return(self$properties[["support"]])
+  return(self$properties()[["support"]])
 })
 Distribution$set("public","distrDomain",function(){
-  return(self$properties[["distrDomain"]])
+  return(self$properties()[["distrDomain"]])
 })
 Distribution$set("public","symmetry",function(){
-  return(self$properties[["symmetry"]])
+  return(self$properties()[["symmetry"]])
 })
 
 # Parameter Accessors
@@ -440,19 +457,17 @@ Distribution$set("public","setParameterValue",function(lst){
   self$parameters()$setParameterValue(lst)
 
   # Update skewness and kurtosis
-  unlockBinding("properties", self)
   x = try(self$kurtosis(excess = TRUE), silent = TRUE)
   if(class(x) == "try-error")
-    self$properties$kurtosis <- NULL
+    private$.properties$kurtosis <- NULL
   else
-    self$properties$kurtosis <- exkurtosisType(x)
+    private$.properties$kurtosis <- exkurtosisType(x)
 
   x = try(self$skewness(), silent = TRUE)
   if(class(x) == "try-error")
-    self$properties$skewness <- NULL
+    private$.properties$skewness <- NULL
   else
-    self$properties$skewness <- skewType(x)
-  lockBinding("properties", self)
+    private$.properties$skewness <- skewType(x)
 
   #private$.setWorkingSupport()
   invisible(self)
@@ -479,7 +494,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
   if(log) return(log(pdf))
   else return(pdf)
 }) # NEEDS TESTING
-Distribution$set("public","cdf",function(x1, lower.tail = TRUE, log.p = FALSE,...){
+Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE){
 
   if(testUnivariate(self)){
     cdf = x1
@@ -527,14 +542,14 @@ Distribution$set("public","inf",function(){
 }) # DONE
 
 Distribution$set("public", "kurtosisType", function() {
-  x = self$properties$kurtosis
+  x = self$properties()$kurtosis
   if(inherits(x,"try-error"))
     return(NA)
   else
     return(x)
 })
 Distribution$set("public", "skewnessType", function() {
-  x = self$properties$skewness
+  x = self$properties()$skewness
   if(inherits(x,"try-error"))
     return(NA)
   else
@@ -558,30 +573,10 @@ Distribution$set("public","liesInDistrDomain",function(x){
 #-------------------------------------------------------------
 # Distribution Private Variables
 #-------------------------------------------------------------
-Distribution$set("private",".pdf", function(...) return(NULL))
-Distribution$set("private",".cdf", function(...) return(NULL))
-Distribution$set("private",".quantile", function(...) return(NULL))
-Distribution$set("private",".rand", function(...) return(NULL))
-Distribution$set("private",".setPdf",function(pdf){
-  unlockBinding(".pdf",private)
-  private$.pdf <- pdf
-  lockBinding(".pdf",private)
-})
-Distribution$set("private",".setCdf",function(cdf){
-  unlockBinding(".cdf",private)
-  private$.cdf <- cdf
-  lockBinding(".cdf",private)
-})
-Distribution$set("private",".setQuantile",function(quantile){
-  unlockBinding(".quantile",private)
-  private$.quantile <- quantile
-  lockBinding(".quantile",private)
-})
-Distribution$set("private",".setRand",function(rand){
-  unlockBinding(".rand",private)
-  private$.rand <- rand
-  lockBinding(".rand",private)
-})
+Distribution$set("private",".pdf", NULL)
+Distribution$set("private",".cdf", NULL)
+Distribution$set("private",".quantile", NULL)
+Distribution$set("private",".rand", NULL)
 Distribution$set("private",".parameters",data.frame())
 Distribution$set("private",".workingSupport",NULL) # DONE
 

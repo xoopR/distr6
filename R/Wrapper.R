@@ -86,9 +86,7 @@ DistributionWrapper$set("public","setParameterValue",function(lst){
   row.names(params) <- NULL
   private$.parameters <- as.ParameterSet(params)
 
-  unlockBinding("properties",self)
-  self$properties$support <- do.call(product,lapply(self$wrappedModels(),function(x) x$support()))
-  lockBinding("properties",self)
+  private$.properties$support <- do.call(product,lapply(self$wrappedModels(),function(x) x$support()))
 
   invisible(self)
 }) # NEEDS TESTING

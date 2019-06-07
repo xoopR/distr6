@@ -32,11 +32,11 @@ Decorator objects add functionality to the given Distribution object
 \code{survival(x1, log = FALSE)} \tab Survival function \tab \code{\link{survival}} \cr
 \code{hazard(x1, log = FALSE)} \tab Hazard function \tab \code{\link{hazard}} \cr
 \code{cumHazard(x1, log = FALSE)} \tab Cumulative hazard function \tab \code{\link{cumHazard}} \cr
-\code{cdfAntiDeriv(lower = self$inf(), upper = self$sup())} \tab Anti-derivative of cdf \tab \code{\link{cdfAntiDeriv}} \cr
-\code{survivalAntiDeriv(lower = self$inf(), upper = self$sup())} \tab Anti-derivative of survival function \tab \code{\link{survivalAntiDeriv}} \cr
-\code{cdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab P-norm of cdf \tab \code{\link{cdfPNorm}} \cr
-\code{pdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab P-norm of pdf \tab \code{\link{pdfPNorm}} \cr
-\code{survivalPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
+\code{cdfAntiDeriv(lower = NULL, upper = NULL))} \tab Anti-derivative of cdf \tab \code{\link{cdfAntiDeriv}} \cr
+\code{survivalAntiDeriv(lower = NULL, upper = NULL)} \tab Anti-derivative of survival function \tab \code{\link{survivalAntiDeriv}} \cr
+\code{cdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of cdf \tab \code{\link{cdfPNorm}} \cr
+\code{pdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of pdf \tab \code{\link{pdfPNorm}} \cr
+\code{survivalPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
 }
 }
 
