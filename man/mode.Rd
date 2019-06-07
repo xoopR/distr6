@@ -18,10 +18,5 @@ If the distribution has multiple modes, the first is returned by default, simila
 one only. Otherwise the index of the mode to return can be given or "All" if all should be returned.
 
 Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
-}
-\seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
+an R6 method.
 }

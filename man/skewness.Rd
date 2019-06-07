@@ -3,11 +3,6 @@
 \name{skewness}
 \alias{skewness}
 \title{Skewness}
-\arguments{
-\item{object}{an object used to select a method.}
-
-\item{...}{further arguments passed to or from other methods.}
-}
 \description{
 Skewness of a distribution
 }
@@ -19,10 +14,5 @@ where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the dis
 standard deviation of the distribution.
 
 Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
-}
-\seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
+an R6 method.
 }

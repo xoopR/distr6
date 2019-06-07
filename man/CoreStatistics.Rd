@@ -18,14 +18,14 @@ Decorator objects add functionality to the given Distribution object
  \code{\link{decorate}} function to decorate a Distribution.
 
  All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations.
+ from analytic computations. See below for the methods added to a distribution after decorating with
+ \code{CoreStatistics}.
 }
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{dist} \tab distribution \tab Distribution to decorate. \cr
-\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
 }
 }
 
@@ -59,6 +59,6 @@ x$kthmoment(4)
 
 }
 \seealso{
-\code{\link{DistributionDecorator}}
+\code{\link{DistributionDecorator}} and \code{\link{ExoticStatistics}}
 }
 \keyword{datasets}

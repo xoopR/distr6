@@ -8,7 +8,6 @@
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{dist} \tab distribution \tab Distribution to decorate. \cr
-#' \code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
 #' }
 #'
 #' @section Added Methods:
@@ -35,9 +34,10 @@
 #'  \code{\link{decorate}} function to decorate a Distribution.
 #'
 #'  All methods in this decorator use numerical approximations and therefore better results may be available
-#'  from analytic computations.
+#'  from analytic computations. See below for the methods added to a distribution after decorating with
+#'  \code{CoreStatistics}.
 #'
-#' @seealso \code{\link{DistributionDecorator}}
+#' @seealso \code{\link{DistributionDecorator}} and \code{\link{ExoticStatistics}}
 #'
 #' @examples
 #' x = Binomial$new()
@@ -64,11 +64,7 @@ CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -89,11 +85,7 @@ CoreStatistics$set("public", "mgf", function(t) {
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -115,11 +107,7 @@ CoreStatistics$set("public", "cf", function(t) {
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -142,11 +130,7 @@ CoreStatistics$set("public", "pgf", function(z) {
 #' where q is the quantile, or inverse distribution function.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -169,11 +153,7 @@ CoreStatistics$set("public", "iqr", function() {
 #' type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -200,9 +180,6 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #' @name skewness
 #' @description Skewness of a distribution
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
-#'
 #' @details The skewness of a distribution is defined by the third standardised moment of the
 #' distribution,
 #' \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
@@ -210,11 +187,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #' standard deviation of the distribution.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -237,11 +210,7 @@ CoreStatistics$set("public", "skewness", function() {
 #' standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -276,11 +245,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #' is computed.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -334,11 +299,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 #' (which is the second moment).
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -377,11 +338,7 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 #' \deqn{var_X = E[X^2] - E[X]^2}
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -400,11 +357,7 @@ CoreStatistics$set("public","var",function(){
 #' covariance is calculated numerically.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -424,11 +377,7 @@ CoreStatistics$set("public","cov",function(){
 #' correlation is calculated numerically.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL
@@ -446,11 +395,7 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #' one only. Otherwise the index of the mode to return can be given or "All" if all should be returned.
 #'
 #' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-#' with \code{decorate(Distribution, CoreStatistics)}.
-#'
-#' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-#' \code{\link{ExoticStatistics}} for other available methods for decorating.
+#' an R6 method.
 #'
 #' @export
 NULL

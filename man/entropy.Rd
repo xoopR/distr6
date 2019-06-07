@@ -20,10 +20,5 @@ where f_X is the pdf of distribution X. The base of the logarithm of the equatio
 type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
 
 Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
-}
-\seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
+an R6 method.
 }

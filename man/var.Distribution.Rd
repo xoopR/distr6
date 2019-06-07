@@ -17,10 +17,5 @@ expectation function and the formula
 \deqn{var_X = E[X^2] - E[X]^2}
 
 Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
-}
-\seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
+an R6 method.
 }
