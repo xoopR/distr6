@@ -70,7 +70,7 @@ CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#'export
+#' @export
 NULL
 CoreStatistics$set("public", "mgf", function(t) {
   return(self$genExp(trafo = function(x) {return(exp(x*t))}))
@@ -95,7 +95,7 @@ CoreStatistics$set("public", "mgf", function(t) {
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public", "cf", function(t) {
   if(testDiscrete(self)){
@@ -121,7 +121,7 @@ CoreStatistics$set("public", "cf", function(t) {
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public", "pgf", function(z) {
   if(testDiscrete(self)){
@@ -148,12 +148,12 @@ CoreStatistics$set("public", "pgf", function(z) {
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public", "iqr", function() {
   return(self$quantile(0.75) - self$quantile(0.25))
 })
-#'
+
 #' @title Entropy
 #' @name entropy
 #'
@@ -175,7 +175,7 @@ CoreStatistics$set("public", "iqr", function() {
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public", "entropy", function(base = 2) {
   if(testDiscrete(self)){
@@ -216,7 +216,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public", "skewness", function() {
   return(self$kthmoment(k = 3, type = "standard"))
@@ -243,7 +243,7 @@ CoreStatistics$set("public", "skewness", function() {
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
   kurtosis = self$kthmoment(k = 4, type = "standard")
@@ -282,7 +282,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 
@@ -340,7 +340,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public","genExp",function(trafo = NULL){
   if(is.null(trafo)){
@@ -383,7 +383,7 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public","var",function(){
   return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
@@ -406,7 +406,7 @@ CoreStatistics$set("public","var",function(){
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public","cov",function(){
   if(testUnivariate(self))
@@ -430,7 +430,7 @@ CoreStatistics$set("public","cov",function(){
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public","cor",function(){}) # TO DO
 
@@ -452,7 +452,7 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #' @seealso \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 #' \code{\link{ExoticStatistics}} for other available methods for decorating.
 #'
-#' export
+#' @export
 NULL
 CoreStatistics$set("public","mode",function(which = 1){
   if(which==1){

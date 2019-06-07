@@ -27,6 +27,4 @@ with \code{decorate(Distribution, CoreStatistics)}.
 \seealso{
 \code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
 \code{\link{ExoticStatistics}} for other available methods for decorating.
-
-export
 }

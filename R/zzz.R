@@ -1,10 +1,8 @@
-# # f <- sys.function(-1)
-# # ns <- environment(f)
-# R62S3::R62S3(Distribution, assignEnvir = parent.env(environment()))
-# R62S3::R62S3(ParameterSet, assignEnvir = parent.env(environment()))
-# R62S3::R62S3(ExoticStatistics, list(Distribution), assignEnvir = parent.env(environment()))
-# R62S3::R62S3(CoreStatistics, list(Distribution), assignEnvir = parent.env(environment()))
-# #
+R62S3::R62Fun(Distribution, assignEnvir = topenv())
+R62S3::R62Fun(ParameterSet, assignEnvir = topenv())
+R62S3::R62Fun(ExoticStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution))
+R62S3::R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution))
+#
 # # #
 # # #   # y = sapply(ls(name=".GlobalEnv"),function(x){
 # # #   #   if(inherits(get(x),"R6ClassGenerator")){
