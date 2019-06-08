@@ -489,7 +489,7 @@ Distribution$set("public","properties",function() return(private$.properties))
 #' @description Returns the support of the distribution.
 #' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
 #' greater than zero,
-#' \deqn{Supp(X) = \{ x \in \mathbb{R}: f_X(x) > 0\}}
+#' \deqn{Supp(X) = \{ x \in R: f_X(x) > 0\}}
 #' where f_X is the pmf if distribution X is discrete, otherwise the pdf.
 #' @seealso \code{\link{SetInterval}} and \code{\link{properties}}
 #' @export
@@ -751,7 +751,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #'
 #' @details
 #'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
-#'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in \mathbb{R}: F_X(x) \ge p\}}
+#'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}
 #'
 #'  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
 #'
