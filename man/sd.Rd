@@ -21,5 +21,5 @@ If the variance is not found in the distribution (analytically or numerically), 
 }
 
 \seealso{
-\code{\link{variance}}
+\code{\link{var.Distribution}}
 }

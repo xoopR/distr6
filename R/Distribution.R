@@ -821,7 +821,7 @@ Distribution$set("public","rand",function(n){
 #' @details The standard deviation is analytically computed as the square root of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
 #'
-#' @seealso \code{\link{variance}}
+#' @seealso \code{\link{var.Distribution}}
 #'
 #' @export
 NULL
