@@ -79,15 +79,13 @@
 #'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
 #'   }
 #'
-#' @section Math/Stats Methods:
+#' @section p/d/q/r Methods:
 #'  \tabular{ll}{
 #'   \strong{Method} \tab \strong{Link} \cr
 #'   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
 #'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
 #'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n)} \tab \code{\link{rand}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
-#'   \code{median()} \tab \code{link{median.Distribution}} \cr
+#'   \code{rand(n)} \tab \code{\link{rand}}
 #'  }
 #'
 #' @section Parameter Methods:
@@ -108,12 +106,12 @@
 #'
 #' @section Representation Methods:
 #' \tabular{ll}{
-#'   \strong{Method} \tab \strong{Details} \cr
-#'   \code{strprint()} \tab Character representation of print \cr
-#'   \code{print()} \tab Print method \cr
-#'   \code{summary(full = T)} \tab Summary method \cr
-#'   \code{plot()} \tab Plotting method \cr
-#'   \code{qqplot()} \tab QQ-Plots \cr
+#'   \strong{Method} \tab \strong{Link} \cr
+#'   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+#'   \code{print()} \tab \code{\link[base]{print}} \cr
+#'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+#'   \code{plot()} \tab Coming Soon. \cr
+#'   \code{qqplot()} \tab Coming Soon. \cr
 #' }
 #'
 #'
@@ -358,7 +356,20 @@ Distribution$set("public","print",function(...){
   cat(self$strprint())
   invisible(self)
 })
-Distribution$set("public","summary",function(full=T){
+
+#' @title Distribution Summary
+#' @description Summary method for distribution objects (and all child classes).
+#'
+#' @section R6 Usage: $summary(full = TRUE)
+#' @param object distribution.
+#' @param full logical; if TRUE (default), gives an extended summary, otherwise brief.
+#' @param ... additional arguments.
+#'
+#' @seealso \code{\link{Distribution}}
+#'
+#' @export
+summary.Distribution <- function(object, full = TRUE,...) {}
+Distribution$set("public","summary",function(full = TRUE,...){
 
   which_params = self$parameters()$as.data.frame()$settable
 
@@ -414,6 +425,7 @@ Distribution$set("public","summary",function(full=T){
     cat("\n Support:",self$support()$getSymbol(),"\t\t See properties() for more")
   }
 })
+
 Distribution$set("public","plot",function(){}) # TO DO
 Distribution$set("public","qqplot",function(){}) # TO DO
 
@@ -479,7 +491,9 @@ Distribution$set("public","type",function(){
 #' @seealso \code{\link{SetInterval}}
 #' @export
 NULL
-Distribution$set("public","properties",function() return(private$.properties))
+Distribution$set("public","properties",function(){
+  return(private$.properties)
+})
 
 #' @name support
 #' @title Support Accessor
@@ -821,7 +835,7 @@ Distribution$set("public","rand",function(n){
 #' @details The standard deviation is analytically computed as the square root of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
 #'
-#' @seealso \code{\link{var.Distribution}}
+#' @seealso \code{\link{var}}
 #'
 #' @export
 NULL
@@ -848,6 +862,26 @@ Distribution$set("public","median",function(na.rm = NULL,...){
   return(self$quantile(0.5))
 })
 
+#' @title Distribution Interquartile Range
+#' @name iqr
+#' @description Interquartile range of a distribution
+#'
+#' @usage iqr(object)
+#' @section R6 Usage: $iqr()
+#'
+#' @param object Distribution.
+#'
+#' @details The interquartile range of a distribution is defined by
+#' \deqn{iqr_X = q(0.75) - q(0.25)}
+#' where q is the quantile, or inverse distribution function.
+#'
+#' Returns error if the quantile function is missing.
+#'
+#' @export
+NULL
+Distribution$set("public", "iqr", function() {
+  return(self$quantile(0.75) - self$quantile(0.25))
+})
 #-------------------------------------------------------------
 # Public Methods - Validation
 #-------------------------------------------------------------

@@ -1,10 +1,15 @@
+#' @include SetInterval_SpecialSet.R ParameterSet.R
 #-------------------------------------------------------------
 # Normal Distribution Documentation
 #-------------------------------------------------------------
 #' @title Normal Distribution
+#'
 #' @description Mathematical and statistical functions for the Normal distribution parameterised
 #' with mean and variance, sd or precision.
+#'
 #' @name Normal
+#'
+#' @section Constructor: Normal$new(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -26,33 +31,31 @@
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
+#' @inheritSection Distribution p/d/q/r Methods
+#' @inheritSection Distribution Parameter Methods
+#' @inheritSection Distribution Validation Methods
+#' @inheritSection Distribution Representation Methods
 #'
-#' @section Public Methods:
-#'  \tabular{lrr}{
-#'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
-#'   \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
-#'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
-#'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
-#'   \code{normectation()} \tab numeric \tab normectation.  \cr
-#'   \code{var()} \tab numeric \tab Variance.  \cr
-#'   \code{skewness()} \tab numeric \tab Skewness. \cr
-#'   \code{kurtosis(excess = TRUE)} \tab numeric \tab Kurtosis. Kurtosis - 3 if excess = TRUE. \cr
-#'   \code{entropy(base = 2)} \tab numeric \tab Entropy. Shannon if base = 2. \cr
-#'   \code{mode()} \tab numeric \tab Mode. \cr
-#'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
-#'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-#'   \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
-#'   \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
-#'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
+#' @section Statistical Methods:
+#'  \tabular{ll}{
+#'   \strong{Method} \tab \strong{Link} \cr
+#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
+#'   \code{var()} \tab \code{\link{var}} \cr
+#'   \code{skewness()} \tab \code{\link{skewness}} \cr
+#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
+#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
+#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
+#'   \code{cf(t)} \tab \code{\link{cf}} \cr
+#'   \code{sd()} \tab \code{\link{sd}} \cr
+#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
+#'   \code{iqr()} \tab \code{\link{iqr}} \cr
 #'   }
 #'
+#' @export
 NULL
 #-------------------------------------------------------------
 # Normal Distribution Definition
 #-------------------------------------------------------------
-#' @include SetInterval_SpecialSet.R ParameterSet.R
-#' @export
 Normal <- R6::R6Class("Normal", inherit = Distribution, lock_objects = F)
 Normal$set("public","name","Normal")
 Normal$set("public","short_name","Norm")
@@ -60,51 +63,33 @@ Normal$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
 
-Normal$set("public","expectation",function(){
+Normal$set("public","mean",function(){
   self$getParameterValue("mean")
 })
-
 Normal$set("public","var",function(){
   self$getParameterValue("var")
 })
-
-Normal$set("public","skewness",function() return(0))
-
+Normal$set("public","skewness",function(){
+  return(0)
+})
 Normal$set("public","kurtosis",function(excess = TRUE){
   if(excess)
     return(0)
   else
     return(3)
 })
-
 Normal$set("public","entropy",function(base = 2){
   return(0.5 * log(2 * pi * exp(1) * self$getParameterValue("var"), base))
 })
-
 Normal$set("public", "mgf", function(t){
   return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
 })
-
 Normal$set("public", "cf", function(t){
   return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
 })
-
-Normal$set("public","survival",function(x1, log.p = FALSE){
-  self$cdf(x1, lower.tail = FALSE, log.p = log.p)
+Normal$set("public","mode",function(){
+  return(self$getParameterValue("mean"))
 })
-
-Normal$set("public","hazard",function(x1){
-  self$pdf(x1)/self$survival(x1)
-})
-
-Normal$set("public","cumHazard",function(x1){
-  -self$cdf(x1, log.p = TRUE)
-})
-
-Normal$set("public","mode",function() return(self$getParameterValue("mean")))
-
-Normal$set("private",".parameters", NULL)
-
 Normal$set("public","initialize",function(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL){
 
   var.bool = FALSE

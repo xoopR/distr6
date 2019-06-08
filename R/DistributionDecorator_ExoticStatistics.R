@@ -115,21 +115,18 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper
 #'
 #' @export
 NULL
-ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
-  if(!is.null(self$cdf(x1))){
-    if(log)
-      return(log(1 - self$cdf(x1)))
-    else
-      return(1 - self$cdf(x1))
-  } else {
+ExoticStatistics$set("public", "survival", function(x1, log.p = FALSE) {
+  if(!is.null(self$cdf(x1)))
+    self$cdf(x1 = x1, lower.tail = FALSE, log.p = log.p)
+  else {
     message(.distr6$message_numeric)
     surv = integrate(self$pdf, x1, self$sup())$value
-    if(log)
+    if(log.p)
       return(log(surv))
     else
       return(surv)
   }
-}) # DONE
+})
 
 #' @title Hazard Function
 #' @name hazard
@@ -183,9 +180,9 @@ ExoticStatistics$set("public", "hazard", function(x1, log=FALSE) {
 #' @export
 ExoticStatistics$set("public", "cumHazard", function(x1, log=FALSE) {
   if(!log){
-    return(-log(self$survival(x1)))
+    return(-self$survival(x1, log.p = TRUE))
   } else
-    return(log(-log(self$survival(x1))))
+    return(log(-self$survival(x1, log.p = TRUE)))
 })
 
 #' @title Cumulative Distribution Function P-Norm

@@ -23,7 +23,7 @@
 #' \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
 #' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 #' \code{mode(which = 1)} \tab Mode \tab \code{\link{mode}} \cr
-#' \code{var()} \tab Variance \tab \code{\link{var.Distribution}} \cr
+#' \code{var()} \tab Variance \tab \code{\link{var}} \cr
 #' \code{cov()} \tab Covariance \tab \code{\link{cov.Distribution}} \cr
 #' \code{cor()} \tab Correlation \tab \code{\link{cor.Distribution}} \cr
 #' }
@@ -51,20 +51,30 @@
 #' @export
 CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 
+#-------------------------------------------------------------
+# Public Methods - Documented in Binomial Distribution
+#-------------------------------------------------------------
+#-------------------------------------------------------------
+# Public Methods - mgf
+#-------------------------------------------------------------
 #' @title Moment Generating Function
 #' @name mgf
 #' @description Moment generating function of a distribution
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage mgf(object, t)
+#' @section R6 Usage: $mgf(t)
+#'
+#' @param object Distribution.
 #' @param t integer to evaluate moment generating function at.
 #'
 #' @details The moment generating function is defined by
 #' \deqn{mgf_X(t) = E_X[exp(xt)]}
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -72,20 +82,27 @@ CoreStatistics$set("public", "mgf", function(t) {
   return(self$genExp(trafo = function(x) {return(exp(x*t))}))
 })
 
+#-------------------------------------------------------------
+# Public Methods - cf
+#-------------------------------------------------------------
 #' @title Characteristic Function
 #' @name cf
 #' @description Characteristic function of a distribution
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
-#' @param t integer to evaluate characteristic function at
+#' @usage cf(object, t)
+#' @section R6 Usage: $cf(t)
+#'
+#' @param object Distribution.
+#' @param t integer to evaluate characteristic function at.
 #'
 #' @details The characteristic function is defined by
 #' \deqn{cf_X(t) = E_X[exp(xti)]}
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#'@seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -95,19 +112,27 @@ CoreStatistics$set("public", "cf", function(t) {
   }
 })
 
+#-------------------------------------------------------------
+# Public Methods - pgf
+#-------------------------------------------------------------
 #' @title Probability Generating Function
 #' @name pgf
+#' @description Probability generating function of a distribution
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage pgf(object, z)
+#' @section R6 Usage: $pgf(z)
 #'
-#' @description Probability generating function of a discrete distribution
+#' @param object Distribution.
+#' @param z integer to evaluate characteristic function at.
+#'
 #' @details The probability generating function is defined by
 #' \deqn{pgf_X(t) = E_X[exp(z^x)]}
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#'@seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -118,42 +143,28 @@ CoreStatistics$set("public", "pgf", function(z) {
   }
 })
 
-#' @title Interquartile Range
-#' @name iqr
-#'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
-#'
-#' @description Interquartile range of a distribution
-#' @details The interquartile range of a distribution is defined by
-#' \deqn{iqr_X = q(0.75) - q(0.25)}
-#' where q is the quantile, or inverse distribution function.
-#'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
-#'
-#' @export
-NULL
-CoreStatistics$set("public", "iqr", function() {
-  return(self$quantile(0.75) - self$quantile(0.25))
-})
-
-#' @title Entropy
+#-------------------------------------------------------------
+# Public Methods - Entropy
+#-------------------------------------------------------------
+#' @title Distribution Entropy
 #' @name entropy
-#'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
-#' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
-#'
 #' @description (Information) Entropy of a distribution
 #'
-#' @details The entropy of a distribution is defined by
-#' \deqn{- sum f_X * log(f_X)}
-#' where f_X is the pdf of distribution X. The base of the logarithm of the equation determines the
-#' type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
+#' @param object an object used to select a method.
+#' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
 #'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' @usage entropy(object, base = 2)
+#' @section R6 Usage: $entropy(base = 2)
+#'
+#' @details The entropy of a (discrete) distribution is defined by
+#' \deqn{- sum f_X * log(f_X)}
+#' where f_X is the pdf of distribution X, with an integration analogue for continuous distributions.
+#' The base of the logarithm of the equation determines the type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
+#'
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -176,18 +187,28 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
   }
 })
 
-#' @title Skewness
+#-------------------------------------------------------------
+# Public Methods - Skewness
+#-------------------------------------------------------------
+#' @title Distribution Skewness
 #' @name skewness
 #' @description Skewness of a distribution
+#'
+#' @usage skewness(object)
+#' @section R6 Usage: $skewness()
+#'
+#' @param object distribution.
 #'
 #' @details The skewness of a distribution is defined by the third standardised moment of the
 #' distribution,
 #' \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
-#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-#' standard deviation of the distribution.
+#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+#' \eqn{\sigma} is the standard deviation of the distribution.
 #'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -195,12 +216,17 @@ CoreStatistics$set("public", "skewness", function() {
   return(self$kthmoment(k = 3, type = "standard"))
 })
 
-#' @title Kurtosis
+#-------------------------------------------------------------
+# Public Methods - Kurtosis
+#-------------------------------------------------------------
+#' @title Distribution Kurtosis
 #' @name kurtosis
 #' @description Kurtosis of a distribution
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage kurtosis(object, excess = TRUE)
+#' @section R6 Usage: $kurtosis(excess = TRUE)
+#'
+#' @param object Distribution.
 #' @param excess logical, if TRUE (default) excess Kurtosis returned
 #'
 #' @details The kurtosis of a distribution is defined by the fourth standardised moment of the
@@ -209,8 +235,10 @@ CoreStatistics$set("public", "skewness", function() {
 #' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 #' standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 #'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -222,6 +250,37 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
     return(kurtosis)
 })
 
+#-------------------------------------------------------------
+# Public Methods - Variance
+#-------------------------------------------------------------
+#' @name var
+#' @title Distribution Variance
+#' @description The variance of a distribution, either calculated analytically if possible otherwise
+#' estimated numerically.
+#'
+#' @usage var(object)
+#' @section R6 Usage: $var()
+#'
+#' @param object distribution.
+#'
+#' @details The variance of a distribution is defined by the formula
+#' \deqn{var_X = E[X^2] - E[X]^2}
+#'
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#'
+#' @seealso \code{\link{CoreStatistics}}, \code{\link{decorate}} and \code{\link{genExp}}.
+#'
+#' @export
+NULL
+CoreStatistics$set("public","var",function(){
+  return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
+})
+
+#-------------------------------------------------------------
+# Public Methods - Kth Moment
+#-------------------------------------------------------------
 #' @title Kth Moment
 #' @name kthmoment
 #' @description Kth standardised or central moment of a distribution
@@ -281,6 +340,9 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
   }
 })
 
+#-------------------------------------------------------------
+# Public Methods - genExp
+#-------------------------------------------------------------
 #' @title Generalised Expectation of a Distribution
 #' @name genExp
 #'
@@ -326,26 +388,9 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
   }
 })
 
-#' @title Numeric Variance of a Distribution
-#' @name var.Distribution
-#' @description A numeric variance calculation for distributions.
-#'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
-#'
-#' @details The variance of a probability distribution can be numerically calculated via the generalised
-#' expectation function and the formula
-#' \deqn{var_X = E[X^2] - E[X]^2}
-#'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
-#'
-#' @export
-NULL
-CoreStatistics$set("public","var",function(){
-  return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
-})
-
+#-------------------------------------------------------------
+# Public Methods - cov
+#-------------------------------------------------------------
 #' @title Numeric Covariance a Distribution
 #' @name cov.Distribution
 #' @description A numeric calculation for the covariance of a (multivariate) distribution.
@@ -366,6 +411,9 @@ CoreStatistics$set("public","cov",function(){
     return(self$var())
 }) # TO DO
 
+#-------------------------------------------------------------
+# Public Methods - cor
+#-------------------------------------------------------------
 #' @title Numeric Correlation a Distribution
 #' @name cor.Distribution
 #' @description A numeric calculation for the correlation of a (multivariate) distribution.
@@ -383,6 +431,9 @@ CoreStatistics$set("public","cov",function(){
 NULL
 CoreStatistics$set("public","cor",function(){}) # TO DO
 
+#-------------------------------------------------------------
+# Public Methods - mode
+#-------------------------------------------------------------
 #' @title Mode of a Distribution
 #' @name mode
 #' @description A numeric search for the mode(s) of a distribution.
@@ -410,3 +461,29 @@ CoreStatistics$set("public","mode",function(which = 1){
       return(optimize(self$pdf,c(self$inf(),1e08), maximum = TRUE))
   }
 }) # IN PROGRESS
+
+#-------------------------------------------------------------
+# Public Methods - mean
+#-------------------------------------------------------------
+#' @title Distribution Mean
+#'
+#' @param x Distribution.
+#' @param ... Additional arguments.
+#'
+#' @section R6 Usage: $mean()
+#'
+#' @description Arithmetic mean for the probability distribution.
+#' @details The artihmetic mean of a (discrete) probability distribution X is the expectation
+#' \deqn{E_X(X) = \sum p_X(x)*x}
+#' with an integration analogue for continuous distributions.
+#'
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#' @seealso \code{\link{CoreStatistics}}, \code{\link{decorate}} and \code{\link{genExp}}.
+#'
+#' @export
+mean.Distribution <- function(x, ...) {}
+CoreStatistics$set("public","mean",function(...){
+  return(self$genExp())
+})

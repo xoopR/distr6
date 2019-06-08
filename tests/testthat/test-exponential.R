@@ -22,21 +22,18 @@ test_that("symmetry",{
 test_that("silent statistics",{
   expect_silent(Exponential$new(rate = 1)$kurtosis(T))
   expect_silent(Exponential$new(rate = 1)$kurtosis(F))
-  expect_silent(Exponential$new(rate = 1)$expectation())
+  expect_silent(Exponential$new(rate = 1)$mean())
   expect_silent(Exponential$new(rate = 1)$entropy())
   expect_equal(Exponential$new(rate = 1)$mgf(1), 0)
   expect_equal(Exponential$new(rate = 1)$mgf(0.7), 1/0.3)
   expect_silent(Exponential$new(rate = 1)$cf(1))
-  expect_silent(Exponential$new(rate = 1)$survival(1))
-  expect_silent(Exponential$new(rate = 1)$hazard(1))
-  expect_silent(Exponential$new(rate = 1)$cumHazard(1))
   expect_silent(Exponential$new(rate = 1)$pdf(1))
   expect_silent(Exponential$new(rate = 1)$cdf(1))
   expect_silent(Exponential$new(rate = 1)$quantile(1))
   expect_silent(Exponential$new(rate = 1)$rand(1))
   expect_equal(Exponential$new(rate = 1)$var(), 1)
   expect_equal(Exponential$new(rate = 1)$sd(), 1)
-  expect_equal(Exponential$new(rate = 1)$expectation(), 1)
+  expect_equal(Exponential$new(rate = 1)$mean(), 1)
 })
 
 test_that("statistical results",{

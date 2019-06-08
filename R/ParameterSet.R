@@ -173,7 +173,7 @@ ParameterSet$set("public","update", function(){
 #' @description Returns some or all the parameters in a distribution.
 #' @usage parameters(object, id = NULL, error = "warn")
 #' @section R6 Usage: $parameters(id = NULL, error = "warn")
-#' @param object distribution.
+#' @param object Distribution or ParameterSet.
 #' @param id character, see details.
 #' @param error character, value to pass to \code{stopwarn}.
 #' @details If \code{id} is given and matches a parameter in the distribution, the parameter is returned
@@ -206,7 +206,7 @@ ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
 #' @description Returns the value of the given parameter.
 #' @usage getParameterValue(object, id, error = "warn")
 #' @section R6 Usage: $getParameterValue(id, error = "warn")
-#' @param object distribution.
+#' @param object Distribution or ParameterSet.
 #' @param id character, id of the parameter to return.
 #' @param error character, value to pass to \code{stopwarn}.
 #' @details Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
@@ -238,7 +238,7 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 #'
 #' @usage setParameterValue(object, lst, error = "warn")
 #' @section R6 Usage: $setParameterValue(lst, error = "warn")
-#' @param object distribution.
+#' @param object Distribution or ParameterSet.
 #' @param lst list, see details.
 #' @param error character, value to pass to \code{stopwarn}.
 #' @details A list is supplied to the function, the list names are parameter IDs and the list values are

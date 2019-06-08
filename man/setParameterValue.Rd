@@ -7,7 +7,7 @@
 setParameterValue(object, lst, error = "warn")
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution or ParameterSet.}
 
 \item{lst}{list, see details.}
 

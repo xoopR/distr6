@@ -85,16 +85,14 @@ A generalised distribution object for defining custom probability distributions
   }
 }
 
-\section{Math/Stats Methods}{
+\section{p/d/q/r Methods}{
 
  \tabular{ll}{
   \strong{Method} \tab \strong{Link} \cr
   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
-  \code{sd()} \tab \code{\link{sd}} \cr
-  \code{median()} \tab \code{link{median.Distribution}} \cr
+  \code{rand(n)} \tab \code{\link{rand}}
  }
 }
 
@@ -121,12 +119,12 @@ A generalised distribution object for defining custom probability distributions
 \section{Representation Methods}{
 
 \tabular{ll}{
-  \strong{Method} \tab \strong{Details} \cr
-  \code{strprint()} \tab Character representation of print \cr
-  \code{print()} \tab Print method \cr
-  \code{summary(full = T)} \tab Summary method \cr
-  \code{plot()} \tab Plotting method \cr
-  \code{qqplot()} \tab QQ-Plots \cr
+  \strong{Method} \tab \strong{Link} \cr
+  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+  \code{plot()} \tab Coming Soon. \cr
+  \code{qqplot()} \tab Coming Soon. \cr
 }
 }
 

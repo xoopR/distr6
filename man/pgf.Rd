@@ -3,19 +3,29 @@
 \name{pgf}
 \alias{pgf}
 \title{Probability Generating Function}
+\usage{
+pgf(object, z)
+}
 \arguments{
-\item{object}{an object used to select a method.}
+\item{object}{Distribution.}
 
-\item{...}{further arguments passed to or from other methods.}
+\item{z}{integer to evaluate characteristic function at.}
 }
 \description{
-Probability generating function of a discrete distribution
+Probability generating function of a distribution
 }
 \details{
 The probability generating function is defined by
 \deqn{pgf_X(t) = E_X[exp(z^x)]}
 where X is the distribution and E_X is the expectation of the distribution X.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $pgf(z)
+}
+
+\seealso{
+\code{\link{CoreStatistics}} and \code{\link{decorate}}
 }

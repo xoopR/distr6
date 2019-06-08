@@ -1,4 +1,6 @@
 R62S3::R62Fun(Distribution, assignEnvir = topenv(), mask = T)
+R62S3::R62Fun(Binomial, assignEnvir = topenv(), mask = T, dispatchClasses = list(Distribution))
+R62S3::R62Fun(Normal, assignEnvir = topenv(), mask = T, dispatchClasses = list(Distribution))
 R62S3::R62Fun(ParameterSet, assignEnvir = topenv())
 R62S3::R62Fun(ExoticStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution))
 R62S3::R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution))

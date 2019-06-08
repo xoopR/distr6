@@ -43,7 +43,7 @@ Decorator objects add functionality to the given Distribution object
 \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
 \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 \code{mode(which = 1)} \tab Mode \tab \code{\link{mode}} \cr
-\code{var()} \tab Variance \tab \code{\link{var.Distribution}} \cr
+\code{var()} \tab Variance \tab \code{\link{var}} \cr
 \code{cov()} \tab Covariance \tab \code{\link{cov.Distribution}} \cr
 \code{cor()} \tab Correlation \tab \code{\link{cor.Distribution}} \cr
 }

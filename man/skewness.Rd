@@ -2,7 +2,13 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{skewness}
 \alias{skewness}
-\title{Skewness}
+\title{Distribution Skewness}
+\usage{
+skewness(object)
+}
+\arguments{
+\item{object}{distribution.}
+}
 \description{
 Skewness of a distribution
 }
@@ -10,9 +16,16 @@ Skewness of a distribution
 The skewness of a distribution is defined by the third standardised moment of the
 distribution,
 \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
-where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-standard deviation of the distribution.
+where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+\eqn{\sigma} is the standard deviation of the distribution.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $skewness()
+}
+
+\seealso{
+\code{\link{CoreStatistics}} and \code{\link{decorate}}
 }

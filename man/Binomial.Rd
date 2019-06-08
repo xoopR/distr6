@@ -7,12 +7,16 @@
 Mathematical and statistical functions for the Binomial distribution parameterised
 with probability of success and size (number of trials).
 }
+\section{Constructor}{
+ Binomial$new(size = 10, prob = 0.5, decorators = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{size} \tab numeric \tab number of trials, default = 10. \cr
-\code{prob} \tab numeric \tab probability of success, default = 0.5. \cr
+\code{size} \tab numeric \tab number of trials. \cr
+\code{prob} \tab numeric \tab probability of success. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
 }
 }
@@ -22,25 +26,21 @@ with probability of success and size (number of trials).
 as an integer and prob (probability of success) as a number between 0 and 1.
 }
 
-\section{Public Methods}{
+\section{Statistical Methods}{
 
- \tabular{lrr}{
-  \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-  \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
-  \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
-  \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
-  \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
-  \code{expectation()} \tab numeric \tab Expectation.  \cr
-  \code{var()} \tab numeric \tab Variance.  \cr
-  \code{skewness()} \tab numeric \tab Skewness. \cr
-  \code{kurtosis(excess = TRUE)} \tab numeric \tab Kurtosis. Kurtosis - 3 if excess = TRUE. \cr
-  \code{entropy(base = 2)} \tab numeric \tab Entropy. Shannon if base = 2. \cr
-  \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
-  \code{pgf(t)} \tab numeric \tab Evaluates probability generating function at t. \cr
-  \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-  \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
-  \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at t. \cr
-  \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{mean()} \tab \code{\link{mean.Distribution}} \cr
+  \code{var()} \tab \code{\link{var}} \cr
+  \code{skewness()} \tab \code{\link{skewness}} \cr
+  \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
+  \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
+  \code{mgf(t)} \tab \code{\link{mgf}} \cr
+  \code{pgf(z)} \tab \code{\link{pgf}} \cr
+  \code{cf(t)} \tab \code{\link{cf}} \cr
+  \code{sd()} \tab \code{\link{sd}} \cr
+  \code{median()} \tab \code{\link{median.Distribution}} \cr
+  \code{iqr()} \tab \code{\link{iqr}} \cr
   }
 }
 
@@ -72,5 +72,48 @@ as an integer and prob (probability of success) as a number between 0 and 1.
   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
   }
+}
+
+\section{p/d/q/r Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n)} \tab \code{\link{rand}}
+ }
+}
+
+\section{Parameter Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{parameters(id)} \tab \code{\link{parameters}} \cr
+  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
+  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+}
+}
+
+\section{Validation Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{liesInSupport(x, all = TRUE)} \tab \code{\link{liesInSupport}} \cr
+  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
+  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+}
+}
+
+\section{Representation Methods}{
+
+\tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+  \code{plot()} \tab Coming Soon. \cr
+  \code{qqplot()} \tab Coming Soon. \cr
+}
 }
 

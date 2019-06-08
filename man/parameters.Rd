@@ -7,7 +7,7 @@
 parameters(object, id = NULL, error = "warn")
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution or ParameterSet.}
 
 \item{id}{character, see details.}
 

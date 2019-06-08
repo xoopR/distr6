@@ -1,3 +1,4 @@
+#' @include SetInterval_SpecialSet.R ParameterSet.R
 #-------------------------------------------------------------
 # Exponential Distribution Documentation
 #-------------------------------------------------------------
@@ -5,6 +6,8 @@
 #' @description Mathematical and statistical functions for the Exponential distribution parameterised
 #' with rate or scale.
 #' @name Exponential
+#'
+#' @section Constructor: Exponential$new(rate = NULL, scale = NULL, decorators = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -21,33 +24,17 @@
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
+#' @inheritSection Distribution p/d/q/r Methods
+#' @inheritSection Normal Statistical Methods
+#' @inheritSection Distribution Parameter Methods
+#' @inheritSection Distribution Validation Methods
+#' @inheritSection Distribution Representation Methods
 #'
-#' @section Public Methods:
-#'  \tabular{lrr}{
-#'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
-#'   \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
-#'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
-#'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
-#'   \code{expectation()} \tab numeric \tab Expectation.  \cr
-#'   \code{var()} \tab numeric \tab Variance.  \cr
-#'   \code{skewness()} \tab numeric \tab Skewness. \cr
-#'   \code{kurtosis(excess = TRUE)} \tab numeric \tab Kurtosis. Kurtosis - 3 if excess = TRUE. \cr
-#'   \code{entropy(base = 2)} \tab numeric \tab Entropy. Shannon if base = 2. \cr
-#'   \code{mode()} \tab numeric \tab Mode. \cr
-#'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
-#'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-#'   \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
-#'   \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
-#'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
-#'   }
-#'
+#' @export
 NULL
 #-------------------------------------------------------------
 # Exponential Distribution Definition
 #-------------------------------------------------------------
-#' @include SetInterval_SpecialSet.R ParameterSet.R
-#' @export
 Exponential <- R6::R6Class("Exponential", inherit = Distribution, lock_objects = F)
 Exponential$set("public","name","Exponential")
 Exponential$set("public","short_name","Exp")
@@ -55,54 +42,34 @@ Exponential$set("public","traits",list(type = PosReals$new(zero = T),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
 
-Exponential$set("public","expectation",function(){
+Exponential$set("public","mean",function(){
   self$getParameterValue("scale")
 })
-
 Exponential$set("public","var",function(){
   self$getParameterValue("scale")^2
 })
-
 Exponential$set("public","skewness",function() return(2))
-
 Exponential$set("public","kurtosis",function(excess = TRUE){
   if(excess)
     return(6)
   else
     return(9)
 })
-
 Exponential$set("public","entropy",function(base = 2){
   1 - log(self$getParameterValue("rate"), base)
 })
-
 Exponential$set("public", "mgf", function(t){
   if(t < self$getParameterValue("rate"))
     return(self$getParameterValue("rate") / (self$getParameterValue("rate") - t))
   else
     return(0)
 })
-
 Exponential$set("public", "cf", function(t){
   return(self$getParameterValue("rate") / (self$getParameterValue("rate") -  ((0+1i) * t)))
 })
-
-Exponential$set("public","survival",function(x1, log.p = FALSE){
-  self$cdf(x1, lower.tail = FALSE, log.p = log.p)
+Exponential$set("public","mode",function(){
+  return(0)
 })
-
-Exponential$set("public","hazard",function(x1){
-  self$pdf(x1)/self$survival(x1)
-})
-
-Exponential$set("public","cumHazard",function(x1){
-  -self$cdf(x1, log.p = TRUE)
-})
-
-Exponential$set("public","mode",function() return(0))
-
-Exponential$set("private",".parameters", NULL)
-
 Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decorators = NULL){
 
   rate.bool = FALSE

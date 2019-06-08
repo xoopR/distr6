@@ -7,7 +7,7 @@
 getParameterValue(object, id, error = "warn")
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution or ParameterSet.}
 
 \item{id}{character, id of the parameter to return.}
 
