@@ -32,78 +32,89 @@ A generalised distribution object for defining custom probability distributions
 }
 
 \section{Constructor Details}{
- The most basic Distribution object consists of a name and one of pdf/cdf.
+
+
+  The most basic Distribution object consists of a name and one of pdf/cdf.
 
   If supplied, \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
-  object. If none are supplied then the set of Reals is taken to be the type, support and domain
-  of the distribution. If only \code{type} is supplied then this is taken to also be the support
-  and domain.
+  object. If none are supplied then the set of Reals is taken to be the type and the dimension is the
+  number of formal arguments in the pdf/cdf. If only \code{type} is supplied then this is taken to also
+  be the support and domain.
 
   By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
-  Use the \code{\link{FunctionImputation}} decorator to generate these with a selected method.
+  Use the \code{\link{FunctionImputation}} decorator to generate these.
 
-  If the distribution has parameters, then these should be supplied as a ParameterSet.
-  The distribution parameterisation is taken to be whichever parameters are flagged as 'settable',
-  any others in the ParameterSet are automatically updated by a given function. See \code{\link{ParameterSet}}
-  for more details on construction of a ParameterSet.
+  See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
 
-  \code{decorators} is a list of decorators (R6 environments not strings) to decorate the
-  Distribution with in construction. Decorators can also be added after construction. See
-  \code{\link{DistributionDecorator}} for more details.
+  \code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
+  Distribution in construction. Decorators can also be added after construction. See
+  \code{\link{DistributionDecorator}} and \code{\link{decorate}} for more details.
 
   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
   If not given these are automatically filled from \code{type} and \code{support}.
 }
 
+\section{Public Variables}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Return} \cr
+  \code{name} \tab Name of distribution. \cr
+  \code{short_name} \tab Id of distribution. \cr
+  \code{description} \tab Brief description of distribution. \cr
+  \code{traits} \tab List: type, valueSupport, variateForm.
+  }
+}
+
 \section{Accessor Methods}{
 
- \tabular{lll}{
-  \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-  \code{name()} \tab character \cr
-  \code{short_name()} \tab character \cr
-  \code{description()} \tab character \cr
-  \code{decorators()} \tab character \cr
-  \code{traits()} \tab list \cr
-  \code{valueSupport()} \tab character \cr
-  \code{variateForm()} \tab character \cr
-  \code{type()} \tab Set \tab \code{\link{Set}} \cr
-  \code{properties()} \tab list \cr
-  \code{support()} \tab Set \tab \code{\link{Set}} \cr
-  \code{distrDomain()} \tab Set \tab \code{\link{Set}} \cr
-  \code{symmetry()} \tab character \cr
-  \code{parameters(id)} \tab ParameterSet or data.frame. \tab \code{\link{ParameterSet}} \cr
-  \code{getParameterValue(id)} \tab numeric \tab \code{\link{ParameterSet}} \cr
-  \code{sup()} \tab numeric \tab supremum of distribution \cr
-  \code{inf()} \tab numeric \tab infimum of distribution \cr
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
+  \code{variateForm()} \tab \code{\link{variateForm}} \cr
+  \code{type()} \tab \code{\link{type}} \cr
+  \code{properties()} \tab \code{\link{properties}} \cr
+  \code{support()} \tab \code{\link{support}} \cr
+  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
+  \code{symmetry()} \tab \code{\link{symmetry}} \cr
+  \code{sup()}  \tab \code{\link{sup}} \cr
+  \code{inf()} \tab \code{\link{inf}} \cr
+  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
+  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
   }
 }
 
 \section{Math/Stats Methods}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Details} \cr
-  \code{pdf(x1, log = F)} \tab Evaluate density/mass at x1 \cr
-  \code{cdf(x1, lower.tail = T, log.p = F)} \tab Evaluate distribution function at x1.\cr
-  \code{quantile(p, lower.tail = T, log.p = F)} \tab Evaluate quantile function at p \cr
-  \code{rand(n)} \tab Simulate n draws from distribution \cr
-  \code{expectation(trafo)} \tab Calculate expectation \cr
-  \code{var()} \tab Calculate variance \cr
-  \code{sd()} \tab Calculate standard deviation \cr
-  \code{cov()} \tab Calculate covariance. See Details \cr
-  \code{cor()} \tab Calculate correlation. See Details \cr
-  \code{median()} \tab Calculate median \cr
+  \strong{Method} \tab \strong{Link} \cr
+  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{sd()} \tab \code{\link{sd}} \cr
+  \code{median()} \tab \code{link{median.Distribution}} \cr
  }
 }
 
-\section{Other Methods}{
+\section{Parameter Methods}{
 
- \tabular{lll}{
-  \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-  \code{setParameterValue(lst)} \tab list -> invisible(self) \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
-  \code{liesInSupport(x, all = TRUE)} \tab numeric x logical -> logical \tab Does x lie in the support of distribution? See Details. \cr
-  \code{liesInType(x)} \tab numeric -> logical \tab Does x lie in the type of distribution? \cr
-  \code{liesInDistrDomain(x)} \tab numeric -> logical \tab Does x lie in the domain of distribution? \cr
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{parameters(id)} \tab \code{\link{parameters}} \cr
+  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
+  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+}
+}
+
+\section{Validation Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{liesInSupport(x, all = TRUE)} \tab \code{\link{liesInSupport}} \cr
+  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
+  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
 }
 }
 
@@ -119,17 +130,8 @@ A generalised distribution object for defining custom probability distributions
 }
 }
 
-\section{Public Methods Details}{
-
-\code{cov} defaults to \code{var} for univariate distributions and \code{cor} returns NULL.
-
-If \code{liesInSupport(x, all = TRUE)} then returns TRUE only if every numeric in vector \code{x} lies
-in the support of the distribution, otherwise returns a vector of logicals.
-}
-
 \seealso{
 See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 Intervals. See \code{\link{ParameterSet}} for parameter details. See
-\code{\link{DistributionDecorator}} for Decorator details. See \code{\link[stats]{Binomial}} for
-details on the arguments to \code{pdf}/\code{cdf}/\code{quantile}/\code{rand}.
+\code{\link{DistributionDecorator}} for Decorator details.
 }

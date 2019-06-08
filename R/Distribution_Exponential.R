@@ -2,7 +2,7 @@
 # Exponential Distribution Documentation
 #-------------------------------------------------------------
 #' @title Exponential Distribution
-#' @description Mathematical and statistical functions for the exponential distribution parameterised
+#' @description Mathematical and statistical functions for the Exponential distribution parameterised
 #' with rate or scale.
 #' @name Exponential
 #'
@@ -12,27 +12,15 @@
 #' \code{rate} \tab numeric \tab arrival rate. \cr
 #' \code{scale} \tab numeric \tab scale parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{...} \tab ANY \tab additional arguments for Distribution constructor. See details. \cr
 #' }
 #'
 #' @section Constructor Details: The exponential distribution can either be parameterised with a rate or
 #' scale parameter. If neither are provided then rate parameterisation is used with rate = 1. If both are
 #' provided then rate parameterisation is used with given rate. Scale is defined by
 #' \deqn{scale = 1/rate}
-#' The CoreStatistics and ExoticStatistics decorators can be added to the distribution for further
-#' numeric functionality, but these are approximate calculations only. Additional arguments can be passed
-#' to the Distribution constructor, including R62S3 to determine if S3 methods should be added for
-#' the exponential distribution.
 #'
-#'
-#' @section Public Variables:
-#'  \tabular{lr}{
-#'   \strong{Method} \tab \strong{Return} \cr
-#'   \code{name} \tab "Exponential" \cr
-#'   \code{short_name} \tab "Exp" \cr
-#'   \code{traits} \tab List of exponential distribution traits. \cr
-#'   \code{properties} \tab List of exponential distribution properties. \cr
-#'   }
+#' @inheritSection Distribution Public Variables
+#' @inheritSection Distribution Accessor Methods
 #'
 #' @section Public Methods:
 #'  \tabular{lrr}{
@@ -54,14 +42,6 @@
 #'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
 #'   }
 #'
-#' @section Public Methods Details:
-#' If \code{log.p} is TRUE then the natural logarithm of probabilities is returned. If \code{lower.tail}
-#' is TRUE then distribution functions are evaluated at the lower tail of the distribution, otherwise
-#' the upper tail (1 - p).
-#'
-#'
-#' @seealso See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
-#' for Decorator details as well as \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
 NULL
 #-------------------------------------------------------------
 # Exponential Distribution Definition
@@ -123,7 +103,7 @@ Exponential$set("public","mode",function() return(0))
 
 Exponential$set("private",".parameters", NULL)
 
-Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decorators = NULL,...){
+Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decorators = NULL){
 
   rate.bool = FALSE
   scale.bool = FALSE
@@ -165,6 +145,6 @@ Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decora
   private$.properties
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
-                   symmetric  = FALSE, ...)
+                   symmetric  = FALSE)
   invisible(self)
 })

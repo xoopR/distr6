@@ -167,20 +167,57 @@ ParameterSet$set("public","update", function(){
   }
   invisible(self)
 })
+
+#' @name parameters
+#' @title Parameters Accessor
+#' @description Returns some or all the parameters in a distribution.
+#' @usage parameters(object, id = NULL, error = "warn")
+#' @section R6 Usage: $parameters(id = NULL, error = "warn")
+#' @param object distribution.
+#' @param id character, see details.
+#' @param error character, value to pass to \code{stopwarn}.
+#' @details If \code{id} is given and matches a parameter in the distribution, the parameter is returned
+#' with all details. If \code{id} is given but doesn't match a parameter, an empty data.frame is returned.
+#' Finally if \code{id} is not given, returns all parameters in the distribution.
+#'
+#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
+#' with warning otherwise.
+#'
+#' @seealso \code{\link{getParameterValue}} and \code{\link{setParameterValue}}
+#' @export
+NULL
 ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
   if(length(private$.parameters)==0)
     RSmisc::stopwarn(error, "There are no parameters in this distribution.")
 
   if(!is.null(id)){
     id0 = id
-    if(length(dplyr::filter(private$.parameters, id == id0))==0){
+    if(length(dplyr::filter(private$.parameters, id %in% id0))==0){
       return(self)
     }
-    return(dplyr::filter(private$.parameters, id == id0))
+    return(dplyr::filter(private$.parameters, id %in% id0))
   } else {
       return(self)
   }
 })
+
+#' @name getParameterValue
+#' @title Parameter Value Accessor
+#' @description Returns the value of the given parameter.
+#' @usage getParameterValue(object, id, error = "warn")
+#' @section R6 Usage: $getParameterValue(id, error = "warn")
+#' @param object distribution.
+#' @param id character, id of the parameter to return.
+#' @param error character, value to pass to \code{stopwarn}.
+#' @details Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
+#' the value of the given parameter.
+#'
+#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
+#' with warning otherwise.
+#'
+#' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
+#' @export
+NULL
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 
   if(length(private$.parameters)==0)
@@ -194,6 +231,25 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
     return(val[[1]])
 
 }) # NEEDS TESTING
+
+#' @name setParameterValue
+#' @title Parameter Value Setter
+#' @description Returns the value of the given parameter.
+#'
+#' @usage setParameterValue(object, lst, error = "warn")
+#' @section R6 Usage: $setParameterValue(lst, error = "warn")
+#' @param object distribution.
+#' @param lst list, see details.
+#' @param error character, value to pass to \code{stopwarn}.
+#' @details A list is supplied to the function, the list names are parameter IDs and the list values are
+#' the respective values to set the parameters.
+#'
+#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
+#' with warning otherwise.
+#'
+#' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
+#' @export
+NULL
 ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
   if(length(private$.parameters)!=0){
 

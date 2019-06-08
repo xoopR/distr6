@@ -1,4 +1,4 @@
-R62S3::R62Fun(Distribution, assignEnvir = topenv())
+R62S3::R62Fun(Distribution, assignEnvir = topenv(), mask = T)
 R62S3::R62Fun(ParameterSet, assignEnvir = topenv())
 R62S3::R62Fun(ExoticStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution))
 R62S3::R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution))
@@ -14,6 +14,6 @@ R62S3::R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Dis
 # # #   #     return(FALSE)
 # # #   # })
 # # #   # y = (y[y!="FALSE"])
-# # #   # lapply(y,R62S3::R62S3::R62S3::R62S3, assignEnvir = parent.env(environment()))
+# # #   # lapply(y,R62S3::R62Fun, assignEnvir = parent.env(environment()))
 # #
 # #

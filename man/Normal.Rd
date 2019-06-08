@@ -5,7 +5,7 @@
 \title{Normal Distribution}
 \description{
 Mathematical and statistical functions for the Normal distribution parameterised
-with rate or scale.
+with mean and variance, sd or precision.
 }
 \section{Constructor Arguments}{
 
@@ -16,7 +16,6 @@ with rate or scale.
 \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
 \code{precision} \tab numeric \tab precision, squared scale parameter. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{...} \tab ANY \tab additional arguments for Distribution constructor. See details. \cr
 }
 }
 
@@ -28,22 +27,6 @@ sd is defined by
 \deqn{sd = var^2}
 prec is defined by
 \deqn{prec = var^-1}
-
-The CoreStatistics and ExoticStatistics decorators can be added to the distribution for further
-numeric functionality, but these are approximate calculations only. Additional arguments can be passed
-to the Distribution constructor, including R62S3 to determine if S3 methods should be added for
-the Normal distribution.
-}
-
-\section{Public Variables}{
-
- \tabular{lr}{
-  \strong{Method} \tab \strong{Return} \cr
-  \code{name} \tab "Normal" \cr
-  \code{short_name} \tab "norm" \cr
-  \code{traits} \tab List of Normal distribution traits. \cr
-  \code{properties} \tab List of Normal distribution properties. \cr
-  }
 }
 
 \section{Public Methods}{
@@ -68,14 +51,33 @@ the Normal distribution.
   }
 }
 
-\section{Public Methods Details}{
+\section{Public Variables}{
 
-If \code{log.p} is TRUE then the natural logarithm of probabilities is returned. If \code{lower.tail}
-is TRUE then distribution functions are evaluated at the lower tail of the distribution, otherwise
-the upper tail (1 - p).
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Return} \cr
+  \code{name} \tab Name of distribution. \cr
+  \code{short_name} \tab Id of distribution. \cr
+  \code{description} \tab Brief description of distribution. \cr
+  \code{traits} \tab List: type, valueSupport, variateForm.
+  }
 }
 
-\seealso{
-See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
-for Decorator details as well as \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
+\section{Accessor Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
+  \code{variateForm()} \tab \code{\link{variateForm}} \cr
+  \code{type()} \tab \code{\link{type}} \cr
+  \code{properties()} \tab \code{\link{properties}} \cr
+  \code{support()} \tab \code{\link{support}} \cr
+  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
+  \code{symmetry()} \tab \code{\link{symmetry}} \cr
+  \code{sup()}  \tab \code{\link{sup}} \cr
+  \code{inf()} \tab \code{\link{inf}} \cr
+  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
+  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+  }
 }
+

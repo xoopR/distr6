@@ -14,26 +14,14 @@
 #' \code{size} \tab numeric \tab number of trials, default = 10. \cr
 #' \code{prob} \tab numeric \tab probability of success, default = 0.5. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{...} \tab ANY \tab additional arguments for Distribution constructor. See details. \cr
 #' }
 #'
 #' @section Constructor Details: The Binomial distribution is parameterised with size (number of trials)
 #' as an integer and prob (probability of success) as a number between 0 and 1.
 #'
-#' The CoreStatistics and ExoticStatistics decorators can be added to the distribution for further
-#' numeric functionality, but these are approximate calculations only. Additional arguments can be passed
-#' to the Distribution constructor, including R62S3 to determine if S3 methods should be added for
-#' the Binomial distribution.
 #'
-#'
-#' @section Public Variables:
-#'  \tabular{lr}{
-#'   \strong{Method} \tab \strong{Return} \cr
-#'   \code{name} \tab "Binomial" \cr
-#'   \code{short_name} \tab "Binom" \cr
-#'   \code{traits} \tab List of Binomial distribution traits. \cr
-#'   \code{properties} \tab List of Binomial distribution properties. \cr
-#'   }
+#' @inheritSection Distribution Public Variables
+#' @inheritSection Distribution Accessor Methods
 #'
 #' @section Public Methods:
 #'  \tabular{lrr}{
@@ -55,14 +43,6 @@
 #'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at t. \cr
 #'   }
 #'
-#' @section Public Methods Details:
-#' If \code{log.p} is TRUE then the natural logarithm of probabilities is returned. If \code{lower.tail}
-#' is TRUE then distribution functions are evaluated at the lower tail of the distribution, otherwise
-#' the upper tail (1 - p).
-#'
-#'
-#' @seealso See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
-#' for Decorator details as well as \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
 NULL
 #-------------------------------------------------------------
 # Binomial Distribution Definition
@@ -131,7 +111,7 @@ Binomial$set("public","setParameterValue",function(lst){
 
 Binomial$set("private",".parameters", NULL)
 
-Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL, ...){
+Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL){
 
   private$.parameters <- ParameterSet$new(id = list("prob","size","qprob"), value = list(0.5, 10, 0.5),
                                           lower = list(0, 1, 0), upper = list(1, Inf, 1),
@@ -155,6 +135,6 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = 
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(0:size), distrDomain = PosIntegers$new(zero = T),
-                   symmetric = symmetric, ...)
+                   symmetric = symmetric)
   invisible(self)
 })
