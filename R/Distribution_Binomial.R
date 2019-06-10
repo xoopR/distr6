@@ -1,7 +1,7 @@
 #' @include SetInterval_SpecialSet.R ParameterSet.R
 #-------------------------------------------------------------
 # Binomial Distribution Documentation
-#-------------------------------------------------------------
+#--------------------------------------------------------------
 #' @title Binomial Distribution
 #'
 #' @description Mathematical and statistical functions for the Binomial distribution parameterised
