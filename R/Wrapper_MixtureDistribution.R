@@ -20,7 +20,7 @@
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{distlist} \tab list \tab List of distributions. \cr
-#' \code{weights} \tab list \tab Vector of weights. See Details. \cr
+#' \code{weights} \tab numeric \tab Vector of weights. See Details. \cr
 #' \code{...} \tab any \tab Additional arguments to pass to pdf/cdf.
 #' }
 #'
