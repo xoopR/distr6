@@ -39,8 +39,7 @@ See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 
 \examples{
 hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
-hubBin$getParameterValue("Binom_prob")
-hubBin$getLowerLimit()
+hubBin$getParameterValue("prob")
 hubBin$pdf(2)
 }
 \seealso{

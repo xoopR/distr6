@@ -30,8 +30,7 @@
 #'
 #' @examples
 #' hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
-#' hubBin$getParameterValue("Binom_prob")
-#' hubBin$getLowerLimit()
+#' hubBin$getParameterValue("prob")
 #' hubBin$pdf(2)
 NULL
 
@@ -50,9 +49,9 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
   pdf <- function(x1, ...){
     if(x1 <= private$.cutoffInterval[[1]]())
-      return(self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[1]]()))
-    else if(x1 >= private$.cutoffInterval[[2]]())
-      return(1-self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[2]]()))
+      return(self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[1]]))
+    else if(x1 >= private$.cutoffInterval[[2]])
+      return(1-self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[2]]))
     else
       return(self$wrappedModels()[[1]]$pdf(x1))
   }
