@@ -4,6 +4,8 @@
 #'
 #' @name CoreStatistics
 #'
+#' @section Constructor: CoreStatistics$new(dist)
+#'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
@@ -16,7 +18,6 @@
 #' \code{mgf(t)} \tab Moment generating function \tab \code{\link{mgf}} \cr
 #' \code{pgf(t)} \tab Probability generating function \tab \code{\link{pgf}} \cr
 #' \code{cf(t)} \tab Characteristic function \tab \code{\link{cf}} \cr
-#' \code{iqr()} \tab Interquartile Range \tab \code{\link{iqr}} \cr
 #' \code{entropy(base = 2)} \tab (Shannon) Entropy \tab \code{\link{entropy}} \cr
 #' \code{skewness()} \tab Skewness \tab \code{\link{skewness}} \cr
 #' \code{kurtosis(excess = TRUE)} \tab Kurtosis \tab \code{\link{kurtosis}} \cr
@@ -24,10 +25,9 @@
 #' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 #' \code{mode(which = 1)} \tab Mode \tab \code{\link{mode}} \cr
 #' \code{var()} \tab Variance \tab \code{\link{var}} \cr
-#' \code{cov()} \tab Covariance \tab \code{\link{cov.Distribution}} \cr
-#' \code{cor()} \tab Correlation \tab \code{\link{cor.Distribution}} \cr
+#' \code{cov()} \tab Covariance \tab \code{\link{cov}} \cr
+#' \code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
 #' }
-#'
 #'
 #' @details Decorator objects add functionality to the given Distribution object
 #'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
@@ -37,23 +37,21 @@
 #'  from analytic computations. See below for the methods added to a distribution after decorating with
 #'  \code{CoreStatistics}.
 #'
-#' @seealso \code{\link{DistributionDecorator}} and \code{\link{ExoticStatistics}}
+#' @seealso \code{\link{DistributionDecorator}}, \code{\link{decorate}} and \code{\link{ExoticStatistics}}
 #'
 #' @examples
 #' x = Binomial$new()
 #' decorate(x, CoreStatistics)
-#' x$iqr()
+#' x$genExp()
 #'
 #' @examples
 #' x = Binomial$new(decorators = CoreStatistics)
 #' x$kthmoment(4)
 #'
 #' @export
+NULL
 CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 
-#-------------------------------------------------------------
-# Public Methods - Documented in Binomial Distribution
-#-------------------------------------------------------------
 #-------------------------------------------------------------
 # Public Methods - mgf
 #-------------------------------------------------------------
@@ -126,7 +124,7 @@ CoreStatistics$set("public", "cf", function(t) {
 #' @param z integer to evaluate characteristic function at.
 #'
 #' @details The probability generating function is defined by
-#' \deqn{pgf_X(t) = E_X[exp(z^x)]}
+#' \deqn{pgf_X(z) = E_X[exp(z^x)]}
 #' where X is the distribution and E_X is the expectation of the distribution X.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
@@ -150,7 +148,7 @@ CoreStatistics$set("public", "pgf", function(z) {
 #' @name entropy
 #' @description (Information) Entropy of a distribution
 #'
-#' @param object an object used to select a method.
+#' @param object Distribution.
 #' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
 #'
 #' @usage entropy(object, base = 2)
@@ -197,7 +195,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #' @usage skewness(object)
 #' @section R6 Usage: $skewness()
 #'
-#' @param object distribution.
+#' @param object Distribution.
 #'
 #' @details The skewness of a distribution is defined by the third standardised moment of the
 #' distribution,
@@ -261,7 +259,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #' @usage var(object)
 #' @section R6 Usage: $var()
 #'
-#' @param object distribution.
+#' @param object Distribution.
 #'
 #' @details The variance of a distribution is defined by the formula
 #' \deqn{var_X = E[X^2] - E[X]^2}
@@ -285,8 +283,10 @@ CoreStatistics$set("public","var",function(){
 #' @name kthmoment
 #' @description Kth standardised or central moment of a distribution
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage kthmoment(object, k, type = "central")
+#' @section R6 Usage: $kthmoment(k, type = "central")
+#'
+#' @param object Distribution.
 #' @param k the kth moment to calculate
 #' @param type one of 'central', 'standard' or 'zero', abbreviations allowed
 #'
@@ -295,16 +295,13 @@ CoreStatistics$set("public","var",function(){
 #' \deqn{CM(k)_X = E_X[(x - \mu)^k]}
 #' the kth standardised moment of a distribution is defined by
 #' \deqn{SM(k)_X = CM(k)/\sigma^k}
-#' #' the kth zeroth moment of a distribution is defined by
+#' the kth zeroth moment of a distribution is defined by
 #' \deqn{ZM(k)_X = E_X[(x)^k]}
 #' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 #' standard deviation of the distribution.
 #'
 #' Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment
 #' is computed.
-#'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
 #'
 #' @export
 NULL
@@ -346,8 +343,10 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 #' @title Generalised Expectation of a Distribution
 #' @name genExp
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage genExp(object, trafo = NULL)
+#' @section R6 Usage: $genExp(trafo = NULL)
+#'
+#' @param object Distribution.
 #' @param trafo transformation for expectation calculation, see details.
 #'
 #' @description A generalised expectation function for distributions, for arithmetic mean and more complex
@@ -360,8 +359,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 #' transformation must be given as a function, for example \code{trafo = function(x) x^2}
 #' (which is the second moment).
 #'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' @seealso \code{\link{mean}}, \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 #'
 #' @export
 NULL
@@ -392,17 +390,16 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 # Public Methods - cov
 #-------------------------------------------------------------
 #' @title Numeric Covariance a Distribution
-#' @name cov.Distribution
+#' @name cov
 #' @description A numeric calculation for the covariance of a (multivariate) distribution.
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage cov(object)
+#' @section R6 Usage: $cov()
+#'
+#' @param object Distribution.
 #'
 #' @details If the distribution is univariate then the variance is returned, otherwise the
 #' covariance is calculated numerically.
-#'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
 #'
 #' @export
 NULL
@@ -415,17 +412,16 @@ CoreStatistics$set("public","cov",function(){
 # Public Methods - cor
 #-------------------------------------------------------------
 #' @title Numeric Correlation a Distribution
-#' @name cor.Distribution
+#' @name cor
 #' @description A numeric calculation for the correlation of a (multivariate) distribution.
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage cor(object)
+#' @section R6 Usage: $cor()
+#'
+#' @param object Distribution.
 #'
 #' @details If the distribution is univariate then nothing is returned, otherwise the
 #' correlation is calculated numerically.
-#'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
 #'
 #' @export
 NULL
@@ -438,15 +434,14 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #' @name mode
 #' @description A numeric search for the mode(s) of a distribution.
 #'
-#' @param object an object used to select a method.
-#' @param ... further arguments passed to or from other methods.
+#' @usage mode(object, which)
+#' @section R6 Usage: $mode(which)
+#'
+#' @param object Distribution.
 #' @param which which mode of the distribution should be returned, default is the first.
 #'
 #' @details If the distribution has multiple modes, the first is returned by default, similarly if it has
-#' one only. Otherwise the index of the mode to return can be given or "All" if all should be returned.
-#'
-#' Documentation is for the S3 method, the first parameter can be omitted if calling as
-#' an R6 method.
+#' one only. Otherwise the index of the mode to return can be given or "all" if all should be returned.
 #'
 #' @export
 NULL

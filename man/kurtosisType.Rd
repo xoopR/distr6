@@ -7,7 +7,7 @@
 kurtosisType(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 If the distribution kurtosis is present in properties, returns the type of kurtosis

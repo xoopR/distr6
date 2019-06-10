@@ -7,7 +7,7 @@
 variateForm(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the variateForm of the distribution, one of univariate/multivariate/matrixvariate.

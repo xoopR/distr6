@@ -7,7 +7,7 @@
 distrDomain(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the distribution domain.

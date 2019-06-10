@@ -7,7 +7,7 @@
 sup(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the distribution supremum as the supremum of the support.

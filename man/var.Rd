@@ -7,7 +7,7 @@
 var(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 The variance of a distribution, either calculated analytically if possible otherwise

@@ -62,6 +62,7 @@ Normal$set("public","short_name","Norm")
 Normal$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
+Normal$set("public","description","Normal Probability Distribution.")
 
 Normal$set("public","mean",function(){
   self$getParameterValue("mean")

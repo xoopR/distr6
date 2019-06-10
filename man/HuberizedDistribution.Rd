@@ -2,7 +2,7 @@
 % Please edit documentation in R/Wrapper_HuberizedDistribution.R
 \name{HuberizedDistribution}
 \alias{HuberizedDistribution}
-\title{Distribution Huberized Wrapper}
+\title{Distribution Huberization Wrapper}
 \description{
 A wrapper for huberizing any probability distribution at given limits.
 }
@@ -13,13 +13,15 @@ Huberizes a distribution at lower and upper limits, using the formula
  f_H(x) = \tab \eqn{f(x)} \tab if \eqn{lower < x < upper} \cr
  \tab \eqn{1 - F(x)} \tab if \eqn{x \ge upper} \cr
 }
-where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X, F_X is the
+where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X/F_X is the
 pdf/cdf of the original distribution.
 
 If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
-
-\code{HuberizedDistribution} inherits all methods from \code{Distribution}.
 }
+\section{Constructor}{
+ HuberizedDistribution$new(distribution, lower = NULL, upper = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -32,11 +34,7 @@ If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self
 
 \section{Public Methods}{
 
-\tabular{ll}{
-\strong{Method} \tab \strong{Details} \cr
-\code{getLowerLimit()} \tab Gets lower limit of huberization. \cr
-\code{getUpperLimit()} \tab Gets upper limit of huberization. \cr
-}
+See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 
 \examples{
@@ -46,6 +44,5 @@ hubBin$getLowerLimit()
 hubBin$pdf(2)
 }
 \seealso{
-\code{\link{TruncatedDistribution}} and \code{\link{DistributionWrapper}} for wrapper details.
-See \code{\link{Distribution}} for a list of public methods.
+\code{\link{listWrappers}}.
 }

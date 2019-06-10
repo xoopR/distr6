@@ -7,7 +7,7 @@
 skewnessType(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 If the distribution skewness is present in properties, returns the type of skewness

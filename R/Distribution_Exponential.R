@@ -41,6 +41,7 @@ Exponential$set("public","short_name","Exp")
 Exponential$set("public","traits",list(type = PosReals$new(zero = T),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
+Exponential$set("public","description","Exponential Probability Distribution.")
 
 Exponential$set("public","mean",function(){
   self$getParameterValue("scale")

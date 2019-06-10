@@ -7,7 +7,7 @@
 valueSupport(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the valueSupport of the distribution, one of discrete/continuous/mixture.

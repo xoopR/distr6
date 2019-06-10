@@ -16,7 +16,7 @@ Probability generating function of a distribution
 }
 \details{
 The probability generating function is defined by
-\deqn{pgf_X(t) = E_X[exp(z^x)]}
+\deqn{pgf_X(z) = E_X[exp(z^x)]}
 where X is the distribution and E_X is the expectation of the distribution X.
 
 If an analytic expression isn't available, returns error. To impute a numerical expression, use the

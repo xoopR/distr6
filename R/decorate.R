@@ -5,8 +5,7 @@
 #' @param decorators list of decorators
 #'
 #' @seealso \code{\link{DistributionDecorator}} for the abstract decorator class and
-#' \code{\link{CoreStatistics}}, \code{\link{ExoticStatistics}}, \code{\link{FunctionImputation}} for
-#' available decorators.
+#' \code{\link{listDecorators}} for available decorators.
 #'
 #' @examples
 #' B <- Binomial$new()

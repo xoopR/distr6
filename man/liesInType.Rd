@@ -7,7 +7,7 @@
 liesInType(object, x, all = TRUE)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 
 \item{x}{vector of numerics to test.}
 

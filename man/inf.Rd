@@ -7,7 +7,7 @@
 inf(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the distribution infimum as the infimum of the support.

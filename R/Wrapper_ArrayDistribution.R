@@ -1,15 +1,7 @@
 #' @name ArrayDistribution
 #' @title Product ArrayDistribution
-#' @description A special case joint distribution where each independent distribution is the same
-#' Distribution class but not necessarily with the same parameters.
-#' @seealso \code{\link{ProductDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}
-#' for wrapper details.
-#' @details Exploits the following relationships of independent distributions
-#' \deqn{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
-#' \deqn{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
-#' where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
 #'
-#' \code{ArrayDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#' @section Constructor: ArrayDistribution$new(distribution, paramList)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -18,6 +10,18 @@
 #' \code{paramList} \tab list \tab List of parameters, see examples. \cr
 #' }
 #'
+#' @description A special case joint distribution where each independent distribution is the same
+#' Distribution class but not necessarily with the same parameters.
+#'
+#' @details Exploits the following relationships of independent distributions
+#' \deqn{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
+#' \deqn{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
+#' where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
+#'
+#' @section Public Methods:
+#' See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#'
+#' @seealso \code{\link{ProductDistribution}}
 #'
 #' @examples
 #' a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
@@ -66,6 +70,8 @@ ArrayDistribution$set("public","initialize",function(distribution, paramList){
   type = do.call(product, lapply(distlist,function(x) x$type()))
   support = do.call(product, lapply(distlist,function(x) x$support()))
   distrDomain = do.call(product, lapply(distlist,function(x) x$distrDomain()))
+
+  description = paste0("Array of ",length(paramList),
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
                    short_name = short_name, support = support, type = type,

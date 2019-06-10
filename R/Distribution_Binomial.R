@@ -56,6 +56,7 @@ Binomial$set("public","short_name","Binom")
 Binomial$set("public","traits",list(type = PosIntegers$new(zero = T),
                                     valueSupport = "discrete",
                                     variateForm = "univariate"))
+Binomial$set("public","description","Binomial Probability Distribution.")
 
 Binomial$set("public","mean",function(){
   self$getParameterValue("size") * self$getParameterValue("prob")
@@ -85,8 +86,8 @@ Binomial$set("public", "cf", function(t){
 Binomial$set("public","pgf",function(z){
   (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
 })
-Binomial$set("public","setParameterValue",function(lst){
-  super$setParameterValue(lst)
+Binomial$set("public","setParameterValue",function(lst, error = "warn"){
+  super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(0:self$getParameterValue("size"))
 })
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL){

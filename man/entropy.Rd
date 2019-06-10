@@ -7,7 +7,7 @@
 entropy(object, base = 2)
 }
 \arguments{
-\item{object}{an object used to select a method.}
+\item{object}{Distribution.}
 
 \item{base}{base of the entropy logarithm, default = 2 (Shannon entropy)}
 }

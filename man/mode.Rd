@@ -3,10 +3,11 @@
 \name{mode}
 \alias{mode}
 \title{Mode of a Distribution}
+\usage{
+mode(object, which)
+}
 \arguments{
-\item{object}{an object used to select a method.}
-
-\item{...}{further arguments passed to or from other methods.}
+\item{object}{Distribution.}
 
 \item{which}{which mode of the distribution should be returned, default is the first.}
 }
@@ -15,8 +16,9 @@ A numeric search for the mode(s) of a distribution.
 }
 \details{
 If the distribution has multiple modes, the first is returned by default, similarly if it has
-one only. Otherwise the index of the mode to return can be given or "All" if all should be returned.
-
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+one only. Otherwise the index of the mode to return can be given or "all" if all should be returned.
 }
+\section{R6 Usage}{
+ $mode(which)
+}
+

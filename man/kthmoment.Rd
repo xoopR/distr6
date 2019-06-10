@@ -3,10 +3,11 @@
 \name{kthmoment}
 \alias{kthmoment}
 \title{Kth Moment}
+\usage{
+kthmoment(object, k, type = "central")
+}
 \arguments{
-\item{object}{an object used to select a method.}
-
-\item{...}{further arguments passed to or from other methods.}
+\item{object}{Distribution.}
 
 \item{k}{the kth moment to calculate}
 
@@ -20,14 +21,15 @@ The kth central moment of a distribution is defined by
 \deqn{CM(k)_X = E_X[(x - \mu)^k]}
 the kth standardised moment of a distribution is defined by
 \deqn{SM(k)_X = CM(k)/\sigma^k}
-#' the kth zeroth moment of a distribution is defined by
+the kth zeroth moment of a distribution is defined by
 \deqn{ZM(k)_X = E_X[(x)^k]}
 where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 standard deviation of the distribution.
 
 Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment
 is computed.
-
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
 }
+\section{R6 Usage}{
+ $kthmoment(k, type = "central")
+}
+

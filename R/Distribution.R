@@ -361,7 +361,7 @@ Distribution$set("public","print",function(...){
 #' @description Summary method for distribution objects (and all child classes).
 #'
 #' @section R6 Usage: $summary(full = TRUE)
-#' @param object distribution.
+#' @param object Distribution.
 #' @param full logical; if TRUE (default), gives an extended summary, otherwise brief.
 #' @param ... additional arguments.
 #'
@@ -436,7 +436,7 @@ Distribution$set("public","qqplot",function(){}) # TO DO
 #' @title Decorators Accessor
 #' @usage decorators(object)
 #' @section R6 Usage: $decorators()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the decorators added to a distribution.
 #' @seealso \code{\link{decorate}} and \code{\link{DistributionDecorator}}
 #' @export
@@ -449,7 +449,7 @@ Distribution$set("public","decorators", function(){
 #' @title Value Support Accessor
 #' @usage valueSupport(object)
 #' @section R6 Usage: $valueSupport()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the valueSupport of the distribution, one of discrete/continuous/mixture.
 #' @export
 NULL
@@ -461,7 +461,7 @@ Distribution$set("public","valueSupport",function(){
 #' @title Variate Form Accessor
 #' @usage variateForm(object)
 #' @section R6 Usage: $variateForm()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the variateForm of the distribution, one of univariate/multivariate/matrixvariate.
 #' @export
 NULL
@@ -473,7 +473,7 @@ Distribution$set("public","variateForm",function(){
 #' @title Type Accessor
 #' @usage type(object)
 #' @section R6 Usage: $type()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the scientific type of the distribution.
 #' @seealso \code{\link{SetInterval}}
 #' @export
@@ -486,7 +486,7 @@ Distribution$set("public","type",function(){
 #' @title Properties Accessor
 #' @usage properties(object)
 #' @section R6 Usage: $properties()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the scientific type of the distribution.
 #' @seealso \code{\link{SetInterval}}
 #' @export
@@ -499,7 +499,7 @@ Distribution$set("public","properties",function(){
 #' @title Support Accessor
 #' @usage support(object)
 #' @section R6 Usage: $support()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the support of the distribution.
 #' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
 #' greater than zero,
@@ -516,7 +516,7 @@ Distribution$set("public","support",function(){
 #' @title Distribution Domain Accessor
 #' @usage distrDomain(object)
 #' @section R6 Usage: $distrDomain()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the distribution domain.
 #' @details The domain of a probability distribution is the set of values returned by the pdf/pdf,
 #' including zero.
@@ -531,7 +531,7 @@ Distribution$set("public","distrDomain",function(){
 #' @title Symmetry Accessor
 #' @usage symmetry(object)
 #' @section R6 Usage: $symmetry()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the distribution symmetry, one of "symmetric" or "asymmetric".
 #' @seealso \code{\link{properties}}
 #' @export
@@ -544,7 +544,7 @@ Distribution$set("public","symmetry",function(){
 #' @title Supremum Accessor
 #' @usage sup(object)
 #' @section R6 Usage: $sup()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the distribution supremum as the supremum of the support.
 #' @seealso \code{\link{support}} and \code{\link{inf}}
 #' @export
@@ -557,7 +557,7 @@ Distribution$set("public","sup",function(){
 #' @title Infimum Accessor
 #' @usage inf(object)
 #' @section R6 Usage: $inf()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description Returns the distribution infimum as the infimum of the support.
 #' @seealso \code{\link{support}} and \code{\link{sup}}
 #' @export
@@ -570,7 +570,7 @@ Distribution$set("public","inf",function(){
 #' @title Type of Kurtosis Accessor
 #' @usage kurtosisType(object)
 #' @section R6 Usage: $kurtosisType()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description If the distribution kurtosis is present in properties, returns the type of kurtosis
 #' (platykurtic/mesokurtic/leptokurtic), otherwise returns NULL.
 #' @seealso \code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
@@ -588,7 +588,7 @@ Distribution$set("public", "kurtosisType", function() {
 #' @title Type of Skewness Accessor
 #' @usage skewnessType(object)
 #' @section R6 Usage: $skewnessType()
-#' @param object distribution.
+#' @param object Distribution.
 #' @description If the distribution skewness is present in properties, returns the type of skewness
 #' (negative/none/positive), otherwise returns NULL.
 #' @seealso \code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
@@ -648,7 +648,7 @@ Distribution$set("public","setParameterValue",function(lst, error = "warn"){
 #'
 #' @usage pdf(object, x1, ..., log = FALSE)
 #' @section R6 Usage: $pdf(x1, ..., log = FALSE)
-#' @param object distribution.
+#' @param object Distribution.
 #' @param x1 vector of numerics to evaluate function at.
 #' @param ... additional arguments.
 #' @param log logical; if TRUE, probabilities p are given as log(p).
@@ -701,7 +701,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
 #'
 #' @usage cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE)
 #' @section R6 Usage: $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)
-#' @param object distribution.
+#' @param object Distribution.
 #' @param x1 vector of numerics to evaluate function at.
 #' @param ... additional arguments.
 #' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
@@ -757,7 +757,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #'
 #' @importFrom stats quantile
 #' @section R6 Usage: $quantile(p, ..., lower.tail = TRUE, log.p = FALSE)
-#' @param x distribution.
+#' @param x Distribution.
 #' @param p vector of probabilities to evaluate function at.
 #' @param ... additional arguments.
 #' @param lower.tail logical; if TRUE, probabilities p are given as log(p).
@@ -798,7 +798,7 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
 #'
 #' @usage rand(object, n)
 #' @section R6 Usage: $rand(n)
-#' @param object distribution.
+#' @param object Distribution.
 #' @param n number of observations. If length(n) > 1, the length is taken to be the number required.
 #'
 #' @details
@@ -831,7 +831,7 @@ Distribution$set("public","rand",function(n){
 #'
 #' @usage sd(object)
 #' @section R6 Usage: $sd()
-#' @param object distribution.
+#' @param object Distribution.
 #' @details The standard deviation is analytically computed as the square root of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
 #'
@@ -848,7 +848,7 @@ Distribution$set("public","sd",function(){
 #'
 #' @importFrom stats median
 #' @section R6 Usage: $median()
-#' @param x distribution.
+#' @param x Distribution.
 #' @param na.rm ignored, added for consistency with S3 generic.
 #' @param ... ignored, added for consistency with S3 generic.
 #' @details The median is computed as the quantile function evaluated at 0.5.
@@ -892,7 +892,7 @@ Distribution$set("public", "iqr", function() {
 #'
 #' @usage liesInSupport(object, x, all = TRUE)
 #' @section R6 Usage: $liesInSupport(x, all = TRUE)
-#' @param object distribution.
+#' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
@@ -917,7 +917,7 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE){
 #'
 #' @usage liesInType(object, x, all = TRUE)
 #' @section R6 Usage: $liesInType(x, all = TRUE)
-#' @param object distribution.
+#' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
@@ -942,7 +942,7 @@ Distribution$set("public","liesInType",function(x, all = TRUE){
 #'
 #' @usage liesInDistrDomain(object, x, all = TRUE)
 #' @section R6 Usage: $liesInDistrDomain(x, all = TRUE)
-#' @param object distribution.
+#' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}

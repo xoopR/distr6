@@ -8,24 +8,24 @@ An R6 abstract wrapper class with methods implemented for child classes.
 }
 \details{
 This wrapper is an abstract class and cannot be implemented directly.
-See \code{\link{listWrappers}} for a list of wrappers that can be constructed. After wrapping multiple models, parameter IDs are altered by prefixing the ID with "model_".
-For example wrapping Model1 with a parameter 'param1' results in 'Model1_param1'.
-See \code{parameters} to find the parameter IDs.
+See \code{\link{listWrappers}} for a list of wrappers that can be constructed. After wrapping multiple models,
+parameter IDs are altered by prefixing the ID with "model_". For example wrapping Model1 with a parameter
+'param1' results in 'Model1_param1'. Call \code{parameters} to find the parameter IDs.
 }
-\section{Public Methods}{
+\section{Wrapper Methods}{
 
 \tabular{lll}{
-\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-\code{wrappedModels(model = NULL)} \tab character -> distribution \tab See public method details.\cr
+\strong{Method} \tab \strong{Link} \cr
+\code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
 }
 }
 
-\section{Public Method Details}{
+\section{Wrapper Method Details}{
 
 If a name is given to \code{wrappedModels}, returns the wrapped distribution otherwise returns a list
 of all wrapped distributions.
 }
 
 \seealso{
-\code{\link{TruncatedDistribution}}, \code{\link{HuberizedDistribution}}
+\code{\link{listWrappers}}
 }
