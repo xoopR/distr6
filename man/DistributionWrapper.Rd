@@ -12,18 +12,12 @@ See \code{\link{listWrappers}} for a list of wrappers that can be constructed. A
 parameter IDs are altered by prefixing the ID with "model_". For example wrapping Model1 with a parameter
 'param1' results in 'Model1_param1'. Call \code{parameters} to find the parameter IDs.
 }
-\section{Wrapper Methods}{
+\section{Public Methods}{
 
-\tabular{lll}{
+\tabular{ll}{
 \strong{Method} \tab \strong{Link} \cr
 \code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
 }
-}
-
-\section{Wrapper Method Details}{
-
-If a name is given to \code{wrappedModels}, returns the wrapped distribution otherwise returns a list
-of all wrapped distributions.
 }
 
 \seealso{

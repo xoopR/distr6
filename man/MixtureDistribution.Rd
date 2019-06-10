@@ -32,12 +32,6 @@ they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall 
 
 \section{Public Methods}{
 
-\tabular{ll}{
-\strong{Method} \tab \strong{Details} \cr
-\code{weights()} \tab Returns the weights of the wrapped distributions.
-}
-
-
 See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 

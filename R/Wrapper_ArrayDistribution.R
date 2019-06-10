@@ -71,10 +71,10 @@ ArrayDistribution$set("public","initialize",function(distribution, paramList){
   support = do.call(product, lapply(distlist,function(x) x$support()))
   distrDomain = do.call(product, lapply(distlist,function(x) x$distrDomain()))
 
-  description = paste0("Array of ",length(paramList),
+  description = paste0("Array of ",length(paramList)," ",distribution$public_fields$name," distributions.")
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
                    short_name = short_name, support = support, type = type,
-                   distrDomain = distrDomain)
+                   distrDomain = distrDomain, description = description)
 
 })

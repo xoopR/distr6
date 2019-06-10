@@ -24,6 +24,5 @@ decorate(E, list(CoreStatistics, ExoticStatistics))
 }
 \seealso{
 \code{\link{DistributionDecorator}} for the abstract decorator class and
-\code{\link{CoreStatistics}}, \code{\link{ExoticStatistics}}, \code{\link{FunctionImputation}} for
-available decorators.
+\code{\link{listDecorators}} for available decorators.
 }
