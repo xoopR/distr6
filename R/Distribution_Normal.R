@@ -91,6 +91,7 @@ Normal$set("public", "cf", function(t){
 Normal$set("public","mode",function(){
   return(self$getParameterValue("mean"))
 })
+
 Normal$set("public","initialize",function(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL){
 
   var.bool = FALSE

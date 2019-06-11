@@ -376,14 +376,14 @@ Distribution$set("public","summary",function(full = TRUE,...){
   if(full){
     if(length(private$.parameters)!=0){
       cat(self$name,"with parameterisation:\n")
-      cat("\t",paste(self$parameters()$as.data.frame()[which_params, "id"][[1]],
-                     self$parameters()$as.data.frame()[which_params,"value"][[1]],
+      cat("\t",paste(self$parameters()$as.data.frame()[which_params, "id"],
+                     self$parameters()$as.data.frame()[which_params,"value"],
                      sep = " = ", collapse = "; "))
     } else
       cat(self$name(),"\n")
     cat("\n\n Quick Statistics: \n")
 
-    a_exp = suppressMessages(try(self$expectation(), silent = T))
+    a_exp = suppressMessages(try(self$mean(), silent = T))
     a_var = suppressMessages(try(self$var(), silent = T))
     a_skew = suppressMessages(try(self$skewness(), silent = T))
     a_kurt = suppressMessages(try(self$kurtosis(), silent = T))
@@ -398,10 +398,10 @@ Distribution$set("public","summary",function(full = TRUE,...){
     if(!inherits(a_var,"try-error")) cat("\t", a_var, sep = "")
     if(!inherits(a_skew,"try-error")) cat("\t\t", a_skew, sep = "")
     if(!inherits(a_kurt,"try-error")) cat("\t\t", a_kurt, sep = "")
-    cat("\n")
+    cat("\n\n")
 
-    cat(" Support:",self$support()$getSymbol())
-    cat("\n Traits: ",self$valueSupport(),"; ",self$variateForm(),"\n\t See getTraits() for more",sep="")
+    cat(" Support:",self$support()$getSymbol(), "\t Scientific Type:",self$type()$getSymbol(),"\n")
+    cat("\n Traits: ",self$valueSupport(),"; ",self$variateForm(),"\n\t See traits() for more",sep="")
 
     if(inherits(a_kurt,"try-error"))
       cat("\n Properties: ", self$distrDomain()$getSymbol(), "; ", self$symmetry(),
@@ -414,14 +414,11 @@ Distribution$set("public","summary",function(full = TRUE,...){
       cat("\n\n Decorated with: ", paste0(self$decorators(),collapse=", "))
 
   } else {
-    if(length(private$.parameters)!=0){
-      cat(self$short_name,"distribution with parameterisation: ")
-      cat(paste(self$parameters()$as.data.frame()[which_params,"id"][[1]],
-                self$parameters()$as.data.frame()[which_params,"value"][[1]],
-                sep = " = ", collapse = "; "))
-    } else
-        cat(self$name)
-    cat("\n Scientific Type:",self$type()$getSymbol(),"\t See traits for more")
+    if(length(private$.parameters)!=0)
+      cat(self$strprint())
+    else
+      cat(self$name)
+    cat("\n Scientific Type:",self$type()$getSymbol(),"\t See traits() for more")
     cat("\n Support:",self$support()$getSymbol(),"\t\t See properties() for more")
   }
 })

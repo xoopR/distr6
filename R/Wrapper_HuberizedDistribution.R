@@ -48,7 +48,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   if(is.null(upper)) upper = distribution$sup()
 
   pdf <- function(x1, ...){
-    if(x1 <= private$.cutoffInterval[[1]]())
+    if(x1 <= private$.cutoffInterval[[1]])
       return(self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[1]]))
     else if(x1 >= private$.cutoffInterval[[2]])
       return(1-self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[2]]))
