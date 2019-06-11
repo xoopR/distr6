@@ -161,12 +161,15 @@ makeUniqueDistributions <- function(distlist){
 }
 
 #' @title Kurtosis Type
-#' @description Gets the type of (excess) kurtosis#' @usage skewType(skew)
+#' @description Gets the type of (excess) kurtosis
 #' @param kurtosis numeric.
 #' @examples
 #' exkurtosisType(1)
 #' @export
 exkurtosisType <- function(kurtosis){
+
+  if(kurtosis == "NaN") return("undefined")
+
   if(kurtosis < 0)
     return("platykurtic")
   else if(kurtosis == 0)
@@ -177,12 +180,14 @@ exkurtosisType <- function(kurtosis){
 
 #' @title Skewness Type
 #' @description Gets the type of skewness
-#' @usage skewType(skew)
 #' @param skew numeric.
 #' @examples
 #' skewType(1)
 #' @export
 skewType <- function(skew){
+
+  if(skew == "NaN") return("undefined")
+
   if(skew < 0)
     return("negative skew")
   else if(skew == 0)
