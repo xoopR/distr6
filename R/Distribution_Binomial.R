@@ -16,7 +16,7 @@
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{size} \tab numeric \tab number of trials. \cr
 #' \code{prob} \tab numeric \tab probability of success. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' }
 #'
 #' @section Constructor Details: The Binomial distribution is parameterised with size (number of trials)

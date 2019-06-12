@@ -19,7 +19,7 @@ with mean and variance, sd or precision.
 \code{var} \tab numeric \tab variance, squared scale parameter. \cr
 \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
 \code{precision} \tab numeric \tab precision, squared scale parameter. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 }
 }
 

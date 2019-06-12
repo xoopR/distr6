@@ -18,7 +18,7 @@
 #' \code{var} \tab numeric \tab variance, squared scale parameter. \cr
 #' \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
 #' \code{precision} \tab numeric \tab precision, squared scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' }
 #'
 #' @section Constructor Details: The Normal distribution can either be parameterised with variance,
@@ -90,10 +90,6 @@ Normal$set("public", "cf", function(t){
 })
 Normal$set("public","mode",function(){
   return(self$getParameterValue("mean"))
-})
-
-Normal$set("private",".getSettableParams", function(mean,var = NULL,sd = NULL,prec = NULL){
-
 })
 
 Normal$set("public","initialize",function(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL){
