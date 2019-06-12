@@ -8,7 +8,7 @@
 #' listDistributions(traits = list(VariateForm = "univariate"))
 #' listDistributions(traits = list(ValueSupport = "discrete"))
 #' @export
-listDistributions <- function(simplify=FALSE, traits=NULL){
+listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "Distribution_generator")
@@ -36,12 +36,19 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
     if(!is.null(traits)){
       names(traits) = tolower(names(traits))
       if(checkmate::testList(traits)){
-        for(i in 1:length(traits))
-          distrs = distrs[distrs[,tolower(colnames(distrs)) %in% names(traits)[[i]]] == traits[[i]],]
+        if(is.null(traits$valuesupport))
+          distrs = dplyr::filter(distrs, VariateForm == traits$variateform)
+        else if(is.null(traits$variateform))
+          distrs = dplyr::filter(distrs, ValueSupport == traits$valuesupport)
+        else if(!is.null(traits$variateform) & !is.null(traits$valuesupport))
+          distrs = dplyr::filter(distrs, VariateForm == traits$variateform & ValueSupport == traits$valuesupport)
       }
     }
     if("ShortName" %in% rownames(data.frame(distrs))) distrs = t(distrs)
-    return(data.frame(distrs))
+    if(view)
+      View(data.frame(distrs))
+    else
+      return(data.frame(distrs))
   }
 }
 
