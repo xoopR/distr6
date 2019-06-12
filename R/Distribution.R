@@ -342,11 +342,10 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #-------------------------------------------------------------
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
-    string = paste(apply(self$parameters()$as.data.frame()[self$parameters()$as.data.frame()$settable,],1,
-                         function(x) paste(x[1],trimws(x[2]),sep=" = ")
-                         ),
-                   collapse=", ")
-    string = paste0(self$short_name,"(",string,")")
+    settable = self$parameters()$as.data.frame()$settable
+    id = self$parameters()$as.data.frame()[settable, "id"]
+    value = self$parameters()$as.data.frame()[settable, "value"]
+    string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
   } else {
     string = paste0(self$short_name)
   }

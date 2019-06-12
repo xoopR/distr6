@@ -136,14 +136,15 @@ ParameterSet$set("public","initialize", function(id, value, lower, upper, class,
     a_upper = ifelse(upper[[i]] == Inf, upper[[i]], as(upper[[i]], a_class))
 
     a_value = as(value[[i]], a_class)
-    checkmate::assert(a_value >= a_lower, a_value <= a_upper, combine = "and",
+    checkmate::assert(all(a_value >= a_lower), all(a_value <= a_upper), combine = "and",
                       .var.name = "'value' should be between 'lower' and 'upper'")
 
-    a_param = data.frame(id = a_id, value = a_value, lower = a_lower,
+    a_param = data.frame(id = a_id, value = a_lower, lower = a_lower,
                          upper = a_upper, class = a_class, settable = a_settable,
                          description = a_description,
                          updateFunc = a_update,
                          stringsAsFactors = F)
+    a_param$value <- list(a_value)
 
     params = rbind(params, a_param)
   }
@@ -224,11 +225,11 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
     RSmisc::stopwarn(error, "There are no parameters in this distribution.")
   if(missing(id))
     RSmisc::stopwarn(error, "Argument 'id' is missing, with no default.")
-  val = self$parameters(id, TRUE)[["value"]]
+  val = self$parameters(id)[["value"]]
   if(length(val)==0){
     RSmisc::stopwarn(error, paste(id, "is not a parameter in this distribution."))
   }else
-    return(val[[1]])
+    return(unlist(val[[1]]))
 
 }) # NEEDS TESTING
 
@@ -274,7 +275,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
         checkmate::assertInteger(value,lower = param$lower, upper = param$upper)
       }
 
-      private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
+      private$.parameters[private$.parameters[,"id"] %in% param$id, "value"][[1]] <- list(value)
     }
 
     rm(id, value, i)

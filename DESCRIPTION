@@ -50,6 +50,7 @@ Collate:
     'SetInterval_SpecialSet.R'
     'Distribution_Binomial.R'
     'Distribution_Exponential.R'
+    'Distribution_Multinomial.R'
     'Distribution_Normal.R'
     'IGNORE_Wrapper_ConcreteWrapper.R'
     'SetInterval_Interval.R'

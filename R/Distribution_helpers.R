@@ -26,11 +26,10 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
     distrs = do.call(rbind.data.frame,lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
-      x = suppressMessages(x$new())
-      ShortName = x$short_name
-      Type =  RSmisc::getR6Class(x$type())
-      ValueSupport = x$valueSupport()
-      VariateForm = x$variateForm()
+      ShortName = x$public_fields$short_name
+      Type = x$public_fields$traits$type$getSymbol()
+      ValueSupport = x$public_fields$traits$valueSupport
+      VariateForm = x$public_fields$traits$variateForm
       return(cbind(ShortName, ClassName, Type, ValueSupport, VariateForm))
     }))
     row.names(distrs) = NULL
