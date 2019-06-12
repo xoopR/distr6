@@ -168,7 +168,7 @@ makeUniqueDistributions <- function(distlist){
 #' @export
 exkurtosisType <- function(kurtosis){
 
-  if(kurtosis == "NaN") return("undefined")
+  if(is.nan(kurtosis)) return("undefined")
 
   if(kurtosis < 0)
     return("platykurtic")
@@ -186,7 +186,7 @@ exkurtosisType <- function(kurtosis){
 #' @export
 skewType <- function(skew){
 
-  if(skew == "NaN") return("undefined")
+  if(is.nan(skew)) return("undefined")
 
   if(skew < 0)
     return("negative skew")

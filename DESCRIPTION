@@ -54,7 +54,6 @@ Collate:
     'SetInterval_Interval.R'
     'Wrapper.R'
     'Wrapper_ArrayDistribution.R'
-    'Wrapper_ConcreteWrapper.R'
     'Wrapper_Convolution.R'
     'Wrapper_HuberizedDistribution.R'
     'Wrapper_MixtureDistribution.R'

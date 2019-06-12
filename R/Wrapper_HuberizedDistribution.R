@@ -56,15 +56,6 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
       return(self$wrappedModels()[[1]]$pdf(x1))
   }
 
-  cdf <- function(x1, ...){
-    if(x1 <= private$.cutoffInterval[[1]])
-      return(self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[1]]))
-    else if(x1 >= private$.cutoffInterval[[2]])
-      return(1-self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[2]]))
-    else
-      return(self$wrappedModels()[[1]]$cdf(x1))
-  }
-
   name = paste("Huberized",distribution$name)
   short_name = paste0("Huberized",distribution$short_name)
 
@@ -75,7 +66,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
   description = paste0(distribution$description, " Huberized between ",lower," and ",upper,".")
 
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
+  super$initialize(distlist = distlist, pdf = pdf, name = name,
                    short_name = short_name, type = distribution$type(),
                    support = distribution$support(), distrDomain = distribution$distrDomain(),
                    prefixParams = FALSE, description = description)
