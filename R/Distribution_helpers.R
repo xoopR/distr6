@@ -3,6 +3,7 @@
 #' traits and/or properties.
 #' @param simplify logical.
 #' @param traits list of traits to filter distributions by.
+#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
 #' @examples
 #' listDistributions()
 #' listDistributions(traits = list(VariateForm = "univariate"))
@@ -36,17 +37,17 @@ listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
     if(!is.null(traits)){
       names(traits) = tolower(names(traits))
       if(checkmate::testList(traits)){
-        if(is.null(traits$valuesupport))
-          distrs = dplyr::filter(distrs, VariateForm == traits$variateform)
-        else if(is.null(traits$variateform))
-          distrs = dplyr::filter(distrs, ValueSupport == traits$valuesupport)
+        if(is.null(traits$valuesupport) & !is.null(traits$variateform))
+          distrs = dplyr::filter(distrs, distrs$VariateForm == traits$variateform)
+        else if(is.null(traits$variateform) & !is.null(traits$valuesupport))
+          distrs = dplyr::filter(distrs, distrs$ValueSupport == traits$valuesupport)
         else if(!is.null(traits$variateform) & !is.null(traits$valuesupport))
-          distrs = dplyr::filter(distrs, VariateForm == traits$variateform & ValueSupport == traits$valuesupport)
+          distrs = dplyr::filter(distrs, distrs$VariateForm == traits$variateform & distrs$ValueSupport == traits$valuesupport)
       }
     }
     if("ShortName" %in% rownames(data.frame(distrs))) distrs = t(distrs)
     if(view)
-      View(data.frame(distrs))
+      utils::View(data.frame(distrs))
     else
       return(data.frame(distrs))
   }
