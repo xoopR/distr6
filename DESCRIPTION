@@ -25,7 +25,7 @@ Description: An R6 object oriented Distributions package in R. Unified interface
   commonly used probabilty distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
 Depends: 
-Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats
+Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats, extraDistr
 Suggests: knitr, testthat, devtools
 Remotes: RaphaelS1/RSmisc, RaphaelS1/R62S3
 License: MIT + file LICENSE
