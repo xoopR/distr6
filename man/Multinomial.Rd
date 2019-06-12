@@ -26,7 +26,8 @@ with mean and variance, sd or precision.
 Size, N, is given as a single integer greater than zero, such that if \eqn{x} is a vector of \eqn{K} parameters
 passed to the pmf then it should be true that \eqn{\sum x_i = N}.
 The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect
-to be passed to the pmf function.
+to be passed to the pmf function. The probability vector is automatically normalised with
+\deqn{probs = probs/sum(probs)}.
 }
 
 \section{Statistical Methods}{

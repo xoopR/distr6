@@ -23,7 +23,8 @@
 #' Size, N, is given as a single integer greater than zero, such that if \eqn{x} is a vector of \eqn{K} parameters
 #' passed to the pmf then it should be true that \eqn{\sum x_i = N}.
 #' The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect
-#' to be passed to the pmf function.
+#' to be passed to the pmf function. The probability vector is automatically normalised with
+#' \deqn{probs = probs/sum(probs)}.
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
@@ -86,12 +87,12 @@ Multinomial$set("public","entropy",function(base = 2){
   probs = self$getParameterValue("probs")
   K = self$getParameterValue("K")
 
-  s1 = -log(factorial(size))
-  s2 = -size * sum(probs * log(probs))
+  s1 = -log(factorial(size), base)
+  s2 = -size * sum(probs * log(probs, base))
   s3 = 0
   for(i in 1:K){
     for(j in 0:size){
-      s3 = s3 + (choose(size, j) * (probs[[i]]^j) * ((1-probs[[i]])^(size-j)) * (log(factor(j))))
+      s3 = s3 + (choose(size, j) * (probs[[i]]^j) * ((1-probs[[i]])^(size-j)) * (log(factorial(j), base)))
     }
   }
 
@@ -106,13 +107,15 @@ Multinomial$set("public", "cf", function(t){
   return((exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
 }) # TEST
 Multinomial$set("public", "pgf", function(z){
-  checkmate::assert(length(t) == self$getParameterValue("K"))
+  checkmate::assert(length(z) == self$getParameterValue("K"))
   return((self$getParameterValue("probs") * z)^self$getParameterValue("size"))
 }) # TEST
 
 Multinomial$set("public","initialize",function(size, probs, decorators = NULL){
   if(missing(size)) stop("Size is missing with no default.")
   if(missing(probs)) stop("Probs is missing with no default.")
+
+  probs <- probs/sum(probs)
 
   K = unlist(length(probs))
   private$.parameters <- ParameterSet$new(id = list("size","K", "probs"),
@@ -143,6 +146,6 @@ Multinomial$set("public","initialize",function(size, probs, decorators = NULL){
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Set$new(0:size, dim = K),
-                   distrDomain = PosIntegers$new(zero = T, dim = K), symmetric = TRUE)
+                   distrDomain = PosIntegers$new(zero = T, dim = K), symmetric = FALSE)
   invisible(self)
 })

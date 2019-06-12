@@ -47,12 +47,12 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
 
 #' @title Lists Implemented Distribution Decorators
 #' @description Lists decorators that can decorate an R6 Distribution.
-#' @param simplify logical. If FALSE (default) returns result as decorator, otherwise character.
+#' @param simplify logical. If TRUE (default) returns results as characters, otherwise R6 classes.
 #' @examples
 #' listDecorators()
 #' listDecorators(FALSE)
 #' @export
-listDecorators <- function(simplify=FALSE){
+listDecorators <- function(simplify = TRUE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "DistributionDecorator_generator")
@@ -71,12 +71,12 @@ listDecorators <- function(simplify=FALSE){
 
 #' @title Lists Implemented Distribution Decorators
 #' @description Lists wrappers that can wrap an R6 Distribution.
-#' @param simplify logical. If FALSE (default) returns result as wrapper, otherwise character.
+#' @param simplify logical. If TRUE (default) returns results as characters, otherwise R6 classes.
 #' @examples
 #' listWrappers()
 #' listWrappers(TRUE)
 #' @export
-listWrappers <- function(simplify=FALSE){
+listWrappers <- function(simplify = TRUE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "DistributionWrapper_generator")
