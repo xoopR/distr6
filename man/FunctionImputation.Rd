@@ -23,7 +23,6 @@ Decorator objects add functionality to the given Distribution object
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{dist} \tab distribution \tab Distribution to decorate. \cr
-\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
 }
 }
 

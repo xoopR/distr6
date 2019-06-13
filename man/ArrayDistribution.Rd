@@ -12,9 +12,11 @@ Exploits the following relationships of independent distributions
 \deqn{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
 \deqn{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
 where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
-
-\code{ArrayDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
+\section{Constructor}{
+ ArrayDistribution$new(distribution, paramList)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -24,6 +26,11 @@ where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN
 }
 }
 
+\section{Public Methods}{
+
+See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+}
+
 \examples{
 a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                         list(prob = 0.2, size = 6)))
@@ -31,6 +38,5 @@ a$pdf(x1=1,x2=2,x3=3)
 a$cdf(x1=1,x2=2,x3=3)
 }
 \seealso{
-\code{\link{ProductDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}
-for wrapper details.
+\code{\link{ProductDistribution}}
 }

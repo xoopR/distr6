@@ -14,37 +14,33 @@ Decorator objects add functionality to the given Distribution object
  \code{\link{decorate}} function to decorate a Distribution.
 
  All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations.
+ from analytic computations. See below for the methods added to a distribution after decorating with
+ \code{ExoticStatistics}.
 }
+\section{Constructor}{
+ ExoticStatistics$new(dist)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{dist} \tab distribution \tab Distribution to decorate. \cr
-\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
 }
 }
 
-\section{Public Methods}{
+\section{Added Methods}{
 
 \tabular{lll}{
-\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-\code{cdfAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
-Anti-derivative of cdf evaluated between lower and upper. \cr
-\code{survivalAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
-Anti-derivative of survival function evaluated between lower and upper. \cr
-\code{survival(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
-Survival function evaluated at x1, log(survival) if log = TRUE. \cr
-\code{hazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
-Hazard function evaluated at x1, log(hazard) if log = TRUE. \cr
-\code{cumHazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
-Cumulative hazard function evaluated at x1, log(cumHazard) if log = TRUE. \cr
-\code{cdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
-The pth norm of the cumulative distribution function, evaluated between limits. \cr
-\code{pdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
-The pth norm of the probability density function, evaluated between limits. \cr
-\code{survivalPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
-The pth norm of the survival function, evaluated between limits.
+\strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
+\code{survival(x1, log = FALSE)} \tab Survival function \tab \code{\link{survival}} \cr
+\code{hazard(x1, log = FALSE)} \tab Hazard function \tab \code{\link{hazard}} \cr
+\code{cumHazard(x1, log = FALSE)} \tab Cumulative hazard function \tab \code{\link{cumHazard}} \cr
+\code{cdfAntiDeriv(lower = NULL, upper = NULL))} \tab Anti-derivative of cdf \tab \code{\link{cdfAntiDeriv}} \cr
+\code{survivalAntiDeriv(lower = NULL, upper = NULL)} \tab Anti-derivative of survival function \tab \code{\link{survivalAntiDeriv}} \cr
+\code{cdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of cdf \tab \code{\link{cdfPNorm}} \cr
+\code{pdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of pdf \tab \code{\link{pdfPNorm}} \cr
+\code{survivalPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
 }
 }
 
@@ -55,7 +51,8 @@ x$survival(1)
 
 x = Exponential$new(decorators = ExoticStatistics)
 x$survival(4)
+
 }
 \seealso{
-\code{\link{DistributionDecorator}}
+\code{\link{DistributionDecorator}} and \code{\link{CoreStatistics}}
 }

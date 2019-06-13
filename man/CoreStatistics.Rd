@@ -13,14 +13,18 @@ Decorator objects add functionality to the given Distribution object
  \code{\link{decorate}} function to decorate a Distribution.
 
  All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations.
+ from analytic computations. See below for the methods added to a distribution after decorating with
+ \code{CoreStatistics}.
 }
+\section{Constructor}{
+ CoreStatistics$new(dist)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{dist} \tab distribution \tab Distribution to decorate. \cr
-\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
 }
 }
 
@@ -31,27 +35,27 @@ Decorator objects add functionality to the given Distribution object
 \code{mgf(t)} \tab Moment generating function \tab \code{\link{mgf}} \cr
 \code{pgf(t)} \tab Probability generating function \tab \code{\link{pgf}} \cr
 \code{cf(t)} \tab Characteristic function \tab \code{\link{cf}} \cr
-\code{iqr()} \tab Interquartile Range \tab \code{\link{iqr}} \cr
 \code{entropy(base = 2)} \tab (Shannon) Entropy \tab \code{\link{entropy}} \cr
 \code{skewness()} \tab Skewness \tab \code{\link{skewness}} \cr
 \code{kurtosis(excess = TRUE)} \tab Kurtosis \tab \code{\link{kurtosis}} \cr
 \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
 \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 \code{mode(which = 1)} \tab Mode \tab \code{\link{mode}} \cr
-\code{var()} \tab Variance \tab \code{\link{var.Distribution}} \cr
-\code{cov()} \tab Covariance \tab \code{\link{cov.Distribution}} \cr
-\code{cor()} \tab Correlation \tab \code{\link{cor.Distribution}} \cr
+\code{var()} \tab Variance \tab \code{\link{var}} \cr
+\code{cov()} \tab Covariance \tab \code{\link{cov}} \cr
+\code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
 }
 }
 
 \examples{
 x = Binomial$new()
 decorate(x, CoreStatistics)
-x$iqr()
+x$genExp()
 
 x = Binomial$new(decorators = CoreStatistics)
 x$kthmoment(4)
+
 }
 \seealso{
-\code{\link{DistributionDecorator}}
+\code{\link{DistributionDecorator}}, \code{\link{decorate}} and \code{\link{ExoticStatistics}}
 }

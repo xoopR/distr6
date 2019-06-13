@@ -1,10 +1,13 @@
+#' @include SetInterval_SpecialSet.R ParameterSet.R
 #-------------------------------------------------------------
 # Exponential Distribution Documentation
 #-------------------------------------------------------------
 #' @title Exponential Distribution
-#' @description Mathematical and statistical functions for the exponential distribution parameterised
+#' @description Mathematical and statistical functions for the Exponential distribution parameterised
 #' with rate or scale.
 #' @name Exponential
+#'
+#' @section Constructor: Exponential$new(rate = NULL, scale = NULL, decorators = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -12,138 +15,63 @@
 #' \code{rate} \tab numeric \tab arrival rate. \cr
 #' \code{scale} \tab numeric \tab scale parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{...} \tab ANY \tab additional arguments for Distribution constructor. See details. \cr
 #' }
 #'
 #' @section Constructor Details: The exponential distribution can either be parameterised with a rate or
 #' scale parameter. If neither are provided then rate parameterisation is used with rate = 1. If both are
 #' provided then rate parameterisation is used with given rate. Scale is defined by
 #' \deqn{scale = 1/rate}
-#' The CoreStatistics and ExoticStatistics decorators can be added to the distribution for further
-#' numeric functionality, but these are approximate calculations only. Additional arguments can be passed
-#' to the Distribution constructor, including R62S3 to determine if S3 methods should be added for
-#' the exponential distribution.
 #'
+#' @inheritSection Distribution Public Variables
+#' @inheritSection Distribution Accessor Methods
+#' @inheritSection Distribution p/d/q/r Methods
+#' @inheritSection Normal Statistical Methods
+#' @inheritSection Distribution Parameter Methods
+#' @inheritSection Distribution Validation Methods
+#' @inheritSection Distribution Representation Methods
 #'
-#' @section Public Variables:
-#'  \tabular{lr}{
-#'   \strong{Method} \tab \strong{Return} \cr
-#'   \code{name} \tab "Exponential" \cr
-#'   \code{short_name} \tab "Exp" \cr
-#'   \code{traits} \tab List of exponential distribution traits. \cr
-#'   \code{properties} \tab List of exponential distribution properties. \cr
-#'   }
-#'
-#' @section Public Methods:
-#'  \tabular{lrr}{
-#'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
-#'   \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
-#'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
-#'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
-#'   \code{expectation()} \tab numeric \tab Expectation.  \cr
-#'   \code{var()} \tab numeric \tab Variance.  \cr
-#'   \code{skewness()} \tab numeric \tab Skewness. \cr
-#'   \code{kurtosis(excess = TRUE)} \tab numeric \tab Kurtosis. Kurtosis - 3 if excess = TRUE. \cr
-#'   \code{entropy(base = 2)} \tab numeric \tab Entropy. Shannon if base = 2. \cr
-#'   \code{mode()} \tab numeric \tab Mode. \cr
-#'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
-#'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-#'   \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
-#'   \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
-#'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
-#'   }
-#'
-#' @section Public Methods Details:
-#' If \code{log.p} is TRUE then the natural logarithm of probabilities is returned. If \code{lower.tail}
-#' is TRUE then distribution functions are evaluated at the lower tail of the distribution, otherwise
-#' the upper tail (1 - p).
-#'
-#'
-#' @seealso See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
-#' for Decorator details as well as \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
+#' @export
 NULL
 #-------------------------------------------------------------
 # Exponential Distribution Definition
 #-------------------------------------------------------------
-#' @include SetInterval_SpecialSet.R ParameterSet.R
-#' @export
 Exponential <- R6::R6Class("Exponential", inherit = Distribution, lock_objects = F)
 Exponential$set("public","name","Exponential")
 Exponential$set("public","short_name","Exp")
 Exponential$set("public","traits",list(type = PosReals$new(zero = T),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
+Exponential$set("public","description","Exponential Probability Distribution.")
 
-Exponential$set("public","properties",list(support = PosReals$new(zero = T),
-                                           distrDomain = PosReals$new(zero = T),
-                                           symmetry  = "asymmetric"))
-
-Exponential$set("private",".pdf",function(x1, log = FALSE){
-  dexp(x1, self$getParameterValue("rate"), log)
-})
-
-Exponential$set("private",".cdf",function(x1, lower.tail = TRUE, log.p = FALSE){
-  pexp(x1, self$getParameterValue("rate"), lower.tail, log.p)
-})
-
-Exponential$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
-  qexp(p, self$getParameterValue("rate"), lower.tail, log.p)
-})
-
-Exponential$set("private",".rand",function(n){
-  rexp(n, self$getParameterValue("rate"))
-})
-
-Exponential$set("public","expectation",function(){
+Exponential$set("public","mean",function(){
   self$getParameterValue("scale")
 })
-
 Exponential$set("public","var",function(){
   self$getParameterValue("scale")^2
 })
-
 Exponential$set("public","skewness",function() return(2))
-
 Exponential$set("public","kurtosis",function(excess = TRUE){
   if(excess)
     return(6)
   else
     return(9)
 })
-
 Exponential$set("public","entropy",function(base = 2){
   1 - log(self$getParameterValue("rate"), base)
 })
-
 Exponential$set("public", "mgf", function(t){
   if(t < self$getParameterValue("rate"))
     return(self$getParameterValue("rate") / (self$getParameterValue("rate") - t))
   else
     return(0)
 })
-
 Exponential$set("public", "cf", function(t){
   return(self$getParameterValue("rate") / (self$getParameterValue("rate") -  ((0+1i) * t)))
 })
-
-Exponential$set("public","survival",function(x1, log.p = FALSE){
-  self$cdf(x1, lower.tail = FALSE, log.p)
+Exponential$set("public","mode",function(){
+  return(0)
 })
-
-Exponential$set("public","hazard",function(x1){
-  self$pdf(x1)/self$survival(x1)
-})
-
-Exponential$set("public","cumHazard",function(x1){
-  -self$cdf(x1, log.p = TRUE)
-})
-
-Exponential$set("public","mode",function() return(0))
-
-Exponential$set("private",".parameters", NULL)
-
-Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decorators = NULL,...){
+Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decorators = NULL){
 
   rate.bool = FALSE
   scale.bool = FALSE
@@ -177,6 +105,14 @@ Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decora
   if(!is.null(rate)) self$setParameterValue(list(rate = rate))
   if(!is.null(scale)) self$setParameterValue(list(scale = scale))
 
-  super$initialize(decorators = decorators,...)
+  pdf <- function(x1) dexp(x1, self$getParameterValue("rate"))
+  cdf <- function(x1) pexp(x1, self$getParameterValue("rate"))
+  quantile <- function(p) qexp(p, self$getParameterValue("rate"))
+  rand <- function(n) rexp(n, self$getParameterValue("rate"))
+
+  private$.properties
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
+                   symmetric  = FALSE)
   invisible(self)
 })

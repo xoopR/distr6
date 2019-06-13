@@ -6,12 +6,14 @@ test_that("lists",{
   expect_silent(listDistributions())
   expect_silent(listDistributions(simplify = T))
   expect_silent(listDistributions(traits = list(VariateForm = "univariate")))
-  expect_silent(listDistributions(traits = list(variateForm = "univariate")))
-  expect_silent(listDistributions(traits = list(variateform = "univariate")))
-  expect_silent(listDecorators())
+  expect_silent(listDistributions(traits = list(VariateForm = "univariate", valuesupport = "continuous")))
+  expect_silent(listDistributions(traits = list(efsf = "fsdf")))
+  expect_silent(listDecorators(F))
   expect_silent(listDecorators(T))
-  expect_silent(listSpecialSets())
+  expect_silent(listSpecialSets(T))
   expect_silent(listSpecialSets(F))
+  expect_silent(listWrappers(T))
+  expect_silent(listWrappers(F))
 })
 
 test_that("unique distributions",{

@@ -2,17 +2,14 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{genExp}
 \alias{genExp}
-\alias{genExp.Distribution}
 \title{Generalised Expectation of a Distribution}
 \usage{
-\method{genExp}{Distribution}(object, trafo = NULL, ...)
+genExp(object, trafo = NULL)
 }
 \arguments{
-\item{object}{an object used to select a method.}
+\item{object}{Distribution.}
 
 \item{trafo}{transformation for expectation calculation, see details.}
-
-\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 A generalised expectation function for distributions, for arithmetic mean and more complex
@@ -26,12 +23,11 @@ checks which analytic methods are present before selecting a numeric strategy.
 If trafo = NULL, then the arithmetic mean is calculated, i.e. the approximation to \eqn{E[X]}. Any
 transformation must be given as a function, for example \code{trafo = function(x) x^2}
 (which is the second moment).
-
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
 }
+\section{R6 Usage}{
+ $genExp(trafo = NULL)
+}
+
 \seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
+\code{\link{mean}}, \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 }

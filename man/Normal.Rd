@@ -5,8 +5,12 @@
 \title{Normal Distribution}
 \description{
 Mathematical and statistical functions for the Normal distribution parameterised
-with rate or scale.
+with mean and variance, sd or precision.
 }
+\section{Constructor}{
+ Normal$new(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -15,8 +19,7 @@ with rate or scale.
 \code{var} \tab numeric \tab variance, squared scale parameter. \cr
 \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
 \code{precision} \tab numeric \tab precision, squared scale parameter. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{...} \tab ANY \tab additional arguments for Distribution constructor. See details. \cr
+\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 }
 }
 
@@ -28,54 +31,95 @@ sd is defined by
 \deqn{sd = var^2}
 prec is defined by
 \deqn{prec = var^-1}
+}
 
-The CoreStatistics and ExoticStatistics decorators can be added to the distribution for further
-numeric functionality, but these are approximate calculations only. Additional arguments can be passed
-to the Distribution constructor, including R62S3 to determine if S3 methods should be added for
-the Normal distribution.
+\section{Statistical Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{mean()} \tab \code{\link{mean.Distribution}} \cr
+  \code{var()} \tab \code{\link{var}} \cr
+  \code{skewness()} \tab \code{\link{skewness}} \cr
+  \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
+  \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
+  \code{mgf(t)} \tab \code{\link{mgf}} \cr
+  \code{cf(t)} \tab \code{\link{cf}} \cr
+  \code{sd()} \tab \code{\link{sd}} \cr
+  \code{median()} \tab \code{\link{median.Distribution}} \cr
+  \code{iqr()} \tab \code{\link{iqr}} \cr
+  }
 }
 
 \section{Public Variables}{
 
- \tabular{lr}{
+ \tabular{ll}{
   \strong{Method} \tab \strong{Return} \cr
-  \code{name} \tab "Normal" \cr
-  \code{short_name} \tab "norm" \cr
-  \code{traits} \tab List of Normal distribution traits. \cr
-  \code{properties} \tab List of Normal distribution properties. \cr
+  \code{name} \tab Name of distribution. \cr
+  \code{short_name} \tab Id of distribution. \cr
+  \code{description} \tab Brief description of distribution. \cr
+  \code{traits} \tab List: type, valueSupport, variateForm.
   }
 }
 
-\section{Public Methods}{
+\section{Accessor Methods}{
 
- \tabular{lrr}{
-  \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-  \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
-  \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
-  \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
-  \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
-  \code{normectation()} \tab numeric \tab normectation.  \cr
-  \code{var()} \tab numeric \tab Variance.  \cr
-  \code{skewness()} \tab numeric \tab Skewness. \cr
-  \code{kurtosis(excess = TRUE)} \tab numeric \tab Kurtosis. Kurtosis - 3 if excess = TRUE. \cr
-  \code{entropy(base = 2)} \tab numeric \tab Entropy. Shannon if base = 2. \cr
-  \code{mode()} \tab numeric \tab Mode. \cr
-  \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
-  \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-  \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
-  \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
-  \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
+  \code{variateForm()} \tab \code{\link{variateForm}} \cr
+  \code{type()} \tab \code{\link{type}} \cr
+  \code{properties()} \tab \code{\link{properties}} \cr
+  \code{support()} \tab \code{\link{support}} \cr
+  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
+  \code{symmetry()} \tab \code{\link{symmetry}} \cr
+  \code{sup()}  \tab \code{\link{sup}} \cr
+  \code{inf()} \tab \code{\link{inf}} \cr
+  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
+  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
   }
 }
 
-\section{Public Methods Details}{
+\section{p/d/q/r Methods}{
 
-If \code{log.p} is TRUE then the natural logarithm of probabilities is returned. If \code{lower.tail}
-is TRUE then distribution functions are evaluated at the lower tail of the distribution, otherwise
-the upper tail (1 - p).
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n)} \tab \code{\link{rand}}
+ }
 }
 
-\seealso{
-See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
-for Decorator details as well as \code{\link{CoreStatistics}} and \code{\link{ExoticStatistics}}.
+\section{Parameter Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{parameters(id)} \tab \code{\link{parameters}} \cr
+  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
+  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 }
+}
+
+\section{Validation Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{liesInSupport(x, all = TRUE)} \tab \code{\link{liesInSupport}} \cr
+  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
+  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+}
+}
+
+\section{Representation Methods}{
+
+\tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+  \code{plot()} \tab Coming Soon. \cr
+  \code{qqplot()} \tab Coming Soon. \cr
+}
+}
+

@@ -2,17 +2,14 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{kurtosis}
 \alias{kurtosis}
-\alias{kurtosis.Distribution}
-\title{Kurtosis}
+\title{Distribution Kurtosis}
 \usage{
-\method{kurtosis}{Distribution}(object, excess = TRUE, ...)
+kurtosis(object, excess = TRUE)
 }
 \arguments{
-\item{object}{an object used to select a method.}
+\item{object}{Distribution.}
 
 \item{excess}{logical, if TRUE (default) excess Kurtosis returned}
-
-\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Kurtosis of a distribution
@@ -24,11 +21,13 @@ distribution,
 where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
 }
+\section{R6 Usage}{
+ $kurtosis(excess = TRUE)
+}
+
 \seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
+\code{\link{CoreStatistics}} and \code{\link{decorate}}
 }

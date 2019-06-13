@@ -1,29 +1,23 @@
 #' @name DistributionWrapper
 #' @title Abstract Wrapper for Distributions
+#' @description An R6 abstract wrapper class with methods implemented for child classes.
 #'
 #' @details This wrapper is an abstract class and cannot be implemented directly.
-#' See \code{\link{listWrappers}} for a list of wrappers that can be constructed. After wrapping multiple models, parameter IDs are altered by prefixing the ID with "model_".
-#' For example wrapping Model1 with a parameter 'param1' results in 'Model1_param1'.
-#' See \code{parameters} to find the parameter IDs.
-#
-#' @description An R6 abstract wrapper class with methods implemented for child classes.
-#' @seealso \code{\link{TruncatedDistribution}}, \code{\link{HuberizedDistribution}}
+#' See \code{\link{listWrappers}} for a list of wrappers that can be constructed. After wrapping multiple models,
+#' parameter IDs are altered by prefixing the ID with "model_". For example wrapping Model1 with a parameter
+#' 'param1' results in 'Model1_param1'. Call \code{parameters} to find the parameter IDs.
+#'
+#' @seealso \code{\link{listWrappers}}
 #'
 #'
 #' @section Public Methods:
-#' \tabular{lll}{
-#' \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-#' \code{wrappedModels(model = NULL)} \tab character -> distribution \tab See public method details.\cr
+#' \tabular{ll}{
+#' \strong{Method} \tab \strong{Link} \cr
+#' \code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
 #'}
-#'
-#' @section Public Method Details:
-#' If a name is given to \code{wrappedModels}, returns the wrapped distribution otherwise returns a list
-#' of all wrapped distributions.
 #'
 #'
 NULL
-
-#' @export
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
 DistributionWrapper$set("public","initialize",function(distlist, prefixParams = TRUE,...){
   if(RSmisc::getR6Class(self) == "DistributionWrapper")
@@ -52,14 +46,40 @@ DistributionWrapper$set("public","initialize",function(distlist, prefixParams = 
   super$initialize(parameters = params, ...)
 })
 
-DistributionWrapper$set("private", ".wrappedModels", list())
+#' @name wrappedModels
+#' @title Gets Internally Wrapped Models
+#' @description Returns either a list of all the wrapped models or the models named by parameters.
+#'
+#' @usage wrappedModels(object, model = NULL)
+#' @section R6 Usage: $wrappedModels(model = NULL)
+#'
+#' @param object Distribution.
+#' @param model character, see details.
+#'
+#' @details Accessor for internally wrapped models. If the \code{model} parameter is matched by a single named
+#' wrapped model, this model is returned. If a vector is supplied to \code{model} parameter then a list
+#' of internal models is returned if matched, otherwise a list of all internal models is returned. If
+#' \code{model} is NULL (default) then a list of all internal models are returned.
+#'
+#' @seealso \code{\link{DistributionWrapper}}
+#'
+#' @export
+NULL
 DistributionWrapper$set("public", "wrappedModels", function(model=NULL){
-  if(!is.null(model))
-    return(private$.wrappedModels[[model]])
-  else
-    return(private$.wrappedModels)
+
+  if(!is.null(model)){
+    if(all(model %in% names(private$.wrappedModels))){
+      if(length(model)==1)
+        return(private$.wrappedModels[[model]])
+      else
+        return(private$.wrappedModels[model])
+    } else
+      private$.wrappedModels
+  } else
+    private$.wrappedModels
 })
-DistributionWrapper$set("public","setParameterValue",function(lst){
+DistributionWrapper$set("private", ".wrappedModels", list())
+DistributionWrapper$set("public","setParameterValue",function(lst, error = "warn"){
   for(i in 1:length(lst)){
     if(grepl("_",lst[[i]],fixed = T)){
       id = names(lst)[[i]]
@@ -74,7 +94,7 @@ DistributionWrapper$set("public","setParameterValue",function(lst){
       model = self$wrappedModels()[[1]]$short_name
       newlst = lst
     }
-    self$wrappedModels(model)$setParameterValue(newlst)
+    self$wrappedModels(model)$setParameterValue(newlst, error)
   }
   rm(i)
 
@@ -86,24 +106,7 @@ DistributionWrapper$set("public","setParameterValue",function(lst){
   row.names(params) <- NULL
   private$.parameters <- as.ParameterSet(params)
 
-  unlockBinding("properties",self)
-  self$properties$support <- do.call(product,lapply(self$wrappedModels(),function(x) x$support()))
-  lockBinding("properties",self)
+  private$.properties$support <- do.call(product,lapply(self$wrappedModels(),function(x) x$support()))
 
   invisible(self)
-}) # NEEDS TESTING
-
-#' @name ConcreteWrapper
-#' @title Concrete Wrapper for Distributions
-#' @description An R6 concrete wrapper class for use with decorators.
-#' @seealso \code{\link{DistributionWrapper}}
-#' @details Should not be constructed by the user. The purpose of this class is to provide a non-abstract
-#' interface that can be initialized by decorators when required.
-#'
-NULL
-
-#' @export
-ConcreteWrapper <- R6::R6Class("ConcreteWrapper", inherit = DistributionWrapper, lock_objects = FALSE)
-ConcreteWrapper$set("public","initialize",function(...){
-  super$initialize(...)
 })

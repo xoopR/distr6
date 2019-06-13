@@ -2,31 +2,30 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{pgf}
 \alias{pgf}
-\alias{pgf.Distribution}
 \title{Probability Generating Function}
 \usage{
-\method{pgf}{Distribution}(object, z, ...)
+pgf(object, z)
 }
 \arguments{
-\item{object}{an object used to select a method.}
+\item{object}{Distribution.}
 
-\item{z}{integer to evaluate probability generating function at.}
-
-\item{...}{further arguments passed to or from other methods.}
+\item{z}{integer to evaluate characteristic function at.}
 }
 \description{
-Probability generating function of a discrete distribution
+Probability generating function of a distribution
 }
 \details{
 The probability generating function is defined by
-\deqn{pgf_X(t) = E_X[exp(z^x)]}
+\deqn{pgf_X(z) = E_X[exp(z^x)]}
 where X is the distribution and E_X is the expectation of the distribution X.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
 }
+\section{R6 Usage}{
+ $pgf(z)
+}
+
 \seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
+\code{\link{CoreStatistics}} and \code{\link{decorate}}
 }

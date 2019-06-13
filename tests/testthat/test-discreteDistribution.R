@@ -26,11 +26,11 @@ discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0,
 )
 
 test_that("check all accessors are working", {
-  expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100.0)")
+  expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100)")
   expect_equal(discreteTester$name, "Discrete Test")
   expect_equal(discreteTester$short_name, "TestDistr")
   expect_equal(discreteTester$description, NULL)
-  expect_equal(discreteTester$decorators, "CoreStatistics")
+  expect_equal(discreteTester$decorators(), "CoreStatistics")
   expect_equal(discreteTester$valueSupport(), "discrete")
   expect_equal(discreteTester$variateForm(), "univariate")
   expect_equal(discreteTester$symmetry(),"symmetric")

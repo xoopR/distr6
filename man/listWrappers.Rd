@@ -4,10 +4,10 @@
 \alias{listWrappers}
 \title{Lists Implemented Distribution Decorators}
 \usage{
-listWrappers(simplify = FALSE)
+listWrappers(simplify = TRUE)
 }
 \arguments{
-\item{simplify}{logical. If FALSE (default) returns result as wrapper, otherwise character.}
+\item{simplify}{logical. If TRUE (default) returns results as characters, otherwise R6 classes.}
 }
 \description{
 Lists wrappers that can wrap an R6 Distribution.

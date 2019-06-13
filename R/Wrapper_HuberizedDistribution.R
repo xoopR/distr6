@@ -1,20 +1,8 @@
 #' @name HuberizedDistribution
-#' @title Distribution Huberized Wrapper
+#' @title Distribution Huberization Wrapper
 #' @description A wrapper for huberizing any probability distribution at given limits.
-#' @seealso \code{\link{TruncatedDistribution}} and \code{\link{DistributionWrapper}} for wrapper details.
-#' See \code{\link{Distribution}} for a list of public methods.
-#' @details Huberizes a distribution at lower and upper limits, using the formula
-#' \tabular{lll}{
-#'  \tab \eqn{F(x)} \tab if \eqn{x \le lower} \cr
-#'  f_H(x) = \tab \eqn{f(x)} \tab if \eqn{lower < x < upper} \cr
-#'  \tab \eqn{1 - F(x)} \tab if \eqn{x \ge upper} \cr
-#' }
-#' where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X, F_X is the
-#' pdf/cdf of the original distribution.
 #'
-#' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
-#'
-#' \code{HuberizedDistribution} inherits all methods from \code{Distribution}.
+#' @section Constructor: HuberizedDistribution$new(distribution, lower = NULL, upper = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -24,29 +12,31 @@
 #' \code{upper} \tab numeric \tab Upper limit for huberization.
 #' }
 #'
-#' @section Public Methods:
-#' \tabular{ll}{
-#' \strong{Method} \tab \strong{Details} \cr
-#' \code{getLowerLimit()} \tab Gets lower limit of huberization. \cr
-#' \code{getUpperLimit()} \tab Gets upper limit of huberization. \cr
+#' @details Huberizes a distribution at lower and upper limits, using the formula
+#' \tabular{lll}{
+#'  \tab \eqn{F(x)} \tab if \eqn{x \le lower} \cr
+#'  f_H(x) = \tab \eqn{f(x)} \tab if \eqn{lower < x < upper} \cr
+#'  \tab \eqn{1 - F(x)} \tab if \eqn{x \ge upper} \cr
 #' }
+#' where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X/F_X is the
+#' pdf/cdf of the original distribution.
+#'
+#' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+#'
+#' @section Public Methods:
+#' See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#'
+#' @seealso \code{\link{listWrappers}}.
 #'
 #' @examples
 #' hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
-#' hubBin$getParameterValue("Binom_prob")
-#' hubBin$getLowerLimit()
+#' hubBin$getParameterValue("prob")
 #' hubBin$pdf(2)
 NULL
 
 #' @export
 HuberizedDistribution <- R6::R6Class("HuberizedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 HuberizedDistribution$set("private", ".cutoffInterval", NULL)
-HuberizedDistribution$set("public", "getLowerLimit", function(){
-  return(private$.cutoffInterval[[1]])
-})
-HuberizedDistribution$set("public", "getUpperLimit", function(){
-  return(private$.cutoffInterval[[2]])
-})
 HuberizedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){
 
   assertDistribution(distribution)
@@ -58,10 +48,10 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   if(is.null(upper)) upper = distribution$sup()
 
   pdf <- function(x1, ...){
-    if(x1 <= self$getLowerLimit())
-      return(self$wrappedModels()[[1]]$cdf(self$getLowerLimit()))
-    else if(x1 >= self$getUpperLimit())
-      return(1-self$wrappedModels()[[1]]$cdf(self$getUpperLimit()))
+    if(x1 <= private$.cutoffInterval[[1]])
+      return(self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[1]]))
+    else if(x1 >= private$.cutoffInterval[[2]])
+      return(1-self$wrappedModels()[[1]]$cdf(private$.cutoffInterval[[2]]))
     else
       return(self$wrappedModels()[[1]]$pdf(x1))
   }
@@ -74,10 +64,12 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
   private$.cutoffInterval = c(lower, upper)
 
+  description = paste0(distribution$description, " Huberized between ",lower," and ",upper,".")
+
   super$initialize(distlist = distlist, pdf = pdf, name = name,
                    short_name = short_name, type = distribution$type(),
                    support = distribution$support(), distrDomain = distribution$distrDomain(),
-                   prefixParams = FALSE)
+                   prefixParams = FALSE, description = description)
 }) # IN PROGRESS
 
 #' @title Huberize a Distribution

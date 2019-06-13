@@ -2,19 +2,16 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{kthmoment}
 \alias{kthmoment}
-\alias{kthmoment.Distribution}
 \title{Kth Moment}
 \usage{
-\method{kthmoment}{Distribution}(object, k, type = "central", ...)
+kthmoment(object, k, type = "central")
 }
 \arguments{
-\item{object}{an object used to select a method.}
+\item{object}{Distribution.}
 
 \item{k}{the kth moment to calculate}
 
 \item{type}{one of 'central', 'standard' or 'zero', abbreviations allowed}
-
-\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Kth standardised or central moment of a distribution
@@ -24,19 +21,15 @@ The kth central moment of a distribution is defined by
 \deqn{CM(k)_X = E_X[(x - \mu)^k]}
 the kth standardised moment of a distribution is defined by
 \deqn{SM(k)_X = CM(k)/\sigma^k}
-#' the kth zeroth moment of a distribution is defined by
+the kth zeroth moment of a distribution is defined by
 \deqn{ZM(k)_X = E_X[(x)^k]}
 where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 standard deviation of the distribution.
 
 Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment
 is computed.
+}
+\section{R6 Usage}{
+ $kthmoment(k, type = "central")
+}
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method. CoreStatistics methods can only be used if the distribution has first been decorated
-with \code{decorate(Distribution, CoreStatistics)}.
-}
-\seealso{
-\code{\link{decorate}} for the decorator function and \code{\link{CoreStatistics}} and
-\code{\link{ExoticStatistics}} for other available methods for decorating.
-}

@@ -11,4 +11,7 @@ test_that("decorate",{
   expect_message(decorate(Exponential$new(rate=1),CoreStatistics))
   y = Exponential$new(rate=1,decorators = CoreStatistics)
   expect_equal(decorate(y,CoreStatistics),"y is already decorated with CoreStatistics")
+  E <- Exponential$new(rate = 1)
+  CoreStatistics$new(E)
+  expect_equal(E$decorators(),"CoreStatistics")
 })
