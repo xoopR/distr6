@@ -9,18 +9,21 @@
 #'
 #' @name Binomial
 #'
-#' @section Constructor: Binomial$new(size = 10, prob = 0.5, decorators = NULL)
+#' @section Constructor: Binomial$new(size = 10, prob = 0.5, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{size} \tab numeric \tab number of trials. \cr
 #' \code{prob} \tab numeric \tab probability of success. \cr
+#' \code{qprob} \tab numeric \tab probability of failure. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The Binomial distribution is parameterised with size (number of trials)
-#' as an integer and prob (probability of success) as a number between 0 and 1.
+#' as an integer and either prob (probability of success) or qprob (probability of failure) as a number
+#' between 0 and 1. If \code{qprob} is given then \code{prob} is ignored.
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
@@ -50,7 +53,7 @@ NULL
 #-------------------------------------------------------------
 # Binomial Distribution Definition
 #-------------------------------------------------------------
-Binomial <- R6::R6Class("Binomial", inherit = Distribution, lock_objects = F)
+Binomial <- R6::R6Class("Binomial", inherit = SDistribution, lock_objects = F)
 Binomial$set("public","name","Binomial")
 Binomial$set("public","short_name","Binom")
 Binomial$set("public","traits",list(type = PosIntegers$new(zero = T),
@@ -90,17 +93,20 @@ Binomial$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(0:self$getParameterValue("size"))
 })
-Binomial$set("public","initialize",function(size = 10, prob = 0.5, decorators = NULL){
 
-  private$.parameters <- ParameterSet$new(id = list("prob","size","qprob"), value = list(0.5, 10, 0.5),
-                                          lower = list(0, 1, 0), upper = list(1, Inf, 1),
-                                          class = list("numeric","integer","numeric"),
-                                          settable = list(TRUE, TRUE, FALSE),
-                                          updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
-                                          description = list("Probability of Success", "Number of trials",
-                                                             "Probability of failure"))
+Binomial$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$size)) lst = c(lst, list(size = paramlst$size))
+  if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
+  if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
+  return(lst)
+})
 
-  self$setParameterValue(list(size = size, prob = prob))
+
+Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
+
+  private$.parameters <- getParameterSet(self, size, prob, qprob, verbose)
+  self$setParameterValue(list(size = size, prob = prob, qprob = qprob))
 
   if(prob == 0.5 | size >= 30)
     symmetric <- TRUE

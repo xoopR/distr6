@@ -9,16 +9,17 @@
 #'
 #' @name Normal
 #'
-#' @section Constructor: Normal$new(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL)
+#' @section Constructor: Normal$new(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab mean, location parameter. \cr
+#' \code{ } \tab numeric \tab mean, location parameter. \cr
 #' \code{var} \tab numeric \tab variance, squared scale parameter. \cr
 #' \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
 #' \code{precision} \tab numeric \tab precision, squared scale parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The Normal distribution can either be parameterised with variance,
@@ -56,7 +57,7 @@ NULL
 #-------------------------------------------------------------
 # Normal Distribution Definition
 #-------------------------------------------------------------
-Normal <- R6::R6Class("Normal", inherit = Distribution, lock_objects = F)
+Normal <- R6::R6Class("Normal", inherit = SDistribution, lock_objects = F)
 Normal$set("public","name","Normal")
 Normal$set("public","short_name","Norm")
 Normal$set("public","traits",list(type = Reals$new(),
@@ -92,60 +93,20 @@ Normal$set("public","mode",function(){
   return(self$getParameterValue("mean"))
 })
 
-Normal$set("public","initialize",function(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL){
+Normal$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
+  if(!is.null(paramlst$var)) lst = c(lst, list(var = paramlst$var))
+  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
+  if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
+  return(lst)
+})
 
-  var.bool = FALSE
-  sd.bool = FALSE
-  prec.bool = FALSE
+Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = NULL,
+                                          decorators = NULL, verbose = FALSE){
 
-  if(is.null(var) & is.null(sd) & is.null(prec)){
-    message("var, sd and prec missing. var = 1 parameterisation used.")
-    var = 1
-  } else if(!is.null(var) & (!is.null(sd) | !is.null(prec))){
-    message("Multiple parameterisations provided. var parameterisation used.")
-    var = var
-    sd = NULL
-    prec = NULL
-  } else if(is.null(var) & !is.null(sd) & !is.null(prec)){
-    message("Multiple parameterisations provided. sd parameterisation used.")
-    sd = sd
-    var = NULL
-    prec = NULL
-  }
-
-  if(!is.null(var)){
-    var.bool = TRUE
-    var.update = NA
-    sd.update = "self$getParameterValue('var')^0.5"
-    prec.update = "self$getParameterValue('var')^-1"
-  } else if(!is.null(sd)){
-    sd.bool = TRUE
-    sd.update = NA
-    var.update = "self$getParameterValue('sd')^2"
-    prec.update = "self$getParameterValue('sd')^-2"
-  } else{
-    prec.bool = TRUE
-    prec.update = NA
-    var.update = "self$getParameterValue('prec')^-1"
-    sd.update = "self$getParameterValue('prec')^-0.5"
-  }
-
-  private$.parameters <- ParameterSet$new(id = list("mean","var","sd","prec"),
-                                          value = list(0, 1, 1, 1),
-                                          lower = list(-Inf, 0, 0, 0),
-                                          upper = list(Inf, Inf, Inf, Inf),
-                                          class = list("numeric","numeric","numeric","numeric"),
-                                          settable = list(TRUE, var.bool, sd.bool, prec.bool),
-                                          updateFunc = list(NA, var.update, sd.update, prec.update),
-                                          description = list("Mean - Location Parameter",
-                                                             "Variance - Squared Scale Parameter",
-                                                             "Standard Deviation - Scale Parameter",
-                                                             "Precision - Inverse Squared Scale Parameter"))
-
-  self$setParameterValue(list(mean = mean))
-  if(!is.null(var)) self$setParameterValue(list(var = var))
-  else if(!is.null(sd)) self$setParameterValue(list(sd = sd))
-  else if(!is.null(prec)) self$setParameterValue(list(prec = prec))
+  private$.parameters <- getParameterSet(self, mean, var, sd, prec, verbose)
+  self$setParameterValue(list(mean = mean, var = var, sd = sd, prec = prec))
 
   pdf <- function(x1) dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
   cdf <- function(x1) pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))

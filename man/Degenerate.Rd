@@ -8,7 +8,7 @@ Mathematical and statistical functions for the Degenerate distribution parameter
 by location (mean).
 }
 \section{Constructor}{
- Degenerate$new(mean = 0, decorators = NULL)
+ Degenerate$new(mean = 0, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -17,6 +17,7 @@ by location (mean).
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{mean} \tab numeric \tab location parameter. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
+\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 

@@ -8,7 +8,7 @@ Mathematical and statistical functions for the Exponential distribution paramete
 with rate or scale.
 }
 \section{Constructor}{
- Exponential$new(rate = NULL, scale = NULL, decorators = NULL)
+ Exponential$new(rate = NULL, scale = NULL, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -18,13 +18,14 @@ with rate or scale.
 \code{rate} \tab numeric \tab arrival rate. \cr
 \code{scale} \tab numeric \tab scale parameter. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 
 \section{Constructor Details}{
  The exponential distribution can either be parameterised with a rate or
-scale parameter. If neither are provided then rate parameterisation is used with rate = 1. If both are
-provided then rate parameterisation is used with given rate. Scale is defined by
+scale parameter. Default parameterisation is with rate = 1. If scale is given then rate is ignored.
+Scale is defined by
 \deqn{scale = 1/rate}
 }
 

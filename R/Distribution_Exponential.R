@@ -7,7 +7,7 @@
 #' with rate or scale.
 #' @name Exponential
 #'
-#' @section Constructor: Exponential$new(rate = NULL, scale = NULL, decorators = NULL)
+#' @section Constructor: Exponential$new(rate = NULL, scale = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -15,11 +15,12 @@
 #' \code{rate} \tab numeric \tab arrival rate. \cr
 #' \code{scale} \tab numeric \tab scale parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The exponential distribution can either be parameterised with a rate or
-#' scale parameter. If neither are provided then rate parameterisation is used with rate = 1. If both are
-#' provided then rate parameterisation is used with given rate. Scale is defined by
+#' scale parameter. Default parameterisation is with rate = 1. If scale is given then rate is ignored.
+#' Scale is defined by
 #' \deqn{scale = 1/rate}
 #'
 #' @inheritSection Distribution Public Variables
@@ -35,7 +36,7 @@ NULL
 #-------------------------------------------------------------
 # Exponential Distribution Definition
 #-------------------------------------------------------------
-Exponential <- R6::R6Class("Exponential", inherit = Distribution, lock_objects = F)
+Exponential <- R6::R6Class("Exponential", inherit = SDistribution, lock_objects = F)
 Exponential$set("public","name","Exponential")
 Exponential$set("public","short_name","Exp")
 Exponential$set("public","traits",list(type = PosReals$new(zero = T),
@@ -71,46 +72,24 @@ Exponential$set("public", "cf", function(t){
 Exponential$set("public","mode",function(){
   return(0)
 })
-Exponential$set("public","initialize",function(rate = NULL, scale = NULL, decorators = NULL){
 
-  rate.bool = FALSE
-  scale.bool = FALSE
+Exponential$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
+  if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
+  return(lst)
+})
 
-  if(is.null(rate) & is.null(scale)){
-    message("rate and scale missing. rate = 1 parameterisation used.")
-    rate = 1
-  } else if(!is.null(rate) & !is.null(scale)){
-    message("Both rate and scale provided. rate parameterisation used.")
-    rate = rate
-    scale = NULL
-  }
+Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE){
 
-  if(!is.null(rate)){
-    rate.bool = TRUE
-    rate.update = NA
-    scale.update = "self$getParameterValue('rate')^-1"
-  } else{
-    scale.bool = TRUE
-    scale.update = NA
-    rate.update = "self$getParameterValue('scale')^-1"
-  }
-
-  private$.parameters <- ParameterSet$new(id = list("rate","scale"), value = list(1, 1),
-                   lower = list(0, 0), upper = list(Inf, Inf),
-                   class = list("numeric","numeric"),
-                   settable = list(rate.bool, scale.bool),
-                   updateFunc = list(rate.update, scale.update),
-                   description = list("Arrival Rate", "Scale"))
-
-  if(!is.null(rate)) self$setParameterValue(list(rate = rate))
-  if(!is.null(scale)) self$setParameterValue(list(scale = scale))
+  private$.parameters <- getParameterSet(self, rate, scale, verbose)
+  self$setParameterValue(list(rate = rate, scale = scale))
 
   pdf <- function(x1) dexp(x1, self$getParameterValue("rate"))
   cdf <- function(x1) pexp(x1, self$getParameterValue("rate"))
   quantile <- function(p) qexp(p, self$getParameterValue("rate"))
   rand <- function(n) rexp(n, self$getParameterValue("rate"))
 
-  private$.properties
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
                    symmetric  = FALSE)

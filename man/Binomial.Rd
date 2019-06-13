@@ -8,7 +8,7 @@ Mathematical and statistical functions for the Binomial distribution parameteris
 with probability of success and size (number of trials).
 }
 \section{Constructor}{
- Binomial$new(size = 10, prob = 0.5, decorators = NULL)
+ Binomial$new(size = 10, prob = 0.5, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -17,13 +17,16 @@ with probability of success and size (number of trials).
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{size} \tab numeric \tab number of trials. \cr
 \code{prob} \tab numeric \tab probability of success. \cr
+\code{qprob} \tab numeric \tab probability of failure. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
+\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 
 \section{Constructor Details}{
  The Binomial distribution is parameterised with size (number of trials)
-as an integer and prob (probability of success) as a number between 0 and 1.
+as an integer and either prob (probability of success) or qprob (probability of failure) as a number
+between 0 and 1. If \code{qprob} is given then \code{prob} is ignored.
 }
 
 \section{Statistical Methods}{

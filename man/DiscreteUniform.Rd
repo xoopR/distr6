@@ -8,16 +8,17 @@ Mathematical and statistical functions for the DiscreteUniform distribution para
 with lower and upper limits.
 }
 \section{Constructor}{
- DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL)
+ DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{lower} \tab integer \tab probability of success. \cr
-\code{upper} \tab integer \tab probability of success. \cr
+\code{lower} \tab integer \tab lower distribution limit. \cr
+\code{upper} \tab integer \tab upper distribution limit. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 

@@ -9,14 +9,15 @@
 #'
 #' @name DiscreteUniform
 #'
-#' @section Constructor: DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL)
+#' @section Constructor: DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab integer \tab probability of success. \cr
-#' \code{upper} \tab integer \tab probability of success. \cr
+#' \code{lower} \tab integer \tab lower distribution limit. \cr
+#' \code{upper} \tab integer \tab upper distribution limit. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The DiscreteUniform distribution is parameterised with lower and
@@ -50,7 +51,7 @@ NULL
 #-------------------------------------------------------------
 # DiscreteUniform Distribution Definition
 #-------------------------------------------------------------
-DiscreteUniform <- R6::R6Class("DiscreteUniform", inherit = Distribution, lock_objects = F)
+DiscreteUniform <- R6::R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F)
 DiscreteUniform$set("public","name","DiscreteUniform")
 DiscreteUniform$set("public","short_name","DUnif")
 DiscreteUniform$set("public","traits",list(type = Integers$new(),
@@ -92,32 +93,26 @@ DiscreteUniform$set("public","pgf",function(z){
 })
 DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
   if("lower" %in% names(lst) & "upper" %in% names(lst))
-    checkmate::assert(lst[["lower"]] <= lst[["upper"]])
+    checkmate::assert(lst[["lower"]] <= lst[["upper"]], .var.name = "lower must be <= upper")
   else if("lower" %in% names(lst))
-    checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"))
+    checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"), .var.name = "lower must be <= upper")
   else if("upper" %in% names(lst))
-    checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"))
+    checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"), .var.name = "upper must be >= lower")
 
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
 })
 
-DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL){
+DiscreteUniform$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$lower)) lst = c(lst, list(lower = paramlst$lower))
+  if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
+  return(lst)
+})
 
-  checkmate::assert(lower <= upper)
+DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
-  private$.parameters <- ParameterSet$new(id = list("lower","upper", "N"),
-                                          value = list(0, 1, (upper - lower + 1)),
-                                          lower = list(-Inf, -Inf, -Inf),
-                                          upper = list(Inf, Inf, Inf),
-                                          class = list("integer","integer","integer"),
-                                          settable = list(TRUE, TRUE, FALSE),
-                                          updateFunc = list(NULL, NULL,
-                                                            "self$getParameterValue('upper') - self$getParameterValue('lower') + 1"),
-                                          description = list("Lower distribution limit.",
-                                                             "Upper distribution limit.",
-                                                             "Distribution width."))
-
+  private$.parameters <- getParameterSet(self, lower, upper, verbose)
   self$setParameterValue(list(lower = lower, upper = upper))
 
   pdf = function(x1) return(1 / self$getParameterValue("N"))

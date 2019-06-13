@@ -8,7 +8,7 @@ Mathematical and statistical functions for the Bernoulli distribution parameteri
 with probability of success.
 }
 \section{Constructor}{
- Bernoulli$new(prob = 0.5, decorators = NULL)
+ Bernoulli$new(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -16,13 +16,16 @@ with probability of success.
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{prob} \tab numeric \tab probability of success. \cr
+\code{qprob} \tab numeric \tab probability of failure. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 
 \section{Constructor Details}{
  The Bernoulli distribution is parameterised with prob (probability of
-success) as a number between 0 and 1.
+success) or qprob (probability of failure) as a number between 0 and 1. If \code{qprob} is given then
+\code{prob} is ignored.
 }
 
 \section{Statistical Methods}{

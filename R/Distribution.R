@@ -614,24 +614,25 @@ Distribution$set("public","getParameterValue",function(id, error = "warn"){
 })
 # Documented in ParameterSet.R
 Distribution$set("public","setParameterValue",function(lst, error = "warn"){
+  if(length(lst)!=0){
+    self$parameters()$setParameterValue(lst, error)
 
-  self$parameters()$setParameterValue(lst, error)
+    # Update skewness and kurtosis
+    x = try(self$kurtosis(excess = TRUE), silent = TRUE)
+    if(class(x) == "try-error")
+      private$.properties$kurtosis <- NULL
+    else
+      private$.properties$kurtosis <- exkurtosisType(x)
 
-  # Update skewness and kurtosis
-  x = try(self$kurtosis(excess = TRUE), silent = TRUE)
-  if(class(x) == "try-error")
-    private$.properties$kurtosis <- NULL
-  else
-    private$.properties$kurtosis <- exkurtosisType(x)
+    x = try(self$skewness(), silent = TRUE)
+    if(class(x) == "try-error")
+      private$.properties$skewness <- NULL
+    else
+      private$.properties$skewness <- skewType(x)
 
-  x = try(self$skewness(), silent = TRUE)
-  if(class(x) == "try-error")
-    private$.properties$skewness <- NULL
-  else
-    private$.properties$skewness <- skewType(x)
-
-  #private$.setWorkingSupport()
-  invisible(self)
+    #private$.setWorkingSupport()
+    invisible(self)
+  }
 })
 
 #-------------------------------------------------------------
@@ -673,16 +674,21 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
   if(testUnivariate(self)){
     pdf = x1
     pdf[!self$liesInSupport(x1, all = F)] = 0
+    if(sum(self$liesInSupport(x1, all = F))!=0)
+      pdf[self$liesInSupport(x1, all = F)] = private$.pdf(pdf[self$liesInSupport(x1, all = F)])
 
-    pdf.in = sapply(pdf[self$liesInSupport(x1, all = F)], function(x0) private$.pdf(x0,...))
+   # pdf.in = sapply(pdf[self$liesInSupport(x1, all = F)], function(x0) private$.pdf(x0,...))
 
-    pdf[self$liesInSupport(x1, all = F)] = pdf.in
+
+   # rm(x1)
+   # pdf = private$.pdf(x1,...)
+
   } else {
     if(is.null(x1)) pdf = private$.pdf(...)
     else pdf = private$.pdf(x1, ...)
   }
 
-  pdf = unlist(pdf)
+#  pdf = unlist(pdf)
 
   if(log) return(log(pdf))
   else return(pdf)

@@ -9,13 +9,14 @@
 #'
 #' @name Degenerate
 #'
-#' @section Constructor: Degenerate$new(mean = 0, decorators = NULL)
+#' @section Constructor: Degenerate$new(mean = 0, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{mean} \tab numeric \tab location parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The Degenerate distribution is parameterised with a location parameter (mean),
@@ -48,7 +49,7 @@ NULL
 #-------------------------------------------------------------
 # Degenerate Distribution Definition
 #-------------------------------------------------------------
-Degenerate <- R6::R6Class("Degenerate", inherit = Distribution, lock_objects = F)
+Degenerate <- R6::R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
 Degenerate$set("public","name","Degenerate")
 Degenerate$set("public","short_name","Degen")
 Degenerate$set("public","traits",list(type = Reals$new(),
@@ -84,17 +85,19 @@ Degenerate$set("public","mode",function(){
 Degenerate$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(self$getParameterValue("mean"))
+  invisible(self)
 })
 
-Degenerate$set("public","initialize",function(mean = 0, decorators = NULL){
+Degenerate$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
+  return(lst)
+})
 
-  private$.parameters <- ParameterSet$new(id = list("mean"), value = list(0),
-                                          lower = list(-Inf), upper = list(Inf),
-                                          class = list("numeric"),
-                                          settable = list(TRUE),
-                                          updateFunc = list(NA),
-                                          description = list("Location Parameter"))
 
+Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
+
+  private$.parameters <- getParameterSet(self, mean, verbose)
   self$setParameterValue(list(mean = mean))
 
   pdf <- function(x1) if(x1 == self$getParameterValue("mean")) return(1) else return(0)

@@ -438,10 +438,10 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #' @section R6 Usage: $mode(which)
 #'
 #' @param object Distribution.
-#' @param which which mode of the distribution should be returned, default is the first.
+#' @param which which mode of the distribution should be returned, default is all.
 #'
-#' @details If the distribution has multiple modes, the first is returned by default, similarly if it has
-#' one only. Otherwise the index of the mode to return can be given or "all" if all should be returned.
+#' @details If the distribution has multiple modes, all are returned by default. Otherwise the index
+#' of the mode to return can be given or "all" if all should be returned.
 #'
 #' @export
 NULL

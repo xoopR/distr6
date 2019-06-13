@@ -9,14 +9,14 @@ mode(object, which)
 \arguments{
 \item{object}{Distribution.}
 
-\item{which}{which mode of the distribution should be returned, default is the first.}
+\item{which}{which mode of the distribution should be returned, default is all.}
 }
 \description{
 A numeric search for the mode(s) of a distribution.
 }
 \details{
-If the distribution has multiple modes, the first is returned by default, similarly if it has
-one only. Otherwise the index of the mode to return can be given or "all" if all should be returned.
+If the distribution has multiple modes, all are returned by default. Otherwise the index
+of the mode to return can be given or "all" if all should be returned.
 }
 \section{R6 Usage}{
  $mode(which)

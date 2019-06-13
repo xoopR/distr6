@@ -9,17 +9,20 @@
 #'
 #' @name Bernoulli
 #'
-#' @section Constructor: Bernoulli$new(prob = 0.5, decorators = NULL)
+#' @section Constructor: Bernoulli$new(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{prob} \tab numeric \tab probability of success. \cr
+#' \code{qprob} \tab numeric \tab probability of failure. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The Bernoulli distribution is parameterised with prob (probability of
-#' success) as a number between 0 and 1.
+#' success) or qprob (probability of failure) as a number between 0 and 1. If \code{qprob} is given then
+#' \code{prob} is ignored.
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
@@ -49,7 +52,7 @@ NULL
 #-------------------------------------------------------------
 # Bernoulli Distribution Definition
 #-------------------------------------------------------------
-Bernoulli <- R6::R6Class("Bernoulli", inherit = Distribution, lock_objects = F)
+Bernoulli <- R6::R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
 Bernoulli$set("public","name","Bernoulli")
 Bernoulli$set("public","short_name","Bern")
 Bernoulli$set("public","traits",list(type = PosIntegers$new(zero = T),
@@ -87,17 +90,19 @@ Bernoulli$set("public","pgf",function(z){
   return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))
 })
 
-Bernoulli$set("public","initialize",function(prob = 0.5, decorators = NULL){
+Bernoulli$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
+  else if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
+  return(lst)
+})
 
-  private$.parameters <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
-                                          lower = list(0, 0), upper = list(1, 1),
-                                          class = list("numeric","numeric"),
-                                          settable = list(TRUE, FALSE),
-                                          updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
-                                          description = list("Probability of Success",
-                                                             "Probability of failure"))
 
-  self$setParameterValue(list(prob = prob))
+Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
+
+  private$.parameters <- getParameterSet(self, prob, qprob, verbose)
+  if(!is.null(qprob)) prob <- NULL
+  self$setParameterValue(list(prob = prob, qprob = qprob))
 
   pdf = function(x1) dbinom(x1, 1, self$getParameterValue("prob"))
   cdf = function(x1) pbinom(x1, 1, self$getParameterValue("prob"))

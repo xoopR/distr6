@@ -5,10 +5,10 @@
 \title{Multinomial Distribution}
 \description{
 Mathematical and statistical functions for the Multinomial distribution parameterised
-with mean and variance, sd or precision.
+with size and probabilities.
 }
 \section{Constructor}{
- Multinomial$new(size, probs, decorators = NULL)
+ Multinomial$new(size, probs, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -18,6 +18,7 @@ with mean and variance, sd or precision.
 \code{size} \tab integer \tab number of trials. See details. \cr
 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 
