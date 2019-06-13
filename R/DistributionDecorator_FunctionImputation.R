@@ -66,14 +66,19 @@ FunctionImputation$set("public","cdf",function(x1){
       return(sum(self$pdf(self$inf():x1)))
     } else if(testContinuous(self)){
       message(.distr6$message_numeric)
-      return(integrate(self$pdf, lower = self$inf(), upper = x1)$value)
+      if(length(x1)>1)
+        return(unlist(sapply(x1, function(x0) integrate(self$pdf, lower = self$inf(), upper = x0)$value)))
+      else
+        return(integrate(self$pdf, lower = self$inf(), upper = x1)$value)
+
     }
   } else
     return("FunctionImputation is currently only supported for univariate distributions.")
 })
 FunctionImputation$set("public","quantile",function(p){
   message(.distr6$message_numeric)
-  if(!RSmisc::testMessage(self$cdf(1))){
+
+ # if(!RSmisc::testMessage(self$cdf(1))){
     #CDF2QUANTILE - DISCRETE/CONT
     if(testDiscrete(self)){
       to = ifelse(self$sup() == Inf, 1e+08, self$sup())
@@ -81,26 +86,24 @@ FunctionImputation$set("public","quantile",function(p){
       x1 = seq.int(from,to,by = 1)
       y = self$cdf(x1)
 
-      message(.distr6$message_numeric)
-
-      return(sapply(p, function(p0){
-        return(x1[min(which(y == min(y[y>p0])))])
-      }))
+      if(length(p)>1)
+        return(unlist(sapply(p, function(p0) return(x1[min(which(y == min(y[y>p0])))]))))
+      else
+        return(x1[min(which(y == min(y[y>p])))])
 
     } else if(testContinuous(self)){
-      if(strategy == "inversion"){
+ #     if(strategy == "inversion"){
         upper = ifelse(self$sup() == Inf, 1e+08, self$sup())
         lower = ifelse(self$inf() == -Inf, -1e+08, self$inf())
 
-        message(.distr6$message_numeric)
-
-        return(sapply(p, function(p0){
-          return(GoFKernel::inverse(self$cdf)(p0))
-        }))
+        if(length(p)>1)
+          return(unlist(sapply(p, function(p0) return(suppressMessages(GoFKernel::inverse(self$cdf)(p0))))))
+        else
+          return(suppressMessages(GoFKernel::inverse(self$cdf)(p)))
     }
-  }
-
-}})
+ #   }
+ # }
+})
 FunctionImputation$set("public","rand",function(n){
   message(.distr6$message_numeric)
   if(!RSmisc::testMessage(self$quantile(1))){

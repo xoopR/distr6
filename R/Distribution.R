@@ -126,39 +126,6 @@ NULL
 #' @export
 Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 
-#-------------------------------------------------------------
-# Distribution Private Methods
-#-------------------------------------------------------------
-Distribution$set("private",".setWorkingSupport",function(){
-  suppressMessages({
-    rands = self$rand(20)
-
-    if(self$sup() != Inf)
-      newsup = self$sup()
-    else{
-      newsup = max(rands)
-      while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
-      newsup = ceiling(newsup - 1)
-    }
-
-    inf = self$inf()
-    if(inf != -Inf)
-      newinf = inf
-    else{
-      newinf = min(rands)
-      while(self$pdf(newinf) > .Machine$double.eps) newinf = newinf - 1
-      newinf = floor(newinf + 1)
-    }
-
-    private$.workingSupport <- list(inf = newinf, sup = newsup)
-  })
-})
-Distribution$set("private",".getWorkingSupportRange",function(){
-  return(private$.workingSupport$inf:private$.workingSupport$sup)
-})
-Distribution$set("private",".updateDecorators", function(decs){
-  private$.decorators <- decs
-})
 
 #-------------------------------------------------------------
 # Public Methods - Constructor
@@ -251,6 +218,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       else
         formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
       private$.pdf <- pdf
+      private$.isPdf <- TRUE
     } else
       private$.pdf <- function(...) return(NULL)
 
@@ -260,6 +228,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       else
         formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
       private$.cdf <- cdf
+      private$.isCdf <- TRUE
     } else
       private$.cdf <- function(...) return(NULL)
 
@@ -277,6 +246,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       else
         formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
       private$.quantile <- quantile
+      private$.isQuantile <- TRUE
     } else
       private$.quantile <- function(...) NULL
 
@@ -286,6 +256,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       else
         formals(rand) = c(formals(rand),list(self=self),alist(...=))
       private$.rand <- rand
+      private$.isRand <- TRUE
     } else
       private$.rand <- function(...) NULL
 
@@ -301,11 +272,22 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     if(!is.null(decorators))
       suppressMessages(decorate(self, decorators))
 
-    if(!is.null(pdf)) private$.pdf <- pdf
-    if(!is.null(cdf)) private$.cdf <- cdf
-    if(!is.null(quantile)) private$.quantile <- quantile
-    if(!is.null(rand)) private$.rand <- rand
-
+    if(!is.null(pdf)){
+      private$.pdf <- pdf
+      private$.isPdf <- TRUE
+    }
+    if(!is.null(cdf)){
+      private$.cdf <- cdf
+      private$.isCdf <- TRUE
+    }
+    if(!is.null(quantile)){
+      private$.quantile <- quantile
+      private$.isQuantile <- TRUE
+    }
+    if(!is.null(rand)){
+      private$.rand <- rand
+      private$.isRand <- TRUE
+    }
 
     if(!is.null(symmetry)){
       symm = ifelse(symmetric,"symmetric","asymmetric")
@@ -671,6 +653,10 @@ Distribution$set("public","setParameterValue",function(lst, error = "warn"){
 #' @export
 NULL
 Distribution$set("public","pdf",function(x1, ..., log = FALSE){
+
+  if(!private$.isPdf)
+    return(NULL)
+
   if(testUnivariate(self)){
     pdf = x1
     pdf[!self$liesInSupport(x1, all = F)] = 0
@@ -730,20 +716,26 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
 NULL
 Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE){
 
+  if(!private$.isCdf)
+    return(NULL)
+
   if(testUnivariate(self)){
     cdf = x1
     cdf[x1 >= self$sup()] = 1
     cdf[x1 < self$inf()] = 0
 
-    cdf.in = sapply(cdf[x1 < self$sup() & x1 >= self$inf()], function(q0) private$.cdf(q0,...))
+    if(sum(self$liesInSupport(x1, all = F))!=0)
+      cdf[self$liesInSupport(x1, all = F)] = private$.cdf(cdf[self$liesInSupport(x1, all = F)])
 
-    cdf[x1 < self$sup() & x1 >= self$inf()] = cdf.in
+
+    # cdf.in = sapply(cdf[x1 < self$sup() & x1 >= self$inf()], function(q0) private$.cdf(q0,...))
+    # cdf[x1 < self$sup() & x1 >= self$inf()] = cdf.in
   } else {
     if(is.null(x1)) cdf = private$.cdf(...)
     else cdf = private$.cdf(x1, ...)
   }
 
-  cdf = unlist(cdf)
+  #cdf = unlist(cdf)
 
   if(log.p & lower.tail) return(log(cdf))
   else if(log.p & !lower.tail) return(log(1 - cdf))
@@ -785,11 +777,22 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' @export
 quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE) {}
 Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
-    if(lower.tail){
-      return(unlist(sapply(p, function(p0) private$.quantile(p0,...))))
-    } else{
-      return(unlist(sapply(p, function(p0) private$.quantile(1 - p0,...))))
-    }
+
+  if(!private$.isQuantile)
+    return(NULL)
+
+  if(!lower.tail)
+    p = 1 - p
+
+  #return(unlist(sapply(p, function(p0) private$.quantile(p0,...))))
+  quantile = p
+  quantile[p > 1] = NaN
+  quantile[p < 0] = NaN
+  if(sum(p >= 0 & p <= 1)!=0)
+    quantile[p >= 0 & p <= 1] = private$.quantile(quantile[p >= 0 & p <= 1])
+
+  return(quantile)
+
 }) # NEEDS TESTING
 #-------------------------------------------------------------
 # Public Methods - rand
@@ -818,6 +821,10 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
 #' @export
 NULL
 Distribution$set("public","rand",function(n){
+
+  if(!private$.isRand)
+    return(NULL)
+
   if(length(n) > 1)
     n = length(n)
 
@@ -969,9 +976,6 @@ Distribution$set("public","name",character(0))
 Distribution$set("public","short_name",character(0))
 Distribution$set("public","description",NULL)
 Distribution$set("public","traits",list())
-#-------------------------------------------------------------
-# Distribution Private Variables
-#-------------------------------------------------------------
 Distribution$set("private",".pdf", NULL)
 Distribution$set("private",".cdf", NULL)
 Distribution$set("private",".quantile", NULL)
@@ -980,3 +984,41 @@ Distribution$set("private",".parameters",data.frame())
 Distribution$set("private",".workingSupport",NULL)
 Distribution$set("private",".decorators", NULL)
 Distribution$set("private",".properties",NULL)
+Distribution$set("private",".isPdf", FALSE)
+Distribution$set("private",".isCdf", FALSE)
+Distribution$set("private",".isQuantile", FALSE)
+Distribution$set("private",".isRand", FALSE)
+
+#-------------------------------------------------------------
+# Distribution Private Methods
+#-------------------------------------------------------------
+Distribution$set("private",".setWorkingSupport",function(){
+  suppressMessages({
+    rands = self$rand(20)
+
+    if(self$sup() != Inf)
+      newsup = self$sup()
+    else{
+      newsup = max(rands)
+      while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
+      newsup = ceiling(newsup - 1)
+    }
+
+    inf = self$inf()
+    if(inf != -Inf)
+      newinf = inf
+    else{
+      newinf = min(rands)
+      while(self$pdf(newinf) > .Machine$double.eps) newinf = newinf - 1
+      newinf = floor(newinf + 1)
+    }
+
+    private$.workingSupport <- list(inf = newinf, sup = newsup)
+  })
+})
+Distribution$set("private",".getWorkingSupportRange",function(){
+  return(private$.workingSupport$inf:private$.workingSupport$sup)
+})
+Distribution$set("private",".updateDecorators", function(decs){
+  private$.decorators <- decs
+})

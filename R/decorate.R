@@ -36,21 +36,25 @@ decorate <- function(distribution, decorators){
           pdf = FunctionImputation$public_methods$pdf
           formals(pdf)$self = distribution
           distribution$.__enclos_env__$private$.pdf <- pdf
+          distribution$.__enclos_env__$private$.isPdf <- TRUE
         }
         if(is.null(distribution$cdf(1))){
           cdf = FunctionImputation$public_methods$cdf
           formals(cdf)$self = distribution
           distribution$.__enclos_env__$private$.cdf <- cdf
+          distribution$.__enclos_env__$private$.isCdf <- TRUE
         }
         if(is.null(distribution$quantile(1))){
           quantile = FunctionImputation$public_methods$quantile
           formals(quantile)$self = distribution
           distribution$.__enclos_env__$private$.quantile <- quantile
+          distribution$.__enclos_env__$private$.isQuantile <- TRUE
         }
         if(is.null(distribution$rand(1))){
           rand = FunctionImputation$public_methods$rand
           formals(rand)$self = distribution
           distribution$.__enclos_env__$private$.rand <- rand
+          distribution$.__enclos_env__$private$.isRand <- TRUE
         }
       } else{
         methods <- c(a_decorator$public_methods, get(paste0(a_decorator$inherit))$public_methods)
