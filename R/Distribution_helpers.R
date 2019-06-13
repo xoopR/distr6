@@ -104,11 +104,13 @@ listWrappers <- function(simplify = TRUE){
 #' @title Lists Implemented R6 Special Sets
 #' @description Lists special sets that can be used in SetInterval.
 #' @param simplify logical. If FALSE (default) returns data.frame of set name and symbol, otherwise character.
+#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
 #' @examples
 #' listSpecialSets()
 #' listSpecialSets(TRUE)
+#' listSpecialSets(view = TRUE)
 #' @export
-listSpecialSets <- function(simplify=FALSE){
+listSpecialSets <- function(simplify = FALSE, view = FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "SpecialSet_generator" |
@@ -134,7 +136,11 @@ listSpecialSets <- function(simplify=FALSE){
       return(cbind(ClassName, Symbol, Lower, Upper))
     }))
     row.names(symbols) = NULL
-    return(symbols)
+
+    if(view)
+      utils::View(data.frame(symbols))
+    else
+      return(symbols)
   }
 }
 

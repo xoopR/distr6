@@ -22,7 +22,8 @@ test_that("symmetry",{
 test_that("silent statistics",{
   expect_silent(Exponential$new(rate = 1)$kurtosis(T))
   expect_silent(Exponential$new(rate = 1)$kurtosis(F))
-  expect_silent(Exponential$new(rate = 1)$mean())
+  expect_equal(Exponential$new(rate = 1)$mean(), 1)
+  expect_equal(Exponential$new(rate = 1)$mode(), 0)
   expect_silent(Exponential$new(rate = 1)$entropy())
   expect_equal(Exponential$new(rate = 1)$mgf(1), 0)
   expect_equal(Exponential$new(rate = 1)$mgf(0.7), 1/0.3)

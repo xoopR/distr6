@@ -38,12 +38,15 @@ test_that("silent statistics",{
   expect_silent(mn$pdf(1:3))
   expect_silent(mn$var())
   expect_silent(mn$sd())
+  expect_silent(mn$cov())
+  expect_silent(mn$cor())
 })
 
 test_that("statistical results",{
   probs = c(0.1, 0.2, 0.7)
   mn = Multinomial$new(size = 3, prob = probs)
   expect_equal(mn$pdf(c(1,5,7)), 0)
+  expect_error(mn$pdf(c(1,7)))
   expect_equal(mn$pdf(c(1,1,1)), dmultinom(x = c(1,1,1), prob = probs))
   expect_equal(mn$mean(), 3 * probs)
   expect_equal(mn$var(), 3 * probs * (1-probs))

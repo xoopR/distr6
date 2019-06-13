@@ -25,6 +25,7 @@ test_that("silent statistics",{
   expect_equal(Degenerate$new()$var(), 0)
   expect_equal(Degenerate$new()$sd(), 0)
   expect_equal(Degenerate$new()$mean(), 0)
+  expect_equal(Degenerate$new()$mode(), 0)
   expect_silent(Degenerate$new()$mgf(1))
   expect_silent(Degenerate$new()$cf(1))
   expect_equal(Degenerate$new()$pdf(1), 0)
