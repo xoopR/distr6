@@ -8,16 +8,18 @@ A wrapper for truncating any probability distribution at given limits.
 }
 \details{
 Truncates a distribution at lower and upper limits, using the formulae
-\deqn{f_T = f_X(x) / (F_X(upper) - F_X(lower))}
-\deqn{F_T = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
+\deqn{f_T(x) = f_X(x) / (F_X(upper) - F_X(lower))}
+\deqn{F_T(x) = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
 where f_T/F_T is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and f_X, F_X is the
 pdf/cdf of the original distribution.
 
 If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 The support of the new distribution is the interval of points between lower and upper.
-
-\code{TruncatedDistribution} inherits all methods from \code{Distribution}.
 }
+\section{Constructor}{
+ TruncatedDistribution$new(distribution, lower = NULL, upper = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -28,11 +30,16 @@ The support of the new distribution is the interval of points between lower and 
 }
 }
 
+\section{Public Methods}{
+
+See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+}
+
 \examples{
 truncBin <- TruncatedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
 truncBin$getParameterValue("prob")
+
 }
 \seealso{
-\code{\link{HuberizedDistribution}} and \code{\link{DistributionWrapper}} for wrapper details.
-See \code{\link{Distribution}} for a list of public methods.
+\code{\link{listWrappers}}.
 }

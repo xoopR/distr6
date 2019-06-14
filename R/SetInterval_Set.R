@@ -25,7 +25,7 @@ NULL
 #' @include SetInterval.R
 #' @export
 Set <- R6::R6Class("Set", inherit = SetInterval)
-Set$set("public","initialize",function(...){
+Set$set("public","initialize",function(..., dim = 1){
   if(missing(...))
     invisible(self)
   else{
@@ -42,5 +42,10 @@ Set$set("public","initialize",function(...){
       private$.upper <- dots[[length(dots)]]
     }
   }
+
+  if(dim != 1)
+    private$.setSymbol <- paste0(private$.setSymbol,"^",dim)
+
+
   invisible(self)
 })

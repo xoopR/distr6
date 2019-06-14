@@ -10,7 +10,7 @@ exkurtosisType(kurtosis)
 \item{kurtosis}{numeric.}
 }
 \description{
-Gets the type of (excess) kurtosis#' @usage skewType(skew)
+Gets the type of (excess) kurtosis
 }
 \examples{
 exkurtosisType(1)

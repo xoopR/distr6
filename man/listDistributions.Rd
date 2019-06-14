@@ -4,12 +4,14 @@
 \alias{listDistributions}
 \title{Lists Implemented R6 Distributions}
 \usage{
-listDistributions(simplify = FALSE, traits = NULL)
+listDistributions(simplify = FALSE, traits = NULL, view = FALSE)
 }
 \arguments{
 \item{simplify}{logical.}
 
 \item{traits}{list of traits to filter distributions by.}
+
+\item{view}{logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.}
 }
 \description{
 Lists R6 distributions, either all in a data.frame or filtered by chosen

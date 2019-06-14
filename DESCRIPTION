@@ -25,7 +25,7 @@ Description: An R6 object oriented Distributions package in R. Unified interface
   commonly used probabilty distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
 Depends: 
-Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc
+Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats, extraDistr, utils
 Suggests: knitr, testthat, devtools
 Remotes: RaphaelS1/RSmisc, RaphaelS1/R62S3
 License: MIT + file LICENSE
@@ -48,9 +48,18 @@ Collate:
     'SetInterval.R'
     'SetInterval_Set.R'
     'SetInterval_SpecialSet.R'
+    'Distribution_Arcsine.R'
+    'Distribution_Bernoulli.R'
     'Distribution_Binomial.R'
+    'Distribution_Degenerate.R'
+    'Distribution_DiscreteUniform.R'
     'Distribution_Exponential.R'
+    'Distribution_Multinomial.R'
     'Distribution_Normal.R'
+    'Distribution_Poisson.R'
+    'Distribution_SDistribution.R'
+    'Distribution_Weibull.R'
+    'IGNORE_Wrapper_ConcreteWrapper.R'
     'SetInterval_Interval.R'
     'Wrapper.R'
     'Wrapper_ArrayDistribution.R'
@@ -63,5 +72,6 @@ Collate:
     'assertions.R'
     'decorate.R'
     'distr6_globals.R'
+    'getParameterSet.R'
     'measures.R'
     'zzz.R'

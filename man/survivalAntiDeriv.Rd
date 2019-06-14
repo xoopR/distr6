@@ -3,7 +3,12 @@
 \name{survivalAntiDeriv}
 \alias{survivalAntiDeriv}
 \title{Survival Function Anti-Derivative}
+\usage{
+survivalAntiDeriv(object, lower = NULL, upper = NULL)
+}
 \arguments{
+\item{object}{Distribution.}
+
 \item{lower}{lower limit for integration, default is infimum.}
 
 \item{upper}{upper limit for integration, default is supremum.}
@@ -18,6 +23,13 @@ The survival anti-derivative is defined by
 where X is the distribution, S_X is the survival function of the distribution X and a,b are the
 limits of integration.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{ExoticStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $survivalAntiDeriv(lower = NULL, upper = NULL)
+}
+
+\seealso{
+\code{\link{ExoticStatistics}} and \code{\link{decorate}}
 }

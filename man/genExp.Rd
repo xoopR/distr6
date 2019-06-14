@@ -3,10 +3,11 @@
 \name{genExp}
 \alias{genExp}
 \title{Generalised Expectation of a Distribution}
+\usage{
+genExp(object, trafo = NULL)
+}
 \arguments{
-\item{object}{an object used to select a method.}
-
-\item{...}{further arguments passed to or from other methods.}
+\item{object}{Distribution.}
 
 \item{trafo}{transformation for expectation calculation, see details.}
 }
@@ -22,7 +23,11 @@ checks which analytic methods are present before selecting a numeric strategy.
 If trafo = NULL, then the arithmetic mean is calculated, i.e. the approximation to \eqn{E[X]}. Any
 transformation must be given as a function, for example \code{trafo = function(x) x^2}
 (which is the second moment).
+}
+\section{R6 Usage}{
+ $genExp(trafo = NULL)
+}
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+\seealso{
+\code{\link{mean}}, \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 }

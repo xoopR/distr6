@@ -3,10 +3,15 @@
 \name{survival}
 \alias{survival}
 \title{Survival Function}
+\usage{
+survival(object, x1, log.p = FALSE)
+}
 \arguments{
+\item{object}{Distribution.}
+
 \item{x1}{Point to evaluate the survival function at.}
 
-\item{log}{logical, if TRUE then the (natural) logarithm of the survival function is returned.}
+\item{log.p}{logical, if TRUE then the (natural) logarithm of the survival function is returned.}
 }
 \description{
 The survival function of a probability distribution is the probability of surviving
@@ -18,6 +23,13 @@ The survival function is defined by
 where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf, \eqn{f_X} is the pdf and
 Sup(X) is the supremum of the distribution X.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{ExoticStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $survival(x1, log.p = FALSE)
+}
+
+\seealso{
+\code{\link{ExoticStatistics}} and \code{\link{decorate}}
 }
