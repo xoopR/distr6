@@ -85,6 +85,15 @@ Weibull$set("public","mode",function(){
   else
     return(0)
 })
+Weibull$set("public","mgf",function(){
+  message("No analytic result for Weibull mgf available. Try decorating with CoreStatistics.")
+  return(NULL)
+})
+Weibull$set("public","cf",function(){
+  message("No analytic result for Weibull cdf available.")
+  return(NULL)
+})
+
 
 Weibull$set("private",".getRefParams", function(paramlst){
   lst = list()
