@@ -1,4 +1,4 @@
-Weibull <- R6::R6Class("Weibull", inherit = Distribution, lock_objects = F)
+Weibull <- R6::R6Class("Weibull", inherit = SDistribution, lock_objects = F)
 Weibull$set("public","name","Weibull")
 Weibull$set("public","short_name","Weibull")
 Weibull$set("public","traits",list(type = PosReals$new(zero=T),
@@ -7,25 +7,25 @@ Weibull$set("public","traits",list(type = PosReals$new(zero=T),
 Weibull$set("public","description","Weibull Probability Distribution.")
 
 Weibull$set("public","mean",function(){
-  self$getParameterValue("scale")*digamma(1+1/self$getParameterValue("shape"))
+  self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape"))
 })
 
 Weibull$set("public","var",function(){
   l<-self$getParameterValue("scale")
   k<-self$getParameterValue("shape")
-  l^2 *(digamma(1+2/k)-digamma(1+1/k))^2
+  l^2 *(gamma(1+2/k)-gamma(1+1/k))^2
 })
 
 
 Weibull$set("public","skewness",function() {
   mu<-self$getParameterValue("mean")
   sigma<-sqrt(self$getParameterValue("var"))
-  (digamma(1+3/k)*l^3-3*mu*sigma^2-mu^3)/sigma^3
+  (gamma(1+3/k)*l^3-3*mu*sigma^2-mu^3)/sigma^3
 })
 
 Weibull$set("public","kurtosis",function(excess = TRUE){
-  skew<-(digamma(1+3/k)*l^3-3*mu*sigma^2-mu^3)/sigma^3
-  kur<-(l^4*digamma(1+4/k)-4*skew*sigma^3*mu-6*sigma^2*mu^2-mu^4)/sigma^4 - 3
+  skew<-(gamma(1+3/k)*l^3-3*mu*sigma^2-mu^3)/sigma^3
+  kur<-(l^4*gamma(1+4/k)-4*skew*sigma^3*mu-6*sigma^2*mu^2-mu^4)/sigma^4 - 3
   if(excess)
     return(kur)
   else
@@ -33,7 +33,7 @@ Weibull$set("public","kurtosis",function(excess = TRUE){
 })
 
 Weibull$set("public","entropy",function(base = 2){
-  -digamma(1)*(1-1/k)+log(l/k)+1
+  -gamma(1)*(1-1/k)+log(l/k)+1
 })
 
 
