@@ -26,24 +26,6 @@ Poisson$set("public","kurtosis",function(excess = TRUE){
     return(1/self$getParameterValue("rate") + 3)
 })
 
-Poisson$set("public","entropy",function(base = 2){   ##########to be checked###########
-  lambda<-self$getParameterValue("rate")
-  if (lambda>10){
-    return (1/2 * log(2*pi*exp(1)*lambda)-1/(12*lambda)-1/(24*lambda^2)-19/(360*lambda^3))
-  }
-  else {
-    summation<-function (lambda){
-      i<- 0
-      total<- 0
-      for (i in 0:100) {
-        total<-total+exp(-lambda)*(lambda^i*log(factorial(i))/factorial(i))
-        i<-i+1
-      }
-      total
-    }
-    return (summation(lambda)+lambda*(1-log(lambda)))
-  }
-})
 
 Poisson$set("public", "mgf", function(t){
   exp(self$getParameterValue("rate")*(exp(t)-1))
