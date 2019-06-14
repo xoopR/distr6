@@ -1,3 +1,4 @@
+
 Poisson <- R6::R6Class("Poisson", inherit = Distribution, lock_objects = F)
 Poisson$set("public","name","Poisson")
 Poisson$set("public","short_name","Pois")
@@ -5,6 +6,7 @@ Poisson$set("public","traits",list(type = PosIntegers$new(zero = T),
                                    valueSupport = "discrete",
                                    variateForm = "univariate"))
 
+Poisson$set("public","description","Poisson Probability Distribution.")
 
 Poisson$set("public","mean",function(){
   self$getParameterValue("rate")
