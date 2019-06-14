@@ -200,3 +200,17 @@ getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
 
   return(ps)
 }
+
+getParameterSet.StudentT <- function(x, df, verbose = FALSE){
+  
+  if(verbose) message("Parameterised with df.")
+  
+  ps <- ParameterSet$new(id = list("df"), value = list(1),
+                         lower = list(0), upper = list(Inf),
+                         class = list("numeric"),
+                         settable = list(TRUE),
+                         updateFunc = list(NA),
+                         description = list("Degree of Freedom"))
+  
+  return(ps)
+}
