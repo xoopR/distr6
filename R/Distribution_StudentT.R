@@ -69,9 +69,9 @@ StudentT$set("public","kurtosis",function(excess = TRUE){
   if(df > 4)
     exkurtosis = 6/(df-4)
   else if(df > 2 & df <= 4)
-    exkurtosis = Inf
+    return(Inf)
   else
-    exkurtosis = NaN
+    return(NaN)
 
   if(excess)
     return(exkurtosis)
