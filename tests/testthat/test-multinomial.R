@@ -9,16 +9,19 @@ test_that("constructor",{
   expect_silent(Multinomial$new(size = 3, probs = c(0.1,0.4)))
 })
 
+mn = Multinomial$new(size = 3, probs = c(0.1,0.9))
 test_that("parameters", {
-  expect_equal(Multinomial$new(size = 3, probs = c(0.1,0.9))$getParameterValue("K"), 2)
-  expect_equal(Multinomial$new(size = 3, probs = c(0.1,0.9))$getParameterValue("size"), 3)
-  expect_equal(Multinomial$new(size = 3, probs = c(0.1,0.9))$getParameterValue("probs"), c(0.1,0.9))
+  expect_equal(mn$getParameterValue("K"), 2)
+  expect_equal(mn$getParameterValue("size"), 3)
+  expect_equal(mn$getParameterValue("probs"), c(0.1,0.9))
 })
 
 test_that("properties & traits",{
-  expect_equal(Multinomial$new(size = 3, probs = c(0.1,0.9))$valueSupport(), "discrete")
-  expect_equal(Multinomial$new(size = 3, probs = c(0.1,0.9))$variateForm(), "multivariate")
-  expect_equal(Multinomial$new(size = 3, probs = c(0.1,0.9))$symmetry(), "asymmetric")
+  expect_equal(mn$valueSupport(), "discrete")
+  expect_equal(mn$variateForm(), "multivariate")
+  expect_equal(mn$symmetry(), "asymmetric")
+  expect_equal(mn$inf(), 0)
+  expect_equal(mn$sup(), 3)
 })
 
 test_that("normalise", {
@@ -26,28 +29,22 @@ test_that("normalise", {
   expect_equal(Multinomial$new(size = 1, probs = c(0.1,0.9))$getParameterValue("probs"),c(0.1,0.9))
 })
 
-test_that("silent statistics",{
-  mn = Multinomial$new(size = 3, prob = c(0.1, 0.2, 0.7))
-  expect_silent(mn$kurtosis(T))
-  expect_silent(mn$skewness())
-  expect_silent(mn$mean())
-  expect_silent(mn$entropy())
-  expect_silent(mn$mgf(1:3))
-  expect_silent(mn$cf(1:3))
-  expect_silent(mn$pgf(1:3))
-  expect_silent(mn$pdf(1:3))
-  expect_silent(mn$var())
-  expect_silent(mn$sd())
-  expect_silent(mn$cov())
-  expect_silent(mn$cor())
-})
 
-test_that("statistical results",{
-  probs = c(0.1, 0.2, 0.7)
-  mn = Multinomial$new(size = 3, prob = probs)
+probs = c(0.1, 0.2, 0.7)
+mn = Multinomial$new(size = 3, prob = probs)
+test_that("statistics",{
+  expect_equal(mn$mean(), 3 * probs)
+  expect_equal(mn$var(), 3 * probs * (1-probs))
+  expect_equal(mn$skewness(), NaN)
+  expect_equal(mn$kurtosis(T), NaN)
+  expect_equal(mn$kurtosis(F), NaN)
+  expect_equal(round(mn$entropy(), 5), 2.35928)
+  expect_equal(mn$mgf(1:3), sum(exp(1:3)*probs)^3)
+  expect_equal(mn$pgf(1:3), sum((1:3)*probs)^3)
+  expect_equal(mn$cf(1:3), sum(exp((1:3) * 1i)*probs)^3)
+  expect_error(mn$mode())
   expect_equal(mn$pdf(c(1,5,7)), 0)
   expect_error(mn$pdf(c(1,7)))
   expect_equal(mn$pdf(c(1,1,1)), dmultinom(x = c(1,1,1), prob = probs))
-  expect_equal(mn$mean(), 3 * probs)
-  expect_equal(mn$var(), 3 * probs * (1-probs))
+  expect_silent(mn$rand(10))
 })

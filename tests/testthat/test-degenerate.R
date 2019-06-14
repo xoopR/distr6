@@ -16,9 +16,11 @@ test_that("properties & traits",{
   expect_equal(Degenerate$new()$valueSupport(), "continuous")
   expect_equal(Degenerate$new()$variateForm(), "univariate")
   expect_equal(Degenerate$new()$symmetry(), "symmetric")
+  expect_equal(Degenerate$new()$sup(), 0)
+  expect_equal(Degenerate$new()$inf(), 0)
 })
 
-test_that("silent statistics",{
+test_that("statistics",{
   expect_equal(Degenerate$new()$kurtosis(), NaN)
   expect_equal(Degenerate$new()$skewness(), NaN)
   expect_equal(Degenerate$new()$entropy(), 0)

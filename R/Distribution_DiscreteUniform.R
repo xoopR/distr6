@@ -76,6 +76,12 @@ DiscreteUniform$set("public", "cf", function(t){
 DiscreteUniform$set("public","pgf",function(z){
   return(1/self$getParameterValue("N") * sum(z^(1:self$getParameterValue("N"))))
 })
+DiscreteUniform$set("public","mode",function(which="all"){
+  if(which=="all")
+    return(self$inf():self$sup())
+  else
+    return((self$inf():self$sup())[which])
+})
 DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] <= lst[["upper"]], .var.name = "lower must be <= upper")

@@ -4,7 +4,7 @@
 \alias{mode}
 \title{Mode of a Distribution}
 \usage{
-mode(object, which)
+mode(object, which = "all")
 }
 \arguments{
 \item{object}{Distribution.}
@@ -19,6 +19,6 @@ If the distribution has multiple modes, all are returned by default. Otherwise t
 of the mode to return can be given or "all" if all should be returned.
 }
 \section{R6 Usage}{
- $mode(which)
+ $mode(which = "all")
 }
 
