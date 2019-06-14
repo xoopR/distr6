@@ -3,12 +3,13 @@
 \name{cf}
 \alias{cf}
 \title{Characteristic Function}
+\usage{
+cf(object, t)
+}
 \arguments{
-\item{object}{an object used to select a method.}
+\item{object}{Distribution.}
 
-\item{...}{further arguments passed to or from other methods.}
-
-\item{t}{integer to evaluate characteristic function at}
+\item{t}{integer to evaluate characteristic function at.}
 }
 \description{
 Characteristic function of a distribution
@@ -18,6 +19,13 @@ The characteristic function is defined by
 \deqn{cf_X(t) = E_X[exp(xti)]}
 where X is the distribution and E_X is the expectation of the distribution X.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $cf(t)
+}
+
+\seealso{
+\code{\link{CoreStatistics}} and \code{\link{decorate}}
 }

@@ -1,0 +1,38 @@
+library(testthat)
+
+context("Degenerate distribution")
+
+test_that("constructor",{
+  expect_silent(Degenerate$new())
+  expect_silent(Degenerate$new(5))
+})
+
+test_that("parameters", {
+  expect_equal(Degenerate$new()$getParameterValue("mean"), 0)
+  expect_equal(Degenerate$new(10)$getParameterValue("mean"), 10)
+})
+
+test_that("properties & traits",{
+  expect_equal(Degenerate$new()$valueSupport(), "continuous")
+  expect_equal(Degenerate$new()$variateForm(), "univariate")
+  expect_equal(Degenerate$new()$symmetry(), "symmetric")
+})
+
+test_that("silent statistics",{
+  expect_equal(Degenerate$new()$kurtosis(), NaN)
+  expect_equal(Degenerate$new()$skewness(), NaN)
+  expect_equal(Degenerate$new()$entropy(), 0)
+  expect_equal(Degenerate$new()$var(), 0)
+  expect_equal(Degenerate$new()$sd(), 0)
+  expect_equal(Degenerate$new()$mean(), 0)
+  expect_equal(Degenerate$new()$mode(), 0)
+  expect_silent(Degenerate$new()$mgf(1))
+  expect_silent(Degenerate$new()$cf(1))
+  expect_equal(Degenerate$new()$pdf(1), 0)
+  expect_equal(Degenerate$new()$pdf(0), 1)
+  expect_equal(Degenerate$new()$cdf(-1), 0)
+  expect_equal(Degenerate$new()$cdf(0), 1)
+  expect_equal(Degenerate$new()$quantile(0.4), 0)
+  expect_equal(Degenerate$new()$quantile(0), 0)
+  expect_equal(Degenerate$new()$rand(1), 0)
+})

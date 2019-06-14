@@ -13,11 +13,3 @@ test_that("check discrete mixture wrapper", {
   expect_equal(mixBin$pdf(1:10), Binomial$new()$pdf(1:10))
   expect_equal(mixBin$cdf(1:10), Binomial$new()$cdf(1:10))
 })
-
-test_that("check weights",{
-  expect_equal(MixtureDistribution$new(list(Binomial$new(),Binomial$new()))$weights(),c(0.5,0.5))
-  expect_equal(MixtureDistribution$new(list(Binomial$new(),Binomial$new()), weights = c(0.1,0.9))$weights(),
-               c(0.1,0.9))
-  expect_error(MixtureDistribution$new(list(Binomial$new(),Binomial$new()), weights = c(0.1,0.2)))
-  expect_error(MixtureDistribution$new(list(Binomial$new(),Binomial$new()), weights = c(0.2)))
-})

@@ -136,14 +136,15 @@ ParameterSet$set("public","initialize", function(id, value, lower, upper, class,
     a_upper = ifelse(upper[[i]] == Inf, upper[[i]], as(upper[[i]], a_class))
 
     a_value = as(value[[i]], a_class)
-    checkmate::assert(a_value >= a_lower, a_value <= a_upper, combine = "and",
+    checkmate::assert(all(a_value >= a_lower), all(a_value <= a_upper), combine = "and",
                       .var.name = "'value' should be between 'lower' and 'upper'")
 
-    a_param = data.frame(id = a_id, value = a_value, lower = a_lower,
+    a_param = data.frame(id = a_id, value = a_lower, lower = a_lower,
                          upper = a_upper, class = a_class, settable = a_settable,
                          description = a_description,
                          updateFunc = a_update,
                          stringsAsFactors = F)
+    a_param$value <- list(a_value)
 
     params = rbind(params, a_param)
   }
@@ -156,7 +157,7 @@ ParameterSet$set("public","print", function(){
 })
 ParameterSet$set("public","update", function(){
   if(any(!is.na(private$.parameters$updateFunc))){
-    update_filter = !is.na(private$.parameters$updateFunc) & !private$.parameters$settable
+    update_filter = !is.na(private$.parameters$updateFunc) #& !private$.parameters$settable
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       fnc = function(self){}
@@ -167,33 +168,89 @@ ParameterSet$set("public","update", function(){
   }
   invisible(self)
 })
+
+#' @name parameters
+#' @title Parameters Accessor
+#' @description Returns some or all the parameters in a distribution.
+#' @usage parameters(object, id = NULL, error = "warn")
+#' @section R6 Usage: $parameters(id = NULL, error = "warn")
+#' @param object Distribution or ParameterSet.
+#' @param id character, see details.
+#' @param error character, value to pass to \code{stopwarn}.
+#' @details If \code{id} is given and matches a parameter in the distribution, the parameter is returned
+#' with all details. If \code{id} is given but doesn't match a parameter, an empty data.frame is returned.
+#' Finally if \code{id} is not given, returns all parameters in the distribution.
+#'
+#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
+#' with warning otherwise.
+#'
+#' @seealso \code{\link{getParameterValue}} and \code{\link{setParameterValue}}
+#' @export
+NULL
 ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
   if(length(private$.parameters)==0)
     RSmisc::stopwarn(error, "There are no parameters in this distribution.")
 
   if(!is.null(id)){
     id0 = id
-    if(length(dplyr::filter(private$.parameters, id == id0))==0){
+    if(length(dplyr::filter(private$.parameters, id %in% id0))==0){
       return(self)
     }
-    return(dplyr::filter(private$.parameters, id == id0))
+    return(dplyr::filter(private$.parameters, id %in% id0))
   } else {
       return(self)
   }
 })
+
+#' @name getParameterValue
+#' @title Parameter Value Accessor
+#' @description Returns the value of the given parameter.
+#' @usage getParameterValue(object, id, error = "warn")
+#' @section R6 Usage: $getParameterValue(id, error = "warn")
+#' @param object Distribution or ParameterSet.
+#' @param id character, id of the parameter to return.
+#' @param error character, value to pass to \code{stopwarn}.
+#' @details Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
+#' the value of the given parameter.
+#'
+#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
+#' with warning otherwise.
+#'
+#' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
+#' @export
+NULL
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 
   if(length(private$.parameters)==0)
     RSmisc::stopwarn(error, "There are no parameters in this distribution.")
   if(missing(id))
     RSmisc::stopwarn(error, "Argument 'id' is missing, with no default.")
-  val = self$parameters(id, TRUE)[["value"]]
+  val = self$parameters(id)[["value"]]
   if(length(val)==0){
     RSmisc::stopwarn(error, paste(id, "is not a parameter in this distribution."))
   }else
-    return(val[[1]])
+    return(unlist(val[[1]]))
 
 }) # NEEDS TESTING
+
+#' @name setParameterValue
+#' @title Parameter Value Setter
+#' @description Returns the value of the given parameter.
+#'
+#' @usage setParameterValue(object, lst, error = "warn")
+#' @section R6 Usage: $setParameterValue(lst, error = "warn")
+#' @param object Distribution or ParameterSet.
+#' @param lst list, see details.
+#' @param error character, value to pass to \code{stopwarn}.
+#' @details A list is supplied to the function, the list names are parameter IDs and the list values are
+#' the respective values to set the parameters.
+#'
+#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
+#' with warning otherwise.
+#'
+#' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
+#' @export
+NULL
 ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
   if(length(private$.parameters)!=0){
 
@@ -208,8 +265,8 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       if(nrow(param)==0)
         RSmisc::stopwarn(error, sprintf("%s is not in the parameter set.",id))
 
-      if(!param$settable)
-        RSmisc::stopwarn(error, sprintf("%s is not settable.",param$id))
+      # if(!param$settable)
+      #   RSmisc::stopwarn(error, sprintf("%s is not settable.",param$id))
 
       if(param$class=="numeric")
         checkmate::assertNumeric(value,lower = param$lower, upper = param$upper)
@@ -218,7 +275,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
         checkmate::assertInteger(value,lower = param$lower, upper = param$upper)
       }
 
-      private$.parameters[private$.parameters[,"id"] %in% param$id, "value"] <- value
+      private$.parameters[private$.parameters[,"id"] %in% param$id, "value"][[1]] <- list(value)
     }
 
     rm(id, value, i)

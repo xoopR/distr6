@@ -3,7 +3,12 @@
 \name{survivalPNorm}
 \alias{survivalPNorm}
 \title{Survival Function P-Norm}
+\usage{
+survivalPNorm(object, p = 2, lower = NULL, upper = NULL)
+}
 \arguments{
+\item{object}{Distribution.}
+
 \item{p}{p-norm to calculate.}
 
 \item{lower}{lower limit for integration, default is infimum.}
@@ -20,6 +25,13 @@ where X is the distribution, \eqn{S_X} is the survival function and a,b are the 
 
 Returns NULL if distribution is not continuous.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{ExoticStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $survivalPNorm(object, p = 2, lower = NULL, upper = NULL)
+}
+
+\seealso{
+\code{\link{ExoticStatistics}} and \code{\link{decorate}}
 }

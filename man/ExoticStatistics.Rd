@@ -17,6 +17,10 @@ Decorator objects add functionality to the given Distribution object
  from analytic computations. See below for the methods added to a distribution after decorating with
  \code{ExoticStatistics}.
 }
+\section{Constructor}{
+ ExoticStatistics$new(dist)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -47,6 +51,7 @@ x$survival(1)
 
 x = Exponential$new(decorators = ExoticStatistics)
 x$survival(4)
+
 }
 \seealso{
 \code{\link{DistributionDecorator}} and \code{\link{CoreStatistics}}

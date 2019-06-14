@@ -2,11 +2,12 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{entropy}
 \alias{entropy}
-\title{Entropy}
+\title{Distribution Entropy}
+\usage{
+entropy(object, base = 2)
+}
 \arguments{
-\item{object}{an object used to select a method.}
-
-\item{...}{further arguments passed to or from other methods.}
+\item{object}{Distribution.}
 
 \item{base}{base of the entropy logarithm, default = 2 (Shannon entropy)}
 }
@@ -14,11 +15,18 @@
 (Information) Entropy of a distribution
 }
 \details{
-The entropy of a distribution is defined by
+The entropy of a (discrete) distribution is defined by
 \deqn{- sum f_X * log(f_X)}
-where f_X is the pdf of distribution X. The base of the logarithm of the equation determines the
-type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
+where f_X is the pdf of distribution X, with an integration analogue for continuous distributions.
+The base of the logarithm of the equation determines the type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $entropy(base = 2)
+}
+
+\seealso{
+\code{\link{CoreStatistics}} and \code{\link{decorate}}
 }
