@@ -1,5 +1,5 @@
 
-Poisson <- R6::R6Class("Poisson", inherit = Distribution, lock_objects = F)
+Poisson <- R6::R6Class("Poisson", inherit = SDistribution, lock_objects = F)
 Poisson$set("public","name","Poisson")
 Poisson$set("public","short_name","Pois")
 Poisson$set("public","traits",list(type = PosIntegers$new(zero = T),
