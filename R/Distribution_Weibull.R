@@ -1,4 +1,40 @@
-Weibull <- R6::R6Class("Weibull", inherit = Distribution, lock_objects = F)
+#' @include SetInterval_SpecialSet.R ParameterSet.R
+#-------------------------------------------------------------
+# Weibull Distribution Documentation
+#-------------------------------------------------------------
+#' @title Weibull Distribution
+#' @description Mathematical and statistical functions for the Weibull distribution parameterised
+#' with shape and scale.
+#' @name Weibull
+#'
+#' @section Constructor: Weibull$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
+#'
+#' @section Constructor Arguments:
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{shape} \tab numeric \tab shape parameter. \cr
+#' \code{scale} \tab numeric \tab scale parameter. \cr
+#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+#' }
+#'
+#' @section Constructor Details: The Weibull distribution is parameterised with a shape and scale
+#' parameter, both as positive numerics.
+#'
+#' @inheritSection Distribution Public Variables
+#' @inheritSection Distribution Accessor Methods
+#' @inheritSection Distribution p/d/q/r Methods
+#' @inheritSection Normal Statistical Methods
+#' @inheritSection Distribution Parameter Methods
+#' @inheritSection Distribution Validation Methods
+#' @inheritSection Distribution Representation Methods
+#'
+#' @export
+NULL
+#-------------------------------------------------------------
+# Weibull Distribution Definition
+#-------------------------------------------------------------
+Weibull <- R6::R6Class("Weibull", inherit = SDistribution, lock_objects = F)
 Weibull$set("public","name","Weibull")
 Weibull$set("public","short_name","Weibull")
 Weibull$set("public","traits",list(type = PosReals$new(zero=T),
@@ -7,66 +43,69 @@ Weibull$set("public","traits",list(type = PosReals$new(zero=T),
 Weibull$set("public","description","Weibull Probability Distribution.")
 
 Weibull$set("public","mean",function(){
-  self$getParameterValue("scale")*digamma(1+1/self$getParameterValue("shape"))
+  return(self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape")))
 })
-
 Weibull$set("public","var",function(){
-  l<-self$getParameterValue("scale")
-  k<-self$getParameterValue("shape")
-  l^2 *(digamma(1+2/k)-digamma(1+1/k))^2
+  scale<-self$getParameterValue("scale")
+  shape<-self$getParameterValue("shape")
+  return(scale^2 *(gamma(1+2/shape)-gamma(1+1/shape)^2))
 })
-
-
 Weibull$set("public","skewness",function() {
-  mu<-self$getParameterValue("mean")
-  sigma<-sqrt(self$getParameterValue("var"))
-  (digamma(1+3/k)*l^3-3*mu*sigma^2-mu^3)/sigma^3
+  scale <- self$getParameterValue("scale")
+  shape <- self$getParameterValue("shape")
+  mu <- self$mean()
+  sigma <- self$sd()
+  return(((gamma(1+3/shape)*(scale^3))  - (3*mu*sigma^2) - (mu^3)) / (sigma^3))
 })
-
 Weibull$set("public","kurtosis",function(excess = TRUE){
-  skew<-(digamma(1+3/k)*l^3-3*mu*sigma^2-mu^3)/sigma^3
-  kur<-(l^4*digamma(1+4/k)-4*skew*sigma^3*mu-6*sigma^2*mu^2-mu^4)/sigma^4 - 3
+  skew <- self$skewness()
+  scale <- self$getParameterValue("scale")
+  shape <- self$getParameterValue("shape")
+  mu <- self$mean()
+  sigma <- self$sd()
+
+  kur <- (((scale^4) * gamma(1+4/shape)) - (4*skew*(sigma^3)*mu) - (6*(sigma^2)*(mu^2)) - (mu^4)) / (sigma^4)
+
   if(excess)
-    return(kur)
+    return(kur - 3)
   else
-    return(kur+3)
+    return(kur)
 })
-
 Weibull$set("public","entropy",function(base = 2){
-  -digamma(1)*(1-1/k)+log(l/k)+1
+  scale <- self$getParameterValue("scale")
+  shape <- self$getParameterValue("shape")
+  return(-digamma(1)*(1-1/shape)+log(scale/shape, base)+1)
 })
-
-
-
 Weibull$set("public","mode",function(){
-  if(k>1){
-  return (l*((k-1)/k)^(1/k))
-  }
-  else{
-  return(0)
-  }
+  scale <- self$getParameterValue("scale")
+  shape <- self$getParameterValue("shape")
+
+  if(shape > 1)
+    return (scale*((shape-1)/shape)^(1/shape))
+  else
+    return(0)
 })
 
 Weibull$set("private",".getRefParams", function(paramlst){
   lst = list()
-  if(!is.null(paramlst$shape)) lst = c(lst, list(shape=shape))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(scale=scale))
+  if(!is.null(paramlst$shape)) lst = c(lst, list(shape=paramlst$shape))
+  if(!is.null(paramlst$scale)) lst = c(lst, list(scale=paramlst$scale))
   return(lst)
 })
 
-Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NULL,...){
-  
+Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NULL, verbose = FALSE){
+
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  self$setParameterValue(list(shape=shape,rate = rate ))
-   
-  pdf <- function(x1) dWeibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  cdf <- function(x1) pWeibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  quantile <- function(p) qWeibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  rand <- function(n) rWeibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  
+  self$setParameterValue(list(shape=shape, scale = scale))
+
+  pdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  cdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  quantile <- function(p) dweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  rand <- function(n) dweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
                    symmetric = FALSE)
-  
+
   invisible(self)
 })

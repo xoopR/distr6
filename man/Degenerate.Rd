@@ -26,23 +26,6 @@ by location (mean).
 default is 0.
 }
 
-\section{Statistical Methods}{
-
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
-  \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-  \code{var()} \tab \code{\link{var}} \cr
-  \code{skewness()} \tab \code{\link{skewness}} \cr
-  \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-  \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-  \code{mgf(t)} \tab \code{\link{mgf}} \cr
-  \code{cf(t)} \tab \code{\link{cf}} \cr
-  \code{sd()} \tab \code{\link{sd}} \cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  }
-}
-
 \section{Public Variables}{
 
  \tabular{ll}{
@@ -82,6 +65,23 @@ default is 0.
   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
   \code{rand(n)} \tab \code{\link{rand}}
  }
+}
+
+\section{Statistical Methods}{
+
+ \tabular{ll}{
+  \strong{Method} \tab \strong{Link} \cr
+  \code{mean()} \tab \code{\link{mean.Distribution}} \cr
+  \code{var()} \tab \code{\link{var}} \cr
+  \code{skewness()} \tab \code{\link{skewness}} \cr
+  \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
+  \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
+  \code{mgf(t)} \tab \code{\link{mgf}} \cr
+  \code{cf(t)} \tab \code{\link{cf}} \cr
+  \code{sd()} \tab \code{\link{sd}} \cr
+  \code{median()} \tab \code{\link{median.Distribution}} \cr
+  \code{iqr()} \tab \code{\link{iqr}} \cr
+  }
 }
 
 \section{Parameter Methods}{

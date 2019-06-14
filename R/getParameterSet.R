@@ -172,3 +172,31 @@ getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
 
   return(ps)
 }
+
+getParameterSet.Poisson <- function(x, rate, verbose = FALSE){
+
+  if(verbose) message("Parameterised with size and probs.")
+
+  ps <-  ParameterSet$new(id = list("rate"), value = list(1),
+                          lower = list(0), upper = list(Inf),
+                          class = list("numeric"),
+                          settable = list(TRUE),
+                          updateFunc = list(NA),
+                          description = list("Arrival Rate"))
+
+  return(ps)
+}
+
+getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape and scale.")
+
+  ps <-  ParameterSet$new(id = list("shape","scale"), value = list(1,1),
+                          lower = list(0,0), upper = list(Inf,Inf),
+                          class = list("numeric","numeric"),
+                          settable = list(TRUE,TRUE),
+                          updateFunc = list(NA,NA),
+                          description = list("Shape paramer", "Scale parameter"))
+
+  return(ps)
+}
