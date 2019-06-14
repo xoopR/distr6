@@ -234,9 +234,9 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 
     if(!is.null(pdf) & !is.null(cdf)){
       checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
-                        .var.name = "'pdf' and 'cdf' maust take the same arguments.")
+                        .var.name = "'pdf' and 'cdf' must take the same arguments.")
       checkmate::assert(all(names(formals(pdf)) == names(formals(cdf))),
-                        .var.name = "'pdf' and 'cdf' maust take the same arguments.")
+                        .var.name = "'pdf' and 'cdf' must take the same arguments.")
     }
 
 
@@ -724,8 +724,8 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     cdf[x1 >= self$sup()] = 1
     cdf[x1 < self$inf()] = 0
 
-    if(sum(self$liesInSupport(x1, all = F))!=0)
-      cdf[self$liesInSupport(x1, all = F)] = private$.cdf(cdf[self$liesInSupport(x1, all = F)])
+    if(sum(x1 >= self$inf() & x1 < self$sup())!=0)
+      cdf[x1 >= self$inf() & x1 < self$sup()] = private$.cdf(cdf[x1 >= self$inf() & x1 < self$sup()])
 
 
     # cdf.in = sapply(cdf[x1 < self$sup() & x1 >= self$inf()], function(q0) private$.cdf(q0,...))
@@ -788,8 +788,10 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
   quantile = p
   quantile[p > 1] = NaN
   quantile[p < 0] = NaN
-  if(sum(p >= 0 & p <= 1)!=0)
-    quantile[p >= 0 & p <= 1] = private$.quantile(quantile[p >= 0 & p <= 1])
+  quantile[p == 0] = self$inf()
+  quantile[p == 1] = self$sup()
+  if(sum(p > 0 & p < 1)!=0)
+    quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
 
   return(quantile)
 
@@ -899,11 +901,12 @@ Distribution$set("public", "iqr", function() {
 #' @description Tests if the given data lies in the support of the Distribution, either tests if all
 #' data lies in the support or any of it.
 #'
-#' @usage liesInSupport(object, x, all = TRUE)
-#' @section R6 Usage: $liesInSupport(x, all = TRUE)
+#' @usage liesInSupport(object, x, all = TRUE, bound = TRUE)
+#' @section R6 Usage: $liesInSupport(x, all = TRUE, bound = TRUE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
+#' @param bound logical, if TRUE (default) boundary points included
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
 #' lies in the support. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
@@ -912,11 +915,11 @@ Distribution$set("public", "iqr", function() {
 #'
 #' @export
 NULL
-Distribution$set("public","liesInSupport",function(x, all = TRUE){
-  if(all)
-    return(all(x >= self$inf()) & all(x <= self$sup()))
-  else
-    return(x >= self$inf() & x <= self$sup())
+Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = TRUE){
+  if(all & bound) return(all(x >= self$inf()) & all(x <= self$sup()))
+  else if(all & !bound) return(all(x > self$inf()) & all(x < self$sup()))
+  else if(!all & bound) return(x >= self$inf() & x <= self$sup())
+  else if(!all & !bound) return(x > self$inf() & x < self$sup())
 })
 
 #' @name liesInType

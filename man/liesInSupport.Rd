@@ -4,7 +4,7 @@
 \alias{liesInSupport}
 \title{Test if Data Lies in Distribution Support}
 \usage{
-liesInSupport(object, x, all = TRUE)
+liesInSupport(object, x, all = TRUE, bound = TRUE)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -12,6 +12,8 @@ liesInSupport(object, x, all = TRUE)
 \item{x}{vector of numerics to test.}
 
 \item{all}{logical, see details.}
+
+\item{bound}{logical, if TRUE (default) boundary points included}
 }
 \description{
 Tests if the given data lies in the support of the Distribution, either tests if all
@@ -23,7 +25,7 @@ lies in the support. If \code{all} is \code{FALSE} then returns a vector of logi
 in the vector \code{x}.
 }
 \section{R6 Usage}{
- $liesInSupport(x, all = TRUE)
+ $liesInSupport(x, all = TRUE, bound = TRUE)
 }
 
 \seealso{

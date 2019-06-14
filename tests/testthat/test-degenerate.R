@@ -33,6 +33,6 @@ test_that("silent statistics",{
   expect_equal(Degenerate$new()$cdf(-1), 0)
   expect_equal(Degenerate$new()$cdf(0), 1)
   expect_equal(Degenerate$new()$quantile(0.4), 0)
-  expect_equal(Degenerate$new()$quantile(0), -Inf)
+  expect_equal(Degenerate$new()$quantile(0), 0)
   expect_equal(Degenerate$new()$rand(1), 0)
 })

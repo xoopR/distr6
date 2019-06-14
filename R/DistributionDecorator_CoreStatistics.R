@@ -288,15 +288,15 @@ CoreStatistics$set("public","var",function(){
 #'
 #' @param object Distribution.
 #' @param k the kth moment to calculate
-#' @param type one of 'central', 'standard' or 'zero', abbreviations allowed
+#' @param type one of 'central', 'standard' or 'raw', abbreviations allowed
 #'
 #'
 #' @details The kth central moment of a distribution is defined by
 #' \deqn{CM(k)_X = E_X[(x - \mu)^k]}
 #' the kth standardised moment of a distribution is defined by
 #' \deqn{SM(k)_X = CM(k)/\sigma^k}
-#' the kth zeroth moment of a distribution is defined by
-#' \deqn{ZM(k)_X = E_X[(x)^k]}
+#' the kth raw moment of a distribution is defined by
+#' \deqn{RM(k)_X = E_X[x^k]}
 #' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 #' standard deviation of the distribution.
 #'
@@ -311,7 +311,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 
     if(grepl("^[c,C]", type)) type <- "central"
     else if(grepl("^[s,S]", type)) type <- "standard"
-    else if(grepl("^[z,Z]", type)) type <- "zeroth"
+    else if(grepl("^[r,R]", type)) type <- "raw"
     else{
       warning("Type not recognised, central used")
       type <- "central"
@@ -324,8 +324,8 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
         return(0)
     }
 
-    if(type == "zeroth"){
-      return(self$genExp(trafo = function(x) return((x)^k)))
+    if(type == "raw"){
+      return(self$genExp(trafo = function(x) return(x^k)))
     }
 
     centralMoment = self$genExp(trafo = function(x) return((x - self$genExp())^k))
