@@ -3,10 +3,10 @@
 # Student's t Distribution Documentation
 #-------------------------------------------------------------
 #' @title Student's t Distribution
-#' 
+#'
 #' @description Mathematical and statistical functions for the Student's t distribution parameterised
 #' with df degrees of freedom.
-#' 
+#'
 #' @name StudentT
 #'
 #' @section Constructor: StudentT$new(df = 1, decorators = NULL, verbose = FALSE)
@@ -19,8 +19,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Student's t distribution can be parameterised with df
-#' degrees of freedom. Default parameterisation is with df = 1.
+#' @section Constructor Details: The Student's t distribution is parameterised with
+#' degrees of freedom, df. Default parameterisation is with df = 1.
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
@@ -30,21 +30,6 @@
 #' @inheritSection Distribution Validation Methods
 #' @inheritSection Distribution Representation Methods
 #'
-#' @section Statistical Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = exp(1))} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   }
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
@@ -53,65 +38,59 @@ NULL
 StudentT <- R6::R6Class("StudentT", inherit = SDistribution, lock_objects = F)
 StudentT$set("public","name","StudentT")
 StudentT$set("public","short_name","T")
-StudentT$set("public","traits",list(type = Reals$new(zero = T),
+StudentT$set("public","traits",list(type = Reals$new(),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
 StudentT$set("public","description","Student's t Probability Distribution.")
 
 StudentT$set("public","mean",function(){
-  v <- self$getParameterValue("df")
-  if(v > 1)
+  if(self$getParameterValue("df") > 1)
     return(0)
   else
     return(NaN)
 })
-
 StudentT$set("public","var",function(){
-  v <- self$getParameterValue("df")
-  if(v > 2)
-    return(v/(v-2))
-  else if(v > 1 & v <= 2)
+  df <- self$getParameterValue("df")
+  if(df > 2)
+    return(df/(df-2))
+  else if(df > 1 & df <= 2)
     return(Inf)
   else
     return(NaN)
 })
-
 StudentT$set("public","skewness",function(){
-  v <- self$getParameterValue("df")
-  if(v > 3)
+  if(self$getParameterValue("df") > 3)
     return(0)
   else
     return(NaN)
 })
-
 StudentT$set("public","kurtosis",function(excess = TRUE){
-  v <- self$getParameterValue("df")
-  if(v > 4)
-    exkurtosis = 6/(v-4)
-  else if(v > 2 & v <= 4)
+  df <- self$getParameterValue("df")
+  if(df > 4)
+    exkurtosis = 6/(df-4)
+  else if(df > 2 & df <= 4)
     exkurtosis = Inf
   else
     exkurtosis = NaN
+
   if(excess)
     return(exkurtosis)
   else
     return(exkurtosis + 3)
-  
-})
 
-StudentT$set("public","entropy",function(base = exp(1)){
-  v <- self$getParameterValue("df")
-  ((v+1)/2)*(digamma((1+v)/2) - digamma(v/2)) + log(sqrt(v)*beta(v/2, 1/2), base)
 })
-
+StudentT$set("public","entropy",function(base = 2){
+  df <- self$getParameterValue("df")
+  (((df+1)/2)*(digamma((1+df)/2) - digamma(df/2))) + (log(sqrt(df)*beta(df/2, 1/2), base))
+})
 StudentT$set("public", "mgf", function(t) return(NaN))
-
 StudentT$set("public", "cf", function(t){
-  v <- self$getParameterValue("df")
-  return(besselK(sqrt(v)*abs(t), v/2) * ((sqrt(v)*abs(t))^(v/2)) / (gamma(v/2)*2^(v/2-1)))
+  df <- self$getParameterValue("df")
+  return((besselK(sqrt(df)*abs(t), df/2) * ((sqrt(df)*abs(t))^(df/2))) / (gamma(df/2)*2^(df/2-1)))
 })
-
-StudentT$set("public","mode",function() return(0))
+StudentT$set("public","mode",function(){
+  return(0)
+})
 
 StudentT$set("private",".getRefParams", function(paramlst){
   lst = list()
@@ -120,15 +99,15 @@ StudentT$set("private",".getRefParams", function(paramlst){
 })
 
 StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
-  
+
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(list(df = df))
-  
+
   pdf <- function(x1) dt(x1, self$getParameterValue("df"))
   cdf <- function(x1) pt(x1, self$getParameterValue("df"))
   quantile <- function(p) qt(p, self$getParameterValue("df"))
   rand <- function(n) rt(n, self$getParameterValue("df"))
-  
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
                    symmetric  = TRUE)

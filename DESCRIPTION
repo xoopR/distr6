@@ -58,6 +58,7 @@ Collate:
     'Distribution_Normal.R'
     'Distribution_Poisson.R'
     'Distribution_SDistribution.R'
+    'Distribution_StudentT.R'
     'Distribution_Weibull.R'
     'IGNORE_Wrapper_ConcreteWrapper.R'
     'SetInterval_Interval.R'
