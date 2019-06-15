@@ -228,3 +228,26 @@ getParameterSet.Pareto <- function(x, shape, scale, verbose = FALSE){
 
   return(ps)
 }
+
+getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE){
+
+  var.bool = scale.bool = FALSE
+
+  if(!is.null(var)){
+    if(verbose) message("Parameterised with mean and var.")
+    var.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with mean and scale.")
+    scale.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("mean","scale","var"), value = list(0, 1, 2),
+                         lower = list(-Inf, 0, 0), upper = list(Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric"),
+                         settable = list(TRUE, scale.bool, var.bool),
+                         updateFunc = list(NA, NA, "2*self$getParameterValue('scale')^2"),
+                         description = list("Mean - Location Parameter",
+                                            "Scale - Scale Parameter",
+                                            "Variance - Alternate Scale Parameter"))
+  return(ps)
+}

@@ -893,6 +893,7 @@ NULL
 Distribution$set("public", "iqr", function() {
   return(self$quantile(0.75) - self$quantile(0.25))
 })
+
 #-------------------------------------------------------------
 # Public Methods - Validation
 #-------------------------------------------------------------
