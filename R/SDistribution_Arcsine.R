@@ -4,8 +4,10 @@
 #-------------------------------------------------------------
 #' @title Arcsine Distribution
 #'
-#' @description Mathematical and statistical functions for the Arcsine distribution.
-#' Parameterised with lower and upper limits.
+#' @description Mathematical and statistical functions for the Arcsine distribution parameterised
+#' with lower and upper limits. The Arcsine distribution is defined by the pdf,
+#' \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
+#' where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
 #'
 #' @name Arcsine
 #'

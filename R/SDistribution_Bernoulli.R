@@ -5,7 +5,14 @@
 #' @title Bernoulli Distribution
 #'
 #' @description Mathematical and statistical functions for the Bernoulli distribution parameterised
-#' with probability of success.
+#' with prob or \eqn{qprob = 1 - prob}. The prob parameterisation is defined by the pmf,
+#' \deqn{f(x) = p, if x =1; 1-p, if x = 0}
+#'
+#' where \eqn{p \epsilon [0,1]} is the prob parameter.
+#'
+#' @details The default parameterisation of probability of success is favoured over the probability
+#' of failure as this is more common in practice, however the two are mathematically identical (subject to
+#' a simple translation).
 #'
 #' @name Bernoulli
 #'

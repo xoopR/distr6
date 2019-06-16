@@ -4,7 +4,13 @@
 #-------------------------------------------------------------
 #' @title Pareto Distribution
 #' @description Mathematical and statistical functions for the Pareto distribution parameterised
-#' with shape and scale
+#' with shape and scale and defined by the pdf,
+#' \deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
+#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale parameter.
+#'
+#' @details \code{cf} is omitted as no analytic expression involving the incomplete gamma function
+#' with complex numbers could be found.
+#'
 #' @name Pareto
 #'
 #' @section Constructor: Pareto$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)

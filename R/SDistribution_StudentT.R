@@ -4,8 +4,10 @@
 #-------------------------------------------------------------
 #' @title Student's t Distribution
 #'
-#' @description Mathematical and statistical functions for the Student's t distribution parameterised
-#' with df degrees of freedom.
+#' @description Mathematical and statistical functions for Student's T distribution parameterised
+#' with degrees of freedom.  The T distribution is defined by the pdf,
+#' \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
+#' where \eqn{\nu > 0} is the degrees of freedom.
 #'
 #' @name StudentT
 #'

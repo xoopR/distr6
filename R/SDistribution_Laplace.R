@@ -5,11 +5,17 @@
 #' @title Laplace Distribution
 #'
 #' @description Mathematical and statistical functions for the Laplace distribution parameterised
-#' with mean and scale.
+#' with mean and scale or \eqn{variance = 2(scale)^2}. The mean/scale parameterisation is defined by
+#' the pdf,
+#' \deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
+#' where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\beta > 0} is the scale parameter.
+#'
+#' @details The Laplace distribution is paramterised with mean and scale by default as this appears to
+#' be slightly more common in popular usage.
 #'
 #' @name Laplace
 #'
-#' @section Constructor: Laplace$new(mean = 0, scale = NULL, decorators = NULL, verbose = FALSE)
+#' @section Constructor: Laplace$new(mean = 0, scale = 1, var = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -22,9 +28,7 @@
 #' }
 #'
 #' @section Constructor Details: The Laplace distribution can either be parameterised with mean and
-#' scale or variance. The default parameteisation is with mean 0 and scale 1. The scale and var parameters
-#' are related via
-#' \deqn{var = 2(scale)^2}
+#' scale or variance. The default parameteisation is with mean 0 and scale 1.
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods

@@ -3,8 +3,19 @@
 # Exponential Distribution Documentation
 #-------------------------------------------------------------
 #' @title Exponential Distribution
+#'
+#' @description Mathematical and statistical functions for the Exponential distribution parameterised
+#' with rate or \eqn{scale = 1/rate}. The rate parameterisation is defined by the pdf,
+#' \deqn{f(x) = \lambda exp(-x\lambda)}
+#' where \eqn{\lambda > 0} is the rate parameter.
+#'
 #' @description Mathematical and statistical functions for the Exponential distribution parameterised
 #' with rate or scale.
+#'
+#' @details By default we use the rate parameterisation for the Exponential distribution as arrival rate
+#' provides the most interpretable representation of the distribution and is most popular for say point
+#' processes.
+#'
 #' @name Exponential
 #'
 #' @section Constructor: Exponential$new(rate = NULL, scale = NULL, decorators = NULL, verbose = FALSE)

@@ -5,7 +5,11 @@
 #' @title Poisson Distribution
 #'
 #' @description Mathematical and statistical functions for the Poisson distribution parameterised
-#' with arrival rate.
+#' with (arrival) rate and defined by the pmf,
+#' \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
+#' where \eqn{\lambda} > 0 is the rate parameter.
+#'
+#' @details \code{entropy} is omitted as no closed form expression could be found.
 #'
 #' @name Poisson
 #'

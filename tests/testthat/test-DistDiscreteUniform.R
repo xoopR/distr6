@@ -22,6 +22,8 @@ test_that("properties & traits",{
   expect_equal(DiscreteUniform$new()$symmetry(), "asymmetric")
   expect_equal(DiscreteUniform$new()$sup(), 1)
   expect_equal(DiscreteUniform$new()$inf(), 0)
+  expect_equal(DiscreteUniform$new()$dmax(), 1)
+  expect_equal(DiscreteUniform$new()$dmin(), 0)
 })
 
 du = DiscreteUniform$new()

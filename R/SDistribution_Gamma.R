@@ -5,13 +5,12 @@
 #' @title Gamma Distribution
 #'
 #' @description Mathematical and statistical functions for the Gamma distribution parameterised
-#' with mean and shape, rate or scale. By default we use the shape/rate combination, which is most common
-#' in statistics (particularly Bayesian). The shape/rate Gamma distribution is defined by the pdf,
-#' \deqn{f(x) = (b^a)/Gamma(a) * x^(a-1) * exp(-bx)}
-#' where a is the shape parameter and b is the rate parameter.
+#' with shape and rate, \eqn{scale = 1/rate} or \eqn{mean = shape/rate}. The shape-rate Gamma distribution is defined by the pdf,
+#' \deqn{f(x) = (\beta^\alpha)/Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
+#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the rate parameter.
 #'
-#' @details All results given are analytical but we do make use of the base R gamma function, which is
-#' found in common usage R and we therefore trust the precision of the results.
+#' @details The Gamma Distribution is parameterised by default with shape and rate as this is most common
+#' in statistics (particularly Bayesian).
 #'
 #' @name Gamma
 #'
@@ -48,7 +47,7 @@
 NULL
 Gamma <- R6::R6Class("Gamma", inherit = SDistribution, lock_objects = F)
 Gamma$set("public","name","Gamma")
-Gamma$set("public","short_name","Gam")
+Gamma$set("public","short_name","Gamma")
 
 Gamma$set("public","traits",list(type = PosReals$new(zero = T),
                                        valueSupport = "continuous",

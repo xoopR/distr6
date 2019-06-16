@@ -19,6 +19,8 @@ test_that("properties & traits",{
   expect_equal(Laplace$new()$symmetry(), "symmetric")
   expect_equal(Laplace$new()$inf(), -Inf)
   expect_equal(Laplace$new()$sup(), Inf)
+  expect_equal(Laplace$new()$dmin(), -Inf)
+  expect_equal(Laplace$new()$dmax(), Inf)
   expect_equal(Laplace$new()$valueSupport(), "continuous")
   expect_equal(Laplace$new()$variateForm(), "univariate")
 })

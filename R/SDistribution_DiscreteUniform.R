@@ -4,6 +4,12 @@
 #-------------------------------------------------------------
 #' @title DiscreteUniform Distribution
 #'
+#' @description Mathematical and statistical functions for the Discrete Uniform distribution parameterised
+#' with lower and upper limits. The Discrete Uniform distribution is defined by the pmf,
+#' \deqn{f(x) = 1/n}
+#' where \eqn{n = b - a + 1} is the interval width and \eqn{a, b \epsilon Z; b \ge a}, are the lower and
+#' upper limits respectively.
+#'
 #' @description Mathematical and statistical functions for the DiscreteUniform distribution parameterised
 #' with lower and upper limits.
 #'
