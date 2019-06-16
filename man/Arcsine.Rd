@@ -52,6 +52,8 @@ Parameterised with lower and upper limits.
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
+  \code{dmax()}  \tab \code{\link{dmax}} \cr
+  \code{dmin()} \tab \code{\link{dmin}} \cr
   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
   }

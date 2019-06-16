@@ -75,6 +75,8 @@
 #'   \code{symmetry()} \tab \code{\link{symmetry}} \cr
 #'   \code{sup()}  \tab \code{\link{sup}} \cr
 #'   \code{inf()} \tab \code{\link{inf}} \cr
+#'   \code{dmax()}  \tab \code{\link{dmax}} \cr
+#'   \code{dmin()} \tab \code{\link{dmin}} \cr
 #'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
 #'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
 #'   }
@@ -524,7 +526,7 @@ Distribution$set("public","symmetry",function(){
 #' @section R6 Usage: $sup()
 #' @param object Distribution.
 #' @description Returns the distribution supremum as the supremum of the support.
-#' @seealso \code{\link{support}} and \code{\link{inf}}
+#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
 #' @export
 NULL
 Distribution$set("public","sup",function(){
@@ -537,11 +539,41 @@ Distribution$set("public","sup",function(){
 #' @section R6 Usage: $inf()
 #' @param object Distribution.
 #' @description Returns the distribution infimum as the infimum of the support.
-#' @seealso \code{\link{support}} and \code{\link{sup}}
+#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
 #' @export
 NULL
 Distribution$set("public","inf",function(){
   return(self$support()$inf())
+})
+
+#' @name dmax
+#' @title Distribution Maximum Accessor
+#' @usage dmax(object)
+#' @section R6 Usage: $dmax()
+#' @param object Distribution.
+#' @description Returns the distribution maximum as the maximum of the support. If the support is not
+#' bounded above then maximum is given by
+#' \deqn{maximum = supremum - 2.220446e-16}
+#' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
+#' @export
+NULL
+Distribution$set("public","dmax",function(){
+  return(self$support()$max())
+})
+
+#' @name dmin
+#' @title Distribution Minimum Accessor
+#' @usage dmin(object)
+#' @section R6 Usage: $dmin()
+#' @param object Distribution.
+#' @description Returns the distribution minimum as the minimum of the support. If the support is not
+#' bounded below then minimum is given by
+#' \deqn{minimum = infimum + 2.220446e-16}
+#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
+#' @export
+NULL
+Distribution$set("public","dmin",function(){
+  return(self$support()$min())
 })
 
 #' @name kurtosisType
@@ -902,25 +934,25 @@ Distribution$set("public", "iqr", function() {
 #' @description Tests if the given data lies in the support of the Distribution, either tests if all
 #' data lies in the support or any of it.
 #'
-#' @usage liesInSupport(object, x, all = TRUE, bound = TRUE)
-#' @section R6 Usage: $liesInSupport(x, all = TRUE, bound = TRUE)
+#' @usage liesInSupport(object, x, all = TRUE, bound = FALSE)
+#' @section R6 Usage: $liesInSupport(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
-#' @param bound logical, if TRUE (default) boundary points included
-#' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
-#' lies in the support. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
+#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
+#' @details If \code{all} is TRUE (default) returns TRUE only if every element in \code{x}
+#' lies in the support. If \code{all} is FALSE then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
 #'
 #' @seealso \code{\link{liesInType}} and \code{\link{liesInDistrDomain}}
 #'
 #' @export
 NULL
-Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = TRUE){
+Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
   if(all & bound) return(all(x >= self$inf()) & all(x <= self$sup()))
-  else if(all & !bound) return(all(x > self$inf()) & all(x < self$sup()))
+  else if(all & !bound) return(all(x >= self$dmin()) & all(x <= self$dmax()))
   else if(!all & bound) return(x >= self$inf() & x <= self$sup())
-  else if(!all & !bound) return(x > self$inf() & x < self$sup())
+  else if(!all & !bound) return(x >= self$dmin() & x <= self$dmax())
 })
 
 #' @name liesInType

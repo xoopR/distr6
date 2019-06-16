@@ -1,7 +1,5 @@
 library(testthat)
 
-
-
 context("Gamma distribution")
 
 test_that("parameterisation",{
@@ -27,8 +25,8 @@ test_that("properties & traits",{
   expect_equal(Gamma$new()$symmetry(), "asymmetric")
   expect_equal(Gamma$new()$sup(), Inf)
   expect_equal(Gamma$new()$inf(), 0)
-  expect_equal(Gamma$new()$properties()$kurtosis,"leptokurtic")
-  expect_equal(Gamma$new()$properties()$skewness,"positive skew")
+  expect_equal(Gamma$new()$dmax(), Inf)
+  expect_equal(Gamma$new()$dmin(), .Machine$double.eps)
 })
 
 
@@ -48,7 +46,3 @@ test_that("statistics",{
   expect_equal(G$quantile(0.324), qgamma(0.324,shape=1,rate=1))
   expect_silent(G$rand(10))
 })
-
-devtools::document()
-
-

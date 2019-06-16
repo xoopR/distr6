@@ -54,6 +54,7 @@ Collate:
     'Distribution_Degenerate.R'
     'Distribution_DiscreteUniform.R'
     'Distribution_Exponential.R'
+    'Distribution_Gamma.R'
     'Distribution_Laplace.R'
     'Distribution_Multinomial.R'
     'Distribution_Normal.R'

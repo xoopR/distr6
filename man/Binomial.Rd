@@ -72,6 +72,8 @@ between 0 and 1. If \code{qprob} is given then \code{prob} is ignored.
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
+  \code{dmax()}  \tab \code{\link{dmax}} \cr
+  \code{dmin()} \tab \code{\link{dmin}} \cr
   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
   }
