@@ -6,7 +6,7 @@
 #'
 #' @description Mathematical and statistical functions for the Multinomial distribution parameterised
 #' with size and probabilites and defined by the pmf,
-#' \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^x_1 * p_2^x_2 * \ldots * p_k^x_k}
+#' \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
 #' where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{K} categories and
 #' \eqn{n = 1,2,\ldots} is the number of trials.
 #'
