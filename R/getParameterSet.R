@@ -200,3 +200,39 @@ getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
 
   return(ps)
 }
+
+
+
+
+
+getParameterSet.Gamma <- function(x, shape, rate, mean = NULL, scale = NULL, verbose = FALSE){
+  
+  rate.bool = mean.bool = scale.bool = FALSE
+  
+  if(!is.null(rate)){
+    if(verbose) message("Parameterised with shape and rate.")
+    rate.bool = TRUE
+  } else if(!is.null(mean)){
+    if(verbose) message("Parameterised with shape and mean.")
+    mean.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with shape and scale.")
+    scale.bool = TRUE
+  }
+  
+  ps <- ParameterSet$new(id = list("shape","rate","mean","scale"), value = list(1, 1, 1, 1),
+                         lower = list(0, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric","numeric"),
+                         settable = list(TRUE, rate.bool, mean.bool, scale.bool),
+                         updateFunc = list(NA, NA, "(self$getParameterValue('shape'))/(self$getParameterValue('rate'))", "self$getParameterValue('rate')^-1"),
+                         description = list("Shape - Shape Parameter",
+                                            "Rate - Inverse Scale Parameter",
+                                            "Mean - Mean Parameter",
+                                            "Scale - Scale Parameter"))
+  return(ps)
+}
+
+
+
+
+
