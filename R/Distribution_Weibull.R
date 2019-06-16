@@ -86,11 +86,11 @@ Weibull$set("public","mode",function(){
     return(0)
 })
 Weibull$set("public","mgf",function(){
-  message("No analytic result for Weibull mgf available. Try decorating with CoreStatistics.")
+  message(.distr6$missing_analytic(self,"mgf"))
   return(NULL)
 })
 Weibull$set("public","cf",function(){
-  message("No analytic result for Weibull cdf available.")
+  message(.distr6$missing_analytic(self,"cf"))
   return(NULL)
 })
 

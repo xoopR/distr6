@@ -83,22 +83,16 @@ Pareto$set("public","entropy",function(base = 2){
   return(log((scale/shape) * exp(1 + 1/shape), base))
 })
 Pareto$set("public", "mgf", function(t){
-  message("No analytic result for Pareto mgf available. Try decorating with CoreStatistics.")
-  return(NULL)
-
-  # if(t < 0){
-  #   shape <- self$getParameterValue("shape")
-  #   scale <- self$getParameterValue("scale")
-  #   return(shape * (-scale*t)^shape * pracma::incgam(-scale * t, -shape))
-  # }else
-  #   return(NaN)
+  if(t < 0){
+    shape <- self$getParameterValue("shape")
+    scale <- self$getParameterValue("scale")
+    return(shape * (-scale*t)^shape * expint::gammainc(-shape, -scale * t))
+  }else
+    return(NaN)
 })
 Pareto$set("public", "cf", function(t){
-  message("No analytic result for Pareto cf available. Try decorating with CoreStatistics.")
+  message(.distr6$missing_analytic(self,"cf"))
   return(NULL)
-  # shape <- self$getParameterValue("shape")
-  # scale <- self$getParameterValue("scale")
-  # return(shape * (-1i * scale * t)^shape * pracma::incgam(-1i * scale * t, -shape))
 })
 Pareto$set("public","mode",function(){
   return(self$getParameterValue("scale"))

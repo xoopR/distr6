@@ -70,7 +70,7 @@ Poisson$set("public","pgf",function(z){
   return(exp(self$getParameterValue("rate")*(z-1)))
 })
 Poisson$set("public","entropy",function(){
-  message("No analytic result for Possion entropy available. Try decorating with CoreStatistics.")
+  message(.distr6$missing_analytic(self,"entropy"))
   return(NULL)
 })
 
