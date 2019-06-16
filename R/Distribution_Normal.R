@@ -14,7 +14,7 @@
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{ } \tab numeric \tab mean, location parameter. \cr
+#' \code{mean} \tab numeric \tab mean, location parameter. \cr
 #' \code{var} \tab numeric \tab variance, squared scale parameter. \cr
 #' \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
 #' \code{precision} \tab numeric \tab precision, squared scale parameter. \cr

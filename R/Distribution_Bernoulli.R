@@ -62,8 +62,8 @@ Bernoulli$set("public","kurtosis",function(excess = TRUE){
     return(exkurtosis + 3)
 })
 Bernoulli$set("public","entropy",function(base = 2){
-  (-self$getParameterValue("qprob")*log(self$getParameterValue("qprob"))) +
-    (-self$getParameterValue("prob")*log(self$getParameterValue("prob")))
+  (-self$getParameterValue("qprob")*log(self$getParameterValue("qprob"), base)) +
+    (-self$getParameterValue("prob")*log(self$getParameterValue("prob"), base))
 })
 Bernoulli$set("public", "mgf", function(t){
   return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))
@@ -73,6 +73,18 @@ Bernoulli$set("public", "cf", function(t){
 })
 Bernoulli$set("public","pgf",function(z){
   return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))
+})
+Bernoulli$set("public","mode",function(which = "all"){
+  if(self$getParameterValue("prob") < 0.5)
+    return(0)
+  else if(self$getParameterValue("prob") > 0.5)
+    return(1)
+  else{
+    if(which == "all")
+      return(c(0,1))
+    else
+      return(c(0,1)[which])
+  }
 })
 
 Bernoulli$set("private",".getRefParams", function(paramlst){

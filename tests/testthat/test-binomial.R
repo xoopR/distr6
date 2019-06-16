@@ -2,27 +2,30 @@ library(testthat)
 
 context("Binomial distribution")
 
-test_that("symmetry",{
+test_that("properties & traits",{
+  expect_equal(Binomial$new()$valueSupport(), "discrete")
+  expect_equal(Binomial$new()$variateForm(), "univariate")
   expect_equal(Binomial$new()$symmetry(), "symmetric")
   expect_equal(Binomial$new(prob = 0.1)$symmetry(), "asymmetric")
+  expect_equal(Binomial$new(size=12)$sup(), 12)
+  expect_equal(Binomial$new()$inf(), 0)
 })
 
-test_that("silent statistics",{
-  expect_silent(Binomial$new()$kurtosis(T))
-  expect_silent(Binomial$new()$kurtosis(F))
-  expect_silent(Binomial$new()$mean())
-  expect_silent(Binomial$new()$entropy())
-  expect_silent(Binomial$new()$mgf(1))
-  expect_silent(Binomial$new()$cf(1))
-  expect_silent(Binomial$new()$pgf(1))
-  expect_silent(Binomial$new()$pdf(1))
-  expect_silent(Binomial$new()$cdf(1))
-  expect_silent(Binomial$new()$quantile(1))
-  expect_silent(Binomial$new()$rand(1))
+b = Binomial$new()
+test_that("statistics",{
+  expect_equal(b$mean(), 5)
+  expect_equal(b$var(), 2.5)
+  expect_equal(b$skewness(), 0)
+  expect_equal(b$kurtosis(T), -0.2)
+  expect_equal(b$kurtosis(F), 2.8)
+  expect_equal(round(b$entropy(), 5), 2.70806)
+  expect_equal(b$mgf(1), (0.5+0.5*exp(1))^10)
+  expect_equal(b$cf(1), (0.5+0.5*exp(1i))^10)
+  expect_equal(b$pgf(1), 1)
+  expect_error(b$mode())
+  expect_equal(b$pdf(1), dbinom(1,size=10,0.5))
+  expect_equal(b$cdf(1), pbinom(1,size=10,0.5))
+  expect_equal(b$quantile(0.56), qbinom(0.56,size=10,0.5))
+  expect_silent(b$rand(10))
 })
 
-test_that("statistical results",{
-  expect_equal(Binomial$new()$pdf(1), dbinom(1,size=10,0.5))
-  expect_equal(Binomial$new()$cdf(1), pbinom(1,size=10,0.5))
-  expect_equal(Binomial$new()$quantile(0.56), qbinom(0.56,size=10,0.5))
-})

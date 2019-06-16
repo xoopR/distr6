@@ -101,15 +101,15 @@ Multinomial$set("public","entropy",function(base = 2){
 }) # TEST
 Multinomial$set("public", "mgf", function(t){
   checkmate::assert(length(t) == self$getParameterValue("K"))
-  return((exp(t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+  return(sum(exp(t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
 }) # TEST
 Multinomial$set("public", "cf", function(t){
   checkmate::assert(length(t) == self$getParameterValue("K"))
-  return((exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+  return(sum(exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
 }) # TEST
 Multinomial$set("public", "pgf", function(z){
   checkmate::assert(length(z) == self$getParameterValue("K"))
-  return((self$getParameterValue("probs") * z)^self$getParameterValue("size"))
+  return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
 }) # TEST
 
 Multinomial$set("public","setParameterValue",function(lst, error = "warn"){

@@ -85,12 +85,6 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
   private$.parameters <- getParameterSet(self, rate, verbose)
   self$setParameterValue(list(rate = rate))
 
-  if(rate>=30)
-    symmetric <- TRUE
-  else
-    symmetric <- FALSE
-
-
   pdf <- function(x1) dpois(x1, self$getParameterValue("rate"))
   cdf <- function(x1) ppois(x1, self$getParameterValue("rate"))
   quantile <- function(p) qpois(p, self$getParameterValue("rate"))
@@ -99,7 +93,7 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosIntegers$new(zero = T),
                    distrDomain = PosIntegers$new(zero = T),
-                   symmetric = symmetric)
+                   symmetric = FALSE)
 
 
   invisible(self)

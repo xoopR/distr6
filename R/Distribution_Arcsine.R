@@ -60,21 +60,21 @@ Arcsine$set("public","kurtosis",function(excess = TRUE){
     return(1.5)
 })
 Arcsine$set("public","entropy",function(base = 2){
-  return(0.5 * log(2 * pi * exp(1) * self$getParameterValue("var"), base))
+  return(log(pi/4, base))
 })
 Arcsine$set("public", "mgf", function(t){
-  return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
+  message("No analytic result for Arcsine mgf available. Try decorating with CoreStatistics.")
+  return(NULL)
 })
 Arcsine$set("public", "cf", function(t){
-  return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
+  message("No analytic result for Arcsine cf available. Try decorating with CoreStatistics.")
+  return(NULL)
 })
 Arcsine$set("public","mode",function(which = "all"){
-  if(which == 1)
-    return(self$getParameterValue("lower"))
-  else if(which == 2)
-    return(self$getParameterValue("upper"))
-  else
+  if(which == "all")
     return(c(self$getParameterValue("lower"),self$getParameterValue("upper")))
+  else
+    return(c(self$getParameterValue("lower"),self$getParameterValue("upper"))[which])
 })
 
 Arcsine$set("private",".getRefParams", function(paramlst){
