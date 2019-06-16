@@ -96,10 +96,6 @@ Pareto$set("public", "mgf", function(t){
   }else
     return(NaN)
 })
-Pareto$set("public", "cf", function(t){
-  message(.distr6$missing_analytic(self,"cf"))
-  return(NULL)
-})
 Pareto$set("public","mode",function(){
   return(self$getParameterValue("scale"))
 })

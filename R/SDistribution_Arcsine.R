@@ -9,6 +9,8 @@
 #' \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
 #' where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
 #'
+#' @details The cf and mgf are omitted as no closed form analytic expression could be found.
+#'
 #' @name Arcsine
 #'
 #' @section Constructor: Arcsine$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
@@ -63,14 +65,6 @@ Arcsine$set("public","kurtosis",function(excess = TRUE){
 })
 Arcsine$set("public","entropy",function(base = 2){
   return(log(pi/4, base))
-})
-Arcsine$set("public", "mgf", function(t){
-  message("No analytic result for Arcsine mgf available. Try decorating with CoreStatistics.")
-  return(NULL)
-})
-Arcsine$set("public", "cf", function(t){
-  message("No analytic result for Arcsine cf available. Try decorating with CoreStatistics.")
-  return(NULL)
 })
 Arcsine$set("public","mode",function(which = "all"){
   if(which == "all")

@@ -57,6 +57,7 @@ Collate:
     'SDistribution_DiscreteUniform.R'
     'SDistribution_Exponential.R'
     'SDistribution_Gamma.R'
+    'SDistribution_Gompertz.R'
     'SDistribution_Laplace.R'
     'SDistribution_Multinomial.R'
     'SDistribution_Normal.R'

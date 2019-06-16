@@ -18,12 +18,13 @@
 #' maximum input. Otherwise all arguments are parsed as elements in a mathematical set.
 #'
 #' @seealso The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
+#'
+#' @export
 NULL
 #-------------------------------------------------------------
 # Set Definition
 #-------------------------------------------------------------
 #' @include SetInterval.R
-#' @export
 Set <- R6::R6Class("Set", inherit = SetInterval)
 Set$set("public","initialize",function(..., dim = 1){
   if(missing(...))

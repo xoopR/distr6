@@ -10,9 +10,6 @@
 #' where \eqn{n = b - a + 1} is the interval width and \eqn{a, b \epsilon Z; b \ge a}, are the lower and
 #' upper limits respectively.
 #'
-#' @description Mathematical and statistical functions for the DiscreteUniform distribution parameterised
-#' with lower and upper limits.
-#'
 #' @name DiscreteUniform
 #'
 #' @section Constructor: DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)

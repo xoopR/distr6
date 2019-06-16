@@ -9,6 +9,9 @@ with lower and upper limits. The Arcsine distribution is defined by the pdf,
 \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
 where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
 }
+\details{
+The cf and mgf are omitted as no closed form analytic expression could be found.
+}
 \section{Constructor}{
  Arcsine$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
 }

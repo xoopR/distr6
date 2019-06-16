@@ -91,14 +91,6 @@ Weibull$set("public","mode",function(){
   else
     return(0)
 })
-Weibull$set("public","mgf",function(){
-  message(.distr6$missing_analytic(self,"mgf"))
-  return(NULL)
-})
-Weibull$set("public","cf",function(){
-  message(.distr6$missing_analytic(self,"cf"))
-  return(NULL)
-})
 
 
 Weibull$set("private",".getRefParams", function(paramlst){

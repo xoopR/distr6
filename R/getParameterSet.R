@@ -155,6 +155,20 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, var = NULL, sd = 
   return(ps)
 }
 
+getParameterSet.Gompertz <- function(x, shape, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape and scale.")
+
+  ps <- ParameterSet$new(id = list("shape","scale"), value = list(1, 1),
+                         lower = list(0, 0), upper = list(Inf, Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE,TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape parameter","Scale parameter"))
+
+  return(ps)
+}
+
 getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
 
   K = unlist(length(probs))

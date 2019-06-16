@@ -73,10 +73,6 @@ Poisson$set("public", "cf", function(t){
 Poisson$set("public","pgf",function(z){
   return(exp(self$getParameterValue("rate")*(z-1)))
 })
-Poisson$set("public","entropy",function(){
-  message(.distr6$missing_analytic(self,"entropy"))
-  return(NULL)
-})
 
 Poisson$set("private",".getRefParams", function(paramlst){
   lst = list()
