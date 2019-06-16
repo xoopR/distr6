@@ -1,0 +1,82 @@
+Package: distr6
+Title: Object Oriented Distributions in R
+Version: 0.1.0.9000
+Authors@R: 
+    c(person(given = "Raphael",
+             family = "Sonabend",
+             role = c("aut","cre"),
+             email = "raphael.sonabend.15@ucl.ac.uk",
+             comment = c(ORCID = "0000-0001-9225-4654")),
+      person(given = "Franz",
+             family = "Kiraly",
+             role = "aut",
+             email = "f.kiraly@ucl.ac.uk"),
+      person(given = "Peter",
+             family = "Ruckdeschel",
+             role = "ctb",
+             email = "peter.ruckdeschel@uni-oldenburg.de",
+             comment = c("Author of distr")),
+      person(given = "Matthias",
+             family = "Kohl",
+             role = "ctb",
+             email = "Matthias.Kohl@stamats.de",
+             comment = c("Author of distr")))
+Description: An R6 object oriented Distributions package in R. Unified interface for 60
+  commonly used probabilty distributions and functionality for multiple scientific types.
+  Additionally classes for symbolic representation of sets.
+Depends: 
+Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats, extraDistr, utils, expint
+Suggests: knitr, testthat, devtools
+Remotes: RaphaelS1/RSmisc, RaphaelS1/R62S3
+License: MIT + file LICENSE
+LazyData: true
+URL: https://raphaels1.github.io/distr6/, https://github.com/RaphaelS1/distr6/
+BugReports: https://github.com/RaphaelS1/distr6/issues
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+RoxygenNote: 6.1.1
+Collate: 
+    'SetInterval_helpers.R'
+    'Distribution_helpers.R'
+    'Distribution.R'
+    'DistributionDecorator.R'
+    'DistributionDecorator_CoreStatistics.R'
+    'DistributionDecorator_ExoticStatistics.R'
+    'DistributionDecorator_FunctionImputation.R'
+    'Distribution_SDistribution.R'
+    'IGNORE_Wrapper_ConcreteWrapper.R'
+    'ParameterSet.R'
+    'SetInterval.R'
+    'SetInterval_Set.R'
+    'SetInterval_SpecialSet.R'
+    'SDistribution_Arcsine.R'
+    'SDistribution_Bernoulli.R'
+    'SDistribution_Binomial.R'
+    'SDistribution_Degenerate.R'
+    'SDistribution_DiscreteUniform.R'
+    'SDistribution_Exponential.R'
+    'SDistribution_Gamma.R'
+    'SDistribution_Laplace.R'
+    'SDistribution_Lognormal.R'
+    'SDistribution_Multinomial.R'
+    'SDistribution_Normal.R'
+    'SDistribution_Pareto.R'
+    'SDistribution_Poisson.R'
+    'SDistribution_StudentT.R'
+    'SDistribution_Weibull.R'
+    'SetInterval_Interval.R'
+    'Wrapper.R'
+    'Wrapper_ArrayDistribution.R'
+    'Wrapper_Convolution.R'
+    'Wrapper_HuberizedDistribution.R'
+    'Wrapper_MixtureDistribution.R'
+    'Wrapper_ProductDistribution.R'
+    'Wrapper_Scale.R'
+    'Wrapper_TruncatedDistribution.R'
+    'assertions.R'
+    'decorate.R'
+    'distr6_globals.R'
+    'getParameterSet.R'
+    'measures.R'
+    'zzz.R'
