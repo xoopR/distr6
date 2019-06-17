@@ -4,8 +4,12 @@
 #-------------------------------------------------------------
 #' @title Arcsine Distribution
 #'
-#' @description Mathematical and statistical functions for the Arcsine distribution.
-#' Parameterised with lower and upper limits.
+#' @description Mathematical and statistical functions for the Arcsine distribution parameterised
+#' with lower and upper limits. The Arcsine distribution is defined by the pdf,
+#' \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
+#' where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
+#'
+#' @details The cf and mgf are omitted as no closed form analytic expression could be found.
 #'
 #' @name Arcsine
 #'
@@ -60,21 +64,13 @@ Arcsine$set("public","kurtosis",function(excess = TRUE){
     return(1.5)
 })
 Arcsine$set("public","entropy",function(base = 2){
-  return(0.5 * log(2 * pi * exp(1) * self$getParameterValue("var"), base))
-})
-Arcsine$set("public", "mgf", function(t){
-  return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
-})
-Arcsine$set("public", "cf", function(t){
-  return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
+  return(log(pi/4, base))
 })
 Arcsine$set("public","mode",function(which = "all"){
-  if(which == 1)
-    return(self$getParameterValue("lower"))
-  else if(which == 2)
-    return(self$getParameterValue("upper"))
-  else
+  if(which == "all")
     return(c(self$getParameterValue("lower"),self$getParameterValue("upper")))
+  else
+    return(c(self$getParameterValue("lower"),self$getParameterValue("upper"))[which])
 })
 
 Arcsine$set("private",".getRefParams", function(paramlst){

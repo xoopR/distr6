@@ -5,7 +5,11 @@
 #' @title Degenerate Distribution
 #'
 #' @description Mathematical and statistical functions for the Degenerate distribution parameterised
-#' by location (mean).
+#' by its mean and defined by the pdf,
+#' \deqn{f(x) = 1, if x = \mu; 0 otherwise}
+#' where \eqn{\mu \epsilon R} is the mean parameter.
+#'
+#' @details The Degenerate Distribution is also known as the Dirac Distribution.
 #'
 #' @name Degenerate
 #'

@@ -5,7 +5,15 @@
 #' @title Binomial Distribution
 #'
 #' @description Mathematical and statistical functions for the Binomial distribution parameterised
-#' with probability of success and size (number of trials).
+#' with size (number of trials) and prob or \eqn{qprob = 1 - prob}. The size-prob Binomial distribution
+#' is defined by the pmf,
+#' \deqn{f(x) = C(n, x)p^x(1-p)^(n-x)}
+#' where \eqn{n = 0,1,2,\ldots} is the size parameter, \eqn{p \epsilon [0,1]} is the prob parameter and
+#' \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+#'
+#' @details The default parameterisation of number of trials and probability of success is favoured
+#' over the probability of failure as talking in terms of failures is more commonly associated with
+#' the negative binomial distribution.
 #'
 #' @name Binomial
 #'

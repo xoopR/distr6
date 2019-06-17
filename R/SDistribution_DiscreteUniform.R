@@ -4,8 +4,11 @@
 #-------------------------------------------------------------
 #' @title DiscreteUniform Distribution
 #'
-#' @description Mathematical and statistical functions for the DiscreteUniform distribution parameterised
-#' with lower and upper limits.
+#' @description Mathematical and statistical functions for the Discrete Uniform distribution parameterised
+#' with lower and upper limits. The Discrete Uniform distribution is defined by the pmf,
+#' \deqn{f(x) = 1/n}
+#' where \eqn{n = b - a + 1} is the interval width and \eqn{a, b \epsilon Z; b \ge a}, are the lower and
+#' upper limits respectively.
 #'
 #' @name DiscreteUniform
 #'
@@ -75,6 +78,12 @@ DiscreteUniform$set("public", "cf", function(t){
 })
 DiscreteUniform$set("public","pgf",function(z){
   return(1/self$getParameterValue("N") * sum(z^(1:self$getParameterValue("N"))))
+})
+DiscreteUniform$set("public","mode",function(which="all"){
+  if(which=="all")
+    return(self$inf():self$sup())
+  else
+    return((self$inf():self$sup())[which])
 })
 DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
   if("lower" %in% names(lst) & "upper" %in% names(lst))

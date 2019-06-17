@@ -4,7 +4,7 @@
 \alias{liesInSupport}
 \title{Test if Data Lies in Distribution Support}
 \usage{
-liesInSupport(object, x, all = TRUE, bound = TRUE)
+liesInSupport(object, x, all = TRUE, bound = FALSE)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -13,19 +13,19 @@ liesInSupport(object, x, all = TRUE, bound = TRUE)
 
 \item{all}{logical, see details.}
 
-\item{bound}{logical, if TRUE (default) boundary points included}
+\item{bound}{logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.}
 }
 \description{
 Tests if the given data lies in the support of the Distribution, either tests if all
 data lies in the support or any of it.
 }
 \details{
-If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
-lies in the support. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
+If \code{all} is TRUE (default) returns TRUE only if every element in \code{x}
+lies in the support. If \code{all} is FALSE then returns a vector of logicals for each corresponding element
 in the vector \code{x}.
 }
 \section{R6 Usage}{
- $liesInSupport(x, all = TRUE, bound = TRUE)
+ $liesInSupport(x, all = TRUE, bound = FALSE)
 }
 
 \seealso{

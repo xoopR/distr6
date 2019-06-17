@@ -5,7 +5,11 @@
 #' @title Poisson Distribution
 #'
 #' @description Mathematical and statistical functions for the Poisson distribution parameterised
-#' with arrival rate.
+#' with (arrival) rate and defined by the pmf,
+#' \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
+#' where \eqn{\lambda} > 0 is the rate parameter.
+#'
+#' @details \code{entropy} is omitted as no closed form expression could be found.
 #'
 #' @name Poisson
 #'
@@ -69,10 +73,6 @@ Poisson$set("public", "cf", function(t){
 Poisson$set("public","pgf",function(z){
   return(exp(self$getParameterValue("rate")*(z-1)))
 })
-Poisson$set("public","entropy",function(){
-  message("No analytic result for Possion entropy available. Try decorating with CoreStatistics.")
-  return(NULL)
-})
 
 Poisson$set("private",".getRefParams", function(paramlst){
   lst = list()
@@ -85,12 +85,6 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
   private$.parameters <- getParameterSet(self, rate, verbose)
   self$setParameterValue(list(rate = rate))
 
-  if(rate>=30)
-    symmetric <- TRUE
-  else
-    symmetric <- FALSE
-
-
   pdf <- function(x1) dpois(x1, self$getParameterValue("rate"))
   cdf <- function(x1) ppois(x1, self$getParameterValue("rate"))
   quantile <- function(p) qpois(p, self$getParameterValue("rate"))
@@ -99,7 +93,7 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosIntegers$new(zero = T),
                    distrDomain = PosIntegers$new(zero = T),
-                   symmetric = symmetric)
+                   symmetric = FALSE)
 
 
   invisible(self)

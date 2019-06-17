@@ -23,7 +23,7 @@
 #' \code{kurtosis(excess = TRUE)} \tab Kurtosis \tab \code{\link{kurtosis}} \cr
 #' \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
 #' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
-#' \code{mode(which = 1)} \tab Mode \tab \code{\link{mode}} \cr
+#' \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
 #' \code{var()} \tab Variance \tab \code{\link{var}} \cr
 #' \code{cov()} \tab Covariance \tab \code{\link{cov}} \cr
 #' \code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
@@ -434,8 +434,8 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #' @name mode
 #' @description A numeric search for the mode(s) of a distribution.
 #'
-#' @usage mode(object, which)
-#' @section R6 Usage: $mode(which)
+#' @usage mode(object, which = "all")
+#' @section R6 Usage: $mode(which = "all")
 #'
 #' @param object Distribution.
 #' @param which which mode of the distribution should be returned, default is all.
@@ -445,7 +445,7 @@ CoreStatistics$set("public","cor",function(){}) # TO DO
 #'
 #' @export
 NULL
-CoreStatistics$set("public","mode",function(which = 1){
+CoreStatistics$set("public","mode",function(which = "all"){
   if(which==1){
     if(testDiscrete(self)){
       rng = try(self$inf():self$sup(),silent = T)

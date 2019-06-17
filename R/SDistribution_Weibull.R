@@ -3,8 +3,14 @@
 # Weibull Distribution Documentation
 #-------------------------------------------------------------
 #' @title Weibull Distribution
+#'
 #' @description Mathematical and statistical functions for the Weibull distribution parameterised
-#' with shape and scale.
+#' with shape and scale. The Weibull distribution is defined by the pdf,
+#' \deqn{f(x) = (\alpha/\beta)*(x/\beta)^(\alpha-1)*exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise}
+#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale parameter.
+#'
+#' @details \code{mgf} and \code{cf} are omitted as no closed form analytic expressions could be found.
+#'
 #' @name Weibull
 #'
 #' @section Constructor: Weibull$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
@@ -84,14 +90,6 @@ Weibull$set("public","mode",function(){
     return (scale*((shape-1)/shape)^(1/shape))
   else
     return(0)
-})
-Weibull$set("public","mgf",function(){
-  message("No analytic result for Weibull mgf available. Try decorating with CoreStatistics.")
-  return(NULL)
-})
-Weibull$set("public","cf",function(){
-  message("No analytic result for Weibull cdf available.")
-  return(NULL)
 })
 
 

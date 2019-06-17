@@ -5,16 +5,23 @@
 #' @title Normal Distribution
 #'
 #' @description Mathematical and statistical functions for the Normal distribution parameterised
-#' with mean and variance, sd or precision.
+#' with mean and variance or \eqn{standard deviation = \sqrt(variance)} or \eqn{precision = 1/variance}.
+#' The mean/variance parameterisation is defined by the pdf,
+#' \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)}
+#' where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\sigma^2} is the variance parameter.
+#'
+#' @details Whilst we recognise that the standard deviation parameterisation is used by R stats,
+#' we opt for the variance parameterisation as default as this appears slightly more common in popular
+#' online resources and textbooks.
 #'
 #' @name Normal
 #'
-#' @section Constructor: Normal$new(mean = 0, var = NULL, sd = NULL, prec = NULL, decorators = NULL, verbose = FALSE)
+#' @section Constructor: Normal$new(mean = 0, var = 1, sd = NULL, prec = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{ } \tab numeric \tab mean, location parameter. \cr
+#' \code{mean} \tab numeric \tab mean, location parameter. \cr
 #' \code{var} \tab numeric \tab variance, squared scale parameter. \cr
 #' \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
 #' \code{precision} \tab numeric \tab precision, squared scale parameter. \cr

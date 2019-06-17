@@ -18,14 +18,14 @@ getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose
   }
 
   ps <- ParameterSet$new(id = list("mean","var","sd","prec"), value = list(0, 1, 1, 1),
-                   lower = list(-Inf, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
-                   class = list("numeric","numeric","numeric","numeric"),
-                   settable = list(TRUE, var.bool, sd.bool, prec.bool),
-                   updateFunc = list(NA, NA, "self$getParameterValue('var')^0.5", "self$getParameterValue('var')^-1"),
-                   description = list("Mean - Location Parameter",
-                                      "Variance - Squared Scale Parameter",
-                                      "Standard Deviation - Scale Parameter",
-                                      "Precision - Inverse Squared Scale Parameter"))
+                         lower = list(-Inf, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric","numeric"),
+                         settable = list(TRUE, var.bool, sd.bool, prec.bool),
+                         updateFunc = list(NA, NA, "self$getParameterValue('var')^0.5", "self$getParameterValue('var')^-1"),
+                         description = list("Mean - Location Parameter",
+                                            "Variance - Squared Scale Parameter",
+                                            "Standard Deviation - Scale Parameter",
+                                            "Precision - Inverse Squared Scale Parameter"))
   return(ps)
 }
 
@@ -128,7 +128,7 @@ getParameterSet.DiscreteUniform <- function(x, lower, upper, verbose = FALSE){
                          updateFunc = list(NULL, NULL,
                                            "self$getParameterValue('upper') - self$getParameterValue('lower') + 1"),
                          description = list("Lower distribution limit.", "Upper distribution limit.",
-                                                             "Distribution width."))
+                                            "Distribution width."))
 
   return(ps)
 }
@@ -155,18 +155,32 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, var = NULL, sd = 
   return(ps)
 }
 
+getParameterSet.Gompertz <- function(x, shape, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape and scale.")
+
+  ps <- ParameterSet$new(id = list("shape","scale"), value = list(1, 1),
+                         lower = list(0, 0), upper = list(Inf, Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE,TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape parameter","Scale parameter"))
+
+  return(ps)
+}
+
 getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
 
   K = unlist(length(probs))
   ps <- ParameterSet$new(id = list("size","K", "probs"),
-                        value = list(1, K, rep(0.5,K)),
-                        lower = list(1, 1, 0),
-                        upper = list(Inf, Inf, 1),
-                        class = list("integer", "integer", "numeric"),
-                        settable = list(TRUE, FALSE, TRUE),
-                        updateFunc = list(NA, "length(self$getParameterValue('probs'))",NA),
-                        description = list("Number of trials", "Number of categories",
-                                           "Probability of success i"))
+                         value = list(1, K, rep(0.5,K)),
+                         lower = list(1, 1, 0),
+                         upper = list(Inf, Inf, 1),
+                         class = list("integer", "integer", "numeric"),
+                         settable = list(TRUE, FALSE, TRUE),
+                         updateFunc = list(NA, "length(self$getParameterValue('probs'))",NA),
+                         description = list("Number of trials", "Number of categories",
+                                            "Probability of success i"))
 
   if(verbose) message("Parameterised with size and probs.")
 
@@ -202,15 +216,85 @@ getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
 }
 
 getParameterSet.StudentT <- function(x, df, verbose = FALSE){
-  
+
   if(verbose) message("Parameterised with df.")
-  
+
   ps <- ParameterSet$new(id = list("df"), value = list(1),
                          lower = list(0), upper = list(Inf),
                          class = list("numeric"),
                          settable = list(TRUE),
                          updateFunc = list(NA),
-                         description = list("Degree of Freedom"))
-  
+                         description = list("Degrees of Freedom"))
+
   return(ps)
 }
+
+getParameterSet.Pareto <- function(x, shape, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape and scale.")
+
+  ps <- ParameterSet$new(id = list("shape","scale"), value = list(1, 1),
+                         lower = list(0, 0), upper = list(Inf, Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE,TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape parameter","Scale parameter"))
+
+  return(ps)
+}
+
+getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE){
+
+  var.bool = scale.bool = FALSE
+
+  if(!is.null(var)){
+    if(verbose) message("Parameterised with mean and var.")
+    var.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with mean and scale.")
+    scale.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("mean","scale","var"), value = list(0, 1, 2),
+                         lower = list(-Inf, 0, 0), upper = list(Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric"),
+                         settable = list(TRUE, scale.bool, var.bool),
+                         updateFunc = list(NA, NA, "2*self$getParameterValue('scale')^2"),
+                         description = list("Mean - Location Parameter",
+                                            "Scale - Scale Parameter",
+                                            "Variance - Alternate Scale Parameter"))
+  return(ps)
+}
+
+getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
+
+  rate.bool = mean.bool = scale.bool = FALSE
+
+  if(!is.null(rate)){
+    if(verbose) message("Parameterised with shape and rate.")
+    rate.bool = TRUE
+  } else if(!is.null(scale)){
+    if(verbose) message("Parameterised with shape and scale.")
+    scale.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with shape and mean.")
+    mean.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("shape","rate","scale","mean"), value = list(1, 1, 1, 1),
+                         lower = list(0, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric","numeric"),
+                         settable = list(TRUE, rate.bool, scale.bool, mean.bool),
+                         updateFunc = list(NA, NA,
+                                           "self$getParameterValue('rate')^-1",
+                                           "(self$getParameterValue('shape'))/(self$getParameterValue('rate'))"),
+                         description = list("Shape - Shape Parameter",
+                                            "Rate - Inverse Scale Parameter",
+                                            "Scale - Scale Parameter",
+                                            "Mean - Mean Parameter"))
+  return(ps)
+}
+
+
+
+
