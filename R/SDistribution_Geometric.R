@@ -1,5 +1,6 @@
 # remotes::install_github("RaphaelS1/distr6", ref = "dev",force=TRUE)
-library(dplyr)
+devtools::load_all()
+dplyr::load_all()
 library(distr6)
 library(R6)
 
@@ -13,23 +14,7 @@ Geometric$set("public","traits",list(type = PosIntegers$new(zero = T),
 
 Geometric$set("public","description","Geometric Distribution.")
 
-Geometric$set("private",".pdf",function(x1){
-   return(dgeom(x1,self$getParameterValue("prob")))
-})
-
-Geometric$set("private",".cdf",function(x1){
-   return(pgeom(x1,self$getParameterValue("prob")))
-})
-
-Geometric$set("private",".quantile",function(p){
-    return(qgeom(p,self$getParameterValue("prob")))
-})
-
-Geometric$set("private",".rand",function(n){
-    return(rgeom(n,self$getParameterValue("prob")))
-})
-
-Geometric$set("public","expectation",function(){
+Geometric$set("public","mean",function(){
    return(1/self$getParameterValue("prob"))
 })
 
@@ -78,15 +63,6 @@ Geometric$set("public","cumHazard",function(x1){
 })
 
 Geometric$set("public","mode",function() return(0))
-
-Geometric$set("public","setParameterValue",function(lst){
-    super$setParameterValue(lst)
-    unlockBinding("properties", self)
-    self$properties$support <- Set$new(0:self$getParameterValue("prob"))
-    lockBinding("properties", self)
-})
-
-Geometric$set("private",".parameters", NULL)
 
 Geometric$set("private",".getRefParams", function(paramlst){
     lst = list()
