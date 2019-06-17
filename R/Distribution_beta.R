@@ -2,7 +2,7 @@ library(distr6)
 library("R6")
 
 Beta <- R6::R6Class("Beta", inherit = Distribution, lock_objects = F)
-Beta$set("public","name","Beta") 
+Beta$set("public","name","Beta")
 Beta$set("public", "triats",list(type = PosReals$new(),
                                  valueSupport ="continuous",
                                  variateForm = "univariate"))
@@ -28,13 +28,13 @@ Beta$set("public","kurtosis",function(excess = TRUE){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
   ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-shape1*shape2*(shape1+shape2+2)}/
-    (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
+                (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
   if (excess)
     return(ex_kurtosis)
   else
     return(ex_kurtosis+3)
 })
-
+  
 #Entropy
 Beta$set("public", "entropy", function(base = 2){
   shape1 <- self$getParameterValue("shape1")
@@ -60,10 +60,43 @@ Beta$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 
-Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,
+Beta$set("public", "initialize", function(shape1 = NULL, shape2 = NULL, decorators = NULL,
                                           verbose = FALSE){
-  private$.parameters <-getParameterSet(self, shape1, shape2, verbose)
-  self$setParameterValue(list(shape1 = shape1, shape2 = shape2))
+  shape1.bool = FALSE
+  shape2.bool = FALSE
+  
+  if(is.null(shape1) & is.null(shape2)){
+    message("both shape parameters are missing. shape1 = shape2 =1 parameterisation used.")
+    shape1 = shape2 = 1
+  } 
+  
+  else if (is.null(shape1) & !is.null(shape2)){
+    message("shape1 parameter is missing and shape2 parameterisation is used")
+    shape2.bool = TRUE
+    shape1 = 1
+    shape2 = shape2
+  }
+  
+  else if (is.null(shape2) & !is.null(shape1)){
+    message("shape2 parameter is missing and shape1 parameterisation is used")
+    shape1.bool = TRUE
+    shape2 = 1
+    shape1 = shape1
+  }
+  
+  else {
+    message("shape parameters are provided")
+    shape1.bool = shape2.bool = TRUE
+    shape1 = shape1 
+    shape2 = shape2
+  }
+  
+  
+  private$.parameters <- ParameterSet$new(id = list("shape1","shape2"), value = list(1,1),
+                                          lower = list(0,0), upper = list(Inf,Inf),
+                                          class = list("integer","integer"),
+                                          settable = list(shape1.bool,shape2.bool),
+                                          description = list("shape1","shape2"))
   
   pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
   cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
@@ -77,7 +110,7 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
     symmetric <- FALSE
   
   super$initialize(decorators = decorators, pdf =pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = set$new(0,1), distrDomain = PosReal$new(zero = TRUE),
+                   rand = rand, support = Set$new(0,1), distrDomain = PosReals$new(zero = TRUE),
                    symmetric = symmetric)
   
   invisible(self)
