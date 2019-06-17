@@ -1,7 +1,7 @@
 library(distr6)
 library("R6")
 
-Beta <- R6::R6Class("Beta", inherit = Distribution, lock_objects = F)
+Beta <- R6::R6Class("Beta", inherit = SDistribution, lock_objects = F)
 Beta$set("public","name","Beta")
 Beta$set("public", "triats",list(type = PosReals$new(),
                                  valueSupport ="continuous",
