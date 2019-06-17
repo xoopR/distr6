@@ -1,6 +1,5 @@
 # remotes::install_github("RaphaelS1/distr6", ref = "dev",force=TRUE)
-devtools::load_all()
-dplyr::load_all()
+library(dplyr)
 library(distr6)
 library(R6)
 
