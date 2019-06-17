@@ -5,51 +5,46 @@
 #' @title Bernoulli Distribution
 #'
 #' @description Mathematical and statistical functions for the Bernoulli distribution parameterised
-#' with probability of success.
+#' with prob or \eqn{qprob = 1 - prob}. The prob parameterisation is defined by the pmf,
+#' \deqn{f(x) = p, if x =1; 1-p, if x = 0}
+#'
+#' where \eqn{p \epsilon [0,1]} is the prob parameter.
+#'
+#' @details The default parameterisation of probability of success is favoured over the probability
+#' of failure as this is more common in practice, however the two are mathematically identical (subject to
+#' a simple translation).
 #'
 #' @name Bernoulli
 #'
-#' @section Constructor: Bernoulli$new(prob = 0.5, decorators = NULL)
+#' @section Constructor: Bernoulli$new(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{prob} \tab numeric \tab probability of success. \cr
+#' \code{qprob} \tab numeric \tab probability of failure. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The Bernoulli distribution is parameterised with prob (probability of
-#' success) as a number between 0 and 1.
+#' success) or qprob (probability of failure) as a number between 0 and 1. If \code{qprob} is given then
+#' \code{prob} is ignored.
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
 #' @inheritSection Distribution p/d/q/r Methods
+#' @inheritSection Binomial Statistical Methods
 #' @inheritSection Distribution Parameter Methods
 #' @inheritSection Distribution Validation Methods
 #' @inheritSection Distribution Representation Methods
-#'
-#' @section Statistical Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   }
 #'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Bernoulli Distribution Definition
 #-------------------------------------------------------------
-Bernoulli <- R6::R6Class("Bernoulli", inherit = Distribution, lock_objects = F)
+Bernoulli <- R6::R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
 Bernoulli$set("public","name","Bernoulli")
 Bernoulli$set("public","short_name","Bern")
 Bernoulli$set("public","traits",list(type = PosIntegers$new(zero = T),
@@ -74,8 +69,8 @@ Bernoulli$set("public","kurtosis",function(excess = TRUE){
     return(exkurtosis + 3)
 })
 Bernoulli$set("public","entropy",function(base = 2){
-  (-self$getParameterValue("qprob")*log(self$getParameterValue("qprob"))) +
-    (-self$getParameterValue("prob")*log(self$getParameterValue("prob")))
+  (-self$getParameterValue("qprob")*log(self$getParameterValue("qprob"), base)) +
+    (-self$getParameterValue("prob")*log(self$getParameterValue("prob"), base))
 })
 Bernoulli$set("public", "mgf", function(t){
   return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))
@@ -86,18 +81,32 @@ Bernoulli$set("public", "cf", function(t){
 Bernoulli$set("public","pgf",function(z){
   return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))
 })
+Bernoulli$set("public","mode",function(which = "all"){
+  if(self$getParameterValue("prob") < 0.5)
+    return(0)
+  else if(self$getParameterValue("prob") > 0.5)
+    return(1)
+  else{
+    if(which == "all")
+      return(c(0,1))
+    else
+      return(c(0,1)[which])
+  }
+})
 
-Bernoulli$set("public","initialize",function(prob = 0.5, decorators = NULL){
+Bernoulli$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
+  else if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
+  return(lst)
+})
 
-  private$.parameters <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
-                                          lower = list(0, 0), upper = list(1, 1),
-                                          class = list("numeric","numeric"),
-                                          settable = list(TRUE, FALSE),
-                                          updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
-                                          description = list("Probability of Success",
-                                                             "Probability of failure"))
 
-  self$setParameterValue(list(prob = prob))
+Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
+
+  private$.parameters <- getParameterSet(self, prob, qprob, verbose)
+  if(!is.null(qprob)) prob <- NULL
+  self$setParameterValue(list(prob = prob, qprob = qprob))
 
   pdf = function(x1) dbinom(x1, 1, self$getParameterValue("prob"))
   cdf = function(x1) pbinom(x1, 1, self$getParameterValue("prob"))

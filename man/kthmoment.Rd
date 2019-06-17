@@ -11,7 +11,7 @@ kthmoment(object, k, type = "central")
 
 \item{k}{the kth moment to calculate}
 
-\item{type}{one of 'central', 'standard' or 'zero', abbreviations allowed}
+\item{type}{one of 'central', 'standard' or 'raw', abbreviations allowed}
 }
 \description{
 Kth standardised or central moment of a distribution
@@ -21,8 +21,8 @@ The kth central moment of a distribution is defined by
 \deqn{CM(k)_X = E_X[(x - \mu)^k]}
 the kth standardised moment of a distribution is defined by
 \deqn{SM(k)_X = CM(k)/\sigma^k}
-the kth zeroth moment of a distribution is defined by
-\deqn{ZM(k)_X = E_X[(x)^k]}
+the kth raw moment of a distribution is defined by
+\deqn{RM(k)_X = E_X[x^k]}
 where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 standard deviation of the distribution.
 

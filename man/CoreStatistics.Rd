@@ -40,7 +40,7 @@ Decorator objects add functionality to the given Distribution object
 \code{kurtosis(excess = TRUE)} \tab Kurtosis \tab \code{\link{kurtosis}} \cr
 \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
 \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
-\code{mode(which = 1)} \tab Mode \tab \code{\link{mode}} \cr
+\code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
 \code{var()} \tab Variance \tab \code{\link{var}} \cr
 \code{cov()} \tab Covariance \tab \code{\link{cov}} \cr
 \code{cor()} \tab Correlation \tab \code{\link{cor}} \cr

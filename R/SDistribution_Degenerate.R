@@ -5,17 +5,22 @@
 #' @title Degenerate Distribution
 #'
 #' @description Mathematical and statistical functions for the Degenerate distribution parameterised
-#' by location (mean).
+#' by its mean and defined by the pdf,
+#' \deqn{f(x) = 1, if x = \mu; 0 otherwise}
+#' where \eqn{\mu \epsilon R} is the mean parameter.
+#'
+#' @details The Degenerate Distribution is also known as the Dirac Distribution.
 #'
 #' @name Degenerate
 #'
-#' @section Constructor: Degenerate$new(mean = 0, decorators = NULL)
+#' @section Constructor: Degenerate$new(mean = 0, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{mean} \tab numeric \tab location parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
+#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The Degenerate distribution is parameterised with a location parameter (mean),
@@ -24,31 +29,17 @@
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
 #' @inheritSection Distribution p/d/q/r Methods
+#' @inheritSection Normal Statistical Methods
 #' @inheritSection Distribution Parameter Methods
 #' @inheritSection Distribution Validation Methods
 #' @inheritSection Distribution Representation Methods
-#'
-#' @section Statistical Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   }
 #'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Degenerate Distribution Definition
 #-------------------------------------------------------------
-Degenerate <- R6::R6Class("Degenerate", inherit = Distribution, lock_objects = F)
+Degenerate <- R6::R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
 Degenerate$set("public","name","Degenerate")
 Degenerate$set("public","short_name","Degen")
 Degenerate$set("public","traits",list(type = Reals$new(),
@@ -84,17 +75,19 @@ Degenerate$set("public","mode",function(){
 Degenerate$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(self$getParameterValue("mean"))
+  invisible(self)
 })
 
-Degenerate$set("public","initialize",function(mean = 0, decorators = NULL){
+Degenerate$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
+  return(lst)
+})
 
-  private$.parameters <- ParameterSet$new(id = list("mean"), value = list(0),
-                                          lower = list(-Inf), upper = list(Inf),
-                                          class = list("numeric"),
-                                          settable = list(TRUE),
-                                          updateFunc = list(NA),
-                                          description = list("Location Parameter"))
 
+Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
+
+  private$.parameters <- getParameterSet(self, mean, verbose)
   self$setParameterValue(list(mean = mean))
 
   pdf <- function(x1) if(x1 == self$getParameterValue("mean")) return(1) else return(0)

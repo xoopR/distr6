@@ -12,7 +12,7 @@
 listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
-      if(environmentName(get(x)$get_inherit()) == "Distribution_generator")
+      if(environmentName(get(x)$get_inherit()) == "SDistribution_generator")
         return(get(x)$classname)
       else
         return(FALSE)
@@ -20,7 +20,6 @@ listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
       return(FALSE)
   })
   y = y[y!="FALSE"]
-  y = y[y!="DistributionWrapper"]
   if(simplify)
     return(as.character(y))
   else{
@@ -108,7 +107,6 @@ listWrappers <- function(simplify = TRUE){
 #' @examples
 #' listSpecialSets()
 #' listSpecialSets(TRUE)
-#' listSpecialSets(view = TRUE)
 #' @export
 listSpecialSets <- function(simplify = FALSE, view = FALSE){
   y = sapply(ls(name="package:distr6"),function(x){

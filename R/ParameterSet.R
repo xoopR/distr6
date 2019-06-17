@@ -157,7 +157,7 @@ ParameterSet$set("public","print", function(){
 })
 ParameterSet$set("public","update", function(){
   if(any(!is.na(private$.parameters$updateFunc))){
-    update_filter = !is.na(private$.parameters$updateFunc) & !private$.parameters$settable
+    update_filter = !is.na(private$.parameters$updateFunc) #& !private$.parameters$settable
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       fnc = function(self){}
@@ -257,6 +257,9 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
     checkmate::assertList(lst)
 
     for(i in 1:length(lst)){
+      if(any(is.null(lst[[i]])) | any(is.nan(lst[[i]])))
+        stop(paste(lst[[i]],"must be a number."))
+
       id <- names(lst)[[i]]
       value <- lst[[i]]
 
@@ -265,8 +268,8 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       if(nrow(param)==0)
         RSmisc::stopwarn(error, sprintf("%s is not in the parameter set.",id))
 
-      if(!param$settable)
-        RSmisc::stopwarn(error, sprintf("%s is not settable.",param$id))
+      # if(!param$settable)
+      #   RSmisc::stopwarn(error, sprintf("%s is not settable.",param$id))
 
       if(param$class=="numeric")
         checkmate::assertNumeric(value,lower = param$lower, upper = param$upper)

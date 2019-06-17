@@ -31,8 +31,8 @@ test_that("r/d/p/q null",{
 
 test_that("r/d/p/q not null",{
   decorate(continuousTester, FunctionImputation)
-  expect_silent(continuousTester$pdf(1))
-  expect_message(continuousTester$cdf(1))
-  expect_message(continuousTester$quantile(1))
+  expect_silent(expect_equal(continuousTester$pdf(1),dexp(1)))
+  expect_message(expect_equal(continuousTester$cdf(1),pexp(1)))
+  expect_message(expect_equal(round(continuousTester$quantile(0.42),5), round(qexp(0.42), 5)))
   expect_message(continuousTester$rand(1))
 })
