@@ -59,6 +59,7 @@ Collate:
     'Distribution_Poisson.R'
     'Distribution_SDistribution.R'
     'Distribution_Weibull.R'
+    'Distribution_beta.R'
     'IGNORE_Wrapper_ConcreteWrapper.R'
     'SetInterval_Interval.R'
     'Wrapper.R'
