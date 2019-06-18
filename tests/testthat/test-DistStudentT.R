@@ -5,6 +5,8 @@ context("Student's t distribution")
 test_that("parameterisation",{
   expect_silent(StudentT$new())
   expect_silent(StudentT$new(df = 10))
+  expect_error(StudentT$new(df = -1))
+  expect_equal(StudentT$new(df = 1.1)$getParameterValue("df"), 1)
   expect_equal(StudentT$new(df = 10)$getParameterValue("df"), 10)
 })
 

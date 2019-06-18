@@ -2,6 +2,14 @@ library(testthat)
 
 context("ChiSquared distribution")
 
+test_that("parameterisation",{
+  expect_silent(ChiSquared$new())
+  expect_silent(ChiSquared$new(df = 10))
+  expect_error(ChiSquared$new(df = -1))
+  expect_equal(ChiSquared$new(df = 1.1)$getParameterValue("df"), 1)
+  expect_equal(ChiSquared$new(df = 10)$getParameterValue("df"), 10)
+})
+
 test_that("properties & traits", {
   expect_equal(ChiSquared$new()$valueSupport(), "continuous")
   expect_equal(ChiSquared$new()$variateForm(), "univariate")
@@ -10,6 +18,8 @@ test_that("properties & traits", {
   expect_equal(ChiSquared$new()$inf(), 0)
   expect_equal(ChiSquared$new()$dmax(), Inf)
   expect_equal(ChiSquared$new()$dmin(), 0)
+  expect_equal(ChiSquared$new(df=2)$dmax(), Inf)
+  expect_equal(ChiSquared$new(df=2)$dmin(), .Machine$double.eps)
 })
 
 chi <- ChiSquared$new(df = 8)
@@ -21,10 +31,12 @@ test_that("statistics", {
   expect_equal(chi$kurtosis(FALSE), 4.5)
   expect_equal(round(chi$entropy(), 5), 3.81661)
   expect_equal(chi$mgf(0), 1)
-  expect_equal(chi$cf(1/2), -.25)
+  expect_equal(chi$cf(1/2), as.complex(-0.25))
+  expect_equal(chi$pgf(1/2), (1 - log(0.5)*2)^(-4))
   expect_equal(chi$mode(), 6)
   expect_equal(chi$pdf(1), dchisq(1, 8))
   expect_equal(chi$cdf(1), pchisq(1, 8))
-  expect_equal(chi$quantile(.5), qchisq(.5, 8))
+  expect_equal(chi$quantile(0.5), qchisq(.5, 8))
+  expect_equal(chi$cdf(chi$quantile(0.32455)), 0.32455)
   expect_silent(chi$rand(10))
 })

@@ -95,6 +95,20 @@ getParameterSet.Binomial <- function(x, size, prob = NULL, qprob = NULL, verbose
   return(ps)
 }
 
+getParameterSet.ChiSquared <- function(x, df, verbose = FALSE){
+
+  if(verbose) message("Parameterised with df.")
+
+  ps <- ParameterSet$new(id = list("df"), value = list(1),
+                         lower = list(0), upper = list(Inf),
+                         class = list("integer"),
+                         settable = list(TRUE),
+                         updateFunc = list(NA),
+                         description = list("Degrees of Freedom"))
+
+  return(ps)
+}
+
 getParameterSet.Degenerate <- function(x, mean, verbose = FALSE){
 
   checkmate::assert(mean < Inf)
@@ -221,7 +235,7 @@ getParameterSet.StudentT <- function(x, df, verbose = FALSE){
 
   ps <- ParameterSet$new(id = list("df"), value = list(1),
                          lower = list(0), upper = list(Inf),
-                         class = list("numeric"),
+                         class = list("integer"),
                          settable = list(TRUE),
                          updateFunc = list(NA),
                          description = list("Degrees of Freedom"))
