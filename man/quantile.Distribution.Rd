@@ -4,7 +4,7 @@
 \alias{quantile.Distribution}
 \title{Inverse Cumulative Distribution Function}
 \usage{
-quantile.Distribution(x, p, ..., lower.tail = TRUE, log.p)
+\method{quantile}{Distribution}(x, p, ..., lower.tail = TRUE, log.p)
 }
 \arguments{
 \item{x}{Distribution.}

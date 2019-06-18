@@ -81,6 +81,7 @@ degrees of freedom, df. Default parameterisation is with df = 1.
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
+  \code{pgf(z)} \tab \code{\link{pgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{sd()} \tab \code{\link{sd}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
