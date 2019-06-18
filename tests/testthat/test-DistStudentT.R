@@ -1,0 +1,36 @@
+library(testthat)
+
+context("Student's t distribution")
+
+test_that("parameterisation",{
+  expect_silent(StudentT$new())
+  expect_silent(StudentT$new(df = 10))
+  expect_equal(StudentT$new(df = 10)$getParameterValue("df"), 10)
+})
+
+test_that("properties & traits",{
+  expect_equal(StudentT$new()$valueSupport(), "continuous")
+  expect_equal(StudentT$new()$variateForm(), "univariate")
+  expect_equal(StudentT$new()$symmetry(), "symmetric")
+  expect_equal(StudentT$new()$sup(), Inf)
+  expect_equal(StudentT$new()$inf(), -Inf)
+  expect_equal(StudentT$new()$dmax(), Inf)
+  expect_equal(StudentT$new()$dmin(), -Inf)
+})
+
+s = StudentT$new(df = 1)
+test_that("statistics",{
+  expect_equal(s$mean(), NaN)
+  expect_equal(s$var(), NaN)
+  expect_equal(s$skewness(), NaN)
+  expect_equal(s$kurtosis(T), NaN)
+  expect_equal(s$kurtosis(F), NaN)
+  expect_equal(s$entropy(), digamma(1) - digamma(1/2) + log(beta(1/2, 1/2), 2))
+  expect_equal(s$mgf(0), NaN)
+  expect_equal(s$cf(1), besselK(1, 1/2) / (gamma(1/2)*2^(-1/2)))
+  expect_equal(s$mode(),0)
+  expect_equal(s$pdf(1), dt(1))
+  expect_equal(s$cdf(1), pt(1))
+  expect_equal(s$quantile(0.56), qt(0.56))
+  expect_silent(s$rand(10))
+})
