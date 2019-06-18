@@ -350,5 +350,28 @@ getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verb
   return(ps)
 }
 
+getParameterSet.Geometric <- function(x, prob = NULL, qprob = NULL, verbose = FALSE){
+  
+  prob.bool = qprob.bool = FALSE
+  
+  if(is.null(prob) & is.null(qprob)){
+    if(verbose) message("prob and qprob missing. Parameterised with prob = 0.5.")
+    prob.bool = TRUE
+  } else if(!is.null(qprob)){
+    if(verbose) message("Parameterised with qprob.")
+    qprob.bool = TRUE
+  } else if(!is.null(prob)){
+    if(verbose) message("Parameterised with prob.")
+    prob.bool = TRUE
+  }
+  
+  ps <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
+                         lower = list(0, 0), upper = list(1, 1),
+                         class = list("numeric","numeric"),
+                         settable = list(prob.bool, qprob.bool),
+                         updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
+                         description = list("Probability of Success", "Probability of failure"))
+  return(ps)
+}
 
 
