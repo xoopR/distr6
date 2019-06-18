@@ -69,6 +69,22 @@ getParameterSet.Bernoulli <- function(x, prob = NULL, qprob = NULL, verbose = FA
   return(ps)
 }
 
+getParameterSet.Beta <- function(x, shape1, shape2, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape1 and shape2.")
+
+
+  ps <- ParameterSet$new(id = list("shape1","shape2"), value = list(1,1),
+                         lower = list(0,0), upper = list(Inf,Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape Parameter (alpha)","Shape Parameter (beta)"))
+
+  return(ps)
+}
+
+
 getParameterSet.Binomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
 
   prob.bool = qprob.bool = FALSE
@@ -166,6 +182,35 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, var = NULL, sd = 
                           updateFunc = list(NA, "self$getParameterValue('rate')^-1"),
                           description = list("Arrival Rate", "Scale"))
 
+  return(ps)
+}
+
+getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
+
+  rate.bool = mean.bool = scale.bool = FALSE
+
+  if(!is.null(rate)){
+    if(verbose) message("Parameterised with shape and rate.")
+    rate.bool = TRUE
+  } else if(!is.null(scale)){
+    if(verbose) message("Parameterised with shape and scale.")
+    scale.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with shape and mean.")
+    mean.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("shape","rate","scale","mean"), value = list(1, 1, 1, 1),
+                         lower = list(0, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric","numeric"),
+                         settable = list(TRUE, rate.bool, scale.bool, mean.bool),
+                         updateFunc = list(NA, NA,
+                                           "self$getParameterValue('rate')^-1",
+                                           "(self$getParameterValue('shape'))/(self$getParameterValue('rate'))"),
+                         description = list("Shape - Shape Parameter",
+                                            "Rate - Inverse Scale Parameter",
+                                            "Scale - Scale Parameter",
+                                            "Mean - Mean Parameter"))
   return(ps)
 }
 
@@ -280,34 +325,6 @@ getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE)
   return(ps)
 }
 
-getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
-
-  rate.bool = mean.bool = scale.bool = FALSE
-
-  if(!is.null(rate)){
-    if(verbose) message("Parameterised with shape and rate.")
-    rate.bool = TRUE
-  } else if(!is.null(scale)){
-    if(verbose) message("Parameterised with shape and scale.")
-    scale.bool = TRUE
-  } else{
-    if(verbose) message("Parameterised with shape and mean.")
-    mean.bool = TRUE
-  }
-
-  ps <- ParameterSet$new(id = list("shape","rate","scale","mean"), value = list(1, 1, 1, 1),
-                         lower = list(0, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
-                         class = list("numeric","numeric","numeric","numeric"),
-                         settable = list(TRUE, rate.bool, scale.bool, mean.bool),
-                         updateFunc = list(NA, NA,
-                                           "self$getParameterValue('rate')^-1",
-                                           "(self$getParameterValue('shape'))/(self$getParameterValue('rate'))"),
-                         description = list("Shape - Shape Parameter",
-                                            "Rate - Inverse Scale Parameter",
-                                            "Scale - Scale Parameter",
-                                            "Mean - Mean Parameter"))
-  return(ps)
-}
 
 
 

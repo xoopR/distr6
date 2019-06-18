@@ -111,7 +111,7 @@ success) or qprob (probability of failure) as a number between 0 and 1. If \code
 
  \tabular{ll}{
   \strong{Method} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE)} \tab \code{\link{liesInSupport}} \cr
+  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
 }
