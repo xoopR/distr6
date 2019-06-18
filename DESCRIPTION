@@ -25,7 +25,7 @@ Description: An R6 object oriented Distributions package in R. Unified interface
   commonly used probabilty distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
 Depends: 
-Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats
+Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats, extraDistr, utils, expint
 Suggests: knitr, testthat, devtools
 Remotes: RaphaelS1/RSmisc, RaphaelS1/R62S3
 License: MIT + file LICENSE
@@ -44,13 +44,29 @@ Collate:
     'DistributionDecorator_CoreStatistics.R'
     'DistributionDecorator_ExoticStatistics.R'
     'DistributionDecorator_FunctionImputation.R'
+    'Distribution_SDistribution.R'
+    'IGNORE_Wrapper_ConcreteWrapper.R'
     'ParameterSet.R'
     'SetInterval.R'
     'SetInterval_Set.R'
     'SetInterval_SpecialSet.R'
-    'Distribution_Binomial.R'
-    'Distribution_Exponential.R'
-    'Distribution_Normal.R'
+    'SDistribution_Arcsine.R'
+    'SDistribution_Bernoulli.R'
+    'SDistribution_Binomial.R'
+    'SDistribution_ChiSquared.R'
+    'SDistribution_Degenerate.R'
+    'SDistribution_DiscreteUniform.R'
+    'SDistribution_Exponential.R'
+    'SDistribution_Gamma.R'
+    'SDistribution_Gompertz.R'
+    'SDistribution_Laplace.R'
+    'SDistribution_Lognormal.R'
+    'SDistribution_Multinomial.R'
+    'SDistribution_Normal.R'
+    'SDistribution_Pareto.R'
+    'SDistribution_Poisson.R'
+    'SDistribution_StudentT.R'
+    'SDistribution_Weibull.R'
     'SetInterval_Interval.R'
     'Wrapper.R'
     'Wrapper_ArrayDistribution.R'
@@ -63,5 +79,6 @@ Collate:
     'assertions.R'
     'decorate.R'
     'distr6_globals.R'
+    'getParameterSet.R'
     'measures.R'
     'zzz.R'

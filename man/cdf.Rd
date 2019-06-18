@@ -7,7 +7,7 @@
 cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 
 \item{x1}{vector of numerics to evaluate function at.}
 

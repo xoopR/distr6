@@ -7,7 +7,7 @@
 skewness(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Skewness of a distribution

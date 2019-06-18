@@ -4,10 +4,10 @@
 \alias{quantile.Distribution}
 \title{Inverse Cumulative Distribution Function}
 \usage{
-\method{quantile}{Distribution}(x, p, ..., lower.tail = TRUE, log.p)
+quantile.Distribution(x, p, ..., lower.tail = TRUE, log.p)
 }
 \arguments{
-\item{x}{distribution.}
+\item{x}{Distribution.}
 
 \item{p}{vector of probabilities to evaluate function at.}
 

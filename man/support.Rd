@@ -7,7 +7,7 @@
 support(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the support of the distribution.

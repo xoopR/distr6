@@ -3,7 +3,12 @@
 \name{cdfPNorm}
 \alias{cdfPNorm}
 \title{Cumulative Distribution Function P-Norm}
+\usage{
+cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
+}
 \arguments{
+\item{object}{Distribution.}
+
 \item{p}{p-norm to calculate.}
 
 \item{lower}{lower limit for integration, default is infimum.}
@@ -20,6 +25,13 @@ where X is the distribution, \eqn{F_X} is the cdf and a,b are the limits of inte
 
 Returns NULL if distribution is not continuous.
 
-Documentation is for the S3 method, the first parameter can be omitted if calling as
-an R6 method.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{ExoticStatistics}} decorator.
+}
+\section{R6 Usage}{
+ $cumHazard(object, p = 2, lower = NULL, upper = NULL)
+}
+
+\seealso{
+\code{\link{ExoticStatistics}} and \code{\link{decorate}}
 }

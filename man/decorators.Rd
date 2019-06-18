@@ -7,7 +7,7 @@
 decorators(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the decorators added to a distribution.

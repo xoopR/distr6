@@ -4,10 +4,10 @@
 \alias{listDecorators}
 \title{Lists Implemented Distribution Decorators}
 \usage{
-listDecorators(simplify = FALSE)
+listDecorators(simplify = TRUE)
 }
 \arguments{
-\item{simplify}{logical. If FALSE (default) returns result as decorator, otherwise character.}
+\item{simplify}{logical. If TRUE (default) returns results as characters, otherwise R6 classes.}
 }
 \description{
 Lists decorators that can decorate an R6 Distribution.

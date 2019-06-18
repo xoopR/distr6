@@ -7,7 +7,7 @@
 symmetry(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the distribution symmetry, one of "symmetric" or "asymmetric".

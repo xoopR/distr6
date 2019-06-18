@@ -7,7 +7,7 @@
 rand(object, n)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 
 \item{n}{number of observations. If length(n) > 1, the length is taken to be the number required.}
 }

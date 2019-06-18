@@ -7,7 +7,7 @@
 pdf(object, x1, ..., log = FALSE)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 
 \item{x1}{vector of numerics to evaluate function at.}
 

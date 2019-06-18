@@ -3,15 +3,16 @@
 #' traits and/or properties.
 #' @param simplify logical.
 #' @param traits list of traits to filter distributions by.
+#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
 #' @examples
 #' listDistributions()
 #' listDistributions(traits = list(VariateForm = "univariate"))
 #' listDistributions(traits = list(ValueSupport = "discrete"))
 #' @export
-listDistributions <- function(simplify=FALSE, traits=NULL){
+listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
-      if(environmentName(get(x)$get_inherit()) == "Distribution_generator")
+      if(environmentName(get(x)$get_inherit()) == "SDistribution_generator")
         return(get(x)$classname)
       else
         return(FALSE)
@@ -19,41 +20,46 @@ listDistributions <- function(simplify=FALSE, traits=NULL){
       return(FALSE)
   })
   y = y[y!="FALSE"]
-  y = y[y!="DistributionWrapper"]
   if(simplify)
     return(as.character(y))
   else{
     distrs = do.call(rbind.data.frame,lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
-      x = suppressMessages(x$new())
-      ShortName = x$short_name
-      Type =  RSmisc::getR6Class(x$type())
-      ValueSupport = x$valueSupport()
-      VariateForm = x$variateForm()
+      ShortName = x$public_fields$short_name
+      Type = x$public_fields$traits$type$getSymbol()
+      ValueSupport = x$public_fields$traits$valueSupport
+      VariateForm = x$public_fields$traits$variateForm
       return(cbind(ShortName, ClassName, Type, ValueSupport, VariateForm))
     }))
     row.names(distrs) = NULL
     if(!is.null(traits)){
       names(traits) = tolower(names(traits))
       if(checkmate::testList(traits)){
-        for(i in 1:length(traits))
-          distrs = distrs[distrs[,tolower(colnames(distrs)) %in% names(traits)[[i]]] == traits[[i]],]
+        if(is.null(traits$valuesupport) & !is.null(traits$variateform))
+          distrs = dplyr::filter(distrs, distrs$VariateForm == traits$variateform)
+        else if(is.null(traits$variateform) & !is.null(traits$valuesupport))
+          distrs = dplyr::filter(distrs, distrs$ValueSupport == traits$valuesupport)
+        else if(!is.null(traits$variateform) & !is.null(traits$valuesupport))
+          distrs = dplyr::filter(distrs, distrs$VariateForm == traits$variateform & distrs$ValueSupport == traits$valuesupport)
       }
     }
     if("ShortName" %in% rownames(data.frame(distrs))) distrs = t(distrs)
-    return(data.frame(distrs))
+    if(view)
+      utils::View(data.frame(distrs))
+    else
+      return(data.frame(distrs))
   }
 }
 
 #' @title Lists Implemented Distribution Decorators
 #' @description Lists decorators that can decorate an R6 Distribution.
-#' @param simplify logical. If FALSE (default) returns result as decorator, otherwise character.
+#' @param simplify logical. If TRUE (default) returns results as characters, otherwise R6 classes.
 #' @examples
 #' listDecorators()
 #' listDecorators(FALSE)
 #' @export
-listDecorators <- function(simplify=FALSE){
+listDecorators <- function(simplify = TRUE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "DistributionDecorator_generator")
@@ -72,12 +78,12 @@ listDecorators <- function(simplify=FALSE){
 
 #' @title Lists Implemented Distribution Decorators
 #' @description Lists wrappers that can wrap an R6 Distribution.
-#' @param simplify logical. If FALSE (default) returns result as wrapper, otherwise character.
+#' @param simplify logical. If TRUE (default) returns results as characters, otherwise R6 classes.
 #' @examples
 #' listWrappers()
 #' listWrappers(TRUE)
 #' @export
-listWrappers <- function(simplify=FALSE){
+listWrappers <- function(simplify = TRUE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "DistributionWrapper_generator")
@@ -97,11 +103,12 @@ listWrappers <- function(simplify=FALSE){
 #' @title Lists Implemented R6 Special Sets
 #' @description Lists special sets that can be used in SetInterval.
 #' @param simplify logical. If FALSE (default) returns data.frame of set name and symbol, otherwise character.
+#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
 #' @examples
 #' listSpecialSets()
 #' listSpecialSets(TRUE)
 #' @export
-listSpecialSets <- function(simplify=FALSE){
+listSpecialSets <- function(simplify = FALSE, view = FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "SpecialSet_generator" |
@@ -127,7 +134,11 @@ listSpecialSets <- function(simplify=FALSE){
       return(cbind(ClassName, Symbol, Lower, Upper))
     }))
     row.names(symbols) = NULL
-    return(symbols)
+
+    if(view)
+      utils::View(data.frame(symbols))
+    else
+      return(symbols)
   }
 }
 
@@ -161,12 +172,15 @@ makeUniqueDistributions <- function(distlist){
 }
 
 #' @title Kurtosis Type
-#' @description Gets the type of (excess) kurtosis#' @usage skewType(skew)
+#' @description Gets the type of (excess) kurtosis
 #' @param kurtosis numeric.
 #' @examples
 #' exkurtosisType(1)
 #' @export
 exkurtosisType <- function(kurtosis){
+
+  if(is.nan(kurtosis)) return("undefined")
+
   if(kurtosis < 0)
     return("platykurtic")
   else if(kurtosis == 0)
@@ -177,12 +191,14 @@ exkurtosisType <- function(kurtosis){
 
 #' @title Skewness Type
 #' @description Gets the type of skewness
-#' @usage skewType(skew)
 #' @param skew numeric.
 #' @examples
 #' skewType(1)
 #' @export
 skewType <- function(skew){
+
+  if(is.nan(skew)) return("undefined")
+
   if(skew < 0)
     return("negative skew")
   else if(skew == 0)

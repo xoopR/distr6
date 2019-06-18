@@ -7,7 +7,7 @@
 properties(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the scientific type of the distribution.

@@ -7,7 +7,7 @@
 \method{median}{Distribution}(x, na.rm = NULL, ...)
 }
 \arguments{
-\item{x}{distribution.}
+\item{x}{Distribution.}
 
 \item{na.rm}{ignored, added for consistency with S3 generic.}
 

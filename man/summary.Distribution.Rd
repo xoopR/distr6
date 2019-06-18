@@ -7,7 +7,7 @@
 \method{summary}{Distribution}(object, full = TRUE, ...)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 
 \item{full}{logical; if TRUE (default), gives an extended summary, otherwise brief.}
 

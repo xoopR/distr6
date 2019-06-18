@@ -7,7 +7,7 @@
 sd(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Standard deviation of a distribution assuming variance is provided.

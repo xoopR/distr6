@@ -7,7 +7,7 @@
 sup(object)
 }
 \arguments{
-\item{object}{distribution.}
+\item{object}{Distribution.}
 }
 \description{
 Returns the distribution supremum as the supremum of the support.
@@ -17,5 +17,5 @@ Returns the distribution supremum as the supremum of the support.
 }
 
 \seealso{
-\code{\link{support}} and \code{\link{inf}}
+\code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
 }
