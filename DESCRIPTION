@@ -63,6 +63,7 @@ Collate:
     'SDistribution_Laplace.R'
     'SDistribution_Lognormal.R'
     'SDistribution_Multinomial.R'
+    'SDistribution_NegBinomal.R'
     'SDistribution_Normal.R'
     'SDistribution_Pareto.R'
     'SDistribution_Poisson.R'
