@@ -2,8 +2,10 @@
 # Lognormal Distribution Documentation
 #-------------------------------------------------------------
 #' @title Lognormal Distribution
+#'
 #' @description Mathematical and statistical functions for the Lognormal distribution parameterised
-#' with mean and standard deviation of the variable's natural logrithm.
+#' with mean and standard deviation of the variable's natural logarithm.
+#'
 #' @name Lognormal
 #'
 #' @section Constructor Arguments:
@@ -106,7 +108,7 @@ LogNormal$set("public","expectation",function(){
 })
 
 LogNormal$set("public","variance",function(){
-  return(exp(self$getParameterValue("sdlog")^2 - 1) * exp(2 * self$getParameterValue("meanlog") + self$getParameterValue("sdlog")^2)) 
+  return(exp(self$getParameterValue("sdlog")^2 - 1) * exp(2 * self$getParameterValue("meanlog") + self$getParameterValue("sdlog")^2))
 })
 
 LogNormal$set("public","varlog",function(){
@@ -118,7 +120,7 @@ LogNormal$set("public","skewness",function() {
 })
 
 LogNormal$set("public","kurtosis",function(){
-  return(exp(4 * self$getParameterValue("sdlog")^2) + 2 * exp(3 * self$getParameterValue("sdlog")^2) + 
+  return(exp(4 * self$getParameterValue("sdlog")^2) + 2 * exp(3 * self$getParameterValue("sdlog")^2) +
            3 * exp(2 *self$getParameterValue("sdlog")^2) - 6)
 })
 
@@ -151,11 +153,11 @@ LogNormal$set("public","mode",function() return((self$getParameterValue("meanlog
 LogNormal$set("private",".parameters", NULL)
 
 LogNormal$set("public","initialize",function(meanlog = 0, varlog = NULL, sdlog = NULL, preclog = NULL, decorators = NULL,...){
-  
+
   varlog.bool = FALSE
   sdlog.bool = FALSE
   preclog.bool = FALSE
-  
+
   if(is.null(varlog) & is.null(sdlog) & is.null(preclog)){
     message("varlog, sdlog and preclog missing. varlog = 1 parameterisation used.")
     varlog = 1
@@ -170,7 +172,7 @@ LogNormal$set("public","initialize",function(meanlog = 0, varlog = NULL, sdlog =
     varlog = NULL
     preclog = NULL
   }
-  
+
   if(!is.null(varlog)){
     varlog.bool = TRUE
     varlog.update = NA
@@ -187,7 +189,7 @@ LogNormal$set("public","initialize",function(meanlog = 0, varlog = NULL, sdlog =
     varlog.update = "self$getParameterValue('preclog')^-1"
     sdlog.update = "self$getParameterValue('preclog')^-0.5"
   }
-  
+
   private$.parameters <- ParameterSet$new(id = list("meanlog","varlog","sdlog","preclog"),
                                           value = list(0, 1, 1, 1),
                                           lower = list(-Inf, 0, 0, 0),
@@ -199,12 +201,12 @@ LogNormal$set("public","initialize",function(meanlog = 0, varlog = NULL, sdlog =
                                                              "Variance-log - Squared Scale Parameter on log scale",
                                                              "Standard Deviation-log - Scale Parameter on log scale",
                                                              "Precision-log - Inverse Squared Scale Parameter on log scale"))
-  
+
   self$setParameterValue(list(meanlog = meanlog))
   if(!is.null(varlog)) self$setParameterValue(list(varlog = varlog))
   else if(!is.null(sdlog)) self$setParameterValue(list(sdlog = sdlog))
   else if(!is.null(preclog)) self$setParameterValue(list(preclog = preclog))
-  
+
   super$initialize(decorators = decorators,...)
   invisible(self)
 })
