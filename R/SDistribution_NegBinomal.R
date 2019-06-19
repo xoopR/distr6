@@ -61,8 +61,8 @@
 #'   \code{median()} \tab \code{\link{median.Distribution}} \cr
 #'   \code{iqr()} \tab \code{\link{iqr}} \cr
 #'   }
-#' @example
-#' NegBinom <- NegBinomial$new(size = 10, prob = 0.5)
+#
+#
 #' @export
 NULL
 

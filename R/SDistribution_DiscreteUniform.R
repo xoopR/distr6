@@ -116,6 +116,6 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(lower, upper),
-                   distrDomain = Integers$new(zero = T), symmetric = FALSE)
+                   distrDomain = Integers$new(zero = T), symmetric = TRUE)
   invisible(self)
 })

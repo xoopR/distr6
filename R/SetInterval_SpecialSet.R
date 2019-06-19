@@ -14,14 +14,21 @@ NULL
 #' @export
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Set)
 SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
-                                              upper = Inf, type = "()", ...){
+                                              upper = Inf, type = "()", complement = NULL, ...){
   if(RSmisc::getR6Class(self, pos = environment()) == "SpecialSet")
     stop(paste(RSmisc::getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  if(dim!=1)
-    private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim)
-  else
-    private$.setSymbol <- setSymbol(paste0(RSmisc::getR6Class(self, pos = environment())))
+  if(dim!=1){
+    if(!is.null(complement))
+      private$.setSymbol <- paste0(paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim),"/",complement$getSymbol())
+    else
+      private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim)
+  } else{
+    if(!is.null(complement))
+      private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"/",complement$getSymbol())
+    else
+      private$.setSymbol <- setSymbol(paste0(RSmisc::getR6Class(self, pos = environment())))
+  }
   private$.lower <- lower
   private$.upper <- upper
   private$.type <- type
@@ -76,8 +83,8 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 NULL
 #' @export
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
-Integers$set("public", "initialize", function(dim = 1,...){
-  super$initialize(dim, type = "[]")
+Integers$set("public", "initialize", function(dim = 1,lower = -Inf, upper = Inf, ...){
+  super$initialize(dim, type = "[]", lower = lower, upper = upper)
 })
 
 #' @title Set of Positive Integers
@@ -94,11 +101,17 @@ Integers$set("public", "initialize", function(dim = 1,...){
 NULL
 #' @export
 PosIntegers <- R6::R6Class("PosIntegers",inherit = SpecialSet)
-PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
-  if(zero)
-    super$initialize(dim, lower = 0, type = "[)")
-  else
-    super$initialize(dim, lower = 1, type = "[)")
+PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE,
+                                                 lower = NULL, upper = Inf){
+  if(!is.null(lower))
+    super$initialize(dim, lower = lower, upper = upper, type = "[)",
+                     complement = Set$new(0:(lower-1)))
+  else{
+    if(zero)
+      super$initialize(dim, lower = 0, type = "[)")
+    else
+      super$initialize(dim, lower = 1, type = "[)")
+  }
 })
 
 #' @title Set of Negative Integers

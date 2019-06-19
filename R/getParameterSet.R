@@ -45,14 +45,11 @@ getParameterSet.Arcsine <- function(x, lower, upper, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.Bernoulli <- function(x, prob = NULL, qprob = NULL, verbose = FALSE){
+getParameterSet.Bernoulli <- function(x, prob, qprob = NULL, verbose = FALSE){
 
   prob.bool = qprob.bool = FALSE
 
-  if(is.null(prob) & is.null(qprob)){
-    if(verbose) message("prob and qprob missing. Parameterised with prob = 0.5.")
-    prob.bool = TRUE
-  } else if(!is.null(qprob)){
+  if(!is.null(qprob)){
     if(verbose) message("Parameterised with qprob.")
     qprob.bool = TRUE
   } else if(!is.null(prob)){
@@ -84,18 +81,14 @@ getParameterSet.Beta <- function(x, shape1, shape2, verbose = FALSE){
   return(ps)
 }
 
-
-getParameterSet.Binomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
+getParameterSet.Binomial <- function(x, size, prob, qprob = NULL, verbose = FALSE){
 
   prob.bool = qprob.bool = FALSE
 
-  if(is.null(prob) & is.null(qprob)){
-    if(verbose) message("prob and qprob missing. Parameterised with prob = 0.5.")
-    prob.bool = TRUE
-  } else if(!is.null(qprob)){
+  if(!is.null(qprob)){
     if(verbose) message("Parameterised with qprob.")
     qprob.bool = TRUE
-  } else if(!is.null(prob)){
+  } else {
     if(verbose) message("Parameterised with prob.")
     prob.bool = TRUE
   }
@@ -214,6 +207,40 @@ getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, ver
   return(ps)
 }
 
+getParameterSet.Geometric <- function(x, prob, qprob = NULL, success = TRUE, verbose = FALSE){
+
+  prob.bool = qprob.bool = FALSE
+
+  if(!is.null(qprob)){
+    if(verbose) message("Parameterised with qprob.")
+    qprob.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with prob.")
+    prob.bool = TRUE
+  }
+
+  if(success)
+    ps <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
+                           lower = list(.Machine$double.eps, .Machine$double.eps),
+                           upper = list(1 - .Machine$double.eps, 1 - .Machine$double.eps),
+                           class = list("numeric","numeric"),
+                           settable = list(prob.bool, qprob.bool),
+                           updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
+                           description = list("Probability of Success",
+                                              "Probability of failure"))
+  else
+    ps <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
+                           lower = list(.Machine$double.eps, .Machine$double.eps),
+                           upper = list(1, 1),
+                           class = list("numeric","numeric"),
+                           settable = list(prob.bool, qprob.bool),
+                           updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
+                           description = list("Probability of Success",
+                                              "Probability of failure"))
+
+  return(ps)
+}
+
 getParameterSet.Gompertz <- function(x, shape, scale, verbose = FALSE){
 
   if(verbose) message("Parameterised with shape and scale.")
@@ -325,10 +352,9 @@ getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE)
   return(ps)
 }
 
-
 getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
   prob.bool = qprob.bool = FALSE
-  
+
   if(is.null(prob) & is.null(qprob)) {
     if(verbose) message("prob and qprob is missing. Parameterised with prob = 0.5.")
     prob.bool = TRUE
@@ -338,7 +364,7 @@ getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verb
   } else if(!is.null(prob)){
     if(verbose) message("Parameterised with prob.")
     prob.bool = TRUE}
-  
+
   ps <- ParameterSet$new(id = list("prob", "qprob", "size"), value = list(0.5, 0.5, 1),
                          lower = list(0, 0, 1), upper = list(1, 1, Inf),
                          class = list("numeric","numeric","integer"),
@@ -346,32 +372,7 @@ getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verb
                          updateFunc = list(NULL, "1 - self$getParameterValue('prob')", NULL),
                          description = list("Probability of Success",
                                             "Probability of failure", "Number of successes"))
-  
+
   return(ps)
 }
-
-getParameterSet.Geometric <- function(x, prob = NULL, qprob = NULL, verbose = FALSE){
-  
-  prob.bool = qprob.bool = FALSE
-  
-  if(is.null(prob) & is.null(qprob)){
-    if(verbose) message("prob and qprob missing. Parameterised with prob = 0.5.")
-    prob.bool = TRUE
-  } else if(!is.null(qprob)){
-    if(verbose) message("Parameterised with qprob.")
-    qprob.bool = TRUE
-  } else if(!is.null(prob)){
-    if(verbose) message("Parameterised with prob.")
-    prob.bool = TRUE
-  }
-  
-  ps <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
-                         lower = list(0, 0), upper = list(1, 1),
-                         class = list("numeric","numeric"),
-                         settable = list(prob.bool, qprob.bool),
-                         updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
-                         description = list("Probability of Success", "Probability of failure"))
-  return(ps)
-}
-
 
