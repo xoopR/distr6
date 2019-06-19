@@ -287,6 +287,25 @@ getParameterSet.Poisson <- function(x, rate, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.Uniform <- function(x, lower, upper, verbose = FALSE){
+
+  checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
+  checkmate::assert(lower < upper, .var.name = "lower must be < upper")
+
+  if(verbose) message("Parameterised with lower and upper.")
+
+  ps <- ParameterSet$new(id = list("lower","upper"),
+                         value = list(0, 1),
+                         lower = list(-Inf, -Inf),
+                         upper = list(Inf, Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Lower distribution limit.", "Upper distribution limit."))
+
+  return(ps)
+}
+
 getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
 
   if(verbose) message("Parameterised with shape and scale.")

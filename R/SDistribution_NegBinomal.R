@@ -10,8 +10,6 @@
 #' \deqn{f(x) = (x + n - 1)C(n - 1) p^n (1 - p)^x}
 #' where \eqn{n = 1,2,...} is the size parameter and \eqn{0 \le p \le 1} is the prob parameter.
 #'
-
-#'
 #' @name NegativeBinomial
 #'
 #' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, decorators = NULL, verbose = FALSE)
@@ -38,7 +36,7 @@
 #' Compared with a Binomial distribution, which counts the number of successes in a
 #' fixed number of trials, a Negative Binomial distribution pre-specifies the target
 #' number of successes and counts the number of failures required to reach this
-#' target number. A NegBinomial(1,p) is the same as a Geometric(p).
+#' target number. A NegativeBinomial(1,p) is the same as a Geometric(p).
 #'
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
@@ -65,31 +63,30 @@
 #
 #' @export
 NULL
-
 #-------------------------------------------------------------
-# NegBinomial Distribution Definition
+# NegativeBinomial Distribution Definition
 #-------------------------------------------------------------
-NegBinomial <- R6::R6Class("NegBinomial", inherit = SDistribution, lock_objects = F)
-NegBinomial$set("public", "name", "NegBinomial")
-NegBinomial$set("public", "shortname", "NBinom")
-NegBinomial$set("public", "traits", list(type = PosIntegers$new(zero = T),
+NegativeBinomial <- R6::R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F)
+NegativeBinomial$set("public", "name", "NegativeBinomial")
+NegativeBinomial$set("public", "shortname", "NBinom")
+NegativeBinomial$set("public", "traits", list(type = PosIntegers$new(zero = T),
                                          valueSupport = "discrete",
                                          variateForm = "univariate"))
-NegBinomial$set("public","description","Negative Binomial Probability Distribution.")
+NegativeBinomial$set("public","description","Negative Binomial Probability Distribution.")
 
-NegBinomial$set("public", "mean", function(){
+NegativeBinomial$set("public", "mean", function(){
   self$getParameterValue("size") * self$getParameterValue("qprob") / self$getParameterValue("prob")
 })
 
-NegBinomial$set("public","var",function(){
+NegativeBinomial$set("public","var",function(){
   self$getParameterValue("size") * self$getParameterValue("qprob") / (self$getParameterValue("prob")^2)
 })
 
-NegBinomial$set("public", "skewness", function(){
+NegativeBinomial$set("public", "skewness", function(){
   (2 - self$getParameterValue("prob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("qprob"))
 })
 
-NegBinomial$set("public", "kurtosis", function(excess = TRUE){
+NegativeBinomial$set("public", "kurtosis", function(excess = TRUE){
   exkurtosis = (self$getParameterValue("prob")^2 - 6*self$getParameterValue("prob") + 6)/
     (self$getParameterValue("size") * self$getParameterValue("qprob"))
   if(excess)
@@ -98,27 +95,27 @@ NegBinomial$set("public", "kurtosis", function(excess = TRUE){
     return(exkurtosis + 3)
 })
 
-NegBinomial$set("public", "mgf", function(t){
+NegativeBinomial$set("public", "mgf", function(t){
   self$getParameterValue("prob")^self$getParameterValue("size") * (1 - self$getParameterValue("qprob")*exp(t))^(-self$getParameterValue("size"))
 })
 
-NegBinomial$set("public", "cf", function(t){
+NegativeBinomial$set("public", "cf", function(t){
   P <- (1 - self$getParameterValue("prob"))/self$getParameterValue("prob")
   Q <- 1 / self$getParameterValue("prob")
   (Q - P*exp((0+1i) * t))^(-self$getParameterValue("size"))
 })
 
-NegBinomial$set("public", "pgf", function(z){
+NegativeBinomial$set("public", "pgf", function(z){
   ((self$getParameterValue("prob")*z) / (1 - self$getParameterValue("qrob")*z))^self$getParameterValue("size")
 })
 
 
-NegBinomial$set("public","setParameterValue",function(lst, error = "warn"){
+NegativeBinomial$set("public","setParameterValue",function(lst, error = "warn"){
    super$setParameterValue(lst, error)
    private$.properties$support <- Set$new(0:self$getParameterValue("size"))
  })
 
-NegBinomial$set("private", ".getRefParams", function(paramlst){
+NegativeBinomial$set("private", ".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$size)) lst = c(lst, list(size = paramlst$size))
   if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
@@ -127,7 +124,7 @@ NegBinomial$set("private", ".getRefParams", function(paramlst){
 })
 
 
-NegBinomial$set("public","initialize", function(size = 1, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
+NegativeBinomial$set("public","initialize", function(size = 1, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 
   private$.paramaters <- getParameterSet(self, size, prob, qprob, verbose)
   self$setParameterValue(list(size = size, prob = prob, qprob = qprob))

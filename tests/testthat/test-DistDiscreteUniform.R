@@ -19,7 +19,7 @@ test_that("parameters", {
 test_that("properties & traits",{
   expect_equal(DiscreteUniform$new()$valueSupport(), "discrete")
   expect_equal(DiscreteUniform$new()$variateForm(), "univariate")
-  expect_equal(DiscreteUniform$new()$symmetry(), "asymmetric")
+  expect_equal(DiscreteUniform$new()$symmetry(), "symmetric")
   expect_equal(DiscreteUniform$new()$sup(), 1)
   expect_equal(DiscreteUniform$new()$inf(), 0)
   expect_equal(DiscreteUniform$new()$dmax(), 1)
