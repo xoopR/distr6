@@ -617,7 +617,9 @@ Distribution$set("public","getParameterValue",function(id, error = "warn"){
 })
 # Documented in ParameterSet.R
 Distribution$set("public","setParameterValue",function(lst, error = "warn"){
+
   if(length(lst)!=0){
+
     self$parameters()$setParameterValue(lst, error)
 
     # Update skewness and kurtosis

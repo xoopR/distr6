@@ -385,7 +385,6 @@ getParameterSet.Logarithmic <- function(x, theta, verbose = FALSE){
   return(ps)
 }
 
-
 getParameterSet.Logistic <- function(x, mean, scale, verbose = FALSE){
 
   if(verbose) message("Parameterised with mean and scale.")
@@ -400,27 +399,30 @@ getParameterSet.Logistic <- function(x, mean, scale, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, type, verbose = FALSE){
 
-getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
   prob.bool = qprob.bool = FALSE
 
-  if(is.null(prob) & is.null(qprob)) {
-    if(verbose) message("prob and qprob is missing. Parameterised with prob = 0.5.")
-    prob.bool = TRUE
-  } else if (!is.null(qprob)){
+  if(!is.null(qprob)){
     if(verbose) message("Parameterised with qprob.")
     qprob.bool = TRUE
-  } else if(!is.null(prob)){
+  } else {
     if(verbose) message("Parameterised with prob.")
-    prob.bool = TRUE}
+    prob.bool = TRUE
+  }
 
-  ps <- ParameterSet$new(id = list("prob", "qprob", "size"), value = list(0.5, 0.5, 1),
+  if(type == "fbs" | type == "tbs")
+    desc = "Number of successes"
+  else
+    desc = "Number of failures"
+
+  ps <- ParameterSet$new(id = list("prob","qprob","size"), value = list(0.5, 0.5, 10),
                          lower = list(0, 0, 1), upper = list(1, 1, Inf),
                          class = list("numeric","numeric","integer"),
                          settable = list(prob.bool, qprob.bool, TRUE),
                          updateFunc = list(NULL, "1 - self$getParameterValue('prob')", NULL),
                          description = list("Probability of Success",
-                                            "Probability of failure", "Number of successes"))
+                                            "Probability of failure", desc))
 
   return(ps)
 }

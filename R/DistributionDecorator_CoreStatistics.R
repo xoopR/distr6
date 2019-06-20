@@ -373,8 +373,11 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 
   if(testDiscrete(self)){
     rng = try(self$inf():self$sup(),silent = T)
-    if(inherits(rng,"try-error"))
-      rng = private$.getWorkingSupportRange()
+    if(inherits(rng,"try-error")){
+      lower = ifelse(self$inf() == -Inf, -1e03, self$inf())
+      upper = ifelse(self$sup() == Inf, 1e03, self$sup())
+      rng = lower:upper
+    }
     pdfs = self$pdf(rng)
     xs = trafo(rng)
     xs[pdfs==0] = 0

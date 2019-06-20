@@ -26,7 +26,7 @@ For each we refer to the number of K successs/failures as the \code{size} parame
 is always the probability of success and \code{qprob} is the probability of failure.
 }
 \section{Constructor}{
- NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, type = "sbf", decorators = NULL, verbose = FALSE)
+ NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -49,6 +49,7 @@ between 0 and 1. If \code{qprob} is given then \code{prob} is ignored. The addit
 \code{type} determines which of the four Negative Binomial distributions should be constructed, this
 cannot be updated after construction. \code{type} should be one of "sbf" (successes before failures),
 "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
+"fbs" is taken as default as this is used in R stats (although "sbf" is typically more common).
 }
 
 \section{Public Variables}{

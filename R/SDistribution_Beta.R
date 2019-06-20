@@ -6,8 +6,8 @@
 #'
 #' @description Mathematical and statistical functions for the Beta distribution parameterised
 #' with two shape parameters and defined by the pdf,
-#' \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / \Beta(\alpha, \beta)}
-#' where \eqn{\alpha, \beta > 0} are the two shape parameters and \eqn{\Beta} is the Beta function.
+#' \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
+#' where \eqn{\alpha, \beta > 0} are the two shape parameters and \eqn{B} is the Beta function.
 #'
 #' @details \code{mgf} and \code{cf} are omitted as no analytic expression could be found. Decorate
 #' with CoreStatistics for numeric results.
