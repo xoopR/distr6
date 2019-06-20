@@ -348,6 +348,36 @@ getParameterSet.StudentT <- function(x, df, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric, verbose = FALSE){
+
+  checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
+  checkmate::assert(lower < upper, .var.name = "lower must be < upper")
+
+  if(symmetric){
+    updateFunc = "(self$getParameterValue('lower') + self$getParameterValue('upper'))/2"
+    settable = FALSE
+    if(verbose) message("Parameterised with lower and upper.")
+  } else{
+    checkmate::assert(mode >= lower, mode <= upper, combine = "and", .var.name = "mode must be between lower and upper")
+    updateFunc = NA
+    settable = TRUE
+    if(verbose) message("Parameterised with lower, upper and mode.")
+  }
+
+  ps <- ParameterSet$new(id = list("lower","upper","mode"),
+                         value = list(0, 1, 0.5),
+                         lower = list(-Inf, -Inf, -Inf),
+                         upper = list(Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric"),
+                         settable = list(TRUE, TRUE, settable),
+                         updateFunc = list(NA, NA, updateFunc),
+                         description = list("Lower distribution limit.", "Upper distribution limit.",
+                                            "Distribution mode."))
+
+  return(ps)
+}
+
+
 getParameterSet.Pareto <- function(x, shape, scale, verbose = FALSE){
 
   if(verbose) message("Parameterised with shape and scale.")

@@ -72,6 +72,7 @@ Collate:
     'SDistribution_Pareto.R'
     'SDistribution_Poisson.R'
     'SDistribution_StudentT.R'
+    'SDistribution_Triangular.R'
     'SDistribution_Uniform.R'
     'SDistribution_Weibull.R'
     'SetInterval_Interval.R'

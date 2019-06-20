@@ -91,6 +91,7 @@ DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
 
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
+  invisible(self)
 })
 
 DiscreteUniform$set("private",".getRefParams", function(paramlst){

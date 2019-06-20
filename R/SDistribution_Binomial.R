@@ -81,6 +81,11 @@ Binomial$set("public","pgf",function(z){
 Binomial$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(0:self$getParameterValue("size"))
+  if(self$getParameterValue("size")==0.5)
+    private$.properties$symmetry <- "asymmetric"
+  else
+    private$.properties$symmetry <- "symmetric"
+  invisible(self)
 })
 
 Binomial$set("private",".getRefParams", function(paramlst){
@@ -97,7 +102,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
   private$.parameters <- getParameterSet(self, size, prob, qprob, verbose)
   self$setParameterValue(list(size = size, prob = prob, qprob = qprob))
 
-  if(prob == 0.5 | size >= 30)
+  if(prob == 0.5)
     symmetric <- TRUE
   else
     symmetric <- FALSE

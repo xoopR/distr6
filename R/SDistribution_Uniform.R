@@ -90,6 +90,7 @@ Uniform$set("public","setParameterValue",function(lst, error = "warn"){
 
   super$setParameterValue(lst, error)
   private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
+  invisible(self)
 })
 Uniform$set("private",".getRefParams", function(paramlst){
   lst = list()
