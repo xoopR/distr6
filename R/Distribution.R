@@ -101,7 +101,7 @@
 #' @section Validation Methods:
 #'  \tabular{ll}{
 #'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{liesInSupport(x, all = TRUE)} \tab \code{\link{liesInSupport}} \cr
+#'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
 #'   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
 #'   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
 #' }
@@ -297,6 +297,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     }
     if(!is.null(support)) private$.properties$support <- support
     if(!is.null(distrDomain)) private$.properties$distrDomain <- distrDomain
+    if(!is.null(description)) self$description <- description
 
     # Update skewness and kurtosis
     x = try(self$kurtosis(excess = TRUE), silent = TRUE)

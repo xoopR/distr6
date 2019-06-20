@@ -6,7 +6,7 @@
 #'
 #' @description Mathematical and statistical functions for the Chi-Squared distribution parameterised
 #' with degrees of freedom. The Chi-Squared distribution is defined by the pdf,
-#' \deqn{f(x) = (x^(\nu/2-1) exp(-x/2))/(2^(\nu/2) * Gamma(\nu/2))}
+#' \deqn{f(x) = (x^(\nu/2-1) exp(-x/2))/(2^(\nu/2) * \Gamma(\nu/2))}
 #' where \eqn{\nu > 0} is the degrees of freedom.
 #'
 #' @name ChiSquared
@@ -27,13 +27,16 @@
 #' @inheritSection Distribution Public Variables
 #' @inheritSection Distribution Accessor Methods
 #' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
+#' @inheritSection Binomial Statistical Methods
 #' @inheritSection Distribution Parameter Methods
 #' @inheritSection Distribution Validation Methods
 #' @inheritSection Distribution Representation Methods
 #'
 #' @export
 NULL
+#-------------------------------------------------------------
+# ChiSquared Distribution Definition
+#-------------------------------------------------------------
 ChiSquared <- R6::R6Class("ChiSquared", inherit = SDistribution, lock_objects = FALSE)
 ChiSquared$set("public", "name", "ChiSquared")
 ChiSquared$set("public", "short_name", "ChiSq")
@@ -43,41 +46,74 @@ ChiSquared$set("public", "traits", list(type = PosReals$new(zero = TRUE),
 ChiSquared$set("public", "description", "ChiSquared Probability Distribution")
 
 ChiSquared$set("public", "mean", function(){
-  self$getParameterValue("df")
+  return(self$getParameterValue("df"))
 })
 ChiSquared$set("public", "var", function(){
-  self$getParameterValue("df")*2
+  return(self$getParameterValue("df")*2)
 })
 ChiSquared$set("public", "skewness", function(){
-  sqrt(8/self$getParameterValue("df"))
+  return(sqrt(8/self$getParameterValue("df")))
 })
 ChiSquared$set("public", "kurtosis", function(excess = TRUE){
-  exkurtosis = 12/self$getParameterValue("df")
   if(excess)
-    return(exkurtosis)
+    return(12/self$getParameterValue("df"))
   else
-    return(exkurtosis + 3)
+    return(12/self$getParameterValue("df") + 3)
 })
 ChiSquared$set("public", "entropy", function(base = 2){
-  self$getParameterValue("df")/2 + log(2*gamma(self$getParameterValue("df")/2), base) +
-    (1 - self$getParameterValue("df")/2)*digamma(self$getParameterValue("df")/2)
+  return(self$getParameterValue("df")/2 + log(2*gamma(self$getParameterValue("df")/2), base) +
+    ((1 - self$getParameterValue("df")/2)*digamma(self$getParameterValue("df")/2)))
 })
 ChiSquared$set("public", "mgf", function(t){
-  if(t < 1/2){
-    (1 - 2*t)^(-self$getParameterValue("df")/2)
+  if(t < 0.5){
+    return((1 - 2*t)^(-self$getParameterValue("df")/2))
   } else{
     return(NaN)
   }
 })
 ChiSquared$set("public", "cf", function(t){
-  (1 - 2i*t)^(-self$getParameterValue("df")/2)
+  return((1 - 2i*t)^(-self$getParameterValue("df")/2))
+})
+ChiSquared$set("public", "pgf", function(z){
+  if(z > 0 & z < sqrt(exp(1)))
+    return((1 - 2 * log(z))^(-self$getParameterValue("df")/2))
+  else
+    return(NaN)
 })
 ChiSquared$set("public", "mode", function(){
-  max(self$getParameterValue("df") - 2, 0)
+  return(max(self$getParameterValue("df") - 2, 0))
 })
 
+ChiSquared$set("public","setParameterValue",function(lst, error = "warn"){
+  super$setParameterValue(lst, error)
+  if(self$getParameterValue("df") == 1)
+    private$.properties$support <- PosReals$new(zero = F)
+  else
+    private$.properties$support <- PosReals$new(zero = T)
+})
+ChiSquared$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
+  return(lst)
+})
 
-pdf <- function(x1) dchisq(x1, self$getParameterValue("df"))
-cdf <- function(x1) pchisq(x1, self$getParameterValue("df"))
-quantile <- function(p) qchisq(p, self$getParameterValue("df"))
-rand <- function(n) rchisq(n, self$getParameterValue("df"))
+ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
+
+  private$.parameters <- getParameterSet(self, df, verbose)
+  self$setParameterValue(list(df = df))
+
+  pdf <- function(x1) dchisq(x1, self$getParameterValue("df"))
+  cdf <- function(x1) pchisq(x1, self$getParameterValue("df"))
+  quantile <- function(p) qchisq(p, self$getParameterValue("df"))
+  rand <- function(n) rchisq(n, self$getParameterValue("df"))
+
+  if(df == 1)
+    support <- PosReals$new(zero = F)
+  else
+    support <- PosReals$new(zero = T)
+
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = support, distrDomain = Reals$new(zero = T),
+                   symmetric  = FALSE)
+  invisible(self)
+})

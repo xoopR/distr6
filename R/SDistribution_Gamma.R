@@ -45,6 +45,9 @@
 #'
 #' @export
 NULL
+#-------------------------------------------------------------
+# Gamma Distribution Definition
+#-------------------------------------------------------------
 Gamma <- R6::R6Class("Gamma", inherit = SDistribution, lock_objects = F)
 Gamma$set("public","name","Gamma")
 Gamma$set("public","short_name","Gamma")

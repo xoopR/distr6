@@ -116,7 +116,7 @@ to be passed to the pmf function. The probability vector is automatically normal
 
  \tabular{ll}{
   \strong{Method} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE)} \tab \code{\link{liesInSupport}} \cr
+  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
 }

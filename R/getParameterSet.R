@@ -45,14 +45,11 @@ getParameterSet.Arcsine <- function(x, lower, upper, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.Bernoulli <- function(x, prob = NULL, qprob = NULL, verbose = FALSE){
+getParameterSet.Bernoulli <- function(x, prob, qprob = NULL, verbose = FALSE){
 
   prob.bool = qprob.bool = FALSE
 
-  if(is.null(prob) & is.null(qprob)){
-    if(verbose) message("prob and qprob missing. Parameterised with prob = 0.5.")
-    prob.bool = TRUE
-  } else if(!is.null(qprob)){
+  if(!is.null(qprob)){
     if(verbose) message("Parameterised with qprob.")
     qprob.bool = TRUE
   } else if(!is.null(prob)){
@@ -69,17 +66,29 @@ getParameterSet.Bernoulli <- function(x, prob = NULL, qprob = NULL, verbose = FA
   return(ps)
 }
 
-getParameterSet.Binomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
+getParameterSet.Beta <- function(x, shape1, shape2, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape1 and shape2.")
+
+
+  ps <- ParameterSet$new(id = list("shape1","shape2"), value = list(1,1),
+                         lower = list(0,0), upper = list(Inf,Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape Parameter (alpha)","Shape Parameter (beta)"))
+
+  return(ps)
+}
+
+getParameterSet.Binomial <- function(x, size, prob, qprob = NULL, verbose = FALSE){
 
   prob.bool = qprob.bool = FALSE
 
-  if(is.null(prob) & is.null(qprob)){
-    if(verbose) message("prob and qprob missing. Parameterised with prob = 0.5.")
-    prob.bool = TRUE
-  } else if(!is.null(qprob)){
+  if(!is.null(qprob)){
     if(verbose) message("Parameterised with qprob.")
     qprob.bool = TRUE
-  } else if(!is.null(prob)){
+  } else {
     if(verbose) message("Parameterised with prob.")
     prob.bool = TRUE
   }
@@ -91,6 +100,20 @@ getParameterSet.Binomial <- function(x, size, prob = NULL, qprob = NULL, verbose
                          updateFunc = list(NULL, "1 - self$getParameterValue('prob')", NULL),
                          description = list("Probability of Success",
                                             "Probability of failure", "Number of trials"))
+
+  return(ps)
+}
+
+getParameterSet.ChiSquared <- function(x, df, verbose = FALSE){
+
+  if(verbose) message("Parameterised with df.")
+
+  ps <- ParameterSet$new(id = list("df"), value = list(1),
+                         lower = list(0), upper = list(Inf),
+                         class = list("integer"),
+                         settable = list(TRUE),
+                         updateFunc = list(NA),
+                         description = list("Degrees of Freedom"))
 
   return(ps)
 }
@@ -155,6 +178,69 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, var = NULL, sd = 
   return(ps)
 }
 
+getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
+
+  rate.bool = mean.bool = scale.bool = FALSE
+
+  if(!is.null(rate)){
+    if(verbose) message("Parameterised with shape and rate.")
+    rate.bool = TRUE
+  } else if(!is.null(scale)){
+    if(verbose) message("Parameterised with shape and scale.")
+    scale.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with shape and mean.")
+    mean.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("shape","rate","scale","mean"), value = list(1, 1, 1, 1),
+                         lower = list(0, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric","numeric"),
+                         settable = list(TRUE, rate.bool, scale.bool, mean.bool),
+                         updateFunc = list(NA, NA,
+                                           "self$getParameterValue('rate')^-1",
+                                           "(self$getParameterValue('shape'))/(self$getParameterValue('rate'))"),
+                         description = list("Shape - Shape Parameter",
+                                            "Rate - Inverse Scale Parameter",
+                                            "Scale - Scale Parameter",
+                                            "Mean - Mean Parameter"))
+  return(ps)
+}
+
+getParameterSet.Geometric <- function(x, prob, qprob = NULL, success = TRUE, verbose = FALSE){
+
+  prob.bool = qprob.bool = FALSE
+
+  if(!is.null(qprob)){
+    if(verbose) message("Parameterised with qprob.")
+    qprob.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with prob.")
+    prob.bool = TRUE
+  }
+
+  if(success)
+    ps <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
+                           lower = list(.Machine$double.eps, .Machine$double.eps),
+                           upper = list(1 - .Machine$double.eps, 1 - .Machine$double.eps),
+                           class = list("numeric","numeric"),
+                           settable = list(prob.bool, qprob.bool),
+                           updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
+                           description = list("Probability of Success",
+                                              "Probability of failure"))
+  else
+    ps <- ParameterSet$new(id = list("prob","qprob"), value = list(0.5, 0.5),
+                           lower = list(.Machine$double.eps, .Machine$double.eps),
+                           upper = list(1, 1),
+                           class = list("numeric","numeric"),
+                           settable = list(prob.bool, qprob.bool),
+                           updateFunc = list(NULL, "1 - self$getParameterValue('prob')"),
+                           description = list("Probability of Success",
+                                              "Probability of failure"))
+
+  return(ps)
+}
+
 getParameterSet.Gompertz <- function(x, shape, scale, verbose = FALSE){
 
   if(verbose) message("Parameterised with shape and scale.")
@@ -201,6 +287,25 @@ getParameterSet.Poisson <- function(x, rate, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.Uniform <- function(x, lower, upper, verbose = FALSE){
+
+  checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
+  checkmate::assert(lower < upper, .var.name = "lower must be < upper")
+
+  if(verbose) message("Parameterised with lower and upper.")
+
+  ps <- ParameterSet$new(id = list("lower","upper"),
+                         value = list(0, 1),
+                         lower = list(-Inf, -Inf),
+                         upper = list(Inf, Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Lower distribution limit.", "Upper distribution limit."))
+
+  return(ps)
+}
+
 getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
 
   if(verbose) message("Parameterised with shape and scale.")
@@ -221,7 +326,7 @@ getParameterSet.StudentT <- function(x, df, verbose = FALSE){
 
   ps <- ParameterSet$new(id = list("df"), value = list(1),
                          lower = list(0), upper = list(Inf),
-                         class = list("numeric"),
+                         class = list("integer"),
                          settable = list(TRUE),
                          updateFunc = list(NA),
                          description = list("Degrees of Freedom"))
@@ -266,35 +371,27 @@ getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE)
   return(ps)
 }
 
-getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
+getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
+  prob.bool = qprob.bool = FALSE
 
-  rate.bool = mean.bool = scale.bool = FALSE
+  if(is.null(prob) & is.null(qprob)) {
+    if(verbose) message("prob and qprob is missing. Parameterised with prob = 0.5.")
+    prob.bool = TRUE
+  } else if (!is.null(qprob)){
+    if(verbose) message("Parameterised with qprob.")
+    qprob.bool = TRUE
+  } else if(!is.null(prob)){
+    if(verbose) message("Parameterised with prob.")
+    prob.bool = TRUE}
 
-  if(!is.null(rate)){
-    if(verbose) message("Parameterised with shape and rate.")
-    rate.bool = TRUE
-  } else if(!is.null(scale)){
-    if(verbose) message("Parameterised with shape and scale.")
-    scale.bool = TRUE
-  } else{
-    if(verbose) message("Parameterised with shape and mean.")
-    mean.bool = TRUE
-  }
+  ps <- ParameterSet$new(id = list("prob", "qprob", "size"), value = list(0.5, 0.5, 1),
+                         lower = list(0, 0, 1), upper = list(1, 1, Inf),
+                         class = list("numeric","numeric","integer"),
+                         settable = list(prob.bool, qprob.bool, TRUE),
+                         updateFunc = list(NULL, "1 - self$getParameterValue('prob')", NULL),
+                         description = list("Probability of Success",
+                                            "Probability of failure", "Number of successes"))
 
-  ps <- ParameterSet$new(id = list("shape","rate","scale","mean"), value = list(1, 1, 1, 1),
-                         lower = list(0, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf),
-                         class = list("numeric","numeric","numeric","numeric"),
-                         settable = list(TRUE, rate.bool, scale.bool, mean.bool),
-                         updateFunc = list(NA, NA,
-                                           "self$getParameterValue('rate')^-1",
-                                           "(self$getParameterValue('shape'))/(self$getParameterValue('rate'))"),
-                         description = list("Shape - Shape Parameter",
-                                            "Rate - Inverse Scale Parameter",
-                                            "Scale - Scale Parameter",
-                                            "Mean - Mean Parameter"))
   return(ps)
 }
-
-
-
 

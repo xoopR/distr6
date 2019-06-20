@@ -85,7 +85,9 @@ StudentT$set("public","entropy",function(base = 2){
   df <- self$getParameterValue("df")
   (((df+1)/2)*(digamma((1+df)/2) - digamma(df/2))) + (log(sqrt(df)*beta(df/2, 1/2), base))
 })
-StudentT$set("public", "mgf", function(t) return(NaN))
+StudentT$set("public", "mgf", function(t){
+  return(NaN)
+})
 StudentT$set("public", "cf", function(t){
   df <- self$getParameterValue("df")
   return((besselK(sqrt(df)*abs(t), df/2) * ((sqrt(df)*abs(t))^(df/2))) / (gamma(df/2)*2^(df/2-1)))
