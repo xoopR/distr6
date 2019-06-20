@@ -95,7 +95,7 @@ Logarithmic$set("public", "cf", function(t){
   return(log(1-self$getParameterValue("theta")*exp(t*1i))/log(1-self$getParameterValue("theta")))
 })
 Logarithmic$set("public", "pgf", function(z){
-  if(abs(z) < 1/log(self$getParameterValue("theta")))
+  if(abs(z) < 1/self$getParameterValue("theta"))
     return(log(1-self$getParameterValue("theta")*z)/log(1-self$getParameterValue("theta")))
   else
     return(NaN)
@@ -118,7 +118,7 @@ Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL,
   rand <- function(n) extraDistr::rlgser(n, self$getParameterValue("theta"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0:100), distrDomain = PosReals$new(zero = TRUE),
+                   rand = rand, support = PosIntegers$new(zero=F), distrDomain = PosReals$new(zero = TRUE),
                    symmetric = FALSE)
 
   invisible(self)
