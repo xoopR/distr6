@@ -71,7 +71,7 @@ Collate:
     'SDistribution_Normal.R'
     'SDistribution_Pareto.R'
     'SDistribution_Poisson.R'
-    'SDistribution_StudentT.R'
+    'SDistribution_TDistribution.R'
     'SDistribution_Triangular.R'
     'SDistribution_Uniform.R'
     'SDistribution_Weibull.R'
