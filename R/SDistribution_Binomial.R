@@ -33,28 +33,8 @@
 #' as an integer and either prob (probability of success) or qprob (probability of failure) as a number
 #' between 0 and 1. If \code{qprob} is given then \code{prob} is ignored.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
-#'
-#' @section Statistical Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   }
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -68,6 +48,7 @@ Binomial$set("public","traits",list(type = PosIntegers$new(zero = T),
                                     valueSupport = "discrete",
                                     variateForm = "univariate"))
 Binomial$set("public","description","Binomial Probability Distribution.")
+Binomial$set("public","package","stats")
 
 Binomial$set("public","mean",function(){
   self$getParameterValue("size") * self$getParameterValue("prob")

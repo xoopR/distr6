@@ -43,13 +43,8 @@
 #' Otherwise the Geometric distribution calculcates probability of \eqn{y} failures before the first success.
 #' Mathematically these are related by \eqn{Y = X - 1}.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Binomial Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -62,10 +57,11 @@ Geometric$set("private",".success",NULL)
 
 Geometric$set("public","name","Geometric")
 Geometric$set("public","short_name","Geom")
-
 Geometric$set("public","traits",list(type = PosIntegers$new(zero = T),
                                        valueSupport = "discrete",
                                        variateForm = "univariate"))
+Geometric$set("public","description","Gamma Probability Distribution.")
+Geometric$set("public","package","stats")
 
 Geometric$set("public","mean",function(){
     if(private$.success)

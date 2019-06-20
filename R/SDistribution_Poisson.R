@@ -26,13 +26,8 @@
 #' @section Constructor Details: The Poisson distribution is parameterised with (arrival) rate as a
 #' positive numeric.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Binomial Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #'
 #' @export
@@ -48,6 +43,7 @@ Poisson$set("public","traits",list(type = PosIntegers$new(zero = T),
                                    variateForm = "univariate"))
 
 Poisson$set("public","description","Poisson Probability Distribution.")
+Poisson$set("public","package","stats")
 
 Poisson$set("public","mean",function(){
   return(self$getParameterValue("rate"))

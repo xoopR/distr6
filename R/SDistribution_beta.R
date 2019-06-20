@@ -28,13 +28,8 @@
 #' @section Constructor Details: The Beta distribution is parameterised with two shape parameters,
 #' both take the default value 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -48,6 +43,7 @@ Beta$set("public", "traits",list(type = PosReals$new(zero = T),
                                  valueSupport ="continuous",
                                  variateForm = "univariate"))
 Beta$set("public","description","Beta Probability Distribution.")
+Beta$set("public","package","stats")
 
 
 Beta$set("public","mean",function(){

@@ -16,6 +16,7 @@ estimated numerically.
 \details{
 The variance of a distribution is defined by the formula
 \deqn{var_X = E[X^2] - E[X]^2}
+where \eqn{E_X} is the expectation of distribution X.
 
 If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 \code{\link{CoreStatistics}} decorator.

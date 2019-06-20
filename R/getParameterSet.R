@@ -371,6 +371,36 @@ getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE)
   return(ps)
 }
 
+getParameterSet.Logarithmic <- function(x, theta, verbose = FALSE){
+
+  if(verbose) message("Parameterised with theta.")
+
+  ps <- ParameterSet$new(id = list("theta"), value = list(0.5),
+                         lower = list(0), upper = list(1),
+                         class = list("numeric"),
+                         settable = list(TRUE),
+                         updateFunc = list(NA),
+                         description = list("Theta parameter."))
+
+  return(ps)
+}
+
+
+getParameterSet.Logistic <- function(x, mean, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with mean and scale.")
+
+  ps <- ParameterSet$new(id = list("mean","scale"), value = list(0, 1),
+                         lower = list(-Inf, .Machine$double.eps), upper = list(Inf, Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Mean - Location Parameter",
+                                            "Scale - Scale Parameter"))
+  return(ps)
+}
+
+
 getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
   prob.bool = qprob.bool = FALSE
 

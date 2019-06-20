@@ -62,9 +62,9 @@
 #'   \code{traits} \tab List: type, valueSupport, variateForm.
 #'   }
 #'
-#' @section Accessor Methods:
+#' @section Public Methods:
 #'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
+#'   \strong{Accessor Methods} \tab \strong{Link} \cr
 #'   \code{decorators()} \tab \code{\link{decorators}} \cr
 #'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
 #'   \code{variateForm()} \tab \code{\link{variateForm}} \cr
@@ -79,53 +79,41 @@
 #'   \code{dmin()} \tab \code{\link{dmin}} \cr
 #'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
 #'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-#'   }
-#'
-#' @section p/d/q/r Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{p/d/q/r Methods} \tab \strong{Link} \cr
 #'   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
 #'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
 #'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n)} \tab \code{\link{rand}}
-#'  }
-#'
-#' @section Parameter Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
+#'   \code{rand(n)} \tab \code{\link{rand}} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{Parameter Methods} \tab \strong{Link} \cr
 #'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
 #'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#' }
-#'
-#' @section Validation Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{Validation Methods} \tab \strong{Link} \cr
 #'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
 #'   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
 #'   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
-#' }
-#'
-#' @section Representation Methods:
-#' \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{Representation Methods} \tab \strong{Link} \cr
 #'   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
 #'   \code{print()} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
 #'   \code{plot()} \tab Coming Soon. \cr
 #'   \code{qqplot()} \tab Coming Soon. \cr
-#' }
+#'   }
 #'
 #'
 #' @seealso See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 #' Intervals. See \code{\link{ParameterSet}} for parameter details. See
 #' \code{\link{DistributionDecorator}} for Decorator details.
+#'
+#' @export
 NULL
-#-------------------------------------------------------------
 #-------------------------------------------------------------
 # Distribution Definition
 #-------------------------------------------------------------
-#' @export
 Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 
 

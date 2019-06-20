@@ -24,13 +24,8 @@
 #' @section Constructor Details: The Chi-Squared distribution is parameterised with
 #' degrees of freedom, df. Default parameterisation is with df = 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Binomial Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -44,6 +39,7 @@ ChiSquared$set("public", "traits", list(type = PosReals$new(zero = TRUE),
                                         valueSupport = "continuous",
                                         variateForm = "univariate"))
 ChiSquared$set("public", "description", "ChiSquared Probability Distribution")
+ChiSquared$set("public","package","stats")
 
 ChiSquared$set("public", "mean", function(){
   return(self$getParameterValue("df"))

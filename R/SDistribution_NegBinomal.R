@@ -5,14 +5,28 @@
 #' @title Negative Binomial Distribution
 #'
 #' @description Mathematical and statistical functions for the Negative Binomial distribution parameterised
-#' with size and prob or \eqn{qprob = 1 - prob}. The size-prob Negative Binomial distribution is defined
-#' by the pmf,
-#' \deqn{f(x) = (x + n - 1)C(n - 1) p^n (1 - p)^x}
-#' where \eqn{n = 1,2,...} is the size parameter and \eqn{0 \le p \le 1} is the prob parameter.
+#' with size and one of: prob, \eqn{qprob = 1 - prob} or mean (formula dependent on parameterisation, see details.)
+#' The Negative Binomial determining the number of success before \eqn{n} failures is defined by the pmf,
+#' \deqn{f(x) = C(x + n - 1, n) p^n (1 - p)^n}
+#' where \eqn{n = 0,1,2,\ldots} is the size parameter, \eqn{p \epsilon [0,1]} is the prob parameter and
+#' \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+#'
+#' @details The Negative Binomial distribution can refer to one of four distributions:
+#'
+#' 1. The number of successes before K failures
+#'
+#' 2. The number of trials before K failures
+#'
+#' 3. The number of failures before K successes
+#'
+#' 4. The number of trials before K successes
+#'
+#' For each we refer to the number of K successs/failures as the \code{size} parameter, \code{prob}
+#' is always the probability of success and \code{qprob} is the probability of failure.
 #'
 #' @name NegativeBinomial
 #'
-#' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, decorators = NULL, verbose = FALSE)
+#' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, type = "sbf", decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -20,45 +34,21 @@
 #' \code{size} \tab numeric \tab number of failures. \cr
 #' \code{prob} \tab numeric \tab probability of success. \cr
 #' \code{qprob} \tab numeric \tab probability of failure. \cr
+#' \code{type} \tab character \tab type of negative binomial, see details. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-##' @section Constructor Details:
-#' The Negative Binomial distribution with size = n (positive) and
-#'  prob = p (0 <= p <= 1) has density function defined as
-#' ,
-#' where n is the number of successes (size), p is the probability of each
-#' success (prob) and x is interpreted as the number of failures before
-#' the n-th success.If \code{qprob} is given then \code{prob} is ignored. This quantifies
-#' the probability of having x failuers in a sequence of independent and identical
-#' Bernoulli before the n-th success is obtained.
-#' Compared with a Binomial distribution, which counts the number of successes in a
-#' fixed number of trials, a Negative Binomial distribution pre-specifies the target
-#' number of successes and counts the number of failures required to reach this
-#' target number. A NegativeBinomial(1,p) is the same as a Geometric(p).
+#' @section Constructor Details: The Negative Binomial distribution is parameterised with size,
+#' as an integer and either prob (probability of success) or qprob (probability of failure) as a number
+#' between 0 and 1. If \code{qprob} is given then \code{prob} is ignored. The additional parameter
+#' \code{type} determines which of the four Negative Binomial distributions should be constructed, this
+#' cannot be updated after construction. \code{type} should be one of "sbf" (successes before failures),
+#' "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
 #'
-#' @section Statistical Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   }
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #
 #
 #' @export
@@ -68,11 +58,13 @@ NULL
 #-------------------------------------------------------------
 NegativeBinomial <- R6::R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F)
 NegativeBinomial$set("public", "name", "NegativeBinomial")
-NegativeBinomial$set("public", "shortname", "NBinom")
+NegativeBinomial$set("public", "short_name", "NBinom")
 NegativeBinomial$set("public", "traits", list(type = PosIntegers$new(zero = T),
                                          valueSupport = "discrete",
                                          variateForm = "univariate"))
+NegativeBinomial$set("private",".type",NULL)
 NegativeBinomial$set("public","description","Negative Binomial Probability Distribution.")
+NegativeBinomial$set("public","package","distr6")
 
 NegativeBinomial$set("public", "mean", function(){
   self$getParameterValue("size") * self$getParameterValue("qprob") / self$getParameterValue("prob")

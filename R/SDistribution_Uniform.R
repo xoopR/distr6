@@ -26,13 +26,8 @@
 #' upper = 1 limits respectively.
 #'
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -45,6 +40,8 @@ Uniform$set("public","short_name","Unif")
 Uniform$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
+Uniform$set("public","description","Uniform Probability Distribution.")
+Uniform$set("public","package","stats")
 
 
 Uniform$set("public","mean",function(){
