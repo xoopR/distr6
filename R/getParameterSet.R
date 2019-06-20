@@ -427,3 +427,16 @@ getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, type, 
   return(ps)
 }
 
+getParameterSet.Cauchy <- function(x, location, scale, verbose = FALSE){
+  
+  if(verbose) message("Parameterised with location and scale.")
+  
+  ps <- ParameterSet$new(id = list("location","scale"), value = list(0, 1),
+                         lower = list(-Inf, 0), upper = list(Inf, Inf),
+                         class = list("numeric","numeric"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Location - Location Parameter",
+                                            "Scale - Scale Parameter"))
+  return(ps)
+}
