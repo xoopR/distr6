@@ -11,7 +11,9 @@ where \eqn{0 < theta < 1} is the theta parameter.
 }
 \details{
 The distribution is implemented by interfacing the extraDistr package, the documentation for
-the extraDistr distribution can be found here, \code{\link[extraDistr]{LogSeries}}.
+the extraDistr distribution can be found here, \code{\link[extraDistr]{LogSeries}}. Entropy
+is omitted as no closed-form expression could be found, decorate with CoreStatstics for a
+numeric results.
 }
 \section{Constructor}{
  Logarithmic$new(theta = 0.5, decorators = NULL, verbose = FALSE)
