@@ -5,10 +5,9 @@
 #' @title Cauchy Distribution
 #'
 #' @description Mathematical and statistical functions for the Cauchy distribution parameterised
-#' with location and scale.
-#' The location/scale parameterisation is defined by the pdf,
-#' \deqn{f(x) = 1 / (\pi * \gamma * (1 + ((x - \x0) / \gamma)^2))}
-#' where \eqn{\x0} is the location parameter and \eqn{\gamma} > 0 is the scale parameter.
+#' with location and scale and defined by the pdf,
+#' \deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))}
+#' where \eqn{\alpha \epsilon R} is the location parameter and \eqn{\beta > 0} is the scale parameter.
 #'
 #' @name Cauchy
 #'
@@ -17,13 +16,13 @@
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{location} \tab numeric \tab location, location parameter. \cr
-#' \code{scale} \tab numeric \tab scale, scale parameter. \cr
+#' \code{location} \tab numeric \tab location parameter. \cr
+#' \code{scale} \tab numeric \tab scale parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Cauchyt distribution is parameterised with
+#' @section Constructor Details: The Cauchy distribution is parameterised with
 #' location and scale. Default parameterisation is with location = 0 and scale = 1.
 #'
 #' @inheritSection SDistribution Public Variables
@@ -41,6 +40,7 @@ Cauchy$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
 Cauchy$set("public","description","Cauchy Probability Distribution.")
+Cauchy$set("public","package","stats")
 
 Cauchy$set("public","mean",function(){
   return(NaN)
@@ -52,10 +52,7 @@ Cauchy$set("public","skewness",function(){
   return(NaN)
 })
 Cauchy$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(NaN)
-  else
-    return(NaN)
+  return(NaN)
 })
 Cauchy$set("public","entropy",function(base = 2){
   return(log(4 * pi * self$getParameterValue("scale"), base))
@@ -64,7 +61,7 @@ Cauchy$set("public", "mgf", function(t){
   return(NaN)
 })
 Cauchy$set("public", "cf", function(t){
-  return(exp((self$getParameterValue("location") * i * t) - (self$getParameterValue("scale") * abs(t))))
+  return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
 })
 Cauchy$set("public","mode",function(){
   return(self$getParameterValue("location"))
@@ -79,17 +76,17 @@ Cauchy$set("private",".getRefParams", function(paramlst){
 
 Cauchy$set("public","initialize",function(location = 0, scale = 1,
                                           decorators = NULL, verbose = FALSE){
-  
+
   private$.parameters <- getParameterSet(self, location, scale, verbose)
   self$setParameterValue(list(location = location, scale = scale))
-  
+
   pdf <- function(x1) dcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
   cdf <- function(x1) pcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
   quantile <- function(p) qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"))
   rand <- function(n) rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
-  
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
+                   rand = rand, support = Reals$new(), distrDomain = Reals$new(),
                    symmetric = TRUE)
   invisible(self)
 })

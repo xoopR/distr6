@@ -54,6 +54,7 @@ Collate:
     'SDistribution_Bernoulli.R'
     'SDistribution_Beta.R'
     'SDistribution_Binomial.R'
+    'SDistribution_Cauchy.R'
     'SDistribution_ChiSquared.R'
     'SDistribution_Degenerate.R'
     'SDistribution_DiscreteUniform.R'
