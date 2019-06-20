@@ -52,7 +52,6 @@ Collate:
     'SetInterval_SpecialSet.R'
     'SDistribution_Arcsine.R'
     'SDistribution_Bernoulli.R'
-    'SDistribution_Beta.R'
     'SDistribution_Binomial.R'
     'SDistribution_ChiSquared.R'
     'SDistribution_Degenerate.R'
