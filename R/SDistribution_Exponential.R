@@ -31,13 +31,8 @@
 #' Scale is defined by
 #' \deqn{scale = 1/rate}
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -51,6 +46,7 @@ Exponential$set("public","traits",list(type = PosReals$new(zero = T),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
 Exponential$set("public","description","Exponential Probability Distribution.")
+Exponential$set("public","package","stats")
 
 Exponential$set("public","mean",function(){
   self$getParameterValue("scale")

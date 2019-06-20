@@ -26,13 +26,8 @@
 #' @section Constructor Details: The DiscreteUniform distribution is parameterised with lower and
 #' upper limits as integers.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Binomial Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -46,6 +41,7 @@ DiscreteUniform$set("public","traits",list(type = Integers$new(),
                                      valueSupport = "discrete",
                                      variateForm = "univariate"))
 DiscreteUniform$set("public","description","DiscreteUniform Probability Distribution.")
+DiscreteUniform$set("public","package","distr6")
 
 DiscreteUniform$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
@@ -115,7 +111,7 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
   rand = function(n) return(self$quantile(runif(n)))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(lower, upper),
-                   distrDomain = Integers$new(zero = T), symmetric = FALSE)
+                   rand = rand, support = Set$new(lower:upper),
+                   distrDomain = Integers$new(zero = T), symmetric = TRUE)
   invisible(self)
 })

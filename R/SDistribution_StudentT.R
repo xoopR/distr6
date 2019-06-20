@@ -24,13 +24,8 @@
 #' @section Constructor Details: The Student's t distribution is parameterised with
 #' degrees of freedom, df. Default parameterisation is with df = 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -44,6 +39,7 @@ StudentT$set("public","traits",list(type = Reals$new(),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
 StudentT$set("public","description","Student's t Probability Distribution.")
+StudentT$set("public","package","stats")
 
 StudentT$set("public","mean",function(){
   if(self$getParameterValue("df") > 1)
@@ -85,7 +81,9 @@ StudentT$set("public","entropy",function(base = 2){
   df <- self$getParameterValue("df")
   (((df+1)/2)*(digamma((1+df)/2) - digamma(df/2))) + (log(sqrt(df)*beta(df/2, 1/2), base))
 })
-StudentT$set("public", "mgf", function(t) return(NaN))
+StudentT$set("public", "mgf", function(t){
+  return(NaN)
+})
 StudentT$set("public", "cf", function(t){
   df <- self$getParameterValue("df")
   return((besselK(sqrt(df)*abs(t), df/2) * ((sqrt(df)*abs(t))^(df/2))) / (gamma(df/2)*2^(df/2-1)))

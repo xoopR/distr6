@@ -31,13 +31,8 @@
 #' success) or qprob (probability of failure) as a number between 0 and 1. If \code{qprob} is given then
 #' \code{prob} is ignored.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Binomial Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -51,6 +46,7 @@ Bernoulli$set("public","traits",list(type = PosIntegers$new(zero = T),
                                     valueSupport = "discrete",
                                     variateForm = "univariate"))
 Bernoulli$set("public","description","Bernoulli Probability Distribution.")
+Bernoulli$set("public","package","distr6")
 
 Bernoulli$set("public","mean",function(){
   self$getParameterValue("prob")

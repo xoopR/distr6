@@ -2,7 +2,7 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{cor}
 \alias{cor}
-\title{Numeric Correlation a Distribution}
+\title{Distribution Correlation}
 \usage{
 cor(object)
 }
@@ -10,11 +10,18 @@ cor(object)
 \item{object}{Distribution.}
 }
 \description{
-A numeric calculation for the correlation of a (multivariate) distribution.
+Correlation of a distribution.
 }
 \details{
-If the distribution is univariate then nothing is returned, otherwise the
-correlation is calculated numerically.
+In terms of covariance, the correlation of a distribution is defined by the equation,
+\deqn{\rho_{XY} = \sigma_{XY}/\sigma_X\sigma_Y}
+where \eqn{\sigma_{XY}} is the covariance of X and Y and \eqn{\sigma_X, \sigma_Y} and the respective
+standard deviations of X and Y.
+
+If the distribution is univariate then returns \eqn{1}.
+
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
 }
 \section{R6 Usage}{
  $cor()

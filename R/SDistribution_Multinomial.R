@@ -36,28 +36,8 @@
 #' to be passed to the pmf function. The probability vector is automatically normalised with
 #' \deqn{probs = probs/sum(probs)}.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
-#'
-#' @section Statistical Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{cov()} \tab \code{\link{cov}} \cr
-#'   \code{cor()} \tab \code{\link{cor}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{pgf(t)} \tab \code{\link{pgf}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
-#'   }
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -71,6 +51,7 @@ Multinomial$set("public","traits",list(type = PosIntegers$new(zero = T, dim = "K
                                   valueSupport = "discrete",
                                   variateForm = "multivariate"))
 Multinomial$set("public","description","Multinomial Probability Distribution.")
+Multinomial$set("public","package","stats")
 
 Multinomial$set("public","mean",function(){
   return(self$getParameterValue("size") * self$getParameterValue("probs"))

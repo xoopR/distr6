@@ -17,8 +17,9 @@ entropy(object, base = 2)
 \details{
 The entropy of a (discrete) distribution is defined by
 \deqn{- sum f_X * log(f_X)}
-where f_X is the pdf of distribution X, with an integration analogue for continuous distributions.
-The base of the logarithm of the equation determines the type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
+where \eqn{f_X} is the pdf of distribution X, with an integration analogue for continuous distributions.
+The base of the logarithm of the equation determines the type of entropy computed. By default we use
+base 2 to compute entropy in 'Shannons' or 'bits'.
 
 If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 \code{\link{CoreStatistics}} decorator.

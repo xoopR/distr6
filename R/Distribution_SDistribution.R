@@ -1,7 +1,100 @@
-
+#-------------------------------------------------------------
+# SDistribution Documentation
+#-------------------------------------------------------------
+#' @title Generalised Special Distribution Object
+#'
+#' @description Abstract class that cannot be constructed directly.
+#'
+#' @name SDistribution
+#'
+#' @section Public Variables:
+#'  \tabular{ll}{
+#'   \strong{Method} \tab \strong{Return} \cr
+#'   \code{name} \tab Name of distribution. \cr
+#'   \code{short_name} \tab Id of distribution. \cr
+#'   \code{description} \tab Brief description of distribution. \cr
+#'   \code{traits} \tab List: type, valueSupport, variateForm. \cr
+#'   \code{package} \tab The package p/d/q/r are implemented in.
+#'  }
+#'
+#' @section Public Methods:
+#'  \tabular{ll}{
+#'   \strong{Accessor Methods} \tab \strong{Link} \cr
+#'   \code{decorators()} \tab \code{\link{decorators}} \cr
+#'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
+#'   \code{variateForm()} \tab \code{\link{variateForm}} \cr
+#'   \code{type()} \tab \code{\link{type}} \cr
+#'   \code{properties()} \tab \code{\link{properties}} \cr
+#'   \code{support()} \tab \code{\link{support}} \cr
+#'   \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
+#'   \code{symmetry()} \tab \code{\link{symmetry}} \cr
+#'   \code{sup()}  \tab \code{\link{sup}} \cr
+#'   \code{inf()} \tab \code{\link{inf}} \cr
+#'   \code{dmax()}  \tab \code{\link{dmax}} \cr
+#'   \code{dmin()} \tab \code{\link{dmin}} \cr
+#'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
+#'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+#'
+#'   \tab \cr \tab \cr \tab \cr
+#'
+#'   \strong{Statistical Methods} \tab \strong{Link} \cr
+#'   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
+#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
+#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
+#'   \code{rand(n)} \tab \code{\link{rand}} \cr
+#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
+#'   \code{var()} \tab \code{\link{var}} \cr
+#'   \code{cov()} \tab \code{\link{cov}} \cr
+#'   \code{cor()} \tab \code{\link{cor}} \cr
+#'   \code{skewness()} \tab \code{\link{skewness}} \cr
+#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
+#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
+#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
+#'   \code{cf(t)} \tab \code{\link{cf}} \cr
+#'   \code{pgf(z)} \tab \code{\link{pgf}} \cr
+#'   \code{sd()} \tab \code{\link{sd}} \cr
+#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
+#'   \code{iqr()} \tab \code{\link{iqr}} \cr
+#'
+#'   \tab \cr \tab \cr \tab \cr
+#'
+#'   \strong{Parameter Methods} \tab \strong{Link} \cr
+#'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
+#'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
+#'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+#'
+#'   \tab \cr \tab \cr \tab \cr
+#'
+#'   \strong{Validation Methods} \tab \strong{Link} \cr
+#'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
+#'   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
+#'   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+#'
+#'   \tab \cr \tab \cr \tab \cr
+#'
+#'   \strong{Representation Methods} \tab \strong{Link} \cr
+#'   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+#'   \code{print()} \tab \code{\link[base]{print}} \cr
+#'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+#'   \code{plot()} \tab Coming Soon. \cr
+#'   \code{qqplot()} \tab Coming Soon. \cr
+#'   }
+#'
+#' @export
+NULL
 SDistribution <- R6::R6Class("SDistribution", inherit = Distribution)
 
 SDistribution$set("public","setParameterValue",function(lst, error = "warn"){
   lst <- private$.getRefParams(lst)
   super$setParameterValue(lst, error)
+})
+SDistribution$set("public","package",NULL)
+SDistribution$set("public","cov",function(){
+  return(self$var())
+})
+SDistribution$set("public","cor",function(){
+  return(1)
+})
+SDistribution$set("public","pgf",function(){
+  return(NaN)
 })

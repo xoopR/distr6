@@ -35,16 +35,14 @@
 #' Mean is defined by
 #' \deqn{mean = shape/rate}
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
+#-------------------------------------------------------------
+# Gamma Distribution Definition
+#-------------------------------------------------------------
 Gamma <- R6::R6Class("Gamma", inherit = SDistribution, lock_objects = F)
 Gamma$set("public","name","Gamma")
 Gamma$set("public","short_name","Gamma")
@@ -54,6 +52,7 @@ Gamma$set("public","traits",list(type = PosReals$new(zero = T),
                                        variateForm = "univariate"))
 
 Gamma$set("public","description","Gamma Probability Distribution.")
+Gamma$set("public","package","stats")
 
 Gamma$set("public","mean",function(){
   return(self$getParameterValue("mean"))
