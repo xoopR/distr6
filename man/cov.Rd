@@ -2,7 +2,7 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{cov}
 \alias{cov}
-\title{Numeric Covariance a Distribution}
+\title{Distribution Covariance}
 \usage{
 cov(object)
 }
@@ -10,13 +10,22 @@ cov(object)
 \item{object}{Distribution.}
 }
 \description{
-A numeric calculation for the covariance of a (multivariate) distribution.
+Covariance of a distribution.
 }
 \details{
-If the distribution is univariate then the variance is returned, otherwise the
-covariance is calculated numerically.
+The covariance of a distribution is defined by the equation,
+\deqn{\sigma_{XY} = E[(X - E[X])(Y - E[Y])], X != Y}
+where \eqn{E_X} is the expectation with respect to distribution X.
+
+If the distribution is univariate then returns the variance.
+
+If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+\code{\link{CoreStatistics}} decorator.
 }
 \section{R6 Usage}{
  $cov()
 }
 
+\seealso{
+\code{\link{CoreStatistics}} and \code{\link{decorate}}
+}

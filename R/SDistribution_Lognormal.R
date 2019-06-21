@@ -28,45 +28,9 @@
 #' prec is defined by
 #' \deqn{prec = var^-1}
 #'
-#' The CoreStatistics and ExoticStatistics decorators can be added to the distribution for further
-#' numeric functionality, but these are approximate calculations only. Additional arguments can be passed
-#' to the Distribution constructor, including R62S3 to determine if S3 methods should be added for
-#' the Lognormal distribution.
 #'
-#'
-#' @section Public Variables:
-#'  \tabular{lr}{
-#'   \strong{Method} \tab \strong{Return} \cr
-#'   \code{name} \tab "Lognormal" \cr
-#'   \code{short_name} \tab "lnorm" \cr
-#'   \code{traits} \tab List of Lognormal distribution traits. \cr
-#'   \code{properties} \tab List of Lognormal distribution properties. \cr
-#'   }
-#'
-#' @section Public Methods:
-#'  \tabular{lrr}{
-#'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{pdf(x1, log = FALSE)} \tab character \tab Evaluates density at x1. \cr
-#'   \code{cdf(x1, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evaluates distribution function at x1. \cr
-#'   \code{quantile(p, lower.tail = TRUE, log.p = FALSE)} \tab numeric \tab Evalutes inverse distribution at p.  \cr
-#'   \code{rand(n)} \tab numeric \tab Randomly generates n samples from the distribution.  \cr
-#'   \code{normectation()} \tab numeric \tab normectation.  \cr
-#'   \code{var()} \tab numeric \tab Variance.  \cr
-#'   \code{skewness()} \tab numeric \tab Skewness. \cr
-#'   \code{kurtosis(excess = TRUE)} \tab numeric \tab Kurtosis. Kurtosis - 3 if excess = TRUE. \cr
-#'   \code{entropy(base = 2)} \tab numeric \tab Entropy. Shannon if base = 2. \cr
-#'   \code{mode()} \tab numeric \tab Mode. \cr
-#'   \code{mgf(t)} \tab numeric \tab Evaluates moment generating function at t. \cr
-#'   \code{cf(t)} \tab numeric \tab Evaluates characteristic function at t. \cr
-#'   \code{survival(x1, log.p = FALSE)} \tab numeric \tab Evaluates survival function at x1. \cr
-#'   \code{hazard(x1)} \tab numeric \tab Evaluates hazard function at x1. \cr
-#'   \code{cumHazard(x1)} \tab numeric \tab Evaluates cumulative hazard function at x1. \cr
-#'   }
-#'
-#' @section Public Methods Details:
-#' If \code{log.p} is TRUE then the natural logarithm of probabilities is returned. If \code{lower.tail}
-#' is TRUE then distribution functions are evaluated at the lower tail of the distribution, otherwise
-#' the upper tail (1 - p).
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #'
 #' @seealso See \code{\link{Distribution}} for inherited methods and variables. See \code{\link{DistributionDecorator}}
@@ -79,6 +43,9 @@ NULL
 Lognormal <- R6::R6Class("Lognormal", inherit = Distribution, lock_objects = F)
 Lognormal$set("public","name","Lognormal")
 Lognormal$set("public","short_name","lnorm")
+Lognormal$set("public","description","Lognormal Probability Distribution.")
+Lognormal$set("public","package","stats")
+
 Lognormal$set("public","traits",list(type = Reals$new(),
                                      valueSupport = "continuous",
                                      variateForm = "multivariate"))

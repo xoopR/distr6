@@ -16,7 +16,7 @@ Skewness of a distribution
 The skewness of a distribution is defined by the third standardised moment of the
 distribution,
 \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
-where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
 \eqn{\sigma} is the standard deviation of the distribution.
 
 If an analytic expression isn't available, returns error. To impute a numerical expression, use the

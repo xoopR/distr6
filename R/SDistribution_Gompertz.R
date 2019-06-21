@@ -32,13 +32,8 @@
 #' @section Constructor Details: The Gompertz distribution is parameterised by default with
 #' shape = 1 and scale = 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -52,6 +47,7 @@ Gompertz$set("public","traits",list(type = PosReals$new(zero = T),
                                        valueSupport = "continuous",
                                        variateForm = "univariate"))
 Gompertz$set("public","description","Gompertz Probability Distribution.")
+Gompertz$set("public","package","distr6")
 
 Gompertz$set("private",".getRefParams", function(paramlst){
   lst = list()

@@ -6,8 +6,8 @@
 #'
 #' @description Mathematical and statistical functions for the Beta distribution parameterised
 #' with two shape parameters and defined by the pdf,
-#' \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / \Beta(\alpha, \beta)}
-#' where \eqn{\alpha, \beta > 0} are the two shape parameters and \eqn{\Beta} is the Beta function.
+#' \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
+#' where \eqn{\alpha, \beta > 0} are the two shape parameters and \eqn{B} is the Beta function.
 #'
 #' @details \code{mgf} and \code{cf} are omitted as no analytic expression could be found. Decorate
 #' with CoreStatistics for numeric results.
@@ -28,13 +28,8 @@
 #' @section Constructor Details: The Beta distribution is parameterised with two shape parameters,
 #' both take the default value 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -48,6 +43,7 @@ Beta$set("public", "traits",list(type = PosReals$new(zero = T),
                                  valueSupport ="continuous",
                                  variateForm = "univariate"))
 Beta$set("public","description","Beta Probability Distribution.")
+Beta$set("public","package","stats")
 
 
 Beta$set("public","mean",function(){
@@ -85,7 +81,7 @@ Beta$set("public","kurtosis",function(excess = TRUE){
   shape2 <- self$getParameterValue("shape2")
 
   ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-(shape1*shape2*(shape1+shape2+2))}/
-                (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
+    (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
   if (excess)
     return(ex_kurtosis)
   else
@@ -95,7 +91,7 @@ Beta$set("public", "entropy", function(base = 2){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
   return(log(beta(shape1,shape2), base) - ((shape1-1)*digamma(shape1)) -
-    ((shape2-1) * digamma(shape2)) + ((shape1+shape2-2)*digamma(shape1+shape2)))
+           ((shape2-1) * digamma(shape2)) + ((shape1+shape2-2)*digamma(shape1+shape2)))
 })
 
 Beta$set("private", ".getRefParams", function(paramlst){

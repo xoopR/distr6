@@ -5,13 +5,28 @@
 \title{Negative Binomial Distribution}
 \description{
 Mathematical and statistical functions for the Negative Binomial distribution parameterised
-with size and prob or \eqn{qprob = 1 - prob}. The size-prob Negative Binomial distribution is defined
-by the pmf,
-\deqn{f(x) = (x + n - 1)C(n - 1) p^n (1 - p)^x}
-where \eqn{n = 1,2,...} is the size parameter and \eqn{0 \le p \le 1} is the prob parameter.
+with size and one of: prob, \eqn{qprob = 1 - prob} or mean (formula dependent on parameterisation, see details.)
+The Negative Binomial determining the number of success before \eqn{n} failures is defined by the pmf,
+\deqn{f(x) = C(x + n - 1, n) p^n (1 - p)^n}
+where \eqn{n = 0,1,2,\ldots} is the size parameter, \eqn{p \epsilon [0,1]} is the prob parameter and
+\eqn{C(a,b)} is the combination (or binomial coefficient) function.
+}
+\details{
+The Negative Binomial distribution can refer to one of four distributions:
+
+1. The number of successes before K failures
+
+2. The number of trials before K failures
+
+3. The number of failures before K successes
+
+4. The number of trials before K successes
+
+For each we refer to the number of K successs/failures as the \code{size} parameter, \code{prob}
+is always the probability of success and \code{qprob} is the probability of failure.
 }
 \section{Constructor}{
- NegativeBinomial$new(size = 10, prob = 0.5, decorators = NULL, verbose = FALSE)
+ NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -21,42 +36,20 @@ where \eqn{n = 1,2,...} is the size parameter and \eqn{0 \le p \le 1} is the pro
 \code{size} \tab numeric \tab number of failures. \cr
 \code{prob} \tab numeric \tab probability of success. \cr
 \code{qprob} \tab numeric \tab probability of failure. \cr
+\code{type} \tab character \tab type of negative binomial, see details. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 
 \section{Constructor Details}{
-
-The Negative Binomial distribution with size = n (positive) and
- prob = p (0 <= p <= 1) has density function defined as
-,
-where n is the number of successes (size), p is the probability of each
-success (prob) and x is interpreted as the number of failures before
-the n-th success.If \code{qprob} is given then \code{prob} is ignored. This quantifies
-the probability of having x failuers in a sequence of independent and identical
-Bernoulli before the n-th success is obtained.
-Compared with a Binomial distribution, which counts the number of successes in a
-fixed number of trials, a Negative Binomial distribution pre-specifies the target
-number of successes and counts the number of failures required to reach this
-target number. A NegativeBinomial(1,p) is the same as a Geometric(p).
-}
-
-\section{Statistical Methods}{
-
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
-  \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-  \code{var()} \tab \code{\link{var}} \cr
-  \code{skewness()} \tab \code{\link{skewness}} \cr
-  \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-  \code{mgf(t)} \tab \code{\link{mgf}} \cr
-  \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{cf(t)} \tab \code{\link{cf}} \cr
-  \code{sd()} \tab \code{\link{sd}} \cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  }
+ The Negative Binomial distribution is parameterised with size,
+as an integer and either prob (probability of success) or qprob (probability of failure) as a number
+between 0 and 1. If \code{qprob} is given then \code{prob} is ignored. The additional parameter
+\code{type} determines which of the four Negative Binomial distributions should be constructed, this
+cannot be updated after construction. \code{type} should be one of "sbf" (successes before failures),
+"tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
+"fbs" is taken as default as this is used in R stats (although "sbf" is typically more common).
 }
 
 \section{Public Variables}{
@@ -66,14 +59,15 @@ target number. A NegativeBinomial(1,p) is the same as a Geometric(p).
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm.
-  }
+  \code{traits} \tab List: type, valueSupport, variateForm. \cr
+  \code{package} \tab The package p/d/q/r are implemented in.
+ }
 }
 
-\section{Accessor Methods}{
+\section{Public Methods}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
@@ -88,49 +82,50 @@ target number. A NegativeBinomial(1,p) is the same as a Geometric(p).
   \code{dmin()} \tab \code{\link{dmin}} \cr
   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  }
-}
 
-\section{p/d/q/r Methods}{
+  \tab \cr \tab \cr \tab \cr
 
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Statistical Methods} \tab \strong{Link} \cr
   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}}
- }
-}
+  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{mean()} \tab \code{\link{mean.Distribution}} \cr
+  \code{var()} \tab \code{\link{var}} \cr
+  \code{cov()} \tab \code{\link{cov}} \cr
+  \code{cor()} \tab \code{\link{cor}} \cr
+  \code{skewness()} \tab \code{\link{skewness}} \cr
+  \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
+  \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
+  \code{mgf(t)} \tab \code{\link{mgf}} \cr
+  \code{cf(t)} \tab \code{\link{cf}} \cr
+  \code{pgf(z)} \tab \code{\link{pgf}} \cr
+  \code{sd()} \tab \code{\link{sd}} \cr
+  \code{median()} \tab \code{\link{median.Distribution}} \cr
+  \code{iqr()} \tab \code{\link{iqr}} \cr
 
-\section{Parameter Methods}{
+  \tab \cr \tab \cr \tab \cr
 
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-}
-}
 
-\section{Validation Methods}{
+  \tab \cr \tab \cr \tab \cr
 
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
-}
-}
 
-\section{Representation Methods}{
+  \tab \cr \tab \cr \tab \cr
 
-\tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
-}
+  }
 }
 

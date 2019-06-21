@@ -28,15 +28,10 @@
 #' }
 #'
 #' @section Constructor Details: The Laplace distribution can either be parameterised with mean and
-#' scale or variance. The default parameteisation is with mean 0 and scale 1.
+#' scale or variance. The default parameterisation is with mean 0 and scale 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -50,6 +45,7 @@ Laplace$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
 Laplace$set("public","description","Laplace Probability Distribution.")
+Laplace$set("public","package","distr6")
 
 Laplace$set("public","mean",function(){
   self$getParameterValue("mean")
