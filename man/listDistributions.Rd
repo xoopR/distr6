@@ -14,7 +14,7 @@ listDistributions(simplify = FALSE, traits = NULL, view = FALSE)
 \item{view}{logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.}
 }
 \description{
-Lists R6 distributions, either all in a data.frame or filtered by chosen
+Lists R6 distributions, either all in a data.table or filtered by chosen
 traits and/or properties.
 }
 \examples{

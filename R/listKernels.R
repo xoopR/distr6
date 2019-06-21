@@ -1,13 +1,10 @@
-#' @title Lists Implemented R6 Distributions
-#' @description Lists R6 distributions, either all in a data.frame or filtered by chosen
+#' @title Lists Implemented R6 Kernels
+#' @description Lists R6 kernels, either all in a data.table or filtered by chosen
 #' traits and/or properties.
 #' @param simplify logical.
-#' @param traits list of traits to filter distributions by.
-#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
 #' @examples
 #' listKernels()
-#' listKernels(traits = list(VariateForm = "univariate"))
-#' listKernels(traits = list(ValueSupport = "discrete"))
+#'
 #' @export
 listKernels <- function(simplify=FALSE){
   y = sapply(ls(name="package:distr6"),function(x){
@@ -32,6 +29,6 @@ listKernels <- function(simplify=FALSE){
     }))
     row.names(distrs) = NULL
 
-    return(data.frame(distrs))
+    return(data.table::data.table(distrs))
   }
 }

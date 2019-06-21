@@ -1,0 +1,41 @@
+#' @title Lists Implemented R6 Special Sets
+#' @description Lists special sets that can be used in SetInterval.
+#' @param simplify logical. If FALSE (default) returns data.table of set name and symbol, otherwise character.
+#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
+#' @examples
+#' listSpecialSets()
+#' listSpecialSets(TRUE)
+#' @export
+listSpecialSets <- function(simplify = FALSE, view = FALSE){
+  y = sapply(ls(name="package:distr6"),function(x){
+    if(inherits(get(x),"R6ClassGenerator")){
+      if(environmentName(get(x)$get_inherit()) == "SpecialSet_generator" |
+         environmentName(get(x)$get_inherit()) == "Rationals_generator" |
+         environmentName(get(x)$get_inherit()) == "Reals_generator")
+        return(get(x)$classname)
+      else
+        return(FALSE)
+    } else
+      return(FALSE)
+  })
+  y = y[y!="FALSE"]
+  if(simplify)
+    return(as.character(y))
+  else{
+    symbols = do.call(rbind.data.frame,lapply(y, function(x){
+      x = get(x)
+      ClassName = x$classname
+      x = x$new()
+      Symbol = x$getSymbol()
+      Lower = x$lower()
+      Upper = x$upper()
+      return(cbind(ClassName, Symbol, Lower, Upper))
+    }))
+    row.names(symbols) = NULL
+
+    if(view)
+      utils::View(data.table::data.table(symbols))
+    else
+      return(data.table::data.table(symbols))
+  }
+}

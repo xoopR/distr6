@@ -2,23 +2,18 @@
 % Please edit documentation in R/listKernels.R
 \name{listKernels}
 \alias{listKernels}
-\title{Lists Implemented R6 Distributions}
+\title{Lists Implemented R6 Kernels}
 \usage{
 listKernels(simplify = FALSE)
 }
 \arguments{
 \item{simplify}{logical.}
-
-\item{traits}{list of traits to filter distributions by.}
-
-\item{view}{logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.}
 }
 \description{
-Lists R6 distributions, either all in a data.frame or filtered by chosen
+Lists R6 kernels, either all in a data.table or filtered by chosen
 traits and/or properties.
 }
 \examples{
 listKernels()
-listKernels(traits = list(VariateForm = "univariate"))
-listKernels(traits = list(ValueSupport = "discrete"))
+
 }

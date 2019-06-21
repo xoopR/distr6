@@ -1,5 +1,5 @@
 #' @title Lists Implemented R6 Distributions
-#' @description Lists R6 distributions, either all in a data.frame or filtered by chosen
+#' @description Lists R6 distributions, either all in a data.table or filtered by chosen
 #' traits and/or properties.
 #' @param simplify logical.
 #' @param traits list of traits to filter distributions by.
@@ -47,8 +47,8 @@ listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
     }
     if("ShortName" %in% rownames(data.frame(distrs))) distrs = t(distrs)
     if(view)
-      utils::View(data.frame(distrs))
+      utils::View(data.table::data.table(distrs))
     else
-      return(data.frame(distrs))
+      return(data.table::data.table(distrs))
   }
 }

@@ -9,7 +9,8 @@
 #' \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
 #' where \eqn{\lambda} > 0 is the rate parameter.
 #'
-#' @details \code{entropy} is omitted as no closed form expression could be found.
+#' @details \code{entropy} is omitted as no closed form expression could be found, decorate with
+#' CoreStatistics for a numeric expression.
 #'
 #' @name Poisson
 #'

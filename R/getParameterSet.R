@@ -192,6 +192,18 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, var = NULL, sd = 
   return(ps)
 }
 
+getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
+  if (verbose) message("Parameterised with df1 and df2.")
+
+  ps <- ParameterSet$new(id = list("df1", "df2"), value = list(1, 1),
+                         lower = list(0, 0), upper = list(Inf, Inf),
+                         class = list("integer", "integer"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = list(NA, NA),
+                         description = list("Degrees of freedom 1",
+                                            "Degrees of freedom 2"))
+}
+
 getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
 
   rate.bool = mean.bool = scale.bool = FALSE
@@ -376,7 +388,6 @@ getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric, verbose
 
   return(ps)
 }
-
 
 getParameterSet.Pareto <- function(x, shape, scale, verbose = FALSE){
 
