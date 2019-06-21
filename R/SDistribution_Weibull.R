@@ -27,13 +27,8 @@
 #' @section Constructor Details: The Weibull distribution is parameterised with a shape and scale
 #' parameter, both as positive numerics.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -47,6 +42,7 @@ Weibull$set("public","traits",list(type = PosReals$new(zero=T),
                                    valueSupport = "continuous",
                                    variateForm = "univariate"))
 Weibull$set("public","description","Weibull Probability Distribution.")
+Weibull$set("public","package","stats")
 
 Weibull$set("public","mean",function(){
   return(self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape")))
@@ -90,14 +86,6 @@ Weibull$set("public","mode",function(){
     return (scale*((shape-1)/shape)^(1/shape))
   else
     return(0)
-})
-Weibull$set("public","mgf",function(){
-  message(.distr6$missing_analytic(self,"mgf"))
-  return(NULL)
-})
-Weibull$set("public","cf",function(){
-  message(.distr6$missing_analytic(self,"cf"))
-  return(NULL)
 })
 
 

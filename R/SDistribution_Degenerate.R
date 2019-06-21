@@ -26,13 +26,8 @@
 #' @section Constructor Details: The Degenerate distribution is parameterised with a location parameter (mean),
 #' default is 0.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -46,6 +41,7 @@ Degenerate$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
 Degenerate$set("public","description","Degenerate Probability Distribution.")
+Degenerate$set("public","package","distr6")
 
 Degenerate$set("public","mean",function(){
   return(self$getParameterValue("mean"))

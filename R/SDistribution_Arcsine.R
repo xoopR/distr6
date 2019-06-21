@@ -9,6 +9,8 @@
 #' \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
 #' where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
 #'
+#' @details The cf and mgf are omitted as no closed form analytic expression could be found.
+#'
 #' @name Arcsine
 #'
 #' @section Constructor: Arcsine$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
@@ -25,13 +27,8 @@
 #' @section Constructor Details: The Arcsine distribution is parameterised with default support of
 #' \eqn{[0,1]}. Both the \code{lower} and \code{upper} arguments must be finite.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -45,6 +42,7 @@ Arcsine$set("public","traits",list(type = Reals$new(),
                                   valueSupport = "continuous",
                                   variateForm = "univariate"))
 Arcsine$set("public","description","Arcsine Probability Distribution.")
+Arcsine$set("public","package","distr6")
 
 Arcsine$set("public","mean",function(){
   return((self$getParameterValue("upper") + self$getParameterValue("lower"))/2)
@@ -63,14 +61,6 @@ Arcsine$set("public","kurtosis",function(excess = TRUE){
 })
 Arcsine$set("public","entropy",function(base = 2){
   return(log(pi/4, base))
-})
-Arcsine$set("public", "mgf", function(t){
-  message("No analytic result for Arcsine mgf available. Try decorating with CoreStatistics.")
-  return(NULL)
-})
-Arcsine$set("public", "cf", function(t){
-  message("No analytic result for Arcsine cf available. Try decorating with CoreStatistics.")
-  return(NULL)
 })
 Arcsine$set("public","mode",function(which = "all"){
   if(which == "all")

@@ -30,7 +30,7 @@ test_that("statistics",{
   expect_equal(Pareto$new()$entropy(), log(exp(2), base=2))
   expect_equal(Pareto$new()$mgf(1), NaN)
   expect_equal(Pareto$new()$mgf(-1), expint::gammainc(-1,1))
-  expect_null(Pareto$new()$cf(1))
+  expect_error(Pareto$new()$cf(1))
   expect_equal(Pareto$new(scale=5)$mode(), 5)
   expect_equal(Pareto$new()$pdf(2), 0.25)
   expect_equal(Pareto$new()$cdf(2), 0.5)

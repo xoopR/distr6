@@ -53,7 +53,7 @@ NULL
 CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 
 #-------------------------------------------------------------
-# Public Methods - mgf
+# mgf
 #-------------------------------------------------------------
 #' @title Moment Generating Function
 #' @name mgf
@@ -67,7 +67,7 @@ CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 #'
 #' @details The moment generating function is defined by
 #' \deqn{mgf_X(t) = E_X[exp(xt)]}
-#' where X is the distribution and E_X is the expectation of the distribution X.
+#' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
@@ -81,7 +81,7 @@ CoreStatistics$set("public", "mgf", function(t) {
 })
 
 #-------------------------------------------------------------
-# Public Methods - cf
+# cf
 #-------------------------------------------------------------
 #' @title Characteristic Function
 #' @name cf
@@ -95,7 +95,7 @@ CoreStatistics$set("public", "mgf", function(t) {
 #'
 #' @details The characteristic function is defined by
 #' \deqn{cf_X(t) = E_X[exp(xti)]}
-#' where X is the distribution and E_X is the expectation of the distribution X.
+#' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
@@ -111,7 +111,7 @@ CoreStatistics$set("public", "cf", function(t) {
 })
 
 #-------------------------------------------------------------
-# Public Methods - pgf
+# pgf
 #-------------------------------------------------------------
 #' @title Probability Generating Function
 #' @name pgf
@@ -125,7 +125,7 @@ CoreStatistics$set("public", "cf", function(t) {
 #'
 #' @details The probability generating function is defined by
 #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
-#' where X is the distribution and E_X is the expectation of the distribution X.
+#' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
@@ -142,7 +142,7 @@ CoreStatistics$set("public", "pgf", function(z) {
 })
 
 #-------------------------------------------------------------
-# Public Methods - Entropy
+# entropy
 #-------------------------------------------------------------
 #' @title Distribution Entropy
 #' @name entropy
@@ -156,8 +156,9 @@ CoreStatistics$set("public", "pgf", function(z) {
 #'
 #' @details The entropy of a (discrete) distribution is defined by
 #' \deqn{- sum f_X * log(f_X)}
-#' where f_X is the pdf of distribution X, with an integration analogue for continuous distributions.
-#' The base of the logarithm of the equation determines the type of entropy computed. By default we use base 2 to compute entropy in 'Shannons' or 'bits'.
+#' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for continuous distributions.
+#' The base of the logarithm of the equation determines the type of entropy computed. By default we use
+#' base 2 to compute entropy in 'Shannons' or 'bits'.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
@@ -173,7 +174,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
       rng = getWorkingSupport(self)
     probs = self$pdf(rng)
     logs = log(self$pdf(rng), base)
-    return(-sum(probs * logs))
+    return(-sum(probs * logs, na.rm = T))
   } else if(testContinuous(self)){
     warning("Results from numerical integration are approximate only, better results may be available.")
     return(-integrate(function(x) {
@@ -186,7 +187,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 })
 
 #-------------------------------------------------------------
-# Public Methods - Skewness
+# skewness
 #-------------------------------------------------------------
 #' @title Distribution Skewness
 #' @name skewness
@@ -200,7 +201,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #' @details The skewness of a distribution is defined by the third standardised moment of the
 #' distribution,
 #' \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
-#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+#' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
 #' \eqn{\sigma} is the standard deviation of the distribution.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
@@ -215,7 +216,7 @@ CoreStatistics$set("public", "skewness", function() {
 })
 
 #-------------------------------------------------------------
-# Public Methods - Kurtosis
+# kurtosis
 #-------------------------------------------------------------
 #' @title Distribution Kurtosis
 #' @name kurtosis
@@ -230,7 +231,7 @@ CoreStatistics$set("public", "skewness", function() {
 #' @details The kurtosis of a distribution is defined by the fourth standardised moment of the
 #' distribution,
 #' \deqn{k_X = E_X[(x - \mu)^4]/\sigma^4}
-#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
+#' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 #' standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
@@ -249,7 +250,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 })
 
 #-------------------------------------------------------------
-# Public Methods - Variance
+# variance
 #-------------------------------------------------------------
 #' @name var
 #' @title Distribution Variance
@@ -263,6 +264,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #'
 #' @details The variance of a distribution is defined by the formula
 #' \deqn{var_X = E[X^2] - E[X]^2}
+#' where \eqn{E_X} is the expectation of distribution X.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
@@ -277,7 +279,7 @@ CoreStatistics$set("public","var",function(){
 })
 
 #-------------------------------------------------------------
-# Public Methods - Kth Moment
+# kthmoment
 #-------------------------------------------------------------
 #' @title Kth Moment
 #' @name kthmoment
@@ -297,7 +299,7 @@ CoreStatistics$set("public","var",function(){
 #' \deqn{SM(k)_X = CM(k)/\sigma^k}
 #' the kth raw moment of a distribution is defined by
 #' \deqn{RM(k)_X = E_X[x^k]}
-#' where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
+#' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 #' standard deviation of the distribution.
 #'
 #' Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment
@@ -338,7 +340,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 })
 
 #-------------------------------------------------------------
-# Public Methods - genExp
+# genExp
 #-------------------------------------------------------------
 #' @title Generalised Expectation of a Distribution
 #' @name genExp
@@ -365,12 +367,17 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 NULL
 CoreStatistics$set("public","genExp",function(trafo = NULL){
   if(is.null(trafo)){
-    trafo = function(x) return(x)
+    trafo = function() return(x)
+    formals(trafo) = alist(x = )
   }
+
   if(testDiscrete(self)){
     rng = try(self$inf():self$sup(),silent = T)
-    if(inherits(rng,"try-error"))
-      rng = private$.getWorkingSupportRange()
+    if(inherits(rng,"try-error")){
+      lower = ifelse(self$inf() == -Inf, -1e03, self$inf())
+      upper = ifelse(self$sup() == Inf, 1e03, self$sup())
+      rng = lower:upper
+    }
     pdfs = self$pdf(rng)
     xs = trafo(rng)
     xs[pdfs==0] = 0
@@ -387,19 +394,27 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 })
 
 #-------------------------------------------------------------
-# Public Methods - cov
+# cov
 #-------------------------------------------------------------
-#' @title Numeric Covariance a Distribution
+#' @title Distribution Covariance
 #' @name cov
-#' @description A numeric calculation for the covariance of a (multivariate) distribution.
+#' @description Covariance of a distribution.
 #'
 #' @usage cov(object)
 #' @section R6 Usage: $cov()
 #'
 #' @param object Distribution.
 #'
-#' @details If the distribution is univariate then the variance is returned, otherwise the
-#' covariance is calculated numerically.
+#' @details The covariance of a distribution is defined by the equation,
+#' \deqn{\sigma_{XY} = E[(X - E[X])(Y - E[Y])], X != Y}
+#' where \eqn{E_X} is the expectation with respect to distribution X.
+#'
+#' If the distribution is univariate then returns the variance.
+#'
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -409,26 +424,33 @@ CoreStatistics$set("public","cov",function(){
 }) # TO DO
 
 #-------------------------------------------------------------
-# Public Methods - cor
+# cor
 #-------------------------------------------------------------
-#' @title Numeric Correlation a Distribution
+#' @title Distribution Correlation
 #' @name cor
-#' @description A numeric calculation for the correlation of a (multivariate) distribution.
+#' @description Correlation of a distribution.
 #'
 #' @usage cor(object)
 #' @section R6 Usage: $cor()
 #'
 #' @param object Distribution.
 #'
-#' @details If the distribution is univariate then nothing is returned, otherwise the
-#' correlation is calculated numerically.
+#' @details In terms of covariance, the correlation of a distribution is defined by the equation,
+#' \deqn{\rho_{XY} = \sigma_{XY}/\sigma_X\sigma_Y}
+#' where \eqn{\sigma_{XY}} is the covariance of X and Y and \eqn{\sigma_X, \sigma_Y} and the respective
+#' standard deviations of X and Y.
+#'
+#' If the distribution is univariate then returns \eqn{1}.
+#'
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
 #'
 #' @export
 NULL
 CoreStatistics$set("public","cor",function(){}) # TO DO
 
 #-------------------------------------------------------------
-# Public Methods - mode
+# mode - TO DO
 #-------------------------------------------------------------
 #' @title Mode of a Distribution
 #' @name mode
@@ -458,7 +480,7 @@ CoreStatistics$set("public","mode",function(which = "all"){
 }) # IN PROGRESS
 
 #-------------------------------------------------------------
-# Public Methods - mean
+# mean
 #-------------------------------------------------------------
 #' @title Distribution Mean
 #'

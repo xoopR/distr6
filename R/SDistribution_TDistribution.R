@@ -9,9 +9,9 @@
 #' \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
 #' where \eqn{\nu > 0} is the degrees of freedom.
 #'
-#' @name StudentT
+#' @name TDistribution
 #'
-#' @section Constructor: StudentT$new(df = 1, decorators = NULL, verbose = FALSE)
+#' @section Constructor: TDistribution$new(df = 1, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -24,34 +24,30 @@
 #' @section Constructor Details: The Student's t distribution is parameterised with
 #' degrees of freedom, df. Default parameterisation is with df = 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Student's t Distribution Definition
 #-------------------------------------------------------------
-StudentT <- R6::R6Class("StudentT", inherit = SDistribution, lock_objects = F)
-StudentT$set("public","name","StudentT")
-StudentT$set("public","short_name","T")
-StudentT$set("public","traits",list(type = Reals$new(),
+TDistribution <- R6::R6Class("TDistribution", inherit = SDistribution, lock_objects = F)
+TDistribution$set("public","name","TDistribution")
+TDistribution$set("public","short_name","T")
+TDistribution$set("public","traits",list(type = Reals$new(),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
-StudentT$set("public","description","Student's t Probability Distribution.")
+TDistribution$set("public","description","Student's t Probability Distribution.")
+TDistribution$set("public","package","stats")
 
-StudentT$set("public","mean",function(){
+TDistribution$set("public","mean",function(){
   if(self$getParameterValue("df") > 1)
     return(0)
   else
     return(NaN)
 })
-StudentT$set("public","var",function(){
+TDistribution$set("public","var",function(){
   df <- self$getParameterValue("df")
   if(df > 2)
     return(df/(df-2))
@@ -60,13 +56,13 @@ StudentT$set("public","var",function(){
   else
     return(NaN)
 })
-StudentT$set("public","skewness",function(){
+TDistribution$set("public","skewness",function(){
   if(self$getParameterValue("df") > 3)
     return(0)
   else
     return(NaN)
 })
-StudentT$set("public","kurtosis",function(excess = TRUE){
+TDistribution$set("public","kurtosis",function(excess = TRUE){
   df <- self$getParameterValue("df")
   if(df > 4)
     exkurtosis = 6/(df-4)
@@ -81,26 +77,28 @@ StudentT$set("public","kurtosis",function(excess = TRUE){
     return(exkurtosis + 3)
 
 })
-StudentT$set("public","entropy",function(base = 2){
+TDistribution$set("public","entropy",function(base = 2){
   df <- self$getParameterValue("df")
   (((df+1)/2)*(digamma((1+df)/2) - digamma(df/2))) + (log(sqrt(df)*beta(df/2, 1/2), base))
 })
-StudentT$set("public", "mgf", function(t) return(NaN))
-StudentT$set("public", "cf", function(t){
+TDistribution$set("public", "mgf", function(t){
+  return(NaN)
+})
+TDistribution$set("public", "cf", function(t){
   df <- self$getParameterValue("df")
   return((besselK(sqrt(df)*abs(t), df/2) * ((sqrt(df)*abs(t))^(df/2))) / (gamma(df/2)*2^(df/2-1)))
 })
-StudentT$set("public","mode",function(){
+TDistribution$set("public","mode",function(){
   return(0)
 })
 
-StudentT$set("private",".getRefParams", function(paramlst){
+TDistribution$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
   return(lst)
 })
 
-StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
+TDistribution$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(list(df = df))

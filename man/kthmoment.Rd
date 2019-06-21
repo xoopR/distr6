@@ -23,7 +23,7 @@ the kth standardised moment of a distribution is defined by
 \deqn{SM(k)_X = CM(k)/\sigma^k}
 the kth raw moment of a distribution is defined by
 \deqn{RM(k)_X = E_X[x^k]}
-where E_X is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 standard deviation of the distribution.
 
 Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment

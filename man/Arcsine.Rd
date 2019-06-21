@@ -9,6 +9,9 @@ with lower and upper limits. The Arcsine distribution is defined by the pdf,
 \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
 where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
 }
+\details{
+The cf and mgf are omitted as no closed form analytic expression could be found.
+}
 \section{Constructor}{
  Arcsine$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
 }
@@ -36,14 +39,15 @@ where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respective
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm.
-  }
+  \code{traits} \tab List: type, valueSupport, variateForm. \cr
+  \code{package} \tab The package p/d/q/r are implemented in.
+ }
 }
 
-\section{Accessor Methods}{
+\section{Public Methods}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
@@ -58,66 +62,50 @@ where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respective
   \code{dmin()} \tab \code{\link{dmin}} \cr
   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  }
-}
 
-\section{p/d/q/r Methods}{
+  \tab \cr \tab \cr \tab \cr
 
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Statistical Methods} \tab \strong{Link} \cr
   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}}
- }
-}
-
-\section{Statistical Methods}{
-
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \code{rand(n)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
+  \code{cov()} \tab \code{\link{cov}} \cr
+  \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
+  \code{pgf(z)} \tab \code{\link{pgf}} \cr
   \code{sd()} \tab \code{\link{sd}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
-  }
-}
 
-\section{Parameter Methods}{
+  \tab \cr \tab \cr \tab \cr
 
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-}
-}
 
-\section{Validation Methods}{
+  \tab \cr \tab \cr \tab \cr
 
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE)} \tab \code{\link{liesInSupport}} \cr
+  \strong{Validation Methods} \tab \strong{Link} \cr
+  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
-}
-}
 
-\section{Representation Methods}{
+  \tab \cr \tab \cr \tab \cr
 
-\tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
+  \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
-}
+  }
 }
 

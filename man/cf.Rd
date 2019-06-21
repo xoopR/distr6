@@ -17,7 +17,7 @@ Characteristic function of a distribution
 \details{
 The characteristic function is defined by
 \deqn{cf_X(t) = E_X[exp(xti)]}
-where X is the distribution and E_X is the expectation of the distribution X.
+where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 
 If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 \code{\link{CoreStatistics}} decorator.

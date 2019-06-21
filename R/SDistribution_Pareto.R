@@ -27,13 +27,8 @@
 #' @section Constructor Details: The Pareto distribution is parameterised with shape and scale parameters.
 #' Default parameterisation is with shape = 1 and scale = 1.
 #'
-#' @inheritSection Distribution Public Variables
-#' @inheritSection Distribution Accessor Methods
-#' @inheritSection Distribution p/d/q/r Methods
-#' @inheritSection Normal Statistical Methods
-#' @inheritSection Distribution Parameter Methods
-#' @inheritSection Distribution Validation Methods
-#' @inheritSection Distribution Representation Methods
+#' @inheritSection SDistribution Public Variables
+#' @inheritSection SDistribution Public Methods
 #'
 #' @export
 NULL
@@ -47,6 +42,8 @@ Pareto$set("public","traits",list(type = PosReals$new(zero = T),
                                        valueSupport = "continuous",
                                        variateForm = "univariate"))
 Pareto$set("public","description","Pareto Probability Distribution.")
+Pareto$set("public","package","distr6")
+
 Pareto$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)
     return(Inf)
@@ -95,10 +92,6 @@ Pareto$set("public", "mgf", function(t){
     return(shape * (-scale*t)^shape * expint::gammainc(-shape, -scale * t))
   }else
     return(NaN)
-})
-Pareto$set("public", "cf", function(t){
-  message(.distr6$missing_analytic(self,"cf"))
-  return(NULL)
 })
 Pareto$set("public","mode",function(){
   return(self$getParameterValue("scale"))
