@@ -1,20 +1,18 @@
+#' @include SetInterval_SpecialSet.R
 #-------------------------------------------------------------
-# SDistribution Documentation
+# Kernel Documentation
 #-------------------------------------------------------------
-#' @title Abstract Special Distribution Class
+#' @title Abstract Kernel Class
 #'
 #' @description Abstract class that cannot be constructed directly.
 #'
-#' @name SDistribution
+#' @name Kernel
 #'
 #' @section Public Variables:
 #'  \tabular{ll}{
 #'   \strong{Method} \tab \strong{Return} \cr
-#'   \code{name} \tab Name of distribution. \cr
-#'   \code{short_name} \tab Id of distribution. \cr
-#'   \code{description} \tab Brief description of distribution. \cr
-#'   \code{traits} \tab List: type, valueSupport, variateForm. \cr
-#'   \code{package} \tab The package p/d/q/r are implemented in.
+#'   \code{name} \tab Name of kernel. \cr
+#'   \code{short_name} \tab Id of kernel. \cr
 #'  }
 #'
 #' @section Public Methods:
@@ -26,14 +24,11 @@
 #'   \code{type()} \tab \code{\link{type}} \cr
 #'   \code{properties()} \tab \code{\link{properties}} \cr
 #'   \code{support()} \tab \code{\link{support}} \cr
-#'   \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
 #'   \code{symmetry()} \tab \code{\link{symmetry}} \cr
 #'   \code{sup()}  \tab \code{\link{sup}} \cr
 #'   \code{inf()} \tab \code{\link{inf}} \cr
 #'   \code{dmax()}  \tab \code{\link{dmax}} \cr
 #'   \code{dmin()} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
 #'
 #'   \tab \cr \tab \cr \tab \cr
 #'
@@ -44,24 +39,9 @@
 #'   \code{rand(n)} \tab \code{\link{rand}} \cr
 #'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
 #'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{cov()} \tab \code{\link{cov}} \cr
-#'   \code{cor()} \tab \code{\link{cor}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{pgf(z)} \tab \code{\link{pgf}} \cr
 #'   \code{sd()} \tab \code{\link{sd}} \cr
 #'   \code{median()} \tab \code{\link{median.Distribution}} \cr
 #'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'
-#'   \tab \cr \tab \cr \tab \cr
-#'
-#'   \strong{Parameter Methods} \tab \strong{Link} \cr
-#'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
-#'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 #'
 #'   \tab \cr \tab \cr \tab \cr
 #'
@@ -82,19 +62,41 @@
 #'
 #' @export
 NULL
-SDistribution <- R6::R6Class("SDistribution", inherit = Distribution)
+Kernel <- R6::R6Class("Kernel", inherit = Distribution)
+Kernel$set("public","traits",list(type = Reals$new(),
+                                      valueSupport = "continuous",
+                                      variateForm = "univariate"))
+Kernel$set("public","package","distr6")
+Kernel$set("private",".type","symmetric")
+Kernel$set("public","mode",function(){
+  return(0)
+})
+Kernel$set("public","mean",function(){
+  return(0)
+})
+Kernel$set("public","median",function(){
+  return(0)
+})
+Kernel$set("public","rand",function(n){
+  if(length(n) > 1)
+    n <- length(n)
 
-SDistribution$set("public","setParameterValue",function(lst, error = "warn"){
-  lst <- private$.getRefParams(lst)
-  super$setParameterValue(lst, error)
+  return(self$quantile(runif(n)))
 })
-SDistribution$set("public","package",NULL)
-SDistribution$set("public","cov",function(){
-  return(self$var())
-})
-SDistribution$set("public","cor",function(){
-  return(1)
-})
-SDistribution$set("public","pgf",function(){
-  return(NaN)
-})
+
+#' @title Squared Probability Density Function 2-Norm
+#' @name squared2Norm
+#' @description The squared 2-norm of the Kernel pdf evaluated over the whole support.
+#'
+#' @usage squared2Norm(object)
+#' @section R6 Usage: $squared2Norm()
+#'
+#' @param object Distribution.
+#'
+#' @details The squared 2-norm of the pdf is defined by
+#' \deqn{\int (f_X(u))^2 du}
+#' where X is the Kernel and \eqn{f_X} is its pdf.
+#'
+#' @export
+NULL
+Kernel$set("public","squared2Norm",function() return(NULL))

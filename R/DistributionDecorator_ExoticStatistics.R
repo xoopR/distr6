@@ -274,7 +274,7 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 #' @description The p-norm of the pdf evaluated between given limits or over the whole support.
 #'
 #' @usage pdfPNorm(object, p = 2, lower = NULL, upper = NULL)
-#' @section R6 Usage: $pdfPNorm(object, p = 2, lower = NULL, upper = NULL)
+#' @section R6 Usage: $pdfPNorm(p = 2, lower = NULL, upper = NULL)
 #'
 #' @param object Distribution.
 #' @param p p-norm to calculate.

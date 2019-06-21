@@ -334,7 +334,7 @@ getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.TDistribution <- function(x, df, verbose = FALSE){
+getParameterSet.StudentT <- function(x, df, verbose = FALSE){
 
   if(verbose) message("Parameterised with df.")
 
