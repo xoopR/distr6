@@ -104,20 +104,6 @@ getParameterSet.Binomial <- function(x, size, prob, qprob = NULL, verbose = FALS
   return(ps)
 }
 
-getParameterSet.Cauchy <- function(x, location, scale, verbose = FALSE){
-
-  if(verbose) message("Parameterised with location and scale.")
-
-  ps <- ParameterSet$new(id = list("location","scale"), value = list(0, 1),
-                         lower = list(-Inf, 0), upper = list(Inf, Inf),
-                         class = list("numeric","numeric"),
-                         settable = list(TRUE, TRUE),
-                         updateFunc = NULL,
-                         description = list("Location Parameter",
-                                            "Scale Parameter"))
-  return(ps)
-}
-
 getParameterSet.ChiSquared <- function(x, df, verbose = FALSE){
 
   if(verbose) message("Parameterised with df.")
@@ -190,6 +176,18 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, var = NULL, sd = 
                           description = list("Arrival Rate", "Scale"))
 
   return(ps)
+}
+
+getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
+  if (verbose) message("Parameterised with df1 and df2.")
+  
+  ps <- ParameterSet$new(id = list("df1", "df2"), value = list(1, 1),
+                         lower = list(0, 0), upper = list(Inf, Inf),
+                         class = list("integer", "integer"),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = list(NA, NA),
+                         description = list("Degrees of freedom 1",
+                                            "Degrees of freedom 2"))
 }
 
 getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
@@ -334,7 +332,7 @@ getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.TDistribution <- function(x, df, verbose = FALSE){
+getParameterSet.StudentT <- function(x, df, verbose = FALSE){
 
   if(verbose) message("Parameterised with df.")
 
@@ -347,36 +345,6 @@ getParameterSet.TDistribution <- function(x, df, verbose = FALSE){
 
   return(ps)
 }
-
-getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric, verbose = FALSE){
-
-  checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
-  checkmate::assert(lower < upper, .var.name = "lower must be < upper")
-
-  if(symmetric){
-    updateFunc = "(self$getParameterValue('lower') + self$getParameterValue('upper'))/2"
-    settable = FALSE
-    if(verbose) message("Parameterised with lower and upper.")
-  } else{
-    checkmate::assert(mode >= lower, mode <= upper, combine = "and", .var.name = "mode must be between lower and upper")
-    updateFunc = NA
-    settable = TRUE
-    if(verbose) message("Parameterised with lower, upper and mode.")
-  }
-
-  ps <- ParameterSet$new(id = list("lower","upper","mode"),
-                         value = list(0, 1, 0.5),
-                         lower = list(-Inf, -Inf, -Inf),
-                         upper = list(Inf, Inf, Inf),
-                         class = list("numeric","numeric","numeric"),
-                         settable = list(TRUE, TRUE, settable),
-                         updateFunc = list(NA, NA, updateFunc),
-                         description = list("Lower distribution limit.", "Upper distribution limit.",
-                                            "Distribution mode."))
-
-  return(ps)
-}
-
 
 getParameterSet.Pareto <- function(x, shape, scale, verbose = FALSE){
 
@@ -415,58 +383,27 @@ getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE)
   return(ps)
 }
 
-getParameterSet.Logarithmic <- function(x, theta, verbose = FALSE){
-
-  if(verbose) message("Parameterised with theta.")
-
-  ps <- ParameterSet$new(id = list("theta"), value = list(0.5),
-                         lower = list(0), upper = list(1),
-                         class = list("numeric"),
-                         settable = list(TRUE),
-                         updateFunc = list(NA),
-                         description = list("Theta parameter."))
-
-  return(ps)
-}
-
-getParameterSet.Logistic <- function(x, mean, scale, verbose = FALSE){
-
-  if(verbose) message("Parameterised with mean and scale.")
-
-  ps <- ParameterSet$new(id = list("mean","scale"), value = list(0, 1),
-                         lower = list(-Inf, .Machine$double.eps), upper = list(Inf, Inf),
-                         class = list("numeric","numeric"),
-                         settable = list(TRUE, TRUE),
-                         updateFunc = NULL,
-                         description = list("Mean - Location Parameter",
-                                            "Scale - Scale Parameter"))
-  return(ps)
-}
-
-getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, type, verbose = FALSE){
-
+getParameterSet.NegBinomial <- function(x, size, prob = NULL, qprob = NULL, verbose = FALSE){
   prob.bool = qprob.bool = FALSE
 
-  if(!is.null(qprob)){
+  if(is.null(prob) & is.null(qprob)) {
+    if(verbose) message("prob and qprob is missing. Parameterised with prob = 0.5.")
+    prob.bool = TRUE
+  } else if (!is.null(qprob)){
     if(verbose) message("Parameterised with qprob.")
     qprob.bool = TRUE
-  } else {
+  } else if(!is.null(prob)){
     if(verbose) message("Parameterised with prob.")
-    prob.bool = TRUE
-  }
+    prob.bool = TRUE}
 
-  if(type == "fbs" | type == "tbs")
-    desc = "Number of successes"
-  else
-    desc = "Number of failures"
-
-  ps <- ParameterSet$new(id = list("prob","qprob","size"), value = list(0.5, 0.5, 10),
+  ps <- ParameterSet$new(id = list("prob", "qprob", "size"), value = list(0.5, 0.5, 1),
                          lower = list(0, 0, 1), upper = list(1, 1, Inf),
                          class = list("numeric","numeric","integer"),
                          settable = list(prob.bool, qprob.bool, TRUE),
                          updateFunc = list(NULL, "1 - self$getParameterValue('prob')", NULL),
                          description = list("Probability of Success",
-                                            "Probability of failure", desc))
+                                            "Probability of failure", "Number of successes"))
 
   return(ps)
 }
+
