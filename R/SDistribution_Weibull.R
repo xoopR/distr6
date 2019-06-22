@@ -102,9 +102,9 @@ Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NUL
   self$setParameterValue(list(shape=shape, scale = scale))
 
   pdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  cdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  quantile <- function(p) dweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  rand <- function(n) dweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  cdf <- function(x1) pweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  quantile <- function(p) qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  rand <- function(n) rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),

@@ -26,6 +26,6 @@ test_that("statistics",{
   expect_error(b$mode())
   expect_equal(b$pdf(1), dpois(1,1))
   expect_equal(b$cdf(1), ppois(1,1))
-  expect_equal(b$quantile(0.56), qpois(0.56)))
+  expect_equal(b$quantile(0.56), qpois(0.56,1))
   expect_silent(b$rand(10))
 })
