@@ -53,7 +53,7 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
     if(length(x1)==1)
       return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * private$.weights)))
     else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) %*% diag(private$.weights()))))
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) %*% diag(private$.weights))))
   }
   formals(pdf)$self <- self
 
@@ -61,7 +61,7 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
     if(length(x1)==1)
       return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x1)) * private$.weights)))
     else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x1)) %*% diag(private$.weights()))))
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x1)) %*% diag(private$.weights))))
   }
   formals(cdf)$self <- self
 
