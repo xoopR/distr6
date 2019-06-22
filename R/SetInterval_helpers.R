@@ -25,8 +25,8 @@ operation <- function(unicode,...){
       x <- paste0(x,"}")
     return(x)
   })
-  lower = as.numeric(unlist(lapply(dots, function(x) x$lower())),recursive=T)
-  upper = as.numeric(unlist(lapply(dots, function(x) x$upper()),recursive = T))
+  lower = as.numeric(unlist(lapply(dots, function(x) x$inf())),recursive=T)
+  upper = as.numeric(unlist(lapply(dots, function(x) x$sup()),recursive = T))
 
   setSymbol <- paste(unlist(symbols), collapse = paste0(" ",unicode," "))
   return(SetInterval$new(symbol = setSymbol, type = "{}", lower = lower,
@@ -112,8 +112,8 @@ complement <- function(...){
 #' @export
 power <- function(x, power){
   symbol = paste0(x$getSymbol(),"^",power)
-  lower = rep(x$lower(),power)
-  upper = rep(x$upper(),power)
+  lower = rep(x$inf(),power)
+  upper = rep(x$sup(),power)
 
   SetInterval$new(symbol = symbol, type = x$type(), lower = lower,
                   upper = upper, dimension = power)

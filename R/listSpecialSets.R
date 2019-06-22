@@ -27,9 +27,9 @@ listSpecialSets <- function(simplify = FALSE, view = FALSE){
       ClassName = x$classname
       x = x$new()
       Symbol = x$getSymbol()
-      Lower = x$lower()
-      Upper = x$upper()
-      return(cbind(ClassName, Symbol, Lower, Upper))
+      Infimum = x$inf()
+      Supremum = x$sup()
+      return(cbind(ClassName, Symbol, Infimum, Supremum))
     }))
     row.names(symbols) = NULL
 

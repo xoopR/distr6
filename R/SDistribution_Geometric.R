@@ -24,21 +24,21 @@
 #'
 #' @name Geometric
 #'
-#' @section Constructor: Geometric$new(prob = 0.5, qprob = NULL, success = FALSE, decorators = NULL, verbose = FALSE)
+#' @section Constructor: Geometric$new(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{prob} \tab numeric \tab probability of success. \cr
 #' \code{qprob} \tab numeric \tab probability of failure. \cr
-#' \code{success} \tab logical \tab number of successes or failures, see details. \cr
+#' \code{trials} \tab logical \tab number of trials or failures, see details. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
 #' @section Constructor Details: The Geometric distribution is parameterised with probability of success,
-#' prob = 0.5 by default. The logical parameter \code{success} determines which Geometric distribution
-#' is constructed and cannot be changed after construction. If \code{success} is TRUE then
+#' prob = 0.5 by default. The logical parameter \code{trials} determines which Geometric distribution
+#' is constructed and cannot be changed after construction. If \code{trials} is TRUE then
 #' the Geometric distribution that calculates the probability of first success is after \eqn{x} trials.
 #' Otherwise the Geometric distribution calculcates probability of \eqn{y} failures before the first success.
 #' Mathematically these are related by \eqn{Y = X - 1}.
@@ -53,7 +53,7 @@ NULL
 #-------------------------------------------------------------
 Geometric <-  R6::R6Class("Geometric", inherit = SDistribution, lock_objects = F)
 
-Geometric$set("private",".success",NULL)
+Geometric$set("private",".trails",NULL)
 
 Geometric$set("public","name","Geometric")
 Geometric$set("public","short_name","Geom")
@@ -64,7 +64,7 @@ Geometric$set("public","description","Gamma Probability Distribution.")
 Geometric$set("public","package","stats")
 
 Geometric$set("public","mean",function(){
-    if(private$.success)
+    if(private$.trials)
         return(1/self$getParameterValue("prob"))
     else
         return((1-self$getParameterValue("prob"))/self$getParameterValue("prob"))
@@ -87,7 +87,7 @@ Geometric$set("public","entropy",function(base = 2){
     return(((-(1-prob)*log(1-prob,base))-(prob*log(prob,base)))/prob)
 })
 Geometric$set("public", "mgf", function(t){
-    if(private$.success){
+    if(private$.trials){
         if(t < -log(1-self$getParameterValue("prob")))
             return((self$getParameterValue("prob")*exp(t))/(1-(1-self$getParameterValue("prob"))*exp(t)))
         else
@@ -96,19 +96,19 @@ Geometric$set("public", "mgf", function(t){
         return((self$getParameterValue("prob"))/(1-(1-self$getParameterValue("prob"))*exp(t)))
 })
 Geometric$set("public", "cf", function(t){
-    if(private$.success)
+    if(private$.trials)
         return((self$getParameterValue("prob")*exp(1i*t))/(1-(1-self$getParameterValue("prob"))*exp(1i*t)))
     else
         return((self$getParameterValue("prob"))/(1-(1-self$getParameterValue("prob"))*exp(1i*t)))
 })
 Geometric$set("public","pgf",function(z){
-    if(private$.success)
+    if(private$.trials)
         return((self$getParameterValue("prob") * z)/(1-z*self$getParameterValue("qprob")))
     else
         return(self$getParameterValue("prob")/(1-z*self$getParameterValue("qprob")))
 })
 Geometric$set("public","mode",function(){
-    if(private$.success)
+    if(private$.trials)
         return(1)
     else
         return(0)
@@ -121,15 +121,15 @@ Geometric$set("private",".getRefParams", function(paramlst){
     return(lst)
 })
 
-Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, success = FALSE, decorators = NULL,
+Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
                                              verbose = FALSE,...){
 
-    checkmate::assertLogical(success)
-    private$.success <- success
-    private$.parameters <- getParameterSet(x=self, prob=prob, qprob=qprob, success=success, verbose=verbose)
+    checkmate::assertLogical(trials)
+    private$.trials <- trials
+    private$.parameters <- getParameterSet(x=self, prob=prob, qprob=qprob, trials=trials, verbose=verbose)
     self$setParameterValue(list(prob = prob, qprob = qprob))
 
-    if(!success){
+    if(!trials){
         pdf <- function(x1) dgeom(x1, self$getParameterValue("prob"))
         cdf <- function(x1) pgeom(x1, self$getParameterValue("prob"))
         quantile <- function(p) qgeom(p, self$getParameterValue("prob"))
@@ -142,7 +142,7 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, success =
         quantile <- function(p) qgeom(p, self$getParameterValue("prob"))+1
         rand <- function(n) rgeom(n, self$getParameterValue("prob"))
         support <- PosIntegers$new(zero = F)
-        description = "Geometric (Successes) Probability Distribution."
+        description = "Geometric (Trials) Probability Distribution."
     }
 
 

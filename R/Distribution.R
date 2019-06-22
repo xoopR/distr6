@@ -315,9 +315,9 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #-------------------------------------------------------------
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
-    settable = self$parameters()$as.data.frame()$settable
-    id = self$parameters()$as.data.frame()[settable, "id"]
-    value = self$parameters()$as.data.frame()[settable, "value"]
+    settable = self$parameters()$as.data.table()$settable
+    id = self$parameters()$as.data.table()[settable, "id"]
+    value = self$parameters()$as.data.table()[settable, "value"]
     string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
   } else {
     string = paste0(self$short_name)
@@ -343,13 +343,13 @@ Distribution$set("public","print",function(...){
 summary.Distribution <- function(object, full = TRUE,...) {}
 Distribution$set("public","summary",function(full = TRUE,...){
 
-  which_params = self$parameters()$as.data.frame()$settable
+  which_params = self$parameters()$as.data.table()$settable
 
   if(full){
     if(length(private$.parameters)!=0){
       cat(self$name,"with parameterisation:\n")
-      cat("\t",paste(self$parameters()$as.data.frame()[which_params, "id"],
-                     self$parameters()$as.data.frame()[which_params,"value"],
+      cat("\t",paste(unlist(self$parameters()$as.data.table()[which_params, "id"]),
+                     unlist(self$parameters()$as.data.table()[which_params,"value"]),
                      sep = " = ", collapse = "; "))
     } else
       cat(self$name(),"\n")

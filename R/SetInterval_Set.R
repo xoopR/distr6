@@ -50,3 +50,4 @@ Set$set("public","initialize",function(..., dim = 1){
 
   invisible(self)
 })
+Set$set("private",".macType","integer")

@@ -26,14 +26,14 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#")
 
 As distr6 is currently in development, there is no publication to CRAN and therefore it has to be installed via the `remotes` package. Either install the latest stable version from master or the latest dev version:
 
-```{r results = "hide"}
+```{r results = "hide",eval=FALSE}
 # remotes::install_github("RaphaelS1/distr6") # Installs stable version from master
 remotes::install_github("RaphaelS1/distr6", ref = "dev") # Installs latest dev version
 ```
 
 Then attach the library as usual:
 
-```{r results = "hide"}
+```{r results = "hide",message=FALSE,warning=FALSE}
 library(distr6)
 ```
 
@@ -68,7 +68,7 @@ distr6 allows the user to create a distribution object and then call any methods
 
 Moreover once an object is created, the user can call statistical methods to get basic (and more complex) results
 ```{r}
-B$expectation()
+B$mean()
 summary(B)
 ```
 

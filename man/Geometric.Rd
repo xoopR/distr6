@@ -24,7 +24,7 @@ in R stats. Once constructed, the type of Geometric distribution cannot be chang
 only the probability of success/failure.
 }
 \section{Constructor}{
- Geometric$new(prob = 0.5, qprob = NULL, success = FALSE, decorators = NULL, verbose = FALSE)
+ Geometric$new(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -33,7 +33,7 @@ only the probability of success/failure.
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{prob} \tab numeric \tab probability of success. \cr
 \code{qprob} \tab numeric \tab probability of failure. \cr
-\code{success} \tab logical \tab number of successes or failures, see details. \cr
+\code{trials} \tab logical \tab number of trials or failures, see details. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
@@ -41,8 +41,8 @@ only the probability of success/failure.
 
 \section{Constructor Details}{
  The Geometric distribution is parameterised with probability of success,
-prob = 0.5 by default. The logical parameter \code{success} determines which Geometric distribution
-is constructed and cannot be changed after construction. If \code{success} is TRUE then
+prob = 0.5 by default. The logical parameter \code{trials} determines which Geometric distribution
+is constructed and cannot be changed after construction. If \code{trials} is TRUE then
 the Geometric distribution that calculates the probability of first success is after \eqn{x} trials.
 Otherwise the Geometric distribution calculcates probability of \eqn{y} failures before the first success.
 Mathematically these are related by \eqn{Y = X - 1}.

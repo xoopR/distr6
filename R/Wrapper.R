@@ -29,9 +29,9 @@ DistributionWrapper$set("public","initialize",function(distlist, prefixParams = 
   private$.wrappedModels <- distlist
 
   if(prefixParams){
-    params <- do.call(rbind.data.frame,lapply(distlist, function(x){
-      params = x[["parameters"]]()$as.data.frame()
-      params[,1] = paste(x[["short_name"]],params[,1],sep="_")
+    params <- data.table::rbindlist(lapply(distlist, function(x){
+      params = x[["parameters"]]()$as.data.table()
+      params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
       return(params)
     }))
     row.names(params) <- NULL
@@ -98,9 +98,9 @@ DistributionWrapper$set("public","setParameterValue",function(lst, error = "warn
   }
   rm(i)
 
-  params <- do.call(rbind,lapply(self$wrappedModels(), function(x){
-    params = x[["parameters"]]()$as.data.frame()
-    params[,1] = paste(x[["short_name"]],params[,1],sep="_")
+  params <- data.table::rbindlist(lapply(self$wrappedModels(), function(x){
+    params = x[["parameters"]]()$as.data.table()
+    params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
     return(params)
   }))
   row.names(params) <- NULL
