@@ -147,7 +147,9 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
   invisible(self)
 })
 ParameterSet$set("public","print", function(){
-  print(private$.parameters)
+  ps <- private$.parameters
+  ps$support <- lapply(ps$support,function(x) x$getSymbol())
+  print(ps)
 })
 ParameterSet$set("public","update", function(){
   if(any(!is.na(private$.parameters$updateFunc))){
