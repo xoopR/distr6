@@ -20,6 +20,10 @@ navbar:
       href: articles/api_lifecycle.html
     - text: Roadmap
       href: articles/roadmap.html  
+  - text: Tutorials
+    menu:
+    - text: Overview to distr6 v0
+      href: articles/tutorial_overview_to_distr6_v0.html
   right:
   - text: Reference
     href: reference/
