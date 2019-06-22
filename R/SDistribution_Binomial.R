@@ -110,7 +110,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
   pdf = function(x1) dbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
   cdf = function(x1) pbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
   quantile = function(p) qbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
-  rand = function(n) dbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
+  rand = function(n) rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(0:size), distrDomain = PosIntegers$new(zero = T),

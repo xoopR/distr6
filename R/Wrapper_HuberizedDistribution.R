@@ -23,8 +23,8 @@
 #'
 #' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 #'
-#' @section Public Methods:
-#' See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#' @inheritSection DistributionWrapper Public Variables
+#' @inheritSection DistributionWrapper Public Methods
 #'
 #' @seealso \code{\link{listWrappers}}.
 #'
