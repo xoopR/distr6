@@ -41,9 +41,63 @@ reference:
     desc: "Functions for Distribution constructor and helpers."
     contents: 
       - Distribution
+      - SDistribution
+      - Kernel
       - exkurtosisType
       - skewType
-      - listDistributions
+      - liesInDistrDomain
+      - liesInSupport
+      - liesInType
+  - title: "Mathematical and Statistical"
+    desc: "Mathematical and statistical functions acting on Distribution objects."
+    contents: 
+      - cdf
+      - cdfAntiDeriv
+      - cdfPNorm
+      - cf
+      - cor
+      - cov
+      - cumHazard
+      - entropy
+      - genExp
+      - generalPNorm
+      - hazard
+      - kthmoment
+      - kurtosis
+      - mean.Distribution
+      - median.Distribution
+      - mgf
+      - mode
+      - pdf
+      - pdfPNorm
+      - pgf
+      - quantile.Distribution
+      - rand
+      - sd
+      - skewness
+      - skewnessType
+      - squared2Norm
+      - survival
+      - survivalAntiDeriv
+      - survivalPNorm
+  - title: "Distribution Accessors"
+    desc: "Accessor methods for Distribution objects."
+    contents: 
+      - decorators
+      - distrDomain
+      - dmax
+      - dmin
+      - inf
+      - iqr
+      - kurtosisType
+      - parameters
+      - properties
+      - summary.Distribution
+      - sup
+      - support
+      - symmetry
+      - type
+      - valueSupport
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
@@ -57,7 +111,6 @@ reference:
     desc: "Functionality for composite modelling including joint and conditional distributions."
     contents:
       - DistributionWrapper
-      - ConcreteWrapper
       - ArrayDistribution
       - ProductDistribution
       - HuberizedDistribution
@@ -66,14 +119,49 @@ reference:
       - truncate
       - MixtureDistribution
       - Scale
-  - title: "Discrete Distributions"
-    desc: "Discrete probability distributions."
+  - title: "Univariate Discrete Distributions"
     contents:
+      - Bernoulli
       - Binomial
-  - title: "Continuous Distributions"
-    desc: "Continuous probability distributions."
+      - Discrete Uniform
+      - Geometric
+      - Logarithmic
+      - Poisson
+  - title: "Univariate Continuous Distributions"
     contents:
+      - Arcsine
+      - Beta
+      - Cauchy
+      - ChiSquared
+      - Degenerate
       - Exponential
+      - FDistribution
+      - Gompertz
+      - Laplace
+      - Logistic
+      - Lognormal
+      - Normal
+      - Pareto
+      - StudentT
+      - Triangular
+      - Uniform
+      - Weibull
+  - title: "Multivariate Discrete Distributions"
+    contents:
+      - Multinomial    
+  - title: "Kernels"
+    contents:
+      - Cosine
+      - Epanechnikov
+      - Gaussian
+      - KLogistic
+      - KTriangular
+      - KUniform
+      - Quartic
+      - Sigmoid
+      - Silverman
+      - Tricube
+      - Triweight
   - title: "Assertions"
     desc: "Validation checks for Distributions."
     contents:
@@ -95,6 +183,7 @@ reference:
       - starts_with("Neg")
       - setSymbol
       - operation
+      - complement
       - power
       - product
       - union
@@ -103,8 +192,14 @@ reference:
     desc: "Miscellaneous functions for use in distr6."
     contents: 
       - makeUniqueDistributions
+      - listDistributions
+      - listKernels
+      - listWrappers
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
       - ParameterSet
       - as.ParameterSet
+      - getParameterSupport
+      - getParameterValue
+      - setParameterValue
