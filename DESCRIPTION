@@ -26,7 +26,7 @@ Description: An R6 object oriented Distributions package in R. Unified interface
   Additionally classes for symbolic representation of sets.
 Depends: 
 Imports: checkmate, R6, R62S3, magrittr, GoFKernel, dplyr, RSmisc, stats, extraDistr, utils, expint, data.table
-Suggests: knitr, testthat, devtools
+Suggests: knitr, testthat, devtools, remotes
 Remotes: RaphaelS1/RSmisc, RaphaelS1/R62S3
 License: MIT + file LICENSE
 LazyData: true
