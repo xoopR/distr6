@@ -3,7 +3,6 @@
 \name{MixtureDistribution}
 \alias{MixtureDistribution}
 \title{Mixture Distribution Wrapper}
-\format{An \code{\link[R6]{R6}} object.}
 \description{
 Wrapper used to construct a mixture of two or more distributions.
 }
@@ -15,25 +14,25 @@ w_1,...,w_n. The pdf of the mixture distribution M(X1,...,XN), f_M is given by
 and the cdf, F_M is given by
 \deqn{F_M = sum_i (F_i)(w_i)}
 
-If weights are given, they should be provided as a list of numerics summing to one. If NULL,
+If weights are given, they should be provided as a vector of numerics summing to one. If NULL,
 they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 }
+\section{Constructor}{
+ MixtureDistribution$new(distlist, weights = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
-\code{weights} \tab list \tab List of weights. See Details. \cr
-\code{...} \tab any \tab Additional arguments to pass to pdf/cdf.
+\code{weights} \tab numeric \tab Vector of weights. See Details. \cr
 }
 }
 
 \section{Public Methods}{
 
-\tabular{ll}{
-\strong{Method} \tab \strong{Details} \cr
-\code{weights()} \tab Returns the weights of the wrapped distributions.
-}
+See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 
 \examples{
@@ -42,6 +41,5 @@ mixture$pdf(1)
 mixture$cdf(1)
 }
 \seealso{
-\code{\link{DistributionWrapper}} for wrapper details.
-See \code{\link{Distribution}} for a list of public methods.
+\code{\link{listWrappers}}.
 }

@@ -11,6 +11,12 @@ assertMixture(x)
 checkMixture(x)
 testMixture(x)
 isMixture(x)
+
+checkMixture(x)
+
+assertMixture(x)
+
+isMixture(x)
 }
 \arguments{
 \item{x}{Distribution}

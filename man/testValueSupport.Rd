@@ -11,6 +11,12 @@ assertValueSupport(x, type)
 checkValueSupport(x, type)
 testValueSupport(x, type)
 isValueSupport(x, type)
+
+checkValueSupport(x, type)
+
+assertValueSupport(x, type)
+
+isValueSupport(x, type)
 }
 \arguments{
 \item{x}{Distribution}

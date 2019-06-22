@@ -1,11 +1,11 @@
 ^\.travis\.yml$
 ^\.appveyor\.yml$
-_pkgdown.yml
-cran-comments.md
+\_pkgdown\.yml
+cran-comments\.md
 ^CRAN-RELEASE$
 docs
 Licensing
-CODE_OF_CONDUCT.md
-CONTRIBUTING.md
+CODE\_OF\_CONDUCT\.md
+CONTRIBUTING\.md
 pkgdown
 LICENSE_GIT

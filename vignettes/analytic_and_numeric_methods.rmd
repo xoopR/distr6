@@ -1,27 +1,80 @@
 ---
-title: "Analytic and Numeric Methods"
+title: "Decorators, Analytic and Numeric Methods"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Analytic and Numeric Methods}
+  %\VignetteIndexEntry{Decorators, Analytic and Numeric Methods}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-To keep all Distribution results as precise as possible and to ensure optimal efficiency, we separate out all analytic and numerical calculations using decorators. The image below gives a visual representation of how this looks for a custom Distribution object. All public methods inside the Distribution are analytic only, i.e. no approximations or numerical integration take place. So if a user wants to define a custom distribution and calculate the analytic representation, then they can supply this to the constructor, otherwise they use decorators for numeric approximation.
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(distr6)
+```
 
-We have three decorators:
+distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernel, of class `Kernel`, should only contain analytic methods. This ensures that all results are as precise as possible and ensure optimal efficiency. The figure below gives a visual representation of how this looks. Moreover we further minimise error by restricting any possible numeric calculations such as in Beta or Gamma functions to only methods implemented in R stats, such as `beta` and `gamma`, or in the `pracma` package. For distributions where no closed form analytic expression can be found, details of this are found in the 'Details' section of the distribution's help page. To impute numeric results, decorators are used.
+
+![](decorators.png)
+
+
+Currently distr6 has three decorators:
 
 1. `CoreStatistics`
 2. `ExoticStatistics`
 3. `FunctionImputation`
 
-`CoreStatistics` contains all commonly used mathematical and statistical functions used to describe a probability distribution. These include expectation, variance, kurtosis and skewness. `ExoticStatistics` contains less commonly used functions for the general user but useful functions for modelling and survival analysis. These included survival, hazard and p-norm of pdf. `FunctionImputation` imputes the pdf/cdf/quantile/random using numerical methods, depending which are provided. These follow a strict hierarchy to maximise efficiency and minimise error from numerical approximations. The hierarchy is as follows:
+`CoreStatistics` contains all commonly used mathematical and statistical functions used to describe a probability distribution, for example: expectation, variance, kurtosis and skewness. In addition there is a generalised expectation function `genExp` that can be used to find any generic expectation of the distribution of the form $E[f(X)]$ where $f(X)$ can be any function acting on $X$. This is particularly useful for more complex functions such as `kthmoment`.
+
+`ExoticStatistics` contains less commonly used functions for the general user but useful functions for modelling and survival analysis. These include survival, hazard and any p-norm of pdf.
+
+`FunctionImputation` imputes the pdf/cdf/quantile/random using numerical methods, depending which are provided. These follow a strict hierarchy to maximise efficiency and minimise error from numerical approximations. The hierarchy is as follows:
 
 * To impute the pdf: `cdf2pdf`; `rand2pdf`; `quantile2pdf`
 * To impute the cdf: `quantile2cdf`; `pdf2cdf`; `rand2cdf`
 * To impute the quantile: `cdf2quantile`; `pdf2quantile`; `rand2quantile`
 * To impute the rand: `quantile2rand`; `cdf2rand`; `pdf2rand`
 
-When a decorator is constructed, either in construction of a `Distribution` or after, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `variance` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator. However if `variance` is missing, then a numeric method is added as a public method. Similarly where possible an analytic method is always preferred. For example, if an analytic `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated. Finally, even if an analytic expression for `expectation` exists, the `CoreStatitics` decorator always adds a `genExp` method for a generalised numerical expectation formula, this is required for numerical results for variance, moments, etc.
+## How to Decorate
 
-![](decorators.png)
+Decorators can be added to a distribution in one of three ways depending on whether the decorator should be added in construction or not.
+
+### Method 1: In Construction
+
+```{r, results='hide'}
+Normal$new(var = 1, decorators = CoreStatistics) # For one only
+Normal$new(var = 1, decorators = list(CoreStatistics, ExoticStatistics)) # For multiple
+```
+
+### Method 2: After Construction, Construct a Decorator
+```{r, error = TRUE}
+n <- Normal$new(var = 1)
+n$pdfPNorm(2) # Error as it hasn't been decorated
+n <- Normal$new(var = 1)
+ExoticStatistics$new(n)
+n$pdfPNorm(2)
+```
+
+### Method 3: After Construction, Use `decorate`
+```{r, error = TRUE}
+n <- Normal$new()
+n$kthmoment(4, "raw") # Error as it hasn't been decorated
+decorate(n, CoreStatistics)
+n$kthmoment(4, "raw")
+```
+
+When a decorator is constructed, either in construction of a `Distribution` or after, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `variance` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator.
+
+```{r}
+n <- Normal$new(decorators = CoreStatistics)
+n$mean # The analytic method
+```
+
+Similarly where possible an analytic method is always preferred. For example, if an analytic `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated.
+
+```{r}
+n <- Normal$new(decorators = ExoticStatistics)
+n$survival(2) == n$cdf(2, lower.tail = F) # The analytic method
+```
+
+Finally, even if an analytic expression for `expectation` exists, the `CoreStatistics` decorator always adds a `genExp` method for a generalised numerical expectation formula, this is required for numerical results for variance, moments, etc.
+
+

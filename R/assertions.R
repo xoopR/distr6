@@ -1,9 +1,4 @@
 #' @title assert/check/test/isDistribution
-#' @name testDistribution
-#' @aliases
-#'   checkDistribution
-#'   assertDistribution
-#'   isDistribution
 #' @description Validation checks to test if a given object is an R6 Distribution
 #' @param x object to test
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -20,17 +15,23 @@
 #' testDistribution(Binomial$new()) # TRUE
 #'
 #' @export
+testDistribution <- function(){}
+#' @rdname testDistribution
+#' @export
+checkDistribution <- function(){}
+#' @rdname testDistribution
+#' @export
+assertDistribution <- function(){}
+#' @rdname testDistribution
+#' @export
+isDistribution <- function(){}
+
 RSmisc::makeChecks(assertionName = "Distribution",
            cond = inherits(x,"Distribution"),
            errormsg = paste(x,"is not an R6 Distribution object"),
            pos = environment())
 
 #' @title assert/check/test/isDistributionList
-#' @name testDistributionList
-#' @aliases
-#'   checkDistributionList
-#'   assertDistributionList
-#'   isDistributionList
 #' @description Validation checks to test if a given object is a list of R6 Distributions
 #' @param x object to test
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -47,17 +48,23 @@ RSmisc::makeChecks(assertionName = "Distribution",
 #' testDistributionList(list(Binomial$new(),Exponential$new())) # TRUE
 #'
 #' @export
+testDistributionList <- function(){}
+#' @rdname testDistributionList
+#' @export
+checkDistributionList <- function(){}
+#' @rdname testDistributionList
+#' @export
+assertDistributionList <- function(){}
+#' @rdname testDistributionList
+#' @export
+isDistributionList <- function(){}
+
 RSmisc::makeChecks(assertionName =  "DistributionList",
            cond = all(unlist(lapply(x,inherits,"Distribution"))),
            errormsg = "One or more items in the list are not Distributions",
            pos = environment())
 
 #' @title assert/check/test/isDistributionFeature
-#' @name testDistributionFeature
-#' @aliases
-#'   checkDistributionFeature
-#'   assertDistributionFeature
-#'   isDistributionFeature
 #' @description Validation checks to test for a given feature in a Distribution
 #' @param x Distribution
 #' @param accessor accessor of property/trait to test
@@ -76,6 +83,17 @@ RSmisc::makeChecks(assertionName =  "DistributionList",
 #' testDistributionFeature(Exponential$new(), "valueSupport", "discrete") # FALSE
 #'
 #' @export
+testDistributionFeature <- function(){}
+#' @rdname testDistributionFeature
+#' @export
+checkDistributionFeature <- function(){}
+#' @rdname testDistributionFeature
+#' @export
+assertDistributionFeature <- function(){}
+#' @rdname testDistributionFeature
+#' @export
+isDistributionFeature <- function(){}
+
 RSmisc::makeChecks(assertionName =  "DistributionFeature",
            cond = x[[accessor]]() == feature,
            errormsg = paste(x$short_name,"is not",feature),
@@ -84,10 +102,6 @@ RSmisc::makeChecks(assertionName =  "DistributionFeature",
 
 #' @title assert/check/test/VariateForm
 #' @name testVariateForm
-#' @aliases
-#'   checkVariateForm
-#'   assertVariateForm
-#'   isVariateForm
 #' @description Validation checks to test the variate form of a Distribution
 #' @param x Distribution
 #' @param type variate form type, univariate/multivariate/matrixvariate
@@ -105,6 +119,17 @@ RSmisc::makeChecks(assertionName =  "DistributionFeature",
 #' testVariateForm(Exponential$new(), "multivariate") # FALSE
 #'
 #' @export
+testVariateForm <- function(){}
+#' @rdname testVariateForm
+#' @export
+checkVariateForm <- function(){}
+#' @rdname testVariateForm
+#' @export
+assertVariateForm <- function(){}
+#' @rdname testVariateForm
+#' @export
+isVariateForm <- function(){}
+
 RSmisc::makeChecks(assertionName =  "VariateForm",
            cond = x[["variateForm"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
@@ -113,10 +138,6 @@ RSmisc::makeChecks(assertionName =  "VariateForm",
 
 #' @title assert/check/test/Univariate
 #' @name testUnivariate
-#' @aliases
-#'   checkUnivariate
-#'   assertUnivariate
-#'   isUnivariate
 #' @description Validation checks to test if Distribution is univariate
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -132,6 +153,17 @@ RSmisc::makeChecks(assertionName =  "VariateForm",
 #' testUnivariate(Binomial$new()) # TRUE
 #'
 #' @export
+testUnivariate <- function(){}
+#' @rdname testUnivariate
+#' @export
+checkUnivariate <- function(){}
+#' @rdname testUnivariate
+#' @export
+assertUnivariate <- function(){}
+#' @rdname testUnivariate
+#' @export
+isUnivariate <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Univariate",
            cond = x[["variateForm"]]() == "univariate",
            errormsg = paste(x$short_name,"is not univariate"),
@@ -139,10 +171,6 @@ RSmisc::makeChecks(assertionName =  "Univariate",
 
 #' @title assert/check/test/Multivariate
 #' @name testMultivariate
-#' @aliases
-#'   checkMultivariate
-#'   assertMultivariate
-#'   isMultivariate
 #' @description Validation checks to test if Distribution is multivariate.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -158,6 +186,17 @@ RSmisc::makeChecks(assertionName =  "Univariate",
 #' testMultivariate(Binomial$new()) # FALSE
 #'
 #' @export
+testMultivariate <- function(){}
+#' @rdname testMultivariate
+#' @export
+checkMultivariate <- function(){}
+#' @rdname testMultivariate
+#' @export
+assertMultivariate <- function(){}
+#' @rdname testMultivariate
+#' @export
+isMultivariate <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Multivariate",
            cond = x[["variateForm"]]() == "multivariate",
            errormsg = paste(x$short_name,"is not multivariate"),
@@ -165,10 +204,6 @@ RSmisc::makeChecks(assertionName =  "Multivariate",
 
 #' @title assert/check/test/Matrixvariate
 #' @name testMatrixvariate
-#' @aliases
-#'   checkMatrixvariate
-#'   assertMatrixvariate
-#'   isMatrixvariate
 #' @description Validation checks to test if Distribution is matrixvariate.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -184,6 +219,17 @@ RSmisc::makeChecks(assertionName =  "Multivariate",
 #' testMatrixvariate(Binomial$new()) # FALSE
 #'
 #' @export
+testMatrixvariate <- function(){}
+#' @rdname testMatrixvariate
+#' @export
+checkMatrixvariate <- function(){}
+#' @rdname testMatrixvariate
+#' @export
+assertMatrixvariate <- function(){}
+#' @rdname testMatrixvariate
+#' @export
+isMatrixvariate <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Matrixvariate",
            cond = x[["variateForm"]]() == "matrixvariate",
            errormsg = paste(x$short_name,"is not matrixvariate"),
@@ -191,10 +237,6 @@ RSmisc::makeChecks(assertionName =  "Matrixvariate",
 
 #' @title assert/check/test/ValueSupport
 #' @name testValueSupport
-#' @aliases
-#'   checkValueSupport
-#'   assertValueSupport
-#'   isValueSupport
 #' @description Validation checks to test the value support of a Distribution
 #' @param x Distribution
 #' @param type value support type, continuous/discrete/mixture
@@ -212,6 +254,17 @@ RSmisc::makeChecks(assertionName =  "Matrixvariate",
 #' testValueSupport(Exponential$new(), "discrete") # FALSE
 #'
 #' @export
+testValueSupport <- function(){}
+#' @rdname testValueSupport
+#' @export
+checkValueSupport <- function(){}
+#' @rdname testValueSupport
+#' @export
+assertValueSupport <- function(){}
+#' @rdname testValueSupport
+#' @export
+isValueSupport <- function(){}
+
 RSmisc::makeChecks(assertionName =  "ValueSupport",
            cond = x[["valueSupport"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
@@ -220,10 +273,6 @@ RSmisc::makeChecks(assertionName =  "ValueSupport",
 
 #' @title assert/check/test/Continuous
 #' @name testContinuous
-#' @aliases
-#'   checkContinuous
-#'   assertContinuous
-#'   isContinuous
 #' @description Validation checks to test if Distribution is continuous
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -239,6 +288,17 @@ RSmisc::makeChecks(assertionName =  "ValueSupport",
 #' testContinuous(Binomial$new()) # FALSE
 #'
 #' @export
+testContinuous <- function(){}
+#' @rdname testContinuous
+#' @export
+checkContinuous <- function(){}
+#' @rdname testContinuous
+#' @export
+assertContinuous <- function(){}
+#' @rdname testContinuous
+#' @export
+isContinuous <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Continuous",
            cond = x[["valueSupport"]]() == "continuous",
            errormsg = paste(x$short_name,"is not continuous"),
@@ -246,10 +306,6 @@ RSmisc::makeChecks(assertionName =  "Continuous",
 
 #' @title assert/check/test/Discrete
 #' @name testDiscrete
-#' @aliases
-#'   checkDiscrete
-#'   assertDiscrete
-#'   isDiscrete
 #' @description Validation checks to test if Distribution is discrete
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -265,6 +321,17 @@ RSmisc::makeChecks(assertionName =  "Continuous",
 #' testDiscrete(Binomial$new()) # FALSE
 #'
 #' @export
+testDiscrete <- function(){}
+#' @rdname testDiscrete
+#' @export
+checkDiscrete <- function(){}
+#' @rdname testDiscrete
+#' @export
+assertDiscrete <- function(){}
+#' @rdname testDiscrete
+#' @export
+isDiscrete <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Discrete",
            cond = x[["valueSupport"]]() == "discrete",
            errormsg = paste(x$short_name,"is not discrete"),
@@ -272,10 +339,6 @@ RSmisc::makeChecks(assertionName =  "Discrete",
 
 #' @title assert/check/test/Mixture
 #' @name testMixture
-#' @aliases
-#'   checkMixture
-#'   assertMixture
-#'   isMixture
 #' @description Validation checks to test if Distribution is mixture
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -291,6 +354,17 @@ RSmisc::makeChecks(assertionName =  "Discrete",
 #' testMixture(Binomial$new()) # FALSE
 #'
 #' @export
+testMixture <- function(){}
+#' @rdname testMixture
+#' @export
+checkMixture <- function(){}
+#' @rdname testMixture
+#' @export
+assertMixture <- function(){}
+#' @rdname testMixture
+#' @export
+isMixture <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Mixture",
            cond = x[["valueSupport"]]() == "mixture",
            errormsg = paste(x$short_name,"is not mixture"),
@@ -298,10 +372,6 @@ RSmisc::makeChecks(assertionName =  "Mixture",
 
 #' @title assert/check/test/Symmetric
 #' @name testSymmetric
-#' @aliases
-#'   checkSymmetric
-#'   assertSymmetric
-#'   isSymmetric
 #' @description Validation checks to test if Distribution is symmetric
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -317,6 +387,17 @@ RSmisc::makeChecks(assertionName =  "Mixture",
 #' testSymmetric(Binomial$new()) # FALSE
 #'
 #' @export
+testSymmetric <- function(){}
+#' @rdname testSymmetric
+#' @export
+checkSymmetric <- function(){}
+#' @rdname testSymmetric
+#' @export
+assertSymmetric <- function(){}
+#' @rdname testSymmetric
+#' @export
+isSymmetric <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Symmetric",
            cond = x[["symmetry"]]()=="symmetric",
            errormsg = paste(x$short_name,"is not symmetric"),
@@ -324,10 +405,6 @@ RSmisc::makeChecks(assertionName =  "Symmetric",
 
 #' @title assert/check/test/Skewness
 #' @name testSkewness
-#' @aliases
-#'   checkSkewness
-#'   assertSkewness
-#'   isSkewness
 #' @description Validation checks to test the skewnewss of a Distribution
 #' @param x Distribution
 #' @param type skewness type, Negative Skew/No Skew/Positive Skew
@@ -345,6 +422,17 @@ RSmisc::makeChecks(assertionName =  "Symmetric",
 #' testSkewness(Binomial$new(), "Positive Skew")
 #'
 #' @export
+testSkewness <- function(){}
+#' @rdname testSkewness
+#' @export
+checkSkewness <- function(){}
+#' @rdname testSkewness
+#' @export
+assertSkewness <- function(){}
+#' @rdname testSkewness
+#' @export
+isSkewness <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Skewness",
            cond = x[["skewnessType"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
@@ -353,10 +441,6 @@ RSmisc::makeChecks(assertionName =  "Skewness",
 
 #' @title assert/check/test/NegativeSkew
 #' @name testNegativeSkew
-#' @aliases
-#'   checkNegativeSkew
-#'   assertNegativeSkew
-#'   isNegativeSkew
 #' @description Validation checks to test if Distribution is negative skew.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -372,6 +456,17 @@ RSmisc::makeChecks(assertionName =  "Skewness",
 #' testNegativeSkew(Binomial$new())
 #'
 #' @export
+testNegativeSkew <- function(){}
+#' @rdname testNegativeSkew
+#' @export
+checkNegativeSkew <- function(){}
+#' @rdname testNegativeSkew
+#' @export
+assertNegativeSkew <- function(){}
+#' @rdname testNegativeSkew
+#' @export
+isNegativeSkew <- function(){}
+
 RSmisc::makeChecks(assertionName =  "NegativeSkew",
            cond = x[["skewnessType"]]() == "Negative Skew",
            errormsg = paste(x$short_name,"is not negative skew"),
@@ -379,10 +474,6 @@ RSmisc::makeChecks(assertionName =  "NegativeSkew",
 
 #' @title assert/check/test/PositiveSkew
 #' @name testPositiveSkew
-#' @aliases
-#'   checkPositiveSkew
-#'   assertPositiveSkew
-#'   isPositiveSkew
 #' @description Validation checks to test if Distribution is positive skew.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -398,6 +489,17 @@ RSmisc::makeChecks(assertionName =  "NegativeSkew",
 #' testPositiveSkew(Binomial$new())
 #'
 #' @export
+testPositiveSkew <- function(){}
+#' @rdname testPositiveSkew
+#' @export
+checkPositiveSkew <- function(){}
+#' @rdname testPositiveSkew
+#' @export
+assertPositiveSkew <- function(){}
+#' @rdname testPositiveSkew
+#' @export
+isPositiveSkew <- function(){}
+
 RSmisc::makeChecks(assertionName =  "PositiveSkew",
            cond = x[["skewnessType"]]() == "Positive Skew",
            errormsg = paste(x$short_name,"is not positive skew"),
@@ -405,10 +507,6 @@ RSmisc::makeChecks(assertionName =  "PositiveSkew",
 
 #' @title assert/check/test/NoSkew
 #' @name testNoSkew
-#' @aliases
-#'   checkNoSkew
-#'   assertNoSkew
-#'   isNoSkew
 #' @description Validation checks to test if Distribution is no skew.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -424,6 +522,17 @@ RSmisc::makeChecks(assertionName =  "PositiveSkew",
 #' testNoSkew(Binomial$new())
 #'
 #' @export
+testNoSkew <- function(){}
+#' @rdname testNoSkew
+#' @export
+checkNoSkew <- function(){}
+#' @rdname testNoSkew
+#' @export
+assertNoSkew <- function(){}
+#' @rdname testNoSkew
+#' @export
+isNoSkew <- function(){}
+
 RSmisc::makeChecks(assertionName =  "NoSkew",
            cond = x[["skewnessType"]]() == "No Skew",
            errormsg = paste(x$short_name,"is not no skew"),
@@ -431,10 +540,6 @@ RSmisc::makeChecks(assertionName =  "NoSkew",
 
 #' @title assert/check/test/Kurtosis
 #' @name testKurtosis
-#' @aliases
-#'   checkKurtosis
-#'   assertKurtosis
-#'   isKurtosis
 #' @description Validation checks to test the kurtosis of a Distribution
 #' @param x Distribution
 #' @param type kurtosis type, leptokurtic/mesokurtic/platykurtic
@@ -452,6 +557,17 @@ RSmisc::makeChecks(assertionName =  "NoSkew",
 #' testKurtosis(Binomial$new(), "platykurtic")
 #'
 #' @export
+testKurtosis <- function(){}
+#' @rdname testKurtosis
+#' @export
+checkKurtosis <- function(){}
+#' @rdname testKurtosis
+#' @export
+assertKurtosis <- function(){}
+#' @rdname testKurtosis
+#' @export
+isKurtosis <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Kurtosis",
            cond = x[["kurtosisType"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
@@ -460,10 +576,6 @@ RSmisc::makeChecks(assertionName =  "Kurtosis",
 
 #' @title assert/check/test/Platykurtic
 #' @name testPlatykurtic
-#' @aliases
-#'   checkPlatykurtic
-#'   assertPlatykurtic
-#'   isPlatykurtic
 #' @description Validation checks to test if Distribution is platykurtic.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -479,6 +591,17 @@ RSmisc::makeChecks(assertionName =  "Kurtosis",
 #' testPlatykurtic(Binomial$new())
 #'
 #' @export
+testPlatykurtic <- function(){}
+#' @rdname testPlatykurtic
+#' @export
+checkPlatykurtic <- function(){}
+#' @rdname testPlatykurtic
+#' @export
+assertPlatykurtic <- function(){}
+#' @rdname testPlatykurtic
+#' @export
+isPlatykurtic <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Platykurtic",
            cond = x[["kurtosisType"]]() == "platykurtic",
            errormsg = paste(x$short_name,"is not platykurtic"),
@@ -486,10 +609,6 @@ RSmisc::makeChecks(assertionName =  "Platykurtic",
 
 #' @title assert/check/test/Mesokurtic
 #' @name testMesokurtic
-#' @aliases
-#'   checkMesokurtic
-#'   assertMesokurtic
-#'   isMesokurtic
 #' @description Validation checks to test if Distribution is mesokurtic.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -505,6 +624,17 @@ RSmisc::makeChecks(assertionName =  "Platykurtic",
 #' testMesokurtic(Binomial$new())
 #'
 #' @export
+testMesokurtic <- function(){}
+#' @rdname testMesokurtic
+#' @export
+checkMesokurtic <- function(){}
+#' @rdname testMesokurtic
+#' @export
+assertMesokurtic <- function(){}
+#' @rdname testMesokurtic
+#' @export
+isMesokurtic <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Mesokurtic",
            cond = x[["kurtosisType"]]() == "mesokurtic",
            errormsg = paste(x$short_name,"is not mesokurtic"),
@@ -512,10 +642,6 @@ RSmisc::makeChecks(assertionName =  "Mesokurtic",
 
 #' @title assert/check/test/Leptokurtic
 #' @name testLeptokurtic
-#' @aliases
-#'   checkLeptokurtic
-#'   assertLeptokurtic
-#'   isLeptokurtic
 #' @description Validation checks to test if Distribution is leptokurtic.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -531,6 +657,17 @@ RSmisc::makeChecks(assertionName =  "Mesokurtic",
 #' testLeptokurtic(Binomial$new())
 #'
 #' @export
+testLeptokurtic <- function(){}
+#' @rdname testLeptokurtic
+#' @export
+checkLeptokurtic <- function(){}
+#' @rdname testLeptokurtic
+#' @export
+assertLeptokurtic <- function(){}
+#' @rdname testLeptokurtic
+#' @export
+isLeptokurtic <- function(){}
+
 RSmisc::makeChecks(assertionName =  "Leptokurtic",
            cond = x[["kurtosisType"]]() == "leptokurtic",
            errormsg = paste(x$short_name,"is not leptokurtic"),

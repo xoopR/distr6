@@ -11,6 +11,12 @@ assertDistributionList(x)
 checkDistributionList(x)
 testDistributionList(x)
 isDistributionList(x)
+
+checkDistributionList(x)
+
+assertDistributionList(x)
+
+isDistributionList(x)
 }
 \arguments{
 \item{x}{object to test}

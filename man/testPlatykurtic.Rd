@@ -11,6 +11,12 @@ assertPlatykurtic(x)
 checkPlatykurtic(x)
 testPlatykurtic(x)
 isPlatykurtic(x)
+
+checkPlatykurtic(x)
+
+assertPlatykurtic(x)
+
+isPlatykurtic(x)
 }
 \arguments{
 \item{x}{Distribution}

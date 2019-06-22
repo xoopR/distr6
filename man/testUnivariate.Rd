@@ -11,6 +11,12 @@ assertUnivariate(x)
 checkUnivariate(x)
 testUnivariate(x)
 isUnivariate(x)
+
+checkUnivariate(x)
+
+assertUnivariate(x)
+
+isUnivariate(x)
 }
 \arguments{
 \item{x}{Distribution}

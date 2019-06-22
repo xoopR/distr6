@@ -44,3 +44,4 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
 Interval$set("public","as.numeric",function(){
   return(seq.int(self$min(),self$max(),1))
 })
+Interval$set("private",".macType","numeric")

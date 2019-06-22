@@ -13,8 +13,7 @@ cexpo = function(x){
 }
 
 ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
-                      lower = list(0, 0, 0), upper = list(Inf, Inf, 5),
-                      class = list("numeric","numeric","numeric"),
+                      support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0,5)),
                       settable = list(TRUE, FALSE, FALSE),
                       updateFunc = list(NULL, "1/self$getParameterValue('rate')",
                                         "exp(self$getParameterValue('rate'))"),
@@ -29,7 +28,7 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
 )
 
 test_that("check all accessors are working", {
-  expect_equal(continuousTester$decorators, list())
+  expect_equal(continuousTester$decorators(), NULL)
   expect_equal(continuousTester$valueSupport(), "continuous")
   expect_equal(continuousTester$variateForm(), "univariate")
   expect_equal(continuousTester$symmetry(), "symmetric")
@@ -38,7 +37,7 @@ test_that("check all accessors are working", {
 
 test_that("check core statistics", {
   expect_silent(continuousTester$setParameterValue(list(rate = 6)))
-  expect_message(decorate(continuousTester, CoreStatistics, FALSE))
+  expect_message(decorate(continuousTester, CoreStatistics))
   expect_equal(continuousTester$genExp(), 1/6)
   expect_equal(continuousTester$var(), 1/36)
   expect_equal(continuousTester$sd(), 1/6)
@@ -56,7 +55,7 @@ test_that("check core statistics", {
 })
 
 test_that("check exotic statistics", {
-  expect_message(decorate(continuousTester, ExoticStatistics, FALSE))
+  expect_message(decorate(continuousTester, ExoticStatistics))
   expect_equal(continuousTester$survival(1), 1-continuousTester$cdf(1))
   expect_equal(round(continuousTester$survivalAntiDeriv(), 5), round(continuousTester$survivalPNorm(p = 1), 5))
   expect_equal(round(continuousTester$genExp(), 5), round(continuousTester$survivalPNorm(p = 1), 5))

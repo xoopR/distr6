@@ -17,7 +17,7 @@ generalPNorm(fun, p, lower, upper)
 }
 \description{
 Calculate the p-norm of any function between given limits. Given by,
-\deqn{(int_S |f|^p d\mu)^1/p}
+\deqn{(\int_S |f|^p d\mu)^1/p}
 }
 \examples{
 generalPNorm(Exponential$new()$pdf,2,0,10)

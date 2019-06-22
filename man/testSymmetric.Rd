@@ -11,6 +11,12 @@ assertSymmetric(x)
 checkSymmetric(x)
 testSymmetric(x)
 isSymmetric(x)
+
+checkSymmetric(x)
+
+assertSymmetric(x)
+
+isSymmetric(x)
 }
 \arguments{
 \item{x}{Distribution}

@@ -13,8 +13,7 @@ cexpo = function(x){
 }
 
 ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
-                      lower = list(0, 0, 0), upper = list(Inf, Inf, 5),
-                      class = list("numeric","numeric","numeric"),
+                      support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0,5)),
                       settable = list(TRUE, FALSE, FALSE),
                       updateFunc = list(NULL, "1/self$getParameterValue('rate')",
                                         "exp(self$getParameterValue('rate'))"),
@@ -25,7 +24,7 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     distrDomain=PosReals$new(),
                                     pdf = dexpo,
                                     parameters = ps,
-                                    decorators = ExoticStatistics, R62S3 = FALSE
+                                    decorators = ExoticStatistics
 )
 
 test_that("numeric survival functions",{
@@ -41,7 +40,7 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     distrDomain=PosReals$new(),
                                     pdf = dexpo, cdf = cexpo,
                                     parameters = ps,
-                                    decorators = ExoticStatistics, R62S3 = FALSE
+                                    decorators = ExoticStatistics
 )
 
 test_that("analytic survival functions",{

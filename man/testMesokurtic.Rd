@@ -11,6 +11,12 @@ assertMesokurtic(x)
 checkMesokurtic(x)
 testMesokurtic(x)
 isMesokurtic(x)
+
+checkMesokurtic(x)
+
+assertMesokurtic(x)
+
+isMesokurtic(x)
 }
 \arguments{
 \item{x}{Distribution}

@@ -11,6 +11,12 @@ assertVariateForm(x, type)
 checkVariateForm(x, type)
 testVariateForm(x, type)
 isVariateForm(x, type)
+
+checkVariateForm(x, type)
+
+assertVariateForm(x, type)
+
+isVariateForm(x, type)
 }
 \arguments{
 \item{x}{Distribution}

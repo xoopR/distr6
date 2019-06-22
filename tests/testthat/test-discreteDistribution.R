@@ -10,8 +10,7 @@ dbin = function(x){
 }
 
 ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0.8),
-                      lower = list(0, 1, 0), upper = list(1, Inf, 1),
-                      class = list("numeric","integer","numeric"),
+                      support = list(Interval$new(0,1), PosNaturals$new(), Interval$new(0,1)),
                       settable = list(TRUE, TRUE, FALSE),
                       updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
                       description = list("Probability of Success", "Number of trials",
@@ -22,15 +21,15 @@ discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0,
                                   distrDomain=PosNaturals$new(),
                                   pdf = dbin,
                                   parameters = ps,
-                                  decorators = list(CoreStatistics), R62S3 = FALSE
+                                  decorators = list(CoreStatistics)
 )
 
 test_that("check all accessors are working", {
-  expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100.0)")
+  expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100)")
   expect_equal(discreteTester$name, "Discrete Test")
   expect_equal(discreteTester$short_name, "TestDistr")
   expect_equal(discreteTester$description, NULL)
-  expect_equal(discreteTester$decorators, "CoreStatistics")
+  expect_equal(discreteTester$decorators(), "CoreStatistics")
   expect_equal(discreteTester$valueSupport(), "discrete")
   expect_equal(discreteTester$variateForm(), "univariate")
   expect_equal(discreteTester$symmetry(),"symmetric")
@@ -67,7 +66,7 @@ test_that("check exotic functions silent",{
 
 test_that("check mgf, cf, pgf",{
   expect_equal(discreteTester$mgf(4), (1 - 0.9 + 0.9*exp(4))^2)
-  expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4)*1+0i)^2)
+  expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4i))^2)
   expect_equal(discreteTester$pgf(2), (1 - 0.9 + 0.9*2)^2)
 })
 

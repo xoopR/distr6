@@ -13,10 +13,10 @@ NULL
 
 #' @export
 DistributionDecorator <- R6::R6Class("DistributionDecorator")
-DistributionDecorator$set("public","initialize",function(dist, R62S3 = TRUE){
+DistributionDecorator$set("public","initialize",function(dist){
   if(RSmisc::getR6Class(self) == "DistributionDecorator")
     stop(paste0(RSmisc::getR6Class(self), " is an abstract class that can't be initialized. Try using
                decorate([distribution], ",RSmisc::getR6Class(self),")"))
 
-  decorate(dist, get(RSmisc::getR6Class(self)), R62S3)
+  decorate(dist, get(RSmisc::getR6Class(self)))
 })

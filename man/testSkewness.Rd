@@ -11,6 +11,12 @@ assertSkewness(x, type)
 checkSkewness(x, type)
 testSkewness(x, type)
 isSkewness(x, type)
+
+checkSkewness(x, type)
+
+assertSkewness(x, type)
+
+isSkewness(x, type)
 }
 \arguments{
 \item{x}{Distribution}

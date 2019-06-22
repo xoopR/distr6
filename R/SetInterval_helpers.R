@@ -25,8 +25,8 @@ operation <- function(unicode,...){
       x <- paste0(x,"}")
     return(x)
   })
-  lower = as.numeric(unlist(lapply(dots, function(x) x$lower())),recursive=T)
-  upper = as.numeric(unlist(lapply(dots, function(x) x$upper()),recursive = T))
+  lower = as.numeric(unlist(lapply(dots, function(x) x$inf())),recursive=T)
+  upper = as.numeric(unlist(lapply(dots, function(x) x$sup()),recursive = T))
 
   setSymbol <- paste(unlist(symbols), collapse = paste0(" ",unicode," "))
   return(SetInterval$new(symbol = setSymbol, type = "{}", lower = lower,
@@ -75,6 +75,25 @@ union <- function(...){
   operation("\u222A",...)
 }
 
+#' @title Symbolic Complement for SetInterval
+#'
+#' @description Makes a symbolic representation for the complement of sets/intervals.
+#' @return An R6 object of class SetInterval.
+#' @name complement
+#'
+#' @usage complement(...)
+#'
+#' @param ... sets and/or intervals to take the union of.
+#'
+#' @details This does not calculate the complement of the arguments but
+#'   is just a symbolic representation using unicode.
+#'
+#' @seealso \code{\link{product}} and \code{\link{union}}.
+#' @export
+complement <- function(...){
+  operation("/",...)
+}
+
 #' @title Symbolic Exponentiation for SetInterval
 #'
 #' @description Makes a symbolic representation for the exponentiation of a given
@@ -93,8 +112,8 @@ union <- function(...){
 #' @export
 power <- function(x, power){
   symbol = paste0(x$getSymbol(),"^",power)
-  lower = rep(x$lower(),power)
-  upper = rep(x$upper(),power)
+  lower = rep(x$inf(),power)
+  upper = rep(x$sup(),power)
 
   SetInterval$new(symbol = symbol, type = x$type(), lower = lower,
                   upper = upper, dimension = power)
@@ -120,6 +139,14 @@ power <- function(x, power){
 #' @param y distribution
 `*.SetInterval` <- function(x, y){
   product(x, y)
+}
+
+#' @usage \method{-}{SetInterval}(x, y)
+#' @rdname complement
+#' @param x distribution
+#' @param y distribution
+`-.SetInterval` <- function(x, y){
+  complement(x, y)
 }
 
 #' @title Unicode Symbol of Special Sets

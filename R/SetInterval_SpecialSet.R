@@ -14,14 +14,21 @@ NULL
 #' @export
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Set)
 SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
-                                              upper = Inf, type = "()", ...){
+                                              upper = Inf, type = "()", complement = NULL, ...){
   if(RSmisc::getR6Class(self, pos = environment()) == "SpecialSet")
     stop(paste(RSmisc::getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  if(dim!=1)
-    private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim)
-  else
-    private$.setSymbol <- setSymbol(paste0(RSmisc::getR6Class(self, pos = environment())))
+  if(dim!=1){
+    if(!is.null(complement))
+      private$.setSymbol <- paste0(paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim),"/",complement$getSymbol())
+    else
+      private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim)
+  } else{
+    if(!is.null(complement))
+      private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"/",complement$getSymbol())
+    else
+      private$.setSymbol <- setSymbol(paste0(RSmisc::getR6Class(self, pos = environment())))
+  }
   private$.lower <- lower
   private$.upper <- upper
   private$.type <- type
@@ -42,8 +49,8 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
 NULL
 #' @export
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
-Naturals$set("public", "initialize", function(dim = 1,...){
-  super$initialize(dim, lower = 0, type = "[)")
+Naturals$set("public", "initialize", function(dim = 1, lower = 0){
+  super$initialize(dim, lower = lower, type = "[)")
 })
 
 #' @title Set of Positive Natural Numbers
@@ -58,9 +65,9 @@ Naturals$set("public", "initialize", function(dim = 1,...){
 #' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
-PosNaturals <- R6::R6Class("PosNaturals",inherit = SpecialSet)
+PosNaturals <- R6::R6Class("PosNaturals",inherit = Naturals)
 PosNaturals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, lower = 1, type = "[)")
+  super$initialize(dim, lower = 1)
 })
 
 #' @title Set of Integers
@@ -77,7 +84,7 @@ NULL
 #' @export
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
 Integers$set("public", "initialize", function(dim = 1,...){
-  super$initialize(dim, type = "[]")
+  super$initialize(dim,...)
 })
 
 #' @title Set of Positive Integers
@@ -93,7 +100,7 @@ Integers$set("public", "initialize", function(dim = 1,...){
 #' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
-PosIntegers <- R6::R6Class("PosIntegers",inherit = SpecialSet)
+PosIntegers <- R6::R6Class("PosIntegers",inherit = Integers)
 PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, lower = 0, type = "[)")
@@ -114,7 +121,7 @@ PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @seealso \code{\link{listSpecialSets}}
 NULL
 #' @export
-NegIntegers <- R6::R6Class("NegIntegers",inherit = SpecialSet)
+NegIntegers <- R6::R6Class("NegIntegers",inherit = Integers)
 NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, upper = 0, type = "(]")
@@ -135,9 +142,10 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 NULL
 #' @export
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
-Rationals$set("public", "initialize", function(dim = 1,...){
-  super$initialize(dim, type = "()")
+Rationals$set("public", "initialize", function(dim = 1, ...){
+  super$initialize(dim,...)
 })
+Rationals$set("private",".macType","numeric")
 
 #' @title Set of Positive Rationals
 #' @description The mathematical set of positive rationals.
@@ -194,9 +202,10 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 NULL
 #' @export
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
-Reals$set("public", "initialize", function(dim = 1,type, ...){
-  super$initialize(dim, type = "()",...)
+Reals$set("public", "initialize", function(dim = 1, ...){
+  super$initialize(dim, ...)
 })
+Reals$set("private",".macType","numeric")
 
 #' @title Set of Positive Reals
 #' @description The mathematical set of positive reals.
@@ -273,3 +282,4 @@ Complex <- R6::R6Class("Complex",inherit = SpecialSet)
 Complex$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
 })
+Complex$set("private",".macType","complex")

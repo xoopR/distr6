@@ -53,7 +53,7 @@ value of non-settable functions.
   \code{getParameterValue(id, error = "warn")} \tab Returns value of parameter matching gven 'id'. \cr
   \code{setParameterValue(lst, error = "warn")} \tab Set parameters in list names with respective values. See Details. \cr
   \code{rbind()} \tab Combine the rows of multiple ParameterSets. \cr
-  \code{as.data.frame()} \tab Coerces ParameterSet to data.frame.
+  \code{as.data.table()} \tab Coerces ParameterSet to data.frame.
 }
 }
 
@@ -69,26 +69,23 @@ the parameter IDs and the values, \code{as.numeric(lst)}, are used to set the co
 \examples{
  id = list("prob", "size")
  value = list(0.2, 5)
- lower = list(0, 1)
- upper = list(1, Inf)
- class = list("numeric","integer")
+ support = list(Interval$new(0,1), PosIntegers$new())
  settable = list(TRUE, TRUE)
  description = list("Probability of success",NULL)
- ps = ParameterSet$new(id, value, lower, upper, class, settable,
+ ps = ParameterSet$new(id, value, support, settable,
                        description = description)
  ps$parameters()
  ps$getParameterValue("prob")
+ ps$getParameterSupport("prob")
 
 
  id = list("rate", "scale")
  value = list(1, 1)
- lower = list(0, 0)
- upper = list(Inf, Inf)
- class = list("numeric","numeric")
+ support = list(PosReals$new(), PosReals$new())
  settable = list(TRUE, FALSE)
  updateFunc = list(NULL, "1/self$getParameterValue('rate')")
  description = list("Arrival rate","Scale parameter")
- ps = ParameterSet$new(id, value, lower, upper, class, settable,
+ ps = ParameterSet$new(id, value, support, settable,
                        updateFunc, description)
  ps$parameters(id = "rate")
  ps$setParameterValue(list(rate = 2)) # Automatically calls $update

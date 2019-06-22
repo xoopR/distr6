@@ -39,11 +39,9 @@ artifacts:
 
 version: 1.0.{build}-{branch}
 
-branches:
-  only:
-    - master
-    - release
-    - dev
+#branches:
+#  except:
+#    - gh-pages
 
 skip_tags: true
 
