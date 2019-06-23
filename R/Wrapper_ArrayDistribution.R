@@ -28,9 +28,10 @@
 #'                                         list(prob = 0.2, size = 6)))
 #' a$pdf(x1=1,x2=2,x3=3)
 #' a$cdf(x1=1,x2=2,x3=3)
-NULL
-
+#' a$rand(10)
+#'
 #' @export
+NULL
 ArrayDistribution <- R6::R6Class("ArrayDistribution", inherit = ProductDistribution)
 ArrayDistribution$set("public","initialize",function(distribution, paramList, name = NULL,
                                                      short_name = NULL, description = NULL){

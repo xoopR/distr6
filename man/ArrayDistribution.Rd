@@ -109,6 +109,8 @@ a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob =
                                         list(prob = 0.2, size = 6)))
 a$pdf(x1=1,x2=2,x3=3)
 a$cdf(x1=1,x2=2,x3=3)
+a$rand(10)
+
 }
 \seealso{
 \code{\link{ProductDistribution}}

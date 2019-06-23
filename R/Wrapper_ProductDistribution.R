@@ -27,6 +27,7 @@
 #'                                    Binomial$new(prob = 0.5, size = 20)))
 #' prodBin$pdf(x1 = 2, x2 =3)
 #' prodBin$cdf(x1 = 5, x2 = 10)
+#' prodBin$rand(10)
 NULL
 
 #' @export
@@ -62,11 +63,16 @@ ProductDistribution$set("public","initialize",function(distlist, name = NULL,
     return(prod(prods))
   },list(n = length(distlist)))
 
+  rand = function(n) {
+    return(data.table::data.table(sapply(self$wrappedModels(), function(x) x$rand(n))))
+  }
+
+
   type = do.call(product, lapply(distlist,function(x) x$type()))
   support = do.call(product, lapply(distlist,function(x) x$support()))
   distrDomain = do.call(product, lapply(distlist,function(x) x$distrDomain()))
 
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
                    short_name = short_name, description = description, support = support, type = type,
                    distrDomain = distrDomain)
 }) # IN PROGRESS
