@@ -13,7 +13,7 @@
 #'   via \code{\link{product}} or \code{\link{union}}.
 #' @seealso \code{\link{SetInterval}}.
 #' @export
-operation <- function(unicode,lower,upper,type,dim,...){
+operation <- function(unicode,...,lower=NULL,upper=NULL,type=NULL,dim=NULL){
   dots = list(...)
   symbols = lapply(dots,function(x){
     if(inherits(x,"R6ClassGenerator"))
@@ -26,10 +26,10 @@ operation <- function(unicode,lower,upper,type,dim,...){
     return(x)
   })
 
-  if(!is.null(lower)) lower = as.numeric(unlist(lapply(dots, function(x) x$inf())),recursive=T)
-  if(!is.null(upper)) upper = as.numeric(unlist(lapply(dots, function(x) x$sup()),recursive = T))
-  if(!is.null(dim)) dim = length(dots)
-  if(!is.null(type)) type = "{}"
+  if(is.null(lower)) lower = as.numeric(unlist(lapply(dots, function(x) x$inf())))
+  if(is.null(upper)) upper = as.numeric(unlist(lapply(dots, function(x) x$sup())))
+  if(is.null(dim)) dim = length(dots)
+  if(is.null(type)) type = "{}"
 
   setSymbol <- paste(unlist(symbols), collapse = paste0(" ",unicode," "))
   return(SetInterval$new(symbol = setSymbol, type = type, lower = lower,
@@ -74,8 +74,8 @@ product <- function(...){
 #'
 #' @seealso \code{\link{product}} for the cartesian product of two or more intervals/sets.
 #' @export
-union <- function(...){
-  operation("\u222A",...)
+union <- function(..., dim = 1){
+  operation("\u222A",...,dim=dim)
 }
 
 #' @title Symbolic Complement for SetInterval
@@ -99,28 +99,35 @@ complement <- function(...){
   x = dots[[1]]
   y = dots[[2]]
 
+  if(inherits(y,"Set")){
+    if(y$length()==1)
+      y <- Interval$new(y$elements(),y$elements())
+  }
+
   if(inherits(x,"Interval") & inherits(y,"Interval")){
     if(y$sup() >= x$sup() & y$inf() <= x$inf())
       return(Empty$new())
-    else if(y$inf() > x$sup()){
-      lower <- x$inf()
-      upper <- x$sup()
-      type <- x$type()
-    } else if(y$sup() < x$inf()){
-      lower <- x$inf()
-      upper <- x$sup()
-      type <- x$type()
-    } else if(y$sup() >= x$sup() & y$inf() > x$inf()){
-      lower <- x$inf()
-      upper <- y$inf()
-      type <- paste0(substr(x$type(),1,1),")")
-    } else if(y$sup() < x$sup() & y$inf() <= x$inf()){
-      lower <- y$sup()
-      upper <- x$sup()
-      type <- paste0("(",substr(x$type(),2,2))
-    }
+    else if(y$inf() > x$sup() | y$sup() < x$inf())
+      return(x)
+    else if(y$sup() >= x$sup() & y$inf() > x$inf() & y$inf() <= x$sup())
+      return(Interval$new(lower = x$inf(), upper = y$inf(), type = paste0(substr(x$type(),1,1),")"),
+                          class = x$class()))
+    else if(y$sup() < x$sup() & y$inf() <= x$inf() & y$sup() >= x$inf())
+      return(Interval$new(lower = y$sup(), upper = x$sup(), type = paste0("(",substr(x$type(),2,2)),
+                          class = x$class()))
+    else if(y$inf() == x$inf() & y$sup() == y$inf())
+      return(Interval$new(lower = x$inf(), upper = x$sup(), type = paste0("(",substr(x$type(),2,2)),
+                          class = x$class()))
+    else if(y$sup() == x$sup() & y$sup() == y$inf())
+      return(Interval$new(lower = x$inf(), upper = x$sup(), type = paste0(substr(x$type(),1,1),")"),,
+             class = x$class()))
+    else if(y$sup() <= x$sup() & y$inf() >= x$inf())
+      return(union(Interval$new(x$inf(),y$inf(),type=paste0(substr(x$type(),1,1),")"),class = x$class()),
+                     Interval$new(y$sup(),x$sup(),type=paste0("(",substr(x$type(),2,2)),class = x$class()),
+                     dim = x$dimension()))
   }
-  operation("/",lower = lower, upper = upper, type = type, dim = x$dimension(),...)
+
+  operation("/",lower = lower, upper = upper, type = type, dim = x$dimension(),x,y)
 }
 
 #' @title Symbolic Exponentiation for SetInterval

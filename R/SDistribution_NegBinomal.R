@@ -190,7 +190,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
       }
     }
-    support = PosIntegers$new() - Set$new(0:(size-1))
+    support = PosIntegers$new() - Interval$new(0,(size-1), class = "integer")
     description = "Negative Binomial (tbf) Probability Distribution."
   } else{
     pdf = function(x1){
@@ -205,7 +205,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
       }
     }
-    support = PosIntegers$new(lower = size)
+    support = PosIntegers$new() - Interval$new(0,(size-1))
     description = "Negative Binomial (tbs) Probability Distribution."
   }
 

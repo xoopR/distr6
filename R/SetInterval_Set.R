@@ -47,7 +47,15 @@ Set$set("public","initialize",function(..., dim = 1){
   if(dim != 1)
     private$.setSymbol <- paste0(private$.setSymbol,"^",dim)
 
-
+  private$.dimension <- dim
+  private$.elements <- unlist(dots)
   invisible(self)
 })
+Set$set("public","length",function(){
+  return(length(private$.elements))
+})
+Set$set("public","elements",function(){
+  return(private$.elements)
+})
 Set$set("private",".macType","integer")
+Set$set("private",".elements",NULL)
