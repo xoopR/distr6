@@ -111,7 +111,7 @@ distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 
 \examples{
 mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-weights = c(0.2,0.8))
+                                   weights = c(0.2,0.8))
 mixture$pdf(1)
 mixture$cdf(1)
 }

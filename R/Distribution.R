@@ -930,8 +930,7 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @description Tests if the given data lies in the type of the Distribution, either tests if all
 #' data lies in the type or any of it.
 #'
-#' @usage liesInType(object, x, all = TRUE)
-#' @section R6 Usage: $liesInType(x, all = TRUE)
+#' @section R6 Usage: $liesInType(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
@@ -953,8 +952,7 @@ Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
 #' @description Tests if the given data lies in the domain of the Distribution, either tests if all
 #' data lies in the distribution domain or any of it.
 #'
-#' @usage liesInDistrDomain(object, x, all = TRUE)
-#' @section R6 Usage: $liesInDistrDomain(x, all = TRUE)
+#' @section R6 Usage: $liesInDistrDomain(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.

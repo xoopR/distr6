@@ -8,7 +8,13 @@ Mathematical and statistical functions for the Categorical distribution paramete
 with a given support Set, probabilites and defined by the pmf,
 \deqn{f(X_1 = x_i) = p_i}
 where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{x_1,...,x_n}
-in the support set.
+elements in the support set.
+}
+\details{
+Only the mode, pdf, cdf and rand are available for this Distribution. Sampling from this
+distribution is performed with the \code{\link[base]{sample}} function with the elements given as
+the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements
+are supplied in an indexed order (otherwise the results are meaningless).
 }
 \section{Constructor}{
  Categorical$new(..., probs, decorators = NULL, verbose = FALSE)
@@ -29,7 +35,7 @@ in the support set.
  The Categorical distribution is constructed with a series of elements for the support set
 and a probs parameter determining the probability of each category occurring. The length of the probability
 list should equal the number of elements. The probability vector is automatically normalised with
-\deqn{probs = probs/sum(probs)}.
+\deqn{probs = probs/sum(probs)}
 }
 
 \section{Public Variables}{
@@ -111,7 +117,7 @@ list should equal the number of elements. The probability vector is automaticall
 
 \examples{
 x = Categorical$new("Bapple","Banana",2,probs=c(0.2,0.4,1))
-x$pdf(c("Bapple", "Carot", 1, 2))
+x$pdf(c("Bapple", "Carrot", 1, 2))
 x$rand(10)
 
 }
