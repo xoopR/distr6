@@ -295,6 +295,23 @@ getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.MultivariateNormal <- function(x, means, cov, verbose = FALSE){
+
+  K = length(means)
+  ps <- ParameterSet$new(id = list("means","cov","K"),
+                         value = list(rep(0, K), matrix(rep(0,K^2),nrow=K), K),
+                         support = list(Reals$new(), Reals$new(dim=2), PosNaturals$new()),
+                         settable = list(TRUE, TRUE, FALSE),
+                         updateFunc = list(NA, NA, "length(self$getParameterValue('means'))"),
+                         description = list("Vector of means - Location Parameter.",
+                                            "Covariance matrix - Scale Parameter.",
+                                            "Number of components"))
+
+  if(verbose) message("Parameterised with means and cov.")
+
+  return(ps)
+}
+
 getParameterSet.Poisson <- function(x, rate, verbose = FALSE){
 
   if(verbose) message("Parameterised with size and probs.")
