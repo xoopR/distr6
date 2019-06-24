@@ -100,6 +100,21 @@ getParameterSet.Binomial <- function(x, size, prob, qprob = NULL, verbose = FALS
   return(ps)
 }
 
+getParameterSet.Categorical <- function(x, probs, verbose = FALSE){
+
+  categories = unlist(length(probs))
+  ps <- ParameterSet$new(id = list("probs","categories"),
+                         value = list(rep(0.5,categories), categories),
+                         support = list(Interval$new(0,1), PosNaturals$new()),
+                         settable = list(TRUE, FALSE),
+                         updateFunc = list(NA, "length(self$getParameterValue('probs'))"),
+                         description = list("Probability of success i", "Number of categories"))
+
+  if(verbose) message("Parameterised with probs.")
+
+  return(ps)
+}
+
 getParameterSet.Cauchy <- function(x, location, scale, verbose = FALSE){
 
   if(verbose) message("Parameterised with location and scale.")

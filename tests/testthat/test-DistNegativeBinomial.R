@@ -2,6 +2,12 @@ library(testthat)
 
 context("NegativeBinomial distribution")
 
+test_that("parameterisation",{
+  expect_equal(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3)$mean(), 5)
+  expect_equal(NegativeBinomial$new(size = 10, prob = 0.2)$getParameterValue("qprob"),0.8)
+  expect_equal(NegativeBinomial$new(size = 10, qprob = 0.8)$getParameterValue("mean"),40)
+})
+
 test_that("properties & traits",{
   expect_equal(NegativeBinomial$new()$valueSupport(), "discrete")
   expect_equal(NegativeBinomial$new()$variateForm(), "univariate")

@@ -18,8 +18,7 @@ where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X1,...,XN
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{dist1} \tab distribution \tab First distribution for product. \cr
-\code{dist2} \tab distribution \tab Second distribution for product. \cr
+\code{distlist} \tab list \tab List of distributions. \cr
 }
 }
 

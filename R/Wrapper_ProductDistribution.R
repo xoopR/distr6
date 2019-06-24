@@ -47,19 +47,23 @@ ProductDistribution$set("public","initialize",function(distlist, name = NULL,
   pdf = function() {}
   formals(pdf) = lst
   body(pdf) = substitute({
-    prods = NULL
+    pdfs = NULL
     for(i in 1:n)
-      prods = c(prods,self$wrappedModels()[[i]]$pdf(get(paste0("x",i))))
-    return(prod(prods))
+      pdfs = c(pdfs,self$wrappedModels()[[i]]$pdf(get(paste0("x",i))))
+    y = data.table::data.table(matrix(pdfs, ncol = n))
+    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    return(apply(y,1,prod))
   },list(n = length(distlist)))
 
   cdf = function() {}
   formals(cdf) = lst
   body(cdf) = substitute({
-    prods = NULL
+    cdfs = NULL
     for(i in 1:n)
-      prods = c(prods,self$wrappedModels()[[i]]$cdf(get(paste0("x",i))))
-    return(prod(prods))
+      cdfs = c(cdfs,self$wrappedModels()[[i]]$cdf(get(paste0("x",i))))
+    y = data.table::data.table(matrix(cdfs, ncol = n))
+    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    return(apply(y,1,prod))
   },list(n = length(distlist)))
 
   rand = function(n) {

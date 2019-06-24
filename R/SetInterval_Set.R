@@ -63,3 +63,13 @@ Set$set("public","elements",function(){
 })
 Set$set("private",".macType","integer")
 Set$set("private",".elements",NULL)
+Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
+  ret = rep(FALSE, length(x))
+  ret[x %in% self$elements()] = TRUE
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
+})
+

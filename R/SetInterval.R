@@ -84,9 +84,14 @@ SetInterval$set("public","getSymbol",function() return(private$.setSymbol))
 SetInterval$set("public","print",function(){
   print(self$getSymbol())
 })
-SetInterval$set("public","liesInSetInterval",function(x, all = FALSE){
+SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FALSE){
   ret = rep(FALSE, length(x))
-  ret[(x >= self$min() & x <= self$max() & inherits(x, private$.macType))] = TRUE
+  if(bound)
+    #ret[(x >= self$inf() & x <= self$sup() & inherits(x, self$class()))] = TRUE
+    ret[(x >= self$inf() & x <= self$sup())] = TRUE
+  else
+    #ret[(x >= self$min() & x <= self$max() & inherits(x, self$class()))] = TRUE
+    ret[(x >= self$min() & x <= self$max())] = TRUE
   if(all)
     return(all(ret))
   else

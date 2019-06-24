@@ -12,6 +12,8 @@ liesInDistrDomain(object, x, all = TRUE)
 \item{x}{vector of numerics to test.}
 
 \item{all}{logical, see details.}
+
+\item{bound}{logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.}
 }
 \description{
 Tests if the given data lies in the domain of the Distribution, either tests if all
