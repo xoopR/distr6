@@ -52,9 +52,8 @@ Authors@R:
       person(given = "Qian",
              family = "Zhou",
              role = "ctb",
-             email = "zcakqz1@ucl.ac.uk"),    
-
-)
+             email = "zcakqz1@ucl.ac.uk") 
+        )
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
   commonly used probabilty distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
