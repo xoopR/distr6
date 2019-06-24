@@ -30,7 +30,7 @@
 #'
 #' @examples
 #' mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-#' weights = c(0.2,0.8))
+#'                                    weights = c(0.2,0.8))
 #' mixture$pdf(1)
 #' mixture$cdf(1)
 NULL
@@ -75,6 +75,8 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
 
   name = paste("Mixture of",paste(distnames, collapse = "_"))
   short_name = paste0("Mix_",paste(distnames, collapse = "_"))
+
+  type =
 
   description =  paste0("Mixture of: ",paste0(1:length(distlist),") ",lapply(distlist, function(x) x$description),
                                             collapse = " And "), " - With weights: (",

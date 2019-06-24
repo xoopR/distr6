@@ -5,27 +5,20 @@
 \title{Categorical Distribution}
 \description{
 Mathematical and statistical functions for the Categorical distribution parameterised
-with size and probabilites and defined by the pmf,
-\deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
-where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{K} categories and
-\eqn{n = 1,2,\ldots} is the number of trials.
-}
-\details{
-The Categorical is constructed with a size and probs parameter. Size, number of trials,
-should not be confused with the \code{K} parameter for number of categories. \code{K} is determined
-automatically by the number of probabilities supplied to the \code{probs} argument, this also tells the
-object how many inputs to expect in \code{pdf} and \code{rand}. \code{cdf} and \code{quantile} are omitted
-as no closed form analytic expression could be found.
+with a given support Set, probabilites and defined by the pmf,
+\deqn{f(X_1 = x_i) = p_i}
+where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{x_1,...,x_n}
+in the support set.
 }
 \section{Constructor}{
- Categorical$new(size, probs, decorators = NULL, verbose = FALSE)
+ Categorical$new(..., probs, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{size} \tab integer \tab number of trials. See details. \cr
+\code{...} \tab ANY \tab elements in the support Set. See details. \cr
 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
@@ -33,11 +26,9 @@ as no closed form analytic expression could be found.
 }
 
 \section{Constructor Details}{
- The Categorical distribution is parameterised by size and prob.
-Size, N, is given as a single integer greater than zero, such that if \eqn{x} is a vector of \eqn{K} parameters
-passed to the pmf then it should be true that \eqn{\sum x_i = N}.
-The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect
-to be passed to the pmf function. The probability vector is automatically normalised with
+ The Categorical distribution is constructed with a series of elements for the support set
+and a probs parameter determining the probability of each category occurring. The length of the probability
+list should equal the number of elements. The probability vector is automatically normalised with
 \deqn{probs = probs/sum(probs)}.
 }
 
