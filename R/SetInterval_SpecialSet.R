@@ -30,7 +30,7 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
   private$.dimension <- dim
   invisible(self)
 })
-
+SpecialSet$set("private",".macType","integer")
 #' @title Empty Set
 #' @description The mathematical empty, or null, set.
 #' @name Empty

@@ -52,7 +52,7 @@ Interval$set("public","length",function(){
   else
     return(length(self$as.numeric()))
 })
-Interval$set("private",".macType","numeric")
-Interval$set("private","class",function(){
+Interval$set("private",".macType",NULL)
+Interval$set("public","class",function(){
   return(private$.macType)
 })
