@@ -13,7 +13,7 @@
 #'   via \code{\link{product}} or \code{\link{union}}.
 #' @seealso \code{\link{SetInterval}}.
 #' @export
-operation <- function(unicode,...){
+operation <- function(unicode,lower,upper,type,dim,...){
   dots = list(...)
   symbols = lapply(dots,function(x){
     if(inherits(x,"R6ClassGenerator"))
@@ -25,12 +25,15 @@ operation <- function(unicode,...){
       x <- paste0(x,"}")
     return(x)
   })
-  lower = as.numeric(unlist(lapply(dots, function(x) x$inf())),recursive=T)
-  upper = as.numeric(unlist(lapply(dots, function(x) x$sup()),recursive = T))
+
+  if(!is.null(lower)) lower = as.numeric(unlist(lapply(dots, function(x) x$inf())),recursive=T)
+  if(!is.null(upper)) upper = as.numeric(unlist(lapply(dots, function(x) x$sup()),recursive = T))
+  if(!is.null(dim)) dim = length(dots)
+  if(!is.null(type)) type = "{}"
 
   setSymbol <- paste(unlist(symbols), collapse = paste0(" ",unicode," "))
-  return(SetInterval$new(symbol = setSymbol, type = "{}", lower = lower,
-                         upper = upper, dimension = length(dots)))
+  return(SetInterval$new(symbol = setSymbol, type = type, lower = lower,
+                         upper = upper, dimension = dim))
 }
 
 #' @title Symbolic Cartesian Product for SetInterval
@@ -91,7 +94,33 @@ union <- function(...){
 #' @seealso \code{\link{product}} and \code{\link{union}}.
 #' @export
 complement <- function(...){
-  operation("/",...)
+  dots = list(...)
+
+  x = dots[[1]]
+  y = dots[[2]]
+
+  if(inherits(x,"Interval") & inherits(y,"Interval")){
+    if(y$sup() >= x$sup() & y$inf() <= x$inf())
+      return(Empty$new())
+    else if(y$inf() > x$sup()){
+      lower <- x$inf()
+      upper <- x$sup()
+      type <- x$type()
+    } else if(y$sup() < x$inf()){
+      lower <- x$inf()
+      upper <- x$sup()
+      type <- x$type()
+    } else if(y$sup() >= x$sup() & y$inf() > x$inf()){
+      lower <- x$inf()
+      upper <- y$inf()
+      type <- paste0(substr(x$type(),1,1),")")
+    } else if(y$sup() < x$sup() & y$inf() <= x$inf()){
+      lower <- y$sup()
+      upper <- x$sup()
+      type <- paste0("(",substr(x$type(),2,2))
+    }
+  }
+  operation("/",lower = lower, upper = upper, type = type, dim = x$dimension(),...)
 }
 
 #' @title Symbolic Exponentiation for SetInterval
@@ -172,6 +201,7 @@ setSymbol <- function(set){
     set = paste0(substitute(set))
   set = tolower(set)
   return(switch(set,
+                empty = "\u2205",
                 naturals = "\u2115",
                 posnaturals = "\u2115+",
                 integers = "\u2124",

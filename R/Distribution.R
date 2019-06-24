@@ -1,4 +1,4 @@
-#' @include Distribution_helpers.R SetInterval_helpers.R
+#' @include Distribution_helpers.R SetInterval_operations.R
 #-------------------------------------------------------------
 # Distribution Documentation
 #-------------------------------------------------------------

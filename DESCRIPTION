@@ -37,7 +37,7 @@ VignetteBuilder:
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
-    'SetInterval_helpers.R'
+    'SetInterval_operations.R'
     'Distribution_helpers.R'
     'Distribution.R'
     'DistributionDecorator.R'

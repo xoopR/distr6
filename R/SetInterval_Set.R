@@ -1,3 +1,4 @@
+#' @include SetInterval.R
 #-------------------------------------------------------------
 # Set Documentation
 #-------------------------------------------------------------
@@ -24,7 +25,6 @@ NULL
 #-------------------------------------------------------------
 # Set Definition
 #-------------------------------------------------------------
-#' @include SetInterval.R
 Set <- R6::R6Class("Set", inherit = SetInterval)
 Set$set("public","initialize",function(..., dim = 1){
   if(missing(...))

@@ -1,0 +1,31 @@
+library(testthat)
+
+context("NegativeBinomial distribution")
+
+test_that("properties & traits",{
+  expect_equal(NegativeBinomial$new()$valueSupport(), "discrete")
+  expect_equal(NegativeBinomial$new()$variateForm(), "univariate")
+  expect_equal(NegativeBinomial$new()$symmetry(), "asymmetric")
+  expect_equal(NegativeBinomial$new(type = "tbf")$sup(), Inf)
+  expect_equal(NegativeBinomial$new()$inf(), 0)
+  expect_equal(NegativeBinomial$new()$dmax(),Inf)
+  expect_equal(NegativeBinomial$new()$dmin(), 0)
+})
+
+b = NegativeBinomial$new()
+test_that("statistics",{
+  expect_equal(b$mean(), 1)
+  expect_equal(b$var(), 1)
+  expect_equal(b$skewness(), 1)
+  expect_equal(b$kurtosis(T), 1)
+  expect_equal(b$kurtosis(F), 4)
+  expect_error(b$entropy())
+  expect_equal(b$mgf(1), exp((exp(1)-1)))
+  expect_equal(b$cf(1), exp((exp(1i)-1)))
+  expect_equal(b$pgf(1), 1)
+  expect_error(b$mode())
+  expect_equal(b$pdf(1), dpois(1,1))
+  expect_equal(b$cdf(1), ppois(1,1))
+  expect_equal(b$quantile(0.56), qpois(0.56,1))
+  expect_silent(b$rand(10))
+})

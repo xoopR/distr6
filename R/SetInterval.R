@@ -41,11 +41,12 @@
 #'   Construction should instead be called on 'Set' or 'Interval'
 #'
 #' @seealso \code{\link{Set}} for R6 Set objects and \code{\link{Interval}} for R6 Interval objects.
+#'
+#' @export
 NULL
 #-------------------------------------------------------------
 # SetInterval Definition
 #-------------------------------------------------------------
-#' @export
 SetInterval <- R6::R6Class("SetInterval")
 SetInterval$set("public","initialize",function(symbol, lower, upper, type, dimension){
   private$.lower = lower
