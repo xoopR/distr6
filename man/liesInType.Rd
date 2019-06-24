@@ -4,7 +4,7 @@
 \alias{liesInType}
 \title{Test if Data Lies in Distribution Type}
 \usage{
-liesInType(object, x, all = TRUE)
+liesInType(object, x, all = TRUE, bound = FALSE)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -25,7 +25,7 @@ lies in the type. If \code{all} is \code{FALSE} then returns a vector of logical
 in the vector \code{x}.
 }
 \section{R6 Usage}{
- $liesInType(x, all = TRUE)
+ $liesInType(x, all = TRUE, bound = FALSE)
 }
 
 \seealso{
