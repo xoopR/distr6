@@ -5,12 +5,14 @@
 \alias{+.SetInterval}
 \title{Symbolic Union for SetInterval}
 \usage{
-union(...)
+union(..., dim = 1)
 
 \method{+}{SetInterval}(x, y)
 }
 \arguments{
 \item{...}{sets and/or intervals to take the union of.}
+
+\item{dim}{dimension of new SetInterval.}
 
 \item{x}{distribution}
 

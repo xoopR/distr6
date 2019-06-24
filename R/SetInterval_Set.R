@@ -27,10 +27,14 @@ NULL
 #-------------------------------------------------------------
 Set <- R6::R6Class("Set", inherit = SetInterval)
 Set$set("public","initialize",function(..., dim = 1){
-  if(missing(...))
-    invisible(self)
-  else{
+  if(length(list(...)) == 0){
+    private$.type <- "{}"
+    private$.lower <- NULL
+    private$.upper <- NULL
+    private$.setSymbol <- paste0("{}")
+  } else{
     dots <- list(...)
+    private$.elements <- unlist(dots)
     if(length(dots[[1]]) > 1 & is.numeric(dots[[1]])){
       private$.type <- "{}"
       private$.lower <- min(dots[[1]])
@@ -48,7 +52,7 @@ Set$set("public","initialize",function(..., dim = 1){
     private$.setSymbol <- paste0(private$.setSymbol,"^",dim)
 
   private$.dimension <- dim
-  private$.elements <- unlist(dots)
+
   invisible(self)
 })
 Set$set("public","length",function(){

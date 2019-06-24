@@ -26,7 +26,7 @@
 #'
 #' @name NegativeBinomial
 #'
-#' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
+#' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -67,15 +67,8 @@ NegativeBinomial$set("private",".type",NULL)
 NegativeBinomial$set("public","package","distr6")
 
 NegativeBinomial$set("public", "mean", function(){
-  if(private$.type == "sbf")
-    return(self$getParameterValue("size") * self$getParameterValue("prob") / self$getParameterValue("qprob"))
-  else if(private$.type == "tbf")
-    return((self$getParameterValue("size") * self$getParameterValue("prob") / self$getParameterValue("qprob"))+self$getParameterValue("size"))
-  else if(private$.type == "tbs")
-    return((self$getParameterValue("size") * self$getParameterValue("qprob") / self$getParameterValue("prob"))+self$getParameterValue("size"))
-  else if(private$.type == "fbs")
-    return(self$getParameterValue("size") * self$getParameterValue("qprob") / self$getParameterValue("prob"))
-})
+  return(self$getParameterValue("mean"))
+  })
 NegativeBinomial$set("public","var",function(){
   if(private$.type == "sbf" | private$.type == "tbf")
     return(self$getParameterValue("size") * self$getParameterValue("prob") / (self$getParameterValue("qprob")^2))
@@ -163,14 +156,27 @@ NegativeBinomial$set("public","setParameterValue",function(lst, error = "warn"){
 })
 NegativeBinomial$set("private", ".getRefParams", function(paramlst){
   lst = list()
-  if(!is.null(paramlst$size)) lst = c(lst, list(size = paramlst$size))
+  if(!is.null(paramlst$size))
+    lst = c(lst, list(size = paramlst$size))
+  else
+    paramlst$size = self$getParameterValue("size")
   if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
   if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
+  if(!is.null(paramlst$mean)){
+    if(private$.type == "sbf")
+      lst = c(lst, list(prob = paramlst$mean/(paramlst$size + paramlist$mean)))
+    else if(private$.type == "tbf")
+      lst = c(lst, list(prob = (paramlst$mean - paramlst$size)/paramlst$mean))
+    else if(private$.type == "tbs")
+      lst = c(lst, list(prob = paramlst$size/paramlst$mean))
+    else if(private$.type == "fbs")
+      lst = c(lst, list(prob = paramlst$size/(paramlst$mean+paramlst$size)))
+  }
   return(lst)
 })
 
 
-NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qprob = NULL, type = "fbs",
+NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qprob = NULL, mean= NULL, type = "fbs",
                                                      decorators = NULL, verbose = FALSE){
 
   if(!(type %in% c("fbs", "sbf", "tbf", "tbs")))
@@ -178,8 +184,8 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
 
   private$.type <- type
 
-  private$.parameters <- getParameterSet(self, size, prob, qprob, type, verbose)
-  self$setParameterValue(list(size = size, prob = prob, qprob = qprob))
+  private$.parameters <- getParameterSet(self, size, prob, qprob, mean, type, verbose)
+  self$setParameterValue(list(size = size, prob = prob, qprob = qprob, mean = mean))
 
   if(type == "fbs"){
     pdf = function(x1) dnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
@@ -220,7 +226,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
       }
     }
-    print(size)
+
     support = Interval$new(size, Inf, type = "[)", class = "integer")
     description = "Negative Binomial (tbf) Probability Distribution."
 

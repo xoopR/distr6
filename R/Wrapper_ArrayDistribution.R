@@ -1,5 +1,5 @@
 #' @name ArrayDistribution
-#' @title Product ArrayDistribution
+#' @title Product Array Distribution
 #'
 #' @section Constructor: ArrayDistribution$new(distribution, paramList)
 #'

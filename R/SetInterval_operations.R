@@ -4,10 +4,12 @@
 #' @return An R6 object of class SetInterval.
 #' @name operation
 #'
-#' @usage operation(unicode,...)
-#'
 #' @param unicode unicode symbol for the operation.
 #' @param ... sets and/or intervals to combine via the operation.
+#' @param lower lower bound of new SetInterval
+#' @param upper upper bound of new SetInterval
+#' @param type type of new SetInterval
+#' @param dim dimension of new SetInterval
 #'
 #' @details Generally not recommended to use this function directly but instead
 #'   via \code{\link{product}} or \code{\link{union}}.
@@ -65,9 +67,8 @@ product <- function(...){
 #' @return An R6 object of class SetInterval.
 #' @name union
 #'
-#' @usage union(...)
-#'
 #' @param ... sets and/or intervals to take the union of.
+#' @param dim dimension of new SetInterval.
 #'
 #' @details This does not calculate the union of the arguments but
 #'   is just a symbolic representation using unicode.
@@ -127,7 +128,7 @@ complement <- function(...){
                      dim = x$dimension()))
   }
 
-  operation("/",lower = lower, upper = upper, type = type, dim = x$dimension(),x,y)
+ # operation("/",lower = lower, upper = upper, type = type, dim = x$dimension(),x,y)
 }
 
 #' @title Symbolic Exponentiation for SetInterval

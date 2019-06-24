@@ -424,29 +424,45 @@ getParameterSet.Logistic <- function(x, mean, scale, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, type, verbose = FALSE){
+getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean = NULL, type, verbose = FALSE){
 
-  prob.bool = qprob.bool = FALSE
+  prob.bool = qprob.bool = mean.bool = FALSE
 
-  if(!is.null(qprob)){
-    if(verbose) message("Parameterised with qprob.")
+  if(!is.null(mean)){
+    if(verbose) message("Parameterised with size and mean.")
+    mean.bool = TRUE
+  } else if(!is.null(qprob)){
+    if(verbose) message("Parameterised with size and qprob.")
     qprob.bool = TRUE
   } else {
-    if(verbose) message("Parameterised with prob.")
+    if(verbose) message("Parameterised with size and prob.")
     prob.bool = TRUE
   }
 
-  if(type == "fbs" | type == "tbs")
-    desc = "Number of successes"
-  else
-    desc = "Number of failures"
+  if(type == "sbf"){
+    updateFunc <- 'self$getParameterValue("size") * self$getParameterValue("prob") / (1-self$getParameterValue("prob"))'
+    desc <- "Number of failures"
+  } else if(type == "tbf"){
+    updateFunc <- 'self$getParameterValue("size") / (1-self$getParameterValue("prob"))'
+    desc <- "Number of failures"
+  } else if(type == "tbs"){
+    updateFunc <- 'self$getParameterValue("size") / self$getParameterValue("prob")'
+    desc <- "Number of successes"
+  } else {
+    updateFunc <- 'self$getParameterValue("size") * (1-self$getParameterValue("prob")) / self$getParameterValue("prob")'
+    desc <- "Number of successes"
+  }
 
-  ps <- ParameterSet$new(id = list("prob","qprob","size"), value = list(0.5, 0.5, 10),
-                         support = list(Interval$new(0,1,type="()"), Interval$new(0,1,type="()"), PosNaturals$new()),
-                         settable = list(prob.bool, qprob.bool, TRUE),
-                         updateFunc = list(NULL, "1 - self$getParameterValue('prob')", NULL),
+  ps <- ParameterSet$new(id = list("prob","qprob","mean","size"), value = list(0.5, 0.5, 20, 10),
+                         support = list(Interval$new(0,1,type="()"),
+                                        Interval$new(0,1,type="()"),
+                                        PosReals$new(),
+                                        PosNaturals$new()),
+                         settable = list(prob.bool, qprob.bool, mean.bool, TRUE),
+                         updateFunc = list(NULL, "1 - self$getParameterValue('prob')", updateFunc, NULL),
                          description = list("Probability of Success",
-                                            "Probability of failure", desc))
+                                            "Probability of failure",
+                                            "Mean - Location Parameter",desc))
 
   return(ps)
 }

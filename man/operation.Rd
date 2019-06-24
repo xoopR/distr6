@@ -4,12 +4,21 @@
 \alias{operation}
 \title{Symbolic Operations for SetInterval}
 \usage{
-operation(unicode,...)
+operation(unicode, ..., lower = NULL, upper = NULL, type = NULL,
+  dim = NULL)
 }
 \arguments{
 \item{unicode}{unicode symbol for the operation.}
 
 \item{...}{sets and/or intervals to combine via the operation.}
+
+\item{lower}{lower bound of new SetInterval}
+
+\item{upper}{upper bound of new SetInterval}
+
+\item{type}{type of new SetInterval}
+
+\item{dim}{dimension of new SetInterval}
 }
 \value{
 An R6 object of class SetInterval.
