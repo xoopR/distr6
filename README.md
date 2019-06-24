@@ -91,13 +91,13 @@ distr6 has three primary use-cases:
 
 Before publication to CRAN, the latest stable release is available via:
 ````R
-remotes::install_github("RaphaelS1/distr6", dependencies = TRUE)
+remotes::install_github("alan-turing-institute/distr6", dependencies = TRUE)
 ````
 
 
 ## Package Development and Contributing
 
-distr6 is now public on GitHub but developments will continue to be made internally by a team of researchers from UCL working at The Alan Turing Institute. All contributions are released under the [MIT licence](https://opensource.org/licenses/MIT) with acknowledgements to the [LGPL-3 licence of distr](https://github.com/RaphaelS1/distr6/blob/master/Licensing). We welcome external contributors to test our API and notify us of bugs and issues however we are not currently looking for feature requests as the API is still in development. See our [roadmap](https://raphaels1.github.io/distr6/articles/roadmap.html) for short- and long-term plans. Before raising an issue please read through our [contributing guidelines](https://github.com/RaphaelS1/distr6/blob/master/CONTRIBUTING.md) for details including our [code of conduct](https://github.com/RaphaelS1/distr6/blob/master/CODE_OF_CONDUCT.md).
+distr6 is now public on GitHub but developments will continue to be made internally by a team of researchers from UCL working at The Alan Turing Institute. All contributions are released under the [MIT licence](https://opensource.org/licenses/MIT) with acknowledgements to the [LGPL-3 licence of distr](https://github.com/alan-turing-institute/distr6/blob/master/Licensing). We welcome external contributors to test our API and notify us of bugs and issues however we are not currently looking for feature requests as the API is still in development. See our [roadmap](https://alan-turing-institute.github.io/distr6/articles/roadmap.html) for short- and long-term plans. Before raising an issue please read through our [contributing guidelines](https://github.com/alan-turing-institute/distr6/blob/master/CONTRIBUTING.md) for details including our [code of conduct](https://github.com/alan-turing-institute/distr6/blob/master/CODE_OF_CONDUCT.md).
 
 ## Acknowledgements
 
