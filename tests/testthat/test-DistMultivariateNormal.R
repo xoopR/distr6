@@ -45,7 +45,7 @@ test_that("statistics",{
 
 
   expect_equal(MultivariateNormal$new(mean = 0, cov = 1)$pdf(1:5),dnorm(1:5))
-  expect_equal(mvn$pdf(1,2,3), LaplacesDemon::dmvn(1:3,c(1,7,3),matrix(c(1,0,0,0,1,0,0,0,1),nrow=3)))
-  expect_equal(mvn$pdf(1:2,2:3,3:4), LaplacesDemon::dmvn(matrix(c(1:2,2:3,3:4),nrow=2),c(1,7,3),matrix(c(1,0,0,0,1,0,0,0,1),nrow=3)))
+  expect_equal(signif(mvn$pdf(1,2,3),3), 2.366e-07)
+  expect_equal(signif(mvn$pdf(1:2,2:3,3:4),3), c(2.366e-07, 7.835e-06))
   expect_equal(dim(mvn$rand(10)),c(10,3))
 })
