@@ -319,5 +319,40 @@ getParameterSet.Geometric <- function(x, prob = NULL, qprob = NULL, verbose = FA
   return(ps)
 }
 
+getParameterSet.Hypergeometric <- function(x, size = NULL, success = NULL,draws = NULL, verbose = FALSE){
+  
+  size.bool = success.bool = draws.bool = FALSE
+  
+  if(is.null(size) & is.null(success) & is.null(draws)){
+    if(verbose) message("size, success and draws are missing. Parameterised with size=10,success=5,draws=2.")
+    size.bool = TRUE
+    success.bool = TRUE
+    draws.bool = TRUE
+  } else if(!is.null(size)){
+    if(verbose) message("Parameterised with size.")
+    size.bool = TRUE
+  } else if(!is.null(success)){
+    if(verbose) message("Parameterised with success.")
+    success.bool = TRUE
+  }else if(!is.null(draws)){
+    if(verbose) message("Parameterised with draws.")
+    draws.bool = TRUE
+  }
+  
+  
+  ps <- ParameterSet$new(id = list("size","success","draws"), value = list(10, 5,2),
+                         lower = list(0, 0,0), upper = list(Inf,Inf,Inf),
+                         class = list("numeric","numeric","numeric"),
+                         settable = list(size.bool, success.bool,draws.bool),
+                         updateFunc = list(NULL,NULL,NULL),
+                         description = list("population size", "number of success states in the population","number of draws"))
+  
+  if(draws<=size & success<=size) return(ps)
+  else if(draws>size & success>size) message("the number of success states and the number of draws cannot be larger than population size")
+  else if(draws>size) message("the number of draws cannot be larger than population size")
+  else if(success>size) message("the number of success states cannot be larger than population size")
+    
+}
+
 
 
