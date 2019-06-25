@@ -295,27 +295,27 @@ getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.MultivariateNormal <- function(x, means, cov, prec = NULL, verbose = FALSE){
+getParameterSet.MultivariateNormal <- function(x, mean, cov, prec = NULL, verbose = FALSE){
 
   cov.bool = prec.bool = FALSE
 
   if(!is.null(prec)){
-    if(verbose) message("Parameterised with means and prec.")
+    if(verbose) message("Parameterised with mean and prec.")
     prec.bool = TRUE
   } else{
-    if(verbose) message("Parameterised with means and cov.")
+    if(verbose) message("Parameterised with mean and cov.")
     cov.bool = TRUE
   }
 
-  K = length(means)
-  ps <- ParameterSet$new(id = list("means","cov","prec","K"),
+  K = length(mean)
+  ps <- ParameterSet$new(id = list("mean","cov","prec","K"),
                          value = list(rep(0, K), matrix(rep(0,K^2),nrow=K),
                                       matrix(rep(0,K^2),nrow=K), K),
                          support = list(Reals$new(), Reals$new(dim=2),
                                         Reals$new(dim=2), PosNaturals$new()),
                          settable = list(TRUE, cov.bool, prec.bool, FALSE),
                          updateFunc = list(NA, NA, "solve(matrix(self$getParameterValue('cov'),
-                                           nrow = self$getParameterValue('K')))","length(self$getParameterValue('means'))"),
+                                           nrow = self$getParameterValue('K')))","length(self$getParameterValue('mean'))"),
                          description = list("Vector of means - Location Parameter.",
                                             "Covariance matrix - Scale Parameter.",
                                             "Precision matrix - Scale Parameter.",
