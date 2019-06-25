@@ -279,6 +279,55 @@ getParameterSet.Gompertz <- function(x, shape, scale, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog = NULL, 
+                                      mean = NULL, var = NULL, sd = NULL, prec = NULL, verbose = FALSE){
+  
+  varlog.bool = sdlog.bool = preclog.bool = var.bool = sd.bool = prec.bool = meanlog.bool = mean = FALSE
+  
+  if(!is.null(preclog) & !is.null(meanlog)){
+    if(verbose) message("Parameterised with meanlog and spreclog.")
+    preclog.bool = meanlog.bool = TRUE
+  } else if(!is.null(sdlog) & !is.null(meanlog)){
+    if(verbose) message("Parameterised with meanlog and sdlog.")
+    sdlog.bool = meanlog.bool = TRUE
+  } else if(!is.null(varlog) & !is.null(meanlog)){
+    if(verbose) message("Parameterised with meanlog and varlog.")
+    varlog.bool = meanlog.bool = TRUE
+  } else if(!is.null(prec) & !is.null(mean)){
+    if(verbose) message("Parameterised with mean and prec.")
+    prec.bool = TRUE
+  } else if(!is.null(sd) & !is.null(mean)){
+    if(verbose) message("Parameterised with mean and sd.")
+    sd.bool = TRUE
+  } else if(!is.null(var) & !is.null(mean)){
+    if(verbose) message("Parameterised with mean and var.")
+    var.bool = TRUE
+  } else{
+    if (verbose) message ("Please check your parameterisation and have a consistent scale (log or natural)")
+  }
+  
+  ps <- ParameterSet$new(id = list("meanlog","varlog","sdlog","preclog", "mean", "var", "sd", "prec"), value = list(0, 1, 1, 1, exp(1.5), (exp(1) - 1)*exp(3)),
+                         lower = list(-Inf, 0, 0, 0, 0, 0, 0, 0), upper = list(Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf),
+                         class = list("numeric","numeric","numeric","numeric", "numeric","numeric","numeric","numeric"),
+                         settable = list(TRUE, varlog.bool, sdlog.bool, preclog.bool, var.bool, sd.bool, prec.bool, meanlog.bool, mean.bool),
+                         updateFunc = list(NA, NA, "self$getParameterValue('varlog')^0.5", "self$getParameterValue('varlog')^-1",
+                                           "exp(self$getParameterValue('meanlog') + self$getParameterValue('varlog')/2)",
+                                           "(exp(self$getParameterValue('varlog') - 1)) * exp(2 * self$getParameterValue('meanlog') + self$getParameterValue('varlog'))",
+                                           "sqrt((exp(self$getParameterValue('varlog') - 1)) * exp(2 * self$getParameterValue('meanlog') + self$getParameterValue('varlog')))",
+                                           "(exp(self$getParameterValue('varlog') - 1)) * exp(2 * self$getParameterValue('meanlog') + self$getParameterValue('varlog'))^(-1)"),
+                         description = list("log scale parameterisation:",
+                                            "meanlog - Location Parameter on log scale",
+                                            "varlog - Squared Scale Parameter on log scale",
+                                            "sdlog - Scale Parameter on log scale",
+                                            "preclog - Inverse Squared Scale Parameter on logscale",
+                                            "natural scale parametersation:",
+                                            "meanlog - Location Parameter",
+                                            "varlog - Squared Scale Parameter",
+                                            "sdlog - Scale Parameter",
+                                            "preclog - Inverse Squared Scale Parameter"))
+  return(ps)
+}
+
 getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
 
   K = unlist(length(probs))
