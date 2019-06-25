@@ -1,8 +1,8 @@
 language: r
 r:
-  - oldrel
+ # - oldrel
   - release
-  - devel
+ # - devel
  
 sudo: false
 
@@ -15,7 +15,7 @@ dist: trusty
   
 os:
   - linux
-  - osx
+ # - osx
 
 cache: packages
 
