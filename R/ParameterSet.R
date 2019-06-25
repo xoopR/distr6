@@ -286,7 +286,6 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
   if(length(private$.parameters)!=0){
 
     checkmate::assertList(lst)
-
     for(i in 1:length(lst)){
       if(any(is.null(lst[[i]])) | any(is.nan(lst[[i]])))
         stop(paste(lst[[i]],"must be a number."))
@@ -304,6 +303,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
 
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
     }
+
 
     self$update()
 

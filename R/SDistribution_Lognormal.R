@@ -5,7 +5,10 @@
 #' @title Lognormal Distribution
 #'
 #' @description Mathematical and statistical functions for the Lognormal distribution parameterised
-#' with mean and standard deviation of the variable's natural logarithm.
+#' with mean, sd, var, prec on the log or natural scale. The logmean/logvar parameterisation is defined
+#' by the pdf,
+#' \deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))}
+#' where \eqn{\mu \epsilon R} is the log-mean and \eqn{\sigma > 0} is the log-standard deviation.
 #'
 #' @details \code{cf} is omitted as no closed form analytic expression could be found. The \code{mgf} is
 #' included but returns NaN as it is not defined.
@@ -33,9 +36,7 @@
 #'
 #' @section Constructor Details: The Lognormal distribution can either be parameterised with variance,
 #' standard deviation or precision on the natural or log scale.
-#' If none are provided then varlog parameterisation is used with varlog = 1.
-#' If multiple are provided then parameterisation takes the hierarchy: varlog, sdlog, preclog,
-#' var, sd, prec.
+#' If none are provided then meanlog/varlog parameterisation is used with varlog = 1, meanlog = 0.
 #' sdlog is defined by
 #' \deqn{sdlog = varlog^2}
 #' preclog is defined by
@@ -55,17 +56,17 @@ NULL
 Lognormal <- R6::R6Class("Lognormal", inherit = SDistribution, lock_objects = F)
 Lognormal$set("public","name","Lognormal")
 Lognormal$set("public","short_name","Lognormal")
-Lognormal$set("public","traits",list(type = Reals$new(),
+Lognormal$set("public","traits",list(type = PosReals$new(),
                                      valueSupport = "continuous",
                                      variateForm = "univariate"))
 Lognormal$set("public","description","Lognormal Probability Distribution.")
 Lognormal$set("public","package","stats")
 
-Lognormal$set("public","meanlog",function(){
-  return(self$getParameterValue("meanlog"))
+Lognormal$set("public","mean",function(){
+  return(self$getParameterValue("mean"))
 })
-Lognormal$set("public","varlog",function(){
-  return(self$getParameterValue("varlog"))
+Lognormal$set("public","var",function(){
+  return(self$getParameterValue("var"))
 })
 Lognormal$set("public","skewness",function(){
   return(sqrt(exp(self$getParameterValue("varlog")) - 1) * (exp(self$getParameterValue("varlog")) + 2))
@@ -91,36 +92,37 @@ Lognormal$set("public","mode",function(){
 
 Lognormal$set("private",".getRefParams", function(paramlst){
   lst = list()
-  if(!is.null(paramlst$meanlog) | !is.null(paramlst$varlog) | !is.null(paramlst$sdlog) | !is.null(paramlst$preclog)){
-    if(!is.null(paramlst$meanlog)) meanlog <- paramlst$meanlog
-    else meanlog <- self$getParameterValue("meanlog")
 
-    if(!is.null(paramlst$varlog)) varlog <- paramlst$varlog
-    else varlog <- self$getParameterValue("varlog")
+  if(!is.null(paramlst$meanlog)) meanlog <- paramlst$meanlog
+  else meanlog <- self$getParameterValue("meanlog")
+  if(!is.null(paramlst$varlog)) varlog <- paramlst$varlog
+  else varlog <- self$getParameterValue("varlog")
+  if(!is.null(paramlst$mean)) mean <- paramlst$mean
+  else mean <- self$getParameterValue("mean")
+  if(!is.null(paramlst$var)) var <- paramlst$var
+  else var <- self$getParameterValue("var")
 
-    if(!is.null(paramlst$meanlog)) lst = c(lst, list(meanlog = paramlst$meanlog))
-    if(!is.null(paramlst$varlog)) lst = c(lst, list(varlog = paramlst$varlog))
-    if(!is.null(paramlst$sdlog)) lst = c(lst, list(varlog = paramlst$sdlog^2))
-    if(!is.null(paramlst$preclog)) lst = c(lst, list(varlog = paramlst$preclog^-1))
-
-    return(lst)
-  }
-
-  if(!is.null(paramlst$mean) | !is.null(paramlst$var) | !is.null(paramlst$sd) | !is.null(paramlst$prec)){
-    if(!is.null(paramlst$mean)) mean <- paramlst$mean
-    else mean <- self$getParameterValue("mean")
-
-    if(!is.null(paramlst$var)) var <- paramlst$var
-    else var <- self$getParameterValue("var")
-
+  if(self$parameters("meanlog")$settable){
     if(!is.null(paramlst$mean)) lst = c(lst, list(meanlog = log(paramlst$mean/sqrt(1 + var/paramlst$mean^2))))
     if(!is.null(paramlst$var)) lst = c(lst, list(varlog = log(1 + paramlst$var/mean^2)))
     if(!is.null(paramlst$sd)) lst = c(lst, list(varlog = log(1 + (paramlst$sd/mean)^2)))
     if(!is.null(paramlst$prec)) lst = c(lst, list(varlog = log(1 + paramlst$prec^-1/mean^2)))
-
-    return(lst)
+    if(!is.null(paramlst$meanlog)) lst = c(lst, list(meanlog = paramlst$meanlog))
+    if(!is.null(paramlst$varlog)) lst = c(lst, list(varlog = paramlst$varlog))
+    if(!is.null(paramlst$sdlog)) lst = c(lst, list(varlog = paramlst$sdlog^2))
+    if(!is.null(paramlst$preclog)) lst = c(lst, list(varlog = paramlst$preclog^-1))
+  } else {
+    if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
+    if(!is.null(paramlst$var)) lst = c(lst, list(var =  paramlst$var))
+    if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
+    if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
+    if(!is.null(paramlst$meanlog)) lst = c(lst, list(mean = exp(paramlst$meanlog + paramlst$varlog/2)))
+    if(!is.null(paramlst$varlog)) lst = c(lst, list(var = (exp(paramlst$varlog)-1)*exp(2*paramlst$meanlog + paramlst$varlog)))
+    if(!is.null(paramlst$sdlog)) lst = c(lst, list(var = (exp(paramlst$sdlog^2)-1)*exp(2*meanlog + paramlst$sdlog^2)))
+    if(!is.null(paramlst$preclog)) lst = c(lst, list(var = (exp(paramlst$prec^-1)-1)*exp(2*meanlog + paramlst$prec^-1)))
   }
 
+    return(lst)
 
 })
 
@@ -141,8 +143,8 @@ Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NU
   rand <- function(n) rlnorm(n, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
-                   symmetric = TRUE)
+                   rand = rand, support = PosReals$new(), distrDomain = PosReals$new(),
+                   symmetric = FALSE)
   invisible(self)
 })
 

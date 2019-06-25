@@ -21,7 +21,7 @@ as no closed form analytic expression could be found.
 }
 \section{Constructor}{
  MultivariateNormal$new(mean = rep(0,2), cov = c(1,0,0,1),
-                                             prec = NULL, decorators = NULL, verbose = FALSE)
+prec = NULL, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -81,6 +81,7 @@ vector that can be printed via \code{matrix(cov, nrow = K, byrow = FALSE)}.
   \code{rand(n)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
   \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
@@ -119,7 +120,10 @@ vector that can be printed via \code{matrix(cov, nrow = K, byrow = FALSE)}.
 }
 
 \examples{
-MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1),byrow=TRUE,nrow=3))
-MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1))
+MultivariateNormal$new(mean = c(0,0,0),
+cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+
+MultivariateNormal$new(mean = c(0,0,0),
+cov = c(3,-1,-1,-1,1,0,-1,0,1))
 
 }

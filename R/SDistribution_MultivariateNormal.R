@@ -21,7 +21,7 @@
 #' @name MultivariateNormal
 #'
 #' @section Constructor: MultivariateNormal$new(mean = rep(0,2), cov = c(1,0,0,1),
-#'                                              prec = NULL, decorators = NULL, verbose = FALSE)
+#' prec = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -40,8 +40,11 @@
 #' @inheritSection SDistribution Public Methods
 #'
 #' @examples
-#' MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1),byrow=TRUE,nrow=3))
-#' MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1))
+#' MultivariateNormal$new(mean = c(0,0,0),
+#' cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+#'
+#' MultivariateNormal$new(mean = c(0,0,0),
+#' cov = c(3,-1,-1,-1,1,0,-1,0,1))
 #'
 #' @export
 NULL
