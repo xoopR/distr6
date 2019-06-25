@@ -146,22 +146,23 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
   private$.parameters <- params
   invisible(self)
 })
-ParameterSet$set("public","print", function(){
+ParameterSet$set("public","print", function(update = FALSE){
   ps <- private$.parameters
   ps$support <- lapply(ps$support,function(x) x$getSymbol())
-  print(ps)
+  print(ps[,1:5])
 })
 ParameterSet$set("public","update", function(){
   if(any(!is.na(private$.parameters$updateFunc))){
-    update_filter = !is.na(private$.parameters$updateFunc) #& !private$.parameters$settable
+    update_filter = !is.na(private$.parameters$updateFunc)
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       fnc = function(self){}
       body(fnc) = parse(text = x[[6]])
-      newval = fnc(self)
+      newval = as.numeric(fnc(self))
     })
-    private$.parameters[update_filter,"value"] = as.numeric(newvals)
+    private$.parameters[update_filter,"value"][[1]] = newvals
   }
+
   invisible(self)
 })
 
@@ -298,7 +299,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       value <- as(value, param$support[[1]]$.__enclos_env__$private$.macType)
       checkmate::assert(param$support[[1]]$liesInSetInterval(value, all = TRUE))
 
-      private$.parameters[private$.parameters[,"id"] %in% param$id, "value"][[1]] <- list(value)
+      private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
     }
 
     self$update()

@@ -39,6 +39,9 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' x=MultivariateNormal$new(means = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1),byrow=T,nrow=3))
+#'
 #' @export
 NULL
 #-------------------------------------------------------------
@@ -63,7 +66,7 @@ MultivariateNormal$set("public","var",function(){
   return(diag(self$cov()))
 })
 MultivariateNormal$set("public","cov",function(){
-  return(matrix(self$getParameterValue("cov"),nrow = self$getParameterValue("K")))
+  return(self$getParameterValue("cov"))
 })
 MultivariateNormal$set("public","cor",function(){
   return(self$cov() / (sqrt(self$var() %*% t(self$var()))))
@@ -78,32 +81,64 @@ MultivariateNormal$set("public", "cf", function(t){
   return(exp((1i * t(self$getParameterValue("means")) %*% t) + (0.5 * t(t) * self$getParameterValue("cov") * t)))
 })
 
+MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"){
+  if(!is.null(lst$cov)){
+    if(any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))))
+      lst$cov <- matrix(lst$cov, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
+  }
+  if(!is.null(lst$prec)){
+    if(any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))))
+      lst$prec <- matrix(lst$prec, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
+  }
+  if(!is.null(lst$means)){
+    lst$means <- as.numeric(lst$means)
+    if(length(lst$means) < self$getParameterValue("K"))
+      lst$means <- rep(lst$means, self$getParameterValue("K"))
+    if(length(lst$means) > self$getParameterValue("K"))
+      lst$means <- lst$means[1:self$getParameterValue("K")]
+  }
+
+  return(super$setParameterValue(lst, error))
+})
+MultivariateNormal$set("public","getParameterValue",function(id, error = "warn"){
+  if("cov" %in% id)
+    return(matrix(super$getParameterValue("cov", error),nrow = super$getParameterValue("K", error)))
+  else
+    return(super$getParameterValue(id, error))
+})
 MultivariateNormal$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$means)) lst = c(lst, list(means = paramlst$means))
   if(!is.null(paramlst$cov)) lst = c(lst, list(cov = paramlst$cov))
+  if(!is.null(paramlst$prec)) lst = c(lst, list(cov = solve(paramlst$prec)))
   return(lst)
 })
 
 MultivariateNormal$set("public","initialize",function(means = rep(0,2), cov = matrix(c(1,1,1,1),nrow=2),
-                                                      decorators = NULL, verbose = FALSE){
+                                                      prec = NULL, decorators = NULL, verbose = FALSE){
 
-  private$.parameters <- getParameterSet(self, means, cov, verbose)
-  self$setParameterValue(list(means = means, cov = cov))
+  private$.parameters <- getParameterSet(self, means, cov, prec, verbose)
+  self$setParameterValue(list(means = means, cov = cov, prec = prec))
 
-  pdf <- function(x1){
+  lst <- rep(list(bquote()), length(means))
+  names(lst) <- paste("x",1:length(means),sep="")
+
+  pdf <- function(){
+
     if(isSymmetric.matrix(self$cov()) & all(eigen(self$cov(),only.values = T)$values > 0)){
 
-      if(length(x1) != self$getParameterValue("K"))
-        stop(paste("x1 should be of length",self$getParameterValue("K")))
+      K <- self$getParameterValue("K")
+      cov <- self$getParameterValue("cov")
+      xs <- matrix(unlist(mget(paste0("x",1:K))), ncol = K)
+      means <- matrix(self$getParameterValue("means"), nrow = nrow(xs), ncol = K, byrow = T)
 
-      return(as.numeric((2*pi)^(-self$getParameterValue("K")/2) * det(self$cov())^-0.5 *
-               exp((-0.5 * t(x1 - self$getParameterValue("means"))) %*% solve(self$cov()) %*%
-                     (x1 - self$getParameterValue("means")))))
+      return(as.numeric((2*pi)^(-K/2) * det(cov)^-0.5 *
+               exp(-0.5 * rowSums((xs - means) %*% solve(cov) * (xs - means)))))
     } else
       return(NaN)
-
   }
+  formals(pdf) <- lst
+
   rand <- function(n){
     ch <- chol(self$cov())
     xs <- matrix(rnorm(self$getParameterValue("K")*n), ncol = n)

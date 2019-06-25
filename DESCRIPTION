@@ -80,6 +80,7 @@ Collate:
     'SDistribution_Logistic.R'
     'SDistribution_Lognormal.R'
     'SDistribution_Multinomial.R'
+    'SDistribution_MultivariateNormal.R'
     'SDistribution_NegBinomal.R'
     'SDistribution_Normal.R'
     'SDistribution_Pareto.R'

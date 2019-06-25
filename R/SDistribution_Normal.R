@@ -86,8 +86,8 @@ Normal$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
   if(!is.null(paramlst$var)) lst = c(lst, list(var = paramlst$var))
-  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
   if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
+  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
   return(lst)
 })
 
