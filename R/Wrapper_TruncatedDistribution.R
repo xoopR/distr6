@@ -74,8 +74,13 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
 
   description = paste0(distribution$description, " Truncated between ",lower," and ",upper,".")
 
+  if(testDiscrete(distribution))
+    support <- Set$new(lower:upper)
+  else
+    support <- Interval$new(lower,upper)
+
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                   short_name = short_name, support = Interval$new(lower, upper),
+                   short_name = short_name, support = support,
                    type = distribution$type(), prefixParams = FALSE,
                    description = description)
 }) # IN PROGRESS
