@@ -26,7 +26,7 @@
 #'
 #' @name NegativeBinomial
 #'
-#' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
+#' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs", decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -34,7 +34,7 @@
 #' \code{size} \tab numeric \tab number of failures. \cr
 #' \code{prob} \tab numeric \tab probability of success. \cr
 #' \code{qprob} \tab numeric \tab probability of failure. \cr
-#' \code{type} \tab character \tab type of negative binomial, see details. \cr
+#' \code{form} \tab character \tab form of negative binomial, see details. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
@@ -42,12 +42,11 @@
 #' @section Constructor Details: The Negative Binomial distribution is parameterised with size,
 #' as an integer and either prob (probability of success) or qprob (probability of failure) as a number
 #' between 0 and 1. If \code{qprob} is given then \code{prob} is ignored. The additional parameter
-#' \code{type} determines which of the four Negative Binomial distributions should be constructed, this
-#' cannot be updated after construction. \code{type} should be one of "sbf" (successes before failures),
+#' \code{form} determines which of the four Negative Binomial distributions should be constructed, this
+#' cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures),
 #' "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
 #' "fbs" is taken as default as this is used in R stats (although "sbf" is typically more common).
-#' If user inputs any type other than the above four, the default "fbs" is used.
-#' The "type" constructor can be reviewed via the public method named description. (Note that method "type" returns symbolic representation of set/interval rather than the type of negative binomial distributions.)
+#' An unrecognised \code{form} defaults to "fbs". Use \code{$description} to see the Negative Binomial form.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
@@ -64,26 +63,26 @@ NegativeBinomial$set("public", "short_name", "NBinom")
 NegativeBinomial$set("public", "traits", list(type = PosIntegers$new(zero = T),
                                               valueSupport = "discrete",
                                               variateForm = "univariate"))
-NegativeBinomial$set("private",".type",NULL)
+NegativeBinomial$set("private",".form",NULL)
 NegativeBinomial$set("public","package","distr6")
 
 NegativeBinomial$set("public", "mean", function(){
   return(self$getParameterValue("mean"))
 })
 NegativeBinomial$set("public","var",function(){
-  if(private$.type == "sbf" | private$.type == "tbf")
+  if(private$.form == "sbf" | private$.form == "tbf")
     return(self$getParameterValue("size") * self$getParameterValue("prob") / (self$getParameterValue("qprob")^2))
-  else if(private$.type == "fbs" | private$.type == "tbs")
+  else if(private$.form == "fbs" | private$.form == "tbs")
     return(self$getParameterValue("size") * self$getParameterValue("qprob") / (self$getParameterValue("prob")^2))
 })
 NegativeBinomial$set("public", "skewness", function(){
-  if(private$.type == "sbf" | private$.type == "tbf")
+  if(private$.form == "sbf" | private$.form == "tbf")
     return((1 + self$getParameterValue("prob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("prob")))
   else
     return((1 + self$getParameterValue("qprob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("qprob")))
 })
 NegativeBinomial$set("public", "kurtosis", function(excess = TRUE){
-  if(private$.type == "sbf" | private$.type == "tbf")
+  if(private$.form == "sbf" | private$.form == "tbf")
     exkurtosis = (self$getParameterValue("qprob")^2 - 6*self$getParameterValue("qprob") + 6)/
       (self$getParameterValue("size") * self$getParameterValue("prob"))
   else
@@ -98,7 +97,7 @@ NegativeBinomial$set("public", "kurtosis", function(excess = TRUE){
 
 NegativeBinomial$set("public", "mgf", function(t){
   if(t < -log(self$getParameterValue("prob"))){
-    if(private$.type == "sbf" | private$.type == "tbf")
+    if(private$.form == "sbf" | private$.form == "tbf")
       return((self$getParameterValue("qprob")/(1 - self$getParameterValue("prob")*exp(t)))^self$getParameterValue("size"))
     else
       return((self$getParameterValue("prob")/(1 - self$getParameterValue("qprob")*exp(t)))^self$getParameterValue("size"))
@@ -106,37 +105,37 @@ NegativeBinomial$set("public", "mgf", function(t){
     return(NaN)
 })
 NegativeBinomial$set("public", "cf", function(t){
-  if(private$.type == "sbf" | private$.type == "tbf")
+  if(private$.form == "sbf" | private$.form == "tbf")
     return((self$getParameterValue("qprob")/(1 - self$getParameterValue("prob")*exp(t*1i)))^self$getParameterValue("size"))
   else
     return((self$getParameterValue("prob")/(1 - self$getParameterValue("qprob")*exp(t*1i)))^self$getParameterValue("size"))
 })
 NegativeBinomial$set("public", "pgf", function(z){
   if(abs(z) < 1/self$getParameterValue("prob")){
-    if(private$.type == "sbf")
+    if(private$.form == "sbf")
       return((self$getParameterValue("qprob") / (1 - self$getParameterValue("prob")*z))^self$getParameterValue("size"))
-    else if(private$.type == "tbs")
+    else if(private$.form == "tbs")
       return(((self$getParameterValue("prob")*z) / (1 - self$getParameterValue("qprob")*z))^self$getParameterValue("size"))
-    else if(private$.type == "fbs")
+    else if(private$.form == "fbs")
       return((self$getParameterValue("prob") / (1 - self$getParameterValue("qprob")*z))^self$getParameterValue("size"))
-    else if(private$.type == "tbf")
+    else if(private$.form == "tbf")
       return(((self$getParameterValue("qprob")*z) / (1 - self$getParameterValue("prob")*z))^self$getParameterValue("size"))
   } else
     return(NaN)
 })
 
 NegativeBinomial$set("public","mode",function(){
-  if(private$.type == "sbf"){
+  if(private$.form == "sbf"){
     if(self$getParameterValue("size") <= 1)
       return(0)
     else
       return(floor(((self$getParameterValue("size")-1) * self$getParameterValue("prob")) / (self$getParameterValue("qprob"))))
-  } else if(private$.type == "tbf") {
+  } else if(private$.form == "tbf") {
     if(self$getParameterValue("size") <= 1)
       return(1)
     else
       return(floor(((self$getParameterValue("size")-1) * self$getParameterValue("prob")) / (self$getParameterValue("qprob"))) + 10)
-  } else if(private$.type == "fbs"){
+  } else if(private$.form == "fbs"){
     if(self$getParameterValue("size") <= 1)
       return(0)
     else
@@ -152,7 +151,7 @@ NegativeBinomial$set("public","mode",function(){
 
 NegativeBinomial$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
-  if(private$.type == "tbf" | private$.type == "tbs")
+  if(private$.form == "tbf" | private$.form == "tbs")
     private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf, type = "[)", class = "integer")
 })
 NegativeBinomial$set("private", ".getRefParams", function(paramlst){
@@ -164,31 +163,31 @@ NegativeBinomial$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
   if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   if(!is.null(paramlst$mean)){
-    if(private$.type == "sbf")
+    if(private$.form == "sbf")
       lst = c(lst, list(prob = paramlst$mean/(paramlst$size + paramlist$mean)))
-    else if(private$.type == "tbf")
+    else if(private$.form == "tbf")
       lst = c(lst, list(prob = (paramlst$mean - paramlst$size)/paramlst$mean))
-    else if(private$.type == "tbs")
+    else if(private$.form == "tbs")
       lst = c(lst, list(prob = paramlst$size/paramlst$mean))
-    else if(private$.type == "fbs")
+    else if(private$.form == "fbs")
       lst = c(lst, list(prob = paramlst$size/(paramlst$mean+paramlst$size)))
   }
   return(lst)
 })
 
 
-NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qprob = NULL, mean= NULL, type = "fbs",
+NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qprob = NULL, mean= NULL, form = "fbs",
                                                      decorators = NULL, verbose = FALSE){
 
-  if(!(type %in% c("fbs", "sbf", "tbf", "tbs")))
-    type <- "fbs"
+  if(!(form %in% c("fbs", "sbf", "tbf", "tbs")))
+    form <- "fbs"
 
-  private$.type <- type
+  private$.form <- form
 
-  private$.parameters <- getParameterSet(self, size, prob, qprob, mean, type, verbose)
+  private$.parameters <- getParameterSet(self, size, prob, qprob, mean, form, verbose)
   self$setParameterValue(list(size = size, prob = prob, qprob = qprob, mean = mean))
 
-  if(type == "fbs"){
+  if(form == "fbs"){
     pdf = function(x1) dnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
     cdf = function(x1) pnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
     quantile = function(p) qnbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
@@ -199,7 +198,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = support, distrDomain = PosIntegers$new(zero = T),
                      symmetric = FALSE, description = description)
-  } else if(type == "sbf"){
+  } else if(form == "sbf"){
     pdf = function(x1){
       return(choose(x1 + self$getParameterValue("size") - 1, x1) *
                self$getParameterValue("prob")^x1 *
@@ -214,7 +213,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, support = support,
                      distrDomain = PosIntegers$new(zero = T), symmetric = FALSE,
                      description = description)
-  } else if(type == "tbf"){
+  } else if(form == "tbf"){
     pdf = function(x1){
       return(choose(x1 - 1, self$getParameterValue("size")-1) *
                self$getParameterValue("prob")^(x1 - self$getParameterValue("size")) *

@@ -12,18 +12,18 @@ test_that("properties & traits",{
   expect_equal(NegativeBinomial$new()$valueSupport(), "discrete")
   expect_equal(NegativeBinomial$new()$variateForm(), "univariate")
   expect_equal(NegativeBinomial$new()$symmetry(), "asymmetric")
-  expect_equal(NegativeBinomial$new(type = "tbf")$sup(), Inf)
-  expect_equal(NegativeBinomial$new(type = "tbf")$inf(), 10)
-  expect_equal(NegativeBinomial$new(type = "tbs")$inf(), 10)
-  expect_equal(NegativeBinomial$new(type = "fbs")$inf(), 0)
-  expect_equal(NegativeBinomial$new(type = "sbf")$inf(), 0)
+  expect_equal(NegativeBinomial$new(form = "tbf")$sup(), Inf)
+  expect_equal(NegativeBinomial$new(form = "tbf")$inf(), 10)
+  expect_equal(NegativeBinomial$new(form = "tbs")$inf(), 10)
+  expect_equal(NegativeBinomial$new(form = "fbs")$inf(), 0)
+  expect_equal(NegativeBinomial$new(form = "sbf")$inf(), 0)
   expect_equal(NegativeBinomial$new()$dmax(),Inf)
   expect_equal(NegativeBinomial$new()$dmin(), 0)
 })
 
 
 test_that("statistics fbs",{
-  nb = NegativeBinomial$new(type = "fbs", prob = 0.2)
+  nb = NegativeBinomial$new(form = "fbs", prob = 0.2)
   expect_equal(nb$mean(), 8/0.2)
   expect_equal(nb$var(), 8/0.04)
   expect_equal(nb$skewness(), 1.8/sqrt(8))
@@ -36,7 +36,7 @@ test_that("statistics fbs",{
   expect_equal(nb$pgf(2), (0.2/(1-0.8*2))^10)
   expect_equal(nb$pgf(6), NaN)
   expect_equal(nb$mode(), 36)
-  expect_equal(NegativeBinomial$new(type = "fbs", prob = 0.2, size = 1)$mode(), 0)
+  expect_equal(NegativeBinomial$new(form = "fbs", prob = 0.2, size = 1)$mode(), 0)
   expect_equal(nb$pdf(1), dnbinom(1,10,0.2))
   expect_equal(nb$cdf(1), pnbinom(1,10,0.2))
   expect_equal(nb$quantile(0.564658), qnbinom(0.564658,10,0.2))
@@ -44,7 +44,7 @@ test_that("statistics fbs",{
 })
 
 test_that("statistics tbs",{
-  nb = NegativeBinomial$new(type = "tbs", prob = 0.2)
+  nb = NegativeBinomial$new(form = "tbs", prob = 0.2)
   expect_equal(nb$mean(), 8/0.2 + 10)
   expect_equal(nb$var(), 8/0.04)
   expect_equal(nb$skewness(), 1.8/sqrt(8))
@@ -57,7 +57,7 @@ test_that("statistics tbs",{
   expect_equal(nb$pgf(2), (0.4/(1-0.8*2))^10)
   expect_equal(nb$pgf(6), NaN)
   expect_equal(nb$mode(), 46)
-  expect_equal(NegativeBinomial$new(type = "tbs", prob = 0.2, size = 1)$mode(), 1)
+  expect_equal(NegativeBinomial$new(form = "tbs", prob = 0.2, size = 1)$mode(), 1)
 
   expect_equal(nb$pdf(11), choose(10, 9) * 0.2^10 * 0.8^1)
   expect_equal(nb$cdf(12), choose(9,9) * 0.2^10 + choose(10, 9) * 0.2^10 * 0.8^1 + choose(11, 9) * 0.2^10 * 0.8^2)
@@ -66,7 +66,7 @@ test_that("statistics tbs",{
 })
 
 test_that("statistics sbf",{
-  nb = NegativeBinomial$new(type = "sbf", prob = 0.2)
+  nb = NegativeBinomial$new(form = "sbf", prob = 0.2)
   expect_equal(nb$mean(), 2/0.8)
   expect_equal(nb$var(), 2/0.64)
   expect_equal(nb$skewness(), 1.2/sqrt(2))
@@ -79,7 +79,7 @@ test_that("statistics sbf",{
   expect_equal(nb$pgf(2), (0.8/(1-0.8*2))^10)
   expect_equal(nb$pgf(6), NaN)
   expect_equal(nb$mode(), 2)
-  expect_equal(NegativeBinomial$new(type = "sbf", prob = 0.2, size = 1)$mode(), 0)
+  expect_equal(NegativeBinomial$new(form = "sbf", prob = 0.2, size = 1)$mode(), 0)
 
   expect_equal(nb$pdf(11), choose(20, 11) * 0.8^10 * 0.2^11)
   expect_equal(nb$cdf(1), nb$pdf(0) + nb$pdf(1))
@@ -88,7 +88,7 @@ test_that("statistics sbf",{
 })
 
 test_that("statistics tbf",{
-  nb = NegativeBinomial$new(type = "tbf", prob = 0.2)
+  nb = NegativeBinomial$new(form = "tbf", prob = 0.2)
   expect_equal(nb$mean(), 2/0.8+10)
   expect_equal(nb$var(), 2/0.64)
   expect_equal(nb$skewness(), 1.2/sqrt(2))
@@ -101,7 +101,7 @@ test_that("statistics tbf",{
   expect_equal(nb$pgf(2), (1.6/(1-0.8*2))^10)
   expect_equal(nb$pgf(6), NaN)
   expect_equal(nb$mode(), 12)
-  expect_equal(NegativeBinomial$new(type = "tbf", prob = 0.2, size = 1)$mode(), 1)
+  expect_equal(NegativeBinomial$new(form = "tbf", prob = 0.2, size = 1)$mode(), 1)
 
   expect_equal(nb$pdf(11), choose(10, 9) * 0.2^1 * 0.8^10)
   expect_equal(nb$cdf(1), nb$pdf(0) + nb$pdf(1))

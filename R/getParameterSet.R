@@ -558,7 +558,7 @@ getParameterSet.Logistic <- function(x, mean, scale, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean = NULL, type, verbose = FALSE){
+getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean = NULL, form, verbose = FALSE){
 
   prob.bool = qprob.bool = mean.bool = FALSE
 
@@ -573,13 +573,13 @@ getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean =
     prob.bool = TRUE
   }
 
-  if(type == "sbf"){
+  if(form == "sbf"){
     updateFunc <- 'self$getParameterValue("size") * self$getParameterValue("prob") / (1-self$getParameterValue("prob"))'
     desc <- "Number of failures"
-  } else if(type == "tbf"){
+  } else if(form == "tbf"){
     updateFunc <- 'self$getParameterValue("size") / (1-self$getParameterValue("prob"))'
     desc <- "Number of failures"
-  } else if(type == "tbs"){
+  } else if(form == "tbs"){
     updateFunc <- 'self$getParameterValue("size") / self$getParameterValue("prob")'
     desc <- "Number of successes"
   } else {

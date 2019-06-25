@@ -26,7 +26,7 @@ For each we refer to the number of K successs/failures as the \code{size} parame
 is always the probability of success and \code{qprob} is the probability of failure.
 }
 \section{Constructor}{
- NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
+ NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs", decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -36,7 +36,7 @@ is always the probability of success and \code{qprob} is the probability of fail
 \code{size} \tab numeric \tab number of failures. \cr
 \code{prob} \tab numeric \tab probability of success. \cr
 \code{qprob} \tab numeric \tab probability of failure. \cr
-\code{type} \tab character \tab type of negative binomial, see details. \cr
+\code{form} \tab character \tab form of negative binomial, see details. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
@@ -46,12 +46,11 @@ is always the probability of success and \code{qprob} is the probability of fail
  The Negative Binomial distribution is parameterised with size,
 as an integer and either prob (probability of success) or qprob (probability of failure) as a number
 between 0 and 1. If \code{qprob} is given then \code{prob} is ignored. The additional parameter
-\code{type} determines which of the four Negative Binomial distributions should be constructed, this
-cannot be updated after construction. \code{type} should be one of "sbf" (successes before failures),
+\code{form} determines which of the four Negative Binomial distributions should be constructed, this
+cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures),
 "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
 "fbs" is taken as default as this is used in R stats (although "sbf" is typically more common).
-If user inputs any type other than the above four, the default "fbs" is used.
-The "type" constructor can be reviewed via the public method named description. (Note that method "type" returns symbolic representation of set/interval rather than the type of negative binomial distributions.)
+An unrecognised \code{form} defaults to "fbs". Use \code{$description} to see the Negative Binomial form.
 }
 
 \section{Public Variables}{
