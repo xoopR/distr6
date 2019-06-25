@@ -26,7 +26,7 @@ assertDistribution <- function(){}
 #' @export
 isDistribution <- function(){}
 
-RSmisc::makeChecks(assertionName = "Distribution",
+makeChecks(assertionName = "Distribution",
            cond = inherits(x,"Distribution"),
            errormsg = paste(x,"is not an R6 Distribution object"),
            pos = environment())
@@ -59,7 +59,7 @@ assertDistributionList <- function(){}
 #' @export
 isDistributionList <- function(){}
 
-RSmisc::makeChecks(assertionName =  "DistributionList",
+makeChecks(assertionName =  "DistributionList",
            cond = all(unlist(lapply(x,inherits,"Distribution"))),
            errormsg = "One or more items in the list are not Distributions",
            pos = environment())
@@ -94,7 +94,7 @@ assertDistributionFeature <- function(){}
 #' @export
 isDistributionFeature <- function(){}
 
-RSmisc::makeChecks(assertionName =  "DistributionFeature",
+makeChecks(assertionName =  "DistributionFeature",
            cond = x[[accessor]]() == feature,
            errormsg = paste(x$short_name,"is not",feature),
            args = alist(x=, accessor=, feature=),
@@ -130,7 +130,7 @@ assertVariateForm <- function(){}
 #' @export
 isVariateForm <- function(){}
 
-RSmisc::makeChecks(assertionName =  "VariateForm",
+makeChecks(assertionName =  "VariateForm",
            cond = x[["variateForm"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=),
@@ -164,7 +164,7 @@ assertUnivariate <- function(){}
 #' @export
 isUnivariate <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Univariate",
+makeChecks(assertionName =  "Univariate",
            cond = x[["variateForm"]]() == "univariate",
            errormsg = paste(x$short_name,"is not univariate"),
            pos = environment())
@@ -197,7 +197,7 @@ assertMultivariate <- function(){}
 #' @export
 isMultivariate <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Multivariate",
+makeChecks(assertionName =  "Multivariate",
            cond = x[["variateForm"]]() == "multivariate",
            errormsg = paste(x$short_name,"is not multivariate"),
            pos = environment())
@@ -230,7 +230,7 @@ assertMatrixvariate <- function(){}
 #' @export
 isMatrixvariate <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Matrixvariate",
+makeChecks(assertionName =  "Matrixvariate",
            cond = x[["variateForm"]]() == "matrixvariate",
            errormsg = paste(x$short_name,"is not matrixvariate"),
            pos = environment())
@@ -265,7 +265,7 @@ assertValueSupport <- function(){}
 #' @export
 isValueSupport <- function(){}
 
-RSmisc::makeChecks(assertionName =  "ValueSupport",
+makeChecks(assertionName =  "ValueSupport",
            cond = x[["valueSupport"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=),
@@ -299,7 +299,7 @@ assertContinuous <- function(){}
 #' @export
 isContinuous <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Continuous",
+makeChecks(assertionName =  "Continuous",
            cond = x[["valueSupport"]]() == "continuous",
            errormsg = paste(x$short_name,"is not continuous"),
            pos = environment())
@@ -332,7 +332,7 @@ assertDiscrete <- function(){}
 #' @export
 isDiscrete <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Discrete",
+makeChecks(assertionName =  "Discrete",
            cond = x[["valueSupport"]]() == "discrete",
            errormsg = paste(x$short_name,"is not discrete"),
            pos = environment())
@@ -365,7 +365,7 @@ assertMixture <- function(){}
 #' @export
 isMixture <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Mixture",
+makeChecks(assertionName =  "Mixture",
            cond = x[["valueSupport"]]() == "mixture",
            errormsg = paste(x$short_name,"is not mixture"),
            pos = environment())
@@ -398,7 +398,7 @@ assertSymmetric <- function(){}
 #' @export
 isSymmetric <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Symmetric",
+makeChecks(assertionName =  "Symmetric",
            cond = x[["symmetry"]]()=="symmetric",
            errormsg = paste(x$short_name,"is not symmetric"),
            pos = environment())
@@ -433,7 +433,7 @@ assertSkewness <- function(){}
 #' @export
 isSkewness <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Skewness",
+makeChecks(assertionName =  "Skewness",
            cond = x[["skewnessType"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=),
@@ -467,7 +467,7 @@ assertNegativeSkew <- function(){}
 #' @export
 isNegativeSkew <- function(){}
 
-RSmisc::makeChecks(assertionName =  "NegativeSkew",
+makeChecks(assertionName =  "NegativeSkew",
            cond = x[["skewnessType"]]() == "Negative Skew",
            errormsg = paste(x$short_name,"is not negative skew"),
            pos = environment())
@@ -500,7 +500,7 @@ assertPositiveSkew <- function(){}
 #' @export
 isPositiveSkew <- function(){}
 
-RSmisc::makeChecks(assertionName =  "PositiveSkew",
+makeChecks(assertionName =  "PositiveSkew",
            cond = x[["skewnessType"]]() == "Positive Skew",
            errormsg = paste(x$short_name,"is not positive skew"),
            pos = environment())
@@ -533,7 +533,7 @@ assertNoSkew <- function(){}
 #' @export
 isNoSkew <- function(){}
 
-RSmisc::makeChecks(assertionName =  "NoSkew",
+makeChecks(assertionName =  "NoSkew",
            cond = x[["skewnessType"]]() == "No Skew",
            errormsg = paste(x$short_name,"is not no skew"),
            pos = environment())
@@ -568,7 +568,7 @@ assertKurtosis <- function(){}
 #' @export
 isKurtosis <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Kurtosis",
+makeChecks(assertionName =  "Kurtosis",
            cond = x[["kurtosisType"]]() == type,
            errormsg = paste(x$short_name,"is not",type),
            args = alist(x=, type=),
@@ -602,7 +602,7 @@ assertPlatykurtic <- function(){}
 #' @export
 isPlatykurtic <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Platykurtic",
+makeChecks(assertionName =  "Platykurtic",
            cond = x[["kurtosisType"]]() == "platykurtic",
            errormsg = paste(x$short_name,"is not platykurtic"),
            pos = environment())
@@ -635,7 +635,7 @@ assertMesokurtic <- function(){}
 #' @export
 isMesokurtic <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Mesokurtic",
+makeChecks(assertionName =  "Mesokurtic",
            cond = x[["kurtosisType"]]() == "mesokurtic",
            errormsg = paste(x$short_name,"is not mesokurtic"),
            pos = environment())
@@ -668,7 +668,7 @@ assertLeptokurtic <- function(){}
 #' @export
 isLeptokurtic <- function(){}
 
-RSmisc::makeChecks(assertionName =  "Leptokurtic",
+makeChecks(assertionName =  "Leptokurtic",
            cond = x[["kurtosisType"]]() == "leptokurtic",
            errormsg = paste(x$short_name,"is not leptokurtic"),
            pos = environment())

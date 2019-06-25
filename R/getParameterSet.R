@@ -176,7 +176,7 @@ getParameterSet.DiscreteUniform <- function(x, lower, upper, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.Exponential <- function(x, rate, scale = NULL, var = NULL, sd = NULL, prec = NULL, verbose = FALSE){
+getParameterSet.Exponential <- function(x, rate, scale = NULL, verbose = FALSE){
 
   rate.bool = scale.bool = FALSE
 
@@ -212,15 +212,15 @@ getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, ver
 
   rate.bool = mean.bool = scale.bool = FALSE
 
-  if(!is.null(rate)){
-    if(verbose) message("Parameterised with shape and rate.")
-    rate.bool = TRUE
+  if(!is.null(mean)){
+    if(verbose) message("Parameterised with shape and mean.")
+    mean.bool = TRUE
   } else if(!is.null(scale)){
     if(verbose) message("Parameterised with shape and scale.")
     scale.bool = TRUE
   } else{
-    if(verbose) message("Parameterised with shape and mean.")
-    mean.bool = TRUE
+    if(verbose) message("Parameterised with shape and rate.")
+    rate.bool = TRUE
   }
 
   ps <- ParameterSet$new(id = list("shape","rate","scale","mean"), value = list(1, 1, 1, 1),

@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+  #' @include SetInterval_SpecialSet.R ParameterSet.R
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
@@ -40,7 +40,7 @@
 #' @inheritSection SDistribution Public Methods
 #'
 #' @examples
-#' x=MultivariateNormal$new(means = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1),byrow=T,nrow=3))
+#' x=MultivariateNormal$new(means = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1),byrow=TRUE,nrow=3))
 #'
 #' @export
 NULL

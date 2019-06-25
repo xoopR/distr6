@@ -1,3 +1,5 @@
+#' @include RSmisc_helpers.R
+
 #' @title Symbolic Operations for SetInterval
 #'
 #' @description Operations for SetInterval objects and subclasses, symbolic only.

@@ -78,7 +78,7 @@ FunctionImputation$set("public","cdf",function(x1){
 FunctionImputation$set("public","quantile",function(p){
   message(.distr6$message_numeric)
 
- # if(!RSmisc::testMessage(self$cdf(1))){
+ # if(!testMessage(self$cdf(1))){
     #CDF2QUANTILE - DISCRETE/CONT
     if(testDiscrete(self)){
       to = ifelse(self$sup() == Inf, 1e+08, self$sup())
@@ -106,11 +106,11 @@ FunctionImputation$set("public","quantile",function(p){
 })
 FunctionImputation$set("public","rand",function(n){
   message(.distr6$message_numeric)
-  if(!RSmisc::testMessage(self$quantile(1))){
+  if(!testMessage(self$quantile(1))){
     # QUANTILE2RAND - DISCRETE/CONT
     return(sapply(1:n, function(x) self$quantile(runif(1))))
   }
-  if(!RSmisc::testMessage(self$pdf(1)) & testDiscrete(self)){
+  if(!testMessage(self$pdf(1)) & testDiscrete(self)){
     # PDF2RAND - DISCRETE
     return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
   }

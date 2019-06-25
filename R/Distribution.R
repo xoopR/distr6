@@ -97,7 +97,7 @@
 #'   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+#'   \code{strprint()} \tab \code{\link{strprint}} \cr
 #'   \code{print()} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
 #'   \code{plot()} \tab Coming Soon. \cr
@@ -128,7 +128,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       description=NULL
                       ){
 
-  if(RSmisc::getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+  if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
     if(is.null(pdf) & is.null(cdf))
       stop("One of pdf or cdf must be provided.")

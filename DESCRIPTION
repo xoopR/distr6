@@ -37,6 +37,7 @@ VignetteBuilder:
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
+    'RSmisc_helpers.R'
     'SetInterval_operations.R'
     'Distribution_helpers.R'
     'Distribution.R'
@@ -61,7 +62,6 @@ Collate:
     'Kernel_Tricube.R'
     'Kernel_Triweight.R'
     'Kernel_Uniform.R'
-    'RSmisc_helpers.R'
     'SDistribution_Arcsine.R'
     'SDistribution_Bernoulli.R'
     'SDistribution_Beta.R'

@@ -149,7 +149,10 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
 ParameterSet$set("public","print", function(update = FALSE){
   ps <- private$.parameters
   ps$support <- lapply(ps$support,function(x) x$getSymbol())
-  print(ps[,1:5])
+  if(!update)
+    print(ps[,1:5])
+  else
+    print(ps)
 })
 ParameterSet$set("public","update", function(){
   if(any(!is.na(private$.parameters$updateFunc))){
@@ -160,7 +163,7 @@ ParameterSet$set("public","update", function(){
       body(fnc) = parse(text = x[[6]])
       newval = as.numeric(fnc(self))
     })
-    private$.parameters[update_filter,"value"][[1]] = newvals
+    suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
   }
 
   invisible(self)
@@ -186,7 +189,7 @@ ParameterSet$set("public","update", function(){
 NULL
 ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
   if(length(private$.parameters)==0)
-    RSmisc::stopwarn(error, "There are no parameters in this distribution.")
+    stopwarn(error, "There are no parameters in this distribution.")
 
   if(!is.null(id)){
     id0 = id
@@ -219,12 +222,12 @@ NULL
 ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
 
   if(length(private$.parameters)==0)
-    RSmisc::stopwarn(error, "There are no parameters in this distribution.")
+    stopwarn(error, "There are no parameters in this distribution.")
   if(missing(id))
-    RSmisc::stopwarn(error, "Argument 'id' is missing, with no default.")
+    stopwarn(error, "Argument 'id' is missing, with no default.")
   support = self$parameters(id)[["support"]]
   if(length(support)==0){
-    RSmisc::stopwarn(error, paste(id, "is not a parameter in this distribution."))
+    stopwarn(error, paste(id, "is not a parameter in this distribution."))
   }else
     return(unlist(support[[1]]))
 
@@ -250,12 +253,12 @@ NULL
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 
   if(length(private$.parameters)==0)
-    RSmisc::stopwarn(error, "There are no parameters in this distribution.")
+    stopwarn(error, "There are no parameters in this distribution.")
   if(missing(id))
-    RSmisc::stopwarn(error, "Argument 'id' is missing, with no default.")
+    stopwarn(error, "Argument 'id' is missing, with no default.")
   val = self$parameters(id)[["value"]]
   if(length(val)==0){
-    RSmisc::stopwarn(error, paste(id, "is not a parameter in this distribution."))
+    stopwarn(error, paste(id, "is not a parameter in this distribution."))
   }else
     return(unlist(val[[1]]))
 
@@ -294,7 +297,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       param <- dplyr::filter(self$as.data.table(), id == aid)
 
       if(nrow(param)==0)
-        RSmisc::stopwarn(error, sprintf("%s is not in the parameter set.",id))
+        stopwarn(error, sprintf("%s is not in the parameter set.",id))
 
       value <- as(value, param$support[[1]]$.__enclos_env__$private$.macType)
       checkmate::assert(param$support[[1]]$liesInSetInterval(value, all = TRUE))
@@ -302,7 +305,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
     }
 
-    self$update()
+  #  self$update()
 
     invisible(self)
   }

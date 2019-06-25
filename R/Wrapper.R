@@ -76,7 +76,7 @@
 #'   \tab \cr \tab \cr \tab \cr
 #'
 #'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+#'   \code{strprint()} \tab \code{\link{strprint}} \cr
 #'   \code{print()} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
 #'   \code{plot()} \tab Coming Soon. \cr
@@ -87,8 +87,8 @@
 NULL
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
 DistributionWrapper$set("public","initialize",function(distlist, prefixParams = TRUE,...){
-  if(RSmisc::getR6Class(self) == "DistributionWrapper")
-    stop(paste(RSmisc::getR6Class(self), "is an abstract class that can't be initialized."))
+  if(getR6Class(self) == "DistributionWrapper")
+    stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
   assertDistributionList(distlist)
 
