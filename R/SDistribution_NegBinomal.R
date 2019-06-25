@@ -13,11 +13,11 @@
 #'
 #' @details The Negative Binomial distribution can refer to one of four distributions:
 #'
-#' 1. The number of successes before K failures (sbf)
+#' 1. The number of failures before K successes (fbs)
 #'
-#' 2. The number of trials before K failures (tbf)
+#' 2. The number of successes before K failures (sbf)
 #'
-#' 3. The number of failures before K successes (fbs)
+#' 3. The number of trials before K failures (tbf)
 #'
 #' 4. The number of trials before K successes (tbs)
 #'
@@ -46,7 +46,7 @@
 #' cannot be updated after construction. \code{type} should be one of "sbf" (successes before failures),
 #' "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
 #' "fbs" is taken as default as this is used in R stats (although "sbf" is typically more common).
-#' If user inputs any type other than the above four, the default "fbs" is used. 
+#' If user inputs any type other than the above four, the default "fbs" is used.
 #' The "type" constructor can be reviewed via the public method named description. (Note that method "type" returns symbolic representation of set/interval rather than the type of negative binomial distributions.)
 #'
 #' @inheritSection SDistribution Public Variables
@@ -89,7 +89,7 @@ NegativeBinomial$set("public", "kurtosis", function(excess = TRUE){
   else
     exkurtosis = (self$getParameterValue("prob")^2 - 6*self$getParameterValue("prob") + 6)/
       (self$getParameterValue("size") * self$getParameterValue("qprob"))
-  
+
   if(excess)
     return(exkurtosis)
   else
@@ -179,15 +179,15 @@ NegativeBinomial$set("private", ".getRefParams", function(paramlst){
 
 NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qprob = NULL, mean= NULL, type = "fbs",
                                                      decorators = NULL, verbose = FALSE){
-  
+
   if(!(type %in% c("fbs", "sbf", "tbf", "tbs")))
     type <- "fbs"
-  
+
   private$.type <- type
-  
+
   private$.parameters <- getParameterSet(self, size, prob, qprob, mean, type, verbose)
   self$setParameterValue(list(size = size, prob = prob, qprob = qprob, mean = mean))
-  
+
   if(type == "fbs"){
     pdf = function(x1) dnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
     cdf = function(x1) pnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
@@ -195,7 +195,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     rand = function(n) rnbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
     support = PosIntegers$new(zero = T)
     description = "Negative Binomial (fbs) Probability Distribution."
-    
+
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = support, distrDomain = PosIntegers$new(zero = T),
                      symmetric = FALSE, description = description)
@@ -210,7 +210,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     }
     support = PosIntegers$new(zero = T)
     description = "Negative Binomial (sbf) Probability Distribution."
-    
+
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, support = support,
                      distrDomain = PosIntegers$new(zero = T), symmetric = FALSE,
                      description = description)
@@ -227,10 +227,10 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
       }
     }
-    
+
     support = Interval$new(size, Inf, type = "[)", class = "integer")
     description = "Negative Binomial (tbf) Probability Distribution."
-    
+
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, support = support,
                      distrDomain = PosIntegers$new(zero = T), symmetric = FALSE,
                      description = description)
@@ -249,11 +249,11 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     }
     support = Interval$new(size, Inf, type = "[)", class = "integer")
     description = "Negative Binomial (tbs) Probability Distribution."
-    
+
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, support = support,
                      distrDomain = PosIntegers$new(zero = T), symmetric = FALSE,
                      description = description)
   }
-  
+
   invisible(self)
 })

@@ -6,21 +6,21 @@
 \description{
 Mathematical and statistical functions for the Negative Binomial distribution parameterised
 with size and one of: prob, \eqn{qprob = 1 - prob} or mean (formula dependent on parameterisation, see details.)
-The Negative Binomial determining the number of success before \eqn{n} failures is defined by the pmf,
-\deqn{f(x) = C(x + n - 1, n) p^n (1 - p)^n}
+The Negative Binomial determining the number of failures before \eqn{n} successes is defined by the pmf,
+\deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
 where \eqn{n = 0,1,2,\ldots} is the size parameter, \eqn{p \epsilon [0,1]} is the prob parameter and
 \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 }
 \details{
 The Negative Binomial distribution can refer to one of four distributions:
 
-1. The number of successes before K failures
+1. The number of failures before K successes (fbs)
 
-2. The number of trials before K failures
+2. The number of successes before K failures (sbf)
 
-3. The number of failures before K successes
+3. The number of trials before K failures (tbf)
 
-4. The number of trials before K successes
+4. The number of trials before K successes (tbs)
 
 For each we refer to the number of K successs/failures as the \code{size} parameter, \code{prob}
 is always the probability of success and \code{qprob} is the probability of failure.
@@ -50,6 +50,8 @@ between 0 and 1. If \code{qprob} is given then \code{prob} is ignored. The addit
 cannot be updated after construction. \code{type} should be one of "sbf" (successes before failures),
 "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
 "fbs" is taken as default as this is used in R stats (although "sbf" is typically more common).
+If user inputs any type other than the above four, the default "fbs" is used.
+The "type" constructor can be reviewed via the public method named description. (Note that method "type" returns symbolic representation of set/interval rather than the type of negative binomial distributions.)
 }
 
 \section{Public Variables}{
