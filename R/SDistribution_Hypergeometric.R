@@ -108,7 +108,7 @@ Hypergeometric$set("public","initialize",function(size = 10, success = 5, draws 
     
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = Set$new(0:size), distrDomain = PosIntegers$new(zero = T),
-                     symmetric = TRUE)
+                     symmetric = FALSE)
     invisible(self)
 })
 
