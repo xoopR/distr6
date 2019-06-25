@@ -26,7 +26,7 @@ For each we refer to the number of K successs/failures as the \code{size} parame
 is always the probability of success and \code{qprob} is the probability of failure.
 }
 \section{Constructor}{
- NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
+ NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, type = "fbs", decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{

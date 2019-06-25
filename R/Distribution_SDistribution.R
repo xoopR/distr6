@@ -1,7 +1,7 @@
 #-------------------------------------------------------------
 # SDistribution Documentation
 #-------------------------------------------------------------
-#' @title Generalised Special Distribution Object
+#' @title Abstract Special Distribution Class
 #'
 #' @description Abstract class that cannot be constructed directly.
 #'

@@ -10,7 +10,8 @@ with (arrival) rate and defined by the pmf,
 where \eqn{\lambda} > 0 is the rate parameter.
 }
 \details{
-\code{entropy} is omitted as no closed form expression could be found.
+\code{entropy} is omitted as no closed form expression could be found, decorate with
+CoreStatistics for a numeric expression.
 }
 \section{Constructor}{
  Poisson$new(rate = 1, decorators = NULL, verbose = FALSE)

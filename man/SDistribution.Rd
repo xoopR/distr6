@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution_SDistribution.R
 \name{SDistribution}
 \alias{SDistribution}
-\title{Generalised Special Distribution Object}
+\title{Abstract Special Distribution Class}
 \description{
 Abstract class that cannot be constructed directly.
 }

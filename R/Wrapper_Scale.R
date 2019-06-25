@@ -29,13 +29,13 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' Scale$new(Binomial$new())
+#' }
 #'
 #' @seealso See \code{\link{DistributionWrapper}} for inherited wrapper methods and see \code{\link{Distribution}}
 #' for a full list of inherited distribution methods.
-NULL
 
-#' @export
 Scale <- R6::R6Class("Scale", inherit = DistributionWrapper, lock_objects = FALSE)
 Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   assertDistribution(dist)

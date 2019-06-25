@@ -13,8 +13,7 @@ cexpo = function(x){
 }
 
 ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
-                      lower = list(0, 0, 0), upper = list(Inf, Inf, 5),
-                      class = list("numeric","numeric","numeric"),
+                      support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0,5)),
                       settable = list(TRUE, FALSE, FALSE),
                       updateFunc = list(NULL, "1/self$getParameterValue('rate')",
                                         "exp(self$getParameterValue('rate'))"),

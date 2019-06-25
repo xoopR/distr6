@@ -41,11 +41,12 @@
 #'   Construction should instead be called on 'Set' or 'Interval'
 #'
 #' @seealso \code{\link{Set}} for R6 Set objects and \code{\link{Interval}} for R6 Interval objects.
+#'
+#' @export
 NULL
 #-------------------------------------------------------------
 # SetInterval Definition
 #-------------------------------------------------------------
-#' @export
 SetInterval <- R6::R6Class("SetInterval")
 SetInterval$set("public","initialize",function(symbol, lower, upper, type, dimension){
   private$.lower = lower
@@ -55,12 +56,6 @@ SetInterval$set("public","initialize",function(symbol, lower, upper, type, dimen
   private$.setSymbol = symbol
   invisible(self)
 })
-SetInterval$set("public","lower",function(){
-  return(private$.lower)
-})
-SetInterval$set("public","upper",function(){
-  return(private$.upper)
-})
 SetInterval$set("public","type",function(){
   return(private$.type)
 })
@@ -69,29 +64,43 @@ SetInterval$set("public","dimension",function(){
 })
 SetInterval$set("public","max",function(){
   if(private$.type %in% c("()","[)"))
-    return(self$upper()-.Machine$double.eps)
+    return(self$sup()-.Machine$double.eps)
   else
-    return(self$upper())
+    return(self$sup())
 })
 SetInterval$set("public","min",function(){
   if(private$.type %in% c("()","(]"))
-    return(self$lower()+.Machine$double.eps)
+    return(self$inf()+.Machine$double.eps)
   else
-    return(self$lower())
+    return(self$inf())
 })
 SetInterval$set("public","sup",function(){
-  return(self$upper())
+  return(private$.upper)
 })
 SetInterval$set("public","inf",function(){
-  return(self$lower())
+  return(private$.lower)
 })
 SetInterval$set("public","getSymbol",function() return(private$.setSymbol))
 SetInterval$set("public","print",function(){
   print(self$getSymbol())
 })
+SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FALSE){
+  ret = rep(FALSE, length(x))
+  if(bound)
+    #ret[(x >= self$inf() & x <= self$sup() & inherits(x, self$class()))] = TRUE
+    ret[(x >= self$inf() & x <= self$sup())] = TRUE
+  else
+    #ret[(x >= self$min() & x <= self$max() & inherits(x, self$class()))] = TRUE
+    ret[(x >= self$min() & x <= self$max())] = TRUE
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
+})
 
 SetInterval$set("private",".lower",NULL)
 SetInterval$set("private",".upper",NULL)
 SetInterval$set("private",".type",NULL)
+SetInterval$set("private",".macType","numeric")
 SetInterval$set("private",".dimension",NULL)
 SetInterval$set("private",".setSymbol",NULL)

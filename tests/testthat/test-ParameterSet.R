@@ -4,10 +4,9 @@ context("ParameterSet")
 
 test_that("initialize",{
   expect_error(as.ParameterSet(list()))
-  expect_silent(as.ParameterSet(list(id = "Test", value = 2, lower = 1, upper = 5,
-                                     class = "integer", settable = F)))
-  expect_silent(as.ParameterSet(data.frame(id = "Test", value = 2, lower = 1, upper = 5,
-                                     class = "integer", settable = F,
+  expect_silent(as.ParameterSet(list(id = "Test", value = 2, support = list(Set$new(1:5)), settable = F)))
+  expect_silent(as.ParameterSet(data.table::data.table(id = "Test", value = 2, support = list(Set$new(1:5)),
+                                           settable = F,
                                      stringsAsFactors = F)))
 })
 

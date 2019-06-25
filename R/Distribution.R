@@ -1,4 +1,4 @@
-#' @include Distribution_helpers.R SetInterval_helpers.R
+#' @include Distribution_helpers.R SetInterval_operations.R
 #-------------------------------------------------------------
 # Distribution Documentation
 #-------------------------------------------------------------
@@ -315,9 +315,9 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #-------------------------------------------------------------
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
-    settable = self$parameters()$as.data.frame()$settable
-    id = self$parameters()$as.data.frame()[settable, "id"]
-    value = self$parameters()$as.data.frame()[settable, "value"]
+    settable = self$parameters()$as.data.table()$settable
+    id = self$parameters()$as.data.table()[settable, "id"]
+    value = self$parameters()$as.data.table()[settable, "value"]
     string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
   } else {
     string = paste0(self$short_name)
@@ -343,13 +343,13 @@ Distribution$set("public","print",function(...){
 summary.Distribution <- function(object, full = TRUE,...) {}
 Distribution$set("public","summary",function(full = TRUE,...){
 
-  which_params = self$parameters()$as.data.frame()$settable
+  which_params = self$parameters()$as.data.table()$settable
 
   if(full){
     if(length(private$.parameters)!=0){
       cat(self$name,"with parameterisation:\n")
-      cat("\t",paste(self$parameters()$as.data.frame()[which_params, "id"],
-                     self$parameters()$as.data.frame()[which_params,"value"],
+      cat("\t",paste(unlist(self$parameters()$as.data.table()[which_params, "id"]),
+                     unlist(self$parameters()$as.data.table()[which_params,"value"]),
                      sep = " = ", collapse = "; "))
     } else
       cat(self$name(),"\n")
@@ -681,27 +681,17 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
     return(NULL)
 
   if(testUnivariate(self)){
-    pdf = x1
-    pdf[!self$liesInSupport(x1, all = F)] = 0
-    if(sum(self$liesInSupport(x1, all = F))!=0)
-      pdf[self$liesInSupport(x1, all = F)] = private$.pdf(pdf[self$liesInSupport(x1, all = F)])
-
-   # pdf.in = sapply(pdf[self$liesInSupport(x1, all = F)], function(x0) private$.pdf(x0,...))
-
-
-   # rm(x1)
-   # pdf = private$.pdf(x1,...)
-
+    pdf = numeric(length(x1))
+    if(any(self$liesInSupport(x1, all = F)))
+      pdf[self$liesInSupport(x1, all = F)] = private$.pdf(x1[self$liesInSupport(x1, all = F)])
   } else {
     if(is.null(x1)) pdf = private$.pdf(...)
     else pdf = private$.pdf(x1, ...)
   }
 
-#  pdf = unlist(pdf)
-
   if(log) return(log(pdf))
   else return(pdf)
-}) # NEEDS TESTING
+})
 #-------------------------------------------------------------
 # Public Methods - cdf
 #-------------------------------------------------------------
@@ -743,22 +733,14 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
-    cdf = x1
-    cdf[x1 >= self$sup()] = 1
-    cdf[x1 < self$inf()] = 0
-
-    if(sum(x1 >= self$inf() & x1 < self$sup())!=0)
-      cdf[x1 >= self$inf() & x1 < self$sup()] = private$.cdf(cdf[x1 >= self$inf() & x1 < self$sup()])
-
-
-    # cdf.in = sapply(cdf[x1 < self$sup() & x1 >= self$inf()], function(q0) private$.cdf(q0,...))
-    # cdf[x1 < self$sup() & x1 >= self$inf()] = cdf.in
+    cdf = numeric(length(x1))
+    cdf[x1 > self$sup()] = 1
+    if(any(self$liesInSupport(x1, all = F)))
+      cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
   } else {
     if(is.null(x1)) cdf = private$.cdf(...)
     else cdf = private$.cdf(x1, ...)
   }
-
-  #cdf = unlist(cdf)
 
   if(log.p & lower.tail) return(log(cdf))
   else if(log.p & !lower.tail) return(log(1 - cdf))
@@ -940,10 +922,7 @@ Distribution$set("public", "iqr", function() {
 #' @export
 NULL
 Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
-  if(all & bound) return(all(x >= self$inf()) & all(x <= self$sup()))
-  else if(all & !bound) return(all(x >= self$dmin()) & all(x <= self$dmax()))
-  else if(!all & bound) return(x >= self$inf() & x <= self$sup())
-  else if(!all & !bound) return(x >= self$dmin() & x <= self$dmax())
+  return(self$support()$liesInSetInterval(x, all, bound))
 })
 
 #' @name liesInType
@@ -951,11 +930,12 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @description Tests if the given data lies in the type of the Distribution, either tests if all
 #' data lies in the type or any of it.
 #'
-#' @usage liesInType(object, x, all = TRUE)
-#' @section R6 Usage: $liesInType(x, all = TRUE)
+#' @usage liesInType(object, x, all = TRUE, bound = FALSE)
+#' @section R6 Usage: $liesInType(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
+#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
 #' lies in the type. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
@@ -964,11 +944,8 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #'
 #' @export
 NULL
-Distribution$set("public","liesInType",function(x, all = TRUE){
-  if(all)
-    return(all(x >= self$type()$lower()) & all(x <= self$type()$upper))
-  else
-    return(x >= self$type()$lower() & x <= self$type()$upper)
+Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
+  return(self$type()$liesInSetInterval(x, all, bound))
 })
 
 #' @name liesInDistrDomain
@@ -976,11 +953,12 @@ Distribution$set("public","liesInType",function(x, all = TRUE){
 #' @description Tests if the given data lies in the domain of the Distribution, either tests if all
 #' data lies in the distribution domain or any of it.
 #'
-#' @usage liesInDistrDomain(object, x, all = TRUE)
-#' @section R6 Usage: $liesInDistrDomain(x, all = TRUE)
+#' @usage liesInDistrDomain(object, x, all = TRUE, bound = FALSE)
+#' @section R6 Usage: $liesInDistrDomain(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
+#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
 #' lies in the domain. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
@@ -989,11 +967,8 @@ Distribution$set("public","liesInType",function(x, all = TRUE){
 #'
 #' @export
 NULL
-Distribution$set("public","liesInDistrDomain",function(x, all = TRUE){
-  if(all)
-    return(all(x >= self$distrDomain()$lower()) & all(x <= self$distrDomain()$upper))
-  else
-    return(x >= self$distrDomain()$lower() & x <= self$distrDomain()$upper)
+Distribution$set("public","liesInDistrDomain",function(x, all = TRUE, bound = FALSE){
+  return(self$distrDomain()$liesInSetInterval(x, all, bound))
 })
 
 #-------------------------------------------------------------

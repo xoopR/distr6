@@ -8,12 +8,12 @@ dexpo = function(x){
   return(m1 * m2)
 }
 
-ps = ParameterSet$new(id = list("rate", "scale"), value = list(1, 1),
-                      lower = list(0, 0), upper = list(Inf, Inf),
-                      class = list("numeric","numeric"),
-                      settable = list(TRUE, FALSE),
-                      updateFunc = list(NULL, "1/self$getParameterValue('rate')"),
-                      description = list("Arrival rate","Scale parameter"))
+ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
+                      support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0,5)),
+                      settable = list(TRUE, FALSE, FALSE),
+                      updateFunc = list(NULL, "1/self$getParameterValue('rate')",
+                                        "exp(self$getParameterValue('rate'))"),
+                      description = list("Arrival rate","Scale parameter","testpar"))
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),

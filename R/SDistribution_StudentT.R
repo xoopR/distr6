@@ -9,9 +9,9 @@
 #' \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
 #' where \eqn{\nu > 0} is the degrees of freedom.
 #'
-#' @name TDistribution
+#' @name StudentT
 #'
-#' @section Constructor: TDistribution$new(df = 1, decorators = NULL, verbose = FALSE)
+#' @section Constructor: StudentT$new(df = 1, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -32,22 +32,22 @@ NULL
 #-------------------------------------------------------------
 # Student's t Distribution Definition
 #-------------------------------------------------------------
-TDistribution <- R6::R6Class("TDistribution", inherit = SDistribution, lock_objects = F)
-TDistribution$set("public","name","TDistribution")
-TDistribution$set("public","short_name","T")
-TDistribution$set("public","traits",list(type = Reals$new(),
+StudentT <- R6::R6Class("StudentT", inherit = SDistribution, lock_objects = F)
+StudentT$set("public","name","StudentT")
+StudentT$set("public","short_name","T")
+StudentT$set("public","traits",list(type = Reals$new(),
                                     valueSupport = "continuous",
                                     variateForm = "univariate"))
-TDistribution$set("public","description","Student's t Probability Distribution.")
-TDistribution$set("public","package","stats")
+StudentT$set("public","description","Student's t Probability Distribution.")
+StudentT$set("public","package","stats")
 
-TDistribution$set("public","mean",function(){
+StudentT$set("public","mean",function(){
   if(self$getParameterValue("df") > 1)
     return(0)
   else
     return(NaN)
 })
-TDistribution$set("public","var",function(){
+StudentT$set("public","var",function(){
   df <- self$getParameterValue("df")
   if(df > 2)
     return(df/(df-2))
@@ -56,13 +56,13 @@ TDistribution$set("public","var",function(){
   else
     return(NaN)
 })
-TDistribution$set("public","skewness",function(){
+StudentT$set("public","skewness",function(){
   if(self$getParameterValue("df") > 3)
     return(0)
   else
     return(NaN)
 })
-TDistribution$set("public","kurtosis",function(excess = TRUE){
+StudentT$set("public","kurtosis",function(excess = TRUE){
   df <- self$getParameterValue("df")
   if(df > 4)
     exkurtosis = 6/(df-4)
@@ -77,28 +77,28 @@ TDistribution$set("public","kurtosis",function(excess = TRUE){
     return(exkurtosis + 3)
 
 })
-TDistribution$set("public","entropy",function(base = 2){
+StudentT$set("public","entropy",function(base = 2){
   df <- self$getParameterValue("df")
   (((df+1)/2)*(digamma((1+df)/2) - digamma(df/2))) + (log(sqrt(df)*beta(df/2, 1/2), base))
 })
-TDistribution$set("public", "mgf", function(t){
+StudentT$set("public", "mgf", function(t){
   return(NaN)
 })
-TDistribution$set("public", "cf", function(t){
+StudentT$set("public", "cf", function(t){
   df <- self$getParameterValue("df")
   return((besselK(sqrt(df)*abs(t), df/2) * ((sqrt(df)*abs(t))^(df/2))) / (gamma(df/2)*2^(df/2-1)))
 })
-TDistribution$set("public","mode",function(){
+StudentT$set("public","mode",function(){
   return(0)
 })
 
-TDistribution$set("private",".getRefParams", function(paramlst){
+StudentT$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
   return(lst)
 })
 
-TDistribution$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
+StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(list(df = df))

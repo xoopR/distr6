@@ -23,8 +23,8 @@
 #'
 #' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 #'
-#' @section Public Methods:
-#' See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#' @inheritSection DistributionWrapper Public Variables
+#' @inheritSection DistributionWrapper Public Methods
 #'
 #' @seealso \code{\link{listWrappers}}.
 #'
@@ -57,6 +57,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   cdf <- function(x1){
     cdf = x1
     cdf[x1 == self$inf()] <- rep(self$wrappedModels()[[1]]$cdf(self$inf()), sum(x1 == self$inf()))
+    cdf[x1 == self$sup()] <- rep(1, sum(x1 == self$sup()))
     cdf[x1 > self$inf() & x1 < self$sup()] <- self$wrappedModels()[[1]]$cdf(cdf[x1 > self$inf() & x1 < self$sup()])
 
     return(cdf)
