@@ -305,7 +305,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
     }
 
-  #  self$update()
+    self$update()
 
     invisible(self)
   }

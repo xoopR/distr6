@@ -313,6 +313,17 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #-------------------------------------------------------------
 # Public Methods - Representation
 #-------------------------------------------------------------
+#' @title String Representation of Print
+#' @name strprint
+#' @description Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
+#' @details strprint is a suggested method that should be included in all R6 classes to be passed to
+#' methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
+#' parse R6 objects into data-frames, see examples.
+#'
+#' @param object R6 object
+#' @usage strprint(object)
+#'
+#' @export
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
     settable = self$parameters()$as.data.table()$settable
