@@ -852,6 +852,24 @@ Distribution$set("public","rand",function(n){
 #-------------------------------------------------------------
 # Public Methods - Analytic Maths/stats
 #-------------------------------------------------------------
+#' @name prec
+#' @title Precision of a Distribution
+#' @description Precision of a distribution assuming variance is provided.
+#'
+#' @usage prec(object)
+#' @section R6 Usage: $prec()
+#' @param object Distribution.
+#' @details The precision is analytically computed as the reciprocal of the variance.
+#' If the variance is not found in the distribution (analytically or numerically), returns error.
+#'
+#' @seealso \code{\link{var}}
+#'
+#' @export
+NULL
+Distribution$set("public","prec",function(){
+  return(1/self$var())
+})
+
 #' @name sd
 #' @title Standard Deviation of a Distribution
 #' @description Standard deviation of a distribution assuming variance is provided.

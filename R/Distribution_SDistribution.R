@@ -44,6 +44,7 @@
 #'   \code{rand(n)} \tab \code{\link{rand}} \cr
 #'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
 #'   \code{var()} \tab \code{\link{var}} \cr
+#'   \code{prec()} \tab \code{\link{prec}} \cr
 #'   \code{cov()} \tab \code{\link{cov}} \cr
 #'   \code{cor()} \tab \code{\link{cor}} \cr
 #'   \code{skewness()} \tab \code{\link{skewness}} \cr
@@ -91,6 +92,9 @@ SDistribution$set("public","setParameterValue",function(lst, error = "warn"){
 SDistribution$set("public","package",NULL)
 SDistribution$set("public","cov",function(){
   return(self$var())
+})
+SDistribution$set("public","prec",function(){
+  return(1/self$var())
 })
 SDistribution$set("public","cor",function(){
   return(1)
