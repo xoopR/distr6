@@ -405,7 +405,7 @@ makeChecks(assertionName =  "Symmetric",
 
 #' @title assert/check/test/Skewness
 #' @name testSkewness
-#' @description Validation checks to test the skewnewss of a Distribution
+#' @description Validation checks to test the skewness of a Distribution
 #' @param x Distribution
 #' @param type skewness type, Negative Skew/No Skew/Positive Skew
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

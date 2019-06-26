@@ -5,7 +5,7 @@
 #' @title Categorical Distribution
 #'
 #' @description Mathematical and statistical functions for the Categorical distribution parameterised
-#' with a given support Set, probabilites and defined by the pmf,
+#' with a given support Set, probabilities and defined by the pmf,
 #' \deqn{f(X_1 = x_i) = p_i}
 #' where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{x_1,...,x_n}
 #' elements in the support set.

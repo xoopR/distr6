@@ -19,7 +19,7 @@
 #' \deqn{F_M = sum_i (F_i)(w_i)}
 #'
 #' If weights are given, they should be provided as a vector of numerics. If they don't sum to one
-#' then they are normalsised automatically. If NULL, they are taken to be uniform, i.e. for n
+#' then they are normalised automatically. If NULL, they are taken to be uniform, i.e. for n
 #' distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 #'
 #'

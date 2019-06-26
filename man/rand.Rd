@@ -28,6 +28,6 @@ Additional named arguments can be passed, which are required for composite distr
 }
 
 \seealso{
-\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistial functions.
+\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
 \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 }

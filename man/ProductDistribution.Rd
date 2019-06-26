@@ -4,7 +4,7 @@
 \alias{ProductDistribution}
 \title{Product Distribution}
 \description{
-A wrapper for creating the joint distribution of multiple indepdendent probability distributions.
+A wrapper for creating the joint distribution of multiple independent probability distributions.
 }
 \details{
 Exploits the following relationships of independent distributions

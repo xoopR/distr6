@@ -490,7 +490,7 @@ CoreStatistics$set("public","mode",function(which = "all"){
 #' @section R6 Usage: $mean()
 #'
 #' @description Arithmetic mean for the probability distribution.
-#' @details The artihmetic mean of a (discrete) probability distribution X is the expectation
+#' @details The arithmetic mean of a (discrete) probability distribution X is the expectation
 #' \deqn{E_X(X) = \sum p_X(x)*x}
 #' with an integration analogue for continuous distributions.
 #'

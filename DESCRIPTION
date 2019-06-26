@@ -22,7 +22,7 @@ Authors@R:
              email = "Matthias.Kohl@stamats.de",
              comment = c("Author of distr")))
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
-  commonly used probabilty distributions and functionality for multiple scientific types.
+  commonly used probability distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
 Depends: 
 Imports: checkmate, R6, R62S3 (>= 1.3.1), magrittr, GoFKernel, dplyr, stats, extraDistr, utils, expint, data.table

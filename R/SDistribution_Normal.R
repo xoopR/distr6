@@ -31,7 +31,7 @@
 #'
 #' @section Constructor Details: The Normal distribution can either be parameterised with variance,
 #' standard deviation or precision. If none are provided then var parameterisation is used with var = 1.
-#' If multiple are provided then parameterisatin takes the hierarchy: var, sd, prec.
+#' If multiple are provided then parameterisation takes the hierarchy: var, sd, prec.
 #' sd is defined by
 #' \deqn{sd = var^2}
 #' prec is defined by

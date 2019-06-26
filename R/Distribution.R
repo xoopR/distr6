@@ -681,7 +681,7 @@ Distribution$set("public","setParameterValue",function(lst, error = "warn"){
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistial functions.
+#' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
@@ -733,7 +733,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistial functions.
+#' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
@@ -787,7 +787,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistial functions.
+#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
@@ -833,7 +833,7 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistial functions.
+#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export

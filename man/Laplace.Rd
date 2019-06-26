@@ -11,7 +11,7 @@ the pdf,
 where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\beta > 0} is the scale parameter.
 }
 \details{
-The Laplace distribution is paramterised with mean and scale by default as this appears to
+The Laplace distribution is parameterised with mean and scale by default as this appears to
 be slightly more common in popular usage.
 }
 \section{Constructor}{

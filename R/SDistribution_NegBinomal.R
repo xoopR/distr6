@@ -21,7 +21,7 @@
 #'
 #' 4. The number of trials before K successes (tbs)
 #'
-#' For each we refer to the number of K successs/failures as the \code{size} parameter, \code{prob}
+#' For each we refer to the number of K success/failures as the \code{size} parameter, \code{prob}
 #' is always the probability of success and \code{qprob} is the probability of failure.
 #'
 #' @name NegativeBinomial

@@ -11,7 +11,7 @@
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{distribution} \tab distribution \tab Distribution to scale. \cr
 #' \code{mean} \tab numeric \tab Desired mean after distribution shift. \cr
-#' \code{sd} \tab numeritc \tab Desired standard deviation after distribution scale.
+#' \code{sd} \tab numeric \tab Desired standard deviation after distribution scale.
 #' }
 #'
 #' @section Getters:

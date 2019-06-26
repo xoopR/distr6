@@ -1,6 +1,6 @@
 #' @name ProductDistribution
 #' @title Product Distribution
-#' @description A wrapper for creating the joint distribution of multiple indepdendent probability distributions.
+#' @description A wrapper for creating the joint distribution of multiple independent probability distributions.
 #' @seealso \code{\link{ArrayDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}
 #' for wrapper details.
 #' @details Exploits the following relationships of independent distributions

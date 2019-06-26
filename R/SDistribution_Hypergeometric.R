@@ -5,11 +5,11 @@
 #' @title Hypergeometric Distribution
 #'
 #' @description Mathematical and statistical functions for the Hypergeometric distribution parameterised
-#' with population size, number of successeses (or failures) in the population and number of draws. It is defined by
+#' with population size, number of successes (or failures) in the population and number of draws. It is defined by
 #' the pmf,
 #' \deqn{f(x) = C(K, x)*C(N-K,n-x)/C(N,n)}
 #' where \eqn{N = 0,1,2,\ldots} is the population size parameter, \eqn{K = 0,1,2,\ldots} is the number
-#' of successeses parameter and \eqn{n = 0,1,2,\ldots} is the number of draws parameter. \eqn{C(a,b)}
+#' of successes parameter and \eqn{n = 0,1,2,\ldots} is the number of draws parameter. \eqn{C(a,b)}
 #' is the combination (or binomial coefficient) function.
 #'
 #' @details \code{mgf} and \code{cf} are omitted as no closed form analytic expression could be found.
@@ -21,7 +21,7 @@
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{size} \tab numeric \tab  population size. \cr
-#' \code{successes} \tab numeric \tab number of population successeses. \cr
+#' \code{successes} \tab numeric \tab number of population successes. \cr
 #' \code{failures} \tab numeric \tab number of population failures. \cr
 #' \code{draws} \tab numeric \tab number of draws. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr

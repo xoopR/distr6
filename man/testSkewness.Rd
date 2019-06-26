@@ -29,7 +29,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test the skewnewss of a Distribution
+Validation checks to test the skewness of a Distribution
 }
 \examples{
 testSkewness(Binomial$new(), "Negative Skew")
