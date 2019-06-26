@@ -2,7 +2,7 @@ Package: distr6
 Title: Object Oriented Distributions in R
 Version: 1.0.0
 Authors@R: 
-    c(person(given = "Raphael",
+      c(person(given = "Raphael",
              family = "Sonabend",
              role = c("aut","cre"),
              email = "raphael.sonabend.15@ucl.ac.uk",
@@ -20,7 +20,48 @@ Authors@R:
              family = "Kohl",
              role = "ctb",
              email = "Matthias.Kohl@stamats.de",
-             comment = c("Author of distr")))
+             comment = c("Author of distr")),
+      person(given = "Shen",
+             family = "Chen",
+             role = "ctb",
+             email = "seanchen9832@icloud.com"),
+      person(given = "Jordan",
+             family = "Deenichin",
+             role = "ctb",
+             email = "d.deenichin@gmail.com"),
+      person(given = "Chengyang",
+             family = "Gao",
+             role = "ctb",
+             email = "garoc371@gmail.com"),
+      person(given = "Chloe Zhaoyuan",
+             family = "Gu",
+             role = "ctb",
+             email = "guzhaoyuan@outlook.com"),
+      person(given = "Yunjie",
+             family = "He",
+             role = "ctb",
+             email = "zcakebx@ucl.ac.uk"),              
+      person(given = "Xiaowen",
+             family = "Huang",
+             role = "ctb",
+             email = "hxw3678@gmail.com"),
+      person(given = "Shuhan",
+             family = "Liu",
+             role = "ctb",
+             email = "Shuhan.liu.99@gmail.com"),             
+      person(given = "Runlong",
+             family = "Yu",
+             role = "ctb",
+             email = "edwinyurl@hotmail.com"),             
+      person(given = "Chijing",
+             family = "Zeng",
+             role = "ctb",
+             email = "britneyzenguk@gmail.com"),
+      person(given = "Qian",
+             family = "Zhou",
+             role = "ctb",
+             email = "zcakqz1@ucl.ac.uk") 
+        )
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
   commonly used probability distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
