@@ -61,7 +61,7 @@ Set$set("public","length",function(){
 Set$set("public","elements",function(){
   return(private$.elements)
 })
-Set$set("private",".macType","integer")
+Set$set("private",".class","integer")
 Set$set("private",".elements",NULL)
 Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
   ret = rep(FALSE, length(x))

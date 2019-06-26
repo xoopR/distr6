@@ -39,7 +39,7 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   if(lower == -Inf) lower = "-\u221E"
   if(upper == Inf) upper = "+\u221E"
   private$.setSymbol <- paste0(substr(type,1,1),lower,":", upper,substr(type,2,2))
-  private$.macType <- class
+  private$.class <- class
   invisible(self)
 })
 
@@ -52,7 +52,4 @@ Interval$set("public","length",function(){
   else
     return(length(self$as.numeric()))
 })
-Interval$set("private",".macType",NULL)
-Interval$set("public","class",function(){
-  return(private$.macType)
-})
+Interval$set("private",".class",NULL)

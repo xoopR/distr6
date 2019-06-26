@@ -76,6 +76,7 @@ Collate:
     'SDistribution_Gamma.R'
     'SDistribution_Geometric.R'
     'SDistribution_Gompertz.R'
+    'SDistribution_Hypergeometric.R'
     'SDistribution_Laplace.R'
     'SDistribution_Logarithmic.R'
     'SDistribution_Logistic.R'

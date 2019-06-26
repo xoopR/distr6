@@ -30,7 +30,7 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
   private$.dimension <- dim
   invisible(self)
 })
-SpecialSet$set("private",".macType","integer")
+SpecialSet$set("private",".class","integer")
 #' @title Empty Set
 #' @description The mathematical empty, or null, set.
 #' @name Empty
@@ -159,7 +159,7 @@ Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
 Rationals$set("public", "initialize", function(dim = 1, ...){
   super$initialize(dim,...)
 })
-Rationals$set("private",".macType","numeric")
+Rationals$set("private",".class","numeric")
 
 #' @title Set of Positive Rationals
 #' @description The mathematical set of positive rationals.
@@ -222,7 +222,7 @@ Reals <- R6::R6Class("Reals",inherit = SpecialSet)
 Reals$set("public", "initialize", function(dim = 1, ...){
   super$initialize(dim, ...)
 })
-Reals$set("private",".macType","numeric")
+Reals$set("private",".class","numeric")
 
 #' @title Set of Positive Reals
 #' @description The mathematical set of positive reals.
@@ -303,4 +303,4 @@ Complex <- R6::R6Class("Complex",inherit = SpecialSet)
 Complex$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
 })
-Complex$set("private",".macType","complex")
+Complex$set("private",".class","complex")

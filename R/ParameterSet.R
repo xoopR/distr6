@@ -88,6 +88,13 @@ NULL
 
 ParameterSet <- R6::R6Class("ParameterSet")
 ParameterSet$set("private",".parameters",NULL)
+ParameterSet$set("private",".SetParameterSupport",function(lst){
+  id = names(lst)
+  support = lst[[1]]
+  which = which(unlist(private$.parameters$id) %in% id)
+  private$.parameters[which,3][[1]] <- list(support)
+  invisible(self)
+})
 ParameterSet$set("public","initialize", function(id, value, support, settable,
                                                  updateFunc = NULL, description = NULL){
 
@@ -129,7 +136,7 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
     } else
       a_update = NA
 
-    a_value = as(value[[i]], a_support$.__enclos_env__$private$.macType)
+    a_value = as(value[[i]], a_support$.__enclos_env__$private$.class)
     checkmate::assert(a_support$liesInSetInterval(a_value, all = T), combine = "and",
                       .var.name = "'value' should be between 'lower' and 'upper'")
 
@@ -298,7 +305,9 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       if(nrow(param)==0)
         stopwarn(error, sprintf("%s is not in the parameter set.",id))
 
-      value <- as(value, param$support[[1]]$.__enclos_env__$private$.macType)
+      if(param$support[[1]]$class() == "integer")
+        value <- round(value)
+
       checkmate::assert(param$support[[1]]$liesInSetInterval(value, all = TRUE))
 
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
