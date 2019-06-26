@@ -42,8 +42,8 @@ plot.SDistribution <- function(x, fun, nPoints = 3000, coverage = 0.99,
   #   layout.col Works in the same way as mfrow that changes the layout
   #             figures and only applies if iterative == FALSE. If TRUE, 
   #             figures will be displayed in a columnwise order. The 
-  #             default is set to be FALSE. If both mfrow and mfcol are TRUE,
-  #             mfcol will overwrite mfrow.
+  #             default is set to be FALSE. If both layout.row and 
+  #             layout.col are TRUE, layout.col prevails.
   #   margin    Similiar to mfrow, only works if iterative == FALSE. The
   #             margin of plots are changed when mar == TRUE.
   #   coverage  A numerical parameter between 0 and 1, indicating the range 
