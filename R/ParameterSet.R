@@ -200,10 +200,10 @@ ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
 
   if(!is.null(id)){
     id0 = id
-    if(length(dplyr::filter(private$.parameters, id %in% id0))==0){
+    if(length(subset(private$.parameters, id %in% id0))==0){
       return(self)
     }
-    return(dplyr::filter(private$.parameters, id %in% id0))
+    return(subset(private$.parameters, id %in% id0))
   } else {
       return(self)
   }
@@ -300,7 +300,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       aid <- names(lst)[[i]]
       value <- lst[[i]]
 
-      param <- dplyr::filter(self$as.data.table(), id == aid)
+      param <- subset(self$as.data.table(), id == aid)
 
       if(nrow(param)==0)
         stopwarn(error, sprintf("%s is not in the parameter set.",id))
