@@ -43,6 +43,7 @@ Hypergeometric$set("public", "traits", list(type = PosIntegers$new(zero = TRUE),
                                         valueSupport = "discrete",
                                         variateForm = "univariate"))
 Hypergeometric$set("public", "description", "Hypergeometric Probability Distribution")
+Hypergeometric$set("public","package","stats")
 
 Hypergeometric$set("public", "mean", function(){
     return(self$getParameterValue("draws")*self$getParameterValue("successes")/self$getParameterValue("size"))

@@ -5,14 +5,18 @@
 \title{Hypergeometric Distribution}
 \description{
 Mathematical and statistical functions for the Hypergeometric distribution parameterised
-with population size N, the number of success states in the population K and the number of draws n(i.e. quantity drawn in each trial).
-The  Hypergeometric distribution is defined by the pmf,
+with population size, number of successeses (or failures) in the population and number of draws. It is defined by
+the pmf,
 \deqn{f(x) = C(K, x)*C(N-K,n-x)/C(N,n)}
-where \eqn{N = 0,1,2,\ldots} is the population size parameter, \eqn{K = 0,1,2,\ldots} is the success parameter and
-\eqn{n = 0,1,2,\ldots} is the draws parameter.\eqn{C(a,b)} is the combination (or binomial coefficient) function.
+where \eqn{N = 0,1,2,\ldots} is the population size parameter, \eqn{K = 0,1,2,\ldots} is the number
+of successeses parameter and \eqn{n = 0,1,2,\ldots} is the number of draws parameter. \eqn{C(a,b)}
+is the combination (or binomial coefficient) function.
+}
+\details{
+\code{mgf} and \code{cf} are omitted as no closed form analytic expression could be found.
 }
 \section{Constructor}{
- Hypergeometric$new(size = 10, success = 5, draws = 2,decorators = NULL, verbose = FALSE)
+ Hypergeometric$new(size = 10, successes = 5, failures = 5, draws = 2, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -20,7 +24,8 @@ where \eqn{N = 0,1,2,\ldots} is the population size parameter, \eqn{K = 0,1,2,\l
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{size} \tab numeric \tab  population size. \cr
-\code{success} \tab numeric \tab number of success states in the population. \cr
+\code{successes} \tab numeric \tab number of population successeses. \cr
+\code{failures} \tab numeric \tab number of population failures. \cr
 \code{draws} \tab numeric \tab number of draws. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.

@@ -90,14 +90,19 @@ SetInterval$set("public","class",function(){
 SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FALSE){
   ret = rep(FALSE, length(x))
 
+  if(self$class() == "integer")
+    class_test = sapply(x, checkmate::testIntegerish)
+  else if(self$class() == "numeric")
+    class_test = sapply(x, checkmate::testNumeric)
+
   if(bound & self$class()=="integer")
-    ret[(x >= self$inf() & x <= self$sup() & checkmate::testIntegerish(x))] = TRUE
+    ret[(x >= self$inf() & x <= self$sup() & class_test)] = TRUE
   else if(!bound & self$class()=="integer")
-    ret[(x >= self$min() & x <= self$max() & checkmate::testIntegerish(x))] = TRUE
+    ret[(x >= self$min() & x <= self$max() & class_test)] = TRUE
   else if(bound & self$class()=="numeric")
-    ret[(x >= self$inf() & x <= self$sup() & inherits(x, "numeric"))] = TRUE
+    ret[(x >= self$inf() & x <= self$sup() & class_test)] = TRUE
   else if(!bound & self$class()=="numeric")
-    ret[(x >= self$min() & x <= self$max() & inherits(x, "numeric"))] = TRUE
+    ret[(x >= self$min() & x <= self$max() & class_test)] = TRUE
 
   if(all)
     return(all(ret))

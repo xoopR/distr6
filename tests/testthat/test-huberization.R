@@ -25,3 +25,4 @@ test_that("check huberization constructor",{
   expect_silent(huberize(Binomial$new()))
   expect_error(huberize(Distribution$new("Test"),1,2))
 })
+

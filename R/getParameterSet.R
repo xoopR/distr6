@@ -283,11 +283,6 @@ getParameterSet.Hypergeometric <- function(x, size, successes, failures = NULL, 
 
   successes.bool = failures.bool = FALSE
 
-  # if(draws<=size & successes<=size) return(ps)
-  # else if(draws>size & successes>size) message("the number of successes states and the number of draws cannot be larger than population size")
-  # else if(draws>size) message("the number of draws cannot be larger than population size")
-  # else if(successes>size) message("the number of successes states cannot be larger than population size")
-  #
   if(!is.null(failures)){
     if(verbose) message("Parameterised with number of failures.")
     failures.bool = TRUE
@@ -354,10 +349,10 @@ getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog 
                                               "varlog - Squared Scale Parameter on log scale",
                                               "sdlog - Scale Parameter on log scale",
                                               "preclog - Inverse Squared Scale Parameter on logscale",
-                                              "meanlog - Location Parameter",
-                                              "varlog - Squared Scale Parameter",
-                                              "sdlog - Scale Parameter",
-                                              "preclog - Inverse Squared Scale Parameter"))
+                                              "mean - Location Parameter",
+                                              "var - Squared Scale Parameter",
+                                              "sd - Scale Parameter",
+                                              "prec - Inverse Squared Scale Parameter"))
 
   } else{
     if(!is.null(prec)){

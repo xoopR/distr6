@@ -91,10 +91,12 @@ MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"
   if(!is.null(lst$cov)){
     if(any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))))
       lst$cov <- matrix(lst$cov, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
+    lst$cov <- as.numeric(lst$cov)
   }
   if(!is.null(lst$prec)){
     if(any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))))
       lst$prec <- matrix(lst$prec, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
+    lst$prec <- as.numeric(lst$prec)
   }
   if(!is.null(lst$mean)){
     lst$mean <- as.numeric(lst$mean)
@@ -102,6 +104,7 @@ MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"
       lst$mean <- rep(lst$mean, self$getParameterValue("K"))
     if(length(lst$mean) > self$getParameterValue("K"))
       lst$mean <- lst$mean[1:self$getParameterValue("K")]
+    lst$mean <- as.numeric(lst$mean)
   }
 
   return(super$setParameterValue(lst, error))
