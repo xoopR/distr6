@@ -1,9 +1,23 @@
 language: r
-r:
-  - oldrel
-  - release
+#r:
+#  - oldrel
+#  - release
  # - devel
  
+matrix:
+    include:
+        - os: linux
+          r: oldrel
+        - os: linux
+          r: release
+        - os: linux
+          r: devel
+        - os: osx
+          r: oldrel
+        - os: osx
+          r: release
+    
+    
 sudo: false
 
 dist: trusty
@@ -13,9 +27,9 @@ dist: trusty
 #  - master
 #  - dev
   
-os:
-  - linux
-  - osx
+#os:
+#  - linux
+#  - osx
 
 cache: packages
 
