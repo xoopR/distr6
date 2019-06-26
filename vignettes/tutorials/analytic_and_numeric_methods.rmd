@@ -8,7 +8,6 @@ vignette: >
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-remotes::install_github("raphaels1/distr6")
 library(distr6)
 ```
 

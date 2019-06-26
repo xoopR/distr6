@@ -1,0 +1,28 @@
+---
+title: "Introduction to distr6"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to distr6}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+distr6 is a unified and clean interface to organise the hundreds of probability distributions implemented in R into one R6 object oriented package.
+
+distr6 extends the work of Peter Ruckdeschel, Matthias Kohl et al. who created the first object-oriented (OO) interface for distributions using S4. Their [distr package](http://distr.r-forge.r-project.org/) is currently the gold-standard in R for OO distribution handling. Using R6 we aim to take this even further and to create a scalable interface that can continue to grow with the community.
+
+Our short-term aims are to implement all distributions in the R stats package as well as some other commonly utilised distributions. We also allow for user-defined probability distributions/families via multiple inheritance. Building the package from the ground up and making use of tried and tested design patterns (as per Gamma et al. 1994), distr6 aims to be the only package needed for probability distributions in R.
+
+
+## Why Object-Oriented Programming?
+
+There are many advantages to OOP over functional programming (which is more commmon in R). For probability distributions, the biggest advantages is in the ability to quickly construct and recall any number of required distributions, each with mathematical and statistical methods. There are currently no methods in base R that interact with Distributions to obtain basic properties, for example the mean of a distribution. In distr6 this is made possible as every probability distribution is its own class with specific methods. So to get mathematical properties of the Binomial distribution:
+1. `B = Binomial$new(prob, size)`
+2. `B$mean()`
+3. `B$sd()`
+
+Or try using `B$summary()` for a range of common mathematical and statistical results. With the `listDistributions()` command you can see every Distribution currently implemented in distr6, along with their traits.
+
+Another advantage of OOP is making use of inheritance to implement more complex distributions from base distributions. For example any distribution can be easily truncated with a call to `truncate(distribution, lower, upper)` which produces an object of class `TruncatedDistribution` which inherits all methods from `Distribution`. 
+
+We discuss further advantages of OOP including Design Patterns in the help-pages of the website.
