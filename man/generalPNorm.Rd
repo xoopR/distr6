@@ -13,7 +13,7 @@ generalPNorm(fun, p, lower, upper)
 
 \item{lower}{lower bound for the integral}
 
-\item{upper}{upper bounde for the integral}
+\item{upper}{upper bound for the integral}
 }
 \description{
 Calculate the p-norm of any function between given limits. Given by,

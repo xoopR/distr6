@@ -24,10 +24,13 @@ decorate <- function(distribution, decorators){
   decorators = decorators[!(decors_names %in% dist_decors)]
 
   dist_name = substitute(distribution)
+  if(dist_name == ".") dist_name = distribution$short_name
 
-  if(length(decorators) == 0)
-    return(paste(substitute(distribution),"is already decorated with",
-                  paste0(decors_names,collapse=",")))
+  if(length(decorators) == 0){
+    message(paste(dist_name,"is already decorated with", paste0(decors_names,collapse = ",")))
+    return(NULL)
+  }
+
   else{
     lapply(decorators, function(a_decorator){
 
@@ -73,5 +76,6 @@ decorate <- function(distribution, decorators){
     distribution$.__enclos_env__$private$.updateDecorators(unlist(decors_names))
 
     message(paste(dist_name,"is now decorated with", paste0(decors_names,collapse = ",")))
+    return(distribution)
   }
 }

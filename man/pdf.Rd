@@ -39,6 +39,6 @@ Additional named arguments can be passed, which are required for composite distr
 }
 
 \seealso{
-\code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistial functions.
+\code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 }

@@ -41,11 +41,12 @@
 #'   Construction should instead be called on 'Set' or 'Interval'
 #'
 #' @seealso \code{\link{Set}} for R6 Set objects and \code{\link{Interval}} for R6 Interval objects.
+#'
+#' @export
 NULL
 #-------------------------------------------------------------
 # SetInterval Definition
 #-------------------------------------------------------------
-#' @export
 SetInterval <- R6::R6Class("SetInterval")
 SetInterval$set("public","initialize",function(symbol, lower, upper, type, dimension){
   private$.lower = lower
@@ -83,9 +84,26 @@ SetInterval$set("public","getSymbol",function() return(private$.setSymbol))
 SetInterval$set("public","print",function(){
   print(self$getSymbol())
 })
-SetInterval$set("public","liesInSetInterval",function(x, all = FALSE){
+SetInterval$set("public","class",function(){
+  return(private$.class)
+})
+SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FALSE){
   ret = rep(FALSE, length(x))
-  ret[(x >= self$min() & x <= self$max() & inherits(x, private$.macType))] = TRUE
+
+  if(self$class() == "integer")
+    class_test = sapply(x, checkmate::testIntegerish)
+  else if(self$class() == "numeric")
+    class_test = sapply(x, checkmate::testNumeric)
+
+  if(bound & self$class()=="integer")
+    ret[(x >= self$inf() & x <= self$sup() & class_test)] = TRUE
+  else if(!bound & self$class()=="integer")
+    ret[(x >= self$min() & x <= self$max() & class_test)] = TRUE
+  else if(bound & self$class()=="numeric")
+    ret[(x >= self$inf() & x <= self$sup() & class_test)] = TRUE
+  else if(!bound & self$class()=="numeric")
+    ret[(x >= self$min() & x <= self$max() & class_test)] = TRUE
+
   if(all)
     return(all(ret))
   else
@@ -95,6 +113,6 @@ SetInterval$set("public","liesInSetInterval",function(x, all = FALSE){
 SetInterval$set("private",".lower",NULL)
 SetInterval$set("private",".upper",NULL)
 SetInterval$set("private",".type",NULL)
-SetInterval$set("private",".macType","numeric")
+SetInterval$set("private",".class","numeric")
 SetInterval$set("private",".dimension",NULL)
 SetInterval$set("private",".setSymbol",NULL)

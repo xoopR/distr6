@@ -83,8 +83,8 @@ PosReals$new()
 
 distr6 has three primary use-cases:
 
-1. **Upgrading base** Extend the R distributions functions to classes so that each distribution additionally has basic statisical methods including expectation and variance and properties/traits including discrete/continuous, univariate/multivariate, etc.
-1. **Statistics** Implementing decorators and adaptors to manipulate distributions including distribution composition. Aditionally functionality for numeric calculations based on any arbitrary distribution.
+1. **Upgrading base** Extend the R distributions functions to classes so that each distribution additionally has basic statistical methods including expectation and variance and properties/traits including discrete/continuous, univariate/multivariate, etc.
+1. **Statistics** Implementing decorators and adaptors to manipulate distributions including distribution composition. Additionally functionality for numeric calculations based on any arbitrary distribution.
 1. **Modelling** Probabilistic modelling using distr6 objects as the modelling targets. Objects as targets is an understood ML paradigm and introducing distributions as classes is the first step to implementing probabilistic modelling.
 
 ## Installation

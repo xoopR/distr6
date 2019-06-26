@@ -1,4 +1,4 @@
-#' @include Distribution_helpers.R SetInterval_helpers.R
+#' @include Distribution_helpers.R SetInterval_operations.R
 #-------------------------------------------------------------
 # Distribution Documentation
 #-------------------------------------------------------------
@@ -97,7 +97,7 @@
 #'   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+#'   \code{strprint()} \tab \code{\link{strprint}} \cr
 #'   \code{print()} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
 #'   \code{plot()} \tab Coming Soon. \cr
@@ -128,7 +128,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       description=NULL
                       ){
 
-  if(RSmisc::getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+  if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
     if(is.null(pdf) & is.null(cdf))
       stop("One of pdf or cdf must be provided.")
@@ -313,6 +313,17 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #-------------------------------------------------------------
 # Public Methods - Representation
 #-------------------------------------------------------------
+#' @title String Representation of Print
+#' @name strprint
+#' @description Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
+#' @details strprint is a suggested method that should be included in all R6 classes to be passed to
+#' methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
+#' parse R6 objects into data-frames, see examples.
+#'
+#' @param object R6 object
+#' @usage strprint(object)
+#'
+#' @export
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
     settable = self$parameters()$as.data.table()$settable
@@ -670,7 +681,7 @@ Distribution$set("public","setParameterValue",function(lst, error = "warn"){
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistial functions.
+#' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
@@ -681,27 +692,17 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
     return(NULL)
 
   if(testUnivariate(self)){
-    pdf = x1
-    pdf[!self$liesInSupport(x1, all = F)] = 0
-    if(sum(self$liesInSupport(x1, all = F))!=0)
-      pdf[self$liesInSupport(x1, all = F)] = private$.pdf(pdf[self$liesInSupport(x1, all = F)])
-
-   # pdf.in = sapply(pdf[self$liesInSupport(x1, all = F)], function(x0) private$.pdf(x0,...))
-
-
-   # rm(x1)
-   # pdf = private$.pdf(x1,...)
-
+    pdf = numeric(length(x1))
+    if(any(self$liesInSupport(x1, all = F)))
+      pdf[self$liesInSupport(x1, all = F)] = private$.pdf(x1[self$liesInSupport(x1, all = F)])
   } else {
     if(is.null(x1)) pdf = private$.pdf(...)
     else pdf = private$.pdf(x1, ...)
   }
 
-#  pdf = unlist(pdf)
-
   if(log) return(log(pdf))
   else return(pdf)
-}) # NEEDS TESTING
+})
 #-------------------------------------------------------------
 # Public Methods - cdf
 #-------------------------------------------------------------
@@ -732,7 +733,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistial functions.
+#' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
@@ -743,22 +744,14 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
-    cdf = x1
-    cdf[x1 >= self$sup()] = 1
-    cdf[x1 < self$inf()] = 0
-
-    if(sum(x1 >= self$inf() & x1 < self$sup())!=0)
-      cdf[x1 >= self$inf() & x1 < self$sup()] = private$.cdf(cdf[x1 >= self$inf() & x1 < self$sup()])
-
-
-    # cdf.in = sapply(cdf[x1 < self$sup() & x1 >= self$inf()], function(q0) private$.cdf(q0,...))
-    # cdf[x1 < self$sup() & x1 >= self$inf()] = cdf.in
+    cdf = numeric(length(x1))
+    cdf[x1 > self$sup()] = 1
+    if(any(self$liesInSupport(x1, all = F)))
+      cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
   } else {
     if(is.null(x1)) cdf = private$.cdf(...)
     else cdf = private$.cdf(x1, ...)
   }
-
-  #cdf = unlist(cdf)
 
   if(log.p & lower.tail) return(log(cdf))
   else if(log.p & !lower.tail) return(log(1 - cdf))
@@ -794,7 +787,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistial functions.
+#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
@@ -840,7 +833,7 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistial functions.
+#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
@@ -859,6 +852,24 @@ Distribution$set("public","rand",function(n){
 #-------------------------------------------------------------
 # Public Methods - Analytic Maths/stats
 #-------------------------------------------------------------
+#' @name prec
+#' @title Precision of a Distribution
+#' @description Precision of a distribution assuming variance is provided.
+#'
+#' @usage prec(object)
+#' @section R6 Usage: $prec()
+#' @param object Distribution.
+#' @details The precision is analytically computed as the reciprocal of the variance.
+#' If the variance is not found in the distribution (analytically or numerically), returns error.
+#'
+#' @seealso \code{\link{var}}
+#'
+#' @export
+NULL
+Distribution$set("public","prec",function(){
+  return(1/self$var())
+})
+
 #' @name sd
 #' @title Standard Deviation of a Distribution
 #' @description Standard deviation of a distribution assuming variance is provided.
@@ -940,10 +951,7 @@ Distribution$set("public", "iqr", function() {
 #' @export
 NULL
 Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
-  if(all & bound) return(all(x >= self$inf()) & all(x <= self$sup()))
-  else if(all & !bound) return(all(x >= self$dmin()) & all(x <= self$dmax()))
-  else if(!all & bound) return(x >= self$inf() & x <= self$sup())
-  else if(!all & !bound) return(x >= self$dmin() & x <= self$dmax())
+  return(self$support()$liesInSetInterval(x, all, bound))
 })
 
 #' @name liesInType
@@ -951,11 +959,12 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @description Tests if the given data lies in the type of the Distribution, either tests if all
 #' data lies in the type or any of it.
 #'
-#' @usage liesInType(object, x, all = TRUE)
-#' @section R6 Usage: $liesInType(x, all = TRUE)
+#' @usage liesInType(object, x, all = TRUE, bound = FALSE)
+#' @section R6 Usage: $liesInType(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
+#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
 #' lies in the type. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
@@ -964,11 +973,8 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #'
 #' @export
 NULL
-Distribution$set("public","liesInType",function(x, all = TRUE){
-  if(all)
-    return(all(x >= self$type()$lower()) & all(x <= self$type()$upper))
-  else
-    return(x >= self$type()$lower() & x <= self$type()$upper)
+Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
+  return(self$type()$liesInSetInterval(x, all, bound))
 })
 
 #' @name liesInDistrDomain
@@ -976,11 +982,12 @@ Distribution$set("public","liesInType",function(x, all = TRUE){
 #' @description Tests if the given data lies in the domain of the Distribution, either tests if all
 #' data lies in the distribution domain or any of it.
 #'
-#' @usage liesInDistrDomain(object, x, all = TRUE)
-#' @section R6 Usage: $liesInDistrDomain(x, all = TRUE)
+#' @usage liesInDistrDomain(object, x, all = TRUE, bound = FALSE)
+#' @section R6 Usage: $liesInDistrDomain(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
+#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
 #' lies in the domain. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
@@ -989,11 +996,8 @@ Distribution$set("public","liesInType",function(x, all = TRUE){
 #'
 #' @export
 NULL
-Distribution$set("public","liesInDistrDomain",function(x, all = TRUE){
-  if(all)
-    return(all(x >= self$distrDomain()$lower()) & all(x <= self$distrDomain()$upper))
-  else
-    return(x >= self$distrDomain()$lower() & x <= self$distrDomain()$upper)
+Distribution$set("public","liesInDistrDomain",function(x, all = TRUE, bound = FALSE){
+  return(self$distrDomain()$liesInSetInterval(x, all, bound))
 })
 
 #-------------------------------------------------------------

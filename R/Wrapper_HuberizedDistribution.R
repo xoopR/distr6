@@ -23,8 +23,8 @@
 #'
 #' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 #'
-#' @section Public Methods:
-#' See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#' @inheritSection DistributionWrapper Public Variables
+#' @inheritSection DistributionWrapper Public Methods
 #'
 #' @seealso \code{\link{listWrappers}}.
 #'
@@ -56,8 +56,12 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
   cdf <- function(x1){
     cdf = x1
-    cdf[x1 == self$inf()] <- rep(self$wrappedModels()[[1]]$cdf(self$inf()), sum(x1 == self$inf()))
-    cdf[x1 > self$inf() & x1 < self$sup()] <- self$wrappedModels()[[1]]$cdf(cdf[x1 > self$inf() & x1 < self$sup()])
+    if(any(x1 == self$inf()))
+      cdf[x1 == self$inf()] <- rep(self$wrappedModels()[[1]]$cdf(self$inf()), sum(x1 == self$inf()))
+    if(any(x1 == self$sup()))
+      cdf[x1 == self$sup()] <- rep(1, sum(x1 == self$sup()))
+    if(any(x1 > self$inf() & x1 < self$sup()))
+      cdf[x1 > self$inf() & x1 < self$sup()] <- self$wrappedModels()[[1]]$cdf(cdf[x1 > self$inf() & x1 < self$sup()])
 
     return(cdf)
   }
@@ -65,9 +69,12 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   quantile <- function(p){
     p = self$wrappedModels()[[1]]$quantile(p)
     quantile = p
-    quantile[p <= self$inf()] = self$inf()
-    quantile[p >= self$sup()] = self$sup()
-    quantile[p < self$sup() & p > self$inf()] = p[p < self$sup() & p > self$inf()]
+    if(any(p <= self$inf()))
+      quantile[p <= self$inf()] = self$inf()
+    if(any(p >= self$inf()))
+      quantile[p >= self$sup()] = self$sup()
+    if(any(p < self$sup() & p > self$inf()))
+      quantile[p < self$sup() & p > self$inf()] = p[p < self$sup() & p > self$inf()]
 
     return(quantile)
   }
@@ -82,10 +89,13 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
     pdf <- function(x1){
       pdf = x1
-      pdf[x1 == self$inf()] <- rep(self$wrappedModels()[[1]]$cdf(self$inf()), sum(x1 == self$inf()))
-      pdf[x1 == self$sup()] <- rep(self$wrappedModels()[[1]]$cdf(self$sup(), lower.tail = F) +
-        self$wrappedModels()[[1]]$pdf(self$sup()), sum(x1 == self$sup()))
-      pdf[x1 > self$inf() & x1 < self$sup()] <- self$wrappedModels()[[1]]$pdf(pdf[x1 > self$inf() & x1 < self$sup()])
+      if(any(x1 == self$inf()))
+        pdf[x1 == self$inf()] <- rep(self$wrappedModels()[[1]]$cdf(self$inf()), sum(x1 == self$inf()))
+      if(any(x1 == self$sup()))
+        pdf[x1 == self$sup()] <- rep(self$wrappedModels()[[1]]$cdf(self$sup(), lower.tail = F) +
+          self$wrappedModels()[[1]]$pdf(self$sup()), sum(x1 == self$sup()))
+      if(any(x1 > self$inf() & x1 < self$sup()))
+        pdf[x1 > self$inf() & x1 < self$sup()] <- self$wrappedModels()[[1]]$pdf(pdf[x1 > self$inf() & x1 < self$sup()])
 
       return(pdf)
     }

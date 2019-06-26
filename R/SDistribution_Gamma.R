@@ -94,7 +94,12 @@ Gamma$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$shape)) lst = c(lst, list(shape= paramlst$shape))
   if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
   if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
-  if(!is.null(paramlst$mean)) lst = c(lst, list(rate = paramlst$shape/paramlst$mean))
+  if(!is.null(paramlst$mean)){
+    if(is.null(paramlst$shape))
+      lst = c(lst, list(rate = self$getParameterValue("shape")/paramlst$mean))
+    else
+      lst = c(lst, list(rate = paramlst$shape/paramlst$mean))
+  }
 
   return(lst)
 })
@@ -102,7 +107,7 @@ Gamma$set("private",".getRefParams", function(paramlst){
 Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean = NULL, decorators = NULL,
                                          verbose = FALSE){
 
-  private$.parameters <- getParameterSet.Gamma(self, shape, scale, mean, rate, verbose)
+  private$.parameters <- getParameterSet.Gamma(self, shape, rate, scale, mean, verbose)
   self$setParameterValue(list(shape=shape,rate=rate,scale = scale,mean=mean))
 
   pdf <- function(x1) dgamma(x1, self$getParameterValue("shape"),self$getParameterValue('rate'))

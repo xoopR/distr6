@@ -1,3 +1,4 @@
+#' @include SetInterval.R
 #-------------------------------------------------------------
 # Set Documentation
 #-------------------------------------------------------------
@@ -24,13 +25,16 @@ NULL
 #-------------------------------------------------------------
 # Set Definition
 #-------------------------------------------------------------
-#' @include SetInterval.R
 Set <- R6::R6Class("Set", inherit = SetInterval)
 Set$set("public","initialize",function(..., dim = 1){
-  if(missing(...))
-    invisible(self)
-  else{
+  if(length(list(...)) == 0){
+    private$.type <- "{}"
+    private$.lower <- NULL
+    private$.upper <- NULL
+    private$.setSymbol <- paste0("{}")
+  } else{
     dots <- list(...)
+    private$.elements <- unlist(dots)
     if(length(dots[[1]]) > 1 & is.numeric(dots[[1]])){
       private$.type <- "{}"
       private$.lower <- min(dots[[1]])
@@ -47,7 +51,25 @@ Set$set("public","initialize",function(..., dim = 1){
   if(dim != 1)
     private$.setSymbol <- paste0(private$.setSymbol,"^",dim)
 
+  private$.dimension <- dim
 
   invisible(self)
 })
-Set$set("private",".macType","integer")
+Set$set("public","length",function(){
+  return(length(private$.elements))
+})
+Set$set("public","elements",function(){
+  return(private$.elements)
+})
+Set$set("private",".class","integer")
+Set$set("private",".elements",NULL)
+Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
+  ret = rep(FALSE, length(x))
+  ret[x %in% self$elements()] = TRUE
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
+})
+

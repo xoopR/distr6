@@ -44,7 +44,7 @@ only the probability of success/failure.
 prob = 0.5 by default. The logical parameter \code{trials} determines which Geometric distribution
 is constructed and cannot be changed after construction. If \code{trials} is TRUE then
 the Geometric distribution that calculates the probability of first success is after \eqn{x} trials.
-Otherwise the Geometric distribution calculcates probability of \eqn{y} failures before the first success.
+Otherwise the Geometric distribution calculates probability of \eqn{y} failures before the first success.
 Mathematically these are related by \eqn{Y = X - 1}.
 }
 
@@ -88,6 +88,7 @@ Mathematically these are related by \eqn{Y = X - 1}.
   \code{rand(n)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
   \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
@@ -117,7 +118,7 @@ Mathematically these are related by \eqn{Y = X - 1}.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+  \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr

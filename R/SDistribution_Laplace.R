@@ -10,7 +10,7 @@
 #' \deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
 #' where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\beta > 0} is the scale parameter.
 #'
-#' @details The Laplace distribution is paramterised with mean and scale by default as this appears to
+#' @details The Laplace distribution is parameterised with mean and scale by default as this appears to
 #' be slightly more common in popular usage.
 #'
 #' @name Laplace

@@ -10,7 +10,7 @@ test_that("parameterisation", {
   expect_equal(FDistribution$new(df1 = 10, df2 = 5)$getParameterValue("df1"), 10)
   expect_equal(FDistribution$new(df1 = 10, df2 = 5)$getParameterValue("df2"), 5)
   expect_equal(FDistribution$new(df1 = 8.1, df2 = 3.6)$getParameterValue("df1"), 8)
-  expect_equal(FDistribution$new(df1 = 8.1, df2 = 3.6)$getParameterValue("df2"), 3)
+  expect_equal(FDistribution$new(df1 = 8.1, df2 = 3.6)$getParameterValue("df2"), 4)
 })
 
 test_that("properties & traits", {

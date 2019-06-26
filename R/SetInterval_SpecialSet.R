@@ -1,3 +1,5 @@
+#' @include SetInterval_Interval.R
+#'
 #' @title Special Mathematical Sets
 #'
 #' @description Abstract class for the representation of the 'special' mathematical sets.
@@ -8,32 +10,38 @@
 #' see below.
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
-
-#' @include SetInterval_Set.R
+#'
 #' @export
-SpecialSet <- R6::R6Class("SpecialSet", inherit = Set)
+NULL
+SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
 SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
-                                              upper = Inf, type = "()", complement = NULL, ...){
-  if(RSmisc::getR6Class(self, pos = environment()) == "SpecialSet")
-    stop(paste(RSmisc::getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
+                                              upper = Inf, type = "()", ...){
+  if(getR6Class(self, pos = environment()) == "SpecialSet")
+    stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  if(dim!=1){
-    if(!is.null(complement))
-      private$.setSymbol <- paste0(paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim),"/",complement$getSymbol())
-    else
-      private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"^",dim)
-  } else{
-    if(!is.null(complement))
-      private$.setSymbol <- paste0(setSymbol(paste0(RSmisc::getR6Class(self, pos = environment()))),"/",complement$getSymbol())
-    else
-      private$.setSymbol <- setSymbol(paste0(RSmisc::getR6Class(self, pos = environment())))
-  }
+  if(dim!=1)
+      private$.setSymbol <- paste0(setSymbol(paste0(getR6Class(self, pos = environment()))),"^",dim)
+  else
+      private$.setSymbol <- setSymbol(paste0(getR6Class(self, pos = environment())))
+
   private$.lower <- lower
   private$.upper <- upper
   private$.type <- type
   private$.dimension <- dim
   invisible(self)
+})
+SpecialSet$set("private",".class","integer")
+#' @title Empty Set
+#' @description The mathematical empty, or null, set.
+#' @name Empty
+#'
+#' @seealso \code{\link{listSpecialSets}}
+#'
+#' @export
+NULL
+Empty <- R6::R6Class("Empty",inherit = SpecialSet)
+Empty$set("public", "initialize", function(){
+  super$initialize(dim = 1, lower = NULL, upper = NULL, type = "{}")
 })
 
 #' @title Set of Natural Numbers
@@ -46,8 +54,9 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
 Naturals$set("public", "initialize", function(dim = 1, lower = 0){
   super$initialize(dim, lower = lower, type = "[)")
@@ -63,8 +72,9 @@ Naturals$set("public", "initialize", function(dim = 1, lower = 0){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 PosNaturals <- R6::R6Class("PosNaturals",inherit = Naturals)
 PosNaturals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1)
@@ -80,8 +90,9 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
 Integers$set("public", "initialize", function(dim = 1,...){
   super$initialize(dim,...)
@@ -98,8 +109,9 @@ Integers$set("public", "initialize", function(dim = 1,...){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 PosIntegers <- R6::R6Class("PosIntegers",inherit = Integers)
 PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
@@ -119,8 +131,9 @@ PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 NegIntegers <- R6::R6Class("NegIntegers",inherit = Integers)
 NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
@@ -139,13 +152,14 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
 Rationals$set("public", "initialize", function(dim = 1, ...){
   super$initialize(dim,...)
 })
-Rationals$set("private",".macType","numeric")
+Rationals$set("private",".class","numeric")
 
 #' @title Set of Positive Rationals
 #' @description The mathematical set of positive rationals.
@@ -158,8 +172,9 @@ Rationals$set("private",".macType","numeric")
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 PosRationals <- R6::R6Class("PosRationals",inherit = Rationals)
 PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
@@ -179,8 +194,9 @@ PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
 NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
@@ -199,13 +215,14 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
 Reals$set("public", "initialize", function(dim = 1, ...){
   super$initialize(dim, ...)
 })
-Reals$set("private",".macType","numeric")
+Reals$set("private",".class","numeric")
 
 #' @title Set of Positive Reals
 #' @description The mathematical set of positive reals.
@@ -218,8 +235,9 @@ Reals$set("private",".macType","numeric")
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 PosReals <- R6::R6Class("PosReals",inherit = Reals)
 PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
@@ -239,8 +257,9 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 NegReals <- R6::R6Class("NegReals",inherit = Reals)
 NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
@@ -259,8 +278,9 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
 ExtendedReals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
@@ -276,10 +296,11 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
-NULL
+#'
 #' @export
+NULL
 Complex <- R6::R6Class("Complex",inherit = SpecialSet)
 Complex$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
 })
-Complex$set("private",".macType","complex")
+Complex$set("private",".class","complex")

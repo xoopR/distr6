@@ -4,7 +4,7 @@
 \alias{liesInDistrDomain}
 \title{Test if Data Lies in Distribution Domain}
 \usage{
-liesInDistrDomain(object, x, all = TRUE)
+liesInDistrDomain(object, x, all = TRUE, bound = FALSE)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -12,6 +12,8 @@ liesInDistrDomain(object, x, all = TRUE)
 \item{x}{vector of numerics to test.}
 
 \item{all}{logical, see details.}
+
+\item{bound}{logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.}
 }
 \description{
 Tests if the given data lies in the domain of the Distribution, either tests if all
@@ -23,7 +25,7 @@ lies in the domain. If \code{all} is \code{FALSE} then returns a vector of logic
 in the vector \code{x}.
 }
 \section{R6 Usage}{
- $liesInDistrDomain(x, all = TRUE)
+ $liesInDistrDomain(x, all = TRUE, bound = FALSE)
 }
 
 \seealso{

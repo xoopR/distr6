@@ -68,7 +68,7 @@ skewType <- function(skew){
 #' @param fun function to calculate the p-norm of.
 #' @param p the pth norm to calculate
 #' @param lower lower bound for the integral
-#' @param upper upper bounde for the integral
+#' @param upper upper bound for the integral
 #'
 #' @examples
 #' generalPNorm(Exponential$new()$pdf,2,0,10)

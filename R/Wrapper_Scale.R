@@ -11,7 +11,7 @@
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{distribution} \tab distribution \tab Distribution to scale. \cr
 #' \code{mean} \tab numeric \tab Desired mean after distribution shift. \cr
-#' \code{sd} \tab numeritc \tab Desired standard deviation after distribution scale.
+#' \code{sd} \tab numeric \tab Desired standard deviation after distribution scale.
 #' }
 #'
 #' @section Getters:
@@ -29,13 +29,13 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' Scale$new(Binomial$new())
+#' }
 #'
 #' @seealso See \code{\link{DistributionWrapper}} for inherited wrapper methods and see \code{\link{Distribution}}
 #' for a full list of inherited distribution methods.
-NULL
 
-#' @export
 Scale <- R6::R6Class("Scale", inherit = DistributionWrapper, lock_objects = FALSE)
 Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
   assertDistribution(dist)

@@ -50,7 +50,7 @@ value of non-settable functions.
   \code{print()} \tab Print ParameterSet as data.frame. \cr
   \code{update()} \tab Updates unsettable parameters with supplied update functions. \cr
   \code{parameters(id, error = "warn")} \tab If id given, returns specific parameter. Otherwise returns self. \cr
-  \code{getParameterValue(id, error = "warn")} \tab Returns value of parameter matching gven 'id'. \cr
+  \code{getParameterValue(id, error = "warn")} \tab Returns value of parameter matching given 'id'. \cr
   \code{setParameterValue(lst, error = "warn")} \tab Set parameters in list names with respective values. See Details. \cr
   \code{rbind()} \tab Combine the rows of multiple ParameterSets. \cr
   \code{as.data.table()} \tab Coerces ParameterSet to data.frame.
@@ -59,7 +59,7 @@ value of non-settable functions.
 
 \section{Public Method Details}{
 
-Argument 'error' is passed to \code{\link[RSmisc]{stopwarn}} to determine if the code should break or if a
+Argument 'error' is passed to \code{stopwarn} to determine if the code should break or if a
 warning should be returned when an error occurs.
 
 \code{setParameterValue} takes a named list where the list names, \code{names(lst)}, should match

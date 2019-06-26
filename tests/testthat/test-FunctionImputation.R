@@ -19,7 +19,7 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     symmetric=TRUE, type = PosReals$new(zero=T),
                                     distrDomain=PosReals$new(),
                                     pdf = dexpo,
-                                    parameters = ps,
+                                    parameters = ps
 )
 
 test_that("r/d/p/q null",{

@@ -12,7 +12,7 @@ where \eqn{0 < theta < 1} is the theta parameter.
 \details{
 The distribution is implemented by interfacing the extraDistr package, the documentation for
 the extraDistr distribution can be found here, \code{\link[extraDistr]{LogSeries}}. Entropy
-is omitted as no closed-form expression could be found, decorate with CoreStatstics for a
+is omitted as no closed-form expression could be found, decorate with CoreStatistics for a
 numeric results.
 }
 \section{Constructor}{
@@ -74,6 +74,7 @@ theta = 0.5.
   \code{rand(n)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
   \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
@@ -103,7 +104,7 @@ theta = 0.5.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+  \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr

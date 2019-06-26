@@ -35,7 +35,7 @@ online resources and textbooks.
 \section{Constructor Details}{
  The Normal distribution can either be parameterised with variance,
 standard deviation or precision. If none are provided then var parameterisation is used with var = 1.
-If multiple are provided then parameterisatin takes the hierarchy: var, sd, prec.
+If multiple are provided then parameterisation takes the hierarchy: var, sd, prec.
 sd is defined by
 \deqn{sd = var^2}
 prec is defined by
@@ -82,6 +82,7 @@ prec is defined by
   \code{rand(n)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
   \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
@@ -111,7 +112,7 @@ prec is defined by
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
+  \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr

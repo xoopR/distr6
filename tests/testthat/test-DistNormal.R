@@ -27,8 +27,8 @@ test_that("constructor",{
   expect_equal(Normal$new(var = 2, sd = 3)$getParameterValue("sd"), 3)
   expect_equal(Normal$new(var = 2, prec = 3)$getParameterValue("var"), 1/3)
   expect_equal(Normal$new()$getParameterValue("var"), 1)
-  expect_equal(Normal$new(sd = 1, prec = 2)$getParameterValue("sd"), 1)
-  expect_equal(Normal$new(sd = 3, prec = 2)$getParameterValue("prec"), 1/9)
+  expect_equal(Normal$new(sd = 1, prec = 2)$getParameterValue("sd"), sqrt(1/2))
+  expect_equal(Normal$new(sd = 3, prec = 2)$getParameterValue("prec"), 2)
 })
 
 test_that("properties & traits",{

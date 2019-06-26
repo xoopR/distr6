@@ -18,17 +18,19 @@
 #' and the cdf, F_M is given by
 #' \deqn{F_M = sum_i (F_i)(w_i)}
 #'
-#' If weights are given, they should be provided as a vector of numerics summing to one. If NULL,
-#' they are taken to be uniform, i.e. for n distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
+#' If weights are given, they should be provided as a vector of numerics. If they don't sum to one
+#' then they are normalised automatically. If NULL, they are taken to be uniform, i.e. for n
+#' distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
 #'
 #'
-#' @section Public Methods:
-#' See \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#' @inheritSection DistributionWrapper Public Variables
+#' @inheritSection DistributionWrapper Public Methods
 #'
 #' @seealso \code{\link{listWrappers}}.
 #'
 #' @examples
-#' mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()))
+#' mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+#'                                    weights = c(0.2,0.8))
 #' mixture$pdf(1)
 #' mixture$cdf(1)
 NULL
@@ -44,9 +46,9 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
     weights = rep(1/length(distlist), length(distlist))
   else{
     checkmate::assert(length(weights)==length(distlist))
-    checkmate::assert(sum(weights)==1)
   }
 
+  weights <- weights/sum(weights)
   private$.weights <- weights
 
   pdf <- function(x1,...) {
@@ -65,15 +67,22 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
   }
   formals(cdf)$self <- self
 
+  rand <- function(n){
+    x = as.data.frame(table(sample(1:length(self$wrappedModels()), n, TRUE, private$.weights)), stringsAsFactors = F)
+    return(unlist(apply(x,1,function(y) self$wrappedModels()[[as.numeric(y[[1]])]]$rand(as.numeric(y[[2]])))))
+  }
+  formals(rand)$self <- self
+
   name = paste("Mixture of",paste(distnames, collapse = "_"))
   short_name = paste0("Mix_",paste(distnames, collapse = "_"))
+
+  type =
 
   description =  paste0("Mixture of: ",paste0(1:length(distlist),") ",lapply(distlist, function(x) x$description),
                                             collapse = " And "), " - With weights: (",
                        paste0(weights, collapse=", "), ")")
 
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
                    short_name = short_name, description = description)
 }) # IN PROGRESS
-
 MixtureDistribution$set("private",".weights",numeric(0))
