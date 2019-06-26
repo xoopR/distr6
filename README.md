@@ -1,7 +1,7 @@
 # distr6 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![Travis Build Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](https://travis-ci.com/alan-turing-institute/distr6)
-[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/o68k5t4tn4wojj2f?svg=true)](https://ci.appveyor.com/project/alan-turing-institute/distr6)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/mrexqbmrtrx865jf/branch/master?svg=true)](https://ci.appveyor.com/project/RaphaelS1/distr6-xsr0j/branch/master)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 [![CRAN Version](http://www.r-pkg.org/badges/version/distr6)](http://www.r-pkg.org/badges/version/distr6)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
