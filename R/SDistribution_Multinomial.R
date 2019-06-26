@@ -100,7 +100,11 @@ Multinomial$set("public", "pgf", function(z){
 }) # TEST
 
 Multinomial$set("public","setParameterValue",function(lst, error = "warn"){
-  if("probs" %in% names(lst)) lst$probs <- lst$probs/sum(lst$probs)
+  if("probs" %in% names(lst)){
+    checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
+                      .var.name = "Number of categories cannot be changed after construction.")
+    lst$probs <- lst$probs/sum(lst$probs)
+    }
   super$setParameterValue(lst, error)
 })
 
@@ -116,18 +120,26 @@ Multinomial$set("public","initialize",function(size, probs, decorators = NULL, v
   private$.parameters <- getParameterSet(self, size, probs, verbose)
   self$setParameterValue(list(size = size, probs = probs))
 
-  pdf <- function(x1){
-    if(length(x1) != self$getParameterValue("K"))
-      stop(paste("x1 should be of length",self$getParameterValue("K")))
+  lst <- rep(list(bquote()), length(probs))
+  names(lst) <- paste("x",1:length(probs),sep="")
 
+  pdf <- function(){
 
-    if(sum(x1) != self$getParameterValue("size"))
-      return(0)
+    x = do.call(cbind,mget(paste0("x",1:self$getParameterValue("K"))))
+    z = apply(x, 1, function(y){
+      if(sum(y) != self$getParameterValue("size"))
+        return(0)
+      else
+        return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")))
+    })
 
-    return(dmultinom(x1, self$getParameterValue("size"), self$getParameterValue("probs")))
+    return(z)
+
   }
+  formals(pdf) <- lst
+
   rand <- function(n){
-    rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs"))
+    return(data.table::data.table(t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs")))))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,

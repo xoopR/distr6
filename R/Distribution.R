@@ -81,10 +81,10 @@
 #'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{p/d/q/r Methods} \tab \strong{Link} \cr
-#'   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n)} \tab \code{\link{rand}} \cr
+#'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+#'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Parameter Methods} \tab \strong{Link} \cr
 #'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
@@ -659,12 +659,13 @@ Distribution$set("public","setParameterValue",function(lst, error = "warn"){
 #' @description Returns the probability density/mass function for continuous/discrete (or mixture)
 #' distributions evaluated at a given point.
 #'
-#' @usage pdf(object, x1, ..., log = FALSE)
-#' @section R6 Usage: $pdf(x1, ..., log = FALSE)
+#' @usage pdf(object, x1, ..., log = FALSE, simplify = TRUE)
+#' @section R6 Usage: $pdf(x1, ..., log = FALSE, simplify = TRUE)
 #' @param object Distribution.
 #' @param x1 vector of numerics to evaluate function at.
 #' @param ... additional arguments.
 #' @param log logical; if TRUE, probabilities p are given as log(p).
+#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
 #'
 #' @details
 #'  For discrete distributions the probability mass function (pmf) is returned, defined as
@@ -686,7 +687,7 @@ Distribution$set("public","setParameterValue",function(lst, error = "warn"){
 #'
 #' @export
 NULL
-Distribution$set("public","pdf",function(x1, ..., log = FALSE){
+Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 
   if(!private$.isPdf)
     return(NULL)
@@ -700,8 +701,19 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
     else pdf = private$.pdf(x1, ...)
   }
 
-  if(log) return(log(pdf))
-  else return(pdf)
+  if(log) pdf <- log(pdf)
+
+  if(inherits(pdf,"data.table"))
+    return(pdf)
+  else{
+    if(simplify)
+      return(pdf)
+    else{
+      pdf = data.table::data.table(pdf)
+      colnames(pdf) = self$short_name
+      return(pdf)
+    }
+  }
 })
 #-------------------------------------------------------------
 # Public Methods - cdf
@@ -711,13 +723,14 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
 #' @description Returns the cumulative distribution function for a distribution evaluated at a given
 #' point.
 #'
-#' @usage cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE)
-#' @section R6 Usage: $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)
+#' @usage cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
+#' @section R6 Usage: $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 #' @param object Distribution.
 #' @param x1 vector of numerics to evaluate function at.
 #' @param ... additional arguments.
 #' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
 #' @param log.p logical; if TRUE, probabilities p are given as log(p).
+#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
 #'
 #' @details
 #'  The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
@@ -738,7 +751,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE){
 #'
 #' @export
 NULL
-Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE){
+Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
 
   if(!private$.isCdf)
     return(NULL)
@@ -753,10 +766,25 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     else cdf = private$.cdf(x1, ...)
   }
 
-  if(log.p & lower.tail) return(log(cdf))
-  else if(log.p & !lower.tail) return(log(1 - cdf))
-  else if(!log.p & lower.tail) return(cdf)
-  else return(1 - cdf)
+  if(log.p & lower.tail) cdf = log(cdf)
+  else if(log.p & !lower.tail) cdf = log(1 - cdf)
+  else if(!log.p & lower.tail) cdf = cdf
+  else cdf = 1 - cdf
+
+  if(inherits(cdf,"data.table"))
+    return(cdf)
+  else{
+    if(simplify)
+      return(cdf)
+    else{
+      cdf = data.table::data.table(cdf)
+      colnames(cdf) = self$short_name
+      return(cdf)
+    }
+  }
+
+
+
 }) # NEEDS TESTING
 #-------------------------------------------------------------
 # Public Methods - quantile
@@ -766,12 +794,13 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' evaluated at a given point between 0 and 1.
 #'
 #' @importFrom stats quantile
-#' @section R6 Usage: $quantile(p, ..., lower.tail = TRUE, log.p = FALSE)
+#' @section R6 Usage: $quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 #' @param x Distribution.
 #' @param p vector of probabilities to evaluate function at.
 #' @param ... additional arguments.
 #' @param lower.tail logical; if TRUE, probabilities p are given as log(p).
 #' @param log.p ignored, retained for consistency.
+#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
 #'
 #' @details
 #'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
@@ -791,8 +820,8 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
-quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE) {}
-Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
+quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE) {}
+Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p, simplify = TRUE){
 
   if(!private$.isQuantile)
     return(NULL)
@@ -800,7 +829,6 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
   if(!lower.tail)
     p = 1 - p
 
-  #return(unlist(sapply(p, function(p0) private$.quantile(p0,...))))
   quantile = p
   quantile[p > 1] = NaN
   quantile[p < 0] = NaN
@@ -809,7 +837,19 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
   if(sum(p > 0 & p < 1)!=0)
     quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
 
-  return(quantile)
+  if(inherits(quantile,"data.table"))
+    return(quantile)
+  else{
+    if(simplify)
+      return(quantile)
+    else{
+      quantile = data.table::data.table(quantile)
+      colnames(quantile) = self$short_name
+      return(quantile)
+    }
+  }
+
+
 
 }) # NEEDS TESTING
 #-------------------------------------------------------------
@@ -819,10 +859,11 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
 #' @title Random Simulation Function
 #' @description Returns a given number of points sampled from the distribution.
 #'
-#' @usage rand(object, n)
-#' @section R6 Usage: $rand(n)
+#' @usage rand(object, n, simplify = TRUE)
+#' @section R6 Usage: $rand(n, simplify = TRUE)
 #' @param object Distribution.
 #' @param n number of observations. If length(n) > 1, the length is taken to be the number required.
+#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
 #'
 #' @details
 #' If available a rand will be returned without warning using an analytic expression. Otherwise,
@@ -838,7 +879,7 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p){
 #'
 #' @export
 NULL
-Distribution$set("public","rand",function(n){
+Distribution$set("public","rand",function(n, simplify = TRUE){
 
   if(!private$.isRand)
     return(NULL)
@@ -846,7 +887,19 @@ Distribution$set("public","rand",function(n){
   if(length(n) > 1)
     n = length(n)
 
-  return(private$.rand(n))
+  rand = private$.rand(n)
+  if(inherits(rand,"data.table"))
+    return(rand)
+  else{
+    if(simplify)
+      return(rand)
+    else{
+      rand = data.table::data.table(rand)
+      colnames(rand) = self$short_name
+      return(rand)
+    }
+  }
+
 })
 
 #-------------------------------------------------------------

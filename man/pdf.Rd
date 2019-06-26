@@ -4,7 +4,7 @@
 \alias{pdf}
 \title{Probability Density/Mass Function}
 \usage{
-pdf(object, x1, ..., log = FALSE)
+pdf(object, x1, ..., log = FALSE, simplify = TRUE)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -14,6 +14,8 @@ pdf(object, x1, ..., log = FALSE)
 \item{...}{additional arguments.}
 
 \item{log}{logical; if TRUE, probabilities p are given as log(p).}
+
+\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
 }
 \description{
 Returns the probability density/mass function for continuous/discrete (or mixture)
@@ -35,7 +37,7 @@ Additional named arguments can be passed, which are required for composite distr
 \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 }
 \section{R6 Usage}{
- $pdf(x1, ..., log = FALSE)
+ $pdf(x1, ..., log = FALSE, simplify = TRUE)
 }
 
 \seealso{

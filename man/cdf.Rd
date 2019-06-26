@@ -4,7 +4,7 @@
 \alias{cdf}
 \title{Cumulative Distribution Function}
 \usage{
-cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE)
+cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -16,6 +16,8 @@ cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE)
 \item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.}
 
 \item{log.p}{logical; if TRUE, probabilities p are given as log(p).}
+
+\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
 }
 \description{
 Returns the cumulative distribution function for a distribution evaluated at a given
@@ -36,7 +38,7 @@ Additional named arguments can be passed, which are required for composite distr
 \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 }
 \section{R6 Usage}{
- $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)
+ $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 }
 
 \seealso{

@@ -47,8 +47,12 @@ test_that("statistics",{
   expect_equal(mn$pgf(1:3), sum((1:3)*probs)^3)
   expect_equal(mn$cf(1:3), sum(exp((1:3) * 1i)*probs)^3)
   expect_error(mn$mode())
-  expect_equal(mn$pdf(c(1,5,7)), 0)
+  expect_equal(mn$pdf(1,5,7), 0)
   expect_error(mn$pdf(c(1,7)))
-  expect_equal(mn$pdf(c(1,1,1)), dmultinom(x = c(1,1,1), prob = probs))
+  expect_equal(mn$pdf(1,1,1), dmultinom(x = c(1,1,1), prob = probs))
+  expect_equal(Multinomial$new(probs=c(1,4),size=5)$pdf(c(1,2,0),c(4,3,5)),
+               c(dmultinom(x = c(1,4), prob = c(1,4)),
+                 dmultinom(x = c(2,3), prob = c(1,4)),
+                 dmultinom(x = c(0,5), prob = c(1,4))))
   expect_silent(mn$rand(10))
 })
