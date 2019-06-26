@@ -42,7 +42,6 @@ Decorator objects add functionality to the given Distribution object
 \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
 \code{var()} \tab Variance \tab \code{\link{var}} \cr
-\code{cov()} \tab Covariance \tab \code{\link{cov}} \cr
 \code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
 }
 }

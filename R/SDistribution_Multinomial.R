@@ -57,15 +57,12 @@ Multinomial$set("public","mean",function(){
   return(self$getParameterValue("size") * self$getParameterValue("probs"))
 }) # TEST
 Multinomial$set("public","var",function(){
-  return(self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs")))
-}) # TEST
-Multinomial$set("public","cov",function(){
   cov = self$getParameterValue("probs") %*% t(self$getParameterValue("probs")) * -self$getParameterValue("size")
-  diag(cov) = self$var()
+  diag(cov) = self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
   return(cov)
-}) # TEST
+})
 Multinomial$set("public","cor",function(){
-  return(self$cov() / (sqrt(self$var() %*% t(self$var()))))
+  return(self$var() / (sqrt(diag(self$var()) %*% t(diag(self$var())))))
 }) # TEST
 Multinomial$set("public","skewness",function(){
   return(NaN)

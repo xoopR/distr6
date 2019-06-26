@@ -44,7 +44,6 @@ test_that("check core statistics", {
   expect_silent(continuousTester$iqr())
   expect_equal(continuousTester$kthmoment(0), 1)
   expect_equal(continuousTester$kthmoment(1), 0)
-  expect_equal(continuousTester$cov(),continuousTester$var())
   expect_equal(continuousTester$kthmoment(2), continuousTester$var())
   expect_equal(continuousTester$kthmoment(3, type = "standard"), continuousTester$skewness())
   expect_equal(continuousTester$kthmoment(4, type = "standard"), continuousTester$kurtosis(FALSE))

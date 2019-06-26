@@ -30,17 +30,17 @@ test_that("properties & traits",{
 test_that("statistics",{
   expect_equal(mvn$mean(), c(1,7,3))
   expect_equal(mvn$mode(), c(1,7,3))
-  expect_equal(mvn$var(), c(1,1,1))
-  expect_equal(mvn$cor(), mvn$cov())
+  expect_equal(diag(mvn$var()), c(1,1,1))
+  expect_equal(mvn$cor(), mvn$var())
 
   expect_error(mvn$skewness())
   expect_error(mvn$kurtosis())
   expect_error(mvn$pgf(1:3))
 
-  expect_equal(mvn$entropy(), 0.5*log(det(2*pi*(exp(1)*mvn$cov())),2))
-  expect_equal(mvn$mgf(1:3), exp(matrix(c(1,7,3),nrow=1)%*%matrix(1:3,ncol=1) + (0.5 * matrix(1:3,nrow=1)%*%mvn$cov()%*%matrix(1:3,ncol=1))))
+  expect_equal(mvn$entropy(), 0.5*log(det(2*pi*(exp(1)*mvn$var())),2))
+  expect_equal(mvn$mgf(1:3), exp(matrix(c(1,7,3),nrow=1)%*%matrix(1:3,ncol=1) + (0.5 * matrix(1:3,nrow=1)%*%mvn$var()%*%matrix(1:3,ncol=1))))
   expect_error(mvn$mgf(1))
-  expect_equal(mvn$cf(1:3), exp(1i * matrix(c(1,7,3),nrow=1)%*%matrix(1:3,ncol=1) + (0.5 * matrix(1:3,nrow=1)%*%mvn$cov()%*%matrix(1:3,ncol=1))))
+  expect_equal(mvn$cf(1:3), exp(1i * matrix(c(1,7,3),nrow=1)%*%matrix(1:3,ncol=1) + (0.5 * matrix(1:3,nrow=1)%*%mvn$var()%*%matrix(1:3,ncol=1))))
   expect_error(mvn$cf(1))
 
 
