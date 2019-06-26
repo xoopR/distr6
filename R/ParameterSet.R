@@ -49,7 +49,7 @@
 #' }
 #'
 #' @section Public Method Details:
-#' Argument 'error' is passed to \code{\link[RSmisc]{stopwarn}} to determine if the code should break or if a
+#' Argument 'error' is passed to \code{stopwarn} to determine if the code should break or if a
 #' warning should be returned when an error occurs.
 #'
 #' \code{setParameterValue} takes a named list where the list names, \code{names(lst)}, should match
