@@ -56,7 +56,6 @@ reference:
       - cdfPNorm
       - cf
       - cor
-      - cov
       - cumHazard
       - entropy
       - genExp
@@ -71,6 +70,7 @@ reference:
       - pdf
       - pdfPNorm
       - pgf
+      - prec
       - quantile.Distribution
       - rand
       - sd
@@ -80,6 +80,7 @@ reference:
       - survival
       - survivalAntiDeriv
       - survivalPNorm
+      - var
   - title: "Distribution Accessors"
     desc: "Accessor methods for Distribution objects."
     contents: 
@@ -92,12 +93,14 @@ reference:
       - kurtosisType
       - parameters
       - properties
+      - strprint
       - summary.Distribution
       - sup
       - support
       - symmetry
       - type
       - valueSupport
+      - variateForm
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
@@ -111,6 +114,7 @@ reference:
     desc: "Functionality for composite modelling including joint and conditional distributions."
     contents:
       - DistributionWrapper
+      - wrappedModels
       - ArrayDistribution
       - ProductDistribution
       - HuberizedDistribution
@@ -119,12 +123,15 @@ reference:
       - truncate
       - MixtureDistribution
       - Scale
+      - VectorDistribution
   - title: "Univariate Discrete Distributions"
     contents:
       - Bernoulli
       - Binomial
-      - Discrete Uniform
+      - Categorical
+      - DiscreteUniform
       - Geometric
+      - Hypergeometric
       - Logarithmic
       - Poisson
   - title: "Univariate Continuous Distributions"
@@ -136,6 +143,7 @@ reference:
       - Degenerate
       - Exponential
       - FDistribution
+      - Gamma
       - Gompertz
       - Laplace
       - Logistic
@@ -148,7 +156,8 @@ reference:
       - Weibull
   - title: "Multivariate Discrete Distributions"
     contents:
-      - Multinomial    
+      - Multinomial
+      - MultivariateNormal
   - title: "Kernels"
     contents:
       - Cosine
@@ -173,6 +182,7 @@ reference:
       - Interval
       - Set
       - SpecialSet
+      - Empty
       - Naturals
       - Integers
       - Rationals
