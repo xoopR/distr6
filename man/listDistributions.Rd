@@ -4,21 +4,21 @@
 \alias{listDistributions}
 \title{Lists Implemented R6 Distributions}
 \usage{
-listDistributions(simplify = FALSE, traits = NULL, view = FALSE)
+listDistributions(simplify = FALSE, filter = NULL, view = FALSE)
 }
 \arguments{
 \item{simplify}{logical.}
 
-\item{traits}{list of traits to filter distributions by.}
+\item{filter}{list to filter distributions by.}
 
 \item{view}{logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.}
 }
 \description{
-Lists R6 distributions, either all in a data.table or filtered by chosen
-traits and/or properties.
+Lists R6 distributions in a data.table or a chaarcter vector, can be filtered by
+traits and implemented package.
 }
 \examples{
 listDistributions()
-listDistributions(traits = list(VariateForm = "univariate"))
-listDistributions(traits = list(ValueSupport = "discrete"))
+listDistributions(filter = list(VariateForm = "univariate"))
+listDistributions(filter = list(ValueSupport = "discrete"))
 }
