@@ -119,10 +119,29 @@ vector that can be printed via \code{matrix(cov, nrow = K, byrow = FALSE)}.
 }
 
 \examples{
-MultivariateNormal$new(mean = c(0,0,0),
-cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+# Different parameterisations
+MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1)) # Equivalently
+MultivariateNormal$new(mean = c(0,0,0), prec = c(3,-1,-1,-1,1,0,-1,0,1))
 
-MultivariateNormal$new(mean = c(0,0,0),
-cov = c(3,-1,-1,-1,1,0,-1,0,1))
+x <- MultivariateNormal$new() # Default is bivariate standard normal
+
+# Update parameters
+x$setParameterValue(list(mean = c(1, 2)))
+x$setParameterValue(list(prec = c(1,0,0,1))) # When any parameter is updated, all others are too!
+x$parameters()
+
+# p/d/q/r
+# Note the difference from R stats
+x$pdf(1, 2)
+# This allows vectorisation:
+x$pdf(1:3, 2:4)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
 
 }

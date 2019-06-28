@@ -127,3 +127,32 @@ and \eqn{sd}, \eqn{prec} defined analogously.
   }
 }
 
+\examples{
+# Many parameterisations are possible
+Lognormal$new(var = 2, mean = 1)
+Lognormal$new(meanlog = 2, preclog = 5)
+Lognormal$new(meanlog = 4, sd = 2) # Note parameters must be on same scale (log or natural)
+
+x <- Lognormal$new(verbose = TRUE) # meanlog = 0, sdlog = 1 default
+
+# Update parameters
+x$setParameterValue(list(meanlog = 3)) # When any parameter is updated, all others are too!
+x$parameters()
+
+# But you can only set parameters on the same scale, the below has no effect
+x$setParameterValue(list(sd = 3))
+x$setParameterValue(list(sdlog = 3)) # But this does
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

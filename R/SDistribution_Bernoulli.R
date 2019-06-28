@@ -34,6 +34,29 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' # Can be parameterised with probability of success or failure
+#' Bernoulli$new(prob = 0.2)
+#' Bernoulli$new(qprob = 0.3)
+#'
+#' x = Bernoulli$new(verbose = TRUE) # Default is with prob = 0.5
+#'
+#' # Update parameters
+#' x$setParameterValue(list(qprob = 0.3)) # Can update any parameter
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------

@@ -78,7 +78,10 @@ product <- function(...){
 #' @seealso \code{\link{product}} for the cartesian product of two or more intervals/sets.
 #' @export
 union <- function(..., dim = 1){
-  operation("\u222A",...,dim=dim)
+  if(length(unique(unlist(lapply(list(...),function(y) y$getSymbol())))) != 1)
+    operation("\u222A",...,dim=dim)
+  else
+    return(list(...)[[1]])
 }
 
 #' @title Symbolic Complement for SetInterval

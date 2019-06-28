@@ -116,8 +116,22 @@ list should equal the number of elements. The probability vector is automaticall
 }
 
 \examples{
+# Note probabilities are automatically normalised
 x = Categorical$new("Bapple","Banana",2,probs=c(0.2,0.4,1))
+
+# Only the probabilities can be changed and must the same length as in construction
+x$setParameterValue(list(probs = c(0.1,0.2,0.7)))
+
+# p/d/q/r
 x$pdf(c("Bapple", "Carrot", 1, 2))
+x$cdf("Banana") # Assumes ordered in construction
 x$rand(10)
+
+# Statistics
+x$mode()
+
+summary(x)
+
+
 
 }

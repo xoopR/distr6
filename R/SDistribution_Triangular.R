@@ -40,6 +40,33 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
+#' Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
+#' Triangular$new(lower = 2, upper = 5, mode = 4)
+#'
+#' # You can view the type of Triangular distribution with \code{description}
+#' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
+#' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
+#'
+#' x = Triangular$new(lower = -1, upper = 1)
+#'
+#' # Update parameters
+#' x$setParameterValue(list(lower = 2, upper = 7))
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------

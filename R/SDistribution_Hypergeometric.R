@@ -31,6 +31,28 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' Hypergeometric$new(size = 10, successes = 7, draws = 5)
+#' Hypergeometric$new(size = 10, failures = 3, draws = 5)
+#'
+#' x = Hypergeometric$new(verbose = TRUE) # Default is size = 50, successes = 5, draws = 10
+#'
+#' # Update parameters
+#' x$setParameterValue(list(failures = 10)) # When any parameter is updated, all others are too!
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------

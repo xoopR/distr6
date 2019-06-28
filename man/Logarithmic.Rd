@@ -111,3 +111,23 @@ theta = 0.5.
   }
 }
 
+\examples{
+x = Logarithmic$new(theta = 0.2)
+
+# Update parameters
+x$setParameterValue(list(theta = 0.3))
+x$parameters()
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

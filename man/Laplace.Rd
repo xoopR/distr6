@@ -112,3 +112,26 @@ scale or variance. The default parameterisation is with mean 0 and scale 1.
   }
 }
 
+\examples{
+Laplace$new(scale = 2)
+Laplace$new(var = 4)
+
+x = Laplace$new(verbose = TRUE) # Default is mean = 0, scale = 1
+
+# Update parameters
+x$setParameterValue(list(var = 2)) # When any parameter is updated, all others are too!
+x$parameters()
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

@@ -108,3 +108,23 @@ default is 0.
   }
 }
 
+\examples{
+x = Degenerate$new(mean = 4)
+
+# Update parameters
+x$setParameterValue(list(mean = 2.56))
+x$parameters()
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

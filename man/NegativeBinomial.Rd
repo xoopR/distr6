@@ -130,3 +130,36 @@ An unrecognised \code{form} defaults to "fbs". Use \code{$description} to see th
   }
 }
 
+\examples{
+# Different parameterisations
+NegativeBinomial$new(size = 5, prob = 0.2)
+NegativeBinomial$new(size = 5, qprob = 0.2)
+NegativeBinomial$new(size = 5, mean = 4)
+
+# Different forms of the distribution
+NegativeBinomial$new(form = "fbs")
+NegativeBinomial$new(form = "sbf")
+
+# Use description to see which form is used
+NegativeBinomial$new(form = "tbf")
+NegativeBinomial$new(form = "tbs")
+
+x <- NegativeBinomial$new() # Default is size = 10, prob = 0.5 and failures before successes
+
+# Update parameters (form cannot be updated)
+x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all others are too!
+x$parameters()
+
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+}

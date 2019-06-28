@@ -30,6 +30,25 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' x = Arcsine$new(lower = 2, upper = 5)
+#'
+#' # Update parameters
+#' x$setParameterValue(list(upper = 4, lower = 1))
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------

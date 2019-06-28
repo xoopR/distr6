@@ -31,8 +31,8 @@ in statistics (particularly Bayesian).
 }
 
 \section{Constructor Details}{
- The Gamma distribution can either be parameterised with rate,
-scale or mean. If none are provided then the default is taken to be rate = 1 and shape = 1.
+ The Gamma distribution can either be parameterised with shape and
+rate, scale or mean. If none are provided then the default is taken to be rate = 1 and shape = 1.
 If multiple are provided then parameterisation takes the hierarchy: mean, scale, rate.
 Scale is defined by
 \deqn{scale = rate^-1}
@@ -117,3 +117,27 @@ Mean is defined by
   }
 }
 
+\examples{
+Gamma$new(shape = 1, rate = 2)
+Gamma$new(shape = 1, scale = 4)
+Gamma$new(shape = 1, mean = 0.5)
+
+x = Gamma$new(verbose = TRUE) # Default is shape = 1, rate = 1
+
+# Update parameters
+x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
+x$parameters()
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

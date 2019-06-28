@@ -359,9 +359,10 @@ Distribution$set("public","summary",function(full = TRUE,...){
   if(full){
     if(length(private$.parameters)!=0){
       cat(self$name,"with parameterisation:\n")
-      cat("\t",paste(unlist(self$parameters()$as.data.table()[which_params, "id"]),
-                     unlist(self$parameters()$as.data.table()[which_params,"value"]),
-                     sep = " = ", collapse = "; "))
+      settable = self$parameters()$as.data.table()$settable
+      cat("\t", paste(self$parameters()$as.data.table()[settable, "id"],
+                      self$parameters()$as.data.table()[settable, "value"],
+                      sep = " = ", collapse = ", "))
     } else
       cat(self$name(),"\n")
     cat("\n\n Quick Statistics: \n")
@@ -377,10 +378,30 @@ Distribution$set("public","summary",function(full = TRUE,...){
     if(!inherits(a_kurt,"try-error")) cat("\tExcess Kurtosis")
     cat("\n")
 
-    if(!inherits(a_exp,"try-error")) cat("\t", a_exp, sep = "")
-    if(!inherits(a_var,"try-error")) cat("\t", a_var, sep = "")
-    if(!inherits(a_skew,"try-error")) cat("\t\t", a_skew, sep = "")
-    if(!inherits(a_kurt,"try-error")) cat("\t\t", a_kurt, sep = "")
+    if(!inherits(a_exp,"try-error")){
+      if(length(a_exp) > 1)
+        cat("\t", paste0(a_exp, collapse = ", "), sep = "")
+      else
+        cat("\t", a_exp, sep = "")
+    }
+    if(!inherits(a_var,"try-error")){
+      if(length(a_var) > 1)
+        cat("\t", paste0(a_var, collapse = ", "), sep = "")
+      else
+        cat("\t", a_var, sep = "")
+    }
+    if(!inherits(a_skew,"try-error")){
+      if(length(a_skew) > 1)
+        cat("\t\t", paste0(a_skew, collapse = ", "), sep = "")
+      else
+        cat("\t\t", a_skew, sep = "")
+    }
+    if(!inherits(a_kurt,"try-error")){
+      if(length(a_kurt) > 1)
+        cat("\t\t", paste0(a_kurt, collapse = ", "), sep = "")
+      else
+        cat("\t\t", a_kurt, sep = "")
+    }
     cat("\n\n")
 
     cat(" Support:",self$support()$getSymbol(), "\t Scientific Type:",self$type()$getSymbol(),"\n")

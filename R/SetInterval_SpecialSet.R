@@ -61,6 +61,7 @@ Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
 Naturals$set("public", "initialize", function(dim = 1, lower = 0){
   super$initialize(dim, lower = lower, type = "[)")
 })
+Naturals$set("private",".class","integer")
 
 #' @title Set of Positive Natural Numbers
 #' @description The mathematical set of positive natural numbers.
@@ -97,6 +98,7 @@ Integers <- R6::R6Class("Integers",inherit = SpecialSet)
 Integers$set("public", "initialize", function(dim = 1,...){
   super$initialize(dim,...)
 })
+Integers$set("private",".class","integer")
 
 #' @title Set of Positive Integers
 #' @description The mathematical set of positive integers.

@@ -8,7 +8,7 @@
 #' with size and probabilities and defined by the pmf,
 #' \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
 #' where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{K} categories and
-#' \eqn{n = 1,2,\ldots} is the number of trials.
+#' \eqn{n = 1,2,\ldots} is the number of trials. The distribution is supported on \eqn{\sum x_i = N}.
 #'
 #' @details The multinomial is constructed with a size and probs parameter. Size, number of trials,
 #' should not be confused with the \code{K} parameter for number of categories. \code{K} is determined
@@ -38,6 +38,29 @@
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
+#'
+#' @examples
+#' x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
+#'
+#' # Update parameters
+#' x$setParameterValue(list(size = 10))
+#' # Number of categories cannot be changed after construction
+#' x$setParameterValue(list(probs = c(1,2,3)))
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' # Note the difference from R stats
+#' x$pdf(4, 4, 2)
+#' # This allows vectorisation:
+#' x$pdf(c(1,4),c(2,4),c(7,2))
+#'
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
 #'
 #' @export
 NULL

@@ -34,6 +34,28 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' Exponential$new(rate = 4)
+#' Exponential$new(scale = 3)
+#'
+#' x = Exponential$new(verbose = TRUE) # Default is rate = 1
+#'
+#' # Update parameters
+#' x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------
