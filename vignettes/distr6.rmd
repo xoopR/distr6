@@ -10,7 +10,7 @@ vignette: >
 ### Description
 
 distr6 is an object oriented (OO) interface, primarily used for interacting with probability distributions in R. Additionally distr6 includes functionality for composite distributions,
-a symbolic representation for mathematical sets and intervals, basic methods for common kernels and numeric methods for distribution analysis. distr6 is the official R6 upgrade to the distrXXX family of packages.
+a symbolic representation for mathematical sets and intervals, basic methods for common kernels and numeric methods for distribution analysis. distr6 is the official R6 upgrade to the distr family of packages.
 
 ### Main Features
 
@@ -162,12 +162,12 @@ N %>% print()
 
 N$pdf(2)
 pdf(N, 2)
-N %>% 2
+N %>% pdf(2)
 ```
 
 ### Authors
 
-Authors:
+distr6 Authors:
 
 * Raphael Sonabend [raphael.sonabend.15@ucl.ac.uk](raphael.sonabend.15@ucl.ac.uk) (Maintainer) (0000-0001-9225-4654)
 * Franz Kiraly [f.kiraly@ucl.ac.uk](f.kiraly@ucl.ac.uk)
