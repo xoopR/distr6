@@ -31,7 +31,7 @@ To learn more about distr6, start with the distr6 vignette:
 
 And for more advanced usage see the complete tutorials at
 
-\link{https://alan-turing-institute.github.io/distr6/index.html}
+\href{https://alan-turing-institute.github.io/distr6/index.html}{https://alan-turing-institute.github.io/distr6/index.html}
 }
 \seealso{
 Useful links:
