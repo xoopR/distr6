@@ -69,14 +69,12 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
 
   rand <- function(n){
     x = as.data.frame(table(sample(1:length(self$wrappedModels()), n, TRUE, private$.weights)), stringsAsFactors = F)
-    return(unlist(apply(x,1,function(y) self$wrappedModels()[[as.numeric(y[[1]])]]$rand(as.numeric(y[[2]])))))
+    return(as.numeric(unlist(apply(x,1,function(y) self$wrappedModels()[[as.numeric(y[[1]])]]$rand(as.numeric(y[[2]]))))))
   }
   formals(rand)$self <- self
 
   name = paste("Mixture of",paste(distnames, collapse = "_"))
   short_name = paste0("Mix_",paste(distnames, collapse = "_"))
-
-  type =
 
   description =  paste0("Mixture of: ",paste0(1:length(distlist),") ",lapply(distlist, function(x) x$description),
                                             collapse = " And "), " - With weights: (",
