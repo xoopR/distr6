@@ -154,7 +154,7 @@ reference:
       - Triangular
       - Uniform
       - Weibull
-  - title: "Multivariate Discrete Distributions"
+  - title: "Multivariate Distributions"
     contents:
       - Multinomial
       - MultivariateNormal
