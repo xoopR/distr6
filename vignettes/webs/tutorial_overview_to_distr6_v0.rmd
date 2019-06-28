@@ -1,6 +1,7 @@
 ---
 title: "Overview to distr6 v0"
 output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Overview to distr6 v0}
   %\VignetteEngine{knitr::rmarkdown}

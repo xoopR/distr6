@@ -1,6 +1,7 @@
 ---
 title: "Documentation in R6"
 output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Documentation in R6}
   %\VignetteEngine{knitr::rmarkdown}

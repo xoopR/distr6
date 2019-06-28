@@ -14,108 +14,126 @@ distribution construction, full inheritence and more complex design patterns. Th
 scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found [here](https://alan-turing-institute.github.io/distr6/index.html). In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The [website](https://alan-turing-institute.github.io/distr6/index.html) covers more complex use-cases inlcuding composite distributons and decorators for numeric methods.
 
 
-### Getting Started
+## Getting Started
 
 We think the best place to get started is to pick a probability distribution and work through constructing the distribution via different parameterisations and querying the distribution for different methods. Below is a running example with the Normal distribution.
 
-```{r, echo = FALSE, message=FALSE, warning=FALSE}
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+options(tibble.print_min = 4L, tibble.print_max = 4L)
 remotes::install_github("alan-turing-institute/distr6")
 library("distr6")
-knitr::opts_chunk$set(collapse = TRUE)
+set.seed(42)
 ```
 
-#### Construction and Parameterisation
+### Construction and Parameterisation
+All distributions are constructed using R6 dollar sign notation
+The default Normal distribution is the Standard Normal parameterised with mean and var
 ```{r}
-# All distributions are constructed using R6 dollar sign notation
-# The default Normal distribution is the Standard Normal parameterised with mean and var
 Normal$new()
+```
 
-# But we could also parameterise with standard deviation or precision.
-# Note that whichever we choose is clearly printed.
+But we could also parameterise with standard deviation or precision.
+Note that whichever we choose is clearly printed.
+```{r}
 Normal$new(mean = 2, sd = 2)
 Normal$new(mean = 3, prec = 0.5)
+```
 
-# But all parameters are available to us via the parameters method
-# The verbose option displays a parameterisation message in construction
+But all parameters are available to us via the parameters method. The verbose option displays a parameterisation message in construction. Note how all available parameters are displayed, but only the ones chosen in construction are called "settable".
+```{r}
 N <- Normal$new(verbose = TRUE)
-
-# Note how all available parameters are displayed, but only the ones chosen in construction are called "settable"
 N$parameters()
 ```
 
-#### Parameters in distr6
+### Parameters in distr6
+Parameters are accesed with getParameterValue and edited with setParameterValue
 ```{r}
-# Parameters are accesed with getParameterValue and edited with setParameterValue
 N$setParameterValue(list(prec = 2))
 N$getParameterValue("prec")
+```
 
-# Note how all parameters that are related also update
+Note how all parameters that are related also update
+```{r}
 N$parameters()
+```
 
-# To view the functions that relate these parameters add the following
+To view the functions that relate these parameters add the following
+```{r}
 N$parameters()$print(update = T)
+```
 
-# The line above introduces 'method chaining', this occurs when one method is added to another.
-# As another example, let's edit and then access another parameter in the Normal distribution
+The line above introduces 'method chaining', this occurs when one method is added to another.
+As another example, let's edit and then access another parameter in the Normal distribution
+```{r}
 N$setParameterValue(list(var = 3))$getParameterValue("var")
 ```
 
-#### Representing a distribution
+### Representing a distribution
+In keeping with R conventions, distributions have a print and summary method to view key details.
+We have already seen how the print method displays the distribution short_name and the
+parameterisation.
 ```{r}
-# In keeping with R conventions, distributions have a print and summary method to view key details.
-# We have already seen how the print method displays the distribution short_name and the
-# parameterisation.
 N$print()
+```
 
-# The summary method can also show basic statistics and distribution properties
-# and traits. Adding the argument full = F, suppresses the output slightly.
+The summary method can also show basic statistics and distribution properties
+and traits. Adding the argument full = F, suppresses the output slightly.
+```{r}
 N$summary()
 N$summary(full = F)
+```
 
-# All distributions are also comprised of properties and traits. Traits are ways of
-#  describing a class whereas properties describe an object. In simpler terms, this means that a
-#  trait is present independent of the distribution's parameterisation whereas a property depends
-#  on the constructed parameters. These are therefore accessed slightly differently:
+All distributions are also comprised of properties and traits. Traits are ways of
+describing a class whereas properties describe an object. In simpler terms, this means that a
+trait is present independent of the distribution's parameterisation whereas a property depends
+on the constructed parameters. These are therefore accessed slightly differently:
+```{r}
 N$properties() # Note that this is a method
 N$traits # And this is a list variable
+```
 
-# Finally individual properties and traits are accessible via their own 'getters' for example:
+Finally individual properties and traits are accessible via their own 'getters' for example:
+```{r}
 N$valueSupport()
 N$skewness()
 ```
 
-#### p/d/q/r
-
+### p/d/q/r
+distr6 is intended not to replace R stats distributions but to be a different way of interfacing 
+them. All distributions in R stats can be found in distr6 and all their p/d/q/r functions which
+refer to density/cumulative distribution/quantile/random are all available in distr6. Continuing
+our Normal distribution example:
 ```{r}
-# distr6 is intended not to replace R stats distributions but to be a different way of interfacing 
-# them. All distributions in R stats can be found in distr6 and all their p/d/q/r functions which
-# refer to density/cumulative distribution/quantile/random are all available in distr6. Continuing
-# our Normal distribution example:
 N$pdf(2) # dnorm(2)
 N$cdf(2) # pnorm(2)
 N$quantile(2) # qnorm(2)
 N$rand(2) # rnorm(2)
+```
 
-# distr6 makes it easy to query these results by only requiring the distribution to be constructed
-# once and then the specific parameterisation can be forgotten. In the case of the Normal
-# distribution this may not seem like a big difference to R stats but now look at the difference 
-# when we construct a distribution without default parameters
+distr6 makes it easy to query these results by only requiring the distribution to be constructed
+once and then the specific parameterisation can be forgotten. In the case of the Normal
+distribution this may not seem like a big difference to R stats but now look at the difference 
+when we construct a distribution without default parameters
+```{r}
 B <- Beta$new(shape1 = 0.582, shape2 = 1.2490)
 B$pdf(2) # dbeta(2, 0.582, 1.2490)
 B$cdf(2) # pbeta(2, 0.582, 1.2490)
 B$quantile(2) # qbeta(2, 0.582, 1.2490)
 B$rand(2) # rbeta(2, 0.582, 1.2490)
+```
 
-# Finally distr6 includes log/log.p and lower.tail arguments to be consistent with R stats.
+Finally distr6 includes log/log.p and lower.tail arguments to be consistent with R stats.
+```{r}
 N$cdf(3, lower.tail = FALSE, log.p = TRUE) == pnorm(3, lower.tail = FALSE, log.p = TRUE)
 ```
 
-#### Mathematical and Statistical Results
+### Mathematical and Statistical Results
+The final part of this tutorial looks at how to access mathematical and statistical
+results for probability distributions. This is another advantage of distr6 as it collects
+not only the results for the 17 distributions in R stats but also for all others implemented in
+distr6. Continuing with the Normal distribution:
 ```{r}
-# The final part of this tutorial looks at how to access mathematical and statistical
-# results for probability distributions. This is another advantage of distr6 as it collects
-# not only the results for the 17 distributions in R stats but also for all others implemented in
-# distr6. Continuing with the Normal distribution:
 N$mean()
 N$var()
 N$entropy() # Note default is base 2
@@ -123,18 +141,18 @@ N$mgf(2)
 N$cf(1)
 ```
 
+For a full list of methods available use the help documentation for any distribution
 ```{r, eval=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
-# For a full list of methods available use the help documentation for any distribution
 ?Normal
 ```
 
-#### Listing in distr6
+
+### Listing in distr6
+Instead of having to worry about remembering every distribution in R, distr6 provides a way of
+listing all of these, and filtering by traits or package
 ```{r}
-# Instead of having to worry about remembering every distribution in R, distr6 provides a way of
-# listing all of these, and filtering by traits or package
 listDistributions()
 listDistributions(simplify = TRUE)
-
 # Lists discrete distributions only
 listDistributions(filter = list(valuesupport = "discrete")) 
 
@@ -142,10 +160,10 @@ listDistributions(filter = list(valuesupport = "discrete"))
 listDistributions(filter = list(VaLueSupport = "continuous", package = "distr6"))
 ```
 
-#### R6, S3 and Magrittr
+### R6, S3 and Magrittr
+As a final point, distr6 allows the use of R6 or S3 to call methods, which means that the package
+magrittr can also be used for 'piping'. Returning to the Normal distribution
 ```{r}
-# As a final point, distr6 allows the use of R6 or S3 to call methods, which means that the package
-# magrittr can also be used for 'piping'. Returning to the Normal distribution
 library(magrittr)
 N$print()
 print(N)
