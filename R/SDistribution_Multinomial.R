@@ -130,7 +130,7 @@ Multinomial$set("public","initialize",function(size, probs, decorators = NULL, v
     return(dmultinom(x1, self$getParameterValue("size"), self$getParameterValue("probs")))
   }
   rand <- function(n){
-    rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs"))
+    t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs")))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,

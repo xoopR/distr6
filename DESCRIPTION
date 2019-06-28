@@ -65,16 +65,26 @@ Authors@R:
 Description: An R6 object oriented Distributions package in R. Unified interface for 60
   commonly used probability distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
-Imports: checkmate, R6, R62S3 (>= 1.3.1), magrittr, GoFKernel, stats, extraDistr, utils, expint, data.table
+Imports:
+    checkmate,
+    R6,
+    R62S3 (>= 1.3.1),
+    GoFKernel,
+    stats,
+    extraDistr,
+    utils,
+    expint,
+    data.table
 Suggests: 
     knitr,
     testthat,
     devtools,
-    rmarkdown
+    rmarkdown,
+    magrittr
 License: MIT + file LICENSE
 LazyData: true
-URL: https://raphaels1.github.io/distr6/, https://github.com/RaphaelS1/distr6/
-BugReports: https://github.com/RaphaelS1/distr6/issues
+URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
+BugReports: https://github.com/alan-turing-institute/distr6/issues
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
@@ -146,6 +156,7 @@ Collate:
     'Wrapper_VectorDistribution.R'
     'assertions.R'
     'decorate.R'
+    'distr6.R'
     'distr6_globals.R'
     'getParameterSet.R'
     'listDecorators.R'

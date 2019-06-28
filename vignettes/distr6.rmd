@@ -1,31 +1,22 @@
 ---
-title: "distr6: Object Oriented Distributions in R"
+title: "Introduction to distr6"
 output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{distr6}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
 
-### Description
-
-distr6 is an object oriented (OO) interface, primarily used for interacting with probability distributions in R. Additionally distr6 includes functionality for composite distributions,
-a symbolic representation for mathematical sets and intervals, basic methods for common kernels and numeric methods for distribution analysis. distr6 is the official R6 upgrade to the distr family of packages.
-
-### Main Features
-
-1. Currently implements 29 probability distributions including all distributions in the R stats package. Each distribution has (where possible) closed form analytic expressions for basic statistical methods.
-
-2. For each probability distribution, the most common parameterisations are all available in construction and parameters can be accessed (get) and manipulated (set) after construction.
-
-3. Decorators that add further functionality to probability distributions including numeric results for useful modelling functions such as p-norms and k-moments.
-
-4. Wrappers for composite distributions including convolutions, truncation, mixture distributions and product distributions.
+distr6 is a unified, self-contained and scalable interface to probability distributions in R. Making
+use of the R6 paradigm, distr6 implements a fully object-oriented (OO) interface complete with
+distribution construction, full inheritence and more complex design patterns. The API is built to be
+scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found [here](https://alan-turing-institute.github.io/distr6/index.html). In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The [website](https://alan-turing-institute.github.io/distr6/index.html) covers more complex use-cases inlcuding composite distributons and decorators for numeric methods.
 
 
 ### Getting Started
 
-The distr6 interface atttempts to be as unified as possible so that every class that inherits from Distribution has the same set of methods. We think the best place to get started therefore is to pick a probability distribution and work through constructing the distribution, via different parameterisations and querying the distribution for different methods. Below is a short example with the Normal distribution.
+We think the best place to get started is to pick a probability distribution and work through constructing the distribution via different parameterisations and querying the distribution for different methods. Below is a running example with the Normal distribution.
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 remotes::install_github("alan-turing-institute/distr6")
@@ -164,30 +155,3 @@ N$pdf(2)
 pdf(N, 2)
 N %>% pdf(2)
 ```
-
-### Authors
-
-distr6 Authors:
-
-* Raphael Sonabend [raphael.sonabend.15@ucl.ac.uk](raphael.sonabend.15@ucl.ac.uk) (Maintainer) (0000-0001-9225-4654)
-* Franz Kiraly [f.kiraly@ucl.ac.uk](f.kiraly@ucl.ac.uk)
-
-distr Authors:
-
-* Peter Ruckdeschel [peter.ruckdeschel@uni-oldenburg.de](peter.ruckdeschel@uni-oldenburg.de)
-
-* Matthias Kohl [Matthias.Kohl@stamats.de](Matthias.Kohl@stamats.de)
-
-### Useful Links
-
-Full details, issues and designs can be found here:
-
-* [GitHub](https://github.com/alan-turing-institute/distr6/)
-
-Full tutorials, API designs, documentation and extension guidelines can be found here:
-
-* [distr6 Website](https://alan-turing-institute.github.io/distr6/index.html)
-
-Additional information including design documentation, specifically V1 implementation decisions and dicussions can be found here:
-
-* [Wiki](https://github.com/alan-turing-institute/distr6/wiki)
