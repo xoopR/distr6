@@ -210,15 +210,13 @@ plot.SDistribution <- function(x, fun, nPoints = 3000, coverage = 0.99,
 #######################################################################
 my.norm <- Normal$new(mean = 2, sd = 1.5)
 my.norm.two <- Normal$new(mean = 2.5, sd = 1)
-decorate(my.norm, ExoticStatistics)
-decorate(my.norm.two, ExoticStatistics)
 
 # draw a single plot
 plot(my.norm, fun = "pdf")
 
 # draw multiple plots
 plot(my.norm, plot = TRUE, 
-     fun = c("cdf", "pdf", "quantile","survival","hazard","cumHazard", "random"),
+     fun = c("cdf", "pdf", "quantile","survival","hazard","cumHazard", "SomeNonExistingFun"),
      layout.row = T, margin = T, col = "blue", add = F, iterative = F, 
      coverage = 0.99)
 
