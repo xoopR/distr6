@@ -80,7 +80,8 @@ Suggests:
     testthat,
     devtools,
     rmarkdown,
-    magrittr
+    magrittr,
+    remotes
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
