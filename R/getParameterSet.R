@@ -2,33 +2,6 @@ getParameterSet <- function(x, ...){
   UseMethod("getParameterSet", x)
 }
 
-getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose = FALSE){
-
-  var.bool = sd.bool = prec.bool = FALSE
-
-  if(!is.null(prec)){
-    if(verbose) message("Parameterised with mean and prec.")
-    prec.bool = TRUE
-  } else if(!is.null(sd)){
-    if(verbose) message("Parameterised with mean and sd.")
-    sd.bool = TRUE
-  } else{
-    if(verbose) message("Parameterised with mean and var.")
-    var.bool = TRUE
-  }
-
-  ps <- ParameterSet$new(id = list("mean","var","sd","prec"),
-                         value = list(0, 1, 1, 1),
-                         support = list(Reals$new(), PosReals$new(), PosReals$new(), PosReals$new()),
-                         settable = list(TRUE, var.bool, sd.bool, prec.bool),
-                         updateFunc = list(NA, NA, "self$getParameterValue('var')^0.5", "self$getParameterValue('var')^-1"),
-                         description = list("Mean - Location Parameter",
-                                            "Variance - Squared Scale Parameter",
-                                            "Standard Deviation - Scale Parameter",
-                                            "Precision - Inverse Squared Scale Parameter"))
-  return(ps)
-}
-
 getParameterSet.Arcsine <- function(x, lower, upper, verbose = FALSE){
 
   checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
@@ -171,7 +144,6 @@ getParameterSet.Dirichlet <- function(x, params, verbose = FALSE){
 
   return(ps)
 }
-
 
 getParameterSet.DiscreteUniform <- function(x, lower, upper, verbose = FALSE){
 
@@ -362,6 +334,63 @@ getParameterSet.InverseGamma <- function(x, shape, scale, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE){
+
+  var.bool = scale.bool = FALSE
+
+  if(!is.null(var)){
+    if(verbose) message("Parameterised with mean and var.")
+    var.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with mean and scale.")
+    scale.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("mean","scale","var"), value = list(0, 1, 2),
+                         support = list(Reals$new(),PosReals$new(),PosReals$new()),
+                         settable = list(TRUE, scale.bool, var.bool),
+                         updateFunc = list(NA, NA, "2*self$getParameterValue('scale')^2"),
+                         description = list("Mean - Location Parameter",
+                                            "Scale - Scale Parameter",
+                                            "Variance - Alternate Scale Parameter"))
+  return(ps)
+}
+
+getParameterSet.Logarithmic <- function(x, theta, verbose = FALSE){
+
+  if(verbose) message("Parameterised with theta.")
+
+  ps <- ParameterSet$new(id = list("theta"), value = list(0.5),
+                         support = list(Interval$new(0,1,type="()")),
+                         settable = list(TRUE),
+                         updateFunc = list(NA),
+                         description = list("Theta parameter."))
+
+  return(ps)
+}
+
+getParameterSet.Logistic <- function(x, mean, scale, sd = NULL, verbose = FALSE){
+
+  sd.bool = scale.bool = FALSE
+
+  if(!is.null(sd)){
+    if(verbose) message("Parameterised with mean and sd.")
+    sd.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with mean and scale.")
+    scale.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("mean","scale","sd"), value = list(0, 1, pi/sqrt(3)),
+                         support = list(Reals$new(), PosReals$new(), PosReals$new()),
+                         settable = list(TRUE, scale.bool, sd.bool),
+                         updateFunc = list(NA,NA,
+                                           "self$getParameterValue('scale')*pi/sqrt(3)"),
+                         description = list("Mean - Location Parameter",
+                                            "Scale - Scale Parameter",
+                                            "Standard Deviation - Alternative Scale Parameter"))
+  return(ps)
+}
 
 getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog = NULL,
                                       mean = NULL, var = NULL, sd = NULL, prec = NULL, verbose = FALSE){
@@ -498,9 +527,92 @@ getParameterSet.MultivariateNormal <- function(x, mean, cov, prec = NULL, verbos
   return(ps)
 }
 
+getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean = NULL, form, verbose = FALSE){
+
+  prob.bool = qprob.bool = mean.bool = FALSE
+
+  if(!is.null(mean)){
+    if(verbose) message("Parameterised with size and mean.")
+    mean.bool = TRUE
+  } else if(!is.null(qprob)){
+    if(verbose) message("Parameterised with size and qprob.")
+    qprob.bool = TRUE
+  } else {
+    if(verbose) message("Parameterised with size and prob.")
+    prob.bool = TRUE
+  }
+
+  if(form == "sbf"){
+    updateFunc <- 'self$getParameterValue("size") * self$getParameterValue("prob") / (1-self$getParameterValue("prob"))'
+    desc <- "Number of failures"
+  } else if(form == "tbf"){
+    updateFunc <- 'self$getParameterValue("size") / (1-self$getParameterValue("prob"))'
+    desc <- "Number of failures"
+  } else if(form == "tbs"){
+    updateFunc <- 'self$getParameterValue("size") / self$getParameterValue("prob")'
+    desc <- "Number of successes"
+  } else {
+    updateFunc <- 'self$getParameterValue("size") * (1-self$getParameterValue("prob")) / self$getParameterValue("prob")'
+    desc <- "Number of successes"
+  }
+
+  ps <- ParameterSet$new(id = list("prob","qprob","mean","size"), value = list(0.5, 0.5, 20, 10),
+                         support = list(Interval$new(0,1,type="()"),
+                                        Interval$new(0,1,type="()"),
+                                        PosReals$new(),
+                                        PosNaturals$new()),
+                         settable = list(prob.bool, qprob.bool, mean.bool, TRUE),
+                         updateFunc = list(NULL, "1 - self$getParameterValue('prob')", updateFunc, NULL),
+                         description = list("Probability of Success",
+                                            "Probability of failure",
+                                            "Mean - Location Parameter",desc))
+
+  return(ps)
+}
+
+getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose = FALSE){
+
+  var.bool = sd.bool = prec.bool = FALSE
+
+  if(!is.null(prec)){
+    if(verbose) message("Parameterised with mean and prec.")
+    prec.bool = TRUE
+  } else if(!is.null(sd)){
+    if(verbose) message("Parameterised with mean and sd.")
+    sd.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with mean and var.")
+    var.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("mean","var","sd","prec"),
+                         value = list(0, 1, 1, 1),
+                         support = list(Reals$new(), PosReals$new(), PosReals$new(), PosReals$new()),
+                         settable = list(TRUE, var.bool, sd.bool, prec.bool),
+                         updateFunc = list(NA, NA, "self$getParameterValue('var')^0.5", "self$getParameterValue('var')^-1"),
+                         description = list("Mean - Location Parameter",
+                                            "Variance - Squared Scale Parameter",
+                                            "Standard Deviation - Scale Parameter",
+                                            "Precision - Inverse Squared Scale Parameter"))
+  return(ps)
+}
+
+getParameterSet.Pareto <- function(x, shape, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape and scale.")
+
+  ps <- ParameterSet$new(id = list("shape","scale"), value = list(1, 1),
+                         support = list(PosReals$new(), PosReals$new()),
+                         settable = list(TRUE,TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape parameter","Scale parameter"))
+
+  return(ps)
+}
+
 getParameterSet.Poisson <- function(x, rate, verbose = FALSE){
 
-  if(verbose) message("Parameterised with size and probs.")
+  if(verbose) message("Parameterised with rate.")
 
   ps <-  ParameterSet$new(id = list("rate"), value = list(1),
                           support = list(PosReals$new()),
@@ -511,32 +623,15 @@ getParameterSet.Poisson <- function(x, rate, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.Uniform <- function(x, lower, upper, verbose = FALSE){
+getParameterSet.Rayleigh <- function(x, mode, verbose = FALSE){
 
-  checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
-  checkmate::assert(lower < upper, .var.name = "lower must be < upper")
+  if(verbose) message("Parameterised with mode.")
 
-  if(verbose) message("Parameterised with lower and upper.")
-
-  ps <- ParameterSet$new(id = list("lower","upper"),
-                         value = list(0, 1),
-                         support = list(Reals$new(), Reals$new()),
-                         settable = list(TRUE, TRUE),
-                         updateFunc = NULL,
-                         description = list("Lower distribution limit.", "Upper distribution limit."))
-
-  return(ps)
-}
-
-getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
-
-  if(verbose) message("Parameterised with shape and scale.")
-
-  ps <-  ParameterSet$new(id = list("shape","scale"), value = list(1,1),
-                          support = list(PosReals$new(), PosReals$new()),
-                          settable = list(TRUE,TRUE),
-                          updateFunc = list(NA,NA),
-                          description = list("Shape paramer", "Scale parameter"))
+  ps <-  ParameterSet$new(id = list("mode"), value = list(1),
+                          support = list(PosReals$new()),
+                          settable = list(TRUE),
+                          updateFunc = list(NA),
+                          description = list("Mode - Scale Parameter"))
 
   return(ps)
 }
@@ -581,106 +676,19 @@ getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric, verbose
   return(ps)
 }
 
-getParameterSet.Pareto <- function(x, shape, scale, verbose = FALSE){
+getParameterSet.Uniform <- function(x, lower, upper, verbose = FALSE){
 
-  if(verbose) message("Parameterised with shape and scale.")
+  checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
+  checkmate::assert(lower < upper, .var.name = "lower must be < upper")
 
-  ps <- ParameterSet$new(id = list("shape","scale"), value = list(1, 1),
-                         support = list(PosReals$new(), PosReals$new()),
-                         settable = list(TRUE,TRUE),
-                         updateFunc = NULL,
-                         description = list("Shape parameter","Scale parameter"))
+  if(verbose) message("Parameterised with lower and upper.")
 
-  return(ps)
-}
-
-getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE){
-
-  var.bool = scale.bool = FALSE
-
-  if(!is.null(var)){
-    if(verbose) message("Parameterised with mean and var.")
-    var.bool = TRUE
-  } else{
-    if(verbose) message("Parameterised with mean and scale.")
-    scale.bool = TRUE
-  }
-
-  ps <- ParameterSet$new(id = list("mean","scale","var"), value = list(0, 1, 2),
-                         support = list(Reals$new(),PosReals$new(),PosReals$new()),
-                         settable = list(TRUE, scale.bool, var.bool),
-                         updateFunc = list(NA, NA, "2*self$getParameterValue('scale')^2"),
-                         description = list("Mean - Location Parameter",
-                                            "Scale - Scale Parameter",
-                                            "Variance - Alternate Scale Parameter"))
-  return(ps)
-}
-
-getParameterSet.Logarithmic <- function(x, theta, verbose = FALSE){
-
-  if(verbose) message("Parameterised with theta.")
-
-  ps <- ParameterSet$new(id = list("theta"), value = list(0.5),
-                         support = list(Interval$new(0,1,type="()")),
-                         settable = list(TRUE),
-                         updateFunc = list(NA),
-                         description = list("Theta parameter."))
-
-  return(ps)
-}
-
-getParameterSet.Logistic <- function(x, mean, scale, verbose = FALSE){
-
-  if(verbose) message("Parameterised with mean and scale.")
-
-  ps <- ParameterSet$new(id = list("mean","scale"), value = list(0, 1),
-                         support = list(Reals$new(), PosReals$new()),
+  ps <- ParameterSet$new(id = list("lower","upper"),
+                         value = list(0, 1),
+                         support = list(Reals$new(), Reals$new()),
                          settable = list(TRUE, TRUE),
                          updateFunc = NULL,
-                         description = list("Mean - Location Parameter",
-                                            "Scale - Scale Parameter"))
-  return(ps)
-}
-
-getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean = NULL, form, verbose = FALSE){
-
-  prob.bool = qprob.bool = mean.bool = FALSE
-
-  if(!is.null(mean)){
-    if(verbose) message("Parameterised with size and mean.")
-    mean.bool = TRUE
-  } else if(!is.null(qprob)){
-    if(verbose) message("Parameterised with size and qprob.")
-    qprob.bool = TRUE
-  } else {
-    if(verbose) message("Parameterised with size and prob.")
-    prob.bool = TRUE
-  }
-
-  if(form == "sbf"){
-    updateFunc <- 'self$getParameterValue("size") * self$getParameterValue("prob") / (1-self$getParameterValue("prob"))'
-    desc <- "Number of failures"
-  } else if(form == "tbf"){
-    updateFunc <- 'self$getParameterValue("size") / (1-self$getParameterValue("prob"))'
-    desc <- "Number of failures"
-  } else if(form == "tbs"){
-    updateFunc <- 'self$getParameterValue("size") / self$getParameterValue("prob")'
-    desc <- "Number of successes"
-  } else {
-    updateFunc <- 'self$getParameterValue("size") * (1-self$getParameterValue("prob")) / self$getParameterValue("prob")'
-    desc <- "Number of successes"
-  }
-
-  ps <- ParameterSet$new(id = list("prob","qprob","mean","size"), value = list(0.5, 0.5, 20, 10),
-                         support = list(Interval$new(0,1,type="()"),
-                                        Interval$new(0,1,type="()"),
-                                        PosReals$new(),
-                                        PosNaturals$new()),
-                         settable = list(prob.bool, qprob.bool, mean.bool, TRUE),
-                         updateFunc = list(NULL, "1 - self$getParameterValue('prob')", updateFunc, NULL),
-                         description = list("Probability of Success",
-                                            "Probability of failure",
-                                            "Mean - Location Parameter",desc))
+                         description = list("Lower distribution limit.", "Upper distribution limit."))
 
   return(ps)
 }
@@ -698,3 +706,17 @@ getParameterSet.Wald <- function(x, mean, shape, verbose = FALSE){
 
   return(ps)
 }
+
+getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape and scale.")
+
+  ps <-  ParameterSet$new(id = list("shape","scale"), value = list(1,1),
+                          support = list(PosReals$new(), PosReals$new()),
+                          settable = list(TRUE,TRUE),
+                          updateFunc = list(NA,NA),
+                          description = list("Shape paramer", "Scale parameter"))
+
+  return(ps)
+}
+
