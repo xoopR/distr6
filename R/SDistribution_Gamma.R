@@ -6,8 +6,9 @@
 #'
 #' @description Mathematical and statistical functions for the Gamma distribution parameterised
 #' with shape and rate, \eqn{scale = 1/rate} or \eqn{mean = shape/rate}. The shape-rate Gamma distribution is defined by the pdf,
-#' \deqn{f(x) = (\beta^\alpha)/Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
-#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the rate parameter.
+#' \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
+#' where \eqn{\alpha > 0} is the shape parameter, \eqn{\beta > 0} is the rate parameter and
+#' \eqn{\Gamma} is the gamma function.
 #'
 #' @details The Gamma Distribution is parameterised by default with shape and rate as this is most common
 #' in statistics (particularly Bayesian).
@@ -70,7 +71,7 @@ Gamma <- R6::R6Class("Gamma", inherit = SDistribution, lock_objects = F)
 Gamma$set("public","name","Gamma")
 Gamma$set("public","short_name","Gamma")
 
-Gamma$set("public","traits",list(type = PosReals$new(zero = T),
+Gamma$set("public","traits",list(type = PosReals$new(),
                                        valueSupport = "continuous",
                                        variateForm = "univariate"))
 

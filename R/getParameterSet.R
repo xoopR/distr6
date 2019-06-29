@@ -157,6 +157,22 @@ getParameterSet.Degenerate <- function(x, mean, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.Dirichlet <- function(x, params, verbose = FALSE){
+
+  K = length(params)
+  ps <- ParameterSet$new(id = list("params","K"),
+                         value = list(rep(1,K), K),
+                         support = list(PosReals$new(), Interval$new(2,Inf,type="[)",class="integer")),
+                         settable = list(TRUE, FALSE),
+                         updateFunc = list(NA, "length(self$getParameterValue('params'))"),
+                         description = list("Conccentration parameters", "Number of categories"))
+
+  if(verbose) message("Parameterised with params.")
+
+  return(ps)
+}
+
+
 getParameterSet.DiscreteUniform <- function(x, lower, upper, verbose = FALSE){
 
   checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
@@ -332,6 +348,20 @@ getParameterSet.Hypergeometric <- function(x, size, successes, failures = NULL, 
   return(ps)
 
 }
+
+getParameterSet.InverseGamma <- function(x, shape, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape and scale.")
+
+  ps <- ParameterSet$new(id = list("shape","scale"), value = list(1, 1),
+                         support = list(PosReals$new(), PosReals$new()),
+                         settable = list(TRUE,TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape Parameter","Scale Parameter"))
+
+  return(ps)
+}
+
 
 getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog = NULL,
                                       mean = NULL, var = NULL, sd = NULL, prec = NULL, verbose = FALSE){

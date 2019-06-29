@@ -66,7 +66,7 @@ Description: An R6 object oriented Distributions package in R. Unified interface
   commonly used probability distributions and functionality for multiple scientific types.
   Additionally classes for symbolic representation of sets.
 Depends: 
-Imports: checkmate, R6, R62S3 (>= 1.3.1), magrittr, GoFKernel, stats, extraDistr, utils, expint, data.table, pracma
+Imports: Bessel, checkmate, R6, R62S3 (>= 1.3.1), magrittr, GoFKernel, stats, extraDistr, utils, expint, data.table, pracma
 Suggests: knitr, testthat, devtools
 License: MIT + file LICENSE
 LazyData: true
@@ -110,6 +110,7 @@ Collate:
     'SDistribution_Cauchy.R'
     'SDistribution_ChiSquared.R'
     'SDistribution_Degenerate.R'
+    'SDistribution_Dirichlet.R'
     'SDistribution_DiscreteUniform.R'
     'SDistribution_Exponential.R'
     'SDistribution_FDistribution.R'
@@ -119,6 +120,7 @@ Collate:
     'SDistribution_Gompertz.R'
     'SDistribution_Gumbel.R'
     'SDistribution_Hypergeometric.R'
+    'SDistribution_InverseGamma.R'
     'SDistribution_Laplace.R'
     'SDistribution_Logarithmic.R'
     'SDistribution_Logistic.R'
