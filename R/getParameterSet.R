@@ -120,7 +120,7 @@ getParameterSet.Cauchy <- function(x, location, scale, verbose = FALSE){
   if(verbose) message("Parameterised with location and scale.")
 
   ps <- ParameterSet$new(id = list("location","scale"), value = list(0, 1),
-                         support = list(Reals$new(), PosReals$new(zero = T)),
+                         support = list(Reals$new(), PosReals$new()),
                          settable = list(TRUE, TRUE),
                          updateFunc = NULL,
                          description = list("Location Parameter",
@@ -208,6 +208,20 @@ getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
                                             "Degrees of freedom 2"))
 }
 
+getParameterSet.Frechet <- function(x, shape, scale, minimum, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape, scale and minimum.")
+
+  ps <- ParameterSet$new(id = list("shape","scale","minimum"), value = list(1, 1, 0),
+                         support = list(PosReals$new(), PosReals$new(), Reals$new()),
+                         settable = list(TRUE,TRUE,TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape Parameter","Scale Parameter",
+                                            "Distribution Minimum - Location Parameter"))
+
+  return(ps)
+}
+
 getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, verbose = FALSE){
 
   rate.bool = mean.bool = scale.bool = FALSE
@@ -276,6 +290,19 @@ getParameterSet.Gompertz <- function(x, shape, scale, verbose = FALSE){
                          updateFunc = NULL,
                          description = list("Shape parameter","Scale parameter"))
 
+  return(ps)
+}
+
+getParameterSet.Gumbel <- function(x, location, scale, verbose = FALSE){
+
+  if(verbose) message("Parameterised with location and scale.")
+
+  ps <- ParameterSet$new(id = list("location","scale"), value = list(0, 1),
+                         support = list(Reals$new(), PosReals$new()),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Location Parameter",
+                                            "Scale Parameter"))
   return(ps)
 }
 
@@ -624,6 +651,20 @@ getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean =
                          description = list("Probability of Success",
                                             "Probability of failure",
                                             "Mean - Location Parameter",desc))
+
+  return(ps)
+}
+
+getParameterSet.Wald <- function(x, mean, shape, verbose = FALSE){
+
+  if(verbose) message("Parameterised with mean and shape.")
+
+  ps <- ParameterSet$new(id = list("mean","shape"), value = list(1, 1),
+                         support = list(PosReals$new(), PosReals$new()),
+                         settable = list(TRUE,TRUE),
+                         updateFunc = NULL,
+                         description = list("Mean - Location Parameter",
+                                            "Shape Parameter"))
 
   return(ps)
 }

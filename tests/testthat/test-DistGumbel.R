@@ -1,0 +1,40 @@
+library(testthat)
+
+context("Gumbel distribution")
+
+test_that("parameterisation",{
+  expect_silent(Gumbel$new())
+  expect_silent(Gumbel$new(location = 10))
+  expect_silent(Gumbel$new(scale = 20))
+  expect_error(Gumbel$new(scale = 0))
+  expect_equal(Gumbel$new(location = 5)$getParameterValue("location"), 5)
+  expect_equal(Gumbel$new(scale = 10)$getParameterValue("scale"), 10)
+})
+
+test_that("properties & traits",{
+  expect_equal(Gumbel$new()$valueSupport(), "continuous")
+  expect_equal(Gumbel$new()$variateForm(), "univariate")
+  expect_equal(Gumbel$new()$symmetry(), "symmetric")
+  expect_equal(Gumbel$new()$sup(), Inf)
+  expect_equal(Gumbel$new()$inf(), -Inf)
+  expect_equal(Gumbel$new()$dmax(), Inf)
+  expect_equal(Gumbel$new()$dmin(), -Inf)
+})
+
+c = Gumbel$new(location = 0, scale = 1)
+test_that("statistics",{
+  expect_equal(c$mean(), -digamma(1))
+  expect_equal(c$var(), pi^2/6)
+  expect_equal(round(c$skewness(),2), 1.14)
+  expect_equal(c$kurtosis(T), 12/5)
+  expect_equal(c$kurtosis(F), 12/5+3)
+  expect_equal(c$entropy(), log(1, 2) - digamma(1) + 1)
+  expect_equal(c$mgf(2.5), gamma(1 - 2.5)*exp(0))
+  expect_equal(c$cf(2.5), pracma::gammaz(1 - 1i*2.5)*exp(0))
+  expect_equal(c$mode(),0)
+  expect_equal(c$pdf(1:2), extraDistr::dgumbel(1:2))
+  expect_equal(c$cdf(1:2), extraDistr::pgumbel(1:2))
+  expect_equal(c$quantile(c(0.56,0.12)), extraDistr::qgumbel(c(0.56,0.12)))
+  expect_equal(c$cdf(c$quantile(0.56)), 0.56)
+  expect_equal(length(c$rand(10)),10)
+})
