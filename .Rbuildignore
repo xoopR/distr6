@@ -11,4 +11,5 @@ CONTRIBUTING\.md
 pkgdown
 LICENSE.md
 vignettes/webs
-README\.md
+README\.Rmd
+

@@ -1,9 +1,9 @@
 ---
-title: "Multivariates"
+title: "Multivariate Distributions"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Multivariates}
+  %\VignetteIndexEntry{Multivariate Distributions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

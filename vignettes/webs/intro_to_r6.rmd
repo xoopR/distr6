@@ -1,0 +1,20 @@
+---
+title: "Introduction to R6"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Introduction to R6}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+library(distr6)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The purpose of this tutorial is to give a very brief introduction to R6, limited to the functionality needed to go through the basic tutorials that are in this website. This includes: dollar sign notation, construction, methods & chaining, and cloning.
+
+## What is R6?
+
+In the beginning there was S, then R, followed by S3, S4, R5 (reference classes) and R6. 
