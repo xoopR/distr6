@@ -81,7 +81,7 @@ Currently we are planning on implementing around 60 probability distributions fo
 
 ```{r}
 listDistributions()
-listDistributions(traits = list(valueSupport = "discrete"))
+listDistributions(filter = list(valueSupport = "discrete"))
 ```
 
 ## Wrappers and Decorators

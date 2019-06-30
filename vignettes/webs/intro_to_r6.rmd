@@ -17,6 +17,108 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 The purpose of this tutorial is to give a very brief introduction to R6, limited to the functionality needed to go through the basic tutorials that are in this website. This includes: dollar sign notation, construction, methods & chaining, and cloning.
 
+
 ## What is R6?
 
-In the beginning there was S, then R, followed by S3, S4, R5 (reference classes) and R6. 
+We won't go into a full history of R here but we will give a very quick overview. R is a functional programming language that contains some object-oriented paradigms, namely S3, S4, R5 and R6. This means that whilst the majority of your time in R will be spent calling functions on variables with different arguments, it is also possible to create 'objects' that store data and are editable via methods. A method is essentially a function that is stored and acts on the object.
+
+## Classes and Objects in R6
+
+An object is an instance of a class, an instance is created by construction. In simpler and more practical terms: probability distributions in distr6 are stored as 'classes' and to use these distributions they have to be 'constructed'. We will cover the construction of distributions in distr6 in the next tutorial, so for now we just focus on the R6 specifics.
+
+## Constructing a Class
+
+Every distribution in distr6 is stored as a class, we will take the Normal distribution as a class. Note the R class type is an `R6ClassGenerator` this tells us that this is a class to be constructed (as opposed to an object that can be manipulated).
+```{r}
+class(Normal)
+```
+
+Constructing a class in R6 is always done using the same syntax `$new(...)` but the arguments past to this function depend on the class. Just like functions in R these arguments can be named or un-named and a default may or may not be provided. In this case there is a default so the following doesn't produce an error
+```{r}
+Normal$new()
+```
+
+But we can also pass arguments in the usual way
+```{r}
+Normal$new(var = 2)
+```
+See the help documentation for the specific arguments to pass `?Normal`.
+
+## Methods
+
+Methods work in the exact same way as function except that again the dollar sign notation is used, `object$method(...)`. Notice that the constructor `$new()` is used for classes whereas methods are called on objects. For example let's construct a Normal distribution object and save this 
+```{r}
+N <- Normal$new()
+
+# Notice the R class is now 'Normal'
+class(N)
+```
+
+To call the method `mean`:
+```{r}
+N$mean()
+```
+Or a method with arguments:
+```{r}
+N$kurtosis(excess = FALSE)
+```
+
+A final point about methods is that they act on the object, this means that whilst some will produce an output such as the ones above, others will actually change the object. Whereas to update a variable in R you may run something like `y = y + 1` in R6 the change is made in the method:
+```{r}
+N$getParameterValue("var")
+N$setParameterValue(list(var = 5))
+N$getParameterValue("var")
+```
+Don't worry about the particulars of these methods just yet, we will return to them in later tutorials. For now just notice using the `setParameterValue()` method update the object `N` without us having to manually save this.
+
+### Method Chaining
+
+Method chaining is a slightly more advanced topic and therefore we will only very briefly discuss it here. It is essentially the act of combining multiple methods into one line (or chain) for example:
+```{r}
+N$setParameterValue(list(var = 6))$getParameterValue("var")
+```
+See how we simply added one method to the end of the other using the same dollar sign syntax. Not all methods can be chained and don't worry if you don't feel comfortable doing this, we're just highlighting it for users more familiar with object-oriented programming.
+
+## Cloning
+
+The final thing we discuss is an advanced topic but is very important in R6. The best way to demonstrate cloning and copying is by example and we won't discuss any of the details. 
+
+First we create a class called "adder" don't worry about the technicals here, in summary it's a class with one method, which adds numbers to itself. 
+```{r}
+adder <- R6::R6Class("adder",public = list(add = function(y){
+  self$x = self$x + y
+  invisible(self)}, x = 0))
+a = adder$new()
+```
+
+Here's an example of it in action, see how the internal value is automatically updated without the object having to be re-saved.
+```{r}
+a$x
+a$add(2)
+a$x
+```
+
+Now comes the tricky part, watch what happens when we copy the object `a` via the function `a = b`
+```{r}
+a <- adder$new()
+b <- a
+a$x
+b$x
+b$add(4)
+b$x
+a$x
+```
+
+See what happened? Even though we only called the method on `b`, the results were copied back to `a`. Sometimes this can be very useful but more often that not it is unneccesary. To get around this problem use the `$clone()` method:
+
+```{r}
+a <- adder$new()
+b <- a$clone()
+a$x
+b$x
+b$add(4)
+b$x
+a$x
+```
+
+This can be a tricky concept to get your head around but try not to worry too much about it and just remember that copying using `=` or `<-` will lead to the values of both variables being updated to always be the same whereas copying using `$clone()` creates a completely separate object that is identical at the time of cloning but then remains independent.
