@@ -3,7 +3,23 @@ template:
     bootswatch: spacelab
 
 navbar:
-  left:   
+  left:
+  - text: Basics
+    menu:
+      - text: Introduction to R6
+        href: articles/webs/intro_to_r6.html
+      - text: Constructing a Distribution
+        href: articles/webs/constructing_a_distribution.html
+      - text: Getting and Setting Parameters
+        href: articles/webs/parameters.html
+      - text: Statistical Methods
+        href: articles/webs/statistical_methods.html
+      - text: Properties and Traits
+        href: articles/webs/properties_traits.html
+      - text: Multivariate Distributions
+        href: articles/webs/multivariates.html
+      - text: Listing
+        href: articles/webs/listing.html
   - text: OOP and R6
     menu:
     - text: OOP and Design Patterns
