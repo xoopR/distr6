@@ -637,11 +637,11 @@ Distribution$set("public", "skewnessType", function() {
 # Public Methods - Parameters
 #-------------------------------------------------------------
 # Documented in ParameterSet.R
-Distribution$set("public","parameters",function(id = NULL, error = "warn"){
+Distribution$set("public","parameters",function(id = NULL, error = "warn", update = FALSE){
   if(length(private$.parameters)==0)
     return(NULL)
   else
-    return(private$.parameters$parameters(id, error))
+    return(private$.parameters$parameters(id, error, update))
 })
 # Documented in ParameterSet.R
 Distribution$set("public","getParameterValue",function(id, error = "warn"){

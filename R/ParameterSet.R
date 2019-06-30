@@ -179,11 +179,12 @@ ParameterSet$set("public","update", function(){
 #' @name parameters
 #' @title Parameters Accessor
 #' @description Returns some or all the parameters in a distribution.
-#' @usage parameters(object, id = NULL, error = "warn")
-#' @section R6 Usage: $parameters(id = NULL, error = "warn")
+#' @usage parameters(object, id = NULL, error = "warn", update = FALSE)
+#' @section R6 Usage: $parameters(id = NULL, error = "warn", update = FALSE)
 #' @param object Distribution or ParameterSet.
 #' @param id character, see details.
 #' @param error character, value to pass to \code{stopwarn}.
+#' @param update logical, if FALSE don't include update function
 #' @details If \code{id} is given and matches a parameter in the distribution, the parameter is returned
 #' with all details. If \code{id} is given but doesn't match a parameter, an empty data.frame is returned.
 #' Finally if \code{id} is not given, returns all parameters in the distribution.
@@ -194,7 +195,7 @@ ParameterSet$set("public","update", function(){
 #' @seealso \code{\link{getParameterValue}} and \code{\link{setParameterValue}}
 #' @export
 NULL
-ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
+ParameterSet$set("public","parameters",function(id = NULL, error = "warn", update = FALSE){
   if(length(private$.parameters)==0)
     stopwarn(error, "There are no parameters in this distribution.")
 
@@ -202,8 +203,12 @@ ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
     id0 = id
     if(length(subset(private$.parameters, id %in% id0))==0){
       return(self)
+    } else{
+      if(update)
+        return(subset(private$.parameters, id %in% id0))
+      else
+        return(subset(private$.parameters, id %in% id0, 1:5))
     }
-    return(subset(private$.parameters, id %in% id0))
   } else {
       return(self)
   }
