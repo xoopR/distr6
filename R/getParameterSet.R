@@ -392,6 +392,20 @@ getParameterSet.Logistic <- function(x, mean, scale, sd = NULL, verbose = FALSE)
   return(ps)
 }
 
+getParameterSet.LogLogistic <- function(x, scale, shape, location, verbose = FALSE){
+
+  if(verbose) message("Parameterised with scale, shape and location.")
+
+  ps <- ParameterSet$new(id = list("scale","shape","location"), value = list(1,1,0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = T)),
+                         settable = list(TRUE, TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Scale Parameter",
+                                            "Shape Parameter",
+                                            "Location Parameter"))
+  return(ps)
+}
+
 getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog = NULL,
                                       mean = NULL, var = NULL, sd = NULL, prec = NULL, verbose = FALSE){
 
