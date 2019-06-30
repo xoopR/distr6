@@ -84,14 +84,13 @@ and \eqn{sd}, \eqn{prec} defined analogously.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -128,3 +127,32 @@ and \eqn{sd}, \eqn{prec} defined analogously.
   }
 }
 
+\examples{
+# Many parameterisations are possible
+Lognormal$new(var = 2, mean = 1)
+Lognormal$new(meanlog = 2, preclog = 5)
+Lognormal$new(meanlog = 4, sd = 2) # Note parameters must be on same scale (log or natural)
+
+x <- Lognormal$new(verbose = TRUE) # meanlog = 0, sdlog = 1 default
+
+# Update parameters
+x$setParameterValue(list(meanlog = 3)) # When any parameter is updated, all others are too!
+x$parameters()
+
+# But you can only set parameters on the same scale, the below has no effect
+x$setParameterValue(list(sd = 3))
+x$setParameterValue(list(sdlog = 3)) # But this does
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

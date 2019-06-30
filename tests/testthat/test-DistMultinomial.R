@@ -36,7 +36,9 @@ probs = c(0.1, 0.2, 0.7)
 mn = Multinomial$new(size = 3, prob = probs)
 test_that("statistics",{
   expect_equal(mn$mean(), 3 * probs)
-  expect_equal(mn$var(), 3 * probs * (1-probs))
+  expect_equal(diag(mn$var()), 3 * probs * (1-probs))
+  expect_equal(mn$var(), matrix(c(0.27,-0.06,-0.21,-0.06,0.48,-0.42,
+                                 -0.21,-0.42,0.63),nrow = 3))
   expect_equal(mn$skewness(), NaN)
   expect_equal(mn$kurtosis(T), NaN)
   expect_equal(mn$kurtosis(F), NaN)
@@ -45,8 +47,12 @@ test_that("statistics",{
   expect_equal(mn$pgf(1:3), sum((1:3)*probs)^3)
   expect_equal(mn$cf(1:3), sum(exp((1:3) * 1i)*probs)^3)
   expect_error(mn$mode())
-  expect_equal(mn$pdf(c(1,5,7)), 0)
+  expect_equal(mn$pdf(1,5,7), 0)
   expect_error(mn$pdf(c(1,7)))
-  expect_equal(mn$pdf(c(1,1,1)), dmultinom(x = c(1,1,1), prob = probs))
+  expect_equal(mn$pdf(1,1,1), dmultinom(x = c(1,1,1), prob = probs))
+  expect_equal(Multinomial$new(probs=c(1,4),size=5)$pdf(c(1,2,0),c(4,3,5)),
+               c(dmultinom(x = c(1,4), prob = c(1,4)),
+                 dmultinom(x = c(2,3), prob = c(1,4)),
+                 dmultinom(x = c(0,5), prob = c(1,4))))
   expect_silent(mn$rand(10))
 })

@@ -14,6 +14,7 @@
 #'    \code{type} \tab character \tab Interval type, one of (), (], [), []. \cr
 #'    \code{lower} \tab numeric \tab Lower limit of set/interval. \cr
 #'    \code{upper} \tab numeric \tab Upper limit of set/interval. \cr
+#'    \code{class} \tab character \tab Atomic class, one of "numeric" or "integer". \cr
 #'    \code{dimension} \tab integer \tab Dimension of set/interval.
 #'}
 #'
@@ -23,6 +24,7 @@
 #' \code{lower} \tab numeric \tab Lower limit of set/interval. \cr
 #' \code{upper} \tab numeric \tab Upper limit of set/interval. \cr
 #' \code{type} \tab  character \tab Closed/open interval type. \cr
+#' \code{class} \tab  character \tab Class of set/interval. \cr
 #' \code{dimension} \tab integer \tab Dimension of set/interval. \cr
 #' \code{max} \tab  numeric \tab Maximum of set/interval. \cr
 #' \code{min} \tab  numeric \tab Minimum of set/interval. \cr
@@ -48,12 +50,13 @@ NULL
 # SetInterval Definition
 #-------------------------------------------------------------
 SetInterval <- R6::R6Class("SetInterval")
-SetInterval$set("public","initialize",function(symbol, lower, upper, type, dimension){
+SetInterval$set("public","initialize",function(symbol, lower, upper, type, class = "numeric", dimension){
   private$.lower = lower
   private$.upper = upper
   private$.type = type
   private$.dimension = as.integer(dimension)
   private$.setSymbol = symbol
+  private$.class = class
   invisible(self)
 })
 SetInterval$set("public","type",function(){
@@ -113,6 +116,6 @@ SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FA
 SetInterval$set("private",".lower",NULL)
 SetInterval$set("private",".upper",NULL)
 SetInterval$set("private",".type",NULL)
-SetInterval$set("private",".class","numeric")
+SetInterval$set("private",".class",NULL)
 SetInterval$set("private",".dimension",NULL)
 SetInterval$set("private",".setSymbol",NULL)

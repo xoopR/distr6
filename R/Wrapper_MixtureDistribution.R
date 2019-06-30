@@ -68,21 +68,26 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
   formals(cdf)$self <- self
 
   rand <- function(n){
-    x = as.data.frame(table(sample(1:length(self$wrappedModels()), n, TRUE, private$.weights)), stringsAsFactors = F)
-    return(unlist(apply(x,1,function(y) self$wrappedModels()[[as.numeric(y[[1]])]]$rand(as.numeric(y[[2]])))))
+    x = Multinomial$new(probs = private$.weights, size = n)$rand(1)
+    y = c()
+    for(i in 1:length(x))
+      y = c(y, self$wrappedModels()[[i]]$rand(x[[i]]))
+    return(sample(y, n))
   }
   formals(rand)$self <- self
 
   name = paste("Mixture of",paste(distnames, collapse = "_"))
   short_name = paste0("Mix_",paste(distnames, collapse = "_"))
-
-  type =
+  type = do.call(union, lapply(distlist, type))
+  support = do.call(union, lapply(distlist, type))
+  distrDomain = do.call(union, lapply(distlist, type))
 
   description =  paste0("Mixture of: ",paste0(1:length(distlist),") ",lapply(distlist, function(x) x$description),
                                             collapse = " And "), " - With weights: (",
                        paste0(weights, collapse=", "), ")")
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
-                   short_name = short_name, description = description)
+                   short_name = short_name, description = description, type = type,
+                   support = support, distrDomain = distrDomain)
 }) # IN PROGRESS
 MixtureDistribution$set("private",".weights",numeric(0))

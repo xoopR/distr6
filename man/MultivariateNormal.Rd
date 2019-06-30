@@ -75,14 +75,13 @@ vector that can be printed via \code{matrix(cov, nrow = K, byrow = FALSE)}.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -120,10 +119,29 @@ vector that can be printed via \code{matrix(cov, nrow = K, byrow = FALSE)}.
 }
 
 \examples{
-MultivariateNormal$new(mean = c(0,0,0),
-cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+# Different parameterisations
+MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1)) # Equivalently
+MultivariateNormal$new(mean = c(0,0,0), prec = c(3,-1,-1,-1,1,0,-1,0,1))
 
-MultivariateNormal$new(mean = c(0,0,0),
-cov = c(3,-1,-1,-1,1,0,-1,0,1))
+x <- MultivariateNormal$new() # Default is bivariate standard normal
+
+# Update parameters
+x$setParameterValue(list(mean = c(1, 2)))
+x$setParameterValue(list(prec = c(1,0,0,1))) # When any parameter is updated, all others are too!
+x$parameters()
+
+# p/d/q/r
+# Note the difference from R stats
+x$pdf(1, 2)
+# This allows vectorisation:
+x$pdf(1:3, 2:4)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
 
 }

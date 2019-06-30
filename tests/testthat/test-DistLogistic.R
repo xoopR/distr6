@@ -6,6 +6,7 @@ test_that("constructor",{
   expect_silent(Logistic$new())
   expect_silent(Logistic$new(mean = 1))
   expect_silent(Logistic$new(scale = 1))
+  expect_silent(Logistic$new(sd = 2))
   expect_error(Logistic$new(scale = 0))
 
   expect_equal(Logistic$new(mean = 2)$getParameterValue("mean"), 2)

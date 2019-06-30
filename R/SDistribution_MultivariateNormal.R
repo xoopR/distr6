@@ -40,11 +40,30 @@
 #' @inheritSection SDistribution Public Methods
 #'
 #' @examples
-#' MultivariateNormal$new(mean = c(0,0,0),
-#' cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+#' # Different parameterisations
+#' MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
+#' MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1)) # Equivalently
+#' MultivariateNormal$new(mean = c(0,0,0), prec = c(3,-1,-1,-1,1,0,-1,0,1))
 #'
-#' MultivariateNormal$new(mean = c(0,0,0),
-#' cov = c(3,-1,-1,-1,1,0,-1,0,1))
+#' x <- MultivariateNormal$new() # Default is bivariate standard normal
+#'
+#' # Update parameters
+#' x$setParameterValue(list(mean = c(1, 2)))
+#' x$setParameterValue(list(prec = c(1,0,0,1))) # When any parameter is updated, all others are too!
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' # Note the difference from R stats
+#' x$pdf(1, 2)
+#' # This allows vectorisation:
+#' x$pdf(1:3, 2:4)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -67,13 +86,10 @@ MultivariateNormal$set("public","mode",function(){
   return(self$getParameterValue("mean"))
 })
 MultivariateNormal$set("public","var",function(){
-  return(diag(self$cov()))
-})
-MultivariateNormal$set("public","cov",function(){
   return(self$getParameterValue("cov"))
 })
 MultivariateNormal$set("public","cor",function(){
-  return(self$cov() / (sqrt(self$var() %*% t(self$var()))))
+  return(self$var() / (sqrt(diag(self$var()) %*% t(diag(self$var())))))
 })
 MultivariateNormal$set("public","entropy",function(base = 2){
   return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
@@ -121,11 +137,13 @@ MultivariateNormal$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
   if(!is.null(paramlst$cov)) lst = c(lst, list(cov = paramlst$cov))
-  if(!is.null(paramlst$prec)) lst = c(lst, list(cov = solve(paramlst$prec)))
+  if(!is.null(paramlst$prec)) lst = c(lst, list(cov = solve(matrix(paramlst$prec,
+                                                                   nrow = self$getParameterValue("K"),
+                                                                   ncol = self$getParameterValue("K")))))
   return(lst)
 })
 
-MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = matrix(c(1,0,0,1),nrow=2),
+MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1,0,0,1),
                                                       prec = NULL, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
@@ -136,7 +154,7 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = mat
 
   pdf <- function(){
 
-    if(isSymmetric.matrix(self$cov()) & all(eigen(self$cov(),only.values = T)$values > 0)){
+    if(isSymmetric.matrix(self$var()) & all(eigen(self$var(),only.values = T)$values > 0)){
 
       K <- self$getParameterValue("K")
       cov <- self$getParameterValue("cov")
@@ -151,7 +169,7 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = mat
   formals(pdf) <- lst
 
   rand <- function(n){
-    ch <- chol(self$cov())
+    ch <- chol(self$var())
     xs <- matrix(rnorm(self$getParameterValue("K")*n), ncol = n)
     return(data.table::data.table(t(mean + ch %*% xs)))
   }

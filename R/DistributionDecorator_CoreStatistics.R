@@ -25,7 +25,6 @@
 #' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 #' \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
 #' \code{var()} \tab Variance \tab \code{\link{var}} \cr
-#' \code{cov()} \tab Covariance \tab \code{\link{cov}} \cr
 #' \code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
 #' }
 #'
@@ -254,8 +253,8 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #-------------------------------------------------------------
 #' @name var
 #' @title Distribution Variance
-#' @description The variance of a distribution, either calculated analytically if possible otherwise
-#' estimated numerically.
+#' @description The variance or covariance of a distribution, either calculated analytically if
+#' or estimated numerically.
 #'
 #' @usage var(object)
 #' @section R6 Usage: $var()
@@ -264,7 +263,8 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #'
 #' @details The variance of a distribution is defined by the formula
 #' \deqn{var_X = E[X^2] - E[X]^2}
-#' where \eqn{E_X} is the expectation of distribution X.
+#' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+#' covariance matrix is returned.
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
@@ -275,7 +275,8 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #' @export
 NULL
 CoreStatistics$set("public","var",function(){
-  return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
+  if(testUnivariate(self))
+    return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
 })
 
 #-------------------------------------------------------------
@@ -392,36 +393,6 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     }, lower = self$inf(), upper = self$sup())$value))
   }
 })
-
-#-------------------------------------------------------------
-# cov
-#-------------------------------------------------------------
-#' @title Distribution Covariance
-#' @name cov
-#' @description Covariance of a distribution.
-#'
-#' @usage cov(object)
-#' @section R6 Usage: $cov()
-#'
-#' @param object Distribution.
-#'
-#' @details The covariance of a distribution is defined by the equation,
-#' \deqn{\sigma_{XY} = E[(X - E[X])(Y - E[Y])], X != Y}
-#' where \eqn{E_X} is the expectation with respect to distribution X.
-#'
-#' If the distribution is univariate then returns the variance.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
-#'
-#' @export
-NULL
-CoreStatistics$set("public","cov",function(){
-  if(testUnivariate(self))
-    return(self$var())
-}) # TO DO
 
 #-------------------------------------------------------------
 # cor

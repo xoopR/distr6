@@ -46,6 +46,37 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' # Different parameterisations
+#' Geometric$new(prob = 0.2)
+#' Geometric$new(qprob = 0.7)
+#'
+#' # Different forms of the distribution
+#' Geometric$new(trials = TRUE) # Number of trials before first success
+#' Geometric$new(trials = FALSE) # Number of failures before first success
+#'
+#' # Use description to see which form is used
+#' Geometric$new(trials = TRUE)$description
+#' Geometric$new(trials = FALSE)$description
+#'
+#' x <- Geometric$new() # Default is prob = 0.5 and number of failures before first success
+#'
+#' # Update parameters
+#' x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all others are too!
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------
@@ -60,7 +91,6 @@ Geometric$set("public","short_name","Geom")
 Geometric$set("public","traits",list(type = PosIntegers$new(zero = T),
                                        valueSupport = "discrete",
                                        variateForm = "univariate"))
-Geometric$set("public","description","Gamma Probability Distribution.")
 Geometric$set("public","package","stats")
 
 Geometric$set("public","mean",function(){

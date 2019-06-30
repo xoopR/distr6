@@ -6,8 +6,9 @@
 \description{
 Mathematical and statistical functions for the Gamma distribution parameterised
 with shape and rate, \eqn{scale = 1/rate} or \eqn{mean = shape/rate}. The shape-rate Gamma distribution is defined by the pdf,
-\deqn{f(x) = (\beta^\alpha)/Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
-where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the rate parameter.
+\deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
+where \eqn{\alpha > 0} is the shape parameter, \eqn{\beta > 0} is the rate parameter and
+\eqn{\Gamma} is the gamma function.
 }
 \details{
 The Gamma Distribution is parameterised by default with shape and rate as this is most common
@@ -31,8 +32,8 @@ in statistics (particularly Bayesian).
 }
 
 \section{Constructor Details}{
- The Gamma distribution can either be parameterised with rate,
-scale or mean. If none are provided then the default is taken to be rate = 1 and shape = 1.
+ The Gamma distribution can either be parameterised with shape and
+rate, scale or mean. If none are provided then the default is taken to be rate = 1 and shape = 1.
 If multiple are provided then parameterisation takes the hierarchy: mean, scale, rate.
 Scale is defined by
 \deqn{scale = rate^-1}
@@ -74,14 +75,13 @@ Mean is defined by
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -118,3 +118,27 @@ Mean is defined by
   }
 }
 
+\examples{
+Gamma$new(shape = 1, rate = 2)
+Gamma$new(shape = 1, scale = 4)
+Gamma$new(shape = 1, mean = 0.5)
+
+x = Gamma$new(verbose = TRUE) # Default is shape = 1, rate = 1
+
+# Update parameters
+x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
+x$parameters()
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

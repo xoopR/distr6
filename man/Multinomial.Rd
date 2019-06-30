@@ -8,7 +8,7 @@ Mathematical and statistical functions for the Multinomial distribution paramete
 with size and probabilities and defined by the pmf,
 \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
 where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{K} categories and
-\eqn{n = 1,2,\ldots} is the number of trials.
+\eqn{n = 1,2,\ldots} is the number of trials. The distribution is supported on \eqn{\sum x_i = N}.
 }
 \details{
 The multinomial is constructed with a size and probs parameter. Size, number of trials,
@@ -75,14 +75,13 @@ to be passed to the pmf function. The probability vector is automatically normal
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -119,3 +118,27 @@ to be passed to the pmf function. The probability vector is automatically normal
   }
 }
 
+\examples{
+x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
+
+# Update parameters
+x$setParameterValue(list(size = 10))
+# Number of categories cannot be changed after construction
+x$setParameterValue(list(probs = c(1,2,3)))
+x$parameters()
+
+# p/d/q/r
+# Note the difference from R stats
+x$pdf(4, 4, 2)
+# This allows vectorisation:
+x$pdf(c(1,4),c(2,4),c(7,2))
+
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

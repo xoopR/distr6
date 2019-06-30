@@ -74,14 +74,17 @@ Imports:
     extraDistr,
     utils,
     expint,
-    data.table
+    data.table,
+    Bessel,
+    pracma
 Suggests: 
     knitr,
     testthat,
     devtools,
     rmarkdown,
     magrittr,
-    remotes
+    remotes,
+    actuar
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
@@ -124,14 +127,19 @@ Collate:
     'SDistribution_Cauchy.R'
     'SDistribution_ChiSquared.R'
     'SDistribution_Degenerate.R'
+    'SDistribution_Dirichlet.R'
     'SDistribution_DiscreteUniform.R'
     'SDistribution_Exponential.R'
     'SDistribution_FDistribution.R'
+    'SDistribution_Frechet.R'
     'SDistribution_Gamma.R'
     'SDistribution_Geometric.R'
     'SDistribution_Gompertz.R'
+    'SDistribution_Gumbel.R'
     'SDistribution_Hypergeometric.R'
+    'SDistribution_InverseGamma.R'
     'SDistribution_Laplace.R'
+    'SDistribution_LogLogistic.R'
     'SDistribution_Logarithmic.R'
     'SDistribution_Logistic.R'
     'SDistribution_Lognormal.R'
@@ -141,9 +149,11 @@ Collate:
     'SDistribution_Normal.R'
     'SDistribution_Pareto.R'
     'SDistribution_Poisson.R'
+    'SDistribution_Rayleigh.R'
     'SDistribution_StudentT.R'
     'SDistribution_Triangular.R'
     'SDistribution_Uniform.R'
+    'SDistribution_Wald.R'
     'SDistribution_Weibull.R'
     'SetInterval_Set.R'
     'Wrapper.R'

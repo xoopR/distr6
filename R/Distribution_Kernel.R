@@ -33,10 +33,10 @@
 #'   \tab \cr \tab \cr \tab \cr
 #'
 #'   \strong{Statistical Methods} \tab \strong{Link} \cr
-#'   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n)} \tab \code{\link{rand}} \cr
+#'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+#'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
 #'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
 #'   \code{var()} \tab \code{\link{var}} \cr
 #'   \code{sd()} \tab \code{\link{sd}} \cr
@@ -77,7 +77,7 @@ Kernel$set("public","mean",function(){
 Kernel$set("public","median",function(){
   return(0)
 })
-Kernel$set("public","rand",function(n){
+Kernel$set("public","rand",function(n, simplify = TRUE){
   if(length(n) > 1)
     n <- length(n)
 

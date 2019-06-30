@@ -6,8 +6,9 @@
 #'
 #' @description Mathematical and statistical functions for the Gamma distribution parameterised
 #' with shape and rate, \eqn{scale = 1/rate} or \eqn{mean = shape/rate}. The shape-rate Gamma distribution is defined by the pdf,
-#' \deqn{f(x) = (\beta^\alpha)/Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
-#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the rate parameter.
+#' \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
+#' where \eqn{\alpha > 0} is the shape parameter, \eqn{\beta > 0} is the rate parameter and
+#' \eqn{\Gamma} is the gamma function.
 #'
 #' @details The Gamma Distribution is parameterised by default with shape and rate as this is most common
 #' in statistics (particularly Bayesian).
@@ -27,8 +28,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Gamma distribution can either be parameterised with rate,
-#' scale or mean. If none are provided then the default is taken to be rate = 1 and shape = 1.
+#' @section Constructor Details: The Gamma distribution can either be parameterised with shape and
+#' rate, scale or mean. If none are provided then the default is taken to be rate = 1 and shape = 1.
 #' If multiple are provided then parameterisation takes the hierarchy: mean, scale, rate.
 #' Scale is defined by
 #' \deqn{scale = rate^-1}
@@ -37,6 +38,29 @@
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
+#'
+#' @examples
+#' Gamma$new(shape = 1, rate = 2)
+#' Gamma$new(shape = 1, scale = 4)
+#' Gamma$new(shape = 1, mean = 0.5)
+#'
+#' x = Gamma$new(verbose = TRUE) # Default is shape = 1, rate = 1
+#'
+#' # Update parameters
+#' x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -47,7 +71,7 @@ Gamma <- R6::R6Class("Gamma", inherit = SDistribution, lock_objects = F)
 Gamma$set("public","name","Gamma")
 Gamma$set("public","short_name","Gamma")
 
-Gamma$set("public","traits",list(type = PosReals$new(zero = T),
+Gamma$set("public","traits",list(type = PosReals$new(),
                                        valueSupport = "continuous",
                                        variateForm = "univariate"))
 

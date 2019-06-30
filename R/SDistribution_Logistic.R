@@ -5,26 +5,47 @@
 #' @title Logistic Distribution
 #'
 #' @description Mathematical and statistical functions for the Logistic distribution parameterised
-#' with mean (location) and scale.
+#' with mean (location) and scale or \eqn{sd = scale\sqrt(3)/\pi}, and defined by the pdf
+#' \deqn{f(x) = exp(-(x-\mu)/s) / (s*(1+exp(-(x-\mu)/s))^2)}
 #'
 #' @name Logistic
 #'
-#' @section Constructor: Logistic$new(mean = 0, scale = 1, decorators = NULL, verbose = FALSE)
+#' @section Constructor: Logistic$new(mean = 0, scale = 1, sd = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{mean} \tab numeric \tab location parameter. \cr
 #' \code{scale} \tab numeric \tab scale parameter. \cr
+#' \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Laplace distribution is parameterised with mean and
+#' @section Constructor Details: The Logistic distribution is parameterised with mean and
 #' scale. The default parameterisation is with mean 0 and scale 1.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
+#'
+#' @examples
+#' x <- Logistic$new(mean = 2, scale = 3)
+#'
+#' # Update parameters
+#' x$setParameterValue(list(sd = 2)) # When any parameter is updated, all others are too!
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -44,7 +65,7 @@ Logistic$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
 Logistic$set("public","var",function(){
-  return((self$getParameterValue("scale")^2)*(pi^2)/3)
+  return(self$getParameterValue("sd")^2)
 })
 Logistic$set("public","skewness",function(){
   return(0)
@@ -76,14 +97,15 @@ Logistic$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
+  if(!is.null(paramlst$sd)) lst = c(lst, list(scale = paramlst$sd*sqrt(3)/pi))
   return(lst)
 })
 
-Logistic$set("public","initialize",function(mean = 0, scale = 1,
+Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
                                           decorators = NULL, verbose = FALSE){
 
-  private$.parameters <- getParameterSet(self, mean, scale, verbose)
-  self$setParameterValue(list(mean = mean, scale = scale))
+  private$.parameters <- getParameterSet(self, mean, scale, sd, verbose)
+  self$setParameterValue(list(mean = mean, scale = scale, sd = sd))
 
   pdf <- function(x1) dlogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))
   cdf <- function(x1) plogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))

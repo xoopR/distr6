@@ -5,10 +5,11 @@
 \title{Logistic Distribution}
 \description{
 Mathematical and statistical functions for the Logistic distribution parameterised
-with mean (location) and scale.
+with mean (location) and scale or \eqn{sd = scale\sqrt(3)/\pi}, and defined by the pdf
+\deqn{f(x) = exp(-(x-\mu)/s) / (s*(1+exp(-(x-\mu)/s))^2)}
 }
 \section{Constructor}{
- Logistic$new(mean = 0, scale = 1, decorators = NULL, verbose = FALSE)
+ Logistic$new(mean = 0, scale = 1, sd = NULL, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -17,13 +18,14 @@ with mean (location) and scale.
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{mean} \tab numeric \tab location parameter. \cr
 \code{scale} \tab numeric \tab scale parameter. \cr
+\code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 
 \section{Constructor Details}{
- The Laplace distribution is parameterised with mean and
+ The Logistic distribution is parameterised with mean and
 scale. The default parameterisation is with mean 0 and scale 1.
 }
 
@@ -61,14 +63,13 @@ scale. The default parameterisation is with mean 0 and scale 1.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -105,3 +106,23 @@ scale. The default parameterisation is with mean 0 and scale 1.
   }
 }
 
+\examples{
+x <- Logistic$new(mean = 2, scale = 3)
+
+# Update parameters
+x$setParameterValue(list(sd = 2)) # When any parameter is updated, all others are too!
+x$parameters()
+
+# p/d/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$var()
+
+summary(x)
+
+}

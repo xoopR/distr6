@@ -48,6 +48,34 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' # Many parameterisations are possible
+#' Lognormal$new(var = 2, mean = 1)
+#' Lognormal$new(meanlog = 2, preclog = 5)
+#' Lognormal$new(meanlog = 4, sd = 2) # Note parameters must be on same scale (log or natural)
+#'
+#' x <- Lognormal$new(verbose = TRUE) # meanlog = 0, sdlog = 1 default
+#'
+#' # Update parameters
+#' x$setParameterValue(list(meanlog = 3)) # When any parameter is updated, all others are too!
+#' x$parameters()
+#'
+#' # But you can only set parameters on the same scale, the below has no effect
+#' x$setParameterValue(list(sd = 3))
+#' x$setParameterValue(list(sdlog = 3)) # But this does
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------
@@ -103,23 +131,15 @@ Lognormal$set("private",".getRefParams", function(paramlst){
   else var <- self$getParameterValue("var")
 
   if(self$parameters("meanlog")$settable){
-    if(!is.null(paramlst$mean)) lst = c(lst, list(meanlog = log(paramlst$mean/sqrt(1 + var/paramlst$mean^2))))
-    if(!is.null(paramlst$var)) lst = c(lst, list(varlog = log(1 + paramlst$var/mean^2)))
-    if(!is.null(paramlst$sd)) lst = c(lst, list(varlog = log(1 + (paramlst$sd/mean)^2)))
-    if(!is.null(paramlst$prec)) lst = c(lst, list(varlog = log(1 + paramlst$prec^-1/mean^2)))
-    if(!is.null(paramlst$meanlog)) lst = c(lst, list(meanlog = paramlst$meanlog))
-    if(!is.null(paramlst$varlog)) lst = c(lst, list(varlog = paramlst$varlog))
-    if(!is.null(paramlst$sdlog)) lst = c(lst, list(varlog = paramlst$sdlog^2))
-    if(!is.null(paramlst$preclog)) lst = c(lst, list(varlog = paramlst$preclog^-1))
+    if(!is.null(paramlst[["meanlog"]])) lst = c(lst, list(meanlog = paramlst$meanlog))
+    if(!is.null(paramlst[["varlog"]])) lst = c(lst, list(varlog = paramlst$varlog))
+    if(!is.null(paramlst[["sdlog"]])) lst = c(lst, list(varlog = paramlst$sdlog^2))
+    if(!is.null(paramlst[["preclog"]])) lst = c(lst, list(varlog = paramlst$preclog^-1))
   } else {
-    if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-    if(!is.null(paramlst$var)) lst = c(lst, list(var =  paramlst$var))
-    if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
-    if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
-    if(!is.null(paramlst$meanlog)) lst = c(lst, list(mean = exp(paramlst$meanlog + paramlst$varlog/2)))
-    if(!is.null(paramlst$varlog)) lst = c(lst, list(var = (exp(paramlst$varlog)-1)*exp(2*paramlst$meanlog + paramlst$varlog)))
-    if(!is.null(paramlst$sdlog)) lst = c(lst, list(var = (exp(paramlst$sdlog^2)-1)*exp(2*meanlog + paramlst$sdlog^2)))
-    if(!is.null(paramlst$preclog)) lst = c(lst, list(var = (exp(paramlst$prec^-1)-1)*exp(2*meanlog + paramlst$prec^-1)))
+    if(!is.null(paramlst[["mean"]])) lst = c(lst, list(mean = paramlst$mean))
+    if(!is.null(paramlst[["var"]])) lst = c(lst, list(var =  paramlst$var))
+    if(!is.null(paramlst[["sd"]])) lst = c(lst, list(var = paramlst$sd^2))
+    if(!is.null(paramlst[["prec"]])) lst = c(lst, list(var = paramlst$prec^-1))
   }
 
     return(lst)

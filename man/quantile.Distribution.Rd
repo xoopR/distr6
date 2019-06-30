@@ -4,7 +4,8 @@
 \alias{quantile.Distribution}
 \title{Inverse Cumulative Distribution Function}
 \usage{
-\method{quantile}{Distribution}(x, p, ..., lower.tail = TRUE, log.p)
+\method{quantile}{Distribution}(x, p, ..., lower.tail = TRUE, log.p,
+  simplify = TRUE)
 }
 \arguments{
 \item{x}{Distribution.}
@@ -16,6 +17,8 @@
 \item{lower.tail}{logical; if TRUE, probabilities p are given as log(p).}
 
 \item{log.p}{ignored, retained for consistency.}
+
+\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
 }
 \description{
 Returns the inverse cumulative distribution, aka quantile, function for a distribution
@@ -36,7 +39,7 @@ Additional named arguments can be passed, which are required for composite distr
 \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 }
 \section{R6 Usage}{
- $quantile(p, ..., lower.tail = TRUE, log.p = FALSE)
+ $quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 }
 
 \seealso{

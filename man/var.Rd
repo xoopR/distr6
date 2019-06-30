@@ -10,13 +10,14 @@ var(object)
 \item{object}{Distribution.}
 }
 \description{
-The variance of a distribution, either calculated analytically if possible otherwise
-estimated numerically.
+The variance or covariance of a distribution, either calculated analytically if
+or estimated numerically.
 }
 \details{
 The variance of a distribution is defined by the formula
 \deqn{var_X = E[X^2] - E[X]^2}
-where \eqn{E_X} is the expectation of distribution X.
+where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+covariance matrix is returned.
 
 If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 \code{\link{CoreStatistics}} decorator.

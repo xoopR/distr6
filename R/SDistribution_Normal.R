@@ -40,6 +40,29 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @examples
+#' # Different parameterisations
+#' Normal$new(var = 1, mean = 1)
+#' Normal$new(prec = 2, mean = 1)
+#' Normal$new(mean = 1, sd = 2)
+#' x <- Normal$new(verbose = TRUE) # Standard normal default
+#'
+#' # Update parameters
+#' x$setParameterValue(list(var = 2))
+#' x$parameters()
+#'
+#' # p/d/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$var()
+#'
+#' summary(x)
+#'
 #' @export
 NULL
 #-------------------------------------------------------------

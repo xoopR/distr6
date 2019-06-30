@@ -72,14 +72,13 @@ list should equal the number of elements. The probability vector is automaticall
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{var()} \tab \code{\link{var}} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -117,8 +116,22 @@ list should equal the number of elements. The probability vector is automaticall
 }
 
 \examples{
+# Note probabilities are automatically normalised
 x = Categorical$new("Bapple","Banana",2,probs=c(0.2,0.4,1))
+
+# Only the probabilities can be changed and must the same length as in construction
+x$setParameterValue(list(probs = c(0.1,0.2,0.7)))
+
+# p/d/q/r
 x$pdf(c("Bapple", "Carrot", 1, 2))
+x$cdf("Banana") # Assumes ordered in construction
 x$rand(10)
+
+# Statistics
+x$mode()
+
+summary(x)
+
+
 
 }

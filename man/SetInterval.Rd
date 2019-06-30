@@ -18,6 +18,7 @@ Whilst this is not an abstract class, direct construction is generally not advis
    \code{type} \tab character \tab Interval type, one of (), (], [), []. \cr
    \code{lower} \tab numeric \tab Lower limit of set/interval. \cr
    \code{upper} \tab numeric \tab Upper limit of set/interval. \cr
+   \code{class} \tab character \tab Atomic class, one of "numeric" or "integer". \cr
    \code{dimension} \tab integer \tab Dimension of set/interval.
 }
 }
@@ -29,6 +30,7 @@ Whilst this is not an abstract class, direct construction is generally not advis
 \code{lower} \tab numeric \tab Lower limit of set/interval. \cr
 \code{upper} \tab numeric \tab Upper limit of set/interval. \cr
 \code{type} \tab  character \tab Closed/open interval type. \cr
+\code{class} \tab  character \tab Class of set/interval. \cr
 \code{dimension} \tab integer \tab Dimension of set/interval. \cr
 \code{max} \tab  numeric \tab Maximum of set/interval. \cr
 \code{min} \tab  numeric \tab Minimum of set/interval. \cr
