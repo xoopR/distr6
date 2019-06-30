@@ -15,7 +15,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates_traits.html) we looked at multivariate distributions and how to use the p/d/q/r functions to evaluate multiple points of these. This tutorial concludes the 'Basic' set of tutorials with the use of 'listing' in distr6.
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we looked at multivariate distributions and how to use the p/d/q/r functions to evaluate multiple points of these. This tutorial concludes the 'Basic' set of tutorials with the use of 'listing' in distr6.
 
 ## Listing
 
