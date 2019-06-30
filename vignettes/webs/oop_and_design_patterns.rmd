@@ -1,6 +1,7 @@
 ---
 title: "OOP and Design Patterns"
 output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{OOP and Design Patterns}
   %\VignetteEngine{knitr::rmarkdown}

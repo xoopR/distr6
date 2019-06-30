@@ -7,23 +7,23 @@ navbar:
   - text: OOP and R6
     menu:
     - text: OOP and Design Patterns
-      href: articles/oop_and_design_patterns.html  
+      href: articles/webs/oop_and_design_patterns.html  
     - text: R6 and Design Patterns
-      href: articles/r6_and_design_patterns.html
+      href: articles/webs/r6_and_design_patterns.html
     - text: Documentation in R6
-      href: articles/documentation_in_r6.html
+      href: articles/webs/documentation_in_r6.html
   - text: API and Design
     menu:
     - text: Analytic and Numeric Methods
-      href: articles/analytic_and_numeric_methods.html
+      href: articles/webs/analytic_and_numeric_methods.html
     - text: API Lifecycle
-      href: articles/api_lifecycle.html
+      href: articles/webs/api_lifecycle.html
     - text: Roadmap
-      href: articles/roadmap.html  
+      href: articles/webs/roadmap.html  
   - text: Tutorials
     menu:
     - text: Overview to distr6 v0
-      href: articles/tutorial_overview_to_distr6_v0.html
+      href: articles/webs/tutorial_overview_to_distr6_v0.html
   right:
   - text: Reference
     href: reference/
@@ -41,9 +41,66 @@ reference:
     desc: "Functions for Distribution constructor and helpers."
     contents: 
       - Distribution
+      - SDistribution
+      - Kernel
       - exkurtosisType
       - skewType
-      - listDistributions
+      - liesInDistrDomain
+      - liesInSupport
+      - liesInType
+  - title: "Mathematical and Statistical"
+    desc: "Mathematical and statistical functions acting on Distribution objects."
+    contents: 
+      - cdf
+      - cdfAntiDeriv
+      - cdfPNorm
+      - cf
+      - cor
+      - cumHazard
+      - entropy
+      - genExp
+      - generalPNorm
+      - hazard
+      - kthmoment
+      - kurtosis
+      - mean.Distribution
+      - median.Distribution
+      - mgf
+      - mode
+      - pdf
+      - pdfPNorm
+      - pgf
+      - prec
+      - quantile.Distribution
+      - rand
+      - sd
+      - skewness
+      - skewnessType
+      - squared2Norm
+      - survival
+      - survivalAntiDeriv
+      - survivalPNorm
+      - var
+  - title: "Distribution Accessors"
+    desc: "Accessor methods for Distribution objects."
+    contents: 
+      - decorators
+      - distrDomain
+      - dmax
+      - dmin
+      - inf
+      - iqr
+      - kurtosisType
+      - parameters
+      - properties
+      - strprint
+      - summary.Distribution
+      - sup
+      - support
+      - symmetry
+      - type
+      - valueSupport
+      - variateForm
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
@@ -57,7 +114,7 @@ reference:
     desc: "Functionality for composite modelling including joint and conditional distributions."
     contents:
       - DistributionWrapper
-      - ConcreteWrapper
+      - wrappedModels
       - ArrayDistribution
       - ProductDistribution
       - HuberizedDistribution
@@ -66,14 +123,54 @@ reference:
       - truncate
       - MixtureDistribution
       - Scale
-  - title: "Discrete Distributions"
-    desc: "Discrete probability distributions."
+      - VectorDistribution
+  - title: "Univariate Discrete Distributions"
     contents:
+      - Bernoulli
       - Binomial
-  - title: "Continuous Distributions"
-    desc: "Continuous probability distributions."
+      - Categorical
+      - DiscreteUniform
+      - Geometric
+      - Hypergeometric
+      - Logarithmic
+      - Poisson
+  - title: "Univariate Continuous Distributions"
     contents:
+      - Arcsine
+      - Beta
+      - Cauchy
+      - ChiSquared
+      - Degenerate
       - Exponential
+      - FDistribution
+      - Gamma
+      - Gompertz
+      - Laplace
+      - Logistic
+      - Lognormal
+      - Normal
+      - Pareto
+      - StudentT
+      - Triangular
+      - Uniform
+      - Weibull
+  - title: "Multivariate Distributions"
+    contents:
+      - Multinomial
+      - MultivariateNormal
+  - title: "Kernels"
+    contents:
+      - Cosine
+      - Epanechnikov
+      - Gaussian
+      - KLogistic
+      - KTriangular
+      - KUniform
+      - Quartic
+      - Sigmoid
+      - Silverman
+      - Tricube
+      - Triweight
   - title: "Assertions"
     desc: "Validation checks for Distributions."
     contents:
@@ -85,6 +182,7 @@ reference:
       - Interval
       - Set
       - SpecialSet
+      - Empty
       - Naturals
       - Integers
       - Rationals
@@ -95,6 +193,7 @@ reference:
       - starts_with("Neg")
       - setSymbol
       - operation
+      - complement
       - power
       - product
       - union
@@ -103,8 +202,14 @@ reference:
     desc: "Miscellaneous functions for use in distr6."
     contents: 
       - makeUniqueDistributions
+      - listDistributions
+      - listKernels
+      - listWrappers
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
       - ParameterSet
       - as.ParameterSet
+      - getParameterSupport
+      - getParameterValue
+      - setParameterValue
