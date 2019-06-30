@@ -11,8 +11,8 @@
 #' \eqn{\Gamma} is the gamma function.
 #'
 #' @details The InverseGamma Distribution uses the extraDistr package as it provides a quantile function
-#' that computes the inverse upper incomplete Gamma function. The BesselK function from the package
-#' Bessel is used to compute the characteristic function.
+#' that computes the inverse upper incomplete Gamma function. The cf is ommitted as no working function for the
+#' modified Bessel of the second kind taking complex inputs  could be found.
 #'
 #' @name InverseGamma
 #'
@@ -107,11 +107,11 @@ InverseGamma$set("public","entropy",function(base = 2){
 InverseGamma$set("public", "mgf", function(t){
   return(NaN)
 })
-InverseGamma$set("public", "cf", function(t){
-  p1 = (2 * (-1i * self$getParameterValue("scale") *t)^(self$getParameterValue("shape")/2))/gamma(self$getParameterValue("shape"))
-  p2 = Bessel::BesselK(sqrt(-4i*self$getParameterValue("scale")*t), self$getParameterValue("shape"))
-  return(p1*p2)
-})
+# InverseGamma$set("public", "cf", function(t){
+#   p1 = (2 * (-1i * self$getParameterValue("scale") *t)^(self$getParameterValue("shape")/2))/gamma(self$getParameterValue("shape"))
+#   p2 = Bessel::BesselK(sqrt(-4i*self$getParameterValue("scale")*t), self$getParameterValue("shape"))
+#   return(p1*p2)
+# })
 
 InverseGamma$set("private",".getRefParams", function(paramlst){
   lst = list()

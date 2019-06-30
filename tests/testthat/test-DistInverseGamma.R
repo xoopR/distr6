@@ -37,7 +37,7 @@ test_that("statistics",{
   expect_equal(g$entropy(), 1 - digamma(1)*2)
 
   expect_equal(g$mgf(1), NaN)
-  expect_equal(g$cf(1), 2*(-1i * 1 * 1)^0.5 * Bessel::BesselK(sqrt(-4*1i),1))
+  expect_error(g$cf(1))
   expect_equal(g$mode(), 1/2)
   expect_equal(g$pdf(1), extraDistr::dinvgamma(1,1,1))
   expect_equal(g$cdf(1), extraDistr::pinvgamma(1,1,1))

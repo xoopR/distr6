@@ -12,8 +12,8 @@ where \eqn{\alpha > 0} is the shape parameter, \eqn{\beta > 0} is the scale para
 }
 \details{
 The InverseGamma Distribution uses the extraDistr package as it provides a quantile function
-that computes the inverse upper incomplete Gamma function. The BesselK function from the package
-Bessel is used to compute the characteristic function.
+that computes the inverse upper incomplete Gamma function. The cf is ommitted as no working function for the
+modified Bessel of the second kind taking complex inputs  could be found.
 }
 \section{Constructor}{
  InverseGamma$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)

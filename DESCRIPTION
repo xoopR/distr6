@@ -75,7 +75,6 @@ Imports:
     utils,
     expint,
     data.table,
-    Bessel,
     pracma
 Suggests: 
     knitr,
@@ -83,7 +82,6 @@ Suggests:
     devtools,
     rmarkdown,
     magrittr,
-    remotes,
     actuar
 License: MIT + file LICENSE
 LazyData: true
