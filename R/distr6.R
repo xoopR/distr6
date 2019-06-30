@@ -9,7 +9,7 @@
 #' The main features of distr6 are:
 #'
 #' \itemize{
-#' \item Currently implements 29 probability distributions including all distributions in the R
+#' \item Currently implements 36 probability distributions (and 11 Kernels) including all distributions in the R
 #' stats package. Each distribution has (where possible) closed form analytic expressions for
 #' basic statistical methods.
 #' \item Decorators that add further functionality to probability distributions including numeric

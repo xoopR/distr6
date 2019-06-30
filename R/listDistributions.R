@@ -3,13 +3,12 @@
 #' traits and implemented package.
 #' @param simplify logical.
 #' @param filter list to filter distributions by.
-#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
 #' @examples
 #' listDistributions()
 #' listDistributions(filter = list(VariateForm = "univariate"))
 #' listDistributions(filter = list(ValueSupport = "discrete"))
 #' @export
-listDistributions <- function(simplify=FALSE, filter=NULL, view = FALSE){
+listDistributions <- function(simplify=FALSE, filter=NULL){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "SDistribution_generator")
@@ -46,9 +45,7 @@ listDistributions <- function(simplify=FALSE, filter=NULL, view = FALSE){
       }
     }
     if("ShortName" %in% rownames(data.frame(distrs))) distrs = t(distrs)
-    if(view)
-      utils::View(data.table::data.table(distrs))
-    else
-      return(data.table::data.table(distrs))
+
+    return(data.table::data.table(distrs))
   }
 }

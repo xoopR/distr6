@@ -8,8 +8,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r include = FALSE}
 library(distr6)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernel, of class `Kernel`, should only contain analytic methods. This ensures that all results are as precise as possible and ensure optimal efficiency. The figure below gives a visual representation of how this looks. Moreover we further minimise error by restricting any possible numeric calculations such as in Beta or Gamma functions to only methods implemented in R stats, such as `beta` and `gamma`, or in the `pracma` package. For distributions where no closed form analytic expression can be found, details of this are found in the 'Details' section of the distribution's help page. To impute numeric results, decorators are used.

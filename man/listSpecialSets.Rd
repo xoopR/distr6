@@ -4,12 +4,10 @@
 \alias{listSpecialSets}
 \title{Lists Implemented R6 Special Sets}
 \usage{
-listSpecialSets(simplify = FALSE, view = FALSE)
+listSpecialSets(simplify = FALSE)
 }
 \arguments{
 \item{simplify}{logical. If FALSE (default) returns data.table of set name and symbol, otherwise character.}
-
-\item{view}{logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.}
 }
 \description{
 Lists special sets that can be used in SetInterval.

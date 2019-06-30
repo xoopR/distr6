@@ -4,7 +4,7 @@
 \alias{LogLogistic}
 \title{Log-Logistic Distribution}
 \description{
-Mathematical and statistical functions for the Log-Logistic distribution parameterised
+Mathematical and statistical functions for the Log-Logistic (aka Fisk) distribution parameterised
 with shape, scale and location, and defined by the pdf
 \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
 where \eqn{\beta > 0} is the shape parameter, \eqn{\alpha > 0} is the scale parameter and

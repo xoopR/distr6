@@ -8,10 +8,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-distr6 is a unified, self-contained and scalable interface to probability distributions in R. Making
-use of the R6 paradigm, distr6 implements a fully object-oriented (OO) interface complete with
-distribution construction, full inheritence and more complex design patterns. The API is built to be
-scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found [here](https://alan-turing-institute.github.io/distr6/index.html). In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The [website](https://alan-turing-institute.github.io/distr6/index.html) covers more complex use-cases inlcuding composite distributons and decorators for numeric methods.
+distr6 is a unified, self-contained and scalable interface to probability distributions in R. Making use of the R6 paradigm, distr6 implements a fully object-oriented (OO) interface complete with distribution construction, full inheritence and more complex design patterns. The API is built to be scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found [here](https://alan-turing-institute.github.io/distr6/index.html). In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The [website](https://alan-turing-institute.github.io/distr6/index.html) covers more complex use-cases inlcuding composite distributons and decorators for numeric methods.
 
 
 ## Getting Started
@@ -21,7 +18,6 @@ We think the best place to get started is to pick a probability distribution and
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
-remotes::install_github("alan-turing-institute/distr6")
 library("distr6")
 set.seed(42)
 ```

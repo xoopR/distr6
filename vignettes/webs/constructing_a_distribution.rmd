@@ -10,7 +10,7 @@ vignette: >
 
 ```{r include = FALSE}
 library(distr6)
-knitr::opts_chunk$set(collapse = TRUE, comment = "#")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 First and foremost, distr6 is a package for probability distributions in R. Currently there are 36 distributions implemented in distr6 and another 11 kernels. These tutorials try to follow the journey for using, editing and analysing a probability distribution. Don't worry if you've never used R6 before, these tutorials assume no prior knowledge of R6. If you're interested in learning the basics of R6, see the tutorial "Introduction to R6", this tutorial is particularly useful for understanding how to copy (or clone) distributions in R.

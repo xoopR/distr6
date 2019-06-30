@@ -8,6 +8,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r include = FALSE}
+library(distr6)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
 Despite R6 becoming more commonplace in R packages, we have found no documentation of best practices for using R6 and object-oriented programming (OOP) methods and design patterns. Hence we propose our own R6 snippets and workarounds for common design patterns and other OOP methods. We have implemented the following OOP processes and design patterns thus far:
 
 1. [Abstract Classes](#abstract-classes)

@@ -3,14 +3,14 @@ title: "Getting and Setting Parameters"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Constructing a Distribution}
+  %\VignetteIndexEntry{Getting and Setting Parameters}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r include = FALSE}
 library(distr6)
-knitr::opts_chunk$set(collapse = TRUE, comment = "#")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 In our [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html) we constructed a Normal distribution with a variety of parameterisations. Now we will look at how to access the parameters of the distribution and how to update them.
