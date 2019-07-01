@@ -20,6 +20,18 @@ navbar:
         href: articles/webs/multivariates.html
       - text: Listing
         href: articles/webs/listing.html
+  - text: Advanced
+    menu:
+      - text: S3 and Piping
+        href: articles/webs/s3_piping.html
+      - text: Decorators
+        href: articles/webs/decorators.html
+      - text: Wrappers
+        href: articles/webs/wrappers.html
+      - text: Sets and Intervals
+        href: articles/webs/sets.html
+      - text: Custom Distributions
+        href: articles/webs/custom_distributions.html
   - text: OOP and R6
     menu:
     - text: OOP and Design Patterns
@@ -159,19 +171,26 @@ reference:
       - Degenerate
       - Exponential
       - FDistribution
+      - Frechet
       - Gamma
       - Gompertz
+      - Gumbel
+      - InverseGamma
       - Laplace
       - Logistic
+      - LogLogistic
       - Lognormal
       - Normal
       - Pareto
+      - Rayleigh
       - StudentT
       - Triangular
       - Uniform
+      - Wald
       - Weibull
   - title: "Multivariate Distributions"
     contents:
+      - Dirichlet
       - Multinomial
       - MultivariateNormal
   - title: "Kernels"
@@ -221,6 +240,7 @@ reference:
       - listDistributions
       - listKernels
       - listWrappers
+      - distr6-package
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
