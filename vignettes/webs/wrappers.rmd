@@ -40,7 +40,7 @@ Just like decorators, wrappers are a design pattern commonly used in object-orie
 
 ```{r}
 class(Normal$new())
-class(truncate(Normal$new()),-1,1)
+class(truncate(Normal$new()))
 ```
 
 See how the Normal distribution becomes an object of class `TruncatedDistribution` which in itself is of class `DistributionWrapper`. This tells the machine to expect a slightly different interface but it still recognises the original Normal distirbution that is being wrapped.
@@ -147,7 +147,7 @@ Whilst mixture distributions are composties, they are still univariate:
 
 ```{r}
 M$pdf(1)
-B$pdf(1) * 0.1 + B$pdf(1) * 0.5 + E*pdf(1) * 0.4
+N$pdf(1) * 0.1 + B$pdf(1) * 0.5 + E$pdf(1) * 0.4
 M$cdf(1)
 M$rand(4)
 plot(x = seq.int(-3,10,0.1), y = M$pdf(seq.int(-3,10,0.1)),type="l")
