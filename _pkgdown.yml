@@ -48,10 +48,6 @@ navbar:
       href: articles/webs/api_lifecycle.html
     - text: Roadmap
       href: articles/webs/roadmap.html  
-  - text: Tutorials
-    menu:
-    - text: Overview to distr6 v0
-      href: articles/webs/tutorial_overview_to_distr6_v0.html
   right:
   - text: Reference
     href: reference/
