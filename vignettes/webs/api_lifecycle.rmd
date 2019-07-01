@@ -16,17 +16,17 @@ distr6 v1 is now live and most of the API is stable however some aspects are sti
 
 The lists below use the headings name from the [reference page](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions) of the website.
 
-### Experimental Classes and Methods ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+## Experimental Classes and Methods ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 * [Function Imputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
 * [Scale](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
 * [Convolution](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
 
-### Maturing Classes and Methods ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+## Maturing Classes and Methods ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
 * [Kernels](https://alan-turing-institute.github.io/distr6/reference/#section-kernels)
 
-### Stable Classes and Methods ![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
+## Stable Classes and Methods ![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 
 * [Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-distributions)
 * [Mathematical and Statistical](https://alan-turing-institute.github.io/distr6/reference/#section-mathematical-and-statistical)
