@@ -19,7 +19,7 @@ In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articl
 
 ## Properties vs Traits
 
-Before discussing how to actually view properties and traits it is worth understand the difference beween the two. In computer science and object-oriented programming terms, the difference is that a trait relates to a class whereas a property relates to an object. In terms of a probability distribution, the difference is that a distribution traits holds independently of the parameterisation, whereas a distribution property depends on the parameterisation. For example the Normal distribution is always univariate continuous and the Binomial distribution is always univariate discrete, hence we refer to these as traits. Whereas the Binomial distribution is symmetric if and only if the probability of success is 0.5, otherwise it's asymmetric, hence we refer to symmetry as a property.
+Before discussing how to actually view properties and traits it is worth understand the difference between the two. In computer science and object-oriented programming terms, the difference is that a trait relates to a class whereas a property relates to an object. In terms of a probability distribution, the difference is that a distribution traits holds independently of the parameterisation, whereas a distribution property depends on the parameterisation. For example the Normal distribution is always univariate continuous and the Binomial distribution is always univariate discrete, hence we refer to these as traits. Whereas the Binomial distribution is symmetric if and only if the probability of success is 0.5, otherwise it's asymmetric, hence we refer to symmetry as a property.
 
 ## Traits
 
@@ -41,7 +41,7 @@ N$valueSupport()
 N$variateForm()
 ```
 
-Note that `traits` is a variable (no parantheses after it) whereas calling specific traits is a method and thus require parantheses, this is because traits are class properties.
+Note that `traits` is a variable (no parentheses after it) whereas calling specific traits is a method and thus require parentheses, this is because traits are class properties.
 
 ## Properties
 
@@ -49,11 +49,11 @@ The properties included in distr6 are kurtosis, skewness, symmetry, support, dis
 
 Kurtosis is a measure of how heavy a distribution's tails us. A distribution is one of: mesokurtic (kurtosis equals that of the Normal distribution), leptokurtic (kurtosis is higher than Normal distribution), platykurtic (kurtosis is smaller than Normal distributions). In slightly simpler terms: a platykurtic distribution is likely to produce less outliers (or extreme deviations) than a Normal distribution, a mesokurtic distribution will produce the same amount and a leptokurtic distribution will produce more.
 
-Skewness is a slightly easier concept to understand. It refers to the shape of the distribution and specifically if a distribution is negative skew (skew < 0) then the 'tail' is on the left side of the distribution whereas a positive skew distirbution has its 'tail' on the right. If a distribution is symmetric there is no skew (although the reverse doesn't necessarily hold).
+Skewness is a slightly easier concept to understand. It refers to the shape of the distribution and specifically if a distribution is negative skew (skew < 0) then the 'tail' is on the left side of the distribution whereas a positive skew distribution has its 'tail' on the right. If a distribution is symmetric there is no skew (although the reverse doesn't necessarily hold).
 
 Symmetry is one of 'symmetric' or 'asymmetric' and is an informal way of identifying if the pdf of the distribution is symmetric about a single point (the median). Informally, the distribution support is the set of values that produce a non-zero results when plugged into the pdf and the distrDomain is a similar concept except generalised to the family of distributions (i.e. before parameterisation).
 
-To view properties in distr6, we use the `properties()` method, note that this is a method (with parantheses) and not a variable:
+To view properties in distr6, we use the `properties()` method, note that this is a method (with parentheses) and not a variable:
 ```{r}
 Normal$new()$properties()
 ```
@@ -72,7 +72,7 @@ Note that `kurtosisType()` and `skewnessType()` are used as these produce the ty
 
 ## Other Distribution Variables
 
-There are three other variables that can be accessed from a distribution. Once again a variable differs from a method in that it relates to the class and is called without parantheses. These are respectively `name`, `short_name` and `description`, hopefully their output is intuitive
+There are three other variables that can be accessed from a distribution. Once again a variable differs from a method in that it relates to the class and is called without parentheses. These are respectively `name`, `short_name` and `description`, hopefully their output is intuitive
 ```{r}
 N$name
 N$short_name

@@ -32,7 +32,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) introduced decorators in distr6. These are used to add numeric and more complex methods to the distirbution interface. Wrappers are the next big distr6 feature and serve a similar purpose.
+The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) introduced decorators in distr6. These are used to add numeric and more complex methods to the distribution interface. Wrappers are the next big distr6 feature and serve a similar purpose.
 
 ## Wrappers
 
@@ -143,7 +143,7 @@ M$description
 class(M)
 ```
 
-Whilst mixture distributions are composties, they are still univariate:
+Whilst mixture distributions are composites, they are still univariate:
 
 ```{r}
 M$pdf(1)

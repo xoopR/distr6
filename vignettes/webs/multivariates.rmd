@@ -15,7 +15,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html) we used variables and methods to find properties and traits of the Normal distribution. Before that we looked at statistical methods and construction of the Normal distirbution. In this tutorial we look at multivariate distributions, which should feel similar to univariate distributions.
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html) we used variables and methods to find properties and traits of the Normal distribution. Before that we looked at statistical methods and construction of the Normal distribution. In this tutorial we look at multivariate distributions, which should feel similar to univariate distributions.
 
 ## Constructing a Multivariate Distribution
 

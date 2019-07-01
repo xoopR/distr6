@@ -19,7 +19,7 @@
 #'
 #' @section Constructor Details:
 #' An R6 ParameterSet is required to construct a custom Probability Distribution that takes parameters.
-#' This constructor ensures that the correct format of parameters is supplied to the disitribution.
+#' This constructor ensures that the correct format of parameters is supplied to the distribution.
 #'
 #' Every argument can either be given as the correct type (as listed above) or as a list of that type.
 #' If arguments are provided as a list, then each argument must be of the same length list, with values

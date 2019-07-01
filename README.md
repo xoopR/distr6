@@ -1,7 +1,7 @@
-Untitled
+distr6
 ================
 
-# distr6 <img src="man/figures/logo.png" align="right" alt="" width="120" />
+<img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![Travis Build
 Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](https://travis-ci.com/alan-turing-institute/distr6)
@@ -15,16 +15,13 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 ## What is distr6?
 
-distr6 is a unified and clean interface to organise the hundreds of
-probability distributions implemented in R into one R6 object oriented
-package.
-
-Our short-term aims are to implement all distributions in the R stats
-package as well as some other commonly utilised distributions. We also
-allow for user-defined probability distributions/families via multiple
-inheritance. Building the package from the ground up and making use of
-tried and tested design patterns (as per Gamma et al. 1994), distr6 aims
-to be the only package needed for probability distributions in R.
+distr6 is a unified and clean interface to organise the probability
+distributions implemented in R into one R6 object oriented package, as
+well as adding distributions yet to implemented in R, currently we have
+36 probability distributions as well as 11 kernels. Building the package
+from the ground up and making use of tried and tested design patterns
+(as per Gamma et al. 1994), distr6 aims to make probability
+distributions easy to use, understand and analyse.
 
 distr6 extends the work of Peter Ruckdeschel, Matthias Kohl et al. who
 created the first object-oriented (OO) interface for distributions using
@@ -32,9 +29,8 @@ S4. Their [distr package](http://distr.r-forge.r-project.org/) is
 currently the gold-standard in R for OO distribution handling. Using R6
 we aim to take this even further and to create a scalable interface that
 can continue to grow with the community. Full details of the API and
-class structure can be seen in the project [wiki
-page](https://github.com/alan-turing-institute/distr6/wiki) and the
-[distr6 website](https://alan-turing-institute.github.io/distr6/).
+class structure can be seen in the [distr6
+website](https://alan-turing-institute.github.io/distr6/).
 
 ## Main Features
 
@@ -42,9 +38,11 @@ distr6 is not intended to replace the base R distributions function but
 instead to give an alternative that focuses on distributions as objects
 that can be manipulated and accessed as required. The main features
 therefore centre on OOP practices, design patterns and API design. Of
-particular note: \* All distributions in base R introduced as objects
-with methods for common statistical functions including pdf, cdf,
-inverse cdf, simulation, mean, variance, skewness and kurtosis
+particular note:
+
+All distributions in base R introduced as objects with methods for
+common statistical functions including pdf, cdf, inverse cdf,
+simulation, mean, variance, skewness and kurtosis
 
 ``` r
 B <- Binomial$new(prob = 0.5, size = 10)
@@ -57,7 +55,7 @@ B$rand(5)
 #> [1] 7 7 4 7 6
 summary(B)
 #> Binomial with parameterisation:
-#>   prob = 0.5; size = 10
+#>   prob = 0.5, size = 10
 #> 
 #>  Quick Statistics: 
 #>  Mean    Variance    Skewness    Excess Kurtosis
@@ -71,9 +69,7 @@ summary(B)
 #>   See properties() for more
 ```
 
-  - Flexible construction of distributions for common parameterisations
-
-<!-- end list -->
+Flexible construction of distributions for common parameterisations
 
 ``` r
 Exponential$new(rate = 2)
@@ -95,10 +91,8 @@ Normal$new(mean = 0, sd = 3)$parameters()
 #> 4: Precision - Inverse Squared Scale Parameter
 ```
 
-  - Decorators for extending functionality of distributions to more
-    complex modelling methods
-
-<!-- end list -->
+Decorators for extending functionality of distributions to more complex
+modelling methods
 
 ``` r
 B <- Binomial$new()
@@ -114,10 +108,8 @@ B$kthmoment(6)
 #> [1] 190
 ```
 
-  - S3 compatibility to make the interface more flexible for users who
-    are less familiar with OOP
-
-<!-- end list -->
+S3 compatibility to make the interface more flexible for users who are
+less familiar with OOP
 
 ``` r
 B <- Binomial$new()
@@ -129,11 +121,8 @@ cdf(B, 2:5) # B$cdf(2:5)
 #> [1] 0.0546875 0.1718750 0.3769531 0.6230469
 ```
 
-  - Wrappers including truncation and huberization for distribution
-    manipulation and including product/joint distributions for
-    distribution composition
-
-<!-- end list -->
+Wrappers including truncation, huberization and product distributions
+for manipulation and composition of distributions.
 
 ``` r
 B <- Binomial$new()
@@ -146,18 +135,14 @@ ProductDistribution$new(list(B,N))
 #> BinomXNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
 ```
 
-  - Additionally we introduce a SetSymbol class for a purely symbolic
-    representation of sets for Distribution typing
-
-<!-- end list -->
+Additionally we introduce a SetSymbol class for a purely symbolic
+representation of sets for Distribution typing
 
 ``` r
 Binomial$new()$type()
 #> [1] "ℤ+"
 Binomial$new()$support()
 #> [1] "{0,...,10}"
-Binomial$new()$distrDomain()
-#> [1] "ℤ+"
 Set$new(1:5)
 #> [1] "{1,...,5}"
 Interval$new(1,5)
@@ -185,27 +170,37 @@ distr6 has three primary use-cases:
 
 ## Installation
 
-Before publication to CRAN, the latest stable release is available
-via:
+Before publication to CRAN, the latest stable release is available via:
 
 ``` r
-remotes::install_github("alan-turing-institute/distr6", dependencies = TRUE)
+remotes::install_github("alan-turing-institute/distr6")
 ```
+
+## Future Plans
+
+The v1.0 release focuses on the core features of the SDistribution class
+as well as analytic methods in wrappers including but not limit to
+truncation, huberization, product distributions and mixture
+distributions. In our next release we plan to include
+
+  - A `plot` and `qqplot` method for distributions
+  - A finalised `FunctionImputation` decorator with different imputation
+    strategies
+  - More probability distributions
+  - Finalised Kernels
+  - Any other good suggestions made between now and then\!
 
 ## Package Development and Contributing
 
-distr6 is now public on GitHub but developments will continue to be made
-internally by a team of researchers from UCL working at The Alan Turing
-Institute. All contributions are released under the [MIT
+distr6 is released under the [MIT
 licence](https://opensource.org/licenses/MIT) with acknowledgements to
 the [LGPL-3 licence of
 distr](https://github.com/alan-turing-institute/distr6/blob/master/Licensing).
-We welcome external contributors to test our API and notify us of bugs
-and issues however we are not currently looking for feature requests as
-the API is still in development. See our
-[roadmap](https://alan-turing-institute.github.io/distr6/articles/roadmap.html)
-for short- and long-term plans. Before raising an issue please read
-through our [contributing
+Therefore any contributions to distr6 will also be accepted under the
+MIT licence. We welcome all bug reports, issues, questions and
+suggestions which can be [raised
+here](https://github.com/alan-turing-institute/distr6/issues) but please
+read through our [contributing
 guidelines](https://github.com/alan-turing-institute/distr6/blob/master/CONTRIBUTING.md)
 for details including our [code of
 conduct](https://github.com/alan-turing-institute/distr6/blob/master/CODE_OF_CONDUCT.md).
@@ -216,17 +211,17 @@ distr6 is the result of a collaboration between many people,
 universities and institutions across the world, without whom the speed
 and performance of the package would not be up to the standard it is.
 Firstly we acknowledge all the work of Prof. Dr. Peter Ruckdeschel and
-Prof. Dr. Matthias Kohl in developing the original distrXXX family of
-packages. Secondly their signficiant contributions to the planning and
+Prof. Dr. Matthias Kohl in developing the original distr family of
+packages. Secondly their significant contributions to the planning and
 design of distr6 including the distribution and probability family class
 structures. A team of undergraduates at University College London
-implemented many of the probability distributions, designed the plotting
-interface and are currently in the process of implementing these
-desgins. The team consists of Shen Chen (@ShenSeanChen), Jordan
-Deenichin (@jdeenichin), Chengyang Gao (@garoc371), Chloe Zhaoyuan Gu
-(@gzy823), Yunjie He (@RoyaHe), Xiaowen Huang (@w090613), Shuhan Liu
-(@shliu99), Runlong Yu (@Edwinyrl), Chijing Zeng (@britneyzeng) and Qian
-Zhou (@yumizhou47). We also want to thank Prof. Dr. Bernd Bischl for
-discussions about design choices and useful features. Finally University
-College London and The Alan Turing Institute for hosting workshops,
-meetings and providing coffee whenever needed.
+implemented many of the probability distributions and are designing the
+plotting interface. The team consists of Shen Chen (@ShenSeanChen),
+Jordan Deenichin (@jdeenichin), Chengyang Gao (@garoc371), Chloe
+Zhaoyuan Gu (@gzy823), Yunjie He (@RoyaHe), Xiaowen Huang (@w090613),
+Shuhan Liu (@shliu99), Runlong Yu (@Edwinyrl), Chijing Zeng
+(@britneyzeng) and Qian Zhou (@yumizhou47). We also want to thank
+Prof. Dr. Bernd Bischl for discussions about design choices and useful
+features. Finally University College London and The Alan Turing
+Institute for hosting workshops, meetings and providing coffee whenever
+needed.

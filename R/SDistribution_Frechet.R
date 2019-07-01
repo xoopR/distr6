@@ -29,7 +29,7 @@
 #' @section Constructor Details: The Frechet distribution is parameterised with
 #' shape, scale and minimum. Default parameterisation is with shape = 1, scale = 1 and minimum = 0.
 #'
-#' @details The mgf and cgf are omitted as no closed form analytic expression could be found.
+#' @details The mgf and cf are omitted as no closed form analytic expression could be found.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

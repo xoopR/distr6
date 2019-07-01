@@ -65,7 +65,7 @@ getParameterValue(N, "var")
 
 ## Piping
 
-We won't go into too much detail about piping because it will be familiar to users who need to make use of it and may not be necessary for others. Piping is the process of calling functions in a set order using the pipe, `%>%` notation, from the magrittr package [@magrittr]. We specifically mention piping because it goes hand-in-hand with method chaining, which we dicussed in the [introduction to R6 tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html). Below are some examples of how piping can be used in distr6. 
+We won't go into too much detail about piping because it will be familiar to users who need to make use of it and may not be necessary for others. Piping is the process of calling functions in a set order using the pipe, `%>%` notation, from the magrittr package [@magrittr]. We specifically mention piping because it goes hand-in-hand with method chaining, which we discussed in the [introduction to R6 tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html). Below are some examples of how piping can be used in distr6. 
 
 ```{r}
 library(magrittr)

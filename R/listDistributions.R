@@ -1,5 +1,5 @@
 #' @title Lists Implemented R6 Distributions
-#' @description Lists R6 distributions in a data.table or a chaarcter vector, can be filtered by
+#' @description Lists R6 distributions in a data.table or a character vector, can be filtered by
 #' traits and implemented package.
 #' @param simplify logical.
 #' @param filter list to filter distributions by.

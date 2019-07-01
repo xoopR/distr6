@@ -15,7 +15,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html) we constructed a Normal distribution and accesed and updated its parameters for a varity of parameterisations. In this tutorial we cover how to access mathematical and statistical methods of the Normal distribution including the `dnorm/pnorm/qnorm/rnorm` equivalents in distr6.
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html) we constructed a Normal distribution and accessed and updated its parameters for a variety of parameterisations. In this tutorial we cover how to access mathematical and statistical methods of the Normal distribution including the `dnorm/pnorm/qnorm/rnorm` equivalents in distr6.
 
 ## p/d/q/r
 

@@ -56,7 +56,7 @@ N$setParameterValue(list(mean = 4, sd = 2))
 N$parameters()
 ```
 
-But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distributon will lead to the variance argument being ignored:
+But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will lead to the variance argument being ignored:
 ```{r}
 N$setParameterValue(list(var = 2, prec = 3))
 N$parameters()
@@ -65,4 +65,4 @@ N$parameters()
 
 ## Summary
 
-In this tutorial we looked at getting and setting parameters for the Normal distribution. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we look at accessing mathematical and statisical methods including the p/d/q/r functions.
+In this tutorial we looked at getting and setting parameters for the Normal distribution. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we look at accessing mathematical and statistical methods including the p/d/q/r functions.
