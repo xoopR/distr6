@@ -78,9 +78,11 @@ product <- function(...){
 #' @seealso \code{\link{product}} for the cartesian product of two or more intervals/sets.
 #' @export
 union <- function(..., dim = 1){
-  if(length(unique(unlist(lapply(list(...),function(y) y$getSymbol())))) != 1)
-    operation("\u222A",...,dim=dim)
-  else
+  if(length(unique(unlist(lapply(list(...),function(y) y$getSymbol())))) != 1){
+    lower = min(sapply(list(...), function(y) y$inf()))
+    upper = max(sapply(list(...), function(y) y$sup()))
+    operation("\u222A",...,dim = dim, lower = lower, upper = upper)
+  }else
     return(list(...)[[1]])
 }
 
@@ -163,6 +165,7 @@ power <- function(x, power){
 
 #' @usage \method{^}{SetInterval}(x, power)
 #' @rdname power
+#' @export
 `^.SetInterval` <- function(x, power){
   power(x, power)
 }
@@ -171,6 +174,7 @@ power <- function(x, power){
 #' @rdname union
 #' @param x distribution
 #' @param y distribution
+#' @export
 `+.SetInterval` <- function(x, y){
   union(x, y)
 }
@@ -179,6 +183,7 @@ power <- function(x, power){
 #' @rdname product
 #' @param x distribution
 #' @param y distribution
+#' @export
 `*.SetInterval` <- function(x, y){
   product(x, y)
 }
@@ -187,6 +192,7 @@ power <- function(x, power){
 #' @rdname complement
 #' @param x distribution
 #' @param y distribution
+#' @export
 `-.SetInterval` <- function(x, y){
   complement(x, y)
 }

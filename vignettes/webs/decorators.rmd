@@ -1,0 +1,123 @@
+---
+title: "Decorators"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Decorators}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+references:
+- id: GoF
+  title: 'Design patterns: elements of reusable object-oriented software'
+  author:
+  - family: Gamma
+    given: Erich
+  - family: Helm
+    given: Richard
+  - family: Johnson
+    given: Ralph
+  - family: Vlissides
+    given: John
+  ISBN: 0-201-63361-2
+  publisher: Addison-Wesley
+  issued:
+    year: 1994
+---
+
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/s3_piping.html) introduced S3 and piping into distr6, allowing different approaches to calling R6 methods. In this tutorial we take a look at a big feature of distr6, decorators.
+
+Note: Decorators in distr6 are still maturing, this means the API is still subject to minor changes and the internal computations may be improved, therefore we are aware performance may be sub-optimal.
+
+## Decorators
+
+In object-oriented programming it is common to discuss 'Design Patterns' as specific methods used to solve coding problems, decorators are one of these 'patterns'. For full definitions and details about design patterns, we refer the reader to the seminal Design Patterns textbook [@GoF]. Briefly, the decorator design pattern is used to add functionality to an object. For example, say we have a class that only has a `print` method and a decorator for `summary` methods. Then the user can either use the object by itself with the `print` method only or optionally you can 'decorate' the object and thereby use the `summary` method. This is perhaps confusing in the abstract, so lets work through an example in distr6. We will go through a quick example and then return to which decorators are available and how they are used in distr6:
+
+
+```{r, error=TRUE}
+N <- Normal$new()
+N$survival(1)
+decorate(N, ExoticStatistics)
+N$survival(1)
+```
+
+In the example above we:
+
+1. Constructed a Normal distribution
+2. Demonstrated that the `survival` method does not exist
+3. Decorated the distribution with the `ExoticStatistics` decorator
+4. Successfully evaluated the survival function
+
+### CoreStatistics
+
+The CoreStatistics decorator includes methods for numeric calculations, a generalised moments `kthmoment` function and a generalised expectation method `genExp`. All methods can be viewed using `?CoreStatistics`. In distr6 we have a strict design principle that only analytic results should be provided as methods in distributions, i.e. we only return results for which we know the output is 100% accurate. The `CoreStatistics` decorator allows you to return numeric results when analytic ones aren't available. For example, 
+
+```{r, error=TRUE}
+w <- Weibull$new()
+
+# Error as the characteristic function doesn't exist
+w$cf(1)
+decorate(w, CoreStatistics)
+
+# Warning as numerical integration used
+w$cf(5)
+```
+
+The decorator also introduces generalised moment and expectation methods. The help documentation for these `?kthmoment` and `?genExp` give a full overview to these methods, but both are very useful for modelling, inference and deriving other numeric results.
+
+### ExoticStatistics
+
+The ExoticStatistics decorator includes more complex numeric methods as well as survival, hazard and cumulative hazard that may or may not be analytic expressions (depending what is available in the distribution object). Once again all the methods added by this decorator can be viewed using `?ExoticStatistics`. For example, 
+
+```{r, error=TRUE}
+N <- Normal$new()
+
+# Error as the characteristic function doesn't exist
+N$hazard(1)
+decorate(N, ExoticStatistics)
+
+# No warning as an analytic expression using pdf and cdf are used
+N$hazard(1)
+
+# Warning as numeric calculations are used
+N$pdfPNorm(2,0,4)
+```
+
+### FunctionImputation
+
+The final implemented decorator is used to impute missing p/d/q/r methods. At the moment the imputation strategy cannot be chosen but in future updates this will be a function argument that can be selected. Again these use numeric strategies and highlight these with messages to alert you to less precise results. We will return to the `FunctionImputation` decorator in a [future tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html) which looks at constructing custom distributions.
+
+## How to Decorate
+
+There are two main ways to decorate distributions in distr6, either in construction or after construction. We show these by example:
+
+In Construction
+```{r}
+Normal$new(decorators = CoreStatistics)
+Normal$new(decorators = list(CoreStatistics, ExoticStatistics))
+```
+
+After Construction
+```{r}
+N <- Normal$new()
+decorate(N, CoreStatistics)
+
+# Or piping as in the last tutorial
+library(magrittr)
+Normal$new() %>% decorate(list(CoreStatistics, ExoticStatistics))
+```
+
+And that's all there is to it! Just make sure you pass the Decorator object (not the name) to the decorators argument. If you forget which decorators are available, just run `listDecorators()`, or `listDecorators(simplify = FALSE)` if you want to see which methods they include at the same time.
+
+## Summary
+
+In this tutorial we looked at decorators in distr6 to obtain numeric results, methods for statistical modelling and imputation methods for missing p/d/q/r functions. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html) we look at the next big feature in distr6, wrappers.
+
+## References

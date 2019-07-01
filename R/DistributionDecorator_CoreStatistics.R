@@ -104,9 +104,11 @@ CoreStatistics$set("public", "mgf", function(t) {
 #' @export
 NULL
 CoreStatistics$set("public", "cf", function(t) {
-  if(testDiscrete(self)){
+  if(testDiscrete(self))
     return(self$genExp(trafo = function(x) {return(exp(x*t*1i))}))
-  }
+  else
+    return(self$genExp(trafo = function(x) {return(Re(exp(x*t*1i)))}) +
+             1i * self$genExp(trafo = function(x) {return(Im(exp(x*t*1i)))}))
 })
 
 #-------------------------------------------------------------
@@ -241,7 +243,9 @@ CoreStatistics$set("public", "skewness", function() {
 #' @export
 NULL
 CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
-  kurtosis = self$kthmoment(k = 4, type = "standard")
+  kurtosis =  suppressMessages(self$kthmoment(k = 4, type = "standard"))
+  if(testContinuous(self))
+    message(.distr6$message_numeric)
   if(excess)
     return(kurtosis - 3)
   else
@@ -275,8 +279,11 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #' @export
 NULL
 CoreStatistics$set("public","var",function(){
-  if(testUnivariate(self))
-    return(self$genExp(trafo = function(x) x^2) - self$genExp()^2)
+  if(testUnivariate(self)){
+    if(testContinuous(self))
+      message(.distr6$message_numeric)
+    return(suppressMessages(self$genExp(trafo = function(x) x^2) - self$genExp()^2))
+  }
 })
 
 #-------------------------------------------------------------
@@ -384,7 +391,7 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     xs[pdfs==0] = 0
     return(sum(pdfs * xs))
   } else if(testContinuous(self)){
-    message("Results from numerical integration are approximate only, better results may be available.")
+    message(.distr6$message_numeric)
     return(suppressMessages(integrate(function(x) {
       pdfs = self$pdf(x)
       xs = trafo(x)

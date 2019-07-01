@@ -35,25 +35,25 @@ decorate <- function(distribution, decorators){
     lapply(decorators, function(a_decorator){
 
       if(a_decorator$classname == "FunctionImputation"){
-        if(is.null(distribution$pdf(1))){
+        if(!distribution$.__enclos_env__$private$.isPdf){
           pdf = FunctionImputation$public_methods$pdf
           formals(pdf)$self = distribution
           distribution$.__enclos_env__$private$.pdf <- pdf
           distribution$.__enclos_env__$private$.isPdf <- TRUE
         }
-        if(is.null(distribution$cdf(1))){
+        if(!distribution$.__enclos_env__$private$.isCdf){
           cdf = FunctionImputation$public_methods$cdf
           formals(cdf)$self = distribution
           distribution$.__enclos_env__$private$.cdf <- cdf
           distribution$.__enclos_env__$private$.isCdf <- TRUE
         }
-        if(is.null(distribution$quantile(1))){
-          quantile = FunctionImputation$public_methods$quantile
-          formals(quantile)$self = distribution
-          distribution$.__enclos_env__$private$.quantile <- quantile
+        if(!distribution$.__enclos_env__$private$.isQuantile){
+          quant = FunctionImputation$public_methods$quantile
+          formals(quant)$self = distribution
+          distribution$.__enclos_env__$private$.quantile <- quant
           distribution$.__enclos_env__$private$.isQuantile <- TRUE
         }
-        if(is.null(distribution$rand(1))){
+        if(!distribution$.__enclos_env__$private$.isRand){
           rand = FunctionImputation$public_methods$rand
           formals(rand)$self = distribution
           distribution$.__enclos_env__$private$.rand <- rand

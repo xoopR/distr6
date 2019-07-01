@@ -79,8 +79,8 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
   else
     support <- Interval$new(lower,upper)
 
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                   short_name = short_name, support = support,
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf,
+                   name = name, short_name = short_name, support = support,
                    type = distribution$type(), prefixParams = FALSE,
                    description = description)
 }) # IN PROGRESS

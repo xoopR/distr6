@@ -97,21 +97,22 @@ FunctionImputation$set("public","quantile",function(p){
         lower = ifelse(self$inf() == -Inf, -1e+08, self$inf())
 
         if(length(p)>1)
-          return(unlist(sapply(p, function(p0) return(suppressMessages(GoFKernel::inverse(self$cdf)(p0))))))
+          return(unlist(sapply(p, function(p0)
+            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = lower,upper = upper)(p0))))))
         else
-          return(suppressMessages(GoFKernel::inverse(self$cdf)(p)))
+          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = lower, upper = upper)(p)))
     }
  #   }
  # }
 })
 FunctionImputation$set("public","rand",function(n){
-  message(.distr6$message_numeric)
-  if(!testMessage(self$quantile(1))){
-    # QUANTILE2RAND - DISCRETE/CONT
-    return(sapply(1:n, function(x) self$quantile(runif(1))))
-  }
-  if(!testMessage(self$pdf(1)) & testDiscrete(self)){
-    # PDF2RAND - DISCRETE
-    return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
+  strategy = "q2r"
+  if(strategy == "q2r"){
+    message(.distr6$message_numeric)
+    return(suppressMessages(sapply(1:n, function(x) self$quantile(runif(1)))))
+  } else if(strategy == "p2r"){
+    message(.distr6$message_numeric)
+    if(testDiscrete(self))
+      return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
   }
 })

@@ -67,13 +67,13 @@ SetInterval$set("public","dimension",function(){
 })
 SetInterval$set("public","max",function(){
   if(private$.type %in% c("()","[)"))
-    return(self$sup()-.Machine$double.eps)
+    return(self$sup()-1.1e-15)
   else
     return(self$sup())
 })
 SetInterval$set("public","min",function(){
   if(private$.type %in% c("()","(]"))
-    return(self$inf()+.Machine$double.eps)
+    return(self$inf()+1.1e-15)
   else
     return(self$inf())
 })

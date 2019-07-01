@@ -75,6 +75,6 @@ skewType <- function(skew){
 #'
 #' @export
 generalPNorm <- function(fun, p, lower, upper){
-  warning(.distr6$message_numeric)
+  message(.distr6$message_numeric)
   return((stats::integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
 }
