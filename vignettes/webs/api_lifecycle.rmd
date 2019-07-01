@@ -8,48 +8,35 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-distr6 is still in development and the lifecycle of the package can be considered 'experimental'. Whilst we welcome users to install and experiment with distr6, much of the functionality is still in development and therefore may not function as expected. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. If for any reason you think some of these should be moved around (particularly from stable to experimental or maturing), please log this as an [issue here](https://github.com/RaphaelS1/distr6/issues).
+distr6 v1 is now live and most of the API is stable however some aspects are still 'maturing' or 'experimental'. This means that whilst the core feature API, such as the distribution interface, is stable and is unlikely to change, other aspects such as specific decorators may be subject to future change. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. Please refer to [this website](https://www.tidyverse.org/lifecycle/) for the tidyverse definitions of different lifecycle stages. For us these mean:
 
-[Click here](https://raphaels1.github.io/distr6/reference/index.html) for the full reference list of classes and methods.
-All information regarding future developments is in the [distr6 wiki](https://github.com/RaphaelS1/distr6/wiki) and [roadmap](https://raphaels1.github.io/distr6/articles/roadmap.html).
+1. [Experimental](#experimental-classes-and-methods) - In development, possibly with bugs and the API may change
+2. [Maturing](#maturing-classes-and-methods) - Functioning but the internal methodology needs tweaking, API is unlikely to change
+3. [Stable](#maturing-classes-and-methods) - Functioning as expected and (hopefully) bug free
 
-We split implemented functions into:
-
-1. [Experimental](#experimental-classes-and-methods) - In development.
-2. [Maturing](#maturing-classes-and-methods) - Functioning but needs tweaking.
-3. [Stable](#maturing-classes-and-methods) - Functioning as expected.
+The lists below use the headings name from the [reference page](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions) of the website.
 
 ### Experimental Classes and Methods ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
-* FunctionImputation
-* Scale
+* [Function Imputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Scale](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Convolution](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
 
 ### Maturing Classes and Methods ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
-* Distribution
-* ArrayDistribution
-* ProductDistribution
-* HuberizedDistribution
-* TruncatedDistribution
-* MixtureDistribution
+* [Kernels](https://alan-turing-institute.github.io/distr6/reference/#section-kernels)
 
 ### Stable Classes and Methods ![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 
-* exKurtosisType
-* skewType
-* listDistributions
-* DistributionDecorator
-* CoreStatistics
-* ExoticStatistics
-* decorate
-* listDecorators
-* DistributionWrapper
-* ConcreteWrapper
-* huberize
-* truncate
-* [Discrete Distributions](https://raphaels1.github.io/distr6/reference/index.html#section-discrete-distributions)
-* [Continuous Distributions](https://raphaels1.github.io/distr6/reference/index.html#section-continuous-distributions)
-* [Assertions](https://raphaels1.github.io/distr6/reference/index.html#section-assertions)
-* [SetInterval (and all child classes)](https://raphaels1.github.io/distr6/reference/index.html#section-symbolic-sets)
-* All [helper functions](https://raphaels1.github.io/distr6/reference/index.html#section-helper-functions)
-* [ParameterSet](https://raphaels1.github.io/distr6/reference/index.html#section-parameter-sets)
+* [Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-distributions)
+* [Mathematical and Statistical](https://alan-turing-institute.github.io/distr6/reference/#section-mathematical-and-statistical)
+* [Distribution Accessors](https://alan-turing-institute.github.io/distr6/reference/#section-distribution-accessors)
+* [Decorators, except FunctionImputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Wrappers, except Scale and Convolution](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Univariate Discrete Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions)
+* [Univariate Continuous Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-continuous-distributions)
+* [Multivariate Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-multivariate-distributions)
+* [Assertions](https://alan-turing-institute.github.io/distr6/reference/#section-assertions)
+* [Symbolic Sets](https://alan-turing-institute.github.io/distr6/reference/#section-symbolic-sets)
+* [Helper Functions](https://alan-turing-institute.github.io/distr6/reference/#section-helper-functions)
+* [Parameter Sets](https://alan-turing-institute.github.io/distr6/reference/#section-parameter-sets)
