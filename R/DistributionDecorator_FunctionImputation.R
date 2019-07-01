@@ -98,9 +98,9 @@ FunctionImputation$set("public","quantile",function(p){
 
         if(length(p)>1)
           return(unlist(sapply(p, function(p0)
-            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = lower,upper = upper)(p0))))))
+            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = self$inf(),upper = self$sup())(p0))))))
         else
-          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = lower, upper = upper)(p)))
+          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf(), upper = self$sup())(p)))
     }
  #   }
  # }
