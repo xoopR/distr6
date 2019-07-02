@@ -43,7 +43,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -64,7 +64,7 @@ Cauchy$set("public","package","stats")
 Cauchy$set("public","mean",function(){
   return(NaN)
 })
-Cauchy$set("public","var",function(){
+Cauchy$set("public","variance",function(){
   return(NaN)
 })
 Cauchy$set("public","skewness",function(){

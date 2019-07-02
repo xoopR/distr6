@@ -53,7 +53,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -74,14 +74,14 @@ Bernoulli$set("public","package","distr6")
 Bernoulli$set("public","mean",function(){
   self$getParameterValue("prob")
 })
-Bernoulli$set("public","var",function(){
+Bernoulli$set("public","variance",function(){
   self$getParameterValue("prob") * self$getParameterValue("qprob")
 })
 Bernoulli$set("public","skewness",function(){
   (1 - (2*self$getParameterValue("prob"))) / self$stdev()
 })
 Bernoulli$set("public","kurtosis",function(excess = TRUE){
-  exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$var()
+  exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
   if(excess)
     return(exkurtosis)
   else

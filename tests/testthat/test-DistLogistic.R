@@ -27,7 +27,7 @@ test_that("properties & traits",{
 test_that("statistics",{
   expect_equal(l$mean(), 0)
   expect_equal(l$mode(), 0)
-  expect_equal(l$var(), pi^2/3)
+  expect_equal(l$variance(), pi^2/3)
   expect_equal(l$skewness(), 0)
   expect_equal(l$kurtosis(T), 1.2)
   expect_equal(l$kurtosis(F), 4.2)

@@ -30,9 +30,6 @@ KTriangular <- R6::R6Class("KTriangular", inherit = Kernel, lock_objects = F)
 KTriangular$set("public","name","KTriangular")
 KTriangular$set("public","short_name","KTri")
 KTriangular$set("public","description","Triangular Kernel")
-KTriangular$set("public","var",function(){
-
-})
 KTriangular$set("public","squared2Norm",function(){
   return(2/3)
 })

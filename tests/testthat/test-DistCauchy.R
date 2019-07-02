@@ -24,7 +24,7 @@ test_that("properties & traits",{
 c = Cauchy$new(location = 0, scale = 1)
 test_that("statistics",{
   expect_equal(c$mean(), NaN)
-  expect_equal(c$var(), NaN)
+  expect_equal(c$variance(), NaN)
   expect_equal(c$skewness(), NaN)
   expect_equal(c$kurtosis(T), NaN)
   expect_equal(c$kurtosis(F), NaN)

@@ -21,7 +21,7 @@ test_that("properties & traits",{
 
 test_that("statistics",{
   expect_equal(Weibull$new()$mean(), 1)
-  expect_equal(Weibull$new()$var(), 1)
+  expect_equal(Weibull$new()$variance(), 1)
   expect_equal(Weibull$new()$skewness(), 2)
   expect_equal(Weibull$new()$kurtosis(T), 6)
   expect_equal(Weibull$new()$kurtosis(F), 9)

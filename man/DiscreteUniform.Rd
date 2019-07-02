@@ -69,7 +69,7 @@ upper limits as integers.
   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-  \code{var()} \tab \code{\link{var}} \cr
+  \code{variance()} \tab \code{\link{variance}} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
@@ -122,7 +122,7 @@ x$rand(4)
 
 # Statistics
 x$mean()
-x$var()
+x$variance()
 
 summary(x)
 

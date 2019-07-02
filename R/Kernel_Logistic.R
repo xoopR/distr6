@@ -30,9 +30,6 @@ KLogistic <- R6::R6Class("KLogistic", inherit = Kernel, lock_objects = F)
 KLogistic$set("public","name","KLogistic")
 KLogistic$set("public","short_name","KLogis")
 KLogistic$set("public","description","KLogistic Kernel")
-KLogistic$set("public","var",function(){
-
-})
 KLogistic$set("public","squared2Norm",function(){
   return(1/6)
 })

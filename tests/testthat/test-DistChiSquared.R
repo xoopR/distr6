@@ -25,7 +25,7 @@ test_that("properties & traits", {
 chi <- ChiSquared$new(df = 8)
 test_that("statistics", {
   expect_equal(chi$mean(), 8)
-  expect_equal(chi$var(), 16)
+  expect_equal(chi$variance(), 16)
   expect_equal(chi$skewness(), 1)
   expect_equal(chi$kurtosis(TRUE), 1.5)
   expect_equal(chi$kurtosis(FALSE), 4.5)

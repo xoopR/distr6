@@ -42,7 +42,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -63,7 +63,7 @@ ChiSquared$set("public","package","stats")
 ChiSquared$set("public", "mean", function(){
   return(self$getParameterValue("df"))
 })
-ChiSquared$set("public", "var", function(){
+ChiSquared$set("public", "variance", function(){
   return(self$getParameterValue("df")*2)
 })
 ChiSquared$set("public", "skewness", function(){

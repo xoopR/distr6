@@ -40,7 +40,7 @@ implemented kernels.
   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-  \code{var()} \tab \code{\link{var}} \cr
+  \code{variance()} \tab \code{\link{variance}} \cr
   \code{sd()} \tab \code{\link{sd}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr

@@ -55,7 +55,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -76,21 +76,21 @@ Binomial$set("public","package","stats")
 Binomial$set("public","mean",function(){
   self$getParameterValue("size") * self$getParameterValue("prob")
 })
-Binomial$set("public","var",function(){
+Binomial$set("public","variance",function(){
   self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob")
 })
 Binomial$set("public","skewness",function(){
   (1 - (2*self$getParameterValue("prob"))) / self$stdev()
 })
 Binomial$set("public","kurtosis",function(excess = TRUE){
-  exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$var()
+  exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
   if(excess)
     return(exkurtosis)
   else
     return(exkurtosis + 3)
 })
 Binomial$set("public","entropy",function(base = 2){
-  0.5 * log(2 * pi * exp(1) * self$var(), base)
+  0.5 * log(2 * pi * exp(1) * self$variance(), base)
 })
 Binomial$set("public", "mgf", function(t){
   (self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size")

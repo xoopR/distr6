@@ -49,7 +49,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -73,7 +73,7 @@ Frechet$set("public","mean",function(){
   else
     return(self$getParameterValue("minimum") + self$getParameterValue("scale")*gamma(1 - 1/self$getParameterValue("shape")))
 })
-Frechet$set("public","var",function(){
+Frechet$set("public","variance",function(){
   if(self$getParameterValue("shape") <= 2)
     return(Inf)
   else

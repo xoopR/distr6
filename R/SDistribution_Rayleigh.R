@@ -43,7 +43,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -67,7 +67,7 @@ Rayleigh$set("public","mean",function(){
 Rayleigh$set("public","mode",function(){
   return(self$getParameterValue("mode"))
 })
-Rayleigh$set("public","var",function(){
+Rayleigh$set("public","variance",function(){
   return((4-pi)/2 * self$getParameterValue("mode")^2)
 })
 Rayleigh$set("public","skewness",function(){

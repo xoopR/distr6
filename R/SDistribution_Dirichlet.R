@@ -54,7 +54,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -82,7 +82,7 @@ Dirichlet$set("public","mode",function(){
   mode[params > 1] <- (params-1)/(sum(params)-K)
   return(mode)
 })
-Dirichlet$set("public","var",function(){
+Dirichlet$set("public","variance",function(){
   K <- self$getParameterValue("K")
   params <- self$getParameterValue("params")
   parami <- params/sum(params)

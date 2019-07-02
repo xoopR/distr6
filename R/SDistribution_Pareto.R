@@ -45,7 +45,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -69,7 +69,7 @@ Pareto$set("public","mean",function(){
   else
     return((self$getParameterValue("shape") * self$getParameterValue("scale"))/(self$getParameterValue("shape")-1))
 })
-Pareto$set("public","var",function(){
+Pareto$set("public","variance",function(){
   shape <- self$getParameterValue("shape")
   scale <- self$getParameterValue("scale")
   if(shape <= 2)

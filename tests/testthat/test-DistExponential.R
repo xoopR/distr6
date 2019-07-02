@@ -28,7 +28,7 @@ test_that("properties & traits",{
 e = Exponential$new(rate = 1)
 test_that("statistics",{
   expect_equal(e$mean(), 1)
-  expect_equal(e$var(), 1)
+  expect_equal(e$variance(), 1)
   expect_equal(e$skewness(), 2)
   expect_equal(e$kurtosis(T), 6)
   expect_equal(e$kurtosis(F), 9)

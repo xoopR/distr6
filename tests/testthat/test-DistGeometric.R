@@ -17,7 +17,7 @@ g = Geometric$new()
 test_that("statistics",{
     expect_equal(Geometric$new()$mean(), 1)
     expect_equal(Geometric$new(trials = T)$mean(), 2)
-    expect_equal(g$var(), 2)
+    expect_equal(g$variance(), 2)
     expect_equal(g$skewness(), 1.5/sqrt(0.5))
     expect_equal(g$kurtosis(T), 6.5)
     expect_equal(g$kurtosis(F), 9.5)

@@ -29,7 +29,7 @@ test_that("properties & traits",{
 du = DiscreteUniform$new()
 test_that("statistics",{
   expect_equal(du$mean(), 0.5)
-  expect_equal(du$var(), 0.25)
+  expect_equal(du$variance(), 0.25)
   expect_equal(du$skewness(), 0)
   expect_equal(du$kurtosis(T), -2)
   expect_equal(du$kurtosis(F), 1)

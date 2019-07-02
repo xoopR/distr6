@@ -43,7 +43,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -64,7 +64,7 @@ Logistic$set("public","package","stats")
 Logistic$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-Logistic$set("public","var",function(){
+Logistic$set("public","variance",function(){
   return(self$getParameterValue("sd")^2)
 })
 Logistic$set("public","skewness",function(){

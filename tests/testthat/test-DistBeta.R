@@ -24,7 +24,7 @@ test_that("properties & traits",{
 B = Beta$new()
 test_that("statistics",{
   expect_equal(B$mean(), 0.5)
-  expect_equal(B$var(), 1/12)
+  expect_equal(B$variance(), 1/12)
   expect_equal(B$skewness(), 0)
   expect_equal(B$kurtosis(T), -1.2)
   expect_equal(B$kurtosis(F), 1.8)

@@ -45,7 +45,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -66,7 +66,7 @@ Weibull$set("public","package","stats")
 Weibull$set("public","mean",function(){
   return(self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape")))
 })
-Weibull$set("public","var",function(){
+Weibull$set("public","variance",function(){
   scale<-self$getParameterValue("scale")
   shape<-self$getParameterValue("shape")
   return(scale^2 *(gamma(1+2/shape)-gamma(1+1/shape)^2))

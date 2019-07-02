@@ -46,7 +46,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -68,7 +68,7 @@ Poisson$set("public","package","stats")
 Poisson$set("public","mean",function(){
   return(self$getParameterValue("rate"))
 })
-Poisson$set("public","var",function(){
+Poisson$set("public","variance",function(){
   return(self$getParameterValue("rate"))
 })
 Poisson$set("public","skewness",function(){

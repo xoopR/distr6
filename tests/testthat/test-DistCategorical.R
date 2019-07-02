@@ -24,7 +24,7 @@ test_that("properties & traits",{
 
 test_that("statistics",{
   expect_error(cat$mean())
-  expect_error(cat$var())
+  expect_error(cat$variance())
   expect_error(cat$skewness())
   expect_error(cat$kurtosis())
   expect_error(cat$entropy())

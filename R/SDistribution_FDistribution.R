@@ -44,7 +44,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -68,7 +68,7 @@ FDistribution$set("public", "mean", function(){
   else
     return(NaN)
 })
-FDistribution$set("public", "var", function(){
+FDistribution$set("public", "variance", function(){
   if(self$getParameterValue("df2") > 4)
     return((2*self$getParameterValue("df2")^2*(self$getParameterValue("df1") + self$getParameterValue("df2") - 2))/
              (self$getParameterValue("df1")*(self$getParameterValue("df2") - 2)^2*(self$getParameterValue("df2") - 4)))

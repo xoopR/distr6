@@ -25,7 +25,7 @@ test_that("properties & traits",{
 test_that("statistics fbs",{
   nb = NegativeBinomial$new(form = "fbs", prob = 0.2)
   expect_equal(nb$mean(), 8/0.2)
-  expect_equal(nb$var(), 8/0.04)
+  expect_equal(nb$variance(), 8/0.04)
   expect_equal(nb$skewness(), 1.8/sqrt(8))
   expect_equal(nb$kurtosis(T), 0.605)
   expect_equal(nb$kurtosis(F), 3.605)
@@ -46,7 +46,7 @@ test_that("statistics fbs",{
 test_that("statistics tbs",{
   nb = NegativeBinomial$new(form = "tbs", prob = 0.2)
   expect_equal(nb$mean(), 8/0.2 + 10)
-  expect_equal(nb$var(), 8/0.04)
+  expect_equal(nb$variance(), 8/0.04)
   expect_equal(nb$skewness(), 1.8/sqrt(8))
   expect_equal(nb$kurtosis(T), 0.605)
   expect_equal(nb$kurtosis(F), 3.605)
@@ -68,7 +68,7 @@ test_that("statistics tbs",{
 test_that("statistics sbf",{
   nb = NegativeBinomial$new(form = "sbf", prob = 0.2)
   expect_equal(nb$mean(), 2/0.8)
-  expect_equal(nb$var(), 2/0.64)
+  expect_equal(nb$variance(), 2/0.64)
   expect_equal(nb$skewness(), 1.2/sqrt(2))
   expect_equal(nb$kurtosis(T), 0.92)
   expect_equal(nb$kurtosis(F), 3.92)
@@ -90,7 +90,7 @@ test_that("statistics sbf",{
 test_that("statistics tbf",{
   nb = NegativeBinomial$new(form = "tbf", prob = 0.2)
   expect_equal(nb$mean(), 2/0.8+10)
-  expect_equal(nb$var(), 2/0.64)
+  expect_equal(nb$variance(), 2/0.64)
   expect_equal(nb$skewness(), 1.2/sqrt(2))
   expect_equal(nb$kurtosis(T), 0.92)
   expect_equal(nb$kurtosis(F), 3.92)

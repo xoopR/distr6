@@ -61,7 +61,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -85,7 +85,7 @@ MultivariateNormal$set("public","mean",function(){
 MultivariateNormal$set("public","mode",function(){
   return(self$getParameterValue("mean"))
 })
-MultivariateNormal$set("public","var",function(){
+MultivariateNormal$set("public","variance",function(){
   return(self$getParameterValue("cov"))
 })
 MultivariateNormal$set("public","entropy",function(base = 2){
@@ -151,7 +151,7 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
 
   pdf <- function(){
 
-    if(isSymmetric.matrix(self$var()) & all(eigen(self$var(),only.values = T)$values > 0)){
+    if(isSymmetric.matrix(self$variance()) & all(eigen(self$variance(),only.values = T)$values > 0)){
 
       K <- self$getParameterValue("K")
       cov <- self$getParameterValue("cov")
@@ -166,7 +166,7 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
   formals(pdf) <- lst
 
   rand <- function(n){
-    ch <- chol(self$var())
+    ch <- chol(self$variance())
     xs <- matrix(rnorm(self$getParameterValue("K")*n), ncol = n)
     return(data.table::data.table(t(mean + ch %*% xs)))
   }

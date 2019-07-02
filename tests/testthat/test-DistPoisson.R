@@ -15,7 +15,7 @@ test_that("properties & traits",{
 b = Poisson$new()
 test_that("statistics",{
   expect_equal(b$mean(), 1)
-  expect_equal(b$var(), 1)
+  expect_equal(b$variance(), 1)
   expect_equal(b$skewness(), 1)
   expect_equal(b$kurtosis(T), 1)
   expect_equal(b$kurtosis(F), 4)

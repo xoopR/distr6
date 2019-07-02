@@ -58,7 +58,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -81,7 +81,7 @@ Gamma$set("public","package","stats")
 Gamma$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-Gamma$set("public","var",function(){
+Gamma$set("public","variance",function(){
   return(self$getParameterValue("mean")*self$getParameterValue("scale"))
 })
 Gamma$set("public","skewness",function() {

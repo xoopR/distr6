@@ -25,7 +25,7 @@ test_that("properties & traits",{
 x = Wald$new(mean = 2.5, shape = 3)
 test_that("statistics",{
   expect_equal(x$mean(), 2.5)
-  expect_equal(x$var(), 2.5^3 / 3)
+  expect_equal(x$variance(), 2.5^3 / 3)
   expect_equal(round(x$skewness(),6), 2.738613)
   expect_equal(x$kurtosis(T), 12.5)
   expect_equal(x$kurtosis(F), 15.5)

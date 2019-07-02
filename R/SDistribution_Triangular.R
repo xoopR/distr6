@@ -63,7 +63,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -84,7 +84,7 @@ Triangular$set("private",".type","symmetric")
 Triangular$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode"))/3)
 })
-Triangular$set("public","var",function(){
+Triangular$set("public","variance",function(){
   return((self$getParameterValue("lower")^2 + self$getParameterValue("upper")^2 +
             self$getParameterValue("mode")^2 - self$getParameterValue("lower")*self$getParameterValue("upper") -
             self$getParameterValue("lower")*self$getParameterValue("mode")-

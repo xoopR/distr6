@@ -43,7 +43,7 @@ test_that("properties & traits",{
 
 test_that("statistics",{
   expect_equal(Normal$new()$mean(), 0)
-  expect_equal(Normal$new()$var(), 1)
+  expect_equal(Normal$new()$variance(), 1)
   expect_equal(Normal$new()$skewness(), 0)
   expect_equal(Normal$new()$kurtosis(T), 0)
   expect_equal(Normal$new()$kurtosis(F), 3)

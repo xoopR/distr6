@@ -12,4 +12,5 @@ pkgdown
 LICENSE.md
 vignettes/webs
 README\.Rmd
+\.github
 

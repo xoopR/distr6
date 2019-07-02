@@ -26,7 +26,7 @@ test_that("statistics",{
   expect_equal(Degenerate$new()$kurtosis(), NaN)
   expect_equal(Degenerate$new()$skewness(), NaN)
   expect_equal(Degenerate$new()$entropy(), 0)
-  expect_equal(Degenerate$new()$var(), 0)
+  expect_equal(Degenerate$new()$variance(), 0)
   expect_equal(Degenerate$new()$stdev(), 0)
   expect_equal(Degenerate$new()$mean(), 0)
   expect_equal(Degenerate$new()$mode(), 0)

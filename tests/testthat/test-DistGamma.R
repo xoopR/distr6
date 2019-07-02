@@ -33,7 +33,7 @@ test_that("properties & traits",{
 G = Gamma$new(shape = 1)
 test_that("statistics",{
   expect_equal(G$mean(), 1)
-  expect_equal(G$var(), 1)
+  expect_equal(G$variance(), 1)
   expect_equal(G$skewness(), 2)
   expect_equal(G$kurtosis(T), 6)
   expect_equal(G$kurtosis(F), 9)

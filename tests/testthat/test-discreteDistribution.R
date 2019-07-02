@@ -45,7 +45,7 @@ test_that("check parameter getting/setting", {
 test_that("check basic maths functions as expected", {
   expect_equal(discreteTester$pdf(1), dbinom(1,2,0.9))
   expect_equal(discreteTester$genExp(), 2*0.9)
-  expect_equal(discreteTester$var(), 2*0.9*0.1)
+  expect_equal(discreteTester$variance(), 2*0.9*0.1)
   expect_null(discreteTester$median())
 })
 

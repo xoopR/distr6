@@ -63,12 +63,12 @@
 #   decorate(ConvE12, CoreStatistics)
 #   expect_equal(ConvE12$pdf(1), dgamma(x = 1, shape = 2))
 #   expect_equal(ConvE12$expectation(), 2)
-#   expect_equal(continuousTester3$var(), 2)
+#   expect_equal(continuousTester3$variance(), 2)
 #   expect_equal(continuousTester3$expectation(), continuousTester$expectation() + continuousTester2$expectation())
-#   expect_equal(continuousTester3$var(), continuousTester$var() + continuousTester2$var())
+#   expect_equal(continuousTester3$variance(), continuousTester$variance() + continuousTester2$variance())
 #   continuousTester4 = Convolution$new(continuousTester, continuousTester2, type = reals$new(), add = F)
 #   expect_equal(continuousTester4$expectation(), continuousTester$expectation() - continuousTester2$expectation())
-#   expect_equal(continuousTester4$var(), continuousTester$var() + continuousTester2$var())
+#   expect_equal(continuousTester4$variance(), continuousTester$variance() + continuousTester2$variance())
 # })
 #
 # test_that("check discrete convolution functions",{
@@ -76,7 +76,7 @@
 #   discreteTester2$.__enclos_env__$private$.short_name = "TestDistr2"
 #   convTest = Convolution$new(discreteTester, discreteTester2, support = interval$new(0,10))
 #   expect_equal(convTest$expectation(), discreteTester$expectation() + discreteTester2$expectation())
-#   expect_equal(convTest$var(), discreteTester$var() + discreteTester2$var())
+#   expect_equal(convTest$variance(), discreteTester$variance() + discreteTester2$variance())
 #   expect_silent(convTest$setParameterValue(list(TestDistr_prob = 0.3)))
 #   expect_equal(convTest$getInternalModel("TestDistr")$getParameterValue("prob"),0.3)
 #   expect_silent(convTest$setParameterValue(list(TestDistr_prob = 0.9)))
@@ -86,5 +86,5 @@
 #   expect_equal(convTest2$expectation(), 6*0.9)
 #   discreteTester3 = Convolution$new(discreteTester, discreteTester2, add = F, support = integers$new())
 #   expect_equal(discreteTester3$expectation(), discreteTester$expectation() - discreteTester2$expectation())
-#   expect_equal(discreteTester3$var(), discreteTester$var() + discreteTester2$var())
+#   expect_equal(discreteTester3$variance(), discreteTester$variance() + discreteTester2$variance())
 # })

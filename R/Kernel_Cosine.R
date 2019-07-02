@@ -30,9 +30,6 @@ Cosine <- R6::R6Class("Cosine", inherit = Kernel, lock_objects = F)
 Cosine$set("public","name","Cosine")
 Cosine$set("public","short_name","Cos")
 Cosine$set("public","description","Cosine Kernel")
-Cosine$set("public","var",function(){
-
-})
 Cosine$set("public","squared2Norm",function(){
   return(pi^2 / 16)
 })

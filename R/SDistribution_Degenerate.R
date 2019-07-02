@@ -44,7 +44,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -65,7 +65,7 @@ Degenerate$set("public","package","distr6")
 Degenerate$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-Degenerate$set("public","var",function(){
+Degenerate$set("public","variance",function(){
   return(0)
 })
 Degenerate$set("public","skewness",function(){

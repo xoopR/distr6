@@ -45,7 +45,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -66,7 +66,7 @@ Arcsine$set("public","package","distr6")
 Arcsine$set("public","mean",function(){
   return((self$getParameterValue("upper") + self$getParameterValue("lower"))/2)
 })
-Arcsine$set("public","var",function(){
+Arcsine$set("public","variance",function(){
   return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2)/8)
 })
 Arcsine$set("public","skewness",function(){

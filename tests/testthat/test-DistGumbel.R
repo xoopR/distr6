@@ -24,7 +24,7 @@ test_that("properties & traits",{
 c = Gumbel$new(location = 0, scale = 1)
 test_that("statistics",{
   expect_equal(c$mean(), -digamma(1))
-  expect_equal(c$var(), pi^2/6)
+  expect_equal(c$variance(), pi^2/6)
   expect_equal(round(c$skewness(),2), 1.14)
   expect_equal(c$kurtosis(T), 12/5)
   expect_equal(c$kurtosis(F), 12/5+3)

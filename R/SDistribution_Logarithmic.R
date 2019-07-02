@@ -47,7 +47,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -69,7 +69,7 @@ Logarithmic$set("public","mean",function(){
   theta = self$getParameterValue("theta")
   return(-theta/(log(1-theta)*(1-theta)))
 })
-Logarithmic$set("public","var",function(){
+Logarithmic$set("public","variance",function(){
   theta = self$getParameterValue("theta")
   return((-theta^2 - theta*log(1-theta)) / ((1-theta)^2 * (log(1-theta))^2))
 })
