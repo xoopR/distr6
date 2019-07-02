@@ -112,6 +112,6 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, rand = rand,
                    support = Set$new(...),
-                   distrDomain = PosIntegers$new(zero = T, dim = length(probs)), symmetric = FALSE)
+                   distrDomain = Complex$new(), symmetric = FALSE)
   invisible(self)
 })

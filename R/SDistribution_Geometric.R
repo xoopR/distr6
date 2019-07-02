@@ -88,7 +88,7 @@ Geometric$set("private",".trails",NULL)
 
 Geometric$set("public","name","Geometric")
 Geometric$set("public","short_name","Geom")
-Geometric$set("public","traits",list(type = PosIntegers$new(zero = T),
+Geometric$set("public","traits",list(type = Naturals$new(),
                                        valueSupport = "discrete",
                                        variateForm = "univariate"))
 Geometric$set("public","package","stats")
@@ -164,21 +164,21 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = 
         cdf <- function(x1) pgeom(x1, self$getParameterValue("prob"))
         quantile <- function(p) qgeom(p, self$getParameterValue("prob"))
         rand <- function(n) rgeom(n, self$getParameterValue("prob"))
-        support <- PosIntegers$new(zero = T)
+        support <- Naturals$new()
         description = "Geometric (Failures) Probability Distribution."
     } else {
         pdf <- function(x1) dgeom(x1+1, self$getParameterValue("prob"))
         cdf <- function(x1) pgeom(x1+1, self$getParameterValue("prob"))
         quantile <- function(p) qgeom(p, self$getParameterValue("prob"))+1
         rand <- function(n) rgeom(n, self$getParameterValue("prob"))
-        support <- PosIntegers$new(zero = F)
+        support <- PosNaturals$new()
         description = "Geometric (Trials) Probability Distribution."
     }
 
 
 
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                     rand = rand, support = support, distrDomain = PosIntegers$new(zero = T),
+                     rand = rand, support = support, distrDomain = Naturals$new(),
                      symmetric  = FALSE, description = description)
 
     invisible(self)

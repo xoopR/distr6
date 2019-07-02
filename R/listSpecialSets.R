@@ -6,29 +6,27 @@
 #' listSpecialSets(TRUE)
 #' @export
 listSpecialSets <- function(simplify = FALSE){
-  y = sapply(ls(name="package:distr6"),function(x){
-    if(inherits(get(x),"R6ClassGenerator")){
-      if(environmentName(get(x)$get_inherit()) == "SpecialSet_generator" |
-         environmentName(get(x)$get_inherit()) == "Rationals_generator" |
-         environmentName(get(x)$get_inherit()) == "Reals_generator")
-        return(get(x)$classname)
-      else
-        return(FALSE)
-    } else
-      return(FALSE)
-  })
-  y = y[y!="FALSE"]
+  y = c("Empty","Naturals","PosNaturals","Integers","PosIntegers","NegIntegers","Rationals",
+        "PosRationals","NegRationals","Reals","PosReals","NegReals","ExtendedReals",
+        "Complex")
   if(simplify)
     return(as.character(y))
   else{
     symbols = do.call(rbind.data.frame,lapply(y, function(x){
       x = get(x)
+      zero = "zero" %in% names(formals(PosReals$public_methods$initialize))
       ClassName = x$classname
       x = x$new()
       Symbol = x$getSymbol()
-      Infimum = x$inf()
+      if(zero & grepl("Pos",ClassName))
+        Infimum = "0/1"
+      else
+        Infimum = x$inf()
       if(is.null(Infimum)) Infimum = "NULL"
-      Supremum = x$sup()
+      if(zero & grepl("Neg",ClassName))
+        Supremum = "-1/0"
+      else
+        Supremum = x$sup()
       if(is.null(Supremum)) Supremum = "NULL"
       return(cbind(ClassName, Symbol, Infimum, Supremum))
     }))
