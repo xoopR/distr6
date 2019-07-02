@@ -34,8 +34,6 @@ navbar:
         href: articles/webs/custom_distributions.html
   - text: Appendices
     menu:
-    - text: OOP and Design Patterns
-      href: articles/webs/oop_and_design_patterns.html  
     - text: R6 and Design Patterns
       href: articles/webs/r6_and_design_patterns.html
     - text: Documentation in R6
