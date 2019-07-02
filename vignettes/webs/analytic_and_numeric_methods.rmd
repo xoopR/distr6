@@ -15,7 +15,12 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernel, of class `Kernel`, should only contain analytic methods. This ensures that all results are as precise as possible and ensure optimal efficiency. The figure below gives a visual representation of how this looks. Moreover we further minimise error by restricting any possible numeric calculations such as in Beta or Gamma functions to only methods implemented in R stats, such as `beta` and `gamma`, or in the `pracma` package. For distributions where no closed form analytic expression can be found, details of this are found in the 'Details' section of the distribution's help page. To impute numeric results, decorators are used.
+distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernels, of class `Kernel`, should only contain analytic methods. This ensures that all results are as precise as possible and ensure optimal efficiency. The figure below gives a visual representation of how this looks. 
+
+It was not a straightforward decision deciding which methods should be included in the core distribution interfaces. We made the decision that methods involving infinite sums should not be included as any approximation via numeric integration would not be sufficiently accurate. However we allowed the use of the `beta`, `gamma`, and `digamma` functions from base R packages, as these are widely used in the community, have good documentation and have been widely tested. We additionally chose to include the `gammaz` and `gammainc` methods from `pracma` and `expint`, both packages use C implementations and appear to be in wide usage although we encourage the user to examine these further if interested.
+
+For distributions where no closed form analytic expression can be found, details of this are found in the 'Details' section of the distribution's help page, and attempting to run the function will throw an error. To impute numeric results, decorators are used.
+
 
 ![](decorators.png)
 
@@ -37,34 +42,6 @@ Currently distr6 has three decorators:
 * To impute the quantile: `cdf2quantile`; `pdf2quantile`; `rand2quantile`
 * To impute the rand: `quantile2rand`; `cdf2rand`; `pdf2rand`
 
-## How to Decorate
-
-Decorators can be added to a distribution in one of three ways depending on whether the decorator should be added in construction or not.
-
-### Method 1: In Construction
-
-```{r, results='hide'}
-Normal$new(var = 1, decorators = CoreStatistics) # For one only
-Normal$new(var = 1, decorators = list(CoreStatistics, ExoticStatistics)) # For multiple
-```
-
-### Method 2: After Construction, Construct a Decorator
-```{r, error = TRUE}
-n <- Normal$new(var = 1)
-n$pdfPNorm(2) # Error as it hasn't been decorated
-n <- Normal$new(var = 1)
-ExoticStatistics$new(n)
-n$pdfPNorm(2)
-```
-
-### Method 3: After Construction, Use `decorate`
-```{r, error = TRUE}
-n <- Normal$new()
-n$kthmoment(4, "raw") # Error as it hasn't been decorated
-decorate(n, CoreStatistics)
-n$kthmoment(4, "raw")
-```
-
 When a decorator is constructed, either in construction of a `Distribution` or after, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `variance` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator.
 
 ```{r}
@@ -80,5 +57,11 @@ n$survival(2) == n$cdf(2, lower.tail = F) # The analytic method
 ```
 
 Finally, even if an analytic expression for `expectation` exists, the `CoreStatistics` decorator always adds a `genExp` method for a generalised numerical expectation formula, this is required for numerical results for variance, moments, etc.
+
+
+
+See the [decorators tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) for details on how to decorate a Distribution.
+
+
 
 
