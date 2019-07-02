@@ -7,10 +7,7 @@
 \alias{isContinuous}
 \title{assert/check/test/Continuous}
 \usage{
-assertContinuous(x)
-checkContinuous(x)
 testContinuous(x)
-isContinuous(x)
 
 checkContinuous(x)
 
@@ -27,7 +24,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is continuous
+Validation checks to test if Distribution is continuous.
 }
 \examples{
 testContinuous(Binomial$new()) # FALSE

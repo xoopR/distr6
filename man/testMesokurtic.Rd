@@ -7,10 +7,7 @@
 \alias{isMesokurtic}
 \title{assert/check/test/Mesokurtic}
 \usage{
-assertMesokurtic(x)
-checkMesokurtic(x)
 testMesokurtic(x)
-isMesokurtic(x)
 
 checkMesokurtic(x)
 

@@ -28,7 +28,7 @@ Operations for SetInterval objects and subclasses, symbolic only.
 }
 \details{
 Generally not recommended to use this function directly but instead
-  via \code{\link{product}} or \code{\link{union}}.
+  via \code{\link{product.SetInterval}} or \code{\link{union.SetInterval}}.
 }
 \seealso{
 \code{\link{SetInterval}}.

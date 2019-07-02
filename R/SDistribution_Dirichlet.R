@@ -92,9 +92,6 @@ Dirichlet$set("public","var",function(){
   diag(covar) = var
   return(covar)
 })
-Dirichlet$set("public","cor",function(){
-  return(self$var() / (sqrt(diag(self$var()) %*% t(diag(self$var())))))
-})
 Dirichlet$set("public","entropy",function(base = 2){
   params <- self$getParameterValue("params")
   return(log(prod(gamma(params))/gamma(sum(params)),2) + (sum(params) - length(params))*digamma(sum(params)) -

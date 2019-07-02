@@ -7,10 +7,7 @@
 \alias{isValueSupport}
 \title{assert/check/test/ValueSupport}
 \usage{
-assertValueSupport(x, type)
-checkValueSupport(x, type)
 testValueSupport(x, type)
-isValueSupport(x, type)
 
 checkValueSupport(x, type)
 
@@ -29,7 +26,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test the value support of a Distribution
+Validation checks to test the value support of a Distribution.
 }
 \examples{
 testValueSupport(Binomial$new(), "discrete") # silent

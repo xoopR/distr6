@@ -7,10 +7,7 @@
 \alias{isLeptokurtic}
 \title{assert/check/test/Leptokurtic}
 \usage{
-assertLeptokurtic(x)
-checkLeptokurtic(x)
 testLeptokurtic(x)
-isLeptokurtic(x)
 
 checkLeptokurtic(x)
 

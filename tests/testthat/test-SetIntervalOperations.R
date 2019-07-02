@@ -10,21 +10,21 @@ test_that("operation",{
 })
 
 test_that("product",{
-  expect_silent(product(si1, si2))
+  expect_silent(product.SetInterval(si1, si2))
   expect_silent(si1 * si2)
-  expect_equal(product(si1, si2), si1 * si2)
+  expect_equal(product.SetInterval(si1, si2), si1 * si2)
 })
 
 test_that("union",{
-  expect_silent(union(si1, si2))
+  expect_silent(union.SetInterval(si1, si2))
   expect_silent(si1 + si2)
-  expect_equal(union(si1, si2), si1 + si2)
+  expect_equal(union.SetInterval(si1, si2), si1 + si2)
 })
 
 test_that("power",{
-  expect_silent(power(si1, 2))
+  expect_silent(power.SetInterval(si1, 2))
   expect_silent(si1 ^ 2)
-  expect_equal(power(si1, 2), si1 ^ 2)
+  expect_equal(power.SetInterval(si1, 2), si1 ^ 2)
 })
 
 test_that("complement",{
@@ -51,7 +51,7 @@ test_that("complement",{
   expect_equal((x-y)$getSymbol(), Interval$new(4,7,type="[)")$getSymbol())
 
   y = Interval$new(5,7)
-  expect_equal((x-y)$getSymbol(), union(Interval$new(4,5,type="[)"),
+  expect_equal((x-y)$getSymbol(), union.SetInterval(Interval$new(4,5,type="[)"),
                                         Interval$new(7,8,type="(]"))$getSymbol())
 })
 

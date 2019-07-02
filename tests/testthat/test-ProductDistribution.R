@@ -10,7 +10,7 @@ test_that("constructor",{
 test_that("type/support/distrDomain",{
   expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$type()$getSymbol(), PosIntegers$new(2)$getSymbol())
   expect_equal(ProductDistribution$new(list(Binomial$new(size = 2), Binomial$new(size = 3)))$support()$getSymbol(),
-               product(Set$new(0:2),Set$new(0:3))$getSymbol())
+               product.SetInterval(Set$new(0:2),Set$new(0:3))$getSymbol())
   expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$distrDomain()$getSymbol(), PosIntegers$new(2)$getSymbol())
 })
 

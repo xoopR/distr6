@@ -7,10 +7,7 @@
 \alias{isVariateForm}
 \title{assert/check/test/VariateForm}
 \usage{
-assertVariateForm(x, type)
-checkVariateForm(x, type)
 testVariateForm(x, type)
-isVariateForm(x, type)
 
 checkVariateForm(x, type)
 
@@ -29,7 +26,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test the variate form of a Distribution
+Validation checks to test the variate form of a Distribution.
 }
 \examples{
 testVariateForm(Binomial$new(), "univariate") # silent

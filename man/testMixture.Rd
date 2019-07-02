@@ -7,10 +7,7 @@
 \alias{isMixture}
 \title{assert/check/test/Mixture}
 \usage{
-assertMixture(x)
-checkMixture(x)
 testMixture(x)
-isMixture(x)
 
 checkMixture(x)
 
@@ -27,7 +24,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is mixture
+Validation checks to test if Distribution is mixture.
 }
 \examples{
 testMixture(Binomial$new()) # FALSE

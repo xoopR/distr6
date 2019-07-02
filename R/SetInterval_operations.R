@@ -14,7 +14,7 @@
 #' @param dim dimension of new SetInterval
 #'
 #' @details Generally not recommended to use this function directly but instead
-#'   via \code{\link{product}} or \code{\link{union}}.
+#'   via \code{\link{product.SetInterval}} or \code{\link{union.SetInterval}}.
 #' @seealso \code{\link{SetInterval}}.
 #' @export
 operation <- function(unicode,...,lower=NULL,upper=NULL,type=NULL,dim=NULL){
@@ -40,44 +40,44 @@ operation <- function(unicode,...,lower=NULL,upper=NULL,type=NULL,dim=NULL){
                          upper = upper, dimension = dim))
 }
 
-#' @title Symbolic Cartesian Product for SetInterval
+#' @title Symbolic Cartesian product.SetInterval for SetInterval
 #'
-#' @description Makes a symbolic representation for the cartesian product of sets/intervals.
+#' @description Makes a symbolic representation for the cartesian product.SetInterval of sets/intervals.
 #' @return An R6 object of class SetInterval.
-#' @name product
+#' @name product.SetInterval
 #'
-#' @usage product(...)
+#' @usage product.SetInterval(...)
 #'
-#' @param ... sets and/or intervals to take the cartesian product of.
+#' @param ... sets and/or intervals to take the cartesian product.SetInterval of.
 #'
-#' @details This does not calculate the cartesian product of the arguments but
+#' @details This does not calculate the cartesian product.SetInterval of the arguments but
 #'   is just a symbolic representation using unicode.
 #'
-#' @seealso \code{\link{union}} for the union of two or more intervals/sets.
+#' @seealso \code{\link{union.SetInterval}} for the union.SetInterval of two or more intervals/sets.
 #' @export
-product <- function(...){
+product.SetInterval <- function(...){
   dots = list(...)
   if(length(unique(sapply(dots,function(x) x$getSymbol()))) == 1 & length(dots)>1)
-    return(power(dots[[1]], length(dots)))
+    return(power.SetInterval(dots[[1]], length(dots)))
   else
     return(operation("\u00D7",...))
 }
 
-#' @title Symbolic Union for SetInterval
+#' @title Symbolic union.SetInterval for SetInterval
 #'
-#' @description Makes a symbolic representation for the union of sets/intervals.
+#' @description Makes a symbolic representation for the union.SetInterval of sets/intervals.
 #' @return An R6 object of class SetInterval.
-#' @name union
+#' @name union.SetInterval
 #'
-#' @param ... sets and/or intervals to take the union of.
+#' @param ... sets and/or intervals to take the union.SetInterval of.
 #' @param dim dimension of new SetInterval.
 #'
-#' @details This does not calculate the union of the arguments but
+#' @details This does not calculate the union.SetInterval of the arguments but
 #'   is just a symbolic representation using unicode.
 #'
-#' @seealso \code{\link{product}} for the cartesian product of two or more intervals/sets.
+#' @seealso \code{\link{product.SetInterval}} for the cartesian product.SetInterval of two or more intervals/sets.
 #' @export
-union <- function(..., dim = 1){
+union.SetInterval <- function(..., dim = 1){
   if(length(unique(unlist(lapply(list(...),function(y) y$getSymbol())))) != 1){
     lower = min(sapply(list(...), function(y) y$inf()))
     upper = max(sapply(list(...), function(y) y$sup()))
@@ -86,22 +86,22 @@ union <- function(..., dim = 1){
     return(list(...)[[1]])
 }
 
-#' @title Symbolic Complement for SetInterval
+#' @title Symbolic complement.SetInterval for SetInterval
 #'
-#' @description Makes a symbolic representation for the complement of sets/intervals.
+#' @description Makes a symbolic representation for the complement.SetInterval of sets/intervals.
 #' @return An R6 object of class SetInterval.
-#' @name complement
+#' @name complement.SetInterval
 #'
-#' @usage complement(...)
+#' @usage complement.SetInterval(...)
 #'
-#' @param ... sets and/or intervals to take the union of.
+#' @param ... sets and/or intervals to take the union.SetInterval of.
 #'
-#' @details This does not calculate the complement of the arguments but
+#' @details This does not calculate the complement.SetInterval of the arguments but
 #'   is just a symbolic representation using unicode.
 #'
-#' @seealso \code{\link{product}} and \code{\link{union}}.
+#' @seealso \code{\link{product.SetInterval}} and \code{\link{union.SetInterval}}.
 #' @export
-complement <- function(...){
+complement.SetInterval <- function(...){
   dots = list(...)
 
   x = dots[[1]]
@@ -130,7 +130,7 @@ complement <- function(...){
       return(Interval$new(lower = x$inf(), upper = x$sup(), type = paste0(substr(x$type(),1,1),")"),,
              class = x$class()))
     else if(y$sup() <= x$sup() & y$inf() >= x$inf())
-      return(union(Interval$new(x$inf(),y$inf(),type=paste0(substr(x$type(),1,1),")"),class = x$class()),
+      return(union.SetInterval(Interval$new(x$inf(),y$inf(),type=paste0(substr(x$type(),1,1),")"),class = x$class()),
                      Interval$new(y$sup(),x$sup(),type=paste0("(",substr(x$type(),2,2)),class = x$class()),
                      dim = x$dimension()))
   }
@@ -143,58 +143,58 @@ complement <- function(...){
 #' @description Makes a symbolic representation for the exponentiation of a given
 #'   set or interval.
 #' @return An R6 object of class SetInterval.
-#' @name power
+#' @name power.SetInterval
 #'
-#' @usage power(x, power)
+#' @usage power.SetInterval(x, power.SetInterval)
 #'
 #' @param x set or interval
-#' @param power power
+#' @param power.SetInterval power.SetInterval
 #'
 #' @details This does not calculate the value of exponentiation but
 #'   is just a symbolic representation using unicode.
 #'
 #' @export
-power <- function(x, power){
-  symbol = paste0(x$getSymbol(),"^",power)
-  lower = rep(x$inf(),power)
-  upper = rep(x$sup(),power)
+power.SetInterval <- function(x, power.SetInterval){
+  symbol = paste0(x$getSymbol(),"^",power.SetInterval)
+  lower = rep(x$inf(),power.SetInterval)
+  upper = rep(x$sup(),power.SetInterval)
 
   SetInterval$new(symbol = symbol, type = x$type(), lower = lower,
-                  upper = upper, dimension = power)
+                  upper = upper, dimension = power.SetInterval)
 }
 
-#' @usage \method{^}{SetInterval}(x, power)
-#' @rdname power
+#' @usage \method{^}{SetInterval}(x, power.SetInterval)
+#' @rdname power.SetInterval
 #' @export
-`^.SetInterval` <- function(x, power){
-  power(x, power)
+`^.SetInterval` <- function(x, power.SetInterval){
+  power.SetInterval(x, power.SetInterval)
 }
 
 #' @usage \method{+}{SetInterval}(x, y)
-#' @rdname union
+#' @rdname union.SetInterval
 #' @param x distribution
 #' @param y distribution
 #' @export
 `+.SetInterval` <- function(x, y){
-  union(x, y)
+  union.SetInterval(x, y)
 }
 
 #' @usage \method{*}{SetInterval}(x, y)
-#' @rdname product
+#' @rdname product.SetInterval
 #' @param x distribution
 #' @param y distribution
 #' @export
 `*.SetInterval` <- function(x, y){
-  product(x, y)
+  product.SetInterval(x, y)
 }
 
 #' @usage \method{-}{SetInterval}(x, y)
-#' @rdname complement
+#' @rdname complement.SetInterval
 #' @param x distribution
 #' @param y distribution
 #' @export
 `-.SetInterval` <- function(x, y){
-  complement(x, y)
+  complement.SetInterval(x, y)
 }
 
 #' @title Unicode Symbol of Special Sets

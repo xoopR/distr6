@@ -4,7 +4,8 @@
 \alias{Kernel}
 \title{Abstract Kernel Class}
 \description{
-Abstract class that cannot be constructed directly.
+Abstract class that cannot be constructed directly. See \code{listKernels} for a list of
+implemented kernels.
 }
 \section{Public Variables}{
 
@@ -62,3 +63,6 @@ Abstract class that cannot be constructed directly.
   }
 }
 
+\seealso{
+\code{\link{listKernels}}
+}

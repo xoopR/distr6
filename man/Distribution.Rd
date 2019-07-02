@@ -47,8 +47,8 @@ A generalised distribution object for defining custom probability distributions
   See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
 
   \code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
-  Distribution in construction. Decorators can also be added after construction. See
-  \code{\link{DistributionDecorator}} and \code{\link{decorate}} for more details.
+  Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
+  for more details.
 
   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
@@ -113,5 +113,5 @@ A generalised distribution object for defining custom probability distributions
 \seealso{
 See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 Intervals. See \code{\link{ParameterSet}} for parameter details. See
-\code{\link{DistributionDecorator}} for Decorator details.
+\code{\link{decorate}} for Decorator details.
 }

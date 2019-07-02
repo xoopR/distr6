@@ -7,10 +7,7 @@
 \alias{isMatrixvariate}
 \title{assert/check/test/Matrixvariate}
 \usage{
-assertMatrixvariate(x)
-checkMatrixvariate(x)
 testMatrixvariate(x)
-isMatrixvariate(x)
 
 checkMatrixvariate(x)
 

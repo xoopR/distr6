@@ -54,5 +54,5 @@ x$survival(4)
 
 }
 \seealso{
-\code{\link{DistributionDecorator}} and \code{\link{CoreStatistics}}
+\code{\link{CoreStatistics}}
 }

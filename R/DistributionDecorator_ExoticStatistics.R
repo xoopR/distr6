@@ -36,7 +36,7 @@
 #'  from analytic computations. See below for the methods added to a distribution after decorating with
 #'  \code{ExoticStatistics}.
 #'
-#' @seealso \code{\link{DistributionDecorator}} and \code{\link{CoreStatistics}}
+#' @seealso \code{\link{CoreStatistics}}
 #'
 #' @examples
 #' x = Exponential$new()

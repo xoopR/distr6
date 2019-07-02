@@ -84,9 +84,6 @@ Multinomial$set("public","var",function(){
   diag(cov) = self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
   return(cov)
 })
-Multinomial$set("public","cor",function(){
-  return(self$var() / (sqrt(diag(self$var()) %*% t(diag(self$var())))))
-}) # TEST
 Multinomial$set("public","skewness",function(){
   return(NaN)
 })

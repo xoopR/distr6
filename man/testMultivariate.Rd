@@ -7,10 +7,7 @@
 \alias{isMultivariate}
 \title{assert/check/test/Multivariate}
 \usage{
-assertMultivariate(x)
-checkMultivariate(x)
 testMultivariate(x)
-isMultivariate(x)
 
 checkMultivariate(x)
 

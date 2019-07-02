@@ -7,10 +7,7 @@
 \alias{isDiscrete}
 \title{assert/check/test/Discrete}
 \usage{
-assertDiscrete(x)
-checkDiscrete(x)
 testDiscrete(x)
-isDiscrete(x)
 
 checkDiscrete(x)
 
@@ -27,7 +24,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is discrete
+Validation checks to test if Distribution is discrete.
 }
 \examples{
 testDiscrete(Binomial$new()) # FALSE

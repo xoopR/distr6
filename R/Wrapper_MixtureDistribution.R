@@ -78,9 +78,9 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
 
   name = paste("Mixture of",paste(distnames, collapse = "_"))
   short_name = paste0("Mix_",paste(distnames, collapse = "_"))
-  type = do.call(union, lapply(distlist, type))
-  support = do.call(union, lapply(distlist, type))
-  distrDomain = do.call(union, lapply(distlist, type))
+  type = do.call(union.SetInterval, lapply(distlist, type))
+  support = do.call(union.SetInterval, lapply(distlist, type))
+  distrDomain = do.call(union.SetInterval, lapply(distlist, type))
 
   description =  paste0("Mixture of: ",paste0(1:length(distlist),") ",lapply(distlist, function(x) x$description),
                                             collapse = " And "), " - With weights: (",

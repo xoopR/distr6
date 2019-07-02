@@ -88,9 +88,6 @@ MultivariateNormal$set("public","mode",function(){
 MultivariateNormal$set("public","var",function(){
   return(self$getParameterValue("cov"))
 })
-MultivariateNormal$set("public","cor",function(){
-  return(self$var() / (sqrt(diag(self$var()) %*% t(diag(self$var())))))
-})
 MultivariateNormal$set("public","entropy",function(base = 2){
   return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
 })

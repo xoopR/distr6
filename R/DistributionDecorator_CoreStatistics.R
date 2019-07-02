@@ -1,15 +1,16 @@
 #' @title Core Statistical Methods for Distributions
-#' @description Added functionality to distribution objects for numerical statistical
-#'   methods. Including a generalised expectation function for more complex numerical calculations.
+#'
+#' @description Numeric methods for missing analytic expression in distr6 Distribution objects.
+#' Additionally includes generalised expectation and moments functions.
 #'
 #' @name CoreStatistics
 #'
-#' @section Constructor: CoreStatistics$new(dist)
+#' @section Constructor: CoreStatistics$new(distribution)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{dist} \tab distribution \tab Distribution to decorate. \cr
+#' \code{distribution} \tab distribution \tab Distribution to decorate. \cr
 #' }
 #'
 #' @section Added Methods:
@@ -25,7 +26,7 @@
 #' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 #' \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
 #' \code{var()} \tab Variance \tab \code{\link{var}} \cr
-#' \code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
+#' \code{mean()} \tab Arithmetic mean \tab \code{\link{mean.Distribution}} \cr
 #' }
 #'
 #' @details Decorator objects add functionality to the given Distribution object
@@ -36,7 +37,7 @@
 #'  from analytic computations. See below for the methods added to a distribution after decorating with
 #'  \code{CoreStatistics}.
 #'
-#' @seealso \code{\link{DistributionDecorator}}, \code{\link{decorate}} and \code{\link{ExoticStatistics}}
+#' @seealso \code{\link{decorate}} and \code{\link{ExoticStatistics}}
 #'
 #' @examples
 #' x = Binomial$new()
@@ -253,7 +254,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 })
 
 #-------------------------------------------------------------
-# variance
+# var
 #-------------------------------------------------------------
 #' @name var
 #' @title Distribution Variance
@@ -400,33 +401,6 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     }, lower = self$inf(), upper = self$sup())$value))
   }
 })
-
-#-------------------------------------------------------------
-# cor
-#-------------------------------------------------------------
-#' @title Distribution Correlation
-#' @name cor
-#' @description Correlation of a distribution.
-#'
-#' @usage cor(object)
-#' @section R6 Usage: $cor()
-#'
-#' @param object Distribution.
-#'
-#' @details In terms of covariance, the correlation of a distribution is defined by the equation,
-#' \deqn{\rho_{XY} = \sigma_{XY}/\sigma_X\sigma_Y}
-#' where \eqn{\sigma_{XY}} is the covariance of X and Y and \eqn{\sigma_X, \sigma_Y} and the respective
-#' standard deviations of X and Y.
-#'
-#' If the distribution is univariate then returns \eqn{1}.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @export
-NULL
-CoreStatistics$set("public","cor",function(){}) # TO DO
-
 #-------------------------------------------------------------
 # mode - TO DO
 #-------------------------------------------------------------

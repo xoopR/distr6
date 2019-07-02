@@ -7,10 +7,7 @@
 \alias{isDistributionList}
 \title{assert/check/test/isDistributionList}
 \usage{
-assertDistributionList(x)
-checkDistributionList(x)
 testDistributionList(x)
-isDistributionList(x)
 
 checkDistributionList(x)
 
@@ -27,7 +24,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is a list of R6 Distributions
+Validation checks to test if a given object is a list of R6 Distributions.
 }
 \examples{
 testDistributionList(list(Binomial$new(),5)) # FALSE

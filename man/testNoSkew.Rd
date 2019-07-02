@@ -7,10 +7,7 @@
 \alias{isNoSkew}
 \title{assert/check/test/NoSkew}
 \usage{
-assertNoSkew(x)
-checkNoSkew(x)
 testNoSkew(x)
-isNoSkew(x)
 
 checkNoSkew(x)
 

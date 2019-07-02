@@ -4,8 +4,8 @@
 \alias{CoreStatistics}
 \title{Core Statistical Methods for Distributions}
 \description{
-Added functionality to distribution objects for numerical statistical
-  methods. Including a generalised expectation function for more complex numerical calculations.
+Numeric methods for missing analytic expression in distr6 Distribution objects.
+Additionally includes generalised expectation and moments functions.
 }
 \details{
 Decorator objects add functionality to the given Distribution object
@@ -17,14 +17,14 @@ Decorator objects add functionality to the given Distribution object
  \code{CoreStatistics}.
 }
 \section{Constructor}{
- CoreStatistics$new(dist)
+ CoreStatistics$new(distribution)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{distribution} \tab distribution \tab Distribution to decorate. \cr
 }
 }
 
@@ -42,7 +42,7 @@ Decorator objects add functionality to the given Distribution object
 \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
 \code{var()} \tab Variance \tab \code{\link{var}} \cr
-\code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
+\code{mean()} \tab Arithmetic mean \tab \code{\link{mean.Distribution}} \cr
 }
 }
 
@@ -56,5 +56,5 @@ x$kthmoment(4)
 
 }
 \seealso{
-\code{\link{DistributionDecorator}}, \code{\link{decorate}} and \code{\link{ExoticStatistics}}
+\code{\link{decorate}} and \code{\link{ExoticStatistics}}
 }

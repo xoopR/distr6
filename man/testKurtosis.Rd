@@ -7,10 +7,7 @@
 \alias{isKurtosis}
 \title{assert/check/test/Kurtosis}
 \usage{
-assertKurtosis(x, type)
-checkKurtosis(x, type)
 testKurtosis(x, type)
-isKurtosis(x, type)
 
 checkKurtosis(x, type)
 
@@ -29,7 +26,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test the kurtosis of a Distribution
+Validation checks to test the kurtosis of a Distribution.
 }
 \examples{
 testKurtosis(Binomial$new(), "leptokurtic")

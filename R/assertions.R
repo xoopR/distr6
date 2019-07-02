@@ -1,14 +1,9 @@
 #' @title assert/check/test/isDistribution
-#' @description Validation checks to test if a given object is an R6 Distribution
+#' @description Validation checks to test if a given object is an R6 Distribution.
 #' @param x object to test
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertDistribution(x)
-#' checkDistribution(x)
-#' testDistribution(x)
-#' isDistribution(x)
 #'
 #' @examples
 #' testDistribution(5) # FALSE
@@ -32,16 +27,11 @@ makeChecks(assertionName = "Distribution",
            pos = environment())
 
 #' @title assert/check/test/isDistributionList
-#' @description Validation checks to test if a given object is a list of R6 Distributions
+#' @description Validation checks to test if a given object is a list of R6 Distributions.
 #' @param x object to test
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertDistributionList(x)
-#' checkDistributionList(x)
-#' testDistributionList(x)
-#' isDistributionList(x)
 #'
 #' @examples
 #' testDistributionList(list(Binomial$new(),5)) # FALSE
@@ -65,18 +55,13 @@ makeChecks(assertionName =  "DistributionList",
            pos = environment())
 
 #' @title assert/check/test/isDistributionFeature
-#' @description Validation checks to test for a given feature in a Distribution
+#' @description Validation checks to test for a given feature in a Distribution.
 #' @param x Distribution
 #' @param accessor accessor of property/trait to test
 #' @param feature feature to check if the property possesses
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertDistributionFeature(x, accessor, feature)
-#' checkDistributionFeature(x, accessor, feature)
-#' testDistributionFeature(x, accessor, feature)
-#' isDistributionFeature(x, accessor, feature)
 #'
 #' @examples
 #' testDistributionFeature(Binomial$new(), "variateForm", "multivariate") # TRUE
@@ -102,17 +87,12 @@ makeChecks(assertionName =  "DistributionFeature",
 
 #' @title assert/check/test/VariateForm
 #' @name testVariateForm
-#' @description Validation checks to test the variate form of a Distribution
+#' @description Validation checks to test the variate form of a Distribution.
 #' @param x Distribution
 #' @param type variate form type, univariate/multivariate/matrixvariate
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertVariateForm(x, type)
-#' checkVariateForm(x, type)
-#' testVariateForm(x, type)
-#' isVariateForm(x, type)
 #'
 #' @examples
 #' testVariateForm(Binomial$new(), "univariate") # silent
@@ -138,16 +118,11 @@ makeChecks(assertionName =  "VariateForm",
 
 #' @title assert/check/test/Univariate
 #' @name testUnivariate
-#' @description Validation checks to test if Distribution is univariate
+#' @description Validation checks to test if Distribution is univariate.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertUnivariate(x)
-#' checkUnivariate(x)
-#' testUnivariate(x)
-#' isUnivariate(x)
 #'
 #' @examples
 #' testUnivariate(Binomial$new()) # TRUE
@@ -177,11 +152,6 @@ makeChecks(assertionName =  "Univariate",
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 #'
-#' @usage assertMultivariate(x)
-#' checkMultivariate(x)
-#' testMultivariate(x)
-#' isMultivariate(x)
-#'
 #' @examples
 #' testMultivariate(Binomial$new()) # FALSE
 #'
@@ -210,11 +180,6 @@ makeChecks(assertionName =  "Multivariate",
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 #'
-#' @usage assertMatrixvariate(x)
-#' checkMatrixvariate(x)
-#' testMatrixvariate(x)
-#' isMatrixvariate(x)
-#'
 #' @examples
 #' testMatrixvariate(Binomial$new()) # FALSE
 #'
@@ -237,17 +202,12 @@ makeChecks(assertionName =  "Matrixvariate",
 
 #' @title assert/check/test/ValueSupport
 #' @name testValueSupport
-#' @description Validation checks to test the value support of a Distribution
+#' @description Validation checks to test the value support of a Distribution.
 #' @param x Distribution
 #' @param type value support type, continuous/discrete/mixture
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertValueSupport(x, type)
-#' checkValueSupport(x, type)
-#' testValueSupport(x, type)
-#' isValueSupport(x, type)
 #'
 #' @examples
 #' testValueSupport(Binomial$new(), "discrete") # silent
@@ -273,16 +233,11 @@ makeChecks(assertionName =  "ValueSupport",
 
 #' @title assert/check/test/Continuous
 #' @name testContinuous
-#' @description Validation checks to test if Distribution is continuous
+#' @description Validation checks to test if Distribution is continuous.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertContinuous(x)
-#' checkContinuous(x)
-#' testContinuous(x)
-#' isContinuous(x)
 #'
 #' @examples
 #' testContinuous(Binomial$new()) # FALSE
@@ -306,16 +261,11 @@ makeChecks(assertionName =  "Continuous",
 
 #' @title assert/check/test/Discrete
 #' @name testDiscrete
-#' @description Validation checks to test if Distribution is discrete
+#' @description Validation checks to test if Distribution is discrete.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertDiscrete(x)
-#' checkDiscrete(x)
-#' testDiscrete(x)
-#' isDiscrete(x)
 #'
 #' @examples
 #' testDiscrete(Binomial$new()) # FALSE
@@ -339,16 +289,11 @@ makeChecks(assertionName =  "Discrete",
 
 #' @title assert/check/test/Mixture
 #' @name testMixture
-#' @description Validation checks to test if Distribution is mixture
+#' @description Validation checks to test if Distribution is mixture.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertMixture(x)
-#' checkMixture(x)
-#' testMixture(x)
-#' isMixture(x)
 #'
 #' @examples
 #' testMixture(Binomial$new()) # FALSE
@@ -372,16 +317,11 @@ makeChecks(assertionName =  "Mixture",
 
 #' @title assert/check/test/Symmetric
 #' @name testSymmetric
-#' @description Validation checks to test if Distribution is symmetric
+#' @description Validation checks to test if Distribution is symmetric.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertSymmetric(x)
-#' checkSymmetric(x)
-#' testSymmetric(x)
-#' isSymmetric(x)
 #'
 #' @examples
 #' testSymmetric(Binomial$new()) # FALSE
@@ -405,17 +345,12 @@ makeChecks(assertionName =  "Symmetric",
 
 #' @title assert/check/test/Skewness
 #' @name testSkewness
-#' @description Validation checks to test the skewness of a Distribution
+#' @description Validation checks to test the skewness of a Distribution.
 #' @param x Distribution
 #' @param type skewness type, Negative Skew/No Skew/Positive Skew
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertSkewness(x, type)
-#' checkSkewness(x, type)
-#' testSkewness(x, type)
-#' isSkewness(x, type)
 #'
 #' @examples
 #' testSkewness(Binomial$new(), "Negative Skew")
@@ -447,11 +382,6 @@ makeChecks(assertionName =  "Skewness",
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 #'
-#' @usage assertNegativeSkew(x)
-#' checkNegativeSkew(x)
-#' testNegativeSkew(x)
-#' isNegativeSkew(x)
-#'
 #' @examples
 #' testNegativeSkew(Binomial$new())
 #'
@@ -479,11 +409,6 @@ makeChecks(assertionName =  "NegativeSkew",
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertPositiveSkew(x)
-#' checkPositiveSkew(x)
-#' testPositiveSkew(x)
-#' isPositiveSkew(x)
 #'
 #' @examples
 #' testPositiveSkew(Binomial$new())
@@ -513,10 +438,6 @@ makeChecks(assertionName =  "PositiveSkew",
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 #'
-#' @usage assertNoSkew(x)
-#' checkNoSkew(x)
-#' testNoSkew(x)
-#' isNoSkew(x)
 #'
 #' @examples
 #' testNoSkew(Binomial$new())
@@ -540,17 +461,12 @@ makeChecks(assertionName =  "NoSkew",
 
 #' @title assert/check/test/Kurtosis
 #' @name testKurtosis
-#' @description Validation checks to test the kurtosis of a Distribution
+#' @description Validation checks to test the kurtosis of a Distribution.
 #' @param x Distribution
 #' @param type kurtosis type, leptokurtic/mesokurtic/platykurtic
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertKurtosis(x, type)
-#' checkKurtosis(x, type)
-#' testKurtosis(x, type)
-#' isKurtosis(x, type)
 #'
 #' @examples
 #' testKurtosis(Binomial$new(), "leptokurtic")
@@ -582,11 +498,6 @@ makeChecks(assertionName =  "Kurtosis",
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 #'
-#' @usage assertPlatykurtic(x)
-#' checkPlatykurtic(x)
-#' testPlatykurtic(x)
-#' isPlatykurtic(x)
-#'
 #' @examples
 #' testPlatykurtic(Binomial$new())
 #'
@@ -615,11 +526,6 @@ makeChecks(assertionName =  "Platykurtic",
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 #'
-#' @usage assertMesokurtic(x)
-#' checkMesokurtic(x)
-#' testMesokurtic(x)
-#' isMesokurtic(x)
-#'
 #' @examples
 #' testMesokurtic(Binomial$new())
 #'
@@ -647,11 +553,6 @@ makeChecks(assertionName =  "Mesokurtic",
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @usage assertLeptokurtic(x)
-#' checkLeptokurtic(x)
-#' testLeptokurtic(x)
-#' isLeptokurtic(x)
 #'
 #' @examples
 #' testLeptokurtic(Binomial$new())

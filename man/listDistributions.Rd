@@ -12,7 +12,7 @@ listDistributions(simplify = FALSE, filter = NULL)
 \item{filter}{list to filter distributions by.}
 }
 \description{
-Lists R6 distributions in a data.table or a chaarcter vector, can be filtered by
+Lists R6 distributions in a data.table or a character vector, can be filtered by
 traits and implemented package.
 }
 \examples{

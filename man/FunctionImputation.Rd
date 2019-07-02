@@ -48,5 +48,5 @@ x = Distribution$new("Test", pdf = function(x) 1/(4-1), decorators = ExoticStati
 x$cdf(1)
 }
 \seealso{
-\code{\link{DistributionDecorator}}
+\code{\link{decorate}}
 }

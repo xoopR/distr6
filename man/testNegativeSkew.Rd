@@ -7,10 +7,7 @@
 \alias{isNegativeSkew}
 \title{assert/check/test/NegativeSkew}
 \usage{
-assertNegativeSkew(x)
-checkNegativeSkew(x)
 testNegativeSkew(x)
-isNegativeSkew(x)
 
 checkNegativeSkew(x)
 

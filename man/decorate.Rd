@@ -14,6 +14,15 @@ decorate(distribution, decorators)
 \description{
 A convenient S3 function to decorate R6 distributions
 }
+\details{
+Decorating is the process of adding methods to classes that are not part of the core
+interface. Use \code{listDecorators} to see wich decorators are currently available. The primary
+use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions,
+to impute missing p/d/q/r functions.
+
+The \code{decorators} parameter should either be a list of decorator classes (i.e. not as strings)
+or a single decorator class; see examples.
+}
 \examples{
 B <- Binomial$new()
 decorate(B, CoreStatistics)
@@ -23,6 +32,5 @@ decorate(E, list(CoreStatistics, ExoticStatistics))
 
 }
 \seealso{
-\code{\link{DistributionDecorator}} for the abstract decorator class and
 \code{\link{listDecorators}} for available decorators.
 }

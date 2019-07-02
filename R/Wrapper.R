@@ -172,7 +172,5 @@ DistributionWrapper$set("public","setParameterValue",function(lst, error = "warn
   row.names(params) <- NULL
   private$.parameters <- as.ParameterSet(params)
 
-  private$.properties$support <- do.call(product,lapply(self$wrappedModels(),function(x) x$support()))
-
   invisible(self)
 })

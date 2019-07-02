@@ -29,7 +29,7 @@
 #' \code{rand(n)} \tab integer x numeric -> numeric \tab n simulations from distribution. \cr
 #' }
 #'
-#' @seealso \code{\link{DistributionDecorator}}
+#' @seealso \code{\link{decorate}}
 #'
 #' @examples
 #' x = Distribution$new("Test", pdf = function(x) 1/(4-1), support = Interval$new(1,4),

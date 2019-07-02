@@ -1,4 +1,4 @@
-#' @include Distribution_helpers.R SetInterval_operations.R
+#' @include SetInterval_operations.R
 #-------------------------------------------------------------
 # Distribution Documentation
 #-------------------------------------------------------------
@@ -46,8 +46,8 @@
 #'   See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
 #'
 #'   \code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
-#'   Distribution in construction. Decorators can also be added after construction. See
-#'   \code{\link{DistributionDecorator}} and \code{\link{decorate}} for more details.
+#'   Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
+#'   for more details.
 #'
 #'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
 #'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
@@ -107,7 +107,7 @@
 #'
 #' @seealso See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 #' Intervals. See \code{\link{ParameterSet}} for parameter details. See
-#' \code{\link{DistributionDecorator}} for Decorator details.
+#' \code{\link{decorate}} for Decorator details.
 #'
 #' @export
 NULL
@@ -358,61 +358,59 @@ Distribution$set("public","summary",function(full = TRUE,...){
 
   if(full){
     if(length(private$.parameters)!=0){
-      cat(self$name,"with parameterisation:\n")
+      cat(self$description,"Parameterised with:\n")
       settable = self$parameters()$as.data.table()$settable
-      cat("\t", paste(self$parameters()$as.data.table()[settable, "id"],
+      cat(" ", paste(self$parameters()$as.data.table()[settable, "id"],
                       self$parameters()$as.data.table()[settable, "value"],
                       sep = " = ", collapse = ", "))
     } else
       cat(self$name(),"\n")
-    cat("\n\n Quick Statistics: \n")
+
 
     a_exp = suppressMessages(try(self$mean(), silent = T))
     a_var = suppressMessages(try(self$var(), silent = T))
     a_skew = suppressMessages(try(self$skewness(), silent = T))
     a_kurt = suppressMessages(try(self$kurtosis(), silent = T))
 
-    if(!inherits(a_exp,"try-error")) cat("\tMean")
-    if(!inherits(a_var,"try-error")) cat("\tVariance")
-    if(!inherits(a_skew,"try-error")) cat("\tSkewness")
-    if(!inherits(a_kurt,"try-error")) cat("\tExcess Kurtosis")
-    cat("\n")
+    if(!inherits(a_exp,"try-error") | !inherits(a_var,"try-error") |
+       !inherits(a_skew,"try-error") | !inherits(a_kurt,"try-error"))
+      cat("\n\n ",crayon::underline("Quick Statistics"),"\n")
 
     if(!inherits(a_exp,"try-error")){
+      cat("\tMean:")
       if(length(a_exp) > 1)
-        cat("\t", paste0(a_exp, collapse = ", "), sep = "")
+        cat("\t\t", paste0(a_exp, collapse = ", "),"\n", sep = "")
       else
-        cat("\t", a_exp, sep = "")
+        cat("\t\t", a_exp,"\n", sep = "")
     }
     if(!inherits(a_var,"try-error")){
+      cat("\tVariance:")
       if(length(a_var) > 1)
-        cat("\t", paste0(a_var, collapse = ", "), sep = "")
+        cat("\t", paste0(a_var, collapse = ", "),"\n", sep = "")
       else
-        cat("\t", a_var, sep = "")
+        cat("\t", a_var,"\n", sep = "")
     }
     if(!inherits(a_skew,"try-error")){
+      cat("\tSkewness:")
       if(length(a_skew) > 1)
-        cat("\t\t", paste0(a_skew, collapse = ", "), sep = "")
+        cat("\t", paste0(a_skew, collapse = ", "),"\n", sep = "")
       else
-        cat("\t\t", a_skew, sep = "")
+        cat("\t", a_skew,"\n", sep = "")
     }
     if(!inherits(a_kurt,"try-error")){
+      cat("\tEx. Kurtosis:")
       if(length(a_kurt) > 1)
-        cat("\t\t", paste0(a_kurt, collapse = ", "), sep = "")
+        cat("\t", paste0(a_kurt, collapse = ", "),"\n", sep = "")
       else
-        cat("\t\t", a_kurt, sep = "")
+        cat("\t", a_kurt,"\n", sep = "")
     }
-    cat("\n\n")
+    cat("\n")
 
-    cat(" Support:",self$support()$getSymbol(), "\t Scientific Type:",self$type()$getSymbol(),"\n")
-    cat("\n Traits: ",self$valueSupport(),"; ",self$variateForm(),"\n\t See traits() for more",sep="")
-
-    if(inherits(a_kurt,"try-error"))
-      cat("\n Properties: ", self$distrDomain()$getSymbol(), "; ", self$symmetry(),
-          "\n\t See properties() for more", sep="")
-    else
-      cat("\n Properties: ", self$kurtosisType(), "; ", self$skewnessType(),"; ", self$symmetry(),
-          "\n\t See properties() for more", sep="")
+    cat(" Support:",self$support()$getSymbol(), "\tScientific Type:",self$type()$getSymbol(),"\n")
+    cat("\n Traits:\t",self$valueSupport(),"; ",self$variateForm(), sep="")
+    cat("\n Properties:\t", self$symmetry(),sep="")
+    if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType())
+    if(!inherits(a_skew,"try-error")) cat(";",self$skewnessType())
 
     if(length(self$decorators())!=0)
       cat("\n\n Decorated with: ", paste0(self$decorators(),collapse=", "))
@@ -422,8 +420,8 @@ Distribution$set("public","summary",function(full = TRUE,...){
       cat(self$strprint())
     else
       cat(self$name)
-    cat("\n Scientific Type:",self$type()$getSymbol(),"\t See traits() for more")
-    cat("\n Support:",self$support()$getSymbol(),"\t\t See properties() for more")
+    cat("\nScientific Type:",self$type()$getSymbol(),"\t See $traits for more")
+    cat("\nSupport:",self$support()$getSymbol(),"\t See $properties() for more")
   }
 })
 
@@ -439,7 +437,7 @@ Distribution$set("public","qqplot",function(){}) # TO DO
 #' @section R6 Usage: $decorators()
 #' @param object Distribution.
 #' @description Returns the decorators added to a distribution.
-#' @seealso \code{\link{decorate}} and \code{\link{DistributionDecorator}}
+#' @seealso \code{\link{decorate}}
 #' @export
 NULL
 Distribution$set("public","decorators", function(){
@@ -1000,6 +998,34 @@ Distribution$set("public","median",function(na.rm = NULL,...){
 NULL
 Distribution$set("public", "iqr", function() {
   return(self$quantile(0.75) - self$quantile(0.25))
+})
+
+#' @title Distribution Correlation
+#' @name cor
+#' @description Correlation of a distribution.
+#'
+#' @usage cor(object)
+#' @section R6 Usage: $cor()
+#'
+#' @param object Distribution.
+#'
+#' @details In terms of covariance, the correlation of a distribution is defined by the equation,
+#' \deqn{\rho_{XY} = \sigma_{XY}/\sigma_X\sigma_Y}
+#' where \eqn{\sigma_{XY}} is the covariance of X and Y and \eqn{\sigma_X, \sigma_Y} and the respective
+#' standard deviations of X and Y.
+#'
+#' If the distribution is univariate then returns \eqn{1}.
+#'
+#' Calculates correlation analytically from variance. If an analytic expression for variance isn't available,
+#' returns error. To impute a numeric expression, use the \code{\link{CoreStatistics}} decorator.
+#'
+#' @export
+NULL
+Distribution$set("public","cor",function(){
+  if(testUnivariate(self))
+    return(1)
+  else
+    return(self$var() / (sqrt(diag(self$var()) %*% t(diag(self$var())))))
 })
 
 #-------------------------------------------------------------

@@ -7,10 +7,7 @@
 \alias{isDistribution}
 \title{assert/check/test/isDistribution}
 \usage{
-assertDistribution(x)
-checkDistribution(x)
 testDistribution(x)
-isDistribution(x)
 
 checkDistribution(x)
 
@@ -27,7 +24,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is an R6 Distribution
+Validation checks to test if a given object is an R6 Distribution.
 }
 \examples{
 testDistribution(5) # FALSE

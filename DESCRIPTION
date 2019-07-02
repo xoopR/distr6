@@ -75,7 +75,8 @@ Imports:
     utils,
     expint,
     data.table,
-    pracma
+    pracma,
+    crayon
 Suggests: 
     knitr,
     testthat,
@@ -95,7 +96,6 @@ RoxygenNote: 6.1.1
 Collate: 
     'RSmisc_helpers.R'
     'SetInterval_operations.R'
-    'Distribution_helpers.R'
     'Distribution.R'
     'DistributionDecorator.R'
     'DistributionDecorator_CoreStatistics.R'
@@ -168,11 +168,15 @@ Collate:
     'decorate.R'
     'distr6.R'
     'distr6_globals.R'
+    'exkurtosisType.R'
+    'generalPNorm.R'
     'getParameterSet.R'
     'listDecorators.R'
     'listDistributions.R'
     'listKernels.R'
     'listSpecialSets.R'
     'listWrappers.R'
+    'makeUniqueDistributions.R'
     'measures.R'
+    'skewType.R'
     'zzz.R'

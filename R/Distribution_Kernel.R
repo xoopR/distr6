@@ -4,9 +4,12 @@
 #-------------------------------------------------------------
 #' @title Abstract Kernel Class
 #'
-#' @description Abstract class that cannot be constructed directly.
+#' @description Abstract class that cannot be constructed directly. See \code{listKernels} for a list of
+#' implemented kernels.
 #'
 #' @name Kernel
+#'
+#' @seealso \code{\link{listKernels}}
 #'
 #' @section Public Variables:
 #'  \tabular{ll}{
@@ -66,6 +69,14 @@ Kernel <- R6::R6Class("Kernel", inherit = Distribution)
 Kernel$set("public","traits",list(type = Reals$new(),
                                       valueSupport = "continuous",
                                       variateForm = "univariate"))
+Kernel$set("public","initialize",function(...){
+  if(getR6Class(self) == "Kernel")
+    stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels()
+    to see the kernels currently implemented in distr6."))
+
+  super$initialize(...)
+})
+
 Kernel$set("public","package","distr6")
 Kernel$set("private",".type","symmetric")
 Kernel$set("public","mode",function(){

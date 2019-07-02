@@ -8,16 +8,11 @@ R62S3::R62Fun(DistributionWrapper, assignEnvir = topenv(), dispatchClasses = lis
 
 
 .onAttach <- function(libname, pkgname) {
-  setHook(packageEvent("distr", "attach"), function(...) {
-    packageStartupMessage("-----------------------------------------------------------------------")
-    packageStartupMessage(
-      "Loading distr and distr6 can cause problems. If you do require both then we recommend first loading distr and then distr6: \n
-      library(distr); library(distr6)"
-    )
-    packageStartupMessage("-----------------------------------------------------------------------")
-  })
-
   packageStartupMessage("\n-------------------------------------------------")
-  packageStartupMessage(" \t\tWelcome to distr6. \n \t\t---------------- \n To get started see: \n * ?distr6 \n * vignette('distr6','distr6') \n * https://alan-turing-institute.github.io/distr6/")
+  packageStartupMessage(" \t\tWelcome to distr6. \n \t\t----------------
+To get started see:
+* ?distr6
+* vignette('distr6','distr6')
+* https://alan-turing-institute.github.io/distr6/")
   packageStartupMessage("-------------------------------------------------\n")
 }

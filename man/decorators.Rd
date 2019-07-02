@@ -17,5 +17,5 @@ Returns the decorators added to a distribution.
 }
 
 \seealso{
-\code{\link{decorate}} and \code{\link{DistributionDecorator}}
+\code{\link{decorate}}
 }

@@ -83,6 +83,13 @@
 #' @export
 NULL
 SDistribution <- R6::R6Class("SDistribution", inherit = Distribution)
+SDistribution$set("public","initialize",function(...){
+  if(getR6Class(self) == "SDistribution")
+    stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listDistributions()
+    to see the probability distributions currently implemented in distr6."))
+
+  super$initialize(...)
+})
 
 SDistribution$set("public","setParameterValue",function(lst, error = "warn"){
   lst <- private$.getRefParams(lst)
@@ -90,12 +97,6 @@ SDistribution$set("public","setParameterValue",function(lst, error = "warn"){
   invisible(self)
 })
 SDistribution$set("public","package",NULL)
-SDistribution$set("public","prec",function(){
-  return(1/self$var())
-})
-SDistribution$set("public","cor",function(){
-  return(1)
-})
 SDistribution$set("public","pgf",function(){
   return(NaN)
 })

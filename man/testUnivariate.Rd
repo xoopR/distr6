@@ -7,10 +7,7 @@
 \alias{isUnivariate}
 \title{assert/check/test/Univariate}
 \usage{
-assertUnivariate(x)
-checkUnivariate(x)
 testUnivariate(x)
-isUnivariate(x)
 
 checkUnivariate(x)
 
@@ -27,7 +24,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is univariate
+Validation checks to test if Distribution is univariate.
 }
 \examples{
 testUnivariate(Binomial$new()) # TRUE

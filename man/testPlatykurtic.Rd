@@ -7,10 +7,7 @@
 \alias{isPlatykurtic}
 \title{assert/check/test/Platykurtic}
 \usage{
-assertPlatykurtic(x)
-checkPlatykurtic(x)
 testPlatykurtic(x)
-isPlatykurtic(x)
 
 checkPlatykurtic(x)
 

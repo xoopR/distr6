@@ -12,7 +12,7 @@ scale parameter and \eqn{m \epsilon R} is the minimum parameter. The distributio
 on \eqn{x > m}.
 }
 \details{
-The mgf and cgf are omitted as no closed form analytic expression could be found.
+The mgf and cf are omitted as no closed form analytic expression could be found.
 }
 \section{Constructor}{
  Frechet$new(shape = 1, scale = 1, minimum = 0,

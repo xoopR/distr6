@@ -7,10 +7,7 @@
 \alias{isDistributionFeature}
 \title{assert/check/test/isDistributionFeature}
 \usage{
-assertDistributionFeature(x, accessor, feature)
-checkDistributionFeature(x, accessor, feature)
 testDistributionFeature(x, accessor, feature)
-isDistributionFeature(x, accessor, feature)
 
 checkDistributionFeature(x, accessor, feature)
 
@@ -31,7 +28,7 @@ If check passes then \code{assert} returns invisibly and \code{test}/\code{check
   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 }
 \description{
-Validation checks to test for a given feature in a Distribution
+Validation checks to test for a given feature in a Distribution.
 }
 \examples{
 testDistributionFeature(Binomial$new(), "variateForm", "multivariate") # TRUE
