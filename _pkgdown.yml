@@ -34,14 +34,17 @@ navbar:
         href: articles/webs/custom_distributions.html
   - text: Appendices
     menu:
+    - text: API Lifecycle
+      href: articles/webs/api_lifecycle.html
+    - text: Analytic and Numeric Methods
+      href: articles/webs/analytic_and_numeric_methods.html
+    - text: R vs C
+      href: articles/webs/r_vs_c.html
     - text: R6 and Design Patterns
       href: articles/webs/r6_and_design_patterns.html
     - text: Documentation in R6
       href: articles/webs/documentation_in_r6.html
-    - text: Analytic and Numeric Methods
-      href: articles/webs/analytic_and_numeric_methods.html
-    - text: API Lifecycle
-      href: articles/webs/api_lifecycle.html
+
   right:
   - text: Reference
     href: reference/
