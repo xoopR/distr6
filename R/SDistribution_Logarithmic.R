@@ -59,7 +59,7 @@ NULL
 Logarithmic <- R6::R6Class("Logarithmic", inherit = SDistribution, lock_objects = F)
 Logarithmic$set("public","name","Logarithmic")
 Logarithmic$set("public","short_name","Log")
-Logarithmic$set("public", "traits",list(type = Naturals$new(),
+Logarithmic$set("public", "traits",list(type = PosIntegers$new(zero = T),
                                  valueSupport ="discrete",
                                  variateForm = "univariate"))
 Logarithmic$set("public","description","Logarithmic Probability Distribution.")
@@ -137,7 +137,7 @@ Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL,
   rand <- function(n) extraDistr::rlgser(n, self$getParameterValue("theta"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosNaturals$new(), distrDomain = PosReals$new(zero = TRUE),
+                   rand = rand, support = PosIntegers$new(zero=F), distrDomain = PosReals$new(zero = TRUE),
                    symmetric = FALSE)
 
   invisible(self)

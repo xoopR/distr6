@@ -58,7 +58,7 @@
 #' @examples
 #'  id = list("prob", "size")
 #'  value = list(0.2, 5)
-#'  support = list(Interval$new(0,1), PosNaturals$new())
+#'  support = list(Interval$new(0,1), PosIntegers$new())
 #'  settable = list(TRUE, TRUE)
 #'  description = list("Probability of success",NULL)
 #'  ps = ParameterSet$new(id, value, support, settable,

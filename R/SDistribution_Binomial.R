@@ -67,7 +67,7 @@ NULL
 Binomial <- R6::R6Class("Binomial", inherit = SDistribution, lock_objects = F)
 Binomial$set("public","name","Binomial")
 Binomial$set("public","short_name","Binom")
-Binomial$set("public","traits",list(type = Naturals$new(),
+Binomial$set("public","traits",list(type = PosIntegers$new(zero = T),
                                     valueSupport = "discrete",
                                     variateForm = "univariate"))
 Binomial$set("public","description","Binomial Probability Distribution.")
@@ -136,7 +136,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
   rand = function(n) rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0:size), distrDomain = Naturals$new(),
+                   rand = rand, support = Set$new(0:size), distrDomain = PosIntegers$new(zero = T),
                    symmetric = symmetric)
   invisible(self)
 })
