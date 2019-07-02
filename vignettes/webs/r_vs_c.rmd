@@ -1,0 +1,67 @@
+---
+title: "R vs. C"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{R vs. C}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+
+One of the most common questions when implementing a function in R, especially one that may take a long time to run, is whether the function should be written in C. In distr6, not only did we not opt to write our functions in C, but we actively chose to write our own p/d/q/r methods instead of interfacing packages that had already done so in C. We had two reasons for this: firstly to minimise dependencies on unknown packages, secondly to increase efficiency (we didn't have to verify every package when their p/d/q/r methods were abstracted), thirdly to make the p/d/q/r/ methods visible to the user and fourthly because C implementations were not vastly quicker.
+
+Below are some speed tests that we ran comparing our distr6 methods to external packages.
+
+
+```{r results='hide'}
+# Pareto: distr6 vs. extraDistr
+
+t1 = Sys.time()
+Pareto$new()$pdf(1:1000)
+t2 = Sys.time()
+extraDistr::dpareto(1:1000)
+t3 = Sys.time()
+distr6_pareto_1000_pdf <- as.numeric(round(t2 - t1,4))
+extradistr_pareto_1000_pdf <- as.numeric(round(t3 - t2,4))
+
+t1 = Sys.time()
+Pareto$new()$rand(10000)
+t2 = Sys.time()
+extraDistr::rpareto(10000)
+t3 = Sys.time()
+distr6_pareto_1000000_rand <- as.numeric(round(t2 - t1,4))
+extradistr_pareto_1000000_rand <- as.numeric(round(t3 - t2,4))
+
+
+# Gumbel: distr6 vs. actuar
+
+t1 = Sys.time()
+Gumbel$new()$pdf(1:1000)
+t2 = Sys.time()
+actuar::dgumbel(1:1000,1,1)
+t3 = Sys.time()
+distr6_gumbel_1000_pdf <- as.numeric(round(t2 - t1,4))
+actuar_gumbel_1000_pdf <- as.numeric(round(t3 - t2,4))
+
+t1 = Sys.time()
+Gumbel$new()$rand(10000)
+t2 = Sys.time()
+actuar::rgumbel(10000,1,1)
+t3 = Sys.time()
+distr6_gumbel_1000000_rand <- as.numeric(round(t2 - t1,4))
+actuar_gumbel_1000000_rand <- as.numeric(round(t3 - t2,4))
+```
+
+Which gives the following
+
+```{r echo=FALSE}
+data.frame(Package = c("distr6","extraDistr","actuar"), Pareto_pdf = c(distr6_pareto_1000_pdf,extradistr_pareto_1000_pdf,NA), Pareto_rand = c(distr6_pareto_100000_rand, extradistr_pareto_100000_rand, NA), Gumbel_pdf = c(distr6_gumbel_1000_pdf,NA,actuar_gumbel_1000_pdf), Gumbel_rand = c(distr6_gumbel_100000_rand,NA,actuar_gumbel_100000_rand))
+```
+
