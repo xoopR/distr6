@@ -21,24 +21,20 @@ We document all R6 classes using the following Roxygen tags:
 * @title - Documentation title, short and descriptive of class. Title Case.
 * @name - Name of class
 * @description - Description of class
-* @format -  "An \code{\link[R6]{R6}} object."
-* @section Construction: - Initialize method, includes parameters and defaults.
-* @section Constructor Arguments: - Tabular. Describes arguments to constructors, including type.
-* @section Accessor Methods: - Tabular. Lists all public accessor methods, brief description and return type.
-* @section Maths/Stats Methods: - Tabular. Lists all mathematical/statistical methods (e.g. exp/var), brief description.
-* @section Other Methods: - Tabular. Lists all other methods, brief description and return type.
-* @section Representation Methods: - Tabular. Lists all representation methods (e.g. print/summary), brief description and return type
-* @details - Details of class. Can be split into sections "@section Constructor Details:" and "@section Public Method Details:" but only if strictly necessary.
-* @seealso - Referencing other classes
-
-When a class has relatively few methods we instead replace the different sections with
-* @section Public Methods:
-* @section Public Methods Details:
+* @details - Details of class. Optional.
+* @section Constructor: Function and arguments to pass to constructor.
+* @section Constructor Arguments: Tabular. Gives argument names, input type and details.
+* @section Constructor Details: Any extra details required to construct the class. Optional.
+* @section Public Variables: Tabular. Variable name and return type.
+* @section Public Methods: Tabular. Method name and a link to a full documentation page. Sections separated by line breaks and bold headings.
+* @seealso - Referencing other classes. Optional.
 
 ### Example
+
 ````R
+#' @include Distribution_helpers.R SetInterval_operations.R
 #-------------------------------------------------------------
-# Distribution R6Class Definition
+# Distribution Documentation
 #-------------------------------------------------------------
 #' @title Generalised Distribution Object
 #'
@@ -47,59 +43,55 @@ When a class has relatively few methods we instead replace the different section
 #'   mathematical and statistical methods for distributions are defined here with approximate numerical
 #'   calculations (as opposed to analytical results).
 #'
-#
 #' @name Distribution
+#'
+#' @section Constructor: Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
+#' distrDomain = NULL, symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+#' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description=NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{name} \tab character \tab Full name of distribution. \cr
-#' ...
+#' \code{short_name} \tab character \tab Short name to identify distribution. \cr
+#' \code{type} \tab SetInterval \tab Scientific type. \cr
 #' }
 #'
-#' @section Constructor Details: The primary purpose of the Distribution object is to serve as the parent class
-#'   to all other distributions....
+#' @section Constructor Details:
 #'
+#'   The most basic Distribution object consists of a name and one of pdf/cdf.
 #'
-#' @section Accessor Methods:
-#'  \tabular{lrr}{
-#'   \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#'   \code{name()} \tab character \cr
-#'   ...
+#' @section Public Variables:
+#'  \tabular{ll}{
+#'   \strong{Variable} \tab \strong{Return} \cr
+#'   \code{name} \tab Name of distribution. \cr
+#'   \code{short_name} \tab Id of distribution. \cr
 #'   }
 #'
-#' @section Math/Stats Methods:
+#' @section Public Methods:
 #'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Details} \cr
-#'   \code{pdf(x, log = F)} \tab Evaluate density/mass at x \cr
-#'   ...
-#'  }
+#'   \strong{Accessor Methods} \tab \strong{Link} \cr
+#'   \code{decorators()} \tab \code{\link{decorators}} \cr
+#'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{p/d/q/r Methods} \tab \strong{Link} \cr
+#'   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
+#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{Parameter Methods} \tab \strong{Link} \cr
+#'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{Validation Methods} \tab \strong{Link} \cr
+#'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{Representation Methods} \tab \strong{Link} \cr
+#'   \code{strprint()} \tab \code{\link{strprint}} \cr
+#'   }
 #'
-#' @section Other Methods:
-#'  \tabular{lll}{
-#'   \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-#'   \code{setParameterValue(lst)} \tab list -> invisible(self) \tab Set parameter value. See \code{\link{ParameterSet}}. \cr
-#'  ...  
-#' }
-#'
-#' @section Representation Methods:
-#' \tabular{ll}{
-#'   \strong{Method} \tab \strong{Details} \cr
-#'   \code{print()} \tab Print method \cr
-#'   ...
-#' }
-#'
-#'
-#' @section Public Methods Details:
-#' If \code{liesInSupport(x, all = TRUE)} then returns TRUE only if every numeric in vector \code{x} lies
-#' in the support of the distribution, otherwise returns a vector of logicals.
-#' ...
-#'
-#'
-#' @seealso See ...
+#' @export
 NULL
 #-------------------------------------------------------------
-
-#' @export
+# Distribution Definition
+#-------------------------------------------------------------
 Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 ````
