@@ -327,21 +327,26 @@ makeChecks(assertionName =  "Mixture",
 #' testSymmetric(Binomial$new()) # FALSE
 #'
 #' @export
-testSymmetric <- function(){}
+testSymmetric <- function(x){
+  testThat(x[["symmetry"]]() == "symmetric")
+}
 #' @rdname testSymmetric
 #' @export
-checkSymmetric <- function(){}
+checkSymmetric <- function(x){
+  checkThat(x[["symmetry"]]() == "symmetric", paste(x$short_name,
+                                                    "is not symmetric"))
+}
 #' @rdname testSymmetric
 #' @export
-assertSymmetric <- function(){}
+assertSymmetric <- function(x){
+  assertThat(x, x[["symmetry"]]() == "symmetric", paste(x$short_name,
+                                                        "is not symmetric"))
+}
 #' @rdname testSymmetric
 #' @export
-isSymmetric <- function(){}
-
-makeChecks(assertionName =  "Symmetric",
-           cond = x[["symmetry"]]()=="symmetric",
-           errormsg = paste(x$short_name,"is not symmetric"),
-           pos = environment())
+isSymmetric.Distribution <- function(object){
+  isThat(object[["symmetry"]]() == "symmetric")
+}
 
 #' @title assert/check/test/Skewness
 #' @name testSkewness

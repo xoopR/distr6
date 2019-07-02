@@ -9,6 +9,12 @@ A generalised distribution object for defining custom probability distributions
   mathematical and statistical methods for distributions are defined here with approximate numerical
   calculations (as opposed to analytical results).
 }
+\section{Constructor}{
+ Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
+distrDomain = NULL, symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -58,7 +64,7 @@ A generalised distribution object for defining custom probability distributions
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr

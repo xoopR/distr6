@@ -4,7 +4,7 @@
 \alias{testSymmetric}
 \alias{checkSymmetric}
 \alias{assertSymmetric}
-\alias{isSymmetric}
+\alias{isSymmetric.Distribution}
 \title{assert/check/test/Symmetric}
 \usage{
 testSymmetric(x)
@@ -13,7 +13,7 @@ checkSymmetric(x)
 
 assertSymmetric(x)
 
-isSymmetric(x)
+\method{isSymmetric}{Distribution}(object)
 }
 \arguments{
 \item{x}{Distribution}

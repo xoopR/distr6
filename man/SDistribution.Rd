@@ -9,7 +9,7 @@ Abstract class that cannot be constructed directly.
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
