@@ -107,8 +107,8 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
   rand <- function(n) rpois(n, self$getParameterValue("rate"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosIntegers$new(zero = T),
-                   distrDomain = PosIntegers$new(zero = T),
+                   rand = rand, support = Naturals$new(),
+                   distrDomain = Naturals$new(),
                    symmetric = FALSE)
 
 

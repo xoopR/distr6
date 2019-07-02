@@ -1,4 +1,4 @@
-#' @include SetInterval_Interval.R
+#' @include SetInterval_Interval.R setSymbol.R
 #'
 #' @title Special Mathematical Sets
 #'

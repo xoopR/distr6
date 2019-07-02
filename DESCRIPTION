@@ -101,6 +101,7 @@ Collate:
     'DistributionDecorator_CoreStatistics.R'
     'DistributionDecorator_ExoticStatistics.R'
     'DistributionDecorator_FunctionImputation.R'
+    'setSymbol.R'
     'SetInterval.R'
     'SetInterval_Interval.R'
     'SetInterval_SpecialSet.R'
