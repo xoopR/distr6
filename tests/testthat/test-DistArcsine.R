@@ -16,7 +16,7 @@ test_that("properties & traits",{
 a = Arcsine$new()
 test_that("statistics",{
   expect_equal(a$mean(), 1/2)
-  expect_equal(a$var(), 1/8)
+  expect_equal(a$variance(), 1/8)
   expect_equal(a$skewness(), 0)
   expect_equal(a$kurtosis(T), -1.5)
   expect_equal(a$kurtosis(F), 1.5)

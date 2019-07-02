@@ -30,9 +30,6 @@ Gaussian <- R6::R6Class("Gaussian", inherit = Kernel, lock_objects = F)
 Gaussian$set("public","name","Gaussian")
 Gaussian$set("public","short_name","Gaus")
 Gaussian$set("public","description","Gaussian Kernel")
-Gaussian$set("public","var",function(){
-
-})
 Gaussian$set("public","squared2Norm",function(){
   return((2*sqrt(pi))^-1)
 })

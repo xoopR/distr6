@@ -59,7 +59,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -80,7 +80,7 @@ Normal$set("public","package","stats")
 Normal$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-Normal$set("public","var",function(){
+Normal$set("public","variance",function(){
   return(self$getParameterValue("var"))
 })
 Normal$set("public","skewness",function(){

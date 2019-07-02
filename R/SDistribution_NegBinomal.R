@@ -80,7 +80,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #
@@ -101,7 +101,7 @@ NegativeBinomial$set("public","package","distr6")
 NegativeBinomial$set("public", "mean", function(){
   return(self$getParameterValue("mean"))
 })
-NegativeBinomial$set("public","var",function(){
+NegativeBinomial$set("public","variance",function(){
   if(private$.form == "sbf" | private$.form == "tbf")
     return(self$getParameterValue("size") * self$getParameterValue("prob") / (self$getParameterValue("qprob")^2))
   else if(private$.form == "fbs" | private$.form == "tbs")

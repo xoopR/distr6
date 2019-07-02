@@ -30,7 +30,7 @@ test_that("properties & traits",{
 u = Uniform$new()
 test_that("statistics",{
   expect_equal(u$mean(), 0.5)
-  expect_equal(u$var(), 1/12)
+  expect_equal(u$variance(), 1/12)
   expect_equal(u$skewness(), 0)
   expect_equal(u$kurtosis(T), -6/5)
   expect_equal(u$kurtosis(F), 1.8)

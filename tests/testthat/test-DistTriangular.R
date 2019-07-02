@@ -38,7 +38,7 @@ test_that("properties & traits",{
 t = Triangular$new()
 test_that("statistics",{
   expect_equal(t$mean(), 0.5)
-  expect_equal(t$var(), 0.75/18)
+  expect_equal(t$variance(), 0.75/18)
   expect_equal(t$skewness(), 0)
   expect_equal(t$kurtosis(T), -0.6)
   expect_equal(t$kurtosis(F), 2.4)

@@ -47,7 +47,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -69,7 +69,7 @@ Logarithmic$set("public","mean",function(){
   theta = self$getParameterValue("theta")
   return(-theta/(log(1-theta)*(1-theta)))
 })
-Logarithmic$set("public","var",function(){
+Logarithmic$set("public","variance",function(){
   theta = self$getParameterValue("theta")
   return((-theta^2 - theta*log(1-theta)) / ((1-theta)^2 * (log(1-theta))^2))
 })
@@ -82,7 +82,7 @@ Logarithmic$set("public","skewness",function(){
   s1 = (theta*(3*theta + theta*log(1-theta) + log(1-theta))) / ((theta-1)^3 * log(1-theta)^2)
   s2 = 2 * (-theta/(log(1-theta)*(1-theta)))^3
 
-  return((s1+s2)/(self$sd()^3))
+  return((s1+s2)/(self$stdev()^3))
 })
 Logarithmic$set("public","kurtosis",function(excess = TRUE){
   theta = self$getParameterValue("theta")
@@ -97,7 +97,7 @@ Logarithmic$set("public","kurtosis",function(excess = TRUE){
 
   sum = - s1 - s2 - s3 - s4 - s5 - s6 - s7
 
-  kurtosis = sum/(self$sd()^4)
+  kurtosis = sum/(self$stdev()^4)
 
   if(excess)
     return(kurtosis - 3)

@@ -47,7 +47,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -73,7 +73,7 @@ InverseGamma$set("public","mean",function(){
   else
     return(NaN)
 })
-InverseGamma$set("public","var",function(){
+InverseGamma$set("public","variance",function(){
   if(self$getParameterValue("shape") > 2)
     return(self$getParameterValue("scale")^2/((self$getParameterValue("shape")-1)^2 * (self$getParameterValue("shape")-2)))
   else

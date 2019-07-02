@@ -23,7 +23,7 @@ test_that("check support", {
   expect_equal(Distribution$new("Discrete Test", pdf = dbinom)$valueSupport(), "continuous")
 })
 
-test_that("check variate", {
+test_that("check variateForm", {
   dbin = function(x){
     m1 = choose(self$getParameterValue("size"), x)
     m2 = self$getParameterValue("prob")^x

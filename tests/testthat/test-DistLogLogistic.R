@@ -27,8 +27,8 @@ test_that("properties & traits",{
 g = LogLogistic$new(location = 1, shape = 2, scale = 3)
 test_that("statistics",{
   expect_equal(g$mean(),1 + (3*pi/2)/sin(pi/2))
-  expect_equal(g$var(), NaN)
-  expect_equal(round(LogLogistic$new(shape = 3, scale = 2)$var(), 5), 3.82494)
+  expect_equal(g$variance(), NaN)
+  expect_equal(round(LogLogistic$new(shape = 3, scale = 2)$variance(), 5), 3.82494)
   expect_equal(g$skewness(), NaN)
   expect_equal(round(LogLogistic$new(shape = 4, scale = 2)$skewness(),5), 6.70886)
   expect_equal(g$kurtosis(), NaN)

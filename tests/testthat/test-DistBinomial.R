@@ -16,7 +16,7 @@ test_that("properties & traits",{
 b = Binomial$new()
 test_that("statistics",{
   expect_equal(b$mean(), 5)
-  expect_equal(b$var(), 2.5)
+  expect_equal(b$variance(), 2.5)
   expect_equal(b$skewness(), 0)
   expect_equal(b$kurtosis(T), -0.2)
   expect_equal(b$kurtosis(F), 2.8)

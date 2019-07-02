@@ -30,9 +30,6 @@ Sigmoid <- R6::R6Class("Sigmoid", inherit = Kernel, lock_objects = F)
 Sigmoid$set("public","name","Sigmoid")
 Sigmoid$set("public","short_name","Sigm")
 Sigmoid$set("public","description","Sigmoid Kernel")
-Sigmoid$set("public","var",function(){
-
-})
 Sigmoid$set("public","squared2Norm",function(){
   return(2 / pi^2)
 })

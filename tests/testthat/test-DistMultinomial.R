@@ -36,8 +36,8 @@ probs = c(0.1, 0.2, 0.7)
 mn = Multinomial$new(size = 3, prob = probs)
 test_that("statistics",{
   expect_equal(mn$mean(), 3 * probs)
-  expect_equal(diag(mn$var()), 3 * probs * (1-probs))
-  expect_equal(mn$var(), matrix(c(0.27,-0.06,-0.21,-0.06,0.48,-0.42,
+  expect_equal(diag(mn$variance()), 3 * probs * (1-probs))
+  expect_equal(mn$variance(), matrix(c(0.27,-0.06,-0.21,-0.06,0.48,-0.42,
                                  -0.21,-0.42,0.63),nrow = 3))
   expect_equal(mn$skewness(), NaN)
   expect_equal(mn$kurtosis(T), NaN)

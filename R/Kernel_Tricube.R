@@ -30,9 +30,6 @@ Tricube <- R6::R6Class("Tricube", inherit = Kernel, lock_objects = F)
 Tricube$set("public","name","Tricube")
 Tricube$set("public","short_name","Tric")
 Tricube$set("public","description","Tricube Kernel")
-Tricube$set("public","var",function(){
-
-})
 Tricube$set("public","squared2Norm",function(){
   return(175/247)
 })

@@ -55,7 +55,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -78,7 +78,7 @@ LogLogistic$set("public","mean",function(){
            (self$getParameterValue("scale")*pi/self$getParameterValue("shape"))/
            sin(pi/self$getParameterValue("shape")))
 })
-LogLogistic$set("public","var",function(){
+LogLogistic$set("public","variance",function(){
   if(self$getParameterValue("shape") > 2){
     scale <- self$getParameterValue("scale")
     shapi <- pi/self$getParameterValue("shape")

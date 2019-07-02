@@ -51,7 +51,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -72,7 +72,7 @@ Laplace$set("public","package","distr6")
 Laplace$set("public","mean",function(){
   self$getParameterValue("mean")
 })
-Laplace$set("public","var",function(){
+Laplace$set("public","variance",function(){
   self$getParameterValue("var")
 })
 Laplace$set("public","skewness",function(){

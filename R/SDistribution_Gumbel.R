@@ -46,7 +46,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -67,7 +67,7 @@ Gumbel$set("public","package","distr6")
 Gumbel$set("public","mean",function(){
   return(self$getParameterValue("location") - digamma(1)*self$getParameterValue("scale"))
 })
-Gumbel$set("public","var",function(){
+Gumbel$set("public","variance",function(){
   return((pi * self$getParameterValue("scale"))^2/6)
 })
 Gumbel$set("public","skewness",function(){

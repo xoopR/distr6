@@ -49,7 +49,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -76,7 +76,7 @@ Hypergeometric$set("public","mode",function(){
     size <- self$getParameterValue("size")
     return(floor(((draws + 1)*(successes + 1))/(size+2)))
 })
-Hypergeometric$set("public","var",function(){
+Hypergeometric$set("public","variance",function(){
     draws <- self$getParameterValue("draws")
     successes <- self$getParameterValue("successes")
     size <- self$getParameterValue("size")

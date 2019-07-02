@@ -28,7 +28,7 @@ test_that("properties & traits",{
 H = Hypergeometric$new()
 test_that("statistics",{
     expect_equal(H$mean(), 1)
-    expect_equal(round(H$var(),7), 0.7346939)
+    expect_equal(round(H$variance(),7), 0.7346939)
     expect_equal(round(H$skewness(),7), 0.5833333)
     expect_equal(signif(H$kurtosis(T),7), -0.0750591)
     expect_equal(signif(H$kurtosis(F),7), 2.924941)

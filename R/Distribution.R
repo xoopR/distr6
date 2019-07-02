@@ -372,7 +372,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
 
 
     a_exp = suppressMessages(try(self$mean(), silent = T))
-    a_var = suppressMessages(try(self$var(), silent = T))
+    a_var = suppressMessages(try(self$variance(), silent = T))
     a_skew = suppressMessages(try(self$skewness(), silent = T))
     a_kurt = suppressMessages(try(self$kurtosis(), silent = T))
 
@@ -938,30 +938,30 @@ Distribution$set("public","rand",function(n, simplify = TRUE){
 #' @details The precision is analytically computed as the reciprocal of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
 #'
-#' @seealso \code{\link{var}}
+#' @seealso \code{\link{variance}}
 #'
 #' @export
 NULL
 Distribution$set("public","prec",function(){
-  return(1/self$var())
+  return(1/self$variance())
 })
 
-#' @name sd
+#' @name stdev
 #' @title Standard Deviation of a Distribution
 #' @description Standard deviation of a distribution assuming variance is provided.
 #'
-#' @usage sd(object)
-#' @section R6 Usage: $sd()
+#' @usage stdev(object)
+#' @section R6 Usage: $stdev()
 #' @param object Distribution.
 #' @details The standard deviation is analytically computed as the square root of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
 #'
-#' @seealso \code{\link{var}}
+#' @seealso \code{\link{variance}}
 #'
 #' @export
 NULL
-Distribution$set("public","sd",function(){
-  return(sqrt(self$var()))
+Distribution$set("public","stdev",function(){
+  return(sqrt(self$variance()))
 })
 
 #' @title Median of a Distribution
@@ -1029,7 +1029,7 @@ Distribution$set("public","cor",function(){
   if(testUnivariate(self))
     return(1)
   else
-    return(self$var() / (sqrt(diag(self$var()) %*% t(diag(self$var())))))
+    return(self$variance() / (sqrt(diag(self$variance()) %*% t(diag(self$variance())))))
 })
 
 #-------------------------------------------------------------

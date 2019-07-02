@@ -30,9 +30,6 @@ Epanechnikov <- R6::R6Class("Epanechnikov", inherit = Kernel, lock_objects = F)
 Epanechnikov$set("public","name","Epanechnikov")
 Epanechnikov$set("public","short_name","Epan")
 Epanechnikov$set("public","description","Epanechnikov Kernel")
-Epanechnikov$set("public","var",function(){
-
-})
 Epanechnikov$set("public","squared2Norm",function(){
   return(3/5)
 })

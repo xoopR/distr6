@@ -51,7 +51,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -72,7 +72,7 @@ Wald$set("public","package","distr6")
 Wald$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-Wald$set("public","var",function(){
+Wald$set("public","variance",function(){
   return(self$getParameterValue("mean")^3/self$getParameterValue("shape"))
 })
 Wald$set("public","skewness",function(){

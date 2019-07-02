@@ -24,7 +24,7 @@ test_that("properties & traits",{
 x = Rayleigh$new(2)
 test_that("statistics",{
   expect_equal(x$mean(), sqrt(pi/2)*2)
-  expect_equal(x$var(), 8-pi*2)
+  expect_equal(x$variance(), 8-pi*2)
   expect_equal(round(x$skewness(), 5), 0.63111)
   expect_equal(round(x$kurtosis(T),5), 0.24509)
   expect_equal(round(x$kurtosis(F),5), 3.24509)

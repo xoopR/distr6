@@ -42,7 +42,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -66,7 +66,7 @@ StudentT$set("public","mean",function(){
   else
     return(NaN)
 })
-StudentT$set("public","var",function(){
+StudentT$set("public","variance",function(){
   df <- self$getParameterValue("df")
   if(df > 2)
     return(df/(df-2))

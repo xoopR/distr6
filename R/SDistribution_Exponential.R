@@ -52,7 +52,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -73,7 +73,7 @@ Exponential$set("public","package","stats")
 Exponential$set("public","mean",function(){
   self$getParameterValue("scale")
 })
-Exponential$set("public","var",function(){
+Exponential$set("public","variance",function(){
   self$getParameterValue("scale")^2
 })
 Exponential$set("public","skewness",function() return(2))

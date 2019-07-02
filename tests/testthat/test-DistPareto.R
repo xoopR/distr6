@@ -20,8 +20,8 @@ test_that("properties & traits",{
 test_that("statistics",{
   expect_equal(Pareto$new(shape = 1)$mean(), Inf)
   expect_equal(Pareto$new(shape = 2)$mean(), 2)
-  expect_equal(Pareto$new(shape = 2)$var(), Inf)
-  expect_equal(Pareto$new(shape = 3)$var(), 0.75)
+  expect_equal(Pareto$new(shape = 2)$variance(), Inf)
+  expect_equal(Pareto$new(shape = 3)$variance(), 0.75)
   expect_equal(Pareto$new(shape = 3)$skewness(), NaN)
   expect_equal(Pareto$new(shape = 4)$skewness(), 10*sqrt(0.5))
   expect_equal(Pareto$new(shape = 4)$kurtosis(), NaN)

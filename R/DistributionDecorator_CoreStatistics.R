@@ -25,7 +25,7 @@
 #' \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
 #' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 #' \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
-#' \code{var()} \tab Variance \tab \code{\link{var}} \cr
+#' \code{variance()} \tab Variance \tab \code{\link{variance}} \cr
 #' \code{mean()} \tab Arithmetic mean \tab \code{\link{mean.Distribution}} \cr
 #' }
 #'
@@ -254,15 +254,15 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 })
 
 #-------------------------------------------------------------
-# var
+# variance
 #-------------------------------------------------------------
-#' @name var
+#' @name variance
 #' @title Distribution Variance
 #' @description The variance or covariance of a distribution, either calculated analytically if
 #' or estimated numerically.
 #'
-#' @usage var(object)
-#' @section R6 Usage: $var()
+#' @usage variance(object)
+#' @section R6 Usage: $variance()
 #'
 #' @param object Distribution.
 #'
@@ -279,7 +279,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #'
 #' @export
 NULL
-CoreStatistics$set("public","var",function(){
+CoreStatistics$set("public","variance",function(){
   if(testUnivariate(self)){
     if(testContinuous(self))
       message(.distr6$message_numeric)
@@ -344,7 +344,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
     if(type == "central")
       return(centralMoment)
     else if(type == "standard")
-      return(centralMoment / self$sd()^k)
+      return(centralMoment / self$stdev()^k)
   }
 })
 

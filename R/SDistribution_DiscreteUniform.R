@@ -44,7 +44,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -65,7 +65,7 @@ DiscreteUniform$set("public","package","distr6")
 DiscreteUniform$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
 })
-DiscreteUniform$set("public","var",function(){
+DiscreteUniform$set("public","variance",function(){
   return(((self$getParameterValue("upper") - self$getParameterValue("lower") + 1)^2 - 1) / 12)
 })
 DiscreteUniform$set("public","skewness",function(){

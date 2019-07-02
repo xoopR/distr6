@@ -46,7 +46,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -68,7 +68,7 @@ Beta$set("public","package","stats")
 Beta$set("public","mean",function(){
   return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
 })
-Beta$set("public","var",function(){
+Beta$set("public","variance",function(){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
 

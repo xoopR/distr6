@@ -72,7 +72,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -93,7 +93,7 @@ Lognormal$set("public","package","stats")
 Lognormal$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-Lognormal$set("public","var",function(){
+Lognormal$set("public","variance",function(){
   return(self$getParameterValue("var"))
 })
 Lognormal$set("public","skewness",function(){

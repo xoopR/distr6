@@ -32,7 +32,7 @@ params = c(2,3)
 mn = Dirichlet$new(params)
 test_that("statistics",{
   expect_equal(mn$mean(), c(2/5,3/5))
-  expect_equal(mn$var(), matrix(c(0.04,-0.04,-0.04,0.04),nrow = 2))
+  expect_equal(mn$variance(), matrix(c(0.04,-0.04,-0.04,0.04),nrow = 2))
   expect_error(mn$skewness())
   expect_error(mn$kurtosis())
   expect_equal(round(mn$entropy(), 5), round(log(1/12,base=2) + 3*digamma(5) - 2.268353,5))

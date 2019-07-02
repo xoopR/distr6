@@ -24,8 +24,8 @@ test_that("statistics",{
   expect_equal(g$mean(), NaN)
   expect_equal(InverseGamma$new(shape = 2)$mean(), 1)
 
-  expect_equal(g$var(), NaN)
-  expect_equal(InverseGamma$new(shape = 3)$var(), 0.25)
+  expect_equal(g$variance(), NaN)
+  expect_equal(InverseGamma$new(shape = 3)$variance(), 0.25)
 
   expect_equal(g$skewness(), NaN)
   expect_equal(InverseGamma$new(shape = 4)$skewness(), 4*sqrt(2))

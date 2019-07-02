@@ -30,9 +30,6 @@ Silverman <- R6::R6Class("Silverman", inherit = Kernel, lock_objects = F)
 Silverman$set("public","name","Silverman")
 Silverman$set("public","short_name","Silv")
 Silverman$set("public","description","Silverman Kernel")
-Silverman$set("public","var",function(){
-
-})
 Silverman$set("public","squared2Norm",function(){
   return((3 * sqrt(2))/16)
 })

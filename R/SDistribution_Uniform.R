@@ -45,7 +45,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -67,7 +67,7 @@ Uniform$set("public","package","stats")
 Uniform$set("public","mean",function(){
  return((self$getParameterValue("lower")+self$getParameterValue("upper"))/2)
 })
-Uniform$set("public","var",function(){
+Uniform$set("public","variance",function(){
   return(((self$getParameterValue("upper")-self$getParameterValue("lower"))^2)/12)
 })
 Uniform$set("public","skewness",function(){

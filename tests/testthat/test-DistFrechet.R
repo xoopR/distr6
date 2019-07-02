@@ -23,8 +23,8 @@ test_that("statistics",{
   expect_equal(x$mean(), Inf)
   expect_equal(Frechet$new(shape = 2)$mean(), gamma(1- 1/2))
 
-  expect_equal(x$var(), Inf)
-  expect_equal(Frechet$new(shape = 3)$var(), gamma(1- 2/3) - gamma(1-1/3)^2)
+  expect_equal(x$variance(), Inf)
+  expect_equal(Frechet$new(shape = 3)$variance(), gamma(1- 2/3) - gamma(1-1/3)^2)
 
   expect_equal(x$skewness(), Inf)
   expect_equal(Frechet$new(shape = 4)$skewness(), (gamma(0.25) - 3*gamma(0.5)*gamma(0.75) +

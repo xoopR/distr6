@@ -73,7 +73,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -99,7 +99,7 @@ Geometric$set("public","mean",function(){
     else
         return((1-self$getParameterValue("prob"))/self$getParameterValue("prob"))
 })
-Geometric$set("public","var",function(){
+Geometric$set("public","variance",function(){
    return((1-self$getParameterValue("prob"))/(self$getParameterValue("prob")^2))
 })
 Geometric$set("public","skewness",function(){

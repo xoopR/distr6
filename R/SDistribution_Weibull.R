@@ -45,7 +45,7 @@
 #'
 #' # Statistics
 #' x$mean()
-#' x$var()
+#' x$variance()
 #'
 #' summary(x)
 #'
@@ -66,7 +66,7 @@ Weibull$set("public","package","stats")
 Weibull$set("public","mean",function(){
   return(self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape")))
 })
-Weibull$set("public","var",function(){
+Weibull$set("public","variance",function(){
   scale<-self$getParameterValue("scale")
   shape<-self$getParameterValue("shape")
   return(scale^2 *(gamma(1+2/shape)-gamma(1+1/shape)^2))
@@ -75,7 +75,7 @@ Weibull$set("public","skewness",function() {
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
   mu <- self$mean()
-  sigma <- self$sd()
+  sigma <- self$stdev()
   return(((gamma(1+3/shape)*(scale^3))  - (3*mu*sigma^2) - (mu^3)) / (sigma^3))
 })
 Weibull$set("public","kurtosis",function(excess = TRUE){
@@ -83,7 +83,7 @@ Weibull$set("public","kurtosis",function(excess = TRUE){
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
   mu <- self$mean()
-  sigma <- self$sd()
+  sigma <- self$stdev()
 
   kur <- (((scale^4) * gamma(1+4/shape)) - (4*skew*(sigma^3)*mu) - (6*(sigma^2)*(mu^2)) - (mu^4)) / (sigma^4)
 

@@ -27,7 +27,7 @@ test_that("properties & traits",{
 
 test_that("statistics",{
   expect_equal(Laplace$new()$mean(), 0)
-  expect_equal(Laplace$new()$var(), 2)
+  expect_equal(Laplace$new()$variance(), 2)
   expect_equal(Laplace$new()$skewness(), 0)
   expect_equal(Laplace$new()$kurtosis(T), 3)
   expect_equal(Laplace$new()$kurtosis(F), 6)

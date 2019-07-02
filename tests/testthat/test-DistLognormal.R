@@ -40,7 +40,7 @@ test_that("properties & traits",{
 ln = Lognormal$new()
 test_that("statistics",{
   expect_equal(ln$mean(), exp(1/2))
-  expect_equal(ln$var(), (exp(1)-1)*exp(1))
+  expect_equal(ln$variance(), (exp(1)-1)*exp(1))
   expect_equal(ln$skewness(), (exp(1)+2)*sqrt(exp(1)-1))
   expect_equal(ln$kurtosis(T), exp(4)+2*exp(3)+3*exp(2)-6)
   expect_equal(ln$kurtosis(F), exp(4)+2*exp(3)+3*exp(2)-3)

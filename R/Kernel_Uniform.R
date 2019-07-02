@@ -33,7 +33,7 @@ KUniform$set("public","description","Uniform Kernel")
 KUniform$set("public","mean",function(){
   return(0)
 })
-KUniform$set("public","var",function(){
+KUniform$set("public","variance",function(){
   return(1/3)
 })
 KUniform$set("public","squared2Norm",function(){
