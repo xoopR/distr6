@@ -75,7 +75,7 @@ Weibull$set("public","skewness",function() {
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
   mu <- self$mean()
-  sigma <- self$sd()
+  sigma <- self$stdev()
   return(((gamma(1+3/shape)*(scale^3))  - (3*mu*sigma^2) - (mu^3)) / (sigma^3))
 })
 Weibull$set("public","kurtosis",function(excess = TRUE){
@@ -83,7 +83,7 @@ Weibull$set("public","kurtosis",function(excess = TRUE){
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
   mu <- self$mean()
-  sigma <- self$sd()
+  sigma <- self$stdev()
 
   kur <- (((scale^4) * gamma(1+4/shape)) - (4*skew*(sigma^3)*mu) - (6*(sigma^2)*(mu^2)) - (mu^4)) / (sigma^4)
 

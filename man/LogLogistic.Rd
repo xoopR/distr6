@@ -41,7 +41,7 @@ shape = 1, scale = 1 and location = 0.
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
@@ -86,7 +86,7 @@ shape = 1, scale = 1 and location = 0.
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{sd()} \tab \code{\link{sd}} \cr
+  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 

@@ -344,7 +344,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
     if(type == "central")
       return(centralMoment)
     else if(type == "standard")
-      return(centralMoment / self$sd()^k)
+      return(centralMoment / self$stdev()^k)
   }
 })
 

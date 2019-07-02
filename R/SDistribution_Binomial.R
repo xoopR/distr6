@@ -80,7 +80,7 @@ Binomial$set("public","var",function(){
   self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob")
 })
 Binomial$set("public","skewness",function(){
-  (1 - (2*self$getParameterValue("prob"))) / self$sd()
+  (1 - (2*self$getParameterValue("prob"))) / self$stdev()
 })
 Binomial$set("public","kurtosis",function(excess = TRUE){
   exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$var()

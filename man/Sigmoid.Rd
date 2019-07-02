@@ -23,7 +23,7 @@ over the support \eqn{x \epsilon R}.
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of kernel. \cr
   \code{short_name} \tab Id of kernel. \cr
  }

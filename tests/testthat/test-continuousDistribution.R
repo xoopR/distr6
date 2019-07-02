@@ -40,7 +40,7 @@ test_that("check core statistics", {
   expect_message(decorate(continuousTester, CoreStatistics))
   expect_equal(continuousTester$genExp(), 1/6)
   expect_equal(continuousTester$var(), 1/36)
-  expect_equal(continuousTester$sd(), 1/6)
+  expect_equal(continuousTester$stdev(), 1/6)
   expect_silent(continuousTester$iqr())
   expect_equal(continuousTester$kthmoment(0), 1)
   expect_equal(continuousTester$kthmoment(1), 0)

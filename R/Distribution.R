@@ -946,12 +946,12 @@ Distribution$set("public","prec",function(){
   return(1/self$var())
 })
 
-#' @name sd
+#' @name stdev
 #' @title Standard Deviation of a Distribution
 #' @description Standard deviation of a distribution assuming variance is provided.
 #'
-#' @usage sd(object)
-#' @section R6 Usage: $sd()
+#' @usage stdev(object)
+#' @section R6 Usage: $stdev()
 #' @param object Distribution.
 #' @details The standard deviation is analytically computed as the square root of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
@@ -960,7 +960,7 @@ Distribution$set("public","prec",function(){
 #'
 #' @export
 NULL
-Distribution$set("public","sd",function(){
+Distribution$set("public","stdev",function(){
   return(sqrt(self$var()))
 })
 
