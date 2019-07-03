@@ -94,14 +94,14 @@ reference:
       - prec
       - quantile.Distribution
       - rand
-      - sd
+      - stdev
       - skewness
       - skewnessType
       - squared2Norm
       - survival
       - survivalAntiDeriv
       - survivalPNorm
-      - var
+      - variance
   - title: "Distribution Accessors"
     desc: "Accessor methods for Distribution objects."
     contents: 
@@ -125,7 +125,6 @@ reference:
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
-      - DistributionDecorator
       - CoreStatistics
       - ExoticStatistics
       - FunctionImputation
@@ -190,10 +189,10 @@ reference:
     contents:
       - Cosine
       - Epanechnikov
-      - Gaussian
-      - KLogistic
-      - KTriangular
-      - KUniform
+      - NormalKernel
+      - LogisticKernel
+      - TriangularKernel
+      - UniformKernel
       - Quartic
       - Sigmoid
       - Silverman
@@ -221,10 +220,10 @@ reference:
       - starts_with("Neg")
       - setSymbol
       - operation
-      - complement
-      - power
-      - product
-      - union
+      - complement.SetInterval
+      - power.SetInterval
+      - product.SetInterval
+      - union.SetInterval
       - listSpecialSets
   - title: "Helper Functions"
     desc: "Miscellaneous functions for use in distr6."
