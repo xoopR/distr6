@@ -8,6 +8,10 @@ Mathematical and statistical functions for the Triweight kernel defined by the p
 \deqn{f(x) = 35/32(1 - x^2)^3}
 over the support \eqn{x \epsilon (-1,1)}.
 }
+\details{
+The quantile function is omitted as no closed form analytic expression could
+be found, decorate with FunctionImputation for numeric results.
+}
 \section{Constructor}{
  Triweight$new(decorators = NULL)
 }

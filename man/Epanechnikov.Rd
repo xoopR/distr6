@@ -8,6 +8,10 @@ Mathematical and statistical functions for the Epanechnikov kernel defined by th
 \deqn{f(x) = 3/4(1-x^2)}
 over the support \eqn{x \epsilon (-1,1)}.
 }
+\details{
+The quantile function is omitted as no closed form analytic expressions could
+be found, decorate with FunctionImputation for numeric results.
+}
 \section{Constructor}{
  Epanechnikov$new(decorators = NULL)
 }

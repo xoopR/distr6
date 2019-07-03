@@ -8,6 +8,9 @@
 #' \deqn{f(x) = 15/16(1 - x^2)^2}
 #' over the support \eqn{x \epsilon (-1,1)}.
 #'
+#' @details Quantile is omitted as no closed form analytic expression could be found, decorate with
+#' FunctionImputation for numeric results.
+#'
 #' @name Quartic
 #'
 #' @section Constructor: Quartic$new(decorators = NULL)
@@ -33,6 +36,9 @@ Quartic$set("public","description","Quartic Kernel")
 Quartic$set("public","squared2Norm",function(){
   return(5/7)
 })
+Quartic$set("public","variance",function(){
+  return(1/7)
+})
 Quartic$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
@@ -41,11 +47,8 @@ Quartic$set("public","initialize",function(decorators = NULL){
   cdf <- function(x1){
     return(15/16 * (x1 - 2/3*x1^3 + 1/5*x1^5 + 8/15))
   }
-  quantile <- function(p){
 
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
                    support = Interval$new(-1, 1), distrDomain = Reals$new(), symmetric = TRUE)
   invisible(self)
 }) # QUANTILE & VAR MISSING

@@ -1,13 +1,25 @@
 library(testthat)
 
-u = KUniform$new()
-test_that("statistics",{
-  expect_equal(u$mean(), 0)
-  expect_equal(u$variance(), 1/3)
-  expect_equal(u$squared2Norm(), 0.5)
-  expect_equal(u$pdf(1), 0.5)
-  expect_equal(u$cdf(0.6), 0.8)
-  expect_equal(u$quantile(0.324), -0.352)
-  expect_equal(u$cdf(u$quantile(0.324)), 0.324)
-  expect_silent(u$rand(10))
+unif = UniformKernel$new()
+
+test_that("zero statistics",{
+  expect_equal(unif$mean(), 0)
+  expect_equal(unif$median(), 0)
+  expect_equal(unif$mode(), 0)
+})
+
+test_that("var & squared-norm",{
+  expect_equal(unif$variance(), 1/3)
+  expect_equal(unif$squared2Norm(), 1/2)
+})
+
+test_that("support",{
+  expect_equal(unif$support()$getSymbol(), Interval$new(-1,1)$getSymbol())
+})
+
+test_that("d/p/q/r",{
+  expect_equal(unif$pdf(c(-0.1,0,0.1)), rep(0.5, 3))
+  expect_equal(unif$cdf(c(0.4)), 0.7)
+  expect_equal(unif$cdf(unif$quantile(c(0.42,0.5,0.78))),c(0.42,0.5,0.78))
+  expect_equal(length(unif$rand(10)), 10)
 })

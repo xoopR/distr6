@@ -8,6 +8,9 @@
 #' \deqn{f(x) = 3/4(1-x^2)}
 #' over the support \eqn{x \epsilon (-1,1)}.
 #'
+#' @details The quantile function is omitted as no closed form analytic expressions could
+#' be found, decorate with FunctionImputation for numeric results.
+#'
 #' @name Epanechnikov
 #'
 #' @section Constructor: Epanechnikov$new(decorators = NULL)
@@ -33,6 +36,9 @@ Epanechnikov$set("public","description","Epanechnikov Kernel")
 Epanechnikov$set("public","squared2Norm",function(){
   return(3/5)
 })
+Epanechnikov$set("public","variance",function(){
+  return(1/5)
+})
 Epanechnikov$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
@@ -41,11 +47,8 @@ Epanechnikov$set("public","initialize",function(decorators = NULL){
   cdf <- function(x1){
     return(3/4*x1 - 1/4*x1^3 + 1/2)
   }
-  quantile <- function(p){
 
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
                    support = Interval$new(-1, 1), distrDomain = Reals$new(), symmetric = TRUE)
   invisible(self)
-}) # QUANTILE & VAR MISSING
+})

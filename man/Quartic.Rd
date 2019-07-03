@@ -8,6 +8,10 @@ Mathematical and statistical functions for the Quartic kernel defined by the pdf
 \deqn{f(x) = 15/16(1 - x^2)^2}
 over the support \eqn{x \epsilon (-1,1)}.
 }
+\details{
+Quantile is omitted as no closed form analytic expression could be found, decorate with
+FunctionImputation for numeric results.
+}
 \section{Constructor}{
  Quartic$new(decorators = NULL)
 }

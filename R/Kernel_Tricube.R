@@ -8,6 +8,9 @@
 #' \deqn{f(x) = 70/81(1 - |x|^3)^3}
 #' over the support \eqn{x \epsilon (-1,1)}.
 #'
+#' @details The cdf and quantile functions are omitted as no closed form analytic expressions could
+#' be found, decorate with FunctionImputation for numeric results.
+#'
 #' @name Tricube
 #'
 #' @section Constructor: Tricube$new(decorators = NULL)
@@ -33,19 +36,16 @@ Tricube$set("public","description","Tricube Kernel")
 Tricube$set("public","squared2Norm",function(){
   return(175/247)
 })
+Tricube$set("public","variance",function(){
+  return(35/243)
+})
 Tricube$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
     return(70/81 * (1-abs(x1)^3)^3)
   }
-  cdf <- function(x1){
 
-  }
-  quantile <- function(p){
-
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+  super$initialize(decorators = decorators, pdf = pdf,
                    support = Interval$new(-1, 1), distrDomain = Reals$new(), symmetric = TRUE)
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING

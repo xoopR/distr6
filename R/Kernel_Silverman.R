@@ -8,6 +8,9 @@
 #' \deqn{f(x) = 1/2 * exp(-|x1|/sqrt(2)) * sin(|x1|/sqrt(2) + \pi/4)}
 #' over the support \eqn{x \epsilon R}.
 #'
+#' @details The cdf and quantile functions are omitted as no closed form analytic expressions could
+#' be found, decorate with FunctionImputation for numeric results.
+#'
 #' @name Silverman
 #'
 #' @section Constructor: Silverman$new(decorators = NULL)
@@ -33,19 +36,16 @@ Silverman$set("public","description","Silverman Kernel")
 Silverman$set("public","squared2Norm",function(){
   return((3 * sqrt(2))/16)
 })
+Silverman$set("public","variance",function(){
+  return(0)
+})
 Silverman$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
     return(1/2 * exp(-abs(x1)/sqrt(2)) * sin(abs(x1)/sqrt(2) + pi/4))
   }
-  cdf <- function(x1){
 
-  }
-  quantile <- function(p){
-
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+  super$initialize(decorators = decorators, pdf = pdf,
                    support = Reals$new(), distrDomain = Reals$new(), symmetric = TRUE)
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING

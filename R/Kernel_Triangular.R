@@ -8,9 +8,9 @@
 #' \deqn{f(x) = 1 - |x|}
 #' over the support \eqn{x \epsilon (-1,1)}.
 #'
-#' @name KTriangular
+#' @name TriangularKernel
 #'
-#' @section Constructor: KTriangular$new(decorators = NULL)
+#' @section Constructor: TriangularKernel$new(decorators = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -26,23 +26,34 @@ NULL
 #-------------------------------------------------------------
 # Uniform Kernel Definition
 #-------------------------------------------------------------
-KTriangular <- R6::R6Class("KTriangular", inherit = Kernel, lock_objects = F)
-KTriangular$set("public","name","KTriangular")
-KTriangular$set("public","short_name","KTri")
-KTriangular$set("public","description","Triangular Kernel")
-KTriangular$set("public","squared2Norm",function(){
+TriangularKernel <- R6::R6Class("TriangularKernel", inherit = Kernel, lock_objects = F)
+TriangularKernel$set("public","name","TriangularKernel")
+TriangularKernel$set("public","short_name","TriKern")
+TriangularKernel$set("public","description","Triangular Kernel")
+TriangularKernel$set("public","variance",function(){
+  return(1/6)
+})
+TriangularKernel$set("public","squared2Norm",function(){
   return(2/3)
 })
-KTriangular$set("public","initialize",function(decorators = NULL){
+TriangularKernel$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
     return(1 - abs(x1))
   }
   cdf <- function(x1){
-
+    cdf = x1
+    cdf[x1 < 0] = x1[x1 < 0] + 0.5*x1[x1 < 0]^2 + 1/2
+    cdf[x1 == 0] = 0.5
+    cdf[x1 > 0] = x1[x1 > 0] - 0.5*x1[x1 > 0]^2 + 1/2
+    return(cdf)
   }
   quantile <- function(p){
-
+    quantile = p
+    quantile[p < 0.5] = -1 + sqrt(2 * p[p < 0.5])
+    quantile[p == 0.5] = 0
+    quantile[p > 0.5] = 1 - sqrt(2 - 2*p[p > 0.5])
+    return(quantile)
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,

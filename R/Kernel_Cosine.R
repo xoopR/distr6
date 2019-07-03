@@ -33,19 +33,22 @@ Cosine$set("public","description","Cosine Kernel")
 Cosine$set("public","squared2Norm",function(){
   return(pi^2 / 16)
 })
+Cosine$set("public","variance",function(){
+  return(1 - 8/(pi^2))
+})
 Cosine$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
     return(pi/4 * cos(pi/2 * x1))
   }
   cdf <- function(x1){
-
+    return(0.5 * (sin((pi*x1)/2)+1))
   }
   quantile <- function(p){
-
+    return((2*asin(2*p - 1))/pi)
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    support = Interval$new(-1,1), distrDomain = Reals$new(), symmetric = TRUE)
   invisible(self)
-}) # CDF, QUANTILE & VAR MISSING
+})

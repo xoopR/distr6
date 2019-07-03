@@ -1,16 +1,19 @@
 #' @include SetInterval_SpecialSet.R ParameterSet.R
 #-------------------------------------------------------------
-# Gaussian Kernel
+# Normal Kernel
 #-------------------------------------------------------------
-#' @title Gaussian Kernel
+#' @title NormalKernel
 #'
-#' @description Mathematical and statistical functions for the Gaussian kernel defined by the pdf,
+#' @description Mathematical and statistical functions for the NormalKernel kernel defined by the pdf,
 #' \deqn{f(x) = exp(-x^2/2)/sqrt(2\pi)}
 #' over the support \eqn{x \epsilon R}.
 #'
-#' @name Gaussian
+#' @details We use the \code{erf} and \code{erfinv} error and inverse error functions from the Pracma
+#' package.
 #'
-#' @section Constructor: Gaussian$new(decorators = NULL)
+#' @name NormalKernel
+#'
+#' @section Constructor: NormalKernel$new(decorators = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -24,28 +27,31 @@
 #' @export
 NULL
 #-------------------------------------------------------------
-# Gaussian Kernel Definition
+# NormalKernel Kernel Definition
 #-------------------------------------------------------------
-Gaussian <- R6::R6Class("Gaussian", inherit = Kernel, lock_objects = F)
-Gaussian$set("public","name","Gaussian")
-Gaussian$set("public","short_name","Gaus")
-Gaussian$set("public","description","Gaussian Kernel")
-Gaussian$set("public","squared2Norm",function(){
+NormalKernel <- R6::R6Class("NormalKernel", inherit = Kernel, lock_objects = F)
+NormalKernel$set("public","name","NormalKernel")
+NormalKernel$set("public","short_name","NormKern")
+NormalKernel$set("public","description","Normal Kernel")
+NormalKernel$set("public","squared2Norm",function(){
   return((2*sqrt(pi))^-1)
 })
-Gaussian$set("public","initialize",function(decorators = NULL){
+NormalKernel$set("public","variance",function(){
+  return(1)
+})
+NormalKernel$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
     return(1/sqrt(2*pi) * exp(-0.5 * x1^2))
   }
   cdf <- function(x1){
-
+    return(1/2 * (pracma::erf(x1/sqrt(2)) + 1))
   }
   quantile <- function(p){
-
+    return(sqrt(2) * pracma::erfinv(2*p - 1))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    support = Reals$new(), distrDomain = Reals$new(), symmetric = TRUE)
   invisible(self)
-}) # CDF, QUANTILE & VAR MISSING
+})

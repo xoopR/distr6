@@ -8,6 +8,10 @@ Mathematical and statistical functions for the Silverman kernel defined by the p
 \deqn{f(x) = 1/2 * exp(-|x1|/sqrt(2)) * sin(|x1|/sqrt(2) + \pi/4)}
 over the support \eqn{x \epsilon R}.
 }
+\details{
+The cdf and quantile functions are omitted as no closed form analytic expressions could
+be found, decorate with FunctionImputation for numeric results.
+}
 \section{Constructor}{
  Silverman$new(decorators = NULL)
 }

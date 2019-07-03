@@ -8,9 +8,9 @@
 #' \deqn{f(x) = 1/2}
 #' over the support \eqn{x \epsilon (-1,1)}.
 #'
-#' @name KUniform
+#' @name UniformKernel
 #'
-#' @section Constructor: KUniform$new(decorators = NULL)
+#' @section Constructor: UniformKernel$new(decorators = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -26,20 +26,17 @@ NULL
 #-------------------------------------------------------------
 # Uniform Kernel Definition
 #-------------------------------------------------------------
-KUniform <- R6::R6Class("KUniform", inherit = Kernel, lock_objects = F)
-KUniform$set("public","name","KUniform")
-KUniform$set("public","short_name","KUnif")
-KUniform$set("public","description","Uniform Kernel")
-KUniform$set("public","mean",function(){
-  return(0)
-})
-KUniform$set("public","variance",function(){
+UniformKernel <- R6::R6Class("UniformKernel", inherit = Kernel, lock_objects = F)
+UniformKernel$set("public","name","UniformKernel")
+UniformKernel$set("public","short_name","KUnif")
+UniformKernel$set("public","description","Uniform Kernel")
+UniformKernel$set("public","variance",function(){
   return(1/3)
 })
-KUniform$set("public","squared2Norm",function(){
+UniformKernel$set("public","squared2Norm",function(){
   return(0.5)
 })
-KUniform$set("public","initialize",function(decorators = NULL){
+UniformKernel$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
     return(rep(0.5,length(x1)))

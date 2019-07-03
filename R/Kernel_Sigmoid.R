@@ -8,6 +8,9 @@
 #' \deqn{f(x) = (2/\pi) * (exp(x) + exp(-x))^-1}
 #' over the support \eqn{x \epsilon R}.
 #'
+#' @details The cdf and quantile functions are omitted as no closed form analytic expressions could
+#' be found, decorate with FunctionImputation for numeric results.
+#'
 #' @name Sigmoid
 #'
 #' @section Constructor: Sigmoid$new(decorators = NULL)
@@ -33,19 +36,16 @@ Sigmoid$set("public","description","Sigmoid Kernel")
 Sigmoid$set("public","squared2Norm",function(){
   return(2 / pi^2)
 })
+Sigmoid$set("public","variance",function(){
+  return(pi^2/4)
+})
 Sigmoid$set("public","initialize",function(decorators = NULL){
 
   pdf <- function(x1){
     return((2/pi) * (exp(x1) + exp(-x1))^-1)
   }
-  cdf <- function(x1){
 
-  }
-  quantile <- function(p){
-
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Reals$new(), distrDomain = Reals$new(), symmetric = TRUE)
+  super$initialize(decorators = decorators, pdf = pdf, support = Reals$new(), distrDomain = Reals$new(),
+                   symmetric = TRUE)
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING

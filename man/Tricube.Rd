@@ -8,6 +8,10 @@ Mathematical and statistical functions for the Tricube kernel defined by the pdf
 \deqn{f(x) = 70/81(1 - |x|^3)^3}
 over the support \eqn{x \epsilon (-1,1)}.
 }
+\details{
+The cdf and quantile functions are omitted as no closed form analytic expressions could
+be found, decorate with FunctionImputation for numeric results.
+}
 \section{Constructor}{
  Tricube$new(decorators = NULL)
 }
