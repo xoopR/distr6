@@ -15,6 +15,12 @@ test_that("parameters", {
   expect_equal(mvn$getParameterValue("mean"), c(1,7,3))
   expect_equal(mvn$getParameterValue("cov"), matrix(c(1,0,0,0,1,0,0,0,1),nrow=3))
   expect_equal(mvn$getParameterValue("prec"), matrix(c(1,0,0,0,1,0,0,0,1),nrow=3))
+  expect_equal(mvn$setParameterValue(list(prec = c(1,0,0,0,1,0,0,0,1)))$getParameterValue("prec"),
+               matrix(c(1,0,0,0,1,0,0,0,1),nrow = 3))
+  expect_equal(mvn$setParameterValue(list(mean = c(1)))$getParameterValue("mean"),
+               c(1,1,1))
+  expect_equal(mvn$setParameterValue(list(mean = c(1,2,3,4)))$getParameterValue("mean"),
+               c(1,2,3))
 })
 
 test_that("properties & traits",{
@@ -27,6 +33,7 @@ test_that("properties & traits",{
   expect_equal(mvn$dmax(), Inf)
 })
 
+mvn = MultivariateNormal$new(mean = c(1,7,3),cov = c(1,0,0,0,1,0,0,0,1))
 test_that("statistics",{
   expect_equal(mvn$mean(), c(1,7,3))
   expect_equal(mvn$mode(), c(1,7,3))
@@ -35,7 +42,7 @@ test_that("statistics",{
 
   expect_error(mvn$skewness())
   expect_error(mvn$kurtosis())
-  expect_error(mvn$pgf(1:3))
+  expect_equal(mvn$pgf(1:3),NaN)
 
   expect_equal(mvn$entropy(), 0.5*log(det(2*pi*(exp(1)*mvn$variance())),2))
   expect_equal(mvn$mgf(1:3), exp(matrix(c(1,7,3),nrow=1)%*%matrix(1:3,ncol=1) + (0.5 * matrix(1:3,nrow=1)%*%mvn$variance()%*%matrix(1:3,ncol=1))))
@@ -45,6 +52,7 @@ test_that("statistics",{
 
 
   expect_equal(MultivariateNormal$new(mean = 0, cov = 1)$pdf(1:5),dnorm(1:5))
+  expect_equal(MultivariateNormal$new(mean = c(1,1), cov = c(1,2,3,4))$pdf(1), NaN)
   expect_equal(signif(mvn$pdf(1,2,3),3), 2.366e-07)
   expect_equal(signif(mvn$pdf(1:2,2:3,3:4),3), c(2.366e-07, 7.835e-06))
   expect_equal(dim(mvn$rand(10)),c(10,3))

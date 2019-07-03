@@ -6,8 +6,13 @@ test_that("check continuous Huberized wrapper", {
   hubExp = HuberizedDistribution$new(Exponential$new(), lower = 2, upper = 5)
   expect_equal(hubExp$cdf(1), 0)
   expect_equal(hubExp$cdf(2), Exponential$new()$cdf(2))
+  expect_equal(hubExp$cdf(4), Exponential$new()$cdf(4))
   expect_equal(hubExp$cdf(100), 1)
   expect_equal(hubExp$cdf(5), 1)
+  expect_equal(length(hubExp$rand(10)),10)
+  expect_equal(hubExp$quantile(0), 2)
+  expect_equal(hubExp$quantile(1), 5)
+  expect_equal(hubExp$quantile(0.987), Exponential$new()$quantile(0.987))
 })
 
 test_that("check discrete Huberized wrapper", {
@@ -23,6 +28,8 @@ test_that("check huberization constructor",{
   expect_silent(huberize.Distribution(Binomial$new(), upper = 5))
   expect_silent(huberize(Binomial$new(),lower = 1))
   expect_silent(huberize(Binomial$new()))
-  expect_error(huberize(Distribution$new("Test"),1,2))
+  expect_error(huberize(Distribution$new("Test", pdf = dbinom),1,2))
+  expect_message(huberize(MixtureDistribution$new(list(Binomial$new(),Normal$new())),1,2))
+  expect_error(HuberizedDistribution$new(MixtureDistribution$new(list(Binomial$new(),Normal$new())),1,2))
 })
 

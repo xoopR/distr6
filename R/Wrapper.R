@@ -147,14 +147,13 @@ DistributionWrapper$set("public", "wrappedModels", function(model=NULL){
 DistributionWrapper$set("private", ".wrappedModels", list())
 DistributionWrapper$set("public","setParameterValue",function(lst, error = "warn"){
   for(i in 1:length(lst)){
-    if(grepl("_",lst[[i]],fixed = T)){
+    if(grepl("_",names(lst)[[i]],fixed = T)){
       id = names(lst)[[i]]
       underscore = gregexpr("_",id,fixed=T)[[1]][1]
       model = substr(id,1,underscore-1)
       parameter = substr(id,underscore+1,1000)
 
-      value = lst[[i]]
-      newlst = list(value)
+      newlst = list(lst[[i]])
       names(newlst) = parameter
     } else{
       model = self$wrappedModels()[[1]]$short_name

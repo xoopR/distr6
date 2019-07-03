@@ -4,8 +4,16 @@ context("NegativeBinomial distribution")
 
 test_that("parameterisation",{
   expect_equal(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3)$mean(), 5)
+  expect_equal(NegativeBinomial$new(form = "dasd")$.__enclos_env__$private$.form, "fbs")
   expect_equal(NegativeBinomial$new(size = 10, prob = 0.2)$getParameterValue("qprob"),0.8)
   expect_equal(NegativeBinomial$new(size = 10, qprob = 0.8)$getParameterValue("mean"),40)
+  expect_equal(NegativeBinomial$new(size = 10, qprob = 0.8)$setParameterValue(list(prob = 0.2))$getParameterValue("qprob"),0.8)
+  expect_error(NegativeBinomial$new(form = "tbf")$setParameterValue(list(mean = 2)))
+  expect_equal(NegativeBinomial$new(form = "tbf")$setParameterValue(list(mean = 12))$getParameterValue("prob"),2/12)
+  expect_equal(NegativeBinomial$new(form = "sbf")$setParameterValue(list(mean = 2))$getParameterValue("prob"),2/12)
+  expect_equal(NegativeBinomial$new(form = "fbs")$setParameterValue(list(mean = 2))$getParameterValue("prob"),10/12)
+  expect_error(NegativeBinomial$new(form = "tbs")$setParameterValue(list(mean = 2)))
+  expect_equal(NegativeBinomial$new(form = "tbs")$setParameterValue(list(mean = 12))$getParameterValue("prob"),10/12)
 })
 
 test_that("properties & traits",{
@@ -61,6 +69,7 @@ test_that("statistics tbs",{
 
   expect_equal(nb$pdf(11), choose(10, 9) * 0.2^10 * 0.8^1)
   expect_equal(nb$cdf(12), choose(9,9) * 0.2^10 + choose(10, 9) * 0.2^10 * 0.8^1 + choose(11, 9) * 0.2^10 * 0.8^2)
+  expect_equal(nb$cdf(11:12), c(nb$pdf(10) + nb$pdf(11), nb$pdf(10) + nb$pdf(11) + nb$pdf(12)))
   expect_null(nb$quantile(0.564658))
   expect_null(nb$rand(10))
 })
@@ -83,6 +92,7 @@ test_that("statistics sbf",{
 
   expect_equal(nb$pdf(11), choose(20, 11) * 0.8^10 * 0.2^11)
   expect_equal(nb$cdf(1), nb$pdf(0) + nb$pdf(1))
+  expect_equal(nb$cdf(1:2), c(nb$pdf(0) + nb$pdf(1), nb$pdf(0) + nb$pdf(1) + nb$pdf(2)))
   expect_null(nb$quantile(0.564658))
   expect_null(nb$rand(10))
 })
@@ -104,7 +114,8 @@ test_that("statistics tbf",{
   expect_equal(NegativeBinomial$new(form = "tbf", prob = 0.2, size = 1)$mode(), 1)
 
   expect_equal(nb$pdf(11), choose(10, 9) * 0.2^1 * 0.8^10)
-  expect_equal(nb$cdf(1), nb$pdf(0) + nb$pdf(1))
+  expect_equal(nb$cdf(11), nb$pdf(10) + nb$pdf(11))
+  expect_equal(nb$cdf(11:12), c(nb$pdf(10) + nb$pdf(11), nb$pdf(10) + nb$pdf(11) + nb$pdf(12)))
   expect_null(nb$quantile(0.564658))
   expect_null(nb$rand(10))
 })

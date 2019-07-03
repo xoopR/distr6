@@ -185,6 +185,7 @@ NegativeBinomial$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   if(private$.form == "tbf" | private$.form == "tbs")
     private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf, type = "[)", class = "integer")
+  invisible(self)
 })
 NegativeBinomial$set("private", ".getRefParams", function(paramlst){
   lst = list()
@@ -196,12 +197,16 @@ NegativeBinomial$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   if(!is.null(paramlst$mean)){
     if(private$.form == "sbf")
-      lst = c(lst, list(prob = paramlst$mean/(paramlst$size + paramlist$mean)))
-    else if(private$.form == "tbf")
+      lst = c(lst, list(prob = paramlst$mean/(paramlst$size + paramlst$mean)))
+    else if(private$.form == "tbf"){
+      if(paramlst$mean <= paramlst$size)
+        stop("Mean must be > number of failures")
       lst = c(lst, list(prob = (paramlst$mean - paramlst$size)/paramlst$mean))
-    else if(private$.form == "tbs")
+    } else if(private$.form == "tbs"){
+      if(paramlst$mean <= paramlst$size)
+        stop("Mean must be > number of successes")
       lst = c(lst, list(prob = paramlst$size/paramlst$mean))
-    else if(private$.form == "fbs")
+    } else if(private$.form == "fbs")
       lst = c(lst, list(prob = paramlst$size/(paramlst$mean+paramlst$size)))
   }
   return(lst)
@@ -252,7 +257,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
                self$getParameterValue("qprob")^self$getParameterValue("size"))
     }
     cdf = function(x1){
-      if(length(x1 == 1))
+      if(length(x1) == 1)
         return(sum(self$pdf(self$inf():x1)))
       else{
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
@@ -272,7 +277,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
                self$getParameterValue("qprob")^(x1 - self$getParameterValue("size")))
     }
     cdf = function(x1){
-      if(length(x1 == 1))
+      if(length(x1) == 1)
         return(sum(self$pdf(self$inf():x1)))
       else{
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))

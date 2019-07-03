@@ -302,6 +302,31 @@ ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper =
 }) # NEEDS TESTING
 
 #-------------------------------------------------------------
+# squared2Norm
+#-------------------------------------------------------------
+#' @title Squared Probability Density Function 2-Norm
+#' @name squared2Norm
+#' @description The squared 2-norm of the pdf evaluated over the whole support by default or given
+#' limits.
+#'
+#' @usage squared2Norm(object, lower = NULL, upper = NULL)
+#' @section R6 Usage: $squared2Norm(lower = NULL, upper = NULL)
+#'
+#' @param object Distribution.
+#' @param lower lower limit for integration, default is infimum.
+#' @param upper upper limit for integration, default is supremum.
+#'
+#' @details The squared 2-norm of the pdf is defined by
+#' \deqn{\int (f_X(u))^2 du}
+#' where X is the Distribution and \eqn{f_X} is its pdf.
+#'
+#' @export
+NULL
+ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL){
+  return(self$pdfPNorm(p = 2, lower = lower, upper = upper))
+})
+
+#-------------------------------------------------------------
 # Public Methods - survivalPNorm
 #-------------------------------------------------------------
 #' @title Survival Function P-Norm
@@ -334,4 +359,4 @@ ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, up
 
   if(testContinuous(self))
     return(generalPNorm(self$survival, p, lower, upper))
-}) # NEEDS TESTING
+})

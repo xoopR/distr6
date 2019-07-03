@@ -29,7 +29,7 @@ test_that("statistics",{
   expect_error(cat$kurtosis())
   expect_error(cat$entropy())
   expect_error(cat$mgf(1:3))
-  expect_error(cat$pgf(1:3))
+  expect_equal(cat$pgf(1:3), NaN)
   expect_error(cat$cf(1:3))
   expect_equal(cat$mode(), "T")
   expect_equal(cat$pdf("T"), 4/5)

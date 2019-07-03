@@ -95,19 +95,3 @@ Kernel$set("public","rand",function(n, simplify = TRUE){
   return(self$quantile(runif(n)))
 })
 
-#' @title Squared Probability Density Function 2-Norm
-#' @name squared2Norm
-#' @description The squared 2-norm of the Kernel pdf evaluated over the whole support.
-#'
-#' @usage squared2Norm(object)
-#' @section R6 Usage: $squared2Norm()
-#'
-#' @param object Distribution.
-#'
-#' @details The squared 2-norm of the pdf is defined by
-#' \deqn{\int (f_X(u))^2 du}
-#' where X is the Kernel and \eqn{f_X} is its pdf.
-#'
-#' @export
-NULL
-Kernel$set("public","squared2Norm",function() return(NULL))

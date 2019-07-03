@@ -49,6 +49,7 @@ test_that("statistics",{
   expect_equal(Normal$new()$kurtosis(F), 3)
   expect_equal(Normal$new()$entropy(), 0.5 * log(2*pi*exp(1),base=2))
   expect_equal(Normal$new()$mgf(1), exp(0.5))
+  expect_equal(Normal$new()$pgf(1), NaN)
   expect_equal(Normal$new()$cf(1), as.complex(exp(- 0.5)))
   expect_equal(Normal$new()$mode(), 0)
   expect_equal(Normal$new()$pdf(2), dnorm(2))

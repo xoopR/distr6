@@ -97,6 +97,6 @@ SDistribution$set("public","setParameterValue",function(lst, error = "warn"){
   invisible(self)
 })
 SDistribution$set("public","package",NULL)
-SDistribution$set("public","pgf",function(){
+SDistribution$set("public","pgf",function(...){
   return(NaN)
 })

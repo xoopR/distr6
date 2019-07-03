@@ -18,6 +18,8 @@ test_that("parameterisation",{
   expect_equal(Gamma$new(mean=3)$getParameterValue("rate"),1/3)
   expect_equal(Gamma$new(shape = 2,scale=3)$getParameterValue("rate"),1/3)
   expect_equal(Gamma$new(shape = 2,scale=3)$getParameterValue("mean"),6)
+  expect_equal(Gamma$new(shape = 2,scale=3)$setParameterValue(list(mean = 2))$getParameterValue("rate"),
+               1)
 })
 
 test_that("properties & traits",{
