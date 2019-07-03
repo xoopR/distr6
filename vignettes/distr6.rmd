@@ -132,7 +132,7 @@ not only the results for the 17 distributions in R stats but also for all others
 distr6. Continuing with the Normal distribution:
 ```{r}
 N$mean()
-N$var()
+N$variance()
 N$entropy() # Note default is base 2
 N$mgf(2)
 N$cf(1)

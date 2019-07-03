@@ -2,6 +2,17 @@ library(testthat)
 
 context("Geometric distribution")
 
+test_that("parameterisations",{
+    expect_silent(Geometric$new())
+    expect_silent(Geometric$new(prob = 0.3))
+    expect_silent(Geometric$new(qprob = 0.2))
+    expect_error(Geometric$new(prob = -1))
+    expect_silent(Geometric$new(trials = TRUE))
+    expect_silent(Geometric$new(trials = FALSE))
+    expect_equal(Geometric$new(prob = 0.2)$getParameterValue("qprob"), 0.8)
+    expect_equal(Geometric$new(qprob = 0.2)$getParameterValue("prob"), 0.8)
+})
+
 test_that("properties & traits",{
     expect_equal(Geometric$new()$valueSupport(), "discrete")
     expect_equal(Geometric$new()$variateForm(), "univariate")

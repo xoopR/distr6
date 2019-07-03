@@ -6,6 +6,7 @@ test_that("lists",{
   expect_silent(listDistributions())
   expect_silent(listDistributions(simplify = T))
   expect_silent(listDistributions(filter = list(VariateForm = "univariate")))
+  expect_silent(listDistributions(filter = list(package = "distr6")))
   expect_silent(listDistributions(filter = list(VariateForm = "univariate", valuesupport = "continuous")))
   expect_silent(listDistributions(filter = list(efsf = "fsdf")))
   expect_silent(listDecorators(F,T))

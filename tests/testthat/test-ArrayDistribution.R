@@ -19,8 +19,8 @@ test_that("pdf/cdf",{
 test_that("type/support/distrdomain",{
   a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                            list(prob = 0.2, size = 6)))
-  expect_equal(a$type()$getSymbol(), PosIntegers$new(dim = 3)$getSymbol())
-  expect_equal(a$distrDomain()$getSymbol(), PosIntegers$new(dim = 3)$getSymbol())
+  expect_equal(a$type()$getSymbol(), Naturals$new(dim = 3)$getSymbol())
+  expect_equal(a$distrDomain()$getSymbol(), Naturals$new(dim = 3)$getSymbol())
   expect_equal(a$support()$getSymbol(), (Set$new(0:2) * Set$new(0:4) * Set$new(0:6))$getSymbol())
 
 })

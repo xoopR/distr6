@@ -104,7 +104,7 @@ Binomial$set("public","pgf",function(z){
 Binomial$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(0:self$getParameterValue("size"))
-  if(self$getParameterValue("size")==0.5)
+  if(self$getParameterValue("prob")==0.5)
     private$.properties$symmetry <- "asymmetric"
   else
     private$.properties$symmetry <- "symmetric"

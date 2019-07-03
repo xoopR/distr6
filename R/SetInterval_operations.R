@@ -20,8 +20,6 @@
 operation <- function(unicode,...,lower=NULL,upper=NULL,type=NULL,dim=NULL){
   dots = list(...)
   symbols = lapply(dots,function(x){
-    if(inherits(x,"R6ClassGenerator"))
-      x <- x[["new"]]()
     x <- x[["getSymbol"]]()
     if(!grepl("\\{.",x))
       x <- paste0("{", x)

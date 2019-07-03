@@ -44,7 +44,6 @@ listDistributions <- function(simplify=FALSE, filter=NULL){
           distrs = subset(distrs, distrs$Package == filter$package)
       }
     }
-    if("ShortName" %in% rownames(data.frame(distrs))) distrs = t(distrs)
 
     return(data.table::data.table(distrs))
   }

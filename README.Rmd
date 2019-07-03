@@ -68,7 +68,7 @@ S3 compatibility to make the interface more flexible for users who are less fami
 ```{r s3}
 B <- Binomial$new()
 mean(B) # B$mean()
-var(B) # B$var()
+variance(B) # B$variance()
 cdf(B, 2:5) # B$cdf(2:5)
 ```
 

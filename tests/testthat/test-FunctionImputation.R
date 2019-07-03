@@ -8,6 +8,10 @@ dexpo = function(x){
   return(m1 * m2)
 }
 
+cexpo = function(x){
+  return(1 - exp(-self$getParameterValue("rate") * x))
+}
+
 ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
                       support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0,5)),
                       settable = list(TRUE, FALSE, FALSE),
@@ -33,6 +37,28 @@ test_that("r/d/p/q not null",{
   decorate(continuousTester, FunctionImputation)
   expect_silent(expect_equal(continuousTester$pdf(1),dexp(1)))
   expect_message(expect_equal(continuousTester$cdf(1),pexp(1)))
+  expect_message(expect_equal(round(continuousTester$quantile(0.42),5), round(qexp(0.42), 5)))
+  expect_message(continuousTester$rand(1))
+})
+
+continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
+                                    symmetric=TRUE, type = PosReals$new(zero=T),
+                                    distrDomain=PosReals$new(),
+                                    cdf = cexpo,
+                                    parameters = ps
+)
+
+test_that("r/d/p/q null",{
+  expect_null(continuousTester$pdf(1))
+  expect_silent(continuousTester$cdf(1))
+  expect_null(continuousTester$quantile(1))
+  expect_null(continuousTester$rand(1))
+})
+
+test_that("r/d/p/q not null",{
+  decorate(continuousTester, FunctionImputation)
+  expect_message(expect_equal(continuousTester$pdf(1),dexp(1)))
+  expect_silent(expect_equal(continuousTester$cdf(1),pexp(1)))
   expect_message(expect_equal(round(continuousTester$quantile(0.42),5), round(qexp(0.42), 5)))
   expect_message(continuousTester$rand(1))
 })

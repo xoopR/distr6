@@ -8,10 +8,10 @@ test_that("constructor",{
 })
 
 test_that("type/support/distrDomain",{
-  expect_equal(VectorDistribution$new(list(Binomial$new(), Binomial$new()))$type()$getSymbol(), PosIntegers$new(2)$getSymbol())
+  expect_equal(VectorDistribution$new(list(Binomial$new(), Binomial$new()))$type()$getSymbol(), Naturals$new(2)$getSymbol())
   expect_equal(VectorDistribution$new(list(Binomial$new(size = 2), Binomial$new(size = 3)))$support()$getSymbol(),
                product.SetInterval(Set$new(0:2),Set$new(0:3))$getSymbol())
-  expect_equal(VectorDistribution$new(list(Binomial$new(), Binomial$new()))$distrDomain()$getSymbol(), PosIntegers$new(2)$getSymbol())
+  expect_equal(VectorDistribution$new(list(Binomial$new(), Binomial$new()))$distrDomain()$getSymbol(), Naturals$new(2)$getSymbol())
 })
 
 test_that("pdf/cdf",{
@@ -20,3 +20,9 @@ test_that("pdf/cdf",{
   expect_equal(VectorDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$cdf(2:4,1:3),
                data.table::data.table(Binom1 = pbinom(2:4,40,0.2), Binom2 = pbinom(1:3,5,0.9)))
 })
+
+test_that("rand",{
+  expect_equal(dim(VectorDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$rand(5)),
+               c(5,2))
+})
+

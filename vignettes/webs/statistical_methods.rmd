@@ -46,7 +46,7 @@ But all these statistics can be accessed individually as well. To see the full l
 
 ```{r}
 N$mean()
-N$var()
+N$variance()
 N$skewness()
 N$kurtosis(excess = FALSE)
 N$cf(2)

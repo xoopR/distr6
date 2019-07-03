@@ -14,6 +14,14 @@ test_that("properties & traits",{
 })
 
 a = Arcsine$new()
+test_that("parameters",{
+  expect_silent(a$setParameterValue(list(lower = 2, upper = 6)))
+  expect_error(a$setParameterValue(list(lower = 7, upper = 6)))
+  expect_error(a$setParameterValue(list(upper = -10)))
+  expect_error(a$setParameterValue(list(lower = 10)))
+})
+
+a = Arcsine$new()
 test_that("statistics",{
   expect_equal(a$mean(), 1/2)
   expect_equal(a$variance(), 1/8)

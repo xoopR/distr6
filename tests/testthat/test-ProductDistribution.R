@@ -8,10 +8,10 @@ test_that("constructor",{
 })
 
 test_that("type/support/distrDomain",{
-  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$type()$getSymbol(), PosIntegers$new(2)$getSymbol())
+  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$type()$getSymbol(), Naturals$new(2)$getSymbol())
   expect_equal(ProductDistribution$new(list(Binomial$new(size = 2), Binomial$new(size = 3)))$support()$getSymbol(),
                product.SetInterval(Set$new(0:2),Set$new(0:3))$getSymbol())
-  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$distrDomain()$getSymbol(), PosIntegers$new(2)$getSymbol())
+  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$distrDomain()$getSymbol(), Naturals$new(2)$getSymbol())
 })
 
 test_that("pdf/cdf",{
@@ -21,4 +21,9 @@ test_that("pdf/cdf",{
                Binomial$new(size = 40, prob = 0.2)$pdf(4) * Binomial$new(size = 5, prob = 0.9)$pdf(3))
   expect_equal(ProductDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$cdf(4,x2=8),
                Binomial$new(size = 40, prob = 0.2)$cdf(4) * Binomial$new(size = 5, prob = 0.9)$cdf(8))
+})
+
+test_that("rand",{
+  expect_equal(dim(ProductDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$rand(5)),
+               c(5,2))
 })

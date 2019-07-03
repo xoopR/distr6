@@ -42,6 +42,7 @@ test_that("statistics", {
   expect_error(f1$cf(1))
   expect_equal(f1$mode(), 1/6)
   expect_equal(f2$mode(), NaN)
+  expect_equal(round(f1$entropy(exp(1)), 5), 2.45435)
   expect_equal(f1$pdf(2), df(2, 4, 1))
   expect_equal(f2$cdf(1.5), pf(1.5, 2, 10))
   expect_equal(f1$quantile(0.5), qf(0.5, 4, 1))

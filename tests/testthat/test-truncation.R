@@ -12,17 +12,20 @@ test_that("check truncation constructor",{
   expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$sup(), 10)
 })
 
+t <- truncate(Binomial$new(),lower = 1, upper = 5)
 test_that("truncation results",{
-  expect_equal(truncate(Binomial$new(),lower = 1, upper = 5)$pdf(6), 0)
-  expect_equal(truncate(Binomial$new(),lower = 1, upper = 5)$pdf(0), 0)
-  expect_equal(truncate(Binomial$new(),lower = 1, upper = 5)$pdf(4),
+  expect_equal(t$pdf(6), 0)
+  expect_equal(t$pdf(0), 0)
+  expect_equal(t$pdf(4),
                dbinom(4, prob = 0.5, size = 10)/((pbinom(5,prob=0.5,size=10)-pbinom(1,prob=0.5,size=10))))
-  expect_equal(truncate(Binomial$new(),lower = 1, upper = 5)$cdf(5), 1)
-  expect_equal(truncate(Binomial$new(),lower = 1, upper = 5)$cdf(6), 1)
-  expect_equal(truncate(Binomial$new(),lower = 1, upper = 5)$cdf(0), 0)
-  expect_equal(truncate(Binomial$new(),lower = 1, upper = 5)$cdf(4),
+  expect_equal(t$cdf(5), 1)
+  expect_equal(t$cdf(6), 1)
+  expect_equal(t$cdf(0), 0)
+  expect_equal(t$cdf(4),
                (pbinom(4, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10))/
                  (pbinom(5, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10)))
+  expect_equal(t$support()$getSymbol(),Set$new(1:5)$getSymbol())
+  expect_equal(truncate(Exponential$new(),lower=2,upper=3)$support()$getSymbol(),Interval$new(2,3)$getSymbol())
 })
 
 

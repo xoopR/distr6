@@ -12,6 +12,9 @@ test_that("parameterisation",{
     expect_silent(Hypergeometric$new(failures = 5))
     expect_equal(Hypergeometric$new(size = 10, failures = 2, draws=2)$getParameterValue("successes"), 8)
     expect_silent(Hypergeometric$new(draws = 2))
+    H <- Hypergeometric$new()
+    expect_equal(H$setParameterValue(list(failures = 6))$getParameterValue("successes"), 44)
+    expect_equal(H$setParameterValue(list(successes = 6))$getParameterValue("failures"), 44)
 })
 
 test_that("properties & traits",{
@@ -28,6 +31,7 @@ test_that("properties & traits",{
 H = Hypergeometric$new()
 test_that("statistics",{
     expect_equal(H$mean(), 1)
+    expect_equal(H$mode(), 1)
     expect_equal(round(H$variance(),7), 0.7346939)
     expect_equal(round(H$skewness(),7), 0.5833333)
     expect_equal(signif(H$kurtosis(T),7), -0.0750591)

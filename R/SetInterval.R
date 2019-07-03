@@ -98,13 +98,9 @@ SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FA
   else if(self$class() == "numeric")
     class_test = sapply(x, checkmate::testNumeric)
 
-  if(bound & self$class()=="integer")
+  if(bound)
     ret[(x >= self$inf() & x <= self$sup() & class_test)] = TRUE
-  else if(!bound & self$class()=="integer")
-    ret[(x >= self$min() & x <= self$max() & class_test)] = TRUE
-  else if(bound & self$class()=="numeric")
-    ret[(x >= self$inf() & x <= self$sup() & class_test)] = TRUE
-  else if(!bound & self$class()=="numeric")
+  else(!bound)
     ret[(x >= self$min() & x <= self$max() & class_test)] = TRUE
 
   if(all)

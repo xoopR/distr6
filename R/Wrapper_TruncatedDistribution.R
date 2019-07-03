@@ -52,10 +52,7 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
     upper <- distribution$sup()
 
   pdf <- function(x1,...) {
-    if(x1 <= self$inf() | x1 > self$sup())
-      return(0)
-    else
-      self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$sup()) - self$wrappedModels()[[1]]$cdf(self$inf()))
+    self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$sup()) - self$wrappedModels()[[1]]$cdf(self$inf()))
   }
   formals(pdf)$self <- self
 

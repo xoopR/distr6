@@ -90,7 +90,7 @@ Exponential$set("public", "mgf", function(t){
   if(t < self$getParameterValue("rate"))
     return(self$getParameterValue("rate") / (self$getParameterValue("rate") - t))
   else
-    return(0)
+    return(NaN)
 })
 Exponential$set("public", "cf", function(t){
   return(self$getParameterValue("rate") / (self$getParameterValue("rate") -  ((0+1i) * t)))

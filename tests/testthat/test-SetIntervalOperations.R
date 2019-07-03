@@ -19,6 +19,7 @@ test_that("union",{
   expect_silent(union.SetInterval(si1, si2))
   expect_silent(si1 + si2)
   expect_equal(union.SetInterval(si1, si2), si1 + si2)
+  expect_equal(union.SetInterval(si1, si1), si1)
 })
 
 test_that("power",{
@@ -53,6 +54,10 @@ test_that("complement",{
   y = Interval$new(5,7)
   expect_equal((x-y)$getSymbol(), union.SetInterval(Interval$new(4,5,type="[)"),
                                         Interval$new(7,8,type="(]"))$getSymbol())
+
+  y = Set$new(5)
+  expect_equal((x-y)$getSymbol(), union.SetInterval(Interval$new(4,5,type="[)"),
+                                                    Interval$new(5,8,type="(]"))$getSymbol())
 })
 
 test_that("setSymbol",{

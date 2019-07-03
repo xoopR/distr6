@@ -315,8 +315,8 @@ makeChecks(assertionName =  "Mixture",
            errormsg = paste(x$short_name,"is not mixture"),
            pos = environment())
 
-#' @title assert/check/test/Symmetric
-#' @name testSymmetric
+#' @title assert/check/test/Symmetry
+#' @name testSymmetry
 #' @description Validation checks to test if Distribution is symmetric.
 #' @param x Distribution
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
@@ -324,28 +324,28 @@ makeChecks(assertionName =  "Mixture",
 #'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
 #'
 #' @examples
-#' testSymmetric(Binomial$new()) # FALSE
+#' testSymmetry(Binomial$new()) # FALSE
 #'
 #' @export
-testSymmetric <- function(x){
+testSymmetry <- function(){
   testThat(x[["symmetry"]]() == "symmetric")
 }
-#' @rdname testSymmetric
+#' @rdname testSymmetry
 #' @export
-checkSymmetric <- function(x){
+checkSymmetry <- function(){
   checkThat(x[["symmetry"]]() == "symmetric", paste(x$short_name,
                                                     "is not symmetric"))
 }
-#' @rdname testSymmetric
+#' @rdname testSymmetry
 #' @export
-assertSymmetric <- function(x){
+assertSymmetry <- function(){
   assertThat(x, x[["symmetry"]]() == "symmetric", paste(x$short_name,
                                                         "is not symmetric"))
 }
-#' @rdname testSymmetric
+#' @rdname testSymmetry
 #' @export
-isSymmetric.Distribution <- function(object){
-  isThat(object[["symmetry"]]() == "symmetric")
+isSymmetry <- function(){
+  isThat(x[["symmetry"]]() == "symmetric")
 }
 
 #' @title assert/check/test/Skewness
