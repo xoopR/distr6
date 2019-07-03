@@ -7,16 +7,16 @@
 \alias{isContinuous}
 \title{assert/check/test/Continuous}
 \usage{
-testContinuous(x)
+testContinuous(object)
 
-checkContinuous(x)
+checkContinuous(object)
 
-assertContinuous(x)
+assertContinuous(object)
 
-isContinuous(x)
+isContinuous(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

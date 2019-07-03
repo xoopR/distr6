@@ -7,16 +7,16 @@
 \alias{isNegativeSkew}
 \title{assert/check/test/NegativeSkew}
 \usage{
-testNegativeSkew(x)
+testNegativeSkew(object)
 
-checkNegativeSkew(x)
+checkNegativeSkew(object)
 
-assertNegativeSkew(x)
+assertNegativeSkew(object)
 
-isNegativeSkew(x)
+isNegativeSkew(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

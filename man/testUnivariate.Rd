@@ -7,16 +7,16 @@
 \alias{isUnivariate}
 \title{assert/check/test/Univariate}
 \usage{
-testUnivariate(x)
+testUnivariate(object)
 
-checkUnivariate(x)
+checkUnivariate(object)
 
-assertUnivariate(x)
+assertUnivariate(object)
 
-isUnivariate(x)
+isUnivariate(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

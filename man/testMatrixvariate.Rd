@@ -7,16 +7,16 @@
 \alias{isMatrixvariate}
 \title{assert/check/test/Matrixvariate}
 \usage{
-testMatrixvariate(x)
+testMatrixvariate(object)
 
-checkMatrixvariate(x)
+checkMatrixvariate(object)
 
-assertMatrixvariate(x)
+assertMatrixvariate(object)
 
-isMatrixvariate(x)
+isMatrixvariate(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

@@ -7,16 +7,16 @@
 \alias{isMultivariate}
 \title{assert/check/test/Multivariate}
 \usage{
-testMultivariate(x)
+testMultivariate(object)
 
-checkMultivariate(x)
+checkMultivariate(object)
 
-assertMultivariate(x)
+assertMultivariate(object)
 
-isMultivariate(x)
+isMultivariate(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

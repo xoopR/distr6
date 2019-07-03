@@ -7,16 +7,16 @@
 \alias{isPlatykurtic}
 \title{assert/check/test/Platykurtic}
 \usage{
-testPlatykurtic(x)
+testPlatykurtic(object)
 
-checkPlatykurtic(x)
+checkPlatykurtic(object)
 
-assertPlatykurtic(x)
+assertPlatykurtic(object)
 
-isPlatykurtic(x)
+isPlatykurtic(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

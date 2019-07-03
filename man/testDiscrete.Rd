@@ -7,16 +7,16 @@
 \alias{isDiscrete}
 \title{assert/check/test/Discrete}
 \usage{
-testDiscrete(x)
+testDiscrete(object)
 
-checkDiscrete(x)
+checkDiscrete(object)
 
-assertDiscrete(x)
+assertDiscrete(object)
 
-isDiscrete(x)
+isDiscrete(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

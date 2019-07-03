@@ -7,16 +7,16 @@
 \alias{isSkewness}
 \title{assert/check/test/Skewness}
 \usage{
-testSkewness(x, type)
+testSkewness(object, type)
 
-checkSkewness(x, type)
+checkSkewness(object, type)
 
-assertSkewness(x, type)
+assertSkewness(object, type)
 
-isSkewness(x, type)
+isSkewness(object, type)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 
 \item{type}{skewness type, Negative Skew/No Skew/Positive Skew}
 }

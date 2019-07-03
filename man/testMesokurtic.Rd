@@ -7,16 +7,16 @@
 \alias{isMesokurtic}
 \title{assert/check/test/Mesokurtic}
 \usage{
-testMesokurtic(x)
+testMesokurtic(object)
 
-checkMesokurtic(x)
+checkMesokurtic(object)
 
-assertMesokurtic(x)
+assertMesokurtic(object)
 
-isMesokurtic(x)
+isMesokurtic(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

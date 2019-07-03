@@ -7,16 +7,16 @@
 \alias{isVariateForm}
 \title{assert/check/test/VariateForm}
 \usage{
-testVariateForm(x, type)
+testVariateForm(object, type)
 
-checkVariateForm(x, type)
+checkVariateForm(object, type)
 
-assertVariateForm(x, type)
+assertVariateForm(object, type)
 
-isVariateForm(x, type)
+isVariateForm(object, type)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 
 \item{type}{variate form type, univariate/multivariate/matrixvariate}
 }

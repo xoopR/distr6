@@ -7,16 +7,16 @@
 \alias{isKurtosis}
 \title{assert/check/test/Kurtosis}
 \usage{
-testKurtosis(x, type)
+testKurtosis(object, type)
 
-checkKurtosis(x, type)
+checkKurtosis(object, type)
 
-assertKurtosis(x, type)
+assertKurtosis(object, type)
 
-isKurtosis(x, type)
+isKurtosis(object, type)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 
 \item{type}{kurtosis type, leptokurtic/mesokurtic/platykurtic}
 }

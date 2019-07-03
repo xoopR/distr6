@@ -7,16 +7,16 @@
 \alias{isDistributionFeature}
 \title{assert/check/test/isDistributionFeature}
 \usage{
-testDistributionFeature(x, accessor, feature)
+testDistributionFeature(object, accessor, feature)
 
-checkDistributionFeature(x, accessor, feature)
+checkDistributionFeature(object, accessor, feature)
 
-assertDistributionFeature(x, accessor, feature)
+assertDistributionFeature(object, accessor, feature)
 
-isDistributionFeature(x, accessor, feature)
+isDistributionFeature(object, accessor, feature)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 
 \item{accessor}{accessor of property/trait to test}
 

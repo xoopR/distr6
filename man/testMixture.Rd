@@ -7,16 +7,16 @@
 \alias{isMixture}
 \title{assert/check/test/Mixture}
 \usage{
-testMixture(x)
+testMixture(object)
 
-checkMixture(x)
+checkMixture(object)
 
-assertMixture(x)
+assertMixture(object)
 
-isMixture(x)
+isMixture(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

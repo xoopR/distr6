@@ -7,16 +7,16 @@
 \alias{isDistributionList}
 \title{assert/check/test/isDistributionList}
 \usage{
-testDistributionList(x)
+testDistributionList(object)
 
-checkDistributionList(x)
+checkDistributionList(object)
 
-assertDistributionList(x)
+assertDistributionList(object)
 
-isDistributionList(x)
+isDistributionList(object)
 }
 \arguments{
-\item{x}{object to test}
+\item{object}{object to test}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}

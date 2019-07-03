@@ -7,16 +7,16 @@
 \alias{isValueSupport}
 \title{assert/check/test/ValueSupport}
 \usage{
-testValueSupport(x, type)
+testValueSupport(object, type)
 
-checkValueSupport(x, type)
+checkValueSupport(object, type)
 
-assertValueSupport(x, type)
+assertValueSupport(object, type)
 
-isValueSupport(x, type)
+isValueSupport(object, type)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 
 \item{type}{value support type, continuous/discrete/mixture}
 }

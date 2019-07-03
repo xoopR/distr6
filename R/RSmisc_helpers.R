@@ -19,6 +19,30 @@ testThat <- function(cond){
 isThat <- function(cond){
   return(testThat(cond))
 }
+
+makeChecks <- function(assertionName, cond, errormsg, args = alist(object=),
+                       pos = -1){
+  cond = substitute(cond)
+  errormsg = substitute(errormsg)
+  value = function(){}
+  formals(value) = args
+  body(value) = substitute(assertThat(object,arg1,arg2),list(arg1=cond,arg2=errormsg))
+  assign(paste0("assert",assertionName), value = value,
+         pos = pos)
+
+  body(value) = substitute(checkThat(arg1,arg2),list(arg1=cond,arg2=errormsg))
+  assign(paste0("check",assertionName), value = value,
+         pos = pos)
+
+  body(value) = substitute(testThat(arg1),list(arg1=cond))
+  assign(paste0("test",assertionName), value = value,
+         pos = pos)
+
+  body(value) = substitute(isThat(arg1),list(arg1=cond))
+  assign(paste0("is",assertionName), value = value,
+         pos = pos)
+}
+
 getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1){
   if(classname)
     return(get(class(object)[[n.par+1]], pos = pos)$classname)
@@ -38,28 +62,7 @@ ifnerror <- function(expr, noerror, error = NULL, silent = T){
     noerror
   }
 }
-makeChecks <- function(assertionName, cond, errormsg, args = alist(x=),
-                       pos = -1){
-  cond = substitute(cond)
-  errormsg = substitute(errormsg)
-  value = function(x){}
-  formals(value) = args
-  body(value) = substitute(assertThat(x,arg1,arg2),list(arg1=cond,arg2=errormsg))
-  assign(paste0("assert",assertionName), value = value,
-         pos = pos)
 
-  body(value) = substitute(checkThat(arg1,arg2),list(arg1=cond,arg2=errormsg))
-  assign(paste0("check",assertionName), value = value,
-         pos = pos)
-
-  body(value) = substitute(testThat(arg1),list(arg1=cond))
-  assign(paste0("test",assertionName), value = value,
-         pos = pos)
-
-  body(value) = substitute(isThat(arg1),list(arg1=cond))
-  assign(paste0("is",assertionName), value = value,
-         pos = pos)
-}
 stopwarn <- function(error = "warn", error.msg){
   checkmate::assert(error == "warn", error == "stop",
                     .var.name = "'error' should be one of 'warn' or 'stop'.")
