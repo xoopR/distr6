@@ -1,5 +1,10 @@
 language: r
 
+branches:
+  only:
+  - master
+  - dev
+  
 matrix:
     include:
   #      - os: linux
