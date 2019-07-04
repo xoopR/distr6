@@ -1,0 +1,211 @@
+---
+title: "Creating an SDistribution"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Creating an SDistribution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+This tutorial assumes that you have a good knowledge of R6 and so we will not be going through the basics of inheritance and private/public methods/variables.
+
+## SDistribution Class
+
+All implemented probability distributions (excluding Kernels) in distr6 inherit from the `SDistribution` class. This means they share a common interface. The only differences between these distributions is that some will have methods missing as no analytic results are available. A core design principle in distr6 is that only analytic methods are defined in the SDistribution child classes, all numeric results are available through decorators. See the [decorators](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) tutorial for more information on decorators and the [analytic and numeric](https://alan-turing-institute.github.io/distr6/articles/webs/analytic_and_numeric_methods.html) article for further discussions on analytic and numeric methods. The summary is that when creating your own SDistribution class, please do not put any numeric methods in the core interface, if a closed form expression cannot be found, omit the method entirely and it can be imputed with a decorator. If your desired method is not available in one of our decorators but you think it is useful, see the [creatng a decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html) extension guidelines.
+
+## Creating an SDistribution
+
+### SDistribution Variables
+
+ Every class inheriting from SDistribution must have the following public variables:
+
+* name - Full (unique) name of probability distribution
+* short_name - Short name (unique) id for distribution
+* traits - List including type (SetInterval), valueSupport (discrete/continuous/mixture), variateForm (univariate/multivariate/matrixvariate)
+* description - Short description, usually just the name
+* package - The package in which the d/p/q/r functions are written
+
+For the Normal distribution, the above all looks like
+
+```{r eval=FALSE}
+Normal <- R6::R6Class("Normal", inherit = SDistribution, lock_objects = F)
+Normal$set("public","name","Normal")
+Normal$set("public","short_name","Norm")
+Normal$set("public","traits",list(type = Reals$new(),
+                                  valueSupport = "continuous",
+                                  variateForm = "univariate"))
+Normal$set("public","description","Normal Probability Distribution.")
+Normal$set("public","package","stats")
+```
+
+Note:
+
+1. The `lock_objects=F` it is very important that this is not left out as it ensures decorators work correctly.
+2. We use the R6 convention of defining the class as succinctly as possible (class name and inherited classes) and then using the `set` method to add private/public variables/methods
+
+### SDistribution Methods
+
+For the full list of methods to (optimally) include see the 'Statistical Methods' section in the help pages of SDistribution: `?SDistribution`. This **does not** include pdf/cdf/quantile/rand, these are defined in the constructor and not in the class. Once again, if there is no closed form analytic expression possible, omit the method completely.
+
+The following methods are included by default and can therefore by omitted from the class definition:
+
+1. prec
+2. cor
+3. stdev
+4. median
+5. iqr
+
+Additionally the `pgf` method returns NaN if omitted but this can be overloaded by including the method in the class definition. Below is an example of adding four methods to the Normal distribution
+
+```{r eval=FALSE}
+Normal$set("public","mean",function(){
+  return(self$getParameterValue("mean"))
+})
+Normal$set("public","variance",function(){
+  return(self$getParameterValue("var"))
+})
+Normal$set("public","skewness",function(){
+  return(0)
+})
+Normal$set("public", "mgf", function(t){
+  return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
+})
+```
+
+Note:
+
+1. Methods that require parameters use the `self` keyword and the `getParameterValue` method, we looked at this in the [custom distribution tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html)
+2. The arguments to the methods are not optional, they must have the names given in the `?SDistribution` help page, this ensures that the automated S3 dispatch methods run correctly
+
+### The Constructor
+
+The constructor for all SDistribution objects looks the same, below is the constructor for the Normal distribution, which we will talk through as an example.
+
+```{r eval=FALSE}
+Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = NULL,
+                                          decorators = NULL, verbose = FALSE){
+
+  private$.parameters <- getParameterSet(self, mean, var, sd, prec, verbose)
+  self$setParameterValue(list(mean = mean, var = var, sd = sd, prec = prec))
+
+  pdf <- function(x1) dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
+  cdf <- function(x1) pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
+  quantile <- function(p) qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"))
+  rand <- function(n) rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
+
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = Reals$new(zero = T),
+                   distrDomain = Reals$new(zero = T), symmetric = TRUE)
+  invisible(self)
+})
+```
+
+Note the following:
+
+1. The arguments to the constructor include all possible parameterisations. The default paramterisation is given, whilst the others are NULL. We include the additional arguments 'decorators' which determines if the object should be decorated in constructor and 'verbose' which lets the user decide if they are informed of the parameterisation in construction.
+2. Every constructor includes the `getParameterSet` and `setParameterValue` methods, we will return to these later.
+3. The d/p/q/r methods are defined here in the constructor, either interfacing another package or written by you
+4. The super-class constructor is called, arguments passed to this include the decorators arguments, the d/p/q/r methods and the properties of the distribution including:
+   * support (SetInterval)
+   * distrDomain (SetInterval)
+   * symmetric (logical)
+5. A distribution is termed symmetric iff it is analytically symmetric, i.e. a CLT style approximation does not count.
+6. If an analytic expression for d/p/q/r is not available, omit this from the constructor and super-class constructor
+
+### getParameterSet
+
+In a separate script called getParameterSet.R we have the generic and dispatch methods for every SDistribution. This function validates the initial choice of parameterisation, tells the user the parameterisation (if `verbose == TRUE`), constructs and returns the ParameterSet for the distribution. Below is the `getParameterSet` method for the Normal distirbution
+
+```{r}
+getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose = FALSE){
+
+  var.bool = sd.bool = prec.bool = FALSE
+
+  if(!is.null(prec)){
+    if(verbose) message("Parameterised with mean and prec.")
+    prec.bool = TRUE
+  } else if(!is.null(sd)){
+    if(verbose) message("Parameterised with mean and sd.")
+    sd.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with mean and var.")
+    var.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("mean","var","sd","prec"),
+                         value = list(0, 1, 1, 1),
+                         support = list(Reals$new(), PosReals$new(), PosReals$new(), PosReals$new()),
+                         settable = list(TRUE, var.bool, sd.bool, prec.bool),
+                         updateFunc = list(NA, NA, "self$getParameterValue('var')^0.5", "self$getParameterValue('var')^-1"),
+                         description = list("Mean - Location Parameter",
+                                            "Variance - Squared Scale Parameter",
+                                            "Standard Deviation - Scale Parameter",
+                                            "Precision - Inverse Squared Scale Parameter"))
+  return(ps)
+}
+```
+
+Note:
+
+1. This is a dispatch method so the method name is `getParameterSet.Normal`
+2. Only the non-default parameters are NULL, this helps specify the order of parameter importance (i.e. what happens if the user inputs more than one parameterisation)
+3. The conditionals at the start of the method determine which parameterisation to construct based on given parameters. It additionally sets up a hierarchy, in this case if a user gives all parameterisations then mean and prec are used, if multiple but not prec are given, then sd is used otherwise var.
+4. The default values in the ParameterSet are arbitrary, just make sure they are within the support
+5. The 'settable' values are determined by which parameterisation the user constructs. These are `TRUE` whilst other parameterisations are now `FALSE`.
+6. There is a default parameterisation that the `updateFunc`s reference, this does not need to be the parameterisation chosen by the user. This will also correspond to the `.getRefParams` method (see below).
+
+### .getRefParams
+
+To ensure that there is no clash of parameterisations or any conflicts between functions that are updated by others, we have an internal method that is called by `setParameterValue` to ensure the same parameter is always updated. For example in the Normal distribution, it doesn't matter if the user passes sd, var or prec to `setParameterValue` internally it is always the variance that is updated, and this is because of the `.getRefParams` private method. All the other parameterisations are updated automatically using the `updateFunc`s that you write in the ParameterSet, hence why it is very important that these reference the default parameterisation. This is less abstract by example, again the Normal distribution
+
+```{r eval=FALSE}
+Normal$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
+  if(!is.null(paramlst$var)) lst = c(lst, list(var = paramlst$var))
+  if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
+  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
+  return(lst)
+})
+```
+
+Note
+
+1. Again we have set up a hierarchy so that if a user provides multiple parameterisations the preference is given in order of prec -> sd -> var.
+2. The mean is used in every parameterisation hence this is always returned
+3. The variance is the default parameterisation (alongside mean) hence every other option references this
+
+Internally this looks a bit like:
+
+1. `setParameterValue` is called with `lst = list(sd = 2)`
+2. `setParameterValue` calls `.getRefParams(paramlst = list(sd=2))`
+3. `.getRefParams` returns `list(var = 4)` (sd^2)
+4. `list(var = 4)` is then used by `setParameterValue` to update the variance
+5. `update` is called in the ParameterSet which uses all the `updateFunc`s to update sd and prec
+
+This may seem slightly counter-intuitive as we have first given sd, transformed this to variance then later re-calculated sd. However this is incredibly important as it maintains no clashes when multiple functions are updated and allows complex updates (such as in composite distributions) to run smoothly. Even when only one parameterisation is possible, this is still a required private method as it is called directly in `setParmeterValue`.
+
+
+## Summary
+
+That's everything that is required to create your own SDistribution class. In summary the different components include
+
+1. The 5 public variables
+2. Public methods: 'statistical methods' section in `?SDistribution`
+3. The constructor: Includes d/p/q/r methods, properties and arguments for decorator
+4. `getParameterSet` dispatch method, written in the `getParameterSet.R` script
+5. `.getRefParams` for ensuring efficient updating of parameters
+
+## Extension Guidelines
+
+* [Kernel](https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html)
+* [Wrapper](https://alan-turing-institute.github.io/distr6/articles/webs/create_wrapper.html)
+* [Decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html)

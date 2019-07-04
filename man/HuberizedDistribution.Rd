@@ -113,6 +113,7 @@ If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self
 hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
 hubBin$getParameterValue("prob")
 hubBin$pdf(2)
+
 }
 \seealso{
 \code{\link{listWrappers}}.

@@ -37,10 +37,6 @@ makeChecks <- function(assertionName, cond, errormsg, args = alist(object=),
   body(value) = substitute(testThat(arg1),list(arg1=cond))
   assign(paste0("test",assertionName), value = value,
          pos = pos)
-
-  body(value) = substitute(isThat(arg1),list(arg1=cond))
-  assign(paste0("is",assertionName), value = value,
-         pos = pos)
 }
 
 getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1){

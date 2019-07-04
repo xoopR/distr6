@@ -1,0 +1,23 @@
+---
+title: "Creating an SDistribution"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Creating an SDistribution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+
+## Extension Guidelines
+
+* [SDistribution](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html)
+* [Kernel](https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html)
+* [Decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html)

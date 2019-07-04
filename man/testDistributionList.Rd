@@ -4,24 +4,21 @@
 \alias{testDistributionList}
 \alias{checkDistributionList}
 \alias{assertDistributionList}
-\alias{isDistributionList}
-\title{assert/check/test/isDistributionList}
+\title{assert/check/test/DistributionList}
 \usage{
 testDistributionList(object)
 
 checkDistributionList(object)
 
 assertDistributionList(object)
-
-isDistributionList(object)
 }
 \arguments{
 \item{object}{object to test}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if a given object is a list of R6 Distributions.

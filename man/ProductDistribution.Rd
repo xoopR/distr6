@@ -105,6 +105,7 @@ prodBin <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10),
 prodBin$pdf(x1 = 2, x2 =3)
 prodBin$cdf(x1 = 5, x2 = 10)
 prodBin$rand(10)
+
 }
 \seealso{
 \code{\link{ArrayDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}

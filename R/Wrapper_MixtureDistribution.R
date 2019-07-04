@@ -33,9 +33,9 @@
 #'                                    weights = c(0.2,0.8))
 #' mixture$pdf(1)
 #' mixture$cdf(1)
-NULL
-
+#'
 #' @export
+NULL
 MixtureDistribution <- R6::R6Class("MixtureDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 MixtureDistribution$set("public","initialize",function(distlist, weights = NULL){
 

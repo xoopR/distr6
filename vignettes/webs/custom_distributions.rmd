@@ -121,7 +121,7 @@ U$survivalPNorm(3, 2, 6)
 
 And that's all there is to it! These tutorials have covered everything from the basics of constructing an implemented `SDistribution` right the way through, accessing and setting parameters, analysis distributions, manipulating them with decorators and wrappers, and finally adding your own custom distribution and using decorators to analyse it. Everything we have covered also applies to the Kernels in distr6, although these have less functionality, to see which are implemented run `listKernels()`.
 
-The Extension Guidelines explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The [project wiki](https://github.com/alan-turing-institute/distr6/wiki) includes design documentation and contributor guidelines, please read these before making a pull request.
+The [Extension Guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html) explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The [project wiki](https://github.com/alan-turing-institute/distr6/wiki) includes design documentation and contributor guidelines, please read these before making a pull request.
 
 We hope you find distr6 intuitive to use but if you have any questions or want to report a bug, please don't hesitate to [raise am issue](https://github.com/alan-turing-institute/distr6/issues).
 

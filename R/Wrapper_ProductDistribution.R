@@ -27,9 +27,9 @@
 #' prodBin$pdf(x1 = 2, x2 =3)
 #' prodBin$cdf(x1 = 5, x2 = 10)
 #' prodBin$rand(10)
-NULL
-
+#'
 #' @export
+NULL
 ProductDistribution <- R6::R6Class("ProductDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 ProductDistribution$set("public","initialize",function(distlist, name = NULL,
                                                        short_name = NULL, description = NULL){

@@ -1,9 +1,9 @@
-#' @title assert/check/test/isDistribution
+#' @title assert/check/test/Distribution
 #' @description Validation checks to test if a given object is an R6 Distribution.
 #' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testDistribution(5) # FALSE
@@ -17,21 +17,18 @@ checkDistribution <- function(){}
 #' @rdname testDistribution
 #' @export
 assertDistribution <- function(){}
-#' @rdname testDistribution
-#' @export
-isDistribution <- function(){}
 
 makeChecks(assertionName = "Distribution",
            cond = inherits(object, "Distribution"),
            errormsg = paste(object, "is not an R6 Distribution object"),
            pos = environment())
 
-#' @title assert/check/test/isDistributionList
+#' @title assert/check/test/DistributionList
 #' @description Validation checks to test if a given object is a list of R6 Distributions.
 #' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testDistributionList(list(Binomial$new(),5)) # FALSE
@@ -45,84 +42,19 @@ checkDistributionList <- function(){}
 #' @rdname testDistributionList
 #' @export
 assertDistributionList <- function(){}
-#' @rdname testDistributionList
-#' @export
-isDistributionList <- function(){}
 
 makeChecks(assertionName =  "DistributionList",
            cond = all(unlist(lapply(object, inherits,"Distribution"))),
            errormsg = "One or more items in the list are not Distributions",
            pos = environment())
 
-#' @title assert/check/test/isDistributionFeature
-#' @description Validation checks to test for a given feature in a Distribution.
-#' @param object Distribution
-#' @param accessor accessor of property/trait to test
-#' @param feature feature to check if the property possesses
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @examples
-#' testDistributionFeature(Binomial$new(), "variateForm", "multivariate") # TRUE
-#' testDistributionFeature(Exponential$new(), "valueSupport", "discrete") # FALSE
-#'
-#' @export
-testDistributionFeature <- function(){}
-#' @rdname testDistributionFeature
-#' @export
-checkDistributionFeature <- function(){}
-#' @rdname testDistributionFeature
-#' @export
-assertDistributionFeature <- function(){}
-#' @rdname testDistributionFeature
-#' @export
-isDistributionFeature <- function(){}
-
-makeChecks(assertionName =  "DistributionFeature",
-           cond = object[[accessor]]() == feature,
-           errormsg = paste(object$short_name,"is not",feature),
-           args = alist(object=, accessor=, feature=),
-           pos = environment())
-
-#' @title assert/check/test/VariateForm
-#' @name testVariateForm
-#' @description Validation checks to test the variate form of a Distribution.
-#' @param object Distribution
-#' @param type variate form type, univariate/multivariate/matrixvariate
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @examples
-#' testVariateForm(Binomial$new(), "univariate") # silent
-#' testVariateForm(Exponential$new(), "multivariate") # FALSE
-#'
-#' @export
-testVariateForm <- function(){}
-#' @rdname testVariateForm
-#' @export
-checkVariateForm <- function(){}
-#' @rdname testVariateForm
-#' @export
-assertVariateForm <- function(){}
-#' @rdname testVariateForm
-#' @export
-isVariateForm <- function(){}
-
-makeChecks(assertionName =  "VariateForm",
-           cond = object[["variateForm"]]() == type,
-           errormsg = paste(object$short_name,"is not",type),
-           args = alist(object=, type=),
-           pos = environment())
-
 #' @title assert/check/test/Univariate
 #' @name testUnivariate
 #' @description Validation checks to test if Distribution is univariate.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testUnivariate(Binomial$new()) # TRUE
@@ -135,9 +67,6 @@ checkUnivariate <- function(){}
 #' @rdname testUnivariate
 #' @export
 assertUnivariate <- function(){}
-#' @rdname testUnivariate
-#' @export
-isUnivariate <- function(){}
 
 makeChecks(assertionName =  "Univariate",
            cond = object[["variateForm"]]() == "univariate",
@@ -148,9 +77,9 @@ makeChecks(assertionName =  "Univariate",
 #' @name testMultivariate
 #' @description Validation checks to test if Distribution is multivariate.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testMultivariate(Binomial$new()) # FALSE
@@ -163,9 +92,6 @@ checkMultivariate <- function(){}
 #' @rdname testMultivariate
 #' @export
 assertMultivariate <- function(){}
-#' @rdname testMultivariate
-#' @export
-isMultivariate <- function(){}
 
 makeChecks(assertionName =  "Multivariate",
            cond = object[["variateForm"]]() == "multivariate",
@@ -176,9 +102,9 @@ makeChecks(assertionName =  "Multivariate",
 #' @name testMatrixvariate
 #' @description Validation checks to test if Distribution is matrixvariate.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testMatrixvariate(Binomial$new()) # FALSE
@@ -191,53 +117,19 @@ checkMatrixvariate <- function(){}
 #' @rdname testMatrixvariate
 #' @export
 assertMatrixvariate <- function(){}
-#' @rdname testMatrixvariate
-#' @export
-isMatrixvariate <- function(){}
 
 makeChecks(assertionName =  "Matrixvariate",
            cond = object[["variateForm"]]() == "matrixvariate",
            errormsg = paste(object$short_name,"is not matrixvariate"),
            pos = environment())
 
-#' @title assert/check/test/ValueSupport
-#' @name testValueSupport
-#' @description Validation checks to test the value support of a Distribution.
-#' @param object Distribution
-#' @param type value support type, continuous/discrete/mixture
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @examples
-#' testValueSupport(Binomial$new(), "discrete") # silent
-#' testValueSupport(Exponential$new(), "discrete") # FALSE
-#'
-#' @export
-testValueSupport <- function(){}
-#' @rdname testValueSupport
-#' @export
-checkValueSupport <- function(){}
-#' @rdname testValueSupport
-#' @export
-assertValueSupport <- function(){}
-#' @rdname testValueSupport
-#' @export
-isValueSupport <- function(){}
-
-makeChecks(assertionName =  "ValueSupport",
-           cond = object[["valueSupport"]]() == type,
-           errormsg = paste(object$short_name,"is not",type),
-           args = alist(object=, type=),
-           pos = environment())
-
 #' @title assert/check/test/Continuous
 #' @name testContinuous
 #' @description Validation checks to test if Distribution is continuous.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testContinuous(Binomial$new()) # FALSE
@@ -250,9 +142,6 @@ checkContinuous <- function(){}
 #' @rdname testContinuous
 #' @export
 assertContinuous <- function(){}
-#' @rdname testContinuous
-#' @export
-isContinuous <- function(){}
 
 makeChecks(assertionName =  "Continuous",
            cond = object[["valueSupport"]]() == "continuous",
@@ -263,9 +152,9 @@ makeChecks(assertionName =  "Continuous",
 #' @name testDiscrete
 #' @description Validation checks to test if Distribution is discrete.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testDiscrete(Binomial$new()) # FALSE
@@ -278,9 +167,6 @@ checkDiscrete <- function(){}
 #' @rdname testDiscrete
 #' @export
 assertDiscrete <- function(){}
-#' @rdname testDiscrete
-#' @export
-isDiscrete <- function(){}
 
 makeChecks(assertionName =  "Discrete",
            cond = object[["valueSupport"]]() == "discrete",
@@ -291,9 +177,9 @@ makeChecks(assertionName =  "Discrete",
 #' @name testMixture
 #' @description Validation checks to test if Distribution is mixture.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testMixture(Binomial$new()) # FALSE
@@ -306,9 +192,6 @@ checkMixture <- function(){}
 #' @rdname testMixture
 #' @export
 assertMixture <- function(){}
-#' @rdname testMixture
-#' @export
-isMixture <- function(){}
 
 makeChecks(assertionName =  "Mixture",
            cond = object[["valueSupport"]]() == "mixture",
@@ -319,80 +202,35 @@ makeChecks(assertionName =  "Mixture",
 #' @name testSymmetric
 #' @description Validation checks to test if Distribution is symmetric.
 #' @param object Distribution
-#' @param ... Ignored, added for consistency in generic.
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testSymmetric(Binomial$new()) # FALSE
 #'
 #' @export
-testSymmetric <- function(object,...){
-  testThat(object[["symmetry"]]() == "symmetric")
-}
+testSymmetric <- function(){}
 #' @rdname testSymmetric
 #' @export
-checkSymmetric <- function(object,...){
-  checkThat(object[["symmetry"]]() == "symmetric", paste(object$short_name,
-                                                    "is not symmetric"))
-}
+checkSymmetric <- function(){}
 #' @rdname testSymmetric
 #' @export
-assertSymmetric <- function(object,...){
-  assertThat(object, object[["symmetry"]]() == "symmetric", paste(object$short_name,
-                                                        "is not symmetric"))
-}
-#' @rdname testSymmetric
-#' @export
-isSymmetric.Distribution <- function(object,...){
-  isThat(object[["symmetry"]]() == "symmetric")
-}
+assertSymmetric <- function(){}
 
-# makeChecks(assertionName =  "Symmetric",
-#            cond = object[["symmetry"]]() == "symmetric",
-#            errormsg = paste(object$short_name,"is not symmeitrc"),
-#            args = alist(object=, type=),
-#            pos = environment())
-
-#' @title assert/check/test/Skewness
-#' @name testSkewness
-#' @description Validation checks to test the skewness of a Distribution.
-#' @param object Distribution
-#' @param type skewness type, Negative Skew/No Skew/Positive Skew
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @examples
-#' testSkewness(Binomial$new(), "Negative Skew")
-#' testSkewness(Binomial$new(), "Positive Skew")
-#'
-#' @export
-testSkewness <- function(){}
-#' @rdname testSkewness
-#' @export
-checkSkewness <- function(){}
-#' @rdname testSkewness
-#' @export
-assertSkewness <- function(){}
-#' @rdname testSkewness
-#' @export
-isSkewness <- function(){}
-
-makeChecks(assertionName =  "Skewness",
-           cond = object[["skewnessType"]]() == type,
-           errormsg = paste(object$short_name,"is not",type),
-           args = alist(object=, type=),
+makeChecks(assertionName =  "Symmetric",
+           cond = object[["symmetry"]]() == "symmetric",
+           errormsg = paste(object$short_name,"is not symmetric"),
+           args = alist(object=),
            pos = environment())
 
 #' @title assert/check/test/NegativeSkew
 #' @name testNegativeSkew
 #' @description Validation checks to test if Distribution is negative skew.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testNegativeSkew(Binomial$new())
@@ -405,9 +243,6 @@ checkNegativeSkew <- function(){}
 #' @rdname testNegativeSkew
 #' @export
 assertNegativeSkew <- function(){}
-#' @rdname testNegativeSkew
-#' @export
-isNegativeSkew <- function(){}
 
 makeChecks(assertionName =  "NegativeSkew",
            cond = object[["skewnessType"]]() == "Negative Skew",
@@ -418,9 +253,9 @@ makeChecks(assertionName =  "NegativeSkew",
 #' @name testPositiveSkew
 #' @description Validation checks to test if Distribution is positive skew.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testPositiveSkew(Binomial$new())
@@ -433,9 +268,6 @@ checkPositiveSkew <- function(){}
 #' @rdname testPositiveSkew
 #' @export
 assertPositiveSkew <- function(){}
-#' @rdname testPositiveSkew
-#' @export
-isPositiveSkew <- function(){}
 
 makeChecks(assertionName =  "PositiveSkew",
            cond = object[["skewnessType"]]() == "Positive Skew",
@@ -446,9 +278,9 @@ makeChecks(assertionName =  "PositiveSkew",
 #' @name testNoSkew
 #' @description Validation checks to test if Distribution is no skew.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #'
 #' @examples
@@ -462,53 +294,19 @@ checkNoSkew <- function(){}
 #' @rdname testNoSkew
 #' @export
 assertNoSkew <- function(){}
-#' @rdname testNoSkew
-#' @export
-isNoSkew <- function(){}
 
 makeChecks(assertionName =  "NoSkew",
            cond = object[["skewnessType"]]() == "No Skew",
            errormsg = paste(object$short_name,"is not no skew"),
            pos = environment())
 
-#' @title assert/check/test/Kurtosis
-#' @name testKurtosis
-#' @description Validation checks to test the kurtosis of a Distribution.
-#' @param object Distribution
-#' @param type kurtosis type, leptokurtic/mesokurtic/platykurtic
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
-#'
-#' @examples
-#' testKurtosis(Binomial$new(), "leptokurtic")
-#' testKurtosis(Binomial$new(), "platykurtic")
-#'
-#' @export
-testKurtosis <- function(){}
-#' @rdname testKurtosis
-#' @export
-checkKurtosis <- function(){}
-#' @rdname testKurtosis
-#' @export
-assertKurtosis <- function(){}
-#' @rdname testKurtosis
-#' @export
-isKurtosis <- function(){}
-
-makeChecks(assertionName =  "Kurtosis",
-           cond = object[["kurtosisType"]]() == type,
-           errormsg = paste(object$short_name,"is not",type),
-           args = alist(object=, type=),
-           pos = environment())
-
 #' @title assert/check/test/Platykurtic
 #' @name testPlatykurtic
 #' @description Validation checks to test if Distribution is platykurtic.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testPlatykurtic(Binomial$new())
@@ -521,9 +319,6 @@ checkPlatykurtic <- function(){}
 #' @rdname testPlatykurtic
 #' @export
 assertPlatykurtic <- function(){}
-#' @rdname testPlatykurtic
-#' @export
-isPlatykurtic <- function(){}
 
 makeChecks(assertionName =  "Platykurtic",
            cond = object[["kurtosisType"]]() == "platykurtic",
@@ -534,9 +329,9 @@ makeChecks(assertionName =  "Platykurtic",
 #' @name testMesokurtic
 #' @description Validation checks to test if Distribution is mesokurtic.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testMesokurtic(Binomial$new())
@@ -549,9 +344,6 @@ checkMesokurtic <- function(){}
 #' @rdname testMesokurtic
 #' @export
 assertMesokurtic <- function(){}
-#' @rdname testMesokurtic
-#' @export
-isMesokurtic <- function(){}
 
 makeChecks(assertionName =  "Mesokurtic",
            cond = object[["kurtosisType"]]() == "mesokurtic",
@@ -562,9 +354,9 @@ makeChecks(assertionName =  "Mesokurtic",
 #' @name testLeptokurtic
 #' @description Validation checks to test if Distribution is leptokurtic.
 #' @param object Distribution
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test}/\code{is} return \code{FALSE}.
+#'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
 #' testLeptokurtic(Binomial$new())
@@ -577,9 +369,6 @@ checkLeptokurtic <- function(){}
 #' @rdname testLeptokurtic
 #' @export
 assertLeptokurtic <- function(){}
-#' @rdname testLeptokurtic
-#' @export
-isLeptokurtic <- function(){}
 
 makeChecks(assertionName =  "Leptokurtic",
            cond = object[["kurtosisType"]]() == "leptokurtic",

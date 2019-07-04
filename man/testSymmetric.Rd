@@ -4,26 +4,21 @@
 \alias{testSymmetric}
 \alias{checkSymmetric}
 \alias{assertSymmetric}
-\alias{isSymmetric.Distribution}
 \title{assert/check/test/Symmetric}
 \usage{
-testSymmetric(object, ...)
+testSymmetric(object)
 
-checkSymmetric(object, ...)
+checkSymmetric(object)
 
-assertSymmetric(object, ...)
-
-\method{isSymmetric}{Distribution}(object, ...)
+assertSymmetric(object)
 }
 \arguments{
 \item{object}{Distribution}
-
-\item{...}{Ignored, added for consistency in generic.}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is symmetric.

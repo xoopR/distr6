@@ -32,9 +32,9 @@
 #' hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
 #' hubBin$getParameterValue("prob")
 #' hubBin$pdf(2)
-NULL
-
+#'
 #' @export
+NULL
 HuberizedDistribution <- R6::R6Class("HuberizedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 HuberizedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){
 
