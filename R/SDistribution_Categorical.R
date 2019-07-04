@@ -65,9 +65,6 @@ NULL
 Categorical <- R6::R6Class("Categorical", inherit = SDistribution, lock_objects = F)
 Categorical$set("public","name","Categorical")
 Categorical$set("public","short_name","Cat")
-Categorical$set("public","traits",list(type = Complex$new(),
-                                  valueSupport = "discrete",
-                                  variateForm = "univariate"))
 Categorical$set("public","description","Categorical Probability Distribution.")
 Categorical$set("public","package","distr6")
 
@@ -112,6 +109,8 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, rand = rand,
                    support = Set$new(...),
-                   distrDomain = Complex$new(), symmetric = FALSE)
+                   distrDomain = Complex$new(), symmetric = FALSE, type = Complex$new(),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
   invisible(self)
 })

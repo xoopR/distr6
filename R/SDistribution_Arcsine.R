@@ -57,9 +57,6 @@ NULL
 Arcsine <- R6::R6Class("Arcsine", inherit = SDistribution, lock_objects = F)
 Arcsine$set("public","name","Arcsine")
 Arcsine$set("public","short_name","Arc")
-Arcsine$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Arcsine$set("public","description","Arcsine Probability Distribution.")
 Arcsine$set("public","package","distr6")
 
@@ -145,6 +142,9 @@ Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Interval$new(lower,upper), distrDomain = Reals$new(), symmetric = TRUE)
+                   support = Interval$new(lower,upper), distrDomain = Reals$new(), symmetric = TRUE,
+                   type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

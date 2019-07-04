@@ -10,8 +10,7 @@ listKernels(simplify = FALSE)
 \item{simplify}{logical.}
 }
 \description{
-Lists R6 kernels, either all in a data.table or filtered by chosen
-traits and/or properties.
+Lists all implemented kernels in disrt6.
 }
 \examples{
 listKernels()

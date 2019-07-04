@@ -290,6 +290,9 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     if(!is.null(support)) private$.properties$support <- support
     if(!is.null(distrDomain)) private$.properties$distrDomain <- distrDomain
     if(!is.null(description)) self$description <- description
+    if(!is.null(type)) private$.traits$type <- type
+    if(!is.null(valueSupport)) private$.traits$valueSupport <- valueSupport
+    if(!is.null(variateForm)) private$.traits$variateForm <- variateForm
 
     # Update skewness and kurtosis
     x = try(self$kurtosis(excess = TRUE), silent = TRUE)

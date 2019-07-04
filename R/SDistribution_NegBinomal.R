@@ -92,9 +92,6 @@ NULL
 NegativeBinomial <- R6::R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F)
 NegativeBinomial$set("public", "name", "NegativeBinomial")
 NegativeBinomial$set("public", "short_name", "NBinom")
-NegativeBinomial$set("public", "traits", list(type = Naturals$new(),
-                                              valueSupport = "discrete",
-                                              variateForm = "univariate"))
 NegativeBinomial$set("private",".form",NULL)
 NegativeBinomial$set("public","package","distr6")
 
@@ -231,10 +228,6 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     rand = function(n) rnbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
     support = Naturals$new()
     description = "Negative Binomial (fbs) Probability Distribution."
-
-    super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                     rand = rand, support = support, distrDomain = Naturals$new(),
-                     symmetric = FALSE, description = description)
   } else if(form == "sbf"){
     pdf = function(x1){
       return(choose(x1 + self$getParameterValue("size") - 1, x1) *
@@ -244,12 +237,10 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     cdf = function(x1){
       return(1 - pbeta(self$getParameterValue("prob"), x1+1, self$getParameterValue("size")))
     }
+    quantile = NULL
+    rand = NULL
     support = Naturals$new()
     description = "Negative Binomial (sbf) Probability Distribution."
-
-    super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, support = support,
-                     distrDomain = Naturals$new(), symmetric = FALSE,
-                     description = description)
   } else if(form == "tbf"){
     pdf = function(x1){
       return(choose(x1 - 1, self$getParameterValue("size")-1) *
@@ -263,13 +254,10 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
       }
     }
-
+    quantile = NULL
+    rand = NULL
     support = Interval$new(size, Inf, type = "[)", class = "integer")
     description = "Negative Binomial (tbf) Probability Distribution."
-
-    super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, support = support,
-                     distrDomain = Naturals$new(), symmetric = FALSE,
-                     description = description)
   } else{
     pdf = function(x1){
       return(choose(x1 - 1, self$getParameterValue("size")-1) *
@@ -283,13 +271,17 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
         return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
       }
     }
+    quantile = NULL
+    rand = NULL
     support = Interval$new(size, Inf, type = "[)", class = "integer")
     description = "Negative Binomial (tbs) Probability Distribution."
-
-    super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, support = support,
-                     distrDomain = Naturals$new(), symmetric = FALSE,
-                     description = description)
   }
+
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = support, distrDomain = Naturals$new(),
+                   symmetric = FALSE, description = description, type = Naturals$new(),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
 
   invisible(self)
 })

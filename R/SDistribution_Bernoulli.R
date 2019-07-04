@@ -65,9 +65,6 @@ NULL
 Bernoulli <- R6::R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
 Bernoulli$set("public","name","Bernoulli")
 Bernoulli$set("public","short_name","Bern")
-Bernoulli$set("public","traits",list(type = Naturals$new(),
-                                    valueSupport = "discrete",
-                                    variateForm = "univariate"))
 Bernoulli$set("public","description","Bernoulli Probability Distribution.")
 Bernoulli$set("public","package","distr6")
 
@@ -134,6 +131,8 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(0,1), distrDomain = Naturals$new(),
-                   symmetric = FALSE)
+                   symmetric = FALSE,type = Naturals$new(),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
   invisible(self)
 })

@@ -39,7 +39,6 @@ If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm. \cr
   \code{package} \tab The package p/d/q/r are implemented in.
  }
 }
@@ -50,6 +49,7 @@ If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr

@@ -70,9 +70,6 @@ NULL
 Multinomial <- R6::R6Class("Multinomial", inherit = SDistribution, lock_objects = F)
 Multinomial$set("public","name","Multinomial")
 Multinomial$set("public","short_name","Multinom")
-Multinomial$set("public","traits",list(type = Naturals$new(dim = "K"),
-                                  valueSupport = "discrete",
-                                  variateForm = "multivariate"))
 Multinomial$set("public","description","Multinomial Probability Distribution.")
 Multinomial$set("public","package","stats")
 
@@ -164,6 +161,8 @@ Multinomial$set("public","initialize",function(size, probs, decorators = NULL, v
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Set$new(0:size, dim = length(probs)),
-                   distrDomain = Naturals$new(dim = length(probs)), symmetric = FALSE)
+                   distrDomain = Naturals$new(dim = length(probs)), symmetric = FALSE,type = Naturals$new(dim = "K"),
+                   valueSupport = "discrete",
+                   variateForm = "multivariate")
   invisible(self)
 })

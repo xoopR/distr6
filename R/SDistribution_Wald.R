@@ -63,9 +63,6 @@ NULL
 Wald <- R6::R6Class("Wald", inherit = SDistribution, lock_objects = F)
 Wald$set("public","name","Wald")
 Wald$set("public","short_name","Wald")
-Wald$set("public","traits",list(type = PosReals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Wald$set("public","description","Wald Probability Distribution.")
 Wald$set("public","package","distr6")
 
@@ -137,6 +134,7 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
                    rand = rand, support = PosReals$new(), distrDomain = PosReals$new(),
-                   symmetric = TRUE)
+                   symmetric = TRUE, type = PosReals$new(), valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

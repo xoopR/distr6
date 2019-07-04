@@ -84,9 +84,6 @@ NULL
 Lognormal <- R6::R6Class("Lognormal", inherit = SDistribution, lock_objects = F)
 Lognormal$set("public","name","Lognormal")
 Lognormal$set("public","short_name","Lognormal")
-Lognormal$set("public","traits",list(type = PosReals$new(),
-                                     valueSupport = "continuous",
-                                     variateForm = "univariate"))
 Lognormal$set("public","description","Lognormal Probability Distribution.")
 Lognormal$set("public","package","stats")
 
@@ -164,7 +161,9 @@ Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NU
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(), distrDomain = PosReals$new(),
-                   symmetric = FALSE)
+                   symmetric = FALSE,type = PosReals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })
 

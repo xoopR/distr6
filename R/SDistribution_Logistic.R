@@ -55,9 +55,6 @@ NULL
 Logistic <- R6::R6Class("Logistic", inherit = SDistribution, lock_objects = F)
 Logistic$set("public","name","Logistic")
 Logistic$set("public","short_name","Logis")
-Logistic$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Logistic$set("public","description","Logistic Probability Distribution.")
 Logistic$set("public","package","stats")
 
@@ -114,6 +111,8 @@ Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(), distrDomain = Reals$new(),
-                   symmetric = TRUE)
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

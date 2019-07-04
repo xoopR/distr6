@@ -1,6 +1,5 @@
 #' @title Lists Implemented R6 Kernels
-#' @description Lists R6 kernels, either all in a data.table or filtered by chosen
-#' traits and/or properties.
+#' @description Lists all implemented kernels in disrt6.
 #' @param simplify logical.
 #' @examples
 #' listKernels()

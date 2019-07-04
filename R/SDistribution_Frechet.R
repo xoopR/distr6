@@ -61,9 +61,6 @@ NULL
 Frechet <- R6::R6Class("Frechet", inherit = SDistribution, lock_objects = F)
 Frechet$set("public","name","Frechet")
 Frechet$set("public","short_name","Frec")
-Frechet$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Frechet$set("public","description","Frechet Probability Distribution.")
 Frechet$set("public","package","distr6")
 
@@ -153,6 +150,8 @@ Frechet$set("public","initialize",function(shape = 1, scale = 1, minimum = 0,
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(minimum, Inf, type = "()"), distrDomain = Reals$new(),
-                   symmetric = FALSE)
+                   symmetric = FALSE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

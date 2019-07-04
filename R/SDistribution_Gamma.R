@@ -70,11 +70,6 @@ NULL
 Gamma <- R6::R6Class("Gamma", inherit = SDistribution, lock_objects = F)
 Gamma$set("public","name","Gamma")
 Gamma$set("public","short_name","Gamma")
-
-Gamma$set("public","traits",list(type = PosReals$new(),
-                                       valueSupport = "continuous",
-                                       variateForm = "univariate"))
-
 Gamma$set("public","description","Gamma Probability Distribution.")
 Gamma$set("public","package","stats")
 
@@ -141,7 +136,9 @@ Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean 
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = F), distrDomain = PosReals$new(zero = T),
-                   symmetric  = FALSE)
+                   symmetric  = FALSE,type = PosReals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })
 

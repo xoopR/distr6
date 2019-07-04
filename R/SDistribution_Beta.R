@@ -58,9 +58,6 @@ NULL
 Beta <- R6::R6Class("Beta", inherit = SDistribution, lock_objects = F)
 Beta$set("public","name","Beta")
 Beta$set("public","short_name","Beta")
-Beta$set("public", "traits",list(type = PosReals$new(zero = T),
-                                 valueSupport ="continuous",
-                                 variateForm = "univariate"))
 Beta$set("public","description","Beta Probability Distribution.")
 Beta$set("public","package","stats")
 
@@ -139,7 +136,9 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(0,1), distrDomain = PosReals$new(zero = TRUE),
-                   symmetric = symmetric)
+                   symmetric = symmetric, type = PosReals$new(zero = T),
+                   valueSupport ="continuous",
+                   variateForm = "univariate")
 
   invisible(self)
 })

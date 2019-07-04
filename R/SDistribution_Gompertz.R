@@ -58,9 +58,6 @@ NULL
 Gompertz <- R6::R6Class("Gompertz", inherit = SDistribution, lock_objects = F)
 Gompertz$set("public","name","Gompertz")
 Gompertz$set("public","short_name","Gomp")
-Gompertz$set("public","traits",list(type = PosReals$new(zero = T),
-                                       valueSupport = "continuous",
-                                       variateForm = "univariate"))
 Gompertz$set("public","description","Gompertz Probability Distribution.")
 Gompertz$set("public","package","distr6")
 
@@ -91,8 +88,10 @@ Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = N
   }
 
 
-  suppressMessages(super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
-                   symmetric  = FALSE))
+                   symmetric  = FALSE,type = PosReals$new(zero = T),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

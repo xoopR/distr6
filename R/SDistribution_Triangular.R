@@ -75,9 +75,6 @@ NULL
 Triangular <- R6::R6Class("Triangular", inherit = SDistribution, lock_objects = F)
 Triangular$set("public","name","Triangular")
 Triangular$set("public","short_name","Tri")
-Triangular$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Triangular$set("public","package","distr6")
 Triangular$set("private",".type","symmetric")
 
@@ -237,6 +234,8 @@ Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lowe
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(lower, upper), distrDomain = Reals$new(),
-                   symmetric = symmetry, description = description)
+                   symmetric = symmetry, description = description,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

@@ -66,9 +66,6 @@ NULL
 Dirichlet <- R6::R6Class("Dirichlet", inherit = SDistribution, lock_objects = F)
 Dirichlet$set("public","name","Dirichlet")
 Dirichlet$set("public","short_name","Diri")
-Dirichlet$set("public","traits",list(type = Interval$new(0,1,dim = "K"),
-                                  valueSupport = "continuous",
-                                  variateForm = "multivariate"))
 Dirichlet$set("public","description","Multivariate Normal Probability Distribution.")
 Dirichlet$set("public","package","distr6")
 
@@ -154,6 +151,9 @@ Dirichlet$set("public","initialize",function(params, decorators = NULL, verbose 
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Interval$new(0,1,type="()",dim = length(params)),
-                   distrDomain = Reals$new(dim = length(params)), symmetric = FALSE)
+                   distrDomain = Reals$new(dim = length(params)), symmetric = FALSE,
+                   type = Interval$new(0,1,dim = "K"),
+                   valueSupport = "continuous",
+                   variateForm = "multivariate")
   invisible(self)
 })
