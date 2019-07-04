@@ -150,13 +150,14 @@ reference:
       - wrappedModels
       - ArrayDistribution
       - ProductDistribution
+      - VectorDistribution
       - HuberizedDistribution
       - huberize
       - TruncatedDistribution
       - truncate
       - MixtureDistribution
+      - Convolution
       - Scale
-      - VectorDistribution
   - title: "Univariate Discrete Distributions"
     contents:
       - Bernoulli
