@@ -32,6 +32,18 @@ navbar:
         href: articles/webs/sets.html
       - text: Custom Distributions
         href: articles/webs/custom_distributions.html
+  - text: Extension Guidelines
+    menu:
+    - text: Preliminaries
+      href: articles/webs/preliminaries.html
+    - text: Creating an SDistribution
+      href: articles/webs/create_sdistribution.html
+    - text: Creating a Kernel
+      href: articles/webs/create_kernel.html
+    - text: Creating a Decorator
+      href: articles/webs/create_decorator.html
+    - text: Creating a Wrapper
+      href: articles/webs/create_wrapper.html
   - text: Appendices
     menu:
     - text: API Lifecycle
