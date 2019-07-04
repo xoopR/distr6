@@ -7,7 +7,7 @@
 #' @description Mathematical and statistical functions for the Dirichlet distribution parameterised
 #' with 'params' and defined by the pdf,
 #' \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})}
-#' where \eqn{\alpha = \alpha_1,...,\alpha_k} are the k concentration parameters, \eqn{\Gamma} is the gamma function,
+#' where \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0} are the k concentration parameters, \eqn{\Gamma} is the gamma function,
 #' \eqn{\sum} is the summation function and \eqn{\prod} is the product function. The distribution is
 #' supported on \eqn{x_i \epsilon (0,1), \sum x_i = 1}.
 #'
@@ -108,7 +108,7 @@ Dirichlet$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Dirichlet$set("public","initialize",function(params, decorators = NULL, verbose = FALSE){
+Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, params, verbose)
   self$setParameterValue(list(params = params))

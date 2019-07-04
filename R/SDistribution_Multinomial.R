@@ -132,7 +132,7 @@ Multinomial$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Multinomial$set("public","initialize",function(size, probs, decorators = NULL, verbose = FALSE){
+Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, size, probs, verbose)
   self$setParameterValue(list(size = size, probs = probs))

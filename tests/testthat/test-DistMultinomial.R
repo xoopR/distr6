@@ -3,9 +3,9 @@ library(testthat)
 context("Multinomial distribution")
 
 test_that("constructor",{
-  expect_error(Multinomial$new())
-  expect_error(Multinomial$new(size = 5))
-  expect_error(Multinomial$new(probs = c(0.2)))
+  expect_silent(Multinomial$new())
+  expect_equal(Multinomial$new(size = 5)$getParameterValue("probs"),c(0.5,0.5))
+  expect_equal(Multinomial$new(probs = c(0.2))$getParameterValue("size"), 10)
   expect_silent(Multinomial$new(size = 3, probs = c(0.1,0.4)))
 })
 
