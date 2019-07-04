@@ -448,6 +448,18 @@ Distribution$set("public","decorators", function(){
   return(private$.decorators)
 })
 
+#' @name traits
+#' @title Traits Accessor
+#' @usage traits(object)
+#' @section R6 Usage: $traits()
+#' @param object Distribution.
+#' @description Returns the traits of the distribution.
+#' @export
+NULL
+Distribution$set("public","traits",function(){
+  return(private$.traits)
+})
+
 #' @name valueSupport
 #' @title Value Support Accessor
 #' @usage valueSupport(object)
@@ -457,7 +469,7 @@ Distribution$set("public","decorators", function(){
 #' @export
 NULL
 Distribution$set("public","valueSupport",function(){
-  return(self$traits[["valueSupport"]])
+  return(self$traits()[["valueSupport"]])
 })
 
 #' @name variateForm
@@ -469,7 +481,7 @@ Distribution$set("public","valueSupport",function(){
 #' @export
 NULL
 Distribution$set("public","variateForm",function(){
-  return(self$traits[["variateForm"]])
+  return(self$traits()[["variateForm"]])
 })
 
 #' @name type
@@ -482,7 +494,7 @@ Distribution$set("public","variateForm",function(){
 #' @export
 NULL
 Distribution$set("public","type",function(){
-  return(self$traits[["type"]])
+  return(self$traits()[["type"]])
 })
 
 #' @name properties
@@ -490,8 +502,7 @@ Distribution$set("public","type",function(){
 #' @usage properties(object)
 #' @section R6 Usage: $properties()
 #' @param object Distribution.
-#' @description Returns the scientific type of the distribution.
-#' @seealso \code{\link{SetInterval}}
+#' @description Returns the properties of the distribution.
 #' @export
 NULL
 Distribution$set("public","properties",function(){
@@ -1110,7 +1121,6 @@ Distribution$set("public","liesInDistrDomain",function(x, all = TRUE, bound = FA
 Distribution$set("public","name",character(0))
 Distribution$set("public","short_name",character(0))
 Distribution$set("public","description",NULL)
-Distribution$set("public","traits",list())
 Distribution$set("private",".pdf", NULL)
 Distribution$set("private",".cdf", NULL)
 Distribution$set("private",".quantile", NULL)
@@ -1119,6 +1129,7 @@ Distribution$set("private",".parameters",data.frame())
 Distribution$set("private",".workingSupport",NULL)
 Distribution$set("private",".decorators", NULL)
 Distribution$set("private",".properties",NULL)
+Distribution$set("private",".traits",NULL)
 Distribution$set("private",".isPdf", FALSE)
 Distribution$set("private",".isCdf", FALSE)
 Distribution$set("private",".isQuantile", FALSE)
