@@ -97,7 +97,7 @@ Finally a whole host of other arguments could be supplied to the Distribution to
 
 1. pdfs and cdfs should have the same number of arguments. For example if the distribution is univariate both should have one argument only (and with the same name).
 2. By default the type, support and distrDomain are taken to be the Reals, if this is not the case then the true ones should be supplied as `SetInterval` objects.
-3. valueSupport and variateForm are automatically inferred from the distribution's type. If the type is in the Integers or Naturals then the valueSupport is taken to be discrete, otherwise continuous. If the dimension of the type is 1 then the variateForm is taken to be univariate, multivariate otherwise. These can be overwritten for mixture and matrixvariate distributions.
+3. valueSupport and variateForm are automatically inferred from the distribution's type. If the type is in the Integers or Naturals then the valueSupport is taken to be discrete, otherwise continuous. If the dimension of the type is $1$ then the variateForm is taken to be univariate, multivariate otherwise. These can be overwritten for mixture and matrixvariate distributions.
 
 ## Putting Everything Together
 

@@ -23,15 +23,15 @@ Before discussing how to actually view properties and traits it is worth underst
 
 ## Traits
 
-In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of "continuous", "discrete" or "mixture", this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then '0' is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html)). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).
+In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of "continuous", "discrete" or "mixture", this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs, and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then '0' is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html)). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).
 
-To view all the traits of the Normal distribution, call the variable `traits`,
+To view all the traits of the Normal distribution, call the method `traits()`,
 ```{r}
 N <- Normal$new()
-N$traits
+N$traits()
 
 # You can also do the above in one line
-Normal$new()$traits 
+Normal$new()$traits ()
 ```
 
 Or to view a specific trait:
@@ -41,7 +41,6 @@ N$valueSupport()
 N$variateForm()
 ```
 
-Note that `traits` is a variable (no parentheses after it) whereas calling specific traits is a method and thus require parentheses, this is because traits are class properties.
 
 ## Properties
 
@@ -53,7 +52,7 @@ Skewness is a slightly easier concept to understand. It refers to the shape of t
 
 Symmetry is one of 'symmetric' or 'asymmetric' and is an informal way of identifying if the pdf of the distribution is symmetric about a single point (the median). Informally, the distribution support is the set of values that produce a non-zero results when plugged into the pdf and the distrDomain is a similar concept except generalised to the family of distributions (i.e. before parameterisation).
 
-To view properties in distr6, we use the `properties()` method, note that this is a method (with parentheses) and not a variable:
+To view properties in distr6, we use the `properties()` method
 ```{r}
 Normal$new()$properties()
 ```
@@ -81,7 +80,7 @@ N$description
 
 ## Summary
 
-In this tutorial we covered the difference between properties and traits as well as briefly R6 variables and methods. We also looked at calling properties and traits as a list or as individual items. Finally we covered distribution variables. Remember you don't have to learn all these method and variable names off by heart, it's all listed in every distribution help page. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we turn to multivariate distributions.
+In this tutorial we covered the difference between properties and traits, how to call properties and traits as a list or as individual items, and finally distribution variables. Remember you don't have to learn all these method and variable names off by heart, it's all listed in every distribution help page. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we turn to multivariate distributions.
 
 
 

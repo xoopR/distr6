@@ -27,7 +27,7 @@ class 'kernel', which in turn inherits from `Distribution`. But this is a much s
 * `kernel$valueSupport()` == continuous
 * `kernel$variateForm()` == univariate
 
-And for all kernels the sampling method uses inverse cdf transform sampling, so this is also defined in
+And for all kernels the sampling method uses inverse transform sampling, so this is also defined in
 the parent class. Hence the only methods required to add are
 
 * squared2Norm: This is new for kernels (i.e. not given for probability distributions)

@@ -29,7 +29,6 @@ All implemented probability distributions (excluding Kernels) in distr6 inherit 
 
 * name - Full (unique) name of probability distribution
 * short_name - Short name (unique) id for distribution
-* traits - List including type (SetInterval), valueSupport (discrete/continuous/mixture), variateForm (univariate/multivariate/matrixvariate)
 * description - Short description, usually just the name
 * package - The package in which the d/p/q/r functions are written
 
@@ -39,9 +38,6 @@ For the Normal distribution, the above all looks like
 Normal <- R6::R6Class("Normal", inherit = SDistribution, lock_objects = F)
 Normal$set("public","name","Normal")
 Normal$set("public","short_name","Norm")
-Normal$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Normal$set("public","description","Normal Probability Distribution.")
 Normal$set("public","package","stats")
 ```
@@ -103,7 +99,8 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(zero = T),
-                   distrDomain = Reals$new(zero = T), symmetric = TRUE)
+                   distrDomain = Reals$new(zero = T), symmetric = TRUE, type = Reals$new(),
+                   valueSupport = "continuous", variateForm = "univariate")
   invisible(self)
 })
 ```
@@ -113,12 +110,11 @@ Note the following:
 1. The arguments to the constructor include all possible parameterisations. The default paramterisation is given, whilst the others are NULL. We include the additional arguments 'decorators' which determines if the object should be decorated in constructor and 'verbose' which lets the user decide if they are informed of the parameterisation in construction.
 2. Every constructor includes the `getParameterSet` and `setParameterValue` methods, we will return to these later.
 3. The d/p/q/r methods are defined here in the constructor, either interfacing another package or written by you
-4. The super-class constructor is called, arguments passed to this include the decorators arguments, the d/p/q/r methods and the properties of the distribution including:
-   * support (SetInterval)
-   * distrDomain (SetInterval)
-   * symmetric (logical)
+4. The super-class constructor is called, arguments passed to this include the decorators arguments, the d/p/q/r methods, the properties of the distribution including: support (SetInterval); distrDomain (SetInterval); symmetric (logical).
+And the traits of the distribution inlcuding: type (SetInterval); variateForm ("univariate"/"multivariate"/"matrixvariate"); valueSupport ("discrete"/"continuous"/"mixture").
 5. A distribution is termed symmetric iff it is analytically symmetric, i.e. a CLT style approximation does not count.
 6. If an analytic expression for d/p/q/r is not available, omit this from the constructor and super-class constructor
+7. There are no validation checks for properties or traits. The methods assume that if you are creating your own class that you will only supply valid inputs.
 
 ### getParameterSet
 
@@ -200,7 +196,7 @@ That's everything that is required to create your own SDistribution class. In su
 
 1. The 5 public variables
 2. Public methods: 'statistical methods' section in `?SDistribution`
-3. The constructor: Includes d/p/q/r methods, properties and arguments for decorator
+3. The constructor: Includes d/p/q/r methods, properties, traits and an argument for decorators
 4. `getParameterSet` dispatch method, written in the `getParameterSet.R` script
 5. `.getRefParams` for ensuring efficient updating of parameters
 

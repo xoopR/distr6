@@ -151,10 +151,10 @@ listing all of these, and filtering by traits or package. We only show the first
 head(listDistributions())
 head(listDistributions(simplify = TRUE))
 # Lists discrete distributions only
-head(listDistributions(filter = list(valuesupport = "discrete"))
+head(listDistributions(filter = list(valuesupport = "discrete")))
 
 # Multiple filters can be used, note this is case-insensitive
-listDistributions(filter = list(VaLueSupport = "continuous", package = "distr6"))
+head(listDistributions(filter = list(VaLueSupport = "continuous", package = "distr6")))
 ```
 
 ### R6, S3 and Magrittr
@@ -170,3 +170,9 @@ N$pdf(2)
 pdf(N, 2)
 N %>% pdf(2)
 ```
+
+## Further Documentation
+
+ * [Tutorials](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html)
+ * [Extension guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html)
+ * [Project Wiki](https://github.com/alan-turing-institute/distr6/wiki)

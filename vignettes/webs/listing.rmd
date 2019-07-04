@@ -23,30 +23,30 @@ Currently distr6 includes 5 listing functions: `listDistributions(), listDecorat
 
 ## listDistributions
 
-`listDistributions()` is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their p/d/q/r methods are implemented in. For example a distribution with package `stats` means that the p/d/q/r methods interface the R stats functions whereas a distribution with package `distr6` means the methods are written in distr6.
+`listDistributions()` is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their p/d/q/r methods are implemented in. For example a distribution with package `stats` means that the p/d/q/r methods interface the R stats functions whereas a distribution with package `distr6` means the methods are written in distr6. We've added the `head()` method just to save space.
 
 ```{r}
-listDistributions()
+head(listDistributions())
 ```
 
 To see a simplified version of the list, add the `simplify = TRUE` argument
 
 ```{r}
-listDistributions(simplify = TRUE)
+head(listDistributions(simplify = TRUE))
 ```
 
 Finally this list can be filtered to help you find a distribution with specific traits, for example for a multivariate distribution
 
 ```{r}
-listDistributions(filter = list(variateform = "multivariate"))
+head(listDistributions(filter = list(variateform = "multivariate")))
 
 # The trait name is case-insensitive
-listDistributions(filter = list(VaRiAtEfORm = "multivariate")) 
+head(listDistributions(filter = list(VaRiAtEfORm = "multivariate")))
 ```
 
 Or for multiple filters:
 ```{r}
-listDistributions(filter = list(variateform = "multivariate", package = "distr6"))
+head(listDistributions(filter = list(variateform = "multivariate", package = "distr6")))
 ```
 
 ## Summary
