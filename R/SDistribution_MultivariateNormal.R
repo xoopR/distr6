@@ -73,9 +73,6 @@ NULL
 MultivariateNormal <- R6::R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F)
 MultivariateNormal$set("public","name","MultivariateNormal")
 MultivariateNormal$set("public","short_name","MultiNorm")
-MultivariateNormal$set("public","traits",list(type = Reals$new(dim = "K"),
-                                  valueSupport = "continuous",
-                                  variateForm = "multivariate"))
 MultivariateNormal$set("public","description","Multivariate Normal Probability Distribution.")
 MultivariateNormal$set("public","package","distr6")
 
@@ -173,6 +170,8 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Reals$new(dim = length(mean)),
-                   distrDomain = Reals$new(dim = length(mean)), symmetric = FALSE)
+                   distrDomain = Reals$new(dim = length(mean)), symmetric = FALSE,type = Reals$new(dim = "K"),
+                   valueSupport = "continuous",
+                   variateForm = "multivariate")
   invisible(self)
 })

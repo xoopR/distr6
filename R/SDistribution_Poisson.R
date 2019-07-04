@@ -58,10 +58,6 @@ NULL
 Poisson <- R6::R6Class("Poisson", inherit = SDistribution, lock_objects = F)
 Poisson$set("public","name","Poisson")
 Poisson$set("public","short_name","Pois")
-Poisson$set("public","traits",list(type = PosIntegers$new(zero = T),
-                                   valueSupport = "discrete",
-                                   variateForm = "univariate"))
-
 Poisson$set("public","description","Poisson Probability Distribution.")
 Poisson$set("public","package","stats")
 
@@ -109,7 +105,9 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Naturals$new(),
                    distrDomain = Naturals$new(),
-                   symmetric = FALSE)
+                   symmetric = FALSE,type = PosIntegers$new(zero = T),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
 
 
   invisible(self)

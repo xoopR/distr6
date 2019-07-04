@@ -57,9 +57,6 @@ NULL
 Pareto <- R6::R6Class("Pareto", inherit = SDistribution, lock_objects = F)
 Pareto$set("public","name","Pareto")
 Pareto$set("public","short_name","Pare")
-Pareto$set("public","traits",list(type = PosReals$new(zero = T),
-                                       valueSupport = "continuous",
-                                       variateForm = "univariate"))
 Pareto$set("public","description","Pareto Probability Distribution.")
 Pareto$set("public","package","distr6")
 
@@ -150,6 +147,8 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(scale, Inf, type = "[)"), distrDomain = PosReals$new(zero = T),
-                   symmetric  = FALSE)
+                   symmetric  = FALSE,type = PosReals$new(zero = T),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

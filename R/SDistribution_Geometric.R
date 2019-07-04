@@ -84,13 +84,10 @@ NULL
 #-------------------------------------------------------------
 Geometric <-  R6::R6Class("Geometric", inherit = SDistribution, lock_objects = F)
 
-Geometric$set("private",".trails",NULL)
+Geometric$set("private",".trials",NULL)
 
 Geometric$set("public","name","Geometric")
 Geometric$set("public","short_name","Geom")
-Geometric$set("public","traits",list(type = Naturals$new(),
-                                       valueSupport = "discrete",
-                                       variateForm = "univariate"))
 Geometric$set("public","package","stats")
 
 Geometric$set("public","mean",function(){
@@ -179,7 +176,9 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = 
 
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = support, distrDomain = Naturals$new(),
-                     symmetric  = FALSE, description = description)
+                     symmetric  = FALSE, description = description,type = Naturals$new(),
+                     valueSupport = "discrete",
+                     variateForm = "univariate")
 
     invisible(self)
 

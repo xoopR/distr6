@@ -38,6 +38,7 @@ package.
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr

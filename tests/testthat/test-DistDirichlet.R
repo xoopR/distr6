@@ -3,7 +3,7 @@ library(testthat)
 context("Dirichlet distribution")
 
 test_that("constructor",{
-  expect_error(Dirichlet$new())
+  expect_equal(Dirichlet$new()$getParameterValue("params"), c(1,1))
   expect_error(Dirichlet$new(params = c(0,1,2)))
   expect_silent(Dirichlet$new(params = c(3,1,2)))
 })

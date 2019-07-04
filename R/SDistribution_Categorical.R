@@ -65,9 +65,6 @@ NULL
 Categorical <- R6::R6Class("Categorical", inherit = SDistribution, lock_objects = F)
 Categorical$set("public","name","Categorical")
 Categorical$set("public","short_name","Cat")
-Categorical$set("public","traits",list(type = Complex$new(),
-                                  valueSupport = "discrete",
-                                  variateForm = "univariate"))
 Categorical$set("public","description","Categorical Probability Distribution.")
 Categorical$set("public","package","distr6")
 
@@ -89,7 +86,16 @@ Categorical$set("private",".getRefParams", function(paramlst){
 
 Categorical$set("public","initialize",function(..., probs, decorators = NULL, verbose = FALSE){
 
-  checkmate::assert(length(list(...)) == length(probs))
+  dots = list(...)
+
+  if(length(dots)==0){
+    probs = 1
+    dots = 1
+    support = Set$new(1)
+  } else
+    support = Set$new(...)
+
+  checkmate::assert(length(dots) == length(probs))
 
   private$.parameters <- getParameterSet(self, probs, verbose)
   self$setParameterValue(list(probs = probs))
@@ -97,7 +103,6 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
   pdf <- function(x1){
     return(self$getParameterValue("probs")[self$support()$elements() %in% x1])
   }
-
   cdf <- function(x1){
     if(length(x1) > 1)
       cdfs = sapply(x1, function(x) sum(self$pdf(self$support()$elements()[1:which(self$support()$elements() %in% x)])))
@@ -105,13 +110,14 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
       cdfs = sum(self$pdf(self$support()$elements()[1:which(self$support()$elements() %in% x1)]))
     return(cdfs)
   }
-
   rand <- function(n){
     return(sample(self$support()$elements(), n, TRUE, self$getParameterValue("probs")))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, rand = rand,
-                   support = Set$new(...),
-                   distrDomain = Complex$new(), symmetric = FALSE)
+                   support = support,
+                   distrDomain = Complex$new(), symmetric = FALSE, type = Complex$new(),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
   invisible(self)
 })

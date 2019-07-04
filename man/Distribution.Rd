@@ -68,7 +68,6 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm.
   }
 }
 
@@ -77,6 +76,7 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr

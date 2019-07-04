@@ -7,7 +7,7 @@
 Mathematical and statistical functions for the Dirichlet distribution parameterised
 with 'params' and defined by the pdf,
 \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})}
-where \eqn{\alpha = \alpha_1,...,\alpha_k} are the k concentration parameters, \eqn{\Gamma} is the gamma function,
+where \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0} are the k concentration parameters, \eqn{\Gamma} is the gamma function,
 \eqn{\sum} is the summation function and \eqn{\prod} is the product function. The distribution is
 supported on \eqn{x_i \epsilon (0,1), \sum x_i = 1}.
 }
@@ -42,7 +42,6 @@ normalising the samples.
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm. \cr
   \code{package} \tab The package p/d/q/r are implemented in.
  }
 }
@@ -52,6 +51,7 @@ normalising the samples.
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr

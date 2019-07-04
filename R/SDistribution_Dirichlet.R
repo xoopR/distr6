@@ -7,7 +7,7 @@
 #' @description Mathematical and statistical functions for the Dirichlet distribution parameterised
 #' with 'params' and defined by the pdf,
 #' \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})}
-#' where \eqn{\alpha = \alpha_1,...,\alpha_k} are the k concentration parameters, \eqn{\Gamma} is the gamma function,
+#' where \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0} are the k concentration parameters, \eqn{\Gamma} is the gamma function,
 #' \eqn{\sum} is the summation function and \eqn{\prod} is the product function. The distribution is
 #' supported on \eqn{x_i \epsilon (0,1), \sum x_i = 1}.
 #'
@@ -66,9 +66,6 @@ NULL
 Dirichlet <- R6::R6Class("Dirichlet", inherit = SDistribution, lock_objects = F)
 Dirichlet$set("public","name","Dirichlet")
 Dirichlet$set("public","short_name","Diri")
-Dirichlet$set("public","traits",list(type = Interval$new(0,1,dim = "K"),
-                                  valueSupport = "continuous",
-                                  variateForm = "multivariate"))
 Dirichlet$set("public","description","Multivariate Normal Probability Distribution.")
 Dirichlet$set("public","package","distr6")
 
@@ -111,7 +108,7 @@ Dirichlet$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Dirichlet$set("public","initialize",function(params, decorators = NULL, verbose = FALSE){
+Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, params, verbose)
   self$setParameterValue(list(params = params))
@@ -154,6 +151,9 @@ Dirichlet$set("public","initialize",function(params, decorators = NULL, verbose 
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Interval$new(0,1,type="()",dim = length(params)),
-                   distrDomain = Reals$new(dim = length(params)), symmetric = FALSE)
+                   distrDomain = Reals$new(dim = length(params)), symmetric = FALSE,
+                   type = Interval$new(0,1,dim = "K"),
+                   valueSupport = "continuous",
+                   variateForm = "multivariate")
   invisible(self)
 })

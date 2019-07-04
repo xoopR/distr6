@@ -56,9 +56,6 @@ NULL
 FDistribution <- R6::R6Class("FDistribution", inherit = SDistribution, lock_objects = FALSE)
 FDistribution$set("public", "name", "FDistribution")
 FDistribution$set("public", "short_name", "F")
-FDistribution$set("public", "traits", list(type = PosReals$new(zero = TRUE),
-                                           valueSupport = "continuous",
-                                           variateForm = "univariate"))
 FDistribution$set("public", "description", "F Probability Distribution")
 FDistribution$set("public", "package", "stats")
 
@@ -146,5 +143,7 @@ FDistribution$set("public", "initialize", function(df1 = 1, df2 = 1, decorators 
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = support, distrDomain = PosReals$new(zero = TRUE),
-                   symmetric = FALSE)
+                   symmetric = FALSE,type = PosReals$new(zero = TRUE),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
 })

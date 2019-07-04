@@ -56,9 +56,6 @@ NULL
 Degenerate <- R6::R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
 Degenerate$set("public","name","Degenerate")
 Degenerate$set("public","short_name","Degen")
-Degenerate$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Degenerate$set("public","description","Degenerate Probability Distribution.")
 Degenerate$set("public","package","distr6")
 
@@ -112,6 +109,8 @@ Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbo
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(mean), distrDomain = Reals$new(zero = T),
-                   symmetric = TRUE)
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

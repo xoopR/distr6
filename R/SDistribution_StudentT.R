@@ -54,9 +54,6 @@ NULL
 StudentT <- R6::R6Class("StudentT", inherit = SDistribution, lock_objects = F)
 StudentT$set("public","name","StudentT")
 StudentT$set("public","short_name","T")
-StudentT$set("public","traits",list(type = Reals$new(),
-                                    valueSupport = "continuous",
-                                    variateForm = "univariate"))
 StudentT$set("public","description","Student's t Probability Distribution.")
 StudentT$set("public","package","stats")
 
@@ -129,6 +126,8 @@ StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose =
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
-                   symmetric  = TRUE)
+                   symmetric  = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

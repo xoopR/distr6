@@ -61,9 +61,6 @@ NULL
 Hypergeometric <- R6::R6Class("Hypergeometric", inherit = SDistribution, lock_objects = FALSE)
 Hypergeometric$set("public", "name", "Hypergeometric")
 Hypergeometric$set("public", "short_name", "Hypergeom")
-Hypergeometric$set("public", "traits", list(type = Naturals$new(),
-                                        valueSupport = "discrete",
-                                        variateForm = "univariate"))
 Hypergeometric$set("public", "description", "Hypergeometric Probability Distribution")
 Hypergeometric$set("public","package","stats")
 
@@ -156,7 +153,9 @@ Hypergeometric$set("public","initialize",function(size = 50, successes = 5, fail
 
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = support, distrDomain = Naturals$new(),
-                     symmetric = FALSE)
+                     symmetric = FALSE,type = Naturals$new(),
+                     valueSupport = "discrete",
+                     variateForm = "univariate")
     invisible(self)
 })
 

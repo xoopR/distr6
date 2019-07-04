@@ -3,8 +3,9 @@ library(testthat)
 context("Categorical distribution")
 
 test_that("constructor",{
-  expect_error(Categorical$new())
-  expect_error(Categorical$new(probs = c(0.1,0.4)))
+  expect_equal(Categorical$new()$getParameterValue("probs"),1)
+  expect_equal(Categorical$new()$support(),Set$new(1))
+  expect_silent(Categorical$new(probs = c(0.1,0.4)))
   expect_silent(Categorical$new("Bapple","Banana",probs = c(0.1,0.4)))
   expect_error(Categorical$new("Bapple","Banana",probs = c(0.1,0.4,0.2)))
 })

@@ -54,9 +54,6 @@ NULL
 ChiSquared <- R6::R6Class("ChiSquared", inherit = SDistribution, lock_objects = FALSE)
 ChiSquared$set("public", "name", "ChiSquared")
 ChiSquared$set("public", "short_name", "ChiSq")
-ChiSquared$set("public", "traits", list(type = PosReals$new(zero = TRUE),
-                                        valueSupport = "continuous",
-                                        variateForm = "univariate"))
 ChiSquared$set("public", "description", "ChiSquared Probability Distribution")
 ChiSquared$set("public","package","stats")
 
@@ -129,6 +126,8 @@ ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = support, distrDomain = Reals$new(zero = T),
-                   symmetric  = FALSE)
+                   symmetric  = FALSE,type = PosReals$new(zero = TRUE),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

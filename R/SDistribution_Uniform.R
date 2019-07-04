@@ -57,9 +57,6 @@ NULL
 Uniform <- R6::R6Class("Uniform", inherit = SDistribution, lock_objects = F)
 Uniform$set("public","name","Uniform")
 Uniform$set("public","short_name","Unif")
-Uniform$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Uniform$set("public","description","Uniform Probability Distribution.")
 Uniform$set("public","package","stats")
 
@@ -131,6 +128,8 @@ Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(lower, upper),
-                   distrDomain = Reals$new(), symmetric = TRUE)
+                   distrDomain = Reals$new(), symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

@@ -64,9 +64,6 @@ NULL
 Exponential <- R6::R6Class("Exponential", inherit = SDistribution, lock_objects = F)
 Exponential$set("public","name","Exponential")
 Exponential$set("public","short_name","Exp")
-Exponential$set("public","traits",list(type = PosReals$new(zero = T),
-                                    valueSupport = "continuous",
-                                    variateForm = "univariate"))
 Exponential$set("public","description","Exponential Probability Distribution.")
 Exponential$set("public","package","stats")
 
@@ -118,6 +115,8 @@ Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorator
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
-                   symmetric  = FALSE)
+                   symmetric  = FALSE, type = PosReals$new(zero = T),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

@@ -57,9 +57,6 @@ NULL
 Weibull <- R6::R6Class("Weibull", inherit = SDistribution, lock_objects = F)
 Weibull$set("public","name","Weibull")
 Weibull$set("public","short_name","Weibull")
-Weibull$set("public","traits",list(type = PosReals$new(zero=T),
-                                   valueSupport = "continuous",
-                                   variateForm = "univariate"))
 Weibull$set("public","description","Weibull Probability Distribution.")
 Weibull$set("public","package","stats")
 
@@ -127,7 +124,8 @@ Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NUL
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
-                   symmetric = FALSE)
+                   symmetric = FALSE, type = PosReals$new(zero=T), valueSupport = "continuous",
+                   variateForm = "univariate")
 
   invisible(self)
 })

@@ -58,9 +58,6 @@ NULL
 Gumbel <- R6::R6Class("Gumbel", inherit = SDistribution, lock_objects = F)
 Gumbel$set("public","name","Gumbel")
 Gumbel$set("public","short_name","Gumb")
-Gumbel$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Gumbel$set("public","description","Gumbel Probability Distribution.")
 Gumbel$set("public","package","distr6")
 
@@ -122,6 +119,8 @@ Gumbel$set("public","initialize",function(location = 0, scale = 1,
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(), distrDomain = Reals$new(),
-                   symmetric = TRUE)
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

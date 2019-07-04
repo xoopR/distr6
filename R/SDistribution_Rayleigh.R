@@ -55,9 +55,6 @@ NULL
 Rayleigh <- R6::R6Class("Rayleigh", inherit = SDistribution, lock_objects = F)
 Rayleigh$set("public","name","Rayleigh")
 Rayleigh$set("public","short_name","Rayl")
-Rayleigh$set("public","traits",list(type = PosReals$new(zero = T),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Rayleigh$set("public","description","Rayleigh Probability Distribution.")
 Rayleigh$set("public","package","distr6")
 
@@ -109,6 +106,8 @@ Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
-                   symmetric = FALSE)
+                   symmetric = FALSE,type = PosReals$new(zero = T),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

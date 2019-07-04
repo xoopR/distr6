@@ -71,9 +71,6 @@ NULL
 Normal <- R6::R6Class("Normal", inherit = SDistribution, lock_objects = F)
 Normal$set("public","name","Normal")
 Normal$set("public","short_name","Norm")
-Normal$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Normal$set("public","description","Normal Probability Distribution.")
 Normal$set("public","package","stats")
 
@@ -127,6 +124,8 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
-                   symmetric = TRUE)
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

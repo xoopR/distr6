@@ -55,9 +55,6 @@ NULL
 Cauchy <- R6::R6Class("Cauchy", inherit = SDistribution, lock_objects = F)
 Cauchy$set("public","name","Cauchy")
 Cauchy$set("public","short_name","Cauchy")
-Cauchy$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Cauchy$set("public","description","Cauchy Probability Distribution.")
 Cauchy$set("public","package","stats")
 
@@ -106,6 +103,8 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(), distrDomain = Reals$new(),
-                   symmetric = TRUE)
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

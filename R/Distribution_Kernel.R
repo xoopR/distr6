@@ -22,6 +22,7 @@
 #'  \tabular{ll}{
 #'   \strong{Accessor Methods} \tab \strong{Link} \cr
 #'   \code{decorators()} \tab \code{\link{decorators}} \cr
+#'   \code{traits()} \tab \code{\link{traits}} \cr
 #'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
 #'   \code{variateForm()} \tab \code{\link{variateForm}} \cr
 #'   \code{type()} \tab \code{\link{type}} \cr
@@ -66,9 +67,6 @@
 #' @export
 NULL
 Kernel <- R6::R6Class("Kernel", inherit = Distribution)
-Kernel$set("public","traits",list(type = Reals$new(),
-                                      valueSupport = "continuous",
-                                      variateForm = "univariate"))
 Kernel$set("public","initialize",function(...){
   if(getR6Class(self) == "Kernel")
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels()
@@ -76,9 +74,13 @@ Kernel$set("public","initialize",function(...){
 
   super$initialize(...)
 })
-
 Kernel$set("public","package","distr6")
 Kernel$set("private",".type","symmetric")
+Kernel$set("public","traits",function(){
+  return(list(type = Reals$new(),
+              valueSupport = "continuous",
+              variateForm = "univariate"))
+})
 Kernel$set("public","mode",function(){
   return(0)
 })

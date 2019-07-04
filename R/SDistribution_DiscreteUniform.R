@@ -56,9 +56,6 @@ NULL
 DiscreteUniform <- R6::R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F)
 DiscreteUniform$set("public","name","DiscreteUniform")
 DiscreteUniform$set("public","short_name","DUnif")
-DiscreteUniform$set("public","traits",list(type = Integers$new(),
-                                     valueSupport = "discrete",
-                                     variateForm = "univariate"))
 DiscreteUniform$set("public","description","DiscreteUniform Probability Distribution.")
 DiscreteUniform$set("public","package","distr6")
 
@@ -132,6 +129,8 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(lower:upper),
-                   distrDomain = Integers$new(zero = T), symmetric = TRUE)
+                   distrDomain = Integers$new(zero = T), symmetric = TRUE,type = Integers$new(),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
   invisible(self)
 })

@@ -63,9 +63,6 @@ NULL
 Laplace <- R6::R6Class("Laplace", inherit = SDistribution, lock_objects = F)
 Laplace$set("public","name","Laplace")
 Laplace$set("public","short_name","Lap")
-Laplace$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Laplace$set("public","description","Laplace Probability Distribution.")
 Laplace$set("public","package","distr6")
 
@@ -141,6 +138,8 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
                    support = Reals$new(), distrDomain = Reals$new(),
-                   symmetric = TRUE)
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

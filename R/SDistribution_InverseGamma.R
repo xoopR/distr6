@@ -59,11 +59,6 @@ NULL
 InverseGamma <- R6::R6Class("InverseGamma", inherit = SDistribution, lock_objects = F)
 InverseGamma$set("public","name","InverseGamma")
 InverseGamma$set("public","short_name","invgam")
-
-InverseGamma$set("public","traits",list(type = PosReals$new(),
-                                       valueSupport = "continuous",
-                                       variateForm = "univariate"))
-
 InverseGamma$set("public","description","Inverse Gamma Probability Distribution.")
 InverseGamma$set("public","package","extraDistr")
 
@@ -133,7 +128,9 @@ InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators 
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = PosReals$new(), distrDomain = PosReals$new(),
-                   symmetric  = FALSE)
+                   symmetric  = FALSE,type = PosReals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })
 
