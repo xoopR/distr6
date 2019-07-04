@@ -1,9 +1,9 @@
 ---
-title: "Creating an SDistribution"
+title: "Creating a Kernel"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Creating an SDistribution}
+  %\VignetteIndexEntry{Creating a Kernel}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,6 +15,114 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
+## Kernel Class
+
+Similarly to implemented probability distributions, implemented kernels all inherit from a single
+class 'kernel', which in turn inherits from `Distribution`. But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the `kernel` parent class. For every kernel the following is true
+
+* kernel$mean() = 0
+* kernel$median() = 0
+* kernel$mode() = 0
+* kernel$type() = Reals$new()
+* kernel$valueSupport() = continuous
+* kernel$variateForm() = univariate
+
+And for all kernels the sampling method uses inverse cdf transform sampling, so this is also defined in
+the parent class. Hence the only methods required to add are
+
+* squared2Norm: This is new for kernels (i.e. not given for probability distributions)
+* variance
+
+And then the d/p/q functions are given in the constructor just like probability distributions.
+
+
+## Creating a Kernel
+
+### Kernel Variables
+
+ These are identical to the SDistribution public variables:
+
+* name - Full (unique) name of kernel
+* short_name - Short name (unique) id for kernel
+* description - Short description, usually just the name
+* package - The package in which the d/p/q functions are written
+
+For the Epanechnikov kernel, the above all looks like
+
+```{r eval=FALSE}
+Epanechnikov <- R6::R6Class("Epanechnikov", inherit = Kernel, lock_objects = F)
+Epanechnikov$set("public","name","Epanechnikov")
+Epanechnikov$set("public","short_name","Epan")
+Epanechnikov$set("public","description","Epanechnikov Kernel")
+```
+
+Note:
+
+1. Again note the use of `lock_objects = F` which ensures correct usage with decorators.
+2. The `package` variable is omitted as it defaults to 'distr6'
+
+### Kernel Methods
+
+As stated above, there are fewer methods that need to be implemented in kernels than probability distributions. These include
+
+
+* variance
+* squared2Norm: the squared 2-norm of the kernel's pdf over the full support
+
+Again the d/p/q methods are implemented in the constructor. So for the Epanechnikov kernel,
+
+```{r eval=FALSE}
+Epanechnikov$set("public","squared2Norm",function(){
+  return(3/5)
+})
+Epanechnikov$set("public","variance",function(){
+  return(1/5)
+})
+```
+
+Note:
+
+1. These methods will always return constants, they are defined as methods not variables for consistency
+2. If no constant numeric is available, omit the method so a numeric one can be added after decoration
+3. As well as the methods listen above, the following methods are also included by default and don't need to be defined
+  * prec
+  * stdev
+  * iqr
+
+### The Constructor
+
+The constructor for kernels is much more simple than that of probability distributions and only need include the d/p/q methods and properties. For the Epanechnikov kernel:
+
+```{r eval=FALSE}
+Epanechnikov$set("public","initialize",function(decorators = NULL){
+  pdf <- function(x1){
+    return(0.75 * (1-x1^2))
+  }
+  cdf <- function(x1){
+    return(3/4*x1 - 1/4*x1^3 + 1/2)
+  }
+
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
+                   support = Interval$new(-1, 1), distrDomain = Reals$new(), symmetric = TRUE)
+  invisible(self)
+})
+```
+
+Note:
+
+1. We omit the quantile method as no closed form analytic expression was found
+2. distrDomain will always be `Reals$new()`
+3. The support will generally either be `Reals$new()` or `Interval$new(-1,1)`
+4. Kernels are all symmetric
+5. The constructor always takes one argument only, `decorators` which is passed to the parent-class constructor
+
+## Summary
+
+Kernels are much simpler to extend than SDistributions. Just remember the following
+
+1. The 4 public variables: name, short_name, description, package
+2. The 2 public methods: variance, squared2Norm
+3. The constructor: Includes d/p/q, the only argument is `decorators`, and the properties are generally identical
 
 ## Extension Guidelines
 
