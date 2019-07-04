@@ -63,13 +63,13 @@
 #'   \code{name} \tab Name of distribution. \cr
 #'   \code{short_name} \tab Id of distribution. \cr
 #'   \code{description} \tab Brief description of distribution. \cr
-#'   \code{traits} \tab List: type, valueSupport, variateForm.
 #'   }
 #'
 #' @section Public Methods:
 #'  \tabular{ll}{
 #'   \strong{Accessor Methods} \tab \strong{Link} \cr
 #'   \code{decorators()} \tab \code{\link{decorators}} \cr
+#'   \code{traits()} \tab \code{\link{traits}} \cr
 #'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
 #'   \code{variateForm()} \tab \code{\link{variateForm}} \cr
 #'   \code{type()} \tab \code{\link{type}} \cr
@@ -197,9 +197,9 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     else
       variateForm = "multivariate"
 
-    self$traits$type <- type
-    self$traits$valueSupport <- valueSupport
-    self$traits$variateForm <- variateForm
+    private$.traits$type <- type
+    private$.traits$valueSupport <- valueSupport
+    private$.traits$variateForm <- variateForm
 
     private$.properties$support <- support
     private$.properties$distrDomain <- distrDomain
@@ -424,7 +424,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
       cat(self$strprint())
     else
       cat(self$name)
-    cat("\nScientific Type:",self$type()$getSymbol(),"\t See $traits for more")
+    cat("\nScientific Type:",self$type()$getSymbol(),"\t See $traits() for more")
     cat("\nSupport:",self$support()$getSymbol(),"\t See $properties() for more")
   }
 })
