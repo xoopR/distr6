@@ -20,12 +20,12 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 Similarly to implemented probability distributions, implemented kernels all inherit from a single
 class 'kernel', which in turn inherits from `Distribution`. But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the `kernel` parent class. For every kernel the following is true
 
-* kernel$mean() = 0
-* kernel$median() = 0
-* kernel$mode() = 0
-* kernel$type() = Reals$new()
-* kernel$valueSupport() = continuous
-* kernel$variateForm() = univariate
+* `kernel$mean()` == 0
+* `kernel$median()` == 0
+* `kernel$mode()` == 0
+* `kernel$type()` == Reals$new()
+* `kernel$valueSupport()` == continuous
+* `kernel$variateForm()` == univariate
 
 And for all kernels the sampling method uses inverse cdf transform sampling, so this is also defined in
 the parent class. Hence the only methods required to add are
@@ -85,9 +85,9 @@ Note:
 1. These methods will always return constants, they are defined as methods not variables for consistency
 2. If no constant numeric is available, omit the method so a numeric one can be added after decoration
 3. As well as the methods listen above, the following methods are also included by default and don't need to be defined
-  * prec
-  * stdev
-  * iqr
+    * prec
+    * stdev
+    * iqr
 
 ### The Constructor
 
