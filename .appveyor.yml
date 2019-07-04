@@ -6,6 +6,10 @@ init:
 install:
   ps: Bootstrap
 
+branches:
+  only:
+  - master
+  - dev
 
 build_script:
   - travis-tool.sh install_deps
