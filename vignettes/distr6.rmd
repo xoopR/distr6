@@ -15,7 +15,7 @@ distr6 is a unified, self-contained and scalable interface to probability distri
 
 We think the best place to get started is to pick a probability distribution and work through constructing the distribution via different parameterisations and querying the distribution for different methods. Below is a running example with the Normal distribution.
 
-```{r, echo = FALSE, message = FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 remotes::install_github("alan-turing-institute/distr6")
@@ -84,10 +84,10 @@ N$summary(full = F)
 All distributions are also comprised of properties and traits. Traits are ways of
 describing a class whereas properties describe an object. In simpler terms, this means that a
 trait is present independent of the distribution's parameterisation whereas a property depends
-on the constructed parameters. These are therefore accessed slightly differently:
+on the constructed parameters.
 ```{r}
-N$properties() # Note that this is a method
-N$traits # And this is a list variable
+N$properties()
+N$traits()
 ```
 
 Finally individual properties and traits are accessible via their own 'getters' for example:
@@ -146,12 +146,12 @@ For a full list of methods available use the help documentation for any distribu
 
 ### Listing in distr6
 Instead of having to worry about remembering every distribution in R, distr6 provides a way of
-listing all of these, and filtering by traits or package
+listing all of these, and filtering by traits or package. We only show the first 5 rows of this to save space.
 ```{r}
-listDistributions()
-listDistributions(simplify = TRUE)
+head(listDistributions())
+head(listDistributions(simplify = TRUE))
 # Lists discrete distributions only
-listDistributions(filter = list(valuesupport = "discrete")) 
+head(listDistributions(filter = list(valuesupport = "discrete"))
 
 # Multiple filters can be used, note this is case-insensitive
 listDistributions(filter = list(VaLueSupport = "continuous", package = "distr6"))

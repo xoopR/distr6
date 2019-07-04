@@ -26,12 +26,11 @@ listDistributions <- function(simplify=FALSE, filter=NULL){
       x = get(x)
       ClassName = x$classname
       ShortName = x$public_fields$short_name
+      Package = x$public_fields$package
       x = x$new()
       ValueSupport = x$valueSupport()
       VariateForm = x$variateForm()
       Type = x$type()$getSymbol()
-
-      Package = x$public_fields$package
       return(data.table::data.table(ShortName, ClassName, Type, ValueSupport, VariateForm, Package))
     }))
     row.names(distrs) = NULL
