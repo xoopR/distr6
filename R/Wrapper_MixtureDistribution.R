@@ -89,5 +89,5 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
                    short_name = short_name, description = description, type = type,
                    support = support, distrDomain = distrDomain, valueSupport = "mixture")
-}) # IN PROGRESS
+})
 MixtureDistribution$set("private",".weights",numeric(0))

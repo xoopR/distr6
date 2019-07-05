@@ -1,9 +1,9 @@
 ---
-title: "Creating an SDistribution"
+title: "Creating a Decorator"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Creating an SDistribution}
+  %\VignetteIndexEntry{Creating a Decorator}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,8 +12,78 @@ vignette: >
 remotes::install_github("alan-turing-institute/distr6")
 library(distr6)
 set.seed(42)
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
 ```
+
+## DistributionDecorator Class
+
+Implementing your own decorator is the easiest extension you can make to distr6, the only difficulty arises in determining what should go in your decorator. If you plan on making a pull-request with a new decorator to distr6 then we would expect the following:
+
+1. A description of your decorator including what problem it solves and why it is required
+2. A description of methodology including the choice of numeric methods and a description of any packages dependended on including how their code is written (e.g. have you seen their code, is it in R or C, are there references).
+3. A decorator that adds at least three methods. We do not want a clutter of decorators in distr6.
+
+The `DistributionDecorator` class is an abstract class that doesn't add any methods or variables, its sole purpose is to define decorators in an abstract sense as a way to collate them. Decorators could function as named lists, for example the `CoreStatistics` decorator could instead be a list called 'CoreStatistics' with each named element being one of the added methods. However lists provide slightly less flexibility and would need to be created as the package is loaded, as opposed to a relatively small class that sits in the package namespace.
+
+## Creating a decorator
+
+A decorator is just a class, inheriting from `DistributionDecorator`, with public methods that are added to a distribution when decorated. For example, the `CoreStatistics` decorator has a definition:
+
+```{r}
+CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
+```
+
+and methods (below are just two, again shortened)
+```{r}
+CoreStatistics$set("public", "mgf", function(t) {
+  return(self$genExp(trafo = function(x) {return(exp(x*t))}))
+})
+
+CoreStatistics$set("public","genExp",function(trafo = NULL){
+  if(is.null(trafo)){
+    trafo = function() return(x)
+    formals(trafo) = alist(x = )
+  }
+    message(.distr6$message_numeric)
+    return(suppressMessages(integrate(function(x) {
+      pdfs = self$pdf(x)
+      xs = trafo(x)
+      xs[pdfs==0] = 0
+      return(xs * pdfs)
+    }, lower = self$inf(), upper = self$sup())$value))
+})
+```
+
+We don't have too many requirements in defining decorators apart from insisting on using the global '.distr6$message_numeric' string as a message to tell users that numeric results may not be exact. We use messages instead of warnings as warnings stack, which quickly becomes annoying.
+
+Finally, we just want to point you in the direction of useful `Distribution` private variables that are rarely used outside of decorators, as an example take the `survival` method from the `ExoticStatistics` class
+
+```{r}
+ExoticStatistics$set("public", "survival", function(x1, log.p = FALSE) {
+  if(private$.isCdf)
+    self$cdf(x1 = x1, lower.tail = FALSE, log.p = log.p)
+  else {
+    message(.distr6$message_numeric)
+    surv = integrate(self$pdf, x1, self$sup())$value
+    if(log.p)
+      return(log(surv))
+    else
+      return(surv)
+  }
+})
+```
+
+Note the use of `private$.isCdf`, this checks to see if the `cdf` method is defined in the `Distribution`. Remember that every `Distribution` object always have public d/p/q/r methods defined but do not necessarily have a private d/p/q/r method which actually does all the work. Therefore every `Distribution` includes flags for whether or not the d/p/q/r method is defined. To test this yourself, create a custom distribution object with a pdf only, and see what happens when you call the `cdf` method (it will return NULL). 
+
+Therefore the use of `private$.isCdf` tells the decorator whether it can use analytic results or if numeric integration is required.
+
+Note: if the user has already decorated their distribution with `FunctionImputation` then even if your decorator thinks the results are analtic, they are not. However this is taken into account by the warning message in the imputed p/d/q/r methods.
+
+## Summary
+
+1. Decorators are simply to implement, just define a new class inheritinf from `DistributionDecorator`
+2. Add as many public methods as you want, but remember to include messages for numeric integration
+3. Make use of the private `.isCdf`, `.isPdf`, `.isQuantile`, `.isRand` methods to exploit analytic results. 
 
 
 ## Extension Guidelines

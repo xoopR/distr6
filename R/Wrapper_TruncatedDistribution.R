@@ -80,7 +80,7 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
                    name = name, short_name = short_name, support = support,
                    type = distribution$type(), prefixParams = FALSE,
                    description = description)
-}) # IN PROGRESS
+})
 
 #' @title Truncate a Distribution
 #' @description S3 functionality to truncate an R6 distribution.

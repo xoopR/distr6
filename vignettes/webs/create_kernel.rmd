@@ -18,7 +18,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ## Kernel Class
 
 Similarly to implemented probability distributions, implemented kernels all inherit from a single
-class 'kernel', which in turn inherits from `Distribution`. But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the `kernel` parent class. For every kernel the following is true
+class 'kernel', which in turn inherits from `Distribution` (see the [uml diagram](https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png)).  But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the `kernel` parent class. For every kernel the following is true
 
 * `kernel$mean()` == 0
 * `kernel$median()` == 0

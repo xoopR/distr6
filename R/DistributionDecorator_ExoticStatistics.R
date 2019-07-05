@@ -144,7 +144,7 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper
 #' @export
 NULL
 ExoticStatistics$set("public", "survival", function(x1, log.p = FALSE) {
-  if(!is.null(self$cdf(x1)))
+  if(private$.isCdf)
     self$cdf(x1 = x1, lower.tail = FALSE, log.p = log.p)
   else {
     message(.distr6$message_numeric)
@@ -182,9 +182,9 @@ ExoticStatistics$set("public", "survival", function(x1, log.p = FALSE) {
 #'
 #' @export
 ExoticStatistics$set("public", "hazard", function(x1, log = FALSE) {
-  if(!is.null(self$pdf(x1)))
+  if(private$.isPdf)
     pdf = self$pdf(x1)
-  else if(!is.null(self$cdf(x1))){
+  else if(private$.isCdf){
     message(.distr6$message_numeric)
     pdf = deriv(y~self$cdf(x1),"x1")
   }

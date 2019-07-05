@@ -1,9 +1,9 @@
 ---
-title: "Creating an SDistribution"
+title: "Creating a Wrapper"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Creating an SDistribution}
+  %\VignetteIndexEntry{Creating a Wrapper}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,6 +15,133 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
+## DistributionWrapper Class
+
+Wrappers may the hardest class to extend in distr6, simply due to the fact that there are no set rules for what can and can't go in a wrapper. Every implemented wrapper inherits from the `DistributionWrapper` class which in turn inherits from `Distribution` (see the [uml diagram](https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png)). The `DistributionWrapper` class introduces its own constructor, the `wrappedModels` method and overloads the `setParameterValue` method. We will briefly discuss why these three methods are important to all implemented methods.
+
+### The Constructor
+
+The `DistributionWrapper` constructor takes two named arguments and has `...` for named arguments to passed to the `Distribuion` constructor. The named arguments are `distlist`, a list of distributions, and `prefixParams` a logical determining if the parameters in the parameterset should have their names prefixed with 'short_name_' where 'short_name' is the `short_name` of the given distributions, this is required when multiple distributions are wrapped with the same parameters. Internally the constructor combines all of these parametersets into one combined `ParameterSet` that the user can see.
+
+For example, say we use the `MixtureDistribution` wrapper on two Binomial distributions, see how the parameter names are automatically updated
+```{r}
+M <- MixtureDistribution$new(list(Binomial$new(),Binomial$new()))
+M$parameters()
+```
+
+### setParameterValue
+
+As the constructor may change the names of parameters, the `setParameterValue` is overloaded to ensure the correct `ParameterSet` from the corresponding distribution is updated. So given the example above, if a user wants to update the first Binomial distribuion
+
+```{r}
+M$setParameterValue(list(Binom1_prob = 0.2))
+```
+
+And internally the parameter name is split at the underscore and updates the parameter of the first Binomial distribution, notice now that both the external representation of the combined `ParameterSet` is updated as well as the one in the internal model
+
+```{r}
+M$parameters()
+M$wrappedModels("Binom1")$parameters()
+```
+
+### wrappedModels
+
+We saw above the use of `wrappedModels`, this is a simple accessor found in all implemented wrapers that ensure the underlying models can be accesed, which is usually required for the new methods in wrappers, which we will see more below.
+
+## Creating a Wrapper
+
+Now we have a background of the `DistributionWrapper` class we can discuss actually creating a wrapper. As discussed in the [wrappers tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html), there are multiple types of wrappers, each will be implemented slightly differently. Therefore we're just going to look at one quick example from each example and point you to the source code for further examples.
+
+### TruncatedDistribution
+
+An implemented wrapper should consist of two parts: the wrapper definition and the wrapper constructor. In the case of the `TruncatedDistribution`, a slightly abridged version looks like
+```{r eval=FALSE}
+TruncatedDistribution <- R6::R6Class("TruncatedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+
+TruncatedDistribution$set("public","initialize",function(distribution, lower = NULL,
+                                                         upper = NULL){
+
+  pdf <- function(x1,...) {
+    self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$sup()) - self$wrappedModels()[[1]]$cdf(self$inf()))
+  }
+
+  cdf <- function(x1,...){
+    num = self$wrappedModels()[[1]]$cdf(x1) - self$wrappedModels()[[1]]$cdf(self$inf())
+    den = self$wrappedModels()[[1]]$cdf(self$sup()) - self$wrappedModels()[[1]]$cdf(self$inf())
+    return(num/den)
+  }
+
+  name = paste("Truncated",distribution$name)
+  short_name = paste0("Truncated",distribution$short_name)
+
+  distlist = list(distribution)
+  names(distlist) = distribution$short_name
+
+  description = paste0(distribution$description, " Truncated between ",lower," and ",upper,".")
+
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf,
+                   name = name, short_name = short_name, support = support,
+                   type = distribution$type(), prefixParams = FALSE,
+                   description = description)
+})
+```
+
+All wrappers should pass the following to the parent-class constructor:
+
+1. Name - New name after wrapping
+2. short_name - New short_name after wrapping
+3. distlist - The named list of distributions (even if just one)
+4. description - Optional, updated description after wrapping
+
+And then any other arguments that may be changed by wrapping, remember that any arguments passed to the `DistributionWrapper` constructor are in turn passed to the `Distribution` constructor, hence we can think of implemented wrappers as custom distributions. Read the [custom distribution tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.rmd) for more information about the arguments passed to the `Distribution` constructor.
+
+Notice also that the new `pdf` and `cdf` methods reference the original model using the `wrappedModels` method. This will generally be the case with all wrappers.
+
+### MixtureDistribution
+
+The `MixtureDistribution` wrapper is slightly different in that it takes a composition of multiple distributions and it adds a private variable
+
+```{r eval=FALSE}
+MixtureDistribution <- R6::R6Class("MixtureDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+MixtureDistribution$set("public","initialize",function(distlist, weights = NULL){
+
+  distlist = makeUniqueDistributions(distlist)
+  distnames = names(distlist)
+
+  private$.weights <- weights
+
+  pdf <- function(x1,...) {
+    if(length(x1)==1)
+      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * private$.weights)))
+    else
+      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) %*% diag(private$.weights))))
+  }
+
+  name = paste("Mixture of",paste(distnames, collapse = "_"))
+  short_name = paste0("Mix_",paste(distnames, collapse = "_"))
+  type = do.call(union.SetInterval, lapply(distlist, type))
+  support = do.call(union.SetInterval, lapply(distlist, type))
+  distrDomain = do.call(union.SetInterval, lapply(distlist, type))
+
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
+                   short_name = short_name, description = description, type = type,
+                   support = support, distrDomain = distrDomain, valueSupport = "mixture")
+})
+MixtureDistribution$set("private",".weights",numeric(0))
+```
+
+Again this is a shortened version of the code. Note the following in the above
+
+1. As multiple distributons are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html).
+2. We add a private variable `.weights` which is accessed in the pdf/cdf. In general we allow additional private variables and methods to be added to wrappers, but not public ones.
+3. The type/support/distrDomain are all updated to account for multiple distributions.
+4. All implemented wrappers inherit from `DistributionWrapper` and again `lock_objects = FALSE`
+
+## Summary
+
+1. Implementing wrappers is similar to implementing a SDistribution or Kernel but generally more flexible
+2. We can add private methods/variables to a wrapper, but if possible, not public methods/variables
+3. Wrappers automatically add methods for accessing internaly models and correctly getting/setting parameters
 
 ## Extension Guidelines
 

@@ -74,7 +74,7 @@ decorate <- function(distribution, decorators){
 
         if(length(methods) > 0){
           for(i in 1:length(methods)){
-            formals(methods[[i]]) = c(formals(methods[[i]]),list(self=distribution))
+            formals(methods[[i]]) = c(formals(methods[[i]]),list(self=distribution),list(private = distribution$.__enclos_env__$private))
             assign(names(methods)[[i]],methods[[i]],envir=as.environment(distribution))
           }
         }
