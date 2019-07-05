@@ -85,7 +85,7 @@ decorate(U, FunctionImputation)
 U$cdf(1:10)
 
 # The same as expected
-punif(0:10,min=0,max=10)
+punif(1:10, min=1, max=10)
 
 # And again other arguments are automatically added
 U$cdf(5, lower.tail = FALSE, log.p = TRUE)
