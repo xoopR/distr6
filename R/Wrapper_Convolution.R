@@ -2,7 +2,7 @@
 #'
 #' @description Calculates the convolution of two distribution via numerical calculations.
 #'
-#' @details STILL IN DEVELOPMENT. Results are likely sub-optimal.
+#' @details STILL IN DEVELOPMENT. Results are likely sub-optimal and some bugs may be present.
 #'
 #' @name Convolution
 #'

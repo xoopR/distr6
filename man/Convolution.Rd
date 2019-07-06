@@ -7,7 +7,7 @@
 Calculates the convolution of two distribution via numerical calculations.
 }
 \details{
-STILL IN DEVELOPMENT. Results are likely sub-optimal.
+STILL IN DEVELOPMENT. Results are likely sub-optimal and some bugs may be present.
 }
 \section{Constructor}{
  Convolution$new(dist1, dist2, add = TRUE, type = NULL)

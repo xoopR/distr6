@@ -76,7 +76,7 @@
 #'   type = Reals$new()
 #'
 #'   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-#'                    short_name = short_name, type = type, prefixParams = FALSE,...)
+#'                    short_name = short_name, type = type, ...)
 #' }) # IN PROGRESS
 #'
 #' Scale$set("public","getScaleMean",function(){

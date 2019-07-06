@@ -62,4 +62,19 @@ test_that("check exotic statistics", {
   expect_equal(-log(continuousTester$survival(3)), continuousTester$cumHazard(3))
 })
 
+qexpo = function(p){
+  return(-log(1-p)/self$getParameterValue("rate"))
+}
 
+continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
+                                    symmetric=TRUE, type = PosReals$new(zero=T),
+                                    distrDomain=PosReals$new(),
+                                    pdf = dexpo,
+                                    cdf = cexpo,
+                                    quantile = qexpo,
+                                    parameters = ps
+)
+
+test_that("quantile", {
+  expect_equal(continuousTester$quantile(1), qexp(1))
+})

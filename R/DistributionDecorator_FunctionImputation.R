@@ -66,14 +66,16 @@ FunctionImputation$set("public","pdf",function(x1){
         else
           return(pracma::fderiv(self$cdf,x1))
       }
-  } else
-    return("FunctionImputation is currently only supported for univariate distributions.")
+  }
 })
 FunctionImputation$set("public","cdf",function(x1){
   # PDF2CDF
   if(testUnivariate(self)){
     if(testDiscrete(self)){
-      return(sum(self$pdf(self$inf():x1)))
+      if(length(x1)>1)
+        return(sapply(x1,function(x) sum(self$pdf(self$inf():x))))
+      else
+        return(sum(self$pdf(self$inf():x1)))
     } else if(testContinuous(self)){
       message(.distr6$message_numeric)
       if(length(x1)>1)
@@ -82,8 +84,7 @@ FunctionImputation$set("public","cdf",function(x1){
         return(integrate(self$pdf, lower = self$inf(), upper = x1)$value)
 
     }
-  } else
-    return("FunctionImputation is currently only supported for univariate distributions.")
+  }
 })
 FunctionImputation$set("public","quantile",function(p){
   message(.distr6$message_numeric)
@@ -120,9 +121,9 @@ FunctionImputation$set("public","rand",function(n){
   if(strategy == "q2r"){
     message(.distr6$message_numeric)
     return(suppressMessages(sapply(1:n, function(x) self$quantile(runif(1)))))
-  } else if(strategy == "p2r"){
-    message(.distr6$message_numeric)
-    if(testDiscrete(self))
-      return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
-  }
+  } #else if(strategy == "p2r"){
+  #   message(.distr6$message_numeric)
+  #   if(testDiscrete(self))
+  #     return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
+  # }
 })

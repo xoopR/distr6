@@ -38,7 +38,7 @@ test_that("statistics",{
   expect_equal(e$cf(1), 1/(1-1i))
   expect_equal(e$mode(),0)
   expect_equal(e$pdf(1), dexp(1))
-  expect_equal(e$cdf(1), pexp(1))
+  expect_equal(e$cdf(1,log.p = T, lower.tail = T), pexp(1, log.p = T))
   expect_equal(e$quantile(0.324), qexp(0.324))
   expect_silent(e$rand(10))
 })

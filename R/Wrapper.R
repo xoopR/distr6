@@ -89,7 +89,7 @@
 #'@export
 NULL
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
-DistributionWrapper$set("public","initialize",function(distlist, prefixParams = TRUE,...){
+DistributionWrapper$set("public","initialize",function(distlist,...){
   if(getR6Class(self) == "DistributionWrapper")
     stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
@@ -98,7 +98,7 @@ DistributionWrapper$set("public","initialize",function(distlist, prefixParams = 
   lapply(distlist, function(x) x$parameters()$update())
   private$.wrappedModels <- distlist
 
-  if(prefixParams){
+  if(length(distlist)>1){
     params <- data.table::rbindlist(lapply(distlist, function(x){
       params = x[["parameters"]]()$as.data.table()
       params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")

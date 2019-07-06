@@ -9,6 +9,12 @@ test_that("constructor",{
   expect_warning(MultivariateNormal$new(mean = c(2,3), cov = matrix(c(1,3,4))))
 })
 
+test_that("represent",{
+  expect_output(MultivariateNormal$new()$summary())
+  expect_output(MultivariateNormal$new()$summary(F))
+  expect_output(MultivariateNormal$new()$print())
+})
+
 mvn = MultivariateNormal$new(mean = c(1,7,3),cov = c(1,0,0,0,1,0,0,0,1))
 test_that("parameters", {
   expect_equal(mvn$getParameterValue("K"), 3)
@@ -17,6 +23,8 @@ test_that("parameters", {
   expect_equal(mvn$getParameterValue("prec"), matrix(c(1,0,0,0,1,0,0,0,1),nrow=3))
   expect_equal(mvn$setParameterValue(list(prec = c(1,0,0,0,1,0,0,0,1)))$getParameterValue("prec"),
                matrix(c(1,0,0,0,1,0,0,0,1),nrow = 3))
+  expect_warning(expect_equal(mvn$setParameterValue(list(prec = c(1,0,0,0,1,0,0,0,1,1)))$getParameterValue("prec"),
+               matrix(c(1,0,0,0,1,0,0,0,1),nrow = 3)))
   expect_equal(mvn$setParameterValue(list(mean = c(1)))$getParameterValue("mean"),
                c(1,1,1))
   expect_equal(mvn$setParameterValue(list(mean = c(1,2,3,4)))$getParameterValue("mean"),
@@ -31,6 +39,8 @@ test_that("properties & traits",{
   expect_equal(mvn$sup(), Inf)
   expect_equal(mvn$dmin(), -Inf)
   expect_equal(mvn$dmax(), Inf)
+  expect_equal(mvn$kurtosisType(), NA)
+  expect_equal(mvn$skewnessType(), NA)
 })
 
 mvn = MultivariateNormal$new(mean = c(1,7,3),cov = c(1,0,0,0,1,0,0,0,1))

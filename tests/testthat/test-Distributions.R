@@ -2,11 +2,15 @@ library(testthat)
 
 context("Distributions")
 
-test_that("check name validations", {
+test_that("check constructor", {
+  expect_error(Distribution$new(short_name = "Test_Distr"))
+  expect_error(Distribution$new(pdf = dbinom))
   expect_silent(Distribution$new("Discrete Test","TestDistr", pdf = dbinom))
   expect_error(Distribution$new(short_name = "Test Distr", pdf = dbinom))
   expect_silent(Distribution$new(short_name = "TestDistr", pdf = dbinom))
   expect_silent(Distribution$new(name = "Test Distr", pdf = dbinom))
+  expect_equal(Distribution$new(name = "Test Distr", pdf = dbinom)$strprint(),"TestDistr")
+  expect_null(Distribution$new(name = "Test Distr", pdf = dbinom)$parameters())
 })
 
 dbin = function(x, log,...){

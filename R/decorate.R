@@ -45,8 +45,9 @@ decorate <- function(distribution, decorators){
 
   else{
     lapply(decorators, function(a_decorator){
-
       if(a_decorator$classname == "FunctionImputation"){
+        if(!testUnivariate(distribution))
+          stop("FunctionImputation is currently only supported for univariate distributions.")
         if(!distribution$.__enclos_env__$private$.isPdf){
           pdf = FunctionImputation$public_methods$pdf
           formals(pdf)$self = distribution

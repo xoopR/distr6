@@ -25,6 +25,7 @@ test_that("statistics",{
 
   expect_equal(x$variance(), Inf)
   expect_equal(Frechet$new(shape = 3)$variance(), gamma(1- 2/3) - gamma(1-1/3)^2)
+  expect_equal(Frechet$new(shape = 3)$prec(), 1/(gamma(1- 2/3) - gamma(1-1/3)^2))
 
   expect_equal(x$skewness(), Inf)
   expect_equal(Frechet$new(shape = 4)$skewness(), (gamma(0.25) - 3*gamma(0.5)*gamma(0.75) +
@@ -41,6 +42,7 @@ test_that("statistics",{
   expect_error(Frechet$new()$mgf(1))
   expect_error(Frechet$new()$cf(1))
   expect_equal(x$mode(), 1/2)
+  expect_equal(x$cor(), 1)
 
   expect_equal(x$pdf(1:2), extraDistr::dfrechet(1:2))
   expect_equal(x$cdf(1:2), extraDistr::pfrechet(1:2))

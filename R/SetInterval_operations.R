@@ -148,12 +148,6 @@ complement.SetInterval <- function(...){
     else if(y$sup() < x$sup() & y$inf() <= x$inf() & y$sup() >= x$inf())
       return(Interval$new(lower = y$sup(), upper = x$sup(), type = paste0("(",substr(x$type(),2,2)),
                           class = x$class()))
-    else if(y$inf() == x$inf() & y$sup() == y$inf())
-      return(Interval$new(lower = x$inf(), upper = x$sup(), type = paste0("(",substr(x$type(),2,2)),
-                          class = x$class()))
-    else if(y$sup() == x$sup() & y$sup() == y$inf())
-      return(Interval$new(lower = x$inf(), upper = x$sup(), type = paste0(substr(x$type(),1,1),")"),,
-             class = x$class()))
     else if(y$sup() <= x$sup() & y$inf() >= x$inf())
       return(union.SetInterval(Interval$new(x$inf(),y$inf(),type=paste0(substr(x$type(),1,1),")"),class = x$class()),
                      Interval$new(y$sup(),x$sup(),type=paste0("(",substr(x$type(),2,2)),class = x$class()),

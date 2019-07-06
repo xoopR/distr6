@@ -263,9 +263,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     }
   }
 
-    if(!is.null(decorators))
-      suppressMessages(decorate(self, decorators))
-
     if(!is.null(pdf)){
       private$.pdf <- pdf
       private$.isPdf <- TRUE
@@ -293,6 +290,9 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     if(!is.null(type)) private$.traits$type <- type
     if(!is.null(valueSupport)) private$.traits$valueSupport <- valueSupport
     if(!is.null(variateForm)) private$.traits$variateForm <- variateForm
+
+    if(!is.null(decorators))
+      suppressMessages(decorate(self, decorators))
 
     # Update skewness and kurtosis
     x = try(self$kurtosis(excess = TRUE), silent = TRUE)
@@ -361,17 +361,16 @@ Distribution$set("public","print",function(...){
 summary.Distribution <- function(object, full = TRUE,...) {}
 Distribution$set("public","summary",function(full = TRUE,...){
 
-  which_params = self$parameters()$as.data.table()$settable
-
   if(full){
     if(length(private$.parameters)!=0){
+
       cat(self$description,"Parameterised with:\n")
       settable = self$parameters()$as.data.table()$settable
       cat(" ", paste(self$parameters()$as.data.table()[settable, "id"],
                       self$parameters()$as.data.table()[settable, "value"],
                       sep = " = ", collapse = ", "))
     } else
-      cat(self$name(),"\n")
+      cat(self$name,"\n")
 
 
     a_exp = suppressMessages(try(self$mean(), silent = T))
@@ -399,16 +398,16 @@ Distribution$set("public","summary",function(full = TRUE,...){
     }
     if(!inherits(a_skew,"try-error")){
       cat("\tSkewness:")
-      if(length(a_skew) > 1)
-        cat("\t", paste0(a_skew, collapse = ", "),"\n", sep = "")
-      else
+      # if(length(a_skew) > 1)
+      #   cat("\t", paste0(a_skew, collapse = ", "),"\n", sep = "")
+      # else
         cat("\t", a_skew,"\n", sep = "")
     }
     if(!inherits(a_kurt,"try-error")){
       cat("\tEx. Kurtosis:")
-      if(length(a_kurt) > 1)
-        cat("\t", paste0(a_kurt, collapse = ", "),"\n", sep = "")
-      else
+      # if(length(a_kurt) > 1)
+      #   cat("\t", paste0(a_kurt, collapse = ", "),"\n", sep = "")
+      # else
         cat("\t", a_kurt,"\n", sep = "")
     }
     cat("\n")
@@ -625,7 +624,7 @@ Distribution$set("public","dmin",function(){
 NULL
 Distribution$set("public", "kurtosisType", function() {
   x = self$properties()$kurtosis
-  if(inherits(x,"try-error"))
+  if(is.null(x))
     return(NA)
   else
     return(x)
@@ -643,7 +642,7 @@ Distribution$set("public", "kurtosisType", function() {
 NULL
 Distribution$set("public", "skewnessType", function() {
   x = self$properties()$skewness
-  if(inherits(x,"try-error"))
+  if(is.null(x))
     return(NA)
   else
     return(x)
@@ -734,8 +733,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
     if(any(self$liesInSupport(x1, all = F)))
       pdf[self$liesInSupport(x1, all = F)] = private$.pdf(x1[self$liesInSupport(x1, all = F)])
   } else {
-    if(is.null(x1)) pdf = private$.pdf(...)
-    else pdf = private$.pdf(x1, ...)
+    pdf = private$.pdf(x1, ...)
   }
 
   if(log) pdf <- log(pdf)
@@ -799,8 +797,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     if(any(self$liesInSupport(x1, all = F)))
       cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
   } else {
-    if(is.null(x1)) cdf = private$.cdf(...)
-    else cdf = private$.cdf(x1, ...)
+      cdf = private$.cdf(x1, ...)
   }
 
   if(log.p & lower.tail) cdf = log(cdf)
