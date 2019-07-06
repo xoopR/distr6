@@ -73,6 +73,9 @@ Binomial$set("public","package","stats")
 Binomial$set("public","mean",function(){
   self$getParameterValue("size") * self$getParameterValue("prob")
 })
+Binomial$set("public","mode",function(){
+  return(floor((self$getParameterValue("size") + 1) * self$getParameterValue("prob")))
+})
 Binomial$set("public","variance",function(){
   self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob")
 })
@@ -98,6 +101,7 @@ Binomial$set("public", "cf", function(t){
 Binomial$set("public","pgf",function(z){
   (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
 })
+
 Binomial$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   private$.properties$support <- Set$new(0:self$getParameterValue("size"))

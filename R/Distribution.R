@@ -670,13 +670,13 @@ Distribution$set("public","setParameterValue",function(lst, error = "warn"){
     self$parameters()$setParameterValue(lst, error)
 
     # Update skewness and kurtosis
-    x = try(self$kurtosis(excess = TRUE), silent = TRUE)
+    x = suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
     if(class(x) == "try-error")
       private$.properties$kurtosis <- NULL
     else
       private$.properties$kurtosis <- exkurtosisType(x)
 
-    x = try(self$skewness(), silent = TRUE)
+    x = suppressMessages(try(self$skewness(), silent = TRUE))
     if(class(x) == "try-error")
       private$.properties$skewness <- NULL
     else

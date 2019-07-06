@@ -75,3 +75,9 @@ testMessage <- function(expr){
   else
     return(FALSE)
 }
+
+modal = function(data){
+  tab = table(unlist(data))
+  modal = as.numeric(names(tab)[tab==max(tab)])
+  return(modal)
+}

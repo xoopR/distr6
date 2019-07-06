@@ -142,7 +142,8 @@ CoreStatistics$set("public", "pgf", function(z) {
   if(testDiscrete(self)){
     x = self$genExp(trafo = function(x) {return(z^x)})
     return(x)
-  }
+  } else
+    return(NaN)
 })
 
 #-------------------------------------------------------------
@@ -172,22 +173,8 @@ CoreStatistics$set("public", "pgf", function(z) {
 #' @export
 NULL
 CoreStatistics$set("public", "entropy", function(base = 2) {
-  if(testDiscrete(self)){
-    rng = try(self$inf():self$sup(),silent = T)
-    if(inherits(rng,"try-error"))
-      rng = getWorkingSupport(self)
-    probs = self$pdf(rng)
-    logs = log(self$pdf(rng), base)
-    return(-sum(probs * logs, na.rm = T))
-  } else if(testContinuous(self)){
-    warning("Results from numerical integration are approximate only, better results may be available.")
-    return(-integrate(function(x) {
-      probs = self$pdf(x)
-      logs = log(self$pdf(x), base)
-      logs[probs==0] = 0
-      return(probs * logs)
-    }, lower = self$inf(), upper = self$sup())$value)
-  }
+  message(.distr6$message_numeric)
+  return(suppressMessages(self$genExp(trafo = function(x) -log(self$pdf(x), base))))
 })
 
 #-------------------------------------------------------------
@@ -283,7 +270,6 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 NULL
 CoreStatistics$set("public","variance",function(){
   if(testUnivariate(self)){
-    if(testContinuous(self))
       message(.distr6$message_numeric)
     return(suppressMessages(self$genExp(trafo = function(x) x^2) - self$genExp()^2))
   }
@@ -337,16 +323,18 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
         return(0)
     }
 
+    message(.distr6$message_numeric)
+
     if(type == "raw"){
-      return(self$genExp(trafo = function(x) return(x^k)))
+      suppressMessages(return(self$genExp(trafo = function(x) return(x^k))))
     }
 
-    centralMoment = self$genExp(trafo = function(x) return((x - self$genExp())^k))
+    centralMoment = suppressMessages(self$genExp(trafo = function(x) return((x - self$genExp())^k)))
 
     if(type == "central")
       return(centralMoment)
     else if(type == "standard")
-      return(centralMoment / self$stdev()^k)
+      suppressMessages(return(centralMoment / self$stdev()^k))
   }
 })
 
@@ -422,16 +410,18 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 #' @export
 NULL
 CoreStatistics$set("public","mode",function(which = "all"){
-  if(which==1){
-    if(testDiscrete(self)){
-      rng = try(self$inf():self$sup(),silent = T)
-      if(inherits(rng,"try-error"))
-        rng = self$getWorkingSupport()
-      return(rng[which.max(self$pdf(rng))])
-    } else if(testContinuous(self))
-      return(optimize(self$pdf,c(self$inf(),1e08), maximum = TRUE))
+  if(private$.isRand)
+    return(modal(round(self$rand(1e5),4)))
+  else{
+    lower <- ifelse(self$inf() == -Inf, -1e3, self$inf())
+    upper <- ifelse(self$sup() == Inf, 1e3, self$sup())
+
+    if(testDiscrete(self))
+      return((self$inf():self$sup())[which.max(self$pdf(self$inf():self$sup()))])
+    else
+      return(optimize(self$pdf, interval=c(lower, upper), maximum = T)$maximum)
   }
-}) # IN PROGRESS
+})
 
 #-------------------------------------------------------------
 # mean

@@ -58,10 +58,10 @@ test_that("check kurtosis and skewness", {
 
 test_that("check exotic functions silent",{
   expect_silent(discreteTester$mode())
-  expect_silent(discreteTester$kthmoment(2))
-  expect_silent(discreteTester$kthmoment(3, type = "standard"))
+  expect_message(discreteTester$kthmoment(2))
+  expect_message(discreteTester$kthmoment(3, type = "standard"))
   expect_silent(discreteTester$pgf(z=2))
-  expect_silent(discreteTester$entropy())
+  expect_message(discreteTester$entropy())
 })
 
 test_that("check mgf, cf, pgf",{
