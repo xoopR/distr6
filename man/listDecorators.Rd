@@ -4,21 +4,18 @@
 \alias{listDecorators}
 \title{Lists Implemented Distribution Decorators}
 \usage{
-listDecorators(simplify = TRUE, get = TRUE)
+listDecorators(simplify = TRUE)
 }
 \arguments{
-\item{simplify}{logical. If TRUE (default) returns results as characters.}
-
-\item{get}{logical. If TRUE (default) gets results as R6 classes, ignored if simplify = TRUE.}
+\item{simplify}{logical. If TRUE (default) returns results as characters, otherwise as R6 classes.}
 }
 \description{
 Lists decorators that can decorate an R6 Distribution.
 }
-\details{
-If \code{simplify} and \code{get} are both false then returns a data.table of decorator
-names and methods added by the decorator.
-}
 \examples{
 listDecorators()
 listDecorators(FALSE)
+}
+\seealso{
+\code{\link{DistributionDecorator}}
 }

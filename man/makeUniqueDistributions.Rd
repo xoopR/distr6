@@ -2,7 +2,7 @@
 % Please edit documentation in R/makeUniqueDistributions.R
 \name{makeUniqueDistributions}
 \alias{makeUniqueDistributions}
-\title{De-Duplicate Distributions}
+\title{De-Duplicate Distribution Names}
 \usage{
 makeUniqueDistributions(distlist)
 }
@@ -10,9 +10,13 @@ makeUniqueDistributions(distlist)
 \item{distlist}{list of Distributions.}
 }
 \description{
-From a list of Distributions with the same short_name, suffix each with a consecutive
+Helper function to lapply over the given distribution list, and make the \code{short_name}s unique.
+}
+\details{
+The \code{short_name}s are made unique by suffixing each with a consecutive
 number so that the names are no longer duplicated.
 }
 \examples{
 makeUniqueDistributions(list(Binomial$new(), Binomial$new()))
+
 }

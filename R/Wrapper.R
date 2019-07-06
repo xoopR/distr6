@@ -1,11 +1,14 @@
 #' @name DistributionWrapper
-#' @title Abstract Wrapper for Distributions
-#' @description An R6 abstract wrapper class with methods implemented for child classes.
 #'
-#' @details This wrapper is an abstract class and cannot be implemented directly.
-#' See \code{\link{listWrappers}} for a list of wrappers that can be constructed. After wrapping multiple models,
-#' parameter IDs are altered by prefixing the ID with "model_". For example wrapping Model1 with a parameter
-#' 'param1' results in 'Model1_param1'. Call \code{parameters} to find the parameter IDs.
+#' @title Abstract DistributionWrapper Class
+#'
+#' @description The abstract parent class to wrappers.
+#'
+#' @details Wrapping is the process of adapting the interface of a class into another (Gamma et al. 1994).
+#' After wrapping, the parameters of a distribution may be prefixed with the distribution name to ensure
+#' uniqueness of parameter IDs.
+#'
+#' Abstract classes cannot be implemented directly. Use the \code{listWrappers} function to see constructable wrappers.
 #'
 #' @seealso \code{\link{listWrappers}}
 #'
@@ -83,6 +86,7 @@
 #'   }
 #'
 #'
+#'@export
 NULL
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
 DistributionWrapper$set("public","initialize",function(distlist, prefixParams = TRUE,...){

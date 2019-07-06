@@ -1,6 +1,8 @@
-#' @title Lists Implemented R6 Kernels
-#' @description Lists all implemented kernels in disrt6.
-#' @param simplify logical.
+#' @title Lists Implemented Kernels
+#' @description Lists all implemented kernels in distr6.
+#' @param simplify logical. If FALSE (default) returns kernels with support as a data.table, otherwise returns
+#' kernel names as characters.
+#' @seealso \code{\link{Kernel}}
 #' @examples
 #' listKernels()
 #'

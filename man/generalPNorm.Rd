@@ -16,8 +16,15 @@ generalPNorm(fun, p, lower, upper)
 \item{upper}{upper bound for the integral}
 }
 \description{
-Calculate the p-norm of any function between given limits. Given by,
+Calculate the p-norm of any function between given limits.
+}
+\details{
+The p-norm of a function \eqn{f} is given by,
 \deqn{(\int_S |f|^p d\mu)^1/p}
+where \eqn{S} is the function support.
+
+The p-norm is calculated numerically using the \code{integrate} function and therefore results
+are approximate only.
 }
 \examples{
 generalPNorm(Exponential$new()$pdf,2,0,10)

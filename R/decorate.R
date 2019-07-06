@@ -1,10 +1,10 @@
 #' @title Decorate Distributions
 #'
-#' @description A convenient S3 function to decorate R6 distributions
+#' @description Functionality to decorate R6 Distributions (and child classes) with extra methods.
 #'
 #' @details Decorating is the process of adding methods to classes that are not part of the core
-#' interface. Use \code{listDecorators} to see wich decorators are currently available. The primary
-#' use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions,
+#' interface (Gamma et al. 1994). Use \code{listDecorators} to see wich decorators are currently available. The primary
+#' use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
 #' to impute missing p/d/q/r functions.
 #'
 #' The \code{decorators} parameter should either be a list of decorator classes (i.e. not as strings)
@@ -21,6 +21,10 @@
 #'
 #' E <- Exponential$new()
 #' decorate(E, list(CoreStatistics, ExoticStatistics))
+#'
+#' @references
+#' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
+#' of Reusable Object-Oriented Software.” Addison-Wesley.
 #'
 #' @export
 decorate <- function(distribution, decorators){

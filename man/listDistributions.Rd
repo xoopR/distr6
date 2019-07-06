@@ -2,21 +2,33 @@
 % Please edit documentation in R/listDistributions.R
 \name{listDistributions}
 \alias{listDistributions}
-\title{Lists Implemented R6 Distributions}
+\title{Lists Implemented Distributions}
 \usage{
 listDistributions(simplify = FALSE, filter = NULL)
 }
 \arguments{
-\item{simplify}{logical.}
+\item{simplify}{logical. If FALSE (default) returns distributions with traits as a data.table, otherwise returns
+distribution names as characters.}
 
-\item{filter}{list to filter distributions by.}
+\item{filter}{list to filter distributions by. See examples.}
 }
 \description{
-Lists R6 distributions in a data.table or a character vector, can be filtered by
+Lists distr6 distributions in a data.table or a character vector, can be filtered by
 traits and implemented package.
 }
 \examples{
 listDistributions()
+
+# Filter list
 listDistributions(filter = list(VariateForm = "univariate"))
-listDistributions(filter = list(ValueSupport = "discrete"))
+
+# Filter is case-insensitive
+listDistributions(filter = list(VaLuESupport = "discrete"))
+
+# Multiple filters
+listDistributions(filter = list(VaLuESupport = "discrete", package = "distr6"))
+
+}
+\seealso{
+\code{\link{SDistribution}}
 }

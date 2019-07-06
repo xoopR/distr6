@@ -1,12 +1,22 @@
-#' @title Lists Implemented R6 Distributions
-#' @description Lists R6 distributions in a data.table or a character vector, can be filtered by
+#' @title Lists Implemented Distributions
+#' @description Lists distr6 distributions in a data.table or a character vector, can be filtered by
 #' traits and implemented package.
-#' @param simplify logical.
-#' @param filter list to filter distributions by.
+#' @param simplify logical. If FALSE (default) returns distributions with traits as a data.table, otherwise returns
+#' distribution names as characters.
+#' @param filter list to filter distributions by. See examples.
+#' @seealso \code{\link{SDistribution}}
 #' @examples
 #' listDistributions()
+#'
+#' # Filter list
 #' listDistributions(filter = list(VariateForm = "univariate"))
-#' listDistributions(filter = list(ValueSupport = "discrete"))
+#'
+#' # Filter is case-insensitive
+#' listDistributions(filter = list(VaLuESupport = "discrete"))
+#'
+#' # Multiple filters
+#' listDistributions(filter = list(VaLuESupport = "discrete", package = "distr6"))
+#'
 #' @export
 listDistributions <- function(simplify=FALSE, filter=NULL){
   y = sapply(ls(name="package:distr6"),function(x){

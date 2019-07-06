@@ -9,9 +9,7 @@
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{id} \tab character \tab unique one-word identifier. \cr
 #' \code{value} \tab numeric \tab initial parameter value. \cr
-#' \code{lower} \tab numeric \tab minimum value parameter can take. \cr
-#' \code{upper} \tab numeric \tab maximum value parameter can take. \cr
-#' \code{class} \tab character \tab parameter class; "numeric" or "integer". \cr
+#' \code{support} \tab numeric \tab range of values parameter can take. \cr
 #' \code{settable} \tab logical \tab if TRUE the parameter can be updated. See Details. \cr
 #' \code{updateFunc = NULL} \tab character \tab string to be parsed and evaluated as function. See Details. \cr
 #' \code{description = NULL} \tab character \tab optional description of parameter.
@@ -21,39 +19,32 @@
 #' An R6 ParameterSet is required to construct a custom Probability Distribution that takes parameters.
 #' This constructor ensures that the correct format of parameters is supplied to the distribution.
 #'
-#' Every argument can either be given as the correct type (as listed above) or as a list of that type.
+#' Every argument can either be given as the type listed above or as a list of that type.
 #' If arguments are provided as a list, then each argument must be of the same length list, with values
 #' as NULL where appropriate. See examples for more.
 #'
 #' Each parameter requires a unique one-word \code{id} that is used to get and set parameters
-#' after construction. A \code{settable} parameter is one that can be updated after construction of
-#' a distribution via \code{$setParameterValue}. The Distribution is parameterised by whichever parameters
-#' are given as \code{settable}. Non-settable parameters are either constant or can be automatically updated
-#' if an \code{updateFunc} is provided. \code{updateFunc} should be provided as a string that could be
-#' understood in the body of a function by a Distribution object, i.e. by naming parameters via
-#' \code{$getParameterValue}, see examples.
+#' after construction. The parameterisation of the distribution is determined by the parameters
+#' that have \code{settable = TRUE}, see examples. When multiple parameterisations are possible,
+#' \code{updateFunc} is used to update the parameters not used in the parameterisation. These should
+#' should be provided as a string that could be understood in the body of a function by a Distribution
+#' object, i.e. by naming parameters via \code{$getParameterValue}, see examples.
 #'
 #' Internally after calling \code{$setParameterValue}, \code{$update} is called to update the
 #' value of non-settable functions.
 #'
 #'@section Public Methods:
 #'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Details} \cr
-#'   \code{print()} \tab Print ParameterSet as data.frame. \cr
-#'   \code{update()} \tab Updates unsettable parameters with supplied update functions. \cr
-#'   \code{parameters(id, error = "warn")} \tab If id given, returns specific parameter. Otherwise returns self. \cr
-#'   \code{getParameterValue(id, error = "warn")} \tab Returns value of parameter matching given 'id'. \cr
-#'   \code{setParameterValue(lst, error = "warn")} \tab Set parameters in list names with respective values. See Details. \cr
-#'   \code{rbind()} \tab Combine the rows of multiple ParameterSets. \cr
-#'   \code{as.data.table()} \tab Coerces ParameterSet to data.frame.
+#'   \strong{Method} \tab \strong{Link} \cr
+#'   \code{print(hide_cols = "updateFunc")} \tab \code{\link{print.ParameterSet}} \cr
+#'   \code{update()} \tab \code{\link{update.ParameterSet}} \cr
+#'   \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
+#'   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
+#'   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
+#'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+#'   \code{rbind(...)} \tab \code{\link{rbind.ParameterSet}} \cr
+#'   \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
 #' }
-#'
-#' @section Public Method Details:
-#' Argument 'error' is passed to \code{stopwarn} to determine if the code should break or if a
-#' warning should be returned when an error occurs.
-#'
-#' \code{setParameterValue} takes a named list where the list names, \code{names(lst)}, should match
-#' the parameter IDs and the values, \code{as.numeric(lst)}, are used to set the corresponding parameter value.
 #'
 #' @examples
 #'  id = list("prob", "size")
@@ -153,15 +144,50 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
   private$.parameters <- params
   invisible(self)
 })
-ParameterSet$set("public","print", function(update = FALSE){
+#' @name print.ParameterSet
+#' @title Print a ParameterSet
+#'
+#' @description Prints a ParameterSet as a data.table with strprint variants of R6 classes.
+#' @details If given the \code{hide_cols} argument can be used to hide specific columns from the
+#' data.table.
+#'
+#' @param x ParameterSet
+#' @param hide_cols string, if given the data.table is filtered to hide these columns
+#' @param ... ignored, added for S3 consistency
+#'
+#' @section R6 Usage: $print(hide_cols = "updateFunc")
+#'
+#' @seealso \code{\link{ParameterSet}}
+#'
+#' @export
+print.ParameterSet <- function(x, hide_cols, ...) {}
+ParameterSet$set("public","print", function(hide_cols = "updateFunc",...){
   ps <- private$.parameters
   ps$support <- lapply(ps$support,function(x) x$getSymbol())
-  if(!update)
-    print(ps[,1:5])
-  else
-    print(ps)
+  print(subset(ps, select = !(names(ps) %in% hide_cols)))
 })
-ParameterSet$set("public","update", function(){
+
+#' @title Updates a ParameterSet
+#'
+#' @importFrom stats update
+#' @section R6 Usage: $update()
+#'
+#' @param object ParameterSet
+#' @param ... ignored, added for S3 consistency
+#'
+#' @description Updates parameter in a ParameterSet using \code{updateFunc}s.
+#'
+#' @details In general this method should never need to be called manually by the user as it is internally
+#' called in \code{setParameterValue}.
+#'
+#' The method works by cycling through parameters in a \code{ParameterSet} that have non-NA \code{updateFunc}s
+#' and parses these as expressions, thereby updating their values.
+#'
+#' @seealso \code{\link{ParameterSet}}
+#'
+#' @export
+update.ParameterSet <- function(object, ...) {}
+ParameterSet$set("public","update", function(...){
   if(any(!is.na(private$.parameters$updateFunc))){
     update_filter = !is.na(private$.parameters$updateFunc)
     updates = private$.parameters[update_filter,]
@@ -179,12 +205,14 @@ ParameterSet$set("public","update", function(){
 #' @name parameters
 #' @title Parameters Accessor
 #' @description Returns some or all the parameters in a distribution.
-#' @usage parameters(object, id = NULL, error = "warn", update = FALSE)
-#' @section R6 Usage: $parameters(id = NULL, error = "warn", update = FALSE)
+#'
+#' @usage parameters(object, id = NULL, error = "warn")
+#' @section R6 Usage: $parameters(id = NULL, error = "warn")
+#'
 #' @param object Distribution or ParameterSet.
 #' @param id character, see details.
-#' @param error character, value to pass to \code{stopwarn}.
-#' @param update logical, if FALSE don't include update function
+#' @param error character, value to pass to \code{stopwarn}
+#'
 #' @details If \code{id} is given and matches a parameter in the distribution, the parameter is returned
 #' with all details. If \code{id} is given but doesn't match a parameter, an empty data.frame is returned.
 #' Finally if \code{id} is not given, returns all parameters in the distribution.
@@ -195,20 +223,16 @@ ParameterSet$set("public","update", function(){
 #' @seealso \code{\link{getParameterValue}} and \code{\link{setParameterValue}}
 #' @export
 NULL
-ParameterSet$set("public","parameters",function(id = NULL, error = "warn", update = FALSE){
+ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
   if(length(private$.parameters)==0)
     stopwarn(error, "There are no parameters in this distribution.")
 
   if(!is.null(id)){
     id0 = id
-    if(length(subset(private$.parameters, id %in% id0))==0){
+    if(length(subset(private$.parameters, id %in% id0))==0)
       return(self)
-    } else{
-      if(update)
-        return(subset(private$.parameters, id %in% id0))
-      else
-        return(subset(private$.parameters, id %in% id0, 1:5))
-    }
+    else
+      return(subset(private$.parameters, id %in% id0))
   } else {
       return(self)
   }
@@ -324,6 +348,19 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
     invisible(self)
   }
 }) # NEEDS TESTING
+
+#' @title Combine ParameterSets
+#'
+#' @description rbind dispatch method to combine parameter sets by rows.
+#'
+#' @param ... ParameterSets
+#'
+#' @section R6 Usage: $rbind(...)
+#'
+#' @seealso \code{\link{ParameterSet}}
+#'
+#' @export
+rbind.ParameterSet <- function(...){}
 ParameterSet$set("public","rbind",function(...){
   newpar = rbind(self$as.data.table(),
                  do.call(rbind,lapply(list(...), function(x) x$as.data.table())))
@@ -332,6 +369,21 @@ ParameterSet$set("public","rbind",function(...){
   else
     return(as.ParameterSet(newpar))
 })
+
+#' @name as.data.table
+#' @title Coerce ParameterSet to data.table
+#'
+#' @description Coerces a ParameterSet to a data.table.
+#'
+#' @param object ParameterSet
+#'
+#' @usage as.data.table(object)
+#' @section R6 Usage: $as.data.table()
+#'
+#' @seealso \code{\link{ParameterSet}}
+#'
+#' @export
+NULL
 ParameterSet$set("public","as.data.table",function(){
   return(private$.parameters)
 })

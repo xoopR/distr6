@@ -2,17 +2,21 @@
 % Please edit documentation in R/listKernels.R
 \name{listKernels}
 \alias{listKernels}
-\title{Lists Implemented R6 Kernels}
+\title{Lists Implemented Kernels}
 \usage{
 listKernels(simplify = FALSE)
 }
 \arguments{
-\item{simplify}{logical.}
+\item{simplify}{logical. If FALSE (default) returns kernels with support as a data.table, otherwise returns
+kernel names as characters.}
 }
 \description{
-Lists all implemented kernels in disrt6.
+Lists all implemented kernels in distr6.
 }
 \examples{
 listKernels()
 
+}
+\seealso{
+\code{\link{Kernel}}
 }

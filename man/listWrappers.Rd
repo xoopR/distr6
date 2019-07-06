@@ -2,12 +2,12 @@
 % Please edit documentation in R/listWrappers.R
 \name{listWrappers}
 \alias{listWrappers}
-\title{Lists Implemented Distribution Decorators}
+\title{Lists Implemented Distribution Wrappers}
 \usage{
 listWrappers(simplify = TRUE)
 }
 \arguments{
-\item{simplify}{logical. If TRUE (default) returns results as characters, otherwise R6 classes.}
+\item{simplify}{logical. If TRUE (default) returns results as characters, otherwise as R6 classes.}
 }
 \description{
 Lists wrappers that can wrap an R6 Distribution.
@@ -15,4 +15,7 @@ Lists wrappers that can wrap an R6 Distribution.
 \examples{
 listWrappers()
 listWrappers(TRUE)
+}
+\seealso{
+\code{\link{DistributionWrapper}}
 }

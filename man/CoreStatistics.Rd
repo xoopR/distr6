@@ -4,17 +4,19 @@
 \alias{CoreStatistics}
 \title{Core Statistical Methods for Distributions}
 \description{
-Numeric methods for missing analytic expression in distr6 Distribution objects.
-Additionally includes generalised expectation and moments functions.
+This decorator adds numeric methods for missing analytic expression in distr6 Distribution
+objects as well as adding generalised expectation and moments functions.
 }
 \details{
-Decorator objects add functionality to the given Distribution object
- by copying methods in the decorator environment to the chosen Distribution environment. Use the
- \code{\link{decorate}} function to decorate a Distribution.
+Decorator objects add functionality to the given Distribution object by copying methods
+in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
+below to find details of the methods that are added to the Distribution. Methods already
+present in the distribution are not overwritten by the decorator.
 
- All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations. See below for the methods added to a distribution after decorating with
- \code{CoreStatistics}.
+Use \code{\link{decorate}} to decorate a Distribution.
+
+All methods in this decorator use numerical approximations and therefore better results may be available
+from analytic computations.
 }
 \section{Constructor}{
  CoreStatistics$new(distribution)
@@ -56,5 +58,5 @@ x$kthmoment(4)
 
 }
 \seealso{
-\code{\link{decorate}} and \code{\link{ExoticStatistics}}
+\code{\link{decorate}}, \code{\link{listDecorators}}
 }

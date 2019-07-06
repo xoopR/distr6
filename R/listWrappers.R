@@ -1,6 +1,7 @@
-#' @title Lists Implemented Distribution Decorators
+#' @title Lists Implemented Distribution Wrappers
 #' @description Lists wrappers that can wrap an R6 Distribution.
-#' @param simplify logical. If TRUE (default) returns results as characters, otherwise R6 classes.
+#' @param simplify logical. If TRUE (default) returns results as characters, otherwise as R6 classes.
+#' @seealso \code{\link{DistributionWrapper}}
 #' @examples
 #' listWrappers()
 #' listWrappers(TRUE)

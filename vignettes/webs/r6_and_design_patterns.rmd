@@ -6,6 +6,22 @@ vignette: >
   %\VignetteIndexEntry{R6 and Design Patterns}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+references:
+- id: GoF
+  title: 'Design patterns: elements of reusable object-oriented software'
+  author:
+  - family: Gamma
+    given: Erich
+  - family: Helm
+    given: Richard
+  - family: Johnson
+    given: Ralph
+  - family: Vlissides
+    given: John
+  ISBN: 0-201-63361-2
+  publisher: Addison-Wesley
+  issued:
+    year: 1994
 ---
 
 ```{r include = FALSE}
@@ -23,7 +39,7 @@ Instead of providing a comprehensive glossary of OOP terms (of which many exist)
 
 ### Design Patterns
 
-Design Patterns were collated, formalised and introduced in the seminal Design Patterns book (Gamma et al.) and the authors are commonly referred to as the Gang of Four (GoF).
+Design Patterns were collated, formalised and introduced in the seminal Design Patterns book (Gamma et al.) and the authors are commonly referred to as the Gang of Four (GoF) [@GoF].
 
 By far the most common design patterns in R toolboxes are the **strategy** and **visitor** design patterns. From GoF:
 

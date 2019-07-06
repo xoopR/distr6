@@ -653,11 +653,11 @@ Distribution$set("public", "skewnessType", function() {
 # Public Methods - Parameters
 #-------------------------------------------------------------
 # Documented in ParameterSet.R
-Distribution$set("public","parameters",function(id = NULL, error = "warn", update = FALSE){
+Distribution$set("public","parameters",function(id = NULL, error = "warn"){
   if(length(private$.parameters)==0)
     return(NULL)
   else
-    return(private$.parameters$parameters(id, error, update))
+    return(private$.parameters$parameters(id, error))
 })
 # Documented in ParameterSet.R
 Distribution$set("public","getParameterValue",function(id, error = "warn"){
@@ -858,10 +858,13 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #'
 #' @export
 quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE) {}
-Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p, simplify = TRUE){
+Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
 
   if(!private$.isQuantile)
     return(NULL)
+
+  if(log.p)
+    p = exp(p)
 
   if(!lower.tail)
     p = 1 - p
@@ -982,6 +985,7 @@ Distribution$set("public","stdev",function(){
 #' @description Median of a distribution assuming quantile is provided.
 #'
 #' @importFrom stats median
+#' @method median Distribution
 #' @section R6 Usage: $median()
 #' @param x Distribution.
 #' @param na.rm ignored, added for consistency with S3 generic.
@@ -992,7 +996,7 @@ Distribution$set("public","stdev",function(){
 #' @seealso \code{\link{quantile.Distribution}}
 #'
 #' @export
-median.Distribution <- function(x, na.rm = NULL, ..) {}
+median.Distribution <- function(x, na.rm = NULL, ...) {}
 Distribution$set("public","median",function(na.rm = NULL,...){
   return(self$quantile(0.5))
 })

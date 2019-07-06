@@ -7,7 +7,7 @@
 listSpecialSets(simplify = FALSE)
 }
 \arguments{
-\item{simplify}{logical. If FALSE (default) returns data.table of set name and symbol, otherwise character.}
+\item{simplify}{logical. If FALSE (default) returns data.table of set name and symbol, otherwise set names as characters.}
 }
 \description{
 Lists special sets that can be used in SetInterval.
@@ -15,4 +15,7 @@ Lists special sets that can be used in SetInterval.
 \examples{
 listSpecialSets()
 listSpecialSets(TRUE)
+}
+\seealso{
+\code{\link{SpecialSet}}
 }

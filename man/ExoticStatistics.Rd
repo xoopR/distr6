@@ -4,28 +4,29 @@
 \alias{ExoticStatistics}
 \title{Exotic Statistical Methods for Distributions}
 \description{
-Further functionality to distribution objects for numerical statistical
-  methods that can be considered more exotic than core, such as survival modelling
-  and p-norms.
+This decorator adds methods for more complex statistical methods including p-norms,
+survival and hazard functions and anti-derivatives.
 }
 \details{
-Decorator objects add functionality to the given Distribution object
- by copying methods in the decorator environment to the chosen Distribution environment. Use the
- \code{\link{decorate}} function to decorate a Distribution.
+Decorator objects add functionality to the given Distribution object by copying methods
+in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
+below to find details of the methods that are added to the Distribution. Methods already
+present in the distribution are not overwritten by the decorator.
 
- All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations. See below for the methods added to a distribution after decorating with
- \code{ExoticStatistics}.
+Use \code{\link{decorate}} to decorate a Distribution.
+
+Methods in this decorator may use numerical approximations and therefore better results may be available
+from analytic computations.
 }
 \section{Constructor}{
- ExoticStatistics$new(dist)
+ ExoticStatistics$new(distribution)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{distribution} \tab distribution \tab Distribution to decorate. \cr
 }
 }
 
@@ -54,5 +55,5 @@ x$survival(4)
 
 }
 \seealso{
-\code{\link{CoreStatistics}}
+\code{\link{decorate}}, \code{\link{listDecorators}}
 }

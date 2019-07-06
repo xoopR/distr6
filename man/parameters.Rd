@@ -4,16 +4,14 @@
 \alias{parameters}
 \title{Parameters Accessor}
 \usage{
-parameters(object, id = NULL, error = "warn", update = FALSE)
+parameters(object, id = NULL, error = "warn")
 }
 \arguments{
 \item{object}{Distribution or ParameterSet.}
 
 \item{id}{character, see details.}
 
-\item{error}{character, value to pass to \code{stopwarn}.}
-
-\item{update}{logical, if FALSE don't include update function}
+\item{error}{character, value to pass to \code{stopwarn}}
 }
 \description{
 Returns some or all the parameters in a distribution.
@@ -27,7 +25,7 @@ Finally if \code{id} is not given, returns all parameters in the distribution.
 with warning otherwise.
 }
 \section{R6 Usage}{
- $parameters(id = NULL, error = "warn", update = FALSE)
+ $parameters(id = NULL, error = "warn")
 }
 
 \seealso{
