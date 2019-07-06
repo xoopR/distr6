@@ -5,23 +5,28 @@
 \alias{^.SetInterval}
 \title{Symbolic Exponentiation for SetInterval}
 \usage{
-power.SetInterval(x, power.SetInterval)
+power.SetInterval(x, power)
 
-\method{^}{SetInterval}(x, power.SetInterval)
+\method{^}{SetInterval}(x, power)
 }
 \arguments{
-\item{x}{set or interval}
+\item{x}{SetInterval}
 
-\item{power.SetInterval}{power.SetInterval}
-}
-\value{
-An R6 object of class SetInterval.
+\item{power}{power to raise SetInterval to}
 }
 \description{
-Makes a symbolic representation for the exponentiation of a given
-  set or interval.
+Makes a symbolic representation for the exponentiation of a given set/interval.
 }
 \details{
-This does not calculate the value of exponentiation but
+This does not calculate the exponentiation but
   is just a symbolic representation using unicode.
+}
+\examples{
+PosNaturals$new() ^ 2
+power.SetInterval(Reals$new(), 3)
+
+}
+\seealso{
+\code{\link{product.SetInterval}}, \code{\link{union.SetInterval}},
+\code{\link{complement.SetInterval}}
 }

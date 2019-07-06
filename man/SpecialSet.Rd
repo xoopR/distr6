@@ -7,8 +7,11 @@
 Abstract class for the representation of the 'special' mathematical sets.
 }
 \details{
-This is an abstract class that cannot be constructed, instead construct one of the child classes,
-see below.
+Special sets refer to the most commonly used (and important) sets in mathematics. Including
+the sets of natural numbers, integers and reals.
+
+This is an abstract class that cannot be constructed, instead construct one of the implemented
+SpecialSet child-classes. For a full list of these see \code{\link{listSpecialSets}}.
 }
 \seealso{
 \code{\link{listSpecialSets}}

@@ -6,15 +6,31 @@
 \description{
 The mathematical set of negative integers.
 }
+\details{
+The set of NegIntegers is defined as the set of negative or non-positive numbers that can
+be written without a fractional component, i.e.
+\deqn{NegIntegers = {...,-3, -2, -1, 0}}
+\eqn{0} may or may not be included (depending on the \code{zero} argument).
+}
+\section{Constructor}{
+ NegIntegers$new(dim = 1, zero = FALSE)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
+\examples{
+NegIntegers$new()
+NegIntegers$new(zero = TRUE)
+NegIntegers$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

@@ -6,8 +6,12 @@
 #'
 #' @name SpecialSet
 #'
-#' @details This is an abstract class that cannot be constructed, instead construct one of the child classes,
-#' see below.
+#' @details
+#' Special sets refer to the most commonly used (and important) sets in mathematics. Including
+#' the sets of natural numbers, integers and reals.
+#'
+#' This is an abstract class that cannot be constructed, instead construct one of the implemented
+#' SpecialSet child-classes. For a full list of these see \code{\link{listSpecialSets}}.
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
@@ -31,11 +35,19 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
   invisible(self)
 })
 SpecialSet$set("private",".class","integer")
-#' @title Empty Set
-#' @description The mathematical empty, or null, set.
+
 #' @name Empty
+#' @title Empty Set
+#' @description The mathematical Empty, or Null, set.
+#' @details The Empty set is the set defined by having no elements,
+#' \deqn{Empty = { }}
+#'
+#' @section Constructor: Empty$new()
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' Empty$new()
 #'
 #' @export
 NULL
@@ -47,13 +59,27 @@ Empty$set("public", "initialize", function(){
 #' @title Set of Natural Numbers
 #' @description The mathematical set of natural numbers.
 #' @name Naturals
+#'
+#' @details The set of Naturals is defined as the counting numbers, i.e.
+#' \deqn{Naturals = {0, 1, 2,...}}
+#'
+#' @section Constructor: Naturals$new(dim = 1, lower = 0)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
+#'    \code{lower} \tab integer \tab Where to start the set. \cr
 #' }
 #'
+#' @section Constructor Details: Generally the \code{lower} argument should be ignored, its primary use-case
+#' is for the \code{PosNaturals} child-class.
+#'
+#'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' Naturals$new()
+#' Naturals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -66,13 +92,22 @@ Naturals$set("private",".class","integer")
 #' @title Set of Positive Natural Numbers
 #' @description The mathematical set of positive natural numbers.
 #' @name PosNaturals
+#'
+#' @details The set of Positive Naturals is defined as the positive counting numbers, i.e.
+#' \deqn{PosNaturals = {1, 2, 3,...}}
+#'
+#' @section Constructor: PosNaturals$new(dim = 1)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' PosNaturals$new()
+#' PosNaturals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -84,13 +119,27 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 #' @title Set of Integers
 #' @description The mathematical set of integers.
 #' @name Integers
+#'
+#' @details The set of Integers is defined as the set of numbers that can be written without a fractional
+#' component, i.e.
+#' \deqn{Integers = {...,-3, -2, -1, 0, 1, 2, 3,...}}
+#'
+#' @section Constructor: Integers$new(dim = 1,...)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
+#'    \code{...} \tab ANY \tab Additional arguments.
 #' }
 #'
+#' @section Constructor Details: Generally the \code{...} argument should be ignored, its primary use-case
+#' is for the child-classes.
+#'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' Integers$new()
+#' Integers$new(dim = 2)
 #'
 #' @export
 NULL
@@ -103,14 +152,26 @@ Integers$set("private",".class","integer")
 #' @title Set of Positive Integers
 #' @description The mathematical set of positive integers.
 #' @name PosIntegers
+#'
+#' @details The set of PosIntegers is defined as the set of positive or non-negative numbers that can
+#' be written without a fractional component, i.e.
+#' \deqn{PosIntegers = {0, 1, 2, 3,...}}
+#' \eqn{0} may or may not be included (depending on the \code{zero} argument).
+#'
+#' @section Constructor: PosIntegers$new(dim = 1, zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' PosIntegers$new()
+#' PosIntegers$new(zero = TRUE)
+#' PosIntegers$new(dim = 2)
 #'
 #' @export
 NULL
@@ -125,14 +186,26 @@ PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @title Set of Negative Integers
 #' @description The mathematical set of negative integers.
 #' @name NegIntegers
+#'
+#' @details The set of NegIntegers is defined as the set of negative or non-positive numbers that can
+#' be written without a fractional component, i.e.
+#' \deqn{NegIntegers = {...,-3, -2, -1, 0}}
+#' \eqn{0} may or may not be included (depending on the \code{zero} argument).
+#'
+#' @section Constructor: NegIntegers$new(dim = 1, zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' NegIntegers$new()
+#' NegIntegers$new(zero = TRUE)
+#' NegIntegers$new(dim = 2)
 #'
 #' @export
 NULL
@@ -145,15 +218,30 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @title Set of Rationals
-#' @description The mathematical set of rationals.
+#' @description The mathematical set of rational numbers.
 #' @name Rationals
+#'
+#' @details The set of Rationals is defined as the set of numbers that can be written as a fraction
+#' of two integers, i.e.
+#' \deqn{Rationals = {p/q | p,q \epsilon Z}}
+#' where \eqn{Z} is the set of integers.
+#'
+#' @section Constructor: Rationals$new(dim = 1,...)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
+#'    \code{...} \tab ANY \tab Additional arguments.
 #' }
 #'
+#' @section Constructor Details: Generally the \code{...} argument should be ignored, its primary use-case
+#' is for the child-classes.
+#'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' Rationals$new()
+#' Rationals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -164,16 +252,30 @@ Rationals$set("public", "initialize", function(dim = 1, ...){
 Rationals$set("private",".class","numeric")
 
 #' @title Set of Positive Rationals
-#' @description The mathematical set of positive rationals.
+#' @description The mathematical set of positive rational numbers.
 #' @name PosRationals
+#'
+#' @details The set of Positive Rationals is defined as the set of numbers that can be written as a fraction
+#' of two integers and are non-negative, i.e.
+#' \deqn{PosRationals = {p/q | p,q \epsilon Z, p/q >= 0}}
+#' where \eqn{Z} is the set of integers.
+#'
+#' \eqn{0} may or may not be included (depending on the \code{zero} argument).
+#'
+#' @section Constructor: PosRationals$new(dim = 1, zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' PosRationals$new()
+#' PosRationals$new(zero = TRUE)
+#' PosRationals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -186,16 +288,30 @@ PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @title Set of Negative Rationals
-#' @description The mathematical set of negative rationals.
+#' @description The mathematical set of negative rational numbers.
 #' @name NegRationals
+#'
+#' @details The set of Positive Rationals is defined as the set of numbers that can be written as a fraction
+#' of two integers and are non-negative, i.e.
+#' \deqn{NegRationals = {p/q | p,q \epsilon Z, p/q <= 0}}
+#' where \eqn{Z} is the set of integers.
+#'
+#' \eqn{0} may or may not be included (depending on the \code{zero} argument).
+#'
+#' @section Constructor: NegRationals$new(dim = 1, zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' NegRationals$new()
+#' NegRationals$new(zero = TRUE)
+#' NegRationals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -208,15 +324,29 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @title Set of Reals
-#' @description The mathematical set of reals.
+#' @description The mathematical set of real numebers.
 #' @name Reals
+#'
+#' @details The set of Reals is defined as the union of the set of rationals and irrationals, i.e.
+#' \deqn{Reals = I ∪ Q}
+#' where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
+#'
+#' @section Constructor: Reals$new(dim = 1,...)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
+#'    \code{...} \tab ANY \tab Additional arguments.
 #' }
 #'
+#' @section Constructor Details: Generally the \code{...} argument should be ignored, its primary use-case
+#' is for the child-classes.
+#'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' Reals$new()
+#' Reals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -227,16 +357,30 @@ Reals$set("public", "initialize", function(dim = 1, ...){
 Reals$set("private",".class","numeric")
 
 #' @title Set of Positive Reals
-#' @description The mathematical set of positive reals.
+#' @description The mathematical set of positive real numbers.
 #' @name PosReals
+#'
+#' @details The set of Positive Reals is defined as the union of the set of positive rationals and positive
+#' irrationals, i.e.
+#' \deqn{PosReals = I+ ∪ Q+}
+#' where \eqn{I+} is the set of positive irrationals and \eqn{Q+} is the set of positive rationals.
+#'
+#' \eqn{0} may or may not be included (depending on the \code{zero} argument).
+#'
+#' @section Constructor: PosReals$new(dim = 1, zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' PosReals$new()
+#' PosReals$new(zero = TRUE)
+#' PosReals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -249,16 +393,30 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @title Set of Negative Reals
-#' @description The mathematical set of negative reals.
+#' @description The mathematical set of negative real numbers.
 #' @name NegReals
+#'
+#' @details The set of Negative Reals is defined as the union of the set of negative rationals and negative
+#' irrationals, i.e.
+#' \deqn{NegReals = I- ∪ Q-}
+#' where \eqn{I-} is the set of negative irrationals and \eqn{Q-} is the set of negative rationals.
+#'
+#' \eqn{0} may or may not be included (depending on the \code{zero} argument).
+#'
+#' @section Constructor: NegReals$new(dim = 1, zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' NegReals$new()
+#' NegReals$new(zero = TRUE)
+#' NegReals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -271,15 +429,25 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @title Set of Extended Reals
-#' @description The mathematical set of extended reals.
+#' @description The mathematical set of extended real numbers.
 #' @name ExtendedReals
+#'
+#' @details The set of Extended Reals is defined as the union of the set of reals with +-Infinity, i.e.
+#' \deqn{ExtendedReals = R ∪ {-\infty, \infty}}
+#' where \eqn{R} is the set of reals.
+#'
+#' @section Constructor: ExtendedReals$new(dim = 1)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' ExtendedReals$new()
+#' ExtendedReals$new(dim = 2)
 #'
 #' @export
 NULL
@@ -289,15 +457,25 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 })
 
 #' @title Set of Complex Numbers
-#' @description The mathematical set of complex numbers.
+#' @description The mathematical set of complex numebers.
 #' @name Complex
+#'
+#' @details The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.
+#' \deqn{C = {a + bi | a,b \epsilon R}}
+#' where \eqn{R} is the set of reals.
+#'
+#' @section Constructor: Complex$new(dim = 1)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' Complex$new()
+#' Complex$new(dim = 2)
 #'
 #' @export
 NULL

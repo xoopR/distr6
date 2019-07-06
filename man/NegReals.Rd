@@ -4,17 +4,35 @@
 \alias{NegReals}
 \title{Set of Negative Reals}
 \description{
-The mathematical set of negative reals.
+The mathematical set of negative real numbers.
 }
+\details{
+The set of Negative Reals is defined as the union of the set of negative rationals and negative
+irrationals, i.e.
+\deqn{NegReals = I- ∪ Q-}
+where \eqn{I-} is the set of negative irrationals and \eqn{Q-} is the set of negative rationals.
+
+\eqn{0} may or may not be included (depending on the \code{zero} argument).
+}
+\section{Constructor}{
+ NegReals$new(dim = 1, zero = FALSE)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
+\examples{
+NegReals$new()
+NegReals$new(zero = TRUE)
+NegReals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

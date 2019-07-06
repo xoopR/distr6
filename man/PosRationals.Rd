@@ -4,17 +4,35 @@
 \alias{PosRationals}
 \title{Set of Positive Rationals}
 \description{
-The mathematical set of positive rationals.
+The mathematical set of positive rational numbers.
 }
+\details{
+The set of Positive Rationals is defined as the set of numbers that can be written as a fraction
+of two integers and are non-negative, i.e.
+\deqn{PosRationals = {p/q | p,q \epsilon Z, p/q >= 0}}
+where \eqn{Z} is the set of integers.
+
+\eqn{0} may or may not be included (depending on the \code{zero} argument).
+}
+\section{Constructor}{
+ PosRationals$new(dim = 1, zero = FALSE)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
+\examples{
+PosRationals$new()
+PosRationals$new(zero = TRUE)
+PosRationals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

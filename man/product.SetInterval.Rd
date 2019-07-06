@@ -3,29 +3,32 @@
 \name{product.SetInterval}
 \alias{product.SetInterval}
 \alias{*.SetInterval}
-\title{Symbolic Cartesian product.SetInterval for SetInterval}
+\title{Symbolic Cartesian Product for SetInterval}
 \usage{
 product.SetInterval(...)
 
 \method{*}{SetInterval}(x, y)
 }
 \arguments{
-\item{...}{sets and/or intervals to take the cartesian product.SetInterval of.}
+\item{x}{SetInterval}
 
-\item{x}{distribution}
+\item{y}{SetInterval}
 
-\item{y}{distribution}
-}
-\value{
-An R6 object of class SetInterval.
+\item{...}{SetIntervals to take the cartesian product of.}
 }
 \description{
-Makes a symbolic representation for the cartesian product.SetInterval of sets/intervals.
+Makes a symbolic representation for the cartesian product of sets/intervals.
 }
 \details{
-This does not calculate the cartesian product.SetInterval of the arguments but
+This does not calculate the cartesian product of the arguments but
   is just a symbolic representation using unicode.
 }
+\examples{
+PosNaturals$new() * Reals$new()
+product.SetInterval(PosNaturals$new(), Reals$new())
+
+}
 \seealso{
-\code{\link{union.SetInterval}} for the union.SetInterval of two or more intervals/sets.
+\code{\link{union.SetInterval}}, \code{\link{complement.SetInterval}},
+\code{\link{power.SetInterval}}
 }

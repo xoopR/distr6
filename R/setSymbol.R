@@ -8,9 +8,20 @@
 #' @param set special set
 #'
 #' @details Special set can be supplied as a character string or class, case-insensitive.
-#'   See \code{\link{SpecialSet}} for full list of currently supported sets.
+#'   See \code{\link{listSpecialSets}} for full list of currently supported sets.
 #'
-#' @seealso \code{\link{SpecialSet}}
+#' @seealso \code{\link{SpecialSet}}, \code{\link{listSpecialSets}}
+#'
+#' @examples
+#' # Supplied as class
+#' setSymbol(empty)
+#'
+#' # Supplied as string
+#' setSymbol("empty")
+#'
+#' # Case-insensitive
+#' setSymbol(EmPtY)
+#'
 #'
 #' @export
 setSymbol <- function(set){

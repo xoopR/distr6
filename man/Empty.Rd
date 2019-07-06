@@ -4,7 +4,19 @@
 \alias{Empty}
 \title{Empty Set}
 \description{
-The mathematical empty, or null, set.
+The mathematical Empty, or Null, set.
+}
+\details{
+The Empty set is the set defined by having no elements,
+\deqn{Empty = { }}
+}
+\section{Constructor}{
+ Empty$new()
+}
+
+\examples{
+Empty$new()
+
 }
 \seealso{
 \code{\link{listSpecialSets}}

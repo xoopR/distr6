@@ -4,17 +4,35 @@
 \alias{PosReals}
 \title{Set of Positive Reals}
 \description{
-The mathematical set of positive reals.
+The mathematical set of positive real numbers.
 }
+\details{
+The set of Positive Reals is defined as the union of the set of positive rationals and positive
+irrationals, i.e.
+\deqn{PosReals = I+ ∪ Q+}
+where \eqn{I+} is the set of positive irrationals and \eqn{Q+} is the set of positive rationals.
+
+\eqn{0} may or may not be included (depending on the \code{zero} argument).
+}
+\section{Constructor}{
+ PosReals$new(dim = 1, zero = FALSE)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
+\examples{
+PosReals$new()
+PosReals$new(zero = TRUE)
+PosReals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

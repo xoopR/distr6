@@ -4,16 +4,37 @@
 \alias{Rationals}
 \title{Set of Rationals}
 \description{
-The mathematical set of rationals.
+The mathematical set of rational numbers.
 }
+\details{
+The set of Rationals is defined as the set of numbers that can be written as a fraction
+of two integers, i.e.
+\deqn{Rationals = {p/q | p,q \epsilon Z}}
+where \eqn{Z} is the set of integers.
+}
+\section{Constructor}{
+ Rationals$new(dim = 1,...)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
+   \code{...} \tab ANY \tab Additional arguments.
 }
 }
 
+\section{Constructor Details}{
+ Generally the \code{...} argument should be ignored, its primary use-case
+is for the child-classes.
+}
+
+\examples{
+Rationals$new()
+Rationals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

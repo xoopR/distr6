@@ -2,24 +2,52 @@
 % Please edit documentation in R/SetInterval_Set.R
 \name{Set}
 \alias{Set}
-\title{Symbolic Set Object}
+\title{R6 Generalised Class for Symbolic Sets}
 \description{
-An R6 set object for symbolic representation of mathematical sets.
+A symbolic R6 Set class.
 }
+\details{
+Sets are distinguised from intervals in R6 as they are finite mathematical sets with
+elements that can be printed. The elements can be of any class.
+}
+\section{Constructor}{
+ Set$new(..., dim = 1)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{...} \tab ANY \tab See constructor details. \cr
+   \code{...} \tab ANY \tab Elements in the set. \cr
+   \code{dim} \tab integer \tab Dimension of the set.
 }
 }
 
-\section{Constructor Details}{
- Objects of any class can be passed to the set constructor. If a numeric
-vector is passed then a discrete set of integers is created in the range from the minimum to the
-maximum input. Otherwise all arguments are parsed as elements in a mathematical set.
+\section{Public Methods}{
+
+ \tabular{ll}{
+  \strong{Accessor Methods} \tab \strong{Link} \cr
+  \code{type()} \tab  \code{\link{type.SetInterval}}  \cr
+  \code{dimension()} \tab \code{\link{dimension.SetInterval}}\cr
+  \code{max()} \tab  \code{\link{max.SetInterval}} \cr
+  \code{min()} \tab  \code{\link{min.SetInterval}} \cr
+  \code{sup()} \tab  \code{\link{sup.SetInterval}}  \cr
+  \code{inf()} \tab  \code{\link{inf.SetInterval}}  \cr
+  \code{getSymbol()} \tab  \code{\link{getSymbol.SetInterval}} \cr
+  \code{class()} \tab  \code{\link{class.SetInterval}}  \cr
+  \code{elements()} \tab  \code{\link{elements}}  \cr
+  \tab \cr \tab \cr \tab \cr
+  \strong{Set Methods} \tab \strong{Link} \cr
+  \code{length()} \tab  \code{\link{length.Set}}  \cr
+  \tab \cr \tab \cr \tab \cr
+  \strong{Validation Methods} \tab \strong{Link} \cr
+  \code{liesInSetInterval(x, all = FALSE, bound = FALSE)} \tab \code{\link{liesInSetInterval}} \cr
+  \tab \cr \tab \cr \tab \cr
+  \strong{Representation Methods} \tab \strong{Link} \cr
+  \code{print()} \tab \code{\link[base]{print}} \cr
+  }
 }
 
 \seealso{
-The parent class \code{\link{SetInterval}} for a full list of inherited methods and variables.
+\code{\link{Interval}}
 }

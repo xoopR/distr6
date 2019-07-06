@@ -3,29 +3,32 @@
 \name{complement.SetInterval}
 \alias{complement.SetInterval}
 \alias{-.SetInterval}
-\title{Symbolic complement.SetInterval for SetInterval}
+\title{Symbolic Complement for SetInterval}
 \usage{
 complement.SetInterval(...)
 
 \method{-}{SetInterval}(x, y)
 }
 \arguments{
-\item{...}{sets and/or intervals to take the union.SetInterval of.}
+\item{x}{SetInterval}
 
-\item{x}{distribution}
+\item{y}{SetInterval}
 
-\item{y}{distribution}
-}
-\value{
-An R6 object of class SetInterval.
+\item{...}{SetIntervals to take the complement of.}
 }
 \description{
-Makes a symbolic representation for the complement.SetInterval of sets/intervals.
+Makes a symbolic representation for the complement of sets/intervals.
 }
 \details{
-This does not calculate the complement.SetInterval of the arguments but
+This does not calculate the complement of the arguments but
   is just a symbolic representation using unicode.
 }
+\examples{
+PosNaturals$new() - Interval$new(-1,10)
+complement.SetInterval(Reals$new(), Interval$new(10,Inf))
+
+}
 \seealso{
-\code{\link{product.SetInterval}} and \code{\link{union.SetInterval}}.
+\code{\link{product.SetInterval}}, \code{\link{union.SetInterval}},
+\code{\link{power.SetInterval}}
 }
