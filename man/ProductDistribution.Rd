@@ -14,11 +14,18 @@ where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X1,...,XN
 
 \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
+\section{Constructor}{
+ ProductDistribution$new(distlist, name = NULL, short_name = NULL, description = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
+\code{name} \tab list \tab Optional new name for distribution. \cr
+\code{short_name} \tab list \tab Optional new short_name for distribution. \cr
+\code{description} \tab list \tab Optional new description for distribution. \cr
 }
 }
 
@@ -108,6 +115,5 @@ prodBin$rand(10)
 
 }
 \seealso{
-\code{\link{ArrayDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}
-for wrapper details.
+\code{\link{ArrayDistribution}}, \code{\link{listWrappers}}
 }

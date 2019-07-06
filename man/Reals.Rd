@@ -8,7 +8,7 @@ The mathematical set of real numebers.
 }
 \details{
 The set of Reals is defined as the union of the set of rationals and irrationals, i.e.
-\deqn{Reals = I ∪ Q}
+\deqn{Reals = I \cup Q}
 where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 }
 \section{Constructor}{

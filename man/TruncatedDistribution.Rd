@@ -15,6 +15,9 @@ pdf/cdf of the original distribution.
 
 If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 The support of the new distribution is the interval of points between lower and upper.
+
+The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
+\code{FunctionImputation} first.
 }
 \section{Constructor}{
  TruncatedDistribution$new(distribution, lower = NULL, upper = NULL)
@@ -108,10 +111,12 @@ The support of the new distribution is the interval of points between lower and 
 }
 
 \examples{
-truncBin <- TruncatedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
+truncBin <- TruncatedDistribution$new(
+            Binomial$new(prob = 0.5, size = 10),
+            lower = 2, upper = 4)
 truncBin$getParameterValue("prob")
 
 }
 \seealso{
-\code{\link{listWrappers}}.
+\code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{truncate}}
 }

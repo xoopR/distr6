@@ -328,7 +328,7 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @name Reals
 #'
 #' @details The set of Reals is defined as the union of the set of rationals and irrationals, i.e.
-#' \deqn{Reals = I ∪ Q}
+#' \deqn{Reals = I \cup Q}
 #' where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 #'
 #' @section Constructor: Reals$new(dim = 1,...)
@@ -362,7 +362,7 @@ Reals$set("private",".class","numeric")
 #'
 #' @details The set of Positive Reals is defined as the union of the set of positive rationals and positive
 #' irrationals, i.e.
-#' \deqn{PosReals = I+ ∪ Q+}
+#' \deqn{PosReals = I+ \cup Q+}
 #' where \eqn{I+} is the set of positive irrationals and \eqn{Q+} is the set of positive rationals.
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
@@ -398,7 +398,7 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @details The set of Negative Reals is defined as the union of the set of negative rationals and negative
 #' irrationals, i.e.
-#' \deqn{NegReals = I- ∪ Q-}
+#' \deqn{NegReals = I- \cup Q-}
 #' where \eqn{I-} is the set of negative irrationals and \eqn{Q-} is the set of negative rationals.
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
@@ -433,7 +433,7 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @name ExtendedReals
 #'
 #' @details The set of Extended Reals is defined as the union of the set of reals with +-Infinity, i.e.
-#' \deqn{ExtendedReals = R ∪ {-\infty, \infty}}
+#' \deqn{ExtendedReals = R \cup {-\infty, \infty}}
 #' where \eqn{R} is the set of reals.
 #'
 #' @section Constructor: ExtendedReals$new(dim = 1)

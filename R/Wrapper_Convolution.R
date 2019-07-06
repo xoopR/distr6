@@ -2,18 +2,21 @@
 #'
 #' @description Calculates the convolution of two distribution via numerical calculations.
 #'
+#' @details STILL IN DEVELOPMENT. Results are likely sub-optimal.
+#'
 #' @name Convolution
 #'
+#' @section Constructor: Convolution$new(dist1, dist2, add = TRUE, type = NULL)
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{dist1} \tab distribution \tab First distribution in convolution. \cr
 #' \code{dist2} \tab distribution \tab Second distribution in convolution. \cr
 #' \code{add} \tab logical \tab Add or subtract distributions. \cr
+#' \code{type} \tab logical \tab Type of new distribution, automated if NULL. \cr
 #' }
 #'
-#'
-#' @seealso \code{\link{DistributionWrapper}}
+#' @seealso \code{\link{listWrappers}}
 #'
 #' @export
 NULL
@@ -81,9 +84,9 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
                    short_name = short_name)
 }) # IN PROGRESS
 
-`Distribution+Distribution` <- function(dist1, dist2){
+`+.Distribution` <- function(dist1, dist2){
   Convolution$new(dist1, dist2, add = TRUE)
 }
-`Distribution-Distribution` <- function(dist1, dist2){
+`-.Distribution` <- function(dist1, dist2){
   Convolution$new(dist1, dist2, add = FALSE)
 }

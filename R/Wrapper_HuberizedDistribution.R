@@ -2,16 +2,6 @@
 #' @title Distribution Huberization Wrapper
 #' @description A wrapper for huberizing any probability distribution at given limits.
 #'
-#' @section Constructor: HuberizedDistribution$new(distribution, lower = NULL, upper = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distribution} \tab distribution \tab Distribution to huberize. \cr
-#' \code{lower} \tab numeric \tab Lower limit for huberization. \cr
-#' \code{upper} \tab numeric \tab Upper limit for huberization.
-#' }
-#'
 #' @details Huberizes a distribution at lower and upper limits, using the formula
 #' \tabular{lll}{
 #'  \tab \eqn{F(x)} \tab if \eqn{x \le lower} \cr
@@ -23,13 +13,29 @@
 #'
 #' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 #'
+#' The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
+#' \code{FunctionImputation} first.
+#'
+#' @section Constructor: HuberizedDistribution$new(distribution, lower = NULL, upper = NULL)
+#'
+#' @section Constructor Arguments:
+#' \tabular{lll}{
+#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+#' \code{distribution} \tab distribution \tab Distribution to huberize. \cr
+#' \code{lower} \tab numeric \tab Lower limit for huberization. \cr
+#' \code{upper} \tab numeric \tab Upper limit for huberization.
+#' }
+#'
+#'
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods
 #'
-#' @seealso \code{\link{listWrappers}}.
+#' @seealso \code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{huberize}}
 #'
 #' @examples
-#' hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
+#' hubBin <- HuberizedDistribution$new(
+#'           Binomial$new(prob = 0.5, size = 10),
+#'           lower = 2, upper = 4)
 #' hubBin$getParameterValue("prob")
 #' hubBin$pdf(2)
 #'
@@ -115,7 +121,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
                      valueSupport = "mixture")
   } else
     stop(.distr6$huberize_discrete)
-}) # IN PROGRESS
+})
 
 #' @title Huberize a Distribution
 #' @description S3 functionality to huberize an R6 distribution.

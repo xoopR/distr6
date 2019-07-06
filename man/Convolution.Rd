@@ -6,6 +6,13 @@
 \description{
 Calculates the convolution of two distribution via numerical calculations.
 }
+\details{
+STILL IN DEVELOPMENT. Results are likely sub-optimal.
+}
+\section{Constructor}{
+ Convolution$new(dist1, dist2, add = TRUE, type = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -13,9 +20,10 @@ Calculates the convolution of two distribution via numerical calculations.
 \code{dist1} \tab distribution \tab First distribution in convolution. \cr
 \code{dist2} \tab distribution \tab Second distribution in convolution. \cr
 \code{add} \tab logical \tab Add or subtract distributions. \cr
+\code{type} \tab logical \tab Type of new distribution, automated if NULL. \cr
 }
 }
 
 \seealso{
-\code{\link{DistributionWrapper}}
+\code{\link{listWrappers}}
 }

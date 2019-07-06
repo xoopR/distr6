@@ -26,7 +26,7 @@
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods
 #'
-#' @seealso \code{\link{listWrappers}}.
+#' @seealso \code{\link{listWrappers}}
 #'
 #' @examples
 #' mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),

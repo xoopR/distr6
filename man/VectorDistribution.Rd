@@ -2,7 +2,7 @@
 % Please edit documentation in R/Wrapper_VectorDistribution.R
 \name{VectorDistribution}
 \alias{VectorDistribution}
-\title{Vector Distribution}
+\title{Vectorise Distributions}
 \description{
 A wrapper for creating a vector of distributions.
 }
@@ -11,15 +11,19 @@ A vector of distributions has the following relationship
 \deqn{f_V(X1 = x1,...,XN = xN) = f_X1(x1), ..., f_XN(xn)}
 \deqn{F_V(X1 = x1,...,XN = xN) = F_X1(x1), ..., F_XN(xn)}
 where f_V/F_V is the pdf/cdf of the vector of distributions V and X1,...,XN are distributions.
-
-\code{VectorDistribution} inherits all methods from \code{\link{Distribution}} and
-\code{\link{DistributionWrapper}}.
 }
+\section{Constructor}{
+ VectorDistribution$new(distlist, name = NULL, short_name = NULL, description = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
+\code{name} \tab list \tab Optional new name for distribution. \cr
+\code{short_name} \tab list \tab Optional new short_name for distribution. \cr
+\code{description} \tab list \tab Optional new description for distribution. \cr
 }
 }
 
@@ -101,13 +105,13 @@ where f_V/F_V is the pdf/cdf of the vector of distributions V and X1,...,XN are 
 }
 
 \examples{
-vecBin <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10),
-                                   Normal$new(mean = 15)))
+vecBin <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
+                           size = 10), Normal$new(mean = 15)))
 vecBin$pdf(x1 = 2, x2 =3)
 vecBin$cdf(1:5, 12:16)
 vecBin$rand(10)
+
 }
 \seealso{
-\code{\link{ArrayDistribution}} and \code{\link{ProductDistribution}}. As well as \code{\link{DistributionWrapper}}
-for wrapper details.
+\code{\link{listWrappers}}
 }

@@ -1,8 +1,7 @@
 #' @name ProductDistribution
 #' @title Product Distribution
 #' @description A wrapper for creating the joint distribution of multiple independent probability distributions.
-#' @seealso \code{\link{ArrayDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}
-#' for wrapper details.
+#' @seealso \code{\link{ArrayDistribution}}, \code{\link{listWrappers}}
 #' @details Exploits the following relationships of independent distributions
 #' \deqn{f_P(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
 #' \deqn{F_P(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
@@ -10,12 +9,16 @@
 #'
 #' \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 #'
+#' @section Constructor: ProductDistribution$new(distlist, name = NULL, short_name = NULL, description = NULL)
+#'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{distlist} \tab list \tab List of distributions. \cr
+#' \code{name} \tab list \tab Optional new name for distribution. \cr
+#' \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
+#' \code{description} \tab list \tab Optional new description for distribution. \cr
 #' }
-#'
 #'
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods

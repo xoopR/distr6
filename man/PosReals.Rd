@@ -9,7 +9,7 @@ The mathematical set of positive real numbers.
 \details{
 The set of Positive Reals is defined as the union of the set of positive rationals and positive
 irrationals, i.e.
-\deqn{PosReals = I+ ∪ Q+}
+\deqn{PosReals = I+ \cup Q+}
 where \eqn{I+} is the set of positive irrationals and \eqn{Q+} is the set of positive rationals.
 
 \eqn{0} may or may not be included (depending on the \code{zero} argument).

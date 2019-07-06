@@ -17,6 +17,9 @@ where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper)
 pdf/cdf of the original distribution.
 
 If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+
+The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
+\code{FunctionImputation} first.
 }
 \section{Constructor}{
  HuberizedDistribution$new(distribution, lower = NULL, upper = NULL)
@@ -110,11 +113,13 @@ If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self
 }
 
 \examples{
-hubBin <- HuberizedDistribution$new(Binomial$new(prob = 0.5, size = 10), lower = 2, upper = 4)
+hubBin <- HuberizedDistribution$new(
+          Binomial$new(prob = 0.5, size = 10),
+          lower = 2, upper = 4)
 hubBin$getParameterValue("prob")
 hubBin$pdf(2)
 
 }
 \seealso{
-\code{\link{listWrappers}}.
+\code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{huberize}}
 }

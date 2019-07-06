@@ -116,5 +116,5 @@ mixture$cdf(1)
 
 }
 \seealso{
-\code{\link{listWrappers}}.
+\code{\link{listWrappers}}
 }

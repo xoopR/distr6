@@ -14,7 +14,8 @@ Exploits the following relationships of independent distributions
 where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
 }
 \section{Constructor}{
- ArrayDistribution$new(distribution, paramList)
+ ArrayDistribution$new(distribution, paramList, name = NULL, short_name = NULL,
+description = NULL)
 }
 
 \section{Constructor Arguments}{
@@ -22,7 +23,10 @@ where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distribution} \tab distribution \tab Distribution to wrap. \cr
-\code{paramList} \tab list \tab List of parameters, see examples. \cr
+\code{paramList} \tab list \tab List of parameters, see example. \cr
+\code{name} \tab list \tab Optional new name for distribution. \cr
+\code{short_name} \tab list \tab Optional new short_name for distribution. \cr
+\code{description} \tab list \tab Optional new description for distribution. \cr
 }
 }
 
@@ -104,13 +108,15 @@ where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN
 }
 
 \examples{
-a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
-                                        list(prob = 0.2, size = 6)))
+a = ArrayDistribution$new(Binomial,
+              list(list(prob = 0.1, size = 2),
+                   list(prob = 0.6, size = 4),
+                   list(prob = 0.2, size = 6)))
 a$pdf(x1=1,x2=2,x3=3)
 a$cdf(x1=1,x2=2,x3=3)
 a$rand(10)
 
 }
 \seealso{
-\code{\link{ProductDistribution}}
+\code{\link{listWrappers}}
 }

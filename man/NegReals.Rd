@@ -9,7 +9,7 @@ The mathematical set of negative real numbers.
 \details{
 The set of Negative Reals is defined as the union of the set of negative rationals and negative
 irrationals, i.e.
-\deqn{NegReals = I- ∪ Q-}
+\deqn{NegReals = I- \cup Q-}
 where \eqn{I-} is the set of negative irrationals and \eqn{Q-} is the set of negative rationals.
 
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
