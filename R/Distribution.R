@@ -660,30 +660,36 @@ Distribution$set("public","parameters",function(id = NULL, error = "warn"){
 })
 # Documented in ParameterSet.R
 Distribution$set("public","getParameterValue",function(id, error = "warn"){
-  return(private$.parameters$getParameterValue(id, error))
+  if(length(private$.parameters)==0)
+    return(NULL)
+  else
+    return(private$.parameters$getParameterValue(id, error))
 })
 # Documented in ParameterSet.R
 Distribution$set("public","setParameterValue",function(lst, error = "warn"){
+  if(length(private$.parameters)==0)
+    return(NULL)
+  else{
+    if(length(lst)!=0){
 
-  if(length(lst)!=0){
+      self$parameters()$setParameterValue(lst, error)
 
-    self$parameters()$setParameterValue(lst, error)
+      # Update skewness and kurtosis
+      x = suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
+      if(class(x) == "try-error")
+        private$.properties$kurtosis <- NULL
+      else
+        private$.properties$kurtosis <- exkurtosisType(x)
 
-    # Update skewness and kurtosis
-    x = suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
-    if(class(x) == "try-error")
-      private$.properties$kurtosis <- NULL
-    else
-      private$.properties$kurtosis <- exkurtosisType(x)
+      x = suppressMessages(try(self$skewness(), silent = TRUE))
+      if(class(x) == "try-error")
+        private$.properties$skewness <- NULL
+      else
+        private$.properties$skewness <- skewType(x)
 
-    x = suppressMessages(try(self$skewness(), silent = TRUE))
-    if(class(x) == "try-error")
-      private$.properties$skewness <- NULL
-    else
-      private$.properties$skewness <- skewType(x)
-
-    #private$.setWorkingSupport()
-    invisible(self)
+      #private$.setWorkingSupport()
+      invisible(self)
+    }
   }
 })
 

@@ -29,7 +29,7 @@ If an analytic expression isn't available, returns error. To impute a numerical 
 \code{\link{ExoticStatistics}} decorator.
 }
 \section{R6 Usage}{
- $cumHazard(object, p = 2, lower = NULL, upper = NULL)
+ $cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
 }
 
 \seealso{

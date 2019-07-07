@@ -118,6 +118,7 @@ MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"
   }
 
   return(super$setParameterValue(lst, error))
+  invisible(self)
 })
 MultivariateNormal$set("public","getParameterValue",function(id, error = "warn"){
   if("cov" %in% id)

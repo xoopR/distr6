@@ -11,12 +11,13 @@ test_that("initialize",{
 })
 
 
-
 test_that("getters",{
   expect_silent(Binomial$new()$getParameterValue("prob"))
   expect_silent(Binomial$new()$parameters("prob"))
+  expect_silent(Binomial$new()$parameters("prodsdsb"))
   expect_silent(Binomial$new()$parameters())
   expect_warning(Binomial$new()$getParameterValue("prob2"))
+  expect_silent(Binomial$new()$parameters())
 })
 
 test_that("setters",{
@@ -28,4 +29,9 @@ test_that("setters",{
 test_that("rbind",{
   expect_error(rbind(Binomial$new()$parameters(),Binomial$new()$parameters()))
   expect_silent(Binomial$new()$parameters()$rbind(Exponential$new(rate=1)$parameters()))
+})
+
+test_that("no parameters",{
+  expect_null(UniformKernel$new()$parameters())
+ UniformKernel$new()$getParameterValue("id")
 })

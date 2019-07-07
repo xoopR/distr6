@@ -224,12 +224,9 @@ ParameterSet$set("public","update", function(...){
 #' @export
 NULL
 ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
-  if(length(private$.parameters)==0)
-    stopwarn(error, "There are no parameters in this distribution.")
-
   if(!is.null(id)){
     id0 = id
-    if(length(subset(private$.parameters, id %in% id0))==0)
+    if(nrow(subset(private$.parameters, id %in% id0))==0)
       return(self)
     else
       return(subset(private$.parameters, id %in% id0))
@@ -256,9 +253,6 @@ ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
 #' @export
 NULL
 ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
-
-  if(length(private$.parameters)==0)
-    stopwarn(error, "There are no parameters in this distribution.")
   if(missing(id))
     stopwarn(error, "Argument 'id' is missing, with no default.")
   support = self$parameters(id)[["support"]]
@@ -287,9 +281,6 @@ ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
 #' @export
 NULL
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
-
-  if(length(private$.parameters)==0)
-    stopwarn(error, "There are no parameters in this distribution.")
   if(missing(id))
     stopwarn(error, "Argument 'id' is missing, with no default.")
   val = self$parameters(id)[["value"]]
@@ -319,8 +310,6 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 #' @export
 NULL
 ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
-  if(length(private$.parameters)!=0){
-
     checkmate::assertList(lst)
     for(i in 1:length(lst)){
       if(any(is.null(lst[[i]])) | any(is.nan(lst[[i]])))
@@ -342,12 +331,10 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
     }
 
-
     self$update()
 
     invisible(self)
-  }
-}) # NEEDS TESTING
+})
 
 #' @title Combine ParameterSets
 #'
@@ -404,15 +391,6 @@ ParameterSet$set("public","as.data.table",function(){
 #' @export
 as.ParameterSet <- function(x,...){
   UseMethod("as.ParameterSet", x)
-}
-
-#' @rdname as.ParameterSet
-#' @export
-as.ParameterSet.data.frame <- function(x,...){
-  return(ParameterSet$new(id = list(x$id), value = list(x$value), support = list(x$support),
-                          settable = list(x$settable),
-                          updateFunc = list(x$updateFunc),
-                          description = list(x$description)))
 }
 
 #' @rdname as.ParameterSet

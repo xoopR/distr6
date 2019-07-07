@@ -71,6 +71,18 @@ dbin = function(x){
   return(m1 * m2 * m3)
 }
 
+pbin = function(x){
+  sapply(x, function(x1){
+    return(sum(sapply(0:x1, function(x1){
+      m1 = choose(self$getParameterValue(id="size"), x1)
+      m2 = self$getParameterValue(id="prob")^x1
+      m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x1)
+      return(m1 * m2 * m3)
+    })))
+  })
+
+}
+
 ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.5, 10, 0.8),
                       support = list(Interval$new(0,1), PosNaturals$new(), Interval$new(0,1)),
                       settable = list(TRUE, TRUE, FALSE),
@@ -90,6 +102,21 @@ test_that("discrete r/p/q",{
   decorate(discreteTester, FunctionImputation)
   expect_silent(expect_equal(discreteTester$pdf(1),dbinom(1,10,0.5)))
   expect_equal(discreteTester$cdf(1),pbinom(1,10,0.5))
+  expect_message(expect_equal(discreteTester$quantile(0.42), qbinom(0.42,10, 0.5)))
+  expect_message(discreteTester$rand(1))
+})
+
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
+                                  symmetric=TRUE, type = PosNaturals$new(),
+                                  distrDomain=PosNaturals$new(),
+                                  cdf = pbin,
+                                  parameters = ps,
+                                  decorators = list(FunctionImputation)
+)
+
+test_that("discrete r/p/q",{
+  expect_silent(expect_equal(discreteTester$cdf(1),pbinom(1,10,0.5)))
+  expect_equal(discreteTester$pdf(1),dbinom(1,10,0.5))
   expect_message(expect_equal(discreteTester$quantile(0.42), qbinom(0.42,10, 0.5)))
   expect_message(discreteTester$rand(1))
 })

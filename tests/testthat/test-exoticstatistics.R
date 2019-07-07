@@ -33,6 +33,22 @@ test_that("numeric survival functions",{
   expect_message(expect_equal(continuousTester$cumHazard(2), -pexp(2, log = T, lower.tail = F)))
 })
 
+continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
+                                    symmetric=TRUE, type = PosReals$new(zero=T),
+                                    distrDomain=PosReals$new(),
+                                    cdf = cexpo,
+                                    parameters = ps,
+                                    decorators = ExoticStatistics
+)
+
+test_that("numeric survival functions",{
+  expect_silent(expect_equal(continuousTester$survival(1), pexp(1, lower.tail = F)))
+  expect_message(expect_equal(continuousTester$hazard(1), dexp(1)/pexp(1, lower.tail = F)))
+  expect_message(expect_equal(continuousTester$hazard(1, T), log(dexp(1)/pexp(1, lower.tail = F))))
+  expect_silent(expect_equal(continuousTester$cumHazard(2), -pexp(2, log = T, lower.tail = F)))
+  expect_silent(expect_equal(continuousTester$cumHazard(2, T), log(-pexp(2, log = T, lower.tail = F))))
+})
+
 
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),

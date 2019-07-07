@@ -187,7 +187,10 @@ ExoticStatistics$set("public", "hazard", function(x1, log = FALSE) {
     pdf = self$pdf(x1)
   else if(private$.isCdf){
     message(.distr6$message_numeric)
-    pdf = deriv(y~self$cdf(x1),"x1")
+    pdf = try(as.numeric(attr(deriv(y~self$cdf(x1),"x1", func = TRUE)(x1),"gradient")),
+            silent = TRUE)
+    if(inherits(pdf,"try-error"))
+      pdf = pracma::fderiv(self$cdf,x1)
   }
 
   surv = self$survival(x1)
@@ -240,7 +243,7 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
 #' @description The p-norm of the cdf evaluated between given limits or over the whole support.
 #'
 #' @usage cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
-#' @section R6 Usage: $cumHazard(object, p = 2, lower = NULL, upper = NULL)
+#' @section R6 Usage: $cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
 #'
 #' @param object Distribution.
 #' @param p p-norm to calculate.

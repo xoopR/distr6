@@ -312,7 +312,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
     else if(grepl("^[s,S]", type)) type <- "standard"
     else if(grepl("^[r,R]", type)) type <- "raw"
     else{
-      warning("Type not recognised, central used")
+      message("Type not recognised, central used")
       type <- "central"
     }
 

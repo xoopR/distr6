@@ -84,6 +84,8 @@ test_that("variance",{
 })
 
 test_that("kthmoment",{
+  expect_message(expect_equal(continuousTester$kthmoment(3, "d"), continuousTester$kthmoment(3, "c")))
+
   expect_message(expect_equal(continuousTester$kthmoment(3, "s"), Exponential$new()$skewness()))
   expect_message(expect_equal(discreteTester$kthmoment(3, "s"), Binomial$new()$skewness()))
 

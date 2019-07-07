@@ -2,14 +2,11 @@
 % Please edit documentation in R/ParameterSet.R
 \name{as.ParameterSet}
 \alias{as.ParameterSet}
-\alias{as.ParameterSet.data.frame}
 \alias{as.ParameterSet.data.table}
 \alias{as.ParameterSet.list}
 \title{Coerce to a ParameterSet}
 \usage{
 as.ParameterSet(x,...)
-
-\method{as.ParameterSet}{data.frame}(x, ...)
 
 \method{as.ParameterSet}{data.table}(x, ...)
 
