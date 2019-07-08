@@ -28,6 +28,7 @@
 #'                            size = 10), Normal$new(mean = 15)))
 #' vecBin$pdf(x1 = 2, x2 =3)
 #' vecBin$cdf(1:5, 12:16)
+#' vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
 #' vecBin$rand(10)
 #'
 #' @export
@@ -68,6 +69,17 @@ VectorDistribution$set("public","initialize",function(distlist, name = NULL,
     return(y)
   },list(n = length(distlist)))
 
+  quantile = function() {}
+  formals(quantile) = lst
+  body(quantile) = substitute({
+    quantiles = NULL
+    for(i in 1:n)
+      quantiles = c(quantiles,self$wrappedModels()[[i]]$quantile(get(paste0("x",i))))
+    y = data.table::data.table(matrix(quantiles, ncol = n))
+    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    return(y)
+  },list(n = length(distlist)))
+
   rand = function(n) {
     return(data.table::data.table(sapply(self$wrappedModels(), function(x) x$rand(n))))
   }
@@ -77,7 +89,7 @@ VectorDistribution$set("public","initialize",function(distlist, name = NULL,
   support = do.call(product.SetInterval, lapply(distlist,function(x) x$support()))
   distrDomain = do.call(product.SetInterval, lapply(distlist,function(x) x$distrDomain()))
 
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
+  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand, name = name,
                    short_name = short_name, description = description, support = support, type = type,
                    distrDomain = distrDomain)
 })

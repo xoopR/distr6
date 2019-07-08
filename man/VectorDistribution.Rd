@@ -96,6 +96,7 @@ vecBin <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
                            size = 10), Normal$new(mean = 15)))
 vecBin$pdf(x1 = 2, x2 =3)
 vecBin$cdf(1:5, 12:16)
+vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
 vecBin$rand(10)
 
 }

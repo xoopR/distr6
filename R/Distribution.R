@@ -871,19 +871,31 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
   if(!private$.isQuantile)
     return(NULL)
 
-  if(log.p)
-    p = exp(p)
+  if(testUnivariate(self)){
+    if(log.p)
+      p = exp(p)
 
-  if(!lower.tail)
-    p = 1 - p
+    if(!lower.tail)
+      p = 1 - p
 
-  quantile = p
-  quantile[p > 1] = NaN
-  quantile[p < 0] = NaN
-  quantile[p == 0] = self$inf()
-  quantile[p == 1] = self$sup()
-  if(sum(p > 0 & p < 1)!=0)
-    quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
+    quantile = p
+    quantile[p > 1] = NaN
+    quantile[p < 0] = NaN
+    quantile[p == 0] = self$inf()
+    quantile[p == 1] = self$sup()
+    if(sum(p > 0 & p < 1)!=0)
+      quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
+  } else{
+    p = c(list(p), list(...))
+
+    if(log.p)
+      p = lapply(p, exp)
+
+    if(!lower.tail)
+      p = lapply(p, function(x) 1 - x)
+
+    quantile = do.call(private[[".quantile"]], args = p)
+  }
 
   if(inherits(quantile,"data.table"))
     return(quantile)
