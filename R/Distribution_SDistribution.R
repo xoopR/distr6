@@ -16,6 +16,8 @@
 #'   \code{package} \tab The package p/d/q/r are implemented in.
 #'  }
 #'
+#' @inheritSection Distribution Public Methods
+#'
 #' @section Public Methods:
 #'  \tabular{ll}{
 #'   \strong{Accessor Methods} \tab \strong{Link} \cr
@@ -44,6 +46,7 @@
 #'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
 #'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
 #'   \code{variance()} \tab \code{\link{variance}} \cr
+#'   \code{stdev()} \tab \code{\link{stdev}} \cr
 #'   \code{prec()} \tab \code{\link{prec}} \cr
 #'   \code{cor()} \tab \code{\link{cor}} \cr
 #'   \code{skewness()} \tab \code{\link{skewness}} \cr
@@ -67,8 +70,8 @@
 #'
 #'   \strong{Validation Methods} \tab \strong{Link} \cr
 #'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-#'   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
-#'   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+#'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
+#'   \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 #'
 #'   \tab \cr \tab \cr \tab \cr
 #'
@@ -82,6 +85,9 @@
 #'
 #' @export
 NULL
+#-------------------------------------------------------------
+# SDistribution Definition
+#-------------------------------------------------------------
 SDistribution <- R6::R6Class("SDistribution", inherit = Distribution)
 SDistribution$set("public","initialize",function(...){
   if(getR6Class(self) == "SDistribution")

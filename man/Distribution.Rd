@@ -5,9 +5,7 @@
 \title{Generalised Distribution Object}
 \description{
 A generalised distribution object for defining custom probability distributions
-  as well as serving as the parent class to specific, familiar distributions. Common
-  mathematical and statistical methods for distributions are defined here with approximate numerical
-  calculations (as opposed to analytical results).
+  as well as serving as the parent class to specific, familiar distributions.
 }
 \section{Constructor}{
  Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
@@ -91,11 +89,18 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
   \tab \cr \tab \cr \tab \cr
-  \strong{p/d/q/r Methods} \tab \strong{Link} \cr
+  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
+  \tab \cr \tab \cr \tab \cr
+  \strong{Statistical Methods} \tab \strong{Link} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
+  \code{stdev()} \tab \code{\link{stdev}}\cr
+  \code{median()} \tab \code{\link{median.Distribution}} \cr
+  \code{iqr()} \tab \code{\link{iqr}} \cr
+  \code{cor()} \tab \code{\link{cor}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
@@ -104,8 +109,8 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
+  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr

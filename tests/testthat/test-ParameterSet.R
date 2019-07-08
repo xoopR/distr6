@@ -33,5 +33,10 @@ test_that("rbind",{
 
 test_that("no parameters",{
   expect_null(UniformKernel$new()$parameters())
- UniformKernel$new()$getParameterValue("id")
+  expect_null(UniformKernel$new()$setParameterValue("d"))
+})
+
+
+test_that("verbose ps",{
+  expect_message(lapply(listDistributions(simplify = T), function(x) get(x)$new(verbose = T)))
 })

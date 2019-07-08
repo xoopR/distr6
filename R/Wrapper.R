@@ -12,14 +12,7 @@
 #'
 #' @seealso \code{\link{listWrappers}}
 #'
-#' @section Public Variables:
-#'  \tabular{ll}{
-#'   \strong{Variable} \tab \strong{Return} \cr
-#'   \code{name} \tab Name of distribution. \cr
-#'   \code{short_name} \tab Id of distribution. \cr
-#'   \code{description} \tab Brief description of distribution. \cr
-#'   \code{package} \tab The package p/d/q/r are implemented in.
-#'  }
+#' @inheritSection SDistribution Public Variables
 #'
 #' @section Public Methods:
 #'  \tabular{ll}{
@@ -40,43 +33,30 @@
 #'   \code{dmin()} \tab \code{\link{dmin}} \cr
 #'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
 #'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-#'
 #'   \tab \cr \tab \cr \tab \cr
-#'
-#'   \strong{Statistical Methods} \tab \strong{Link} \cr
+#'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
 #'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
 #'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
 #'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
 #'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{var()} \tab \code{\link{var}} \cr
-#'   \code{cor()} \tab \code{\link{cor}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-#'   \code{sd()} \tab \code{\link{sd}} \cr
+#'   \tab \cr \tab \cr \tab \cr
+#'   \strong{Statistical Methods} \tab \strong{Link} \cr
+#'   \code{prec()} \tab \code{\link{prec}} \cr
+#'   \code{stdev()} \tab \code{\link{stdev}}\cr
 #'   \code{median()} \tab \code{\link{median.Distribution}} \cr
 #'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'
+#'   \code{cor()} \tab \code{\link{cor}} \cr
 #'   \tab \cr \tab \cr \tab \cr
-#'
 #'   \strong{Parameter Methods} \tab \strong{Link} \cr
 #'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
 #'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#'
 #'   \tab \cr \tab \cr \tab \cr
-#'
 #'   \strong{Validation Methods} \tab \strong{Link} \cr
 #'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-#'   \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
-#'   \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
-#'
+#'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
+#'   \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 #'   \tab \cr \tab \cr \tab \cr
-#'
 #'   \strong{Representation Methods} \tab \strong{Link} \cr
 #'   \code{strprint()} \tab \code{\link{strprint}} \cr
 #'   \code{print()} \tab \code{\link[base]{print}} \cr

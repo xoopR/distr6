@@ -23,7 +23,7 @@ test_that("statistics",{
   expect_equal(b$mgf(1), exp((exp(1)-1)))
   expect_equal(b$cf(1), exp((exp(1i)-1)))
   expect_equal(b$pgf(1), 1)
-  expect_error(b$mode())
+  expect_equal(b$mode(), 1)
   expect_equal(b$pdf(1), dpois(1,1))
   expect_equal(b$cdf(1), ppois(1,1))
   expect_equal(b$quantile(0.56), qpois(0.56,1))

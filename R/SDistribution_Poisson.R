@@ -64,6 +64,9 @@ Poisson$set("public","package","stats")
 Poisson$set("public","mean",function(){
   return(self$getParameterValue("rate"))
 })
+Poisson$set("public","mode",function(){
+  return(floor(self$getParameterValue("rate")))
+})
 Poisson$set("public","variance",function(){
   return(self$getParameterValue("rate"))
 })

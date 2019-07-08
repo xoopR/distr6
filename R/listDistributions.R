@@ -35,12 +35,29 @@ listDistributions <- function(simplify=FALSE, filter=NULL){
     distrs = data.table::rbindlist(lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
-      ShortName = x$public_fields$short_name
       Package = x$public_fields$package
-      x = x$new()
-      ValueSupport = x$valueSupport()
-      VariateForm = x$variateForm()
-      Type = x$type()$getSymbol()
+      ShortName = x$public_fields$short_name
+
+      sup <- body(x$public_methods$initialize)[grepl("super$initialize", body(x$public_methods$initialize), fixed = T)]
+      if(grepl("continuous", sup))
+        ValueSupport = "continuous"
+      else if(grepl("discrete", sup))
+        ValueSupport = "discrete"
+      else
+        ValueSupport = "mixture"
+
+      if(grepl("univariate", sup))
+        VariateForm = "univariate"
+      else if(grepl("multivariate", sup))
+        VariateForm = "multivariate"
+      else
+        VariateForm = "matrixvariate"
+
+      match = regexpr('type[[:blank:]]*=[[:blank:]]*[[:alpha:]]*[[:punct:]]{1}new\\((.*)\\)$', sup)
+      sup = substr(sup, match[1], attr(match, "match.length") + match[1])
+      sup = substr(sup,1,regexpr("\\)",sup)[1])
+      Type = eval(parse(text = trimws(substr(sup, regexpr("=", sup, fixed = T)[1]+1, nchar(sup)))))$getSymbol()
+
       return(data.table::data.table(ShortName, ClassName, Type, ValueSupport, VariateForm, Package))
     }))
     row.names(distrs) = NULL
