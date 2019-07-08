@@ -38,13 +38,18 @@ as an integer and either prob (probability of success) or qprob (probability of 
 between 0 and 1. If \code{qprob} is given then \code{prob} is ignored.
 }
 
-\section{Public Methods}{
+\section{Public Variables}{
 
-\tabular{ll}{
-\strong{Test} \tab \strong{Another} \cr
-Hello \tab Goodbye
+ \tabular{ll}{
+  \strong{Variable} \tab \strong{Return} \cr
+  \code{name} \tab Name of distribution. \cr
+  \code{short_name} \tab Id of distribution. \cr
+  \code{description} \tab Brief description of distribution. \cr
+  \code{package} \tab The package p/d/q/r are implemented in.
+ }
 }
 
+\section{Public Methods}{
 
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
@@ -159,17 +164,6 @@ Hello \tab Goodbye
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
   }
-}
-
-\section{Public Variables}{
-
- \tabular{ll}{
-  \strong{Variable} \tab \strong{Return} \cr
-  \code{name} \tab Name of distribution. \cr
-  \code{short_name} \tab Id of distribution. \cr
-  \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
- }
 }
 
 \examples{

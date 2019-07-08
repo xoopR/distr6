@@ -109,7 +109,6 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
     checkmate::assertLogical(a_settable, .var.name = "'settable' must be logical")
 
     a_support = support[[i]]
-    if(inherits(a_support,"list")) a_support <- a_support[[1]]
     checkmate::assert(inherits(a_support, "SetInterval"),
                       .var.name = "'class' must inherit class 'SetInterval'")
 
@@ -254,10 +253,11 @@ ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
 NULL
 ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
   if(missing(id))
-    stopwarn(error, "Argument 'id' is missing, with no default.")
+    return(stopwarn(error, "Argument 'id' is missing, with no default."))
+
   support = self$parameters(id)[["support"]]
   if(length(support)==0){
-    stopwarn(error, paste(id, "is not a parameter in this distribution."))
+    return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
   }else
     return(unlist(support[[1]]))
 
@@ -282,10 +282,10 @@ ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
 NULL
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
   if(missing(id))
-    stopwarn(error, "Argument 'id' is missing, with no default.")
+    return(stopwarn(error, "Argument 'id' is missing, with no default."))
   val = self$parameters(id)[["value"]]
   if(length(val)==0){
-    stopwarn(error, paste(id, "is not a parameter in this distribution."))
+    return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
   }else
     return(unlist(val[[1]]))
 
@@ -321,7 +321,7 @@ ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
       param <- subset(self$as.data.table(), id == aid)
 
       if(nrow(param)==0)
-        stopwarn(error, sprintf("%s is not in the parameter set.",id))
+        return(stopwarn(error, sprintf("%s is not in the parameter set.",aid)))
 
       if(param$support[[1]]$class() == "integer")
         value <- round(value)

@@ -47,3 +47,8 @@ test_that("ifnerror",{
   expect_warning(ifnerror(stop("Error"),"Success","warn",silent = T))
   expect_error(ifnerror(stop("Error"),"Success","stop",silent = T))
 })
+
+test_that("modal",{
+  expect_equal(modal(c(1,2,2,4,5,6,7,2,4,4,2,4,2)), 2)
+  expect_equal(modal(c(1,2,2,4,5,6,7,2,4,4,2,4,2,4)), c(2,4))
+})

@@ -105,3 +105,25 @@ test_that("mean",{
   expect_message(expect_equal(continuousTester$mean(), Exponential$new()$mean()))
   expect_equal(discreteTester$mean(), Binomial$new()$mean())
 })
+
+
+rbin = function(n){
+  pdf = function(x){
+    m1 = choose(self$getParameterValue(id="size"), x)
+    m2 = self$getParameterValue(id="prob")^x
+    m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
+    return(m1 * m2 * m3)
+  }
+  return(sample(1:10, size = n, replace = T, prob = pdf(1:10)))
+}
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
+                                  symmetric=TRUE, type = PosNaturals$new(),
+                                  distrDomain=PosNaturals$new(),
+                                  pdf = dbin, rand = rbin,
+                                  parameters = ps,
+                                  decorators = CoreStatistics
+)
+
+test_that("rand2mode",{
+  expect_equal(discreteTester$mode(), Binomial$new()$mode())
+})

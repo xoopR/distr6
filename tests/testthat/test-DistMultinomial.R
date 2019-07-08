@@ -48,7 +48,10 @@ test_that("statistics",{
   expect_equal(mn$cf(1:3), sum(exp((1:3) * 1i)*probs)^3)
   expect_error(mn$mode())
   expect_equal(mn$pdf(1,5,7), 0)
-  expect_error(mn$pdf(c(1,7)))
+  expect_error(mn$pdf(1,7))
+  expect_error(mn$pdf(1,7,8,9))
+  expect_silent(mn$pdf(c(1,2),c(8,7),c(1,2)))
+  expect_error(mn$pdf(c(1,2),c(8,7),c(1)))
   expect_equal(mn$pdf(1,1,1), dmultinom(x = c(1,1,1), prob = probs))
   expect_equal(Multinomial$new(probs=c(1,4),size=5)$pdf(c(1,2,0),c(4,3,5)),
                c(dmultinom(x = c(1,4), prob = c(1,4)),

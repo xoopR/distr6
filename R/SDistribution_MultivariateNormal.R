@@ -104,7 +104,8 @@ MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"
     lst$cov <- as.numeric(lst$cov)
   }
   if(!is.null(lst$prec)){
-    if(any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))))
+    if(any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
+       length(dim) != self$getParameterValue("K")^2)
       lst$prec <- matrix(lst$prec, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
     lst$prec <- as.numeric(lst$prec)
   }
@@ -117,7 +118,7 @@ MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"
     lst$mean <- as.numeric(lst$mean)
   }
 
-  return(super$setParameterValue(lst, error))
+  super$setParameterValue(lst, error)
   invisible(self)
 })
 MultivariateNormal$set("public","getParameterValue",function(id, error = "warn"){
@@ -152,6 +153,14 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
     if(isSymmetric.matrix(self$variance()) & all(eigen(self$variance(),only.values = T)$values > 0)){
 
       K <- self$getParameterValue("K")
+      call <- mget(paste0("x",1:K))
+
+      if(!all(unlist(lapply(call, is.numeric))))
+        stop(paste(K,"arguments expected."))
+
+      if(length(unique(unlist(lapply(call,length)))) > 1)
+        stop("The same number of points must be passed to each variable.")
+
       cov <- self$getParameterValue("cov")
       xs <- matrix(unlist(mget(paste0("x",1:K))), ncol = K)
       mean <- matrix(self$getParameterValue("mean"), nrow = nrow(xs), ncol = K, byrow = T)

@@ -120,9 +120,13 @@ Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL
     K <- self$getParameterValue("K")
 
     call <- mget(paste0("x",1:K))
-    if(length(unique(unlist(lapply(call,length)))) > 1){
+
+    if(!all(unlist(lapply(call, is.numeric))))
+      stop(paste(self$getParameterValue("K"),"arguments expected."))
+
+    if(length(unique(unlist(lapply(call,length)))) > 1)
       stop("The same number of points must be passed to each variable.")
-    }
+
     args <- matrix(as.numeric(unlist(call)), ncol = K)
 
     params <- self$getParameterValue("params")

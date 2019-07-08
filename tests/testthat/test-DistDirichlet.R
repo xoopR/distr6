@@ -45,6 +45,8 @@ test_that("statistics",{
                c(extraDistr::ddirichlet(c(0.2,0.8),params),
                  extraDistr::ddirichlet(c(0.5,0.5),params)))
   expect_error(mn$pdf(1,c(1,2)))
+  expect_error(mn$pdf(1))
+  expect_error(mn$pdf(1,3,4))
   expect_null(mn$cdf(1,2))
   expect_null(mn$quantile(0.1,0.2))
   expect_equal(dim(mn$rand(10)),c(10,2))

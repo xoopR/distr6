@@ -86,12 +86,8 @@ DistributionWrapper$set("public","initialize",function(distlist,...){
     }))
     row.names(params) <- NULL
     params <- as.ParameterSet(params)
-  } else{
-    if(length(distlist) == 1)
-      params <- distlist[[1]]$parameters()
-    else
-      params <- do.call(rbind,lapply(distlist, function(x) x$parameters()))
-  }
+  } else
+    params <- distlist[[1]]$parameters()
 
   super$initialize(parameters = params, ...)
 })

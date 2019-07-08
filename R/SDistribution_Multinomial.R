@@ -142,6 +142,14 @@ Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), d
 
   pdf <- function(){
 
+    call = mget(paste0("x",1:self$getParameterValue("K")))
+
+    if(!all(unlist(lapply(call, is.numeric))))
+      stop(paste(self$getParameterValue("K"),"arguments expected."))
+
+    if(length(unique(unlist(lapply(call,length)))) > 1)
+      stop("The same number of points must be passed to each variable.")
+
     x = do.call(cbind,mget(paste0("x",1:self$getParameterValue("K"))))
     z = apply(x, 1, function(y){
       if(sum(y) != self$getParameterValue("size"))
