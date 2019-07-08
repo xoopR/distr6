@@ -10,7 +10,7 @@ test_that("constructor",{
   expect_error(Triangular$new(upper = Inf))
   expect_silent(Triangular$new(lower = 2.3, upper = 3.8))
   expect_silent(Triangular$new(lower = 2, upper = 8, mode = 6))
-  expect_silent(Triangular$new(lower = 2, upper = 8, mode = 1, symmetric = T))
+  expect_message(Triangular$new(lower = 2, upper = 8, mode = 1, symmetric = T, verbose = T))
   expect_equal(Triangular$new(symmetric = F)$.__enclos_env__$private$.type,"asymmetric")
   expect_equal(Triangular$new(symmetric = T)$.__enclos_env__$private$.type,"symmetric")
 })

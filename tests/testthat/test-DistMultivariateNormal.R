@@ -5,6 +5,7 @@ context("Multinomial distribution")
 test_that("constructor",{
   expect_silent(MultivariateNormal$new())
   expect_silent(MultivariateNormal$new(mean = c(0,0,0), prec = c(1,0,0,0,1,0,0,0,1)))
+  expect_message(MultivariateNormal$new(mean = c(0,0,0), prec = c(1,0,0,0,1,0,0,0,1), verbose = T))
   expect_error(MultivariateNormal$new(mean = 5))
   expect_warning(MultivariateNormal$new(mean = c(2,3), cov = matrix(c(1,3,4))))
 })

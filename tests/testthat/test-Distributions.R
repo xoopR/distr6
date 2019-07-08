@@ -71,3 +71,8 @@ test_that("check r/d/p/q", {
   expect_null(Distribution$new("Test", pdf = dbinom)$rand(1))
 })
 
+test_that("working_support",{
+  expect_silent(Exponential$new()$.__enclos_env__$private$.setWorkingSupport())
+  expect_equal(Exponential$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
+               list(inf = 0, sup = 36))
+})

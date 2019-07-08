@@ -1175,10 +1175,11 @@ Distribution$set("private",".setWorkingSupport",function(){
     }
 
     private$.workingSupport <- list(inf = newinf, sup = newsup)
+    invisible(self)
   })
 })
-Distribution$set("private",".getWorkingSupportRange",function(){
-  return(private$.workingSupport$inf:private$.workingSupport$sup)
+Distribution$set("private",".getWorkingSupport",function(){
+  return(private$.workingSupport)
 })
 Distribution$set("private",".updateDecorators", function(decs){
   private$.decorators <- decs

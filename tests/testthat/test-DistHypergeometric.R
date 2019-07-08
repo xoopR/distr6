@@ -9,7 +9,7 @@ test_that("parameterisation",{
     expect_equal(Hypergeometric$new(size = 10)$getParameterValue("size"), 10)
     expect_silent(Hypergeometric$new(size =10))
     expect_silent(Hypergeometric$new(successes = 5))
-    expect_silent(Hypergeometric$new(failures = 5))
+    expect_message(Hypergeometric$new(failures = 5, verbose = T))
     expect_equal(Hypergeometric$new(size = 10, failures = 2, draws=2)$getParameterValue("successes"), 8)
     expect_silent(Hypergeometric$new(draws = 2))
     H <- Hypergeometric$new()

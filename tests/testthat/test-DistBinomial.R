@@ -6,6 +6,7 @@ test_that("constructor", {
   expect_silent(Binomial$new())
   expect_silent(Binomial$new(prob = 0.2))
   expect_silent(Binomial$new(qprob = 0.2))
+  expect_message(Binomial$new(qprob = 0.2, verbose = T))
   expect_equal(Binomial$new(prob = 0.2)$getParameterValue("qprob"), 0.8)
   expect_equal(Binomial$new(qprob = 0.2)$getParameterValue("prob"), 0.8)
 })

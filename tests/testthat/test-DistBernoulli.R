@@ -6,6 +6,7 @@ test_that("constructor", {
   expect_silent(Bernoulli$new())
   expect_silent(Bernoulli$new(prob = 0.2))
   expect_silent(Bernoulli$new(qprob = 0.2))
+  expect_message(Bernoulli$new(qprob = 0.2, verbose = T))
   expect_equal(Bernoulli$new(prob = 0.2)$getParameterValue("qprob"), 0.8)
   expect_equal(Bernoulli$new(qprob = 0.2)$getParameterValue("prob"), 0.8)
 })

@@ -15,8 +15,8 @@ test_that("parameterisation",{
   expect_equal(Gamma$new(shape = 2,rate=3)$getParameterValue("scale"),1/3 )
   expect_equal(Gamma$new(shape = 2,rate=3)$getParameterValue("mean"),2/3 )
   expect_equal(Gamma$new(shape = 2,mean=3)$getParameterValue("rate"),2/3)
-  expect_equal(Gamma$new(mean=3)$getParameterValue("rate"),1/3)
-  expect_equal(Gamma$new(shape = 2,scale=3)$getParameterValue("rate"),1/3)
+  expect_message(expect_equal(Gamma$new(mean=3, verbose = T)$getParameterValue("rate"),1/3))
+  expect_message(expect_equal(Gamma$new(shape = 2,scale=3, verbose = T)$getParameterValue("rate"),1/3))
   expect_equal(Gamma$new(shape = 2,scale=3)$getParameterValue("mean"),6)
   expect_equal(Gamma$new(shape = 2,scale=3)$setParameterValue(list(mean = 2))$getParameterValue("rate"),
                1)

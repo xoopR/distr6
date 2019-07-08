@@ -4,6 +4,8 @@ context("NegativeBinomial distribution")
 
 test_that("parameterisation",{
   expect_equal(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3)$mean(), 5)
+  expect_message(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3, verbose = T))
+  expect_message(NegativeBinomial$new(size = 10, qprob = 0.3, verbose = T))
   expect_equal(NegativeBinomial$new(form = "dasd")$.__enclos_env__$private$.form, "fbs")
   expect_equal(NegativeBinomial$new(size = 10, prob = 0.2)$getParameterValue("qprob"),0.8)
   expect_equal(NegativeBinomial$new(size = 10, qprob = 0.8)$getParameterValue("mean"),40)

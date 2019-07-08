@@ -7,7 +7,7 @@ test_that("parameterisation",{
   expect_silent(Exponential$new(rate = 2, scale = 3))
   expect_equal(Exponential$new(rate = 2, scale = 3)$getParameterValue("scale"), 3)
   expect_equal(Exponential$new(scale = 3)$getParameterValue("scale"), 3)
-  expect_silent(Exponential$new(scale = 3))
+  expect_message(Exponential$new(scale = 3, verbose = T))
   expect_silent(Exponential$new(rate = 2))
   expect_equal(Exponential$new(rate = 2)$getParameterValue("rate"), 2)
   expect_equal(Exponential$new(rate = 2)$getParameterValue("scale"), 1/2)

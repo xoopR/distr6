@@ -7,9 +7,9 @@ test_that("constructor",{
   expect_silent(Normal$new(var = 1))
   expect_silent(Normal$new(sd = 1))
   expect_silent(Normal$new(prec = 1))
-  expect_silent(Normal$new(var = 2, sd = 3))
+  expect_message(Normal$new(var = 2, sd = 3, verbose = T))
   expect_silent(Normal$new(var = 2, prec = 3))
-  expect_silent(Normal$new(prec = 2, sd = 3))
+  expect_message(Normal$new(prec = 2, sd = 3, verbose = T))
   expect_silent(Normal$new(var = 2, sd = 3, prec = 4))
 
   expect_equal(Normal$new(var = 2)$getParameterValue("sd"), 2^0.5)
