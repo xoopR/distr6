@@ -35,11 +35,6 @@
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
-#' @section Public Methods:
-#' \tabular{ll}{
-#' \strong{Test} \tab \strong{Another} \cr
-#' Hello \tab Goodbye
-#' }
 #'
 #' @examples
 #' # Can be parameterised with probability of success or failure
