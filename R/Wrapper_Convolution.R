@@ -30,21 +30,22 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
     fnc <- function(x1) {}
     if(add){
       body(fnc) <- substitute({
-        message("Results from numerical integration are approximate only, better results may be available.")
+        message(.distr6$message_numeric)
         return(sapply(x1,function(z){
           integrate(f = function(y){self$wrappedModels(name1)$pdf(z - y)*
               self$wrappedModels(name2)$pdf(y)},
-              lower = self$wrappedModels(name2)$inf(), upper = z)$value
+              lower = -Inf,
+              upper = Inf)$value
         }))
       },list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name))
     } else {
       body(fnc) <- substitute({
-        message("Results from numerical integration are approximate only, better results may be available.")
+        message(.distr6$message_numeric)
         return(sapply(x1,function(z){
-          integrate(f = function(y){self$wrappedModels(name1)$pdf(y - z)*
-              self$wrappedModels(name2)$pdf(y)},
-              lower = self$wrappedModels(name2)$inf(),
-              upper = z)$value
+          integrate(f = function(y){self$wrappedModels(name1)$pdf(y)*
+              self$wrappedModels(name2)$pdf(y - z)},
+              lower = -Inf,
+              upper = Inf)$value
         }))
       },list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name))
     }
@@ -52,6 +53,8 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
     fnc <- function(x1) {}
     if(add){
       body(fnc) <- substitute({
+        message(.distr6$message_numeric)
+
         return(sapply(x1,function(z){
           support <- try(self$wrappedModels(name2)$inf():self$wrappedModels(name2)$sup())
           if(inherits(support,"try-error"))
@@ -61,24 +64,24 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
         }))
       },list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name))
     } else {
-      body(fnc) <- substitute({
-        return(sapply(x1,function(z){
-          support <- try(self$wrappedModels(name2)$inf():self$wrappedModels(name2)$sup())
-          if(inherits(support,"try-error"))
-            support <- self$wrappedModels(name2)$.__enclos_env__$private$.getWorkingSupportRange()
-          sum(self$wrappedModels(name1)$pdf(support - z) * self$wrappedModels(name2)$pdf(support))
-        }))
-      },list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name))
+      stop("Substracting discrete random variables not currently supported.")
+      # body(fnc) <- substitute({
+      #   message(.distr6$message_numeric)
+      #
+      #   return(sapply(x1,function(z){
+      #     support <- try(self$wrappedModels(name1)$inf():self$wrappedModels(name1)$sup())
+      #     if(inherits(support,"try-error"))
+      #       support <- self$wrappedModels(name1)$.__enclos_env__$private$.getWorkingSupportRange()
+      #     sum(self$wrappedModels(name1)$pdf(support-z) * self$wrappedModels(name2)$pdf(support))
+      #   }))
+      # },list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name))
     }
   }
 
   name = paste("Convolution of",distlist[[1]]$short_name,"and",distlist[[2]]$short_name)
   short_name = paste0(distlist[[1]]$short_name,distlist[[2]]$short_name)
 
-  if(testDiscrete(distlist[[1]]) & testDiscrete(distlist[[2]]))
-    type = Naturals$new()
-  else
-    type = Reals$new()
+  type = distlist[[2]]$type()
 
   super$initialize(distlist = distlist, pdf = fnc, name = name,
                    short_name = short_name, type = type)
