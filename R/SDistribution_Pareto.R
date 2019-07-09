@@ -2,14 +2,20 @@
 #-------------------------------------------------------------
 # Pareto Distribution Documentation
 #-------------------------------------------------------------
-#' @title Pareto Distribution
-#' @description Mathematical and statistical functions for the Pareto distribution parameterised
-#' with shape and scale and defined by the pdf,
-#' \deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
-#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale parameter.
+#' @title Pareto Distribution Class
 #'
-#' @details \code{cf} is omitted as no analytic expression involving the incomplete gamma function
-#' with complex numbers could be found.
+#' @description Mathematical and statistical functions for the Pareto distribution, which is commonly
+#' used in Economics to model the distribution of wealth and the 80-20 rule.
+#'
+#' @details The Pareto distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' is defined by the pdf,
+#' \deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
+#' for \eqn{\alpha > 0} and \eqn{\beta > 0}.
+#'
+#' The distribution is supported on \eqn{[\beta, \infty)}.
+#'
+#' \code{cf} is omitted as no analytical expression involving the incomplete gamma function
+#' with complex numbers could be found. Decorate with \code{CoreStatistics} for numerical results.
 #'
 #' @name Pareto
 #'
@@ -24,8 +30,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Pareto distribution is parameterised with shape and scale parameters.
-#' Default parameterisation is with shape = 1 and scale = 1.
+#' @section Constructor Details: The Pareto distribution is parameterised with \code{shape} and \code{scale}
+#' as positive numerics.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

@@ -2,11 +2,17 @@
 #-------------------------------------------------------------
 # Logistic Distribution Documentation
 #-------------------------------------------------------------
-#' @title Logistic Distribution
+#' @title Logistic Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Logistic distribution parameterised
-#' with mean (location) and scale or \eqn{sd = scale\sqrt(3)/\pi}, and defined by the pdf
+#' @description Mathematical and statistical functions for the Logistic distribution, which is commonly
+#' used in logistic regression and feedforward neural networks.
+#'
+#' @details The Logistic distribution parameterised with mean, \eqn{\mu}, and scale \eqn{s}, is
+#' defined by the pdf,
 #' \deqn{f(x) = exp(-(x-\mu)/s) / (s*(1+exp(-(x-\mu)/s))^2)}
+#' for \eqn{\mu \epsilon R} and \eqn{s > 0}.
+#'
+#' The distribution is supported on the Reals.
 #'
 #' @name Logistic
 #'
@@ -22,8 +28,10 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Logistic distribution is parameterised with mean and
-#' scale. The default parameterisation is with mean 0 and scale 1.
+#' @section Constructor Details: The Logistic distribution is parameterised with \code{mean} as a
+#' numeric and either \code{scale} or \code{sd} as positive numerics. These are related via,
+#' \deqn{sd = scale*\pi/\sqrt(3)}
+#' If \code{sd} is given then \code{scale} is ignored.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

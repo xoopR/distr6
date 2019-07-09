@@ -2,18 +2,22 @@
 % Please edit documentation in R/SDistribution_Hypergeometric.R
 \name{Hypergeometric}
 \alias{Hypergeometric}
-\title{Hypergeometric Distribution}
+\title{Hypergeometric Distribution Class}
 \description{
-Mathematical and statistical functions for the Hypergeometric distribution parameterised
-with population size, number of successes (or failures) in the population and number of draws. It is defined by
-the pmf,
-\deqn{f(x) = C(K, x)*C(N-K,n-x)/C(N,n)}
-where \eqn{N = 0,1,2,\ldots} is the population size parameter, \eqn{K = 0,1,2,\ldots} is the number
-of successes parameter and \eqn{n = 0,1,2,\ldots} is the number of draws parameter. \eqn{C(a,b)}
-is the combination (or binomial coefficient) function.
+Mathematical and statistical functions for the Hypergeometric distribution, which is
+used to model the number of successes out of a population containing a known number of possible
+successes, for example the number of red balls from an urn or red, blue and yellow balls.
 }
 \details{
-\code{mgf} and \code{cf} are omitted as no closed form analytic expression could be found.
+The Hypergeometric distribution parameterised with population size, \eqn{N}, number of possible
+successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf,
+\deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
+for \eqn{N = {0,1,2,\ldots}}, \eqn{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+
+The distribution is supported on \eqn{{max(0, n + K - N),...,min(n,K)}}.
+
+\code{mgf} and \code{cf} are omitted as no closed form analytic expression could be found. Decorate with
+\code{CoreStatistics} for numerical results.
 }
 \section{Constructor}{
  Hypergeometric$new(size = 10, successes = 5, failures = 5, draws = 2, decorators = NULL, verbose = FALSE)
@@ -30,6 +34,15 @@ is the combination (or binomial coefficient) function.
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
+}
+
+\section{Constructor Details}{
+
+The Hypergeometric distribution is parameterised with \code{size} and \code{draws} as positive
+whole numbers, and either \code{successes} or \code{failures} as positive whole numbers. These are
+related via,
+\deqn{failures = size - successes}
+If \code{failures} is given then \code{successes} is ignored.
 }
 
 \section{Public Variables}{

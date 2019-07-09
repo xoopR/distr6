@@ -2,18 +2,22 @@
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
-#' @title Dirichlet Distribution
+#' @title Dirichlet Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Dirichlet distribution parameterised
-#' with 'params' and defined by the pdf,
+#' @description Mathematical and statistical functions for the Dirichlet distribution, which is commonly
+#' used as a prior in Bayesian modelling and is multivariate generalisation of the Beta distribution.
+#'
+#' @details The Dirichlet distribution parameterised with concentration paramameters, \eqn{\alpha_1,...,\alpha_k},
+#' is defined by the pdf,
 #' \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})}
-#' where \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0} are the k concentration parameters, \eqn{\Gamma} is the gamma function,
-#' \eqn{\sum} is the summation function and \eqn{\prod} is the product function. The distribution is
-#' supported on \eqn{x_i \epsilon (0,1), \sum x_i = 1}.
+#' for \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function.
 #'
-#' @details mgf and cf are omitted as no closed form analytic expression could be found. The parameter
-#' \code{K} is automatically updated by counting the length of the params vector, once constructed this
-#' cannot be changed. Sampling is performed via sampling independent Gamma distributions and
+#' The distribution is supported on \eqn{x_i \epsilon (0,1), \sum x_i = 1}.
+#'
+#' mgf and cf are omitted as no closed form analytic expression could be found.
+#'
+#' The parameter \code{K} is automatically updated by counting the length of the params vector, once
+#' constructed this cannot be changed. Sampling is performed via sampling independent Gamma distributions and
 #' normalising the samples.
 #'
 #' @name Dirichlet

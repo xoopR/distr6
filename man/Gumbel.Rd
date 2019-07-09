@@ -2,16 +2,24 @@
 % Please edit documentation in R/SDistribution_Gumbel.R
 \name{Gumbel}
 \alias{Gumbel}
-\title{Gumbel Distribution}
+\title{Gumbel Distribution Class}
 \description{
-Mathematical and statistical functions for the Gumbel distribution parameterised
-with location and scale and defined by the pdf,
-\deqn{f(x) = 1 / \beta * exp(-(z + exp(-z)))}
-where \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} is the location parameter and \eqn{\beta > 0} is the scale parameter.
+Mathematical and statistical functions for the Gumbel distribution, which is used to
+model the maximum (or minimum) of a number of samples of different distributions, and is a special
+case of the Generalised Extreme Value distribution.
 }
 \details{
-Apery's Constant to 16 significant figures is used in the skewness calculation. The gammaz
-function from the pracma package is used in the cf to allow complex inputs.
+The Gumbel distribution parameterised with location, \eqn{\mu}, and scale, \eqn{\beta},
+is defined by the pdf,
+\deqn{f(x) = 1 / \beta * exp(-(z + exp(-z)))}
+for \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
+
+The distribution is supported on the Reals.
+
+Apery's Constant to 16 significant figures is used in the skewness calculation. The \code{gammaz}
+function from the \code{pracma} package is used in the \code{cf} to allow complex inputs.
+
+
 }
 \section{Constructor}{
  Gumbel$new(location = 0, scale = 1, decorators = NULL, verbose = FALSE)
@@ -30,7 +38,7 @@ function from the pracma package is used in the cf to allow complex inputs.
 
 \section{Constructor Details}{
  The Gumbel distribution is parameterised with
-location and scale. Default parameterisation is with location = 0 and scale = 1.
+\code{location} as a numeric and \code{scale} as a positive numeric.
 }
 
 \section{Public Variables}{

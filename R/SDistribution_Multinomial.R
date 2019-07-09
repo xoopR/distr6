@@ -4,17 +4,18 @@
 #-------------------------------------------------------------
 #' @title Multinomial Distribution
 #'
-#' @description Mathematical and statistical functions for the Multinomial distribution parameterised
-#' with size and probabilities and defined by the pmf,
-#' \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
-#' where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{K} categories and
-#' \eqn{n = 1,2,\ldots} is the number of trials. The distribution is supported on \eqn{\sum x_i = N}.
+#' @description Mathematical and statistical functions for the Multinomial distribution, which is used
+#' to extend the binomial distribution to multiple variables, for example to model the rolls of multiple dice
+#' multiple times.
 #'
-#' @details The multinomial is constructed with a size and probs parameter. Size, number of trials,
-#' should not be confused with the \code{K} parameter for number of categories. \code{K} is determined
-#' automatically by the number of probabilities supplied to the \code{probs} argument, this also tells the
-#' object how many inputs to expect in \code{pdf} and \code{rand}. \code{cdf} and \code{quantile} are omitted
-#' as no closed form analytic expression could be found.
+#' @details The Multinomial distribution parameterised with number of trials, \eqn{n}, and probabilities
+#' of success, \eqn{p_1,...,p_k}, is defined by the pmf,
+#' \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
+#' for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} and \eqn{n = 1,2,\ldots}.
+#'
+#' The distribution is supported on \eqn{\sum x_i = N}
+#'
+#' \code{cdf} and \code{quantile} are omitted as no closed form analytic expression could be found.
 #'
 #' @name Multinomial
 #'
@@ -23,17 +24,16 @@
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{size} \tab integer \tab number of trials. See details. \cr
+#' \code{size} \tab numeric \tab number of trials. See details. \cr
 #' \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Multinomial distribution is parameterised by size and prob.
-#' Size, N, is given as a single integer greater than zero, such that if \eqn{x} is a vector of \eqn{K} parameters
-#' passed to the pmf then it should be true that \eqn{\sum x_i = N}.
+#' @section Constructor Details: The Multinomial distribution is parameterised by \code{size} as a positive
+#' whole number and \code{probs} as a vector of numerics between 0 and 1.
 #' The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect
-#' to be passed to the pmf function. The probability vector is automatically normalised with
+#' to be passed to the maths/stats methods. The probability vector is automatically normalised with
 #' \deqn{probs = probs/sum(probs)}.
 #'
 #' @inheritSection SDistribution Public Variables

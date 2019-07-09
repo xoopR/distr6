@@ -2,20 +2,22 @@
 % Please edit documentation in R/SDistribution_LogLogistic.R
 \name{LogLogistic}
 \alias{LogLogistic}
-\title{Log-Logistic Distribution}
+\title{Log-Logistic Distribution Class}
 \description{
-Mathematical and statistical functions for the Log-Logistic (aka Fisk) distribution parameterised
-with shape, scale and location, and defined by the pdf
-\deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
-where \eqn{\beta > 0} is the shape parameter, \eqn{\alpha > 0} is the scale parameter and
-\eqn{\gamma >= 0} is the location parameter.
+Mathematical and statistical functions for the Log-Logistic distribution,
+which is used in survival analysis for its non-monotonic hazard as well as in economics (known more
+commonly as the Fisk distribution).
 }
 \details{
-One of the difficulties in the log-logistic distribution is that there is little concensus
-online about the most common parameterisation and indeed often these are incorrectly conflated. We
-have therefore only included one parameterisation, which is in-line with McLaughlin's Compendium (2016).
+The Log-Logistic distribution parameterised with shape, \eqn{\beta}, scale, \eqn{\alpha},
+and location, \eqn{\gamma}, is defined by the pdf
+\deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
+for \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}.
 
-Entropy, mgf and cf are omitted as no closed form analytic expression could be found.
+The distribution is supported on the non-negative Reals.
+
+\code{entropy}, \code{mgf} and \code{cf} are omitted as no closed form analytical expression could be found.
+Decorate with \code{CoreStatistics} for numerical results.
 }
 \section{Constructor}{
  LogLogistic$new(scale = 1, shape = 1, location = 0, decorators = NULL, verbose = FALSE)
@@ -34,8 +36,8 @@ Entropy, mgf and cf are omitted as no closed form analytic expression could be f
 }
 
 \section{Constructor Details}{
- The LogLogistic distribution is parameterised by default with
-shape = 1, scale = 1 and location = 0.
+ The LogLogistic distribution is parameterised with \code{shape} and
+\code{scale} as positive numerics and \code{location} as a numeric.
 }
 
 \section{Public Variables}{

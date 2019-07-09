@@ -2,12 +2,22 @@
 #-------------------------------------------------------------
 # Wald Distribution Documentation
 #-------------------------------------------------------------
-#' @title Wald Distribution
+#' @title Wald Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Wald (Inverse Gaussian) distribution parameterised
-#' with mean and shape and defined by the pdf,
+#' @description Mathematical and statistical functions for the Wald (Inverse Gaussian) distribution,
+#' which is used for modelling the first passage time for Brownian motion.
+#'
+#' @details The Wald distribution parameterised with mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined
+#' by the pdf,
 #' \deqn{f(x) = (\lambda/2\pi x^3)^0.5 exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
-#' where \eqn{\lambda > 0} is the shape parameter and \eqn{\mu > 0} is the mean parameter.
+#' for \eqn{\lambda > 0} and \eqn{\mu > 0}.
+#'
+#' The distribution is supported on the Positive Reals.
+#'
+#' Sampling is performed as per Michael, Schucany, Haas (1976).
+#'
+#' The \code{quantile} and \code{entropy} functions are omitted as no closed form analytic
+#' expression could be found.
 #'
 #' @name Wald
 #'
@@ -22,11 +32,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Wald distribution is parameterised with
-#' mean and shape. Default parameterisation is with mean = 1 and shape = 1.
-#'
-#' @details Sampling is performed as per Michael, Schucany, Haas (1976). The quantile and entropy
-#' functions are omitted as no closed form analytic expression could be found.
+#' @section Constructor Details: The Wald distribution is parameterised with \code{mean} as a positive
+#' numeric and \code{shape} as a positive numerics.
 #'
 #' @references
 #'

@@ -2,17 +2,22 @@
 #-------------------------------------------------------------
 # Logarithmic Distribution Documentation
 #-------------------------------------------------------------
-#' @title Logarithmic Distribution
+#' @title Logarithmic Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Logarithmic (series) distribution parameterised
-#' by a parameter, theta, and defined by the pmf,
+#' @description Mathematical and statistical functions for the Logarithmic (series) distribution, which
+#' is derived from the Maclaurin series expansion of \eqn{-ln(1-p)}.
+#'
+#' @details The Logarithmic distribution parameterised with a parameter, \eqn{\theta}, is defined by
+#' the pmf,
 #' \deqn{f(x) = -\theta^x/xlog(1-\theta)}
-#' where \eqn{0 < theta < 1} is the theta parameter.
+#' for \eqn{0 < theta < 1}.
 #'
-#' @details The distribution is implemented by interfacing the extraDistr package, the documentation for
-#' the extraDistr distribution can be found here, \code{\link[extraDistr]{LogSeries}}. Entropy
-#' is omitted as no closed-form expression could be found, decorate with CoreStatistics for a
-#' numeric results.
+#' The distribution is supported on \eqn{{1,2,3,\ldots}}.
+#'
+#' The distribution is implemented by interfacing the \code{extraDistr} package, the documentation for
+#' the \code{extraDistr} distribution can be found here, \code{\link[extraDistr]{LogSeries}}. \code{entropy}
+#' is omitted as no closed-form expression could be found, decorate with \code{CoreStatistics} for
+#' numerical results.
 #'
 #' @name Logarithmic
 #'
@@ -26,8 +31,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Logarithmic distribution is parameterised by default with
-#' theta = 0.5.
+#' @section Constructor Details: The Logarithmic distribution is parameterised with \code{theta} as a
+#' number between 0 and 1.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

@@ -2,14 +2,19 @@
 % Please edit documentation in R/SDistribution_Poisson.R
 \name{Poisson}
 \alias{Poisson}
-\title{Poisson Distribution}
+\title{Poisson Distribution Class}
 \description{
-Mathematical and statistical functions for the Poisson distribution parameterised
-with (arrival) rate and defined by the pmf,
-\deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
-where \eqn{\lambda} > 0 is the rate parameter.
+Mathematical and statistical functions for the Poisson distribution, which is commonly
+used to model the number of events occurring in at a constant, independent rate over an interval of time
+or space.
 }
 \details{
+The Poisson distribution parameterised with arrival rate, \eqn{\lambda}, is defined by the pmf,
+\deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
+where \eqn{\lambda} > 0 is the rate parameter.
+
+The distribution is supported on the Naturals.
+
 \code{entropy} is omitted as no closed form expression could be found, decorate with
 CoreStatistics for a numeric expression.
 }
@@ -28,8 +33,8 @@ CoreStatistics for a numeric expression.
 }
 
 \section{Constructor Details}{
- The Poisson distribution is parameterised with (arrival) rate as a
-positive numeric.
+ The Poisson distribution is parameterised with \code{rate} as a positive
+numeric.
 }
 
 \section{Public Variables}{

@@ -2,17 +2,18 @@
 % Please edit documentation in R/SDistribution_Laplace.R
 \name{Laplace}
 \alias{Laplace}
-\title{Laplace Distribution}
+\title{Laplace Distribution Class}
 \description{
-Mathematical and statistical functions for the Laplace distribution parameterised
-with mean and scale or \eqn{variance = 2(scale)^2}. The mean/scale parameterisation is defined by
-the pdf,
-\deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
-where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\beta > 0} is the scale parameter.
+Mathematical and statistical functions for the Laplace distribution, which is commonly used
+in signal processing and finance.
 }
 \details{
-The Laplace distribution is parameterised with mean and scale by default as this appears to
-be slightly more common in popular usage.
+The Laplace distribution parameterised with mean, \eqn{\mu}, and scale, \eqn{\beta}, is
+defined by the pdf,
+\deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
+for \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
+
+The distribution is supported on the Reals.
 }
 \section{Constructor}{
  Laplace$new(mean = 0, scale = 1, var = NULL, decorators = NULL, verbose = FALSE)
@@ -31,8 +32,10 @@ be slightly more common in popular usage.
 }
 
 \section{Constructor Details}{
- The Laplace distribution can either be parameterised with mean and
-scale or variance. The default parameterisation is with mean 0 and scale 1.
+ The Laplace distribution is parameterised with \code{mean} as a numeric
+and either \code{scale} or \code{var} as positive numerics. These are related via,
+\deqn{var = 2 * scale^2}
+If \code{var} is given then {scale} is ignored.
 }
 
 \section{Public Variables}{

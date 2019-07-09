@@ -2,28 +2,32 @@
 % Please edit documentation in R/SDistribution_NegBinomal.R
 \name{NegativeBinomial}
 \alias{NegativeBinomial}
-\title{Negative Binomial Distribution}
+\title{Negative Binomial Distribution Class}
 \description{
-Mathematical and statistical functions for the Negative Binomial distribution parameterised
-with size and one of: prob, \eqn{qprob = 1 - prob} or mean (formula dependent on parameterisation, see details.)
-The Negative Binomial determining the number of failures before \eqn{n} successes is defined by the pmf,
-\deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
-where \eqn{n = 0,1,2,\ldots} is the size parameter, \eqn{p \epsilon [0,1]} is the prob parameter and
-\eqn{C(a,b)} is the combination (or binomial coefficient) function.
+Mathematical and statistical functions for the Negative Binomial distribution, which
+(depending on the formulation) can be used to model the number of successes, trials or failures before
+a given number of failures or successes.
 }
 \details{
-The Negative Binomial distribution can refer to one of four distributions:
+The Negative Binomial distribution parameterised with number of failures before successes, \eqn{n},
+and probability of success, \eqn{p}, is defined by the pmf
+\deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
+for \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination
+(or binomial coefficient) function.
 
-1. The number of failures before K successes (fbs)
+The Negative Binomial distribution can refer to one of four distributions (forms):
 
-2. The number of successes before K failures (sbf)
+1. The number of failures before K successes (fbs) - Supported on \eqn{{0,1,2,\ldots}}
 
-3. The number of trials before K failures (tbf)
+2. The number of successes before K failures (sbf) - Supported on \eqn{{0,1,2,\ldots}}
 
-4. The number of trials before K successes (tbs)
+3. The number of trials before K failures (tbf) - Supported on \eqn{{n,n+1,n+2,\ldots}}
+
+4. The number of trials before K successes (tbs) - Supported on \eqn{{n,n+1,n+2,\ldots}}
 
 For each we refer to the number of K success/failures as the \code{size} parameter, \code{prob}
 is always the probability of success and \code{qprob} is the probability of failure.
+Use \code{$description} to see the Negative Binomial form.
 }
 \section{Constructor}{
  NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs", decorators = NULL, verbose = FALSE)
@@ -33,9 +37,10 @@ is always the probability of success and \code{qprob} is the probability of fail
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{size} \tab numeric \tab number of failures. \cr
+\code{size} \tab numeric \tab number of failures/successes. \cr
 \code{prob} \tab numeric \tab probability of success. \cr
 \code{qprob} \tab numeric \tab probability of failure. \cr
+\code{mean} \tab numeric \tab location parameter. \cr
 \code{form} \tab character \tab form of negative binomial, see details. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
@@ -43,14 +48,17 @@ is always the probability of success and \code{qprob} is the probability of fail
 }
 
 \section{Constructor Details}{
- The Negative Binomial distribution is parameterised with size,
-as an integer and either prob (probability of success) or qprob (probability of failure) as a number
-between 0 and 1. If \code{qprob} is given then \code{prob} is ignored. The additional parameter
-\code{form} determines which of the four Negative Binomial distributions should be constructed, this
-cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures),
+ The Negative Binomial distribution is parameterised with \code{size} as a positive
+whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1, or \code{mean} as a numeric
+greater than the number of failures/successes (if form is 'tbf' or 'tbs'). These are related via,
+\deqn{qprob = 1 - prob}
+and the \eqn{mean} formula is dependent on the form. If \code{mean} is given then \code{qprob}
+and \code{prob} are ignored. If \code{qprob} is given then \code{prob} is ignored.
+
+The additional \code{form} argument determines which of the four Negative Binomial distributions should be
+constructed, this cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures),
 "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
-"fbs" is taken as default as this is used in R stats (although "sbf" is typically more common).
-An unrecognised \code{form} defaults to "fbs". Use \code{$description} to see the Negative Binomial form.
+"fbs" is taken as default if none are supplied or an unrecognised form is given.
 }
 
 \section{Public Variables}{

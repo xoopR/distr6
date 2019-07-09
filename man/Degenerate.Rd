@@ -2,14 +2,19 @@
 % Please edit documentation in R/SDistribution_Degenerate.R
 \name{Degenerate}
 \alias{Degenerate}
-\title{Degenerate Distribution}
+\title{Degenerate Distribution Class}
 \description{
-Mathematical and statistical functions for the Degenerate distribution parameterised
-by its mean and defined by the pdf,
-\deqn{f(x) = 1, if x = \mu; 0 otherwise}
-where \eqn{\mu \epsilon R} is the mean parameter.
+Mathematical and statistical functions for the Degenerate distribution, which is commonly
+used to model deterministic events or as a representation of the delta, or Heaviside, function.
 }
 \details{
+The Degenerate distribution parameterised with mean, \eqn{\mu}, is defined by the pdf,
+\deqn{f(x) = 1, if x = \mu}
+\deqn{f(x) = 0, if x != \mu}
+for \eqn{\mu \epsilon R}.
+
+The distribution is supported \eqn{{\mu}}.
+
 The Degenerate Distribution is also known as the Dirac Distribution.
 }
 \section{Constructor}{
@@ -27,8 +32,8 @@ The Degenerate Distribution is also known as the Dirac Distribution.
 }
 
 \section{Constructor Details}{
- The Degenerate distribution is parameterised with a location parameter (mean),
-default is 0.
+ The Degenerate distribution is parameterised with \code{mean} as a
+numeric.
 }
 
 \section{Public Variables}{

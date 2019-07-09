@@ -2,18 +2,23 @@
 % Please edit documentation in R/SDistribution_Categorical.R
 \name{Categorical}
 \alias{Categorical}
-\title{Categorical Distribution}
+\title{Categorical Distribution Class}
 \description{
-Mathematical and statistical functions for the Categorical distribution parameterised
-with a given support Set, probabilities and defined by the pmf,
-\deqn{f(X_1 = x_i) = p_i}
-where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{x_1,...,x_n}
-elements in the support set.
+Mathematical and statistical functions for the Categorical distribution, which is
+commonly used in classification supervised learning.
 }
 \details{
-Only the mode, pdf, cdf and rand are available for this Distribution. Sampling from this
-distribution is performed with the \code{\link[base]{sample}} function with the elements given as
-the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements
+The Categorical distribution parameterised with a given support set, \eqn{x_1,...,x_k},
+and respective probabilities. \eqn{p_1,...,p_k}, is defined by the pmf,
+\deqn{f(x_i) = p_i}
+for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
+
+The distribution is supported on \eqn{x_1,...,x_k}.
+
+Only the mode, pdf, cdf and rand are available for this Distribution.
+
+Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements
+given as the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements
 are supplied in an indexed order (otherwise the results are meaningless).
 }
 \section{Constructor}{
@@ -32,10 +37,10 @@ are supplied in an indexed order (otherwise the results are meaningless).
 }
 
 \section{Constructor Details}{
- The Categorical distribution is constructed with a series of elements for the support set
-and a probs parameter determining the probability of each category occurring. The length of the probability
-list should equal the number of elements. The probability vector is automatically normalised with
-\deqn{probs = probs/sum(probs)}
+ The Categorical distribution is parameterised with a series of elements
+for the support set and \code{probs} determining the probability of each category occurring.
+The length of the probability list should equal the number of elements. The probability vector is
+automatically normalised with \deqn{probs = probs/sum(probs)}
 }
 
 \section{Public Variables}{

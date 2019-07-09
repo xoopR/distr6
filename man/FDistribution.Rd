@@ -2,14 +2,19 @@
 % Please edit documentation in R/SDistribution_FDistribution.R
 \name{FDistribution}
 \alias{FDistribution}
-\title{F Distribution}
+\title{F Distribution Class}
 \description{
-Mathematical and statistical functions for the F distribution parameterised
-with a pair of degrees of freedom. The F distribution is defined by the pdf,
-\deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^(\mu/2) x^(\mu/2 - 1) (1 + (\mu/\nu) x)^-(\mu + \nu)/2}
-where \eqn{\mu,\nu > 0} are the degrees of freedom.
+Mathematical and statistical functions for the F distribution, which is commonly used
+in ANOVA testing and is the ratio of scaled Chi-Squared distributions.
 }
 \details{
+The F Distribution parameterised with two degrees of freedom parameters, \eqn{\mu, \nu},
+is defined by the pdf,
+\deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^(\mu/2) x^(\mu/2 - 1) (1 + (\mu/\nu) x)^-(\mu + \nu)/2}
+for \eqn{\mu,\nu > 0}.
+
+The distribution is supported on the Positive Reals.
+
 \code{cf} is omitted as no closed form expression could be found.
 }
 \section{Constructor}{
@@ -27,8 +32,8 @@ where \eqn{\mu,\nu > 0} are the degrees of freedom.
 }
 
 \section{Constructor Details}{
- The F distribution is parameterised with a pair of
-degrees of freedom, df1 and df2. Default parameterisation is with df1 = 1, df2 = 1.
+ The F distribution is parameterised with \code{df1} and \code{df2} as
+positive numerics.
 }
 
 \section{Public Variables}{

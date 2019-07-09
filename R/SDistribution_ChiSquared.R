@@ -2,12 +2,17 @@
 #-------------------------------------------------------------
 # Chi-Squared Distribution Documentation
 #-------------------------------------------------------------
-#' @title Chi-Squared Distribution
+#' @title Chi-Squared Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Chi-Squared distribution parameterised
-#' with degrees of freedom. The Chi-Squared distribution is defined by the pdf,
+#' @description Mathematical and statistical functions for the Chi-Squared distribution, which is
+#' commonly used to model the sum of independent squared Normal distributions and for confidence intervals.
+#'
+#' @details The Chi-Squared distribution parameterised with degrees of freedom, \eqn{\nu}, is defined by the
+#' pdf,
 #' \deqn{f(x) = (x^(\nu/2-1) exp(-x/2))/(2^(\nu/2) * \Gamma(\nu/2))}
-#' where \eqn{\nu > 0} is the degrees of freedom.
+#' for \eqn{\nu > 0}.
+#'
+#' The distribution is supported on the Positive Reals.
 #'
 #' @name ChiSquared
 #'
@@ -22,7 +27,7 @@
 #' }
 #'
 #' @section Constructor Details: The Chi-Squared distribution is parameterised with
-#' degrees of freedom, df. Default parameterisation is with df = 1.
+#' \code{df} as a positive numeric.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

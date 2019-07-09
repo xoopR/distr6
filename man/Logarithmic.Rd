@@ -2,18 +2,23 @@
 % Please edit documentation in R/SDistribution_Logarithmic.R
 \name{Logarithmic}
 \alias{Logarithmic}
-\title{Logarithmic Distribution}
+\title{Logarithmic Distribution Class}
 \description{
-Mathematical and statistical functions for the Logarithmic (series) distribution parameterised
-by a parameter, theta, and defined by the pmf,
-\deqn{f(x) = -\theta^x/xlog(1-\theta)}
-where \eqn{0 < theta < 1} is the theta parameter.
+Mathematical and statistical functions for the Logarithmic (series) distribution, which
+is derived from the Maclaurin series expansion of \eqn{-ln(1-p)}.
 }
 \details{
-The distribution is implemented by interfacing the extraDistr package, the documentation for
-the extraDistr distribution can be found here, \code{\link[extraDistr]{LogSeries}}. Entropy
-is omitted as no closed-form expression could be found, decorate with CoreStatistics for a
-numeric results.
+The Logarithmic distribution parameterised with a parameter, \eqn{\theta}, is defined by
+the pmf,
+\deqn{f(x) = -\theta^x/xlog(1-\theta)}
+for \eqn{0 < theta < 1}.
+
+The distribution is supported on \eqn{{1,2,3,\ldots}}.
+
+The distribution is implemented by interfacing the \code{extraDistr} package, the documentation for
+the \code{extraDistr} distribution can be found here, \code{\link[extraDistr]{LogSeries}}. \code{entropy}
+is omitted as no closed-form expression could be found, decorate with \code{CoreStatistics} for
+numerical results.
 }
 \section{Constructor}{
  Logarithmic$new(theta = 0.5, decorators = NULL, verbose = FALSE)
@@ -30,8 +35,8 @@ numeric results.
 }
 
 \section{Constructor Details}{
- The Logarithmic distribution is parameterised by default with
-theta = 0.5.
+ The Logarithmic distribution is parameterised with \code{theta} as a
+number between 0 and 1.
 }
 
 \section{Public Variables}{

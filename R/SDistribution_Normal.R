@@ -2,17 +2,18 @@
 #-------------------------------------------------------------
 # Normal Distribution Documentation
 #-------------------------------------------------------------
-#' @title Normal Distribution
+#' @title Normal Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Normal distribution parameterised
-#' with mean and variance or \eqn{standard deviation = \sqrt(variance)} or \eqn{precision = 1/variance}.
-#' The mean/variance parameterisation is defined by the pdf,
+#' @description Mathematical and statistical functions for the Normal distribution, which is commonly used
+#' in significance testing, for representing models with a bell curve, and as a result of the central
+#' limit theorem.
+#'
+#' @details The Normal distribution parameterised with variance, \eqn{\sigma^2}, and mean, \eqn{\mu},
+#' is defined by the pdf,
 #' \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)}
-#' where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\sigma^2} is the variance parameter.
+#' for \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}.
 #'
-#' @details Whilst we recognise that the standard deviation parameterisation is used by R stats,
-#' we opt for the variance parameterisation as default as this appears slightly more common in popular
-#' online resources and textbooks.
+#' The distribution is supported on the Reals.
 #'
 #' @name Normal
 #'
@@ -24,18 +25,17 @@
 #' \code{mean} \tab numeric \tab mean, location parameter. \cr
 #' \code{var} \tab numeric \tab variance, squared scale parameter. \cr
 #' \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
-#' \code{precision} \tab numeric \tab precision, squared scale parameter. \cr
+#' \code{precision} \tab numeric \tab precision, inverse squared scale parameter. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Normal distribution can either be parameterised with variance,
-#' standard deviation or precision. If none are provided then var parameterisation is used with var = 1.
-#' If multiple are provided then parameterisation takes the hierarchy: var, sd, prec.
-#' sd is defined by
-#' \deqn{sd = var^2}
-#' prec is defined by
-#' \deqn{prec = var^-1}
+#' @section Constructor Details: The Normal distribution is paramterised with \code{mean} as a numeric,
+#' and either \code{var}, \code{sd} or \code{prec} as numerics. These are related via,
+#' \deqn{sd = \sqrt(var)}
+#' \deqn{prec = 1/var}
+#' If \code{prec} is given then \code{sd} and \code{var} are ignored. If \code{sd} is given then \code{var}
+#' is ignored.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

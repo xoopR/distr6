@@ -2,16 +2,16 @@
 #-------------------------------------------------------------
 # Exponential Distribution Documentation
 #-------------------------------------------------------------
-#' @title Exponential Distribution
+#' @title Exponential Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Exponential distribution parameterised
-#' with rate or \eqn{scale = 1/rate}. The rate parameterisation is defined by the pdf,
+#' @description Mathematical and statistical functions for the Exponential distribution, which is commonly
+#' used to model inter-arrival times in a Poisson process and has the memoryless property.
+#'
+#' @details The Exponential distribution parameterised with rate, \eqn{\lambda}, is defined by the pdf,
 #' \deqn{f(x) = \lambda exp(-x\lambda)}
-#' where \eqn{\lambda > 0} is the rate parameter.
+#' for \eqn{\lambda > 0}.
 #'
-#' @details By default we use the rate parameterisation for the Exponential distribution as arrival rate
-#' provides the most interpretable representation of the distribution and is most popular for say point
-#' processes.
+#' The distribution is supported on the Positive Reals.
 #'
 #' @name Exponential
 #'
@@ -26,10 +26,10 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The exponential distribution can either be parameterised with a rate or
-#' scale parameter. Default parameterisation is with rate = 1. If scale is given then rate is ignored.
-#' Scale is defined by
+#' @section Constructor Details: The Exponential distribution is parameterised with \code{rate} or
+#' \code{scale} as positive numerics. These are related via,
 #' \deqn{scale = 1/rate}
+#' If \code{scale} is given then \code{rate} is ignored.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

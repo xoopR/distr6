@@ -2,12 +2,21 @@
 % Please edit documentation in R/SDistribution_Cauchy.R
 \name{Cauchy}
 \alias{Cauchy}
-\title{Cauchy Distribution}
+\title{Cauchy Distribution Class}
 \description{
-Mathematical and statistical functions for the Cauchy distribution parameterised
-with location and scale and defined by the pdf,
+Mathematical and statistical functions for the Cauchy distribution, which is commonly
+used in physics and finance.
+}
+\details{
+The Cauchy distribution parameterised with location, \eqn{\alpha}, and scale, \eqn{\beta}, is
+defined by the pdf,
 \deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))}
-where \eqn{\alpha \epsilon R} is the location parameter and \eqn{\beta > 0} is the scale parameter.
+for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
+
+The distribution is supported on the Reals.
+
+The Cauchy distribution has an undefined mean and variance, this means that \code{NaN} is returned
+and these methods cannot be computed using any decorators.
 }
 \section{Constructor}{
  Cauchy$new(location = 0, scale = 1, decorators = NULL, verbose = FALSE)
@@ -26,7 +35,7 @@ where \eqn{\alpha \epsilon R} is the location parameter and \eqn{\beta > 0} is t
 
 \section{Constructor Details}{
  The Cauchy distribution is parameterised with
-location and scale. Default parameterisation is with location = 0 and scale = 1.
+\eqn{location} as a numeric and \eqn{scale} as a positive numeric.
 }
 
 \section{Public Variables}{

@@ -4,18 +4,19 @@
 #-------------------------------------------------------------
 #' @title Gamma Distribution
 #'
-#' @description Mathematical and statistical functions for the Gamma distribution parameterised
-#' with shape and rate, \eqn{scale = 1/rate} or \eqn{mean = shape/rate}. The shape-rate Gamma distribution is defined by the pdf,
-#' \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
-#' where \eqn{\alpha > 0} is the shape parameter, \eqn{\beta > 0} is the rate parameter and
-#' \eqn{\Gamma} is the gamma function.
+#' @description Mathematical and statistical functions for the Gamma distribution, commonly used
+#' as the prior in Bayesian modelling, the convolution of exponential distributions, and to model waiting times.
 #'
-#' @details The Gamma Distribution is parameterised by default with shape and rate as this is most common
-#' in statistics (particularly Bayesian).
+#' @details The Gamma distribution parameterised with shape, \eqn{\alpha}, and rate, \eqn{\beta}, is
+#' defined by the pdf,
+#' \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
+#' for \eqn{\alpha, \beta > 0}.
+#'
+#' The distribution is supported on the Positive Reals.
 #'
 #' @name Gamma
 #'
-#' @section Constructor: Gamma$new(shape = 1,rate = 1, scale = NULL, mean = NULL, decorators = NULL, verbose = FALSE)
+#' @section Constructor: Gamma$new(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL, verbose = FALSE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -28,13 +29,13 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Gamma distribution can either be parameterised with shape and
-#' rate, scale or mean. If none are provided then the default is taken to be rate = 1 and shape = 1.
-#' If multiple are provided then parameterisation takes the hierarchy: mean, scale, rate.
-#' Scale is defined by
-#' \deqn{scale = rate^-1}
-#' Mean is defined by
+#' @section Constructor Details: The Gamma distribution is parameterised with \code{shape} and either
+#' \code{rate}, \code{scale} or \code{mean}, all as positive numerics. These are related via,
+#' \deqn{scale = 1/rate}
 #' \deqn{mean = shape/rate}
+#'
+#' If \code{mean} is given then \code{rate} and \code{scale} are ignored. If \code{scale} is given then
+#' \code{rate} is ignored.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

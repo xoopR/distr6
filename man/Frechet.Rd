@@ -2,17 +2,21 @@
 % Please edit documentation in R/SDistribution_Frechet.R
 \name{Frechet}
 \alias{Frechet}
-\title{Frechet Distribution}
+\title{Frechet Distribution Class}
 \description{
-Mathematical and statistical functions for the Frechet (Inverse Weibull) distribution parameterised
-with shape, scale and minimum (location) and defined by the pdf,
-\deqn{f(x) = (\alpha/s)((x-m)/s)^{-1-\alpha}exp(-(x-m)/s)^{-\alpha}}
-where \eqn{\alpha \epsilon R^+} is the shape parameter, \eqn{s \epsilon R^+} is the
-scale parameter and \eqn{m \epsilon R} is the minimum parameter. The distribution is supported
-on \eqn{x > m}.
+Mathematical and statistical functions for the Frechet (Inverse Weibull) distribution,
+which is used as a special case of the Generalised Extreme Value distribution.
 }
 \details{
-The mgf and cf are omitted as no closed form analytic expression could be found.
+The Frechet distribution parameterised with shape, \eqn{\alpha}, scale, \eqn{\beta},
+and minimum, \eqn{\gamma}, is defined by the pdf,
+\deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}}
+for \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}.
+
+The distribution is supported on \eqn{x > \gamma}.
+
+\code{mgf} and \code{cf} are omitted as no closed form analytical expression could be found. Decorate with
+\code{CoreStatistics} for numerical results.
 }
 \section{Constructor}{
  Frechet$new(shape = 1, scale = 1, minimum = 0,
@@ -33,7 +37,7 @@ decorators = NULL, verbose = FALSE)
 
 \section{Constructor Details}{
  The Frechet distribution is parameterised with
-shape, scale and minimum. Default parameterisation is with shape = 1, scale = 1 and minimum = 0.
+\code{shape}, \code{scale} as positive numerics and \code{minimum} as a numeric.
 }
 
 \section{Public Variables}{

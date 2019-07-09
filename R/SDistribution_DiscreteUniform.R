@@ -2,13 +2,18 @@
 #-------------------------------------------------------------
 # DiscreteUniform Distribution Documentation
 #-------------------------------------------------------------
-#' @title DiscreteUniform Distribution
+#' @title Discrete Uniform Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Discrete Uniform distribution parameterised
-#' with lower and upper limits. The Discrete Uniform distribution is defined by the pmf,
-#' \deqn{f(x) = 1/n}
-#' where \eqn{n = b - a + 1} is the interval width and \eqn{a, b \epsilon Z; b \ge a}, are the lower and
-#' upper limits respectively.
+#' @description Mathematical and statistical functions for the Discrete Uniform distribution, which
+#' is commonly used as a discrete variant of the more popular Uniform distribution, used to model events
+#' with an equal probability of occurring (e.g. role of a die).
+#'
+#' @details The Discrete Uniform distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits
+#' is defined by the pmf,
+#' \deqn{f(x) = 1/(b - a + 1)}
+#' for \eqn{a, b \epsilon Z; b \ge a}.
+#'
+#' The distribution is supported on \eqn{{a, a + 1,..., b}}.
 #'
 #' @name DiscreteUniform
 #'
@@ -17,14 +22,14 @@
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab integer \tab lower distribution limit. \cr
-#' \code{upper} \tab integer \tab upper distribution limit. \cr
+#' \code{lower} \tab numeric \tab lower distribution limit. \cr
+#' \code{upper} \tab numeric \tab upper distribution limit. \cr
 #' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The DiscreteUniform distribution is parameterised with lower and
-#' upper limits as integers.
+#' @section Constructor Details: The Discrete Uniform distribution is parameterised with \code{lower}
+#' and \code{upper} as whole numbers.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

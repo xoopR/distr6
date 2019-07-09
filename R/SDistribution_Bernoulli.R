@@ -2,17 +2,18 @@
 #-------------------------------------------------------------
 # Bernoulli Distribution Documentation
 #-------------------------------------------------------------
-#' @title Bernoulli Distribution
+#' @title Bernoulli Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Bernoulli distribution parameterised
-#' with prob or \eqn{qprob = 1 - prob}. The prob parameterisation is defined by the pmf,
-#' \deqn{f(x) = p, if x =1; 1-p, if x = 0}
+#' @description Mathematical and statistical functions for the Bernoulli distribution, which is commonly
+#' used to model a two-outcome scenario.
 #'
-#' where \eqn{p \epsilon [0,1]} is the prob parameter.
+#' @details The Bernoulli distribution parameterised with probability of success, p, is defined by
+#' the pmf,
+#' \deqn{f(x) = p, if x = 1}
+#' \deqn{f(x) = 1 - p, if x = 0}
+#' for \eqn{p \epsilon [0,1]}.
 #'
-#' @details The default parameterisation of probability of success is favoured over the probability
-#' of failure as this is more common in practice, however the two are mathematically identical (subject to
-#' a simple translation).
+#' The distribution is supported on \eqn{{0,1}}.
 #'
 #' @name Bernoulli
 #'
@@ -27,9 +28,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Bernoulli distribution is parameterised with prob (probability of
-#' success) or qprob (probability of failure) as a number between 0 and 1. If \code{qprob} is given then
-#' \code{prob} is ignored.
+#' @section Constructor Details: The Bernoulli distribution is parameterised with either \code{prob} or \code{qprob}
+#' as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob}
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

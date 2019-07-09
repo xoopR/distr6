@@ -2,14 +2,19 @@
 % Please edit documentation in R/SDistribution_Beta.R
 \name{Beta}
 \alias{Beta}
-\title{Beta Distribution}
+\title{Beta Distribution Class}
 \description{
-Mathematical and statistical functions for the Beta distribution parameterised
-with two shape parameters and defined by the pdf,
-\deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
-where \eqn{\alpha, \beta > 0} are the two shape parameters and \eqn{B} is the Beta function.
+Mathematical and statistical functions for the Beta distribution, which is commonly
+used as the prior in Bayesian modelling.
 }
 \details{
+The Beta distribution parameterised with two shape parameters, \eqn{\alpha, \beta}, is defined
+by the pdf,
+\deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
+for \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function.
+
+The distribution is supported on \eqn{[0, 1]}.
+
 \code{mgf} and \code{cf} are omitted as no analytic expression could be found. Decorate
 with CoreStatistics for numeric results.
 }
@@ -29,8 +34,8 @@ with CoreStatistics for numeric results.
 }
 
 \section{Constructor Details}{
- The Beta distribution is parameterised with two shape parameters,
-both take the default value 1.
+ The Beta distribution is parameterised with \code{shape1} and \code{shape2}
+as positive numerics.
 }
 
 \section{Public Variables}{

@@ -2,18 +2,29 @@
 % Please edit documentation in R/SDistribution_Triangular.R
 \name{Triangular}
 \alias{Triangular}
-\title{(Symmetric) Triangular Distribution}
+\title{(Symmetric) Triangular Distribution Class}
 \description{
-Mathematical and statistical functions for the Triangular distribution parameterised
-with lower limit, upper limit and mode and defined by the pdf,
-\deqn{f(x) = 0, x < a}
-\deqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c}
-\deqn{f(x) = 2/(b-a), x = c}
-\deqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b}
-\deqn{f(x) = 0, x > b}
+Mathematical and statistical functions for the Triangular distribution, which is
+commonly used to model population data where only the minimum, mode and maximum are known (or can be
+reliably estimated), also to model the sum of standard uniform distributions.
+}
+\details{
+The Triangular distribution parameterised with lower limit, \eqn{a}, upper limit, \eqn{b},
+and mode, \eqn{c}, is defined by the pdf,
 
-where \eqn{a \epsilon R} is the lower limit, \eqn{b > a} is the upper limit and \eqn{a \le c \le b}
-is the mode.
+\eqn{f(x) = 0, x < a}
+
+\eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c}
+
+\eqn{f(x) = 2/(b-a), x = c}
+
+\eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b}
+
+\eqn{f(x) = 0, x > b}
+
+for \eqn{a,b,c \epsilon R}, \eqn{a \le c \le b}.
+
+The distribution is supported on \eqn{[a, b]}.
 }
 \section{Constructor}{
  Triangular$new(lower = 0, upper = 1, mode = 0.5, symmetric = FALSE,
@@ -35,10 +46,9 @@ decorators = NULL, verbose = FALSE)
 
 \section{Constructor Details}{
  The (non-symmetric) Triangular distribution is parameterised with
-lower = 0, upper = 1 and mode = 0.5 by default. If \code{symmetric = TRUE} then the \code{mode}
-parameter is not-settable and is defined by \eqn{mode = (lower + upper) /2}, this cannot be changed
-after construction.If \code{symmetric = FALSE} (default) then \eqn{mode} is settable after
-construction.
+\code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode}
+parameter is determined automatically and is defined by \eqn{mode = (lower + upper) /2}, this cannot be changed
+after construction. If \code{symmetric = FALSE} (default) then \code{mode} is settable after construction.
 }
 
 \section{Public Variables}{

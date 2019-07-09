@@ -2,14 +2,19 @@
 % Please edit documentation in R/SDistribution_Weibull.R
 \name{Weibull}
 \alias{Weibull}
-\title{Weibull Distribution}
+\title{Weibull Distribution Class}
 \description{
-Mathematical and statistical functions for the Weibull distribution parameterised
-with shape and scale. The Weibull distribution is defined by the pdf,
-\deqn{f(x) = (\alpha/\beta)*(x/\beta)^(\alpha-1)*exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise}
-where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale parameter.
+Mathematical and statistical functions for the Weibull distribution, which is commonly
+used in survival analysis and is a special case of the generalized extreme value distribution.
 }
 \details{
+The Weibull distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta} is
+defined by the pdf,
+\deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise}
+for \eqn{\alpha, \beta > 0}.
+
+The distribution is supported on the Positive Reals.
+
 \code{mgf} and \code{cf} are omitted as no closed form analytic expressions could be found.
 }
 \section{Constructor}{
@@ -28,8 +33,8 @@ where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale p
 }
 
 \section{Constructor Details}{
- The Weibull distribution is parameterised with a shape and scale
-parameter, both as positive numerics.
+ The Weibull distribution is parameterised with \code{shape} and \code{scale}
+as positive numerics.
 }
 
 \section{Public Variables}{

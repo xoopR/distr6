@@ -189,7 +189,7 @@ getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
   if (verbose) message("Parameterised with df1 and df2.")
 
   ps <- ParameterSet$new(id = list("df1", "df2"), value = list(1, 1),
-                         support = list(Naturals$new(), Naturals$new()),
+                         support = list(PosReals$new(), PosReals$new()),
                          settable = list(TRUE, TRUE),
                          updateFunc = list(NA, NA),
                          description = list("Degrees of freedom 1",

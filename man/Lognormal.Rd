@@ -2,17 +2,21 @@
 % Please edit documentation in R/SDistribution_Lognormal.R
 \name{Lognormal}
 \alias{Lognormal}
-\title{Lognormal Distribution}
+\title{Lognormal Distribution Class}
 \description{
-Mathematical and statistical functions for the Lognormal distribution parameterised
-with mean, sd, var, prec on the log or natural scale. The logmean/logvar parameterisation is defined
-by the pdf,
-\deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))}
-where \eqn{\mu \epsilon R} is the log-mean and \eqn{\sigma > 0} is the log-standard deviation.
+Mathematical and statistical functions for the Lognormal distribution, which is
+used to model many natural phenomena as a result of growth driven by small percentage changes.
 }
 \details{
-\code{cf} is omitted as no closed form analytic expression could be found. The \code{mgf} is
-included but returns NaN as it is not defined.
+The Lognormal distribution parameterised with logmean, \eqn{\mu}, and logvar, \eqn{\sigma},
+is defined by the pdf,
+\deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))}
+for \eqn{\mu \epsilon R} and \eqn{\sigma > 0}.
+
+The distribution is supported on the Positive Reals.
+
+\code{cf} is omitted as no closed form analytic expression could be found. Decorate with
+\code{CoreStatistics} for numerical results.
 }
 \section{Constructor}{
  Lognormal$new(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
@@ -31,23 +35,23 @@ included but returns NaN as it is not defined.
 \code{mean} \tab numeric \tab mean of the distribution on the natural scale. \cr
 \code{var} \tab numeric \tab variance of the distribution on the natural scale. \cr
 \code{sd} \tab numeric \tab standard deviation of the distribution on the natural scale. \cr
-\code{precision} \tab numeric \tab precision of the distribution on the natural scale. \cr
+\code{prec} \tab numeric \tab precision of the distribution on the natural scale. \cr
 \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
 \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 }
 }
 
 \section{Constructor Details}{
- The Lognormal distribution can either be parameterised with variance,
-standard deviation or precision on the natural or log scale.
-If none are provided then meanlog/varlog parameterisation is used with varlog = 1, meanlog = 0.
-sdlog is defined by
-\deqn{sdlog = varlog^2}
-preclog is defined by
-\deqn{preclog = varlog^-1}
-The variance on the natural scale is given by
+ The Lognormal distribution is parameterised by either \code{meanlog} and
+\code{varlog}, \code{sdlog} or \code{preclog}, or \code{mean} and \code{var}, \code{sd} or \code{prec}.
+These are related via
 \deqn{var = (exp(var) - 1)) * exp(2 * meanlog + varlog)}
-and \eqn{sd}, \eqn{prec} defined analogously.
+\deqn{sdlog = varlog^2}
+\deqn{sd = var^2}
+Analogously for \code{prec} and \code{preclog}. If \code{prec} is given then all other parameters other
+than \code{mean} are ignored. If \code{sd} is given then all other parameters (except \code{prec}) are
+ignored. If \code{var} is given then all log parameters are ignored. If \code{preclog} is given then
+\code{varlog} and \code{sdlog} are ignored. Finally if \code{sdlog} is given then \code{varlog} is ignored.
 }
 
 \section{Public Variables}{

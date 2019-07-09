@@ -2,22 +2,22 @@
 % Please edit documentation in R/SDistribution_Binomial.R
 \name{Binomial}
 \alias{Binomial}
-\title{Binomial Distribution}
+\title{Binomial Distribution Class}
 \description{
-Mathematical and statistical functions for the Binomial distribution parameterised
-with size (number of trials) and prob or \eqn{qprob = 1 - prob}. The size-prob Binomial distribution
-is defined by the pmf,
-\deqn{f(x) = C(n, x)p^x(1-p)^(n-x)}
-where \eqn{n = 0,1,2,\ldots} is the size parameter, \eqn{p \epsilon [0,1]} is the prob parameter and
-\eqn{C(a,b)} is the combination (or binomial coefficient) function.
+Mathematical and statistical functions for the Binomial distribution, which is commonly
+used to model the number of successes out of a number of independent trials.
 }
 \details{
-The default parameterisation of number of trials and probability of success is favoured
-over the probability of failure as talking in terms of failures is more commonly associated with
-the negative binomial distribution.
+The Binomial distribution parameterised with number of trials, n, and probability of
+success, p, is defined by the pmf,
+\deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
+for \eqn{n = 0,1,2,\ldots} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination
+(or binomial coefficient) function.
+
+The distribution is supported on \eqn{{0, 1,...,n}}.
 }
 \section{Constructor}{
- Binomial$new(size = 10, prob = 0.5, decorators = NULL, verbose = FALSE)
+ Binomial$new(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -33,9 +33,10 @@ the negative binomial distribution.
 }
 
 \section{Constructor Details}{
- The Binomial distribution is parameterised with size (number of trials)
-as an integer and either prob (probability of success) or qprob (probability of failure) as a number
-between 0 and 1. If \code{qprob} is given then \code{prob} is ignored.
+ The Binomial distribution is parameterised with \code{size} as a whole number,
+and either \code{prob} or \code{qprob} as a number between 0 and 1. These are related via,
+\deqn{qprob = 1 - prob}
+If \code{qprob} is given then \code{prob} is ignored.
 }
 
 \section{Public Variables}{

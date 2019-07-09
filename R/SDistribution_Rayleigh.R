@@ -2,14 +2,20 @@
 #-------------------------------------------------------------
 # Rayleigh Distribution Documentation
 #-------------------------------------------------------------
-#' @title Rayleigh Distribution
+#' @title Rayleigh Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Rayleigh distribution parameterised
-#' with mode and defined by the pdf,
-#' \deqn{f(x) = x/\sigma^2 exp(-x^2/(2\sigma^2))}
-#' where \eqn{\sigma > 0} is the mode parameter.
+#' @description Mathematical and statistical functions for the Rayleigh distribution, which can be used
+#' to model random complex numbers.
 #'
-#' @details The cf and mgf are omitted as no closed form analytic expression could be found.
+#' @details The Rayleigh distribution parameterised with mode (or scale), \eqn{\alpha}, is defined by
+#' the pdf,
+#' \deqn{f(x) = x/\alpha^2 exp(-x^2/(2\alpha^2))}
+#' for \eqn{\alpha > 0}.
+#'
+#' The distribution is supported on \eqn{[0, \infty)}.
+#'
+#' \code{cf} and \code{mgf} are omitted as no closed form analytical expression could be found.
+#' Decorate with \code{CoreStatistics} for numerical results.
 #'
 #' @name Rayleigh
 #'
@@ -23,7 +29,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Rayleigh distribution is parameterised by default with mode = 1.
+#' @section Constructor Details: The Rayleigh distribution is parameterised with \code{mode} as a non-negative
+#' numeric.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

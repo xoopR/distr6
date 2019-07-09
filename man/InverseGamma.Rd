@@ -2,18 +2,24 @@
 % Please edit documentation in R/SDistribution_InverseGamma.R
 \name{InverseGamma}
 \alias{InverseGamma}
-\title{Inverse Gamma Distribution}
+\title{Inverse Gamma Distribution Class}
 \description{
-Mathematical and statistical functions for the InverseGamma distribution parameterised
-with shape and scale and defined by the pdf
-\deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(-\alpha-1) * exp(-\beta/x)}
-where \eqn{\alpha > 0} is the shape parameter, \eqn{\beta > 0} is the scale parameter and
-\eqn{\Gamma} is the gamma function.
+Mathematical and statistical functions for the Inverse Gamma distribution, which is
+commonly used in Bayesian statistics as the posterior distribution from the unknown variance in a Normal
+distribution.
 }
 \details{
-The InverseGamma Distribution uses the extraDistr package as it provides a quantile function
-that computes the inverse upper incomplete Gamma function. The cf is ommitted as no working function for the
-modified Bessel of the second kind taking complex inputs  could be found.
+The Inverse Gamma distribution is parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta},
+and defined by the pdf,
+\deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(-\alpha-1) * exp(-\beta/x)}
+for \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function.
+
+The distribution is supported on the Positive Reals.
+
+The Inverse Gamma distribution uses the \code{extraDistr} package as it provides a quantile function
+that computes the inverse upper incomplete Gamma function. The \code{cf} is ommitted as no working function
+for the modified Bessel of the second kind taking complex inputs could be found. Decorate with
+\code{CoreStatistics} for numerical results.
 }
 \section{Constructor}{
  InverseGamma$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
@@ -31,7 +37,8 @@ modified Bessel of the second kind taking complex inputs  could be found.
 }
 
 \section{Constructor Details}{
- The InverseGamma Distribution is parameterised by default with shape = 1 and scale = 1.
+ The Inverse Gamma Distribution is parameterised with \code{shape} and
+\code{scale} as positive numerics.
 }
 
 \section{Public Variables}{

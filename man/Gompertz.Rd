@@ -2,19 +2,21 @@
 % Please edit documentation in R/SDistribution_Gompertz.R
 \name{Gompertz}
 \alias{Gompertz}
-\title{Gompertz Distribution}
+\title{Gompertz Distribution Class}
 \description{
-Mathematical and statistical functions for the Gompertz distribution parameterised
-with shape and scale. The Gompertz distribution is defined by the pdf,
-\deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)}
-where \eqn{\alpha, \beta > 0} are the shape and scale parameters respectively.
-
-Mathematical and statistical functions for the Gompertz distribution parameterised
-with shape and scale.
+Mathematical and statistical functions for the Gompertz distribution, which
+is commonly used in survival analysis particularly to model adult mortality rates.
 }
 \details{
+The Gompertz distribution paramterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is
+defined by the pdf,
+\deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)}
+for \eqn{\alpha, \beta > 0}.
+
+The distribution is supported on the Non-Negative Reals.
+
 Unfortunately the Gompertz distribution is quite complex to deal with and as such no closed
-form expression exist for its mathematical and statistical properties. Try decorating with
+form expression exist for its mathematical and statistical properties. Decorate with
 \code{\link{CoreStatistics}} for numerical results.
 }
 \section{Constructor}{
@@ -33,8 +35,8 @@ form expression exist for its mathematical and statistical properties. Try decor
 }
 
 \section{Constructor Details}{
- The Gompertz distribution is parameterised by default with
-shape = 1 and scale = 1.
+ The Gompertz distribution is parameterised with \code{shape} and
+\code{scale} as positive numerics.
 }
 
 \section{Public Variables}{

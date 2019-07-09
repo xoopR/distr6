@@ -1,9 +1,9 @@
 ---
-title: "Decorators, Analytic and Numeric Methods"
+title: "Decorators, Analytical and Numerical Methods"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Decorators, Analytic and Numeric Methods}
+  %\VignetteIndexEntry{Decorators, Analytical and Numerical Methods}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,13 +15,13 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-This document is for understanding how and when distr6 uses analytic or numeric results. For a tutorial on how to use decorators, [see here](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html).
+This document is for understanding how and when distr6 uses analytical or numerical results. For a tutorial on how to use decorators, [see here](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html).
 
-distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernels, of class `Kernel`, should only contain analytic methods. This ensures that all results are as precise as possible and ensure optimal efficiency. The figure below gives a visual representation of how this looks. 
+distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernels, of class `Kernel`, should only contain analytical methods. This ensures that all results are as precise as possible and ensure optimal efficiency. The figure below gives a visual representation of how this looks. 
 
-It was not a straightforward decision deciding which methods should be included in the core distribution interfaces. We made the decision that methods involving infinite sums should not be included as any approximation via numeric integration would not be sufficiently accurate. However we allowed the use of the `beta`, `gamma`, and `digamma` functions from base R packages, as these are widely used in the community, have good documentation and have been widely tested. We additionally chose to include the `gammaz` and `gammainc` methods from `pracma` and `expint`, both packages use C implementations and appear to be in wide usage although we encourage the user to examine these further if interested.
+It was not a straightforward decision deciding which methods should be included in the core distribution interfaces. We made the decision that methods involving infinite sums should not be included as any approximation via numerical integration would not be sufficiently accurate. However we allowed the use of the `beta`, `gamma`, and `digamma` functions from base R packages, as these are widely used in the community, have good documentation and have been widely tested. We additionally chose to include the `gammaz` and `gammainc` methods from `pracma` and `expint`, both packages use C implementations and appear to be in wide usage although we encourage the user to examine these further if interested.
 
-For distributions where no closed form analytic expression can be found, details of this are found in the 'Details' section of the distribution's help page, and attempting to run the function will throw an error. To impute numeric results, decorators are used.
+For distributions where no closed form analytical expression can be found, details of this are found in the 'Details' section of the distribution's help page, and attempting to run the function will throw an error. To impute numerical results, decorators are used.
 
 
 ![](decorators.png)
@@ -44,21 +44,21 @@ Currently distr6 has three decorators:
 * To impute the quantile: `cdf2quantile`; `pdf2quantile`; `rand2quantile`
 * To impute the rand: `quantile2rand`; `cdf2rand`; `pdf2rand`
 
-When a decorator is constructed, only the functions that do not exist analytically are added. For example, if a distribution has an analytic `variance` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator.
+When a decorator is constructed, only the functions that do not exist analytically are added. For example, if a distribution has an analytical `variance` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator.
 
 ```{r}
 n <- Normal$new(decorators = CoreStatistics)
-n$mean # The analytic method
+n$mean # The analytical method
 ```
 
-Similarly where possible an analytic method is always preferred. For example, if an analytic `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated.
+Similarly where possible an analytical method is always preferred. For example, if an analytical `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated.
 
 ```{r}
 n <- Normal$new(decorators = ExoticStatistics)
-n$survival(2) == n$cdf(2, lower.tail = F) # The analytic method
+n$survival(2) == n$cdf(2, lower.tail = F) # The analytical method
 ```
 
-Finally, even if an analytic expression for `expectation` exists, the `CoreStatistics` decorator always adds a `genExp` method for a generalised numerical expectation formula, this is required for numerical results for variance, moments, etc.
+Finally, even if an analytical expression for `expectation` exists, the `CoreStatistics` decorator always adds a `genExp` method for a generalised numerical expectation formula, this is required for numerical results for variance, moments, etc.
 
 
 

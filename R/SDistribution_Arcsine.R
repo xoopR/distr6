@@ -2,14 +2,20 @@
 #-------------------------------------------------------------
 # Arcsine Distribution Documentation
 #-------------------------------------------------------------
-#' @title Arcsine Distribution
+#' @title Arcsine Distribution Class
 #'
-#' @description Mathematical and statistical functions for the Arcsine distribution parameterised
-#' with lower and upper limits. The Arcsine distribution is defined by the pdf,
+#' @description Mathematical and statistical functions for the Arcsine distribution, which can be
+#' used in the study of random walks and as a special case of the Beta distribution.
+#'
+#' @details The Arcsine distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits
+#' is defined by the pdf,
 #' \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
-#' where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
+#' fpr \eqn{-\infty < a \le b < \infty}.
 #'
-#' @details The cf and mgf are omitted as no closed form analytic expression could be found.
+#' The distribution is supported on \eqn{[lower, upper]}.
+#'
+#' \code{cf} and \code{mgf} are omitted as no closed form analytic expression could be found. Decorate
+#' with \code{CoreStatistics} for numerical results.
 #'
 #' @name Arcsine
 #'
@@ -24,8 +30,8 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Arcsine distribution is parameterised with default support of
-#' \eqn{[0,1]}. Both the \code{lower} and \code{upper} arguments must be finite.
+#' @section Constructor Details: The Arcsine distribution is parameterised with \code{lower} and \code{upper}
+#' as numerics.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods

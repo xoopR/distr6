@@ -4,23 +4,15 @@
 #-------------------------------------------------------------
 #' @title Geometric Distribution
 #'
-#' @description Mathematical and statistical functions for the Geometric distribution parameterised
-#' with prob or \eqn{qprob = 1 - prob}. The Geometric distribution for
-#' the number of X trials before one success is defined by
-#' the pmf,
+#' @description Mathematical and statistical functions for the Geometric distribution, which is commonly
+#' used to model the number of trials (or number of failures) before the first success.
+#'
+#' @details The Geometric distribution to model the number of trials before success, parameterised with
+#' probability of success, \eqn{p}, is defined by the pmf,
 #' \deqn{f(x) = (1 - p)^{k-1}p}
-#' where x is the number of trials needed to get one success and \eqn{0 < p < 1} is the probability
-#' of success.
+#' for \eqn{p \epsilon [0,1]}.
 #'
-#' Alternatively the Geometric distribution can also be defined by the pmf,
-#' \deqn{f(x) = (1 - p)^{k}p}
-#' where x is the number of failures before the first success and \eqn{0 < p \le 1} is the probability
-#' of success.
-#'
-#' @details The Geometric Distribution is parameterised by default with probability of success = 0.5
-#' and such that \eqn{x} is the number of failures before the first success, as this is the implementation
-#' in R stats. Once constructed, the type of Geometric distribution cannot be changed or updated as parameter,
-#' only the probability of success/failure.
+#' The distribution is supported on the Naturals (zero is included if modelling number of failures before success).
 #'
 #' @name Geometric
 #'
@@ -36,12 +28,15 @@
 #' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
 #' }
 #'
-#' @section Constructor Details: The Geometric distribution is parameterised with probability of success,
-#' prob = 0.5 by default. The logical parameter \code{trials} determines which Geometric distribution
-#' is constructed and cannot be changed after construction. If \code{trials} is TRUE then
-#' the Geometric distribution that calculates the probability of first success is after \eqn{x} trials.
-#' Otherwise the Geometric distribution calculates probability of \eqn{y} failures before the first success.
-#' Mathematically these are related by \eqn{Y = X - 1}.
+#' @section Constructor Details: The Geometric distribution is parameterised with \code{prob} or \code{qprob}
+#' as a number between 0 and 1. These are related via,
+#' \deqn{qprob = 1 - prob}
+#' If \code{qprob} is given then {prob is ignored}.
+#'
+#' The logical parameter \code{trials} determines which Geometric distribution is constructed and cannot
+#' be changed after construction. If \code{trials} is TRUE then the Geometric distribution that models the
+#' number of trials, \eqn{x}, before the first success is constructed. Otherwise the Geometric distribution
+#' calculates the probability of \eqn{y} failures before the first success. Mathematically these are related by \eqn{Y = X - 1}.
 #'
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
