@@ -43,20 +43,21 @@ listDistributions <- function(simplify=FALSE, filter=NULL){
         ValueSupport = "continuous"
       else if(grepl("discrete", sup))
         ValueSupport = "discrete"
-      else
-        ValueSupport = "mixture"
+      # else
+      #   ValueSupport = "mixture"
 
       if(grepl("univariate", sup))
         VariateForm = "univariate"
       else if(grepl("multivariate", sup))
         VariateForm = "multivariate"
-      else
-        VariateForm = "matrixvariate"
+      # else
+      #   VariateForm = "matrixvariate"
 
       # match = regexpr('type[[:blank:]]*=[[:blank:]]*[[:alpha:]]*[[:punct:]]{1}new\\((.*)\\)$', sup)
       # sup = substr(sup, match[1], attr(match, "match.length") + match[1])
       # sup = substr(sup,1,regexpr("\\)",sup)[1])
       # Type = eval(parse(text = trimws(substr(sup, regexpr("=", sup, fixed = T)[1]+1, nchar(sup)))))$getSymbol()
+      # return(data.table::data.table(ShortName, ClassName, Type = Type, ValueSupport, VariateForm, Package))
       return(data.table::data.table(ShortName, ClassName, ValueSupport, VariateForm, Package))
     }))
     row.names(distrs) = NULL
