@@ -48,7 +48,7 @@ navbar:
     menu:
     - text: API Lifecycle
       href: articles/webs/api_lifecycle.html
-    - text: Analytic and Numeric Methods
+    - text: Analytical and Numerical Methods
       href: articles/webs/analytic_and_numeric_methods.html
     - text: R vs C
       href: articles/webs/r_vs_c.html
