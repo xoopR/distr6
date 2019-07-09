@@ -897,9 +897,9 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
     quantile = do.call(private[[".quantile"]], args = p)
   }
 
-  if(inherits(quantile,"data.table"))
+  if(inherits(quantile,"data.table")){
     return(quantile)
-  else{
+  }else{
     if(simplify)
       return(quantile)
     else{
@@ -908,10 +908,7 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
       return(quantile)
     }
   }
-
-
-
-}) # NEEDS TESTING
+})
 #-------------------------------------------------------------
 # Public Methods - rand
 #-------------------------------------------------------------
@@ -1167,12 +1164,12 @@ Distribution$set("private",".isRand", FALSE)
 #-------------------------------------------------------------
 Distribution$set("private",".setWorkingSupport",function(){
   suppressMessages({
-    rands = self$rand(20)
+    rands = self$rand(1000)
 
     if(self$sup() != Inf)
       newsup = self$sup()
     else{
-      newsup = max(rands)
+      newsup = ceiling(max(rands))
       while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
       newsup = ceiling(newsup - 1)
     }
@@ -1181,7 +1178,7 @@ Distribution$set("private",".setWorkingSupport",function(){
     if(inf != -Inf)
       newinf = inf
     else{
-      newinf = min(rands)
+      newinf = floor(min(rands))
       while(self$pdf(newinf) > .Machine$double.eps) newinf = newinf - 1
       newinf = floor(newinf + 1)
     }

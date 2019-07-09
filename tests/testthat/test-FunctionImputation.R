@@ -26,17 +26,18 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     parameters = ps
 )
 
-test_that("continuous r/d/p/q null",{
+test_that("continuous r/d/p/q null d2",{
   expect_silent(continuousTester$pdf(1))
   expect_null(continuousTester$cdf(1))
   expect_null(continuousTester$quantile(1))
   expect_null(continuousTester$rand(1))
 })
 
-test_that("continuous r/p/q",{
+test_that("continuous r/p/q d2",{
   decorate(continuousTester, FunctionImputation)
   expect_silent(expect_equal(continuousTester$pdf(1),dexp(1)))
   expect_message(expect_equal(continuousTester$cdf(1),pexp(1)))
+  expect_message(expect_equal(continuousTester$cdf(1:3),pexp(1:3)))
   expect_message(expect_equal(round(continuousTester$quantile(0.42),5), round(qexp(0.42), 5)))
   expect_message(continuousTester$rand(1))
 })
@@ -48,18 +49,19 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
                                     parameters = ps
 )
 
-test_that("r/d/p/q null",{
+test_that("r/d/p/q null p2",{
   expect_null(continuousTester$pdf(1))
   expect_silent(continuousTester$cdf(1))
   expect_null(continuousTester$quantile(1))
   expect_null(continuousTester$rand(1))
 })
 
-test_that("r/d/p/q not null",{
+test_that("r/d/p/q not null p2",{
   decorate(continuousTester, FunctionImputation)
   expect_message(expect_equal(continuousTester$pdf(1),dexp(1)))
   expect_silent(expect_equal(continuousTester$cdf(1),pexp(1)))
   expect_message(expect_equal(round(continuousTester$quantile(0.42),5), round(qexp(0.42), 5)))
+  expect_message(expect_equal(round(continuousTester$quantile(c(0.42,0.24)),5), round(qexp(c(0.42,0.24)), 5)))
   expect_message(continuousTester$rand(1))
 })
 
@@ -118,9 +120,11 @@ test_that("discrete r/p/q",{
   expect_silent(expect_equal(discreteTester$cdf(1),pbinom(1,10,0.5)))
   expect_equal(discreteTester$pdf(1),dbinom(1,10,0.5))
   expect_message(expect_equal(discreteTester$quantile(0.42), qbinom(0.42,10, 0.5)))
+  expect_message(expect_equal(discreteTester$quantile(c(0.42,0.24)), qbinom(c(0.42,0.24), 10, 0.5)))
   expect_message(discreteTester$rand(1))
 })
 
 test_that("multivariate error",{
   expect_error(MultivariateNormal$new(decorators = FunctionImputation))
 })
+

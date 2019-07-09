@@ -59,12 +59,7 @@ FunctionImputation$set("public","pdf",function(x1){
         return(self$cdf(x1) - self$cdf(x1-1))
       } else if(testContinuous(self)){
         message(.distr6$message_numeric)
-        x = try(as.numeric(attr(deriv(y~self$cdf(x1),"x1", func = TRUE)(x1),"gradient")),
-               silent = TRUE)
-        if(!inherits(x,"try-error"))
-          return(x)
-        else
-          return(pracma::fderiv(self$cdf,x1))
+        return(pracma::fderiv(self$cdf,x1))
       }
   }
 })

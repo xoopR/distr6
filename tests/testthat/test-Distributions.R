@@ -66,13 +66,18 @@ ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0
 
 test_that("check r/d/p/q", {
   expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps)$pdf(1))
+  expect_output(Distribution$new("Test", pdf=dbin, quantile = function(p, self) {print(self); return(p)})$quantile(0.4))
   expect_null(Distribution$new("Test", pdf = dbinom)$cdf(1))
   expect_null(Distribution$new("Test", pdf = dbinom)$quantile(1))
   expect_null(Distribution$new("Test", pdf = dbinom)$rand(1))
 })
 
 test_that("working_support",{
-  expect_silent(Exponential$new()$.__enclos_env__$private$.setWorkingSupport())
-  expect_equal(Exponential$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
-               list(inf = 0, sup = 36))
+  set.seed(1)
+  expect_silent(expect_equal(Exponential$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
+               list(inf = 0, sup = 36)))
+  expect_silent(expect_equal(Binomial$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
+               list(inf = 0, sup = 10)))
+  expect_silent(expect_equal(Normal$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
+               list(inf = -8, sup = 8)))
 })
