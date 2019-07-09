@@ -53,12 +53,11 @@ listDistributions <- function(simplify=FALSE, filter=NULL){
       else
         VariateForm = "matrixvariate"
 
-      match = regexpr('type[[:blank:]]*=[[:blank:]]*[[:alpha:]]*[[:punct:]]{1}new\\((.*)\\)$', sup)
-      sup = substr(sup, match[1], attr(match, "match.length") + match[1])
-      sup = substr(sup,1,regexpr("\\)",sup)[1])
-      Type = eval(parse(text = trimws(substr(sup, regexpr("=", sup, fixed = T)[1]+1, nchar(sup)))))$getSymbol()
-
-      return(data.table::data.table(ShortName, ClassName, Type, ValueSupport, VariateForm, Package))
+      #match = regexpr('type[[:blank:]]*=[[:blank:]]*[[:alpha:]]*[[:punct:]]{1}new\\((.*)\\)$', sup)
+      #sup = substr(sup, match[1], attr(match, "match.length") + match[1])
+      #sup = substr(sup,1,regexpr("\\)",sup)[1])
+      #Type = eval(parse(text = trimws(substr(sup, regexpr("=", sup, fixed = T)[1]+1, nchar(sup)))))$getSymbol()
+      return(data.table::data.table(ShortName, ClassName, ValueSupport, VariateForm, Package))
     }))
     row.names(distrs) = NULL
     if(!is.null(filter)){
