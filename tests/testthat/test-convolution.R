@@ -19,6 +19,9 @@ test_that("discrete add",{
   Bern2 = Bernoulli$new(prob = 0.1)
   ConvB12 = Bern1 + Bern2
   expect_equal(round(ConvB12$pdf(1:5),4), round(dbinom(1:5, 2, 0.1),4))
+  Geom1 = Geometric$new(prob = 0.2)
+  Geom2 = Geometric$new(prob = 0.2)
+  expect_equal(round(Convolution$new(Geom1, Geom2)$pdf(1:5),4), round(dnbinom(1:5, 2, 0.2), 4))
 })
 
 test_that("discrete subtract",{

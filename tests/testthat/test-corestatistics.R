@@ -127,3 +127,16 @@ discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:
 test_that("rand2mode",{
   expect_equal(discreteTester$mode(), Binomial$new()$mode())
 })
+
+
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=Naturals$new(),
+                                  symmetric=TRUE, type = PosNaturals$new(),
+                                  distrDomain=PosNaturals$new(),
+                                  pdf = dbin,
+                                  parameters = ps,
+                                  decorators = CoreStatistics
+)
+
+test_that("infinite mean",{
+  expect_equal(discreteTester$mean(), Binomial$new()$mean())
+})
