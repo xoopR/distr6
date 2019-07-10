@@ -141,7 +141,6 @@ Collate:
     'SDistribution_Laplace.R'
     'SDistribution_Logarithmic.R'
     'SDistribution_Logistic.R'
-    'SDistribution_Loglogistic.R'
     'SDistribution_Lognormal.R'
     'SDistribution_Multinomial.R'
     'SDistribution_MultivariateNormal.R'
