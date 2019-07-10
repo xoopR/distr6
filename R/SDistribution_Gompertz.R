@@ -2,40 +2,22 @@
 #-------------------------------------------------------------
 # Gompertz Distribution Documentation
 #-------------------------------------------------------------
-#' @title Gompertz Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Gompertz distribution, which
-#' is commonly used in survival analysis particularly to model adult mortality rates.
-#'
-#' @details The Gompertz distribution paramterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is
-#' defined by the pdf,
-#' \deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)}
-#' for \eqn{\alpha, \beta > 0}.
-#'
-#' The distribution is supported on the Non-Negative Reals.
-#'
-#' Unfortunately the Gompertz distribution is quite complex to deal with and as such no closed
-#' form expression exist for its mathematical and statistical properties. Decorate with
-#' \code{\link{CoreStatistics}} for numerical results.
-#'
 #' @name Gompertz
-#'
-#' @section Constructor: Gompertz$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab positive shape parameter. \cr
-#' \code{scale} \tab numeric \tab positive scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Gompertz distribution is parameterised with \code{shape} and
-#' \code{scale} as positive numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Gompertz
+#' @templateVar DistName Gompertz
+#' @templateVar uses in survival analysis particularly to model adult mortality rates.
+#' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
+#' @templateVar distsupport the Non-Negative Reals
+#' @templateVar omittedVars \code{mean}, \code{var}, \code{mgf}, \code{cf}, \code{entropy}, \code{skewness} and \code{kurtosis}
+#' @templateVar additionalDetails Unfortunately the Gompertz distribution is quite complex to deal with and as such no closed form expressions exist for its mathematical and statistical properties.
+#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar arg1 \code{shape} \tab numeric \tab positive shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab positive scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
 #'
 #' @examples
 #' x <- Gompertz$new(shape = 2, scale = 3)
@@ -44,7 +26,7 @@
 #' x$setParameterValue(list(scale = 1))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -91,7 +73,7 @@ Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = N
 
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
+                   rand = rand, support = PosReals$new(zero = T),
                    symmetric  = FALSE,type = PosReals$new(zero = T),
                    valueSupport = "continuous",
                    variateForm = "univariate")

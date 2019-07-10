@@ -2,37 +2,21 @@
 #-------------------------------------------------------------
 # Degenerate Distribution Documentation
 #-------------------------------------------------------------
-#' @title Degenerate Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Degenerate distribution, which is commonly
-#' used to model deterministic events or as a representation of the delta, or Heaviside, function.
-#'
-#' @details The Degenerate distribution parameterised with mean, \eqn{\mu}, is defined by the pdf,
-#' \deqn{f(x) = 1, if x = \mu}
-#' \deqn{f(x) = 0, if x != \mu}
-#' for \eqn{\mu \epsilon R}.
-#'
-#' The distribution is supported \eqn{{\mu}}.
-#'
-#' The Degenerate Distribution is also known as the Dirac Distribution.
-#'
 #' @name Degenerate
-#'
-#' @section Constructor: Degenerate$new(mean = 0, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab location parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Degenerate distribution is parameterised with \code{mean} as a
-#' numeric.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Degenerate
+#' @templateVar DistName Degenerate
+#' @templateVar uses to model deterministic events or as a representation of the delta, or Heaviside, function
+#' @templateVar params mean, \eqn{\mu}
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1, if x = \mu}\deqn{f(x) = 0, if x != \mu}
+#' @templateVar paramsupport \eqn{\mu \epsilon R}
+#' @templateVar distsupport \eqn{{\mu}}
+#' @templateVar aka Dirac
+#' @aliases Dirac
+#' @templateVar constructor mean = 0
+#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
+#' @templateVar constructorDets \code{mean} as a numeric.
 #'
 #' @examples
 #' x = Degenerate$new(mean = 4)
@@ -41,7 +25,7 @@
 #' x$setParameterValue(list(mean = 2.56))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -113,7 +97,7 @@ Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbo
   rand <- function(n) return(rep(self$getParameterValue("mean"), n))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(mean), distrDomain = Reals$new(zero = T),
+                   rand = rand, support = Set$new(mean),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

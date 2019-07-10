@@ -5,53 +5,49 @@
 \title{Multivariate Normal Distribution Class}
 \description{
 Mathematical and statistical functions for the Multivariate Normal distribution, which
-is used to generalise the Normal distribution to higher dimensions, and is commonly associated with
-Gaussian Processes.
+is commonly used to generalise the Normal distribution to higher dimensions, and is commonly associated with Gaussian Processes.
 }
 \details{
-The Multivariate Normal distribution parameterised with mean, \eqn{\mu}, and covariance matrix,
-\eqn{\Sigma}, is defined by the pdf,
-\deqn{f(x_1,...,x_k) = (2 * \pi)^{-k/2}det(\Sigma)^{-1/2}exp(-1/2(x-\mu)^T\Sigma^{-1}(x-\mu))}
-for \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}.
+The Multivariate Normal distribution parameterised with mean, \eqn{\mu}, and covariance matrix, \eqn{\Sigma}, is defined by the pdf,
+\deqn{f(x_1,...,x_k) = (2 * \pi)^{-k/2}det(\Sigma)^{-1/2}exp(-1/2(x-\mu)^T\Sigma^{-1}(x-\mu))} for \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}.
 
 The distribution is supported on the Reals and only when the covariance matrix is positive-definite.
 
-The parameter \code{K} is automatically updated by counting the length of the mean vector and once
-constructed this cannot be changed. If a \code{mean} vector of length greater than K is given then
-this is truncated to the correct length. If a \code{mean} vector of length less than K is given then
-this replicated and truncated to the correct length. Similarly \code{cov} and \code{prec} are internally
-coerced with \code{matrix(cov, nrow = K, byrow = FALSE)}.
+\code{skewness} and \code{kurtosis}
+are
+omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
+\code{cdf} and \code{quantile}
+are
+omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
 
-Sampling is performed via the Cholesky decomposition.
 
-\code{cdf}, \code{quantile}, \code{skewness} and \code{kurtosis} are omitted as no closed form analytic expression could be found.
+The parameter \code{K} is automatically updated by counting the length of the mean vector and once constructed this cannot be changed. If a \code{mean} vector of length greater than K is given then this is truncated to the correct length. If a \code{mean} vector of length less than K is given then this replicated and truncated to the correct length. Similarly \code{cov} and \code{prec} are internally coerced with \code{matrix(cov, nrow = K, byrow = FALSE)}. \cr\cr Sampling is performed via the Cholesky decomposition using \code{\link[base]{chol}}.
 }
 \section{Constructor}{
- MultivariateNormal$new(mean = rep(0,2), cov = c(1,0,0,1),
-prec = NULL, decorators = NULL, verbose = FALSE)
+ MultivariateNormal$new(mean = rep(0,2), cov = c(1,0,0,1), prec = NULL, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{mean} \tab numeric \tab vector of means. \cr
-\code{cov} \tab numeric \tab vector or matrix. See details. \cr
-\code{prec} \tab numeric \tab vector or matrix. See details. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{mean} \tab numeric \tab vector of means. \cr
+  \code{cov} \tab numeric \tab vector or matrix. See details. \cr
+  \code{prec} \tab numeric \tab vector or matrix. See details. \cr
+  
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Multivariate Normal distribution is parameterised with \code{mean}
-as a vector of numerics and either \code{cov} or \code{prec} as positive semi-definite matrices.
-These are related via,
-\deqn{prec = cov^{-1}}
-If \code{prec} is given then \code{cov} is ignored.
-
-The covariance matrix can either be supplied as a matrix or as a vector that can be printed via
-\code{matrix(cov, nrow = K, byrow = FALSE)}.
+ The Multivariate Normal distribution is parameterised with \code{mean} as a vector of numerics and either \code{cov} or \code{prec} as positive semi-definite matrices. These are related via, \deqn{prec = cov^{-1}} If \code{prec} is given then \code{cov} is ignored. \cr\cr The covariance matrix can either be supplied as a matrix or as a vector that can be coerced via \code{matrix(cov, nrow = K, byrow = FALSE)}.
 }
 
 \section{Public Variables}{
@@ -61,7 +57,7 @@ The covariance matrix can either be supplied as a matrix or as a vector that can
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -76,7 +72,6 @@ The covariance matrix can either be supplied as a matrix or as a vector that can
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -103,7 +98,6 @@ The covariance matrix can either be supplied as a matrix or as a vector that can
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -119,60 +113,9 @@ The covariance matrix can either be supplied as a matrix or as a vector that can
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
-  }
-
-
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
-  \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
@@ -188,14 +131,16 @@ MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), b
 MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1)) # Equivalently
 MultivariateNormal$new(mean = c(0,0,0), prec = c(3,-1,-1,-1,1,0,-1,0,1))
 
-x <- MultivariateNormal$new() # Default is bivariate standard normal
+# Default is bivariate standard normal
+x <- MultivariateNormal$new()
 
 # Update parameters
 x$setParameterValue(list(mean = c(1, 2)))
-x$setParameterValue(list(prec = c(1,0,0,1))) # When any parameter is updated, all others are too!
+# When any parameter is updated, all others are too!
+x$setParameterValue(list(prec = c(1,0,0,1)))
 x$parameters()
 
-# p/d/q/r
+# d/p/q/r
 # Note the difference from R stats
 x$pdf(1, 2)
 # This allows vectorisation:
@@ -208,4 +153,13 @@ x$variance()
 
 summary(x)
 
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+
+Gentle, J.E. (2009). Computational Statistics. Statistics and Computing. New York: Springer. pp. 315–316. doi:10.1007/978-0-387-98144-4. ISBN 978-0-387-98143-7.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions. \code{\link[base]{chol}} for the implementation of the Cholesky decomposition. \code{\link{Normal}} for a special case of the Multivariate Normal distribution. \code{\link{CoreStatistics}} for numerical results. \code{\link{FunctionImputation}} to numerically impute d/p/q/r.
 }

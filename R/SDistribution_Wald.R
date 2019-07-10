@@ -2,47 +2,27 @@
 #-------------------------------------------------------------
 # Wald Distribution Documentation
 #-------------------------------------------------------------
-#' @title Wald Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Wald (Inverse Gaussian) distribution,
-#' which is used for modelling the first passage time for Brownian motion.
-#'
-#' @details The Wald distribution parameterised with mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined
-#' by the pdf,
-#' \deqn{f(x) = (\lambda/2\pi x^3)^0.5 exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
-#' for \eqn{\lambda > 0} and \eqn{\mu > 0}.
-#'
-#' The distribution is supported on the Positive Reals.
-#'
-#' Sampling is performed as per Michael, Schucany, Haas (1976).
-#'
-#' The \code{quantile} and \code{entropy} functions are omitted as no closed form analytic
-#' expression could be found.
-#'
 #' @name Wald
-#'
-#' @section Constructor: Wald$new(mean = 1, shape = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab location parameter. \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Wald distribution is parameterised with \code{mean} as a positive
-#' numeric and \code{shape} as a positive numerics.
-#'
-#' @references
-#'
-#' Michael, John R.; Schucany, William R.; Haas, Roy W. (May 1976). "Generating Random Variates Using
-#' Transformations with Multiple Roots". The American Statistician. 30 (2): 88–90.
-#' doi:10.2307/2683801. JSTOR 2683801.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Wald
+#' @templateVar DistName Wald
+#' @templateVar uses for modelling the first passage time for Brownian motion
+#' @templateVar params mean, \eqn{\mu}, and shape, \eqn{\lambda},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\lambda/2\pi x^3)^0.5 exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
+#' @templateVar paramsupport \eqn{\lambda > 0} and \eqn{\mu > 0}
+#' @templateVar distsupport the Positive Reals
+#' @templateVar omittedVars \code{entropy}
+#' @templateVar omittedDPQR \code{quantile}
+#' @templateVar aka Inverse Normal
+#' @aliases InverseNormal InverseGaussian
+#' @templateVar additionalDetails Sampling is performed as per Michael, Schucany, Haas (1976).
+#' @templateVar constructor mean = 1, shape = 1
+#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
+#' @templateVar arg2 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar constructorDets \code{mean} and \code{shape} as positive numerics.
+#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
+#' @templateVar additionalReferences  Michael, John R.; Schucany, William R.; Haas, Roy W. (May 1976). "Generating Random Variates Using Transformations with Multiple Roots". The American Statistician. 30 (2): 88–90. doi:10.2307/2683801. JSTOR 2683801.
 #'
 #' @examples
 #' x = Wald$new(mean = 2, shape = 5)
@@ -51,7 +31,7 @@
 #' x$setParameterValue(list(shape = 3))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$rand(4)
@@ -140,7 +120,7 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   rand = rand, support = PosReals$new(), distrDomain = PosReals$new(),
+                   rand = rand, support = PosReals$new(),
                    symmetric = TRUE, type = PosReals$new(), valueSupport = "continuous",
                    variateForm = "univariate")
   invisible(self)

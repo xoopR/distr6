@@ -2,40 +2,22 @@
 #-------------------------------------------------------------
 # Logarithmic Distribution Documentation
 #-------------------------------------------------------------
-#' @title Logarithmic Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Logarithmic (series) distribution, which
-#' is derived from the Maclaurin series expansion of \eqn{-ln(1-p)}.
-#'
-#' @details The Logarithmic distribution parameterised with a parameter, \eqn{\theta}, is defined by
-#' the pmf,
-#' \deqn{f(x) = -\theta^x/xlog(1-\theta)}
-#' for \eqn{0 < theta < 1}.
-#'
-#' The distribution is supported on \eqn{{1,2,3,\ldots}}.
-#'
-#' The distribution is implemented by interfacing the \code{extraDistr} package, the documentation for
-#' the \code{extraDistr} distribution can be found here, \code{\link[extraDistr]{LogSeries}}. \code{entropy}
-#' is omitted as no closed-form expression could be found, decorate with \code{CoreStatistics} for
-#' numerical results.
-#'
 #' @name Logarithmic
-#'
-#' @section Constructor: Logarithmic$new(theta = 0.5, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{theta} \tab numeric \tab theta parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Logarithmic distribution is parameterised with \code{theta} as a
-#' number between 0 and 1.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Logarithmic
+#' @templateVar DistName Logarithmic
+#' @templateVar uses to model consumer purchase habits in economics and is derived from the Maclaurin series expansion of \eqn{-ln(1-p)}
+#' @templateVar params a parameter, \eqn{\theta},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = -\theta^x/xlog(1-\theta)}
+#' @templateVar paramsupport \eqn{0 < \theta < 1}
+#' @templateVar distsupport \eqn{{1,2,3,\ldots}}
+#' @templateVar omittedVars \code{entropy}
+#' @templateVar additionalDetails The distribution is implemented by interfacing the \code{extraDistr} package.
+#' @templateVar constructor theta = 0.5
+#' @templateVar arg1 \code{theta} \tab numeric \tab theta parameter. \cr
+#' @templateVar constructorDets \code{theta} as a number between 0 and 1.
+#' @templateVar additionalSeeAlso \code{\link[extraDistr]{LogSeries}} for the d/p/q/r implementation.
 #'
 #' @examples
 #' x = Logarithmic$new(theta = 0.2)
@@ -44,7 +26,7 @@
 #' x$setParameterValue(list(theta = 0.3))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -139,7 +121,7 @@ Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL,
   rand <- function(n) extraDistr::rlgser(n, self$getParameterValue("theta"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosNaturals$new(), distrDomain = PosReals$new(zero = TRUE),
+                   rand = rand, support = PosNaturals$new(),
                    symmetric = FALSE,type = Naturals$new(),
                    valueSupport ="discrete",
                    variateForm = "univariate")

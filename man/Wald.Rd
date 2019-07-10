@@ -2,23 +2,28 @@
 % Please edit documentation in R/SDistribution_Wald.R
 \name{Wald}
 \alias{Wald}
+\alias{InverseNormal}
+\alias{InverseGaussian}
 \title{Wald Distribution Class}
 \description{
-Mathematical and statistical functions for the Wald (Inverse Gaussian) distribution,
-which is used for modelling the first passage time for Brownian motion.
+Mathematical and statistical functions for the Wald distribution, which
+is commonly used for modelling the first passage time for Brownian motion.
 }
 \details{
-The Wald distribution parameterised with mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined
-by the pdf,
-\deqn{f(x) = (\lambda/2\pi x^3)^0.5 exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
-for \eqn{\lambda > 0} and \eqn{\mu > 0}.
+The Wald distribution parameterised with mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined by the pdf,
+\deqn{f(x) = (\lambda/2\pi x^3)^0.5 exp((-\lambda(x-\mu)^2)/(2\mu^2x))} for \eqn{\lambda > 0} and \eqn{\mu > 0}.
 
 The distribution is supported on the Positive Reals.
 
-Sampling is performed as per Michael, Schucany, Haas (1976).
+\code{entropy}
+is
+omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
+\code{quantile}
+is
+omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
 
-The \code{quantile} and \code{entropy} functions are omitted as no closed form analytic
-expression could be found.
+Also known as the Inverse Normal distribution.
+Sampling is performed as per Michael, Schucany, Haas (1976).
 }
 \section{Constructor}{
  Wald$new(mean = 1, shape = 1, decorators = NULL, verbose = FALSE)
@@ -27,17 +32,24 @@ expression could be found.
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{mean} \tab numeric \tab location parameter. \cr
-\code{shape} \tab numeric \tab shape parameter. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{mean} \tab numeric \tab location parameter. \cr
+  \code{shape} \tab numeric \tab shape parameter. \cr
+  
+  
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Wald distribution is parameterised with \code{mean} as a positive
-numeric and \code{shape} as a positive numerics.
+ The Wald distribution is parameterised with \code{mean} and \code{shape} as positive numerics.
 }
 
 \section{Public Variables}{
@@ -47,7 +59,7 @@ numeric and \code{shape} as a positive numerics.
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -62,7 +74,6 @@ numeric and \code{shape} as a positive numerics.
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -89,7 +100,6 @@ numeric and \code{shape} as a positive numerics.
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -105,60 +115,9 @@ numeric and \code{shape} as a positive numerics.
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
-  }
-
-
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
-  \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
@@ -175,7 +134,7 @@ x = Wald$new(mean = 2, shape = 5)
 x$setParameterValue(list(shape = 3))
 x$parameters()
 
-# p/d/q/r
+# d/p/q/r
 x$pdf(5)
 x$cdf(5)
 x$rand(4)
@@ -188,7 +147,11 @@ summary(x)
 
 }
 \references{
-Michael, John R.; Schucany, William R.; Haas, Roy W. (May 1976). "Generating Random Variates Using
-Transformations with Multiple Roots". The American Statistician. 30 (2): 88–90.
-doi:10.2307/2683801. JSTOR 2683801.
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+
+Michael, John R.; Schucany, William R.; Haas, Roy W. (May 1976). "Generating Random Variates Using Transformations with Multiple Roots". The American Statistician. 30 (2): 88–90. doi:10.2307/2683801. JSTOR 2683801.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions. \code{\link{Normal}} for the Normal distribution. \code{\link{CoreStatistics}} for numerical results. \code{\link{FunctionImputation}} to numerically impute d/p/q/r.
 }

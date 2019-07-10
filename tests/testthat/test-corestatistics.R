@@ -20,7 +20,6 @@ ps = ParameterSet$new(id = list("rate", "scale"), value = list(1, 1),
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),
-                                    distrDomain=PosReals$new(),
                                     pdf = dexpo, cdf = cexpo,
                                     parameters = ps,
                                     decorators = CoreStatistics
@@ -42,7 +41,6 @@ ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.5, 10, 0.
 
 discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
                                   symmetric=TRUE, type = PosNaturals$new(),
-                                  distrDomain=PosNaturals$new(),
                                   pdf = dbin,
                                   parameters = ps,
                                   decorators = CoreStatistics
@@ -118,7 +116,6 @@ rbin = function(n){
 }
 discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
                                   symmetric=TRUE, type = PosNaturals$new(),
-                                  distrDomain=PosNaturals$new(),
                                   pdf = dbin, rand = rbin,
                                   parameters = ps,
                                   decorators = CoreStatistics
@@ -131,7 +128,6 @@ test_that("rand2mode",{
 
 discreteTester = Distribution$new("Discrete Test","TestDistr",support=Naturals$new(),
                                   symmetric=TRUE, type = PosNaturals$new(),
-                                  distrDomain=PosNaturals$new(),
                                   pdf = dbin,
                                   parameters = ps,
                                   decorators = CoreStatistics

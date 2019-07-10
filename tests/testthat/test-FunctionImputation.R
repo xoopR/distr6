@@ -21,7 +21,6 @@ ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),
-                                    distrDomain=PosReals$new(),
                                     pdf = dexpo,
                                     parameters = ps
 )
@@ -44,7 +43,6 @@ test_that("continuous r/p/q d2",{
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),
-                                    distrDomain=PosReals$new(),
                                     cdf = cexpo,
                                     parameters = ps
 )
@@ -94,7 +92,6 @@ ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.5, 10, 0.
 
 discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
                                   symmetric=TRUE, type = PosNaturals$new(),
-                                  distrDomain=PosNaturals$new(),
                                   pdf = dbin,
                                   parameters = ps,
                                   decorators = list(CoreStatistics)
@@ -110,7 +107,6 @@ test_that("discrete r/p/q",{
 
 discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
                                   symmetric=TRUE, type = PosNaturals$new(),
-                                  distrDomain=PosNaturals$new(),
                                   cdf = pbin,
                                   parameters = ps,
                                   decorators = list(FunctionImputation)

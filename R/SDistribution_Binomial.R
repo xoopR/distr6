@@ -2,40 +2,21 @@
 #-------------------------------------------------------------
 # Binomial Distribution Documentation
 #-------------------------------------------------------------
-#' @title Binomial Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Binomial distribution, which is commonly
-#' used to model the number of successes out of a number of independent trials.
-#'
-#' @details The Binomial distribution parameterised with number of trials, n, and probability of
-#' success, p, is defined by the pmf,
-#' \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
-#' for \eqn{n = 0,1,2,\ldots} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination
-#' (or binomial coefficient) function.
-#'
-#' The distribution is supported on \eqn{{0, 1,...,n}}.
-#'
 #' @name Binomial
-#'
-#' @section Constructor: Binomial$new(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{size} \tab numeric \tab number of trials. \cr
-#' \code{prob} \tab numeric \tab probability of success. \cr
-#' \code{qprob} \tab numeric \tab probability of failure. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Binomial distribution is parameterised with \code{size} as a whole number,
-#' and either \code{prob} or \code{qprob} as a number between 0 and 1. These are related via,
-#' \deqn{qprob = 1 - prob}
-#' If \code{qprob} is given then \code{prob} is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Binomial
+#' @templateVar DistName Binomial
+#' @templateVar uses to model the number of successes out of a number of independent trials
+#' @templateVar params number of trials, n, and probability of success, p,
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
+#' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
+#' @templateVar distsupport \eqn{{0, 1,...,n}}
+#' @templateVar constructor size = 10, prob = 0.5, qprob = NULL
+#' @templateVar arg1 \code{size} \tab numeric \tab number of trials. \cr
+#' @templateVar arg2 \code{prob} \tab numeric \tab probability of success. \cr
+#' @templateVar arg3 \code{qprob} \tab numeric \tab probability of failure. \cr
+#' @templateVar constructorDets \code{size} as a whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then \code{prob} is ignored.
 #'
 #' @examples
 #' # Can be parameterised with probability of success or failure
@@ -48,7 +29,7 @@
 #' x$setParameterValue(list(size = 4, qprob = 0.1)) # Can update any parameter
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -138,7 +119,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
   rand = function(n) rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0:size), distrDomain = Naturals$new(),
+                   rand = rand, support = Set$new(0:size),
                    symmetric = symmetric,type = Naturals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

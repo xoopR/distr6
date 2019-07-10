@@ -2,39 +2,23 @@
 #-------------------------------------------------------------
 # Arcsine Distribution Documentation
 #-------------------------------------------------------------
-#' @title Arcsine Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Arcsine distribution, which can be
-#' used in the study of random walks and as a special case of the Beta distribution.
-#'
-#' @details The Arcsine distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits
-#' is defined by the pdf,
-#' \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
-#' fpr \eqn{-\infty < a \le b < \infty}.
-#'
-#' The distribution is supported on \eqn{[lower, upper]}.
-#'
-#' \code{cf} and \code{mgf} are omitted as no closed form analytic expression could be found. Decorate
-#' with \code{CoreStatistics} for numerical results.
-#'
 #' @name Arcsine
-#'
-#' @section Constructor: Arcsine$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab numeric \tab lower distribution limit. \cr
-#' \code{upper} \tab numeric \tab upper distribution limit. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Arcsine distribution is parameterised with \code{lower} and \code{upper}
-#' as numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Arcsine
+#' @templateVar DistName Arcsine
+#' @templateVar uses in the study of random walks and as a special case of the Beta distribution
+#' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
+#' @templateVar paramsupport \eqn{-\infty < a \le b < \infty}
+#' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar omittedVars \code{cf} and \code{mgf}
+#' @templateVar additionalDetails When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta}} is used for sampling, otherwise via inverse transform
+#' @templateVar constructor lower = 0, upper = 1
+#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
+#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
+#' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
+#' @templateVar additionalSeeAlso \code{\link{rbeta}} for the Beta distribution sampling function.
 #'
 #' @examples
 #' x = Arcsine$new(lower = 2, upper = 5)
@@ -43,7 +27,7 @@
 #' x$setParameterValue(list(upper = 4, lower = 1))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -148,7 +132,7 @@ Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Interval$new(lower,upper), distrDomain = Reals$new(), symmetric = TRUE,
+                   support = Interval$new(lower,upper),  symmetric = TRUE,
                    type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

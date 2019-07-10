@@ -2,42 +2,23 @@
 #-------------------------------------------------------------
 # Inverse Gamma Distribution Documentation
 #-------------------------------------------------------------
-#' @title Inverse Gamma Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Inverse Gamma distribution, which is
-#' commonly used in Bayesian statistics as the posterior distribution from the unknown variance in a Normal
-#' distribution.
-#'
-#' @details The Inverse Gamma distribution is parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta},
-#' and defined by the pdf,
-#' \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(-\alpha-1) * exp(-\beta/x)}
-#' for \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function.
-#'
-#' The distribution is supported on the Positive Reals.
-#'
-#' The Inverse Gamma distribution uses the \code{extraDistr} package as it provides a quantile function
-#' that computes the inverse upper incomplete Gamma function. The \code{cf} is ommitted as no working function
-#' for the modified Bessel of the second kind taking complex inputs could be found. Decorate with
-#' \code{CoreStatistics} for numerical results.
-#'
 #' @name InverseGamma
-#'
-#' @section Constructor: InverseGamma$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Inverse Gamma Distribution is parameterised with \code{shape} and
-#' \code{scale} as positive numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName InverseGamma
+#' @templateVar DistName Inverse Gamma
+#' @templateVar uses in Bayesian statistics as the posterior distribution from the unknown variance in a Normal distribution
+#' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(-\alpha-1) * exp(-\beta/x)}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function
+#' @templateVar distsupport the Positive Reals
+#' @templateVar omittedVars \code{cf}
+#' @templateVar additionalDetails The distribution is implemented by interfacing the \code{extraDistr} package.
+#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
+#' @templateVar additionalSeeAlso \code{\link[extraDistr]{InvGamma}} for the d/p/q/r implementation.
 #'
 #' @examples
 #' x  = InverseGamma$new(shape = 1, scale = 4)
@@ -46,7 +27,7 @@
 #' x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -134,7 +115,7 @@ InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators 
   rand <- function(n) extraDistr::rinvgamma(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(), distrDomain = PosReals$new(),
+                   rand = rand, support = PosReals$new(),
                    symmetric  = FALSE,type = PosReals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

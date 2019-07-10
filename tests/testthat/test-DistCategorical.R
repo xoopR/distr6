@@ -24,14 +24,14 @@ test_that("properties & traits",{
 
 
 test_that("statistics",{
-  expect_error(cat$mean())
-  expect_error(cat$variance())
-  expect_error(cat$skewness())
-  expect_error(cat$kurtosis())
-  expect_error(cat$entropy())
-  expect_error(cat$mgf(1:3))
+  expect_equal(cat$mean(), NaN)
+  expect_equal(cat$variance(), NaN)
+  expect_equal(cat$skewness(), NaN)
+  expect_equal(cat$kurtosis(), NaN)
+  expect_equal(cat$entropy(), NaN)
+  expect_equal(cat$mgf(1:3), NaN)
   expect_equal(cat$pgf(1:3), NaN)
-  expect_error(cat$cf(1:3))
+  expect_equal(cat$cf(1:3), NaN)
   expect_equal(cat$mode(), "T")
   expect_equal(cat$pdf("T"), 4/5)
   expect_equal(cat$pdf(c("Sandwich","Fish")), c(0.1/5,0))

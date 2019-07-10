@@ -49,6 +49,6 @@ Quartic$set("public","initialize",function(decorators = NULL){
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1), distrDomain = Reals$new(), symmetric = TRUE)
+                   support = Interval$new(-1, 1),  symmetric = TRUE)
   invisible(self)
 }) # QUANTILE & VAR MISSING

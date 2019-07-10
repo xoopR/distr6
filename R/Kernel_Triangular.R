@@ -57,6 +57,6 @@ TriangularKernel$set("public","initialize",function(decorators = NULL){
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Interval$new(-1, 1), distrDomain = Reals$new(), symmetric = TRUE)
+                   support = Interval$new(-1, 1),  symmetric = TRUE)
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING

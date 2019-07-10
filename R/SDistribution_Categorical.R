@@ -2,45 +2,24 @@
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
-#' @title Categorical Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Categorical distribution, which is
-#' commonly used in classification supervised learning.
-#'
-#' @details The Categorical distribution parameterised with a given support set, \eqn{x_1,...,x_k},
-#' and respective probabilities. \eqn{p_1,...,p_k}, is defined by the pmf,
-#' \deqn{f(x_i) = p_i}
-#' for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
-#'
-#' The distribution is supported on \eqn{x_1,...,x_k}.
-#'
-#' Only the mode, pdf, cdf and rand are available for this Distribution.
-#'
-#' Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements
-#' given as the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements
-#' are supplied in an indexed order (otherwise the results are meaningless).
-#'
 #' @name Categorical
-#'
-#' @section Constructor: Categorical$new(..., probs, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{...} \tab ANY \tab elements in the support Set. See details. \cr
-#' \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Categorical distribution is parameterised with a series of elements
-#' for the support set and \code{probs} determining the probability of each category occurring.
-#' The length of the probability list should equal the number of elements. The probability vector is
-#' automatically normalised with \deqn{probs = probs/sum(probs)}
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
-#'
+#' @template SDist
+#' @templateVar ClassName Categorical
+#' @templateVar DistName Categorical
+#' @templateVar uses in classification supervised learning
+#' @templateVar params a given support set, \eqn{x_1,...,x_k}, and respective probabilities, \eqn{p_1,...,p_k},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x_i) = p_i}
+#' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
+#' @templateVar distsupport \eqn{x_1,...,x_k}
+#' @templateVar omittedDPQR \code{quantile}
+#' @templateVar additionalDetails Only the mode, pdf, cdf and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
+#' @templateVar constructor ..., probs
+#' @templateVar arg1 \code{...} \tab ANY \tab elements in the support Set. See details. \cr
+#' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
+#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
+#' @templateVar constructorDets a series of elements for the support set and \code{probs} determining the probability of each category occurring. The length of the probability list should equal the number of elements. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)} If no arguments are given, then defaults to one element '1' with probability one.
+#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function.
 #'
 #' @examples
 #' # Note probabilities are automatically normalised
@@ -49,7 +28,7 @@
 #' # Only the probabilities can be changed and must the same length as in construction
 #' x$setParameterValue(list(probs = c(0.1,0.2,0.7)))
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(c("Bapple", "Carrot", 1, 2))
 #' x$cdf("Banana") # Assumes ordered in construction
 #' x$rand(10)
@@ -58,9 +37,6 @@
 #' x$mode()
 #'
 #' summary(x)
-#'
-#' @examples
-#'
 #'
 #' @export
 NULL
@@ -75,6 +51,27 @@ Categorical$set("public","package","distr6")
 
 Categorical$set("public","mode",function(){
   return(self$support()$elements()[which.max(self$getParameterValue("probs"))])
+})
+Categorical$set("public","mean",function(){
+  return(NaN)
+})
+Categorical$set("public","variance",function(){
+  return(NaN)
+})
+Categorical$set("public","skewness",function(){
+  return(NaN)
+})
+Categorical$set("public","kurtosis",function(){
+  return(NaN)
+})
+Categorical$set("public","entropy",function(){
+  return(NaN)
+})
+Categorical$set("public","mgf",function(t){
+  return(NaN)
+})
+Categorical$set("public","cf",function(t){
+  return(NaN)
 })
 
 Categorical$set("public","setParameterValue",function(lst, error = "warn"){
@@ -121,7 +118,7 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, rand = rand,
                    support = support,
-                   distrDomain = Complex$new(), symmetric = FALSE, type = Complex$new(),
+                   symmetric = FALSE, type = Complex$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")
   invisible(self)

@@ -4,19 +4,24 @@
 \alias{Cauchy}
 \title{Cauchy Distribution Class}
 \description{
-Mathematical and statistical functions for the Cauchy distribution, which is commonly
-used in physics and finance.
+Mathematical and statistical functions for the Cauchy distribution, which
+is commonly used in physics and finance.
 }
 \details{
-The Cauchy distribution parameterised with location, \eqn{\alpha}, and scale, \eqn{\beta}, is
-defined by the pdf,
-\deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))}
-for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
+The Cauchy distribution parameterised with location, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
+\deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))} for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
 
 The distribution is supported on the Reals.
 
-The Cauchy distribution has an undefined mean and variance, this means that \code{NaN} is returned
-and these methods cannot be computed using any decorators.
+
+
+
+
+
+
+
+
+The mean and variance are undefined, hence \code{NaN} is returned.
 }
 \section{Constructor}{
  Cauchy$new(location = 0, scale = 1, decorators = NULL, verbose = FALSE)
@@ -25,17 +30,24 @@ and these methods cannot be computed using any decorators.
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{location} \tab numeric \tab location parameter. \cr
-\code{scale} \tab numeric \tab scale parameter. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{location} \tab numeric \tab location parameter. \cr
+  \code{scale} \tab numeric \tab scale parameter. \cr
+  
+  
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Cauchy distribution is parameterised with
-\eqn{location} as a numeric and \eqn{scale} as a positive numeric.
+ The Cauchy distribution is parameterised with \code{location} as a numeric and \code{scale} as a positive numeric.
 }
 
 \section{Public Variables}{
@@ -45,7 +57,7 @@ and these methods cannot be computed using any decorators.
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -60,7 +72,6 @@ and these methods cannot be computed using any decorators.
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -87,7 +98,6 @@ and these methods cannot be computed using any decorators.
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -103,60 +113,9 @@ and these methods cannot be computed using any decorators.
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
-  }
-
-
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
-  \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
@@ -173,7 +132,7 @@ x = Cauchy$new(location = 2, scale = 5)
 x$setParameterValue(list(scale = 3))
 x$parameters()
 
-# p/d/q/r
+# d/p/q/r
 x$pdf(5)
 x$cdf(5)
 x$quantile(0.42)
@@ -185,4 +144,11 @@ x$variance()
 
 summary(x)
 
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions.
 }

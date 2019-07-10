@@ -2,37 +2,21 @@
 #-------------------------------------------------------------
 # Bernoulli Distribution Documentation
 #-------------------------------------------------------------
-#' @title Bernoulli Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Bernoulli distribution, which is commonly
-#' used to model a two-outcome scenario.
-#'
-#' @details The Bernoulli distribution parameterised with probability of success, p, is defined by
-#' the pmf,
-#' \deqn{f(x) = p, if x = 1}
-#' \deqn{f(x) = 1 - p, if x = 0}
-#' for \eqn{p \epsilon [0,1]}.
-#'
-#' The distribution is supported on \eqn{{0,1}}.
-#'
 #' @name Bernoulli
-#'
-#' @section Constructor: Bernoulli$new(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{prob} \tab numeric \tab probability of success. \cr
-#' \code{qprob} \tab numeric \tab probability of failure. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Bernoulli distribution is parameterised with either \code{prob} or \code{qprob}
-#' as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob}
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Bernoulli
+#' @templateVar DistName Bernoulli
+#' @templateVar uses to model a two-outcome scenario
+#' @templateVar params probability of success, \eqn{p},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, if x = 0}
+#' @templateVar paramsupport \eqn{p \epsilon [0,1]}
+#' @templateVar distsupport \eqn{{0,1}}
+#' @templateVar constructor prob = 0.5, qprob = NULL
+#' @templateVar arg1 \code{prob} \tab numeric \tab probability of success. \cr
+#' @templateVar arg2 \code{qprob} \tab numeric \tab probability of failure. \cr
+#' @templateVar constructorDets \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then {prob is ignored}.
+#' @templateVar additionalSeeAlso \code{\link{Binomial}} for a generalisation of the Bernoulli distribution.
 #'
 #' @examples
 #' # Can be parameterised with probability of success or failure
@@ -45,7 +29,7 @@
 #' x$setParameterValue(list(qprob = 0.3)) # Can update any parameter
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -66,7 +50,7 @@ Bernoulli <- R6::R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
 Bernoulli$set("public","name","Bernoulli")
 Bernoulli$set("public","short_name","Bern")
 Bernoulli$set("public","description","Bernoulli Probability Distribution.")
-Bernoulli$set("public","package","distr6")
+Bernoulli$set("public","package","stats")
 
 Bernoulli$set("public","mean",function(){
   self$getParameterValue("prob")
@@ -130,7 +114,7 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
   rand = function(n) dbinom(n, 1, self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0,1), distrDomain = Naturals$new(),
+                   rand = rand, support = Set$new(0,1),
                    symmetric = FALSE,type = Naturals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

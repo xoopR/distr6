@@ -44,13 +44,13 @@ N$variateForm()
 
 ## Properties
 
-The properties included in distr6 are kurtosis, skewness, symmetry, support, distrDomain.
+The properties included in distr6 are kurtosis, skewness, symmetry, support.
 
 Kurtosis is a measure of how heavy a distribution's tails us. A distribution is one of: mesokurtic (kurtosis equals that of the Normal distribution), leptokurtic (kurtosis is higher than Normal distribution), platykurtic (kurtosis is smaller than Normal distributions). In slightly simpler terms: a platykurtic distribution is likely to produce less outliers (or extreme deviations) than a Normal distribution, a mesokurtic distribution will produce the same amount and a leptokurtic distribution will produce more.
 
 Skewness is a slightly easier concept to understand. It refers to the shape of the distribution and specifically if a distribution is negative skew (skew < 0) then the 'tail' is on the left side of the distribution whereas a positive skew distribution has its 'tail' on the right. If a distribution is symmetric there is no skew (although the reverse doesn't necessarily hold).
 
-Symmetry is one of 'symmetric' or 'asymmetric' and is an informal way of identifying if the pdf of the distribution is symmetric about a single point (the median). Informally, the distribution support is the set of values that produce a non-zero results when plugged into the pdf and the distrDomain is a similar concept except generalised to the family of distributions (i.e. before parameterisation).
+Symmetry is one of 'symmetric' or 'asymmetric' and is an informal way of identifying if the pdf of the distribution is symmetric about a single point (the median). Informally, the distribution support is the set of values that produce a non-zero results when supplied to the pdf.
 
 To view properties in distr6, we use the `properties()` method
 ```{r}
@@ -64,7 +64,6 @@ N$kurtosisType()
 N$skewnessType()
 N$symmetry()
 N$support()
-N$distrDomain()
 ```
 
 Note that `kurtosisType()` and `skewnessType()` are used as these produce the type of kurtosis and skewness respectively, as opposed to `kurtosis()` and `skewness()` which return the values.

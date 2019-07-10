@@ -2,53 +2,34 @@
 #-------------------------------------------------------------
 # Log-Logistic Distribution Documentation
 #-------------------------------------------------------------
-#' @title Log-Logistic Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Log-Logistic distribution,
-#' which is used in survival analysis for its non-monotonic hazard as well as in economics (known more
-#' commonly as the Fisk distribution).
-#'
-#' @details The Log-Logistic distribution parameterised with shape, \eqn{\beta}, scale, \eqn{\alpha},
-#' and location, \eqn{\gamma}, is defined by the pdf
-#' \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
-#' for \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}.
-#'
-#' The distribution is supported on the non-negative Reals.
-#'
-#' \code{entropy}, \code{mgf} and \code{cf} are omitted as no closed form analytical expression could be found.
-#' Decorate with \code{CoreStatistics} for numerical results.
-#'
-#' @references
-#' McLaughlin, M. P. (2016). Compendium of Common Probability Distributions.
-#'
-#' @name LogLogistic
-#'
-#' @section Constructor: LogLogistic$new(scale = 1, shape = 1, location = 0, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{location} \tab numeric \tab location parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The LogLogistic distribution is parameterised with \code{shape} and
-#' \code{scale} as positive numerics and \code{location} as a numeric.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @name Loglogistic
+#' @template SDist
+#' @templateVar ClassName Loglogistic
+#' @templateVar DistName Log-Logistic
+#' @templateVar uses in survival analysis for its non-monotonic hazard as well as in economics
+#' @templateVar params shape, \eqn{\beta}, scale, \eqn{\alpha}, and location, \eqn{\gamma},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}
+#' @templateVar distsupport the non-negative Reals
+#' @templateVar omittedVars \code{entropy}, \code{mgf} and \code{cf}
+#' @templateVar aka Fisk
+#' @aliases Fisk LogLogistic
+#' @templateVar constructor scale = 1, shape = 1, location = 0
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar arg3 \code{location} \tab numeric \tab location parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics and \code{location} as a numeric.
+#' @templateVar additionalSeeAlso \code{\link{Logistic}} for the Logistic distribution.
 #'
 #' @examples
-#' x <- LogLogistic$new(shape = 2, scale = 3)
+#' x <- Loglogistic$new(shape = 2, scale = 3)
 #'
 #' # Update parameters
 #' x$setParameterValue(list(scale = 2))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5:6)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -63,20 +44,20 @@
 #' @export
 NULL
 #-------------------------------------------------------------
-# LogLogistic Distribution Definition
+# Loglogistic Distribution Definition
 #-------------------------------------------------------------
-LogLogistic <- R6::R6Class("LogLogistic", inherit = SDistribution, lock_objects = F)
-LogLogistic$set("public","name","LogLogistic")
-LogLogistic$set("public","short_name","LLogis")
-LogLogistic$set("public","description","LogLogistic Probability Distribution.")
-LogLogistic$set("public","package","distr6")
+Loglogistic <- R6::R6Class("Loglogistic", inherit = SDistribution, lock_objects = F)
+Loglogistic$set("public","name","Log-Logistic")
+Loglogistic$set("public","short_name","LLogis")
+Loglogistic$set("public","description","Log-Logistic Probability Distribution.")
+Loglogistic$set("public","package","distr6")
 
-LogLogistic$set("public","mean",function(){
+Loglogistic$set("public","mean",function(){
   return(self$getParameterValue("location") +
            (self$getParameterValue("scale")*pi/self$getParameterValue("shape"))/
            sin(pi/self$getParameterValue("shape")))
 })
-LogLogistic$set("public","variance",function(){
+Loglogistic$set("public","variance",function(){
   if(self$getParameterValue("shape") > 2){
     scale <- self$getParameterValue("scale")
     shapi <- pi/self$getParameterValue("shape")
@@ -84,7 +65,7 @@ LogLogistic$set("public","variance",function(){
   } else
     return(NaN)
 })
-LogLogistic$set("public","skewness",function(){
+Loglogistic$set("public","skewness",function(){
   if(self$getParameterValue("shape") > 3){
     scale <- self$getParameterValue("scale")
     shapi <- pi/self$getParameterValue("shape")
@@ -95,7 +76,7 @@ LogLogistic$set("public","skewness",function(){
   } else
     return(NaN)
 })
-LogLogistic$set("public","kurtosis",function(excess = TRUE){
+Loglogistic$set("public","kurtosis",function(excess = TRUE){
   if(self$getParameterValue("shape") > 4){
     scale <- self$getParameterValue("scale")
     shapi <- pi/self$getParameterValue("shape")
@@ -111,19 +92,19 @@ LogLogistic$set("public","kurtosis",function(excess = TRUE){
   } else
     return(NaN)
 })
-LogLogistic$set("public","mode",function(){
+Loglogistic$set("public","mode",function(){
   shape <- self$getParameterValue("shape")
   return(self$getParameterValue("location") +
            self$getParameterValue("scale")*((shape-1)/(shape+1))^(1/shape))
 })
 
-LogLogistic$set("public","setParameterValue",function(lst, error = "warn"){
+Loglogistic$set("public","setParameterValue",function(lst, error = "warn"){
   super$setParameterValue(lst, error)
   private$.properties$support <- Interval$new(self$getParameterValue("location"),Inf,type="()")
   invisible(self)
 })
 
-LogLogistic$set("private",".getRefParams", function(paramlst){
+Loglogistic$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
@@ -131,7 +112,7 @@ LogLogistic$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-LogLogistic$set("public","initialize",function(scale = 1, shape = 1, location = 0,
+Loglogistic$set("public","initialize",function(scale = 1, shape = 1, location = 0,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, scale, shape, location, verbose)
@@ -154,7 +135,7 @@ LogLogistic$set("public","initialize",function(scale = 1, shape = 1, location = 
     return(self$quantile(runif(n)))
   }
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(location,Inf,type="()"), distrDomain = PosReals$new(zero=T),
+                   rand = rand, support = Interval$new(location,Inf,type="()"),
                    symmetric = FALSE,type = PosReals$new(zero = T),
                    valueSupport = "continuous",
                    variateForm = "univariate")

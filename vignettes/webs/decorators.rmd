@@ -92,7 +92,7 @@ N$pdfPNorm(2,0,4)
 
 ### FunctionImputation
 
-The final implemented decorator is used to impute missing p/d/q/r methods. At the moment the imputation strategy cannot be chosen but in future updates this will be a function argument that can be selected. Again these use numeric strategies and highlight these with messages to alert you to less precise results. We will return to the `FunctionImputation` decorator in a [future tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html) which looks at constructing custom distributions.
+The final implemented decorator is used to impute missing d/p/q/r methods. At the moment the imputation strategy cannot be chosen but in future updates this will be a function argument that can be selected. Again these use numeric strategies and highlight these with messages to alert you to less precise results. We will return to the `FunctionImputation` decorator in a [future tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html) which looks at constructing custom distributions.
 
 ## How to Decorate
 
@@ -118,6 +118,6 @@ And that's all there is to it! Just make sure you pass the Decorator object (not
 
 ## Summary
 
-In this tutorial we looked at decorators in distr6 to obtain numeric results, methods for statistical modelling and imputation methods for missing p/d/q/r functions. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html) we look at the next big feature in distr6, wrappers.
+In this tutorial we looked at decorators in distr6 to obtain numeric results, methods for statistical modelling and imputation methods for missing d/p/q/r functions. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html) we look at the next big feature in distr6, wrappers.
 
 ## References

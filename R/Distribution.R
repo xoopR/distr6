@@ -10,7 +10,7 @@
 #' @name Distribution
 #'
 #' @section Constructor: Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-#' distrDomain = NULL, symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+#' symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
 #' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
 #'
 #' @section Constructor Arguments:
@@ -20,7 +20,6 @@
 #' \code{short_name} \tab character \tab Short name to identify distribution. \cr
 #' \code{type} \tab SetInterval \tab Scientific type. \cr
 #' \code{support} \tab SetInterval \tab Distribution support. See Details. \cr
-#' \code{distrDomain} \tab SetInterval \tab Distribution domain See Details. \cr
 #' \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
 #' \code{pdf} \tab function \tab See Details. \cr
 #' \code{cdf} \tab function \tab See Details. \cr
@@ -37,10 +36,9 @@
 #'
 #'   The most basic Distribution object consists of a name and one of pdf/cdf.
 #'
-#'   If supplied, \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
-#'   object. If none are supplied then the set of Reals is taken to be the type and the dimension is the
-#'   number of formal arguments in the pdf/cdf. If only \code{type} is supplied then this is taken to also
-#'   be the support and domain.
+#'   If supplied, \code{type} and \code{support} should be given as an R6 SetInterval object. If neither are supplied
+#'   then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
+#'   If only \code{type} is supplied then this is taken to also be the support.
 #'
 #'   By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
 #'   Use the \code{\link{FunctionImputation}} decorator to generate these.
@@ -73,7 +71,6 @@
 #'   \code{type()} \tab \code{\link{type}} \cr
 #'   \code{properties()} \tab \code{\link{properties}} \cr
 #'   \code{support()} \tab \code{\link{support}} \cr
-#'   \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
 #'   \code{symmetry()} \tab \code{\link{symmetry}} \cr
 #'   \code{sup()}  \tab \code{\link{sup}} \cr
 #'   \code{inf()} \tab \code{\link{inf}} \cr
@@ -103,7 +100,6 @@
 #'   \strong{Validation Methods} \tab \strong{Link} \cr
 #'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
 #'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-#'   \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Representation Methods} \tab \strong{Link} \cr
 #'   \code{strprint()} \tab \code{\link{strprint}} \cr
@@ -130,7 +126,7 @@ Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
 # Public Methods - Constructor
 #-------------------------------------------------------------
 Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
-                      type = NULL, support = NULL, distrDomain = NULL,
+                      type = NULL, support = NULL,
                       symmetric = logical(0),
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                       parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
@@ -172,10 +168,8 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       }
     }
     if(is.null(support)) support <- type
-    if(is.null(distrDomain)) distrDomain <- type
     checkmate::assert(inherits(type,"SetInterval"), inherits(support,"SetInterval"),
-                      inherits(distrDomain,"SetInterval"),
-                      .var.name = "'type', 'support' and 'distrDomain' should be class 'SetInterval'.")
+                      .var.name = "'type' and 'support' should be class 'SetInterval'.")
 
     if(!is.null(valueSupport)){
       if(grepl("^c",valueSupport))
@@ -207,7 +201,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     private$.traits$variateForm <- variateForm
 
     private$.properties$support <- support
-    private$.properties$distrDomain <- distrDomain
     symm = ifelse(symmetric,"symmetric","asymmetric")
     private$.properties$symmetry <- symm
 
@@ -290,7 +283,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       private$.properties$symmetry <- symm
     }
     if(!is.null(support)) private$.properties$support <- support
-    if(!is.null(distrDomain)) private$.properties$distrDomain <- distrDomain
     if(!is.null(description)) self$description <- description
     if(!is.null(type)) private$.traits$type <- type
     if(!is.null(valueSupport)) private$.traits$valueSupport <- valueSupport
@@ -531,21 +523,6 @@ Distribution$set("public","properties",function(){
 NULL
 Distribution$set("public","support",function(){
   return(self$properties()[["support"]])
-})
-
-#' @name distrDomain
-#' @title Distribution Domain Accessor
-#' @usage distrDomain(object)
-#' @section R6 Usage: $distrDomain()
-#' @param object Distribution.
-#' @description Returns the distribution domain.
-#' @details The domain of a probability distribution is the set of values returned by the pdf/pdf,
-#' including zero.
-#' @seealso \code{\link{SetInterval}} and \code{\link{properties}}
-#' @export
-NULL
-Distribution$set("public","distrDomain",function(){
-  return(self$properties()[["distrDomain"]])
 })
 
 #' @name symmetry
@@ -1085,7 +1062,7 @@ Distribution$set("public","cor",function(){
 #' lies in the support. If \code{all} is FALSE then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
 #'
-#' @seealso \code{\link{liesInType}} and \code{\link{liesInDistrDomain}}
+#' @seealso \code{\link{liesInType}}
 #'
 #' @export
 NULL
@@ -1108,35 +1085,12 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' lies in the type. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
 #'
-#' @seealso \code{\link{liesInSupport}} and \code{\link{liesInDistrDomain}}
+#' @seealso \code{\link{liesInSupport}}
 #'
 #' @export
 NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
   return(self$type()$liesInSetInterval(x, all, bound))
-})
-
-#' @name liesInDistrDomain
-#' @title Test if Data Lies in Distribution Domain
-#' @description Tests if the given data lies in the domain of the Distribution, either tests if all
-#' data lies in the distribution domain or any of it.
-#'
-#' @usage liesInDistrDomain(object, x, all = TRUE, bound = FALSE)
-#' @section R6 Usage: $liesInDistrDomain(x, all = TRUE, bound = FALSE)
-#' @param object Distribution.
-#' @param x vector of numerics to test.
-#' @param all logical, see details.
-#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
-#' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
-#' lies in the domain. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
-#' in the vector \code{x}.
-#'
-#' @seealso \code{\link{liesInSupport}} and \code{\link{liesInType}}
-#'
-#' @export
-NULL
-Distribution$set("public","liesInDistrDomain",function(x, all = TRUE, bound = FALSE){
-  return(self$distrDomain()$liesInSetInterval(x, all, bound))
 })
 
 #-------------------------------------------------------------

@@ -13,6 +13,6 @@ LICENSE.md
 vignettes/webs
 README\.Rmd
 \.github
-
+man-roxygen
 ^doc$
 ^Meta$

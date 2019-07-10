@@ -4,22 +4,24 @@
 \alias{InverseGamma}
 \title{Inverse Gamma Distribution Class}
 \description{
-Mathematical and statistical functions for the Inverse Gamma distribution, which is
-commonly used in Bayesian statistics as the posterior distribution from the unknown variance in a Normal
-distribution.
+Mathematical and statistical functions for the Inverse Gamma distribution, which
+is commonly used in Bayesian statistics as the posterior distribution from the unknown variance in a Normal distribution.
 }
 \details{
-The Inverse Gamma distribution is parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta},
-and defined by the pdf,
-\deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(-\alpha-1) * exp(-\beta/x)}
-for \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function.
+The Inverse Gamma distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
+\deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(-\alpha-1) * exp(-\beta/x)} for \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function.
 
 The distribution is supported on the Positive Reals.
 
-The Inverse Gamma distribution uses the \code{extraDistr} package as it provides a quantile function
-that computes the inverse upper incomplete Gamma function. The \code{cf} is ommitted as no working function
-for the modified Bessel of the second kind taking complex inputs could be found. Decorate with
-\code{CoreStatistics} for numerical results.
+\code{cf}
+is
+omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
+
+
+
+
+
+The distribution is implemented by interfacing the \code{extraDistr} package.
 }
 \section{Constructor}{
  InverseGamma$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
@@ -28,17 +30,24 @@ for the modified Bessel of the second kind taking complex inputs could be found.
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{shape} \tab numeric \tab shape parameter. \cr
-\code{scale} \tab numeric \tab scale parameter. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{shape} \tab numeric \tab shape parameter. \cr
+  \code{scale} \tab numeric \tab scale parameter. \cr
+  
+  
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Inverse Gamma Distribution is parameterised with \code{shape} and
-\code{scale} as positive numerics.
+ The Inverse Gamma distribution is parameterised with \code{shape} and \code{scale} as positive numerics.
 }
 
 \section{Public Variables}{
@@ -48,7 +57,7 @@ for the modified Bessel of the second kind taking complex inputs could be found.
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -63,7 +72,6 @@ for the modified Bessel of the second kind taking complex inputs could be found.
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -90,7 +98,6 @@ for the modified Bessel of the second kind taking complex inputs could be found.
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -106,60 +113,9 @@ for the modified Bessel of the second kind taking complex inputs could be found.
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
-  }
-
-
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
-  \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
@@ -176,7 +132,7 @@ x  = InverseGamma$new(shape = 1, scale = 4)
 x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
 x$parameters()
 
-# p/d/q/r
+# d/p/q/r
 x$pdf(5)
 x$cdf(5)
 x$quantile(0.42)
@@ -188,4 +144,11 @@ x$variance()
 
 summary(x)
 
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions. \code{\link[extraDistr]{InvGamma}} for the d/p/q/r implementation. \code{\link{CoreStatistics}} for numerical results.
 }

@@ -7,11 +7,10 @@ test_that("constructor",{
   expect_silent(ProductDistribution$new(list(Binomial$new(),Exponential$new(rate=1))))
 })
 
-test_that("type/support/distrDomain",{
+test_that("type/support",{
   expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$type()$getSymbol(), Naturals$new(2)$getSymbol())
   expect_equal(ProductDistribution$new(list(Binomial$new(size = 2), Binomial$new(size = 3)))$support()$getSymbol(),
                product.SetInterval(Set$new(0:2),Set$new(0:3))$getSymbol())
-  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$distrDomain()$getSymbol(), Naturals$new(2)$getSymbol())
 })
 
 test_that("pdf/cdf",{

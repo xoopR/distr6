@@ -2,37 +2,20 @@
 #-------------------------------------------------------------
 # Exponential Distribution Documentation
 #-------------------------------------------------------------
-#' @title Exponential Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Exponential distribution, which is commonly
-#' used to model inter-arrival times in a Poisson process and has the memoryless property.
-#'
-#' @details The Exponential distribution parameterised with rate, \eqn{\lambda}, is defined by the pdf,
-#' \deqn{f(x) = \lambda exp(-x\lambda)}
-#' for \eqn{\lambda > 0}.
-#'
-#' The distribution is supported on the Positive Reals.
-#'
 #' @name Exponential
-#'
-#' @section Constructor: Exponential$new(rate = NULL, scale = NULL, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{rate} \tab numeric \tab arrival rate. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Exponential distribution is parameterised with \code{rate} or
-#' \code{scale} as positive numerics. These are related via,
-#' \deqn{scale = 1/rate}
-#' If \code{scale} is given then \code{rate} is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Exponential
+#' @templateVar DistName Exponential
+#' @templateVar uses to model inter-arrival times in a Poisson process and has the memoryless property
+#' @templateVar params rate, \eqn{\lambda},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = \lambda exp(-x\lambda)}
+#' @templateVar paramsupport \eqn{\lambda > 0}
+#' @templateVar distsupport the Positive Reals
+#' @templateVar constructor rate = NULL, scale = NULL
+#' @templateVar arg1 \code{rate} \tab numeric \tab arrival rate. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets  \code{rate} or \code{scale} as positive numerics. These are related via, \deqn{scale = 1/rate} If \code{scale} is given then \code{rate} is ignored.
 #'
 #' @examples
 #' Exponential$new(rate = 4)
@@ -44,7 +27,7 @@
 #' x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -114,7 +97,7 @@ Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorator
   rand <- function(n) rexp(n, self$getParameterValue("rate"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
+                   rand = rand, support = PosReals$new(zero = T),
                    symmetric  = FALSE, type = PosReals$new(zero = T),
                    valueSupport = "continuous",
                    variateForm = "univariate")

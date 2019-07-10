@@ -65,4 +65,4 @@ N$parameters()
 
 ## Summary
 
-In this tutorial we looked at getting and setting parameters for the Normal distribution. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we look at accessing mathematical and statistical methods including the p/d/q/r functions.
+In this tutorial we looked at getting and setting parameters for the Normal distribution. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we look at accessing mathematical and statistical methods including the d/p/q/r functions.

@@ -2,43 +2,22 @@
 #-------------------------------------------------------------
 # Gamma Distribution Documentation
 #-------------------------------------------------------------
-#' @title Gamma Distribution
-#'
-#' @description Mathematical and statistical functions for the Gamma distribution, commonly used
-#' as the prior in Bayesian modelling, the convolution of exponential distributions, and to model waiting times.
-#'
-#' @details The Gamma distribution parameterised with shape, \eqn{\alpha}, and rate, \eqn{\beta}, is
-#' defined by the pdf,
-#' \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
-#' for \eqn{\alpha, \beta > 0}.
-#'
-#' The distribution is supported on the Positive Reals.
-#'
 #' @name Gamma
-#'
-#' @section Constructor: Gamma$new(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{rate} \tab numeric \tab inverse scale parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{mean} \tab numeric \tab alternate scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Gamma distribution is parameterised with \code{shape} and either
-#' \code{rate}, \code{scale} or \code{mean}, all as positive numerics. These are related via,
-#' \deqn{scale = 1/rate}
-#' \deqn{mean = shape/rate}
-#'
-#' If \code{mean} is given then \code{rate} and \code{scale} are ignored. If \code{scale} is given then
-#' \code{rate} is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Gamma
+#' @templateVar DistName Gamma
+#' @templateVar uses as the prior in Bayesian modelling, the convolution of exponential distributions, and to model waiting times
+#' @templateVar params shape, \eqn{\alpha}, and rate, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
+#' @templateVar distsupport the Positive Reals
+#' @templateVar constructor shape = 1, rate = 1, scale = NULL, mean = NULL
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{rate} \tab numeric \tab inverse scale parameter. \cr
+#' @templateVar arg3 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar arg4 \code{mean} \tab numeric \tab alternate scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and either \code{rate}, \code{scale} or \code{mean}, all as positive numerics. These are related via, \deqn{scale = 1/rate} \deqn{mean = shape/rate} If \code{mean} is given then \code{rate} and \code{scale} are ignored. If \code{scale} is given then \code{rate} is ignored.
 #'
 #' @examples
 #' Gamma$new(shape = 1, rate = 2)
@@ -51,7 +30,7 @@
 #' x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -136,7 +115,7 @@ Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean 
   rand <- function(n) rgamma(n, self$getParameterValue("shape"),self$getParameterValue('rate'))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = F), distrDomain = PosReals$new(zero = T),
+                   rand = rand, support = PosReals$new(zero = F),
                    symmetric  = FALSE,type = PosReals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

@@ -121,11 +121,10 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
   short_name = paste0("Mix_",paste(distnames, collapse = "_"))
   type = do.call(union.SetInterval, lapply(distlist, type))
   support = do.call(union.SetInterval, lapply(distlist, type))
-  distrDomain = do.call(union.SetInterval, lapply(distlist, type))
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
                    short_name = short_name, description = description, type = type,
-                   support = support, distrDomain = distrDomain, valueSupport = "mixture")
+                   support = support, valueSupport = "mixture")
 })
 MixtureDistribution$set("private",".weights",numeric(0))
 ```
@@ -134,7 +133,7 @@ Again this is a shortened version of the code. Note the following in the above
 
 1. As multiple distributons are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html).
 2. We add a private variable `.weights` which is accessed in the pdf/cdf. In general we allow additional private variables and methods to be added to wrappers, but not public ones.
-3. The type/support/distrDomain are all updated to account for multiple distributions.
+3. The type and support are updated to account for multiple distributions.
 4. All implemented wrappers inherit from `DistributionWrapper` and again `lock_objects = FALSE`
 
 ## Summary

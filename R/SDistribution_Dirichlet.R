@@ -2,40 +2,24 @@
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
-#' @title Dirichlet Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Dirichlet distribution, which is commonly
-#' used as a prior in Bayesian modelling and is multivariate generalisation of the Beta distribution.
-#'
-#' @details The Dirichlet distribution parameterised with concentration paramameters, \eqn{\alpha_1,...,\alpha_k},
-#' is defined by the pdf,
-#' \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})}
-#' for \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function.
-#'
-#' The distribution is supported on \eqn{x_i \epsilon (0,1), \sum x_i = 1}.
-#'
-#' mgf and cf are omitted as no closed form analytic expression could be found.
-#'
-#' The parameter \code{K} is automatically updated by counting the length of the params vector, once
-#' constructed this cannot be changed. Sampling is performed via sampling independent Gamma distributions and
-#' normalising the samples.
-#'
 #' @name Dirichlet
-#'
-#' @section Constructor: Dirichlet$new(params, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{params} \tab numeric \tab vector of concentration parameters. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: There is no default parameterisation.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Dirichlet
+#' @templateVar DistName Dirichlet
+#' @templateVar uses as a prior in Bayesian modelling and is multivariate generalisation of the Beta distribution
+#' @templateVar params concentration paramameters, \eqn{\alpha_1,...,\alpha_k},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})}
+#' @templateVar paramsupport \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function
+#' @templateVar distsupport \eqn{x_i \epsilon (0,1), \sum x_i = 1}
+#' @templateVar omittedVars \code{mgf} and \code{cf}
+#' @templateVar omittedDPQR \code{cdf} and \code{quantile}
+#' @templateVar additionalDetails Sampling is performed via sampling independent Gamma distributions and normalising the samples (Devroye, 1986).
+#' @templateVar constructor params = c(1, 1)
+#' @templateVar arg1 \code{params} \tab numeric \tab vector of concentration parameters. \cr
+#' @templateVar constructorDets \code{params} as a vector of positive numerics. The parameter \code{K} is automatically calculated by counting the length of the params vector, once constructed this cannot be changed.
+#' @templateVar additionalReferences Devroye, Luc (1986). Non-Uniform Random Variate Generation. Springer-Verlag. ISBN 0-387-96305-7.
+#' @templateVar additionalSeeAlso \code{\link{Beta}} for the Beta distribution.
 #'
 #' @examples
 #' # Different parameterisations
@@ -49,7 +33,7 @@
 #' x$setParameterValue(list(params = c(1, 2)))
 #' }
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' # Note the difference from R stats
 #' x$pdf(0.1, 0.4, 0.5)
 #' # This allows vectorisation:
@@ -159,7 +143,7 @@ Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Interval$new(0,1,type="()",dim = length(params)),
-                   distrDomain = Reals$new(dim = length(params)), symmetric = FALSE,
+                   symmetric = FALSE,
                    type = Interval$new(0,1,dim = "K"),
                    valueSupport = "continuous",
                    variateForm = "multivariate")

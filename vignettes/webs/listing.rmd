@@ -15,7 +15,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we looked at multivariate distributions and how to use the p/d/q/r functions to evaluate multiple points of these. This tutorial concludes the 'Basic' set of tutorials with the use of 'listing' in distr6.
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we looked at multivariate distributions and how to use the d/p/q/r functions to evaluate multiple points of these. This tutorial concludes the 'Basic' set of tutorials with the use of 'listing' in distr6.
 
 ## Listing
 
@@ -23,7 +23,7 @@ Currently distr6 includes 5 listing functions: `listDistributions(), listDecorat
 
 ## listDistributions
 
-`listDistributions()` is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their p/d/q/r methods are implemented in. For example a distribution with package `stats` means that the p/d/q/r methods interface the R stats functions whereas a distribution with package `distr6` means the methods are written in distr6. We've added the `head()` method just to save space.
+`listDistributions()` is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their d/p/q/r methods are implemented in. For example a distribution with package `stats` means that the d/p/q/r methods interface the R stats functions whereas a distribution with package `distr6` means the methods are written in distr6. We've added the `head()` method just to save space.
 
 ```{r}
 head(listDistributions())

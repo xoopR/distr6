@@ -2,59 +2,31 @@
 #-------------------------------------------------------------
 # Triangular Distribution Documentation
 #-------------------------------------------------------------
-#' @title (Symmetric) Triangular Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Triangular distribution, which is
-#' commonly used to model population data where only the minimum, mode and maximum are known (or can be
-#' reliably estimated), also to model the sum of standard uniform distributions.
-#'
-#' @details The Triangular distribution parameterised with lower limit, \eqn{a}, upper limit, \eqn{b},
-#' and mode, \eqn{c}, is defined by the pdf,
-#'
-#' \eqn{f(x) = 0, x < a}
-#'
-#' \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c}
-#'
-#' \eqn{f(x) = 2/(b-a), x = c}
-#'
-#' \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b}
-#'
-#' \eqn{f(x) = 0, x > b}
-#'
-#' for \eqn{a,b,c \epsilon R}, \eqn{a \le c \le b}.
-#'
-#' The distribution is supported on \eqn{[a, b]}.
-#'
 #' @name Triangular
-#'
-#' @section Constructor: Triangular$new(lower = 0, upper = 1, mode = 0.5, symmetric = FALSE,
-#' decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab numeric \tab lower limit. \cr
-#' \code{upper} \tab numeric \tab upper limit. \cr
-#' \code{mode} \tab numeric \tab mode. \cr
-#' \code{symmetric} \tab logical \tab see details. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The (non-symmetric) Triangular distribution is parameterised with
-#' \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode}
-#' parameter is determined automatically and is defined by \eqn{mode = (lower + upper) /2}, this cannot be changed
-#' after construction. If \code{symmetric = FALSE} (default) then \code{mode} is settable after construction.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @aliases SymmetricTriangular
+#' @templateVar ClassName Triangular
+#' @templateVar DistName Triangular
+#' @templateVar uses to model population data where only the minimum, mode and maximum are known (or can be reliably estimated), also to model the sum of standard uniform distributions
+#' @templateVar params lower limit, \eqn{a}, upper limit, \eqn{b}, and mode, \eqn{c},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b}
+#' @templateVar paramsupport \eqn{a,b,c \epsilon R}, \eqn{a \le c \le b}
+#' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar constructor lower = 0, upper = 1, mode = 0.5, symmetric = FALSE
+#' @templateVar arg1 \code{lower} \tab numeric \tab lower limit. \cr
+#' @templateVar arg2 \code{upper} \tab numeric \tab upper limit. \cr
+#' @templateVar arg3 \code{mode} \tab numeric \tab mode. \cr
+#' @templateVar arg4 \code{symmetric} \tab logical \tab see details. \cr
+#' @templateVar constructorDets \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} is settable after construction.
+#' @templateVar additionalSeeAlso \code{\link{Uniform}} for the Uniform distribution.
 #'
 #' @examples
 #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
 #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
 #' Triangular$new(lower = 2, upper = 5, mode = 4)
 #'
-#' # You can view the type of Triangular distribution with \code{description}
+#' # You can view the type of Triangular distribution with $description
 #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
 #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
 #'
@@ -64,7 +36,7 @@
 #' x$setParameterValue(list(lower = 2, upper = 7))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -242,7 +214,7 @@ Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lowe
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(lower, upper), distrDomain = Reals$new(),
+                   rand = rand, support = Interval$new(lower, upper),
                    symmetric = symmetry, description = description,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

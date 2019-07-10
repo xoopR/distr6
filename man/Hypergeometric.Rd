@@ -4,45 +4,44 @@
 \alias{Hypergeometric}
 \title{Hypergeometric Distribution Class}
 \description{
-Mathematical and statistical functions for the Hypergeometric distribution, which is
-used to model the number of successes out of a population containing a known number of possible
-successes, for example the number of red balls from an urn or red, blue and yellow balls.
+Mathematical and statistical functions for the Hypergeometric distribution, which
+is commonly used to model the number of successes out of a population containing a known number of possible successes, for example the number of red balls from an urn or red, blue and yellow balls.
 }
 \details{
-The Hypergeometric distribution parameterised with population size, \eqn{N}, number of possible
-successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf,
-\deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
-for \eqn{N = {0,1,2,\ldots}}, \eqn{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+The Hypergeometric distribution parameterised with population size, \eqn{N}, number of possible successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf,
+\deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)} for \eqn{N = {0,1,2,\ldots}}, \eqn{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
 The distribution is supported on \eqn{{max(0, n + K - N),...,min(n,K)}}.
 
-\code{mgf} and \code{cf} are omitted as no closed form analytic expression could be found. Decorate with
-\code{CoreStatistics} for numerical results.
+\code{mgf} and \code{cf}
+are
+omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
 }
 \section{Constructor}{
- Hypergeometric$new(size = 10, successes = 5, failures = 5, draws = 2, decorators = NULL, verbose = FALSE)
+ Hypergeometric$new(size = 10, successes = 5, failures = NULL, draws = 2, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{size} \tab numeric \tab  population size. \cr
-\code{successes} \tab numeric \tab number of population successes. \cr
-\code{failures} \tab numeric \tab number of population failures. \cr
-\code{draws} \tab numeric \tab number of draws. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{size} \tab numeric \tab  population size. \cr
+  \code{successes} \tab numeric \tab number of population successes. \cr
+  \code{failures} \tab numeric \tab number of population failures. \cr
+  \code{draws} \tab numeric \tab number of draws. \cr
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
-
-The Hypergeometric distribution is parameterised with \code{size} and \code{draws} as positive
-whole numbers, and either \code{successes} or \code{failures} as positive whole numbers. These are
-related via,
-\deqn{failures = size - successes}
-If \code{failures} is given then \code{successes} is ignored.
+ The Hypergeometric distribution is parameterised with \code{size} and \code{draws} as positive whole numbers, and either \code{successes} or \code{failures} as positive whole numbers. These are related via, \deqn{failures = size - successes} If \code{failures} is given then \code{successes} is ignored.
 }
 
 \section{Public Variables}{
@@ -52,7 +51,7 @@ If \code{failures} is given then \code{successes} is ignored.
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -67,7 +66,6 @@ If \code{failures} is given then \code{successes} is ignored.
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -94,7 +92,6 @@ If \code{failures} is given then \code{successes} is ignored.
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -110,60 +107,9 @@ If \code{failures} is given then \code{successes} is ignored.
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
-  }
-
-
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
-  \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
@@ -183,7 +129,7 @@ x = Hypergeometric$new(verbose = TRUE) # Default is size = 50, successes = 5, dr
 x$setParameterValue(list(failures = 10)) # When any parameter is updated, all others are too!
 x$parameters()
 
-# p/d/q/r
+# d/p/q/r
 x$pdf(5)
 x$cdf(5)
 x$quantile(0.42)
@@ -195,4 +141,11 @@ x$variance()
 
 summary(x)
 
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions.  \code{\link{CoreStatistics}} for numerical results.
 }

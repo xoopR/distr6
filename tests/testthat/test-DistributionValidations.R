@@ -9,13 +9,6 @@ test_that("liesInType",{
   expect_equal(Wald$new()$liesInType(c(0,1),all = FALSE, bound = FALSE), c(FALSE, TRUE))
 })
 
-test_that("liesInDistrDomain",{
-  expect_true(Wald$new()$liesInDistrDomain(c(0,1),all = TRUE, bound = TRUE))
-  expect_false(Wald$new()$liesInDistrDomain(c(0,1),all = TRUE, bound = FALSE))
-  expect_equal(Wald$new()$liesInDistrDomain(c(0,1),all = FALSE, bound = TRUE), c(TRUE, TRUE))
-  expect_equal(Wald$new()$liesInDistrDomain(c(0,1),all = FALSE, bound = FALSE), c(FALSE, TRUE))
-})
-
 test_that("liesInSupport",{
   expect_false(Binomial$new()$liesInSupport(c(10,11),all = TRUE, bound = TRUE))
   expect_false(Binomial$new()$liesInSupport(c(10,11),all = TRUE, bound = FALSE))

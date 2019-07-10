@@ -2,39 +2,21 @@
 #-------------------------------------------------------------
 # Cauchy Distribution Documentation
 #-------------------------------------------------------------
-#' @title Cauchy Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Cauchy distribution, which is commonly
-#' used in physics and finance.
-#'
-#' @details  The Cauchy distribution parameterised with location, \eqn{\alpha}, and scale, \eqn{\beta}, is
-#' defined by the pdf,
-#' \deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))}
-#' for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
-#'
-#' The distribution is supported on the Reals.
-#'
-#' The Cauchy distribution has an undefined mean and variance, this means that \code{NaN} is returned
-#' and these methods cannot be computed using any decorators.
-#'
 #' @name Cauchy
-#'
-#' @section Constructor: Cauchy$new(location = 0, scale = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{location} \tab numeric \tab location parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Cauchy distribution is parameterised with
-#' \eqn{location} as a numeric and \eqn{scale} as a positive numeric.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Cauchy
+#' @templateVar DistName Cauchy
+#' @templateVar uses in physics and finance
+#' @templateVar params location, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))}
+#' @templateVar paramsupport \eqn{\alpha \epsilon R} and \eqn{\beta > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar additionalDetails The mean and variance are undefined, hence \code{NaN} is returned.
+#' @templateVar constructor location = 0, scale = 1
+#' @templateVar arg1 \code{location} \tab numeric \tab location parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{location} as a numeric and \code{scale} as a positive numeric.
 #'
 #' @examples
 #' x = Cauchy$new(location = 2, scale = 5)
@@ -43,7 +25,7 @@
 #' x$setParameterValue(list(scale = 3))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -110,7 +92,7 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
   rand <- function(n) rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(), distrDomain = Reals$new(),
+                   rand = rand, support = Reals$new(),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

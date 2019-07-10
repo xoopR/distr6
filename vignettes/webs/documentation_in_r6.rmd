@@ -46,7 +46,7 @@ We document all R6 classes using the following Roxygen tags:
 #' @name Distribution
 #'
 #' @section Constructor: Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-#' distrDomain = NULL, symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+#' symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
 #' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description=NULL)
 #'
 #' @section Constructor Arguments:
@@ -74,7 +74,7 @@ We document all R6 classes using the following Roxygen tags:
 #'   \code{decorators()} \tab \code{\link{decorators}} \cr
 #'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
 #'   \tab \cr \tab \cr \tab \cr
-#'   \strong{p/d/q/r Methods} \tab \strong{Link} \cr
+#'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
 #'   \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
 #'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
 #'   \tab \cr \tab \cr \tab \cr

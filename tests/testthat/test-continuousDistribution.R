@@ -21,7 +21,6 @@ ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                   symmetric=TRUE, type = PosReals$new(zero=T),
-                                  distrDomain=PosReals$new(),
                                   pdf = dexpo,
                                   cdf = cexpo,
                                   parameters = ps
@@ -68,7 +67,6 @@ qexpo = function(p){
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),
-                                    distrDomain=PosReals$new(),
                                     pdf = dexpo,
                                     cdf = cexpo,
                                     quantile = qexpo,

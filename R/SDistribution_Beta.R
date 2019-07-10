@@ -2,39 +2,20 @@
 #-------------------------------------------------------------
 # Beta Distribution Documentation
 #-------------------------------------------------------------
-#' @title Beta Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Beta distribution, which is commonly
-#' used as the prior in Bayesian modelling.
-#'
-#' @details The Beta distribution parameterised with two shape parameters, \eqn{\alpha, \beta}, is defined
-#' by the pdf,
-#' \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
-#' for \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function.
-#'
-#' The distribution is supported on \eqn{[0, 1]}.
-#'
-#' \code{mgf} and \code{cf} are omitted as no analytic expression could be found. Decorate
-#' with CoreStatistics for numeric results.
-#'
 #' @name Beta
-#'
-#' @section Constructor: Beta$new(shape1 = 1, shape2 = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape1} \tab numeric \tab positive shape parameter. \cr
-#' \code{shape2} \tab numeric \tab positive shape parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Beta distribution is parameterised with \code{shape1} and \code{shape2}
-#' as positive numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Beta
+#' @templateVar DistName Beta
+#' @templateVar uses as the prior in Bayesian modelling
+#' @templateVar params two shape parameters, \eqn{\alpha, \beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function
+#' @templateVar distsupport \eqn{[0, 1]}
+#' @templateVar omittedVars \code{mgf} and \code{cf}
+#' @templateVar constructor shape1 = 1, shape2 = 1
+#' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
+#' @templateVar constructorDets  \code{shape1} and \code{shape2} as positive numerics.
 #'
 #' @examples
 #' x = Beta$new(shape1 = 2, shape2 = 5)
@@ -43,7 +24,7 @@
 #' x$setParameterValue(list(shape1 = 1))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -140,7 +121,7 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
     symmetric <- FALSE
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(0,1), distrDomain = PosReals$new(zero = TRUE),
+                   rand = rand, support = Interval$new(0,1),
                    symmetric = symmetric, type = PosReals$new(zero = T),
                    valueSupport ="continuous",
                    variateForm = "univariate")

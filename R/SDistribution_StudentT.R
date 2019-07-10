@@ -2,36 +2,20 @@
 #-------------------------------------------------------------
 # Student's t Distribution Documentation
 #-------------------------------------------------------------
-#' @title Student's T Distribution Class
-#'
-#' @description Mathematical and statistical functions for Student's T distribution used to estimate
-#' the mean of populations with unknown variance from a small sample size, as well as in t-testing for
-#' difference of means and regression analysis.
-#'
-#' @details The Student's T distribution parameterised with degrees of freedom, \eqn{\nu} is defined by the
-#' pdf,
-#' \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
-#' for \eqn{\nu > 0}.
-#'
-#' The distribution is supported on the Reals.
-#'
 #' @name StudentT
-#'
-#' @section Constructor: StudentT$new(df = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{df} \tab numeric \tab degrees of freedom. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Student's T distribution is parameterised with
-#' \code{df} as a positive numeric.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName StudentT
+#' @templateVar DistName Student's T
+#' @templateVar uses to estimate the mean of populations with unknown variance from a small sample size, as well as in t-testing for difference of means and regression analysis
+#' @templateVar params degrees of freedom, \eqn{\nu},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
+#' @templateVar paramsupport \eqn{\nu > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar constructor df = 1
+#' @templateVar arg1 \code{df} \tab numeric \tab degrees of freedom. \cr
+#' @templateVar constructorDets \code{df} as a positive numeric.
+#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
 #'
 #' @examples
 #' x = StudentT$new(df = 2)
@@ -40,7 +24,7 @@
 #' x$setParameterValue(list(df = 3))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -131,7 +115,7 @@ StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose =
   rand <- function(n) rt(n, self$getParameterValue("df"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
+                   rand = rand, support = Reals$new(zero = T),
                    symmetric  = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

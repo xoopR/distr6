@@ -29,5 +29,5 @@ in the vector \code{x}.
 }
 
 \seealso{
-\code{\link{liesInSupport}} and \code{\link{liesInDistrDomain}}
+\code{\link{liesInSupport}}
 }

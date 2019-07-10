@@ -2,44 +2,22 @@
 #-------------------------------------------------------------
 # Geometric Distribution Documentation
 #-------------------------------------------------------------
-#' @title Geometric Distribution
-#'
-#' @description Mathematical and statistical functions for the Geometric distribution, which is commonly
-#' used to model the number of trials (or number of failures) before the first success.
-#'
-#' @details The Geometric distribution to model the number of trials before success, parameterised with
-#' probability of success, \eqn{p}, is defined by the pmf,
-#' \deqn{f(x) = (1 - p)^{k-1}p}
-#' for \eqn{p \epsilon [0,1]}.
-#'
-#' The distribution is supported on the Naturals (zero is included if modelling number of failures before success).
-#'
 #' @name Geometric
-#'
-#' @section Constructor: Geometric$new(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{prob} \tab numeric \tab probability of success. \cr
-#' \code{qprob} \tab numeric \tab probability of failure. \cr
-#' \code{trials} \tab logical \tab number of trials or failures, see details. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Geometric distribution is parameterised with \code{prob} or \code{qprob}
-#' as a number between 0 and 1. These are related via,
-#' \deqn{qprob = 1 - prob}
-#' If \code{qprob} is given then {prob is ignored}.
-#'
-#' The logical parameter \code{trials} determines which Geometric distribution is constructed and cannot
-#' be changed after construction. If \code{trials} is TRUE then the Geometric distribution that models the
-#' number of trials, \eqn{x}, before the first success is constructed. Otherwise the Geometric distribution
-#' calculates the probability of \eqn{y} failures before the first success. Mathematically these are related by \eqn{Y = X - 1}.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Geometric
+#' @templateVar DistName Geometric
+#' @templateVar uses to model the number of trials (or number of failures) before the first success
+#' @templateVar params probability of success, \eqn{p},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = (1 - p)^{k-1}p}
+#' @templateVar paramsupport \eqn{p \epsilon [0,1]}
+#' @templateVar distsupport the Naturals (zero is included if modelling number of failures before success).
+#' @templateVar additionalDetails The Geometric distribution is used to either refer to modelling the number of trials or number of failures before the first success.
+#' @templateVar constructor prob = 0.5, qprob = NULL, trials = FALSE
+#' @templateVar arg1 \code{prob} \tab numeric \tab probability of success. \cr
+#' @templateVar arg2 \code{qprob} \tab numeric \tab probability of failure. \cr
+#' @templateVar arg3 \code{trials} \tab logical \tab number of trials or failures, see details. \cr
+#' @templateVar constructorDets \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then {prob is ignored}. \cr\cr The logical parameter \code{trials} determines which Geometric distribution is constructed and cannot be changed after construction. If \code{trials} is TRUE then the Geometric distribution that models the number of trials, \eqn{x}, before the first success is constructed. Otherwise the Geometric distribution calculates the probability of \eqn{y} failures before the first success. Mathematically these are related by \eqn{Y = X - 1}.
 #'
 #' @examples
 #' # Different parameterisations
@@ -60,7 +38,7 @@
 #' x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -170,7 +148,7 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = 
 
 
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                     rand = rand, support = support, distrDomain = Naturals$new(),
+                     rand = rand, support = support,
                      symmetric  = FALSE, description = description,type = Naturals$new(),
                      valueSupport = "discrete",
                      variateForm = "univariate")

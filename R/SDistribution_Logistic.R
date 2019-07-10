@@ -2,39 +2,21 @@
 #-------------------------------------------------------------
 # Logistic Distribution Documentation
 #-------------------------------------------------------------
-#' @title Logistic Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Logistic distribution, which is commonly
-#' used in logistic regression and feedforward neural networks.
-#'
-#' @details The Logistic distribution parameterised with mean, \eqn{\mu}, and scale \eqn{s}, is
-#' defined by the pdf,
-#' \deqn{f(x) = exp(-(x-\mu)/s) / (s*(1+exp(-(x-\mu)/s))^2)}
-#' for \eqn{\mu \epsilon R} and \eqn{s > 0}.
-#'
-#' The distribution is supported on the Reals.
-#'
 #' @name Logistic
-#'
-#' @section Constructor: Logistic$new(mean = 0, scale = 1, sd = NULL, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab location parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Logistic distribution is parameterised with \code{mean} as a
-#' numeric and either \code{scale} or \code{sd} as positive numerics. These are related via,
-#' \deqn{sd = scale*\pi/\sqrt(3)}
-#' If \code{sd} is given then \code{scale} is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Logistic
+#' @templateVar DistName Logistic
+#' @templateVar uses in logistic regression and feedforward neural networks
+#' @templateVar params mean, \eqn{\mu}, and scale, \eqn{s},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)/s) / (s*(1+exp(-(x-\mu)/s))^2)}
+#' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{s > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar constructor mean = 0, scale = 1, sd = NULL
+#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
+#' @templateVar constructorDets \code{mean} as a numeric and either \code{scale} or \code{sd} as positive numerics. These are related via, \deqn{sd = scale*\pi/\sqrt(3)} If \code{sd} is given then {scale} is ignored.
 #'
 #' @examples
 #' x <- Logistic$new(mean = 2, scale = 3)
@@ -43,7 +25,7 @@
 #' x$setParameterValue(list(sd = 2)) # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -118,7 +100,7 @@ Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
   rand <- function(n) rlogis(n, self$getParameterValue("mean"), self$getParameterValue("scale"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(), distrDomain = Reals$new(),
+                   rand = rand, support = Reals$new(),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

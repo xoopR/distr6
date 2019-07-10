@@ -2,64 +2,25 @@
 #-------------------------------------------------------------
 # Negative Binomial Distribution Documentation
 #-------------------------------------------------------------
-#' @title Negative Binomial Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Negative Binomial distribution, which
-#' (depending on the formulation) can be used to model the number of successes, trials or failures before
-#' a given number of failures or successes.
-#'
-#' @details The Negative Binomial distribution parameterised with number of failures before successes, \eqn{n},
-#' and probability of success, \eqn{p}, is defined by the pmf
-#' \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
-#' for \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination
-#' (or binomial coefficient) function.
-#'
-#' The Negative Binomial distribution can refer to one of four distributions (forms):
-#'
-#' 1. The number of failures before K successes (fbs) - Supported on \eqn{{0,1,2,\ldots}}
-#'
-#' 2. The number of successes before K failures (sbf) - Supported on \eqn{{0,1,2,\ldots}}
-#'
-#' 3. The number of trials before K failures (tbf) - Supported on \eqn{{n,n+1,n+2,\ldots}}
-#'
-#' 4. The number of trials before K successes (tbs) - Supported on \eqn{{n,n+1,n+2,\ldots}}
-#'
-#' For each we refer to the number of K success/failures as the \code{size} parameter, \code{prob}
-#' is always the probability of success and \code{qprob} is the probability of failure.
-#' Use \code{$description} to see the Negative Binomial form.
-#'
-#'
 #' @name NegativeBinomial
-#'
-#' @section Constructor: NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs", decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{size} \tab numeric \tab number of failures/successes. \cr
-#' \code{prob} \tab numeric \tab probability of success. \cr
-#' \code{qprob} \tab numeric \tab probability of failure. \cr
-#' \code{mean} \tab numeric \tab location parameter. \cr
-#' \code{form} \tab character \tab form of negative binomial, see details. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Negative Binomial distribution is parameterised with \code{size} as a positive
-#' whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1, or \code{mean} as a numeric
-#' greater than the number of failures/successes (if form is 'tbf' or 'tbs'). These are related via,
-#' \deqn{qprob = 1 - prob}
-#' and the \eqn{mean} formula is dependent on the form. If \code{mean} is given then \code{qprob}
-#' and \code{prob} are ignored. If \code{qprob} is given then \code{prob} is ignored.
-#'
-#' The additional \code{form} argument determines which of the four Negative Binomial distributions should be
-#' constructed, this cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures),
-#' "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
-#' "fbs" is taken as default if none are supplied or an unrecognised form is given.
-#'
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName NegativeBinomial
+#' @templateVar DistName Negative Binomial
+#' @templateVar uses to model the number of successes, trials or failures before a given number of failures or successes
+#' @templateVar params number of failures before successes, \eqn{n}, and probability of success, \eqn{p},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
+#' @templateVar paramsupport \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
+#' @templateVar distsupport \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below)
+#' @templateVar additionalDetails The Negative Binomial distribution can refer to one of four distributions (forms): \cr\cr 1. The number of failures before K successes (fbs) \cr\cr 2. The number of successes before K failures (sbf) \cr\cr 3. The number of trials before K failures (tbf) \cr\cr 4. The number of trials before K successes (tbs) \cr\cr For each we refer to the number of K successes/failures as the \code{size} parameter, \code{prob} is always the probability of success and \code{qprob} is the probability of failure. Use \code{$description} to see the Negative Binomial form.
+#' @templateVar constructor size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs"
+#' @templateVar arg1 \code{size} \tab numeric \tab number of failures/successes. \cr
+#' @templateVar arg2 \code{prob} \tab numeric \tab probability of success. \cr
+#' @templateVar arg3 \code{qprob} \tab numeric \tab probability of failure. \cr
+#' @templateVar arg4 \code{mean} \tab numeric \tab location parameter. \cr
+#' @templateVar arg5 \code{form} \tab character \tab form of negative binomial, see details. \cr
+#' @templateVar constructorDets \code{size} as a positive whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1, or \code{mean} as a numeric greater than the number of failures/successes (if form is 'tbf' or 'tbs'). These are related via, \deqn{qprob = 1 - prob} and the \code{mean} formula is dependent on the form. If \code{mean} is given then \code{qprob} and \code{prob} are ignored. If \code{qprob} is given then \code{prob} is ignored. \cr\cr The additional \code{form} argument determines which of the four Negative Binomial distributions should be constructed, this cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures), "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes). "fbs" is taken as default if none are supplied or an unrecognised form is given.
+#' @templateVar additionalSeeAlso \code{\link{Binomial}} for the Binomial distribution and \code{\link{Geometric}} for the Geometric distribution.
 #
 #' @examples
 #' # Different parameterisations
@@ -82,7 +43,7 @@
 #' x$parameters()
 #'
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -288,7 +249,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = support, distrDomain = Naturals$new(),
+                   rand = rand, support = support,
                    symmetric = FALSE, description = description, type = Naturals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

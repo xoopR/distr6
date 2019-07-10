@@ -2,38 +2,20 @@
 #-------------------------------------------------------------
 # Uniform Distribution Documentation
 #-------------------------------------------------------------
-#' @title Uniform Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Uniform distribution, which is commonly
-#' used to model continuous events occuring with equal probability, as an uninformed prior
-#' in Bayesian modelling, and for inverse transform sampling.
-#'
-#' @details The Uniform distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits is
-#' defined by the pdf,
-#' \deqn{f(x) = 1/(b-a)}
-#' for \eqn{-\infty < a < b < \infty}.
-#'
-#' The distribution is supported on \eqn{[a, b]}.
-#'
 #' @name Uniform
-#'
-#' @section Constructor: Uniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab integer \tab lower distribution limit. \cr
-#' \code{upper} \tab integer \tab upper distribution limit. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Uniform distribution is parameterised with \code{lower} and \code{upper}
-#' as numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
-#'
+#' @template SDist
+#' @templateVar ClassName Uniform
+#' @templateVar DistName Uniform
+#' @templateVar uses to model continuous events occuring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling
+#' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/(b-a)}
+#' @templateVar paramsupport \eqn{-\infty < a < b < \infty}
+#' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar constructor lower = 0, upper = 1
+#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
+#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
+#' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
 #'
 #' @examples
 #' x <- Uniform$new(lower = -10, upper = 5)
@@ -42,7 +24,7 @@
 #' x$setParameterValue(list(lower = 2, upper = 7))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -133,7 +115,7 @@ Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(lower, upper),
-                   distrDomain = Reals$new(), symmetric = TRUE,type = Reals$new(),
+                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")
   invisible(self)

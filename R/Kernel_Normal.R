@@ -52,6 +52,6 @@ NormalKernel$set("public","initialize",function(decorators = NULL){
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Reals$new(), distrDomain = Reals$new(), symmetric = TRUE)
+                   support = Reals$new(),  symmetric = TRUE)
   invisible(self)
 })

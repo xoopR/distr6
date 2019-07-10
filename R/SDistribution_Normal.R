@@ -2,43 +2,24 @@
 #-------------------------------------------------------------
 # Normal Distribution Documentation
 #-------------------------------------------------------------
-#' @title Normal Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Normal distribution, which is commonly used
-#' in significance testing, for representing models with a bell curve, and as a result of the central
-#' limit theorem.
-#'
-#' @details The Normal distribution parameterised with variance, \eqn{\sigma^2}, and mean, \eqn{\mu},
-#' is defined by the pdf,
-#' \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)}
-#' for \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}.
-#'
-#' The distribution is supported on the Reals.
-#'
 #' @name Normal
-#'
-#' @section Constructor: Normal$new(mean = 0, var = 1, sd = NULL, prec = NULL, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab mean, location parameter. \cr
-#' \code{var} \tab numeric \tab variance, squared scale parameter. \cr
-#' \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
-#' \code{precision} \tab numeric \tab precision, inverse squared scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Normal distribution is paramterised with \code{mean} as a numeric,
-#' and either \code{var}, \code{sd} or \code{prec} as numerics. These are related via,
-#' \deqn{sd = \sqrt(var)}
-#' \deqn{prec = 1/var}
-#' If \code{prec} is given then \code{sd} and \code{var} are ignored. If \code{sd} is given then \code{var}
-#' is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Normal
+#' @templateVar DistName Normal
+#' @templateVar uses in significance testing, for representing models with a bell curve, and as a result of the central limit theorem
+#' @templateVar params variance, \eqn{\sigma^2}, and mean, \eqn{\mu},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)}
+#' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar aka Gaussian
+#' @aliases Gaussian
+#' @templateVar constructor mean = 0, var = 1, sd = NULL, prec = NULL
+#' @templateVar arg1 \code{mean} \tab numeric \tab mean, location parameter. \cr
+#' @templateVar arg2 \code{var} \tab numeric \tab variance, squared scale parameter. \cr
+#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
+#' @templateVar arg4 \code{prec} \tab numeric \tab precision, inverse squared scale parameter. \cr
+#' @templateVar constructorDets \code{mean} as a numeric, and either \code{var}, \code{sd} or \code{prec} as numerics. These are related via, \deqn{sd = \sqrt(var)}\deqn{prec = 1/var} If \code{prec} is given then \code{sd} and \code{var} are ignored. If \code{sd} is given then \code{var} is ignored.
 #'
 #' @examples
 #' # Different parameterisations
@@ -51,7 +32,7 @@
 #' x$setParameterValue(list(var = 2))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -123,7 +104,7 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
   rand <- function(n) rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
+                   rand = rand, support = Reals$new(zero = T),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

@@ -2,53 +2,43 @@
 % Please edit documentation in R/SDistribution_Triangular.R
 \name{Triangular}
 \alias{Triangular}
-\title{(Symmetric) Triangular Distribution Class}
+\alias{SymmetricTriangular}
+\title{Triangular Distribution Class}
 \description{
-Mathematical and statistical functions for the Triangular distribution, which is
-commonly used to model population data where only the minimum, mode and maximum are known (or can be
-reliably estimated), also to model the sum of standard uniform distributions.
+Mathematical and statistical functions for the Triangular distribution, which
+is commonly used to model population data where only the minimum, mode and maximum are known (or can be reliably estimated), also to model the sum of standard uniform distributions.
 }
 \details{
-The Triangular distribution parameterised with lower limit, \eqn{a}, upper limit, \eqn{b},
-and mode, \eqn{c}, is defined by the pdf,
-
-\eqn{f(x) = 0, x < a}
-
-\eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c}
-
-\eqn{f(x) = 2/(b-a), x = c}
-
-\eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b}
-
-\eqn{f(x) = 0, x > b}
-
-for \eqn{a,b,c \epsilon R}, \eqn{a \le c \le b}.
+The Triangular distribution parameterised with lower limit, \eqn{a}, upper limit, \eqn{b}, and mode, \eqn{c}, is defined by the pdf,
+\cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b} for \eqn{a,b,c \epsilon R}, \eqn{a \le c \le b}.
 
 The distribution is supported on \eqn{[a, b]}.
 }
 \section{Constructor}{
- Triangular$new(lower = 0, upper = 1, mode = 0.5, symmetric = FALSE,
-decorators = NULL, verbose = FALSE)
+ Triangular$new(lower = 0, upper = 1, mode = 0.5, symmetric = FALSE, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{lower} \tab numeric \tab lower limit. \cr
-\code{upper} \tab numeric \tab upper limit. \cr
-\code{mode} \tab numeric \tab mode. \cr
-\code{symmetric} \tab logical \tab see details. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{lower} \tab numeric \tab lower limit. \cr
+  \code{upper} \tab numeric \tab upper limit. \cr
+  \code{mode} \tab numeric \tab mode. \cr
+  \code{symmetric} \tab logical \tab see details. \cr
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The (non-symmetric) Triangular distribution is parameterised with
-\code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode}
-parameter is determined automatically and is defined by \eqn{mode = (lower + upper) /2}, this cannot be changed
-after construction. If \code{symmetric = FALSE} (default) then \code{mode} is settable after construction.
+ The Triangular distribution is parameterised with \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} is settable after construction.
 }
 
 \section{Public Variables}{
@@ -58,7 +48,7 @@ after construction. If \code{symmetric = FALSE} (default) then \code{mode} is se
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -73,7 +63,6 @@ after construction. If \code{symmetric = FALSE} (default) then \code{mode} is se
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -100,7 +89,6 @@ after construction. If \code{symmetric = FALSE} (default) then \code{mode} is se
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -116,60 +104,9 @@ after construction. If \code{symmetric = FALSE} (default) then \code{mode} is se
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
-  }
-
-
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
-  \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
@@ -184,7 +121,7 @@ Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
 Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
 Triangular$new(lower = 2, upper = 5, mode = 4)
 
-# You can view the type of Triangular distribution with \\code{description}
+# You can view the type of Triangular distribution with $description
 Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
 Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
 
@@ -194,7 +131,7 @@ x = Triangular$new(lower = -1, upper = 1)
 x$setParameterValue(list(lower = 2, upper = 7))
 x$parameters()
 
-# p/d/q/r
+# d/p/q/r
 x$pdf(5)
 x$cdf(5)
 x$quantile(0.42)
@@ -206,4 +143,11 @@ x$variance()
 
 summary(x)
 
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions. \code{\link{Uniform}} for the Uniform distribution.
 }

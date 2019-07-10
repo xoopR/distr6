@@ -45,7 +45,7 @@ Sigmoid$set("public","initialize",function(decorators = NULL){
     return((2/pi) * (exp(x1) + exp(-x1))^-1)
   }
 
-  super$initialize(decorators = decorators, pdf = pdf, support = Reals$new(), distrDomain = Reals$new(),
+  super$initialize(decorators = decorators, pdf = pdf, support = Reals$new(), 
                    symmetric = TRUE)
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING

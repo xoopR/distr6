@@ -2,55 +2,30 @@
 #-------------------------------------------------------------
 # Lognormal Distribution Documentation
 #-------------------------------------------------------------
-#' @title Lognormal Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Lognormal distribution, which is
-#' used to model many natural phenomena as a result of growth driven by small percentage changes.
-#'
-#' @details The Lognormal distribution parameterised with logmean, \eqn{\mu}, and logvar, \eqn{\sigma},
-#' is defined by the pdf,
-#' \deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))}
-#' for \eqn{\mu \epsilon R} and \eqn{\sigma > 0}.
-#'
-#' The distribution is supported on the Positive Reals.
-#'
-#' \code{cf} is omitted as no closed form analytic expression could be found. Decorate with
-#' \code{CoreStatistics} for numerical results.
-#'
 #' @name Lognormal
-#'
-#' @section Constructor: Lognormal$new(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
-#'                           mean = 1, var = NULL, sd = NULL, prec = NULL,
-#'                           decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{meanlog} \tab numeric \tab mean of the distribution on the log scale. \cr
-#' \code{varlog} \tab numeric \tab variance of the distribution on the log scale. \cr
-#' \code{sdlog} \tab numeric \tab standard deviation of the distribution on the log scale. \cr
-#' \code{preclog} \tab numeric \tab precision of the distribution on the log scale. \cr
-#' \code{mean} \tab numeric \tab mean of the distribution on the natural scale. \cr
-#' \code{var} \tab numeric \tab variance of the distribution on the natural scale. \cr
-#' \code{sd} \tab numeric \tab standard deviation of the distribution on the natural scale. \cr
-#' \code{prec} \tab numeric \tab precision of the distribution on the natural scale. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Lognormal distribution is parameterised by either \code{meanlog} and
-#' \code{varlog}, \code{sdlog} or \code{preclog}, or \code{mean} and \code{var}, \code{sd} or \code{prec}.
-#' These are related via
-#' \deqn{var = (exp(var) - 1)) * exp(2 * meanlog + varlog)}
-#' \deqn{sdlog = varlog^2}
-#' \deqn{sd = var^2}
-#' Analogously for \code{prec} and \code{preclog}. If \code{prec} is given then all other parameters other
-#' than \code{mean} are ignored. If \code{sd} is given then all other parameters (except \code{prec}) are
-#' ignored. If \code{var} is given then all log parameters are ignored. If \code{preclog} is given then
-#' \code{varlog} and \code{sdlog} are ignored. Finally if \code{sdlog} is given then \code{varlog} is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Lognormal
+#' @templateVar DistName Log-Normal
+#' @templateVar uses to model many natural phenomena as a result of growth driven by small percentage changes
+#' @templateVar params logmean, \eqn{\mu}, and logvar, \eqn{\sigma},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))}
+#' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\sigma > 0}
+#' @templateVar distsupport the Positive Reals
+#' @templateVar omittedVars \code{cf}
+#' @templateVar aka Log-Gaussian
+#' @aliases LogGaussian LogNormal
+#' @templateVar constructor meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL, mean = 1, var = NULL, sd = NULL, prec = NULL
+#' @templateVar arg1 \code{meanlog} \tab numeric \tab mean of the distribution on the log scale. \cr
+#' @templateVar arg2 \code{varlog} \tab numeric \tab variance of the distribution on the log scale. \cr
+#' @templateVar arg3 \code{sdlog} \tab numeric \tab standard deviation of the distribution on the log scale. \cr
+#' @templateVar arg4 \code{preclog} \tab numeric \tab precision of the distribution on the log scale. \cr
+#' @templateVar arg5 \code{mean} \tab numeric \tab mean of the distribution on the natural scale. \cr
+#' @templateVar arg6 \code{var} \tab numeric \tab variance of the distribution on the natural scale. \cr
+#' @templateVar arg7 \code{sd} \tab numeric \tab standard deviation of the distribution on the natural scale. \cr
+#' @templateVar arg8 \code{prec} \tab numeric \tab precision of the distribution on the natural scale. \cr
+#' @templateVar constructorDets either \code{meanlog} and \code{varlog}, \code{sdlog} or \code{preclog}, or \code{mean} and \code{var}, \code{sd} or \code{prec}. These are related via \deqn{var = (exp(var) - 1)) * exp(2 * meanlog + varlog)} \deqn{sdlog = varlog^2} \deqn{sd = var^2} Analogously for \code{prec} and \code{preclog}. If \code{prec} is given then all other parameters other than \code{mean} are ignored. If \code{sd} is given then all other parameters (except \code{prec}) are ignored. If \code{var} is given then all log parameters are ignored. If \code{preclog} is given then \code{varlog} and \code{sdlog} are ignored. Finally if \code{sdlog} is given then \code{varlog} is ignored.
+#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
 #'
 #' @examples
 #' # Many parameterisations are possible
@@ -68,7 +43,7 @@
 #' x$setParameterValue(list(sd = 3))
 #' x$setParameterValue(list(sdlog = 3)) # But this does
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -86,9 +61,9 @@ NULL
 # Lognormal Distribution Definition
 #-------------------------------------------------------------
 Lognormal <- R6::R6Class("Lognormal", inherit = SDistribution, lock_objects = F)
-Lognormal$set("public","name","Lognormal")
+Lognormal$set("public","name","Log-Normal")
 Lognormal$set("public","short_name","Lognormal")
-Lognormal$set("public","description","Lognormal Probability Distribution.")
+Lognormal$set("public","description","Log-Normal Probability Distribution.")
 Lognormal$set("public","package","stats")
 
 Lognormal$set("public","mean",function(){
@@ -164,7 +139,7 @@ Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NU
   rand <- function(n) rlnorm(n, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(), distrDomain = PosReals$new(),
+                   rand = rand, support = PosReals$new(),
                    symmetric = FALSE,type = PosReals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

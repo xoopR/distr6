@@ -2,39 +2,21 @@
 #-------------------------------------------------------------
 # Laplace Distribution Documentation
 #-------------------------------------------------------------
-#' @title Laplace Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Laplace distribution, which is commonly used
-#' in signal processing and finance.
-#'
-#' @details The Laplace distribution parameterised with mean, \eqn{\mu}, and scale, \eqn{\beta}, is
-#' defined by the pdf,
-#' \deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
-#' for \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
-#'
-#' The distribution is supported on the Reals.
-#'
 #' @name Laplace
-#'
-#' @section Constructor: Laplace$new(mean = 0, scale = 1, var = NULL, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab mean, location parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{var} \tab numeric \tab alternate scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Laplace distribution is parameterised with \code{mean} as a numeric
-#' and either \code{scale} or \code{var} as positive numerics. These are related via,
-#' \deqn{var = 2 * scale^2}
-#' If \code{var} is given then {scale} is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Laplace
+#' @templateVar DistName Laplace
+#' @templateVar uses in signal processing and finance
+#' @templateVar params mean, \eqn{\mu}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
+#' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\beta > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar constructor mean = 0, scale = 1, var = NULL
+#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar arg3 \code{var} \tab numeric \tab alternate scale parameter. \cr
+#' @templateVar constructorDets \code{mean} as a numeric and either \code{scale} or \code{var} as positive numerics. These are related via, \deqn{var = 2 * scale^2} If \code{var} is given then {scale} is ignored.
 #'
 #' @examples
 #' Laplace$new(scale = 2)
@@ -46,7 +28,7 @@
 #' x$setParameterValue(list(var = 2)) # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -140,7 +122,7 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Reals$new(), distrDomain = Reals$new(),
+                   support = Reals$new(),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

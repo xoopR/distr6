@@ -99,7 +99,7 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(zero = T),
-                   distrDomain = Reals$new(zero = T), symmetric = TRUE, type = Reals$new(),
+                   symmetric = TRUE, type = Reals$new(),
                    valueSupport = "continuous", variateForm = "univariate")
   invisible(self)
 })
@@ -110,7 +110,7 @@ Note the following:
 1. The arguments to the constructor include all possible parameterisations. The default paramterisation is given, whilst the others are NULL. We include the additional arguments 'decorators' which determines if the object should be decorated in constructor and 'verbose' which lets the user decide if they are informed of the parameterisation in construction.
 2. Every constructor includes the `getParameterSet` and `setParameterValue` methods, we will return to these later.
 3. The d/p/q/r methods are defined here in the constructor, either interfacing another package or written by you
-4. The super-class constructor is called, arguments passed to this include the decorators arguments, the d/p/q/r methods, the properties of the distribution including: support (SetInterval); distrDomain (SetInterval); symmetric (logical).
+4. The super-class constructor is called, arguments passed to this include the decorators arguments, the d/p/q/r methods, the properties of the distribution including: support (SetInterval); symmetric (logical).
 And the traits of the distribution inlcuding: type (SetInterval); variateForm ("univariate"/"multivariate"/"matrixvariate"); valueSupport ("discrete"/"continuous"/"mixture").
 5. A distribution is termed symmetric iff it is analytically symmetric, i.e. a CLT style approximation does not count.
 6. If an analytic expression for d/p/q/r is not available, omit this from the constructor and super-class constructor

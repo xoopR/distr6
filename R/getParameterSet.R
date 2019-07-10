@@ -392,7 +392,7 @@ getParameterSet.Logistic <- function(x, mean, scale, sd = NULL, verbose = FALSE)
   return(ps)
 }
 
-getParameterSet.LogLogistic <- function(x, scale, shape, location, verbose = FALSE){
+getParameterSet.Loglogistic <- function(x, scale, shape, location, verbose = FALSE){
 
   if(verbose) message("Parameterised with scale, shape and location.")
 

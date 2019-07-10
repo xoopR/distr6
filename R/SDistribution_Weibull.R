@@ -2,38 +2,22 @@
 #-------------------------------------------------------------
 # Weibull Distribution Documentation
 #-------------------------------------------------------------
-#' @title Weibull Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Weibull distribution, which is commonly
-#' used in survival analysis and is a special case of the generalized extreme value distribution.
-#'
-#' @details The Weibull distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta} is
-#' defined by the pdf,
-#' \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise}
-#' for \eqn{\alpha, \beta > 0}.
-#'
-#' The distribution is supported on the Positive Reals.
-#'
-#' \code{mgf} and \code{cf} are omitted as no closed form analytic expressions could be found.
-#'
 #' @name Weibull
-#'
-#' @section Constructor: Weibull$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Weibull distribution is parameterised with \code{shape} and \code{scale}
-#' as positive numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Weibull
+#' @templateVar DistName Weibull
+#' @templateVar uses in survival analysis and is a special case of the Generalized Extreme Value distribution
+#' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
+#' @templateVar distsupport the Positive Reals
+#' @templateVar omittedVars \code{mgf} and \code{cf}
+#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
+#' @templateVar additionalSeeAlso \code{\link{Frechet}} and \code{\link{Gumbel}} for other special cases of the generalized extreme value distribution.
 #'
 #' @examples
 #' x <- Weibull$new(shape = 2, scale = 3)
@@ -42,7 +26,7 @@
 #' x$setParameterValue(list(scale = 1))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -128,7 +112,7 @@ Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NUL
   rand <- function(n) rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
+                   rand = rand, support = PosReals$new(zero = T),
                    symmetric = FALSE, type = PosReals$new(zero=T), valueSupport = "continuous",
                    variateForm = "univariate")
 

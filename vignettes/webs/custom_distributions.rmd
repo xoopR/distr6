@@ -23,7 +23,7 @@ The most basic distribution that can be constructed consists of a name and one o
 
 ### self
 
-The `self` keyword is used to tell an object that it should call a method on itself. For example we have used the method `getParameterValue()` on objects before but often we need the object to use this method on itself, so we use `self$getParameterValue()` this is especially important when defining p/d/q/r functions.
+The `self` keyword is used to tell an object that it should call a method on itself. For example we have used the method `getParameterValue()` on objects before but often we need the object to use this method on itself, so we use `self$getParameterValue()` this is especially important when defining d/p/q/r functions.
 
 The pdf of the Uniform distribution is defined by
 $$f(x) = 1/(b - a)$$
@@ -62,7 +62,6 @@ U <- Distribution$new(name = "Uniform", pdf = pdf, parameters = ps, support = su
 The other intervals are filled in with the defaults,
 ```{r}
 U$type()
-U$distrDomain()
 U$support()
 ```
 
@@ -96,7 +95,7 @@ U$cdf(5, lower.tail = FALSE, log.p = TRUE)
 Finally a whole host of other arguments could be supplied to the Distribution to make the results more precise, the full list can be seen in `?Distribution`. A couple of things to take care about are:
 
 1. pdfs and cdfs should have the same number of arguments. For example if the distribution is univariate both should have one argument only (and with the same name).
-2. By default the type, support and distrDomain are taken to be the Reals, if this is not the case then the true ones should be supplied as `SetInterval` objects.
+2. By default the type and support are taken to be the Reals, if this is not the case then the true ones should be supplied as `SetInterval` objects.
 3. valueSupport and variateForm are automatically inferred from the distribution's type. If the type is in the Integers or Naturals then the valueSupport is taken to be discrete, otherwise continuous. If the dimension of the type is $1$ then the variateForm is taken to be univariate, multivariate otherwise. These can be overwritten for mixture and matrixvariate distributions.
 
 ## Putting Everything Together
@@ -104,7 +103,7 @@ Finally a whole host of other arguments could be supplied to the Distribution to
 ```{r}
 cdf <- function(x1)return((x1 -self$getParameterValue("lower"))/ (self$getParameterValue("upper")-self$getParameterValue("lower")))
 
-U <- Distribution$new(name = "Uniform", short_name = "unif", type = Reals$new(), support = Interval$new(1, 10), distrDomain = Reals$new(), symmetric = TRUE, pdf = pdf, cdf = cdf, parameters = ps, description = "Custom uniform distribution")
+U <- Distribution$new(name = "Uniform", short_name = "unif", type = Reals$new(), support = Interval$new(1, 10),  symmetric = TRUE, pdf = pdf, cdf = cdf, parameters = ps, description = "Custom uniform distribution")
 
 decorate(U, list(CoreStatistics, ExoticStatistics, FunctionImputation))
 

@@ -9,7 +9,7 @@ A generalised distribution object for defining custom probability distributions
 }
 \section{Constructor}{
  Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-distrDomain = NULL, symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
 parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
 }
 
@@ -21,7 +21,6 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
 \code{short_name} \tab character \tab Short name to identify distribution. \cr
 \code{type} \tab SetInterval \tab Scientific type. \cr
 \code{support} \tab SetInterval \tab Distribution support. See Details. \cr
-\code{distrDomain} \tab SetInterval \tab Distribution domain See Details. \cr
 \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
 \code{pdf} \tab function \tab See Details. \cr
 \code{cdf} \tab function \tab See Details. \cr
@@ -40,10 +39,9 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
 
   The most basic Distribution object consists of a name and one of pdf/cdf.
 
-  If supplied, \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
-  object. If none are supplied then the set of Reals is taken to be the type and the dimension is the
-  number of formal arguments in the pdf/cdf. If only \code{type} is supplied then this is taken to also
-  be the support and domain.
+  If supplied, \code{type} and \code{support} should be given as an R6 SetInterval object. If neither are supplied
+  then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
+  If only \code{type} is supplied then this is taken to also be the support.
 
   By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
   Use the \code{\link{FunctionImputation}} decorator to generate these.
@@ -80,7 +78,6 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -110,7 +107,6 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr

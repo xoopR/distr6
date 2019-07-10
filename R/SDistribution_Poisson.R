@@ -2,38 +2,20 @@
 #-------------------------------------------------------------
 # Poisson Distribution Documentation
 #-------------------------------------------------------------
-#' @title Poisson Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Poisson distribution, which is commonly
-#' used to model the number of events occurring in at a constant, independent rate over an interval of time
-#' or space.
-#'
-#' @details The Poisson distribution parameterised with arrival rate, \eqn{\lambda}, is defined by the pmf,
-#' \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
-#' where \eqn{\lambda} > 0 is the rate parameter.
-#'
-#' The distribution is supported on the Naturals.
-#'
-#' \code{entropy} is omitted as no closed form expression could be found, decorate with
-#' CoreStatistics for a numeric expression.
-#'
 #' @name Poisson
-#'
-#' @section Constructor: Poisson$new(rate = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{rate} \tab numeric \tab arrival rate. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Poisson distribution is parameterised with \code{rate} as a positive
-#' numeric.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Poisson
+#' @templateVar DistName Poisson
+#' @templateVar uses to model the number of events occurring in at a constant, independent rate over an interval of time or space
+#' @templateVar params arrival rate, \eqn{\lambda},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
+#' @templateVar paramsupport \eqn{\lambda} > 0
+#' @templateVar distsupport the Naturals
+#' @templateVar omittedVars \code{entropy}
+#' @templateVar constructor rate = 1
+#' @templateVar arg1 \code{rate} \tab numeric \tab arrival rate. \cr
+#' @templateVar constructorDets \code{rate} as a positive numeric.
 #'
 #'
 #' @examples
@@ -43,7 +25,7 @@
 #' x$setParameterValue(list(rate = 3))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -112,7 +94,7 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Naturals$new(),
-                   distrDomain = Naturals$new(),
+
                    symmetric = FALSE,type = PosIntegers$new(zero = T),
                    valueSupport = "discrete",
                    variateForm = "univariate")

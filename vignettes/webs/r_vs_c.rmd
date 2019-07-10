@@ -57,14 +57,14 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ## C or R
 
-One of the most common questions when implementing a function in R, especially one that may take a long time to run, is whether the function should be written in C and interfaced using the rcpp package [@rcpp]. In distr6, not only did we not opt to write our functions in C, but we actively chose to write our own p/d/q/r methods instead of interfacing packages that had already done so in C. We had several reasons for this:
+One of the most common questions when implementing a function in R, especially one that may take a long time to run, is whether the function should be written in C and interfaced using the rcpp package [@rcpp]. In distr6, not only did we not opt to write our functions in C, but we actively chose to write our own d/p/q/r methods instead of interfacing packages that had already done so in C. We had several reasons for this:
 
 1. To minimise dependencies on unknown packages
 2. To increase efficiency (we didn't have to verify the code quality of unknown packages)
-3. To make the p/d/q/r/ methods visible to the user
+3. To make the d/p/q/r/ methods visible to the user
 4. Tested C implementations were not vastly quicker
 
-Note: We did interface the p/d/q/r methods of some distributions from other packages. We interfaced everything directly from R stats. Additionally we interefaced the p/d/q/r functions in a couple of distirbutions from extraDistr [@extradistr], usually because they had derived some tricky inverse cdfs.
+Note: We did interface the d/p/q/r methods of some distributions from other packages. We interfaced everything directly from R stats. Additionally we interefaced the d/p/q/r functions in a couple of distirbutions from extraDistr [@extradistr], usually because they had derived some tricky inverse cdfs.
 
 ## Speed Tests
 

@@ -2,37 +2,21 @@
 #-------------------------------------------------------------
 # F Distribution Documentation
 #-------------------------------------------------------------
-#' @title F Distribution Class
-#'
-#' @description Mathematical and statistical functions for the F distribution, which is commonly used
-#' in ANOVA testing and is the ratio of scaled Chi-Squared distributions.
-#'
-#' @details The F Distribution parameterised with two degrees of freedom parameters, \eqn{\mu, \nu},
-#' is defined by the pdf,
-#' \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^(\mu/2) x^(\mu/2 - 1) (1 + (\mu/\nu) x)^-(\mu + \nu)/2}
-#' for \eqn{\mu,\nu > 0}.
-#'
-#' The distribution is supported on the Positive Reals.
-#'
-#' \code{cf} is omitted as no closed form expression could be found.
-#'
 #' @name FDistribution
-#'
-#' @section Constructor: FDistribution$new(df1 = 1, df2 = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{df1, df2} \tab numeric \tab degrees of freedom. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The F distribution is parameterised with \code{df1} and \code{df2} as
-#' positive numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName FDistribution
+#' @templateVar DistName 'F'
+#' @templateVar uses in ANOVA testing and is the ratio of scaled Chi-Squared distributions.
+#' @templateVar params two degrees of freedom parameters, \eqn{\mu, \nu},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^(\mu/2) x^(\mu/2 - 1) (1 + (\mu/\nu) x)^-(\mu + \nu)/2}
+#' @templateVar paramsupport \eqn{\mu, \nu > 0}
+#' @templateVar distsupport the Positive Reals
+#' @templateVar omittedVars \code{cf}
+#' @templateVar constructor df1 = 1, df2 = 1
+#' @templateVar arg1 \code{df1, df2} \tab numeric \tab degrees of freedom. \cr
+#' @templateVar constructorDets \code{df1} and \code{df2} as positive numerics.
+#' @templateVar additionalSeeAlso \code{\link{Normal}} and \code{\link{ChiSquared}} for the Normal and Chi-Squared distributions.
 #'
 #' @examples
 #' x <- FDistribution$new(df1 = 1, df2 = 3)
@@ -41,7 +25,7 @@
 #' x$setParameterValue(list(df2 = 10))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -147,7 +131,7 @@ FDistribution$set("public", "initialize", function(df1 = 1, df2 = 1, decorators 
     support <- PosReals$new(zero = TRUE)
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = support, distrDomain = PosReals$new(zero = TRUE),
+                   rand = rand, support = support,
                    symmetric = FALSE,type = PosReals$new(zero = TRUE),
                    valueSupport = "continuous",
                    variateForm = "univariate")

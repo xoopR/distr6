@@ -103,7 +103,7 @@ Epanechnikov$set("public","initialize",function(decorators = NULL){
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1), distrDomain = Reals$new(), symmetric = TRUE)
+                   support = Interval$new(-1, 1),  symmetric = TRUE)
   invisible(self)
 })
 ```
@@ -111,10 +111,9 @@ Epanechnikov$set("public","initialize",function(decorators = NULL){
 Note:
 
 1. We omit the quantile method as no closed form analytic expression was found
-2. distrDomain will always be `Reals$new()`
-3. The support will generally either be `Reals$new()` or `Interval$new(-1,1)`
-4. Kernels are all symmetric
-5. The constructor always takes one argument only, `decorators` which is passed to the parent-class constructor
+2. The support will generally either be `Reals$new()` or `Interval$new(-1,1)`
+3. Kernels are all symmetric
+4. The constructor always takes one argument only, `decorators` which is passed to the parent-class constructor
 
 ## Summary
 

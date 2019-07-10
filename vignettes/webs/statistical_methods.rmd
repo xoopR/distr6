@@ -17,7 +17,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html) we constructed a Normal distribution and accessed and updated its parameters for a variety of parameterisations. In this tutorial we cover how to access mathematical and statistical methods of the Normal distribution including the `dnorm/pnorm/qnorm/rnorm` equivalents in distr6.
 
-## p/d/q/r
+## d/p/q/r
 
 The advantage of distr6 over R stats is that once a distribution is constructed, it's very easy to find properties and results from the distribution by changing very little. For simple distributions like the Normal distribution, this may not seem like a big difference, but for more complicated ones with multiple parameters, you'll find yourself saving a lot of time!
 
@@ -56,4 +56,4 @@ N$mgf(2)
 
 ## Summary
 
-In this tutorial we looked at using the p/d/q/r functions in distr6 and accessing other statistical results. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html) we take a quick look at distribution properties and traits, whilst trying not to get into too big a discussion about object-oriented programming!
+In this tutorial we looked at using the d/p/q/r functions in distr6 and accessing other statistical results. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html) we take a quick look at distribution properties and traits, whilst trying not to get into too big a discussion about object-oriented programming!

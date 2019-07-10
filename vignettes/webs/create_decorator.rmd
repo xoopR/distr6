@@ -77,7 +77,7 @@ Note the use of `private$.isCdf`, this checks to see if the `cdf` method is defi
 
 Therefore the use of `private$.isCdf` tells the decorator whether it can use analytic results or if numeric integration is required.
 
-Note: if the user has already decorated their distribution with `FunctionImputation` then even if your decorator thinks the results are analtic, they are not. However this is taken into account by the warning message in the imputed p/d/q/r methods.
+Note: if the user has already decorated their distribution with `FunctionImputation` then even if your decorator thinks the results are analtic, they are not. However this is taken into account by the warning message in the imputed d/p/q/r methods.
 
 ## Summary
 

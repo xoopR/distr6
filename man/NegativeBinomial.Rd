@@ -5,29 +5,23 @@
 \title{Negative Binomial Distribution Class}
 \description{
 Mathematical and statistical functions for the Negative Binomial distribution, which
-(depending on the formulation) can be used to model the number of successes, trials or failures before
-a given number of failures or successes.
+is commonly used to model the number of successes, trials or failures before a given number of failures or successes.
 }
 \details{
-The Negative Binomial distribution parameterised with number of failures before successes, \eqn{n},
-and probability of success, \eqn{p}, is defined by the pmf
-\deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
-for \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination
-(or binomial coefficient) function.
+The Negative Binomial distribution parameterised with number of failures before successes, \eqn{n}, and probability of success, \eqn{p}, is defined by the pmf,
+\deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x} for \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
-The Negative Binomial distribution can refer to one of four distributions (forms):
+The distribution is supported on \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below).
 
-1. The number of failures before K successes (fbs) - Supported on \eqn{{0,1,2,\ldots}}
 
-2. The number of successes before K failures (sbf) - Supported on \eqn{{0,1,2,\ldots}}
 
-3. The number of trials before K failures (tbf) - Supported on \eqn{{n,n+1,n+2,\ldots}}
 
-4. The number of trials before K successes (tbs) - Supported on \eqn{{n,n+1,n+2,\ldots}}
 
-For each we refer to the number of K success/failures as the \code{size} parameter, \code{prob}
-is always the probability of success and \code{qprob} is the probability of failure.
-Use \code{$description} to see the Negative Binomial form.
+
+
+
+
+The Negative Binomial distribution can refer to one of four distributions (forms): \cr\cr 1. The number of failures before K successes (fbs) \cr\cr 2. The number of successes before K failures (sbf) \cr\cr 3. The number of trials before K failures (tbf) \cr\cr 4. The number of trials before K successes (tbs) \cr\cr For each we refer to the number of K successes/failures as the \code{size} parameter, \code{prob} is always the probability of success and \code{qprob} is the probability of failure. Use \code{$description} to see the Negative Binomial form.
 }
 \section{Constructor}{
  NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs", decorators = NULL, verbose = FALSE)
@@ -36,29 +30,24 @@ Use \code{$description} to see the Negative Binomial form.
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{size} \tab numeric \tab number of failures/successes. \cr
-\code{prob} \tab numeric \tab probability of success. \cr
-\code{qprob} \tab numeric \tab probability of failure. \cr
-\code{mean} \tab numeric \tab location parameter. \cr
-\code{form} \tab character \tab form of negative binomial, see details. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{size} \tab numeric \tab number of failures/successes. \cr
+  \code{prob} \tab numeric \tab probability of success. \cr
+  \code{qprob} \tab numeric \tab probability of failure. \cr
+  \code{mean} \tab numeric \tab location parameter. \cr
+  \code{form} \tab character \tab form of negative binomial, see details. \cr
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Negative Binomial distribution is parameterised with \code{size} as a positive
-whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1, or \code{mean} as a numeric
-greater than the number of failures/successes (if form is 'tbf' or 'tbs'). These are related via,
-\deqn{qprob = 1 - prob}
-and the \eqn{mean} formula is dependent on the form. If \code{mean} is given then \code{qprob}
-and \code{prob} are ignored. If \code{qprob} is given then \code{prob} is ignored.
-
-The additional \code{form} argument determines which of the four Negative Binomial distributions should be
-constructed, this cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures),
-"tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes).
-"fbs" is taken as default if none are supplied or an unrecognised form is given.
+ The Negative Binomial distribution is parameterised with \code{size} as a positive whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1, or \code{mean} as a numeric greater than the number of failures/successes (if form is 'tbf' or 'tbs'). These are related via, \deqn{qprob = 1 - prob} and the \code{mean} formula is dependent on the form. If \code{mean} is given then \code{qprob} and \code{prob} are ignored. If \code{qprob} is given then \code{prob} is ignored. \cr\cr The additional \code{form} argument determines which of the four Negative Binomial distributions should be constructed, this cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures), "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes). "fbs" is taken as default if none are supplied or an unrecognised form is given.
 }
 
 \section{Public Variables}{
@@ -68,7 +57,7 @@ constructed, this cannot be updated after construction. \code{form} should be on
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -83,7 +72,6 @@ constructed, this cannot be updated after construction. \code{form} should be on
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -110,7 +98,6 @@ constructed, this cannot be updated after construction. \code{form} should be on
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{stdev()} \tab \code{\link{stdev}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -126,60 +113,9 @@ constructed, this cannot be updated after construction. \code{form} should be on
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
-  }
-
-
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInDistrDomain}} \cr
-  \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
   \code{strprint()} \tab \code{\link{strprint}} \cr
   \code{print()} \tab \code{\link[base]{print}} \cr
@@ -210,7 +146,7 @@ x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all oth
 x$parameters()
 
 
-# p/d/q/r
+# d/p/q/r
 x$pdf(5)
 x$cdf(5)
 x$quantile(0.42)
@@ -221,4 +157,11 @@ x$mean()
 x$variance()
 
 summary(x)
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions. \code{\link{Binomial}} for the Binomial distribution and \code{\link{Geometric}} for the Geometric distribution.
 }

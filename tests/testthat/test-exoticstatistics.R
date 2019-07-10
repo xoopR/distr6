@@ -20,7 +20,6 @@ ps = ParameterSet$new(id = list("rate", "scale"), value = list(1, 1),
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),
-                                    distrDomain=PosReals$new(),
                                     pdf = dexpo,
                                     parameters = ps,
                                     decorators = ExoticStatistics
@@ -35,7 +34,6 @@ test_that("numeric survival functions",{
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),
-                                    distrDomain=PosReals$new(),
                                     cdf = cexpo,
                                     parameters = ps,
                                     decorators = ExoticStatistics
@@ -53,7 +51,6 @@ test_that("numeric survival functions",{
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                     symmetric=TRUE, type = PosReals$new(zero=T),
-                                    distrDomain=PosReals$new(),
                                     pdf = dexpo, cdf = cexpo,
                                     parameters = ps,
                                     decorators = ExoticStatistics

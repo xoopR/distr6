@@ -2,41 +2,25 @@
 #-------------------------------------------------------------
 # Frechet Distribution Documentation
 #-------------------------------------------------------------
-#' @title Frechet Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Frechet (Inverse Weibull) distribution,
-#' which is used as a special case of the Generalised Extreme Value distribution.
-#'
-#' @details The Frechet distribution parameterised with shape, \eqn{\alpha}, scale, \eqn{\beta},
-#' and minimum, \eqn{\gamma}, is defined by the pdf,
-#' \deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}}
-#' for \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}.
-#'
-#' The distribution is supported on \eqn{x > \gamma}.
-#'
-#' \code{mgf} and \code{cf} are omitted as no closed form analytical expression could be found. Decorate with
-#' \code{CoreStatistics} for numerical results.
-#'
 #' @name Frechet
-#'
-#' @section Constructor: Frechet$new(shape = 1, scale = 1, minimum = 0,
-#' decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{minimum} \tab numeric \tab location parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Frechet distribution is parameterised with
-#' \code{shape}, \code{scale} as positive numerics and \code{minimum} as a numeric.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Frechet
+#' @templateVar DistName Frechet
+#' @templateVar uses as a special case of the Generalised Extreme Value distribution
+#' @templateVar params shape, \eqn{\alpha}, scale, \eqn{\beta}, and minimum, \eqn{\gamma},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}}
+#' @templateVar paramsupport \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}
+#' @templateVar distsupport \eqn{x > \gamma}
+#' @templateVar omittedVars \code{mgf} and \code{cf}
+#' @templateVar aka Inverse Weibull
+#' @aliases InverseWeibull
+#' @templateVar constructor shape = 1, scale = 1, minimum = 0
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar arg3 \code{minimum} \tab numeric \tab location parameter. \cr
+#' @templateVar constructorDets \code{shape}, \code{scale} as positive numerics and \code{minimum} as a numeric.
+#' @templateVar additionalSeeAlso \code{\link{Gumbel}} and \code{\link{Weibull}} for other special cases of the generalized extreme value distribution.
 #'
 #' @examples
 #' x = Frechet$new(shape = 2, scale = 3, minimum = 6)
@@ -45,7 +29,7 @@
 #' x$setParameterValue(list(shape = 3))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -153,7 +137,7 @@ Frechet$set("public","initialize",function(shape = 1, scale = 1, minimum = 0,
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(minimum, Inf, type = "()"), distrDomain = Reals$new(),
+                   rand = rand, support = Interval$new(minimum, Inf, type = "()"),
                    symmetric = FALSE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

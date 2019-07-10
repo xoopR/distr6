@@ -108,7 +108,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
     super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
                      name = name, short_name = short_name, type = distribution$type(),
-                     support = support, distrDomain = distribution$distrDomain(),
+                     support = support,
                      description = description,
                      valueSupport = "mixture")
   }else if(testContinuous(distribution)){
@@ -116,7 +116,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
     super$initialize(distlist = distlist, cdf = cdf, quantile = quantile, rand = rand, name = name,
                      short_name = short_name, type = distribution$type(),
-                     support = support, distrDomain = distribution$distrDomain(),
+                     support = support,
                      description = description,
                      valueSupport = "mixture")
   } else

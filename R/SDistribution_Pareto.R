@@ -2,39 +2,21 @@
 #-------------------------------------------------------------
 # Pareto Distribution Documentation
 #-------------------------------------------------------------
-#' @title Pareto Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Pareto distribution, which is commonly
-#' used in Economics to model the distribution of wealth and the 80-20 rule.
-#'
-#' @details The Pareto distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta},
-#' is defined by the pdf,
-#' \deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
-#' for \eqn{\alpha > 0} and \eqn{\beta > 0}.
-#'
-#' The distribution is supported on \eqn{[\beta, \infty)}.
-#'
-#' \code{cf} is omitted as no analytical expression involving the incomplete gamma function
-#' with complex numbers could be found. Decorate with \code{CoreStatistics} for numerical results.
-#'
 #' @name Pareto
-#'
-#' @section Constructor: Pareto$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Pareto distribution is parameterised with \code{shape} and \code{scale}
-#' as positive numerics.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Pareto
+#' @templateVar DistName Pareto
+#' @templateVar uses in Economics to model the distribution of wealth and the 80-20 rule
+#' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
+#' @templateVar distsupport \eqn{[\beta, \infty)}
+#' @templateVar omittedVars \code{cf}
+#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
 #'
 #' @examples
 #' x = Pareto$new(shape = 2, scale = 1)
@@ -43,7 +25,7 @@
 #' x$setParameterValue(list(scale = 5.1))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -152,7 +134,7 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(scale, Inf, type = "[)"), distrDomain = PosReals$new(zero = T),
+                   rand = rand, support = Interval$new(scale, Inf, type = "[)"),
                    symmetric  = FALSE,type = PosReals$new(zero = T),
                    valueSupport = "continuous",
                    variateForm = "univariate")

@@ -2,37 +2,21 @@
 #-------------------------------------------------------------
 # DiscreteUniform Distribution Documentation
 #-------------------------------------------------------------
-#' @title Discrete Uniform Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Discrete Uniform distribution, which
-#' is commonly used as a discrete variant of the more popular Uniform distribution, used to model events
-#' with an equal probability of occurring (e.g. role of a die).
-#'
-#' @details The Discrete Uniform distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits
-#' is defined by the pmf,
-#' \deqn{f(x) = 1/(b - a + 1)}
-#' for \eqn{a, b \epsilon Z; b \ge a}.
-#'
-#' The distribution is supported on \eqn{{a, a + 1,..., b}}.
-#'
 #' @name DiscreteUniform
-#'
-#' @section Constructor: DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab numeric \tab lower distribution limit. \cr
-#' \code{upper} \tab numeric \tab upper distribution limit. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Discrete Uniform distribution is parameterised with \code{lower}
-#' and \code{upper} as whole numbers.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName DiscreteUniform
+#' @templateVar DistName Discrete Uniform
+#' @templateVar uses as a discrete variant of the more popular Uniform distribution, used to model events with an equal probability of occurring (e.g. role of a die)
+#' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/(b - a + 1)}
+#' @templateVar paramsupport \eqn{a, b \epsilon Z; b \ge a}
+#' @templateVar distsupport \eqn{{a, a + 1,..., b}}
+#' @templateVar constructor lower = 0, upper = 1
+#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
+#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
+#' @templateVar constructorDets \code{lower} and \code{upper} as whole numbers.
+#' @templateVar additionalSeeAlso \code{\link{Uniform}} for the (continuous) Uniform distribution.
 #'
 #' @examples
 #' x <- DiscreteUniform$new(lower = -10, upper = 5)
@@ -41,7 +25,7 @@
 #' x$setParameterValue(list(lower = 2, upper = 7))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -134,7 +118,7 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(lower:upper),
-                   distrDomain = Integers$new(zero = T), symmetric = TRUE,type = Integers$new(),
+                   symmetric = TRUE, type = Integers$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")
   invisible(self)

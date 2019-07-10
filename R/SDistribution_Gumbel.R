@@ -2,42 +2,22 @@
 #-------------------------------------------------------------
 # Gumbel Distribution Documentation
 #-------------------------------------------------------------
-#' @title Gumbel Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Gumbel distribution, which is used to
-#' model the maximum (or minimum) of a number of samples of different distributions, and is a special
-#' case of the Generalised Extreme Value distribution.
-#'
-#' @details The Gumbel distribution parameterised with location, \eqn{\mu}, and scale, \eqn{\beta},
-#' is defined by the pdf,
-#' \deqn{f(x) = 1 / \beta * exp(-(z + exp(-z)))}
-#' for \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
-#'
-#' The distribution is supported on the Reals.
-#'
-#' Apery's Constant to 16 significant figures is used in the skewness calculation. The \code{gammaz}
-#' function from the \code{pracma} package is used in the \code{cf} to allow complex inputs.
-#'
 #' @name Gumbel
-#'
-#' @section Constructor: Gumbel$new(location = 0, scale = 1, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{location} \tab numeric \tab location parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Gumbel distribution is parameterised with
-#' \code{location} as a numeric and \code{scale} as a positive numeric.
-#'
-#' @details
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Gumbel
+#' @templateVar DistName Gumbel
+#' @templateVar uses to model the maximum (or minimum) of a number of samples of different distributions, and is a special case of the Generalised Extreme Value distribution
+#' @templateVar params location, \eqn{\mu}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1 / \beta * exp(-(z + exp(-z)))}
+#' @templateVar paramsupport \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar additionalDetails Apery's Constant to 16 significant figures is used in the skewness calculation. The \code{gammaz} function from the \code{pracma} package is used in the \code{cf} to allow complex inputs.
+#' @templateVar constructor location = 0, scale = 1
+#' @templateVar arg1 \code{location} \tab numeric \tab location parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{location} as a numeric and \code{scale} as a positive numeric.
+#' @templateVar additionalSeeAlso \code{\link{Frechet}} and \code{\link{Weibull}} for other special cases of the generalized extreme value distribution. \code{\link[pracma]{gammaz}} for the references for the gamma function with complex inputs.
 #'
 #' @examples
 #' x = Gumbel$new(location = 2, scale = 5)
@@ -46,7 +26,7 @@
 #' x$setParameterValue(list(scale = 3))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -126,7 +106,7 @@ Gumbel$set("public","initialize",function(location = 0, scale = 1,
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(), distrDomain = Reals$new(),
+                   rand = rand, support = Reals$new(),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

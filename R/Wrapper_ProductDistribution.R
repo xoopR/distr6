@@ -76,9 +76,7 @@ ProductDistribution$set("public","initialize",function(distlist, name = NULL,
 
   type = do.call(product.SetInterval, lapply(distlist,function(x) x$type()))
   support = do.call(product.SetInterval, lapply(distlist,function(x) x$support()))
-  distrDomain = do.call(product.SetInterval, lapply(distlist,function(x) x$distrDomain()))
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
-                   short_name = short_name, description = description, support = support, type = type,
-                   distrDomain = distrDomain)
-}) # IN PROGRESS
+                   short_name = short_name, description = description, support = support, type = type)
+})

@@ -78,7 +78,6 @@ reference:
       - Kernel
       - exkurtosisType
       - skewType
-      - liesInDistrDomain
       - liesInSupport
       - liesInType
   - title: "Mathematical and Statistical"
@@ -118,7 +117,6 @@ reference:
     desc: "Accessor methods for Distribution objects."
     contents: 
       - decorators
-      - distrDomain
       - dmax
       - dmin
       - inf
@@ -184,7 +182,7 @@ reference:
       - InverseGamma
       - Laplace
       - Logistic
-      - LogLogistic
+      - Loglogistic
       - Lognormal
       - Normal
       - Pareto

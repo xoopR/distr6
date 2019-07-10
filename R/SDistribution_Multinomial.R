@@ -2,42 +2,22 @@
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
-#' @title Multinomial Distribution
-#'
-#' @description Mathematical and statistical functions for the Multinomial distribution, which is used
-#' to extend the binomial distribution to multiple variables, for example to model the rolls of multiple dice
-#' multiple times.
-#'
-#' @details The Multinomial distribution parameterised with number of trials, \eqn{n}, and probabilities
-#' of success, \eqn{p_1,...,p_k}, is defined by the pmf,
-#' \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
-#' for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} and \eqn{n = 1,2,\ldots}.
-#'
-#' The distribution is supported on \eqn{\sum x_i = N}
-#'
-#' \code{cdf} and \code{quantile} are omitted as no closed form analytic expression could be found.
-#'
 #' @name Multinomial
-#'
-#' @section Constructor: Multinomial$new(size, probs, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{size} \tab numeric \tab number of trials. See details. \cr
-#' \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details: The Multinomial distribution is parameterised by \code{size} as a positive
-#' whole number and \code{probs} as a vector of numerics between 0 and 1.
-#' The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect
-#' to be passed to the maths/stats methods. The probability vector is automatically normalised with
-#' \deqn{probs = probs/sum(probs)}.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Multinomial
+#' @templateVar DistName Multinomial
+#' @templateVar uses to extend the binomial distribution to multiple variables, for example to model the rolls of multiple dice multiple times
+#' @templateVar params number of trials, \eqn{n}, and probabilities of success, \eqn{p_1,...,p_k},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
+#' @templateVar paramsupport \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}
+#' @templateVar distsupport \eqn{\sum x_i = N}
+#' @templateVar omittedDPQR \code{cdf} and \code{quantile}
+#' @templateVar constructor size = 10, probs = c(0.5, 0.5)
+#' @templateVar arg1 \code{size} \tab numeric \tab number of trials. See details. \cr
+#' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
+#' @templateVar constructorDets \code{size} as a positive whole number and \code{probs} as a vector of numerics between 0 and 1. The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect to be passed to the maths/stats methods. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)}.
+#' @templateVar additionalSeeAlso \code{\link{Binomial}} for a special case of the Multinomial distribution.
 #'
 #' @examples
 #' x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
@@ -48,7 +28,7 @@
 #' x$setParameterValue(list(probs = c(1,2,3)))
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' # Note the difference from R stats
 #' x$pdf(4, 4, 2)
 #' # This allows vectorisation:
@@ -169,7 +149,7 @@ Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), d
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Set$new(0:size, dim = length(probs)),
-                   distrDomain = Naturals$new(dim = length(probs)), symmetric = FALSE,type = Naturals$new(dim = "K"),
+                   symmetric = FALSE, type = Naturals$new(dim = "K"),
                    valueSupport = "discrete",
                    variateForm = "multivariate")
   invisible(self)

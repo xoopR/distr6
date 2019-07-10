@@ -2,45 +2,23 @@
 #-------------------------------------------------------------
 # Hypergeometric Distribution Documentation
 #-------------------------------------------------------------
-#' @title Hypergeometric Distribution Class
-#'
-#' @description Mathematical and statistical functions for the Hypergeometric distribution, which is
-#' used to model the number of successes out of a population containing a known number of possible
-#' successes, for example the number of red balls from an urn or red, blue and yellow balls.
-#'
-#' @details The Hypergeometric distribution parameterised with population size, \eqn{N}, number of possible
-#' successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf,
-#' \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
-#' for \eqn{N = {0,1,2,\ldots}}, \eqn{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
-#'
-#' The distribution is supported on \eqn{{max(0, n + K - N),...,min(n,K)}}.
-#'
-#' \code{mgf} and \code{cf} are omitted as no closed form analytic expression could be found. Decorate with
-#' \code{CoreStatistics} for numerical results.
-#'
 #' @name Hypergeometric
-#' @section Constructor: Hypergeometric$new(size = 10, successes = 5, failures = 5, draws = 2, decorators = NULL, verbose = FALSE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{size} \tab numeric \tab  population size. \cr
-#' \code{successes} \tab numeric \tab number of population successes. \cr
-#' \code{failures} \tab numeric \tab number of population failures. \cr
-#' \code{draws} \tab numeric \tab number of draws. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
-#'
-#' @section Constructor Details:
-#' The Hypergeometric distribution is parameterised with \code{size} and \code{draws} as positive
-#' whole numbers, and either \code{successes} or \code{failures} as positive whole numbers. These are
-#' related via,
-#' \deqn{failures = size - successes}
-#' If \code{failures} is given then \code{successes} is ignored.
-#'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' @template SDist
+#' @templateVar ClassName Hypergeometric
+#' @templateVar DistName Hypergeometric
+#' @templateVar uses to model the number of successes out of a population containing a known number of possible successes, for example the number of red balls from an urn or red, blue and yellow balls
+#' @templateVar params population size, \eqn{N}, number of possible successes, \eqn{K}, and number of draws from the distribution, \eqn{n},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
+#' @templateVar paramsupport \eqn{N = {0,1,2,\ldots}}, \eqn{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function
+#' @templateVar distsupport \eqn{{max(0, n + K - N),...,min(n,K)}}
+#' @templateVar omittedVars \code{mgf} and \code{cf}
+#' @templateVar constructor size = 10, successes = 5, failures = NULL, draws = 2
+#' @templateVar arg1 \code{size} \tab numeric \tab  population size. \cr
+#' @templateVar arg2 \code{successes} \tab numeric \tab number of population successes. \cr
+#' @templateVar arg3 \code{failures} \tab numeric \tab number of population failures. \cr
+#' @templateVar arg4 \code{draws} \tab numeric \tab number of draws. \cr
+#' @templateVar constructorDets \code{size} and \code{draws} as positive whole numbers, and either \code{successes} or \code{failures} as positive whole numbers. These are related via, \deqn{failures = size - successes} If \code{failures} is given then \code{successes} is ignored.
 #'
 #' @examples
 #' Hypergeometric$new(size = 10, successes = 7, draws = 5)
@@ -52,7 +30,7 @@
 #' x$setParameterValue(list(failures = 10)) # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
-#' # p/d/q/r
+#' # d/p/q/r
 #' x$pdf(5)
 #' x$cdf(5)
 #' x$quantile(0.42)
@@ -163,7 +141,7 @@ Hypergeometric$set("public","initialize",function(size = 50, successes = 5, fail
     support <- Set$new(max(0, draws + successes - size):min(draws,successes))
 
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                     rand = rand, support = support, distrDomain = Naturals$new(),
+                     rand = rand, support = support,
                      symmetric = FALSE,type = Naturals$new(),
                      valueSupport = "discrete",
                      variateForm = "univariate")
