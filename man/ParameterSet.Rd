@@ -15,7 +15,7 @@ ParameterSets are passed to a \code{Distribution$new} constructor when
 \code{value} \tab numeric \tab initial parameter value. \cr
 \code{support} \tab numeric \tab range of values parameter can take. \cr
 \code{settable} \tab logical \tab if TRUE the parameter is printed. See Details. \cr
-\code{updateFunc = NULL} \tab character \tab string to be parsed and evaluated as function. See Details. \cr
+\code{updateFunc = NULL} \tab function \tab evaluated to update parameter. See Details. \cr
 \code{description = NULL} \tab character \tab optional description of parameter.
 }
 }
@@ -34,8 +34,8 @@ after construction. The parameterisation of the distribution is determined by th
 that have \code{settable = TRUE}, this is a slightly confusing term as it actually refers to a parameter
 being 'machine-settable'. Here it just means that the given parameter is used in construction and therefore
 will be included in a call to \code{$print}. \code{updateFunc} is used to update the parameters not used in
-the parameterisation. These should should be provided as a string that could be understood in the body of a
-function by a Distribution object, i.e. by naming parameters via \code{$getParameterValue}, see examples.
+the parameterisation. These should be given as a function that could be understood in the body of a Distribution
+and should start with \code{function(self)}, see examples.
 
 Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
 with a non-NA \code{updateFunc}.
@@ -73,7 +73,7 @@ with a non-NA \code{updateFunc}.
  value = list(1, 1)
  support = list(PosReals$new(), PosReals$new())
  settable = list(TRUE, FALSE)
- updateFunc = list(NULL, "1/self$getParameterValue('rate')")
+ updateFunc = list(NULL, function(self) 1/self$getParameterValue('rate'))
  description = list("Arrival rate","Scale parameter")
  ps = ParameterSet$new(id, value, support, settable,
                        updateFunc, description)

@@ -223,6 +223,6 @@ Zhaoyuan Gu (@gzy823), Yunjie He (@RoyaHe), Xiaowen Huang (@w090613),
 Shuhan Liu (@shliu99), Runlong Yu (@Edwinyrl), Chijing Zeng
 (@britneyzeng) and Qian Zhou (@yumizhou47). We also want to thank
 Prof. Dr. Bernd Bischl for discussions about design choices and useful
-features. Finally University College London and The Alan Turing
-Institute for hosting workshops, meetings and providing coffee whenever
-needed.
+features, particularly advice on the ParameterSet class. Finally
+University College London and The Alan Turing Institute for hosting
+workshops, meetings and providing coffee whenever needed.
