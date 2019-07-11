@@ -136,6 +136,7 @@ reference:
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
+      - DistributionDecorator
       - CoreStatistics
       - ExoticStatistics
       - FunctionImputation
@@ -155,7 +156,6 @@ reference:
       - truncate
       - MixtureDistribution
       - Convolution
-      - Scale
   - title: "Univariate Discrete Distributions"
     contents:
       - Bernoulli
@@ -231,12 +231,25 @@ reference:
       - starts_with("Pos")
       - starts_with("Neg")
       - setSymbol
-      - operation
+      - setOperation
       - complement.SetInterval
       - power.SetInterval
       - product.SetInterval
       - union.SetInterval
       - listSpecialSets
+      - as.numeric.Interval
+      - class.SetInterval
+      - dimension.SetInterval
+      - elements
+      - getSymbol.SetInterval
+      - inf.SetInterval
+      - length.SetInterval
+      - length.Set
+      - liesInSetInterval
+      - max.SetInterval
+      - min.SetInterval
+      - sup.SetInterval
+      - type.SetInterval
   - title: "Helper Functions"
     desc: "Miscellaneous functions for use in distr6."
     contents: 
@@ -253,3 +266,7 @@ reference:
       - getParameterSupport
       - getParameterValue
       - setParameterValue
+      - as.data.table
+      - print.ParameterSet
+      - rbind.ParameterSet
+      - update.ParameterSet
