@@ -14,7 +14,7 @@
 #' @templateVar distsupport the non-negative Reals
 #' @templateVar omittedVars \code{entropy}, \code{mgf} and \code{cf}
 #' @templateVar aka Fisk
-#' @aliases Fisk LogLogistic
+#' @aliases Fisk
 #' @templateVar constructor scale = 1, shape = 1, location = 0
 #' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
 #' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr

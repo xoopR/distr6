@@ -14,7 +14,7 @@
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedVars \code{cf}
 #' @templateVar aka Log-Gaussian
-#' @aliases LogGaussian LogNormal
+#' @aliases Loggaussian
 #' @templateVar constructor meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL, mean = 1, var = NULL, sd = NULL, prec = NULL
 #' @templateVar arg1 \code{meanlog} \tab numeric \tab mean of the distribution on the log scale. \cr
 #' @templateVar arg2 \code{varlog} \tab numeric \tab variance of the distribution on the log scale. \cr

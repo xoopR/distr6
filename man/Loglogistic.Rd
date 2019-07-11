@@ -3,7 +3,6 @@
 \name{Loglogistic}
 \alias{Loglogistic}
 \alias{Fisk}
-\alias{LogLogistic}
 \title{Log-Logistic Distribution Class}
 \description{
 Mathematical and statistical functions for the Log-Logistic distribution, which

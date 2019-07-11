@@ -2,7 +2,7 @@
 #-------------------------------------------------------------
 # Normal Kernel
 #-------------------------------------------------------------
-#' @title NormalKernel
+#' @title Normal Kernel
 #'
 #' @description Mathematical and statistical functions for the NormalKernel kernel defined by the pdf,
 #' \deqn{f(x) = exp(-x^2/2)/sqrt(2\pi)}

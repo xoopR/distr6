@@ -2,8 +2,7 @@
 % Please edit documentation in R/SDistribution_Lognormal.R
 \name{Lognormal}
 \alias{Lognormal}
-\alias{LogGaussian}
-\alias{LogNormal}
+\alias{Loggaussian}
 \title{Log-Normal Distribution Class}
 \description{
 Mathematical and statistical functions for the Log-Normal distribution, which
