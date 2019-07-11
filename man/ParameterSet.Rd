@@ -44,7 +44,7 @@ value of non-settable functions.
 
  \tabular{ll}{
   \strong{Method} \tab \strong{Link} \cr
-  \code{print(hide_cols = "updateFunc")} \tab \code{\link{print.ParameterSet}} \cr
+  \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
   \code{update()} \tab \code{\link{update.ParameterSet}} \cr
   \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr

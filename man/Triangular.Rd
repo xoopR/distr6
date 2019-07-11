@@ -38,7 +38,7 @@ The distribution is supported on \eqn{[a, b]}.
 }
 
 \section{Constructor Details}{
- The Triangular distribution is parameterised with \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} is settable after construction.
+ The Triangular distribution is parameterised with \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} can be updated after construction.
 }
 
 \section{Public Variables}{

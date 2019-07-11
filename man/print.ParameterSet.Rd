@@ -4,7 +4,8 @@
 \alias{print.ParameterSet}
 \title{Print a ParameterSet}
 \usage{
-\method{print}{ParameterSet}(x, hide_cols = "updateFunc", ...)
+\method{print}{ParameterSet}(x, hide_cols = c("updateFunc", "settable"),
+  ...)
 }
 \arguments{
 \item{x}{ParameterSet}
@@ -21,7 +22,7 @@ If given the \code{hide_cols} argument can be used to hide specific columns from
 data.table.
 }
 \section{R6 Usage}{
- $print(hide_cols = "updateFunc")
+ $print(hide_cols = c("updateFunc","settable"))
 }
 
 \seealso{

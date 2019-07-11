@@ -18,7 +18,7 @@
 #' @templateVar arg2 \code{upper} \tab numeric \tab upper limit. \cr
 #' @templateVar arg3 \code{mode} \tab numeric \tab mode. \cr
 #' @templateVar arg4 \code{symmetric} \tab logical \tab see details. \cr
-#' @templateVar constructorDets \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} is settable after construction.
+#' @templateVar constructorDets \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} can be updated after construction.
 #' @templateVar additionalSeeAlso \code{\link{Uniform}} for the Uniform distribution.
 #'
 #' @examples

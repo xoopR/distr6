@@ -36,7 +36,7 @@
 #'@section Public Methods:
 #'  \tabular{ll}{
 #'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{print(hide_cols = "updateFunc")} \tab \code{\link{print.ParameterSet}} \cr
+#'   \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
 #'   \code{update()} \tab \code{\link{update.ParameterSet}} \cr
 #'   \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
@@ -154,13 +154,13 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
 #' @param hide_cols string, if given the data.table is filtered to hide these columns
 #' @param ... ignored, added for S3 consistency
 #'
-#' @section R6 Usage: $print(hide_cols = "updateFunc")
+#' @section R6 Usage: $print(hide_cols = c("updateFunc","settable"))
 #'
 #' @seealso \code{\link{ParameterSet}}
 #'
 #' @export
 print.ParameterSet <- function(x, hide_cols, ...) {}
-ParameterSet$set("public","print", function(hide_cols = "updateFunc",...){
+ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable"),...){
   ps <- private$.parameters
   ps$support <- lapply(ps$support,function(x) x$getSymbol())
   print(subset(ps, select = !(names(ps) %in% hide_cols)))

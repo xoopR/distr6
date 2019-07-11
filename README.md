@@ -55,21 +55,21 @@ B$pdf(1:10)
 B$kurtosis()
 #> [1] -0.2
 B$rand(5)
-#> [1] 7 7 4 7 6
+#> [1] 5 5 7 3 8
 summary(B)
-#> Binomial with parameterisation:
+#> Binomial Probability Distribution. Parameterised with:
 #>   prob = 0.5, size = 10
 #> 
-#>  Quick Statistics: 
-#>  Mean    Variance    Skewness    Excess Kurtosis
-#>  5   2.5     0       -0.2
+#>   Quick Statistics 
+#>  Mean:       5
+#>  Variance:   2.5
+#>  Skewness:   0
+#>  Ex. Kurtosis:   -0.2
 #> 
-#>  Support: {0,...,10}      Scientific Type: ℤ+ 
+#>  Support: {0,...,10}     Scientific Type: ℕ0 
 #> 
 #>  Traits: discrete; univariate
-#>   See traits() for more
-#>  Properties: platykurtic; no skew; symmetric
-#>   See properties() for more
+#>  Properties: symmetric; platykurtic; no skew
 ```
 
 Flexible construction of distributions for common parameterisations
@@ -108,6 +108,7 @@ decorate(B, CoreStatistics)
 #> B is now decorated with CoreStatistics
 #> Binom(prob = 0.5, size = 10)
 B$kthmoment(6)
+#> Results from numeric calculations are approximate only. Better results may be available.
 #> [1] 190
 ```
 
@@ -118,7 +119,7 @@ less familiar with OOP
 B <- Binomial$new()
 mean(B) # B$mean()
 #> [1] 5
-var(B) # B$var()
+variance(B) # B$variance()
 #> [1] 2.5
 cdf(B, 2:5) # B$cdf(2:5)
 #> [1] 0.0546875 0.1718750 0.3769531 0.6230469
@@ -143,13 +144,13 @@ representation of sets for Distribution typing
 
 ``` r
 Binomial$new()$type()
-#> [1] "ℤ+"
+#> [1] "ℕ0"
 Binomial$new()$support()
 #> [1] "{0,...,10}"
 Set$new(1:5)
 #> [1] "{1,...,5}"
 Interval$new(1,5)
-#> [1] "[1:5]"
+#> [1] "[1,5]"
 PosReals$new()
 #> [1] "ℝ+"
 ```
