@@ -39,7 +39,7 @@ implemented kernels.
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{cor()} \tab \code{\link{cor}} \cr
+  \code{correlation()} \tab \code{\link{correlation}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr

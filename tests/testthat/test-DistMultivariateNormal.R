@@ -49,7 +49,7 @@ test_that("statistics",{
   expect_equal(mvn$mean(), c(1,7,3))
   expect_equal(mvn$mode(), c(1,7,3))
   expect_equal(diag(mvn$variance()), c(1,1,1))
-  expect_equal(mvn$cor(), mvn$variance())
+  expect_equal(mvn$correlation(), mvn$variance())
 
   expect_error(mvn$skewness())
   expect_error(mvn$kurtosis())

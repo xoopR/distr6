@@ -87,7 +87,7 @@ reference:
       - cdfAntiDeriv
       - cdfPNorm
       - cf
-      - cor
+      - correlation
       - cumHazard
       - entropy
       - genExp

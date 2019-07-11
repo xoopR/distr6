@@ -90,7 +90,7 @@
 #'   \code{stdev()} \tab \code{\link{stdev}}\cr
 #'   \code{median()} \tab \code{\link{median.Distribution}} \cr
 #'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   \code{cor()} \tab \code{\link{cor}} \cr
+#'   \code{correlation()} \tab \code{\link{correlation}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Parameter Methods} \tab \strong{Link} \cr
 #'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
@@ -1017,11 +1017,11 @@ Distribution$set("public", "iqr", function() {
 })
 
 #' @title Distribution Correlation
-#' @name cor
+#' @name correlation
 #' @description Correlation of a distribution.
 #'
-#' @usage cor(object)
-#' @section R6 Usage: $cor()
+#' @usage correlation(object)
+#' @section R6 Usage: $correlation()
 #'
 #' @param object Distribution.
 #'
@@ -1037,7 +1037,7 @@ Distribution$set("public", "iqr", function() {
 #'
 #' @export
 NULL
-Distribution$set("public","cor",function(){
+Distribution$set("public","correlation",function(){
   if(testUnivariate(self))
     return(1)
   else

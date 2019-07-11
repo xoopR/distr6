@@ -42,7 +42,7 @@ test_that("statistics",{
   expect_error(Frechet$new()$mgf(1))
   expect_error(Frechet$new()$cf(1))
   expect_equal(x$mode(), 1/2)
-  expect_equal(x$cor(), 1)
+  expect_equal(x$correlation(), 1)
 
   expect_equal(x$pdf(1:2), extraDistr::dfrechet(1:2))
   expect_equal(x$cdf(1:2), extraDistr::pfrechet(1:2))

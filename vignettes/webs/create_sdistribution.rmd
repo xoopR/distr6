@@ -54,7 +54,7 @@ For the full list of methods to (optimally) include see the 'Statistical Methods
 The following methods are included by default and can therefore by omitted from the class definition:
 
 1. prec
-2. cor
+2. correlation
 3. stdev
 4. median
 5. iqr
