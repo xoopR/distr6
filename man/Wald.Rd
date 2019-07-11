@@ -11,7 +11,7 @@ is commonly used for modelling the first passage time for Brownian motion.
 }
 \details{
 The Wald distribution parameterised with mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined by the pdf,
-\deqn{f(x) = (\lambda/(2\pix^3))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))} for \eqn{\lambda > 0} and \eqn{\mu > 0}.
+\deqn{f(x) = (\lambda/(2x^3\pi))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))} for \eqn{\lambda > 0} and \eqn{\mu > 0}.
 
 The distribution is supported on the Positive Reals.
 

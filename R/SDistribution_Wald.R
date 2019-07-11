@@ -9,7 +9,7 @@
 #' @templateVar uses for modelling the first passage time for Brownian motion
 #' @templateVar params mean, \eqn{\mu}, and shape, \eqn{\lambda},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (\lambda/(2\pi x^3))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
+#' @templateVar pdfpmfeq \deqn{f(x) = (\lambda/(2x^3\pi))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
 #' @templateVar paramsupport \eqn{\lambda > 0} and \eqn{\mu > 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedVars \code{entropy}
