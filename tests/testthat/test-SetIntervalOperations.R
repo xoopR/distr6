@@ -6,7 +6,7 @@ si1 = SetInterval$new(lower = 1, upper = 10, type = "()", dimension = 1, symbol 
 si2 = SetInterval$new(lower = 1, upper = 10, type = "()", dimension = 1, symbol = "S2")
 
 test_that("operation",{
-  expect_silent(setOperation("T", si1, si2))
+  expect_silent(setOperation("T", list(si1, si2)))
 })
 
 test_that("product",{

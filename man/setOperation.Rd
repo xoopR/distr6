@@ -4,13 +4,13 @@
 \alias{setOperation}
 \title{Symbolic Operations for SetInterval}
 \usage{
-setOperation(unicode, ..., lower = NULL, upper = NULL, type = NULL,
+setOperation(unicode, sets, lower = NULL, upper = NULL, type = NULL,
   dim = NULL)
 }
 \arguments{
 \item{unicode}{unicode symbol for the setOperation.}
 
-\item{...}{sets and/or intervals to combine via the setOperation.}
+\item{sets}{list of sets and/or intervals to combine via the setOperation.}
 
 \item{lower}{lower bound of new SetInterval}
 

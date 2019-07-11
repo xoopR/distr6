@@ -8,7 +8,7 @@
 #' @name setOperation
 #'
 #' @param unicode unicode symbol for the setOperation.
-#' @param ... sets and/or intervals to combine via the setOperation.
+#' @param sets list of sets and/or intervals to combine via the setOperation.
 #' @param lower lower bound of new SetInterval
 #' @param upper upper bound of new SetInterval
 #' @param type type of new SetInterval
@@ -21,9 +21,8 @@
 #' \code{\link{power.SetInterval}}
 #'
 #' @export
-setOperation <- function(unicode,...,lower=NULL,upper=NULL,type=NULL,dim=NULL){
-  dots = list(...)
-  symbols = lapply(dots,function(x){
+setOperation <- function(unicode,sets,lower=NULL,upper=NULL,type=NULL,dim=NULL){
+  symbols = lapply(sets,function(x){
     x <- x[["getSymbol"]]()
     if(!grepl("\\{.",x))
       x <- paste0("{", x)
@@ -32,9 +31,9 @@ setOperation <- function(unicode,...,lower=NULL,upper=NULL,type=NULL,dim=NULL){
     return(x)
   })
 
-  if(is.null(lower)) lower = as.numeric(unlist(lapply(dots, function(x) x$inf())))
-  if(is.null(upper)) upper = as.numeric(unlist(lapply(dots, function(x) x$sup())))
-  if(is.null(dim)) dim = length(dots)
+  if(is.null(lower)) lower = as.numeric(unlist(lapply(sets, function(x) x$inf())))
+  if(is.null(upper)) upper = as.numeric(unlist(lapply(sets, function(x) x$sup())))
+  if(is.null(dim)) dim = length(sets)
   if(is.null(type)) type = "{}"
 
   setSymbol <- paste(unlist(symbols), collapse = paste0(" ",unicode," "))
@@ -69,7 +68,7 @@ product.SetInterval <- function(...){
   if(length(unique(sapply(dots,function(x) x$getSymbol()))) == 1 & length(dots)>1)
     return(power.SetInterval(dots[[1]], length(dots)))
   else
-    return(setOperation("\u00D7",...))
+    return(setOperation("\u00D7", sets = dots))
 }
 
 #' @title Symbolic Unions for SetInterval
@@ -96,12 +95,21 @@ product.SetInterval <- function(...){
 #' @export
 NULL
 union.SetInterval <- function(..., dim = 1){
-  if(length(unique(unlist(lapply(list(...),function(y) y$getSymbol())))) != 1){
-    lower = min(sapply(list(...), function(y) y$inf()))
-    upper = max(sapply(list(...), function(y) y$sup()))
-    setOperation("\u222A",...,dim = dim, lower = lower, upper = upper)
+  dots = list(...)
+
+  if(length(dots) == 1)
+    return(dots[[1]])
+
+  class = lapply(dots, getR6Class)
+  parClass = lapply(class, function(x) get(x)$inherit)
+  dots = dots[!(parClass %in% class)]
+
+  if(length(unique(unlist(lapply(dots,function(y) y$getSymbol())))) != 1){
+    lower = min(sapply(dots, function(y) y$inf()))
+    upper = max(sapply(dots, function(y) y$sup()))
+    setOperation("\u222A", sets = dots, dim = dim, lower = lower, upper = upper)
   }else
-    return(list(...)[[1]])
+    return(dots[[1]])
 }
 
 #' @title Symbolic Complement for SetInterval
