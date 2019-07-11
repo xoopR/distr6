@@ -91,6 +91,11 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
     return(self$quantile(runif(n)))
   }
 
+  private$.outerParameters <- ParameterSet$new(id = list("hubLower", "hubUpper"), value = list(lower, upper),
+                         support = list(Reals$new(), Reals$new()), settable = list(FALSE, FALSE),
+                         description = list("Lower limit of huberization.",
+                                            "Upper limit of huberization."))
+
   if(testDiscrete(distribution)){
 
     support <- Set$new(lower:upper)
@@ -123,6 +128,26 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
                      valueSupport = "mixture")
   } else
     stop(.distr6$huberize_discrete)
+})
+HuberizedDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
+
+  if("hubLower" %in% names(lst) & "hubUpper" %in% names(lst))
+    checkmate::assert(lst[["hubLower"]] < lst[["hubUpper"]], .var.name = "hubLower must be < hubUpper")
+  else if("hubLower" %in% names(lst))
+    checkmate::assert(lst[["hubLower"]] < self$getParameterValue("hubUpper"), .var.name = "hubLower must be < hubUpper")
+  else if("hubUpper" %in% names(lst))
+    checkmate::assert(lst[["hubUpper"]] > self$getParameterValue("hubLower"), .var.name = "hubUpper must be > hubLower")
+
+
+  super$setParameterValue(lst = lst, error = error)
+  if(inherits(self$support(),"Set"))
+    private$.properties$support <- Set$new(self$getParameterValue("hubLower"):self$getParameterValue("hubUpper"))
+  else
+    private$.properties$support <- Interval$new(self$getParameterValue("hubLower"), self$getParameterValue("hubUpper"))
+
+  invisible(self)
 })
 
 #' @title Huberize a Distribution

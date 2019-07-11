@@ -74,6 +74,11 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
 
   description = paste0(distribution$description, " Truncated between ",lower," and ",upper,".")
 
+  private$.outerParameters <- ParameterSet$new(id = list("truncLower", "truncUpper"), value = list(lower, upper),
+                                               support = list(Reals$new(), Reals$new()), settable = list(FALSE, FALSE),
+                                               description = list("Lower limit of truncation.",
+                                                                  "Upper limit of truncation."))
+
   if(testDiscrete(distribution))
     support <- Set$new(lower:upper)
   else
@@ -84,6 +89,27 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
                    type = distribution$type(),
                    description = description)
 })
+TruncatedDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
+
+  if("truncLower" %in% names(lst) & "truncUpper" %in% names(lst))
+    checkmate::assert(lst[["truncLower"]] < lst[["truncUpper"]], .var.name = "truncLower must be < truncUpper")
+  else if("truncLower" %in% names(lst))
+    checkmate::assert(lst[["truncLower"]] < self$getParameterValue("truncUpper"), .var.name = "truncLower must be < truncUpper")
+  else if("truncUpper" %in% names(lst))
+    checkmate::assert(lst[["truncUpper"]] > self$getParameterValue("truncLower"), .var.name = "truncUpper must be > truncLower")
+
+
+  super$setParameterValue(lst = lst, error = error)
+  if(inherits(self$support(),"Set"))
+    private$.properties$support <- Set$new(self$getParameterValue("truncLower"):self$getParameterValue("truncUpper"))
+  else
+    private$.properties$support <- Interval$new(self$getParameterValue("truncLower"), self$getParameterValue("truncUpper"))
+
+  invisible(self)
+})
+
 
 #' @title Truncate a Distribution
 #' @description S3 functionality to truncate an R6 distribution.

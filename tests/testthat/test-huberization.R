@@ -33,3 +33,20 @@ test_that("check huberization constructor",{
   expect_error(HuberizedDistribution$new(MixtureDistribution$new(list(Binomial$new(),Normal$new())),1,2))
 })
 
+test_that("check huberization parameters",{
+  x = huberize(Binomial$new(),lower = 1, upper = 5)
+  expect_equal(x$inf(), 1)
+  expect_equal(x$sup(), 5)
+  expect_equal(x$getParameterValue("hubLower"), 1)
+  expect_equal(x$getParameterValue("hubUpper"), 5)
+  expect_silent(x$setParameterValue(hubLower = 2))
+  expect_silent(x$setParameterValue(hubUpper = 10))
+  expect_equal(x$inf(), 2)
+  expect_equal(x$sup(), 10)
+  expect_equal(x$getParameterValue("hubLower"), 2)
+  expect_equal(x$getParameterValue("hubUpper"), 10)
+  expect_error(x$setParameterValue(hubUpper = 1))
+  expect_error(x$setParameterValue(hubLower = 12))
+  expect_error(x$setParameterValue(hubLower = 4, hubUpper = 3))
+})
+

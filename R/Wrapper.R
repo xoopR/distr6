@@ -76,16 +76,15 @@ DistributionWrapper$set("public","initialize",function(distlist,...){
   #lapply(distlist, function(x) x$parameters()$update())
   private$.wrappedModels <- distlist
 
-  if(length(distlist)>1){
-    params <- data.table::rbindlist(lapply(distlist, function(x){
-      params = x[["parameters"]]()$as.data.table()
-      params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
-      return(params)
-    }))
-    row.names(params) <- NULL
-    params <- as.ParameterSet(params)
-  } else
-    params <- distlist[[1]]$parameters()
+  params <- data.table::rbindlist(lapply(distlist, function(x){
+    params = x[["parameters"]]()$as.data.table()
+    params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
+    return(params)
+  }))
+  row.names(params) <- NULL
+  if(!is.null(private$.outerParameters))
+    params <- rbind(params, private$.outerParameters$as.data.table())
+  params <- as.ParameterSet(params)
 
   super$initialize(parameters = params, ...)
 })
@@ -123,6 +122,7 @@ DistributionWrapper$set("public", "wrappedModels", function(model=NULL){
     private$.wrappedModels
 })
 DistributionWrapper$set("private", ".wrappedModels", list())
+DistributionWrapper$set("private", ".outerParameters", NULL)
 DistributionWrapper$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))
     lst <- list(...)
@@ -136,21 +136,24 @@ DistributionWrapper$set("public","setParameterValue",function(..., lst = NULL, e
 
       newlst = list(lst[[i]])
       names(newlst) = parameter
+      self$wrappedModels(model)$setParameterValue(lst = newlst, error = error)
     } else{
-      model = self$wrappedModels()[[1]]$short_name
-      newlst = lst
+      newlst = list(lst[[i]])
+      names(newlst) = names(lst)[[i]]
+      private$.outerParameters$setParameterValue(lst = newlst)
     }
-    self$wrappedModels(model)$setParameterValue(lst = newlst, error = error)
   }
-  rm(i)
 
   params <- data.table::rbindlist(lapply(self$wrappedModels(), function(x){
     params = x[["parameters"]]()$as.data.table()
     params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
     return(params)
   }))
+  if(!is.null(private$.outerParameters))
+    params <- rbind(params, private$.outerParameters$as.data.table())
   row.names(params) <- NULL
   private$.parameters <- as.ParameterSet(params)
 
   invisible(self)
 })
+

@@ -34,3 +34,21 @@ test_that("check missing",{
   expect_error(truncate(Distribution$new("Test", cdf = pnorm),1,2))
 })
 
+test_that("check truncation parameters",{
+  x = truncate(Binomial$new(),lower = 1, upper = 5)
+  expect_equal(x$inf(), 1)
+  expect_equal(x$sup(), 5)
+  expect_equal(x$getParameterValue("truncLower"), 1)
+  expect_equal(x$getParameterValue("truncUpper"), 5)
+  expect_silent(x$setParameterValue(truncLower = 2))
+  expect_silent(x$setParameterValue(truncUpper = 10))
+  expect_equal(x$inf(), 2)
+  expect_equal(x$sup(), 10)
+  expect_equal(x$getParameterValue("truncLower"), 2)
+  expect_equal(x$getParameterValue("truncUpper"), 10)
+  expect_error(x$setParameterValue(truncUpper = 1))
+  expect_error(x$setParameterValue(truncLower = 12))
+  expect_error(x$setParameterValue(truncLower = 4, truncUpper = 3))
+})
+
+

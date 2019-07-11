@@ -364,11 +364,13 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
 rbind.ParameterSet <- function(...){}
 ParameterSet$set("public","rbind",function(...){
   newpar = rbind(self$as.data.table(),
-                 do.call(rbind,lapply(list(...), function(x) x$as.data.table())))
+                 data.table::rbindlist(lapply(list(...), function(x) x$as.data.table())))
+
   if(any(table(newpar$id)>1))
     stop("IDs must be unique. Try using makeUniqueDistributions first.")
   else
-    return(as.ParameterSet(newpar))
+    private$.parameters <- newpar
+  invisible(self)
 })
 
 #' @name as.data.table

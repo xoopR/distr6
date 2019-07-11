@@ -10,9 +10,9 @@ test_that("constructors",{
 test_that("parameters",{
   truncbin = truncate(Binomial$new(),1,5)
   expect_condition(truncbin$getParameterValue())
-  expect_warning(truncbin$getParameterValue("Binom_prob"))
-  expect_equal(truncbin$getParameterValue("prob"),0.5)
-  expect_silent(truncbin$setParameterValue(prob = 0.8))
+  expect_silent(truncbin$getParameterValue("Binom_prob"))
+  expect_equal(truncbin$getParameterValue("Binom_prob"),0.5)
+  expect_silent(truncbin$setParameterValue(Binom_prob = 0.8))
 })
 
 test_that("wrapped models",{
