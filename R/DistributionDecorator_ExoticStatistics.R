@@ -69,7 +69,7 @@ ExoticStatistics <- R6::R6Class("ExoticStatistics", inherit = DistributionDecora
 #'
 #' @details The cdf anti-derivative is defined by
 #' \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
-#' where X is the distribution, F_X is the cdf of the distribution X and a,b are the limits of integration.
+#' where X is the distribution, \eqn{F_X} is the cdf of the distribution \eqn{X} and \eqn{a, b} are the limits of integration.
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
 #'
@@ -100,7 +100,7 @@ ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NU
 #'
 #' @details The survival anti-derivative is defined by
 #' \deqn{as(a, b) = \int_a^b S_X(x) dx}
-#' where X is the distribution, S_X is the survival function of the distribution X and a,b are the
+#' where X is the distribution, \eqn{S_X} is the survival function of the distribution \eqn{X} and \eqn{a, b} are the
 #' limits of integration.
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
@@ -131,7 +131,7 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper
 #' @param log logical, if TRUE then the (natural) logarithm of the survival function is returned.
 #'
 #' @details The survival function is defined by
-#' \deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) \int_x^\infty f_X(x) dx}
+#' \deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx}
 #' where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf and \eqn{f_X} is the pdf.
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
@@ -245,8 +245,8 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
 #' @param upper upper limit for integration, default is supremum.
 #'
 #' @details The p-norm of the cdf is defined by
-#' \deqn{\int_a^b |F_X|^p d\mu^{1/p}}
-#' where X is the distribution, \eqn{F_X} is the cdf and a,b are the limits of integration.
+#' \deqn{(\int_a^b |F_X|^p d\mu)^{1/p}}
+#' where X is the distribution, \eqn{F_X} is the cdf and \eqn{a, b} are the limits of integration.
 #'
 #' Returns NULL if distribution is not continuous.
 #'
@@ -261,7 +261,7 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 
   if(testContinuous(self))
     return(generalPNorm(self$cdf, p, lower, upper))
-}) # NEEDS TESTING
+})
 
 #-------------------------------------------------------------
 # Public Methods - pdfPNorm
@@ -279,7 +279,7 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 #' @param upper upper limit for integration, default is supremum.
 #'
 #' @details The p-norm of the pdf is defined by
-#' \deqn{\int_a^b |f_X|^p d\mu)^{1/p}}
+#' \deqn{(\int_a^b |f_X|^p d\mu)^{1/p}}
 #' where X is the distribution, \eqn{f_X} is the pdf and a,b are the limits of integration.
 #'
 #' Returns NULL if distribution is not continuous.
@@ -343,7 +343,7 @@ ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL
 #' @param upper upper limit for integration, default is supremum.
 #'
 #' @details The p-norm of the survival function is defined by
-#' \deqn{\int_a^b |S_X|^p d\mu)^{1/p}}
+#' \deqn{(\int_a^b |S_X|^p d\mu)^{1/p}}
 #' where X is the distribution, \eqn{S_X} is the survival function and a,b are the limits of integration.
 #'
 #' Returns NULL if distribution is not continuous.

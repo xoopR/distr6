@@ -9,7 +9,7 @@
 #' @templateVar uses as the prior in Bayesian modelling, the convolution of exponential distributions, and to model waiting times
 #' @templateVar params shape, \eqn{\alpha}, and rate, \eqn{\beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(\alpha-1) * exp(-x\beta)}
+#' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{\alpha-1}exp(-x\beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar constructor shape = 1, rate = 1, scale = NULL, mean = NULL

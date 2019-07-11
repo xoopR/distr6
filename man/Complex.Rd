@@ -8,7 +8,7 @@ The mathematical set of complex numebers.
 }
 \details{
 The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.
-\deqn{Complex = \{a + bi | a,b \in R\}}{Complex = {a + bi | a,b \epsilon R}}
+\deqn{Complex = \{a + bi \ | \ a,b \in R\}}{Complex = {a + bi | a,b \epsilon R}}
 where \eqn{R} is the set of reals.
 }
 \section{Constructor}{

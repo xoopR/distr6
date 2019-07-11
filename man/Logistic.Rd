@@ -9,7 +9,7 @@ is commonly used in logistic regression and feedforward neural networks.
 }
 \details{
 The Logistic distribution parameterised with mean, \eqn{\mu}, and scale, \eqn{s}, is defined by the pdf,
-\deqn{f(x) = exp(-(x-\mu)/s) / (s*(1+exp(-(x-\mu)/s))^2)} for \eqn{\mu \epsilon R} and \eqn{s > 0}.
+\deqn{f(x) = exp(-(x-\mu)/s) / (s(1+exp(-(x-\mu)/s))^2)} for \eqn{\mu \epsilon R} and \eqn{s > 0}.
 
 The distribution is supported on the Reals.
 }

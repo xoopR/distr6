@@ -9,9 +9,9 @@
 #' @templateVar uses as a prior in Bayesian modelling and is multivariate generalisation of the Beta distribution
 #' @templateVar params concentration paramameters, \eqn{\alpha_1,...,\alpha_k},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})}
+#' @templateVar pdfpmfeq \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i))\prod(x_i^{\alpha_i - 1})}
 #' @templateVar paramsupport \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function
-#' @templateVar distsupport \eqn{x_i \epsilon (0,1), \sum x_i = 1}
+#' @templateVar distsupport \eqn{x_i \ \epsilon \ (0,1), \sum x_i = 1}{x_i \epsilon (0,1), \sum x_i = 1}
 #' @templateVar omittedVars \code{mgf} and \code{cf}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
 #' @templateVar additionalDetails Sampling is performed via sampling independent Gamma distributions and normalising the samples (Devroye, 1986).

@@ -9,9 +9,9 @@ is commonly used as a prior in Bayesian modelling and is multivariate generalisa
 }
 \details{
 The Dirichlet distribution parameterised with concentration paramameters, \eqn{\alpha_1,...,\alpha_k}, is defined by the pdf,
-\deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i)) * \prod(x_i^{\alpha_i - 1})} for \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function.
+\deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i))\prod(x_i^{\alpha_i - 1})} for \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function.
 
-The distribution is supported on \eqn{x_i \epsilon (0,1), \sum x_i = 1}.
+The distribution is supported on \eqn{x_i \ \epsilon \ (0,1), \sum x_i = 1}{x_i \epsilon (0,1), \sum x_i = 1}.
 
 \code{mgf} and \code{cf}
 are

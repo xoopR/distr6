@@ -9,7 +9,7 @@
 #' @templateVar uses in physics and finance
 #' @templateVar params location, \eqn{\alpha}, and scale, \eqn{\beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))}
+#' @templateVar pdfpmfeq \deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))}
 #' @templateVar paramsupport \eqn{\alpha \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
 #' @templateVar additionalDetails The mean and variance are undefined, hence \code{NaN} is returned.

@@ -9,7 +9,7 @@ is commonly used in the study of random walks and as a special case of the Beta 
 }
 \details{
 The Arcsine distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pdf,
-\deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))} for \eqn{-\infty < a \le b < \infty}.
+\deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}} for \eqn{-\infty < a \le b < \infty}.
 
 The distribution is supported on \eqn{[a, b]}.
 

@@ -20,7 +20,7 @@ The p-norm of the pdf evaluated between given limits or over the whole support.
 }
 \details{
 The p-norm of the pdf is defined by
-\deqn{\int_a^b |f_X|^p d\mu)^{1/p}}
+\deqn{(\int_a^b |f_X|^p d\mu)^{1/p}}
 where X is the distribution, \eqn{f_X} is the pdf and a,b are the limits of integration.
 
 Returns NULL if distribution is not continuous.

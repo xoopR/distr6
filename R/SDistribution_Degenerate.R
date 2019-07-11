@@ -9,7 +9,7 @@
 #' @templateVar uses to model deterministic events or as a representation of the delta, or Heaviside, function
 #' @templateVar params mean, \eqn{\mu}
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = 1, if x = \mu}\deqn{f(x) = 0, if x != \mu}
+#' @templateVar pdfpmfeq \deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu}
 #' @templateVar paramsupport \eqn{\mu \epsilon R}
 #' @templateVar distsupport \eqn{{\mu}}
 #' @templateVar aka Dirac

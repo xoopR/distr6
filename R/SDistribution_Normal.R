@@ -9,7 +9,7 @@
 #' @templateVar uses in significance testing, for representing models with a bell curve, and as a result of the central limit theorem
 #' @templateVar params variance, \eqn{\sigma^2}, and mean, \eqn{\mu},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)}
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt{2\pi\sigma^2}}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}
 #' @templateVar distsupport the Reals
 #' @templateVar aka Gaussian

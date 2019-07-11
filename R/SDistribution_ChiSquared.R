@@ -9,7 +9,7 @@
 #' @templateVar uses to model the sum of independent squared Normal distributions and for confidence intervals
 #' @templateVar params degrees of freedom, \eqn{\nu},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (x^(\nu/2-1) exp(-x/2))/(2^(\nu/2) * \Gamma(\nu/2))}
+#' @templateVar pdfpmfeq \deqn{f(x) = (x^{\nu/2-1} exp(-x/2))/(2^{\nu/2}\Gamma(\nu/2))}
 #' @templateVar paramsupport \eqn{\nu > 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar constructor df = 1

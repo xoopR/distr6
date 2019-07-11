@@ -9,7 +9,7 @@ is commonly used to model the maximum (or minimum) of a number of samples of dif
 }
 \details{
 The Gumbel distribution parameterised with location, \eqn{\mu}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = 1 / \beta * exp(-(z + exp(-z)))} for \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
+\deqn{f(x) = exp(-(z + exp(-z)))/\beta} for \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
 
 The distribution is supported on the Reals.
 

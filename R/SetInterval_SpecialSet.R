@@ -223,7 +223,7 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @details The set of Rationals is defined as the set of numbers that can be written as a fraction
 #' of two integers, i.e.
-#' \deqn{Rationals = \{p/q | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
+#' \deqn{Rationals = \{\frac{p}{q} | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
 #' where \eqn{Z} is the set of integers.
 #'
 #' @section Constructor: Rationals$new(dim = 1,...)
@@ -433,7 +433,7 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @name ExtendedReals
 #'
 #' @details The set of Extended Reals is defined as the union of the set of reals with +-Infinity, i.e.
-#' \deqn{ExtendedReals = R \cup {-\infty, \infty}}
+#' \deqn{ExtendedReals = R \cup \{-\infty, \infty\}}
 #' where \eqn{R} is the set of reals.
 #'
 #' @section Constructor: ExtendedReals$new(dim = 1)
@@ -461,7 +461,7 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 #' @name Complex
 #'
 #' @details The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.
-#' \deqn{Complex = \{a + bi | a,b \in R\}}{Complex = {a + bi | a,b \epsilon R}}
+#' \deqn{Complex = \{a + bi \ | \ a,b \in R\}}{Complex = {a + bi | a,b \epsilon R}}
 #' where \eqn{R} is the set of reals.
 #'
 #' @section Constructor: Complex$new(dim = 1)

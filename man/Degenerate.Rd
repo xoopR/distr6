@@ -10,7 +10,7 @@ is commonly used to model deterministic events or as a representation of the del
 }
 \details{
 The Degenerate distribution parameterised with mean, \eqn{\mu} is defined by the pdf,
-\deqn{f(x) = 1, if x = \mu}\deqn{f(x) = 0, if x != \mu} for \eqn{\mu \epsilon R}.
+\deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu} for \eqn{\mu \epsilon R}.
 
 The distribution is supported on \eqn{{\mu}}.
 

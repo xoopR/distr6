@@ -19,7 +19,7 @@ after a point x.
 }
 \details{
 The survival function is defined by
-\deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) \int_x^\infty f_X(x) dx}
+\deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx}
 where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf and \eqn{f_X} is the pdf.
 
 Can only be used after decorating with \code{\link{ExoticStatistics}}.

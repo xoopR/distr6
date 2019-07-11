@@ -18,8 +18,8 @@
 #' Distribution class but not necessarily with the same parameters.
 #'
 #' @details Exploits the following relationships of independent distributions
-#' \deqn{f_A(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
-#' \deqn{F_A(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
+#' \deqn{f_A(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}
+#' \deqn{F_A(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}
 #' where \eqn{f_A}/\eqn{F_A} is the pdf/cdf of the array distribution \eqn{A} and \eqn{X1,...,XN} are independent distributions.
 #'
 #' @seealso \code{\link{listWrappers}}

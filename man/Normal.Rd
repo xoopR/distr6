@@ -10,7 +10,7 @@ is commonly used in significance testing, for representing models with a bell cu
 }
 \details{
 The Normal distribution parameterised with variance, \eqn{\sigma^2}, and mean, \eqn{\mu}, is defined by the pdf,
-\deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)} for \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}.
+\deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt{2\pi\sigma^2}} for \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}.
 
 The distribution is supported on the Reals.
 

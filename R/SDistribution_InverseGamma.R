@@ -9,7 +9,7 @@
 #' @templateVar uses in Bayesian statistics as the posterior distribution from the unknown variance in a Normal distribution
 #' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha) * x^(-\alpha-1) * exp(-\beta/x)}
+#' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{-\alpha-1}exp(-\beta/x)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedVars \code{cf}

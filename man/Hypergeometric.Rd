@@ -9,9 +9,9 @@ is commonly used to model the number of successes out of a population containing
 }
 \details{
 The Hypergeometric distribution parameterised with population size, \eqn{N}, number of possible successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf,
-\deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)} for \eqn{N = {0,1,2,\ldots}}, \eqn{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+\deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)} for \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
-The distribution is supported on \eqn{{max(0, n + K - N),...,min(n,K)}}.
+The distribution is supported on \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}.
 
 \code{mgf} and \code{cf}
 are

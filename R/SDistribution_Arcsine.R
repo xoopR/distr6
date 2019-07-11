@@ -9,7 +9,7 @@
 #' @templateVar uses in the study of random walks and as a special case of the Beta distribution
 #' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}}
 #' @templateVar paramsupport \eqn{-\infty < a \le b < \infty}
 #' @templateVar distsupport \eqn{[a, b]}
 #' @templateVar omittedVars \code{cf} and \code{mgf}

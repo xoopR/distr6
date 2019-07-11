@@ -5,7 +5,7 @@
 #' @title Normal Kernel
 #'
 #' @description Mathematical and statistical functions for the NormalKernel kernel defined by the pdf,
-#' \deqn{f(x) = \frac{exp(-\frac{x^2}{2})}{\sqrt(2\pi)}}{f(x) = exp(-x^2/2)/\sqrt(2\pi)}
+#' \deqn{f(x) = exp(-x^2/2)/\sqrt{2\pi}}
 #' over the support \eqn{x \in \R}{x \epsilon R}.
 #'
 #' @details We use the \code{erf} and \code{erfinv} error and inverse error functions from the Pracma

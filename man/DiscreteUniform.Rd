@@ -9,9 +9,9 @@ is commonly used as a discrete variant of the more popular Uniform distribution,
 }
 \details{
 The Discrete Uniform distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pmf,
-\deqn{f(x) = 1/(b - a + 1)} for \eqn{a, b \epsilon Z; b \ge a}.
+\deqn{f(x) = 1/(b - a + 1)} for \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}.
 
-The distribution is supported on \eqn{{a, a + 1,..., b}}.
+The distribution is supported on \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}.
 }
 \section{Constructor}{
  DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)

@@ -9,7 +9,7 @@
 #' @templateVar uses in logistic regression and feedforward neural networks
 #' @templateVar params mean, \eqn{\mu}, and scale, \eqn{s},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)/s) / (s*(1+exp(-(x-\mu)/s))^2)}
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)/s) / (s(1+exp(-(x-\mu)/s))^2)}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{s > 0}
 #' @templateVar distsupport the Reals
 #' @templateVar constructor mean = 0, scale = 1, sd = NULL

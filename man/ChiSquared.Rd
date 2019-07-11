@@ -9,7 +9,7 @@ is commonly used to model the sum of independent squared Normal distributions an
 }
 \details{
 The Chi-Squared distribution parameterised with degrees of freedom, \eqn{\nu}, is defined by the pdf,
-\deqn{f(x) = (x^(\nu/2-1) exp(-x/2))/(2^(\nu/2) * \Gamma(\nu/2))} for \eqn{\nu > 0}.
+\deqn{f(x) = (x^{\nu/2-1} exp(-x/2))/(2^{\nu/2}\Gamma(\nu/2))} for \eqn{\nu > 0}.
 
 The distribution is supported on the Positive Reals.
 }

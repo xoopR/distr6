@@ -10,8 +10,8 @@
 #' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b - a + 1)}
-#' @templateVar paramsupport \eqn{a, b \epsilon Z; b \ge a}
-#' @templateVar distsupport \eqn{{a, a + 1,..., b}}
+#' @templateVar paramsupport \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}
+#' @templateVar distsupport \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}
 #' @templateVar constructor lower = 0, upper = 1
 #' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
 #' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr

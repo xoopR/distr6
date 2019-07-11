@@ -9,7 +9,7 @@ is commonly used in ANOVA testing and is the ratio of scaled Chi-Squared distrib
 }
 \details{
 The 'F' distribution parameterised with two degrees of freedom parameters, \eqn{\mu, \nu}, is defined by the pdf,
-\deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^(\mu/2) x^(\mu/2 - 1) (1 + (\mu/\nu) x)^-(\mu + \nu)/2} for \eqn{\mu, \nu > 0}.
+\deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^{\mu/2} x^{\mu/2 - 1} (1 + (\mu/\nu) x)^{-(\mu + \nu)/2}} for \eqn{\mu, \nu > 0}.
 
 The distribution is supported on the Positive Reals.
 

@@ -9,7 +9,7 @@ The mathematical set of rational numbers.
 \details{
 The set of Rationals is defined as the set of numbers that can be written as a fraction
 of two integers, i.e.
-\deqn{Rationals = \{p/q | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
+\deqn{Rationals = \{\frac{p}{q} | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
 where \eqn{Z} is the set of integers.
 }
 \section{Constructor}{

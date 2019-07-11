@@ -9,7 +9,7 @@
 #' @templateVar uses in ANOVA testing and is the ratio of scaled Chi-Squared distributions.
 #' @templateVar params two degrees of freedom parameters, \eqn{\mu, \nu},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^(\mu/2) x^(\mu/2 - 1) (1 + (\mu/\nu) x)^-(\mu + \nu)/2}
+#' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^{\mu/2} x^{\mu/2 - 1} (1 + (\mu/\nu) x)^{-(\mu + \nu)/2}}
 #' @templateVar paramsupport \eqn{\mu, \nu > 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedVars \code{cf}

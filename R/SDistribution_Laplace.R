@@ -9,7 +9,7 @@
 #' @templateVar uses in signal processing and finance
 #' @templateVar params mean, \eqn{\mu}, and scale, \eqn{\beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-|x-\mu|/\beta)/(2\beta)}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
 #' @templateVar constructor mean = 0, scale = 1, var = NULL

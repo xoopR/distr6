@@ -20,7 +20,7 @@ The p-norm of the survival function evaluated between given limits or over the w
 }
 \details{
 The p-norm of the survival function is defined by
-\deqn{\int_a^b |S_X|^p d\mu)^{1/p}}
+\deqn{(\int_a^b |S_X|^p d\mu)^{1/p}}
 where X is the distribution, \eqn{S_X} is the survival function and a,b are the limits of integration.
 
 Returns NULL if distribution is not continuous.

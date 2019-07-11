@@ -11,7 +11,7 @@
 #' @templateVar params lower limit, \eqn{a}, upper limit, \eqn{b}, and mode, \eqn{c},
 #' @templateVar pdfpmf pdf
 #' @templateVar pdfpmfeq \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b}
-#' @templateVar paramsupport \eqn{a,b,c \epsilon R}, \eqn{a \le c \le b}
+#' @templateVar paramsupport \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}
 #' @templateVar distsupport \eqn{[a, b]}
 #' @templateVar constructor lower = 0, upper = 1, mode = 0.5, symmetric = FALSE
 #' @templateVar arg1 \code{lower} \tab numeric \tab lower limit. \cr

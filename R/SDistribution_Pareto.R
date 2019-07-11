@@ -9,7 +9,7 @@
 #' @templateVar uses in Economics to model the distribution of wealth and the 80-20 rule
 #' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
+#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport \eqn{[\beta, \infty)}
 #' @templateVar omittedVars \code{cf}

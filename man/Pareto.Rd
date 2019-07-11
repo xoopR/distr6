@@ -9,7 +9,7 @@ is commonly used in Economics to model the distribution of wealth and the 80-20 
 }
 \details{
 The Pareto distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))} for \eqn{\alpha, \beta > 0}.
+\deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on \eqn{[\beta, \infty)}.
 

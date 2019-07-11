@@ -9,7 +9,7 @@
 #' @templateVar uses as the prior in Bayesian modelling
 #' @templateVar params two shape parameters, \eqn{\alpha, \beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
+#' @templateVar pdfpmfeq \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function
 #' @templateVar distsupport \eqn{[0, 1]}
 #' @templateVar omittedVars \code{mgf} and \code{cf}

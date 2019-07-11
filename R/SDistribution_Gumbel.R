@@ -9,7 +9,7 @@
 #' @templateVar uses to model the maximum (or minimum) of a number of samples of different distributions, and is a special case of the Generalised Extreme Value distribution
 #' @templateVar params location, \eqn{\mu}, and scale, \eqn{\beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = 1 / \beta * exp(-(z + exp(-z)))}
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(z + exp(-z)))/\beta}
 #' @templateVar paramsupport \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
 #' @templateVar additionalDetails Apery's Constant to 16 significant figures is used in the skewness calculation. The \code{gammaz} function from the \code{pracma} package is used in the \code{cf} to allow complex inputs.

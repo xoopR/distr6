@@ -20,7 +20,7 @@ over the full support.
 \details{
 The survival anti-derivative is defined by
 \deqn{as(a, b) = \int_a^b S_X(x) dx}
-where X is the distribution, S_X is the survival function of the distribution X and a,b are the
+where X is the distribution, \eqn{S_X} is the survival function of the distribution \eqn{X} and \eqn{a, b} are the
 limits of integration.
 
 Can only be used after decorating with \code{\link{ExoticStatistics}}.

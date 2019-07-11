@@ -10,8 +10,8 @@
 #' @templateVar params population size, \eqn{N}, number of possible successes, \eqn{K}, and number of draws from the distribution, \eqn{n},
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
-#' @templateVar paramsupport \eqn{N = {0,1,2,\ldots}}, \eqn{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function
-#' @templateVar distsupport \eqn{{max(0, n + K - N),...,min(n,K)}}
+#' @templateVar paramsupport \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function
+#' @templateVar distsupport \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}
 #' @templateVar omittedVars \code{mgf} and \code{cf}
 #' @templateVar constructor size = 10, successes = 5, failures = NULL, draws = 2
 #' @templateVar arg1 \code{size} \tab numeric \tab  population size. \cr

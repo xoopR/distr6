@@ -20,7 +20,7 @@ over the full support.
 \details{
 The cdf anti-derivative is defined by
 \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
-where X is the distribution, F_X is the cdf of the distribution X and a,b are the limits of integration.
+where X is the distribution, \eqn{F_X} is the cdf of the distribution \eqn{X} and \eqn{a, b} are the limits of integration.
 
 Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
