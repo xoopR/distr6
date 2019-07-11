@@ -37,9 +37,10 @@ Normal$new(mean = 2, sd = 2)
 Normal$new(mean = 3, prec = 0.5)
 ```
 
-But all parameters are available to us via the parameters method. The verbose option displays a parameterisation message in construction. Note how all available parameters are displayed, but only the ones chosen in construction are called "settable".
+But all parameters are available to us via the parameters method. The verbose option displays a parameterisation message in construction. Note how all available parameters are displayed, but only the ones chosen in construction are shown in the print method.
 ```{r}
 N <- Normal$new(verbose = TRUE)
+N$print()
 N$parameters()
 ```
 

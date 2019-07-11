@@ -112,10 +112,12 @@ remotes::install_github("alan-turing-institute/distr6")
 
 The v1.0 release focuses on the core features of the SDistribution class as well as analytic methods in wrappers including but not limit to truncation, huberization, product distributions and mixture distributions. In our next release we plan to include
 
-* A `plot` and `qqplot` method for distributions
+* A `plot` method for Distributions
+* A generalised `qqplot` for comparing any distributions
 * A finalised `FunctionImputation` decorator with different imputation strategies
+* Discrete distribution substraction (negative convolution)
+* A wrapper for scaling distributions to a given mean and variance
 * More probability distributions
-* Finalised Kernels
 * Any other good suggestions made between now and then!
 
 ## Package Development and Contributing

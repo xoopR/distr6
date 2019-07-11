@@ -55,7 +55,7 @@ B$pdf(1:10)
 B$kurtosis()
 #> [1] -0.2
 B$rand(5)
-#> [1] 5 5 7 3 8
+#> [1] 7 7 4 7 6
 summary(B)
 #> Binomial Probability Distribution. Parameterised with:
 #>   prob = 0.5, size = 10
@@ -82,16 +82,11 @@ Exponential$new(scale = 2)
 Normal$new(mean = 0, prec = 2)
 #> Norm(mean = 0, prec = 2)
 Normal$new(mean = 0, sd = 3)$parameters()
-#>      id     value support settable
-#> 1: mean         0       ℝ     TRUE
-#> 2:  var         9      ℝ+    FALSE
-#> 3:   sd         3      ℝ+     TRUE
-#> 4: prec 0.1111111      ℝ+    FALSE
-#>                                    description
-#> 1:                   Mean - Location Parameter
-#> 2:          Variance - Squared Scale Parameter
-#> 3:        Standard Deviation - Scale Parameter
-#> 4: Precision - Inverse Squared Scale Parameter
+#>      id     value support                                 description
+#> 1: mean         0       ℝ                   Mean - Location Parameter
+#> 2:  var         9      ℝ+          Variance - Squared Scale Parameter
+#> 3:   sd         3      ℝ+        Standard Deviation - Scale Parameter
+#> 4: prec 0.1111111      ℝ+ Precision - Inverse Squared Scale Parameter
 ```
 
 Decorators for extending functionality of distributions to more complex
@@ -187,11 +182,13 @@ as well as analytic methods in wrappers including but not limit to
 truncation, huberization, product distributions and mixture
 distributions. In our next release we plan to include
 
-  - A `plot` and `qqplot` method for distributions
+  - A `plot` method for Distributions
+  - A generalised `qqplot` for comparing any distributions
   - A finalised `FunctionImputation` decorator with different imputation
     strategies
+  - Discrete distribution substraction (negative convolution)
+  - A wrapper for scaling distributions to a given mean and variance
   - More probability distributions
-  - Finalised Kernels
   - Any other good suggestions made between now and then\!
 
 ## Package Development and Contributing

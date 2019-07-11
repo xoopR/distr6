@@ -140,7 +140,9 @@ getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose
                          value = list(0, 1, 1, 1),
                          support = list(Reals$new(), PosReals$new(), PosReals$new(), PosReals$new()),
                          settable = list(TRUE, var.bool, sd.bool, prec.bool),
-                         updateFunc = list(NA, NA, "self$getParameterValue('var')^0.5", "self$getParameterValue('var')^-1"),
+                         updateFunc = list(NA, NA,
+                                           function(self) self$getParameterValue('var')^0.5,
+                                           function(self) self$getParameterValue('var')^-1),
                          description = list("Mean - Location Parameter",
                                             "Variance - Squared Scale Parameter",
                                             "Standard Deviation - Scale Parameter",
@@ -155,7 +157,7 @@ Note:
 2. Only the non-default parameters are NULL, this helps specify the order of parameter importance (i.e. what happens if the user inputs more than one parameterisation)
 3. The conditionals at the start of the method determine which parameterisation to construct based on given parameters. It additionally sets up a hierarchy, in this case if a user gives all parameterisations then mean and prec are used, if multiple but not prec are given, then sd is used otherwise var.
 4. The default values in the ParameterSet are arbitrary, just make sure they are within the support
-5. The 'settable' values are determined by which parameterisation the user constructs. These are `TRUE` whilst other parameterisations are now `FALSE`.
+5. The 'settable' values are determined by which parameterisation the user constructs. i.e. The parameters called in construction will be `TRUE` whilst all others are `FALSE`.
 6. There is a default parameterisation that the `updateFunc`s reference, this does not need to be the parameterisation chosen by the user. This will also correspond to the `.getRefParams` method (see below).
 
 ### .getRefParams

@@ -10,8 +10,8 @@
 #' \code{id} \tab character \tab unique one-word identifier. \cr
 #' \code{value} \tab numeric \tab initial parameter value. \cr
 #' \code{support} \tab numeric \tab range of values parameter can take. \cr
-#' \code{settable} \tab logical \tab if TRUE the parameter can be updated. See Details. \cr
-#' \code{updateFunc = NULL} \tab character \tab string to be parsed and evaluated as function. See Details. \cr
+#' \code{settable} \tab logical \tab if TRUE the parameter is printed. See Details. \cr
+#' \code{updateFunc = NULL} \tab function \tab evaluated to update parameter. See Details. \cr
 #' \code{description = NULL} \tab character \tab optional description of parameter.
 #' }
 #'
@@ -25,13 +25,14 @@
 #'
 #' Each parameter requires a unique one-word \code{id} that is used to get and set parameters
 #' after construction. The parameterisation of the distribution is determined by the parameters
-#' that have \code{settable = TRUE}, see examples. When multiple parameterisations are possible,
-#' \code{updateFunc} is used to update the parameters not used in the parameterisation. These should
-#' should be provided as a string that could be understood in the body of a function by a Distribution
-#' object, i.e. by naming parameters via \code{$getParameterValue}, see examples.
+#' that have \code{settable = TRUE}, this is a slightly confusing term as it actually refers to a parameter
+#' being 'machine-settable'. Here it just means that the given parameter is used in construction and therefore
+#' will be included in a call to \code{$print}. \code{updateFunc} is used to update the parameters not used in
+#' the parameterisation. These should be given as a function that could be understood in the body of a Distribution
+#' and should start with \code{function(self)}, see examples.
 #'
-#' Internally after calling \code{$setParameterValue}, \code{$update} is called to update the
-#' value of non-settable functions.
+#' Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
+#' with a non-NA \code{updateFunc}.
 #'
 #'@section Public Methods:
 #'  \tabular{ll}{
@@ -64,7 +65,7 @@
 #'  value = list(1, 1)
 #'  support = list(PosReals$new(), PosReals$new())
 #'  settable = list(TRUE, FALSE)
-#'  updateFunc = list(NULL, "1/self$getParameterValue('rate')")
+#'  updateFunc = list(NULL, function(self) 1/self$getParameterValue('rate'))
 #'  description = list("Arrival rate","Scale parameter")
 #'  ps = ParameterSet$new(id, value, support, settable,
 #'                        updateFunc, description)
@@ -190,11 +191,7 @@ ParameterSet$set("public","update", function(...){
   if(any(!is.na(private$.parameters$updateFunc))){
     update_filter = !is.na(private$.parameters$updateFunc)
     updates = private$.parameters[update_filter,]
-    newvals = apply(updates, 1, function(x){
-      fnc = function(self){}
-      body(fnc) = parse(text = x[[6]])
-      newval = as.numeric(fnc(self))
-    })
+    newvals = apply(updates, 1, function(x) return(x[[6]](self)))
     suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
   }
 
