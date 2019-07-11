@@ -73,7 +73,7 @@ DistributionWrapper$set("public","initialize",function(distlist,...){
 
   assertDistributionList(distlist)
 
-  lapply(distlist, function(x) x$parameters()$update())
+  #lapply(distlist, function(x) x$parameters()$update())
   private$.wrappedModels <- distlist
 
   if(length(distlist)>1){
