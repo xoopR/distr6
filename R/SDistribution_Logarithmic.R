@@ -23,7 +23,7 @@
 #' x = Logarithmic$new(theta = 0.2)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(theta = 0.3))
+#' x$setParameterValue(theta = 0.3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -113,7 +113,7 @@ Logarithmic$set("private", ".getRefParams", function(paramlst){
 Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet.Logarithmic(self, theta, verbose)
-  self$setParameterValue(list(theta=theta))
+  self$setParameterValue(theta=theta)
 
   pdf <- function(x1) extraDistr::dlgser(x1, self$getParameterValue("theta"))
   cdf <- function(x1) extraDistr::plgser(x1, self$getParameterValue("theta"))

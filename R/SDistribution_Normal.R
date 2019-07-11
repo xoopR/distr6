@@ -29,7 +29,7 @@
 #' x <- Normal$new(verbose = TRUE) # Standard normal default
 #'
 #' # Update parameters
-#' x$setParameterValue(list(var = 2))
+#' x$setParameterValue(var = 2)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -96,7 +96,7 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, var, sd, prec, verbose)
-  self$setParameterValue(list(mean = mean, var = var, sd = sd, prec = prec))
+  self$setParameterValue(mean = mean, var = var, sd = sd, prec = prec)
 
   pdf <- function(x1) dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
   cdf <- function(x1) pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))

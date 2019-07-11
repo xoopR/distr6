@@ -26,7 +26,7 @@
 #' x = Categorical$new("Bapple","Banana",2,probs=c(0.2,0.4,1))
 #'
 #' # Only the probabilities can be changed and must the same length as in construction
-#' x$setParameterValue(list(probs = c(0.1,0.2,0.7)))
+#' x$setParameterValue(probs = c(0.1,0.2,0.7))
 #'
 #' # d/p/q/r
 #' x$pdf(c("Bapple", "Carrot", 1, 2))
@@ -74,10 +74,13 @@ Categorical$set("public","cf",function(t){
   return(NaN)
 })
 
-Categorical$set("public","setParameterValue",function(lst, error = "warn"){
+Categorical$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("probs" %in% names(lst)) lst$probs <- lst$probs/sum(lst$probs)
   checkmate::assert(length(lst$probs) == self$getParameterValue("categories"))
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
+  invisible(self)
 })
 
 Categorical$set("private",".getRefParams", function(paramlst){
@@ -100,7 +103,7 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
   checkmate::assert(length(dots) == length(probs))
 
   private$.parameters <- getParameterSet(self, probs, verbose)
-  self$setParameterValue(list(probs = probs))
+  self$setParameterValue(probs = probs)
 
   pdf <- function(x1){
     return(self$getParameterValue("probs")[self$support()$elements() %in% x1])

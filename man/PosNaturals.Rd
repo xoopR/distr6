@@ -8,7 +8,7 @@ The mathematical set of positive natural numbers.
 }
 \details{
 The set of Positive Naturals is defined as the positive counting numbers, i.e.
-\deqn{PosNaturals = {1, 2, 3,...}}
+\deqn{PosNaturals = \{1, 2, 3,...\}}{PosNaturals = {1, 2, 3,...}}
 }
 \section{Constructor}{
  PosNaturals$new(dim = 1)

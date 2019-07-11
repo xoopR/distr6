@@ -13,9 +13,9 @@ mn = Dirichlet$new(params)
 test_that("parameters", {
   expect_equal(mn$getParameterValue("K"), 3)
   expect_equal(mn$getParameterValue("params"), c(0.2,0.5,0.3))
-  expect_error(mn$setParameterValue(list(params = 0.2)))
-  expect_error(mn$setParameterValue(list(params = c(0.2,0.5,0.2,0.1))))
-  expect_silent(mn$setParameterValue(list(params = c(0.2,0.5,0.2))))
+  expect_error(mn$setParameterValue(lst = list(params = 0.2)))
+  expect_error(mn$setParameterValue(lst = list(params = c(0.2,0.5,0.2,0.1))))
+  expect_silent(mn$setParameterValue(lst = list(params = c(0.2,0.5,0.2))))
 })
 
 test_that("properties & traits",{

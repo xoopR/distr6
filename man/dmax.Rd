@@ -12,7 +12,7 @@ dmax(object)
 \description{
 Returns the distribution maximum as the maximum of the support. If the support is not
 bounded above then maximum is given by
-\deqn{maximum = supremum - 2.220446e-16}
+\deqn{maximum = supremum - 1.1e-15}
 }
 \section{R6 Usage}{
  $dmax()

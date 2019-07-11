@@ -22,7 +22,7 @@
 #' x = Cauchy$new(location = 2, scale = 5)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(scale = 3))
+#' x$setParameterValue(scale = 3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -84,7 +84,7 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, location, scale, verbose)
-  self$setParameterValue(list(location = location, scale = scale))
+  self$setParameterValue(location = location, scale = scale)
 
   pdf <- function(x1) dcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
   cdf <- function(x1) pcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))

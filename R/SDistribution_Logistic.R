@@ -22,7 +22,8 @@
 #' x <- Logistic$new(mean = 2, scale = 3)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(sd = 2)) # When any parameter is updated, all others are too!
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(sd = 2)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -92,7 +93,7 @@ Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, scale, sd, verbose)
-  self$setParameterValue(list(mean = mean, scale = scale, sd = sd))
+  self$setParameterValue(mean = mean, scale = scale, sd = sd)
 
   pdf <- function(x1) dlogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))
   cdf <- function(x1) plogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))

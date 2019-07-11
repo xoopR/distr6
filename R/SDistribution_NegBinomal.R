@@ -39,7 +39,7 @@
 #' x <- NegativeBinomial$new() # Default is size = 10, prob = 0.5 and failures before successes
 #'
 #' # Update parameters (form cannot be updated)
-#' x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all others are too!
+#' x$setParameterValue(qprob = 0.2)  # When any parameter is updated, all others are too!
 #' x$parameters()
 #'
 #'
@@ -149,8 +149,8 @@ NegativeBinomial$set("public","mode",function(){
 })
 
 
-NegativeBinomial$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+NegativeBinomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   if(private$.form == "tbf" | private$.form == "tbs")
     private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf, type = "[)", class = "integer")
   invisible(self)
@@ -190,7 +190,7 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
   private$.form <- form
 
   private$.parameters <- getParameterSet(self, size, prob, qprob, mean, form, verbose)
-  self$setParameterValue(list(size = size, prob = prob, qprob = qprob, mean = mean))
+  self$setParameterValue(size = size, prob = prob, qprob = qprob, mean = mean)
 
   if(form == "fbs"){
     pdf = function(x1) dnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))

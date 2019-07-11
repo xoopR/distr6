@@ -33,7 +33,7 @@
 #' x = Triangular$new(lower = -1, upper = 1)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(lower = 2, upper = 7))
+#' x$setParameterValue(lower = 2, upper = 7)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -118,7 +118,9 @@ Triangular$set("private",".getRefParams", function(paramlst){
     if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
   return(lst)
 })
-Triangular$set("public","setParameterValue",function(lst, error = "warn"){
+Triangular$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
   else if("lower" %in% names(lst))
@@ -139,7 +141,7 @@ Triangular$set("public","setParameterValue",function(lst, error = "warn"){
     }
   }
 
-  super$setParameterValue(lst = lst, error)
+  super$setParameterValue(lst = lst, error = error)
 
   private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
   if(private$.type != "symmetric"){
@@ -169,7 +171,7 @@ Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lowe
   }
 
   private$.parameters <- getParameterSet(self, lower, upper, mode, symmetric, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper, mode = mode))
+  self$setParameterValue(lower = lower, upper = upper, mode = mode)
 
   pdf <- function(x1){
     lower = self$getParameterValue("lower")

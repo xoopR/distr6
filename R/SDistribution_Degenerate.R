@@ -22,7 +22,7 @@
 #' x = Degenerate$new(mean = 4)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(mean = 2.56))
+#' x$setParameterValue(mean = 2.56)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -73,8 +73,8 @@ Degenerate$set("public","mode",function(){
   return(self$getParameterValue("mean"))
 })
 
-Degenerate$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+Degenerate$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Set$new(self$getParameterValue("mean"))
   invisible(self)
 })
@@ -89,7 +89,7 @@ Degenerate$set("private",".getRefParams", function(paramlst){
 Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, verbose)
-  self$setParameterValue(list(mean = mean))
+  self$setParameterValue(mean = mean)
 
   pdf <- function(x1) if(x1 == self$getParameterValue("mean")) return(1) else return(0)
   cdf <- function(x1) if(x1 >= self$getParameterValue("mean")) return(1) else return(0)

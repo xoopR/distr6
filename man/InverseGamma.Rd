@@ -106,7 +106,7 @@ The distribution is implemented by interfacing the \code{extraDistr} package.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -129,7 +129,8 @@ The distribution is implemented by interfacing the \code{extraDistr} package.
 x  = InverseGamma$new(shape = 1, scale = 4)
 
 # Update parameters
-x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
+# When any parameter is updated, all others are too!
+x$setParameterValue(scale = 2)
 x$parameters()
 
 # d/p/q/r

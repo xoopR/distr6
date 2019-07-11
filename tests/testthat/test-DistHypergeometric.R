@@ -10,11 +10,12 @@ test_that("parameterisation",{
     expect_silent(Hypergeometric$new(size =10))
     expect_silent(Hypergeometric$new(successes = 5))
     expect_message(Hypergeometric$new(failures = 5, verbose = T))
+
     expect_equal(Hypergeometric$new(size = 10, failures = 2, draws=2)$getParameterValue("successes"), 8)
     expect_silent(Hypergeometric$new(draws = 2))
     H <- Hypergeometric$new()
-    expect_equal(H$setParameterValue(list(failures = 6))$getParameterValue("successes"), 44)
-    expect_equal(H$setParameterValue(list(successes = 6))$getParameterValue("failures"), 44)
+    expect_equal(H$setParameterValue(lst = list(failures = 6))$getParameterValue("successes"), 44)
+    expect_equal(H$setParameterValue(lst = list(successes = 6))$getParameterValue("failures"), 44)
 })
 
 test_that("properties & traits",{

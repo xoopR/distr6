@@ -9,7 +9,7 @@ The mathematical set of positive integers.
 \details{
 The set of PosIntegers is defined as the set of positive or non-negative numbers that can
 be written without a fractional component, i.e.
-\deqn{PosIntegers = {0, 1, 2, 3,...}}
+\deqn{PosIntegers = \{0, 1, 2, 3,...\}}{PosIntegers = {0, 1, 2, 3,...}}
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{

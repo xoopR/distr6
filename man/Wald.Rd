@@ -108,7 +108,7 @@ Sampling is performed as per Michael, Schucany, Haas (1976).
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -131,7 +131,7 @@ Sampling is performed as per Michael, Schucany, Haas (1976).
 x = Wald$new(mean = 2, shape = 5)
 
 # Update parameters
-x$setParameterValue(list(shape = 3))
+x$setParameterValue(shape = 3)
 x$parameters()
 
 # d/p/q/r

@@ -106,7 +106,7 @@ Sampling is performed via sampling independent Gamma distributions and normalisi
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -130,11 +130,12 @@ Sampling is performed via sampling independent Gamma distributions and normalisi
 x <- Dirichlet$new(params = c(2,5,6))
 
 # Update parameters
-x$setParameterValue(list(params = c(3, 2, 3)))
-x$parameters() # Note the K parameter is automatically calculated
+x$setParameterValue(params = c(3, 2, 3))
+# 'K' parameter is automatically calculated
+x$parameters()
 \dontrun{
 # This errors as less than three parameters supplied
-x$setParameterValue(list(params = c(1, 2)))
+x$setParameterValue(params = c(1, 2))
 }
 
 # d/p/q/r

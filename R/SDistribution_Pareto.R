@@ -22,7 +22,7 @@
 #' x = Pareto$new(shape = 2, scale = 1)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(scale = 5.1))
+#' x$setParameterValue(scale = 5.1)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -101,9 +101,10 @@ Pareto$set("public","mode",function(){
   return(self$getParameterValue("scale"))
 })
 
-Pareto$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+Pareto$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("scale"), Inf, type = "[)")
+  invisible(self)
 })
 
 Pareto$set("private",".getRefParams", function(paramlst){
@@ -116,7 +117,7 @@ Pareto$set("private",".getRefParams", function(paramlst){
 Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  self$setParameterValue(list(shape = shape, scale = scale))
+  self$setParameterValue(shape = shape, scale = scale)
 
   pdf <- function(x1){
     shape <- self$getParameterValue("shape")

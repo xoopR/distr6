@@ -8,12 +8,14 @@ A wrapper for huberizing any probability distribution at given limits.
 }
 \details{
 Huberizes a distribution at lower and upper limits, using the formula
-\tabular{lll}{
- \tab \eqn{F(x)} \tab if \eqn{x \le lower} \cr
- f_H(x) = \tab \eqn{f(x)} \tab if \eqn{lower < x < upper} \cr
- \tab \eqn{1 - F(x)} \tab if \eqn{x \ge upper} \cr
-}
-where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and f_X/F_X is the
+
+\eqn{f_H(x) = F(x), if x \le lower}
+
+\eqn{f_H(x) = f(x), if lower < x < upper}
+
+\eqn{f_H(x) = F(x), if x \ge upper}
+
+where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and \eqn{f_X}/\eqn{F_X} is the
 pdf/cdf of the original distribution.
 
 If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
@@ -82,7 +84,7 @@ The pdf and cdf of the distribution are required for this wrapper, if unavailabl
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr

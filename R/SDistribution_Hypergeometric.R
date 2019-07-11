@@ -24,10 +24,12 @@
 #' Hypergeometric$new(size = 10, successes = 7, draws = 5)
 #' Hypergeometric$new(size = 10, failures = 3, draws = 5)
 #'
-#' x = Hypergeometric$new(verbose = TRUE) # Default is size = 50, successes = 5, draws = 10
+#' # Default is size = 50, successes = 5, draws = 10
+#' x = Hypergeometric$new(verbose = TRUE)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(failures = 10)) # When any parameter is updated, all others are too!
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(failures = 10)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -92,8 +94,8 @@ Hypergeometric$set("public","kurtosis",function(excess = TRUE){
         return(exkurtosis + 3)
 })
 
-Hypergeometric$set("public","setParameterValue",function(lst, error = "warn"){
-    super$setParameterValue(lst, error)
+Hypergeometric$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+    super$setParameterValue(..., lst = lst, error = error)
     size = self$getParameterValue("size")
 
     private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
@@ -104,6 +106,7 @@ Hypergeometric$set("public","setParameterValue",function(lst, error = "warn"){
     self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(successes = Set$new(0:size)))
     self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(draws = Set$new(0:size)))
     self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(failures = Set$new(0:size)))
+    invisible(self)
 })
 
 Hypergeometric$set("private",".getRefParams", function(paramlst){
@@ -123,7 +126,7 @@ Hypergeometric$set("public","initialize",function(size = 50, successes = 5, fail
                                                   decorators = NULL, verbose = FALSE){
 
     private$.parameters <- getParameterSet(self, size, successes, failures, draws, verbose)
-    self$setParameterValue(list(size = size, successes=successes, failures = failures, draws = draws))
+    self$setParameterValue(size = size, successes=successes, failures = failures, draws = draws)
 
     pdf = function(x1) dhyper(x1, self$getParameterValue("successes"),
                               self$getParameterValue("failures"),

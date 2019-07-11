@@ -23,9 +23,9 @@
 #' x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
 #'
 #' # Update parameters
-#' x$setParameterValue(list(size = 10))
+#' x$setParameterValue(size = 10)
 #' # Number of categories cannot be changed after construction
-#' x$setParameterValue(list(probs = c(1,2,3)))
+#' x$setParameterValue(probs = c(1,2,3))
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -96,13 +96,16 @@ Multinomial$set("public", "pgf", function(z){
   return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
 }) # TEST
 
-Multinomial$set("public","setParameterValue",function(lst, error = "warn"){
+Multinomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("probs" %in% names(lst)){
     checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
                       .var.name = "Number of categories cannot be changed after construction.")
     lst$probs <- lst$probs/sum(lst$probs)
     }
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
+  invisible(self)
 })
 
 Multinomial$set("private",".getRefParams", function(paramlst){
@@ -115,7 +118,7 @@ Multinomial$set("private",".getRefParams", function(paramlst){
 Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, size, probs, verbose)
-  self$setParameterValue(list(size = size, probs = probs))
+  self$setParameterValue(size = size, probs = probs)
 
   lst <- rep(list(bquote()), length(probs))
   names(lst) <- paste("x",1:length(probs),sep="")

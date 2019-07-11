@@ -21,7 +21,7 @@
 #' x <- Uniform$new(lower = -10, upper = 5)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(lower = 2, upper = 7))
+#' x$setParameterValue(lower = 2, upper = 7)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -84,7 +84,9 @@ Uniform$set("public","mode",function(){
   return(NaN)
 })
 
-Uniform$set("public","setParameterValue",function(lst, error = "warn"){
+Uniform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
   else if("lower" %in% names(lst))
@@ -92,7 +94,7 @@ Uniform$set("public","setParameterValue",function(lst, error = "warn"){
   else if("upper" %in% names(lst))
     checkmate::assert(lst[["upper"]] > self$getParameterValue("lower"), .var.name = "upper must be > lower")
 
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
   invisible(self)
 })
@@ -106,7 +108,7 @@ Uniform$set("private",".getRefParams", function(paramlst){
 Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper))
+  self$setParameterValue(lower = lower, upper = upper)
 
   pdf <- function(x1) dunif(x1, self$getParameterValue("lower"), self$getParameterValue("upper"))
   cdf <- function(x1) punif(x1, self$getParameterValue("lower"), self$getParameterValue("upper"))

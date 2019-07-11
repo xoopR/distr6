@@ -50,7 +50,7 @@ with a non-NA \code{updateFunc}.
   \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \code{rbind(...)} \tab \code{\link{rbind.ParameterSet}} \cr
   \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
 }
@@ -78,7 +78,7 @@ with a non-NA \code{updateFunc}.
  ps = ParameterSet$new(id, value, support, settable,
                        updateFunc, description)
  ps$parameters(id = "rate")
- ps$setParameterValue(list(rate = 2)) # Automatically calls $update
+ ps$setParameterValue(rate = 2) # Automatically calls $update
  ps$getParameterValue("scale") # Auto-updated to 1/2
 
 }

@@ -10,8 +10,8 @@ A wrapper for truncating any probability distribution at given limits.
 Truncates a distribution at lower and upper limits, using the formulae
 \deqn{f_T(x) = f_X(x) / (F_X(upper) - F_X(lower))}
 \deqn{F_T(x) = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
-where f_T/F_T is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and f_X, F_X is the
-pdf/cdf of the original distribution.
+where \eqn{f_T}/\eqn{F_T} is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and
+\eqn{f_X}, \eqn{F_X} is the pdf/cdf of the original distribution.
 
 If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
 The support of the new distribution is the interval of points between lower and upper.
@@ -80,7 +80,7 @@ The pdf and cdf of the distribution are required for this wrapper, if unavailabl
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr

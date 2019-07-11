@@ -106,7 +106,7 @@ The parameter \code{K} is automatically updated by counting the length of the me
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -135,9 +135,9 @@ MultivariateNormal$new(mean = c(0,0,0), prec = c(3,-1,-1,-1,1,0,-1,0,1))
 x <- MultivariateNormal$new()
 
 # Update parameters
-x$setParameterValue(list(mean = c(1, 2)))
+x$setParameterValue(mean = c(1, 2))
 # When any parameter is updated, all others are too!
-x$setParameterValue(list(prec = c(1,0,0,1)))
+x$setParameterValue(prec = c(1,0,0,1))
 x$parameters()
 
 # d/p/q/r

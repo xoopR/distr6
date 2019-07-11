@@ -8,15 +8,15 @@ Wrapper used to construct a mixture of two or more distributions.
 }
 \details{
 A Mixture Distribution is a weighted combination of two or more distributions such that for
-pdf/cdfs of n distribution f_1,...,f_n/F_1,...,F_n and a given weight associated to each distribution,
-w_1,...,w_n. The pdf of the mixture distribution M(X1,...,XN), f_M is given by
-\deqn{f_M = sum_i (f_i)(w_i)}
+pdf/cdfs of n distribution \eqn{f_1,...,f_n}/\eqn{F_1,...,F_n} and a given weight associated to each distribution,
+\eqn{w_1,...,w_n}. The pdf of the mixture distribution \eqn{M(X1,...,XN)}, \eqn{f_M} is given by
+\deqn{f_M = \sum_i (f_i)(w_i)}
 and the cdf, F_M is given by
-\deqn{F_M = sum_i (F_i)(w_i)}
+\deqn{F_M = \sum_i (F_i)(w_i)}
 
 If weights are given, they should be provided as a vector of numerics. If they don't sum to one
 then they are normalised automatically. If NULL, they are taken to be uniform, i.e. for n
-distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
+distributions, \eqn{w_i = 1/n, \ \forall \ i \ \in \ [1,n]}{w_i = 1/n, for all i \epsilon [1,n]}.
 }
 \section{Constructor}{
  MixtureDistribution$new(distlist, weights = NULL)
@@ -78,7 +78,7 @@ distributions, \eqn{w_i = 1/n, \forall i \in [1,n]}.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr

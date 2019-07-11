@@ -100,7 +100,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -123,10 +123,12 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 Hypergeometric$new(size = 10, successes = 7, draws = 5)
 Hypergeometric$new(size = 10, failures = 3, draws = 5)
 
-x = Hypergeometric$new(verbose = TRUE) # Default is size = 50, successes = 5, draws = 10
+# Default is size = 50, successes = 5, draws = 10
+x = Hypergeometric$new(verbose = TRUE)
 
 # Update parameters
-x$setParameterValue(list(failures = 10)) # When any parameter is updated, all others are too!
+# When any parameter is updated, all others are too!
+x$setParameterValue(failures = 10)
 x$parameters()
 
 # d/p/q/r

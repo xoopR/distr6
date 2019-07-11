@@ -106,7 +106,7 @@ The mean and variance are undefined, hence \code{NaN} is returned.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -129,7 +129,7 @@ The mean and variance are undefined, hence \code{NaN} is returned.
 x = Cauchy$new(location = 2, scale = 5)
 
 # Update parameters
-x$setParameterValue(list(scale = 3))
+x$setParameterValue(scale = 3)
 x$parameters()
 
 # d/p/q/r

@@ -22,7 +22,7 @@
 #' x <- FDistribution$new(df1 = 1, df2 = 3)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(df2 = 10))
+#' x$setParameterValue(df2 = 10)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -101,12 +101,13 @@ FDistribution$set("public", "mode", function(){
     return(NaN)
 })
 
-FDistribution$set("public", "setParameterValue", function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+FDistribution$set("public", "setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   if (self$getParameterValue("df1") == 1)
     private$.properties$support <- PosReals$new(zero = FALSE)
   else
     private$.properties$support <- PosReals$new(zero = TRUE)
+  invisible(self)
 })
 FDistribution$set("private", ".getRefParams", function(paramlst){
   lst = list()
@@ -118,7 +119,7 @@ FDistribution$set("private", ".getRefParams", function(paramlst){
 FDistribution$set("public", "initialize", function(df1 = 1, df2 = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df1, df2, verbose)
-  self$setParameterValue(list(df1 = df1, df2 = df2))
+  self$setParameterValue(df1 = df1, df2 = df2)
 
   pdf <- function(x1) df(x1, df1, df2)
   cdf <- function(x1) pf(x1, df1, df2)

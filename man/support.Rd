@@ -15,8 +15,8 @@ Returns the support of the distribution.
 \details{
 The support of a probability distribution is defined as the interval where the pmf/pdf is
 greater than zero,
-\deqn{Supp(X) = \{ x \in R: f_X(x) > 0\}}
-where f_X is the pmf if distribution X is discrete, otherwise the pdf.
+\deqn{Supp(X) = \{x \ \in \mathbb{R}: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
+where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
 }
 \section{R6 Usage}{
  $support()

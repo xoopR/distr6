@@ -23,6 +23,8 @@ checks which analytic methods are present before selecting a numeric strategy.
 If trafo = NULL, then the arithmetic mean is calculated, i.e. the approximation to \eqn{E[X]}. Any
 transformation must be given as a function, for example \code{trafo = function(x) x^2}
 (which is the second moment).
+
+Can only be used after decorating with \code{\link{CoreStatistics}}.
 }
 \section{R6 Usage}{
  $genExp(trafo = NULL)

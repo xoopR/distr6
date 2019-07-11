@@ -106,7 +106,7 @@ The Negative Binomial distribution can refer to one of four distributions (forms
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -142,7 +142,7 @@ NegativeBinomial$new(form = "tbs")
 x <- NegativeBinomial$new() # Default is size = 10, prob = 0.5 and failures before successes
 
 # Update parameters (form cannot be updated)
-x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all others are too!
+x$setParameterValue(qprob = 0.2)  # When any parameter is updated, all others are too!
 x$parameters()
 
 

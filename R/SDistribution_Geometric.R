@@ -32,10 +32,12 @@
 #' Geometric$new(trials = TRUE)$description
 #' Geometric$new(trials = FALSE)$description
 #'
-#' x <- Geometric$new() # Default is prob = 0.5 and number of failures before first success
+#' # Default is prob = 0.5 and number of failures before first success
+#' x <- Geometric$new()
 #'
 #' # Update parameters
-#' x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all others are too!
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(qprob = 0.2)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -127,7 +129,7 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = 
     checkmate::assertLogical(trials)
     private$.trials <- trials
     private$.parameters <- getParameterSet(x=self, prob=prob, qprob=qprob, trials=trials, verbose=verbose)
-    self$setParameterValue(list(prob = prob, qprob = qprob))
+    self$setParameterValue(prob = prob, qprob = qprob)
 
     if(!trials){
         pdf <- function(x1) dgeom(x1, self$getParameterValue("prob"))

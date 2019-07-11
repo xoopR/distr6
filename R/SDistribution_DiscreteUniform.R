@@ -22,7 +22,7 @@
 #' x <- DiscreteUniform$new(lower = -10, upper = 5)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(lower = 2, upper = 7))
+#' x$setParameterValue(lower = 2, upper = 7)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -86,7 +86,9 @@ DiscreteUniform$set("public","mode",function(which="all"){
   else
     return((self$inf():self$sup())[which])
 })
-DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
+DiscreteUniform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] <= lst[["upper"]], .var.name = "lower must be <= upper")
   else if("lower" %in% names(lst))
@@ -94,7 +96,7 @@ DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
   else if("upper" %in% names(lst))
     checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"), .var.name = "upper must be >= lower")
 
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
   invisible(self)
 })
@@ -109,7 +111,7 @@ DiscreteUniform$set("private",".getRefParams", function(paramlst){
 DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper))
+  self$setParameterValue(lower = lower, upper = upper)
 
   pdf = function(x1) return(1 / self$getParameterValue("N"))
   cdf = function(x1) return((x1 - self$getParameterValue("lower") + 1)/ self$getParameterValue("N"))

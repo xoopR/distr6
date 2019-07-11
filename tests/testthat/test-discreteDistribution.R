@@ -37,8 +37,9 @@ test_that("check all accessors are working", {
 })
 
 test_that("check parameter getting/setting", {
-  expect_error(discreteTester$setParameterValue("sgdsvfd"))
-  expect_silent(discreteTester$setParameterValue(list(size = 2, prob = 0.9)))
+  expect_warning(discreteTester$setParameterValue("sgdsvfd"))
+  expect_silent(discreteTester$setParameterValue(size = 2, prob = 0.9))
+  expect_silent(discreteTester$setParameterValue(lst = list(size = 2, prob = 0.9)))
   expect_equal(discreteTester$getParameterValue("prob"), 0.9)
 })
 

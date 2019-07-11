@@ -4,12 +4,14 @@
 \alias{setParameterValue}
 \title{Parameter Value Setter}
 \usage{
-setParameterValue(object, lst, error = "warn")
+setParameterValue(object, ..., lst = NULL, error = "warn")
 }
 \arguments{
 \item{object}{Distribution or ParameterSet.}
 
-\item{lst}{list, see details.}
+\item{...}{named parameters and values to update, see details.}
+
+\item{lst}{optional list, see details.}
 
 \item{error}{character, value to pass to \code{stopwarn}.}
 }
@@ -17,16 +19,26 @@ setParameterValue(object, lst, error = "warn")
 Returns the value of the given parameter.
 }
 \details{
-A list is supplied to the function, the list names are parameter IDs and the list values are
-the respective values to set the parameters.
+Parameters can be updated in one of two ways, either by passing the parameters to update
+as named arguments or as a list with the the list names are parameter IDs and the list values are
+the respective values to set the parameters. Using a list may be preferred for parameters that take
+multiple values. See examples. If \code{lst} is given then any additional arguments are ignored.
 
 \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
 with warning otherwise.
 }
 \section{R6 Usage}{
- $setParameterValue(lst, error = "warn")
+ $setParameterValue(..., lst = NULL, error = "warn")
 }
 
+\examples{
+ps <- Normal$new()$parameters()
+ps$setParameterValue(mean  = 2, var = 5)$print()
+
+ps <- MultivariateNormal$new()$parameters()
+ps$setParameterValue(lst = list(mean = c(1,1)))$print()
+
+}
 \seealso{
 \code{\link{parameters}} and \code{\link{setParameterValue}}
 }

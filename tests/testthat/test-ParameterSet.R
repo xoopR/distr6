@@ -31,11 +31,11 @@ test_that("getters",{
 })
 
 test_that("setters",{
-  expect_silent(Binomial$new()$setParameterValue(list(size = 5.1)))
-  expect_error(Binomial$new()$setParameterValue(list(prob = 2)))
-  expect_silent(Binomial$new()$setParameterValue(list(prob = 0.6)))
-  expect_silent(Binomial$new()$setParameterValue(list(prob = 0.6)))
-  expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(list(sdsa=2))))
+  expect_silent(Binomial$new()$setParameterValue(lst = list(size = 5.1)))
+  expect_error(Binomial$new()$setParameterValue(lst = list(prob = 2)))
+  expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
+  expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
+  expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa=2))))
 })
 
 test_that("rbind",{
@@ -45,7 +45,7 @@ test_that("rbind",{
 
 test_that("no parameters",{
   expect_null(UniformKernel$new()$parameters())
-  expect_null(UniformKernel$new()$setParameterValue(list(d = 2)))
+  expect_null(UniformKernel$new()$setParameterValue(lst = list(d = 2)))
   expect_null(UniformKernel$new()$getParameterValue("d"))
 })
 

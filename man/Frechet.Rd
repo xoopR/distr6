@@ -106,7 +106,7 @@ Also known as the Inverse Weibull distribution.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -129,7 +129,7 @@ Also known as the Inverse Weibull distribution.
 x = Frechet$new(shape = 2, scale = 3, minimum = 6)
 
 # Update parameters
-x$setParameterValue(list(shape = 3))
+x$setParameterValue(shape = 3)
 x$parameters()
 
 # d/p/q/r

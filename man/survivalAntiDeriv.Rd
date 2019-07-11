@@ -23,8 +23,7 @@ The survival anti-derivative is defined by
 where X is the distribution, S_X is the survival function of the distribution X and a,b are the
 limits of integration.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
+Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
 \section{R6 Usage}{
  $survivalAntiDeriv(lower = NULL, upper = NULL)

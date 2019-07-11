@@ -42,7 +42,7 @@
 #'   \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
 #'   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 #'   \code{rbind(...)} \tab \code{\link{rbind.ParameterSet}} \cr
 #'   \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
 #' }
@@ -70,7 +70,7 @@
 #'  ps = ParameterSet$new(id, value, support, settable,
 #'                        updateFunc, description)
 #'  ps$parameters(id = "rate")
-#'  ps$setParameterValue(list(rate = 2)) # Automatically calls $update
+#'  ps$setParameterValue(rate = 2) # Automatically calls $update
 #'  ps$getParameterValue("scale") # Auto-updated to 1/2
 #'
 #' @seealso \code{\link{Distribution}}
@@ -292,28 +292,45 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 #' @title Parameter Value Setter
 #' @description Returns the value of the given parameter.
 #'
-#' @usage setParameterValue(object, lst, error = "warn")
-#' @section R6 Usage: $setParameterValue(lst, error = "warn")
+#' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
+#' @section R6 Usage: $setParameterValue(..., lst = NULL, error = "warn")
 #' @param object Distribution or ParameterSet.
-#' @param lst list, see details.
+#' @param ... named parameters and values to update, see details.
+#' @param lst optional list, see details.
 #' @param error character, value to pass to \code{stopwarn}.
-#' @details A list is supplied to the function, the list names are parameter IDs and the list values are
-#' the respective values to set the parameters.
+#' @details Parameters can be updated in one of two ways, either by passing the parameters to update
+#' as named arguments or as a list with the the list names are parameter IDs and the list values are
+#' the respective values to set the parameters. Using a list may be preferred for parameters that take
+#' multiple values. See examples. If \code{lst} is given then any additional arguments are ignored.
 #'
 #' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
 #' with warning otherwise.
 #'
 #' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
+#'
+#' @examples
+#' ps <- Normal$new()$parameters()
+#' ps$setParameterValue(mean  = 2, var = 5)$print()
+#'
+#' ps <- MultivariateNormal$new()$parameters()
+#' ps$setParameterValue(lst = list(mean = c(1,1)))$print()
+#'
 #' @export
 NULL
-ParameterSet$set("public","setParameterValue",function(lst, error = "warn"){
+ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+    if(is.null(lst))
+      lst <- list(...)
     checkmate::assertList(lst)
     for(i in 1:length(lst)){
+
       if(any(is.null(lst[[i]])) | any(is.nan(lst[[i]])))
-        stop(paste(lst[[i]],"must be a number."))
+        return(stopwarn(error, paste(names(lst)[[i]],"must be a number.")))
 
       aid <- names(lst)[[i]]
       value <- lst[[i]]
+
+      if(is.null(aid) | is.null(value))
+        return(stopwarn(error, "Parameter names and new values must be provided."))
 
       param <- subset(self$as.data.table(), id == aid)
 
@@ -379,8 +396,8 @@ ParameterSet$set("public","as.data.table",function(){
 #' @usage as.ParameterSet(x,...)
 #' @param x object
 #' @param ... additional arguments
-#' @details Currently supported coercions are from data frames, data tables and lists. Function assumes
-#' that the data frame and data table columns are the correct inputs to a ParameterSet, see the constructor
+#' @details Currently supported coercions are from data tables and lists. Function assumes
+#' that the data table columns are the correct inputs to a ParameterSet, see the constructor
 #' for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken to be
 #' arguments.
 #' @seealso \code{\link{ParameterSet}}

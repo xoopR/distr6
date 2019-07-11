@@ -49,7 +49,7 @@
 #'   \strong{Parameter Methods} \tab \strong{Link} \cr
 #'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Validation Methods} \tab \strong{Link} \cr
 #'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
@@ -123,7 +123,10 @@ DistributionWrapper$set("public", "wrappedModels", function(model=NULL){
     private$.wrappedModels
 })
 DistributionWrapper$set("private", ".wrappedModels", list())
-DistributionWrapper$set("public","setParameterValue",function(lst, error = "warn"){
+DistributionWrapper$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
+
   for(i in 1:length(lst)){
     if(grepl("_",names(lst)[[i]],fixed = T)){
       id = names(lst)[[i]]
@@ -137,7 +140,7 @@ DistributionWrapper$set("public","setParameterValue",function(lst, error = "warn
       model = self$wrappedModels()[[1]]$short_name
       newlst = lst
     }
-    self$wrappedModels(model)$setParameterValue(newlst, error)
+    self$wrappedModels(model)$setParameterValue(lst = newlst, error = error)
   }
   rm(i)
 

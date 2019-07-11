@@ -28,7 +28,7 @@
 #' x = Wald$new(mean = 2, shape = 5)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(shape = 3))
+#' x$setParameterValue(shape = 3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -95,7 +95,7 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, shape, verbose)
-  self$setParameterValue(list(mean = mean, shape = shape))
+  self$setParameterValue(mean = mean, shape = shape)
 
   pdf <- function(x1){
     mean <- self$getParameterValue("mean")

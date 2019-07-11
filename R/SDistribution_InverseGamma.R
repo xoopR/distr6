@@ -24,7 +24,8 @@
 #' x  = InverseGamma$new(shape = 1, scale = 4)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(scale = 2)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -107,7 +108,7 @@ InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators 
                                          verbose = FALSE){
 
   private$.parameters <- getParameterSet.InverseGamma(self, shape, scale, verbose)
-  self$setParameterValue(list(shape=shape,scale = scale))
+  self$setParameterValue(shape=shape, scale = scale)
 
   pdf <- function(x1) extraDistr::dinvgamma(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
   cdf <- function(x1) extraDistr::pinvgamma(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))

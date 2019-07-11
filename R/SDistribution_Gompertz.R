@@ -23,7 +23,7 @@
 #' x <- Gompertz$new(shape = 2, scale = 3)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(scale = 1))
+#' x$setParameterValue(scale = 1)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -55,7 +55,7 @@ Gompertz$set("private",".getRefParams", function(paramlst){
 Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  suppressMessages(self$setParameterValue(list(shape = shape, scale = scale)))
+  suppressMessages(self$setParameterValue(shape = shape, scale = scale))
 
   pdf <- function(x1){
     return(self$getParameterValue("shape")*self$getParameterValue("scale")*exp(self$getParameterValue("shape"))*

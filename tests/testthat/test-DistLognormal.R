@@ -29,9 +29,9 @@ test_that("parameterisation",{
 
   expect_equal(Lognormal$new(var = 2)$getParameterValue("prec"), 2^-1)
   expect_equal(Lognormal$new(var = 2)$getParameterValue("var"), 2)
-  expect_equal(Lognormal$new(var = 2)$setParameterValue(list(mean = 3))$getParameterValue("mean"),
+  expect_equal(Lognormal$new(var = 2)$setParameterValue(lst = list(mean = 3))$getParameterValue("mean"),
                3)
-  expect_equal(Lognormal$new(var = 2)$setParameterValue(list(var = 3))$getParameterValue("sd"),
+  expect_equal(Lognormal$new(var = 2)$setParameterValue(lst = list(var = 3))$getParameterValue("sd"),
                sqrt(3))
 
   expect_false(Lognormal$new(sd = 2)$parameters("meanlog")$settable)

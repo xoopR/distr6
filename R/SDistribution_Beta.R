@@ -21,7 +21,7 @@
 #' x = Beta$new(shape1 = 2, shape2 = 5)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(shape1 = 1))
+#' x$setParameterValue(shape1 = 1)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -107,7 +107,7 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
                                           verbose = FALSE){
 
   private$.parameters <- getParameterSet.Beta(self, shape1, shape2, verbose)
-  self$setParameterValue(list(shape1=shape1,shape2=shape2))
+  self$setParameterValue(shape1=shape1,shape2=shape2)
 
   pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
   cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))

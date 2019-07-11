@@ -24,7 +24,8 @@
 #' x = Exponential$new(verbose = TRUE) # Default is rate = 1
 #'
 #' # Update parameters
-#' x$setParameterValue(list(scale = 2)) # When any parameter is updated, all others are too!
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(scale = 2)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -89,7 +90,7 @@ Exponential$set("private",".getRefParams", function(paramlst){
 Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, rate, scale, verbose)
-  self$setParameterValue(list(rate = rate, scale = scale))
+  self$setParameterValue(rate = rate, scale = scale)
 
   pdf <- function(x1) dexp(x1, self$getParameterValue("rate"))
   cdf <- function(x1) pexp(x1, self$getParameterValue("rate"))

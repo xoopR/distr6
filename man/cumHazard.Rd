@@ -22,8 +22,7 @@ The cumulative hazard function is defined analytically by
 \deqn{H_X(x) = -log(S_X)}
 where X is the distribution and \eqn{S_X} is the survival function.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
+Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
 \section{R6 Usage}{
  $cumHazard(x1, log = FALSE)

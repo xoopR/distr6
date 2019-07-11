@@ -8,7 +8,7 @@ The mathematical Empty, or Null, set.
 }
 \details{
 The Empty set is the set defined by having no elements,
-\deqn{Empty = { }}
+\deqn{Empty = \{ \}}{Empty = { }}
 }
 \section{Constructor}{
  Empty$new()

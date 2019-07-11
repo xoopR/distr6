@@ -103,7 +103,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -126,9 +126,9 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
 
 # Update parameters
-x$setParameterValue(list(size = 10))
+x$setParameterValue(size = 10)
 # Number of categories cannot be changed after construction
-x$setParameterValue(list(probs = c(1,2,3)))
+x$setParameterValue(probs = c(1,2,3))
 x$parameters()
 
 # d/p/q/r

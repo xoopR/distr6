@@ -9,7 +9,7 @@ The mathematical set of integers.
 \details{
 The set of Integers is defined as the set of numbers that can be written without a fractional
 component, i.e.
-\deqn{Integers = {...,-3, -2, -1, 0, 1, 2, 3,...}}
+\deqn{Integers = \{...,-3, -2, -1, 0, 1, 2, 3,...\}}{Integers = {...,-3, -2, -1, 0, 1, 2, 3,...}}
 }
 \section{Constructor}{
  Integers$new(dim = 1,...)

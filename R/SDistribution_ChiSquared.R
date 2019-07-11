@@ -21,7 +21,7 @@
 #' x = ChiSquared$new(df = 2)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(df = 3))
+#' x$setParameterValue(df = 3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -86,12 +86,13 @@ ChiSquared$set("public", "mode", function(){
   return(max(self$getParameterValue("df") - 2, 0))
 })
 
-ChiSquared$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+ChiSquared$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   if(self$getParameterValue("df") == 1)
     private$.properties$support <- PosReals$new(zero = F)
   else
     private$.properties$support <- PosReals$new(zero = T)
+  invisible(self)
 })
 ChiSquared$set("private",".getRefParams", function(paramlst){
   lst = list()
@@ -102,7 +103,7 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
 ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, verbose)
-  self$setParameterValue(list(df = df))
+  self$setParameterValue(df = df)
 
   pdf <- function(x1) dchisq(x1, self$getParameterValue("df"))
   cdf <- function(x1) pchisq(x1, self$getParameterValue("df"))

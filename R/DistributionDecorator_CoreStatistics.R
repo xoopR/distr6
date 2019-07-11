@@ -160,7 +160,7 @@ CoreStatistics$set("public", "pgf", function(z) {
 #' @section R6 Usage: $entropy(base = 2)
 #'
 #' @details The entropy of a (discrete) distribution is defined by
-#' \deqn{- sum f_X * log(f_X)}
+#' \deqn{- \sum f_X * log(f_X)}
 #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for continuous distributions.
 #' The base of the logarithm of the equation determines the type of entropy computed. By default we use
 #' base 2 to compute entropy in 'Shannons' or 'bits'.
@@ -191,7 +191,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #'
 #' @details The skewness of a distribution is defined by the third standardised moment of the
 #' distribution,
-#' \deqn{sk_X = E_X[(x - \mu)^3]/\sigma^3}
+#' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
 #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
 #' \eqn{\sigma} is the standard deviation of the distribution.
 #'
@@ -221,7 +221,7 @@ CoreStatistics$set("public", "skewness", function() {
 #'
 #' @details The kurtosis of a distribution is defined by the fourth standardised moment of the
 #' distribution,
-#' \deqn{k_X = E_X[(x - \mu)^4]/\sigma^4}
+#' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
 #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 #' standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 #'
@@ -293,7 +293,7 @@ CoreStatistics$set("public","variance",function(){
 #' @details The kth central moment of a distribution is defined by
 #' \deqn{CM(k)_X = E_X[(x - \mu)^k]}
 #' the kth standardised moment of a distribution is defined by
-#' \deqn{SM(k)_X = CM(k)/\sigma^k}
+#' \deqn{SM(k)_X = \frac{CM(k)}{\sigma^k}}{SM(k)_X = CM(k)/\sigma^k}
 #' the kth raw moment of a distribution is defined by
 #' \deqn{RM(k)_X = E_X[x^k]}
 #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
@@ -301,6 +301,10 @@ CoreStatistics$set("public","variance",function(){
 #'
 #' Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment
 #' is computed.
+#'
+#' Can only be used after decorating with \code{\link{CoreStatistics}}.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -360,6 +364,8 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 #' transformation must be given as a function, for example \code{trafo = function(x) x^2}
 #' (which is the second moment).
 #'
+#' Can only be used after decorating with \code{\link{CoreStatistics}}.
+#'
 #' @seealso \code{\link{mean}}, \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 #'
 #' @export
@@ -392,7 +398,7 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
   }
 })
 #-------------------------------------------------------------
-# mode - TO DO
+# mode
 #-------------------------------------------------------------
 #' @title Mode of a Distribution
 #' @name mode
@@ -406,6 +412,11 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 #'
 #' @details If the distribution has multiple modes, all are returned by default. Otherwise the index
 #' of the mode to return can be given or "all" if all should be returned.
+#'
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{CoreStatistics}} decorator.
+#'
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 #'
 #' @export
 NULL

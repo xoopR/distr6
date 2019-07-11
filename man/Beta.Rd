@@ -100,7 +100,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -123,7 +123,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 x = Beta$new(shape1 = 2, shape2 = 5)
 
 # Update parameters
-x$setParameterValue(list(shape1 = 1))
+x$setParameterValue(shape1 = 1)
 x$parameters()
 
 # d/p/q/r

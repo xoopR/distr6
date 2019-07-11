@@ -9,9 +9,9 @@
 #' @templateVar uses to model a two-outcome scenario
 #' @templateVar params probability of success, \eqn{p},
 #' @templateVar pdfpmf pmf
-#' @templateVar pdfpmfeq \deqn{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, if x = 0}
-#' @templateVar paramsupport \eqn{p \epsilon [0,1]}
-#' @templateVar distsupport \eqn{{0,1}}
+#' @templateVar pdfpmfeq \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0}
+#' @templateVar paramsupport \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}
+#' @templateVar distsupport \eqn{\{0,1\}}{{0,1}}
 #' @templateVar constructor prob = 0.5, qprob = NULL
 #' @templateVar arg1 \code{prob} \tab numeric \tab probability of success. \cr
 #' @templateVar arg2 \code{qprob} \tab numeric \tab probability of failure. \cr
@@ -26,7 +26,8 @@
 #' x = Bernoulli$new(verbose = TRUE) # Default is with prob = 0.5
 #'
 #' # Update parameters
-#' x$setParameterValue(list(qprob = 0.3)) # Can update any parameter
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(qprob = 0.3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -106,7 +107,7 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
 
   private$.parameters <- getParameterSet(self, prob, qprob, verbose)
   if(!is.null(qprob)) prob <- NULL
-  self$setParameterValue(list(prob = prob, qprob = qprob))
+  self$setParameterValue(prob = prob, qprob = qprob)
 
   pdf = function(x1) dbinom(x1, 1, self$getParameterValue("prob"))
   cdf = function(x1) pbinom(x1, 1, self$getParameterValue("prob"))

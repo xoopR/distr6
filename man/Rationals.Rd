@@ -9,8 +9,8 @@ The mathematical set of rational numbers.
 \details{
 The set of Rationals is defined as the set of numbers that can be written as a fraction
 of two integers, i.e.
-\deqn{Rationals = {p/q | p,q \epsilon Z}}
-where \eqn{Z} is the set of integers.
+\deqn{Rationals = \{p/q | p,q \ \in \ \mathbb{Z}\}}{Rationals = {p/q | p,q \epsilon Z}}
+where \eqn{\mathbb{Z}}{Z} is the set of integers.
 }
 \section{Constructor}{
  Rationals$new(dim = 1,...)

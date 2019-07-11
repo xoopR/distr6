@@ -26,7 +26,8 @@
 #' x = Binomial$new() # Default is with prob = 0.5 and size = 10
 #'
 #' # Update parameters
-#' x$setParameterValue(list(size = 4, qprob = 0.1)) # Can update any parameter
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(size = 4, qprob = 0.1)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -84,8 +85,8 @@ Binomial$set("public","pgf",function(z){
   (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
 })
 
-Binomial$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+Binomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Set$new(0:self$getParameterValue("size"))
   if(self$getParameterValue("prob")==0.5)
     private$.properties$symmetry <- "asymmetric"
@@ -106,7 +107,7 @@ Binomial$set("private",".getRefParams", function(paramlst){
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, size, prob, qprob, verbose)
-  self$setParameterValue(list(size = size, prob = prob, qprob = qprob))
+  self$setParameterValue(size = size, prob = prob, qprob = qprob)
 
   if(prob == 0.5)
     symmetric <- TRUE

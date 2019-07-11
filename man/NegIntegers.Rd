@@ -9,7 +9,7 @@ The mathematical set of negative integers.
 \details{
 The set of NegIntegers is defined as the set of negative or non-positive numbers that can
 be written without a fractional component, i.e.
-\deqn{NegIntegers = {...,-3, -2, -1, 0}}
+\deqn{NegIntegers = \{...,-3, -2, -1, 0\}}{NegIntegers = {...,-3, -2, -1, 0}}
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{

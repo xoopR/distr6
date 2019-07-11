@@ -9,9 +9,9 @@ Distribution class but not necessarily with the same parameters.
 }
 \details{
 Exploits the following relationships of independent distributions
-\deqn{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
-\deqn{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
-where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
+\deqn{f_A(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
+\deqn{F_A(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
+where \eqn{f_A}/\eqn{F_A} is the pdf/cdf of the array distribution \eqn{A} and \eqn{X1,...,XN} are independent distributions.
 }
 \section{Constructor}{
  ArrayDistribution$new(distribution, paramList, name = NULL, short_name = NULL,
@@ -77,7 +77,7 @@ description = NULL)
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr

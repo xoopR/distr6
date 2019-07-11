@@ -8,9 +8,9 @@ A wrapper for creating a vector of distributions.
 }
 \details{
 A vector of distributions has the following relationship
-\deqn{f_V(X1 = x1,...,XN = xN) = f_X1(x1), ..., f_XN(xn)}
-\deqn{F_V(X1 = x1,...,XN = xN) = F_X1(x1), ..., F_XN(xn)}
-where f_V/F_V is the pdf/cdf of the vector of distributions V and X1,...,XN are distributions.
+\deqn{f_V(X1 = x1,...,XN = xN) = f_{X1}(x1), ..., f_{XN}(xn)}{f_V(X1 = x1,...,XN = xN) = f_X1(x1), ..., f_XN(xn)}
+\deqn{F_V(X1 = x1,...,XN = xN) = F_{X1}(x1), ..., F_{XN}(xn)}{F_V(X1 = x1,...,XN = xN) = F_X1(x1), ..., F_XN(xn)}
+where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} and \eqn{X1,...,XN} are distributions.
 }
 \section{Constructor}{
  VectorDistribution$new(distlist, name = NULL, short_name = NULL, description = NULL)
@@ -74,7 +74,7 @@ where f_V/F_V is the pdf/cdf of the vector of distributions V and X1,...,XN are 
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr

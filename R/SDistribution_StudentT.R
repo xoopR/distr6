@@ -21,7 +21,7 @@
 #' x = StudentT$new(df = 2)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(df = 3))
+#' x$setParameterValue(df = 3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -107,7 +107,7 @@ StudentT$set("private",".getRefParams", function(paramlst){
 StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, verbose)
-  self$setParameterValue(list(df = df))
+  self$setParameterValue(df = df)
 
   pdf <- function(x1) dt(x1, self$getParameterValue("df"))
   cdf <- function(x1) pt(x1, self$getParameterValue("df"))

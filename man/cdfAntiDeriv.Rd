@@ -22,8 +22,7 @@ The cdf anti-derivative is defined by
 \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
 where X is the distribution, F_X is the cdf of the distribution X and a,b are the limits of integration.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
+Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
 \section{R6 Usage}{
  $cdfAntiDeriv(lower = NULL, upper = NULL)

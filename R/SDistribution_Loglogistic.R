@@ -26,7 +26,7 @@
 #' x <- Loglogistic$new(shape = 2, scale = 3)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(scale = 2))
+#' x$setParameterValue(scale = 2)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -98,8 +98,8 @@ Loglogistic$set("public","mode",function(){
            self$getParameterValue("scale")*((shape-1)/(shape+1))^(1/shape))
 })
 
-Loglogistic$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+Loglogistic$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("location"),Inf,type="()")
   invisible(self)
 })
@@ -116,7 +116,7 @@ Loglogistic$set("public","initialize",function(scale = 1, shape = 1, location = 
                                                decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, scale, shape, location, verbose)
-  self$setParameterValue(list(scale = scale, shape = shape, location = location))
+  self$setParameterValue(scale = scale, shape = shape, location = location)
 
   pdf <- function(x1){
     location <- self$getParameterValue("location")

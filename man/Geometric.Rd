@@ -106,7 +106,7 @@ The Geometric distribution is used to either refer to modelling the number of tr
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -138,10 +138,12 @@ Geometric$new(trials = FALSE) # Number of failures before first success
 Geometric$new(trials = TRUE)$description
 Geometric$new(trials = FALSE)$description
 
-x <- Geometric$new() # Default is prob = 0.5 and number of failures before first success
+# Default is prob = 0.5 and number of failures before first success
+x <- Geometric$new()
 
 # Update parameters
-x$setParameterValue(list(qprob = 0.2))  # When any parameter is updated, all others are too!
+# When any parameter is updated, all others are too!
+x$setParameterValue(qprob = 0.2)
 x$parameters()
 
 # d/p/q/r

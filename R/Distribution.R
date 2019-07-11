@@ -95,7 +95,7 @@
 #'   \strong{Parameter Methods} \tab \strong{Link} \cr
 #'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Validation Methods} \tab \strong{Link} \cr
 #'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
@@ -516,8 +516,8 @@ Distribution$set("public","properties",function(){
 #' @description Returns the support of the distribution.
 #' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
 #' greater than zero,
-#' \deqn{Supp(X) = \{ x \in R: f_X(x) > 0\}}
-#' where f_X is the pmf if distribution X is discrete, otherwise the pdf.
+#' \deqn{Supp(X) = \{x \ \in \mathbb{R}: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
+#' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
 #' @seealso \code{\link{SetInterval}} and \code{\link{properties}}
 #' @export
 NULL
@@ -571,7 +571,7 @@ Distribution$set("public","inf",function(){
 #' @param object Distribution.
 #' @description Returns the distribution maximum as the maximum of the support. If the support is not
 #' bounded above then maximum is given by
-#' \deqn{maximum = supremum - 2.220446e-16}
+#' \deqn{maximum = supremum - 1.1e-15}
 #' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
@@ -586,7 +586,7 @@ Distribution$set("public","dmax",function(){
 #' @param object Distribution.
 #' @description Returns the distribution minimum as the minimum of the support. If the support is not
 #' bounded below then minimum is given by
-#' \deqn{minimum = infimum + 2.220446e-16}
+#' \deqn{minimum = infimum + 1.1e-15}
 #' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
@@ -648,13 +648,15 @@ Distribution$set("public","getParameterValue",function(id, error = "warn"){
     return(private$.parameters$getParameterValue(id, error))
 })
 # Documented in ParameterSet.R
-Distribution$set("public","setParameterValue",function(lst, error = "warn"){
+Distribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if(length(private$.parameters)==0)
     return(NULL)
   else{
     if(length(lst)!=0){
 
-      self$parameters()$setParameterValue(lst, error)
+      self$parameters()$setParameterValue(lst = lst, error = error)
 
       # Update skewness and kurtosis
       x = suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
@@ -821,12 +823,12 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' @param p vector of probabilities to evaluate function at.
 #' @param ... additional arguments.
 #' @param lower.tail logical; if TRUE, probabilities p are given as log(p).
-#' @param log.p ignored, retained for consistency.
+#' @param log.p logical; if TRUE then \eqn{q_X(exp(p))} is returned.
 #' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
 #'
 #' @details
 #'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
-#'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}
+#'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in \mathbb{R}: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
 #'
 #'  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
 #'

@@ -7,7 +7,7 @@ test_that("constructor",{
   expect_silent(Laplace$new(var = 1))
   expect_silent(Laplace$new(scale = 1))
   expect_silent(Laplace$new(mean = 3))
-  expect_warning(expect_error(Laplace$new(var = -2)))
+  expect_warning(Laplace$new(var = -2))
 
   expect_message(expect_equal(Laplace$new(var = 2, verbose = T)$getParameterValue("var"), 2))
   expect_equal(Laplace$new(var = 2)$getParameterValue("scale"), 1)

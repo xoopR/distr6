@@ -19,11 +19,10 @@ a point x.
 }
 \details{
 The hazard function is defined analytically by
-\deqn{h_X(x) = \frac{f_X}{S_X}}
+\deqn{h_X(x) = \frac{f_X}{S_X}}{h_X(x) = f_X/S_X}
 where X is the distribution, \eqn{S_X} is the survival function and \eqn{f_X} is the pdf.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
+Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
 \section{R6 Usage}{
  $hazard(x1, log = FALSE)

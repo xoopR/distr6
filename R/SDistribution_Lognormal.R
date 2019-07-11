@@ -31,17 +31,20 @@
 #' # Many parameterisations are possible
 #' Lognormal$new(var = 2, mean = 1)
 #' Lognormal$new(meanlog = 2, preclog = 5)
-#' Lognormal$new(meanlog = 4, sd = 2) # Note parameters must be on same scale (log or natural)
+#' # Note parameters must be on same scale (log or natural)
+#' Lognormal$new(meanlog = 4, sd = 2)
 #'
 #' x <- Lognormal$new(verbose = TRUE) # meanlog = 0, sdlog = 1 default
 #'
 #' # Update parameters
-#' x$setParameterValue(list(meanlog = 3)) # When any parameter is updated, all others are too!
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(meanlog = 3)
 #' x$parameters()
 #'
 #' # But you can only set parameters on the same scale, the below has no effect
-#' x$setParameterValue(list(sd = 3))
-#' x$setParameterValue(list(sdlog = 3)) # But this does
+#' x$setParameterValue(sd = 3)
+#' # But this does
+#' x$setParameterValue(sdlog = 3)
 #'
 #' # d/p/q/r
 #' x$pdf(5)
@@ -130,8 +133,8 @@ Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NU
     meanlog = varlog = sdlog = preclog = NULL
 
   private$.parameters <- getParameterSet(self, meanlog, varlog, sdlog, preclog, mean, var, sd, prec, verbose)
-  self$setParameterValue(list(meanlog = meanlog, varlog = varlog, sdlog = sdlog, preclog = preclog,
-                              mean = mean, var = var, sd = sd, prec = prec))
+  self$setParameterValue(meanlog = meanlog, varlog = varlog, sdlog = sdlog, preclog = preclog,
+                              mean = mean, var = var, sd = sd, prec = prec)
 
   pdf <- function(x1) dlnorm(x1, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
   cdf <- function(x1) plnorm(x1, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))

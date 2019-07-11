@@ -8,9 +8,9 @@ A wrapper for creating the joint distribution of multiple independent probabilit
 }
 \details{
 Exploits the following relationships of independent distributions
-\deqn{f_P(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
-\deqn{F_P(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
-where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
+\deqn{f_P(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}{f_P(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
+\deqn{F_P(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}{F_P(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
+where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eqn{P} and \eqn{X1,...,XN} are independent distributions.
 
 \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
@@ -76,7 +76,7 @@ where f_P/F_P is the pdf/cdf of the joint (product) distribution P and X1,...,XN
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr

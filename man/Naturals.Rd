@@ -8,7 +8,7 @@ The mathematical set of natural numbers.
 }
 \details{
 The set of Naturals is defined as the counting numbers, i.e.
-\deqn{Naturals = {0, 1, 2,...}}
+\deqn{Naturals = \{0, 1, 2,...\}}{Naturals = {0, 1, 2,...}}
 }
 \section{Constructor}{
  Naturals$new(dim = 1, lower = 0)

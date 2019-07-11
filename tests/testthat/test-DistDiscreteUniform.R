@@ -47,10 +47,10 @@ test_that("statistics",{
 
 test_that("update parameters",{
   du = DiscreteUniform$new(lower=1,upper=5)
-  expect_error(du$setParameterValue(list(upper = 0)))
-  expect_silent(du$setParameterValue(list(upper = 2)))
-  expect_error(du$setParameterValue(list(lower = 3)))
-  expect_silent(du$setParameterValue(list(lower = 1)))
-  expect_silent(du$setParameterValue(list(lower = 1, upper = 3)))
-  expect_error(du$setParameterValue(list(lower = 1, upper = 0)))
+  expect_error(du$setParameterValue(lst = list(upper = 0)))
+  expect_silent(du$setParameterValue(lst = list(upper = 2)))
+  expect_error(du$setParameterValue(lst = list(lower = 3)))
+  expect_silent(du$setParameterValue(lst = list(lower = 1)))
+  expect_silent(du$setParameterValue(lst = list(lower = 1, upper = 3)))
+  expect_error(du$setParameterValue(lst = list(lower = 1, upper = 0)))
 })

@@ -22,7 +22,7 @@
 #' x = Poisson$new(rate = 2)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(rate = 3))
+#' x$setParameterValue(rate = 3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -85,7 +85,7 @@ Poisson$set("private",".getRefParams", function(paramlst){
 Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose = FALSE, ...){
 
   private$.parameters <- getParameterSet(self, rate, verbose)
-  self$setParameterValue(list(rate = rate))
+  self$setParameterValue(rate = rate)
 
   pdf <- function(x1) dpois(x1, self$getParameterValue("rate"))
   cdf <- function(x1) ppois(x1, self$getParameterValue("rate"))

@@ -24,8 +24,8 @@ ParameterSet
 Coerces objects to ParameterSet.
 }
 \details{
-Currently supported coercions are from data frames, data tables and lists. Function assumes
-that the data frame and data table columns are the correct inputs to a ParameterSet, see the constructor
+Currently supported coercions are from data tables and lists. Function assumes
+that the data table columns are the correct inputs to a ParameterSet, see the constructor
 for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken to be
 arguments.
 }

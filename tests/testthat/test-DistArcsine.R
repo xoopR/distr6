@@ -15,10 +15,10 @@ test_that("properties & traits",{
 
 a = Arcsine$new()
 test_that("parameters",{
-  expect_silent(a$setParameterValue(list(lower = 2, upper = 6)))
-  expect_error(a$setParameterValue(list(lower = 7, upper = 6)))
-  expect_error(a$setParameterValue(list(upper = -10)))
-  expect_error(a$setParameterValue(list(lower = 10)))
+  expect_silent(a$setParameterValue(lst = list(lower = 2, upper = 6)))
+  expect_error(a$setParameterValue(lst = list(lower = 7, upper = 6)))
+  expect_error(a$setParameterValue(lst = list(upper = -10)))
+  expect_error(a$setParameterValue(lst = list(lower = 10)))
 })
 
 a = Arcsine$new()

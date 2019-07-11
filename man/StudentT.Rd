@@ -96,7 +96,7 @@ The distribution is supported on the Reals.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -119,7 +119,7 @@ The distribution is supported on the Reals.
 x = StudentT$new(df = 2)
 
 # Update parameters
-x$setParameterValue(list(df = 3))
+x$setParameterValue(df = 3)
 x$parameters()
 
 # d/p/q/r

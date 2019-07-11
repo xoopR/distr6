@@ -96,7 +96,7 @@ The distribution is supported on \eqn{{0, 1,...,n}}.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -123,7 +123,8 @@ Binomial$new(qprob = 0.3)
 x = Binomial$new() # Default is with prob = 0.5 and size = 10
 
 # Update parameters
-x$setParameterValue(list(size = 4, qprob = 0.1)) # Can update any parameter
+# When any parameter is updated, all others are too!
+x$setParameterValue(size = 4, qprob = 0.1)
 x$parameters()
 
 # d/p/q/r

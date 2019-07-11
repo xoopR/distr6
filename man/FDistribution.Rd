@@ -100,7 +100,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -123,7 +123,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 x <- FDistribution$new(df1 = 1, df2 = 3)
 
 # Update parameters
-x$setParameterValue(list(df2 = 10))
+x$setParameterValue(df2 = 10)
 x$parameters()
 
 # d/p/q/r

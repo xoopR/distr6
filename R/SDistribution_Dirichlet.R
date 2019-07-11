@@ -26,11 +26,12 @@
 #' x <- Dirichlet$new(params = c(2,5,6))
 #'
 #' # Update parameters
-#' x$setParameterValue(list(params = c(3, 2, 3)))
-#' x$parameters() # Note the K parameter is automatically calculated
+#' x$setParameterValue(params = c(3, 2, 3))
+#' # 'K' parameter is automatically calculated
+#' x$parameters()
 #' \dontrun{
 #' # This errors as less than three parameters supplied
-#' x$setParameterValue(list(params = c(1, 2)))
+#' x$setParameterValue(params = c(1, 2))
 #' }
 #'
 #' # d/p/q/r
@@ -83,12 +84,15 @@ Dirichlet$set("public","entropy",function(base = 2){
     sum((params-1)*digamma(params)))
 })
 
-Dirichlet$set("public","setParameterValue",function(lst, error = "warn"){
+Dirichlet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("params" %in% names(lst)){
     checkmate::assert(length(lst$params) == self$getParameterValue("K"),
                       .var.name = "Number of categories cannot be changed after construction.")
   }
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
+  invisible(self)
 })
 Dirichlet$set("private",".getRefParams", function(paramlst){
   lst = list()
@@ -99,7 +103,7 @@ Dirichlet$set("private",".getRefParams", function(paramlst){
 Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, params, verbose)
-  self$setParameterValue(list(params = params))
+  self$setParameterValue(params = params)
 
   lst <- rep(list(bquote()), length(params))
   names(lst) <- paste("x",1:length(params),sep="")

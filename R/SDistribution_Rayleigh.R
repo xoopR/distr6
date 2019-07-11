@@ -21,7 +21,7 @@
 #' x <- Rayleigh$new(mode = 2)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(mode = 4))
+#' x$setParameterValue(mode = 4)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -78,7 +78,7 @@ Rayleigh$set("private",".getRefParams", function(paramlst){
 Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mode, verbose)
-  self$setParameterValue(list(mode = mode))
+  self$setParameterValue(mode = mode)
 
   pdf <- function(x1){
     return(x1/self$getParameterValue("mode")^2 * exp((-x1^2)/(2*self$getParameterValue("mode")^2)))

@@ -106,7 +106,7 @@ When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -129,7 +129,7 @@ When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta
 x = Arcsine$new(lower = 2, upper = 5)
 
 # Update parameters
-x$setParameterValue(list(upper = 4, lower = 1))
+x$setParameterValue(upper = 4, lower = 1)
 x$parameters()
 
 # d/p/q/r

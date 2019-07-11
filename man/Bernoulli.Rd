@@ -9,9 +9,9 @@ is commonly used to model a two-outcome scenario.
 }
 \details{
 The Bernoulli distribution parameterised with probability of success, \eqn{p}, is defined by the pmf,
-\deqn{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, if x = 0} for \eqn{p \epsilon [0,1]}.
+\deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0} for \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}.
 
-The distribution is supported on \eqn{{0,1}}.
+The distribution is supported on \eqn{\{0,1\}}{{0,1}}.
 }
 \section{Constructor}{
  Bernoulli$new(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
@@ -96,7 +96,7 @@ The distribution is supported on \eqn{{0,1}}.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -123,7 +123,8 @@ Bernoulli$new(qprob = 0.3)
 x = Bernoulli$new(verbose = TRUE) # Default is with prob = 0.5
 
 # Update parameters
-x$setParameterValue(list(qprob = 0.3)) # Can update any parameter
+# When any parameter is updated, all others are too!
+x$setParameterValue(qprob = 0.3)
 x$parameters()
 
 # d/p/q/r

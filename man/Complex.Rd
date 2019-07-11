@@ -8,8 +8,8 @@ The mathematical set of complex numebers.
 }
 \details{
 The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.
-\deqn{C = {a + bi | a,b \epsilon R}}
-where \eqn{R} is the set of reals.
+\deqn{Complex = {a + bi | a,b \in \mathbb{R}}}{Complex = {a + bi | a,b \epsilon R}}
+where \eqn{\mathbb{R}}{R} is the set of reals.
 }
 \section{Constructor}{
  Complex$new(dim = 1)

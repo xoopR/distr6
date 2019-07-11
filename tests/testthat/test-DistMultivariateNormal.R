@@ -22,13 +22,13 @@ test_that("parameters", {
   expect_equal(mvn$getParameterValue("mean"), c(1,7,3))
   expect_equal(mvn$getParameterValue("cov"), matrix(c(1,0,0,0,1,0,0,0,1),nrow=3))
   expect_equal(mvn$getParameterValue("prec"), matrix(c(1,0,0,0,1,0,0,0,1),nrow=3))
-  expect_equal(mvn$setParameterValue(list(prec = c(1,0,0,0,1,0,0,0,1)))$getParameterValue("prec"),
+  expect_equal(mvn$setParameterValue(lst = list(prec = c(1,0,0,0,1,0,0,0,1)))$getParameterValue("prec"),
                matrix(c(1,0,0,0,1,0,0,0,1),nrow = 3))
-  expect_warning(expect_equal(mvn$setParameterValue(list(prec = c(1,0,0,0,1,0,0,0,1,1)))$getParameterValue("prec"),
+  expect_warning(expect_equal(mvn$setParameterValue(lst = list(prec = c(1,0,0,0,1,0,0,0,1,1)))$getParameterValue("prec"),
                matrix(c(1,0,0,0,1,0,0,0,1),nrow = 3)))
-  expect_equal(mvn$setParameterValue(list(mean = c(1)))$getParameterValue("mean"),
+  expect_equal(mvn$setParameterValue(lst = list(mean = c(1)))$getParameterValue("mean"),
                c(1,1,1))
-  expect_equal(mvn$setParameterValue(list(mean = c(1,2,3,4)))$getParameterValue("mean"),
+  expect_equal(mvn$setParameterValue(lst = list(mean = c(1,2,3,4)))$getParameterValue("mean"),
                c(1,2,3))
 })
 

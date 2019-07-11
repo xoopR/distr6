@@ -26,7 +26,7 @@
 #' x = Frechet$new(shape = 2, scale = 3, minimum = 6)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(shape = 3))
+#' x$setParameterValue(shape = 3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -107,8 +107,8 @@ Frechet$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Frechet$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+Frechet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("minimum"),Inf,type="()")
   invisible(self)
 })
@@ -117,7 +117,7 @@ Frechet$set("public","initialize",function(shape = 1, scale = 1, minimum = 0,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, minimum, verbose)
-  self$setParameterValue(list(shape = shape, scale = scale, minimum = minimum))
+  self$setParameterValue(shape = shape, scale = scale, minimum = minimum)
 
   pdf <- function(x1){
     scale <- self$getParameterValue("scale")

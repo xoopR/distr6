@@ -49,10 +49,10 @@ test_that("statistics",{
 
 u = Uniform$new(lower=1,upper=5)
 test_that("update parameters",{
-  expect_error(u$setParameterValue(list(upper = 0)))
-  expect_silent(u$setParameterValue(list(upper = 2)))
-  expect_error(u$setParameterValue(list(lower = 3)))
-  expect_silent(u$setParameterValue(list(lower = 1)))
-  expect_silent(u$setParameterValue(list(lower = 1, upper = 3)))
-  expect_error(u$setParameterValue(list(lower = 1, upper = 0)))
+  expect_error(u$setParameterValue(lst = list(upper = 0)))
+  expect_silent(u$setParameterValue(lst = list(upper = 2)))
+  expect_error(u$setParameterValue(lst = list(lower = 3)))
+  expect_silent(u$setParameterValue(lst = list(lower = 1)))
+  expect_silent(u$setParameterValue(lst = list(lower = 1, upper = 3)))
+  expect_error(u$setParameterValue(lst = list(lower = 1, upper = 0)))
 })

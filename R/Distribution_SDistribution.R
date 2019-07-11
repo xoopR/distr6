@@ -60,7 +60,7 @@
 #'   \strong{Parameter Methods} \tab \strong{Link} \cr
 #'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 #'
 #'   \tab \cr \tab \cr \tab \cr
 #'
@@ -92,9 +92,11 @@ SDistribution$set("public","initialize",function(...){
   super$initialize(...)
 })
 
-SDistribution$set("public","setParameterValue",function(lst, error = "warn"){
+SDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   lst <- private$.getRefParams(lst)
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   invisible(self)
 })
 SDistribution$set("public","package",NULL)

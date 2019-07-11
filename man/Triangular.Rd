@@ -97,7 +97,7 @@ The distribution is supported on \eqn{[a, b]}.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -128,7 +128,7 @@ Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
 x = Triangular$new(lower = -1, upper = 1)
 
 # Update parameters
-x$setParameterValue(list(lower = 2, upper = 7))
+x$setParameterValue(lower = 2, upper = 7)
 x$parameters()
 
 # d/p/q/r

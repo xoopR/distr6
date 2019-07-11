@@ -106,7 +106,7 @@ Also known as the Gaussian distribution.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -133,7 +133,7 @@ Normal$new(mean = 1, sd = 2)
 x <- Normal$new(verbose = TRUE) # Standard normal default
 
 # Update parameters
-x$setParameterValue(list(var = 2))
+x$setParameterValue(var = 2)
 x$parameters()
 
 # d/p/q/r

@@ -33,9 +33,9 @@
 #' x <- MultivariateNormal$new()
 #'
 #' # Update parameters
-#' x$setParameterValue(list(mean = c(1, 2)))
+#' x$setParameterValue(mean = c(1, 2))
 #' # When any parameter is updated, all others are too!
-#' x$setParameterValue(list(prec = c(1,0,0,1)))
+#' x$setParameterValue(prec = c(1,0,0,1))
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -83,7 +83,9 @@ MultivariateNormal$set("public", "cf", function(t){
   return(exp((1i * self$getParameterValue("mean") %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
 })
 
-MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"){
+MultivariateNormal$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if(!is.null(lst$cov)){
     if(any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))))
       lst$cov <- matrix(lst$cov, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
@@ -104,7 +106,7 @@ MultivariateNormal$set("public","setParameterValue",function(lst, error = "warn"
     lst$mean <- as.numeric(lst$mean)
   }
 
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   invisible(self)
 })
 MultivariateNormal$set("public","getParameterValue",function(id, error = "warn"){
@@ -129,7 +131,7 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
                                                       prec = NULL, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
-  self$setParameterValue(list(mean = mean, cov = cov, prec = prec))
+  self$setParameterValue(mean = mean, cov = cov, prec = prec)
 
   lst <- rep(list(bquote()), length(mean))
   names(lst) <- paste("x",1:length(mean),sep="")

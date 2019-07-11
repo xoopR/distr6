@@ -106,7 +106,7 @@ Only the mode, pdf, cdf and rand are available for this Distribution, all other 
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -130,7 +130,7 @@ Only the mode, pdf, cdf and rand are available for this Distribution, all other 
 x = Categorical$new("Bapple","Banana",2,probs=c(0.2,0.4,1))
 
 # Only the probabilities can be changed and must the same length as in construction
-x$setParameterValue(list(probs = c(0.1,0.2,0.7)))
+x$setParameterValue(probs = c(0.1,0.2,0.7))
 
 # d/p/q/r
 x$pdf(c("Bapple", "Carrot", 1, 2))

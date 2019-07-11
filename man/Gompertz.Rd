@@ -106,7 +106,7 @@ Unfortunately the Gompertz distribution is quite complex to deal with and as suc
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
@@ -129,7 +129,7 @@ Unfortunately the Gompertz distribution is quite complex to deal with and as suc
 x <- Gompertz$new(shape = 2, scale = 3)
 
 # Update parameters
-x$setParameterValue(list(scale = 1))
+x$setParameterValue(scale = 1)
 x$parameters()
 
 # d/p/q/r

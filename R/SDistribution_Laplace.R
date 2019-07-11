@@ -25,7 +25,8 @@
 #' x = Laplace$new(verbose = TRUE) # Default is mean = 0, scale = 1
 #'
 #' # Update parameters
-#' x$setParameterValue(list(var = 2)) # When any parameter is updated, all others are too!
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(var = 2)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -94,7 +95,7 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, scale, var, verbose)
-  self$setParameterValue(list(mean = mean, scale = scale, var = var))
+  self$setParameterValue(mean = mean, scale = scale, var = var)
 
   pdf <- function(x1){
     return((2*self$getParameterValue("scale"))^-1 * exp(-abs(x1-self$getParameterValue("mean"))))

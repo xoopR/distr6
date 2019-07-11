@@ -24,7 +24,7 @@
 #' x = Arcsine$new(lower = 2, upper = 5)
 #'
 #' # Update parameters
-#' x$setParameterValue(list(upper = 4, lower = 1))
+#' x$setParameterValue(upper = 4, lower = 1)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -82,7 +82,9 @@ Arcsine$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Arcsine$set("public","setParameterValue",function(lst, error = "warn"){
+Arcsine$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] <= lst[["upper"]])
   else if("lower" %in% names(lst))
@@ -90,14 +92,15 @@ Arcsine$set("public","setParameterValue",function(lst, error = "warn"){
   else if("upper" %in% names(lst))
     checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"))
 
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("lower"),self$getParameterValue("upper"))
+  invisible(self)
 })
 
 Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper))
+  self$setParameterValue(lower = lower, upper = upper)
 
   pdf <- function(x1){
     if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
