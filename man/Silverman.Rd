@@ -5,8 +5,8 @@
 \title{Silverman Kernel}
 \description{
 Mathematical and statistical functions for the Silverman kernel defined by the pdf,
-\deqn{f(x) = 1/2 * exp(-|x1|/sqrt(2)) * sin(|x1|/sqrt(2) + \pi/4)}
-over the support \eqn{x \epsilon R}.
+\deqn{f(x) = 1/2 * exp(\frac{-|x|}{\sqrt(2)}) * sin(\frac{|x|}{\sqrt(2)} + \frac{\pi}{4})}{f(x) = 1/2 * exp(-|x|/\sqrt(2)) * sin(|x|/\sqrt(2) + \pi/4)}
+over the support \eqn{x \in R}{x \epsilon R}.
 }
 \details{
 The cdf and quantile functions are omitted as no closed form analytic expressions could

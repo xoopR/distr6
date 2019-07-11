@@ -5,8 +5,8 @@
 \title{Epanechnikov Kernel}
 \description{
 Mathematical and statistical functions for the Epanechnikov kernel defined by the pdf,
-\deqn{f(x) = 3/4(1-x^2)}
-over the support \eqn{x \epsilon (-1,1)}.
+\deqn{f(x) = \frac{3}{4}(1-x^2)}{f(x) = 3/4(1-x^2)}
+over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 }
 \details{
 The quantile function is omitted as no closed form analytic expressions could

@@ -5,8 +5,8 @@
 \title{Cosine Kernel}
 \description{
 Mathematical and statistical functions for the Cosine kernel defined by the pdf,
-\deqn{f(x) = \pi/4 * cos(\pi/2 * x)}
-over the support \eqn{x \epsilon (-1,1)}.
+\deqn{f(x) = \frac{\pi}{4} cos(\frac{x\pi}{2})}{f(x) = (\pi/4)cos(x\pi/2)}
+over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 }
 \section{Constructor}{
  Cosine$new(decorators = NULL)

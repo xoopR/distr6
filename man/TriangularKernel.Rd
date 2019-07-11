@@ -6,7 +6,7 @@
 \description{
 Mathematical and statistical functions for the Triangular kernel defined by the pdf,
 \deqn{f(x) = 1 - |x|}
-over the support \eqn{x \epsilon (-1,1)}.
+over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 }
 \section{Constructor}{
  TriangularKernel$new(decorators = NULL)

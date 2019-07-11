@@ -6,7 +6,7 @@
 \description{
 Mathematical and statistical functions for the Triweight kernel defined by the pdf,
 \deqn{f(x) = 35/32(1 - x^2)^3}
-over the support \eqn{x \epsilon (-1,1)}.
+over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 }
 \details{
 The quantile function is omitted as no closed form analytic expression could

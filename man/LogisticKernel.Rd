@@ -5,8 +5,8 @@
 \title{Logistic Kernel}
 \description{
 Mathematical and statistical functions for the LogisticKernel kernel defined by the pdf,
-\deqn{f(x) = (exp(x) + 2 + exp(-x))^-1}
-over the support \eqn{x \epsilon R}.
+\deqn{f(x) = (exp(x) + 2 + exp(-x))^{-1}}{f(x) = (exp(x) + 2 + exp(-x))^-1}
+over the support \eqn{x \in R}{x \epsilon R}.
 }
 \section{Constructor}{
  LogisticKernel$new(decorators = NULL)

@@ -5,8 +5,8 @@
 \title{Sigmoid Kernel}
 \description{
 Mathematical and statistical functions for the Sigmoid kernel defined by the pdf,
-\deqn{f(x) = (2/\pi) * (exp(x) + exp(-x))^-1}
-over the support \eqn{x \epsilon R}.
+\deqn{f(x) = \frac{2}{\pi}(exp(x) + exp(-x))^{-1}}{f(x) = (2/\pi)(exp(x) + exp(-x))^-1}
+over the support \eqn{x \in R}{x \epsilon R}.
 }
 \details{
 The cdf and quantile functions are omitted as no closed form analytic expressions could

@@ -9,7 +9,7 @@
 #' @templateVar uses in survival analysis and is a special case of the Generalized Extreme Value distribution
 #' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise}
+#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedVars \code{mgf} and \code{cf}

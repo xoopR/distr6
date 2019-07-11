@@ -8,8 +8,8 @@ The mathematical set of extended real numbers.
 }
 \details{
 The set of Extended Reals is defined as the union of the set of reals with +-Infinity, i.e.
-\deqn{ExtendedReals = \mathbb{R} \cup {-\infty, \infty}}{ExtendedReals = R \cup {-\infty, \infty}}
-where \eqn{\mathbb{R}}{R} is the set of reals.
+\deqn{ExtendedReals = R \cup {-\infty, \infty}}
+where \eqn{R} is the set of reals.
 }
 \section{Constructor}{
  ExtendedReals$new(dim = 1)

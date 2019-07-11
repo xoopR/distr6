@@ -223,8 +223,8 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @details The set of Rationals is defined as the set of numbers that can be written as a fraction
 #' of two integers, i.e.
-#' \deqn{Rationals = \{p/q | p,q \ \in \ \mathbb{Z}\}}{Rationals = {p/q | p,q \epsilon Z}}
-#' where \eqn{\mathbb{Z}}{Z} is the set of integers.
+#' \deqn{Rationals = \{p/q | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
+#' where \eqn{Z} is the set of integers.
 #'
 #' @section Constructor: Rationals$new(dim = 1,...)
 #' @section Constructor Arguments:
@@ -257,8 +257,8 @@ Rationals$set("private",".class","numeric")
 #'
 #' @details The set of Positive Rationals is defined as the set of numbers that can be written as a fraction
 #' of two integers and are non-negative, i.e.
-#' \deqn{PosRationals = {\frac{p}{q} | p,q \ \in \ \mathbb{Z}, \ \frac{p}{q} \ge 0}}{PosRationals = {p/q | p,q \epsilon Z, p/q \ge 0}}
-#' where \eqn{\mathbb{Z}}{Z} is the set of integers.
+#' \deqn{PosRationals = \{\frac{p}{q} | p,q \ \in \ Z, \ \frac{p}{q} \ge 0\}}{PosRationals = {p/q | p,q \epsilon Z, p/q \ge 0}}
+#' where \eqn{Z} is the set of integers.
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
@@ -293,8 +293,8 @@ PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @details The set of Positive Rationals is defined as the set of numbers that can be written as a fraction
 #' of two integers and are non-negative, i.e.
-#' \deqn{NegRationals = {\frac{p}{q} | p,q \ \in \ \mathbb{Z}, \ \frac{p}{q} \le 0}}{NegRationals = {p/q | p,q \epsilon Z, p/q \le 0}}
-#' where \eqn{\mathbb{Z}}{Z} is the set of integers.
+#' \deqn{NegRationals = \{\frac{p}{q} | p,q \ \in \ Z, \ \frac{p}{q} \le 0\}}{NegRationals = {p/q | p,q \epsilon Z, p/q \le 0}}
+#' where \eqn{Z} is the set of integers.
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
@@ -328,8 +328,8 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @name Reals
 #'
 #' @details The set of Reals is defined as the union of the set of rationals and irrationals, i.e.
-#' \deqn{Reals = \mathbb{I} \cup \mathbb{Q}}{Reals = I \cup Q}
-#' where \eqn{\mathbb{I}}{I} is the set of irrationals and \eqn{\mathbb{Q}} is the set of rationals.
+#' \deqn{Reals = I \cup Q}{Reals = I \cup Q}
+#' where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 #'
 #' @section Constructor: Reals$new(dim = 1,...)
 #' @section Constructor Arguments:
@@ -362,8 +362,8 @@ Reals$set("private",".class","numeric")
 #'
 #' @details The set of Positive Reals is defined as the union of the set of positive rationals and positive
 #' irrationals, i.e.
-#' \deqn{PosReals = \mathbb{I}^+ \cup \mathbb{Q}^+}{PosReals = I+ \cup Q+}
-#' where \eqn{\mathbb{I}^+}{I+} is the set of positive irrationals and \eqn{\mathbb{Q}^+}{Q+} is the set of positive rationals.
+#' \deqn{PosReals = I^+ \cup Q^+}{PosReals = I+ \cup Q+}
+#' where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
@@ -398,8 +398,8 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @details The set of Negative Reals is defined as the union of the set of negative rationals and negative
 #' irrationals, i.e.
-#' \deqn{NegReals = \mathbb{I}^- \cup \mathbb{Q}^-}{NegReals = I- \cup Q-}
-#' where \eqn{\mathbb{I}^-}{I-} is the set of negative irrationals and \eqn{\mathbb{Q}^-}{Q-} is the set of negative rationals.
+#' \deqn{NegReals = I^- \cup Q^-}{NegReals = I- \cup Q-}
+#' where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the set of negative rationals.
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
@@ -433,8 +433,8 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @name ExtendedReals
 #'
 #' @details The set of Extended Reals is defined as the union of the set of reals with +-Infinity, i.e.
-#' \deqn{ExtendedReals = \mathbb{R} \cup {-\infty, \infty}}{ExtendedReals = R \cup {-\infty, \infty}}
-#' where \eqn{\mathbb{R}}{R} is the set of reals.
+#' \deqn{ExtendedReals = R \cup {-\infty, \infty}}
+#' where \eqn{R} is the set of reals.
 #'
 #' @section Constructor: ExtendedReals$new(dim = 1)
 #' @section Constructor Arguments:
@@ -461,8 +461,8 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 #' @name Complex
 #'
 #' @details The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.
-#' \deqn{Complex = {a + bi | a,b \in \mathbb{R}}}{Complex = {a + bi | a,b \epsilon R}}
-#' where \eqn{\mathbb{R}}{R} is the set of reals.
+#' \deqn{Complex = \{a + bi | a,b \in R\}}{Complex = {a + bi | a,b \epsilon R}}
+#' where \eqn{R} is the set of reals.
 #'
 #' @section Constructor: Complex$new(dim = 1)
 #' @section Constructor Arguments:

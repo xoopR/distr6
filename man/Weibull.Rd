@@ -9,7 +9,7 @@ is commonly used in survival analysis and is a special case of the Generalized E
 }
 \details{
 The Weibull distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise} for \eqn{\alpha, \beta > 0}.
+\deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on the Positive Reals.
 

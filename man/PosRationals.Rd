@@ -9,8 +9,8 @@ The mathematical set of positive rational numbers.
 \details{
 The set of Positive Rationals is defined as the set of numbers that can be written as a fraction
 of two integers and are non-negative, i.e.
-\deqn{PosRationals = {\frac{p}{q} | p,q \ \in \ \mathbb{Z}, \ \frac{p}{q} \ge 0}}{PosRationals = {p/q | p,q \epsilon Z, p/q \ge 0}}
-where \eqn{\mathbb{Z}}{Z} is the set of integers.
+\deqn{PosRationals = \{\frac{p}{q} | p,q \ \in \ Z, \ \frac{p}{q} \ge 0\}}{PosRationals = {p/q | p,q \epsilon Z, p/q \ge 0}}
+where \eqn{Z} is the set of integers.
 
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
