@@ -1,6 +1,11 @@
+url: https://alan-turing-institute.github.io/distr6
+
 template:
   params:
     bootswatch: spacelab
+    docsearch:
+      api_key: c08037a20302b0f7fe5a1b7060957f04
+      index_name: distr6
 
 navbar:
   left:
