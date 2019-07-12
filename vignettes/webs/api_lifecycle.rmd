@@ -10,25 +10,19 @@ vignette: >
 
 distr6 v1 is now live and most of the API is stable however some aspects are still 'maturing' or 'experimental'. This means that whilst the core feature API, such as the distribution interface, is stable and is unlikely to change, other aspects such as specific decorators may be subject to future change. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. Please refer to [this website](https://www.tidyverse.org/lifecycle/) for the tidyverse definitions of different lifecycle stages. For us these mean:
 
-1. [Experimental](#experimental-classes-and-methods) - In development, possibly with bugs and the API may change
-2. [Maturing](#maturing-classes-and-methods) - Functioning but the internal methodology needs tweaking, API is unlikely to change
-3. [Stable](#maturing-classes-and-methods) - Functioning as expected and (hopefully) bug free
+1. [Maturing](#maturing-classes-and-methods) - Functioning but the internal methodology needs tweaking, API is unlikely to change
+2. [Stable](#maturing-classes-and-methods) - Functioning as expected and (hopefully) bug free
 
 The lists below use the headings name from the [reference page](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions) of the website.
 
-## Experimental Classes and Methods ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
-
-* [Function Imputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
-* [Scale](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
-* [Convolution](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
-
 ## Maturing Classes and Methods ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
-
-* [Kernels](https://alan-turing-institute.github.io/distr6/reference/#section-kernels)
+* [Function Imputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Convolution](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
 
 ## Stable Classes and Methods ![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 
 * [Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-distributions)
+* [Kernels](https://alan-turing-institute.github.io/distr6/reference/#section-kernels)
 * [Mathematical and Statistical](https://alan-turing-institute.github.io/distr6/reference/#section-mathematical-and-statistical)
 * [Distribution Accessors](https://alan-turing-institute.github.io/distr6/reference/#section-distribution-accessors)
 * [Decorators, except FunctionImputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
