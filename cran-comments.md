@@ -22,7 +22,14 @@ check_win:
 * x86_64-w64_mingw32 (64-bit); R devel (2019-06-23 r76735)
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+There were no ERRORs or WARNINGs.
+
+There was 1 NOTE:
+
+Maintainer: 'Raphael Sonabend <raphael.sonabend.15@ucl.ac.uk>'
+
+New submission
+
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
