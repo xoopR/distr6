@@ -9,7 +9,7 @@ template:
 
 navbar:
   left:
-  - text: Basic Tutorials
+  - text: Basic
     menu:
       - text: Introduction to R6
         href: articles/webs/intro_to_r6.html
@@ -25,7 +25,7 @@ navbar:
         href: articles/webs/multivariates.html
       - text: Listing
         href: articles/webs/listing.html
-  - text: Advanced Tutorials
+  - text: Advanced
     menu:
       - text: S3 and Piping
         href: articles/webs/s3_piping.html
