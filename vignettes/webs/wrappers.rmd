@@ -57,7 +57,7 @@ You can also specify the name of the internal model to access it,
 truncate(Normal$new(),-1,1)$wrappedModels("Norm")
 ```
 
-A slightly quicker approach is to use the `description` variable which is updated each time a distirbution is wrapped
+A slightly quicker approach is to use the `description` variable which is updated each time a distribution is wrapped
 ```{r}
 truncate(Normal$new(),-1,1)$description
 huberize(truncate(Normal$new(),-3,3),-2,2)$description
