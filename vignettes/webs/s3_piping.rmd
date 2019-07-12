@@ -58,7 +58,7 @@ summary(N)
 N$kurtosis()
 kurtosis(N)
 
-setParameterValue(N,list(var = 2))
+setParameterValue(N,var = 2)
 getParameterValue(N, "var")
 ```
 
@@ -69,7 +69,7 @@ We won't go into too much detail about piping because it will be familiar to use
 
 ```{r}
 library(magrittr)
-Normal$new() %>% setParameterValue(list(var = 2)) %>% getParameterValue("var")
+Normal$new() %>% setParameterValue(var = 2) %>% getParameterValue("var")
 
 # Don't worry about unfamiliar functions used here, we return to this in the next tutorial
 Normal$new() %>% decorate(ExoticStatistics) %>% hazard(2)

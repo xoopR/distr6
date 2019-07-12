@@ -43,7 +43,7 @@ N$getParameterValue("prec")
 
 Any parameter can be updated in distr6 using the `setParameterValue` method and all others are updated accordingly. For example,
 ```{r}
-N$setParameterValue(list(var = 2))
+N$setParameterValue(var = 2)
 N$parameters()
 ```
 
@@ -52,13 +52,13 @@ Not only has the variance been updated, but so too have the precision and standa
 Internal checks ensure that only valid parameter values are allowed, for example setting the variance to a negative number will throw an error. Finally, multiple parameters can be updated at the same time
 
 ```{r}
-N$setParameterValue(list(mean = 4, sd = 2))
+N$setParameterValue(mean = 4, sd = 2)
 N$parameters()
 ```
 
 But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will lead to the variance argument being ignored:
 ```{r}
-N$setParameterValue(list(var = 2, prec = 3))
+N$setParameterValue(var = 2, prec = 3)
 N$parameters()
 ```
 

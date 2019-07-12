@@ -38,9 +38,9 @@ Every multivariate distribution includes by default an extra parameter that cann
 ```{r}
 MN <- MultivariateNormal$new()
 MN$getParameterValue("K")
-MN$setParameterValue(list(mean = c(0))) # Causes an error as 1 not 2 means are given
-MN$setParameterValue(list(mean = c(0,1)))
-MN$setParameterValue(list(prec = c(2,0,0,2,1,2))) # Truncated to c(2,0,0,2)
+MN$setParameterValue(mean = c(0)) # Causes an error as 1 not 2 means are given
+MN$setParameterValue(mean = c(0,1))
+MN$setParameterValue(prec = c(2,0,0,2,1,2)) # Truncated to c(2,0,0,2)
 MN$parameters()
 ```
 

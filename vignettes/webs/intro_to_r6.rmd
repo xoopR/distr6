@@ -66,7 +66,7 @@ N$kurtosis(excess = FALSE)
 A final point about methods is that they act on the object, this means that whilst some will produce an output such as the ones above, others will actually change the object. Whereas to update a variable in R you may run something like `y = y + 1` in R6 the change is made in the method:
 ```{r}
 N$getParameterValue("var")
-N$setParameterValue(list(var = 5))
+N$setParameterValue(var = 5)
 N$getParameterValue("var")
 ```
 Don't worry about the particulars of these methods just yet, we will return to them in later tutorials. For now just remember that `setParameterValue()` will update the object `N` without us having to manually save this.
@@ -75,7 +75,7 @@ Don't worry about the particulars of these methods just yet, we will return to t
 
 Method chaining is a slightly more advanced topic and therefore we will only very briefly discuss it here. It is essentially the act of combining multiple methods into one line (or chain), for example:
 ```{r}
-N$setParameterValue(list(var = 6))$getParameterValue("var")
+N$setParameterValue(var = 6)$getParameterValue("var")
 ```
 See how we simply added one method to the end of the other using the same dollar sign syntax. Not all methods can be chained and do not worry if you don't feel comfortable doing this, we're just highlighting it for users more familiar with object-oriented programming.
 
