@@ -111,14 +111,14 @@ Note the following:
 2. Every constructor includes the `getParameterSet` and `setParameterValue` methods, we will return to these later.
 3. The d/p/q/r methods are defined here in the constructor, either interfacing another package or written by you
 4. The super-class constructor is called, arguments passed to this include the decorators arguments, the d/p/q/r methods, the properties of the distribution including: support (SetInterval); symmetric (logical).
-And the traits of the distribution inlcuding: type (SetInterval); variateForm ("univariate"/"multivariate"/"matrixvariate"); valueSupport ("discrete"/"continuous"/"mixture").
+And the traits of the distribution including: type (SetInterval); variateForm ("univariate"/"multivariate"/"matrixvariate"); valueSupport ("discrete"/"continuous"/"mixture").
 5. A distribution is termed symmetric iff it is analytically symmetric, i.e. a CLT style approximation does not count.
 6. If an analytic expression for d/p/q/r is not available, omit this from the constructor and super-class constructor
 7. There are no validation checks for properties or traits. The methods assume that if you are creating your own class that you will only supply valid inputs.
 
 ### getParameterSet
 
-In a separate script called getParameterSet.R we have the generic and dispatch methods for every SDistribution. This function validates the initial choice of parameterisation, tells the user the parameterisation (if `verbose == TRUE`), constructs and returns the ParameterSet for the distribution. Below is the `getParameterSet` method for the Normal distirbution
+In a separate script called getParameterSet.R we have the generic and dispatch methods for every SDistribution. This function validates the initial choice of parameterisation, tells the user the parameterisation (if `verbose == TRUE`), constructs and returns the ParameterSet for the distribution. Below is the `getParameterSet` method for the Normal distribution
 
 ```{r}
 getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose = FALSE){

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
 Implementing your own decorator is the easiest extension you can make to distr6, the only difficulty arises in determining what should go in your decorator. If you plan on making a pull-request with a new decorator to distr6 then we would expect the following:
 
 1. A description of your decorator including what problem it solves and why it is required
-2. A description of methodology including the choice of numeric methods and a description of any packages dependended on including how their code is written (e.g. have you seen their code, is it in R or C, are there references).
+2. A description of methodology including the choice of numeric methods and a description of any packages depended on including how their code is written (e.g. have you seen their code, is it in R or C, are there references).
 3. A decorator that adds at least three methods. We do not want a clutter of decorators in distr6.
 
 The `DistributionDecorator` class is an abstract class that doesn't add any methods or variables, its sole purpose is to define decorators in an abstract sense as a way to collate them. Decorators could function as named lists, for example the `CoreStatistics` decorator could instead be a list called 'CoreStatistics' with each named element being one of the added methods. However lists provide slightly less flexibility and would need to be created as the package is loaded, as opposed to a relatively small class that sits in the package namespace.
@@ -77,11 +77,11 @@ Note the use of `private$.isCdf`, this checks to see if the `cdf` method is defi
 
 Therefore the use of `private$.isCdf` tells the decorator whether it can use analytic results or if numeric integration is required.
 
-Note: if the user has already decorated their distribution with `FunctionImputation` then even if your decorator thinks the results are analtic, they are not. However this is taken into account by the warning message in the imputed d/p/q/r methods.
+Note: if the user has already decorated their distribution with `FunctionImputation` then even if your decorator thinks the results are analytic, they are not. However this is taken into account by the warning message in the imputed d/p/q/r methods.
 
 ## Summary
 
-1. Decorators are simply to implement, just define a new class inheritinf from `DistributionDecorator`
+1. Decorators are simply to implement, just define a new class inheriting from `DistributionDecorator`
 2. Add as many public methods as you want, but remember to include messages for numeric integration
 3. Make use of the private `.isCdf`, `.isPdf`, `.isQuantile`, `.isRand` methods to exploit analytic results. 
 

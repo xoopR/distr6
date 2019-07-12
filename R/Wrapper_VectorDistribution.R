@@ -41,7 +41,7 @@ VectorDistribution$set("public","initialize",function(distlist, name = NULL,
   distlist = makeUniqueDistributions(distlist)
 
   if(is.null(name)) name = paste("Vector:",paste0(lapply(distlist, function(x) x$name),collapse=", "))
-  if(is.null(short_name)) short_name = paste0(lapply(distlist, function(x) x$short_name),collapse="X")
+  if(is.null(short_name)) short_name = paste0(lapply(distlist, function(x) x$short_name),collapse="Vec")
   if(is.null(description)) description = paste0("Vector of:",paste0(lapply(distlist, function(x) x$description), collapse=" "))
 
   lst <- rep(list(bquote()), length(distlist))

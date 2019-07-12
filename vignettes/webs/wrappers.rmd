@@ -43,7 +43,7 @@ class(Normal$new())
 class(truncate(Normal$new()))
 ```
 
-See how the Normal distribution becomes an object of class `TruncatedDistribution` which in itself is of class `DistributionWrapper`. This tells the machine to expect a slightly different interface but it still recognises the original Normal distirbution that is being wrapped.
+See how the Normal distribution becomes an object of class `TruncatedDistribution` which in itself is of class `DistributionWrapper`. This tells the machine to expect a slightly different interface but it still recognises the original Normal distribution that is being wrapped.
 
 ## Accessing Wrapped Models
 

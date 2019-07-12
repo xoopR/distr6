@@ -49,6 +49,9 @@ test_that("check truncation parameters",{
   expect_error(x$setParameterValue(truncUpper = 1))
   expect_error(x$setParameterValue(truncLower = 12))
   expect_error(x$setParameterValue(truncLower = 4, truncUpper = 3))
+  x = truncate(Exponential$new(),lower = 1, upper = 5)
+  expect_silent(x$setParameterValue(truncLower = 2, truncUpper = 10))
+  expect_equal(x$inf(), 2)
+  expect_equal(x$sup(), 10)
+  expect_true(inherits(x$support(), "Interval"))
 })
-
-

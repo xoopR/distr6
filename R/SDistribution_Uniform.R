@@ -6,7 +6,7 @@
 #' @template SDist
 #' @templateVar ClassName Uniform
 #' @templateVar DistName Uniform
-#' @templateVar uses to model continuous events occuring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling
+#' @templateVar uses to model continuous events occurring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling
 #' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
 #' @templateVar pdfpmf pdf
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b-a)}

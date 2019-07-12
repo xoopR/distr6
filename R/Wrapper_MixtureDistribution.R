@@ -76,8 +76,8 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL)
   }
   formals(rand)$self <- self
 
-  name = paste("Mixture of",paste(distnames, collapse = "_"))
-  short_name = paste0("Mix_",paste(distnames, collapse = "_"))
+  name = paste("Mixture of",paste(distnames, collapse = " and "))
+  short_name = paste(distnames, collapse = "Mix")
   type = do.call(union.SetInterval, lapply(distlist, type))
   support = do.call(union.SetInterval, lapply(distlist, type))
 

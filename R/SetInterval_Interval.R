@@ -6,7 +6,7 @@
 #'
 #' @description A symbolic R6 Interval class.
 #'
-#' @details Intervals are distinguised from sets in R6 as they can take an infinite range and are defined
+#' @details Intervals are distinguished from sets in R6 as they can take an infinite range and are defined
 #' over a continuous range (albeit integer or numeric).
 #'
 #' @name Interval

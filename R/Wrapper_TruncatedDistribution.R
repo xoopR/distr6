@@ -67,7 +67,7 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
   formals(cdf)$self <- self
 
   name = paste("Truncated",distribution$name)
-  short_name = paste0("Truncated",distribution$short_name)
+  short_name = paste0("Trunc",distribution$short_name)
 
   distlist = list(distribution)
   names(distlist) = distribution$short_name

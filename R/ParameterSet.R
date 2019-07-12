@@ -43,7 +43,7 @@
 #'   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
 #'   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
 #'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#'   \code{rbind(...)} \tab \code{\link{rbind.ParameterSet}} \cr
+#'   \code{merge(y, ...)} \tab \code{\link{merge.ParameterSet}} \cr
 #'   \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
 #' }
 #'
@@ -352,19 +352,24 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
 
 #' @title Combine ParameterSets
 #'
-#' @description rbind dispatch method to combine parameter sets by rows.
+#' @description merge dispatch method to combine parameter sets by rows.
 #'
+#' @param x ParameterSet
+#' @param y ParameterSet
 #' @param ... ParameterSets
 #'
-#' @section R6 Usage: $rbind(...)
+#' @section R6 Usage: $merge(y, ...)
 #'
 #' @seealso \code{\link{ParameterSet}}
 #'
 #' @export
-rbind.ParameterSet <- function(...){}
-ParameterSet$set("public","rbind",function(...){
+merge.ParameterSet <- function(x, y, ...){}
+ParameterSet$set("public","merge",function(y, ...){
+  newsets = c(list(y), list(...))
+  lapply(newsets, function(x) checkmate::assert(inherits(x,"ParameterSet"),.var.name = "All objects in merge must be ParameterSets"))
+
   newpar = rbind(self$as.data.table(),
-                 data.table::rbindlist(lapply(list(...), function(x) x$as.data.table())))
+                 data.table::rbindlist(lapply(newsets, function(x) x$as.data.table())))
 
   if(any(table(newpar$id)>1))
     stop("IDs must be unique. Try using makeUniqueDistributions first.")

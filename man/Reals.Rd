@@ -4,7 +4,7 @@
 \alias{Reals}
 \title{Set of Reals}
 \description{
-The mathematical set of real numebers.
+The mathematical set of real numbers.
 }
 \details{
 The set of Reals is defined as the union of the set of rationals and irrationals, i.e.

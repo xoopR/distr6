@@ -51,7 +51,7 @@ with a non-NA \code{updateFunc}.
   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \code{rbind(...)} \tab \code{\link{rbind.ParameterSet}} \cr
+  \code{merge(y, ...)} \tab \code{\link{merge.ParameterSet}} \cr
   \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
 }
 }

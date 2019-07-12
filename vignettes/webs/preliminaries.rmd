@@ -17,7 +17,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ## Here Be Dragons
 
-When extending SDistributions, Kernels, Wrappers and Decorators, there are no formal checks on the quality or accuracy of your code. Whilst distr6 is modularised in such a way that a new class with a bug in it won't crash the rest of the package, it is still important that they can be interfaced propelry with parent classes. The next few tutorials will go through how to extend the SDistribution, Kernel, Wrapper and Decorator classes but first please make sure you have gone through the preliminary checklist below. Of course, if you don't intend to make a pull-request to add your extension to the distr6 package, then feel free to go right on ahead and [start here](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html).
+When extending SDistributions, Kernels, Wrappers and Decorators, there are no formal checks on the quality or accuracy of your code. Whilst distr6 is modularised in such a way that a new class with a bug in it won't crash the rest of the package, it is still important that they can be interfaced properly with parent classes. The next few tutorials will go through how to extend the SDistribution, Kernel, Wrapper and Decorator classes but first please make sure you have gone through the preliminary checklist below. Of course, if you don't intend to make a pull-request to add your extension to the distr6 package, then feel free to go right on ahead and [start here](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html).
 
 ## distr6 Pull-Request Preliminaries
 

@@ -5,13 +5,13 @@
 #' @description The abstract parent class to decorators.
 #'
 #' @details Decorating is the process of adding methods to classes that are not part of the core
-#' interface (Gamma et al. 1994). Use \code{listDecorators} to see wich decorators are currently available. The primary
+#' interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators are currently available. The primary
 #' use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
 #' to impute missing d/p/q/r functions.
 #'
 #' Abstract classes cannot be implemented directly. Use the \code{decorate} function to decorate distributions.
 #'
-#' @seealso \code{\link{decorate}}
+#' @seealso \code{\link{decorate}} and \code{\link{listDecorators}}
 #'
 #' @references
 #' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements

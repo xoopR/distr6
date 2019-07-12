@@ -268,5 +268,5 @@ reference:
       - setParameterValue
       - as.data.table
       - print.ParameterSet
-      - rbind.ParameterSet
+      - merge.ParameterSet
       - update.ParameterSet

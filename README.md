@@ -55,7 +55,7 @@ B$pdf(1:10)
 B$kurtosis()
 #> [1] -0.2
 B$rand(5)
-#> [1] 7 7 4 7 6
+#> [1] 5 5 7 3 8
 summary(B)
 #> Binomial Probability Distribution. Parameterised with:
 #>   prob = 0.5, size = 10
@@ -126,7 +126,7 @@ for manipulation and composition of distributions.
 ``` r
 B <- Binomial$new()
 TruncatedDistribution$new(B, lower = 2, upper = 5) #Or: truncate(B,2,5)
-#> TruncatedBinom(prob = 0.5, size = 10)
+#> TruncatedBinom(Binom_prob = 0.5, Binom_size = 10)
 N <- Normal$new()
 MixtureDistribution$new(list(B,N), weights = c(0.1, 0.9))
 #> Mix_Binom_Norm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
@@ -186,7 +186,7 @@ distributions. In our next release we plan to include
   - A generalised `qqplot` for comparing any distributions
   - A finalised `FunctionImputation` decorator with different imputation
     strategies
-  - Discrete distribution substraction (negative convolution)
+  - Discrete distribution subtraction (negative convolution)
   - A wrapper for scaling distributions to a given mean and variance
   - More probability distributions
   - Any other good suggestions made between now and then\!

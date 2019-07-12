@@ -7,7 +7,7 @@
 #' @templateVar ClassName Dirichlet
 #' @templateVar DistName Dirichlet
 #' @templateVar uses as a prior in Bayesian modelling and is multivariate generalisation of the Beta distribution
-#' @templateVar params concentration paramameters, \eqn{\alpha_1,...,\alpha_k},
+#' @templateVar params concentration parameters, \eqn{\alpha_1,...,\alpha_k},
 #' @templateVar pdfpmf pdf
 #' @templateVar pdfpmfeq \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i))\prod(x_i^{\alpha_i - 1})}
 #' @templateVar paramsupport \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function

@@ -5,7 +5,7 @@
 \title{Uniform Distribution Class}
 \description{
 Mathematical and statistical functions for the Uniform distribution, which
-is commonly used to model continuous events occuring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling.
+is commonly used to model continuous events occurring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling.
 }
 \details{
 The Uniform distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pdf,

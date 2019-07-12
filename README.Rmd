@@ -115,7 +115,7 @@ The v1.0 release focuses on the core features of the SDistribution class as well
 * A `plot` method for Distributions
 * A generalised `qqplot` for comparing any distributions
 * A finalised `FunctionImputation` decorator with different imputation strategies
-* Discrete distribution substraction (negative convolution)
+* Discrete distribution subtraction (negative convolution)
 * A wrapper for scaling distributions to a given mean and variance
 * More probability distributions
 * Any other good suggestions made between now and then!

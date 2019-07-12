@@ -50,7 +50,7 @@ ArrayDistribution$set("public","initialize",function(distribution, paramList, na
   distlist = makeUniqueDistributions(sapply(paramList, function(x) do.call(distribution$new, x)))
 
   if(is.null(name)) name = paste0("Array",length(distlist),distribution$public_fields$name)
-  if(is.null(short_name)) short_name = paste0("Array",length(distlist),distribution$public_fields$short_name)
+  if(is.null(short_name)) short_name = paste0("Arr",length(distlist),distribution$public_fields$short_name)
   if(is.null(description)) description = paste0("Array of ",length(paramList)," ",distribution$public_fields$description)
 
   super$initialize(distlist, name, short_name, description)

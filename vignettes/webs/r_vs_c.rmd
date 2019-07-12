@@ -64,7 +64,7 @@ One of the most common questions when implementing a function in R, especially o
 3. To make the d/p/q/r/ methods visible to the user
 4. Tested C implementations were not vastly quicker
 
-Note: We did interface the d/p/q/r methods of some distributions from other packages. We interfaced everything directly from R stats. Additionally we interefaced the d/p/q/r functions in a couple of distirbutions from extraDistr [@extradistr], usually because they had derived some tricky inverse cdfs.
+Note: We did interface the d/p/q/r methods of some distributions from other packages. We interfaced everything directly from R stats. Additionally we interfaced the d/p/q/r functions in a couple of distributions from extraDistr [@extradistr], usually because they had derived some tricky inverse cdfs.
 
 ## Speed Tests
 

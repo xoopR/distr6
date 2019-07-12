@@ -20,6 +20,8 @@ test_that("union",{
   expect_silent(si1 + si2)
   expect_equal(union.SetInterval(si1, si2), si1 + si2)
   expect_equal(union.SetInterval(si1, si1), si1)
+  expect_equal(union.SetInterval(si1), si1)
+  expect_equal(union.SetInterval(PosReals$new(),Reals$new()), Reals$new())
 })
 
 test_that("power",{

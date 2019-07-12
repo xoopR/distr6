@@ -55,7 +55,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   if(is.null(upper)) upper = distribution$sup()
 
   name = paste("Huberized",distribution$name)
-  short_name = paste0("Huberized",distribution$short_name)
+  short_name = paste0("Hub",distribution$short_name)
 
   distlist = list(distribution)
   names(distlist) = distribution$short_name

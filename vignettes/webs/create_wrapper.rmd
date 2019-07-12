@@ -21,7 +21,7 @@ Wrappers may the hardest class to extend in distr6, simply due to the fact that 
 
 ### The Constructor
 
-The `DistributionWrapper` constructor takes two named arguments and has `...` for named arguments to passed to the `Distribuion` constructor. The named arguments are `distlist`, a list of distributions, and `prefixParams` a logical determining if the parameters in the parameterset should have their names prefixed with 'short_name_' where 'short_name' is the `short_name` of the given distributions, this is required when multiple distributions are wrapped with the same parameters. Internally the constructor combines all of these parametersets into one combined `ParameterSet` that the user can see.
+The `DistributionWrapper` constructor takes two named arguments and has `...` for named arguments to passed to the `Distribution` constructor. The named arguments are `distlist`, a list of distributions, and `prefixParams` a logical determining if the parameters in the parameterset should have their names prefixed with 'short_name_' where 'short_name' is the `short_name` of the given distributions, this is required when multiple distributions are wrapped with the same parameters. Internally the constructor combines all of these parametersets into one combined `ParameterSet` that the user can see.
 
 For example, say we use the `MixtureDistribution` wrapper on two Binomial distributions, see how the parameter names are automatically updated
 ```{r}
@@ -46,7 +46,7 @@ M$wrappedModels("Binom1")$parameters()
 
 ### wrappedModels
 
-We saw above the use of `wrappedModels`, this is a simple accessor found in all implemented wrapers that ensure the underlying models can be accesed, which is usually required for the new methods in wrappers, which we will see more below.
+We saw above the use of `wrappedModels`, this is a simple accessor found in all implemented wrappers that ensure the underlying models can be accessed, which is usually required for the new methods in wrappers, which we will see more below.
 
 ## Creating a Wrapper
 
@@ -131,7 +131,7 @@ MixtureDistribution$set("private",".weights",numeric(0))
 
 Again this is a shortened version of the code. Note the following in the above
 
-1. As multiple distributons are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html).
+1. As multiple distributions are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html).
 2. We add a private variable `.weights` which is accessed in the pdf/cdf. In general we allow additional private variables and methods to be added to wrappers, but not public ones.
 3. The type and support are updated to account for multiple distributions.
 4. All implemented wrappers inherit from `DistributionWrapper` and again `lock_objects = FALSE`
@@ -140,7 +140,7 @@ Again this is a shortened version of the code. Note the following in the above
 
 1. Implementing wrappers is similar to implementing a SDistribution or Kernel but generally more flexible
 2. We can add private methods/variables to a wrapper, but if possible, not public methods/variables
-3. Wrappers automatically add methods for accessing internaly models and correctly getting/setting parameters
+3. Wrappers automatically add methods for accessing internally models and correctly getting/setting parameters
 
 ## Extension Guidelines
 

@@ -324,7 +324,7 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 })
 
 #' @title Set of Reals
-#' @description The mathematical set of real numebers.
+#' @description The mathematical set of real numbers.
 #' @name Reals
 #'
 #' @details The set of Reals is defined as the union of the set of rationals and irrationals, i.e.
@@ -457,7 +457,7 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 })
 
 #' @title Set of Complex Numbers
-#' @description The mathematical set of complex numebers.
+#' @description The mathematical set of complex numbers.
 #' @name Complex
 #'
 #' @details The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.

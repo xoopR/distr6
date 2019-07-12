@@ -4,7 +4,7 @@
 \alias{Complex}
 \title{Set of Complex Numbers}
 \description{
-The mathematical set of complex numebers.
+The mathematical set of complex numbers.
 }
 \details{
 The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.

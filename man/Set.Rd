@@ -7,7 +7,7 @@
 A symbolic R6 Set class.
 }
 \details{
-Sets are distinguised from intervals in R6 as they are finite mathematical sets with
+Sets are distinguished from intervals in R6 as they are finite mathematical sets with
 elements that can be printed. The elements can be of any class.
 }
 \section{Constructor}{

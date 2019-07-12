@@ -32,15 +32,17 @@ test_that("getters",{
 
 test_that("setters",{
   expect_silent(Binomial$new()$setParameterValue(lst = list(size = 5.1)))
+  expect_silent(Binomial$new()$setParameterValue(size = 5.1))
+  expect_equal(Binomial$new()$parameters()$setParameterValue(size = 5.1)$getParameterValue("size"), 5)
   expect_error(Binomial$new()$setParameterValue(lst = list(prob = 2)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa=2))))
 })
 
-test_that("rbind",{
-  expect_error(Binomial$new()$parameters()$rbind(Binomial$new()$parameters()))
-  expect_silent(Binomial$new()$parameters()$rbind(Exponential$new(rate=1)$parameters()))
+test_that("merge",{
+  expect_error(Binomial$new()$parameters()$merge(Binomial$new()$parameters()))
+  expect_silent(Binomial$new()$parameters()$merge(Exponential$new(rate=1)$parameters()))
 })
 
 test_that("no parameters",{
