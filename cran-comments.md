@@ -30,6 +30,22 @@ Maintainer: 'Raphael Sonabend <raphael.sonabend.15@ucl.ac.uk>'
 
 New submission
 
+Possibly mis-spelled words in DESCRIPTION:
+  Devroye (65:509)
+  al (65:337, 65:695)
+  dirichlet (65:561)
+  et (65:334, 65:692)
+  wald (65:744)
+
+Found the following (possibly) invalid DOIs:
+  DOI: 10.2307/2683801
+    From: DESCRIPTION
+    Status: Forbidden
+    Message: 403
+    
+ * The mis-spellings are names of authors
+ * I have manually checked the DOI and it resolves to the correct URL
+
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
