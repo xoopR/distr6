@@ -1,5 +1,5 @@
 Package: distr6
-Title: Object oriented distributions
+Title: The Complete R6 Probability Distributions Interface
 Version: 1.0.0
 Authors@R: 
       c(person(given = "Raphael",
