@@ -2,6 +2,7 @@
 #' @description Lists decorators that can decorate an R6 Distribution.
 #' @param simplify logical. If TRUE (default) returns results as characters, otherwise as R6 classes.
 #' @seealso \code{\link{DistributionDecorator}}
+#' @return Either a list of characters (if \code{simplify} is TRUE) or a list of \code{Decorator} classes.
 #' @examples
 #' listDecorators()
 #' listDecorators(FALSE)
@@ -19,15 +20,6 @@ listDecorators <- function(simplify = TRUE){
   y = y[y!="FALSE"]
   if(simplify)
     return(as.character(y))
-  else{
-    decorators = do.call(rbind.data.frame,lapply(y, function(x){
-      x = get(x)
-      Name = x$classname
-      Methods = paste0(names(x$public_methods)[2:length(x$public_methods)],
-                       collapse = "; ")
-      return(cbind(Name, Methods))
-    }))
-    row.names(decorators) = NULL
-    return(data.table::data.table(decorators))
-  }
+  else
+    return(lapply(y, get))
 }

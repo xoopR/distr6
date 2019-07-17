@@ -3,6 +3,9 @@
 \name{dimension.SetInterval}
 \alias{dimension.SetInterval}
 \title{SetInterval Dimension Accessor}
+\value{
+Dimension as an integer.
+}
 \description{
 Returns the SetInterval dimension.
 }

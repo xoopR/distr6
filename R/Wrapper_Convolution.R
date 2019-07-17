@@ -2,7 +2,14 @@
 #'
 #' @description Calculates the convolution of two distribution via numerical calculations.
 #'
-#' @details STILL IN DEVELOPMENT. Results are likely sub-optimal and some bugs may be present.
+#' @details The convolution of two probability distributions \eqn{X}, \eqn{Y} is the sum
+#' \deqn{Z = X + Y}
+#' which has a pmf,
+#' \deqn{P(Z = z) = \sum_x P(X = x)P(Y = z - x)}
+#' with an integration analogue for continuous distributions.
+#'
+#' Currently distr6 supports the addition of discrete and continuous probability distributions, but only
+#' subtraction of continuous distributions.
 #'
 #' @name Convolution
 #'
@@ -15,6 +22,8 @@
 #' \code{add} \tab logical \tab Add or subtract distributions. \cr
 #' \code{type} \tab logical \tab Type of new distribution, automated if NULL. \cr
 #' }
+#'
+#' @return Returns an R6 object of class Convolution.
 #'
 #' @seealso \code{\link{listWrappers}}
 #'

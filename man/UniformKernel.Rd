@@ -3,6 +3,9 @@
 \name{UniformKernel}
 \alias{UniformKernel}
 \title{Uniform Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Uniform kernel defined by the pdf,
 \deqn{f(x) = 1/2}

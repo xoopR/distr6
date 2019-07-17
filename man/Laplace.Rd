@@ -3,6 +3,9 @@
 \name{Laplace}
 \alias{Laplace}
 \title{Laplace Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Laplace distribution, which
 is commonly used in signal processing and finance.

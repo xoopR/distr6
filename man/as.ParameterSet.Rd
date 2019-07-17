@@ -18,7 +18,7 @@ as.ParameterSet(x,...)
 \item{...}{additional arguments}
 }
 \value{
-ParameterSet
+An R6 object of class ParameterSet.
 }
 \description{
 Coerces objects to ParameterSet.

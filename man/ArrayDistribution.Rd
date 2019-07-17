@@ -3,6 +3,9 @@
 \name{ArrayDistribution}
 \alias{ArrayDistribution}
 \title{Product Array Distribution}
+\value{
+Returns an R6 object of class ArrayDistribution.
+}
 \description{
 A special case product distribution where each independent distribution is the same
 Distribution class but not necessarily with the same parameters.

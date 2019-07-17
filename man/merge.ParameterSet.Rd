@@ -13,6 +13,9 @@
 
 \item{...}{ParameterSets}
 }
+\value{
+An R6 object of class ParameterSet.
+}
 \description{
 merge dispatch method to combine parameter sets by rows.
 }

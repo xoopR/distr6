@@ -22,6 +22,9 @@
 #' E <- Exponential$new()
 #' decorate(E, list(CoreStatistics, ExoticStatistics))
 #'
+#' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed
+#' from one of the available decorators added to the SDistribution methods.
+#'
 #' @references
 #' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
 #' of Reusable Object-Oriented Software.” Addison-Wesley.

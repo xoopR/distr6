@@ -11,6 +11,9 @@ kurtosis(object, excess = TRUE)
 
 \item{excess}{logical, if TRUE (default) excess Kurtosis returned}
 }
+\value{
+Kurtosis as a numeric.
+}
 \description{
 Kurtosis of a distribution
 }

@@ -4,6 +4,9 @@
 \alias{Normal}
 \alias{Gaussian}
 \title{Normal Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Normal distribution, which
 is commonly used in significance testing, for representing models with a bell curve, and as a result of the central limit theorem.

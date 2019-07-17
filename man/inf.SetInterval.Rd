@@ -3,6 +3,9 @@
 \name{inf.SetInterval}
 \alias{inf.SetInterval}
 \title{SetInterval Infimum Accessor}
+\value{
+Infimum as a numeric.
+}
 \description{
 Returns the SetInterval infimum.
 }

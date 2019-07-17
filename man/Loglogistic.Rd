@@ -4,6 +4,9 @@
 \alias{Loglogistic}
 \alias{Fisk}
 \title{Log-Logistic Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Log-Logistic distribution, which
 is commonly used in survival analysis for its non-monotonic hazard as well as in economics.

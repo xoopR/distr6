@@ -3,6 +3,9 @@
 \name{Epanechnikov}
 \alias{Epanechnikov}
 \title{Epanechnikov Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Epanechnikov kernel defined by the pdf,
 \deqn{f(x) = \frac{3}{4}(1-x^2)}{f(x) = 3/4(1-x^2)}

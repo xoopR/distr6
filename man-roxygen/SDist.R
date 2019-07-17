@@ -41,6 +41,8 @@
 #' @inheritSection SDistribution Public Variables
 #' @inheritSection SDistribution Public Methods
 #'
+#' @return Returns an R6 object inheriting from class SDistribution.
+#'
 #' @references
 #' McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 #' Michael P. McLaughlin.

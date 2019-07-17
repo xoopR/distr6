@@ -3,6 +3,9 @@
 \name{class.SetInterval}
 \alias{class.SetInterval}
 \title{SetInterval Minimum Accessor}
+\value{
+One of 'numeric' or 'integer'.
+}
 \description{
 Returns the SetInterval minimum.
 }

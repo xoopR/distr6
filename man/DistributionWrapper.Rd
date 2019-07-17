@@ -3,6 +3,9 @@
 \name{DistributionWrapper}
 \alias{DistributionWrapper}
 \title{Abstract DistributionWrapper Class}
+\value{
+Returns error. Abstract classes cannot be constructed directly.
+}
 \description{
 The abstract parent class to wrappers.
 }

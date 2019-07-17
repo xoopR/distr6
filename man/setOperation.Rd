@@ -22,6 +22,8 @@ setOperation(unicode, sets, lower = NULL, upper = NULL, type = NULL,
 }
 \value{
 An R6 object of class SetInterval.
+
+Returns an R6 object inheriting from SetInterval.
 }
 \description{
 Operations for SetInterval objects and subclasses, symbolic only.

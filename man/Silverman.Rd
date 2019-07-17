@@ -3,6 +3,9 @@
 \name{Silverman}
 \alias{Silverman}
 \title{Silverman Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Silverman kernel defined by the pdf,
 \deqn{f(x) = exp(-|x|/\sqrt{2})/2 * sin(|x|/\sqrt{2} + \pi/4)}

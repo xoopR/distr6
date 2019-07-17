@@ -3,6 +3,9 @@
 \name{Logarithmic}
 \alias{Logarithmic}
 \title{Logarithmic Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Logarithmic distribution, which
 is commonly used to model consumer purchase habits in economics and is derived from the Maclaurin series expansion of \eqn{-ln(1-p)}.

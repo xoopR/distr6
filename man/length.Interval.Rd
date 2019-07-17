@@ -3,14 +3,17 @@
 \name{length.Interval}
 \alias{length.Interval}
 \title{Length of Interval}
+\value{
+Returns the length of interval as a numeric if class 'integer' otherwise Inf.
+
+This is an R6 method only, no S3 dispatch is available.
+}
 \description{
 Returns the length of the Interval after coercing to numeric.
 }
 \details{
 If the interval is of class 'numeric', returns Inf. Otherwise coerces to numeric and returns that
 length.
-
-This is an R6 method only, no S3 dispatch is available.
 }
 \section{R6 Usage}{
  $length()

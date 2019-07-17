@@ -11,6 +11,9 @@
 
 \item{...}{ignored, added for S3 consistency}
 }
+\value{
+An R6 object of class ParameterSet.
+}
 \description{
 Updates parameter in a ParameterSet using \code{updateFunc}s.
 }

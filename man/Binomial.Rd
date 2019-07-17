@@ -3,6 +3,9 @@
 \name{Binomial}
 \alias{Binomial}
 \title{Binomial Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Binomial distribution, which
 is commonly used to model the number of successes out of a number of independent trials.

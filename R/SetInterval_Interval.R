@@ -46,6 +46,7 @@
 #'   \code{print()} \tab \code{\link[base]{print}} \cr
 #'   }
 #'
+#' @return Returns an R6 object of class Interval.
 #'
 #' @seealso \code{\link{Set}}
 #'
@@ -82,6 +83,8 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
 #' This is an R6 method only, no S3 dispatch is available.
 #' @section R6 Usage: $length()
 #'
+#'@return If the Interval is of class integer then returns a numeric vector of the interval elements.
+#'
 #' @seealso \code{\link{Set}}, \code{\link{length.Interval}}
 Interval$set("public","as.numeric",function(){
   if(self$class() == "integer")
@@ -95,6 +98,8 @@ Interval$set("public","as.numeric",function(){
 #' @details
 #' If the interval is of class 'numeric', returns Inf. Otherwise coerces to numeric and returns that
 #' length.
+#'
+#' @return Returns the length of interval as a numeric if class 'integer' otherwise Inf.
 #'
 #' This is an R6 method only, no S3 dispatch is available.
 #' @section R6 Usage: $length()

@@ -3,6 +3,9 @@
 \name{length.Set}
 \alias{length.Set}
 \title{Length of Set}
+\value{
+Number of elements in the set.
+}
 \description{
 Returns the length of the Set as the number of elements.
 }

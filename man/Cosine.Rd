@@ -3,6 +3,9 @@
 \name{Cosine}
 \alias{Cosine}
 \title{Cosine Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Cosine kernel defined by the pdf,
 \deqn{f(x) = (\pi/4)cos(x\pi/2)}

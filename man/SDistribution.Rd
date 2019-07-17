@@ -3,6 +3,9 @@
 \name{SDistribution}
 \alias{SDistribution}
 \title{Abstract Special Distribution Class}
+\value{
+Returns error. Abstract classes cannot be constructed directly.
+}
 \description{
 Abstract class that cannot be constructed directly.
 }

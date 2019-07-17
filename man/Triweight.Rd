@@ -3,6 +3,9 @@
 \name{Triweight}
 \alias{Triweight}
 \title{Triweight Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Triweight kernel defined by the pdf,
 \deqn{f(x) = 35/32(1 - x^2)^3}

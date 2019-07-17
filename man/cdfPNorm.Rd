@@ -15,6 +15,9 @@ cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Given p-norm of cdf evaluated between limits as a numeric.
+}
 \description{
 The p-norm of the cdf evaluated between given limits or over the whole support.
 }

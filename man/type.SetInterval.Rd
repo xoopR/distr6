@@ -3,6 +3,9 @@
 \name{type.SetInterval}
 \alias{type.SetInterval}
 \title{SetInterval Type Accessor}
+\value{
+Returns the type of SetInterval, one of "()","(]","[]","[)".
+}
 \description{
 Returns the SetInterval 'type', one of "()","(]","[]","[)".
 }

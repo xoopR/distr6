@@ -3,6 +3,9 @@
 \name{ProductDistribution}
 \alias{ProductDistribution}
 \title{Product Distribution}
+\value{
+Returns an R6 object of class ProductDistribution.
+}
 \description{
 A wrapper for creating the joint distribution of multiple independent probability distributions.
 }

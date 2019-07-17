@@ -3,6 +3,9 @@
 \name{PosReals}
 \alias{PosReals}
 \title{Set of Positive Reals}
+\value{
+Returns R6 object of class PosReals.
+}
 \description{
 The mathematical set of positive real numbers.
 }

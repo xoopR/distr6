@@ -12,6 +12,8 @@
 #'
 #' @seealso \code{\link{SpecialSet}}, \code{\link{listSpecialSets}}
 #'
+#' @return Returns the unicode representation of mathematical special sets.
+#'
 #' @examples
 #' # Supplied as class
 #' setSymbol(empty)

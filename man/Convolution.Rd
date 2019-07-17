@@ -3,11 +3,21 @@
 \name{Convolution}
 \alias{Convolution}
 \title{Distribution Convolution Wrapper}
+\value{
+Returns an R6 object of class Convolution.
+}
 \description{
 Calculates the convolution of two distribution via numerical calculations.
 }
 \details{
-STILL IN DEVELOPMENT. Results are likely sub-optimal and some bugs may be present.
+The convolution of two probability distributions \eqn{X}, \eqn{Y} is the sum
+\deqn{Z = X + Y}
+which has a pmf,
+\deqn{P(Z = z) = \sum_x P(X = x)P(Y = z - x)}
+with an integration analogue for continuous distributions.
+
+Currently distr6 supports the addition of discrete and continuous probability distributions, but only
+subtraction of continuous distributions.
 }
 \section{Constructor}{
  Convolution$new(dist1, dist2, add = TRUE, type = NULL)

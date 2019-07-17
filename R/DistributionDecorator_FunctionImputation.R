@@ -34,6 +34,9 @@
 #'
 #' @seealso \code{\link{decorate}}, \code{\link{listDecorators}}
 #'
+#' @return Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
+#' imputed if previously missing.
+#'
 #' @examples
 #' x = Distribution$new("Test", pdf = function(x) 1/(4-1),
 #' support = Interval$new(1,4),

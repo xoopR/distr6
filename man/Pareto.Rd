@@ -3,6 +3,9 @@
 \name{Pareto}
 \alias{Pareto}
 \title{Pareto Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Pareto distribution, which
 is commonly used in Economics to model the distribution of wealth and the 80-20 rule.

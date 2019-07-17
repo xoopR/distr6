@@ -14,6 +14,9 @@ power.SetInterval(x, power)
 
 \item{power}{power to raise SetInterval to}
 }
+\value{
+Returns an R6 object inheriting from SetInterval.
+}
 \description{
 Makes a symbolic representation for the exponentiation of a given set/interval.
 }

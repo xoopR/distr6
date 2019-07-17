@@ -3,6 +3,9 @@
 \name{Logistic}
 \alias{Logistic}
 \title{Logistic Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Logistic distribution, which
 is commonly used in logistic regression and feedforward neural networks.

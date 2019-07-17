@@ -9,6 +9,9 @@ skewness(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Skewness as a numeric.
+}
 \description{
 Skewness of a distribution
 }

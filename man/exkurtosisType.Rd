@@ -9,6 +9,9 @@ exkurtosisType(kurtosis)
 \arguments{
 \item{kurtosis}{numeric.}
 }
+\value{
+Returns one of 'platykurtic', 'mesokurtic' or 'leptokurtic'.
+}
 \description{
 Gets the type of (excess) kurtosis
 }

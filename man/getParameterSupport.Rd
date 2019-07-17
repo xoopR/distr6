@@ -13,6 +13,9 @@ getParameterSupport(object, id, error = "warn")
 
 \item{error}{character, value to pass to \code{stopwarn}.}
 }
+\value{
+An R6 object of class SetInterval.
+}
 \description{
 Returns the support of the given parameter.
 }

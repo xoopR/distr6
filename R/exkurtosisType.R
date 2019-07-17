@@ -17,6 +17,8 @@
 #' exkurtosisType(0)
 #' exkurtosisType(1)
 #'
+#' @return Returns one of 'platykurtic', 'mesokurtic' or 'leptokurtic'.
+#'
 #' @export
 exkurtosisType <- function(kurtosis){
 

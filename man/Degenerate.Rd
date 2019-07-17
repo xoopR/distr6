@@ -4,6 +4,9 @@
 \alias{Degenerate}
 \alias{Dirac}
 \title{Degenerate Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Degenerate distribution, which
 is commonly used to model deterministic events or as a representation of the delta, or Heaviside, function.

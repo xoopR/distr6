@@ -3,6 +3,9 @@
 \name{Rationals}
 \alias{Rationals}
 \title{Set of Rationals}
+\value{
+Returns R6 object of class Rationals.
+}
 \description{
 The mathematical set of rational numbers.
 }

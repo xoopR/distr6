@@ -9,6 +9,9 @@ properties(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+List of distribution properties.
+}
 \description{
 Returns the properties of the distribution.
 }

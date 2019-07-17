@@ -3,6 +3,9 @@
 \name{Integers}
 \alias{Integers}
 \title{Set of Integers}
+\value{
+Returns R6 object of class Integers.
+}
 \description{
 The mathematical set of integers.
 }

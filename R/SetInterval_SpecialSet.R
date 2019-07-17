@@ -15,6 +15,8 @@
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return Returns error. Abstract classes cannot be constructed directly.
+#'
 #' @export
 NULL
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
@@ -49,6 +51,8 @@ SpecialSet$set("private",".class","integer")
 #' @examples
 #' Empty$new()
 #'
+#' @return Returns R6 object of class Empty.
+#'
 #' @export
 NULL
 Empty <- R6::R6Class("Empty",inherit = SpecialSet)
@@ -81,6 +85,8 @@ Empty$set("public", "initialize", function(){
 #' Naturals$new()
 #' Naturals$new(dim = 2)
 #'
+#' @return Returns R6 object of class Naturals.
+#'
 #' @export
 NULL
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
@@ -108,6 +114,8 @@ Naturals$set("private",".class","integer")
 #' @examples
 #' PosNaturals$new()
 #' PosNaturals$new(dim = 2)
+#'
+#' @return Returns R6 object of class PosNaturals.
 #'
 #' @export
 NULL
@@ -141,6 +149,8 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 #' Integers$new()
 #' Integers$new(dim = 2)
 #'
+#' @return Returns R6 object of class Integers.
+#'
 #' @export
 NULL
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
@@ -172,6 +182,8 @@ Integers$set("private",".class","integer")
 #' PosIntegers$new()
 #' PosIntegers$new(zero = TRUE)
 #' PosIntegers$new(dim = 2)
+#'
+#' @return Returns R6 object of class PosIntegers.
 #'
 #' @export
 NULL
@@ -206,6 +218,8 @@ PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' NegIntegers$new()
 #' NegIntegers$new(zero = TRUE)
 #' NegIntegers$new(dim = 2)
+#'
+#' @return Returns R6 object of class NegIntegers.
 #'
 #' @export
 NULL
@@ -243,6 +257,8 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' Rationals$new()
 #' Rationals$new(dim = 2)
 #'
+#' @return Returns R6 object of class Rationals.
+#'
 #' @export
 NULL
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
@@ -276,6 +292,8 @@ Rationals$set("private",".class","numeric")
 #' PosRationals$new()
 #' PosRationals$new(zero = TRUE)
 #' PosRationals$new(dim = 2)
+#'
+#' @return Returns R6 object of class PosRationals.
 #'
 #' @export
 NULL
@@ -313,6 +331,8 @@ PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' NegRationals$new(zero = TRUE)
 #' NegRationals$new(dim = 2)
 #'
+#' @return Returns R6 object of class NegRationals.
+#'
 #' @export
 NULL
 NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
@@ -348,6 +368,8 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' Reals$new()
 #' Reals$new(dim = 2)
 #'
+#' @return Returns R6 object of class Reals.
+#'
 #' @export
 NULL
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
@@ -376,6 +398,8 @@ Reals$set("private",".class","numeric")
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
+#'
+#' @return Returns R6 object of class PosReals.
 #'
 #' @examples
 #' PosReals$new()
@@ -413,6 +437,8 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return Returns R6 object of class NegReals.
+#'
 #' @examples
 #' NegReals$new()
 #' NegReals$new(zero = TRUE)
@@ -449,6 +475,8 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' ExtendedReals$new()
 #' ExtendedReals$new(dim = 2)
 #'
+#' @return Returns R6 object of class ExtendedReals.
+#'
 #' @export
 NULL
 ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
@@ -476,6 +504,8 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 #' @examples
 #' Complex$new()
 #' Complex$new(dim = 2)
+#'
+#' @return Returns R6 object of class Complex.
 #'
 #' @export
 NULL

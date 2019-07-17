@@ -9,6 +9,9 @@ dmax(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Maximum as a numeric.
+}
 \description{
 Returns the distribution maximum as the maximum of the support. If the support is not
 bounded above then maximum is given by

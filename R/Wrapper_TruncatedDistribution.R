@@ -29,6 +29,8 @@
 #'
 #' @seealso \code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{truncate}}
 #'
+#' @return Returns an R6 object of class TruncatedDistribution.
+#'
 #' @examples
 #' truncBin <- TruncatedDistribution$new(
 #'             Binomial$new(prob = 0.5, size = 10),

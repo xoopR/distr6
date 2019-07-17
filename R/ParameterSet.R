@@ -75,6 +75,8 @@
 #'
 #' @seealso \code{\link{Distribution}}
 #'
+#' @return An R6 object of class ParameterSet.
+#'
 #' @export
 NULL
 
@@ -185,6 +187,8 @@ ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable
 #'
 #' @seealso \code{\link{ParameterSet}}
 #'
+#' @return An R6 object of class ParameterSet.
+#'
 #' @export
 update.ParameterSet <- function(object, ...) {}
 ParameterSet$set("public","update", function(...){
@@ -217,6 +221,9 @@ ParameterSet$set("public","update", function(...){
 #' with warning otherwise.
 #'
 #' @seealso \code{\link{getParameterValue}} and \code{\link{setParameterValue}}
+#'
+#' @return An R6 object of class ParameterSet or a data.table.
+#'
 #' @export
 NULL
 ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
@@ -244,6 +251,8 @@ ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
 #'
 #' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
 #' with warning otherwise.
+#'
+#' @return An R6 object of class SetInterval.
 #'
 #' @seealso \code{\link{parameters}} and \code{\link{SetInterval}}
 #' @export
@@ -273,6 +282,8 @@ ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
 #'
 #' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
 #' with warning otherwise.
+#'
+#' @return The current value of a given parameter as a numeric.
 #'
 #' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
 #' @export
@@ -307,6 +318,8 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 #' with warning otherwise.
 #'
 #' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
+#'
+#' @return An R6 object of class ParameterSet.
 #'
 #' @examples
 #' ps <- Normal$new()$parameters()
@@ -362,6 +375,8 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
 #'
 #' @seealso \code{\link{ParameterSet}}
 #'
+#' @return An R6 object of class ParameterSet.
+#'
 #' @export
 merge.ParameterSet <- function(x, y, ...){}
 ParameterSet$set("public","merge",function(y, ...){
@@ -390,6 +405,8 @@ ParameterSet$set("public","merge",function(y, ...){
 #'
 #' @seealso \code{\link{ParameterSet}}
 #'
+#' @return A data.table.
+#'
 #' @export
 NULL
 ParameterSet$set("public","as.data.table",function(){
@@ -399,7 +416,6 @@ ParameterSet$set("public","as.data.table",function(){
 #' @name as.ParameterSet
 #' @title Coerce to a ParameterSet
 #' @description Coerces objects to ParameterSet.
-#' @return ParameterSet
 #' @usage as.ParameterSet(x,...)
 #' @param x object
 #' @param ... additional arguments
@@ -408,6 +424,8 @@ ParameterSet$set("public","as.data.table",function(){
 #' for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken to be
 #' arguments.
 #' @seealso \code{\link{ParameterSet}}
+#'
+#' @return An R6 object of class ParameterSet.
 #'
 #' @export
 as.ParameterSet <- function(x,...){

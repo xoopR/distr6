@@ -3,6 +3,9 @@
 \name{NegRationals}
 \alias{NegRationals}
 \title{Set of Negative Rationals}
+\value{
+Returns R6 object of class NegRationals.
+}
 \description{
 The mathematical set of negative rational numbers.
 }

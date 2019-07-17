@@ -11,6 +11,9 @@ genExp(object, trafo = NULL)
 
 \item{trafo}{transformation for expectation calculation, see details.}
 }
+\value{
+The given expectation as a numeric, otherwise NULL.
+}
 \description{
 A generalised expectation function for distributions, for arithmetic mean and more complex
 numeric calculations.

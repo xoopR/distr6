@@ -3,6 +3,9 @@
 \name{getSymbol.SetInterval}
 \alias{getSymbol.SetInterval}
 \title{SetInterval Symbol Accessor}
+\value{
+Returns string representation of a SetInterval.
+}
 \description{
 Returns the SetInterval symbol.
 }

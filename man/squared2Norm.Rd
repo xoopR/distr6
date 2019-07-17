@@ -13,6 +13,9 @@ squared2Norm(object, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Squared 2-norm of pdf evaluated between limits as a numeric.
+}
 \description{
 The squared 2-norm of the pdf evaluated over the whole support by default or given
 limits.

@@ -16,6 +16,9 @@ complement.SetInterval(...)
 
 \item{...}{SetIntervals to take the complement of.}
 }
+\value{
+Returns an R6 object inheriting from SetInterval.
+}
 \description{
 Makes a symbolic representation for the complement of sets/intervals.
 }

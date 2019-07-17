@@ -9,6 +9,9 @@ prec(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Reciprocal of variance as a numeric.
+}
 \description{
 Precision of a distribution assuming variance is provided.
 }

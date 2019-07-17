@@ -3,6 +3,9 @@
 \name{Interval}
 \alias{Interval}
 \title{R6 Generalised Class for Symbolic Intervals}
+\value{
+Returns an R6 object of class Interval.
+}
 \description{
 A symbolic R6 Interval class.
 }

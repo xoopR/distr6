@@ -3,6 +3,9 @@
 \name{Rayleigh}
 \alias{Rayleigh}
 \title{Rayleigh Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Rayleigh distribution, which
 is commonly used to model random complex numbers..

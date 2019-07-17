@@ -13,6 +13,9 @@ getParameterValue(object, id, error = "warn")
 
 \item{error}{character, value to pass to \code{stopwarn}.}
 }
+\value{
+The current value of a given parameter as a numeric.
+}
 \description{
 Returns the value of the given parameter.
 }

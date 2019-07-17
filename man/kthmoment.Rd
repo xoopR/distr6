@@ -13,6 +13,9 @@ kthmoment(object, k, type = "central")
 
 \item{type}{one of 'central', 'standard' or 'raw', abbreviations allowed}
 }
+\value{
+If univariate, the given k-moment as a numeric, otherwise NULL.
+}
 \description{
 Kth standardised or central moment of a distribution
 }

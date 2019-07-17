@@ -3,6 +3,9 @@
 \name{Cauchy}
 \alias{Cauchy}
 \title{Cauchy Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Cauchy distribution, which
 is commonly used in physics and finance.

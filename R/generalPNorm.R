@@ -16,6 +16,8 @@
 #' @examples
 #' generalPNorm(Exponential$new()$pdf,2,0,10)
 #'
+#' @return Returns a numeric value for the p norm of a function evaluated between given limits.
+#'
 #' @export
 generalPNorm <- function(fun, p, lower, upper){
   message(.distr6$message_numeric)

@@ -11,6 +11,10 @@ decorate(distribution, decorators)
 
 \item{decorators}{list of decorators}
 }
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with the methods listed
+from one of the available decorators added to the SDistribution methods.
+}
 \description{
 Functionality to decorate R6 Distributions (and child classes) with extra methods.
 }

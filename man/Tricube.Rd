@@ -3,6 +3,9 @@
 \name{Tricube}
 \alias{Tricube}
 \title{Tricube Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Tricube kernel defined by the pdf,
 \deqn{f(x) = 70/81(1 - |x|^3)^3}

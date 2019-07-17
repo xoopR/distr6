@@ -3,6 +3,10 @@
 \name{CoreStatistics}
 \alias{CoreStatistics}
 \title{Core Statistical Methods for Distributions}
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
+added to the SDistribution methods.
+}
 \description{
 This decorator adds numeric methods for missing analytic expression in distr6 Distribution
 objects as well as adding generalised expectation and moments functions.

@@ -3,6 +3,9 @@
 \name{Weibull}
 \alias{Weibull}
 \title{Weibull Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Weibull distribution, which
 is commonly used in survival analysis and is a special case of the Generalized Extreme Value distribution.

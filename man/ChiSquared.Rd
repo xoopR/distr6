@@ -3,6 +3,9 @@
 \name{ChiSquared}
 \alias{ChiSquared}
 \title{Chi-Squared Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Chi-Squared distribution, which
 is commonly used to model the sum of independent squared Normal distributions and for confidence intervals.

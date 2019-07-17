@@ -3,6 +3,9 @@
 \name{Sigmoid}
 \alias{Sigmoid}
 \title{Sigmoid Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Sigmoid kernel defined by the pdf,
 \deqn{f(x) = 2/\pi(exp(x) + exp(-x))^{-1}}

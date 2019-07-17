@@ -9,6 +9,9 @@ correlation(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Either '1' if distribution is univariate or the correlation as a numeric or matrix.
+}
 \description{
 Correlation of a distribution.
 }

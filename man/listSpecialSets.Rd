@@ -9,6 +9,9 @@ listSpecialSets(simplify = FALSE)
 \arguments{
 \item{simplify}{logical. If FALSE (default) returns data.table of set name and symbol, otherwise set names as characters.}
 }
+\value{
+Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SpecialSet}s and their traits.
+}
 \description{
 Lists special sets that can be used in SetInterval.
 }

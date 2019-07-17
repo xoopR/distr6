@@ -114,6 +114,8 @@
 #' Intervals. See \code{\link{ParameterSet}} for parameter details. See
 #' \code{\link{decorate}} for Decorator details.
 #'
+#' @return Returns R6 object of class Distribution.
+#'
 #' @export
 NULL
 #-------------------------------------------------------------
@@ -327,6 +329,8 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #' @param object R6 object
 #' @usage strprint(object)
 #'
+#' @return String representation of the distribution.
+#'
 #' @export
 Distribution$set("public","strprint",function(){
   if(length(private$.parameters)!=0){
@@ -353,6 +357,8 @@ Distribution$set("public","print",function(...){
 #' @param ... additional arguments.
 #'
 #' @seealso \code{\link{Distribution}}
+#'
+#' @return Printed summary of the distribution.
 #'
 #' @export
 summary.Distribution <- function(object, full = TRUE,...) {}
@@ -441,6 +447,7 @@ Distribution$set("public","qqplot",function(){}) # TO DO
 #' @param object Distribution.
 #' @description Returns the decorators added to a distribution.
 #' @seealso \code{\link{decorate}}
+#' @return Character vector of decorators.
 #' @export
 NULL
 Distribution$set("public","decorators", function(){
@@ -453,6 +460,7 @@ Distribution$set("public","decorators", function(){
 #' @section R6 Usage: $traits()
 #' @param object Distribution.
 #' @description Returns the traits of the distribution.
+#' @return List of traits.
 #' @export
 NULL
 Distribution$set("public","traits",function(){
@@ -464,7 +472,8 @@ Distribution$set("public","traits",function(){
 #' @usage valueSupport(object)
 #' @section R6 Usage: $valueSupport()
 #' @param object Distribution.
-#' @description Returns the valueSupport of the distribution, one of discrete/continuous/mixture.
+#' @description Returns the valueSupport of the distribution.
+#' @return One of "discrete"/"continuous"/"mixture".
 #' @export
 NULL
 Distribution$set("public","valueSupport",function(){
@@ -476,7 +485,8 @@ Distribution$set("public","valueSupport",function(){
 #' @usage variateForm(object)
 #' @section R6 Usage: $variateForm()
 #' @param object Distribution.
-#' @description Returns the variateForm of the distribution, one of univariate/multivariate/matrixvariate.
+#' @description Returns the variateForm of the distribution.
+#' @return One of "univariate"/"multivariate"/"matrixvariate".
 #' @export
 NULL
 Distribution$set("public","variateForm",function(){
@@ -489,6 +499,7 @@ Distribution$set("public","variateForm",function(){
 #' @section R6 Usage: $type()
 #' @param object Distribution.
 #' @description Returns the scientific type of the distribution.
+#' @return An R6 object of class SetInterval.
 #' @seealso \code{\link{SetInterval}}
 #' @export
 NULL
@@ -502,6 +513,7 @@ Distribution$set("public","type",function(){
 #' @section R6 Usage: $properties()
 #' @param object Distribution.
 #' @description Returns the properties of the distribution.
+#' @return List of distribution properties.
 #' @export
 NULL
 Distribution$set("public","properties",function(){
@@ -518,6 +530,7 @@ Distribution$set("public","properties",function(){
 #' greater than zero,
 #' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
 #' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
+#' @return An R6 object of class SetInterval.
 #' @seealso \code{\link{SetInterval}} and \code{\link{properties}}
 #' @export
 NULL
@@ -530,7 +543,8 @@ Distribution$set("public","support",function(){
 #' @usage symmetry(object)
 #' @section R6 Usage: $symmetry()
 #' @param object Distribution.
-#' @description Returns the distribution symmetry, one of "symmetric" or "asymmetric".
+#' @description Returns the distribution symmetry.
+#' @return One of "symmetric" or "asymmetric".
 #' @seealso \code{\link{properties}}
 #' @export
 NULL
@@ -544,6 +558,7 @@ Distribution$set("public","symmetry",function(){
 #' @section R6 Usage: $sup()
 #' @param object Distribution.
 #' @description Returns the distribution supremum as the supremum of the support.
+#' @return Supremum as a numeric.
 #' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
 #' @export
 NULL
@@ -557,6 +572,7 @@ Distribution$set("public","sup",function(){
 #' @section R6 Usage: $inf()
 #' @param object Distribution.
 #' @description Returns the distribution infimum as the infimum of the support.
+#' @return Infimum as a numeric.
 #' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
 #' @export
 NULL
@@ -572,6 +588,7 @@ Distribution$set("public","inf",function(){
 #' @description Returns the distribution maximum as the maximum of the support. If the support is not
 #' bounded above then maximum is given by
 #' \deqn{maximum = supremum - 1.1e-15}
+#' @return Maximum as a numeric.
 #' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
@@ -587,6 +604,7 @@ Distribution$set("public","dmax",function(){
 #' @description Returns the distribution minimum as the minimum of the support. If the support is not
 #' bounded below then minimum is given by
 #' \deqn{minimum = infimum + 1.1e-15}
+#' @return Minimum as a numeric.
 #' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
@@ -599,8 +617,9 @@ Distribution$set("public","dmin",function(){
 #' @usage kurtosisType(object)
 #' @section R6 Usage: $kurtosisType()
 #' @param object Distribution.
-#' @description If the distribution kurtosis is present in properties, returns the type of kurtosis
-#' (platykurtic/mesokurtic/leptokurtic), otherwise returns NULL.
+#' @description Returns the type of kurtosis (in relation to Normal distribution)
+#' @return If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
+#' otherwise returns NULL.
 #' @seealso \code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
 #' @export
 NULL
@@ -617,8 +636,9 @@ Distribution$set("public", "kurtosisType", function() {
 #' @usage skewnessType(object)
 #' @section R6 Usage: $skewnessType()
 #' @param object Distribution.
-#' @description If the distribution skewness is present in properties, returns the type of skewness
-#' (negative/none/positive), otherwise returns NULL.
+#' @description Returns the type of skewness.
+#' @return If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
+#' "positive skew", otherwise returns NULL.
 #' @seealso \code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
 #' @export
 NULL
@@ -708,6 +728,9 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
+#' @return Probability density funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a data.table.
+#'
 #' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
@@ -774,6 +797,9 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 #' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
+#' @return Cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a data.table.
+#'
 #' @export
 NULL
 Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
@@ -807,9 +833,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     }
   }
 
-
-
-}) # NEEDS TESTING
+})
 #-------------------------------------------------------------
 # Public Methods - quantile
 #-------------------------------------------------------------
@@ -842,6 +866,9 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #'
 #' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
+#'
+#' @return Inverse cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a data.table.
 #'
 #' @export
 quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE) {}
@@ -913,6 +940,9 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
 #' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
+#' @return Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
+#' or as a data.table.
+#'
 #' @export
 NULL
 Distribution$set("public","rand",function(n, simplify = TRUE){
@@ -950,6 +980,7 @@ Distribution$set("public","rand",function(n, simplify = TRUE){
 #' @param object Distribution.
 #' @details The precision is analytically computed as the reciprocal of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
+#' @return Reciprocal of variance as a numeric.
 #'
 #' @seealso \code{\link{variance}}
 #'
@@ -968,6 +999,7 @@ Distribution$set("public","prec",function(){
 #' @param object Distribution.
 #' @details The standard deviation is analytically computed as the square root of the variance.
 #' If the variance is not found in the distribution (analytically or numerically), returns error.
+#' @return Square-root of variance as a numeric.
 #'
 #' @seealso \code{\link{variance}}
 #'
@@ -988,6 +1020,7 @@ Distribution$set("public","stdev",function(){
 #' @param ... ignored, added for consistency with S3 generic.
 #' @details The median is computed as the quantile function evaluated at 0.5.
 #' If the quantile is not found in the distribution (analytically or numerically), returns error.
+#' @return Quantile function evaluated at 0.5 as a numeric.
 #'
 #' @seealso \code{\link{quantile.Distribution}}
 #'
@@ -1011,6 +1044,8 @@ Distribution$set("public","median",function(na.rm = NULL,...){
 #' where q is the quantile, or inverse distribution function.
 #'
 #' Returns error if the quantile function is missing.
+#'
+#' @return Interquartile range of distribution as a numeric.
 #'
 #' @export
 NULL
@@ -1036,6 +1071,8 @@ Distribution$set("public", "iqr", function() {
 #'
 #' Calculates correlation analytically from variance. If an analytic expression for variance isn't available,
 #' returns error. To impute a numeric expression, use the \code{\link{CoreStatistics}} decorator.
+#'
+#' @return Either '1' if distribution is univariate or the correlation as a numeric or matrix.
 #'
 #' @export
 NULL
@@ -1064,6 +1101,9 @@ Distribution$set("public","correlation",function(){
 #' lies in the support. If \code{all} is FALSE then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
 #'
+#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
+#' lies in the distribution support or FALSE otherwise.
+#'
 #' @seealso \code{\link{liesInType}}
 #'
 #' @export
@@ -1086,6 +1126,9 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
 #' lies in the type. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
 #' in the vector \code{x}.
+#'
+#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
+#' lies in the distribution type or FALSE otherwise.
 #'
 #' @seealso \code{\link{liesInSupport}}
 #'

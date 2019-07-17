@@ -3,6 +3,9 @@
 \name{Dirichlet}
 \alias{Dirichlet}
 \title{Dirichlet Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Dirichlet distribution, which
 is commonly used as a prior in Bayesian modelling and is multivariate generalisation of the Beta distribution.

@@ -3,6 +3,9 @@
 \name{InverseGamma}
 \alias{InverseGamma}
 \title{Inverse Gamma Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Inverse Gamma distribution, which
 is commonly used in Bayesian statistics as the posterior distribution from the unknown variance in a Normal distribution.

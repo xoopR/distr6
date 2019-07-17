@@ -13,6 +13,9 @@ parameters(object, id = NULL, error = "warn")
 
 \item{error}{character, value to pass to \code{stopwarn}}
 }
+\value{
+An R6 object of class ParameterSet or a data.table.
+}
 \description{
 Returns some or all the parameters in a distribution.
 }

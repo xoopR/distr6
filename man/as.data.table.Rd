@@ -9,6 +9,9 @@ as.data.table(object)
 \arguments{
 \item{object}{ParameterSet}
 }
+\value{
+A data.table.
+}
 \description{
 Coerces a ParameterSet to a data.table.
 }

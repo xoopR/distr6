@@ -3,6 +3,9 @@
 \name{elements}
 \alias{elements}
 \title{Set Elements Accessor}
+\value{
+Elements in the set.
+}
 \description{
 Returns the elements in a Set.
 }

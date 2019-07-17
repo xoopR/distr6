@@ -16,6 +16,9 @@ product.SetInterval(...)
 
 \item{...}{SetIntervals to take the cartesian product of.}
 }
+\value{
+Returns an R6 object inheriting from SetInterval.
+}
 \description{
 Makes a symbolic representation for the cartesian product of sets/intervals.
 }

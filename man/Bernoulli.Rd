@@ -3,6 +3,9 @@
 \name{Bernoulli}
 \alias{Bernoulli}
 \title{Bernoulli Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Bernoulli distribution, which
 is commonly used to model a two-outcome scenario.

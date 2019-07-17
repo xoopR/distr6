@@ -13,6 +13,9 @@
 
 \item{...}{ignored, added for consistency with S3 generic.}
 }
+\value{
+Quantile function evaluated at 0.5 as a numeric.
+}
 \description{
 Median of a distribution assuming quantile is provided.
 }

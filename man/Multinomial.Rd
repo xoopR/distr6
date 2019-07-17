@@ -3,6 +3,9 @@
 \name{Multinomial}
 \alias{Multinomial}
 \title{Multinomial Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Multinomial distribution, which
 is commonly used to extend the binomial distribution to multiple variables, for example to model the rolls of multiple dice multiple times.

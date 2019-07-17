@@ -9,6 +9,9 @@ strprint(object)
 \arguments{
 \item{object}{R6 object}
 }
+\value{
+String representation of the distribution.
+}
 \description{
 Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
 }

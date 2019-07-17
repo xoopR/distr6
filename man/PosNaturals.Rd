@@ -3,6 +3,9 @@
 \name{PosNaturals}
 \alias{PosNaturals}
 \title{Set of Positive Natural Numbers}
+\value{
+Returns R6 object of class PosNaturals.
+}
 \description{
 The mathematical set of positive natural numbers.
 }

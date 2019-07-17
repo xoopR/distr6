@@ -9,6 +9,9 @@ setSymbol(set)
 \arguments{
 \item{set}{special set}
 }
+\value{
+Returns the unicode representation of mathematical special sets.
+}
 \description{
 Gets the unicode symbol for standard mathematical special sets.
 }

@@ -9,9 +9,12 @@ skewnessType(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
+"positive skew", otherwise returns NULL.
+}
 \description{
-If the distribution skewness is present in properties, returns the type of skewness
-(negative/none/positive), otherwise returns NULL.
+Returns the type of skewness.
 }
 \section{R6 Usage}{
  $skewnessType()

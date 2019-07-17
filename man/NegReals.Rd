@@ -3,6 +3,9 @@
 \name{NegReals}
 \alias{NegReals}
 \title{Set of Negative Reals}
+\value{
+Returns R6 object of class NegReals.
+}
 \description{
 The mathematical set of negative real numbers.
 }

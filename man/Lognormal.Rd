@@ -4,6 +4,9 @@
 \alias{Lognormal}
 \alias{Loggaussian}
 \title{Log-Normal Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Log-Normal distribution, which
 is commonly used to model many natural phenomena as a result of growth driven by small percentage changes.

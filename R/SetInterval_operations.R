@@ -20,6 +20,8 @@
 #' @seealso \code{\link{product.SetInterval}}, \code{\link{union.SetInterval}}, \code{\link{complement.SetInterval}},
 #' \code{\link{power.SetInterval}}
 #'
+#' @return Returns an R6 object inheriting from SetInterval.
+#'
 #' @export
 setOperation <- function(unicode,sets,lower=NULL,upper=NULL,type=NULL,dim=NULL){
   symbols = lapply(sets,function(x){
@@ -61,6 +63,8 @@ setOperation <- function(unicode,sets,lower=NULL,upper=NULL,type=NULL,dim=NULL){
 #' PosNaturals$new() * Reals$new()
 #' product.SetInterval(PosNaturals$new(), Reals$new())
 #'
+#' @return Returns an R6 object inheriting from SetInterval.
+#'
 #' @export
 NULL
 product.SetInterval <- function(...){
@@ -87,6 +91,8 @@ product.SetInterval <- function(...){
 #'
 #' @seealso \code{\link{product.SetInterval}}, \code{\link{complement.SetInterval}},
 #' \code{\link{power.SetInterval}}
+#'
+#' @return Returns an R6 object inheriting from SetInterval.
 #'
 #' @examples
 #' PosNaturals$new() * Reals$new()
@@ -127,6 +133,8 @@ union.SetInterval <- function(..., dim = 1){
 #'
 #' @seealso \code{\link{product.SetInterval}}, \code{\link{union.SetInterval}},
 #' \code{\link{power.SetInterval}}
+#'
+#' @return Returns an R6 object inheriting from SetInterval.
 #'
 #' @examples
 #' PosNaturals$new() - Interval$new(-1,10)
@@ -181,6 +189,8 @@ complement.SetInterval <- function(...){
 #'
 #' @seealso \code{\link{product.SetInterval}}, \code{\link{union.SetInterval}},
 #' \code{\link{complement.SetInterval}}
+#'
+#' @return Returns an R6 object inheriting from SetInterval.
 #'
 #' @examples
 #' PosNaturals$new() ^ 2

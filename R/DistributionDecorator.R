@@ -17,6 +17,8 @@
 #' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
 #' of Reusable Object-Oriented Software.” Addison-Wesley.
 #'
+#' @return Returns error. Abstract classes cannot be constructed directly.
+#'
 #' @export
 NULL
 DistributionDecorator <- R6::R6Class("DistributionDecorator")

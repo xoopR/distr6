@@ -13,6 +13,9 @@ hazard(object, x1, log = FALSE)
 
 \item{log}{logical, if TRUE then the (natural) logarithm of the hazard function is returned.}
 }
+\value{
+Hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
+}
 \description{
 The hazard function of a probability distribution is the risk of instantaneous event at
 a point x.

@@ -3,6 +3,9 @@
 \name{PosRationals}
 \alias{PosRationals}
 \title{Set of Positive Rationals}
+\value{
+Returns R6 object of class PosRationals.
+}
 \description{
 The mathematical set of positive rational numbers.
 }

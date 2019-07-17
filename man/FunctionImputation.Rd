@@ -3,6 +3,10 @@
 \name{FunctionImputation}
 \alias{FunctionImputation}
 \title{Imputed Pdf/Cdf/Quantile/Rand Functions}
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
+imputed if previously missing.
+}
 \description{
 This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
 by using strategies dependent on which methods are already present in the distribution.

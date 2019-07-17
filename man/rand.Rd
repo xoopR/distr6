@@ -13,6 +13,10 @@ rand(object, n, simplify = TRUE)
 
 \item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
 }
+\value{
+Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
+or as a data.table.
+}
 \description{
 Returns a given number of points sampled from the distribution.
 }

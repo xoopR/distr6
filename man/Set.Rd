@@ -3,6 +3,9 @@
 \name{Set}
 \alias{Set}
 \title{R6 Generalised Class for Symbolic Sets}
+\value{
+Returns an R6 object of class Set.
+}
 \description{
 A symbolic R6 Set class.
 }

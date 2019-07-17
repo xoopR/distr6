@@ -3,6 +3,9 @@
 \name{DistributionDecorator}
 \alias{DistributionDecorator}
 \title{Abstract DistributionDecorator Class}
+\value{
+Returns error. Abstract classes cannot be constructed directly.
+}
 \description{
 The abstract parent class to decorators.
 }

@@ -3,6 +3,9 @@
 \name{MixtureDistribution}
 \alias{MixtureDistribution}
 \title{Mixture Distribution Wrapper}
+\value{
+Returns an R6 object of class MixtureDistribution.
+}
 \description{
 Wrapper used to construct a mixture of two or more distributions.
 }

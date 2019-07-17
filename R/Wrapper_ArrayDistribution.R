@@ -27,6 +27,8 @@
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods
 #'
+#' @return Returns an R6 object of class ArrayDistribution.
+#'
 #' @examples
 #' a = ArrayDistribution$new(Binomial,
 #'               list(list(prob = 0.1, size = 2),

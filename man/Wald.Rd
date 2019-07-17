@@ -5,6 +5,9 @@
 \alias{InverseNormal}
 \alias{InverseGaussian}
 \title{Wald Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Wald distribution, which
 is commonly used for modelling the first passage time for Brownian motion.

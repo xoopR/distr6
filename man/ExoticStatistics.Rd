@@ -3,6 +3,10 @@
 \name{ExoticStatistics}
 \alias{ExoticStatistics}
 \title{Exotic Statistical Methods for Distributions}
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
+added to the SDistribution methods.
+}
 \description{
 This decorator adds methods for more complex statistical methods including p-norms,
 survival and hazard functions and anti-derivatives.

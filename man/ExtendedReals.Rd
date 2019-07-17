@@ -3,6 +3,9 @@
 \name{ExtendedReals}
 \alias{ExtendedReals}
 \title{Set of Extended Reals}
+\value{
+Returns R6 object of class ExtendedReals.
+}
 \description{
 The mathematical set of extended real numbers.
 }

@@ -63,6 +63,7 @@
 #'   \code{qqplot()} \tab Coming Soon. \cr
 #'   }
 #'
+#' @return Returns error. Abstract classes cannot be constructed directly.
 #'
 #'@export
 NULL
@@ -103,6 +104,9 @@ DistributionWrapper$set("public","initialize",function(distlist,...){
 #' wrapped model, this model is returned. If a vector is supplied to \code{model} parameter then a list
 #' of internal models is returned if matched, otherwise a list of all internal models is returned. If
 #' \code{model} is NULL (default) then a list of all internal models are returned.
+#'
+#' @return If \code{model} is NULL then returns list of models that are wrapped by the wrapper. Otherwise
+#' returns model given in \code{model}.
 #'
 #' @seealso \code{\link{DistributionWrapper}}
 #'

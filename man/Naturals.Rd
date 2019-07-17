@@ -3,6 +3,9 @@
 \name{Naturals}
 \alias{Naturals}
 \title{Set of Natural Numbers}
+\value{
+Returns R6 object of class Naturals.
+}
 \description{
 The mathematical set of natural numbers.
 }

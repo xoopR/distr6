@@ -3,6 +3,9 @@
 \name{ParameterSet}
 \alias{ParameterSet}
 \title{Make an R6 Parameter Set for Distributions}
+\value{
+An R6 object of class ParameterSet.
+}
 \description{
 ParameterSets are passed to a \code{Distribution$new} constructor when
  creating a custom probability distribution that takes parameters.

@@ -3,6 +3,9 @@
 \name{Gumbel}
 \alias{Gumbel}
 \title{Gumbel Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Gumbel distribution, which
 is commonly used to model the maximum (or minimum) of a number of samples of different distributions, and is a special case of the Generalised Extreme Value distribution.

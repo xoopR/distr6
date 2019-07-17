@@ -11,6 +11,9 @@ entropy(object, base = 2)
 
 \item{base}{base of the entropy logarithm, default = 2 (Shannon entropy)}
 }
+\value{
+Entropy with given base as a numeric.
+}
 \description{
 (Information) Entropy of a distribution
 }

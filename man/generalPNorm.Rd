@@ -15,6 +15,9 @@ generalPNorm(fun, p, lower, upper)
 
 \item{upper}{upper bound for the integral}
 }
+\value{
+Returns a numeric value for the p norm of a function evaluated between given limits.
+}
 \description{
 Calculate the p-norm of any function between given limits.
 }

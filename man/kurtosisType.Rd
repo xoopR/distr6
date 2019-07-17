@@ -9,9 +9,12 @@ kurtosisType(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
+otherwise returns NULL.
+}
 \description{
-If the distribution kurtosis is present in properties, returns the type of kurtosis
-(platykurtic/mesokurtic/leptokurtic), otherwise returns NULL.
+Returns the type of kurtosis (in relation to Normal distribution)
 }
 \section{R6 Usage}{
  $kurtosisType()

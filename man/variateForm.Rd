@@ -9,8 +9,11 @@ variateForm(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+One of "univariate"/"multivariate"/"matrixvariate".
+}
 \description{
-Returns the variateForm of the distribution, one of univariate/multivariate/matrixvariate.
+Returns the variateForm of the distribution.
 }
 \section{R6 Usage}{
  $variateForm()

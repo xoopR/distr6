@@ -9,6 +9,9 @@ stdev(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Square-root of variance as a numeric.
+}
 \description{
 Standard deviation of a distribution assuming variance is provided.
 }

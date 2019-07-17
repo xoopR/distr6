@@ -3,6 +3,9 @@
 \name{Hypergeometric}
 \alias{Hypergeometric}
 \title{Hypergeometric Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Hypergeometric distribution, which
 is commonly used to model the number of successes out of a population containing a known number of possible successes, for example the number of red balls from an urn or red, blue and yellow balls.

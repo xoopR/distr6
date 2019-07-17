@@ -3,6 +3,9 @@
 \name{HuberizedDistribution}
 \alias{HuberizedDistribution}
 \title{Distribution Huberization Wrapper}
+\value{
+Returns an R6 object of class HuberizedDistribution.
+}
 \description{
 A wrapper for huberizing any probability distribution at given limits.
 }

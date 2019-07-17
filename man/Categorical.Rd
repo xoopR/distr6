@@ -3,6 +3,9 @@
 \name{Categorical}
 \alias{Categorical}
 \title{Categorical Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Categorical distribution, which
 is commonly used in classification supervised learning.

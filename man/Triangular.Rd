@@ -4,6 +4,9 @@
 \alias{Triangular}
 \alias{SymmetricTriangular}
 \title{Triangular Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Triangular distribution, which
 is commonly used to model population data where only the minimum, mode and maximum are known (or can be reliably estimated), also to model the sum of standard uniform distributions.

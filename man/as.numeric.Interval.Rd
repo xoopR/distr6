@@ -3,6 +3,9 @@
 \name{as.numeric.Interval}
 \alias{as.numeric.Interval}
 \title{Coerces Interval to Numeric}
+\value{
+If the Interval is of class integer then returns a numeric vector of the interval elements.
+}
 \description{
 If possible coerces an integer-class to numeric.
 }

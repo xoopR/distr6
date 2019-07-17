@@ -3,6 +3,9 @@
 \name{PosIntegers}
 \alias{PosIntegers}
 \title{Set of Positive Integers}
+\value{
+Returns R6 object of class PosIntegers.
+}
 \description{
 The mathematical set of positive integers.
 }

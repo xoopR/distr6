@@ -4,6 +4,9 @@
 \alias{Frechet}
 \alias{InverseWeibull}
 \title{Frechet Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Frechet distribution, which
 is commonly used as a special case of the Generalised Extreme Value distribution.

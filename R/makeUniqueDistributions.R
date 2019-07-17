@@ -10,6 +10,9 @@
 #' @examples
 #' makeUniqueDistributions(list(Binomial$new(), Binomial$new()))
 #'
+#' @return The list of inputted distributions except with the \code{short_name}s manipulated as necessary to
+#' make them unique.
+#'
 #' @export
 makeUniqueDistributions <- function(distlist){
   assertDistributionList(distlist)

@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments.}
 }
+\value{
+Mean as a numeric.
+}
 \description{
 Arithmetic mean for the probability distribution.
 }

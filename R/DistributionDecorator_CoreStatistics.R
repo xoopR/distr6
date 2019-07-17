@@ -41,6 +41,9 @@
 #'
 #' @seealso \code{\link{decorate}}, \code{\link{listDecorators}}
 #'
+#' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
+#' added to the SDistribution methods.
+#'
 #' @examples
 #' x = Binomial$new()
 #' decorate(x, CoreStatistics)
@@ -76,6 +79,8 @@ CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
 #'
 #' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
+#' @return Moment generating function evaluated at t as a numeric.
+#'
 #' @export
 NULL
 CoreStatistics$set("public", "mgf", function(t) {
@@ -102,7 +107,9 @@ CoreStatistics$set("public", "mgf", function(t) {
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
 #'
-#'@seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
+#'
+#' @return Characteristic function evaluated at t as a numeric.
 #'
 #' @export
 NULL
@@ -134,7 +141,10 @@ CoreStatistics$set("public", "cf", function(t) {
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
 #'
-#'@seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
+#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
+#'
+#' @return Probability generating function evaluated at z as a numeric if distribution is discrete,
+#' otherwise NaN.
 #'
 #' @export
 NULL
@@ -170,6 +180,8 @@ CoreStatistics$set("public", "pgf", function(z) {
 #'
 #' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
+#' @return Entropy with given base as a numeric.
+#'
 #' @export
 NULL
 CoreStatistics$set("public", "entropy", function(base = 2) {
@@ -200,6 +212,8 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #'
 #' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
+#' @return Skewness as a numeric.
+#'
 #' @export
 NULL
 CoreStatistics$set("public", "skewness", function() {
@@ -227,6 +241,8 @@ CoreStatistics$set("public", "skewness", function() {
 #'
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
+#'
+#' @return Kurtosis as a numeric.
 #'
 #' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
@@ -263,6 +279,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 #' \code{\link{CoreStatistics}} decorator.
 #'
+#' @return Variance as a numeric.
 #'
 #' @seealso \code{\link{CoreStatistics}}, \code{\link{decorate}} and \code{\link{genExp}}.
 #'
@@ -305,6 +322,8 @@ CoreStatistics$set("public","variance",function(){
 #' Can only be used after decorating with \code{\link{CoreStatistics}}.
 #'
 #' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
+#'
+#' @return If univariate, the given k-moment as a numeric, otherwise NULL.
 #'
 #' @export
 NULL
@@ -368,6 +387,8 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central"){
 #'
 #' @seealso \code{\link{mean}}, \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 #'
+#' @return The given expectation as a numeric, otherwise NULL.
+#'
 #' @export
 NULL
 CoreStatistics$set("public","genExp",function(trafo = NULL){
@@ -418,6 +439,8 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
 #'
 #' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 #'
+#' @return The estimated mode as a numeric, either all modes (if multiple) or the ordered mode given in \code{which}.
+#'
 #' @export
 NULL
 CoreStatistics$set("public","mode",function(which = "all"){
@@ -453,6 +476,8 @@ CoreStatistics$set("public","mode",function(which = "all"){
 #' \code{\link{CoreStatistics}} decorator.
 #'
 #' @seealso \code{\link{CoreStatistics}}, \code{\link{decorate}} and \code{\link{genExp}}.
+#'
+#' @return Mean as a numeric.
 #'
 #' @export
 mean.Distribution <- function(x, ...) {}

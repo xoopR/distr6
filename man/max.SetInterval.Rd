@@ -3,6 +3,9 @@
 \name{max.SetInterval}
 \alias{max.SetInterval}
 \title{SetInterval Maximum Accessor}
+\value{
+Maximum as a numeric.
+}
 \description{
 Returns the SetInterval maximum.
 }

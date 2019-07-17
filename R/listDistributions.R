@@ -5,6 +5,7 @@
 #' distribution names as characters.
 #' @param filter list to filter distributions by. See examples.
 #' @seealso \code{\link{SDistribution}}
+#' @return Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SDistribution}s and their traits.
 #' @examples
 #' listDistributions()
 #'

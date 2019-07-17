@@ -9,6 +9,9 @@ decorators(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Character vector of decorators.
+}
 \description{
 Returns the decorators added to a distribution.
 }

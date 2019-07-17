@@ -9,6 +9,9 @@ traits(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+List of traits.
+}
 \description{
 Returns the traits of the distribution.
 }

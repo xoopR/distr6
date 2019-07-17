@@ -9,6 +9,9 @@ variance(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Variance as a numeric.
+}
 \description{
 The variance or covariance of a distribution, either calculated analytically if
 or estimated numerically.

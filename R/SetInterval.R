@@ -40,7 +40,9 @@
 #'   }
 #'
 #' @details Whilst this is not an abstract class, direct construction is generally not advised.
-#'   Construction should instead be called on 'Set' or 'Interval'
+#'   Construction should instead be called on 'Set' or 'Interval'.
+#'
+#' @return Returns an R6 object of class SetInterval.
 #'
 #' @seealso \code{\link{Set}} for R6 Set objects and \code{\link{Interval}} for R6 Interval objects.
 #'
@@ -65,6 +67,7 @@ SetInterval$set("public","initialize",function(symbol, lower, upper, type, class
 #' @title SetInterval Type Accessor
 #' @description Returns the SetInterval 'type', one of "()","(]","[]","[)".
 #' @details This is an R6 method only, no S3 dispatch is available.
+#' @return Returns the type of SetInterval, one of "()","(]","[]","[)".
 #' @section R6 Usage: $type()
 #' @seealso \code{\link{SetInterval}}
 SetInterval$set("public","type",function(){
@@ -77,6 +80,7 @@ SetInterval$set("public","type",function(){
 #' @description Returns the SetInterval dimension.
 #' @details This is an R6 method only, no S3 dispatch is available.
 #' @section R6 Usage: $dimension()
+#' @return Dimension as an integer.
 #' @seealso \code{\link{SetInterval}}
 SetInterval$set("public","dimension",function(){
   return(private$.dimension)
@@ -87,6 +91,7 @@ SetInterval$set("public","dimension",function(){
 #' @title SetInterval Maximum Accessor
 #' @description Returns the SetInterval maximum.
 #' @details This is an R6 method only, no S3 dispatch is available.
+#' @return Maximum as a numeric.
 #' @section R6 Usage: $max()
 #' @seealso \code{\link{SetInterval}}
 SetInterval$set("public","max",function(){
@@ -101,6 +106,7 @@ SetInterval$set("public","max",function(){
 #' @title SetInterval Minimum Accessor
 #' @description Returns the SetInterval minimum.
 #' @details This is an R6 method only, no S3 dispatch is available.
+#' @return Minimum as a numeric.
 #' @section R6 Usage: $min()
 #' @seealso \code{\link{SetInterval}}
 SetInterval$set("public","min",function(){
@@ -115,6 +121,7 @@ SetInterval$set("public","min",function(){
 #' @title SetInterval Supremum Accessor
 #' @description Returns the SetInterval supremum.
 #' @details This is an R6 method only, no S3 dispatch is available.
+#' @return Supremum as a numeric.
 #' @section R6 Usage: $sup()
 #' @seealso \code{\link{SetInterval}}
 SetInterval$set("public","sup",function(){
@@ -125,6 +132,7 @@ SetInterval$set("public","sup",function(){
 #' @rdname inf.SetInterval
 #' @title SetInterval Infimum Accessor
 #' @description Returns the SetInterval infimum.
+#' @return Infimum as a numeric.
 #' @details This is an R6 method only, no S3 dispatch is available.
 #' @section R6 Usage: $inf()
 #' @seealso \code{\link{SetInterval}}
@@ -136,6 +144,7 @@ SetInterval$set("public","inf",function(){
 #' @rdname getSymbol.SetInterval
 #' @title SetInterval Symbol Accessor
 #' @description Returns the SetInterval symbol.
+#' @return Returns string representation of a SetInterval.
 #' @details This is an R6 method only, no S3 dispatch is available.
 #' @section R6 Usage: $getSymbol()
 #' @seealso \code{\link{SetInterval}}
@@ -151,6 +160,7 @@ SetInterval$set("public","print",function(){
 #' @rdname class.SetInterval
 #' @title SetInterval Minimum Accessor
 #' @description Returns the SetInterval minimum.
+#' @return One of 'numeric' or 'integer'.
 #' @details This is an R6 method only, no S3 dispatch is available.
 #' @section R6 Usage: $min()
 #' @seealso \code{\link{SetInterval}}
@@ -163,6 +173,8 @@ SetInterval$set("public","class",function(){
 #' @title Test if Data Lies in SetInterval.
 #' @description Tests if the given data lies in the SetInterval, either tests if all data lies in the type
 #' or any of it, can choose if bounds should be included.
+#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
+#' lies in the SetInterval or FALSE otherwise.
 #' @details
 #' If \code{all} is TRUE (default) returns TRUE only if every element in x lies in the type. If \code{all}
 #' is FALSE then returns a vector of logicals for each corresponding element in the vector x.
@@ -175,8 +187,6 @@ SetInterval$set("public","class",function(){
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @param bound logical, if FALSE (default) tests against dmin/dmax otherwise inf/sup.
-#'
-#'
 #'
 #' @section R6 Usage: $liesInSetInterval(x, all = FALSE, bound = FALSE)
 #' @seealso \code{\link{SetInterval}}

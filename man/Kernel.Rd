@@ -3,6 +3,9 @@
 \name{Kernel}
 \alias{Kernel}
 \title{Abstract Kernel Class}
+\value{
+Returns error. Abstract classes cannot be constructed directly.
+}
 \description{
 Abstract class that cannot be constructed directly. See \code{listKernels} for a list of
 implemented kernels.

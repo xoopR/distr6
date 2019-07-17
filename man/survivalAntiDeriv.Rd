@@ -13,6 +13,9 @@ survivalAntiDeriv(object, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Antiderivative of the survival function evaluated between limits as a numeric.
+}
 \description{
 The anti-derivative of the survival function between given limits or
 over the full support.

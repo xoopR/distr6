@@ -9,6 +9,9 @@ listDecorators(simplify = TRUE)
 \arguments{
 \item{simplify}{logical. If TRUE (default) returns results as characters, otherwise as R6 classes.}
 }
+\value{
+Either a list of characters (if \code{simplify} is TRUE) or a list of \code{Decorator} classes.
+}
 \description{
 Lists decorators that can decorate an R6 Distribution.
 }

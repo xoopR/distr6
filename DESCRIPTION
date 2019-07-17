@@ -1,5 +1,5 @@
 Package: distr6
-Title: Object Oriented Distributions in R
+Title: Object oriented distributions
 Version: 1.0.0
 Authors@R: 
       c(person(given = "Raphael",
@@ -62,7 +62,7 @@ Authors@R:
              role = "ctb",
              email = "zcakqz1@ucl.ac.uk") 
         )
-Description: An R6 object oriented Distributions package in R. Unified interface for 36 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation.
+Description: An R6 object oriented distributions package. Unified interface for 36 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation. Design patterns including wrappers and decorators are described in Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of probability distributions including d/p/q/r functions and results we refer to McLaughlin, M. P. (2001). Additionally Devroye (1986, ISBN:0-387-96305-7) for sampling the dirichlet distribution, Gentle (2009)<doi:10.1007/978-0-387-98144-4> for sampling the multivariate normal distribution and Michael et al. (1976)<doi:10.2307/2683801> for sampling the wald distribution.
 Imports: checkmate, R6, R62S3 (>= 1.3.1), GoFKernel, stats, extraDistr, utils, expint, data.table, pracma, crayon
 Suggests:  knitr, testthat, devtools, rmarkdown, magrittr, actuar, remotes
 License: MIT + file LICENSE

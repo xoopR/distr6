@@ -3,6 +3,9 @@
 \name{Complex}
 \alias{Complex}
 \title{Set of Complex Numbers}
+\value{
+Returns R6 object of class Complex.
+}
 \description{
 The mathematical set of complex numbers.
 }

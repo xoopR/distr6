@@ -78,6 +78,8 @@
 #'   \code{qqplot()} \tab Coming Soon. \cr
 #'   }
 #'
+#' @return Returns error. Abstract classes cannot be constructed directly.
+#'
 #' @export
 NULL
 #-------------------------------------------------------------

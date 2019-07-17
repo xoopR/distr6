@@ -34,6 +34,8 @@
 #'
 #' @seealso \code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{huberize}}
 #'
+#' @return Returns an R6 object of class HuberizedDistribution.
+#'
 #' @examples
 #' hubBin <- HuberizedDistribution$new(
 #'           Binomial$new(prob = 0.5, size = 10),

@@ -3,6 +3,9 @@
 \name{Distribution}
 \alias{Distribution}
 \title{Generalised Distribution Object}
+\value{
+Returns R6 object of class Distribution.
+}
 \description{
 A generalised distribution object for defining custom probability distributions
   as well as serving as the parent class to specific, familiar distributions.

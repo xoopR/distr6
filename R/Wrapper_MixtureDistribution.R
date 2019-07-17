@@ -26,6 +26,8 @@
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods
 #'
+#' @return Returns an R6 object of class MixtureDistribution.
+#'
 #' @seealso \code{\link{listWrappers}}
 #'
 #' @examples

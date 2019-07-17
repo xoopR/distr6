@@ -3,6 +3,9 @@
 \name{StudentT}
 \alias{StudentT}
 \title{Student's T Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Student's T distribution, which
 is commonly used to estimate the mean of populations with unknown variance from a small sample size, as well as in t-testing for difference of means and regression analysis.

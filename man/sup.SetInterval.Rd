@@ -3,6 +3,9 @@
 \name{sup.SetInterval}
 \alias{sup.SetInterval}
 \title{SetInterval Supremum Accessor}
+\value{
+Supremum as a numeric.
+}
 \description{
 Returns the SetInterval supremum.
 }

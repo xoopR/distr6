@@ -3,12 +3,15 @@
 \name{SetInterval}
 \alias{SetInterval}
 \title{R6 Generalised Class for Symbolic Sets and Intervals}
+\value{
+Returns an R6 object of class SetInterval.
+}
 \description{
 A generic SetInterval class primarily used as the parent class to \code{Set} and \code{Interval}.
 }
 \details{
 Whilst this is not an abstract class, direct construction is generally not advised.
-  Construction should instead be called on 'Set' or 'Interval'
+  Construction should instead be called on 'Set' or 'Interval'.
 }
 \section{Constructor}{
  SetInterval$new(symbol, lower, upper, type, class = "numeric", dimension)

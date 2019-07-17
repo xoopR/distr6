@@ -12,6 +12,9 @@ distribution names as characters.}
 
 \item{filter}{list to filter distributions by. See examples.}
 }
+\value{
+Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SDistribution}s and their traits.
+}
 \description{
 Lists distr6 distributions in a data.table or a character vector, can be filtered by
 traits and implemented package.

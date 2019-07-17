@@ -15,6 +15,9 @@ survivalPNorm(object, p = 2, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Given p-norm of survival function evaluated between limits as a numeric.
+}
 \description{
 The p-norm of the survival function evaluated between given limits or over the whole support.
 }

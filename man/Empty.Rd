@@ -3,6 +3,9 @@
 \name{Empty}
 \alias{Empty}
 \title{Empty Set}
+\value{
+Returns R6 object of class Empty.
+}
 \description{
 The mathematical Empty, or Null, set.
 }

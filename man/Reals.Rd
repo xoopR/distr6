@@ -3,6 +3,9 @@
 \name{Reals}
 \alias{Reals}
 \title{Set of Reals}
+\value{
+Returns R6 object of class Reals.
+}
 \description{
 The mathematical set of real numbers.
 }

@@ -13,6 +13,9 @@ survival(object, x1, log = FALSE)
 
 \item{log}{logical, if TRUE then the (natural) logarithm of the survival function is returned.}
 }
+\value{
+Survival function as a numeric, natural logarithm returned if \code{log} is TRUE.
+}
 \description{
 The survival function of a probability distribution is the probability of surviving
 after a point x.

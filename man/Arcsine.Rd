@@ -3,6 +3,9 @@
 \name{Arcsine}
 \alias{Arcsine}
 \title{Arcsine Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Arcsine distribution, which
 is commonly used in the study of random walks and as a special case of the Beta distribution.

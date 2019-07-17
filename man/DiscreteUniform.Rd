@@ -3,6 +3,9 @@
 \name{DiscreteUniform}
 \alias{DiscreteUniform}
 \title{Discrete Uniform Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Discrete Uniform distribution, which
 is commonly used as a discrete variant of the more popular Uniform distribution, used to model events with an equal probability of occurring (e.g. role of a die).

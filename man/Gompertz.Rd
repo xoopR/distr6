@@ -3,6 +3,9 @@
 \name{Gompertz}
 \alias{Gompertz}
 \title{Gompertz Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Gompertz distribution, which
 is commonly used in survival analysis particularly to model adult mortality rates..

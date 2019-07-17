@@ -10,6 +10,10 @@
 
 \item{bound}{logical, if FALSE (default) tests against dmin/dmax otherwise inf/sup.}
 }
+\value{
+Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
+lies in the SetInterval or FALSE otherwise.
+}
 \description{
 Tests if the given data lies in the SetInterval, either tests if all data lies in the type
 or any of it, can choose if bounds should be included.

@@ -9,6 +9,9 @@ skewType(skew)
 \arguments{
 \item{skew}{numeric.}
 }
+\value{
+Returns one of 'negative skew', 'no skew' or 'positive skew'.
+}
 \description{
 Gets the type of skewness
 }

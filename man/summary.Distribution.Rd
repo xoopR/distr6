@@ -13,6 +13,9 @@
 
 \item{...}{additional arguments.}
 }
+\value{
+Printed summary of the distribution.
+}
 \description{
 Summary method for distribution objects (and all child classes).
 }

@@ -9,6 +9,8 @@
 #'
 #' @seealso \code{\link{skewness}}, \code{\link{exkurtosisType}}
 #'
+#' @return Returns one of 'negative skew', 'no skew' or 'positive skew'.
+#'
 #' @examples
 #' skewType(1)
 #' skewType(0)

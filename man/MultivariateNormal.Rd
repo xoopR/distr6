@@ -3,6 +3,9 @@
 \name{MultivariateNormal}
 \alias{MultivariateNormal}
 \title{Multivariate Normal Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Multivariate Normal distribution, which
 is commonly used to generalise the Normal distribution to higher dimensions, and is commonly associated with Gaussian Processes.

@@ -23,6 +23,8 @@
 #'
 #' @seealso \code{\link{listWrappers}}
 #'
+#' @return Returns an R6 object of class VectorDistribution.
+#'
 #' @examples
 #' vecBin <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
 #'                            size = 10), Normal$new(mean = 15)))

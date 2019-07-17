@@ -36,8 +36,10 @@
 #' \code{survivalPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
 #' }
 #'
-#'
 #' @seealso \code{\link{decorate}}, \code{\link{listDecorators}}
+#'
+#' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
+#' added to the SDistribution methods.
 #'
 #' @examples
 #' x = Exponential$new()
@@ -75,6 +77,8 @@ ExoticStatistics <- R6::R6Class("ExoticStatistics", inherit = DistributionDecora
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
+#' @return Antiderivative of the cdf evaluated between limits as a numeric.
+#'
 #' @export
 NULL
 ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NULL){
@@ -104,6 +108,8 @@ ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NU
 #' limits of integration.
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Antiderivative of the survival function evaluated between limits as a numeric.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
@@ -135,6 +141,8 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper
 #' where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf and \eqn{f_X} is the pdf.
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Survival function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
@@ -173,6 +181,8 @@ ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
 #' where X is the distribution, \eqn{S_X} is the survival function and \eqn{f_X} is the pdf.
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
@@ -219,6 +229,8 @@ ExoticStatistics$set("public", "hazard", function(x1, log = FALSE) {
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
 #'
+#' @return Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
+#'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
 #' @export
@@ -251,6 +263,8 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
 #' Returns NULL if distribution is not continuous.
 #'
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Given p-norm of cdf evaluated between limits as a numeric.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
@@ -288,6 +302,8 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
+#' @return Given p-norm of pdf evaluated between limits as a numeric.
+#'
 #' @export
 ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
   if(is.null(lower)) lower <- self$inf()
@@ -321,6 +337,8 @@ ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper =
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
+#' @return Squared 2-norm of pdf evaluated between limits as a numeric.
+#'
 #' @export
 NULL
 ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL){
@@ -351,6 +369,8 @@ ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL
 #' Can only be used after decorating with \code{\link{ExoticStatistics}}.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
+#'
+#' @return Given p-norm of survival function evaluated between limits as a numeric.
 #'
 #' @export
 ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, upper = NULL){

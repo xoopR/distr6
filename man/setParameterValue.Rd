@@ -15,6 +15,9 @@ setParameterValue(object, ..., lst = NULL, error = "warn")
 
 \item{error}{character, value to pass to \code{stopwarn}.}
 }
+\value{
+An R6 object of class ParameterSet.
+}
 \description{
 Returns the value of the given parameter.
 }

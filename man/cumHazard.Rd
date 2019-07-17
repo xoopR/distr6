@@ -13,6 +13,9 @@ cumHazard(object, x1, log = FALSE)
 
 \item{log}{logical, if TRUE then the (natural) logarithm of the cumulative hazard function is returned.}
 }
+\value{
+Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
+}
 \description{
 The cumulative hazard function of a probability distribution is the anti-derivative of
 the hazard function.

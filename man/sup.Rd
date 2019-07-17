@@ -9,6 +9,9 @@ sup(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Supremum as a numeric.
+}
 \description{
 Returns the distribution supremum as the supremum of the support.
 }

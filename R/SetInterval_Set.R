@@ -43,6 +43,7 @@
 #'   \code{print()} \tab \code{\link[base]{print}} \cr
 #'   }
 #'
+#' @return Returns an R6 object of class Set.
 #'
 #' @seealso \code{\link{Interval}}
 #'
@@ -87,6 +88,7 @@ Set$set("public","initialize",function(..., dim = 1){
 #' @title Length of Set
 #' @description Returns the length of the Set as the number of elements.
 #' @details This is an R6 method only, no S3 dispatch is available.
+#' @return Number of elements in the set.
 #' @section R6 Usage: $length()
 #' @seealso \code{\link{Set}}
 Set$set("public","length",function(){
@@ -98,6 +100,7 @@ Set$set("public","length",function(){
 #' @title Set Elements Accessor
 #' @description Returns the elements in a Set.
 #' @details This is an R6 method only, no S3 dispatch is available.
+#' @return Elements in the set.
 #' @section R6 Usage: $elements()
 #' @seealso \code{\link{Set}}
 Set$set("public","elements",function(){

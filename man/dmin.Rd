@@ -9,6 +9,9 @@ dmin(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Minimum as a numeric.
+}
 \description{
 Returns the distribution minimum as the minimum of the support. If the support is not
 bounded below then minimum is given by

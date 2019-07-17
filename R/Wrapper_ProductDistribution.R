@@ -23,6 +23,7 @@
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods
 #'
+#' @return Returns an R6 object of class ProductDistribution.
 #'
 #' @examples
 #' prodBin <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10),

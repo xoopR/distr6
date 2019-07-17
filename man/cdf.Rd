@@ -19,6 +19,10 @@ cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 
 \item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
 }
+\value{
+Cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+or as a data.table.
+}
 \description{
 Returns the cumulative distribution function for a distribution evaluated at a given
 point.

@@ -13,6 +13,9 @@ cdfAntiDeriv(object, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Antiderivative of the cdf evaluated between limits as a numeric.
+}
 \description{
 The anti-derivative of the cumulative distribution function between given limits or
 over the full support.

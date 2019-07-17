@@ -3,6 +3,9 @@
 \name{NegativeBinomial}
 \alias{NegativeBinomial}
 \title{Negative Binomial Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Negative Binomial distribution, which
 is commonly used to model the number of successes, trials or failures before a given number of failures or successes.

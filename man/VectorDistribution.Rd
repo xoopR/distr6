@@ -3,6 +3,9 @@
 \name{VectorDistribution}
 \alias{VectorDistribution}
 \title{Vectorise Distributions}
+\value{
+Returns an R6 object of class VectorDistribution.
+}
 \description{
 A wrapper for creating a vector of distributions.
 }

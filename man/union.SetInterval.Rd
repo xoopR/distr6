@@ -18,6 +18,9 @@ union.SetInterval(..., dim = 1)
 
 \item{dim}{dimension of new SetInterval.}
 }
+\value{
+Returns an R6 object inheriting from SetInterval.
+}
 \description{
 Makes a symbolic representation for the union of sets/intervals.
 }

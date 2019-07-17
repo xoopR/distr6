@@ -3,6 +3,9 @@
 \name{Geometric}
 \alias{Geometric}
 \title{Geometric Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Geometric distribution, which
 is commonly used to model the number of trials (or number of failures) before the first success.

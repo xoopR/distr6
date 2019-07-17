@@ -11,6 +11,9 @@ mode(object, which = "all")
 
 \item{which}{which mode of the distribution should be returned, default is all.}
 }
+\value{
+The estimated mode as a numeric, either all modes (if multiple) or the ordered mode given in \code{which}.
+}
 \description{
 A numeric search for the mode(s) of a distribution.
 }

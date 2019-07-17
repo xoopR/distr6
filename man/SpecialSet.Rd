@@ -3,6 +3,9 @@
 \name{SpecialSet}
 \alias{SpecialSet}
 \title{Special Mathematical Sets}
+\value{
+Returns error. Abstract classes cannot be constructed directly.
+}
 \description{
 Abstract class for the representation of the 'special' mathematical sets.
 }

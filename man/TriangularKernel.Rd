@@ -3,6 +3,9 @@
 \name{TriangularKernel}
 \alias{TriangularKernel}
 \title{Triangular Kernel}
+\value{
+Returns an R6 object inheriting from class Kernel.
+}
 \description{
 Mathematical and statistical functions for the Triangular kernel defined by the pdf,
 \deqn{f(x) = 1 - |x|}

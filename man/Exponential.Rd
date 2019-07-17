@@ -3,6 +3,9 @@
 \name{Exponential}
 \alias{Exponential}
 \title{Exponential Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Exponential distribution, which
 is commonly used to model inter-arrival times in a Poisson process and has the memoryless property.

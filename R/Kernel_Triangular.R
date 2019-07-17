@@ -21,6 +21,8 @@
 #' @inheritSection Kernel Public Variables
 #' @inheritSection Kernel Public Methods
 #'
+#' @return Returns an R6 object inheriting from class Kernel.
+#'
 #' @export
 NULL
 #-------------------------------------------------------------

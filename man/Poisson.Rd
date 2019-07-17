@@ -3,6 +3,9 @@
 \name{Poisson}
 \alias{Poisson}
 \title{Poisson Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Poisson distribution, which
 is commonly used to model the number of events occurring in at a constant, independent rate over an interval of time or space.

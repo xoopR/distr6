@@ -3,6 +3,9 @@
 \name{Uniform}
 \alias{Uniform}
 \title{Uniform Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the Uniform distribution, which
 is commonly used to model continuous events occurring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling.

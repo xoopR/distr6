@@ -3,6 +3,9 @@
 \name{NegIntegers}
 \alias{NegIntegers}
 \title{Set of Negative Integers}
+\value{
+Returns R6 object of class NegIntegers.
+}
 \description{
 The mathematical set of negative integers.
 }

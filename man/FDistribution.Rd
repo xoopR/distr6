@@ -3,6 +3,9 @@
 \name{FDistribution}
 \alias{FDistribution}
 \title{'F' Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
 Mathematical and statistical functions for the 'F' distribution, which
 is commonly used in ANOVA testing and is the ratio of scaled Chi-Squared distributions..
