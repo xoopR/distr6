@@ -1,0 +1,74 @@
+---
+title: "Constructing a Distribution"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Constructing a Distribution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+First and foremost, distr6 is a package for probability distributions in R. Currently there are 36 distributions implemented in distr6 and another 11 kernels. These tutorials try to follow the journey for using, editing and analysing a probability distribution. Don't worry if you've never used R6 before, these tutorials assume no prior knowledge of R6. If you're interested in learning the basics of R6, see the tutorial "Introduction to R6", this tutorial is particularly useful for understanding how to copy (or clone) distributions in R.
+
+We will use the Normal probability distribution as a running example.
+
+## Constructing a Distribution
+
+All distributions are constructed using the distribution name, followed by `$new(...)` where `...` are arguments to the constructor. This is different from base R in which a function is called directly. To construct a Standard Normal distribution,
+
+```{r}
+N <- Normal$new()
+```
+
+Printing the distribution shows the distribution name and parameterisation. Notice how printing works the same as always in R, i.e. with `print()`.
+
+```{r}
+print(N)
+```
+
+To access useful statistics, distr6 includes a summary method
+
+```{r}
+summary(N)
+```
+
+And a shortened form is available too
+
+```{r}
+summary(N, full = F)
+```
+
+## Alternative Parameterisations
+
+The distribution parameterisation refers to the parameters that are used to define the distribution. The choice of parameterisation often depends on how you want to the distribution to be interpreted and if fitting procedures will be utilised.
+
+In the case of the Normal distribution, several parameterisations are possible. These include with mean and variance, standard deviation or precision. The parameterisation is specified in construction by naming the parameters, for example mean and standard deviation:
+```{r}
+Normal$new(mean = 2, sd = 2)
+```
+
+Or mean and precision:
+```{r}
+Normal$new(mean = 2, prec = 2)
+```
+
+Notice how the parameterisation chosen in construction is shown in the print method. Finally be careful not to construct a distribution using conflicting parameterisations. For example:
+```{r}
+Normal$new(mean = 2, var = 2, sd = 3, prec = 4)
+```
+Only the mean and precision arguments are used, if you're unsure which parameters are conflicting see the help page for the distribution, `?Normal`. To have the distribution 'tell' you which parameters are used in construction, add the `verbose = T` argument:
+```{r}
+Normal$new(verbose = TRUE)
+Normal$new(mean = 2, var = 2, sd = 3, prec = 4, verbose = TRUE)
+```
+
+## Summary
+
+In this tutorial we looked at constructing a distribution with different parameterisations. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html) we look at getting and setting parameters and how this functions with your chosen parameterisation.

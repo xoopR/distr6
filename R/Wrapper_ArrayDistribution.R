@@ -1,34 +1,48 @@
 #' @name ArrayDistribution
-#' @title Product ArrayDistribution
-#' @description A special case joint distribution where each independent distribution is the same
-#' Distribution class but not necessarily with the same parameters.
-#' @seealso \code{\link{ProductDistribution}} and \code{\link{Distribution}}. As well as \code{\link{DistributionWrapper}}
-#' for wrapper details.
-#' @details Exploits the following relationships of independent distributions
-#' \deqn{f_A(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
-#' \deqn{F_A(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
-#' where f_A/F_A is the pdf/cdf of the joint (product) distribution P and X1,...,XN are independent distributions.
+#' @title Product Array Distribution
 #'
-#' \code{ArrayDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
+#' @section Constructor: ArrayDistribution$new(distribution, paramList, name = NULL, short_name = NULL,
+#' description = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{distribution} \tab distribution \tab Distribution to wrap. \cr
-#' \code{paramList} \tab list \tab List of parameters, see examples. \cr
+#' \code{paramList} \tab list \tab List of parameters, see example. \cr
+#' \code{name} \tab list \tab Optional new name for distribution. \cr
+#' \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
+#' \code{description} \tab list \tab Optional new description for distribution. \cr
 #' }
 #'
+#' @description A special case product distribution where each independent distribution is the same
+#' Distribution class but not necessarily with the same parameters.
+#'
+#' @details Exploits the following relationships of independent distributions
+#' \deqn{f_A(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}
+#' \deqn{F_A(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}
+#' where \eqn{f_A}/\eqn{F_A} is the pdf/cdf of the array distribution \eqn{A} and \eqn{X1,...,XN} are independent distributions.
+#'
+#' @seealso \code{\link{listWrappers}}
+#'
+#' @inheritSection DistributionWrapper Public Variables
+#' @inheritSection DistributionWrapper Public Methods
+#'
+#' @return Returns an R6 object of class ArrayDistribution.
 #'
 #' @examples
-#' a = ArrayDistribution$new(Binomial, list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
-#'                                         list(prob = 0.2, size = 6)))
+#' a = ArrayDistribution$new(Binomial,
+#'               list(list(prob = 0.1, size = 2),
+#'                    list(prob = 0.6, size = 4),
+#'                    list(prob = 0.2, size = 6)))
 #' a$pdf(x1=1,x2=2,x3=3)
 #' a$cdf(x1=1,x2=2,x3=3)
-NULL
-
+#' a$rand(10)
+#'
 #' @export
-ArrayDistribution <- R6::R6Class("ArrayDistribution", inherit = DistributionWrapper)
-ArrayDistribution$set("public","initialize",function(distribution, paramList){
+NULL
+ArrayDistribution <- R6::R6Class("ArrayDistribution", inherit = ProductDistribution)
+ArrayDistribution$set("public","initialize",function(distribution, paramList, name = NULL,
+                                                     short_name = NULL, description = NULL){
   distribution = paste0(substitute(distribution))
   if(!(distribution %in% listDistributions(simplify = T)))
     stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
@@ -37,38 +51,9 @@ ArrayDistribution$set("public","initialize",function(distribution, paramList){
 
   distlist = makeUniqueDistributions(sapply(paramList, function(x) do.call(distribution$new, x)))
 
-  name = paste("Array of",length(distlist),distribution$public_fields$name,"distributions")
-  short_name = paste0("Array",length(distlist),distribution$public_fields$short_name)
+  if(is.null(name)) name = paste0("Array",length(distlist),distribution$public_fields$name)
+  if(is.null(short_name)) short_name = paste0("Arr",length(distlist),distribution$public_fields$short_name)
+  if(is.null(description)) description = paste0("Array of ",length(paramList)," ",distribution$public_fields$description)
 
-  lst <- rep(list(bquote()), length(distlist))
-  names(lst) <- paste("x",1:length(distlist),sep="")
-
-  pdf = function() {}
-  formals(pdf) = lst
-  body(pdf) = substitute({
-    prods = NULL
-    for(i in 1:n){
-      prods = c(prods,self$wrappedModels(paste0(shortname,i))$pdf(get(paste0("x",i))))
-    }
-    return(prod(prods))
-  },list(n = length(distlist), shortname = distribution$public_fields$short_name))
-
-  cdf = function() {}
-  formals(cdf) = lst
-  body(cdf) = substitute({
-    prods = NULL
-    for(i in 1:n){
-      prods = c(prods,self$wrappedModels(paste0(shortname,i))$cdf(get(paste0("x",i))))
-    }
-    return(prod(prods))
-  },list(n = length(distlist), shortname = distribution$public_fields$short_name))
-
-  type = do.call(product, lapply(distlist,function(x) x$type()))
-  support = do.call(product, lapply(distlist,function(x) x$support()))
-  distrDomain = do.call(product, lapply(distlist,function(x) x$distrDomain()))
-
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                   short_name = short_name, support = support, type = type,
-                   distrDomain = distrDomain)
-
+  super$initialize(distlist, name, short_name, description)
 })

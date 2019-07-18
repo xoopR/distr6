@@ -1,0 +1,84 @@
+---
+title: "S3 and Piping"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{S3 and Piping}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+references:
+- id: r62s3
+  title: 'R62S3: Automatic Method Generation from R6'
+  author:
+  - family: Sonabend
+    given: Raphael
+  URL: 'https://CRAN.R-project.org/package=R62S3'
+  publisher: CRAN
+  note: 'R package version 1.3.1'
+  issued:
+    year: 2019
+    month: 6
+- id: magrittr
+  title: 'magrittr: A Forward-Pipe Operator for R'
+  author:
+  - family: Milton Bache
+    given: Stefan
+  - family: Wickham
+    given: Hadley
+  URL: 'https://CRAN.R-project.org/package=magrittr'
+  publisher: CRAN
+  note: 'R package version 1.5'
+  issued:
+    year: 2014
+---
+
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The next set of tutorials focuses on more advanced functionality in distr6. This is not to say that the code itself may be any more complex, but that the use-cases for this functionality is more advanced. Examples of these include composite distributions, decorators for numeric results and piping methods. We start with S3 and piping as these (especially S3) will be familiar concepts to most users, are available in distr6 but are not part of the core functionality.
+
+## S3
+
+Using the R62S3 package [@r62s3] most R6 methods in distr6 can instead be called as an S3 method. Even if you're not aware of it, you've probably used S3 every time you've opened R. For example the `plot` function produces a different plot depending on what object it's called on, a numeric, a linear regression model, or something more complicated, this is because of the S3 dispatch system. Every distribution, kernel, parameterset, wrapper and decorator method is available through S3. Note that constructors always use R6 syntax, i.e. `$new()`. Below are some examples, see the documentation help pages for the different S3 and R6 syntax but remember these are almost identical except that the first argument in S3 will be the object whereas this is omitted in the R6 usage.
+
+```{r}
+N <- Normal$new()
+
+N$pdf(1:2) # R6
+pdf(N, 1:2) # S3
+
+N$summary()
+summary(N)
+
+N$kurtosis()
+kurtosis(N)
+
+setParameterValue(N,var = 2)
+getParameterValue(N, "var")
+```
+
+
+## Piping
+
+We won't go into too much detail about piping because it will be familiar to users who need to make use of it and may not be necessary for others. Piping is the process of calling functions in a set order using the pipe, `%>%` notation, from the magrittr package [@magrittr]. We specifically mention piping because it goes hand-in-hand with method chaining, which we discussed in the [introduction to R6 tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html). Below are some examples of how piping can be used in distr6. 
+
+```{r}
+library(magrittr)
+Normal$new() %>% setParameterValue(var = 2) %>% getParameterValue("var")
+
+# Don't worry about unfamiliar functions used here, we return to this in the next tutorial
+Normal$new() %>% decorate(ExoticStatistics) %>% hazard(2)
+```
+
+Notice that usually the S3 methods require the first argument to be the object, in this case `N` or `Normal$new()` but by using the pipe notation, this is filled automatically. For a more in-depth tutorial on magrittr [see here](https://magrittr.tidyverse.org/).
+
+## Summary
+
+In this tutorial we covered using S3 and piping instead of/as well as R6 syntax in distr6. These allow you to use whichever syntax you're most comfortable with whilst maintaining the integrity of a well-designed and (hopefully) user-friendly object-oriented interface. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) we look at another big feature in distr6, decorators.
+
+## References

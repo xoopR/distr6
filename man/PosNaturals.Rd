@@ -3,17 +3,33 @@
 \name{PosNaturals}
 \alias{PosNaturals}
 \title{Set of Positive Natural Numbers}
+\value{
+Returns R6 object of class PosNaturals.
+}
 \description{
 The mathematical set of positive natural numbers.
 }
+\details{
+The set of Positive Naturals is defined as the positive counting numbers, i.e.
+\deqn{PosNaturals = \{1, 2, 3,...\}}{PosNaturals = {1, 2, 3,...}}
+}
+\section{Constructor}{
+ PosNaturals$new(dim = 1)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
 }
 }
 
+\examples{
+PosNaturals$new()
+PosNaturals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

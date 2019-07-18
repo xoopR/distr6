@@ -3,59 +3,61 @@
 \name{ExoticStatistics}
 \alias{ExoticStatistics}
 \title{Exotic Statistical Methods for Distributions}
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
+added to the SDistribution methods.
+}
 \description{
-Further functionality to distribution objects for numerical statistical
-  methods that can be considered more exotic than core, such as survival modelling
-  and p-norms.
+This decorator adds methods for more complex statistical methods including p-norms,
+survival and hazard functions and anti-derivatives.
 }
 \details{
-Decorator objects add functionality to the given Distribution object
- by copying methods in the decorator environment to the chosen Distribution environment. Use the
- \code{\link{decorate}} function to decorate a Distribution.
+Decorator objects add functionality to the given Distribution object by copying methods
+in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
+below to find details of the methods that are added to the Distribution. Methods already
+present in the distribution are not overwritten by the decorator.
 
- All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations.
+Use \code{\link{decorate}} to decorate a Distribution.
+
+Methods in this decorator may use numerical approximations and therefore better results may be available
+from analytic computations.
 }
+\section{Constructor}{
+ ExoticStatistics$new(distribution)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{dist} \tab distribution \tab Distribution to decorate. \cr
-\code{R62S3} \tab logical \tab If TRUE (default), S3 methods are added for decorators in construction.
+\code{distribution} \tab distribution \tab Distribution to decorate. \cr
 }
 }
 
-\section{Public Methods}{
+\section{Added Methods}{
 
 \tabular{lll}{
-\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-\code{cdfAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
-Anti-derivative of cdf evaluated between lower and upper. \cr
-\code{survivalAntiDeriv(lower = self$inf(), upper = self$sup())} \tab numeric x numeric -> numeric \tab
-Anti-derivative of survival function evaluated between lower and upper. \cr
-\code{survival(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
-Survival function evaluated at x1, log(survival) if log = TRUE. \cr
-\code{hazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
-Hazard function evaluated at x1, log(hazard) if log = TRUE. \cr
-\code{cumHazard(x1, log = FALSE)} \tab numeric x logical -> numeric \tab
-Cumulative hazard function evaluated at x1, log(cumHazard) if log = TRUE. \cr
-\code{cdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
-The pth norm of the cumulative distribution function, evaluated between limits. \cr
-\code{pdfPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
-The pth norm of the probability density function, evaluated between limits. \cr
-\code{survivalPNorm(p = 2, lower = self$inf(), upper = self$sup())} \tab integer x numeric x numeric -> numeric \tab
-The pth norm of the survival function, evaluated between limits.
+\strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
+\code{survival(x1, log = FALSE)} \tab Survival function \tab \code{\link{survival}} \cr
+\code{hazard(x1, log = FALSE)} \tab Hazard function \tab \code{\link{hazard}} \cr
+\code{cumHazard(x1, log = FALSE)} \tab Cumulative hazard function \tab \code{\link{cumHazard}} \cr
+\code{cdfAntiDeriv(lower = NULL, upper = NULL))} \tab Anti-derivative of cdf \tab \code{\link{cdfAntiDeriv}} \cr
+\code{survivalAntiDeriv(lower = NULL, upper = NULL)} \tab Anti-derivative of survival function \tab \code{\link{survivalAntiDeriv}} \cr
+\code{cdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of cdf \tab \code{\link{cdfPNorm}} \cr
+\code{pdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of pdf \tab \code{\link{pdfPNorm}} \cr
+\code{survivalPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
 }
 }
 
 \examples{
 x = Exponential$new()
-decorate(x, ExoticStatistics, R62S3 = FALSE)
+decorate(x, ExoticStatistics)
 x$survival(1)
 
-x = Exponential$new(decorators = ExoticStatistics, R62S3 = FALSE)
+x = Exponential$new(decorators = ExoticStatistics)
 x$survival(4)
+
 }
 \seealso{
-\code{\link{DistributionDecorator}}
+\code{\link{decorate}}, \code{\link{listDecorators}}
 }

@@ -3,17 +3,40 @@
 \name{Integers}
 \alias{Integers}
 \title{Set of Integers}
+\value{
+Returns R6 object of class Integers.
+}
 \description{
 The mathematical set of integers.
 }
+\details{
+The set of Integers is defined as the set of numbers that can be written without a fractional
+component, i.e.
+\deqn{Integers = \{...,-3, -2, -1, 0, 1, 2, 3,...\}}{Integers = {...,-3, -2, -1, 0, 1, 2, 3,...}}
+}
+\section{Constructor}{
+ Integers$new(dim = 1,...)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
+   \code{...} \tab ANY \tab Additional arguments.
 }
 }
 
+\section{Constructor Details}{
+ Generally the \code{...} argument should be ignored, its primary use-case
+is for the child-classes.
+}
+
+\examples{
+Integers$new()
+Integers$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

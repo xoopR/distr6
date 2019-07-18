@@ -3,18 +3,37 @@
 \name{PosIntegers}
 \alias{PosIntegers}
 \title{Set of Positive Integers}
+\value{
+Returns R6 object of class PosIntegers.
+}
 \description{
 The mathematical set of positive integers.
 }
+\details{
+The set of PosIntegers is defined as the set of positive or non-negative numbers that can
+be written without a fractional component, i.e.
+\deqn{PosIntegers = \{0, 1, 2, 3,...\}}{PosIntegers = {0, 1, 2, 3,...}}
+\eqn{0} may or may not be included (depending on the \code{zero} argument).
+}
+\section{Constructor}{
+ PosIntegers$new(dim = 1, zero = FALSE)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
+\examples{
+PosIntegers$new()
+PosIntegers$new(zero = TRUE)
+PosIntegers$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

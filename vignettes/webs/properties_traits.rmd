@@ -1,0 +1,86 @@
+---
+title: "Properties and Traits"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Properties and Traits}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we evaluated the density, distribution and quantile functions from a Standard Normal distributions. As well as sampling from this distribution and accessing various statistical results. In this tutorial we cover how to access distribution properties and traits.
+
+## Properties vs Traits
+
+Before discussing how to actually view properties and traits it is worth understand the difference between the two. In computer science and object-oriented programming terms, the difference is that a trait relates to a class whereas a property relates to an object. In terms of a probability distribution, the difference is that a distribution traits holds independently of the parameterisation, whereas a distribution property depends on the parameterisation. For example the Normal distribution is always univariate continuous and the Binomial distribution is always univariate discrete, hence we refer to these as traits. Whereas the Binomial distribution is symmetric if and only if the probability of success is 0.5, otherwise it's asymmetric, hence we refer to symmetry as a property.
+
+## Traits
+
+In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of "continuous", "discrete" or "mixture", this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs, and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then '0' is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html)). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).
+
+To view all the traits of the Normal distribution, call the method `traits()`,
+```{r}
+N <- Normal$new()
+N$traits()
+
+# You can also do the above in one line
+Normal$new()$traits ()
+```
+
+Or to view a specific trait:
+```{r}
+N$type()
+N$valueSupport()
+N$variateForm()
+```
+
+
+## Properties
+
+The properties included in distr6 are kurtosis, skewness, symmetry, support.
+
+Kurtosis is a measure of how heavy a distribution's tails us. A distribution is one of: mesokurtic (kurtosis equals that of the Normal distribution), leptokurtic (kurtosis is higher than Normal distribution), platykurtic (kurtosis is smaller than Normal distributions). In slightly simpler terms: a platykurtic distribution is likely to produce less outliers (or extreme deviations) than a Normal distribution, a mesokurtic distribution will produce the same amount and a leptokurtic distribution will produce more.
+
+Skewness is a slightly easier concept to understand. It refers to the shape of the distribution and specifically if a distribution is negative skew (skew < 0) then the 'tail' is on the left side of the distribution whereas a positive skew distribution has its 'tail' on the right. If a distribution is symmetric there is no skew (although the reverse doesn't necessarily hold).
+
+Symmetry is one of 'symmetric' or 'asymmetric' and is an informal way of identifying if the pdf of the distribution is symmetric about a single point (the median). Informally, the distribution support is the set of values that produce a non-zero results when supplied to the pdf.
+
+To view properties in distr6, we use the `properties()` method
+```{r}
+Normal$new()$properties()
+```
+
+And once again these can be viewed individually
+```{r}
+N <- Normal$new()
+N$kurtosisType()
+N$skewnessType()
+N$symmetry()
+N$support()
+```
+
+Note that `kurtosisType()` and `skewnessType()` are used as these produce the type of kurtosis and skewness respectively, as opposed to `kurtosis()` and `skewness()` which return the values.
+
+## Other Distribution Variables
+
+There are three other variables that can be accessed from a distribution. Once again a variable differs from a method in that it relates to the class and is called without parentheses. These are respectively `name`, `short_name` and `description`, hopefully their output is intuitive
+```{r}
+N$name
+N$short_name
+N$description
+```
+
+## Summary
+
+In this tutorial we covered the difference between properties and traits, how to call properties and traits as a list or as individual items, and finally distribution variables. Remember you don't have to learn all these method and variable names off by heart, it's all listed in every distribution help page. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we turn to multivariate distributions.
+
+
+
+

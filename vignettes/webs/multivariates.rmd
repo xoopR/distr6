@@ -1,0 +1,72 @@
+---
+title: "Multivariate Distributions"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Multivariate Distributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html) we used variables and methods to find properties and traits of the Normal distribution. Before that we looked at statistical methods and construction of the Normal distribution. In this tutorial we look at multivariate distributions, which should feel similar to univariate distributions.
+
+## Constructing a Multivariate Distribution
+
+Construction of a multivariate distribution is identical to a univariate distribution, except that a vector input is likely to be required for one of the parameters. In keeping with our running Normal example, we will now use the Multivariate Normal distribution.
+
+```{r}
+MN <- MultivariateNormal$new(mean = c(0,0), cov = c(1,0,0,1))
+MultivariateNormal$new() # This is in fact the default
+```
+
+Notice how this is almost identical to constructing a univariate Normal distribution. We even allow multiple parameterisations
+```{r}
+MultivariateNormal$new(mean = c(0,0), prec = c(1,0,0,1))
+```
+
+## Getting and Setting Parameters
+
+Every multivariate distribution includes by default an extra parameter that cannot be updated. This is the `K` parameter that refers to the 'number of components or categories'. It ensures that the correct number of inputs are given to the distribution for the d/p/q/r functions and in updating other parameters. It also means that the number of parameters must be identical when updating. Otherwise getting and setting parameters is identical to univariate distributions.
+
+```{r}
+MN <- MultivariateNormal$new()
+MN$getParameterValue("K")
+MN$setParameterValue(mean = c(0)) # Causes an error as 1 not 2 means are given
+MN$setParameterValue(mean = c(0,1))
+MN$setParameterValue(prec = c(2,0,0,2,1,2)) # Truncated to c(2,0,0,2)
+MN$parameters()
+```
+
+## d/p/q/r
+
+The biggest difference between univariate and multivariate distributions is in how arguments are passed to the d/p/q/r methods. This differs slightly from R stats. For example to evaluate the pdf of the multinomial distribution at (1,2) in R stats we would run
+```{r}
+dmultinom(c(1,2), size = 3, prob = c(0.2,0.8))
+```
+
+Whereas in distr6, each point is its own argument
+```{r}
+Multinomial$new(size = 3, probs = c(0.2,0.8))$pdf(1,2)
+```
+
+There is a very important reason for this: vectorisation. In R stats there is no way to generate multiple points from a multivariate distribution, whereas in distr6...
+```{r}
+MN$pdf(c(1,2), c(2,3))
+MN$rand(5)
+```
+
+Note: `cdf()` and `quantile()` are often omitted from multivariate distributions n distr6 as no closed form analytic expression exists.
+
+
+## Summary
+
+In this tutorial we looked at multivariate distributions and discussed the difference between distr6 and R stats in using the d/p/q/r functions. The [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/listing.html) concludes the 'Basic' set of tutorials with a look at listing in distr6 to help you navigate the package more easily.
+
+

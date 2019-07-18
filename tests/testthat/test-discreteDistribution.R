@@ -10,27 +10,26 @@ dbin = function(x){
 }
 
 ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0.8),
-                      lower = list(0, 1, 0), upper = list(1, Inf, 1),
-                      class = list("numeric","integer","numeric"),
+                      support = list(Interval$new(0,1), PosNaturals$new(), Interval$new(0,1)),
                       settable = list(TRUE, TRUE, FALSE),
-                      updateFunc = list(NULL, NULL, "1 - self$getParameterValue('prob')"),
+                      updateFunc = list(NULL, NULL,
+                                        function(self) 1 - self$getParameterValue('prob')),
                       description = list("Probability of Success", "Number of trials",
                                          "Probability of failure"))
 
-discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0,10),
+discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
                                   symmetric=TRUE, type = PosNaturals$new(),
-                                  distrDomain=PosNaturals$new(),
                                   pdf = dbin,
                                   parameters = ps,
-                                  decorators = list(CoreStatistics), R62S3 = FALSE
+                                  decorators = list(CoreStatistics)
 )
 
 test_that("check all accessors are working", {
-  expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100.0)")
+  expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100)")
   expect_equal(discreteTester$name, "Discrete Test")
   expect_equal(discreteTester$short_name, "TestDistr")
   expect_equal(discreteTester$description, NULL)
-  expect_equal(discreteTester$decorators, "CoreStatistics")
+  expect_equal(discreteTester$decorators(), "CoreStatistics")
   expect_equal(discreteTester$valueSupport(), "discrete")
   expect_equal(discreteTester$variateForm(), "univariate")
   expect_equal(discreteTester$symmetry(),"symmetric")
@@ -38,15 +37,16 @@ test_that("check all accessors are working", {
 })
 
 test_that("check parameter getting/setting", {
-  expect_error(discreteTester$setParameterValue("sgdsvfd"))
-  expect_silent(discreteTester$setParameterValue(list(size = 2, prob = 0.9)))
+  expect_warning(discreteTester$setParameterValue("sgdsvfd"))
+  expect_silent(discreteTester$setParameterValue(size = 2, prob = 0.9))
+  expect_silent(discreteTester$setParameterValue(lst = list(size = 2, prob = 0.9)))
   expect_equal(discreteTester$getParameterValue("prob"), 0.9)
 })
 
 test_that("check basic maths functions as expected", {
   expect_equal(discreteTester$pdf(1), dbinom(1,2,0.9))
   expect_equal(discreteTester$genExp(), 2*0.9)
-  expect_equal(discreteTester$var(), 2*0.9*0.1)
+  expect_equal(discreteTester$variance(), 2*0.9*0.1)
   expect_null(discreteTester$median())
 })
 
@@ -59,15 +59,15 @@ test_that("check kurtosis and skewness", {
 
 test_that("check exotic functions silent",{
   expect_silent(discreteTester$mode())
-  expect_silent(discreteTester$kthmoment(2))
-  expect_silent(discreteTester$kthmoment(3, type = "standard"))
+  expect_message(discreteTester$kthmoment(2))
+  expect_message(discreteTester$kthmoment(3, type = "standard"))
   expect_silent(discreteTester$pgf(z=2))
-  expect_silent(discreteTester$entropy())
+  expect_message(discreteTester$entropy())
 })
 
 test_that("check mgf, cf, pgf",{
   expect_equal(discreteTester$mgf(4), (1 - 0.9 + 0.9*exp(4))^2)
-  expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4)*1+0i)^2)
+  expect_equal(discreteTester$cf(4), (1 - 0.9 + 0.9*exp(4i))^2)
   expect_equal(discreteTester$pgf(2), (1 - 0.9 + 0.9*2)^2)
 })
 

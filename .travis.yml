@@ -1,17 +1,28 @@
 language: r
 
-sudo: false
-
-dist: trusty
-
 branches:
   only:
   - master
-  - release
+  - dev
   
-os:
-  - linux
-#  - osx
+matrix:
+    include:
+   #     - os: linux
+   #       r: oldrel
+        - os: linux
+          r: release
+   #     - os: linux
+   #       r: devel
+   #     - os: osx
+   #       r: oldrel
+   #     - os: osx
+   #       r: release
+   #     - os: osx
+   #       r: devel
+    
+sudo: false
+
+dist: trusty
 
 cache: packages
 

@@ -4,10 +4,10 @@
 \alias{truncate}
 \title{Truncate a Distribution}
 \usage{
-truncate(x, lower, upper)
+truncate(x, lower = NULL, upper = NULL)
 }
 \arguments{
-\item{x}{distribution to truncate}
+\item{x}{Distribution.}
 
 \item{lower}{lower limit for truncation.}
 

@@ -3,6 +3,9 @@
 \name{ParameterSet}
 \alias{ParameterSet}
 \title{Make an R6 Parameter Set for Distributions}
+\value{
+An R6 object of class ParameterSet.
+}
 \description{
 ParameterSets are passed to a \code{Distribution$new} constructor when
  creating a custom probability distribution that takes parameters.
@@ -13,11 +16,9 @@ ParameterSets are passed to a \code{Distribution$new} constructor when
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{id} \tab character \tab unique one-word identifier. \cr
 \code{value} \tab numeric \tab initial parameter value. \cr
-\code{lower} \tab numeric \tab minimum value parameter can take. \cr
-\code{upper} \tab numeric \tab maximum value parameter can take. \cr
-\code{class} \tab character \tab parameter class; "numeric" or "integer". \cr
-\code{settable} \tab logical \tab if TRUE the parameter can be updated. See Details. \cr
-\code{updateFunc = NULL} \tab character \tab string to be parsed and evaluated as function. See Details. \cr
+\code{support} \tab numeric \tab range of values parameter can take. \cr
+\code{settable} \tab logical \tab if TRUE the parameter is printed. See Details. \cr
+\code{updateFunc = NULL} \tab function \tab evaluated to update parameter. See Details. \cr
 \code{description = NULL} \tab character \tab optional description of parameter.
 }
 }
@@ -25,73 +26,62 @@ ParameterSets are passed to a \code{Distribution$new} constructor when
 \section{Constructor Details}{
 
 An R6 ParameterSet is required to construct a custom Probability Distribution that takes parameters.
-This constructor ensures that the correct format of parameters is supplied to the disitribution.
+This constructor ensures that the correct format of parameters is supplied to the distribution.
 
-Every argument can either be given as the correct type (as listed above) or as a list of that type.
+Every argument can either be given as the type listed above or as a list of that type.
 If arguments are provided as a list, then each argument must be of the same length list, with values
 as NULL where appropriate. See examples for more.
 
 Each parameter requires a unique one-word \code{id} that is used to get and set parameters
-after construction. A \code{settable} parameter is one that can be updated after construction of
-a distribution via \code{$setParameterValue}. The Distribution is parameterised by whichever parameters
-are given as \code{settable}. Non-settable parameters are either constant or can be automatically updated
-if an \code{updateFunc} is provided. \code{updateFunc} should be provided as a string that could be
-understood in the body of a function by a Distribution object, i.e. by naming parameters via
-\code{$getParameterValue}, see examples.
+after construction. The parameterisation of the distribution is determined by the parameters
+that have \code{settable = TRUE}, this is a slightly confusing term as it actually refers to a parameter
+being 'machine-settable'. Here it just means that the given parameter is used in construction and therefore
+will be included in a call to \code{$print}. \code{updateFunc} is used to update the parameters not used in
+the parameterisation. These should be given as a function that could be understood in the body of a Distribution
+and should start with \code{function(self)}, see examples.
 
-Internally after calling \code{$setParameterValue}, \code{$update} is called to update the
-value of non-settable functions.
+Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
+with a non-NA \code{updateFunc}.
 }
 
 \section{Public Methods}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Details} \cr
-  \code{print()} \tab Print ParameterSet as data.frame. \cr
-  \code{update()} \tab Updates unsettable parameters with supplied update functions. \cr
-  \code{parameters(id, error = "warn")} \tab If id given, returns specific parameter. Otherwise returns self. \cr
-  \code{getParameterValue(id, error = "warn")} \tab Returns value of parameter matching gven 'id'. \cr
-  \code{setParameterValue(lst, error = "warn")} \tab Set parameters in list names with respective values. See Details. \cr
-  \code{rbind()} \tab Combine the rows of multiple ParameterSets. \cr
-  \code{as.data.frame()} \tab Coerces ParameterSet to data.frame.
+  \strong{Method} \tab \strong{Link} \cr
+  \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
+  \code{update()} \tab \code{\link{update.ParameterSet}} \cr
+  \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
+  \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
+  \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{merge(y, ...)} \tab \code{\link{merge.ParameterSet}} \cr
+  \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
 }
-}
-
-\section{Public Method Details}{
-
-Argument 'error' is passed to \code{\link[RSmisc]{stopwarn}} to determine if the code should break or if a
-warning should be returned when an error occurs.
-
-\code{setParameterValue} takes a named list where the list names, \code{names(lst)}, should match
-the parameter IDs and the values, \code{as.numeric(lst)}, are used to set the corresponding parameter value.
 }
 
 \examples{
  id = list("prob", "size")
  value = list(0.2, 5)
- lower = list(0, 1)
- upper = list(1, Inf)
- class = list("numeric","integer")
+ support = list(Interval$new(0,1), PosNaturals$new())
  settable = list(TRUE, TRUE)
  description = list("Probability of success",NULL)
- ps = ParameterSet$new(id, value, lower, upper, class, settable,
+ ps = ParameterSet$new(id, value, support, settable,
                        description = description)
  ps$parameters()
  ps$getParameterValue("prob")
+ ps$getParameterSupport("prob")
 
 
  id = list("rate", "scale")
  value = list(1, 1)
- lower = list(0, 0)
- upper = list(Inf, Inf)
- class = list("numeric","numeric")
+ support = list(PosReals$new(), PosReals$new())
  settable = list(TRUE, FALSE)
- updateFunc = list(NULL, "1/self$getParameterValue('rate')")
+ updateFunc = list(NULL, function(self) 1/self$getParameterValue('rate'))
  description = list("Arrival rate","Scale parameter")
- ps = ParameterSet$new(id, value, lower, upper, class, settable,
+ ps = ParameterSet$new(id, value, support, settable,
                        updateFunc, description)
  ps$parameters(id = "rate")
- ps$setParameterValue(list(rate = 2)) # Automatically calls $update
+ ps$setParameterValue(rate = 2) # Automatically calls $update
  ps$getParameterValue("scale") # Auto-updated to 1/2
 
 }

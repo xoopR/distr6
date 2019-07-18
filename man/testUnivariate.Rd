@@ -4,24 +4,24 @@
 \alias{testUnivariate}
 \alias{checkUnivariate}
 \alias{assertUnivariate}
-\alias{isUnivariate}
 \title{assert/check/test/Univariate}
 \usage{
-assertUnivariate(x)
-checkUnivariate(x)
-testUnivariate(x)
-isUnivariate(x)
+testUnivariate(object)
+
+checkUnivariate(object)
+
+assertUnivariate(object)
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is univariate
+Validation checks to test if Distribution is univariate.
 }
 \examples{
 testUnivariate(Binomial$new()) # TRUE

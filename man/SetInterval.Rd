@@ -3,47 +3,52 @@
 \name{SetInterval}
 \alias{SetInterval}
 \title{R6 Generalised Class for Symbolic Sets and Intervals}
+\value{
+Returns an R6 object of class SetInterval.
+}
 \description{
-The parent class to sets and intervals in R6. Primarily used for inheriting methods.
+A generic SetInterval class primarily used as the parent class to \code{Set} and \code{Interval}.
 }
 \details{
 Whilst this is not an abstract class, direct construction is generally not advised.
-  Construction should instead be called on 'Set' or 'Interval'
+  Construction should instead be called on 'Set' or 'Interval'.
 }
+\section{Constructor}{
+ SetInterval$new(symbol, lower, upper, type, class = "numeric", dimension)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{symbol} \tab character \tab Representation of set/interval. \cr
+   \code{symbol} \tab character \tab String representation of SetInterval. \cr
+   \code{lower} \tab numeric \tab Lower limit of SetInterval. \cr
+   \code{upper} \tab numeric \tab Upper limit of SetInterval. \cr
    \code{type} \tab character \tab Interval type, one of (), (], [), []. \cr
-   \code{lower} \tab numeric \tab Lower limit of set/interval. \cr
-   \code{upper} \tab numeric \tab Upper limit of set/interval. \cr
-   \code{dimension} \tab integer \tab Dimension of set/interval.
+   \code{class} \tab character \tab Atomic class, one of "numeric" or "integer". \cr
+   \code{dimension} \tab integer \tab Dimension of SetInterval.
 }
 }
 
-\section{Accessor Methods}{
+\section{Public Methods}{
 
-\tabular{lll}{
-\strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-\code{lower} \tab numeric \tab Lower limit of set/interval. \cr
-\code{upper} \tab numeric \tab Upper limit of set/interval. \cr
-\code{type} \tab  character \tab Closed/open interval type. \cr
-\code{dimension} \tab integer \tab Dimension of set/interval. \cr
-\code{max} \tab  numeric \tab Maximum of set/interval. \cr
-\code{min} \tab  numeric \tab Minimum of set/interval. \cr
-\code{sup} \tab  numeric \tab Supremum of set/interval. \cr
-\code{inf} \tab  numeric \tab Infimum of set/interval. \cr
-\code{getSymbol} \tab  character \tab Symbolic representation of set/interval.
-}
-}
-
-\section{Representation Methods}{
-
-\tabular{ll}{
-  \strong{Method} \tab \strong{Details} \cr
-  \code{print} \tab  Prints symbolic representation of set/interval \cr
-}
+ \tabular{ll}{
+  \strong{Accessor Methods} \tab \strong{Link} \cr
+  \code{type()} \tab  \code{\link{type.SetInterval}}  \cr
+  \code{dimension()} \tab \code{\link{dimension.SetInterval}}\cr
+  \code{max()} \tab  \code{\link{max.SetInterval}} \cr
+  \code{min()} \tab  \code{\link{min.SetInterval}} \cr
+  \code{sup()} \tab  \code{\link{sup.SetInterval}}  \cr
+  \code{inf()} \tab  \code{\link{inf.SetInterval}}  \cr
+  \code{getSymbol()} \tab  \code{\link{getSymbol.SetInterval}} \cr
+  \code{class()} \tab  \code{\link{class.SetInterval}}  \cr
+  \tab \cr \tab \cr \tab \cr
+  \strong{Validation Methods} \tab \strong{Link} \cr
+  \code{liesInSetInterval(x, all = FALSE, bound = FALSE)} \tab \code{\link{liesInSetInterval}} \cr
+  \tab \cr \tab \cr \tab \cr
+  \strong{Representation Methods} \tab \strong{Link} \cr
+  \code{print()} \tab \code{\link[base]{print}} \cr
+  }
 }
 
 \seealso{

@@ -1,16 +1,18 @@
-.onLoad <- function(libname, pkgname){
-  R62S3::R62S3(Distribution, assignEnvir = parent.env(environment()))
-  R62S3::R62S3(ParameterSet, assignEnvir = parent.env(environment()))
+R62S3::R62Fun(Distribution, assignEnvir = topenv(), mask = T)
+R62S3::R62Fun(SDistribution, assignEnvir = topenv(), mask = T)
+R62S3::R62Fun(Kernel, assignEnvir = topenv(), mask = T)
+R62S3::R62Fun(ParameterSet, assignEnvir = topenv())
+R62S3::R62Fun(ExoticStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
+R62S3::R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
+R62S3::R62Fun(DistributionWrapper, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
 
-  y = sapply(ls(name=".GlobalEnv"),function(x){
-    if(inherits(get(x),"R6ClassGenerator")){
-      if(environmentName(get(x)$get_inherit()) == "Distribution_generator")
-        return(get(x)$classname)
-      else
-        return(FALSE)
-    } else
-      return(FALSE)
-  })
-  y = (y[y!="FALSE"])
-  lapply(y,R62S3::R62S3, assignEnvir = parent.env(environment()))
+
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage("\n-------------------------------------------------")
+  packageStartupMessage(" \t\tWelcome to distr6. \n \t\t----------------
+To get started see:
+* ?distr6
+* vignette('distr6','distr6')
+* https://alan-turing-institute.github.io/distr6/")
+  packageStartupMessage("-------------------------------------------------\n")
 }

@@ -3,17 +3,40 @@
 \name{Reals}
 \alias{Reals}
 \title{Set of Reals}
-\description{
-The mathematical set of reals.
+\value{
+Returns R6 object of class Reals.
 }
+\description{
+The mathematical set of real numbers.
+}
+\details{
+The set of Reals is defined as the union of the set of rationals and irrationals, i.e.
+\deqn{Reals = I \cup Q}{Reals = I \cup Q}
+where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
+}
+\section{Constructor}{
+ Reals$new(dim = 1,...)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
+   \code{...} \tab ANY \tab Additional arguments.
 }
 }
 
+\section{Constructor Details}{
+ Generally the \code{...} argument should be ignored, its primary use-case
+is for the child-classes.
+}
+
+\examples{
+Reals$new()
+Reals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

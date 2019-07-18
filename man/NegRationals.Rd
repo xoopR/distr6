@@ -3,18 +3,39 @@
 \name{NegRationals}
 \alias{NegRationals}
 \title{Set of Negative Rationals}
-\description{
-The mathematical set of negative rationals.
+\value{
+Returns R6 object of class NegRationals.
 }
+\description{
+The mathematical set of negative rational numbers.
+}
+\details{
+The set of Positive Rationals is defined as the set of numbers that can be written as a fraction
+of two integers and are non-negative, i.e.
+\deqn{NegRationals = \{\frac{p}{q} | p,q \ \in \ Z, \ \frac{p}{q} \le 0\}}{NegRationals = {p/q | p,q \epsilon Z, p/q \le 0}}
+where \eqn{Z} is the set of integers.
+
+\eqn{0} may or may not be included (depending on the \code{zero} argument).
+}
+\section{Constructor}{
+ NegRationals$new(dim = 1, zero = FALSE)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
+\examples{
+NegRationals$new()
+NegRationals$new(zero = TRUE)
+NegRationals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

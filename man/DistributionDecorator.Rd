@@ -2,15 +2,25 @@
 % Please edit documentation in R/DistributionDecorator.R
 \name{DistributionDecorator}
 \alias{DistributionDecorator}
-\title{Abstract Decorator for Distribution}
+\title{Abstract DistributionDecorator Class}
+\value{
+Returns error. Abstract classes cannot be constructed directly.
+}
 \description{
-An abstract decorator object for distributions to enhance functionality.
+The abstract parent class to decorators.
 }
 \details{
-This is an abstract class that cannot be directly constructed.
-  See \code{\link{decorate}} for the function to decorate Distributions.
+Decorating is the process of adding methods to classes that are not part of the core
+interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators are currently available. The primary
+use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
+to impute missing d/p/q/r functions.
+
+Abstract classes cannot be implemented directly. Use the \code{decorate} function to decorate distributions.
+}
+\references{
+Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
+of Reusable Object-Oriented Software.” Addison-Wesley.
 }
 \seealso{
-\code{\link{decorate}} for the decorating function and \code{\link{listDecorators}}
- for available decorators.
+\code{\link{decorate}} and \code{\link{listDecorators}}
 }

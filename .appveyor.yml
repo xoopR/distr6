@@ -6,6 +6,10 @@ init:
 install:
   ps: Bootstrap
 
+branches:
+  only:
+  - master
+  - dev
 
 build_script:
   - travis-tool.sh install_deps
@@ -39,11 +43,9 @@ artifacts:
 
 version: 1.0.{build}-{branch}
 
-branches:
-  only:
-    - master
-    - release
-    - dev
+#branches:
+#  except:
+#    - gh-pages
 
 skip_tags: true
 
@@ -53,6 +55,16 @@ environment:
   global:
     USE_RTOOLS: true
     WARNINGS_ARE_ERRORS: true
+  
+  matrix:
+    - R_VERSION: release
+      R_ARCH: x64
+
+    - R_VERSION: devel
+      R_ARCH: x64
+
+    - R_VERSION: oldrel
+      R_ARCH: x64
 
 cache:
   - C:\RLibrary\

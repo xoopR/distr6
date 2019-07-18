@@ -1,0 +1,35 @@
+---
+title: "Extension Preliminaries"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Extension Preliminaries}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+## Here Be Dragons
+
+When extending SDistributions, Kernels, Wrappers and Decorators, there are no formal checks on the quality or accuracy of your code. Whilst distr6 is modularised in such a way that a new class with a bug in it won't crash the rest of the package, it is still important that they can be interfaced properly with parent classes. The next few tutorials will go through how to extend the SDistribution, Kernel, Wrapper and Decorator classes but first please make sure you have gone through the preliminary checklist below. Of course, if you don't intend to make a pull-request to add your extension to the distr6 package, then feel free to go right on ahead and [start here](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html).
+
+## distr6 Pull-Request Preliminaries
+
+* [Analytic and numeric methods](https://alan-turing-institute.github.io/distr6/articles/webs/analytic_and_numeric_methods.html) for how we separate numeric and analytic methods and where these should go
+* [Documentation](https://alan-turing-institute.github.io/distr6/articles/webs/documentation_in_r6.html) for the correct way to document your new class or function
+* [R vs C](https://alan-turing-institute.github.io/distr6/articles/webs/r_vs_c.html) for why we won't accept pull requests written in C
+* [R6 and Design patterns](https://alan-turing-institute.github.io/distr6/articles/webs/r6_and_design_patterns.html) for our R6 design pattern workarounds
+* [Project wiki](https://github.com/alan-turing-institute/distr6/wiki) for a summary of the above as well as guidelines on unit tests and file naming
+
+## Extension Guidelines
+
+* [SDistribution](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html)
+* [Kernel](https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html)
+* [Wrapper](https://alan-turing-institute.github.io/distr6/articles/webs/create_wrapper.html)
+* [Decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html)

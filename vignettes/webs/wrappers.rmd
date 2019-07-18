@@ -1,0 +1,161 @@
+---
+title: "Wrappers"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Wrappers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+references:
+- id: GoF
+  title: 'Design patterns: elements of reusable object-oriented software'
+  author:
+  - family: Gamma
+    given: Erich
+  - family: Helm
+    given: Richard
+  - family: Johnson
+    given: Ralph
+  - family: Vlissides
+    given: John
+  ISBN: 0-201-63361-2
+  publisher: Addison-Wesley
+  issued:
+    year: 1994
+---
+
+
+```{r include = FALSE}
+remotes::install_github("alan-turing-institute/distr6")
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) introduced decorators in distr6. These are used to add numeric and more complex methods to the distribution interface. Wrappers are the next big distr6 feature and serve a similar purpose.
+
+## Wrappers
+
+Just like decorators, wrappers are a design pattern commonly used in object-oriented programming. For people interested in these principles, we are specifically using the 'Adapter' pattern from Design Patterns [@GoF]. Instead of simply adding methods, as decorators do, wrappers also slightly alter the interface of the object and usually result in a slightly different object being created. For example,
+
+```{r}
+class(Normal$new())
+class(truncate(Normal$new()))
+```
+
+See how the Normal distribution becomes an object of class `TruncatedDistribution` which in itself is of class `DistributionWrapper`. This tells the machine to expect a slightly different interface but it still recognises the original Normal distribution that is being wrapped.
+
+## Accessing Wrapped Models
+
+All wrappers share a common method `wrappedModels()`. More often than not this is used internally but it's still useful if you want to remind yourself of the original wrapped model.
+```{r}
+truncate(Normal$new(),-1,1)$wrappedModels()
+```
+
+You can also specify the name of the internal model to access it,
+```{r}
+truncate(Normal$new(),-1,1)$wrappedModels("Norm")
+```
+
+A slightly quicker approach is to use the `description` variable which is updated each time a distribution is wrapped
+```{r}
+truncate(Normal$new(),-1,1)$description
+huberize(truncate(Normal$new(),-3,3),-2,2)$description
+```
+
+Or finally just look at the new distribution name
+```{r}
+huberize(truncate(Normal$new(),-3,3),-2,2)
+```
+
+## Wrappers in distr6
+
+There are currently 8 wrappers in distr6, these can be listed with `listWrappers()`. They can be sectioned into two groups: composite wrappers and transformer wrappers. Composite wrappers create composite distributions, i.e. distributions that use internal functions to combine multiple distributions. Transformation wrappers perform some form of transformation on the distribution, e.g. scaling the distribution to a given mean or variance. We will look at three of these in detail and hopefully understanding the others will follow intuitively.
+
+Note: The Convolution and Scale wrappers are still in an experimental lifecycle, meaning that we are aware they may be sub-optimal or bugs may be present.
+
+### TruncatedDistribution
+
+This is perhaps the simplest wrapper in distr6. It can be constructed in one of two ways:
+
+```{r}
+N <- Normal$new()
+TruncatedDistribution$new(N, lower = -2, upper = 2)
+truncate(N, lower = -2, upper = 2)
+```
+
+In both cases, the result has to be saved to truncate the distribution as these are not methods in the Normal distribution class, i.e. to use the truncated normal distribution:
+```{r}
+# This is a good example of when piping is clean and effective
+library(magrittr)
+tn <- Normal$new() %>% truncate(-2,2)
+class(tn)
+```
+
+In the example above we are truncating the Normal distribution between the limits -2 and 2, this updates the distribution support accordingly and re-distributes the weights of the pdf and cdf
+```{r}
+tn$cdf(-3)
+tn$cdf(1)
+```
+
+By default the quantile method isn't added, but we could impute this using the `FunctionImputation` decorator:
+```{r}
+decorate(tn, FunctionImputation)
+tn$quantile(0.9121888)
+tn$cdf(1.245) # As expected
+```
+
+### ProductDistribution
+
+A product distribution is a composite distribution in which two or more independent distributions are combined into a single joint distribution. Details about the maths behind this can be found in `?ProductDistribution`. For now we use this as an example of the composite distributions in distr6. Say we want the product distribution of the binomial and normal distributions,
+
+```{r}
+N <- Normal$new(mean = 2, var = 1)
+B <- Binomial$new(size = 5, prob = 0.2)
+P <- ProductDistribution$new(list(N, B))
+print(P)
+P$description
+class(P)
+```
+
+Now we can treat `P` like any other multivariate distribution
+```{r}
+P$pdf(1, 2)
+N$pdf(1) * B$pdf(2)
+
+P$cdf(1, 2)
+N$cdf(1) * B$cdf(2)
+
+P$pdf(c(1,3), c(2, 4))
+P$rand(3)
+```
+
+### MixtureDistribution
+
+A mixture distribution is a distribution with both continuous and discrete parts. It is formed by taking a weighted product of the respective distributions pdfs/cdfs. By default the weights are assumed to follow the uniform distribution, i.e. the probability of each distribution is identical, but this can be edited. Below we take the mixture of Binomial, Normal and Exponential distributions.
+```{r}
+N <- Normal$new()
+B <- Binomial$new()
+E <- Exponential$new()
+M <- MixtureDistribution$new(list(N, B, E), weights = c(0.1,0.5,0.4))
+print(M)
+M$description
+class(M)
+```
+
+Whilst mixture distributions are composites, they are still univariate:
+
+```{r}
+M$pdf(1)
+N$pdf(1) * 0.1 + B$pdf(1) * 0.5 + E$pdf(1) * 0.4
+M$cdf(1)
+M$rand(4)
+plot(x = seq.int(-3,10,0.1), y = M$pdf(seq.int(-3,10,0.1)),type="l")
+```
+
+
+## Summary
+
+There are plenty other wrappers to explore, including vector distributions that combine distributions into one vector and array distributions that are a type of product distribution for k-dimensional distributions of a specific type. The tools learnt from this tutorial are all applicable to every other wrapper and we hope you find the rest intuitive to use. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/sets.html) we look at how to create a custom distribution.
+
+## References
