@@ -95,6 +95,14 @@ Kernel$set("public","rand",function(n, simplify = TRUE){
   if(length(n) > 1)
     n <- length(n)
 
-  return(self$quantile(runif(n)))
+  rand <- self$quantile(runif(n))
+
+  if(simplify)
+    return(rand)
+  else{
+    rand = data.table::data.table(rand)
+    colnames(rand) = self$short_name
+    return(rand)
+  }
 })
 
