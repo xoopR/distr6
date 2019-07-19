@@ -9,9 +9,10 @@ Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](h
 status](https://ci.appveyor.com/api/projects/status/mrexqbmrtrx865jf/branch/master?svg=true)](https://ci.appveyor.com/project/RaphaelS1/distr6-xsr0j/branch/master)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
 <!-- [![CRAN Version](http://www.r-pkg.org/badges/version/distr6)](http://www.r-pkg.org/badges/version/distr6)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/distr6)](http://cranlogs.r-pkg.org/badges/grand-total/distr6)
-[![CRAN Checks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html) -->
-<https://img.shields.io/badge/lifecycle-stable-brightgreen.svg>
+[![version](http://www.r-pkg.org/badges/version/distr6)](http://www.r-pkg.org/badges/version/distr6)
+[![grandTotal](http://cranlogs.r-pkg.org/badges/grand-total/distr6)](http://cranlogs.r-pkg.org/badges/grand-total/distr6)
+[![CRANChecks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
 [![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
