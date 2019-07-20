@@ -8,13 +8,13 @@ Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](h
 [![Appveyor Build
 status](https://ci.appveyor.com/api/projects/status/mrexqbmrtrx865jf/branch/master?svg=true)](https://ci.appveyor.com/project/RaphaelS1/distr6-xsr0j/branch/master)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
-[![version](http://www.r-pkg.org/badges/version/distr6)](http://www.r-pkg.org/badges/version/distr6)
-[![grandTotal](http://cranlogs.r-pkg.org/badges/grand-total/distr6)](http://cranlogs.r-pkg.org/badges/grand-total/distr6)
-[![CRANChecks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
+<https://www.r-pkg.org/badges/version/distr6>
+<https://cranlogs.r-pkg.org/badges/grand-total/distr6>
 [![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!--[![CRAN Checks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)-->
 
 ## What is distr6?
 
@@ -55,7 +55,7 @@ B$pdf(1:10)
 B$kurtosis()
 #> [1] -0.2
 B$rand(5)
-#> [1] 5 5 7 3 8
+#> [1] 7 7 4 7 6
 summary(B)
 #> Binomial Probability Distribution. Parameterised with:
 #>   prob = 0.5, size = 10
@@ -169,7 +169,13 @@ distr6 has three primary use-cases:
 
 ## Installation
 
-Before publication to CRAN, the latest stable release is available via:
+For the latest release on CRAN, install with
+
+``` r
+install.packages("distr6")
+```
+
+Otherwise for the latest stable build
 
 ``` r
 remotes::install_github("alan-turing-institute/distr6")
