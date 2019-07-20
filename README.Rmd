@@ -4,10 +4,9 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-set.seed(42)
-options(repos = c(CRAN = "distr6"))
-knitr::opts_chunk$set(cache = FALSE, collapse = TRUE, comment = "#>")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(distr6)
+set.seed(42)
 ```
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
