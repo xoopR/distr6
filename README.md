@@ -10,7 +10,7 @@ status](https://ci.appveyor.com/api/projects/status/mrexqbmrtrx865jf/branch/mast
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
 <https://www.r-pkg.org/badges/version/distr6>
-<https://cranlogs.r-pkg.org/badges/grand-total/distr6>
+<https://cranlogs.r-pkg.org/badges/grand-total/distr6?color=brightgreen>
 [![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
