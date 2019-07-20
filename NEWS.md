@@ -1,6 +1,7 @@
 # distr6 1.0.1
 
 - Updated vignettes to remove redundant distr6 installation via GitHub
+- Redundant `stopwarn` argument removed from `parameters()` method in `Distribution` and `ParameterSet` classes
 
 
 # distr6 1.0.0

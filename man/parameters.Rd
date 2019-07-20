@@ -4,14 +4,12 @@
 \alias{parameters}
 \title{Parameters Accessor}
 \usage{
-parameters(object, id = NULL, error = "warn")
+parameters(object, id = NULL)
 }
 \arguments{
 \item{object}{Distribution or ParameterSet.}
 
 \item{id}{character, see details.}
-
-\item{error}{character, value to pass to \code{stopwarn}}
 }
 \value{
 An R6 object of class ParameterSet or a data.table.
@@ -21,14 +19,11 @@ Returns some or all the parameters in a distribution.
 }
 \details{
 If \code{id} is given and matches a parameter in the distribution, the parameter is returned
-with all details. If \code{id} is given but doesn't match a parameter, an empty data.frame is returned.
-Finally if \code{id} is not given, returns all parameters in the distribution.
-
-\code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
-with warning otherwise.
+with all details. If \code{id} is given but doesn't match a parameter, an empty data.table is returned.
+Finally if \code{id} is not given, returns self.
 }
 \section{R6 Usage}{
- $parameters(id = NULL, error = "warn")
+ $parameters(id = NULL)
 }
 
 \seealso{

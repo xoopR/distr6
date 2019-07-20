@@ -206,19 +206,15 @@ ParameterSet$set("public","update", function(...){
 #' @title Parameters Accessor
 #' @description Returns some or all the parameters in a distribution.
 #'
-#' @usage parameters(object, id = NULL, error = "warn")
-#' @section R6 Usage: $parameters(id = NULL, error = "warn")
+#' @usage parameters(object, id = NULL)
+#' @section R6 Usage: $parameters(id = NULL)
 #'
 #' @param object Distribution or ParameterSet.
 #' @param id character, see details.
-#' @param error character, value to pass to \code{stopwarn}
 #'
 #' @details If \code{id} is given and matches a parameter in the distribution, the parameter is returned
-#' with all details. If \code{id} is given but doesn't match a parameter, an empty data.frame is returned.
-#' Finally if \code{id} is not given, returns all parameters in the distribution.
-#'
-#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
-#' with warning otherwise.
+#' with all details. If \code{id} is given but doesn't match a parameter, an empty data.table is returned.
+#' Finally if \code{id} is not given, returns self.
 #'
 #' @seealso \code{\link{getParameterValue}} and \code{\link{setParameterValue}}
 #'
@@ -226,7 +222,7 @@ ParameterSet$set("public","update", function(...){
 #'
 #' @export
 NULL
-ParameterSet$set("public","parameters",function(id = NULL, error = "warn"){
+ParameterSet$set("public","parameters",function(id = NULL){
   if(!is.null(id)){
     id0 = id
     if(nrow(subset(private$.parameters, id %in% id0))==0)
