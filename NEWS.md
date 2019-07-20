@@ -1,3 +1,8 @@
+# distr6 1.0.1
+
+- Updated vignettes to remove redundant distr6 installation via GitHub
+
+
 # distr6 1.0.0
 
 - v1 API is ready to be shipped to CRAN!
