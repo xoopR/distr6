@@ -200,7 +200,7 @@ SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FA
 
   if(bound)
     ret[(x >= self$inf() & x <= self$sup() & class_test)] = TRUE
-  else(!bound)
+  else
     ret[(x >= self$min() & x <= self$max() & class_test)] = TRUE
 
   if(all)
