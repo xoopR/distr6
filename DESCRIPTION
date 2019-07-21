@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",

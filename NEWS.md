@@ -1,3 +1,10 @@
+# distr6 1.0.1
+
+- Updated vignettes to remove redundant distr6 installation via GitHub
+- Redundant `stopwarn` argument removed from `parameters()` method in `Distribution` and `ParameterSet` classes
+- Updated Kernel$new() error message to point user to Distribution class
+
+
 # distr6 1.0.0
 
 - v1 API is ready to be shipped to CRAN!

@@ -28,4 +28,6 @@ test_that("d/p/q/r",{
   expect_equal(unif$cdf(c(0.4)), 0.7)
   expect_equal(unif$cdf(unif$quantile(c(0.42,0.5,0.78))),c(0.42,0.5,0.78))
   expect_equal(length(unif$rand(1:10)), 10)
+  expect_equal(nrow(unif$rand(1:10,simplify = F)), 10)
+  expect_equal(ncol(unif$rand(1:10,simplify = F)), 1)
 })

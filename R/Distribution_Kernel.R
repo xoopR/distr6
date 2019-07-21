@@ -71,7 +71,7 @@ Kernel <- R6::R6Class("Kernel", inherit = Distribution)
 Kernel$set("public","initialize",function(...){
   if(getR6Class(self) == "Kernel")
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels()
-    to see the kernels currently implemented in distr6."))
+to see the kernels currently implemented in distr6, or Distribution$new() to construct a custom Kernel."))
 
   super$initialize(...)
 })
@@ -95,6 +95,14 @@ Kernel$set("public","rand",function(n, simplify = TRUE){
   if(length(n) > 1)
     n <- length(n)
 
-  return(self$quantile(runif(n)))
+  rand <- self$quantile(runif(n))
+
+  if(simplify)
+    return(rand)
+  else{
+    rand = data.table::data.table(rand)
+    colnames(rand) = self$short_name
+    return(rand)
+  }
 })
 

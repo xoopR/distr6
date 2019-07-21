@@ -6,10 +6,10 @@ init:
 install:
   ps: Bootstrap
 
-branches:
-  only:
-  - master
-  - dev
+#branches:
+#  only:
+#  - master
+#  - dev
 
 build_script:
   - travis-tool.sh install_deps
@@ -60,11 +60,11 @@ environment:
     - R_VERSION: release
       R_ARCH: x64
 
-    - R_VERSION: devel
-      R_ARCH: x64
+#    - R_VERSION: devel
+#      R_ARCH: x64
 
-    - R_VERSION: oldrel
-      R_ARCH: x64
+#    - R_VERSION: oldrel
+#      R_ARCH: x64
 
 cache:
   - C:\RLibrary\
