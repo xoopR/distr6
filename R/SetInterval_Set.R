@@ -108,7 +108,7 @@ Set$set("public","elements",function(){
 })
 Set$set("private",".class","integer")
 Set$set("private",".elements",NULL)
-Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
+Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = FALSE){
   ret = rep(FALSE, length(x))
   ret[x %in% self$elements()] = TRUE
 

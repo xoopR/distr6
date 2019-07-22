@@ -12,7 +12,7 @@ A generalised distribution object for defining custom probability distributions
 }
 \section{Constructor}{
  Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-symmetric = logical(0), pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
 parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
 }
 

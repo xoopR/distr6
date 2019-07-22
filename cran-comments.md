@@ -1,3 +1,7 @@
+## Patch to fix CRAN violation
+
+This update is to fix the Warning received on Debian systems resulting from an incorrect use of `remotes::install_github` in the vignettes. This has now been removed.
+
 ## Test environments
 On travis:
 * x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R 3.5.3
@@ -18,8 +22,8 @@ Local:
 
 check_win:
  * x86_64-w64_mingw32 (64-bit); R 3.5.3
- * x86_64-w64_mingw32 (64-bit); R 3.6.0
-* x86_64-w64_mingw32 (64-bit); R devel (2019-06-23 r76735)
+ * x86_64-w64_mingw32 (64-bit); R 3.6.1
+* x86_64-w64_mingw32 (64-bit); R devel (2019-07-05 r76784)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.
