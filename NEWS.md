@@ -1,9 +1,9 @@
 # distr6 1.0.1
 
-- Updated vignettes to remove redundant distr6 installation via GitHub
+- Updated vignettes to remove redundant distr6 installation via GitHub that was causing a warning on Debian
 - Redundant `stopwarn` argument removed from `parameters()` method in `Distribution` and `ParameterSet` classes
 - Updated Kernel$new() error message to point user to Distribution class
-
+- Fixed broken if/else statement in liesInSetInterval method of SetInterval class
 
 # distr6 1.0.0
 
