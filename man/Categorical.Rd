@@ -19,12 +19,12 @@ The distribution is supported on \eqn{x_1,...,x_k}.
 
 
 
-\code{quantile}
-is
-omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
 
 
-Only the mode, pdf, cdf and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
+
+
+
+Only the mode, pdf, cdf, quantile and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
 }
 \section{Constructor}{
  Categorical$new(..., probs, decorators = NULL, verbose = FALSE)
@@ -138,6 +138,7 @@ x$setParameterValue(probs = c(0.1,0.2,0.7))
 # d/p/q/r
 x$pdf(c("Bapple", "Carrot", 1, 2))
 x$cdf("Banana") # Assumes ordered in construction
+x$quantile(0.42) # Assumes ordered in construction
 x$rand(10)
 
 # Statistics
@@ -151,5 +152,5 @@ McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function.  \code{\link{FunctionImputation}} to numerically impute d/p/q/r.
+\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function.
 }

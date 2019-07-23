@@ -37,5 +37,6 @@ test_that("statistics",{
   expect_equal(cat$pdf(c("Sandwich","Fish")), c(0.1/5,0))
   expect_equal(cat$cdf(x1 = c(4,"Fish")), c(1/5,0))
   expect_equal(cat$cdf(x1 = c("Sandwich",4)), c(0.1/5,1/5))
+  expect_equal(cat$quantile(c(0, 0.1, 0.42, 1)), c("Sandwich", 4, "T", "T"))
   expect_equal(length(cat$rand(10)),10)
 })

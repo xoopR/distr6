@@ -1,3 +1,7 @@
+# distr6 1.0.2
+
+- Improved efficiency of Categorical distribution cdf and quantile
+
 # distr6 1.0.1
 
 - Updated vignettes to remove redundant distr6 installation via GitHub that was causing a warning on Debian
