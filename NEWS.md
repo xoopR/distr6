@@ -1,6 +1,17 @@
 # distr6 1.0.2
 
-- Improved efficiency of Categorical distribution cdf and quantile
+## Added Functions
+
+- None
+
+## Deprecated Functions
+
+- None
+
+## Updated Functions
+
+- Added quantile to Categorical distribution and updated its cdf efficiency
+- Bug fix in quantile function of huberization wrapper
 
 # distr6 1.0.1
 
