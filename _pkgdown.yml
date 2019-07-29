@@ -51,6 +51,8 @@ navbar:
       href: articles/webs/create_wrapper.html
   - text: Appendices
     menu:
+    - text: Cheatsheet
+      href: articles/webs/distr6_cheatsheet.pdf
     - text: API Lifecycle
       href: articles/webs/api_lifecycle.html
     - text: Analytical and Numerical Methods
