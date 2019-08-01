@@ -1,15 +1,6 @@
-#######################################################################
-#######################################################################
-#######################################################################
-######                                                           ######
-######                Plot Methods for Distr6                    ######
-######                                                           ######
-#######################################################################
-#######################################################################
-
-plot.SDistribution <- function(x, fun, nPoints = 3000, coverage = 0.99,
+plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000, coverage = 0.99,
                                plot = TRUE, iterative = FALSE, add = FALSE,
-                               layout.row = TRUE, layout.col = FALSE, 
+                               layout.row = TRUE, layout.col = FALSE, decompose = FALSE,
                                margin = TRUE,...){
   #######################################################################
   #
@@ -50,12 +41,13 @@ plot.SDistribution <- function(x, fun, nPoints = 3000, coverage = 0.99,
   #             of probabilities being evaluated, centered at probability 
   #             equal 0.5. (e.g. coverage = 0.9 will plot points from 0.05
   #             quantile to 0.95 quantile).
+  #   decompose A logical factor that works only for mixture distributions, 
+  #             if TRUE, the weighted quantities for each distribution will
+  #             be displayed.
   #   ...       All graphical parameters in current R plot function can 
   #             be added as additional arguments.
   #
   #######################################################################
-  
-  
   
   #######################################################################
   #######                   plottable structure                   #######
@@ -95,6 +87,16 @@ plot.SDistribution <- function(x, fun, nPoints = 3000, coverage = 0.99,
       validPlots <- append(validPlots, values = i)
     }}
   
+  
+  names=c("pdf","cdf","hazard","survival")
+  notations=c("f(x)","F(x)","h(x)","S(x)")
+  func_notation=validPlots
+  
+  for(i in 1:length(names)){
+    func_notation=replace(func_notation,func_notation==names[i],notations[i])
+  }
+  
+  
   #######################################################################
   #######                     graphical parameters                #######
   #######################################################################
@@ -127,13 +129,82 @@ plot.SDistribution <- function(x, fun, nPoints = 3000, coverage = 0.99,
   if(iterative == FALSE & margin == TRUE){
     par(mar=c(4,4,2,2))
   }
-  
+
   #######################################################################
   #######                       generate plots                    #######
   #######################################################################
   
-  # Continuous distribution 
-  # if plot == FALSE, return the plottable structure as a list
+  # define functions
+  
+  # FUN_ONE: continuous distribution
+  plot_continuous <- function(validPlots,plotStructure,func_notation){
+    for(i in 1:length(validPlots)){
+      if(validPlots[i]=='cumHazard'){
+        plot(x = plotStructure$points, y = plotStructure[[validPlots[i]]], 
+             type = "l",main=validPlots[i],xlab='x',ylab=expression(Lambda(x)),...)
+      }else if(validPlots[i]=='quantile'){
+        plot(x = plotStructure$cdf, y = plotStructure$points, type = "l",
+             main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
+      }else{
+        plot(x = plotStructure$points, y = plotStructure[[validPlots[i]]], type = "l",main=validPlots[i],xlab='x',ylab=func_notation[i],...)
+      }}}
+  
+  # FUN_TWO: continuous distribution: adding (a) line(s)
+  plot_continuous_lines <- function(validPlots,plotStructure){
+    for (i in length(validPlots)){
+      points(cbind(x = plotStructure$points, y = plotStructure[[validPlots[i]]]), 
+             type = "l", ...)
+    }}
+  
+  # FUN_THREE: discrete distribution
+  plot_discrete <- function(validPlots,plotStructure,func_notation){
+    for(i in 1:length(validPlots)){
+      if(validPlots[i]=='cumHazard'){
+        plot(x = plotStructure$points, y = plotStructure[[validPlots[i]]], type = "l",
+             main=validPlots[i],xlab='x',ylab=expression(Lambda(x)),...)
+      }else if(validPlots[i]=='cdf'){
+        plot(ecdf(plotStructure$points), main='cdf',xlab='x',ylab='F(x)',...)
+      }else if(validPlots[i]=='survival'){
+        plot(x = plotStructure$points, y = plotStructure[[validPlots[i]]], type = "l",
+             main=validPlots[i],xlab='x',ylab=func_notation[i],...)
+      }else if(validPlots[i]=='quantile'){
+        plot(x = plotStructure$cdf, y = plotStructure$points, type = "l",
+             main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
+      }else{
+        plot(x = plotStructure$points, y = plotStructure[[validPlots[i]]], type = "h",
+             main=validPlots[i],xlab='x',ylab=func_notation[i],...)
+      }}}
+  
+  # FUN_FOUR: discrete distribution: adding (a) line(s)
+  plot_discrete_lines <- function(validPlots,plotStructure){
+    for(i in 1:length(validPlots)){
+      if(validPlots[i]=='cumHazard'){
+        points(x = plotStructure$points, y = plotStructure[[validPlots[i]]], type = "l",
+               ...)
+      }else if(validPlots[i]=='cdf'){
+        empcdf <- ecdf(plotStructure$points)
+        kts <- knots(empcdf)
+        points(x = kts, y = empcdf(kts), pch = 16, ...)
+        for(i in 1:length(kts)){
+          segments(x0 = kts[i], x1 = kts[i+1], y0 = empcdf(kts[i]), ...)}
+        segments(x0 = kts[length(kts)], x1 = kts[length(kts)] + 10, 
+                 y0 = 1, ...)
+        segments(x0 = kts[1] - 10, x1 = kts[1], 
+                 y0 = 0, ...)
+      }else if(validPlots[i]=='survival'){
+        points(x = plotStructure$points, y = plotStructure[[validPlots[i]]], type = "l",
+               ...)
+      }else if(validPlots[i]=='quantile'){
+        points(x = plotStructure$cdf, y = plotStructure$points, type = "l",
+               ...)
+      }else{
+        points(x = plotStructure$points, y = plotStructure[[validPlots[i]]], type = "h",
+               ...)
+      }}
+  }
+  
+  
+  # now plot!
   if(plot == FALSE){
     returnList = list(n = plotStructure$n,
                       plotChoice = plotStructure$plotChoice,
@@ -148,79 +219,54 @@ plot.SDistribution <- function(x, fun, nPoints = 3000, coverage = 0.99,
     
     return(returnList)
   } 
-  else{ if(add == FALSE){
-    if(testContinuous(x)){
-      if("pdf" %in% validPlots){
-        # plot pdf
-        plot(x = plotStructure$points, y = plotStructure$pdf, type = "l",
-             main = "pdf", xlab = "x", ylab = "f(x)",...)}
-      if("cdf" %in% validPlots){
-        # plot cdf
-        plot(x = plotStructure$points, y = plotStructure$cdf, type = "l",
-             main = "cdf", xlab = "x", ylab = "F(x)",...)}
-      if("quantile" %in% validPlots){
-        # plot x against quantile
-        plot(x = plotStructure$cdf, y = plotStructure$points, type = "l",
-             main = "quantile", xlab = "q", ylab = parse(text = "F^(-1)(q)"),...)}
-      if("hazard" %in% validPlots){
-        # plot hazard function
-        plot(x = plotStructure$points, y = plotStructure$hazard, type = "l",
-             main = "hazard", xlab = "x", ylab = "h(x)",...)}
-      if("cumHazard" %in% validPlots){
-        # plot cumulative hazard function
-        plot(x = plotStructure$points, y = plotStructure$cumHazard, type = "l",
-             main = "cumulative hazard", xlab = "x", ylab = expression(Lambda(x)),...)}
-      if("survival" %in% validPlots){
-        # plot survival function
-        plot(x = plotStructure$points, y = plotStructure$survival, type = "l",
-             main = "survival", xlab = "x", ylab = "S(x)",...)}
-      
-    }}}
   
-  #######################################################################
-  #######                         line plots                      #######
-  #######################################################################
-  # if add == TRUE, add lines to an existing plot
-  if(add == TRUE){
-    if("pdf" %in% validPlots){
-      points(cbind(plotStructure$points, y = plotStructure$pdf), type = "l",...)}
-    if("cdf" %in% validPlots){
-      points(cbind(plotStructure$points, y = plotStructure$cdf), type = "l",...)}
-    if("quantile" %in% validPlots){
-      points(cbind(plotStructure$cdf, y = plotStructure$points), type = "l",...)}
-    if("hazard" %in% validPlots){
-      points(cbind(plotStructure$points, y = plotStructure$hazard), type = "l",...)}
-    if("cumHazard" %in% validPlots){
-      points(cbind(plotStructure$points, y = plotStructure$cumHazard), 
-             type = "l",...)}
-    if("survival" %in% validPlots){
-      points(cbind(plotStructure$points, y = plotStructure$survival), 
-             type = "l",...)}
-  }
+  else{
+    # continuous case
+    if(testContinuous(x)){
+      if(add == FALSE){
+        plot_continuous(validPlots,plotStructure,func_notation)
+      } else {plot_continuous_lines(validPlots,plotStructure)}}
+    # discrete case
+    if(testDiscrete(x)){
+      if(add == FALSE){
+        plot_discrete(validPlots,plotStructure,func_notation)
+      } else {plot_discrete_lines(validPlots,plotStructure)}}
+    # mixture case
+    if(testMixture(x)){
+     decomposed <- decomposeMixture(x)
+     nDiscrete <- length(decomposed$models$discrete)
+     nContinuous <- length(decomposed$models$continuous)
+     
+     if(decomposed == FALSE){
+       # mixture: con + con
+       if(nDiscrete == 0 & nContinuous > 0){
+         plot_continuous(validPlots,plotStructure,func_notation)}
+       # mixture: discrete + discrete
+       else if(nDiscrete > 0 & nContinuous == 0){
+         plot_discrete(validPlots,plotStructure,func_notation)}
+       # mixture: continuous + discrete
+       else if(nDiscrete > 0 & nContinuous > 0){
+         # plot dots at discrete vales
+         # replace discrete values in plotStructure$points with NA, then draw a line plot.
+         # The line plot will break at NAs
+       }}
+     
+     # if decomposed == TRUE
+     else{
+       # con + con
+       if(nDiscrete == 0 & nContinuous > 0){
+         ###
+         }
+       # dis + dis 
+       else if(nDiscrete > 0 & nContinuous == 0){
+         ###
+         }
+       # con + dis
+       else if(nDiscrete > 0 & nContinuous > 0){
+         ###
+       }}}}
+  
   # return graphical parameters to the original settings
   par(parDefault)
 }
-
-
-
-
-
-#######################################################################
-# example
-#######################################################################
-my.norm <- Normal$new(mean = 2, sd = 1.5)
-my.norm.two <- Normal$new(mean = 2.5, sd = 1)
-
-# draw a single plot
-plot(my.norm, fun = "pdf")
-
-# draw multiple plots
-plot(my.norm, plot = TRUE, 
-     fun = c("cdf", "pdf", "quantile","survival","hazard","cumHazard", "SomeNonExistingFun"),
-     layout.row = T, margin = T, col = "blue", add = F, iterative = F, 
-     coverage = 0.99)
-
-# add line to an existing plot
-plot(my.norm, fun = "pdf")
-plot(my.norm.two, fun = "pdf", add = T, col = "red")
 
