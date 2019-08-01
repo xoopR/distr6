@@ -83,7 +83,9 @@ VectorDistribution$set("public","initialize",function(distlist, name = NULL,
   },list(n = length(distlist)))
 
   rand = function(n) {
-    return(data.table::data.table(sapply(self$wrappedModels(), function(x) x$rand(n))))
+    rand <- t(data.table::data.table(sapply(self$wrappedModels(), function(x) x$rand(n))))
+    colnames(rand) = unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    return(rand)
   }
 
 

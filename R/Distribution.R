@@ -884,7 +884,6 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
       quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
   } else{
     p = c(list(p), list(...))
-
     if(log.p)
       p = lapply(p, exp)
 
