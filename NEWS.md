@@ -12,6 +12,7 @@
 
 - Added quantile to Categorical distribution and updated its cdf efficiency
 - Bug fix in quantile function of huberization wrapper
+- Fixed the `rand` return of a Vector Distribution (transposed data.table and added column names)
 
 ## Documentation
 
