@@ -29,5 +29,7 @@ test_that("pdf/cdf/quantile",{
 test_that("rand",{
   expect_equal(dim(VectorDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$rand(5)),
                c(5,2))
+  expect_equal(dim(VectorDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$rand(1)),
+               c(1,2))
 })
 
