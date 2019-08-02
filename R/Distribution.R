@@ -374,7 +374,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
 
     if(!inherits(a_exp,"try-error") | !inherits(a_var,"try-error") |
        !inherits(a_skew,"try-error") | !inherits(a_kurt,"try-error"))
-      cat("\n\n ",crayon::underline("Quick Statistics"),"\n")
+      cat("\n\n ", "Quick Statistics","\n")
 
     if(!inherits(a_exp,"try-error")){
       cat("\tMean:")

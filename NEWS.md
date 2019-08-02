@@ -18,6 +18,10 @@
 
 - Minor updates to extension guidelines including spelling fixes and an erroneous call to `prefixParams`
 
+## Miscellaneous
+
+- Removed redundant `crayon` dependency
+
 # distr6 1.0.1
 
 - Updated vignettes to remove redundant distr6 installation via GitHub that was causing a warning on Debian
