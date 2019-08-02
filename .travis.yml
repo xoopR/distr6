@@ -1,9 +1,9 @@
 language: r
 
-#branches:
-#  only:
-#  - master
-#  - dev
+branches:
+  only:
+  - master
+  - dev1.1
   
 matrix:
     include:
