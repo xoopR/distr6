@@ -11,7 +11,7 @@ The abstract parent class to wrappers.
 }
 \details{
 Wrapping is the process of adapting the interface of a class into another (Gamma et al. 1994).
-After wrapping, the parameters of a distribution may be prefixed with the distribution name to ensure
+After wrapping, the parameters of a distribution are prefixed with the distribution name to ensure
 uniqueness of parameter IDs.
 
 Abstract classes cannot be implemented directly. Use the \code{listWrappers} function to see constructable wrappers.
