@@ -196,3 +196,5 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
                    description = description)
 })
 ```
+
+## References
