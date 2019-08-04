@@ -34,7 +34,7 @@ test_that("unique parameters",{
 test_that("wrap a wrapper",{
   expect_silent(VectorDistribution$new(list(ProductDistribution$new(list(MixtureDistribution$new(list(Exponential$new(),
                                    huberize(truncate(Normal$new(),lower = -10, upper = 10),-5,5))),
-                                   ArrayDistribution$new(Gompertz,list(list(shape = 2, scale = 4),list(shape = 1, scale = 5))))),
+                                   VectorDistribution$new(distribution = Gompertz,paramList=list(list(shape = 2, scale = 4),list(shape = 1, scale = 5))))),
                                   Binomial$new())))
   x = ProductDistribution$new(list(MixtureDistribution$new(list(Exponential$new(),
                                                                   huberize(truncate(Normal$new(),lower = -10, upper = 10),-5,5))),

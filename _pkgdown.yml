@@ -152,7 +152,6 @@ reference:
     contents:
       - DistributionWrapper
       - wrappedModels
-      - ArrayDistribution
       - ProductDistribution
       - VectorDistribution
       - HuberizedDistribution
