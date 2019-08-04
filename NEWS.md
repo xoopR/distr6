@@ -1,26 +1,27 @@
-# distr6 1.0.2
+# distr6 1.1.0
 
-## Added Functions
-
-- None
-
-## Deprecated Functions
+## Major Updates
 
 - None
 
-## Updated Functions
+## Minor Updates
+
+### Deprecated Functions
+
+- `ArrayDistribution` - This wrapper is now merged with `ProductDistribution` by adding two new parameters to `ProductDistribution` that allow for construction either by a distribution list of by naming a distribution and providing a parameter list
+
+### Updated Functions
 
 - Added quantile to Categorical distribution and updated its cdf efficiency
+- `cdf` of discrete distributions evaluated between integers are now evaluated after rounding down and do not return 0, e.g. `Binomial$new()$cdf(1.8) == Binomial$new()$cdf(1)`
+- Added two additional parameters to `ProductDistribution`: `paramList` and `distribution`, so that it can either function as before or as the `ArrayDistribution` wrapper which is now deprecated.
+- Added two additional parameters to `VectorDistribution`: `paramList` and `distribution`, so that it can either function as before or as a generalisation to the `ArrayDistribution` wrapper which is now deprecated.
+
+## Patches
+
 - Bug fix in quantile function of huberization wrapper
 - Fixed the `rand` return of a Vector Distribution (transposed data.table and added column names)
-- `cdf` of discrete distributions evaluated between integers are now evaluated after rounding down and do not return 0, e.g. `Binomial$new()$cdf(1.8) == Binomial$new()$cdf(1)`
-
-## Documentation
-
-- Minor updates to extension guidelines including spelling fixes and an erroneous call to `prefixParams`
-
-## Miscellaneous
-
+- Fixed spelling mistakes in extension guidelines and removed calls to redundant parameters 
 - Removed redundant `crayon` dependency
 
 # distr6 1.0.1

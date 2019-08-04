@@ -16,7 +16,7 @@ A vector of distributions has the following relationship
 where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} and \eqn{X1,...,XN} are distributions.
 }
 \section{Constructor}{
- VectorDistribution$new(distlist, name = NULL, short_name = NULL, description = NULL)
+ VectorDistribution$new(distlist = NULL, distribution = NULL, paramList = NULL, name = NULL, short_name = NULL, description = NULL)
 }
 
 \section{Constructor Arguments}{
@@ -24,10 +24,20 @@ where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
+\code{distribution} \tab distribution \tab Distribution to wrap. \cr
+\code{paramList} \tab list \tab List of parameters, see example. \cr
 \code{name} \tab list \tab Optional new name for distribution. \cr
 \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 \code{description} \tab list \tab Optional new description for distribution. \cr
 }
+}
+
+\section{Constructor Details}{
+ A vector distribution can either be constructed by a list of
+distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
+to \code{distribution}, as well as a list of parameters to \code{paramList}. The former case provides more flexibility
+in the ability to use multiple distributions but the latter is useful for quickly combining many
+distributions of the same type. See examples.
 }
 
 \section{Public Variables}{
@@ -100,7 +110,15 @@ vecBin$cdf(1:5, 12:16)
 vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
 vecBin$rand(10)
 
+vecBin = ProductDistribution$new(distribution = Binomial,
+       paramList = list(list(prob = 0.1, size = 2),
+                   list(prob = 0.6, size = 4),
+                   list(prob = 0.2, size = 6)))
+vecBin$pdf(x1=1,x2=2,x3=3)
+vecBin$cdf(x1=1,x2=2,x3=3)
+vecBin$rand(10)
+
 }
 \seealso{
-\code{\link{listWrappers}}
+\code{\link{listWrappers}} and \code{\link{ProductDistribution}}
 }

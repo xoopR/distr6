@@ -18,7 +18,7 @@ where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eq
 \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 \section{Constructor}{
- ProductDistribution$new(distlist, name = NULL, short_name = NULL, description = NULL)
+ ProductDistribution$new(distlist = NULL, distribution = NULL, paramList = NULL, name = NULL, short_name = NULL, description = NULL)
 }
 
 \section{Constructor Arguments}{
@@ -26,10 +26,20 @@ where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eq
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
+\code{distribution} \tab distribution \tab Distribution to wrap. \cr
+\code{paramList} \tab list \tab List of parameters, see example. \cr
 \code{name} \tab list \tab Optional new name for distribution. \cr
 \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 \code{description} \tab list \tab Optional new description for distribution. \cr
 }
+}
+
+\section{Constructor Details}{
+ A product distribution can either be constructed by a list of
+distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
+to \code{distribution}, as well as a list of parameters to \code{paramList}. The former case provides more flexibility
+in the ability to use multiple distributions but the latter is useful for quickly combining many
+distributions of the same type. See examples.
 }
 
 \section{Public Variables}{
@@ -101,7 +111,15 @@ prodBin$pdf(x1 = 2, x2 =3)
 prodBin$cdf(x1 = 5, x2 = 10)
 prodBin$rand(10)
 
+prodBin = ProductDistribution$new(distribution = Binomial,
+       paramList = list(list(prob = 0.1, size = 2),
+                   list(prob = 0.6, size = 4),
+                   list(prob = 0.2, size = 6)))
+prodBin$pdf(x1=1,x2=2,x3=3)
+prodBin$cdf(x1=1,x2=2,x3=3)
+prodBin$rand(10)
+
 }
 \seealso{
-\code{\link{ArrayDistribution}}, \code{\link{listWrappers}}
+\code{\link{listWrappers}} and \code{\link{VectorDistribution}}
 }
