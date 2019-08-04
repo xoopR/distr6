@@ -13,6 +13,7 @@
 - Added quantile to Categorical distribution and updated its cdf efficiency
 - Bug fix in quantile function of huberization wrapper
 - Fixed the `rand` return of a Vector Distribution (transposed data.table and added column names)
+- `cdf` of discrete distributions evaluated between integers are now evaluated after rounding down and do not return 0, e.g. `Binomial$new()$cdf(1.8) == Binomial$new()$cdf(1)`
 
 ## Documentation
 
