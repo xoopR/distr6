@@ -799,6 +799,8 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
+    if(testDiscrete(self))
+       x1 <- floor(x1)
     cdf = numeric(length(x1))
     cdf[x1 > self$sup()] = 1
     if(any(self$liesInSupport(x1, all = F)))
