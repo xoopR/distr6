@@ -31,9 +31,9 @@ test_that("getters",{
 })
 
 test_that("setters",{
-  expect_silent(Binomial$new()$setParameterValue(lst = list(size = 5.1)))
-  expect_silent(Binomial$new()$setParameterValue(size = 5.1))
-  expect_equal(Binomial$new()$parameters()$setParameterValue(size = 5.1)$getParameterValue("size"), 5)
+  expect_error(Binomial$new()$setParameterValue(lst = list(size = 5.1)))
+  expect_error(Binomial$new()$setParameterValue(size = 5.1))
+  expect_equal(Binomial$new()$parameters()$setParameterValue(size = 5)$getParameterValue("size"), 5)
   expect_error(Binomial$new()$setParameterValue(lst = list(prob = 2)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
