@@ -5,12 +5,10 @@ context("DiscreteUniform distribution")
 test_that("constructor",{
   expect_silent(DiscreteUniform$new())
   expect_error(DiscreteUniform$new(lower = 5, upper = 3))
-  expect_silent(DiscreteUniform$new(lower = 2.3, upper = 3))
   expect_silent(DiscreteUniform$new(lower = 2, upper = 8))
 })
 
 test_that("parameters", {
-  expect_equal(DiscreteUniform$new(lower = 2.3, upper = 3)$getParameterValue("lower"),2)
   expect_equal(DiscreteUniform$new(lower = 2, upper = 3)$getParameterValue("lower"),2)
   expect_equal(DiscreteUniform$new(lower = 2, upper = 3)$getParameterValue("upper"),3)
   expect_equal(DiscreteUniform$new(lower = 2, upper = 3)$getParameterValue("N"),2)
