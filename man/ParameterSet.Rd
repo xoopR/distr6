@@ -50,7 +50,7 @@ with a non-NA \code{updateFunc}.
   \strong{Method} \tab \strong{Link} \cr
   \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
   \code{update()} \tab \code{\link{update.ParameterSet}} \cr
-  \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
+  \code{parameters(id = NULL)} \tab \code{\link{parameters}} \cr
   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
