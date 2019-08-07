@@ -10,6 +10,10 @@ An R6 object of class ParameterSet.
 ParameterSets are passed to a \code{Distribution$new} constructor when
  creating a custom probability distribution that takes parameters.
 }
+\section{Constructor}{
+ ParameterSet$new(id, value, support, settable, updateFunc = NULL, description = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{

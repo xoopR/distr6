@@ -4,6 +4,8 @@
 #' @description ParameterSets are passed to a \code{Distribution$new} constructor when
 #'  creating a custom probability distribution that takes parameters.
 #'
+#' @section Constructor: ParameterSet$new(id, value, support, settable, updateFunc = NULL, description = NULL)
+#'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
