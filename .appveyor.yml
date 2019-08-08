@@ -9,7 +9,7 @@ install:
 branches:
   only:
   - master
-  - dev
+  - dev1.1
 
 build_script:
   - travis-tool.sh install_deps
