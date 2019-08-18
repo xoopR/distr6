@@ -46,6 +46,8 @@ test_that("type/support - array",{
                                                                         list(prob = 0.2, size = 6)))
   expect_equal(a$type()$getSymbol(), Naturals$new(dim = 3)$getSymbol())
   expect_equal(a$support()$getSymbol(), (Set$new(0:2) * Set$new(0:4) * Set$new(0:6))$getSymbol())
+  expect_error(VectorDistribution$new(distribution = sd, paramList = list()))
+  expect_error(VectorDistribution$new())
 
 })
 

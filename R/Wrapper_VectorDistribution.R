@@ -65,6 +65,10 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
 
     distribution = get(distribution)
     distlist = makeUniqueDistributions(sapply(paramList, function(x) do.call(distribution$new, x)))
+
+    name = paste("Vector:",length(paramList),distribution$classname)
+    short_name = paste0("Vec",length(paramList),distribution$classname)
+    description = paste("Vector of:",length(paramList),distribution$classname,"distributions")
   }
 
   distlist = lapply(distlist, function(x) x$clone())

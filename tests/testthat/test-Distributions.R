@@ -82,3 +82,12 @@ test_that("working_support",{
   expect_silent(expect_equal(Normal$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
                list(inf = -8, sup = 8)))
 })
+
+test_that("print",{
+  expect_equal(print(VectorDistribution$new(distribution = Bernoulli, paramList = list(list(prob = 0.2), list(prob = 0.8),
+                                                                                       list(prob=0.1),list(prob=0.9),list(prob=0.67)))),
+                     VectorDistribution$new(distribution = Bernoulli, paramList = list(list(prob = 0.2), list(prob = 0.8),list(prob=0.1),
+                                                                                             list(prob=0.9),list(prob=0.67)))$print(2))
+  expect_output(Binomial$new()$print(1))
+  expect_output(Binomial$new()$print(5))
+})

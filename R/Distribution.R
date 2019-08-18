@@ -102,8 +102,8 @@
 #'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint()} \tab \code{\link{strprint}} \cr
-#'   \code{print()} \tab \code{\link[base]{print}} \cr
+#'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+#'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
 #'   \code{plot()} \tab Coming Soon. \cr
 #'   \code{qqplot()} \tab Coming Soon. \cr
@@ -318,24 +318,35 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #' parse R6 objects into data-frames, see examples.
 #'
 #' @param object R6 object
-#' @usage strprint(object)
+#' @param n Number of parameters to display before & after ellipsis
+#' @usage strprint(object, n = 2)
 #'
 #' @return String representation of the distribution.
 #'
+#' @examples
+#' Triangular$new()$strprint()
+#' Triangular$new()$strprint(1)
+#'
 #' @export
-Distribution$set("public","strprint",function(){
+Distribution$set("public","strprint",function(n = 2){
   if(length(private$.parameters)!=0){
     settable = self$parameters()$as.data.table()$settable
     id = self$parameters()$as.data.table()[settable, "id"]
     value = self$parameters()$as.data.table()[settable, "value"]
-    string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+    lng <- length(id)
+    if(lng >(2*n))
+      string = paste0(self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
+                      ",...,", paste(id[(lng-n+1):lng], value[(lng-n+1):lng], sep = " = ", collapse = ", "),")")
+    else
+      string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+
   } else {
     string = paste0(self$short_name)
   }
   return(string)
 })
-Distribution$set("public","print",function(...){
-  cat(self$strprint())
+Distribution$set("public","print",function(n = 2, ...){
+  cat(self$strprint(n = n))
   invisible(self)
 })
 

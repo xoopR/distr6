@@ -4,10 +4,12 @@
 \alias{strprint}
 \title{String Representation of Print}
 \usage{
-strprint(object)
+strprint(object, n = 2)
 }
 \arguments{
 \item{object}{R6 object}
+
+\item{n}{Number of parameters to display before & after ellipsis}
 }
 \value{
 String representation of the distribution.
@@ -19,4 +21,9 @@ Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
 strprint is a suggested method that should be included in all R6 classes to be passed to
 methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
 parse R6 objects into data-frames, see examples.
+}
+\examples{
+Triangular$new()$strprint()
+Triangular$new()$strprint(1)
+
 }

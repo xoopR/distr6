@@ -64,6 +64,10 @@ ProductDistribution$set("public","initialize",function(distlist = NULL, distribu
 
     distribution = get(distribution)
     distlist = makeUniqueDistributions(sapply(paramList, function(x) do.call(distribution$new, x)))
+
+    name = paste("Product:",length(paramList),distribution$classname)
+    short_name = paste0("Prod",length(paramList),distribution$classname)
+    description = paste("Product of:",length(paramList),distribution$classname,"distributions")
   }
 
   distlist = lapply(distlist, function(x) x$clone())
