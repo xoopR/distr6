@@ -9,7 +9,8 @@ R62S3::R62Fun(DistributionWrapper, assignEnvir = topenv(), dispatchClasses = lis
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("\n-------------------------------------------------")
-  packageStartupMessage(" \t\tWelcome to distr6. \n \t\t----------------
+  packageStartupMessage(" \tWelcome to distr6 v",packageVersion("distr6"),
+"\n\t------------------------
 To get started see:
 * ?distr6
 * vignette('distr6','distr6')
