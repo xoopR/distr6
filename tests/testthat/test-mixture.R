@@ -28,6 +28,7 @@ test_that("check cdf", {
 
 test_that("check rand",{
   expect_equal(length(M$rand(10)),10)
+  expect_equal(length(M$rand(1)),1)
 })
 
 test_that("alternate constructor",{
