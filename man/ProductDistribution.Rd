@@ -18,7 +18,7 @@ where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eq
 \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
 \section{Constructor}{
- ProductDistribution$new(distlist = NULL, distribution = NULL, paramList = NULL, name = NULL, short_name = NULL, description = NULL)
+ ProductDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
 }
 
 \section{Constructor Arguments}{
@@ -27,7 +27,7 @@ where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eq
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
 \code{distribution} \tab distribution \tab Distribution to wrap. \cr
-\code{paramList} \tab list \tab List of parameters, see example. \cr
+\code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
 \code{name} \tab list \tab Optional new name for distribution. \cr
 \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 \code{description} \tab list \tab Optional new description for distribution. \cr
@@ -37,7 +37,7 @@ where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eq
 \section{Constructor Details}{
  A product distribution can either be constructed by a list of
 distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
-to \code{distribution}, as well as a list of parameters to \code{paramList}. The former case provides more flexibility
+to \code{distribution}, as well as a list or table of parameters to \code{params}. The former case provides more flexibility
 in the ability to use multiple distributions but the latter is useful for quickly combining many
 distributions of the same type. See examples.
 }
@@ -96,8 +96,8 @@ distributions of the same type. See examples.
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
@@ -105,16 +105,24 @@ distributions of the same type. See examples.
 }
 
 \examples{
-prodBin <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10),
-                                   Binomial$new(prob = 0.5, size = 20)))
+prodBin <- ProductDistribution$new(list(Binomial$new(prob = 0.5,
+                           size = 10), Normal$new(mean = 15)))
 prodBin$pdf(x1 = 2, x2 =3)
-prodBin$cdf(x1 = 5, x2 = 10)
+prodBin$cdf(1:5, 12:16)
+prodBin$quantile(c(0.1,0.2),c(0.3,0.4))
 prodBin$rand(10)
 
 prodBin = ProductDistribution$new(distribution = Binomial,
-       paramList = list(list(prob = 0.1, size = 2),
+       params = list(list(prob = 0.1, size = 2),
                    list(prob = 0.6, size = 4),
                    list(prob = 0.2, size = 6)))
+prodBin$pdf(x1=1,x2=2,x3=3)
+prodBin$cdf(x1=1,x2=2,x3=3)
+prodBin$rand(10)
+
+#Equivalently
+prodBin = ProductDistribution$new(distribution = Binomial,
+       params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
 prodBin$pdf(x1=1,x2=2,x3=3)
 prodBin$cdf(x1=1,x2=2,x3=3)
 prodBin$rand(10)

@@ -29,3 +29,14 @@ test_that("check cdf", {
 test_that("check rand",{
   expect_equal(length(M$rand(10)),10)
 })
+
+test_that("alternate constructor",{
+  expect_equal(MixtureDistribution$new(list(Bernoulli$new(0.2),Bernoulli$new(0.7)))$pdf(1),
+               MixtureDistribution$new(vectordist = VectorDistribution$new(distribution = Bernoulli,
+                                                                           params = data.table::data.table(
+                                                                             prob = c(0.2,0.7))))$pdf(1))
+})
+
+
+
+

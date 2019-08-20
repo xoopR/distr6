@@ -299,7 +299,7 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 
 #' @name setParameterValue
 #' @title Parameter Value Setter
-#' @description Returns the value of the given parameter.
+#' @description Sets the value of the given parameter.
 #'
 #' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
 #' @section R6 Usage: $setParameterValue(..., lst = NULL, error = "warn")

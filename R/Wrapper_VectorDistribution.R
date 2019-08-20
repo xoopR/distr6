@@ -7,14 +7,14 @@
 #' \deqn{F_V(X1 = x1,...,XN = xN) = F_{X1}(x1), ..., F_{XN}(xn)}{F_V(X1 = x1,...,XN = xN) = F_X1(x1), ..., F_XN(xn)}
 #' where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} and \eqn{X1,...,XN} are distributions.
 #'
-#' @section Constructor: VectorDistribution$new(distlist = NULL, distribution = NULL, paramList = NULL, name = NULL, short_name = NULL, description = NULL)
+#' @section Constructor: VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{distlist} \tab list \tab List of distributions. \cr
 #' \code{distribution} \tab distribution \tab Distribution to wrap. \cr
-#' \code{paramList} \tab list \tab List of parameters, see example. \cr
+#' \code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
 #' \code{name} \tab list \tab Optional new name for distribution. \cr
 #' \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 #' \code{description} \tab list \tab Optional new description for distribution. \cr
@@ -22,7 +22,7 @@
 #'
 #' @section Constructor Details: A vector distribution can either be constructed by a list of
 #' distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
-#' to \code{distribution}, as well as a list of parameters to \code{paramList}. The former case provides more flexibility
+#' to \code{distribution}, as well as a list or table of parameters to \code{params}. The former case provides more flexibility
 #' in the ability to use multiple distributions but the latter is useful for quickly combining many
 #' distributions of the same type. See examples.
 #'
@@ -41,10 +41,17 @@
 #' vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
 #' vecBin$rand(10)
 #'
-#' vecBin = ProductDistribution$new(distribution = Binomial,
-#'        paramList = list(list(prob = 0.1, size = 2),
+#' vecBin = VectorDistribution$new(distribution = Binomial,
+#'        params = list(list(prob = 0.1, size = 2),
 #'                    list(prob = 0.6, size = 4),
 #'                    list(prob = 0.2, size = 6)))
+#' vecBin$pdf(x1=1,x2=2,x3=3)
+#' vecBin$cdf(x1=1,x2=2,x3=3)
+#' vecBin$rand(10)
+#'
+#' #Equivalently
+#' vecBin = VectorDistribution$new(distribution = Binomial,
+#'        params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
 #' vecBin$pdf(x1=1,x2=2,x3=3)
 #' vecBin$cdf(x1=1,x2=2,x3=3)
 #' vecBin$rand(10)
@@ -52,31 +59,38 @@
 #' @export
 NULL
 VectorDistribution <- R6::R6Class("VectorDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
-VectorDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, paramList = NULL,
+VectorDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,
                                                       name = NULL, short_name = NULL, description = NULL){
 
   if(is.null(distlist)){
-    if(is.null(distribution) | is.null(paramList))
-      stop("Either distlist or distribution and paramList must be provided.")
+    if(is.null(distribution) | is.null(params))
+      stop("Either distlist or distribution and params must be provided.")
 
     distribution = paste0(substitute(distribution))
     if(!(distribution %in% listDistributions(simplify = T)))
       stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
 
     distribution = get(distribution)
-    distlist = makeUniqueDistributions(sapply(paramList, function(x) do.call(distribution$new, x)))
+    if(checkmate::testList(params)){
+      x <- params
+      params <- data.table::as.data.table(t(data.table::as.data.table(x)))
+      colnames(params) <- unique(names(unlist(x)))
+    }
 
-    name = paste("Vector:",length(paramList),distribution$classname)
-    short_name = paste0("Vec",length(paramList),distribution$classname)
-    description = paste("Vector of:",length(paramList),distribution$classname,"distributions")
+      if(inherits(params, "list") | inherits(params, "data.frame") | inherits(params, "matrix")){
+      distlist = apply(params, 1, function(x) do.call(distribution$new, as.list(x)))
+      name = paste0("Vector: ",nrow(params)," ",distribution$classname,"s")
+      short_name = paste0("Vec",nrow(params),distribution$public_fields$short_name)
+      description = paste("Vector of:",nrow(params),distribution$classname,"distributions")
+    } else
+      stop("params must inherit one of: list, data.frame, or matrix.")
+  } else {
+    if(is.null(name)) name = paste("Vector:",paste0(lapply(distlist, function(x) x$name),collapse=", "))
+    if(is.null(short_name)) short_name = paste0(lapply(distlist, function(x) x$short_name),collapse="Vec")
+    if(is.null(description)) description = paste0("Vector of:",paste0(lapply(distlist, function(x) x$description), collapse=" "))
   }
 
-  distlist = lapply(distlist, function(x) x$clone())
   distlist = makeUniqueDistributions(distlist)
-
-  if(is.null(name)) name = paste("Vector:",paste0(lapply(distlist, function(x) x$name),collapse=", "))
-  if(is.null(short_name)) short_name = paste0(lapply(distlist, function(x) x$short_name),collapse="Vec")
-  if(is.null(description)) description = paste0("Vector of:",paste0(lapply(distlist, function(x) x$description), collapse=" "))
 
   lst <- rep(list(bquote()), length(distlist))
   names(lst) <- paste("x",1:length(distlist),sep="")
@@ -121,7 +135,6 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     colnames(rand) = unlist(lapply(self$wrappedModels(), function(x) x$short_name))
     return(rand)
   }
-
 
   type = do.call(product.SetInterval, lapply(distlist,function(x) x$type()))
   support = do.call(product.SetInterval, lapply(distlist,function(x) x$support()))
