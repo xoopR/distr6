@@ -66,6 +66,9 @@ Cauchy$set("public","entropy",function(base = 2){
 Cauchy$set("public", "mgf", function(t){
   return(NaN)
 })
+Cauchy$set("public", "pgf", function(z){
+  return(NaN)
+})
 Cauchy$set("public", "cf", function(t){
   return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
 })

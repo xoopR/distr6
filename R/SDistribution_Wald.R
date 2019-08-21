@@ -73,6 +73,9 @@ Wald$set("public", "mgf", function(t){
   shape <- self$getParameterValue("shape")
   return(exp(shape/mean * (1 - sqrt(1 - 2*mean^2*t/shape))))
 })
+Wald$set("public", "pgf", function(z){
+  return(NaN)
+})
 Wald$set("public", "cf", function(t){
   mean <- self$getParameterValue("mean")
   shape <- self$getParameterValue("shape")

@@ -76,6 +76,9 @@ Laplace$set("public", "mgf", function(t){
   else
     return(NaN)
 })
+Laplace$set("public", "pgf", function(z){
+  return(NaN)
+})
 Laplace$set("public", "cf", function(t){
   return(exp(self$getParameterValue("mean") * t * 1i) / (1 + self$getParameterValue("scale")^2 * t^2))
 })

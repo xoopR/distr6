@@ -94,6 +94,9 @@ StudentT$set("public", "cf", function(t){
   df <- self$getParameterValue("df")
   return((besselK(sqrt(df)*abs(t), df/2) * ((sqrt(df)*abs(t))^(df/2))) / (gamma(df/2)*2^(df/2-1)))
 })
+StudentT$set("public", "pgf", function(z){
+  return(NaN)
+})
 StudentT$set("public","mode",function(){
   return(0)
 })

@@ -100,6 +100,9 @@ FDistribution$set("public", "mode", function(){
   else
     return(NaN)
 })
+FDistribution$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 FDistribution$set("public", "setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)

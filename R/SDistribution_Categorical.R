@@ -16,7 +16,6 @@
 #' @templateVar constructor ..., probs
 #' @templateVar arg1 \code{...} \tab ANY \tab elements in the support Set. See details. \cr
 #' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
 #' @templateVar constructorDets a series of elements for the support set and \code{probs} determining the probability of each category occurring. The length of the probability list should equal the number of elements. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)} If no arguments are given, then defaults to one element '1' with probability one.
 #' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function.
 #'
@@ -49,8 +48,11 @@ Categorical$set("public","short_name","Cat")
 Categorical$set("public","description","Categorical Probability Distribution.")
 Categorical$set("public","package","distr6")
 
-Categorical$set("public","mode",function(){
-  return(self$support()$elements()[which.max(self$getParameterValue("probs"))])
+Categorical$set("public","mode",function(which = "all"){
+  if(which == "all")
+    return(self$support()$elements()[self$getParameterValue("probs")==max(self$getParameterValue("probs"))])
+  else
+    return(self$support()$elements()[self$getParameterValue("probs")==max(self$getParameterValue("probs"))][which])
 })
 Categorical$set("public","mean",function(){
   return(NaN)
@@ -68,6 +70,9 @@ Categorical$set("public","entropy",function(){
   return(NaN)
 })
 Categorical$set("public","mgf",function(t){
+  return(NaN)
+})
+Categorical$set("public","pgf",function(t){
   return(NaN)
 })
 Categorical$set("public","cf",function(t){

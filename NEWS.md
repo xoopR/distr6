@@ -6,6 +6,11 @@
 
 ## Minor Updates
 
+### Added Functions and Classes
+
+- `Empirical` distribution for distributions arising from observed samples (e.g. from MC sampling methods)
+- `simulateEmpiricalDistribution`: function for sampling *without* replacement from an `Empirical` distribution
+
 ### Deprecated Functions
 
 - `ArrayDistribution` - This wrapper is now merged with `ProductDistribution` by adding two new parameters to `ProductDistribution` that allow for construction either by a distribution list of by naming a distribution and providing a parameter list
@@ -28,6 +33,8 @@
 - Removed redundant `crayon` dependency
 - Fixed bug in `MixtureDistribution` that was causing `rand` to erroneously return integers
 - `Degenerate` distribution re-classified as discrete
+- Removed error in `Categorical` documentation
+- Fixed bug in multi-modal `Categorical` distribution
 
 # distr6 1.0.1
 

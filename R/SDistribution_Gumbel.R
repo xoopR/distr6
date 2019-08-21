@@ -70,6 +70,9 @@ Gumbel$set("public","entropy",function(base = 2){
 Gumbel$set("public", "mgf", function(t){
   return(gamma(1 - self$getParameterValue("scale")*t) * exp(self$getParameterValue("location")*t))
 })
+Gumbel$set("public", "pgf", function(z){
+  return(NaN)
+})
 Gumbel$set("public", "cf", function(t){
   return(pracma::gammaz(1 - self$getParameterValue("scale")*t*1i) * exp(1i*self$getParameterValue("location")*t))
 })

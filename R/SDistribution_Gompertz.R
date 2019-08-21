@@ -52,6 +52,10 @@ Gompertz$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
+Gompertz$set("public", "pgf", function(z){
+  return(NaN)
+})
+
 Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)

@@ -33,6 +33,8 @@ test_that("statistics",{
   expect_equal(cat$pgf(1:3), NaN)
   expect_equal(cat$cf(1:3), NaN)
   expect_equal(cat$mode(), "T")
+  expect_equal(cat$mode(which = 1), "T")
+  expect_equal(Categorical$new("A","B",probs = c(0.5,0.5))$mode(which = 2), "B")
   expect_equal(cat$pdf("T"), 4/5)
   expect_equal(cat$pdf(c("Sandwich","Fish")), c(0.1/5,0))
   expect_equal(cat$cdf(x1 = c(4,"Fish")), c(1/5,0))

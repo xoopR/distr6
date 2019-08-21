@@ -73,6 +73,9 @@ Logistic$set("public", "mgf", function(t){
   else
     return(NaN)
 })
+Logistic$set("public", "pgf", function(z){
+  return(NaN)
+})
 Logistic$set("public", "cf", function(t){
   return(exp(1i*self$getParameterValue("mean")*t) *
            (self$getParameterValue("scale")*pi*t)/(sinh(pi*self$getParameterValue("scale")*t)))

@@ -810,12 +810,18 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
-    if(testDiscrete(self) & checkmate::testNumeric(x1))
+    if(self$type()$class() == "integer")
        x1 <- floor(x1)
     cdf = numeric(length(x1))
     cdf[x1 > self$sup()] = 1
-    if(any(self$liesInSupport(x1, all = F)))
-      cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
+
+    if(getR6Class(self) == "Empirical"){
+      if(any(x1 >= self$inf()) | any(x1 <= self$sup()))
+        cdf[x1 >= self$inf() | x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() | x1 <= self$sup()])
+    } else {
+      if(any(self$liesInSupport(x1, all = F)))
+        cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
+    }
   } else {
       cdf = private$.cdf(x1, ...)
   }

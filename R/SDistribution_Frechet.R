@@ -98,6 +98,9 @@ Frechet$set("public","entropy",function(base = 2){
   return(1 - digamma(1)/self$getParameterValue("shape") - digamma(1) +
            log(self$getParameterValue("scale")/self$getParameterValue("shape"), base))
 })
+Frechet$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Frechet$set("private",".getRefParams", function(paramlst){
   lst = list()
