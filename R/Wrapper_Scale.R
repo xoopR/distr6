@@ -38,7 +38,7 @@
 #' #' for a full list of inherited distribution methods.
 #'
 Scale <- R6::R6Class("Scale", inherit = DistributionWrapper, lock_objects = FALSE)
-Scale$set("public","initialize",function(dist,mean=0,sd=1,var=1,...){
+Scale$set("public","initialize",function(dist,mean=NULL,sd=NULL,var=NULL,verbose=FALSE,...){
      assertDistribution(dist)
      dist = dist$clone()
 
@@ -49,20 +49,25 @@ Scale$set("public","initialize",function(dist,mean=0,sd=1,var=1,...){
      names(distlist) = short_name
      
      if(is.null(var)){
-         if(is.null(sd)){
-             message("the scale sd is set to be 1")
-             sd=1
-             self$setScaleSd(sd)
-         }else{ self$setScaleSd(sd) }
-         
-     }else{ self$setScaleSd(sqrt(var)) }
+        if(is.null(sd)){
+           if(verbose){message("the scale sd is set to be 1")}
+           sd=1
+           var = 1
+           self$setScaleSd(sd)
+        }else{ 
+           var = sd^2
+           self$setScaleSd(sd) }
+        
+     }else{ 
+        sd = sqrt(var)
+        self$setScaleSd(sqrt(var)) }
      
      if(is.null(mean)){
-         message("the scale mean is set to be 0")
-         mean=0
-         self$setScaleMean(mean)
+        if(verbose){message("the scale mean is set to be 0")}
+        mean=0
+        self$setScaleMean(mean)
      }else{self$setScaleMean(mean)}
-
+     
      if(!is.null(dist$pdf(1))){
           pdf <- function(x1) {}
          body(pdf) <- substitute({
@@ -78,32 +83,36 @@ Scale$set("public","initialize",function(dist,mean=0,sd=1,var=1,...){
            self$wrapperModels(name)$cdf(self$getScaleMean()+(x1-self$wrappedModels(name)$mean())*scaleTrafo)
        }, list(name = short_name))
      } else{cdf <- NULL}
-  
+     
+     private$.outerParameters <- ParameterSet$new(id = list("ScaleMean","ScaleSd","ScaleVar"), value = list(mean,sd,var),
+                                                  support = list(Reals$new(),PosReals$new(),PosReals$new()), settable = list(FALSE,FALSE,FALSE),
+                                                  description = list("Mean of the output scaled distribution.",
+                                                                     "Standard deviation of the output scaled distribution.",
+                                                                     "Vairance of the output scaled distribution"))
+     
      name = paste("Scaled",name)
      short_name = paste0("Scaled",short_name)
   
      type = Reals$new()
   
      super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                      short_name = short_name, type = type, ...)
+                      short_name = short_name, type = type,...)
    }) # IN PROGRESS
  
-#### getters ###########
-   Scale$set("public","getScaleMean",function(){
-     return(private$.scaleMean)
-   })
-   Scale$set("public","getScaleSd",function(){
-     return(private$.scaleSd)
-   })
-#### setters ###########   
-   Scale$set("public","setScaleMean",function(mean){
-     private$.scaleMean <- mean
-     invisible(self)
-   })
-   Scale$set("public","setScaleSd",function(sd){
-     private$.scaleSd <- sd
-     invisible(self)
-   })
+
+Scale$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+   if(is.null(lst))
+      lst <- list(...)
+   if("ScaleSd"%in%names(lst) & "ScaleVar"%in%names(lst)){
+      checkmate::assert(lst[["ScaleSd"]]^2 == lst[["ScaleVar"]])
+   }else if("ScaleSd"%in%names(lst)){
+      lst[["ScaleVar"]] = lst[["ScaleSd"]]^2
+   }else if("ScaleVar"%in%names(lst)){
+      lst[["ScaleSd"]] = sqrt(lst[["ScaleVar"]])
+   }
+   super$setParameterValue(lst=lst,error=error)
+})
+   
 
    
    
