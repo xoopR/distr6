@@ -1,7 +1,4 @@
-distr6
-================
-
-<img src="man/figures/logo.png" align="right" alt="" width="120" />
+# distr6 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![Travis Build
 Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](https://travis-ci.com/alan-turing-institute/distr6)
