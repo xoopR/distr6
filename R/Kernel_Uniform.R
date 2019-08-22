@@ -30,7 +30,7 @@ NULL
 #-------------------------------------------------------------
 UniformKernel <- R6::R6Class("UniformKernel", inherit = Kernel, lock_objects = F)
 UniformKernel$set("public","name","UniformKernel")
-UniformKernel$set("public","short_name","KUnif")
+UniformKernel$set("public","short_name","UnifKern")
 UniformKernel$set("public","description","Uniform Kernel")
 UniformKernel$set("public","variance",function(){
   return(1/3)
