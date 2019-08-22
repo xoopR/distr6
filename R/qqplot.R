@@ -54,31 +54,21 @@ qqplot.Distribution <- function(x, y, nPoints = 3000, coverage = 0.99,
                                 plot = TRUE, xlab = deparse(substitute(x)), 
                                 ylab = deparse(substitute(y)), ...){
   
-  args <- list(x = x, y = y, nPoints = 3000, coverage = 0.99, withIdLine = withIdLine,
-                withConf = withConf, withConf.pw  = withConf.pw,
-                withConf.sim = if(missing(withConf.sim)) {
-                  if(missing(withConf)) NULL else withConf} else withConf.sim,
-                plot = plot, xlab = xlab, ylab = ylab)    ##with reference to package 'distr'
-  
   
   ##Quantile vs Quantile##
   #use method in plot.Distribution to plot quantile vs quantile
-  plotStructure <- list("points" = NA, "pdf" = NA, "cdf" = NA,
-                        "hazard" = NA, "cumHazard" = NA, "survival" = NA,
-                        n = nPoints, plotChoice = NA)
-  plotStructure$plotChoice <- c("pdf","cdf","quantile","survival","hazard","cumHazard")
   
   # random number generator: sample quantiles from 0 to 1 (cdf)
-  plotStructure$cdf <- seq((0.5 - coverage/2),(0.5 + coverage/2),
-                           length.out = plotStructure$n)
+  points <- seq((0.5 - coverage/2),(0.5 + coverage/2),
+                           length.out = nPoints)
   # calculate x0, y0
-  plotStructure$x0 <- x$quantile(plotStructure$cdf)
-  plotStructure$y0 <- y$quantile(plotStructure$cdf)
+  quantile.X <- x$quantile(points)
+  quantile.Y <- y$quantile(points)
   
   
   #now plot!
   if(plot == TRUE){
-    plot(x = plotStructure$x0, y = plotStructure$y0, type = "p", col = "black",
+    plot(x = quantile.X, y = quantile.Y, type = "p", col = "black",
          xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),...)
     
     ##Identity Line##
@@ -89,8 +79,8 @@ qqplot.Distribution <- function(x, y, nPoints = 3000, coverage = 0.99,
     ##Confidence Lines##
     if(withConf == TRUE){
       
-      x0 <- plotStructure$x0 
-      y0 <- plotStructure$y0
+      x0 <- quantile.X 
+      y0 <- quantile.Y
       
       quantile.df <- data.frame(x0, y0)
       
@@ -120,11 +110,11 @@ qqplot.Distribution <- function(x, y, nPoints = 3000, coverage = 0.99,
       
       ##Legend
       legend("topleft", legend = c("Pintwise CI", "Simultaneous CI"), col = c("orange", "red"),
-               lty = c(3,4), cex = 0.8)
+             lty = c(3,4), cex = 0.8)
     }
     
   }else{
-    returnList = list(x0 = plotStructure$x0, y0 = plotStructure$x0, args = args)
+    returnList = list(x0 = quantile.X, y0 = quantile.Y, args = args)
     
     return(returnList)
   }
