@@ -53,36 +53,37 @@ Scale$set("public","initialize",function(dist,mean=NULL,sd=NULL,var=NULL,verbose
            if(verbose){message("the scale sd is set to be 1")}
            sd=1
            var = 1
-           self$setScaleSd(sd)
+           self$setParameterValue(sd=sd)
         }else{ 
            var = sd^2
-           self$setScaleSd(sd) }
+           self$setParameterValue(sd=sd) }
         
      }else{ 
         sd = sqrt(var)
-        self$setScaleSd(sqrt(var)) }
+        self$setParameterValue(sd=sqrt(var)) }
      
      if(is.null(mean)){
         if(verbose){message("the scale mean is set to be 0")}
         mean=0
-        self$setScaleMean(mean)
-     }else{self$setScaleMean(mean)}
+        self$setParameterValue(mean=mean)
+     }else{self$setParameterValue(mean=mean)}
      
      if(!is.null(dist$pdf(1))){
-          pdf <- function(x1) {}
-         body(pdf) <- substitute({
-           scaleTrafo <- self$getScaleSd()/self$wrappedModels()[[1]]$stdev()
-           self$wrapperModels()[[1]]$pdf(self$getScaleMean()+(x1-self$wrappedModels()[[1]]$mean())*scaleTrafo)
-         }, list(name = short_name))
+        pdf <- function(x1) {}
+        body(pdf) <- substitute({
+           scaleTrafo <- self$getParameterValue("ScaleSd")/self$wrappedModels()[[1]]$stdev()
+           self$wrapperModels()[[1]]$pdf(self$getParameterValue("ScaleMean")+(x1-self$wrappedModels()[[1]]$mean())*scaleTrafo)
+        }, list(name = short_name))
      } else{pdf <- NULL}
      
      if(!is.null(dist$cdf(1))){
-       cdf <- function(x1) {}
-       body(cdf) <- substitute({
-           scaleTrafo <- self$getScaleSd()/self$wrappedModels(name)$stdev()
-           self$wrapperModels(name)$cdf(self$getScaleMean()+(x1-self$wrappedModels(name)$mean())*scaleTrafo)
-       }, list(name = short_name))
+        cdf <- function(x1) {}
+        body(cdf) <- substitute({
+           scaleTrafo <- self$getParameterValue("ScaleSd")/self$wrappedModels(name)$stdev()
+           self$wrapperModels(name)$cdf(self$getParameterValue("ScaleMean")+(x1-self$wrappedModels(name)$mean())*scaleTrafo)
+        }, list(name = short_name))
      } else{cdf <- NULL}
+     
      
      private$.outerParameters <- ParameterSet$new(id = list("ScaleMean","ScaleSd","ScaleVar"), value = list(mean,sd,var),
                                                   support = list(Reals$new(),PosReals$new(),PosReals$new()), settable = list(FALSE,FALSE,FALSE),
