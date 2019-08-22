@@ -129,7 +129,7 @@ Sampling from this distribution is performed with the \code{\link[base]{sample}}
 }
 
 \examples{
-x = Empirical$new(runif(1000)*10)
+x = Empirical$new(stats::runif(1000)*10)
 
 # d/p/q/r
 x$pdf(1:5)
@@ -138,9 +138,8 @@ x$quantile(0.42) # Assumes ordered in construction
 x$rand(10)
 
 # Statistics
-x$mode()
 x$mean()
-x$var()
+x$variance()
 
 summary(x)
 
