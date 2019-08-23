@@ -40,6 +40,7 @@ test_that("statistics",{
   expect_equal(G$skewness(), 2)
   expect_equal(G$kurtosis(T), 6)
   expect_equal(G$kurtosis(F), 9)
+  expect_equal(G$pgf(1), NaN)
   expect_equal(G$entropy(), 1)
   expect_equal(G$mgf(0), 1)
   expect_equal(G$mgf(5), NaN)

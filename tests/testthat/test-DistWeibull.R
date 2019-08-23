@@ -27,6 +27,7 @@ test_that("statistics",{
   expect_equal(Weibull$new()$kurtosis(F), 9)
   expect_equal(Weibull$new()$entropy(), 1)
   expect_error(Weibull$new()$mgf(1))
+  expect_equal(Weibull$new()$pgf(1), NaN)
   expect_error(Weibull$new()$cf(1))
   expect_equal(Weibull$new()$mode(), 0)
   expect_equal(Weibull$new(shape=0.5)$mode(), 0)

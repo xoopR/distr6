@@ -38,6 +38,7 @@ test_that("statistics",{
 
   expect_equal(g$mgf(1), NaN)
   expect_error(g$cf(1))
+  expect_equal(g$pgf(1), NaN)
   expect_equal(g$mode(), 1/2)
   expect_equal(g$pdf(1), extraDistr::dinvgamma(1,1,1))
   expect_equal(g$cdf(1), extraDistr::pinvgamma(1,1,1))

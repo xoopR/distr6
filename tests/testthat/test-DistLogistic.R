@@ -29,6 +29,7 @@ test_that("statistics",{
   expect_equal(l$mean(), 0)
   expect_equal(l$mode(), 0)
   expect_equal(l$variance(), pi^2/3)
+  expect_equal(l$pgf(1), NaN)
   expect_equal(l$skewness(), 0)
   expect_equal(l$kurtosis(T), 1.2)
   expect_equal(l$kurtosis(F), 4.2)

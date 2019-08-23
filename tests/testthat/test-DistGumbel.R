@@ -32,6 +32,7 @@ test_that("statistics",{
   expect_equal(c$mgf(2.5), gamma(1 - 2.5)*exp(0))
   expect_equal(c$cf(2.5), pracma::gammaz(1 - 1i*2.5)*exp(0))
   expect_equal(c$mode(),0)
+  expect_equal(c$pgf(1), NaN)
   expect_equal(c$pdf(1:2), extraDistr::dgumbel(1:2))
   expect_equal(c$cdf(1:2), extraDistr::pgumbel(1:2))
   expect_equal(c$quantile(c(0.56,0.12)), extraDistr::qgumbel(c(0.56,0.12)))

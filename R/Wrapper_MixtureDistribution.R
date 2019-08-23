@@ -58,27 +58,41 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL,
   distnames = names(distlist)
 
   if(is.null(weights))
-    weights = rep(1/length(distlist), length(distlist))
+    weights = "uniform"
   else{
     checkmate::assert(length(weights)==length(distlist))
+    weights <- weights/sum(weights)
   }
 
-  weights <- weights/sum(weights)
   private$.weights <- weights
 
   pdf <- function(x1,...) {
-    if(length(x1)==1)
-      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * private$.weights)))
-    else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) %*% diag(private$.weights))))
+    if(length(x1)==1){
+      if(!is.numeric(private$.weights))
+        return(as.numeric(mean(sapply(self$wrappedModels(), function(y) y$pdf(x1)))))
+      else
+        return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * private$.weights)))
+    } else{
+      if(!is.numeric(private$.weights))
+        return(as.numeric(rowMeans(sapply(self$wrappedModels(), function(y) y$pdf(x1)))))
+      else
+        return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) %*% diag(private$.weights))))
+    }
   }
   formals(pdf)$self <- self
 
   cdf <- function(x1,...) {
-    if(length(x1)==1)
-      return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x1)) * private$.weights)))
-    else
-      return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x1)) %*% diag(private$.weights))))
+    if(length(x1)==1){
+      if(!is.numeric(private$.weights))
+        return(as.numeric(mean(sapply(self$wrappedModels(), function(y) y$cdf(x1)))))
+      else
+        return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x1)) * private$.weights)))
+    } else{
+      if(!is.numeric(private$.weights))
+        return(as.numeric(rowMeans(sapply(self$wrappedModels(), function(y) y$cdf(x1)))))
+      else
+        return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x1)) %*% diag(private$.weights))))
+    }
   }
   formals(cdf)$self <- self
 

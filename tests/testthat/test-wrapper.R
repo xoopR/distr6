@@ -41,7 +41,7 @@ test_that("wrap a wrapper",{
                                                                     Binomial$new()))
   expect_silent(x$parameters())
   expect_silent(x$cdf(2:3,3:4))
-  expect_error(x$pdf(2,1))
+  expect_warning(x$pdf(2,1))
   expect_error(x$cdf(2))
   expect_silent(x$setParameterValue(Binom_size = 15))
   expect_equal(x$getParameterValue("Binom_size"), 15)

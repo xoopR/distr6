@@ -30,6 +30,7 @@ test_that("statistics",{
   expect_equal(B$kurtosis(F), 1.8)
   expect_equal(B$entropy(), 0)
   expect_error(B$mgf(0))
+  expect_equal(B$pgf(1), NaN)
   expect_error(B$cf(1))
   expect_equal(Beta$new(shape1 = 2, shape2 = 0.34)$mode(), 1)
   expect_equal(Beta$new(shape2 = 2, shape1 = 0.34)$mode(), 0)

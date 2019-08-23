@@ -29,6 +29,7 @@ test_that("statistics",{
   expect_equal(Pareto$new(shape = 5)$kurtosis(F), 73.8)
   expect_equal(Pareto$new()$entropy(), log(exp(2), base=2))
   expect_equal(Pareto$new()$mgf(1), NaN)
+  expect_equal(Pareto$new()$pgf(1), NaN)
   expect_equal(Pareto$new()$mgf(-1), expint::gammainc(-1,1))
   expect_error(Pareto$new()$cf(1))
   expect_equal(Pareto$new(scale=5)$mode(), 5)
