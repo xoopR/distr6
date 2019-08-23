@@ -15,10 +15,10 @@ lines.Distribution <- function(x, fun, nPoints = 3000,...){
   colnames(plotStructure$qty) <- c("points","pdf","cdf","quantile","survival",
                                    "hazard","cumHazard")
   
-  plotStructure$qty[,"cdf"] <- seq(0,1,length.out = plotStructure$n)
-  plotStructure$qty[,"points"] <- x$quantile(plotStructure$qty[,"cdf"])
+  plotStructure$qty[,"quantile"] <- seq(0,1,length.out = plotStructure$n)
+  plotStructure$qty[,"points"] <- x$quantile(plotStructure$qty[,"quantile"])
   plotStructure$qty[,"pdf"] <- x$pdf(plotStructure$qty[,"points"])
-  plotStructure$qty[,"quantile"] <- plotStructure$qty[,"cdf"]
+  plotStructure$qty[,"cdf"] <- x$cdf(plotStructure$qty[,"points"])
   
   if(any(fun %in% c("hazard","cumHazard","survival"))){
     # calculate survival
@@ -47,13 +47,15 @@ lines.Distribution <- function(x, fun, nPoints = 3000,...){
 .plot_discrete_lines <- function(fun,plotStructure,...){
   for(i in 1:length(fun)){
    if(fun[i]=='cdf'){
-      lines(stepfun(x = plotStructure$qty[,"points"], 
-                    y = c(0,plotStructure$qty[,"cdf"])), verticals = F,...)
+      lines(stepfun(x = unique(plotStructure$qty[,"points"]), 
+                    y = c(0,unique(plotStructure$qty[,"cdf"]))), verticals = F,...)
     }else if(fun[i]=='quantile'){
-      lines(x = unique(plotStructure$qty[,"cdf"]), y = plotStructure$qty[,"points"], type = "s")
+      lines(x = plotStructure$qty[,"cdf"], y = plotStructure$qty[,"points"], 
+            type = "s",...)
     }else{
         lines(cbind(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]]), 
               type = "h",...)
+      .addArrows(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]],...)
     }
 }}
 
