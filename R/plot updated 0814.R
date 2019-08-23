@@ -62,10 +62,10 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
   colnames(plotStructure$qty) <- c("points","pdf","cdf","quantile","survival",
                                    "hazard","cumHazard")
   
-  plotStructure$qty[,"cdf"] <- seq(0,1,length.out = plotStructure$n)
-  plotStructure$qty[,"points"] <- x$quantile(plotStructure$qty[,"cdf"])
+  plotStructure$qty[,"quantile"] <- seq(0,1,length.out = plotStructure$n)
+  plotStructure$qty[,"points"] <- x$quantile(plotStructure$qty[,"quantile"])
   plotStructure$qty[,"pdf"] <- x$pdf(plotStructure$qty[,"points"])
-  plotStructure$qty[,"quantile"] <- plotStructure$qty[,"cdf"]
+  plotStructure$qty[,"cdf"] <- x$cdf(plotStructure$qty[,"points"])
   
   if(any(fun %in% c("hazard","cumHazard","survival"))){
     # calculate survival
@@ -157,32 +157,32 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
     if(fun[i]=='cumHazard'){
       plot(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]], type = "h",
            main=fun[i],xlab='x',ylab=expression(Lambda(x)),...)
+      .addArrows(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]],...)
     }else if(fun[i]=='cdf'){
       plot(ecdf(plotStructure$qty[,"points"]), main='cdf',xlab='x',ylab='F(x)',...)
     }else if(fun[i]=='quantile'){
-      plot(x = unique(plotStructure$qty[,"cdf"]), y = plotStructure$qty[,"points"], type = "s",
-           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
+      plot(x = plotStructure$qty[,"cdf"], y = plotStructure$qty[,"points"], type = "s",
+           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"), ...)
     }else{
       plot(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]], type = "h",
            main=fun[i],xlab='x',ylab=func_notation[i],...)
+      .addArrows(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]],...)
     }}}
 
 
-
-my.binom <- Binomial$new()
-my.geom=Geometric$new()
-my.norm <- Normal$new(mean = 2, sd = 1.5)
-my.norm.two <- Normal$new(mean = 2.5, sd = 1)
-
-
-plot(my.norm, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = F)
-plot(my.norm, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = T)
-plot(my.binom, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = T)
-
-plot(my.binom, "quantile")
-lines(my.geom, "quantile", col = "red")
-
-plot(my.norm, "pdf")
-plot(my.norm, "pdf", ylim = c(0, 0.5))
-lines(my.norm.two, "pdf", col = "red")
-
+# FUN_FVE: add arrows
+.addArrows <- function(x, y, ...){
+  n <- which(is.finite(y))
+  i.p <- which(is.infinite(y) & (y>0))
+  i.n <- which(is.infinite(y) & (y<0))
+  y.min <- min(y[n])
+  y.max <- max(y[n])
+  
+  if(length(i.p) != 0){
+    for( i in i.p){
+      arrows(x0 = x[i], y0 = y.min, y1 = y.max, ...)
+    }}
+  if(length(i.n) != 0){
+    arrows(x0 = x[i], y0 = y.max, y1 = y.min, ...)
+  }
+}
