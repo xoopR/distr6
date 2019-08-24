@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Rayleigh distribution, which
 is commonly used to model random complex numbers..
 }
 \details{
-The Rayleigh distribution parameterised with mode (or scale), \eqn{\alpha}, is defined by the pdf,
-\deqn{f(x) = x/\alpha^2 exp(-x^2/(2\alpha^2))} for \eqn{\alpha > 0}.
+The Rayleigh distribution parameterised with  mode (or scale), \eqn{\alpha}, is defined by the pdf, \deqn{f(x) = x/\alpha^2 exp(-x^2/(2\alpha^2))} for \eqn{\alpha > 0}.
 
 The distribution is supported on \eqn{[0, \infty)}.
 

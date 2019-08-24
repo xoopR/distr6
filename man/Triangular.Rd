@@ -12,8 +12,7 @@ Mathematical and statistical functions for the Triangular distribution, which
 is commonly used to model population data where only the minimum, mode and maximum are known (or can be reliably estimated), also to model the sum of standard uniform distributions.
 }
 \details{
-The Triangular distribution parameterised with lower limit, \eqn{a}, upper limit, \eqn{b}, and mode, \eqn{c}, is defined by the pdf,
-\cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b} for \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}.
+The Triangular distribution parameterised with  lower limit, \eqn{a}, upper limit, \eqn{b}, and mode, \eqn{c}, is defined by the pdf, \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b} for \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}.
 
 The distribution is supported on \eqn{[a, b]}.
 }

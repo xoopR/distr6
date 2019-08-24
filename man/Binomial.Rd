@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Binomial distribution, which
 is commonly used to model the number of successes out of a number of independent trials.
 }
 \details{
-The Binomial distribution parameterised with number of trials, n, and probability of success, p, is defined by the pmf,
-\deqn{f(x) = C(n, x)p^x(1-p)^{n-x}} for \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+The Binomial distribution parameterised with  number of trials, n, and probability of success, p, is defined by the pmf, \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}} for \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
 The distribution is supported on \eqn{{0, 1,...,n}}.
 }

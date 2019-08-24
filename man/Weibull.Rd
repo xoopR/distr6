@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Weibull distribution, which
 is commonly used in survival analysis and is a special case of the Generalized Extreme Value distribution.
 }
 \details{
-The Weibull distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha} for \eqn{\alpha, \beta > 0}.
+The Weibull distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on the Positive Reals.
 

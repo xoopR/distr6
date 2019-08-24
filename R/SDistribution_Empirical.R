@@ -7,7 +7,6 @@
 #' @templateVar ClassName Empirical
 #' @templateVar DistName Empirical
 #' @templateVar uses in sampling such as MCMC
-#' @templateVar params none,
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{p(x) = \sum I(X = x_i) / |X|}
 #' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k, where |X| is the length of the vector of samples, X}
@@ -16,7 +15,7 @@
 #' @templateVar omittedVars skewness, kurtosis, entropy, mgf, cf
 #' @templateVar constructor samples
 #' @templateVar arg1 \code{samples} \tab numeric \tab vector of observed samples. \cr
-#' @templateVar constructorDets a series of elements for the support set.
+#' @templateVar constructorDets a vector of elements for the support set.
 #' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function.
 #'
 #' @examples

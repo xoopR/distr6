@@ -375,7 +375,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
                       self$parameters()$as.data.table()[settable, "value"],
                       sep = " = ", collapse = ", "))
     } else
-      cat(self$name,"\n")
+      cat(self$description)
 
 
     a_exp = suppressMessages(try(self$mean(), silent = T))

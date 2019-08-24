@@ -12,8 +12,7 @@ Mathematical and statistical functions for the Log-Logistic distribution, which
 is commonly used in survival analysis for its non-monotonic hazard as well as in economics.
 }
 \details{
-The Log-Logistic distribution parameterised with shape, \eqn{\beta}, scale, \eqn{\alpha}, and location, \eqn{\gamma}, is defined by the pdf,
-\deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}} for \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}.
+The Log-Logistic distribution parameterised with  shape, \eqn{\beta}, scale, \eqn{\alpha}, and location, \eqn{\gamma}, is defined by the pdf, \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}} for \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}.
 
 The distribution is supported on the non-negative Reals.
 

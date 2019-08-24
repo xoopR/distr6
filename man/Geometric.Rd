@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Geometric distribution, which
 is commonly used to model the number of trials (or number of failures) before the first success.
 }
 \details{
-The Geometric distribution parameterised with probability of success, \eqn{p}, is defined by the pmf,
-\deqn{f(x) = (1 - p)^{k-1}p} for \eqn{p \epsilon [0,1]}.
+The Geometric distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = (1 - p)^{k-1}p} for \eqn{p \epsilon [0,1]}.
 
 The distribution is supported on the Naturals (zero is included if modelling number of failures before success)..
 

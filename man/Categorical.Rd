@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Categorical distribution, which
 is commonly used in classification supervised learning.
 }
 \details{
-The Categorical distribution parameterised with a given support set, \eqn{x_1,...,x_k}, and respective probabilities, \eqn{p_1,...,p_k}, is defined by the pmf,
-\deqn{f(x_i) = p_i} for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
+The Categorical distribution parameterised with  a given support set, \eqn{x_1,...,x_k}, and respective probabilities, \eqn{p_1,...,p_k}, is defined by the pmf, \deqn{f(x_i) = p_i} for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
 
 The distribution is supported on \eqn{x_1,...,x_k}.
 

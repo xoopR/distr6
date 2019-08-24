@@ -12,8 +12,7 @@ Mathematical and statistical functions for the Log-Normal distribution, which
 is commonly used to model many natural phenomena as a result of growth driven by small percentage changes.
 }
 \details{
-The Log-Normal distribution parameterised with logmean, \eqn{\mu}, and logvar, \eqn{\sigma}, is defined by the pdf,
-\deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))} for \eqn{\mu \epsilon R} and \eqn{\sigma > 0}.
+The Log-Normal distribution parameterised with  logmean, \eqn{\mu}, and logvar, \eqn{\sigma}, is defined by the pdf, \deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))} for \eqn{\mu \epsilon R} and \eqn{\sigma > 0}.
 
 The distribution is supported on the Positive Reals.
 

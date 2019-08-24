@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Beta distribution, which
 is commonly used as the prior in Bayesian modelling.
 }
 \details{
-The Beta distribution parameterised with two shape parameters, \eqn{\alpha, \beta}, is defined by the pdf,
-\deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)} for \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function.
+The Beta distribution parameterised with  two shape parameters, \eqn{\alpha, \beta}, is defined by the pdf, \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)} for \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function.
 
 The distribution is supported on \eqn{[0, 1]}.
 

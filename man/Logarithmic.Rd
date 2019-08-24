@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Logarithmic distribution, which
 is commonly used to model consumer purchase habits in economics and is derived from the Maclaurin series expansion of \eqn{-ln(1-p)}.
 }
 \details{
-The Logarithmic distribution parameterised with a parameter, \eqn{\theta}, is defined by the pmf,
-\deqn{f(x) = -\theta^x/xlog(1-\theta)} for \eqn{0 < \theta < 1}.
+The Logarithmic distribution parameterised with  a parameter, \eqn{\theta}, is defined by the pmf, \deqn{f(x) = -\theta^x/xlog(1-\theta)} for \eqn{0 < \theta < 1}.
 
 The distribution is supported on \eqn{{1,2,3,\ldots}}.
 

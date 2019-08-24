@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Gamma distribution, which
 is commonly used as the prior in Bayesian modelling, the convolution of exponential distributions, and to model waiting times.
 }
 \details{
-The Gamma distribution parameterised with shape, \eqn{\alpha}, and rate, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{\alpha-1}exp(-x\beta)} for \eqn{\alpha, \beta > 0}.
+The Gamma distribution parameterised with  shape, \eqn{\alpha}, and rate, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{\alpha-1}exp(-x\beta)} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on the Positive Reals.
 }

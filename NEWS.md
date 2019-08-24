@@ -13,7 +13,7 @@
 
 ### Deprecated Functions
 
-- `ArrayDistribution` - This wrapper is now merged with `ProductDistribution` by adding two new parameters to `ProductDistribution` that allow for construction either by a distribution list of by naming a distribution and providing a parameter list
+- `ArrayDistribution` - This wrapper is now merged with `ProductDistribution` by adding two new parameters to `ProductDistribution` that allow for construction either by a distribution list of by naming a distribution and providing a parameter list or data.table
 
 ### Updated Functions
 
@@ -24,8 +24,9 @@
 - Removed automated rounding of numerics when `ParameterSet` expected integer in `setParameterValue`
 - Added parameter `n` to `strprint` and `print` to clean the print method for distributions (especially wrappers) with multiple parameters
 - Added optional `vectordist` argument to `MixtureDistribution` for better compatibility with `VectorDistribution`
-- Changed `short_name` of `UniformKernel` from `KUnif` to `UnifKern` to be more consistent with others
+- Changed `short_name` of  Uniform, Logistic, Normal, and Triangular kernels to remove `Kern`. The `ClassName`s (and thus constructors) remain the same
 - `listKernels` and `listSpecialSet` now return data.tables with `stringsAsFactors = FALSE`
+- `Degenerate` distribution re-classified as discrete
 
 ## Patches
 
@@ -34,7 +35,6 @@
 - Fixed spelling mistakes in extension guidelines and removed calls to redundant parameters 
 - Removed redundant `crayon` dependency
 - Fixed bug in `MixtureDistribution` that was causing `rand` to erroneously return integers
-- `Degenerate` distribution re-classified as discrete
 - Removed error in `Categorical` documentation
 - Fixed bug in multi-modal `Categorical` distribution
 

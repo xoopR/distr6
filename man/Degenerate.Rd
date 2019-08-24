@@ -13,8 +13,7 @@ Mathematical and statistical functions for the Degenerate distribution, which
 is commonly used to model deterministic events or as a representation of the delta, or Heaviside, function.
 }
 \details{
-The Degenerate distribution parameterised with mean, \eqn{\mu} is defined by the pmf,
-\deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu} for \eqn{\mu \epsilon R}.
+The Degenerate distribution parameterised with  mean, \eqn{\mu} is defined by the pmf, \deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu} for \eqn{\mu \epsilon R}.
 
 The distribution is supported on \eqn{{\mu}}.
 

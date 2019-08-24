@@ -12,8 +12,7 @@ Mathematical and statistical functions for the Frechet distribution, which
 is commonly used as a special case of the Generalised Extreme Value distribution.
 }
 \details{
-The Frechet distribution parameterised with shape, \eqn{\alpha}, scale, \eqn{\beta}, and minimum, \eqn{\gamma}, is defined by the pdf,
-\deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}} for \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}.
+The Frechet distribution parameterised with  shape, \eqn{\alpha}, scale, \eqn{\beta}, and minimum, \eqn{\gamma}, is defined by the pdf, \deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}} for \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}.
 
 The distribution is supported on \eqn{x > \gamma}.
 

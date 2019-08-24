@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Empirical distribution, which
 is commonly used in sampling such as MCMC.
 }
 \details{
-The Empirical distribution parameterised with none, is defined by the pmf,
-\deqn{p(x) = \sum I(X = x_i) / |X|} for \eqn{x_i \epsilon R, i = 1,...,k, where |X| is the length of the vector of samples, X}.
+The Empirical distribution   is defined by the pmf, \deqn{p(x) = \sum I(X = x_i) / |X|} for \eqn{x_i \epsilon R, i = 1,...,k, where |X| is the length of the vector of samples, X}.
 
 The distribution is supported on \eqn{x_1,...,x_k}.
 
@@ -50,7 +49,7 @@ Sampling from this distribution is performed with the \code{\link[base]{sample}}
 }
 
 \section{Constructor Details}{
- The Empirical distribution is parameterised with a series of elements for the support set.
+ The Empirical distribution is parameterised with a vector of elements for the support set.
 }
 
 \section{Public Variables}{

@@ -3,8 +3,7 @@
 #' @description Mathematical and statistical functions for the <%=DistName%> distribution, which
 #' is commonly used <%=uses%>.
 #'
-#' @details The <%=DistName%> distribution parameterised with <%=params%> is defined by the <%=pdfpmf%>,
-#' <%=pdfpmfeq%> for <%=paramsupport%>.
+#' @details The <%=DistName%> distribution <%= if(exists("params")) "parameterised with " %> <%= if(exists("params")) params %> is defined by the <%=pdfpmf%>, <%=pdfpmfeq%> for <%=paramsupport%>.
 #'
 #' The distribution is supported on <%=distsupport%>.
 #'

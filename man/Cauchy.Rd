@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Cauchy distribution, which
 is commonly used in physics and finance.
 }
 \details{
-The Cauchy distribution parameterised with location, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))} for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
+The Cauchy distribution parameterised with  location, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))} for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
 
 The distribution is supported on the Reals.
 

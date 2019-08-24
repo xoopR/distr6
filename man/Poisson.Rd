@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Poisson distribution, which
 is commonly used to model the number of events occurring in at a constant, independent rate over an interval of time or space.
 }
 \details{
-The Poisson distribution parameterised with arrival rate, \eqn{\lambda}, is defined by the pmf,
-\deqn{f(x) = (\lambda^x * exp(-\lambda))/x!} for \eqn{\lambda} > 0.
+The Poisson distribution parameterised with  arrival rate, \eqn{\lambda}, is defined by the pmf, \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!} for \eqn{\lambda} > 0.
 
 The distribution is supported on the Naturals.
 
