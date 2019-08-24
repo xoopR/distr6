@@ -8,8 +8,8 @@
 #' @templateVar DistName Empirical
 #' @templateVar uses in sampling such as MCMC
 #' @templateVar pdfpmf pmf
-#' @templateVar pdfpmfeq \deqn{p(x) = \sum I(X = x_i) / |X|}
-#' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k, where |X| is the length of the vector of samples, X}
+#' @templateVar pdfpmfeq \deqn{p(x) = \sum I(x = x_i) / k}
+#' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
 #' @templateVar additionalDetails Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and uniform probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
 #' @templateVar omittedVars skewness, kurtosis, entropy, mgf, cf

@@ -11,7 +11,7 @@ Mathematical and statistical functions for the Empirical distribution, which
 is commonly used in sampling such as MCMC.
 }
 \details{
-The Empirical distribution   is defined by the pmf, \deqn{p(x) = \sum I(X = x_i) / |X|} for \eqn{x_i \epsilon R, i = 1,...,k, where |X| is the length of the vector of samples, X}.
+The Empirical distribution   is defined by the pmf, \deqn{p(x) = \sum I(x = x_i) / k} for \eqn{x_i \epsilon R, i = 1,...,k}.
 
 The distribution is supported on \eqn{x_1,...,x_k}.
 
