@@ -25,6 +25,7 @@
 - Added parameter `n` to `strprint` and `print` to clean the print method for distributions (especially wrappers) with multiple parameters
 - Added optional `vectordist` argument to `MixtureDistribution` for better compatibility with `VectorDistribution`
 - Changed `short_name` of `UniformKernel` from `KUnif` to `UnifKern` to be more consistent with others
+- `listKernels` and `listSpecialSet` now return data.tables with `stringsAsFactors = FALSE`
 
 ## Patches
 
