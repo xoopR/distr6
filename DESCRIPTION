@@ -151,6 +151,7 @@ Collate:
     'decorate.R'
     'distr6-deprecated.R'
     'distr6.R'
+    'distr6.news.R'
     'distr6_globals.R'
     'exkurtosisType.R'
     'generalPNorm.R'
