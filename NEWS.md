@@ -37,6 +37,7 @@
 - Fixed bug in `MixtureDistribution` that was causing `rand` to erroneously return integers
 - Removed error in `Categorical` documentation
 - Fixed bug in multi-modal `Categorical` distribution
+- `summary` and `print` now return `self` invisibly for better piping
 
 # distr6 1.0.1
 

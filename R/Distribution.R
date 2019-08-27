@@ -346,7 +346,7 @@ Distribution$set("public","strprint",function(n = 2){
   return(string)
 })
 Distribution$set("public","print",function(n = 2, ...){
-  cat(self$strprint(n = n))
+  cat(self$strprint(n = n),"\n")
   invisible(self)
 })
 
@@ -434,6 +434,8 @@ Distribution$set("public","summary",function(full = TRUE,...){
     cat("\nScientific Type:",self$type()$getSymbol(),"\t See $traits() for more")
     cat("\nSupport:",self$support()$getSymbol(),"\t See $properties() for more")
   }
+  cat("\n")
+  invisible(self)
 })
 
 Distribution$set("public","plot",function(){}) # TO DO

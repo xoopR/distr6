@@ -62,38 +62,38 @@ Empirical$set("public","setParameterValue",function(..., lst = NULL, error = "wa
   return(NULL)
 })
 
+Empirical$set("private",".data",data.table::data.table())
+Empirical$set("private",".total", numeric(1))
+
+
 Empirical$set("public","initialize",function(samples, decorators = NULL, verbose = FALSE){
 
-  support = Set$new(samples)
+  samples <- sort(as.numeric(samples))
+
+  private$.data <- data.table::as.data.table(table(samples))
+  private$.data$samples <- as.numeric(private$.data$samples)
+  private$.data <- cbind(private$.data, cumN = cumsum(private$.data$N))
+  private$.total <- length(samples)
+
 
   pdf <- function(x1){
-    els <- matrix(self$support()$elements(), nrow = length(self$support()$elements()),ncol = length(x1))
-    x1 <- matrix(x1, nrow = nrow(els), ncol = length(x1), byrow  = TRUE)
-    return(apply(els == x1, 2, sum)/nrow(x1))
+    return(as.numeric(unlist(private$.data[match(x1, private$.data$samples), "N"]/private$.total)))
   }
+
   cdf <- function(x1){
-    els <- matrix(self$support()$elements(), nrow = length(self$support()$elements()),ncol = length(x1))
-    x1 <- matrix(x1, nrow = nrow(els), ncol = length(x1), byrow  = TRUE)
-    return(apply(els <= x1, 2, sum)/nrow(x1))
+    return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$samples), "cumN"]/private$.total)))
   }
   quantile <- function(p){
-    els <- self$support()$elements()
-    cdf = matrix(self$cdf(els), nrow = length(els), ncol = length(p), byrow = F)
-    p = matrix(p, nrow = nrow(cdf), ncol = ncol(cdf), byrow = T)
-    diff = cdf - p
-    diff[diff < 0] = Inf
-
-    sel <- matrix(0, nrow = nrow(cdf), ncol = ncol(cdf))
-    sel[apply(diff,2,function(x) x == min(x))] <- 1
-    els <- matrix(els, ncol = length(els), nrow = length(p), byrow = TRUE)
-    return(diag(els %*% sel))
+    p = p * private$.total
+    return(as.numeric(unlist(private$.data[findInterval(p, private$.data$cumN), "samples"])))
   }
+
   rand <- function(n){
     return(sample(self$support()$elements(), n, TRUE))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = support,
+                   support = Set$new(samples),
                    symmetric = FALSE, type = Reals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")
