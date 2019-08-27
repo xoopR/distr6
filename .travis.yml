@@ -3,7 +3,7 @@ language: r
 branches:
   only:
   - master
-  - dev1.1
+  - dev
   
 matrix:
     include:
