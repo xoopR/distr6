@@ -16,8 +16,8 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 ## What is distr6?
 
 distr6 is a unified and clean interface to organise the probability
-distributions implemented in R into one R6 object oriented package, as
-well as adding distributions yet to implemented in R, currently we have
+distributions implemented in R into one R6 object oriented package, As
+well as adding distributions that are not yet implemented in R. Currently we have
 37 probability distributions as well as 11 kernels. Building the package
 from the ground up and making use of tried and tested design patterns
 (as per Gamma et al. 1994), distr6 aims to make probability
