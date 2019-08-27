@@ -2,8 +2,8 @@ language: r
 
 branches:
   only:
-  - master
-  - dev
+    - master
+    - dev
   
 matrix:
     include:
@@ -12,7 +12,7 @@ matrix:
         - os: linux
           r: release
        - os: linux
-         r: devel
+          r: devel
         - os: osx
           r: oldrel
         - os: osx
