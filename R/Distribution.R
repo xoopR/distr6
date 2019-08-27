@@ -732,7 +732,7 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @return Probability density funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' @return Probability density function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
 #'
 #' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
@@ -801,7 +801,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 #' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
-#' @return Cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' @return Cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
 #'
 #' @export
@@ -879,7 +879,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
-#' @return Inverse cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' @return Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
 #'
 #' @export

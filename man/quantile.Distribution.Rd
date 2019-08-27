@@ -21,7 +21,7 @@
 \item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
 }
 \value{
-Inverse cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 or as a data.table.
 }
 \description{
