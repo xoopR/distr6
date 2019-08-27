@@ -1,3 +1,44 @@
+# distr6 1.1.0
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- `Empirical` distribution for distributions arising from observed samples (e.g. from MC sampling methods)
+- `simulateEmpiricalDistribution`: function for sampling *without* replacement from an `Empirical` distribution
+
+### Deprecated Functions
+
+- `ArrayDistribution` - This wrapper is now merged with `ProductDistribution` by adding two new parameters to `ProductDistribution` that allow for construction either by a distribution list of by naming a distribution and providing a parameter list or data.table
+
+### Updated Functions
+
+- Added quantile to Categorical distribution and updated its cdf efficiency
+- `cdf` of discrete distributions evaluated between integers are now evaluated after rounding down and do not return 0, e.g. `Binomial$new()$cdf(1.8) == Binomial$new()$cdf(1)`
+- Added two additional parameters to `ProductDistribution`: `params` and `distribution`, so that it can either function as before or as the `ArrayDistribution` wrapper which is now deprecated.
+- Added two additional parameters to `VectorDistribution`: `params` and `distribution`, so that it can either function as before or as a generalisation to the `ArrayDistribution` wrapper which is now deprecated.
+- Removed automated rounding of numerics when `ParameterSet` expected integer in `setParameterValue`
+- Added parameter `n` to `strprint` and `print` to clean the print method for distributions (especially wrappers) with multiple parameters
+- Added optional `vectordist` argument to `MixtureDistribution` for better compatibility with `VectorDistribution`
+- Changed `short_name` of  Uniform, Logistic, Normal, and Triangular kernels to remove `Kern`. The `ClassName`s (and thus constructors) remain the same
+- `listKernels` and `listSpecialSet` now return data.tables with `stringsAsFactors = FALSE`
+- `Degenerate` distribution re-classified as discrete
+
+## Patches
+
+- Bug fix in quantile function of huberization wrapper
+- Fixed the `rand` return of a Vector Distribution (transposed data.table and added column names)
+- Fixed spelling mistakes in extension guidelines and removed calls to redundant parameters 
+- Removed redundant `crayon` dependency
+- Fixed bug in `MixtureDistribution` that was causing `rand` to erroneously return integers
+- Removed error in `Categorical` documentation
+- Fixed bug in multi-modal `Categorical` distribution
+- `summary` and `print` now return `self` invisibly for better piping
+
 # distr6 1.0.1
 
 - Updated vignettes to remove redundant distr6 installation via GitHub that was causing a warning on Debian

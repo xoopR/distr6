@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Multivariate Normal distribution,
 is commonly used to generalise the Normal distribution to higher dimensions, and is commonly associated with Gaussian Processes.
 }
 \details{
-The Multivariate Normal distribution parameterised with mean, \eqn{\mu}, and covariance matrix, \eqn{\Sigma}, is defined by the pdf,
-\deqn{f(x_1,...,x_k) = (2 * \pi)^{-k/2}det(\Sigma)^{-1/2}exp(-1/2(x-\mu)^T\Sigma^{-1}(x-\mu))} for \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}.
+The Multivariate Normal distribution parameterised with  mean, \eqn{\mu}, and covariance matrix, \eqn{\Sigma}, is defined by the pdf, \deqn{f(x_1,...,x_k) = (2 * \pi)^{-k/2}det(\Sigma)^{-1/2}exp(-1/2(x-\mu)^T\Sigma^{-1}(x-\mu))} for \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}.
 
 The distribution is supported on the Reals and only when the covariance matrix is positive-definite.
 
@@ -120,8 +119,8 @@ The parameter \code{K} is automatically updated by counting the length of the me
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

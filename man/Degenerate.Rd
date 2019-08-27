@@ -3,6 +3,7 @@
 \name{Degenerate}
 \alias{Degenerate}
 \alias{Dirac}
+\alias{Delta}
 \title{Degenerate Distribution Class}
 \value{
 Returns an R6 object inheriting from class SDistribution.
@@ -12,8 +13,7 @@ Mathematical and statistical functions for the Degenerate distribution, which
 is commonly used to model deterministic events or as a representation of the delta, or Heaviside, function.
 }
 \details{
-The Degenerate distribution parameterised with mean, \eqn{\mu} is defined by the pdf,
-\deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu} for \eqn{\mu \epsilon R}.
+The Degenerate distribution parameterised with  mean, \eqn{\mu} is defined by the pmf, \deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu} for \eqn{\mu \epsilon R}.
 
 The distribution is supported on \eqn{{\mu}}.
 
@@ -120,8 +120,8 @@ Also known as the Dirac distribution.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

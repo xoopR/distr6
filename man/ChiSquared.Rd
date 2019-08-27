@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Chi-Squared distribution, which
 is commonly used to model the sum of independent squared Normal distributions and for confidence intervals.
 }
 \details{
-The Chi-Squared distribution parameterised with degrees of freedom, \eqn{\nu}, is defined by the pdf,
-\deqn{f(x) = (x^{\nu/2-1} exp(-x/2))/(2^{\nu/2}\Gamma(\nu/2))} for \eqn{\nu > 0}.
+The Chi-Squared distribution parameterised with  degrees of freedom, \eqn{\nu}, is defined by the pdf, \deqn{f(x) = (x^{\nu/2-1} exp(-x/2))/(2^{\nu/2}\Gamma(\nu/2))} for \eqn{\nu > 0}.
 
 The distribution is supported on the Positive Reals.
 }
@@ -110,8 +109,8 @@ The distribution is supported on the Positive Reals.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

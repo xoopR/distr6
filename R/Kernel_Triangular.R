@@ -30,7 +30,7 @@ NULL
 #-------------------------------------------------------------
 TriangularKernel <- R6::R6Class("TriangularKernel", inherit = Kernel, lock_objects = F)
 TriangularKernel$set("public","name","TriangularKernel")
-TriangularKernel$set("public","short_name","TriKern")
+TriangularKernel$set("public","short_name","Tri")
 TriangularKernel$set("public","description","Triangular Kernel")
 TriangularKernel$set("public","variance",function(){
   return(1/6)

@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Arcsine distribution, which
 is commonly used in the study of random walks and as a special case of the Beta distribution.
 }
 \details{
-The Arcsine distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pdf,
-\deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}} for \eqn{-\infty < a \le b < \infty}.
+The Arcsine distribution parameterised with  lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pdf, \deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}} for \eqn{-\infty < a \le b < \infty}.
 
 The distribution is supported on \eqn{[a, b]}.
 
@@ -120,8 +119,8 @@ When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

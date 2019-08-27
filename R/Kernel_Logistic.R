@@ -30,7 +30,7 @@ NULL
 #-------------------------------------------------------------
 LogisticKernel <- R6::R6Class("LogisticKernel", inherit = Kernel, lock_objects = F)
 LogisticKernel$set("public","name","LogisticKernel")
-LogisticKernel$set("public","short_name","LogisKern")
+LogisticKernel$set("public","short_name","Logis")
 LogisticKernel$set("public","description","Logistic Kernel")
 LogisticKernel$set("public","squared2Norm",function(){
   return(1/6)

@@ -33,6 +33,7 @@ test_that("statistics",{
   expect_error(a$cf(1))
   expect_equal(a$mode(),c(0,1))
   expect_equal(a$mode(2),1)
+  expect_equal(a$pgf(1), NaN)
   expect_equal(a$pdf(1), dbeta(1,0.5,0.5))
   expect_equal(a$cdf(1), pbeta(1,0.5,0.5))
   expect_equal(a$quantile(0.324), qbeta(0.324,0.5,0.5))

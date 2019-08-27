@@ -13,8 +13,7 @@ Mathematical and statistical functions for the Wald distribution, which
 is commonly used for modelling the first passage time for Brownian motion.
 }
 \details{
-The Wald distribution parameterised with mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined by the pdf,
-\deqn{f(x) = (\lambda/(2x^3\pi))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))} for \eqn{\lambda > 0} and \eqn{\mu > 0}.
+The Wald distribution parameterised with  mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = (\lambda/(2x^3\pi))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))} for \eqn{\lambda > 0} and \eqn{\mu > 0}.
 
 The distribution is supported on the Positive Reals.
 
@@ -122,8 +121,8 @@ Sampling is performed as per Michael, Schucany, Haas (1976).
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

@@ -97,6 +97,9 @@ Pareto$set("public", "mgf", function(t){
   }else
     return(NaN)
 })
+Pareto$set("public", "pgf", function(z){
+  return(NaN)
+})
 Pareto$set("public","mode",function(){
   return(self$getParameterValue("scale"))
 })

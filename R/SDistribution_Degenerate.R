@@ -8,12 +8,12 @@
 #' @templateVar DistName Degenerate
 #' @templateVar uses to model deterministic events or as a representation of the delta, or Heaviside, function
 #' @templateVar params mean, \eqn{\mu}
-#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu}
 #' @templateVar paramsupport \eqn{\mu \epsilon R}
 #' @templateVar distsupport \eqn{{\mu}}
 #' @templateVar aka Dirac
-#' @aliases Dirac
+#' @aliases Dirac Delta
 #' @templateVar constructor mean = 0
 #' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
 #' @templateVar constructorDets \code{mean} as a numeric.
@@ -99,7 +99,7 @@ Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbo
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(mean),
                    symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
+                   valueSupport = "discrete",
                    variateForm = "univariate")
   invisible(self)
 })

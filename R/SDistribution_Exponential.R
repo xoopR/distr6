@@ -79,6 +79,9 @@ Exponential$set("public", "cf", function(t){
 Exponential$set("public","mode",function(){
   return(0)
 })
+Exponential$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Exponential$set("private",".getRefParams", function(paramlst){
   lst = list()

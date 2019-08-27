@@ -22,15 +22,15 @@ listKernels <- function(simplify=FALSE){
   if(simplify)
     return(as.character(y))
   else{
-    distrs = do.call(rbind.data.frame,lapply(y, function(x){
+    distrs = do.call(rbind.data.frame,c(lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
       ShortName = x$public_fields$short_name
       Support = x$new()$support()$getSymbol()
       return(cbind(ShortName, ClassName, Support))
-    }))
+    }), list(stringsAsFactors = FALSE)))
     row.names(distrs) = NULL
 
-    return(data.table::data.table(distrs))
+    return(data.table::data.table(distrs, stringsAsFactors = FALSE))
   }
 }

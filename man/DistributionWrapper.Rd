@@ -11,7 +11,7 @@ The abstract parent class to wrappers.
 }
 \details{
 Wrapping is the process of adapting the interface of a class into another (Gamma et al. 1994).
-After wrapping, the parameters of a distribution may be prefixed with the distribution name to ensure
+After wrapping, the parameters of a distribution are prefixed with the distribution name to ensure
 uniqueness of parameter IDs.
 
 Abstract classes cannot be implemented directly. Use the \code{listWrappers} function to see constructable wrappers.
@@ -59,8 +59,8 @@ Abstract classes cannot be implemented directly. Use the \code{listWrappers} fun
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

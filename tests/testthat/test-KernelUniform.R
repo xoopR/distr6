@@ -3,7 +3,7 @@ library(testthat)
 unif = UniformKernel$new()
 
 test_that("represent",{
-  expect_equal(unif$strprint(), "KUnif")
+  expect_equal(unif$strprint(), "Unif")
   expect_output(unif$summary())
   expect_output(unif$summary(F))
 })

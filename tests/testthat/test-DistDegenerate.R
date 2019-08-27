@@ -13,7 +13,7 @@ test_that("parameters", {
 })
 
 test_that("properties & traits",{
-  expect_equal(Degenerate$new()$valueSupport(), "continuous")
+  expect_equal(Degenerate$new()$valueSupport(), "discrete")
   expect_equal(Degenerate$new()$variateForm(), "univariate")
   expect_equal(Degenerate$new()$symmetry(), "symmetric")
   expect_equal(Degenerate$new()$sup(), 0)

@@ -4,6 +4,8 @@
 #' @description ParameterSets are passed to a \code{Distribution$new} constructor when
 #'  creating a custom probability distribution that takes parameters.
 #'
+#' @section Constructor: ParameterSet$new(id, value, support, settable, updateFunc = NULL, description = NULL)
+#'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
@@ -39,7 +41,7 @@
 #'   \strong{Method} \tab \strong{Link} \cr
 #'   \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
 #'   \code{update()} \tab \code{\link{update.ParameterSet}} \cr
-#'   \code{parameters(id, error = "warn")} \tab \code{\link{parameters}} \cr
+#'   \code{parameters(id = NULL)} \tab \code{\link{parameters}} \cr
 #'   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
 #'   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
 #'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
@@ -129,7 +131,7 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
     } else
       a_update = NA
 
-    a_value = as(value[[i]], a_support$.__enclos_env__$private$.class)
+    a_value = value[[i]]
     checkmate::assert(a_support$liesInSetInterval(a_value, all = T), combine = "and",
                       .var.name = "'value' should be between 'lower' and 'upper'")
 
@@ -297,7 +299,7 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 
 #' @name setParameterValue
 #' @title Parameter Value Setter
-#' @description Returns the value of the given parameter.
+#' @description Sets the value of the given parameter.
 #'
 #' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
 #' @section R6 Usage: $setParameterValue(..., lst = NULL, error = "warn")
@@ -346,8 +348,8 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
       if(nrow(param)==0)
         return(stopwarn(error, sprintf("%s is not in the parameter set.",aid)))
 
-      if(param$support[[1]]$class() == "integer")
-        value <- round(value)
+      # if(param$support[[1]]$class() == "integer")
+      #   value <- round(value)
 
       checkmate::assert(param$support[[1]]$liesInSetInterval(value, all = TRUE))
 

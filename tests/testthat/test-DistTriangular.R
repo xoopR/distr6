@@ -48,6 +48,7 @@ test_that("statistics",{
   expect_equal(t$cf(0),  as.complex(NaN))
   expect_equal(t$cf(1),  (-2 * (0.5 - exp(0.5i) + 0.5*exp(1i))) / (0.25))
   expect_equal(t$mode(),0.5)
+  expect_equal(t$pgf(1), NaN)
   expect_equal(t$pdf(1), extraDistr::dtriang(1,0,1,0.5))
   expect_equal(t$cdf(1), extraDistr::ptriang(1,0,1,0.5))
   expect_equal(t$quantile(0.324), extraDistr::qtriang(0.324,0,1,0.5))

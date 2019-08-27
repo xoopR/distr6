@@ -39,6 +39,7 @@ test_that("statistics", {
   expect_equal(f2$kurtosis(TRUE), 70.8)
   expect_equal(f2$kurtosis(FALSE), 73.8)
   expect_equal(f1$mgf(5), NaN)
+  expect_equal(f1$pgf(1), NaN)
   expect_error(f1$cf(1))
   expect_equal(f1$mode(), 1/6)
   expect_equal(f2$mode(), NaN)

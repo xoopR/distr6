@@ -12,8 +12,7 @@ Mathematical and statistical functions for the Log-Normal distribution, which
 is commonly used to model many natural phenomena as a result of growth driven by small percentage changes.
 }
 \details{
-The Log-Normal distribution parameterised with logmean, \eqn{\mu}, and logvar, \eqn{\sigma}, is defined by the pdf,
-\deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))} for \eqn{\mu \epsilon R} and \eqn{\sigma > 0}.
+The Log-Normal distribution parameterised with  logmean, \eqn{\mu}, and logvar, \eqn{\sigma}, is defined by the pdf, \deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))} for \eqn{\mu \epsilon R} and \eqn{\sigma > 0}.
 
 The distribution is supported on the Positive Reals.
 
@@ -120,8 +119,8 @@ Also known as the Log-Gaussian distribution.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

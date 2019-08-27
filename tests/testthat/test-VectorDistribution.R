@@ -29,5 +29,27 @@ test_that("pdf/cdf/quantile",{
 test_that("rand",{
   expect_equal(dim(VectorDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$rand(5)),
                c(5,2))
+  expect_equal(dim(VectorDistribution$new(list(Binomial$new(size = 40, prob = 0.2), Binomial$new(size = 5, prob = 0.9)))$rand(1)),
+               c(1,2))
 })
+
+
+test_that("pdf/cdf - array",{
+  a = VectorDistribution$new(distribution = Binomial, params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                        list(prob = 0.2, size = 6)))
+  expect_equal(a$pdf(1,x2 = 2,x3 = 3), data.table::data.table(Binom1 = Binomial$new(2,0.1)$pdf(1), Binom2 = Binomial$new(4,0.6)$pdf(2), Binom3 = Binomial$new(6,0.2)$pdf(3)))
+  expect_equal(a$cdf(1,x2 = 2,x3 = 3), data.table::data.table(Binom1 = Binomial$new(2,0.1)$cdf(1), Binom2 = Binomial$new(4,0.6)$cdf(2), Binom3 = Binomial$new(6,0.2)$cdf(3)))
+})
+
+test_that("type/support - array",{
+  a = VectorDistribution$new(distribution = Binomial, params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                        list(prob = 0.2, size = 6)))
+  expect_equal(a$type()$getSymbol(), Naturals$new(dim = 3)$getSymbol())
+  expect_equal(a$support()$getSymbol(), (Set$new(0:2) * Set$new(0:4) * Set$new(0:6))$getSymbol())
+  expect_error(VectorDistribution$new(distribution = sd, params = list()))
+  expect_error(VectorDistribution$new())
+  expect_equal(VectorDistribution$new(distribution = Binomial, params = data.table::data.table(prob = c(0.1,0.6,0.2),size = c(2,4,6))), a)
+  expect_error(VectorDistribution$new(distribution = Binomial, params = c(prob = 1)))
+})
+
 

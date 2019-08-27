@@ -73,6 +73,9 @@ Uniform$set("public", "mgf", function(t){
     return((exp(self$getParameterValue("upper") * t) - exp(self$getParameterValue("lower") * t)) /
              (t*(self$getParameterValue("upper")-self$getParameterValue("lower"))))
 })
+Uniform$set("public", "pgf", function(z){
+  return(NaN)
+})
 Uniform$set("public", "cf", function(t){
   if(t==0)
     return(1)

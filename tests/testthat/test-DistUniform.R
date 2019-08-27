@@ -42,6 +42,7 @@ test_that("statistics",{
   expect_equal(u$mode(),NaN)
   expect_equal(u$pdf(1), dunif(1))
   expect_equal(u$cdf(1), punif(1))
+  expect_equal(u$pgf(1), NaN)
   expect_equal(u$quantile(0.324), qunif(0.324))
   expect_equal(u$cdf(u$quantile(0.324)), 0.324)
   expect_silent(u$rand(10))

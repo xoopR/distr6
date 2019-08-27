@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Gumbel distribution, which
 is commonly used to model the maximum (or minimum) of a number of samples of different distributions, and is a special case of the Generalised Extreme Value distribution.
 }
 \details{
-The Gumbel distribution parameterised with location, \eqn{\mu}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = exp(-(z + exp(-z)))/\beta} for \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
+The Gumbel distribution parameterised with  location, \eqn{\mu}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = exp(-(z + exp(-z)))/\beta} for \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
 
 The distribution is supported on the Reals.
 
@@ -120,8 +119,8 @@ Apery's Constant to 16 significant figures is used in the skewness calculation. 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

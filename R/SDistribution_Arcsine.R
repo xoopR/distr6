@@ -74,6 +74,9 @@ Arcsine$set("public","mode",function(which = "all"){
   else
     return(c(self$getParameterValue("lower"),self$getParameterValue("upper"))[which])
 })
+Arcsine$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Arcsine$set("private",".getRefParams", function(paramlst){
   lst = list()

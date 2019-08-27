@@ -20,7 +20,7 @@ Wrappers may the hardest class to extend in distr6, simply due to the fact that 
 
 ### The Constructor
 
-The `DistributionWrapper` constructor takes two named arguments and has `...` for named arguments to passed to the `Distribution` constructor. The named arguments are `distlist`, a list of distributions, and `prefixParams` a logical determining if the parameters in the parameterset should have their names prefixed with 'short_name_' where 'short_name' is the `short_name` of the given distributions, this is required when multiple distributions are wrapped with the same parameters. Internally the constructor combines all of these parametersets into one combined `ParameterSet` that the user can see.
+The `DistributionWrapper` constructor takes one named argument and has `...` for named arguments to passed to the `Distribution` constructor. The named argument is `distlist`, a list of distributions to wrap. Internally the constructor combines all `ParameterSet` from every distribution into one `ParameterSet` that the user can see and query.
 
 For example, say we use the `MixtureDistribution` wrapper on two Binomial distributions, see how the parameter names are automatically updated
 ```{r}
@@ -80,7 +80,7 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf,
                    name = name, short_name = short_name, support = support,
-                   type = distribution$type(), prefixParams = FALSE,
+                   type = distribution$type(),
                    description = description)
 })
 ```
@@ -130,7 +130,7 @@ MixtureDistribution$set("private",".weights",numeric(0))
 
 Again this is a shortened version of the code. Note the following in the above
 
-1. As multiple distributions are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html).
+1. As multiple distributions are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html)).
 2. We add a private variable `.weights` which is accessed in the pdf/cdf. In general we allow additional private variables and methods to be added to wrappers, but not public ones.
 3. The type and support are updated to account for multiple distributions.
 4. All implemented wrappers inherit from `DistributionWrapper` and again `lock_objects = FALSE`

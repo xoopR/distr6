@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Gompertz distribution, which
 is commonly used in survival analysis particularly to model adult mortality rates..
 }
 \details{
-The Gompertz distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)} for \eqn{\alpha, \beta > 0}.
+The Gompertz distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on the Non-Negative Reals.
 
@@ -120,8 +119,8 @@ Unfortunately the Gompertz distribution is quite complex to deal with and as suc
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

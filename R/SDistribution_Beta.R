@@ -95,6 +95,9 @@ Beta$set("public", "entropy", function(base = 2){
   return(log(beta(shape1,shape2), base) - ((shape1-1)*digamma(shape1)) -
            ((shape2-1) * digamma(shape2)) + ((shape1+shape2-2)*digamma(shape1+shape2)))
 })
+Beta$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Beta$set("private", ".getRefParams", function(paramlst){
   lst = list()

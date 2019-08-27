@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Multinomial distribution, which
 is commonly used to extend the binomial distribution to multiple variables, for example to model the rolls of multiple dice multiple times.
 }
 \details{
-The Multinomial distribution parameterised with number of trials, \eqn{n}, and probabilities of success, \eqn{p_1,...,p_k}, is defined by the pmf,
-\deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}} for \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}.
+The Multinomial distribution parameterised with  number of trials, \eqn{n}, and probabilities of success, \eqn{p_1,...,p_k}, is defined by the pmf, \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}} for \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}.
 
 The distribution is supported on \eqn{\sum x_i = N}.
 
@@ -117,8 +116,8 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

@@ -12,12 +12,10 @@
 #' @templateVar pdfpmfeq \deqn{f(x_i) = p_i}
 #' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
-#' @templateVar omittedDPQR \code{quantile}
-#' @templateVar additionalDetails Only the mode, pdf, cdf and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
+#' @templateVar additionalDetails Only the mode, pdf, cdf, quantile and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
 #' @templateVar constructor ..., probs
 #' @templateVar arg1 \code{...} \tab ANY \tab elements in the support Set. See details. \cr
 #' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
 #' @templateVar constructorDets a series of elements for the support set and \code{probs} determining the probability of each category occurring. The length of the probability list should equal the number of elements. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)} If no arguments are given, then defaults to one element '1' with probability one.
 #' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function.
 #'
@@ -31,6 +29,7 @@
 #' # d/p/q/r
 #' x$pdf(c("Bapple", "Carrot", 1, 2))
 #' x$cdf("Banana") # Assumes ordered in construction
+#' x$quantile(0.42) # Assumes ordered in construction
 #' x$rand(10)
 #'
 #' # Statistics
@@ -49,8 +48,11 @@ Categorical$set("public","short_name","Cat")
 Categorical$set("public","description","Categorical Probability Distribution.")
 Categorical$set("public","package","distr6")
 
-Categorical$set("public","mode",function(){
-  return(self$support()$elements()[which.max(self$getParameterValue("probs"))])
+Categorical$set("public","mode",function(which = "all"){
+  if(which == "all")
+    return(self$support()$elements()[self$getParameterValue("probs")==max(self$getParameterValue("probs"))])
+  else
+    return(self$support()$elements()[self$getParameterValue("probs")==max(self$getParameterValue("probs"))][which])
 })
 Categorical$set("public","mean",function(){
   return(NaN)
@@ -68,6 +70,9 @@ Categorical$set("public","entropy",function(){
   return(NaN)
 })
 Categorical$set("public","mgf",function(t){
+  return(NaN)
+})
+Categorical$set("public","pgf",function(t){
   return(NaN)
 })
 Categorical$set("public","cf",function(t){
@@ -109,17 +114,17 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
     return(self$getParameterValue("probs")[self$support()$elements() %in% x1])
   }
   cdf <- function(x1){
-    if(length(x1) > 1)
-      cdfs = sapply(x1, function(x) sum(self$pdf(self$support()$elements()[1:which(self$support()$elements() %in% x)])))
-    else
-      cdfs = sum(self$pdf(self$support()$elements()[1:which(self$support()$elements() %in% x1)]))
-    return(cdfs)
+    return(cumsum(self$pdf(self$support()$elements()))[self$support()$elements() %in% x1])
+  }
+  quantile <- function(p){
+    cdf = matrix(self$cdf(self$support()$elements()), ncol = length(self$support()$elements()), nrow = length(p), byrow = T)
+    return(self$support()$elements()[apply(cdf >= p, 1, function(x) min(which(x)))])
   }
   rand <- function(n){
     return(sample(self$support()$elements(), n, TRUE, self$getParameterValue("probs")))
   }
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, rand = rand,
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
                    support = support,
                    symmetric = FALSE, type = Complex$new(),
                    valueSupport = "discrete",

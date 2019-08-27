@@ -19,7 +19,7 @@ setParameterValue(object, ..., lst = NULL, error = "warn")
 An R6 object of class ParameterSet.
 }
 \description{
-Returns the value of the given parameter.
+Sets the value of the given parameter.
 }
 \details{
 Parameters can be updated in one of two ways, either by passing the parameters to update

@@ -29,6 +29,7 @@ test_that("statistics",{
   expect_equal(round(x$skewness(),6), 2.738613)
   expect_equal(x$kurtosis(T), 12.5)
   expect_equal(x$kurtosis(F), 15.5)
+  expect_equal(x$pgf(1), NaN)
   expect_error(x$entropy())
   expect_equal(x$mgf(0.1), exp(1.2*(1 - sqrt(1 - 1.25/3))))
   expect_equal(x$cf(0.1), exp(1.2*(1 - sqrt(1 - 1.25i/3))))

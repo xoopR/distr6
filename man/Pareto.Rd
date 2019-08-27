@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Pareto distribution, which
 is commonly used in Economics to model the distribution of wealth and the 80-20 rule.
 }
 \details{
-The Pareto distribution parameterised with shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})} for \eqn{\alpha, \beta > 0}.
+The Pareto distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on \eqn{[\beta, \infty)}.
 
@@ -114,8 +113,8 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

@@ -37,6 +37,7 @@ test_that("statistics",{
   expect_equal(s$mgf(0), NaN)
   expect_equal(s$cf(1), besselK(1, 1/2) / (gamma(1/2)*2^(-1/2)))
   expect_equal(s$mode(),0)
+  expect_equal(s$pgf(1), NaN)
   expect_equal(s$pdf(1), dt(1,1))
   expect_equal(s$cdf(1), pt(1,1))
   expect_equal(s$quantile(0.56), qt(0.56,1))

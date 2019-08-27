@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Hypergeometric distribution, whic
 is commonly used to model the number of successes out of a population containing a known number of possible successes, for example the number of red balls from an urn or red, blue and yellow balls.
 }
 \details{
-The Hypergeometric distribution parameterised with population size, \eqn{N}, number of possible successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf,
-\deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)} for \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+The Hypergeometric distribution parameterised with  population size, \eqn{N}, number of possible successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf, \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)} for \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
 The distribution is supported on \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}.
 
@@ -114,8 +113,8 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

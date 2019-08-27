@@ -12,8 +12,7 @@ Mathematical and statistical functions for the Frechet distribution, which
 is commonly used as a special case of the Generalised Extreme Value distribution.
 }
 \details{
-The Frechet distribution parameterised with shape, \eqn{\alpha}, scale, \eqn{\beta}, and minimum, \eqn{\gamma}, is defined by the pdf,
-\deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}} for \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}.
+The Frechet distribution parameterised with  shape, \eqn{\alpha}, scale, \eqn{\beta}, and minimum, \eqn{\gamma}, is defined by the pdf, \deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}} for \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}.
 
 The distribution is supported on \eqn{x > \gamma}.
 
@@ -120,8 +119,8 @@ Also known as the Inverse Weibull distribution.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

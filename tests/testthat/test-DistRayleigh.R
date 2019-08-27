@@ -32,6 +32,7 @@ test_that("statistics",{
   expect_error(x$mgf(0))
   expect_error(x$cf(1))
   expect_equal(x$mode(),2)
+  expect_equal(x$pgf(1), NaN)
   expect_equal(x$pdf(1:2), extraDistr::drayleigh(1:2,2))
   expect_equal(x$cdf(1:2), extraDistr::prayleigh(1:2,2))
   expect_equal(x$quantile(c(0.2,0.42)), extraDistr::qrayleigh(c(0.2,0.42),2))

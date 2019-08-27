@@ -11,20 +11,19 @@ Mathematical and statistical functions for the Categorical distribution, which
 is commonly used in classification supervised learning.
 }
 \details{
-The Categorical distribution parameterised with a given support set, \eqn{x_1,...,x_k}, and respective probabilities, \eqn{p_1,...,p_k}, is defined by the pmf,
-\deqn{f(x_i) = p_i} for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
+The Categorical distribution parameterised with  a given support set, \eqn{x_1,...,x_k}, and respective probabilities, \eqn{p_1,...,p_k}, is defined by the pmf, \deqn{f(x_i) = p_i} for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
 
 The distribution is supported on \eqn{x_1,...,x_k}.
 
 
 
 
-\code{quantile}
-is
-omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
 
 
-Only the mode, pdf, cdf and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
+
+
+
+Only the mode, pdf, cdf, quantile and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
 }
 \section{Constructor}{
  Categorical$new(..., probs, decorators = NULL, verbose = FALSE)
@@ -36,7 +35,7 @@ Only the mode, pdf, cdf and rand are available for this Distribution, all other 
   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
   \code{...} \tab ANY \tab elements in the support Set. See details. \cr
   \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-  \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
+  
   
   
   
@@ -120,8 +119,8 @@ Only the mode, pdf, cdf and rand are available for this Distribution, all other 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
@@ -138,6 +137,7 @@ x$setParameterValue(probs = c(0.1,0.2,0.7))
 # d/p/q/r
 x$pdf(c("Bapple", "Carrot", 1, 2))
 x$cdf("Banana") # Assumes ordered in construction
+x$quantile(0.42) # Assumes ordered in construction
 x$rand(10)
 
 # Statistics
@@ -151,5 +151,5 @@ McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function.  \code{\link{FunctionImputation}} to numerically impute d/p/q/r.
+\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function.
 }

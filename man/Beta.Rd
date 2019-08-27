@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Beta distribution, which
 is commonly used as the prior in Bayesian modelling.
 }
 \details{
-The Beta distribution parameterised with two shape parameters, \eqn{\alpha, \beta}, is defined by the pdf,
-\deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)} for \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function.
+The Beta distribution parameterised with  two shape parameters, \eqn{\alpha, \beta}, is defined by the pdf, \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)} for \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function.
 
 The distribution is supported on \eqn{[0, 1]}.
 
@@ -114,8 +113,8 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
