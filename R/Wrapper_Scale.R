@@ -38,7 +38,7 @@
 #' #' for a full list of inherited distribution methods.
 #'
 Scale <- R6::R6Class("Scale", inherit = DistributionWrapper, lock_objects = FALSE)
-Scale$set("public","initialize",function(dist,mean=NULL,sd=NULL,var=NULL,verbose=FALSE,...){
+Scale$set("public","initialize",function(dist,mean=NULL,sd=NULL,var=NULL,verbose=TRUE,...){
      assertDistribution(dist)
      dist = dist$clone()
 
@@ -83,7 +83,7 @@ Scale$set("public","initialize",function(dist,mean=NULL,sd=NULL,var=NULL,verbose
         pdf <- function(x1){}
         body(pdf) <- substitute({
            scaleTrafo <- self$getParameterValue("ScaleSd")/self$wrappedModels()[[1]]$stdev()
-           self$wrapperModels()[[1]]$pdf(self$getParameterValue("ScaleMean")+(x1-self$wrappedModels()[[1]]$mean())*scaleTrafo)
+           self$wrappedModels()[[1]]$pdf(self$getParameterValue("ScaleMean")+(x1-self$wrappedModels()[[1]]$mean())*scaleTrafo)
         }, list(name = short_name))
      } else{pdf <- NULL}
      
@@ -92,7 +92,7 @@ Scale$set("public","initialize",function(dist,mean=NULL,sd=NULL,var=NULL,verbose
         cdf <- function(x1){}
         body(cdf) <- substitute({
            scaleTrafo <- self$getParameterValue("ScaleSd")/self$wrappedModels(name)$stdev()
-           self$wrapperModels(name)$cdf(self$getParameterValue("ScaleMean")+(x1-self$wrappedModels(name)$mean())*scaleTrafo)
+           self$wrappedModels(name)$cdf(self$getParameterValue("ScaleMean")+(x1-self$wrappedModels(name)$mean())*scaleTrafo)
         }, list(name = short_name))
      } else{cdf <- NULL}
      
