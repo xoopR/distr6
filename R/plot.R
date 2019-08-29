@@ -180,34 +180,27 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
 
 # FUN_THREE: discrete distribution
 .plot_discrete <- function(fun,plotStructure, ...){
-  additional_arg <- list(...)
-  if("pdf" %in% fun){
+  cumH_plot = quan_plot = pdf_plot = cdf_plot = surv_plot = hazard_plot = NULL
+  if("pdf" %in% fun)
       pdf_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"pdf"], type = "h",
-                               main = "Pdf", xlab = "x", ylab = "f(x)", additional_arg))
-  }else{pdf_plot = NULL}
-  if("cumHazard" %in% fun){
+                               main = "Pdf", xlab = "x", ylab = "f(x)", ...))
+  if("cumHazard" %in% fun)
       cumH_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"cumHazard"], type = "h",
-           main="cumHazard",xlab='x',ylab=expression(Lambda(x)), additional_arg))
-  }else{cumH_plot = NULL}
-  if("cdf" %in% fun){
-      cdf_plot <- cowplot::as_grob(~plot(ecdf(plotStructure[,"points"]), main='cdf',xlab='x',ylab='F(x)', additional_arg))
-  }else{cdf_plot = NULL}
-  if('quantile' %in% fun){
+           main="cumHazard",xlab='x',ylab=expression(Lambda(x)), ...))
+  if("cdf" %in% fun)
+      cdf_plot <- cowplot::as_grob(~plot(ecdf(plotStructure[,"points"]), main='cdf',xlab='x',ylab='F(x)', ...))
+  if('quantile' %in% fun)
       quan_plot<- cowplot::as_grob(~plot(x = unique(plotStructure[,"cdf"]), y = plotStructure[,"points"], type = "s",
-           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"), additional_arg))
-  }else{quan_plot = NULL}
-  if("survival" %in% fun){
+           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"), ...))
+  if("survival" %in% fun)
       surv_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"survival"], type = "h",
-           main="Survival",xlab='x',ylab="S(x)", additional_arg))
-  }else{surv_plot = NULL}
-  if("hazard" %in% fun){
+           main="Survival",xlab='x',ylab="S(x)", ...))
+  if("hazard" %in% fun)
     hazard_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "h",
-           main = "Hazard", xlab = "x", ylab = "h(x)", additional_arg))
-  }else{hazard_plot = NULL}
+           main = "Hazard", xlab = "x", ylab = "h(x)", ...))
 
   list_plots <- list(pdf = pdf_plot,cdf = cdf_plot, quantile = quan_plot, cumHazard = cumH_plot,survival = surv_plot,
                      hazard = hazard_plot)
-  list_plots <- list_plots[match(fun,names(list_plots))]
+  return(list_plots[match(fun,names(list_plots))])
 
-  plot_grid(plotlist = list_plots)
  }
