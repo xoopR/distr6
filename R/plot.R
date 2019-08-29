@@ -1,3 +1,4 @@
+#' @export
 plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
                               plot = TRUE, iterative = FALSE,
                               ...){
@@ -123,21 +124,16 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
   #######################################################################
 
   # now plot!
-  if(plot == FALSE){
+  if(!plot)
     return(plotStructure[,c("points",fun)])
-  } else{
-    # continuous case
-    if(testContinuous(x)){
-      .plot_continuous(fun,plotStructure,...)
-
-    }
-    # discrete case
-    if(testDiscrete(x)){
-      .plot_discrete(fun,plotStructure,...)
-
-    }
+  else{
+    if(testContinuous(x))
+      plots <- .plot_continuous(fun,plotStructure,...)
+    else if(testDiscrete(x))
+      plots <- .plot_discrete(fun,plotStructure,...)
+    cowplot::plot_grid(plotlist = plots)
   }
- }
+}
 
 
 # FUN_ONE: continuous distribution
@@ -146,41 +142,39 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
 
   if("cumHazard" %in% fun){
       cumH_plot = cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"cumHazard"],
-           type = "l",main="cumHazard",xlab='x',ylab="H(x)"))
+           type = "l",main="cumHazard",xlab='x',ylab="H(x)",...))
   }
 
   if("quantile" %in% fun){
     quan_plot <- cowplot::as_grob(~plot(x = plotStructure[,"cdf"],
            y = plotStructure[,"points"], type = "l",
-           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)")))
+           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)",...)))
   }
 
   if("pdf" %in% fun){
     pdf_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"pdf"], type = "l",
-                               main = "Pdf", xlab = "x", ylab = "f(x)"))
+                               main = "Pdf", xlab = "x", ylab = "f(x)",...))
   }
 
   if ("cdf" %in% fun){
     cdf_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"cdf"], type = "l",
-                               main = "Cdf", xlab = "x", ylab = "F(x)"))
+                               main = "Cdf", xlab = "x", ylab = "F(x)",...))
   }
 
   if ("survival" %in% fun){
     surv_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"survival"], type = "l",
-                               main = "Survival", xlab = "x", ylab = "S(x)"))
+                               main = "Survival", xlab = "x", ylab = "S(x)",...))
   }
 
   if ("hazard" %in% fun){
     hazard_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "l",
-                               main = "Hazard", xlab = "x", ylab = "h(x)"))
+                               main = "Hazard", xlab = "x", ylab = "h(x)",...))
   }
 
   list_plots <- list(pdf = pdf_plot,cdf = cdf_plot, quantile = quan_plot, cumHazard = cumH_plot,survival = surv_plot,
                      hazard = hazard_plot)
-  list_plots <- list_plots[match(fun,names(list_plots))]
 
-  cowplot::plot_grid(plotlist = list_plots, greedy = TRUE)
-
+  return(list_plots[match(fun,names(list_plots))])
  }
 
 
@@ -215,27 +209,5 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
                      hazard = hazard_plot)
   list_plots <- list_plots[match(fun,names(list_plots))]
 
-  return(list_plots)
-
   plot_grid(plotlist = list_plots)
  }
-
-
-
-# my.binom <- Binomial$new()
-# my.geom=Geometric$new()
-# my.norm <- Normal$new(mean = 2, sd = 1.5)
-# my.norm.two <- Normal$new(mean = 2.5, sd = 1)
-#
-#
-# plot(my.norm, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = F)
-# plot(my.norm, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = T)
-# plot(my.binom, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = T)
-#
-# plot(my.binom, "quantile")
-# #lines(my.geom, "quantile", col = "red")
-#
-# plot(my.norm, "pdf")
-# plot(my.norm, "pdf", ylim = c(0, 0.5))
-# lines(my.norm.two, "pdf", col = "red")
-

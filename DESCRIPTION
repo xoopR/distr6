@@ -153,6 +153,7 @@ Collate:
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'
+    'lines.R'
     'listDecorators.R'
     'listDistributions.R'
     'listKernels.R'

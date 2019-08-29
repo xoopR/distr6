@@ -425,9 +425,6 @@ Distribution$set("public","summary",function(full = TRUE,...){
   }
 })
 
-Distribution$set("public","plot",function(){}) # TO DO
-Distribution$set("public","qqplot",function(){}) # TO DO
-
 #-------------------------------------------------------------
 # Public Methods - Accessors
 #-------------------------------------------------------------
