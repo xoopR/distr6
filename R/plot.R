@@ -1,7 +1,6 @@
 plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
                               plot = TRUE, iterative = FALSE,
-                              layout.row = TRUE, layout.col = FALSE, decompose = FALSE,
-                              margin = TRUE,...){
+                              ...){
   #######################################################################
   #
   #   To set up quantitis required to produce pdf/cdf/quantile/survival/
@@ -11,8 +10,8 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
   #   fun       List of plots to be produced
   #   nPoints   Number of evaluation points to be generated for each
   #             distribution, the default is set to be 3,000.
-  #   plot      A logical factor indicated whether to produce plots for 
-  #             the distribution object. If false, a list containing 
+  #   plot      A logical factor indicated whether to produce plots for
+  #             the distribution object. If false, a list containing
   #             graphical information (evaluation points, pdf, cdf, etc.)
   #             will be returned.
   #   iterative A logical factor that allows the users to specify the
@@ -25,164 +24,218 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
   #             If TRUE, the layout of figures in the plot window will be
   #             decided by default (1*3 for three plots, 2*2 for 4 plots
   #             and 2*3 for 5/6 plots). Once plots are produced, the
-  #             graphical parameters prior to plotting are retrieved. 
-  #             If FALSE, the users can change graphical parameters 
-  #             via par() in the global environment. 
+  #             graphical parameters prior to plotting are retrieved.
+  #             If FALSE, the users can change graphical parameters
+  #             via par() in the global environment.
   #   layout.col Works in the same way as mfrow that changes the layout
-  #             figures and only applies if iterative == FALSE. If TRUE, 
-  #             figures will be displayed in a columnwise order. The 
-  #             default is set to be FALSE. If both layout.row and 
+  #             figures and only applies if iterative == FALSE. If TRUE,
+  #             figures will be displayed in a columnwise order. The
+  #             default is set to be FALSE. If both layout.row and
   #             layout.col are TRUE, layout.col prevails.
   #   margin    Similiar to mfrow, only works if iterative == FALSE. The
   #             margin of plots are changed when mar == TRUE.
-  #   decompose A logical factor that works only for mixture distributions, 
+  #   decompose A logical factor that works only for mixture distributions,
   #             if TRUE, the weighted quantities for each distribution will
   #             be displayed.
-  #   ...       All graphical parameters in current R plot function can 
+  #   ...       All graphical parameters in current R plot function can
   #             be added as additional arguments.
   #
   #######################################################################
-  
+
   #######################################################################
   #######                         validations                     #######
   #######################################################################
-  
+
   plotFuns <- c("pdf","cdf","quantile","survival","hazard","cumHazard")
   # check user input plot names are correct
-  if(!all(fun %in% plotFuns)) {
-    stop("invalid plot function")}
+  if(!all(fun %in% plotFuns))
+    stop("invalid plot function")
+
+  if("cdf" %in% fun & !x$.__enclos_env__$private$.isCdf){
+    message("This distribution does not have a cdf expression. Use the
+            FunctionImputation decorator to impute a numerical cdf.")
+    fun = fun[!(fun %in% c("cdf", "survival", "hazard","cumHazard"))]
+  }
+
+  if("pdf" %in% fun & !x$.__enclos_env__$private$.isPdf){
+    message("This distribution does not have a pdf expression. Use the
+            FunctionImputation decorator to impute a numerical pdf.")
+    fun = fun[!(fun %in% c("pdf", "hazard"))]
+  }
+
+  if("quantile" %in% fun & !x$.__enclos_env__$private$.isQuantile){
+    message("This distribution does not have a quantile expression. Use the
+            FunctionImputation decorator to impute a numerical quantile.")
+    fun = fun[!(fun %in% c("quantile"))]
+  }
 
   #######################################################################
   #######                   plottable structure                   #######
   #######################################################################
-  
-  plotStructure <- list(qty = matrix(NA, nrow = nPoints, ncol = 7),
-                        n = nPoints, plotChoice = NA)
-  plotStructure$plotChoice <- plotFuns
-  colnames(plotStructure$qty) <- c("points","pdf","cdf","quantile","survival",
+
+  plotStructure <- matrix(NA, nrow = nPoints, ncol = 6)
+  colnames(plotStructure) <- c("points","pdf","cdf","survival",
                                    "hazard","cumHazard")
-  
-  plotStructure$qty[,"quantile"] <- seq(0,1,length.out = plotStructure$n)
-  plotStructure$qty[,"points"] <- x$quantile(plotStructure$qty[,"quantile"])
-  plotStructure$qty[,"pdf"] <- x$pdf(plotStructure$qty[,"points"])
-  plotStructure$qty[,"cdf"] <- x$cdf(plotStructure$qty[,"points"])
-  
-  if(any(fun %in% c("hazard","cumHazard","survival"))){
-    # calculate survival
-    plotStructure$qty[,"survival"] <- 1 - plotStructure$qty[,"cdf"]
-    # calculate hazard
-    plotStructure$qty[,"hazard"] <- plotStructure$qty[,"pdf"] / plotStructure$qty[,"survival"]
-    # calculate cumulative hazard
-    plotStructure$qty[,"cumHazard"] <- -log(plotStructure$qty[,"survival"])}
-  
-  names=c("pdf","cdf","hazard","survival")
-  notations=c("f(x)","F(x)","h(x)","S(x)")
-  func_notation=fun
-  
-  for(i in 1:length(names)){
-    func_notation=replace(func_notation,func_notation==names[i],notations[i])
-  }
-  
-  
+
+  plotStructure[,"cdf"] <- seq(0,1,length.out = nPoints)
+  plotStructure[,"points"] <- x$quantile(plotStructure[,"cdf"])
+  plotStructure[,"pdf"] <- x$pdf(plotStructure[,"points"])
+
+  if("survival" %in% fun)
+    plotStructure[,"survival"] <- 1 - plotStructure[,"cdf"]
+  if("hazard" %in% fun)
+    plotStructure[,"hazard"] <- plotStructure[,"pdf"]/(1 - plotStructure[,"cdf"])
+  if("cumHazard" %in% fun)
+    plotStructure[,"cumHazard"] <- -log(1 - plotStructure[,"cdf"])
+
+
   #######################################################################
   #######                     graphical parameters                #######
   #######################################################################
-  
+
   # update par()
-  par(ask = iterative)
-  
+ # par(ask = iterative)
+
   # set the number of plots on one page
   # check the number of plots to be produced
-  if(iterative == FALSE){
-    nPlots <- length(fun)
-    mfList <- list()
-    mfList[[1]] <- c(1,1)
-    mfList[[2]] <- c(1,2)
-    mfList[[3]] <- c(1,3)
-    mfList[[4]] <- c(2,2)
-    mfList[[5]] <- c(2,3)
-    mfList[[6]] <- c(2,3)
-    # update graphical parameters 
-    if (layout.row == TRUE & layout.col == FALSE){
-      par(mfrow = mfList[[nPlots]])}
-    if (layout.col == TRUE){
-      par(mfcol = mfList[[nPlots]])}
-  }
-  
-  # set margins 
-  if(iterative == FALSE & margin == TRUE){
-    par(mar=c(4,4,2,2))
-  }
-  
+  #if(iterative == FALSE){
+   #mfList <- list()
+    #mfList[[1]] <- c(1,1)
+    #mfList[[2]] <- c(1,2)
+    #mfList[[3]] <- c(1,3)
+    #mfList[[4]] <- c(2,2)
+    #mfList[[5]] <- c(2,3)
+    #mfList[[6]] <- c(2,3)
+    # update graphical parameters
+    #if (layout.row == TRUE & layout.col == FALSE){
+      #par(mfrow = mfList[[nPlots]])}
+    #if (layout.col == TRUE){
+      #par(mfcol = mfList[[nPlots]])}
+
+
+  # set margins
+  #if(iterative == FALSE & margin == TRUE){
+    #par(mar=c(4,4,2,2))
+
+
   #######################################################################
   #######                       generate plots                    #######
   #######################################################################
-  
+
   # now plot!
   if(plot == FALSE){
-    return(plotStructure$qty[,c("points",fun)])
-  } 
-  
-  else{
+    return(plotStructure[,c("points",fun)])
+  } else{
     # continuous case
     if(testContinuous(x)){
-        .plot_continuous(fun,plotStructure,func_notation,...)
-      }
+      .plot_continuous(fun,plotStructure,...)
+
+    }
     # discrete case
     if(testDiscrete(x)){
-        .plot_discrete(fun,plotStructure,func_notation,...)
-      }
-}
-}
+      .plot_discrete(fun,plotStructure,...)
+
+    }
+  }
+ }
 
 
 # FUN_ONE: continuous distribution
-.plot_continuous <- function(fun,plotStructure,func_notation,...){
-  for(i in 1:length(fun)){
-    if(fun[i]=='cumHazard'){
-      plot(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]], 
-           type = "l",main=fun[i],xlab='x',ylab=expression(Lambda(x)),...)
-    }else if(fun[i]=='quantile'){
-      plot(x = plotStructure$qty[,"quantile"], 
-           y = plotStructure$qty[,"points"], type = "l",
-           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
-    }else{
-      plot(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]], type = "l",main=fun[i],xlab='x',ylab=func_notation[i],...)
-    }}}
+.plot_continuous <- function(fun,plotStructure,...){
+  cumH_plot = quan_plot = pdf_plot = cdf_plot = surv_plot = hazard_plot = NULL
+
+  if("cumHazard" %in% fun){
+      cumH_plot = cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"cumHazard"],
+           type = "l",main="cumHazard",xlab='x',ylab="H(x)"))
+  }
+
+  if("quantile" %in% fun){
+    quan_plot <- cowplot::as_grob(~plot(x = plotStructure[,"cdf"],
+           y = plotStructure[,"points"], type = "l",
+           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)")))
+  }
+
+  if("pdf" %in% fun){
+    pdf_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"pdf"], type = "l",
+                               main = "Pdf", xlab = "x", ylab = "f(x)"))
+  }
+
+  if ("cdf" %in% fun){
+    cdf_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"cdf"], type = "l",
+                               main = "Cdf", xlab = "x", ylab = "F(x)"))
+  }
+
+  if ("survival" %in% fun){
+    surv_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"survival"], type = "l",
+                               main = "Survival", xlab = "x", ylab = "S(x)"))
+  }
+
+  if ("hazard" %in% fun){
+    hazard_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "l",
+                               main = "Hazard", xlab = "x", ylab = "h(x)"))
+  }
+
+  list_plots <- list(pdf = pdf_plot,cdf = cdf_plot, quantile = quan_plot, cumHazard = cumH_plot,survival = surv_plot,
+                     hazard = hazard_plot)
+  list_plots <- list_plots[match(fun,names(list_plots))]
+
+  cowplot::plot_grid(plotlist = list_plots, greedy = TRUE)
+
+ }
 
 
 # FUN_THREE: discrete distribution
-.plot_discrete <- function(fun,plotStructure,func_notation,...){
-  for(i in 1:length(fun)){
-    if(fun[i]=='cumHazard'){
-      plot(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]], type = "h",
-           main=fun[i],xlab='x',ylab=expression(Lambda(x)),...)
-      .addArrows(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]],...)
-    }else if(fun[i]=='cdf'){
-      plot(ecdf(plotStructure$qty[,"points"]), main='cdf',xlab='x',ylab='F(x)',...)
-    }else if(fun[i]=='quantile'){
-      plot(x = plotStructure$qty[,"cdf"], y = plotStructure$qty[,"points"], type = "s",
-           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"), ...)
-    }else{
-      plot(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]], type = "h",
-           main=fun[i],xlab='x',ylab=func_notation[i],...)
-      .addArrows(x = plotStructure$qty[,"points"], y = plotStructure$qty[,fun[i]],...)
-    }}}
+.plot_discrete <- function(fun,plotStructure, ...){
+  additional_arg <- list(...)
+  if("pdf" %in% fun){
+      pdf_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"pdf"], type = "h",
+                               main = "Pdf", xlab = "x", ylab = "f(x)", additional_arg))
+  }else{pdf_plot = NULL}
+  if("cumHazard" %in% fun){
+      cumH_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"cumHazard"], type = "h",
+           main="cumHazard",xlab='x',ylab=expression(Lambda(x)), additional_arg))
+  }else{cumH_plot = NULL}
+  if("cdf" %in% fun){
+      cdf_plot <- cowplot::as_grob(~plot(ecdf(plotStructure[,"points"]), main='cdf',xlab='x',ylab='F(x)', additional_arg))
+  }else{cdf_plot = NULL}
+  if('quantile' %in% fun){
+      quan_plot<- cowplot::as_grob(~plot(x = unique(plotStructure[,"cdf"]), y = plotStructure[,"points"], type = "s",
+           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"), additional_arg))
+  }else{quan_plot = NULL}
+  if("survival" %in% fun){
+      surv_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"survival"], type = "h",
+           main="Survival",xlab='x',ylab="S(x)", additional_arg))
+  }else{surv_plot = NULL}
+  if("hazard" %in% fun){
+    hazard_plot <- cowplot::as_grob(~plot(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "h",
+           main = "Hazard", xlab = "x", ylab = "h(x)", additional_arg))
+  }else{hazard_plot = NULL}
+
+  list_plots <- list(pdf = pdf_plot,cdf = cdf_plot, quantile = quan_plot, cumHazard = cumH_plot,survival = surv_plot,
+                     hazard = hazard_plot)
+  list_plots <- list_plots[match(fun,names(list_plots))]
+
+  return(list_plots)
+
+  plot_grid(plotlist = list_plots)
+ }
 
 
-# FUN_FVE: add arrows
-.addArrows <- function(x, y, ...){
-  n <- which(is.finite(y))
-  i.p <- which(is.infinite(y) & (y>0))
-  i.n <- which(is.infinite(y) & (y<0))
-  y.min <- min(y[n])
-  y.max <- max(y[n])
-  
-  if(length(i.p) != 0){
-    for( i in i.p){
-      arrows(x0 = x[i], y0 = y.min, y1 = y.max, ...)
-    }}
-  if(length(i.n) != 0){
-    arrows(x0 = x[i], y0 = y.max, y1 = y.min, ...)
-  }
-}
+
+# my.binom <- Binomial$new()
+# my.geom=Geometric$new()
+# my.norm <- Normal$new(mean = 2, sd = 1.5)
+# my.norm.two <- Normal$new(mean = 2.5, sd = 1)
+#
+#
+# plot(my.norm, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = F)
+# plot(my.norm, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = T)
+# plot(my.binom, c("pdf","cdf","quantile","hazard","cumHazard","survival"), col = "red", plot = T)
+#
+# plot(my.binom, "quantile")
+# #lines(my.geom, "quantile", col = "red")
+#
+# plot(my.norm, "pdf")
+# plot(my.norm, "pdf", ylim = c(0, 0.5))
+# lines(my.norm.two, "pdf", col = "red")
+
