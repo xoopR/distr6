@@ -60,7 +60,7 @@ qqplot.Distribution <- function(x, y, nPoints = 3000, pos = 0.5,
     quantile.Y <- y$quantile(points)
     
   }
-  ##If y is emperical distribution or sample data points##
+  ##If y is emperical distribution or random sample points##
   else{
     
     if(testDistributionList(list(x))){
@@ -156,13 +156,13 @@ qqplot.Distribution <- function(x, y, nPoints = 3000, pos = 0.5,
 ##Example
 qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15))
 
-qqplot.Distribution(rnorm(n=3000,mean=15,sd=sqrt(30)), rchisq(n=3000,df=15))
+qqplot.Distribution(Empirical$new(rnorm(n=3000,mean=15,sd=sqrt(30))), Empirical$new(rchisq(n=3000,df=15)))
 qqplot.Distribution(rnorm(n=3000,mean=15,sd=sqrt(30)), rchisq(n=3000,df=15), 
                     pos = 0.9)
 
 qqplot.Distribution(rnorm(n=20,mean=15,sd=sqrt(30)), c(3,6,8,2,0,6,2,7,9,4,3,7,4,5,11,1,10,6,6,3))
 
-qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), rchisq(n=3000,df=15))
+qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), Empirical$new(rchisq(n=3000,df=15)))
 qqplot.Distribution(rnorm(n=3000,mean=15,sd=sqrt(30)), ChiSquared$new(df = 15))
 
 qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15), 
