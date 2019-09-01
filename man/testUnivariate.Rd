@@ -6,14 +6,19 @@
 \alias{assertUnivariate}
 \title{assert/check/test/Univariate}
 \usage{
-testUnivariate(object)
+testUnivariate(object, errormsg = paste(object$short_name,
+  "is not univariate"))
 
-checkUnivariate(object)
+checkUnivariate(object, errormsg = paste(object$short_name,
+  "is not univariate"))
 
-assertUnivariate(object)
+assertUnivariate(object, errormsg = paste(object$short_name,
+  "is not univariate"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

@@ -6,14 +6,19 @@
 \alias{assertLeptokurtic}
 \title{assert/check/test/Leptokurtic}
 \usage{
-testLeptokurtic(object)
+testLeptokurtic(object, errormsg = paste(object$short_name,
+  "is not leptokurtic"))
 
-checkLeptokurtic(object)
+checkLeptokurtic(object, errormsg = paste(object$short_name,
+  "is not leptokurtic"))
 
-assertLeptokurtic(object)
+assertLeptokurtic(object, errormsg = paste(object$short_name,
+  "is not leptokurtic"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

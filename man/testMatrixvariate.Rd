@@ -6,14 +6,19 @@
 \alias{assertMatrixvariate}
 \title{assert/check/test/Matrixvariate}
 \usage{
-testMatrixvariate(object)
+testMatrixvariate(object, errormsg = paste(object$short_name,
+  "is not matrixvariate"))
 
-checkMatrixvariate(object)
+checkMatrixvariate(object, errormsg = paste(object$short_name,
+  "is not matrixvariate"))
 
-assertMatrixvariate(object)
+assertMatrixvariate(object, errormsg = paste(object$short_name,
+  "is not matrixvariate"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

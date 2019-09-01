@@ -1,6 +1,7 @@
 #' @title assert/check/test/Distribution
 #' @description Validation checks to test if a given object is an R6 Distribution.
 #' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -26,6 +27,7 @@ makeChecks(assertionName = "Distribution",
 #' @title assert/check/test/DistributionList
 #' @description Validation checks to test if a given object is a list of R6 Distributions.
 #' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -52,6 +54,7 @@ makeChecks(assertionName =  "DistributionList",
 #' @name testUnivariate
 #' @description Validation checks to test if Distribution is univariate.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -77,6 +80,7 @@ makeChecks(assertionName =  "Univariate",
 #' @name testMultivariate
 #' @description Validation checks to test if Distribution is multivariate.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -102,6 +106,7 @@ makeChecks(assertionName =  "Multivariate",
 #' @name testMatrixvariate
 #' @description Validation checks to test if Distribution is matrixvariate.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -127,6 +132,7 @@ makeChecks(assertionName =  "Matrixvariate",
 #' @name testContinuous
 #' @description Validation checks to test if Distribution is continuous.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -152,6 +158,7 @@ makeChecks(assertionName =  "Continuous",
 #' @name testDiscrete
 #' @description Validation checks to test if Distribution is discrete.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -177,6 +184,7 @@ makeChecks(assertionName =  "Discrete",
 #' @name testMixture
 #' @description Validation checks to test if Distribution is mixture.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -202,6 +210,7 @@ makeChecks(assertionName =  "Mixture",
 #' @name testSymmetric
 #' @description Validation checks to test if Distribution is symmetric.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -228,6 +237,7 @@ makeChecks(assertionName =  "Symmetric",
 #' @name testNegativeSkew
 #' @description Validation checks to test if Distribution is negative skew.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -253,6 +263,7 @@ makeChecks(assertionName =  "NegativeSkew",
 #' @name testPositiveSkew
 #' @description Validation checks to test if Distribution is positive skew.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -278,6 +289,7 @@ makeChecks(assertionName =  "PositiveSkew",
 #' @name testNoSkew
 #' @description Validation checks to test if Distribution is no skew.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -304,6 +316,7 @@ makeChecks(assertionName =  "NoSkew",
 #' @name testPlatykurtic
 #' @description Validation checks to test if Distribution is platykurtic.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -329,6 +342,7 @@ makeChecks(assertionName =  "Platykurtic",
 #' @name testMesokurtic
 #' @description Validation checks to test if Distribution is mesokurtic.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -354,6 +368,7 @@ makeChecks(assertionName =  "Mesokurtic",
 #' @name testLeptokurtic
 #' @description Validation checks to test if Distribution is leptokurtic.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.

@@ -6,14 +6,19 @@
 \alias{assertSymmetric}
 \title{assert/check/test/Symmetric}
 \usage{
-testSymmetric(object)
+testSymmetric(object, errormsg = paste(object$short_name,
+  "is not symmetric"))
 
-checkSymmetric(object)
+checkSymmetric(object, errormsg = paste(object$short_name,
+  "is not symmetric"))
 
-assertSymmetric(object)
+assertSymmetric(object, errormsg = paste(object$short_name,
+  "is not symmetric"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
