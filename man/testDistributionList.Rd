@@ -4,30 +4,29 @@
 \alias{testDistributionList}
 \alias{checkDistributionList}
 \alias{assertDistributionList}
-\alias{isDistributionList}
-\title{assert/check/test/isDistributionList}
+\title{assert/check/test/DistributionList}
 \usage{
-assertDistributionList(x)
-checkDistributionList(x)
-testDistributionList(x)
-isDistributionList(x)
+testDistributionList(object,
+  errormsg = "One or more items in the list are not Distributions")
 
-checkDistributionList(x)
+checkDistributionList(object,
+  errormsg = "One or more items in the list are not Distributions")
 
-assertDistributionList(x)
-
-isDistributionList(x)
+assertDistributionList(object,
+  errormsg = "One or more items in the list are not Distributions")
 }
 \arguments{
-\item{x}{object to test}
+\item{object}{object to test}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is a list of R6 Distributions
+Validation checks to test if a given object is a list of R6 Distributions.
 }
 \examples{
 testDistributionList(list(Binomial$new(),5)) # FALSE

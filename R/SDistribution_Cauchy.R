@@ -2,31 +2,40 @@
 #-------------------------------------------------------------
 # Cauchy Distribution Documentation
 #-------------------------------------------------------------
-#' @title Cauchy Distribution
-#'
-#' @description Mathematical and statistical functions for the Cauchy distribution parameterised
-#' with location and scale and defined by the pdf,
-#' \deqn{f(x) = 1 / (\pi * \beta * (1 + ((x - \alpha) / \beta)^2))}
-#' where \eqn{\alpha \epsilon R} is the location parameter and \eqn{\beta > 0} is the scale parameter.
-#'
 #' @name Cauchy
+#' @template SDist
+#' @templateVar ClassName Cauchy
+#' @templateVar DistName Cauchy
+#' @templateVar uses in physics and finance
+#' @templateVar params location, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))}
+#' @templateVar paramsupport \eqn{\alpha \epsilon R} and \eqn{\beta > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar additionalDetails The mean and variance are undefined, hence \code{NaN} is returned.
+#' @templateVar constructor location = 0, scale = 1
+#' @templateVar arg1 \code{location} \tab numeric \tab location parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{location} as a numeric and \code{scale} as a positive numeric.
 #'
-#' @section Constructor: Cauchy$new(location = 0, scale = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x = Cauchy$new(location = 2, scale = 5)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{location} \tab numeric \tab location parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(scale = 3)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Cauchy distribution is parameterised with
-#' location and scale. Default parameterisation is with location = 0 and scale = 1.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -36,16 +45,13 @@ NULL
 Cauchy <- R6::R6Class("Cauchy", inherit = SDistribution, lock_objects = F)
 Cauchy$set("public","name","Cauchy")
 Cauchy$set("public","short_name","Cauchy")
-Cauchy$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Cauchy$set("public","description","Cauchy Probability Distribution.")
 Cauchy$set("public","package","stats")
 
 Cauchy$set("public","mean",function(){
   return(NaN)
 })
-Cauchy$set("public","var",function(){
+Cauchy$set("public","variance",function(){
   return(NaN)
 })
 Cauchy$set("public","skewness",function(){
@@ -58,6 +64,9 @@ Cauchy$set("public","entropy",function(base = 2){
   return(log(4 * pi * self$getParameterValue("scale"), base))
 })
 Cauchy$set("public", "mgf", function(t){
+  return(NaN)
+})
+Cauchy$set("public", "pgf", function(z){
   return(NaN)
 })
 Cauchy$set("public", "cf", function(t){
@@ -78,7 +87,7 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, location, scale, verbose)
-  self$setParameterValue(list(location = location, scale = scale))
+  self$setParameterValue(location = location, scale = scale)
 
   pdf <- function(x1) dcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
   cdf <- function(x1) pcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
@@ -86,7 +95,9 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
   rand <- function(n) rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(), distrDomain = Reals$new(),
-                   symmetric = TRUE)
+                   rand = rand, support = Reals$new(),
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

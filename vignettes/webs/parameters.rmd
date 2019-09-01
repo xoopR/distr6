@@ -1,0 +1,67 @@
+---
+title: "Getting and Setting Parameters"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Getting and Setting Parameters}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+In our [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html) we constructed a Normal distribution with a variety of parameterisations. Now we will look at how to access the parameters of the distribution and how to update them.
+
+## Accessing Parameters
+
+First we will construct the Standard Normal distribution, the default parameterisation
+```{r}
+N <- Normal$new()
+```
+
+To view all parameters in the distribution we use the `parameters` method
+```{r}
+N$parameters()
+```
+
+Notice how not only the parameters in the given parameterisation are displayed, but all the ones possible. To filter this table for a specific parameter, add the parameter name as an argument
+```{r}
+N$parameters("var")
+```
+
+Or to only see the value of the parameter
+```{r}
+N$getParameterValue("prec")
+```
+
+## Updating Parameters
+
+Any parameter can be updated in distr6 using the `setParameterValue` method and all others are updated accordingly. For example,
+```{r}
+N$setParameterValue(var = 2)
+N$parameters()
+```
+
+Not only has the variance been updated, but so too have the precision and standard deviation parameters. To see the function used for updating you can run `N$parameters("prec", update = TRUE)` but the output is given in a form that your computer can read, so it may not be straightforward to follow for more complicated functions. See the distribution help page, `?Normal` for a more readable version.
+
+Internal checks ensure that only valid parameter values are allowed, for example setting the variance to a negative number will throw an error. Finally, multiple parameters can be updated at the same time
+
+```{r}
+N$setParameterValue(mean = 4, sd = 2)
+N$parameters()
+```
+
+But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will lead to the variance argument being ignored:
+```{r}
+N$setParameterValue(var = 2, prec = 3)
+N$parameters()
+```
+
+
+## Summary
+
+In this tutorial we looked at getting and setting parameters for the Normal distribution. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we look at accessing mathematical and statistical methods including the d/p/q/r functions.

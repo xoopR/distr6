@@ -9,10 +9,13 @@ dmin(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Minimum as a numeric.
+}
 \description{
 Returns the distribution minimum as the minimum of the support. If the support is not
 bounded below then minimum is given by
-\deqn{minimum = infimum + 2.220446e-16}
+\deqn{minimum = infimum + 1.1e-15}
 }
 \section{R6 Usage}{
  $dmin()

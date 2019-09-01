@@ -2,34 +2,39 @@
 #-------------------------------------------------------------
 # Beta Distribution Documentation
 #-------------------------------------------------------------
-#' @title Beta Distribution
-#'
-#' @description Mathematical and statistical functions for the Beta distribution parameterised
-#' with two shape parameters and defined by the pdf,
-#' \deqn{f(x) = (x^(\alpha-1)(1-x)^{\beta-1}) / B(\alpha, \beta)}
-#' where \eqn{\alpha, \beta > 0} are the two shape parameters and \eqn{B} is the Beta function.
-#'
-#' @details \code{mgf} and \code{cf} are omitted as no analytic expression could be found. Decorate
-#' with CoreStatistics for numeric results.
-#'
 #' @name Beta
+#' @template SDist
+#' @templateVar ClassName Beta
+#' @templateVar DistName Beta
+#' @templateVar uses as the prior in Bayesian modelling
+#' @templateVar params two shape parameters, \eqn{\alpha, \beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function
+#' @templateVar distsupport \eqn{[0, 1]}
+#' @templateVar omittedVars \code{mgf} and \code{cf}
+#' @templateVar constructor shape1 = 1, shape2 = 1
+#' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
+#' @templateVar constructorDets  \code{shape1} and \code{shape2} as positive numerics.
 #'
-#' @section Constructor: Beta$new(shape1 = 1, shape2 = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x = Beta$new(shape1 = 2, shape2 = 5)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape1} \tab numeric \tab positive shape parameter. \cr
-#' \code{shape2} \tab numeric \tab positive shape parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(shape1 = 1)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Beta distribution is parameterised with two shape parameters,
-#' both take the default value 1.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -39,9 +44,6 @@ NULL
 Beta <- R6::R6Class("Beta", inherit = SDistribution, lock_objects = F)
 Beta$set("public","name","Beta")
 Beta$set("public","short_name","Beta")
-Beta$set("public", "traits",list(type = PosReals$new(zero = T),
-                                 valueSupport ="continuous",
-                                 variateForm = "univariate"))
 Beta$set("public","description","Beta Probability Distribution.")
 Beta$set("public","package","stats")
 
@@ -49,7 +51,7 @@ Beta$set("public","package","stats")
 Beta$set("public","mean",function(){
   return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
 })
-Beta$set("public","var",function(){
+Beta$set("public","variance",function(){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
 
@@ -93,6 +95,9 @@ Beta$set("public", "entropy", function(base = 2){
   return(log(beta(shape1,shape2), base) - ((shape1-1)*digamma(shape1)) -
            ((shape2-1) * digamma(shape2)) + ((shape1+shape2-2)*digamma(shape1+shape2)))
 })
+Beta$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Beta$set("private", ".getRefParams", function(paramlst){
   lst = list()
@@ -105,7 +110,7 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
                                           verbose = FALSE){
 
   private$.parameters <- getParameterSet.Beta(self, shape1, shape2, verbose)
-  self$setParameterValue(list(shape1=shape1,shape2=shape2))
+  self$setParameterValue(shape1=shape1,shape2=shape2)
 
   pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
   cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
@@ -119,8 +124,10 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
     symmetric <- FALSE
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(0,1), distrDomain = PosReals$new(zero = TRUE),
-                   symmetric = symmetric)
+                   rand = rand, support = Interval$new(0,1),
+                   symmetric = symmetric, type = PosReals$new(zero = T),
+                   valueSupport ="continuous",
+                   variateForm = "univariate")
 
   invisible(self)
 })

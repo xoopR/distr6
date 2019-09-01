@@ -2,18 +2,28 @@
 % Please edit documentation in R/SDistribution_Normal.R
 \name{Normal}
 \alias{Normal}
-\title{Normal Distribution}
+\alias{Gaussian}
+\title{Normal Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
-Mathematical and statistical functions for the Normal distribution parameterised
-with mean and variance or \eqn{standard deviation = \sqrt(variance)} or \eqn{precision = 1/variance}.
-The mean/variance parameterisation is defined by the pdf,
-\deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)}
-where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\sigma^2} is the variance parameter.
+Mathematical and statistical functions for the Normal distribution, which
+is commonly used in significance testing, for representing models with a bell curve, and as a result of the central limit theorem.
 }
 \details{
-Whilst we recognise that the standard deviation parameterisation is used by R stats,
-we opt for the variance parameterisation as default as this appears slightly more common in popular
-online resources and textbooks.
+The Normal distribution parameterised with  variance, \eqn{\sigma^2}, and mean, \eqn{\mu}, is defined by the pdf, \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt{2\pi\sigma^2}} for \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}.
+
+The distribution is supported on the Reals.
+
+
+
+
+
+
+
+
+Also known as the Gaussian distribution.
 }
 \section{Constructor}{
  Normal$new(mean = 0, var = 1, sd = NULL, prec = NULL, decorators = NULL, verbose = FALSE)
@@ -22,35 +32,34 @@ online resources and textbooks.
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{mean} \tab numeric \tab mean, location parameter. \cr
-\code{var} \tab numeric \tab variance, squared scale parameter. \cr
-\code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
-\code{precision} \tab numeric \tab precision, squared scale parameter. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{mean} \tab numeric \tab mean, location parameter. \cr
+  \code{var} \tab numeric \tab variance, squared scale parameter. \cr
+  \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
+  \code{prec} \tab numeric \tab precision, inverse squared scale parameter. \cr
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Normal distribution can either be parameterised with variance,
-standard deviation or precision. If none are provided then var parameterisation is used with var = 1.
-If multiple are provided then parameterisatin takes the hierarchy: var, sd, prec.
-sd is defined by
-\deqn{sd = var^2}
-prec is defined by
-\deqn{prec = var^-1}
+ The Normal distribution is parameterised with \code{mean} as a numeric, and either \code{var}, \code{sd} or \code{prec} as numerics. These are related via, \deqn{sd = \sqrt(var)}\deqn{prec = 1/var} If \code{prec} is given then \code{sd} and \code{var} are ignored. If \code{sd} is given then \code{var} is ignored.
 }
 
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -59,12 +68,12 @@ prec is defined by
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -76,13 +85,14 @@ prec is defined by
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-  \code{var()} \tab \code{\link{var}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
+  \code{variance()} \tab \code{\link{variance}} \cr
+  \code{stdev()} \tab \code{\link{stdev}} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -90,7 +100,6 @@ prec is defined by
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{sd()} \tab \code{\link{sd}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -99,23 +108,53 @@ prec is defined by
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
+\examples{
+# Different parameterisations
+Normal$new(var = 1, mean = 1)
+Normal$new(prec = 2, mean = 1)
+Normal$new(mean = 1, sd = 2)
+x <- Normal$new(verbose = TRUE) # Standard normal default
+
+# Update parameters
+x$setParameterValue(var = 2)
+x$parameters()
+
+# d/p/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$variance()
+
+summary(x)
+
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions.
+}

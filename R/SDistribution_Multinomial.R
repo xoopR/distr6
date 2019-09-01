@@ -2,42 +2,45 @@
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
-#' @title Multinomial Distribution
-#'
-#' @description Mathematical and statistical functions for the Multinomial distribution parameterised
-#' with size and probabilites and defined by the pmf,
-#' \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
-#' where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{K} categories and
-#' \eqn{n = 1,2,\ldots} is the number of trials.
-#'
-#' @details The multinomial is constructed with a size and probs parameter. Size, number of trials,
-#' should not be confused with the \code{K} parameter for number of categories. \code{K} is determined
-#' automatically by the number of probabilities supplied to the \code{probs} argument, this also tells the
-#' object how many inputs to expect in \code{pdf} and \code{rand}. \code{cdf} and \code{quantile} are omitted
-#' as no closed form analytic expression could be found.
-#'
 #' @name Multinomial
+#' @template SDist
+#' @templateVar ClassName Multinomial
+#' @templateVar DistName Multinomial
+#' @templateVar uses to extend the binomial distribution to multiple variables, for example to model the rolls of multiple dice multiple times
+#' @templateVar params number of trials, \eqn{n}, and probabilities of success, \eqn{p_1,...,p_k},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
+#' @templateVar paramsupport \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}
+#' @templateVar distsupport \eqn{\sum x_i = N}
+#' @templateVar omittedDPQR \code{cdf} and \code{quantile}
+#' @templateVar constructor size = 10, probs = c(0.5, 0.5)
+#' @templateVar arg1 \code{size} \tab numeric \tab number of trials. See details. \cr
+#' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
+#' @templateVar constructorDets \code{size} as a positive whole number and \code{probs} as a vector of numerics between 0 and 1. The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect to be passed to the maths/stats methods. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)}.
+#' @templateVar additionalSeeAlso \code{\link{Binomial}} for a special case of the Multinomial distribution.
 #'
-#' @section Constructor: Multinomial$new(size, probs, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{size} \tab integer \tab number of trials. See details. \cr
-#' \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(size = 10)
+#' # Number of categories cannot be changed after construction
+#' x$setParameterValue(probs = c(1,2,3))
+#' x$parameters()
 #'
-#' @section Constructor Details: The Multinomial distribution is parameterised by size and prob.
-#' Size, N, is given as a single integer greater than zero, such that if \eqn{x} is a vector of \eqn{K} parameters
-#' passed to the pmf then it should be true that \eqn{\sum x_i = N}.
-#' The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect
-#' to be passed to the pmf function. The probability vector is automatically normalised with
-#' \deqn{probs = probs/sum(probs)}.
+#' # d/p/q/r
+#' # Note the difference from R stats
+#' x$pdf(4, 4, 2)
+#' # This allows vectorisation:
+#' x$pdf(c(1,4),c(2,4),c(7,2))
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -47,26 +50,17 @@ NULL
 Multinomial <- R6::R6Class("Multinomial", inherit = SDistribution, lock_objects = F)
 Multinomial$set("public","name","Multinomial")
 Multinomial$set("public","short_name","Multinom")
-Multinomial$set("public","traits",list(type = PosIntegers$new(zero = T, dim = "K"),
-                                  valueSupport = "discrete",
-                                  variateForm = "multivariate"))
 Multinomial$set("public","description","Multinomial Probability Distribution.")
 Multinomial$set("public","package","stats")
 
 Multinomial$set("public","mean",function(){
   return(self$getParameterValue("size") * self$getParameterValue("probs"))
 }) # TEST
-Multinomial$set("public","var",function(){
-  return(self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs")))
-}) # TEST
-Multinomial$set("public","cov",function(){
+Multinomial$set("public","variance",function(){
   cov = self$getParameterValue("probs") %*% t(self$getParameterValue("probs")) * -self$getParameterValue("size")
-  diag(cov) = self$var()
+  diag(cov) = self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
   return(cov)
-}) # TEST
-Multinomial$set("public","cor",function(){
-  return(self$cov() / (sqrt(self$var() %*% t(self$var()))))
-}) # TEST
+})
 Multinomial$set("public","skewness",function(){
   return(NaN)
 })
@@ -102,9 +96,16 @@ Multinomial$set("public", "pgf", function(z){
   return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
 }) # TEST
 
-Multinomial$set("public","setParameterValue",function(lst, error = "warn"){
-  if("probs" %in% names(lst)) lst$probs <- lst$probs/sum(lst$probs)
-  super$setParameterValue(lst, error)
+Multinomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
+  if("probs" %in% names(lst)){
+    checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
+                      .var.name = "Number of categories cannot be changed after construction.")
+    lst$probs <- lst$probs/sum(lst$probs)
+    }
+  super$setParameterValue(lst = lst, error = error)
+  invisible(self)
 })
 
 Multinomial$set("private",".getRefParams", function(paramlst){
@@ -114,27 +115,45 @@ Multinomial$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Multinomial$set("public","initialize",function(size, probs, decorators = NULL, verbose = FALSE){
+Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, size, probs, verbose)
-  self$setParameterValue(list(size = size, probs = probs))
+  self$setParameterValue(size = size, probs = probs)
 
-  pdf <- function(x1){
-    if(length(x1) != self$getParameterValue("K"))
-      stop(paste("x1 should be of length",self$getParameterValue("K")))
+  lst <- rep(list(bquote()), length(probs))
+  names(lst) <- paste("x",1:length(probs),sep="")
 
+  pdf <- function(){
 
-    if(sum(x1) != self$getParameterValue("size"))
-      return(0)
+    call = mget(paste0("x",1:self$getParameterValue("K")))
 
-    return(dmultinom(x1, self$getParameterValue("size"), self$getParameterValue("probs")))
+    if(!all(unlist(lapply(call, is.numeric))))
+      stop(paste(self$getParameterValue("K"),"arguments expected."))
+
+    if(length(unique(unlist(lapply(call,length)))) > 1)
+      stop("The same number of points must be passed to each variable.")
+
+    x = do.call(cbind,mget(paste0("x",1:self$getParameterValue("K"))))
+    z = apply(x, 1, function(y){
+      if(sum(y) != self$getParameterValue("size"))
+        return(0)
+      else
+        return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")))
+    })
+
+    return(z)
+
   }
+  formals(pdf) <- lst
+
   rand <- function(n){
-    rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs"))
+    return(data.table::data.table(t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs")))))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
                    support = Set$new(0:size, dim = length(probs)),
-                   distrDomain = PosIntegers$new(zero = T, dim = length(probs)), symmetric = FALSE)
+                   symmetric = FALSE, type = Naturals$new(dim = "K"),
+                   valueSupport = "discrete",
+                   variateForm = "multivariate")
   invisible(self)
 })

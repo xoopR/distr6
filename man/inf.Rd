@@ -9,6 +9,9 @@ inf(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Infimum as a numeric.
+}
 \description{
 Returns the distribution infimum as the infimum of the support.
 }

@@ -2,33 +2,42 @@
 #-------------------------------------------------------------
 # Arcsine Distribution Documentation
 #-------------------------------------------------------------
-#' @title Arcsine Distribution
-#'
-#' @description Mathematical and statistical functions for the Arcsine distribution parameterised
-#' with lower and upper limits. The Arcsine distribution is defined by the pdf,
-#' \deqn{f(x) = 1/(\pi\sqrt((x-a)(b-x)))}
-#' where \eqn{-\infty < a \le b < \infty} are the lower and upper limits respectively.
-#'
-#' @details The cf and mgf are omitted as no closed form analytic expression could be found.
-#'
 #' @name Arcsine
+#' @template SDist
+#' @templateVar ClassName Arcsine
+#' @templateVar DistName Arcsine
+#' @templateVar uses in the study of random walks and as a special case of the Beta distribution
+#' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}}
+#' @templateVar paramsupport \eqn{-\infty < a \le b < \infty}
+#' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar omittedVars \code{cf} and \code{mgf}
+#' @templateVar additionalDetails When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta}} is used for sampling, otherwise via inverse transform
+#' @templateVar constructor lower = 0, upper = 1
+#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
+#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
+#' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
+#' @templateVar additionalSeeAlso \code{\link{rbeta}} for the Beta distribution sampling function.
 #'
-#' @section Constructor: Arcsine$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x = Arcsine$new(lower = 2, upper = 5)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab numeric \tab lower distribution limit. \cr
-#' \code{upper} \tab numeric \tab upper distribution limit. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(upper = 4, lower = 1)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Arcsine distribution is parameterised with default support of
-#' \eqn{[0,1]}. Both the \code{lower} and \code{upper} arguments must be finite.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -38,16 +47,13 @@ NULL
 Arcsine <- R6::R6Class("Arcsine", inherit = SDistribution, lock_objects = F)
 Arcsine$set("public","name","Arcsine")
 Arcsine$set("public","short_name","Arc")
-Arcsine$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Arcsine$set("public","description","Arcsine Probability Distribution.")
 Arcsine$set("public","package","distr6")
 
 Arcsine$set("public","mean",function(){
   return((self$getParameterValue("upper") + self$getParameterValue("lower"))/2)
 })
-Arcsine$set("public","var",function(){
+Arcsine$set("public","variance",function(){
   return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2)/8)
 })
 Arcsine$set("public","skewness",function(){
@@ -68,6 +74,9 @@ Arcsine$set("public","mode",function(which = "all"){
   else
     return(c(self$getParameterValue("lower"),self$getParameterValue("upper"))[which])
 })
+Arcsine$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Arcsine$set("private",".getRefParams", function(paramlst){
   lst = list()
@@ -76,7 +85,9 @@ Arcsine$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Arcsine$set("public","setParameterValue",function(lst, error = "warn"){
+Arcsine$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] <= lst[["upper"]])
   else if("lower" %in% names(lst))
@@ -84,14 +95,15 @@ Arcsine$set("public","setParameterValue",function(lst, error = "warn"){
   else if("upper" %in% names(lst))
     checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"))
 
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("lower"),self$getParameterValue("upper"))
+  invisible(self)
 })
 
 Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper))
+  self$setParameterValue(lower = lower, upper = upper)
 
   pdf <- function(x1){
     if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
@@ -126,6 +138,9 @@ Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Interval$new(lower,upper), distrDomain = Reals$new(), symmetric = TRUE)
+                   support = Interval$new(lower,upper),  symmetric = TRUE,
+                   type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

@@ -1,90 +1,38 @@
-# dexpo = function(x, log,...){
-#   m1 = self$getParameterValue("lambda")
-#   m2 = exp(-1 * self$getParameterValue("lambda") * x)
-#   return(m1 * m2)
-# }
-# cexpo = function(x, lower.tail = T, log.p = F,...){
-#   m1 = exp(-1 * self$getParameterValue("lambda") * x)
-#   return(1 - m1)
-# }
-# continuousTester = Distribution$new("Continuous Test","ContTest",support=posReals$new(),
-#                                     symmetric=TRUE, type = posReals$new(zero=T),
-#                                     distrDomain=posReals$new(),
-#                                     pdf = dexpo, cdf = cexpo,
-#                                     parameters = list(list(id = "lambda",
-#                                                            name = "Rate",
-#                                                            default = 1,
-#                                                            settable = TRUE,
-#                                                            fittable = TRUE,
-#                                                            class = "numeric",
-#                                                            lower = 0,
-#                                                            upper = Inf,
-#                                                            description = "None")),
-#                                     paramvalues = list(lambda = 6)
-# )
-# library(testthat)
-#
-# dbin = function(x, log,...){
-#   m1 = choose(self$getParameterValue(id="size"), x)
-#   m2 = self$getParameterValue(id="prob")^x
-#   m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
-#   return(m1 * m2 * m3)
-# }
-# discreteTester = Distribution$new("Discrete Test","TestDistr",support=interval$new(0,100),
-#                                   symmetric=T, type = posNaturals$new(),
-#                                   distrDomain=posNaturals$new(),
-#                                   pdf = dbin,
-#                                   parameters = list(list(id = "prob",
-#                                                          name = "Probability of Success",
-#                                                          default = 0.5,
-#                                                          value = 0.2,
-#                                                          settable = TRUE,
-#                                                          fittable = TRUE,
-#                                                          class = "numeric",
-#                                                          lower = 0,
-#                                                          upper = 1,
-#                                                          description = "None"),
-#                                                     list(id = "size",
-#                                                          name = "Number of trials",
-#                                                          default = 10,
-#                                                          settable = TRUE,
-#                                                          fittable = TRUE,
-#                                                          class = "integer",
-#                                                          lower = 0,
-#                                                          upper = Inf,
-#                                                          description = "None")),
-#                                   decorators = list(CoreStatistics),
-#                                   paramvalues = list(size = 100)
-# )
-# test_that("check continuous convolution functions", {
-#   Exp1 = Exponential$new(rate = 1)
-#   Exp2 = Exponential$new(rate = 1)
-#   ConvE12 = Convolution$new(Exp1, Exp2, support = PosReals$new())
-#   decorate(ConvE12, CoreStatistics)
-#   expect_equal(ConvE12$pdf(1), dgamma(x = 1, shape = 2))
-#   expect_equal(ConvE12$expectation(), 2)
-#   expect_equal(continuousTester3$var(), 2)
-#   expect_equal(continuousTester3$expectation(), continuousTester$expectation() + continuousTester2$expectation())
-#   expect_equal(continuousTester3$var(), continuousTester$var() + continuousTester2$var())
-#   continuousTester4 = Convolution$new(continuousTester, continuousTester2, type = reals$new(), add = F)
-#   expect_equal(continuousTester4$expectation(), continuousTester$expectation() - continuousTester2$expectation())
-#   expect_equal(continuousTester4$var(), continuousTester$var() + continuousTester2$var())
-# })
-#
-# test_that("check discrete convolution functions",{
-#   discreteTester2 = discreteTester$clone()
-#   discreteTester2$.__enclos_env__$private$.short_name = "TestDistr2"
-#   convTest = Convolution$new(discreteTester, discreteTester2, support = interval$new(0,10))
-#   expect_equal(convTest$expectation(), discreteTester$expectation() + discreteTester2$expectation())
-#   expect_equal(convTest$var(), discreteTester$var() + discreteTester2$var())
-#   expect_silent(convTest$setParameterValue(list(TestDistr_prob = 0.3)))
-#   expect_equal(convTest$getInternalModel("TestDistr")$getParameterValue("prob"),0.3)
-#   expect_silent(convTest$setParameterValue(list(TestDistr_prob = 0.9)))
-#   convTest2 = Convolution$new(convTest, discreteTester2, type = naturals$new(),
-#                               support = interval$new(0,10))
-#   expect_equal(convTest2$pdf(1:12), dbinom(1:12, size = 6, prob = 0.9))
-#   expect_equal(convTest2$expectation(), 6*0.9)
-#   discreteTester3 = Convolution$new(discreteTester, discreteTester2, add = F, support = integers$new())
-#   expect_equal(discreteTester3$expectation(), discreteTester$expectation() - discreteTester2$expectation())
-#   expect_equal(discreteTester3$var(), discreteTester$var() + discreteTester2$var())
+library(testthat)
+
+context("Convolution")
+
+test_that("continuous add", {
+  Exp1 = Exponential$new(rate = 1)
+  Exp2 = Exponential$new(rate = 1)
+  expect_equal(round(Convolution$new(Exp1, Exp2)$pdf(1:5),4), round(dgamma(x = 1:5, shape = 2), 4))
+})
+
+test_that("continuous subtract", {
+  N1 = Normal$new(mean = 3)
+  N2 = Normal$new(mean = 2)
+  expect_equal(round(Convolution$new(N1, N2, add = FALSE)$pdf(1:5),4), round(dnorm(1:5,1,sqrt(2)),4))
+})
+
+test_that("discrete add",{
+  Bern1 = Bernoulli$new(prob = 0.1)
+  Bern2 = Bernoulli$new(prob = 0.1)
+  ConvB12 = Bern1 + Bern2
+  expect_equal(round(ConvB12$pdf(1:5),4), round(dbinom(1:5, 2, 0.1),4))
+  Geom1 = Geometric$new(prob = 0.2)
+  Geom2 = Geometric$new(prob = 0.2)
+  expect_equal(round(Convolution$new(Geom1, Geom2)$pdf(1:5),4), round(dnbinom(1:5, 2, 0.2), 4))
+})
+
+test_that("discrete subtract",{
+  expect_error(Binomial$new() - Binomial$new())
+})
+# test_that("discrete subtract", {
+#   Binom1 = Binomial$new(size = 5, prob = 0.1)
+#   Binom2 = Binomial$new(size = 4, prob = 0.1)
+#   ConvBinom = Binom1 - Binom2
+#   decorate(ConvBinom,CoreStatistics)
+#   ConvBinom$mean()
+#   ConvBinom$variance()
+#   expect_equal(round(ConvBinom$pdf(1:5),4), round(dbinom(1:5, 10, 0.1),4))
 # })

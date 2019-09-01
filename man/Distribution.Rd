@@ -3,12 +3,19 @@
 \name{Distribution}
 \alias{Distribution}
 \title{Generalised Distribution Object}
+\value{
+Returns R6 object of class Distribution.
+}
 \description{
 A generalised distribution object for defining custom probability distributions
-  as well as serving as the parent class to specific, familiar distributions. Common
-  mathematical and statistical methods for distributions are defined here with approximate numerical
-  calculations (as opposed to analytical results).
+  as well as serving as the parent class to specific, familiar distributions.
 }
+\section{Constructor}{
+ Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
+symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
@@ -17,7 +24,6 @@ A generalised distribution object for defining custom probability distributions
 \code{short_name} \tab character \tab Short name to identify distribution. \cr
 \code{type} \tab SetInterval \tab Scientific type. \cr
 \code{support} \tab SetInterval \tab Distribution support. See Details. \cr
-\code{distrDomain} \tab SetInterval \tab Distribution domain See Details. \cr
 \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
 \code{pdf} \tab function \tab See Details. \cr
 \code{cdf} \tab function \tab See Details. \cr
@@ -36,10 +42,9 @@ A generalised distribution object for defining custom probability distributions
 
   The most basic Distribution object consists of a name and one of pdf/cdf.
 
-  If supplied, \code{type}, \code{support} and \code{distrDomain} should be given as an R6 SetInterval
-  object. If none are supplied then the set of Reals is taken to be the type and the dimension is the
-  number of formal arguments in the pdf/cdf. If only \code{type} is supplied then this is taken to also
-  be the support and domain.
+  If supplied, \code{type} and \code{support} should be given as an R6 SetInterval object. If neither are supplied
+  then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
+  If only \code{type} is supplied then this is taken to also be the support.
 
   By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
   Use the \code{\link{FunctionImputation}} decorator to generate these.
@@ -47,8 +52,8 @@ A generalised distribution object for defining custom probability distributions
   See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
 
   \code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
-  Distribution in construction. Decorators can also be added after construction. See
-  \code{\link{DistributionDecorator}} and \code{\link{decorate}} for more details.
+  Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
+  for more details.
 
   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
@@ -58,11 +63,10 @@ A generalised distribution object for defining custom probability distributions
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm.
   }
 }
 
@@ -71,12 +75,12 @@ A generalised distribution object for defining custom probability distributions
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -85,25 +89,31 @@ A generalised distribution object for defining custom probability distributions
   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
   \tab \cr \tab \cr \tab \cr
-  \strong{p/d/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
+  \tab \cr \tab \cr \tab \cr
+  \strong{Statistical Methods} \tab \strong{Link} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
+  \code{stdev()} \tab \code{\link{stdev}}\cr
+  \code{median()} \tab \code{\link{median.Distribution}} \cr
+  \code{iqr()} \tab \code{\link{iqr}} \cr
+  \code{correlation()} \tab \code{\link{correlation}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
@@ -113,5 +123,5 @@ A generalised distribution object for defining custom probability distributions
 \seealso{
 See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 Intervals. See \code{\link{ParameterSet}} for parameter details. See
-\code{\link{DistributionDecorator}} for Decorator details.
+\code{\link{decorate}} for Decorator details.
 }

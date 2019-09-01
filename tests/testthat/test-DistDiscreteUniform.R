@@ -5,12 +5,10 @@ context("DiscreteUniform distribution")
 test_that("constructor",{
   expect_silent(DiscreteUniform$new())
   expect_error(DiscreteUniform$new(lower = 5, upper = 3))
-  expect_silent(DiscreteUniform$new(lower = 2.3, upper = 3))
   expect_silent(DiscreteUniform$new(lower = 2, upper = 8))
 })
 
 test_that("parameters", {
-  expect_equal(DiscreteUniform$new(lower = 2.3, upper = 3)$getParameterValue("lower"),2)
   expect_equal(DiscreteUniform$new(lower = 2, upper = 3)$getParameterValue("lower"),2)
   expect_equal(DiscreteUniform$new(lower = 2, upper = 3)$getParameterValue("upper"),3)
   expect_equal(DiscreteUniform$new(lower = 2, upper = 3)$getParameterValue("N"),2)
@@ -29,7 +27,7 @@ test_that("properties & traits",{
 du = DiscreteUniform$new()
 test_that("statistics",{
   expect_equal(du$mean(), 0.5)
-  expect_equal(du$var(), 0.25)
+  expect_equal(du$variance(), 0.25)
   expect_equal(du$skewness(), 0)
   expect_equal(du$kurtosis(T), -2)
   expect_equal(du$kurtosis(F), 1)
@@ -47,10 +45,10 @@ test_that("statistics",{
 
 test_that("update parameters",{
   du = DiscreteUniform$new(lower=1,upper=5)
-  expect_error(du$setParameterValue(list(upper = 0)))
-  expect_silent(du$setParameterValue(list(upper = 2)))
-  expect_error(du$setParameterValue(list(lower = 3)))
-  expect_silent(du$setParameterValue(list(lower = 1)))
-  expect_silent(du$setParameterValue(list(lower = 1, upper = 3)))
-  expect_error(du$setParameterValue(list(lower = 1, upper = 0)))
+  expect_error(du$setParameterValue(lst = list(upper = 0)))
+  expect_silent(du$setParameterValue(lst = list(upper = 2)))
+  expect_error(du$setParameterValue(lst = list(lower = 3)))
+  expect_silent(du$setParameterValue(lst = list(lower = 1)))
+  expect_silent(du$setParameterValue(lst = list(lower = 1, upper = 3)))
+  expect_error(du$setParameterValue(lst = list(lower = 1, upper = 0)))
 })

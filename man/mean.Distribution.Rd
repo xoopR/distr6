@@ -11,11 +11,14 @@
 
 \item{...}{Additional arguments.}
 }
+\value{
+Mean as a numeric.
+}
 \description{
 Arithmetic mean for the probability distribution.
 }
 \details{
-The artihmetic mean of a (discrete) probability distribution X is the expectation
+The arithmetic mean of a (discrete) probability distribution X is the expectation
 \deqn{E_X(X) = \sum p_X(x)*x}
 with an integration analogue for continuous distributions.
 

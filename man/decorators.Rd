@@ -9,6 +9,9 @@ decorators(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Character vector of decorators.
+}
 \description{
 Returns the decorators added to a distribution.
 }
@@ -17,5 +20,5 @@ Returns the decorators added to a distribution.
 }
 
 \seealso{
-\code{\link{decorate}} and \code{\link{DistributionDecorator}}
+\code{\link{decorate}}
 }

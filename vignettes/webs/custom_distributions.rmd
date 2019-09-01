@@ -1,0 +1,126 @@
+---
+title: "Custom Distributions"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Custom Distributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/sets.html) introduced symbolic sets and intervals in distr6. This final tutorial puts everything we've learnt together to create your own custom distribution object (this is not the same as creating a new class!). All distributions implemented in distr6 inherit from class `SDistribution` this tells you that they are the 'special distributions' that we have implemented. `SDistribution` is an 'abstract' class, this means it can't be constructed to make a `SDistribution` object, however the `Distribution` class can be.
+
+## Constructing a Custom Distribution
+
+The most basic distribution that can be constructed consists of a name and one of pdf or cdf. But most of the time we will also require a `ParameterSet`. We will demonstrate all of this by using the running example of a custom uniform distribution.
+
+### self
+
+The `self` keyword is used to tell an object that it should call a method on itself. For example we have used the method `getParameterValue()` on objects before but often we need the object to use this method on itself, so we use `self$getParameterValue()` this is especially important when defining d/p/q/r functions.
+
+The pdf of the Uniform distribution is defined by
+$$f(x) = 1/(b - a)$$
+where $b$ and $a$ are upper and lower limits respectively.
+
+Hence our pdf function needs to get the values of these limits,
+
+```{r}
+pdf <- function(x1)return(1/(self$getParameterValue("upper")-self$getParameterValue("lower")))
+```
+
+In distr6, all pdf and cdf functions use the first argument of `x1` this is because it generalises well to multivariate distributions which take as arguments `x1, x2,...`. You may also notice that we haven't added a `log` or `log.p` argument, even though these are in implemented distributions, this is because these are added automatically in construction (as well as lower.tail arguments)!
+
+### ParameterSet
+
+We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we have to first construct a `ParameterSet` objects. In fact we have seen these objects multiple times throughout these tutorials, they are what we see when we call `parameters()` on a distribution. Every time you use the `set/getParameterSet()` methods these are actually called on the `ParameterSet`. Constructing a ParameterSet is simple, you just have to remember which arguments are required, and luckily these are all given in `?ParameterSet`
+
+```{r}
+ps <- ParameterSet$new(id = list("lower","upper"), value = c(1,10),
+                       support = list(Reals$new(),Reals$new()),
+                       settable = list(TRUE, TRUE))
+print(ps)
+```
+
+We have omitted the `updateFunc` and `description` arguments as these are very rarely used in custom distributions. The arguments passed to the constructor above are respectively: a unique ID for the parameter, the starting (or default) value of the parameter, the parameter support (where it can take values), and whether or not the parameter can be machine updated (i.e. can an automated procedure be used to manipulate its value).
+
+### Constructing the Distribution
+
+We now have the basics required to construct our custom uniform distribution, the last thing we require is the distribution support. Often the support can be omitted, in which the default set of Reals will be used, but in the case of the uniform distribution the support is very important.
+
+```{r}
+support = Interval$new(1, 10)
+U <- Distribution$new(name = "Uniform", pdf = pdf, parameters = ps, support = support)
+```
+
+The other intervals are filled in with the defaults,
+```{r}
+U$type()
+U$support()
+```
+
+And now we can use your distribution:
+```{r}
+U$pdf(1:10)
+
+# The log argument is automatically added
+U$pdf(4, log = T)
+
+# Automatically returns 0 when outside the support
+U$pdf(-2)
+U$pdf(11)
+```
+
+But the cdf returns NULL as we never supplied a function, so we could supply one or we could impute it using the `FunctionImputation` decorator:
+```{r}
+U$cdf(1:10)
+decorate(U, FunctionImputation)
+U$cdf(1:10)
+
+# The same as expected
+punif(1:10, min=1, max=10)
+
+# And again other arguments are automatically added
+U$cdf(5, lower.tail = FALSE, log.p = TRUE)
+```
+
+### Extra Arguments
+
+Finally a whole host of other arguments could be supplied to the Distribution to make the results more precise, the full list can be seen in `?Distribution`. A couple of things to take care about are:
+
+1. pdfs and cdfs should have the same number of arguments. For example if the distribution is univariate both should have one argument only (and with the same name).
+2. By default the type and support are taken to be the Reals, if this is not the case then the true ones should be supplied as `SetInterval` objects.
+3. valueSupport and variateForm are automatically inferred from the distribution's type. If the type is in the Integers or Naturals then the valueSupport is taken to be discrete, otherwise continuous. If the dimension of the type is $1$ then the variateForm is taken to be univariate, multivariate otherwise. These can be overwritten for mixture and matrixvariate distributions.
+
+## Putting Everything Together
+
+```{r}
+cdf <- function(x1)return((x1 -self$getParameterValue("lower"))/ (self$getParameterValue("upper")-self$getParameterValue("lower")))
+
+U <- Distribution$new(name = "Uniform", short_name = "unif", type = Reals$new(), support = Interval$new(1, 10),  symmetric = TRUE, pdf = pdf, cdf = cdf, parameters = ps, description = "Custom uniform distribution")
+
+decorate(U, list(CoreStatistics, ExoticStatistics, FunctionImputation))
+
+U$mean()
+U$variance()
+U$hazard(5)
+U$rand(5)
+U$kurtosis()
+U$survivalPNorm(3, 2, 6)
+```
+
+
+## Summary
+
+And that's all there is to it! These tutorials have covered everything from the basics of constructing an implemented `SDistribution` right the way through, accessing and setting parameters, analysis distributions, manipulating them with decorators and wrappers, and finally adding your own custom distribution and using decorators to analyse it. Everything we have covered also applies to the Kernels in distr6, although these have less functionality, to see which are implemented run `listKernels()`.
+
+The [Extension Guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html) explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The [project wiki](https://github.com/alan-turing-institute/distr6/wiki) includes design documentation and contributor guidelines, please read these before making a pull request.
+
+We hope you find distr6 intuitive to use but if you have any questions or want to report a bug, please don't hesitate to [raise am issue](https://github.com/alan-turing-institute/distr6/issues).
+
+Good luck and happy coding!

@@ -4,7 +4,8 @@
 \alias{quantile.Distribution}
 \title{Inverse Cumulative Distribution Function}
 \usage{
-\method{quantile}{Distribution}(x, p, ..., lower.tail = TRUE, log.p)
+\method{quantile}{Distribution}(x, p, ..., lower.tail = TRUE,
+  log.p = FALSE, simplify = TRUE)
 }
 \arguments{
 \item{x}{Distribution.}
@@ -15,7 +16,13 @@
 
 \item{lower.tail}{logical; if TRUE, probabilities p are given as log(p).}
 
-\item{log.p}{ignored, retained for consistency.}
+\item{log.p}{logical; if TRUE then \eqn{q_X(exp(p))} is returned.}
+
+\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
+}
+\value{
+Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
+or as a data.table.
 }
 \description{
 Returns the inverse cumulative distribution, aka quantile, function for a distribution
@@ -23,7 +30,7 @@ evaluated at a given point between 0 and 1.
 }
 \details{
 The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
- \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}
+ \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
 
  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
 
@@ -33,13 +40,13 @@ To impute the quantile, use \code{decorate(distribution, FunctionImputation)}, t
 calculation for the quantile with warning.
 
 Additional named arguments can be passed, which are required for composite distributions such as
-\code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
+\code{\link{ProductDistribution}} and \code{\link{VectorDistribution}}.
 }
 \section{R6 Usage}{
- $quantile(p, ..., lower.tail = TRUE, log.p = FALSE)
+ $quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 }
 
 \seealso{
-\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistial functions.
+\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
 \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 }

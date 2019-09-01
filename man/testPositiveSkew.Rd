@@ -4,27 +4,26 @@
 \alias{testPositiveSkew}
 \alias{checkPositiveSkew}
 \alias{assertPositiveSkew}
-\alias{isPositiveSkew}
 \title{assert/check/test/PositiveSkew}
 \usage{
-assertPositiveSkew(x)
-checkPositiveSkew(x)
-testPositiveSkew(x)
-isPositiveSkew(x)
+testPositiveSkew(object, errormsg = paste(object$short_name,
+  "is not positive skew"))
 
-checkPositiveSkew(x)
+checkPositiveSkew(object, errormsg = paste(object$short_name,
+  "is not positive skew"))
 
-assertPositiveSkew(x)
-
-isPositiveSkew(x)
+assertPositiveSkew(object, errormsg = paste(object$short_name,
+  "is not positive skew"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is positive skew.

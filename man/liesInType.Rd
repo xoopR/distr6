@@ -4,7 +4,7 @@
 \alias{liesInType}
 \title{Test if Data Lies in Distribution Type}
 \usage{
-liesInType(object, x, all = TRUE)
+liesInType(object, x, all = TRUE, bound = FALSE)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -12,6 +12,12 @@ liesInType(object, x, all = TRUE)
 \item{x}{vector of numerics to test.}
 
 \item{all}{logical, see details.}
+
+\item{bound}{logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.}
+}
+\value{
+Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
+lies in the distribution type or FALSE otherwise.
 }
 \description{
 Tests if the given data lies in the type of the Distribution, either tests if all
@@ -23,9 +29,9 @@ lies in the type. If \code{all} is \code{FALSE} then returns a vector of logical
 in the vector \code{x}.
 }
 \section{R6 Usage}{
- $liesInType(x, all = TRUE)
+ $liesInType(x, all = TRUE, bound = FALSE)
 }
 
 \seealso{
-\code{\link{liesInSupport}} and \code{\link{liesInDistrDomain}}
+\code{\link{liesInSupport}}
 }

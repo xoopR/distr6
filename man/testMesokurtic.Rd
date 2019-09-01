@@ -4,27 +4,26 @@
 \alias{testMesokurtic}
 \alias{checkMesokurtic}
 \alias{assertMesokurtic}
-\alias{isMesokurtic}
 \title{assert/check/test/Mesokurtic}
 \usage{
-assertMesokurtic(x)
-checkMesokurtic(x)
-testMesokurtic(x)
-isMesokurtic(x)
+testMesokurtic(object, errormsg = paste(object$short_name,
+  "is not mesokurtic"))
 
-checkMesokurtic(x)
+checkMesokurtic(object, errormsg = paste(object$short_name,
+  "is not mesokurtic"))
 
-assertMesokurtic(x)
-
-isMesokurtic(x)
+assertMesokurtic(object, errormsg = paste(object$short_name,
+  "is not mesokurtic"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is mesokurtic.

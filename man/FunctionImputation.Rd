@@ -2,51 +2,61 @@
 % Please edit documentation in R/DistributionDecorator_FunctionImputation.R
 \name{FunctionImputation}
 \alias{FunctionImputation}
-\title{Numeric Pdf/Cdf/Quantile/Rand Functions}
+\title{Imputed Pdf/Cdf/Quantile/Rand Functions}
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
+imputed if previously missing.
+}
 \description{
-Numeric statistical functions including density/mass function, distribution function,
-inverse distribution and simulation.
+This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
+by using strategies dependent on which methods are already present in the distribution.
 }
 \details{
-Decorator objects add functionality to the given Distribution object
- by copying methods in the decorator environment to the chosen Distribution environment. Use the
- \code{\link{decorate}} function to decorate a Distribution. The functions are imputed based on
- which are already available in the distribution. For example if the pdf is known then this is used
- to generate the cdf, quantile and rand. But if the cdf and pdf are both known, then cdf is used to
- generate the quantile.
+Decorator objects add functionality to the given Distribution object by copying methods
+in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
+below to find details of the methods that are added to the Distribution. Methods already
+present in the distribution are not overwritten by the decorator.
 
- All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations.
+Use \code{\link{decorate}} to decorate a Distribution.
+
+All methods in this decorator use numerical approximations and therefore better results may be available
+from analytic computations.
 }
+\section{Constructor}{
+ FunctionImputation$new(distribution)
+}
+
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{distribution} \tab distribution \tab Distribution to decorate. \cr
 }
 }
 
-\section{Public Methods}{
+\section{Added Methods}{
 
 \tabular{lll}{
-\strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-\code{pdf(x1)} \tab numeric x numeric -> numeric \tab Numeric pdf evaluated at x1. \cr
-\code{cdf(x1)} \tab numeric x numeric -> numeric \tab Numeric cdf evaluated at x1. \cr
-\code{quantile(p)} \tab numeric x numeric -> numeric \tab Numeric inverse cdf evaluated at x1. \cr
-\code{rand(n)} \tab integer x numeric -> numeric \tab n simulations from distribution. \cr
+\strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
+\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab Density/mass function \tab \code{\link{pdf}} \cr
+\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Distribution function \tab \code{\link{cdf}}\cr
+\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Quantile function \tab \code{\link{quantile.Distribution}} \cr
+\code{rand(n, simplify = TRUE)} \tab Simulation function \tab \code{\link{rand}} \cr
 }
 }
 
 \examples{
-x = Distribution$new("Test", pdf = function(x) 1/(4-1), support = Interval$new(1,4),
+x = Distribution$new("Test", pdf = function(x) 1/(4-1),
+support = Interval$new(1,4),
 type = Reals$new())
 decorate(x, FunctionImputation)
 plot(x$pdf(0:5))
 plot(x$cdf(0:5))
 
-x = Distribution$new("Test", pdf = function(x) 1/(4-1), decorators = ExoticStatistics)
+x = Distribution$new("Test", pdf = function(x) 1/(4-1),
+decorators = ExoticStatistics)
 x$cdf(1)
 }
 \seealso{
-\code{\link{DistributionDecorator}}
+\code{\link{decorate}}, \code{\link{listDecorators}}
 }

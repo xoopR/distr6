@@ -1,15 +1,25 @@
-#' @title Lists Implemented R6 Distributions
-#' @description Lists R6 distributions, either all in a data.frame or filtered by chosen
-#' traits and/or properties.
-#' @param simplify logical.
-#' @param traits list of traits to filter distributions by.
-#' @param view logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.
+#' @title Lists Implemented Distributions
+#' @description Lists distr6 distributions in a data.table or a character vector, can be filtered by
+#' traits and implemented package.
+#' @param simplify logical. If FALSE (default) returns distributions with traits as a data.table, otherwise returns
+#' distribution names as characters.
+#' @param filter list to filter distributions by. See examples.
+#' @seealso \code{\link{SDistribution}}
+#' @return Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SDistribution}s and their traits.
 #' @examples
 #' listDistributions()
-#' listDistributions(traits = list(VariateForm = "univariate"))
-#' listDistributions(traits = list(ValueSupport = "discrete"))
+#'
+#' # Filter list
+#' listDistributions(filter = list(VariateForm = "univariate"))
+#'
+#' # Filter is case-insensitive
+#' listDistributions(filter = list(VaLuESupport = "discrete"))
+#'
+#' # Multiple filters
+#' listDistributions(filter = list(VaLuESupport = "discrete", package = "distr6"))
+#'
 #' @export
-listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
+listDistributions <- function(simplify=FALSE, filter=NULL){
   y = sapply(ls(name="package:distr6"),function(x){
     if(inherits(get(x),"R6ClassGenerator")){
       if(environmentName(get(x)$get_inherit()) == "SDistribution_generator")
@@ -23,32 +33,47 @@ listDistributions <- function(simplify=FALSE, traits=NULL, view = FALSE){
   if(simplify)
     return(as.character(y))
   else{
-    distrs = do.call(rbind.data.frame,lapply(y, function(x){
+    distrs = data.table::rbindlist(lapply(y, function(x){
       x = get(x)
       ClassName = x$classname
-      ShortName = x$public_fields$short_name
-      Type = x$public_fields$traits$type$getSymbol()
-      ValueSupport = x$public_fields$traits$valueSupport
-      VariateForm = x$public_fields$traits$variateForm
       Package = x$public_fields$package
-      return(cbind(ShortName, ClassName, Type, ValueSupport, VariateForm, Package))
+      ShortName = x$public_fields$short_name
+
+      sup <- body(x$public_methods$initialize)[grepl("super$initialize", body(x$public_methods$initialize), fixed = T)]
+      if(grepl("continuous", sup))
+        ValueSupport = "continuous"
+      else if(grepl("discrete", sup))
+        ValueSupport = "discrete"
+      # else
+      #   ValueSupport = "mixture"
+
+      if(grepl("univariate", sup))
+        VariateForm = "univariate"
+      else if(grepl("multivariate", sup))
+        VariateForm = "multivariate"
+      # else
+      #   VariateForm = "matrixvariate"
+
+      # match = regexpr('type[[:blank:]]*=[[:blank:]]*[[:alpha:]]*[[:punct:]]{1}new\\((.*)\\)$', sup)
+      # sup = substr(sup, match[1], attr(match, "match.length") + match[1])
+      # sup = substr(sup,1,regexpr("\\)",sup)[1])
+      # Type = eval(parse(text = trimws(substr(sup, regexpr("=", sup, fixed = T)[1]+1, nchar(sup)))))$getSymbol()
+      # return(data.table::data.table(ShortName, ClassName, Type = Type, ValueSupport, VariateForm, Package))
+      return(data.table::data.table(ShortName, ClassName, ValueSupport, VariateForm, Package))
     }))
     row.names(distrs) = NULL
-    if(!is.null(traits)){
-      names(traits) = tolower(names(traits))
-      if(checkmate::testList(traits)){
-        if(is.null(traits$valuesupport) & !is.null(traits$variateform))
-          distrs = dplyr::filter(distrs, distrs$VariateForm == traits$variateform)
-        else if(is.null(traits$variateform) & !is.null(traits$valuesupport))
-          distrs = dplyr::filter(distrs, distrs$ValueSupport == traits$valuesupport)
-        else if(!is.null(traits$variateform) & !is.null(traits$valuesupport))
-          distrs = dplyr::filter(distrs, distrs$VariateForm == traits$variateform & distrs$ValueSupport == traits$valuesupport)
+    if(!is.null(filter)){
+      names(filter) = tolower(names(filter))
+      if(checkmate::testList(filter)){
+        if(!is.null(filter$variateform))
+          distrs = subset(distrs, distrs$VariateForm == filter$variateform)
+        if(!is.null(filter$valuesupport))
+          distrs = subset(distrs, distrs$ValueSupport == filter$valuesupport)
+        if(!is.null(filter$package))
+          distrs = subset(distrs, distrs$Package == filter$package)
       }
     }
-    if("ShortName" %in% rownames(data.frame(distrs))) distrs = t(distrs)
-    if(view)
-      utils::View(data.frame(distrs))
-    else
-      return(data.frame(distrs))
+
+    return(data.table::data.table(distrs))
   }
 }

@@ -11,8 +11,21 @@ decorate(distribution, decorators)
 
 \item{decorators}{list of decorators}
 }
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with the methods listed
+from one of the available decorators added to the SDistribution methods.
+}
 \description{
-A convenient S3 function to decorate R6 distributions
+Functionality to decorate R6 Distributions (and child classes) with extra methods.
+}
+\details{
+Decorating is the process of adding methods to classes that are not part of the core
+interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators are currently available. The primary
+use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
+to impute missing d/p/q/r functions.
+
+The \code{decorators} parameter should either be a list of decorator classes (i.e. not as strings)
+or a single decorator class; see examples.
 }
 \examples{
 B <- Binomial$new()
@@ -22,7 +35,10 @@ E <- Exponential$new()
 decorate(E, list(CoreStatistics, ExoticStatistics))
 
 }
+\references{
+Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
+of Reusable Object-Oriented Software.” Addison-Wesley.
+}
 \seealso{
-\code{\link{DistributionDecorator}} for the abstract decorator class and
 \code{\link{listDecorators}} for available decorators.
 }

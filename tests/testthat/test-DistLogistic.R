@@ -6,6 +6,8 @@ test_that("constructor",{
   expect_silent(Logistic$new())
   expect_silent(Logistic$new(mean = 1))
   expect_silent(Logistic$new(scale = 1))
+  expect_silent(Logistic$new(sd = 2))
+  expect_message(Logistic$new(sd = 2, verbose = T))
   expect_error(Logistic$new(scale = 0))
 
   expect_equal(Logistic$new(mean = 2)$getParameterValue("mean"), 2)
@@ -26,7 +28,8 @@ test_that("properties & traits",{
 test_that("statistics",{
   expect_equal(l$mean(), 0)
   expect_equal(l$mode(), 0)
-  expect_equal(l$var(), pi^2/3)
+  expect_equal(l$variance(), pi^2/3)
+  expect_equal(l$pgf(1), NaN)
   expect_equal(l$skewness(), 0)
   expect_equal(l$kurtosis(T), 1.2)
   expect_equal(l$kurtosis(F), 4.2)

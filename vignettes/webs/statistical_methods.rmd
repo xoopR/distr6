@@ -1,0 +1,58 @@
+---
+title: "Statistical Methods"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Statistical Methods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html) we constructed a Normal distribution and accessed and updated its parameters for a variety of parameterisations. In this tutorial we cover how to access mathematical and statistical methods of the Normal distribution including the `dnorm/pnorm/qnorm/rnorm` equivalents in distr6.
+
+## d/p/q/r
+
+The advantage of distr6 over R stats is that once a distribution is constructed, it's very easy to find properties and results from the distribution by changing very little. For simple distributions like the Normal distribution, this may not seem like a big difference, but for more complicated ones with multiple parameters, you'll find yourself saving a lot of time!
+
+Once again we start with constructing the Standard Normal distribution
+```{r}
+N <- Normal$new()
+```
+
+For simplicity, we refer to both the probability density functions of continuous distributions and probability mass functions of discrete distributions, as the "pdf" function. This is in line with R stats using "d" for "density". The other statistical methods from R stats are referred to as "cdf", "quantile" and "rand", the same as in R stats:
+
+```{r}
+N$pdf(1:2) # Density evaluated at points '1' and '2'
+N$cdf(1:2) # Distribution function evaluated at points '1' and '2'
+N$quantile(0.975) # Quantile function evaluated at 0.975
+N$rand(5) # 5 samples from the Normal distribution
+```
+
+## Other Mathematical and Statistical Methods
+
+We have seen in the [first tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html) how the `summary` method can be used to view quick statistics about a probability distribution, i.e.
+```{r}
+summary(N)
+```
+
+But all these statistics can be accessed individually as well. To see the full list of available methods view the 'Statistical Methods' section of the distribution help page, `?Normal`. All probability distributions have the same methods available if possible, i.e. If there is an analytic expression for a statistical result, then we provide it! Below are just a few examples
+
+```{r}
+N$mean()
+N$variance()
+N$skewness()
+N$kurtosis(excess = FALSE)
+N$cf(2)
+N$mgf(2)
+```
+
+
+## Summary
+
+In this tutorial we looked at using the d/p/q/r functions in distr6 and accessing other statistical results. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html) we take a quick look at distribution properties and traits, whilst trying not to get into too big a discussion about object-oriented programming!

@@ -4,30 +4,29 @@
 \alias{testDistribution}
 \alias{checkDistribution}
 \alias{assertDistribution}
-\alias{isDistribution}
-\title{assert/check/test/isDistribution}
+\title{assert/check/test/Distribution}
 \usage{
-assertDistribution(x)
-checkDistribution(x)
-testDistribution(x)
-isDistribution(x)
+testDistribution(object, errormsg = paste(object,
+  "is not an R6 Distribution object"))
 
-checkDistribution(x)
+checkDistribution(object, errormsg = paste(object,
+  "is not an R6 Distribution object"))
 
-assertDistribution(x)
-
-isDistribution(x)
+assertDistribution(object, errormsg = paste(object,
+  "is not an R6 Distribution object"))
 }
 \arguments{
-\item{x}{object to test}
+\item{object}{object to test}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is an R6 Distribution
+Validation checks to test if a given object is an R6 Distribution.
 }
 \examples{
 testDistribution(5) # FALSE

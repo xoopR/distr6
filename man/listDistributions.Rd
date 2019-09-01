@@ -2,23 +2,36 @@
 % Please edit documentation in R/listDistributions.R
 \name{listDistributions}
 \alias{listDistributions}
-\title{Lists Implemented R6 Distributions}
+\title{Lists Implemented Distributions}
 \usage{
-listDistributions(simplify = FALSE, traits = NULL, view = FALSE)
+listDistributions(simplify = FALSE, filter = NULL)
 }
 \arguments{
-\item{simplify}{logical.}
+\item{simplify}{logical. If FALSE (default) returns distributions with traits as a data.table, otherwise returns
+distribution names as characters.}
 
-\item{traits}{list of traits to filter distributions by.}
-
-\item{view}{logical, if TRUE displays Distributions in Viewer. Ignored if \code{simplify} is FALSE.}
+\item{filter}{list to filter distributions by. See examples.}
+}
+\value{
+Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SDistribution}s and their traits.
 }
 \description{
-Lists R6 distributions, either all in a data.frame or filtered by chosen
-traits and/or properties.
+Lists distr6 distributions in a data.table or a character vector, can be filtered by
+traits and implemented package.
 }
 \examples{
 listDistributions()
-listDistributions(traits = list(VariateForm = "univariate"))
-listDistributions(traits = list(ValueSupport = "discrete"))
+
+# Filter list
+listDistributions(filter = list(VariateForm = "univariate"))
+
+# Filter is case-insensitive
+listDistributions(filter = list(VaLuESupport = "discrete"))
+
+# Multiple filters
+listDistributions(filter = list(VaLuESupport = "discrete", package = "distr6"))
+
+}
+\seealso{
+\code{\link{SDistribution}}
 }

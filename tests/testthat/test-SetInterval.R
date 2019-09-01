@@ -33,3 +33,9 @@ test_that("getters ()",{
   expect_equal(si$type(), "()")
   expect_equal(si$getSymbol(), "T")
 })
+
+si = SetInterval$new(symbol = "T",upper=10,lower=1,dimension = 1,type="()",class="numeric")
+test_that("liesInSetInterval",{
+  expect_true(si$liesInSetInterval(10, bound = TRUE))
+  expect_false(si$liesInSetInterval(10, bound = FALSE))
+})

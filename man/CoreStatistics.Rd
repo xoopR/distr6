@@ -3,28 +3,34 @@
 \name{CoreStatistics}
 \alias{CoreStatistics}
 \title{Core Statistical Methods for Distributions}
+\value{
+Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
+added to the SDistribution methods.
+}
 \description{
-Added functionality to distribution objects for numerical statistical
-  methods. Including a generalised expectation function for more complex numerical calculations.
+This decorator adds numeric methods for missing analytic expression in distr6 Distribution
+objects as well as adding generalised expectation and moments functions.
 }
 \details{
-Decorator objects add functionality to the given Distribution object
- by copying methods in the decorator environment to the chosen Distribution environment. Use the
- \code{\link{decorate}} function to decorate a Distribution.
+Decorator objects add functionality to the given Distribution object by copying methods
+in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
+below to find details of the methods that are added to the Distribution. Methods already
+present in the distribution are not overwritten by the decorator.
 
- All methods in this decorator use numerical approximations and therefore better results may be available
- from analytic computations. See below for the methods added to a distribution after decorating with
- \code{CoreStatistics}.
+Use \code{\link{decorate}} to decorate a Distribution.
+
+All methods in this decorator use numerical approximations and therefore better results may be available
+from analytic computations.
 }
 \section{Constructor}{
- CoreStatistics$new(dist)
+ CoreStatistics$new(distribution)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{dist} \tab distribution \tab Distribution to decorate. \cr
+\code{distribution} \tab distribution \tab Distribution to decorate. \cr
 }
 }
 
@@ -41,9 +47,8 @@ Decorator objects add functionality to the given Distribution object
 \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
 \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
 \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
-\code{var()} \tab Variance \tab \code{\link{var}} \cr
-\code{cov()} \tab Covariance \tab \code{\link{cov}} \cr
-\code{cor()} \tab Correlation \tab \code{\link{cor}} \cr
+\code{variance()} \tab Variance \tab \code{\link{variance}} \cr
+\code{mean()} \tab Arithmetic mean \tab \code{\link{mean.Distribution}} \cr
 }
 }
 
@@ -57,5 +62,5 @@ x$kthmoment(4)
 
 }
 \seealso{
-\code{\link{DistributionDecorator}}, \code{\link{decorate}} and \code{\link{ExoticStatistics}}
+\code{\link{decorate}}, \code{\link{listDecorators}}
 }

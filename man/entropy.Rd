@@ -11,12 +11,15 @@ entropy(object, base = 2)
 
 \item{base}{base of the entropy logarithm, default = 2 (Shannon entropy)}
 }
+\value{
+Entropy with given base as a numeric.
+}
 \description{
 (Information) Entropy of a distribution
 }
 \details{
 The entropy of a (discrete) distribution is defined by
-\deqn{- sum f_X * log(f_X)}
+\deqn{- \sum (f_X)log(f_X)}
 where \eqn{f_X} is the pdf of distribution X, with an integration analogue for continuous distributions.
 The base of the logarithm of the equation determines the type of entropy computed. By default we use
 base 2 to compute entropy in 'Shannons' or 'bits'.

@@ -11,6 +11,9 @@ cf(object, t)
 
 \item{t}{integer to evaluate characteristic function at.}
 }
+\value{
+Characteristic function evaluated at t as a numeric.
+}
 \description{
 Characteristic function of a distribution
 }

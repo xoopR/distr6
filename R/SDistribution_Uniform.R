@@ -2,32 +2,39 @@
 #-------------------------------------------------------------
 # Uniform Distribution Documentation
 #-------------------------------------------------------------
-#' @title Uniform Distribution
-#'
-#' @description Mathematical and statistical functions for the Uniform distribution parameterised
-#' with lower and upper limits. The Uniform distribution is defined by the pdf,
-#' \deqn{f(x) = 1/(b-a)}
-#' where \eqn{-\infty < a < b < \infty}, are the lower and upper limits respectively.
-#'
 #' @name Uniform
+#' @template SDist
+#' @templateVar ClassName Uniform
+#' @templateVar DistName Uniform
+#' @templateVar uses to model continuous events occurring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling
+#' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/(b-a)}
+#' @templateVar paramsupport \eqn{-\infty < a < b < \infty}
+#' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar constructor lower = 0, upper = 1
+#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
+#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
+#' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
 #'
-#' @section Constructor: Uniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x <- Uniform$new(lower = -10, upper = 5)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab integer \tab lower distribution limit. \cr
-#' \code{upper} \tab integer \tab upper distribution limit. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(lower = 2, upper = 7)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Uniform distribution is parameterised with lower = 0 and
-#' upper = 1 limits respectively.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
+#' # Statistics
+#' x$mean()
+#' x$variance()
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' summary(x)
 #'
 #' @export
 NULL
@@ -37,9 +44,6 @@ NULL
 Uniform <- R6::R6Class("Uniform", inherit = SDistribution, lock_objects = F)
 Uniform$set("public","name","Uniform")
 Uniform$set("public","short_name","Unif")
-Uniform$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Uniform$set("public","description","Uniform Probability Distribution.")
 Uniform$set("public","package","stats")
 
@@ -47,7 +51,7 @@ Uniform$set("public","package","stats")
 Uniform$set("public","mean",function(){
  return((self$getParameterValue("lower")+self$getParameterValue("upper"))/2)
 })
-Uniform$set("public","var",function(){
+Uniform$set("public","variance",function(){
   return(((self$getParameterValue("upper")-self$getParameterValue("lower"))^2)/12)
 })
 Uniform$set("public","skewness",function(){
@@ -69,6 +73,9 @@ Uniform$set("public", "mgf", function(t){
     return((exp(self$getParameterValue("upper") * t) - exp(self$getParameterValue("lower") * t)) /
              (t*(self$getParameterValue("upper")-self$getParameterValue("lower"))))
 })
+Uniform$set("public", "pgf", function(z){
+  return(NaN)
+})
 Uniform$set("public", "cf", function(t){
   if(t==0)
     return(1)
@@ -80,7 +87,9 @@ Uniform$set("public","mode",function(){
   return(NaN)
 })
 
-Uniform$set("public","setParameterValue",function(lst, error = "warn"){
+Uniform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
   else if("lower" %in% names(lst))
@@ -88,7 +97,7 @@ Uniform$set("public","setParameterValue",function(lst, error = "warn"){
   else if("upper" %in% names(lst))
     checkmate::assert(lst[["upper"]] > self$getParameterValue("lower"), .var.name = "upper must be > lower")
 
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
   invisible(self)
 })
@@ -102,7 +111,7 @@ Uniform$set("private",".getRefParams", function(paramlst){
 Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper))
+  self$setParameterValue(lower = lower, upper = upper)
 
   pdf <- function(x1) dunif(x1, self$getParameterValue("lower"), self$getParameterValue("upper"))
   cdf <- function(x1) punif(x1, self$getParameterValue("lower"), self$getParameterValue("upper"))
@@ -111,6 +120,8 @@ Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(lower, upper),
-                   distrDomain = Reals$new(), symmetric = TRUE)
+                    symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

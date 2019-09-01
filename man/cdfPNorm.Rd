@@ -15,21 +15,23 @@ cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Given p-norm of cdf evaluated between limits as a numeric.
+}
 \description{
 The p-norm of the cdf evaluated between given limits or over the whole support.
 }
 \details{
 The p-norm of the cdf is defined by
-\deqn{\int_a^b |F_X|^p d\mu)^1/p}
-where X is the distribution, \eqn{F_X} is the cdf and a,b are the limits of integration.
+\deqn{(\int_a^b |F_X|^p d\mu)^{1/p}}
+where X is the distribution, \eqn{F_X} is the cdf and \eqn{a, b} are the limits of integration.
 
 Returns NULL if distribution is not continuous.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
+Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
 \section{R6 Usage}{
- $cumHazard(object, p = 2, lower = NULL, upper = NULL)
+ $cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
 }
 
 \seealso{

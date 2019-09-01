@@ -11,6 +11,10 @@ pgf(object, z)
 
 \item{z}{integer to evaluate characteristic function at.}
 }
+\value{
+Probability generating function evaluated at z as a numeric if distribution is discrete,
+otherwise NaN.
+}
 \description{
 Probability generating function of a distribution
 }

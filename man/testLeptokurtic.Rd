@@ -4,27 +4,26 @@
 \alias{testLeptokurtic}
 \alias{checkLeptokurtic}
 \alias{assertLeptokurtic}
-\alias{isLeptokurtic}
 \title{assert/check/test/Leptokurtic}
 \usage{
-assertLeptokurtic(x)
-checkLeptokurtic(x)
-testLeptokurtic(x)
-isLeptokurtic(x)
+testLeptokurtic(object, errormsg = paste(object$short_name,
+  "is not leptokurtic"))
 
-checkLeptokurtic(x)
+checkLeptokurtic(object, errormsg = paste(object$short_name,
+  "is not leptokurtic"))
 
-assertLeptokurtic(x)
-
-isLeptokurtic(x)
+assertLeptokurtic(object, errormsg = paste(object$short_name,
+  "is not leptokurtic"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is leptokurtic.

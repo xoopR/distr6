@@ -4,27 +4,26 @@
 \alias{testMatrixvariate}
 \alias{checkMatrixvariate}
 \alias{assertMatrixvariate}
-\alias{isMatrixvariate}
 \title{assert/check/test/Matrixvariate}
 \usage{
-assertMatrixvariate(x)
-checkMatrixvariate(x)
-testMatrixvariate(x)
-isMatrixvariate(x)
+testMatrixvariate(object, errormsg = paste(object$short_name,
+  "is not matrixvariate"))
 
-checkMatrixvariate(x)
+checkMatrixvariate(object, errormsg = paste(object$short_name,
+  "is not matrixvariate"))
 
-assertMatrixvariate(x)
-
-isMatrixvariate(x)
+assertMatrixvariate(object, errormsg = paste(object$short_name,
+  "is not matrixvariate"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is matrixvariate.

@@ -4,27 +4,25 @@
 \alias{testNoSkew}
 \alias{checkNoSkew}
 \alias{assertNoSkew}
-\alias{isNoSkew}
 \title{assert/check/test/NoSkew}
 \usage{
-assertNoSkew(x)
-checkNoSkew(x)
-testNoSkew(x)
-isNoSkew(x)
+testNoSkew(object, errormsg = paste(object$short_name, "is not no skew"))
 
-checkNoSkew(x)
+checkNoSkew(object, errormsg = paste(object$short_name,
+  "is not no skew"))
 
-assertNoSkew(x)
-
-isNoSkew(x)
+assertNoSkew(object, errormsg = paste(object$short_name,
+  "is not no skew"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is no skew.

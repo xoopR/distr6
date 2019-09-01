@@ -1,0 +1,36 @@
+---
+title: "API Lifecycle"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{API Lifecycle}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+distr6 v1 is now live and most of the API is stable however some aspects are still 'maturing' or 'experimental'. This means that whilst the core feature API, such as the distribution interface, is stable and is unlikely to change, other aspects such as specific decorators may be subject to future change. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. Please refer to [this website](https://www.tidyverse.org/lifecycle/) for the tidyverse definitions of different lifecycle stages. For us these mean:
+
+1. [Maturing](#maturing-classes-and-methods) - Functioning but the internal methodology needs tweaking, API is unlikely to change
+2. [Stable](#maturing-classes-and-methods) - Functioning as expected and (hopefully) bug free
+
+The lists below use the headings name from the [reference page](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions) of the website.
+
+## Maturing Classes and Methods ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+* [Function Imputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Convolution](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+
+## Stable Classes and Methods ![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
+
+* [Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-distributions)
+* [Kernels](https://alan-turing-institute.github.io/distr6/reference/#section-kernels)
+* [Mathematical and Statistical](https://alan-turing-institute.github.io/distr6/reference/#section-mathematical-and-statistical)
+* [Distribution Accessors](https://alan-turing-institute.github.io/distr6/reference/#section-distribution-accessors)
+* [Decorators, except FunctionImputation](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Wrappers, except Scale and Convolution](https://alan-turing-institute.github.io/distr6/reference/#section-decorators)
+* [Univariate Discrete Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions)
+* [Univariate Continuous Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-continuous-distributions)
+* [Multivariate Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-multivariate-distributions)
+* [Assertions](https://alan-turing-institute.github.io/distr6/reference/#section-assertions)
+* [Symbolic Sets](https://alan-turing-institute.github.io/distr6/reference/#section-symbolic-sets)
+* [Helper Functions](https://alan-turing-institute.github.io/distr6/reference/#section-helper-functions)
+* [Parameter Sets](https://alan-turing-institute.github.io/distr6/reference/#section-parameter-sets)

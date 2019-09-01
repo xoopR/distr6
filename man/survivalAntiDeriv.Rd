@@ -13,6 +13,9 @@ survivalAntiDeriv(object, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Antiderivative of the survival function evaluated between limits as a numeric.
+}
 \description{
 The anti-derivative of the survival function between given limits or
 over the full support.
@@ -20,11 +23,10 @@ over the full support.
 \details{
 The survival anti-derivative is defined by
 \deqn{as(a, b) = \int_a^b S_X(x) dx}
-where X is the distribution, S_X is the survival function of the distribution X and a,b are the
+where X is the distribution, \eqn{S_X} is the survival function of the distribution \eqn{X} and \eqn{a, b} are the
 limits of integration.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
+Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
 \section{R6 Usage}{
  $survivalAntiDeriv(lower = NULL, upper = NULL)

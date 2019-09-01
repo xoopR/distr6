@@ -4,30 +4,29 @@
 \alias{testMixture}
 \alias{checkMixture}
 \alias{assertMixture}
-\alias{isMixture}
 \title{assert/check/test/Mixture}
 \usage{
-assertMixture(x)
-checkMixture(x)
-testMixture(x)
-isMixture(x)
+testMixture(object, errormsg = paste(object$short_name,
+  "is not mixture"))
 
-checkMixture(x)
+checkMixture(object, errormsg = paste(object$short_name,
+  "is not mixture"))
 
-assertMixture(x)
-
-isMixture(x)
+assertMixture(object, errormsg = paste(object$short_name,
+  "is not mixture"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is mixture
+Validation checks to test if Distribution is mixture.
 }
 \examples{
 testMixture(Binomial$new()) # FALSE

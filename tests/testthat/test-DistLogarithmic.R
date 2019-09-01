@@ -15,7 +15,7 @@ test_that("properties & traits",{
 l = Logarithmic$new()
 test_that("statistics",{
   expect_equal(l$mean(), -1/log(0.5))
-  expect_equal(l$var(), (-0.25 - 0.5*log(0.5))/(0.25*log(0.5)^2))
+  expect_equal(l$variance(), (-0.25 - 0.5*log(0.5))/(0.25*log(0.5)^2))
   expect_equal(round(l$skewness(), 4), 3.0148)
   expect_equal(round(l$kurtosis(T), 4), 13.3884)
   expect_equal(round(l$kurtosis(F), 4), 16.3884)

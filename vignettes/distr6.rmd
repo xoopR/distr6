@@ -1,28 +1,178 @@
 ---
 title: "Introduction to distr6"
 output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Introduction to distr6}
+  %\VignetteIndexEntry{distr6}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
-distr6 is a unified and clean interface to organise the hundreds of probability distributions implemented in R into one R6 object oriented package.
-
-distr6 extends the work of Peter Ruckdeschel, Matthias Kohl et al. who created the first object-oriented (OO) interface for distributions using S4. Their [distr package](http://distr.r-forge.r-project.org/) is currently the gold-standard in R for OO distribution handling. Using R6 we aim to take this even further and to create a scalable interface that can continue to grow with the community.
-
-Our short-term aims are to implement all distributions in the R stats package as well as some other commonly utilised distributions. We also allow for user-defined probability distributions/families via multiple inheritance. Building the package from the ground up and making use of tried and tested design patterns (as per Gamma et al. 1994), distr6 aims to be the only package needed for probability distributions in R.
+distr6 is a unified, self-contained and scalable interface to probability distributions in R. Making use of the R6 paradigm, distr6 implements a fully object-oriented (OO) interface complete with distribution construction, full inheritance and more complex design patterns. The API is built to be scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found [here](https://alan-turing-institute.github.io/distr6/index.html). In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The [website](https://alan-turing-institute.github.io/distr6/index.html) covers more complex use-cases including composite distributions and decorators for numeric methods.
 
 
-## Why Object-Oriented Programming?
+## Getting Started
 
-There are many advantages to OOP over functional programming (which is more commmon in R). For probability distributions, the biggest advantages is in the ability to quickly construct and recall any number of required distributions, each with mathematical and statistical methods. There are currently no methods in base R that interact with Distributions to obtain basic properties, for example the mean of a distribution. In distr6 this is made possible as every probability distribution is its own class with specific methods. So to get mathematical properties of the Binomial distribution:
-1. `B = Binomial$new(prob, size)`
-2. `B$mean()`
-3. `B$sd()`
+We think the best place to get started is to pick a probability distribution and work through constructing the distribution via different parameterisations and querying the distribution for different methods. Below is a running example with the Normal distribution.
 
-Or try using `B$summary()` for a range of common mathematical and statistical results. With the `listDistributions()` command you can see every Distribution currently implemented in distr6, along with their traits.
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+library("distr6")
+set.seed(42)
+```
 
-Another advantage of OOP is making use of inheritance to implement more complex distributions from base distributions. For example any distribution can be easily truncated with a call to `truncate(distribution, lower, upper)` which produces an object of class `TruncatedDistribution` which inherits all methods from `Distribution`. 
+### Construction and Parameterisation
+All distributions are constructed using R6 dollar sign notation
+The default Normal distribution is the Standard Normal parameterised with mean and var
+```{r}
+Normal$new()
+```
 
-We discuss further advantages of OOP including Design Patterns in the help-pages of the website.
+But we could also parameterise with standard deviation or precision.
+Note that whichever we choose is clearly printed.
+```{r}
+Normal$new(mean = 2, sd = 2)
+Normal$new(mean = 3, prec = 0.5)
+```
+
+But all parameters are available to us via the parameters method. The verbose option displays a parameterisation message in construction. Note how all available parameters are displayed, but only the ones chosen in construction are shown in the print method.
+```{r}
+N <- Normal$new(verbose = TRUE)
+N$print()
+N$parameters()
+```
+
+### Parameters in distr6
+Parameters are accessed with getParameterValue and edited with setParameterValue
+```{r}
+N$setParameterValue(list(prec = 2))
+N$getParameterValue("prec")
+```
+
+Note how all parameters that are related also update
+```{r}
+N$parameters()
+```
+
+To view the functions that relate these parameters add the following
+```{r}
+N$parameters()$print(update = T)
+```
+
+The line above introduces 'method chaining', this occurs when one method is added to another.
+As another example, let's edit and then access another parameter in the Normal distribution
+```{r}
+N$setParameterValue(list(var = 3))$getParameterValue("var")
+```
+
+### Representing a distribution
+In keeping with R conventions, distributions have a print and summary method to view key details.
+We have already seen how the print method displays the distribution short_name and the
+parameterisation.
+```{r}
+N$print()
+```
+
+The summary method can also show basic statistics and distribution properties
+and traits. Adding the argument full = F, suppresses the output slightly.
+```{r}
+N$summary()
+N$summary(full = F)
+```
+
+All distributions are also comprised of properties and traits. Traits are ways of
+describing a class whereas properties describe an object. In simpler terms, this means that a
+trait is present independent of the distribution's parameterisation whereas a property depends
+on the constructed parameters.
+```{r}
+N$properties()
+N$traits()
+```
+
+Finally individual properties and traits are accessible via their own 'getters' for example:
+```{r}
+N$valueSupport()
+N$skewness()
+```
+
+### d/p/q/r
+distr6 is intended not to replace R stats distributions but to be a different way of interfacing 
+them. All distributions in R stats can be found in distr6 and all their d/p/q/r functions which
+refer to density/cumulative distribution/quantile/random are all available in distr6. Continuing
+our Normal distribution example:
+```{r}
+N$pdf(2) # dnorm(2)
+N$cdf(2) # pnorm(2)
+N$quantile(2) # qnorm(2)
+N$rand(2) # rnorm(2)
+```
+
+distr6 makes it easy to query these results by only requiring the distribution to be constructed
+once and then the specific parameterisation can be forgotten. In the case of the Normal
+distribution this may not seem like a big difference to R stats but now look at the difference 
+when we construct a distribution without default parameters
+```{r}
+B <- Beta$new(shape1 = 0.582, shape2 = 1.2490)
+B$pdf(2) # dbeta(2, 0.582, 1.2490)
+B$cdf(2) # pbeta(2, 0.582, 1.2490)
+B$quantile(2) # qbeta(2, 0.582, 1.2490)
+B$rand(2) # rbeta(2, 0.582, 1.2490)
+```
+
+Finally distr6 includes log/log.p and lower.tail arguments to be consistent with R stats.
+```{r}
+N$cdf(3, lower.tail = FALSE, log.p = TRUE) == pnorm(3, lower.tail = FALSE, log.p = TRUE)
+```
+
+### Mathematical and Statistical Results
+The final part of this tutorial looks at how to access mathematical and statistical
+results for probability distributions. This is another advantage of distr6 as it collects
+not only the results for the 17 distributions in R stats but also for all others implemented in
+distr6. Continuing with the Normal distribution:
+```{r}
+N$mean()
+N$variance()
+N$entropy() # Note default is base 2
+N$mgf(2)
+N$cf(1)
+```
+
+For a full list of methods available use the help documentation for any distribution
+```{r, eval=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+?Normal
+```
+
+
+### Listing in distr6
+Instead of having to worry about remembering every distribution in R, distr6 provides a way of
+listing all of these, and filtering by traits or package. We only show the first 5 rows of this to save space.
+```{r}
+head(listDistributions())
+head(listDistributions(simplify = TRUE))
+# Lists discrete distributions only
+head(listDistributions(filter = list(valuesupport = "discrete")))
+
+# Multiple filters can be used, note this is case-insensitive
+head(listDistributions(filter = list(VaLueSupport = "continuous", package = "distr6")))
+```
+
+### R6, S3 and Magrittr
+As a final point, distr6 allows the use of R6 or S3 to call methods, which means that the package
+magrittr can also be used for 'piping'. Returning to the Normal distribution
+```{r}
+library(magrittr)
+N$print()
+print(N)
+N %>% print()
+
+N$pdf(2)
+pdf(N, 2)
+N %>% pdf(2)
+```
+
+## Further Documentation
+
+ * [Tutorials](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html)
+ * [Extension guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html)
+ * [Project Wiki](https://github.com/alan-turing-institute/distr6/wiki)

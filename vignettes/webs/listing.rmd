@@ -1,0 +1,54 @@
+---
+title: "Listing"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Listing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we looked at multivariate distributions and how to use the d/p/q/r functions to evaluate multiple points of these. This tutorial concludes the 'Basic' set of tutorials with the use of 'listing' in distr6.
+
+## Listing
+
+Currently distr6 includes 5 listing functions: `listDistributions(), listDecorators(), listWrappers(), listKernels(), listSpecialSets()`. These are essentially ways of listing the R6 classes implemented in the R6 API. We will only discuss the `listDistributions()` function here as the others cover classes that we haven't discussed yet, but hopefully are intuitive to you and have a similar interface to `listDistributions()`.
+
+## listDistributions
+
+`listDistributions()` is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their d/p/q/r methods are implemented in. For example a distribution with package `stats` means that the d/p/q/r methods interface the R stats functions whereas a distribution with package `distr6` means the methods are written in distr6. We've added the `head()` method just to save space.
+
+```{r}
+head(listDistributions())
+```
+
+To see a simplified version of the list, add the `simplify = TRUE` argument
+
+```{r}
+head(listDistributions(simplify = TRUE))
+```
+
+Finally this list can be filtered to help you find a distribution with specific traits, for example for a multivariate distribution
+
+```{r}
+head(listDistributions(filter = list(variateform = "multivariate")))
+
+# The trait name is case-insensitive
+head(listDistributions(filter = list(VaRiAtEfORm = "multivariate")))
+```
+
+Or for multiple filters:
+```{r}
+head(listDistributions(filter = list(variateform = "multivariate", package = "distr6")))
+```
+
+## Summary
+
+In this tutorial we looked at the `listDistributions()` function so that you don't have to remember which are implemented in distr6. In this set of tutorials we covered the basics of constructing a (univariate) distribution, getting and setting parameters, evaluating statistical results and extending all this to multivariate distributions. The next set of tutorials cover more advanced functionality including decorators for numeric results, wrappers for composite distributions, custom distributions, S3 functionality, and symbolic sets.
+

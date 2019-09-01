@@ -2,38 +2,37 @@
 #-------------------------------------------------------------
 # Gompertz Distribution Documentation
 #-------------------------------------------------------------
-#' @title Gompertz Distribution
-#'
-#' @description Mathematical and statistical functions for the Gompertz distribution parameterised
-#' with shape and scale. The Gompertz distribution is defined by the pdf,
-#' \deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)}
-#' where \eqn{\alpha, \beta > 0} are the shape and scale parameters respectively.
-#'
-#' @description Mathematical and statistical functions for the Gompertz distribution parameterised
-#' with shape and scale.
-#'
-#' @details Unfortunately the Gompertz distribution is quite complex to deal with and as such no closed
-#' form expression exist for its mathematical and statistical properties. Try decorating with
-#' \code{\link{CoreStatistics}} for numerical results.
-#'
 #' @name Gompertz
+#' @template SDist
+#' @templateVar ClassName Gompertz
+#' @templateVar DistName Gompertz
+#' @templateVar uses in survival analysis particularly to model adult mortality rates.
+#' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
+#' @templateVar distsupport the Non-Negative Reals
+#' @templateVar omittedVars \code{mean}, \code{var}, \code{mgf}, \code{cf}, \code{entropy}, \code{skewness} and \code{kurtosis}
+#' @templateVar additionalDetails Unfortunately the Gompertz distribution is quite complex to deal with and as such no closed form expressions exist for its mathematical and statistical properties.
+#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar arg1 \code{shape} \tab numeric \tab positive shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab positive scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
 #'
-#' @section Constructor: Gompertz$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x <- Gompertz$new(shape = 2, scale = 3)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab positive shape parameter. \cr
-#' \code{scale} \tab numeric \tab positive scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(scale = 1)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Gompertz distribution is parameterised by default with
-#' shape = 1 and scale = 1.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' summary(x)
 #'
 #' @export
 NULL
@@ -43,9 +42,6 @@ NULL
 Gompertz <- R6::R6Class("Gompertz", inherit = SDistribution, lock_objects = F)
 Gompertz$set("public","name","Gompertz")
 Gompertz$set("public","short_name","Gomp")
-Gompertz$set("public","traits",list(type = PosReals$new(zero = T),
-                                       valueSupport = "continuous",
-                                       variateForm = "univariate"))
 Gompertz$set("public","description","Gompertz Probability Distribution.")
 Gompertz$set("public","package","distr6")
 
@@ -56,10 +52,14 @@ Gompertz$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
+Gompertz$set("public", "pgf", function(z){
+  return(NaN)
+})
+
 Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  suppressMessages(self$setParameterValue(list(shape = shape, scale = scale)))
+  suppressMessages(self$setParameterValue(shape = shape, scale = scale))
 
   pdf <- function(x1){
     return(self$getParameterValue("shape")*self$getParameterValue("scale")*exp(self$getParameterValue("shape"))*
@@ -76,8 +76,10 @@ Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = N
   }
 
 
-  suppressMessages(super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
-                   symmetric  = FALSE))
+  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
+                   rand = rand, support = PosReals$new(zero = T),
+                   symmetric  = FALSE,type = PosReals$new(zero = T),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

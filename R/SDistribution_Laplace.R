@@ -2,36 +2,44 @@
 #-------------------------------------------------------------
 # Laplace Distribution Documentation
 #-------------------------------------------------------------
-#' @title Laplace Distribution
-#'
-#' @description Mathematical and statistical functions for the Laplace distribution parameterised
-#' with mean and scale or \eqn{variance = 2(scale)^2}. The mean/scale parameterisation is defined by
-#' the pdf,
-#' \deqn{f(x) = 1/2\beta * exp(-|x-\mu|/\beta)}
-#' where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\beta > 0} is the scale parameter.
-#'
-#' @details The Laplace distribution is paramterised with mean and scale by default as this appears to
-#' be slightly more common in popular usage.
-#'
 #' @name Laplace
+#' @template SDist
+#' @templateVar ClassName Laplace
+#' @templateVar DistName Laplace
+#' @templateVar uses in signal processing and finance
+#' @templateVar params mean, \eqn{\mu}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-|x-\mu|/\beta)/(2\beta)}
+#' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\beta > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar constructor mean = 0, scale = 1, var = NULL
+#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar arg3 \code{var} \tab numeric \tab alternate scale parameter. \cr
+#' @templateVar constructorDets \code{mean} as a numeric and either \code{scale} or \code{var} as positive numerics. These are related via, \deqn{var = 2 * scale^2} If \code{var} is given then {scale} is ignored.
 #'
-#' @section Constructor: Laplace$new(mean = 0, scale = 1, var = NULL, decorators = NULL, verbose = FALSE)
+#' @examples
+#' Laplace$new(scale = 2)
+#' Laplace$new(var = 4)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab mean, location parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{var} \tab numeric \tab alternate scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' x = Laplace$new(verbose = TRUE) # Default is mean = 0, scale = 1
 #'
-#' @section Constructor Details: The Laplace distribution can either be parameterised with mean and
-#' scale or variance. The default parameterisation is with mean 0 and scale 1.
+#' # Update parameters
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(var = 2)
+#' x$parameters()
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -41,16 +49,13 @@ NULL
 Laplace <- R6::R6Class("Laplace", inherit = SDistribution, lock_objects = F)
 Laplace$set("public","name","Laplace")
 Laplace$set("public","short_name","Lap")
-Laplace$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Laplace$set("public","description","Laplace Probability Distribution.")
 Laplace$set("public","package","distr6")
 
 Laplace$set("public","mean",function(){
   self$getParameterValue("mean")
 })
-Laplace$set("public","var",function(){
+Laplace$set("public","variance",function(){
   self$getParameterValue("var")
 })
 Laplace$set("public","skewness",function(){
@@ -71,6 +76,9 @@ Laplace$set("public", "mgf", function(t){
   else
     return(NaN)
 })
+Laplace$set("public", "pgf", function(z){
+  return(NaN)
+})
 Laplace$set("public", "cf", function(t){
   return(exp(self$getParameterValue("mean") * t * 1i) / (1 + self$getParameterValue("scale")^2 * t^2))
 })
@@ -90,7 +98,7 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, scale, var, verbose)
-  self$setParameterValue(list(mean = mean, scale = scale, var = var))
+  self$setParameterValue(mean = mean, scale = scale, var = var)
 
   pdf <- function(x1){
     return((2*self$getParameterValue("scale"))^-1 * exp(-abs(x1-self$getParameterValue("mean"))))
@@ -118,7 +126,9 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Reals$new(), distrDomain = Reals$new(),
-                   symmetric = TRUE)
+                   support = Reals$new(),
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

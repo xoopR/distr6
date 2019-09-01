@@ -2,32 +2,40 @@
 #-------------------------------------------------------------
 # DiscreteUniform Distribution Documentation
 #-------------------------------------------------------------
-#' @title DiscreteUniform Distribution
-#'
-#' @description Mathematical and statistical functions for the Discrete Uniform distribution parameterised
-#' with lower and upper limits. The Discrete Uniform distribution is defined by the pmf,
-#' \deqn{f(x) = 1/n}
-#' where \eqn{n = b - a + 1} is the interval width and \eqn{a, b \epsilon Z; b \ge a}, are the lower and
-#' upper limits respectively.
-#'
 #' @name DiscreteUniform
+#' @template SDist
+#' @templateVar ClassName DiscreteUniform
+#' @templateVar DistName Discrete Uniform
+#' @templateVar uses as a discrete variant of the more popular Uniform distribution, used to model events with an equal probability of occurring (e.g. role of a die)
+#' @templateVar params lower, \eqn{a}, and upper, \eqn{b}, limits
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = 1/(b - a + 1)}
+#' @templateVar paramsupport \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}
+#' @templateVar distsupport \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}
+#' @templateVar constructor lower = 0, upper = 1
+#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
+#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
+#' @templateVar constructorDets \code{lower} and \code{upper} as whole numbers.
+#' @templateVar additionalSeeAlso \code{\link{Uniform}} for the (continuous) Uniform distribution.
 #'
-#' @section Constructor: DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x <- DiscreteUniform$new(lower = -10, upper = 5)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab integer \tab lower distribution limit. \cr
-#' \code{upper} \tab integer \tab upper distribution limit. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(lower = 2, upper = 7)
+#' x$parameters()
 #'
-#' @section Constructor Details: The DiscreteUniform distribution is parameterised with lower and
-#' upper limits as integers.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -37,16 +45,13 @@ NULL
 DiscreteUniform <- R6::R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F)
 DiscreteUniform$set("public","name","DiscreteUniform")
 DiscreteUniform$set("public","short_name","DUnif")
-DiscreteUniform$set("public","traits",list(type = Integers$new(),
-                                     valueSupport = "discrete",
-                                     variateForm = "univariate"))
 DiscreteUniform$set("public","description","DiscreteUniform Probability Distribution.")
 DiscreteUniform$set("public","package","distr6")
 
 DiscreteUniform$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
 })
-DiscreteUniform$set("public","var",function(){
+DiscreteUniform$set("public","variance",function(){
   return(((self$getParameterValue("upper") - self$getParameterValue("lower") + 1)^2 - 1) / 12)
 })
 DiscreteUniform$set("public","skewness",function(){
@@ -81,7 +86,9 @@ DiscreteUniform$set("public","mode",function(which="all"){
   else
     return((self$inf():self$sup())[which])
 })
-DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
+DiscreteUniform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] <= lst[["upper"]], .var.name = "lower must be <= upper")
   else if("lower" %in% names(lst))
@@ -89,7 +96,7 @@ DiscreteUniform$set("public","setParameterValue",function(lst, error = "warn"){
   else if("upper" %in% names(lst))
     checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"), .var.name = "upper must be >= lower")
 
-  super$setParameterValue(lst, error)
+  super$setParameterValue(lst = lst, error = error)
   private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
   invisible(self)
 })
@@ -104,7 +111,7 @@ DiscreteUniform$set("private",".getRefParams", function(paramlst){
 DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper))
+  self$setParameterValue(lower = lower, upper = upper)
 
   pdf = function(x1) return(1 / self$getParameterValue("N"))
   cdf = function(x1) return((x1 - self$getParameterValue("lower") + 1)/ self$getParameterValue("N"))
@@ -113,6 +120,8 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(lower:upper),
-                   distrDomain = Integers$new(zero = T), symmetric = TRUE)
+                   symmetric = TRUE, type = Integers$new(),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
   invisible(self)
 })

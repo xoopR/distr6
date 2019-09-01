@@ -4,30 +4,29 @@
 \alias{testDiscrete}
 \alias{checkDiscrete}
 \alias{assertDiscrete}
-\alias{isDiscrete}
 \title{assert/check/test/Discrete}
 \usage{
-assertDiscrete(x)
-checkDiscrete(x)
-testDiscrete(x)
-isDiscrete(x)
+testDiscrete(object, errormsg = paste(object$short_name,
+  "is not discrete"))
 
-checkDiscrete(x)
+checkDiscrete(object, errormsg = paste(object$short_name,
+  "is not discrete"))
 
-assertDiscrete(x)
-
-isDiscrete(x)
+assertDiscrete(object, errormsg = paste(object$short_name,
+  "is not discrete"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is discrete
+Validation checks to test if Distribution is discrete.
 }
 \examples{
 testDiscrete(Binomial$new()) # FALSE

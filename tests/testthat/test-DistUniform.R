@@ -30,7 +30,7 @@ test_that("properties & traits",{
 u = Uniform$new()
 test_that("statistics",{
   expect_equal(u$mean(), 0.5)
-  expect_equal(u$var(), 1/12)
+  expect_equal(u$variance(), 1/12)
   expect_equal(u$skewness(), 0)
   expect_equal(u$kurtosis(T), -6/5)
   expect_equal(u$kurtosis(F), 1.8)
@@ -42,6 +42,7 @@ test_that("statistics",{
   expect_equal(u$mode(),NaN)
   expect_equal(u$pdf(1), dunif(1))
   expect_equal(u$cdf(1), punif(1))
+  expect_equal(u$pgf(1), NaN)
   expect_equal(u$quantile(0.324), qunif(0.324))
   expect_equal(u$cdf(u$quantile(0.324)), 0.324)
   expect_silent(u$rand(10))
@@ -49,10 +50,10 @@ test_that("statistics",{
 
 u = Uniform$new(lower=1,upper=5)
 test_that("update parameters",{
-  expect_error(u$setParameterValue(list(upper = 0)))
-  expect_silent(u$setParameterValue(list(upper = 2)))
-  expect_error(u$setParameterValue(list(lower = 3)))
-  expect_silent(u$setParameterValue(list(lower = 1)))
-  expect_silent(u$setParameterValue(list(lower = 1, upper = 3)))
-  expect_error(u$setParameterValue(list(lower = 1, upper = 0)))
+  expect_error(u$setParameterValue(lst = list(upper = 0)))
+  expect_silent(u$setParameterValue(lst = list(upper = 2)))
+  expect_error(u$setParameterValue(lst = list(lower = 3)))
+  expect_silent(u$setParameterValue(lst = list(lower = 1)))
+  expect_silent(u$setParameterValue(lst = list(lower = 1, upper = 3)))
+  expect_error(u$setParameterValue(lst = list(lower = 1, upper = 0)))
 })

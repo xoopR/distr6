@@ -4,30 +4,29 @@
 \alias{testContinuous}
 \alias{checkContinuous}
 \alias{assertContinuous}
-\alias{isContinuous}
 \title{assert/check/test/Continuous}
 \usage{
-assertContinuous(x)
-checkContinuous(x)
-testContinuous(x)
-isContinuous(x)
+testContinuous(object, errormsg = paste(object$short_name,
+  "is not continuous"))
 
-checkContinuous(x)
+checkContinuous(object, errormsg = paste(object$short_name,
+  "is not continuous"))
 
-assertContinuous(x)
-
-isContinuous(x)
+assertContinuous(object, errormsg = paste(object$short_name,
+  "is not continuous"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if Distribution is continuous
+Validation checks to test if Distribution is continuous.
 }
 \examples{
 testContinuous(Binomial$new()) # FALSE

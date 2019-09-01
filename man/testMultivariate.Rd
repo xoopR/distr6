@@ -4,27 +4,26 @@
 \alias{testMultivariate}
 \alias{checkMultivariate}
 \alias{assertMultivariate}
-\alias{isMultivariate}
 \title{assert/check/test/Multivariate}
 \usage{
-assertMultivariate(x)
-checkMultivariate(x)
-testMultivariate(x)
-isMultivariate(x)
+testMultivariate(object, errormsg = paste(object$short_name,
+  "is not multivariate"))
 
-checkMultivariate(x)
+checkMultivariate(object, errormsg = paste(object$short_name,
+  "is not multivariate"))
 
-assertMultivariate(x)
-
-isMultivariate(x)
+assertMultivariate(object, errormsg = paste(object$short_name,
+  "is not multivariate"))
 }
 \arguments{
-\item{x}{Distribution}
+\item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}/\code{is}
+If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test}/\code{is} return \code{FALSE}.
+  an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is multivariate.

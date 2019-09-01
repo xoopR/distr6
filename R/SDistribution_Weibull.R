@@ -2,33 +2,41 @@
 #-------------------------------------------------------------
 # Weibull Distribution Documentation
 #-------------------------------------------------------------
-#' @title Weibull Distribution
-#'
-#' @description Mathematical and statistical functions for the Weibull distribution parameterised
-#' with shape and scale. The Weibull distribution is defined by the pdf,
-#' \deqn{f(x) = (\alpha/\beta)*(x/\beta)^(\alpha-1)*exp(-x/\beta)^\alpha, x \ge 0; 0 otherwise}
-#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale parameter.
-#'
-#' @details \code{mgf} and \code{cf} are omitted as no closed form analytic expressions could be found.
-#'
 #' @name Weibull
+#' @template SDist
+#' @templateVar ClassName Weibull
+#' @templateVar DistName Weibull
+#' @templateVar uses in survival analysis and is a special case of the Generalized Extreme Value distribution
+#' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
+#' @templateVar distsupport the Positive Reals
+#' @templateVar omittedVars \code{mgf} and \code{cf}
+#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
+#' @templateVar additionalSeeAlso \code{\link{Frechet}} and \code{\link{Gumbel}} for other special cases of the generalized extreme value distribution.
 #'
-#' @section Constructor: Weibull$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x <- Weibull$new(shape = 2, scale = 3)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(scale = 1)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Weibull distribution is parameterised with a shape and scale
-#' parameter, both as positive numerics.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -38,16 +46,13 @@ NULL
 Weibull <- R6::R6Class("Weibull", inherit = SDistribution, lock_objects = F)
 Weibull$set("public","name","Weibull")
 Weibull$set("public","short_name","Weibull")
-Weibull$set("public","traits",list(type = PosReals$new(zero=T),
-                                   valueSupport = "continuous",
-                                   variateForm = "univariate"))
 Weibull$set("public","description","Weibull Probability Distribution.")
 Weibull$set("public","package","stats")
 
 Weibull$set("public","mean",function(){
   return(self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape")))
 })
-Weibull$set("public","var",function(){
+Weibull$set("public","variance",function(){
   scale<-self$getParameterValue("scale")
   shape<-self$getParameterValue("shape")
   return(scale^2 *(gamma(1+2/shape)-gamma(1+1/shape)^2))
@@ -56,7 +61,7 @@ Weibull$set("public","skewness",function() {
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
   mu <- self$mean()
-  sigma <- self$sd()
+  sigma <- self$stdev()
   return(((gamma(1+3/shape)*(scale^3))  - (3*mu*sigma^2) - (mu^3)) / (sigma^3))
 })
 Weibull$set("public","kurtosis",function(excess = TRUE){
@@ -64,7 +69,7 @@ Weibull$set("public","kurtosis",function(excess = TRUE){
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
   mu <- self$mean()
-  sigma <- self$sd()
+  sigma <- self$stdev()
 
   kur <- (((scale^4) * gamma(1+4/shape)) - (4*skew*(sigma^3)*mu) - (6*(sigma^2)*(mu^2)) - (mu^4)) / (sigma^4)
 
@@ -77,6 +82,9 @@ Weibull$set("public","entropy",function(base = 2){
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
   return(-digamma(1)*(1-1/shape)+log(scale/shape, base)+1)
+})
+Weibull$set("public", "pgf", function(z){
+  return(NaN)
 })
 Weibull$set("public","mode",function(){
   scale <- self$getParameterValue("scale")
@@ -99,16 +107,17 @@ Weibull$set("private",".getRefParams", function(paramlst){
 Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  self$setParameterValue(list(shape=shape, scale = scale))
+  self$setParameterValue(shape=shape, scale = scale)
 
   pdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  cdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  quantile <- function(p) dweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  rand <- function(n) dweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  cdf <- function(x1) pweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  quantile <- function(p) qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  rand <- function(n) rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T), distrDomain = PosReals$new(zero = T),
-                   symmetric = FALSE)
+                   rand = rand, support = PosReals$new(zero = T),
+                   symmetric = FALSE, type = PosReals$new(zero=T), valueSupport = "continuous",
+                   variateForm = "univariate")
 
   invisible(self)
 })

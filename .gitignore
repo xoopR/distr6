@@ -1,3 +1,6 @@
 .DS_Store
 R/.Rhistory
 .Rhistory
+inst/doc
+doc
+Meta

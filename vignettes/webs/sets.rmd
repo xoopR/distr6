@@ -1,0 +1,83 @@
+---
+title: "Sets and Intervals"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Sets and Intervals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include = FALSE}
+library(distr6)
+set.seed(42)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html) we looked at how wrappers are used to extend functionality in distr6 to composite and transformed distributions. Now we will take a slight detour from the distribution interface to look at symbolic sets and intervals. We will keep this tutorial brief as whilst these objects form an integral part of making distr6 have pretty print methods, they are purely symbolic and have little mathematical functionality.
+
+## Sets, Intervals and SetIntervals
+
+The class structure for these objects looks like: `SetInterval -> Set`, `SetInterval -> Interval` i.e. everything inherits from `SetInterval`, this means all methods from `SetInterval` are also in `Set` and `Interval` objects. Sets and intervals primarily differ in that sets expect discrete elements whereas intervals expect a range of numerics:
+
+```{r}
+Set$new("A","B","C")
+Interval$new(lower = 1, upper = 10)
+```
+
+The type of interval can be changed to ensure the correct bounds are set
+```{r}
+Interval$new(-Inf, Inf, type = "()")
+Interval$new(-Inf, 10, type = "(]")
+Interval$new(1, Inf, type = "[)")
+Interval$new(1, 10, type = "[]")
+```
+
+These also include basic accessors for the bounds of the interval
+```{r}
+Interval$new(0,10,type = "()")$min()
+Interval$new(0,10,type = "()")$inf()
+Interval$new(0,10,type = "()")$max()
+
+#10 - 1.1e-15
+Interval$new(0,10,type = "()")$sup()
+```
+
+And a way of testing if an element lies in the set or interval
+```{r}
+Interval$new(0,10,type = "()")$liesInSetInterval(10)
+Interval$new(0,10,type = "(]")$liesInSetInterval(10)
+```
+
+## Special Sets
+
+distr6 includes some sets which are especially special, these can be listed with
+```{r}
+listSpecialSets()
+```
+
+And are constructed like any class
+```{r}
+Reals$new()
+Naturals$new()
+```
+
+Note: We don't have one set for non-negative and another for positive, this is determined by the `zero` argument
+```{r}
+PosReals$new(zero = T)$liesInSetInterval(0)
+PosReals$new(zero = F)$liesInSetInterval(0)
+```
+
+## SetInterval Operations
+
+We also have available a few symbolic operations for sets
+```{r}
+Reals$new() + Naturals$new()
+Reals$new() * Naturals$new()
+PosReals$new() - Interval$new(-2, 5)
+Reals$new()^2
+```
+
+## Summary
+
+We have kept this very short as these are primarily meant to be used internally. We encourage you to look at the help pages in the documentation if you are interested in learning about sets further. In the next and [final tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html) we conclude with running through how to construct your own custom distribution.

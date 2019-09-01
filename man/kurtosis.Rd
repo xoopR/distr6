@@ -11,13 +11,16 @@ kurtosis(object, excess = TRUE)
 
 \item{excess}{logical, if TRUE (default) excess Kurtosis returned}
 }
+\value{
+Kurtosis as a numeric.
+}
 \description{
 Kurtosis of a distribution
 }
 \details{
 The kurtosis of a distribution is defined by the fourth standardised moment of the
 distribution,
-\deqn{k_X = E_X[(x - \mu)^4]/\sigma^4}
+\deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
 where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
 standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
 

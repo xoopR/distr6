@@ -13,6 +13,9 @@ cdfAntiDeriv(object, lower = NULL, upper = NULL)
 
 \item{upper}{upper limit for integration, default is supremum.}
 }
+\value{
+Antiderivative of the cdf evaluated between limits as a numeric.
+}
 \description{
 The anti-derivative of the cumulative distribution function between given limits or
 over the full support.
@@ -20,10 +23,9 @@ over the full support.
 \details{
 The cdf anti-derivative is defined by
 \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
-where X is the distribution, F_X is the cdf of the distribution X and a,b are the limits of integration.
+where X is the distribution, \eqn{F_X} is the cdf of the distribution \eqn{X} and \eqn{a, b} are the limits of integration.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
+Can only be used after decorating with \code{\link{ExoticStatistics}}.
 }
 \section{R6 Usage}{
  $cdfAntiDeriv(lower = NULL, upper = NULL)

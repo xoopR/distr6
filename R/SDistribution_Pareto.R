@@ -2,33 +2,40 @@
 #-------------------------------------------------------------
 # Pareto Distribution Documentation
 #-------------------------------------------------------------
-#' @title Pareto Distribution
-#' @description Mathematical and statistical functions for the Pareto distribution parameterised
-#' with shape and scale and defined by the pdf,
-#' \deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
-#' where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale parameter.
-#'
-#' @details \code{cf} is omitted as no analytic expression involving the incomplete gamma function
-#' with complex numbers could be found.
-#'
 #' @name Pareto
+#' @template SDist
+#' @templateVar ClassName Pareto
+#' @templateVar DistName Pareto
+#' @templateVar uses in Economics to model the distribution of wealth and the 80-20 rule
+#' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
+#' @templateVar distsupport \eqn{[\beta, \infty)}
+#' @templateVar omittedVars \code{cf}
+#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
+#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
 #'
-#' @section Constructor: Pareto$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
+#' @examples
+#' x = Pareto$new(shape = 2, scale = 1)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{shape} \tab numeric \tab shape parameter. \cr
-#' \code{scale} \tab numeric \tab scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(scale = 5.1)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Pareto distribution is parameterised with shape and scale parameters.
-#' Default parameterisation is with shape = 1 and scale = 1.
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -38,9 +45,6 @@ NULL
 Pareto <- R6::R6Class("Pareto", inherit = SDistribution, lock_objects = F)
 Pareto$set("public","name","Pareto")
 Pareto$set("public","short_name","Pare")
-Pareto$set("public","traits",list(type = PosReals$new(zero = T),
-                                       valueSupport = "continuous",
-                                       variateForm = "univariate"))
 Pareto$set("public","description","Pareto Probability Distribution.")
 Pareto$set("public","package","distr6")
 
@@ -50,7 +54,7 @@ Pareto$set("public","mean",function(){
   else
     return((self$getParameterValue("shape") * self$getParameterValue("scale"))/(self$getParameterValue("shape")-1))
 })
-Pareto$set("public","var",function(){
+Pareto$set("public","variance",function(){
   shape <- self$getParameterValue("shape")
   scale <- self$getParameterValue("scale")
   if(shape <= 2)
@@ -93,13 +97,17 @@ Pareto$set("public", "mgf", function(t){
   }else
     return(NaN)
 })
+Pareto$set("public", "pgf", function(z){
+  return(NaN)
+})
 Pareto$set("public","mode",function(){
   return(self$getParameterValue("scale"))
 })
 
-Pareto$set("public","setParameterValue",function(lst, error = "warn"){
-  super$setParameterValue(lst, error)
+Pareto$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Interval$new(self$getParameterValue("scale"), Inf, type = "[)")
+  invisible(self)
 })
 
 Pareto$set("private",".getRefParams", function(paramlst){
@@ -112,7 +120,7 @@ Pareto$set("private",".getRefParams", function(paramlst){
 Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  self$setParameterValue(list(shape = shape, scale = scale))
+  self$setParameterValue(shape = shape, scale = scale)
 
   pdf <- function(x1){
     shape <- self$getParameterValue("shape")
@@ -130,7 +138,9 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(scale, Inf, type = "[)"), distrDomain = PosReals$new(zero = T),
-                   symmetric  = FALSE)
+                   rand = rand, support = Interval$new(scale, Inf, type = "[)"),
+                   symmetric  = FALSE,type = PosReals$new(zero = T),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

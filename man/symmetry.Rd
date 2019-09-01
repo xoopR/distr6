@@ -9,8 +9,11 @@ symmetry(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+One of "symmetric" or "asymmetric".
+}
 \description{
-Returns the distribution symmetry, one of "symmetric" or "asymmetric".
+Returns the distribution symmetry.
 }
 \section{R6 Usage}{
  $symmetry()

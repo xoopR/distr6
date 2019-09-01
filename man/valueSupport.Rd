@@ -9,8 +9,11 @@ valueSupport(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+One of "discrete"/"continuous"/"mixture".
+}
 \description{
-Returns the valueSupport of the distribution, one of discrete/continuous/mixture.
+Returns the valueSupport of the distribution.
 }
 \section{R6 Usage}{
  $valueSupport()

@@ -1,25 +1,69 @@
+url: https://alan-turing-institute.github.io/distr6
+
 template:
   params:
     bootswatch: spacelab
+    docsearch:
+      api_key: c08037a20302b0f7fe5a1b7060957f04
+      index_name: distr6
 
 navbar:
-  left:   
-  - text: OOP and R6
+  left:
+  - text: Basic
     menu:
-    - text: OOP and Design Patterns
-      href: articles/oop_and_design_patterns.html  
-    - text: R6 and Design Patterns
-      href: articles/r6_and_design_patterns.html
-    - text: Documentation in R6
-      href: articles/documentation_in_r6.html
-  - text: API and Design
+      - text: Introduction to R6
+        href: articles/webs/intro_to_r6.html
+      - text: Constructing a Distribution
+        href: articles/webs/constructing_a_distribution.html
+      - text: Getting and Setting Parameters
+        href: articles/webs/parameters.html
+      - text: Statistical Methods
+        href: articles/webs/statistical_methods.html
+      - text: Properties and Traits
+        href: articles/webs/properties_traits.html
+      - text: Multivariate Distributions
+        href: articles/webs/multivariates.html
+      - text: Listing
+        href: articles/webs/listing.html
+  - text: Advanced
     menu:
-    - text: Analytic and Numeric Methods
-      href: articles/analytic_and_numeric_methods.html
+      - text: S3 and Piping
+        href: articles/webs/s3_piping.html
+      - text: Decorators
+        href: articles/webs/decorators.html
+      - text: Wrappers
+        href: articles/webs/wrappers.html
+      - text: Sets and Intervals
+        href: articles/webs/sets.html
+      - text: Custom Distributions
+        href: articles/webs/custom_distributions.html
+  - text: Extension Guidelines
+    menu:
+    - text: Preliminaries
+      href: articles/webs/preliminaries.html
+    - text: Creating an SDistribution
+      href: articles/webs/create_sdistribution.html
+    - text: Creating a Kernel
+      href: articles/webs/create_kernel.html
+    - text: Creating a Decorator
+      href: articles/webs/create_decorator.html
+    - text: Creating a Wrapper
+      href: articles/webs/create_wrapper.html
+  - text: Appendices
+    menu:
+    - text: Cheatsheet
+      href: https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf
     - text: API Lifecycle
-      href: articles/api_lifecycle.html
-    - text: Roadmap
-      href: articles/roadmap.html  
+      href: articles/webs/api_lifecycle.html
+    - text: Analytical and Numerical Methods
+      href: articles/webs/analytic_and_numeric_methods.html
+    - text: R vs C
+      href: articles/webs/r_vs_c.html
+    - text: R6 and Design Patterns
+      href: articles/webs/r6_and_design_patterns.html
+    - text: Documentation in R6
+      href: articles/webs/documentation_in_r6.html
+
   right:
   - text: Reference
     href: reference/
@@ -37,9 +81,66 @@ reference:
     desc: "Functions for Distribution constructor and helpers."
     contents: 
       - Distribution
+      - SDistribution
+      - Kernel
       - exkurtosisType
       - skewType
-      - listDistributions
+      - liesInSupport
+      - liesInType
+  - title: "Mathematical and Statistical"
+    desc: "Mathematical and statistical functions acting on Distribution objects."
+    contents: 
+      - cdf
+      - cdfAntiDeriv
+      - cdfPNorm
+      - cf
+      - correlation
+      - cumHazard
+      - entropy
+      - genExp
+      - generalPNorm
+      - hazard
+      - kthmoment
+      - kurtosis
+      - mean.Distribution
+      - median.Distribution
+      - mgf
+      - mode
+      - pdf
+      - pdfPNorm
+      - pgf
+      - prec
+      - quantile.Distribution
+      - rand
+      - simulateEmpiricalDistribution
+      - stdev
+      - skewness
+      - skewnessType
+      - squared2Norm
+      - survival
+      - survivalAntiDeriv
+      - survivalPNorm
+      - variance
+  - title: "Distribution Accessors"
+    desc: "Accessor methods for Distribution objects."
+    contents: 
+      - decorators
+      - dmax
+      - dmin
+      - inf
+      - iqr
+      - kurtosisType
+      - parameters
+      - properties
+      - strprint
+      - summary.Distribution
+      - sup
+      - support
+      - symmetry
+      - traits
+      - type
+      - valueSupport
+      - variateForm
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
@@ -53,23 +154,70 @@ reference:
     desc: "Functionality for composite modelling including joint and conditional distributions."
     contents:
       - DistributionWrapper
-      - ConcreteWrapper
-      - ArrayDistribution
+      - wrappedModels
       - ProductDistribution
+      - VectorDistribution
       - HuberizedDistribution
       - huberize
       - TruncatedDistribution
       - truncate
       - MixtureDistribution
-      - Scale
-  - title: "Discrete Distributions"
-    desc: "Discrete probability distributions."
+      - Convolution
+  - title: "Univariate Discrete Distributions"
     contents:
+      - Bernoulli
       - Binomial
-  - title: "Continuous Distributions"
-    desc: "Continuous probability distributions."
+      - Categorical
+      - Degenerate
+      - DiscreteUniform
+      - Empirical
+      - Geometric
+      - Hypergeometric
+      - Logarithmic
+      - Poisson
+  - title: "Univariate Continuous Distributions"
     contents:
+      - Arcsine
+      - Beta
+      - Cauchy
+      - ChiSquared
       - Exponential
+      - FDistribution
+      - Frechet
+      - Gamma
+      - Gompertz
+      - Gumbel
+      - InverseGamma
+      - Laplace
+      - Logistic
+      - Loglogistic
+      - Lognormal
+      - Normal
+      - Pareto
+      - Rayleigh
+      - StudentT
+      - Triangular
+      - Uniform
+      - Wald
+      - Weibull
+  - title: "Multivariate Distributions"
+    contents:
+      - Dirichlet
+      - Multinomial
+      - MultivariateNormal
+  - title: "Kernels"
+    contents:
+      - Cosine
+      - Epanechnikov
+      - NormalKernel
+      - LogisticKernel
+      - TriangularKernel
+      - UniformKernel
+      - Quartic
+      - Sigmoid
+      - Silverman
+      - Tricube
+      - Triweight
   - title: "Assertions"
     desc: "Validation checks for Distributions."
     contents:
@@ -81,6 +229,7 @@ reference:
       - Interval
       - Set
       - SpecialSet
+      - Empty
       - Naturals
       - Integers
       - Rationals
@@ -90,17 +239,42 @@ reference:
       - starts_with("Pos")
       - starts_with("Neg")
       - setSymbol
-      - operation
-      - power
-      - product
-      - union
+      - setOperation
+      - complement.SetInterval
+      - power.SetInterval
+      - product.SetInterval
+      - union.SetInterval
       - listSpecialSets
+      - as.numeric.Interval
+      - class.SetInterval
+      - dimension.SetInterval
+      - elements
+      - getSymbol.SetInterval
+      - inf.SetInterval
+      - length.Interval
+      - length.Set
+      - liesInSetInterval
+      - max.SetInterval
+      - min.SetInterval
+      - sup.SetInterval
+      - type.SetInterval
   - title: "Helper Functions"
     desc: "Miscellaneous functions for use in distr6."
     contents: 
       - makeUniqueDistributions
+      - listDistributions
+      - listKernels
+      - listWrappers
+      - distr6-package
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
       - ParameterSet
       - as.ParameterSet
+      - getParameterSupport
+      - getParameterValue
+      - setParameterValue
+      - as.data.table
+      - print.ParameterSet
+      - merge.ParameterSet
+      - update.ParameterSet

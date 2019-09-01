@@ -13,16 +13,15 @@ cexpo = function(x){
 }
 
 ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
-                      lower = list(0, 0, 0), upper = list(Inf, Inf, 5),
-                      class = list("numeric","numeric","numeric"),
+                      support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0,5)),
                       settable = list(TRUE, FALSE, FALSE),
-                      updateFunc = list(NULL, "1/self$getParameterValue('rate')",
-                                        "exp(self$getParameterValue('rate'))"),
+                      updateFunc = list(NULL,
+                      function(self) 1/self$getParameterValue('rate'),
+                      function(self) exp(self$getParameterValue('rate'))),
                       description = list("Arrival rate","Scale parameter","testpar"))
 
 continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
                                   symmetric=TRUE, type = PosReals$new(zero=T),
-                                  distrDomain=PosReals$new(),
                                   pdf = dexpo,
                                   cdf = cexpo,
                                   parameters = ps
@@ -37,21 +36,20 @@ test_that("check all accessors are working", {
 })
 
 test_that("check core statistics", {
-  expect_silent(continuousTester$setParameterValue(list(rate = 6)))
+  expect_silent(continuousTester$setParameterValue(lst = list(rate = 6)))
   expect_message(decorate(continuousTester, CoreStatistics))
   expect_equal(continuousTester$genExp(), 1/6)
-  expect_equal(continuousTester$var(), 1/36)
-  expect_equal(continuousTester$sd(), 1/6)
+  expect_equal(continuousTester$variance(), 1/36)
+  expect_equal(continuousTester$stdev(), 1/6)
   expect_silent(continuousTester$iqr())
   expect_equal(continuousTester$kthmoment(0), 1)
   expect_equal(continuousTester$kthmoment(1), 0)
-  expect_equal(continuousTester$cov(),continuousTester$var())
-  expect_equal(continuousTester$kthmoment(2), continuousTester$var())
+  expect_equal(continuousTester$kthmoment(2), continuousTester$variance())
   expect_equal(continuousTester$kthmoment(3, type = "standard"), continuousTester$skewness())
   expect_equal(continuousTester$kthmoment(4, type = "standard"), continuousTester$kurtosis(FALSE))
-  expect_message(continuousTester$setParameterValue(list(rate = 10)))
+  expect_silent(continuousTester$setParameterValue(lst = list(rate = 10)))
   expect_equal(continuousTester$mgf(6), continuousTester$getParameterValue("rate") / (continuousTester$getParameterValue("rate") - 6))
-  expect_message(continuousTester$setParameterValue(list(rate = 5)))
+  expect_silent(continuousTester$setParameterValue(lst = list(rate = 5)))
   expect_equal(continuousTester$entropy(base=exp(1)), 1-log(continuousTester$getParameterValue("rate")))
 })
 
@@ -64,4 +62,18 @@ test_that("check exotic statistics", {
   expect_equal(-log(continuousTester$survival(3)), continuousTester$cumHazard(3))
 })
 
+qexpo = function(p){
+  return(-log(1-p)/self$getParameterValue("rate"))
+}
 
+continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReals$new(),
+                                    symmetric=TRUE, type = PosReals$new(zero=T),
+                                    pdf = dexpo,
+                                    cdf = cexpo,
+                                    quantile = qexpo,
+                                    parameters = ps
+)
+
+test_that("quantile", {
+  expect_equal(continuousTester$quantile(1), qexp(1))
+})

@@ -3,17 +3,34 @@
 \name{ExtendedReals}
 \alias{ExtendedReals}
 \title{Set of Extended Reals}
-\description{
-The mathematical set of extended reals.
+\value{
+Returns R6 object of class ExtendedReals.
 }
+\description{
+The mathematical set of extended real numbers.
+}
+\details{
+The set of Extended Reals is defined as the union of the set of reals with +-Infinity, i.e.
+\deqn{ExtendedReals = R \cup \{-\infty, \infty\}}
+where \eqn{R} is the set of reals.
+}
+\section{Constructor}{
+ ExtendedReals$new(dim = 1)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
 }
 }
 
+\examples{
+ExtendedReals$new()
+ExtendedReals$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

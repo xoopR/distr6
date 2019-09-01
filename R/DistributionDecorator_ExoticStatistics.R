@@ -1,17 +1,26 @@
-#' @title Exotic Statistical Methods for Distributions
-#'
-#' @description Further functionality to distribution objects for numerical statistical
-#'   methods that can be considered more exotic than core, such as survival modelling
-#'   and p-norms.
-#'
 #' @name ExoticStatistics
 #'
-#' @section Constructor: ExoticStatistics$new(dist)
+#' @title Exotic Statistical Methods for Distributions
+#'
+#' @description This decorator adds methods for more complex statistical methods including p-norms,
+#' survival and hazard functions and anti-derivatives.
+#'
+#' @details Decorator objects add functionality to the given Distribution object by copying methods
+#' in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
+#' below to find details of the methods that are added to the Distribution. Methods already
+#' present in the distribution are not overwritten by the decorator.
+#'
+#' Use \code{\link{decorate}} to decorate a Distribution.
+#'
+#' Methods in this decorator may use numerical approximations and therefore better results may be available
+#' from analytic computations.
+#'
+#' @section Constructor: ExoticStatistics$new(distribution)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{dist} \tab distribution \tab Distribution to decorate. \cr
+#' \code{distribution} \tab distribution \tab Distribution to decorate. \cr
 #' }
 #'
 #' @section Added Methods:
@@ -27,16 +36,10 @@
 #' \code{survivalPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
 #' }
 #'
+#' @seealso \code{\link{decorate}}, \code{\link{listDecorators}}
 #'
-#' @details Decorator objects add functionality to the given Distribution object
-#'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
-#'  \code{\link{decorate}} function to decorate a Distribution.
-#'
-#'  All methods in this decorator use numerical approximations and therefore better results may be available
-#'  from analytic computations. See below for the methods added to a distribution after decorating with
-#'  \code{ExoticStatistics}.
-#'
-#' @seealso \code{\link{DistributionDecorator}} and \code{\link{CoreStatistics}}
+#' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
+#' added to the SDistribution methods.
 #'
 #' @examples
 #' x = Exponential$new()
@@ -68,12 +71,13 @@ ExoticStatistics <- R6::R6Class("ExoticStatistics", inherit = DistributionDecora
 #'
 #' @details The cdf anti-derivative is defined by
 #' \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
-#' where X is the distribution, F_X is the cdf of the distribution X and a,b are the limits of integration.
+#' where X is the distribution, \eqn{F_X} is the cdf of the distribution \eqn{X} and \eqn{a, b} are the limits of integration.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
+#'
+#' @return Antiderivative of the cdf evaluated between limits as a numeric.
 #'
 #' @export
 NULL
@@ -100,11 +104,12 @@ ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NU
 #'
 #' @details The survival anti-derivative is defined by
 #' \deqn{as(a, b) = \int_a^b S_X(x) dx}
-#' where X is the distribution, S_X is the survival function of the distribution X and a,b are the
+#' where X is the distribution, \eqn{S_X} is the survival function of the distribution \eqn{X} and \eqn{a, b} are the
 #' limits of integration.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Antiderivative of the survival function evaluated between limits as a numeric.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
@@ -124,32 +129,32 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper
 #' @description The survival function of a probability distribution is the probability of surviving
 #' after a point x.
 #'
-#' @usage survival(object, x1, log.p = FALSE)
-#' @section R6 Usage: $survival(x1, log.p = FALSE)
+#' @usage survival(object, x1, log = FALSE)
+#' @section R6 Usage: $survival(x1, log = FALSE)
 #'
 #' @param object Distribution.
 #' @param x1 Point to evaluate the survival function at.
-#' @param log.p logical, if TRUE then the (natural) logarithm of the survival function is returned.
+#' @param log logical, if TRUE then the (natural) logarithm of the survival function is returned.
 #'
 #' @details The survival function is defined by
-#' \deqn{S_X(x) = P(X \geq x) = 1 - F_X(x) \int_x^{Sup(X)} f_X(x) dx}
-#' where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf, \eqn{f_X} is the pdf and
-#' Sup(X) is the supremum of the distribution X.
+#' \deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx}
+#' where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf and \eqn{f_X} is the pdf.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Survival function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
-ExoticStatistics$set("public", "survival", function(x1, log.p = FALSE) {
-  if(!is.null(self$cdf(x1)))
-    self$cdf(x1 = x1, lower.tail = FALSE, log.p = log.p)
+ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
+  if(private$.isCdf)
+    self$cdf(x1 = x1, lower.tail = FALSE, log.p = log)
   else {
     message(.distr6$message_numeric)
     surv = integrate(self$pdf, x1, self$sup())$value
-    if(log.p)
+    if(log)
       return(log(surv))
     else
       return(surv)
@@ -172,21 +177,25 @@ ExoticStatistics$set("public", "survival", function(x1, log.p = FALSE) {
 #' @param log logical, if TRUE then the (natural) logarithm of the hazard function is returned.
 #'
 #' @details The hazard function is defined analytically by
-#' \deqn{h_X(x) = \frac{f_X}{S_X}}
+#' \deqn{h_X(x) = \frac{f_X}{S_X}}{h_X(x) = f_X/S_X}
 #' where X is the distribution, \eqn{S_X} is the survival function and \eqn{f_X} is the pdf.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 ExoticStatistics$set("public", "hazard", function(x1, log = FALSE) {
-  if(!is.null(self$pdf(x1)))
+  if(private$.isPdf)
     pdf = self$pdf(x1)
-  else if(!is.null(self$cdf(x1))){
+  else if(private$.isCdf){
     message(.distr6$message_numeric)
-    pdf = deriv(y~self$cdf(x1),"x1")
+    pdf = try(as.numeric(attr(deriv(y~self$cdf(x1),"x1", func = TRUE)(x1),"gradient")),
+            silent = TRUE)
+    if(inherits(pdf,"try-error"))
+      pdf = pracma::fderiv(self$cdf,x1)
   }
 
   surv = self$survival(x1)
@@ -218,17 +227,18 @@ ExoticStatistics$set("public", "hazard", function(x1, log = FALSE) {
 #' \deqn{H_X(x) = -log(S_X)}
 #' where X is the distribution and \eqn{S_X} is the survival function.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
   if(!log){
-    return(-self$survival(x1, log.p = TRUE))
+    return(-self$survival(x1, log = TRUE))
   } else
-    return(log(-self$survival(x1, log.p = TRUE)))
+    return(log(-self$survival(x1, log = TRUE)))
 })
 
 #-------------------------------------------------------------
@@ -239,7 +249,7 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
 #' @description The p-norm of the cdf evaluated between given limits or over the whole support.
 #'
 #' @usage cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
-#' @section R6 Usage: $cumHazard(object, p = 2, lower = NULL, upper = NULL)
+#' @section R6 Usage: $cdfPNorm(object, p = 2, lower = NULL, upper = NULL)
 #'
 #' @param object Distribution.
 #' @param p p-norm to calculate.
@@ -247,13 +257,14 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
 #' @param upper upper limit for integration, default is supremum.
 #'
 #' @details The p-norm of the cdf is defined by
-#' \deqn{\int_a^b |F_X|^p d\mu)^1/p}
-#' where X is the distribution, \eqn{F_X} is the cdf and a,b are the limits of integration.
+#' \deqn{(\int_a^b |F_X|^p d\mu)^{1/p}}
+#' where X is the distribution, \eqn{F_X} is the cdf and \eqn{a, b} are the limits of integration.
 #'
 #' Returns NULL if distribution is not continuous.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
+#'
+#' @return Given p-norm of cdf evaluated between limits as a numeric.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
 #'
@@ -264,7 +275,7 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 
   if(testContinuous(self))
     return(generalPNorm(self$cdf, p, lower, upper))
-}) # NEEDS TESTING
+})
 
 #-------------------------------------------------------------
 # Public Methods - pdfPNorm
@@ -274,7 +285,7 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 #' @description The p-norm of the pdf evaluated between given limits or over the whole support.
 #'
 #' @usage pdfPNorm(object, p = 2, lower = NULL, upper = NULL)
-#' @section R6 Usage: $pdfPNorm(object, p = 2, lower = NULL, upper = NULL)
+#' @section R6 Usage: $pdfPNorm(p = 2, lower = NULL, upper = NULL)
 #'
 #' @param object Distribution.
 #' @param p p-norm to calculate.
@@ -282,15 +293,16 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 #' @param upper upper limit for integration, default is supremum.
 #'
 #' @details The p-norm of the pdf is defined by
-#' \deqn{\int_a^b |f_X|^p d\mu)^1/p}
+#' \deqn{(\int_a^b |f_X|^p d\mu)^{1/p}}
 #' where X is the distribution, \eqn{f_X} is the pdf and a,b are the limits of integration.
 #'
 #' Returns NULL if distribution is not continuous.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
+#'
+#' @return Given p-norm of pdf evaluated between limits as a numeric.
 #'
 #' @export
 ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
@@ -300,6 +312,38 @@ ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper =
   if(testContinuous(self))
     return(generalPNorm(self$pdf, p, lower, upper))
 }) # NEEDS TESTING
+
+#-------------------------------------------------------------
+# squared2Norm
+#-------------------------------------------------------------
+#' @title Squared Probability Density Function 2-Norm
+#' @name squared2Norm
+#' @description The squared 2-norm of the pdf evaluated over the whole support by default or given
+#' limits.
+#'
+#' @usage squared2Norm(object, lower = NULL, upper = NULL)
+#' @section R6 Usage: $squared2Norm(lower = NULL, upper = NULL)
+#'
+#' @param object Distribution.
+#' @param lower lower limit for integration, default is infimum.
+#' @param upper upper limit for integration, default is supremum.
+#'
+#' @details The squared 2-norm of the pdf is defined by
+#' \deqn{\int (f_X(u))^2 du}
+#' where X is the Distribution and \eqn{f_X} is its pdf.
+#'
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
+#' \code{\link{ExoticStatistics}} decorator.
+#'
+#' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
+#'
+#' @return Squared 2-norm of pdf evaluated between limits as a numeric.
+#'
+#' @export
+NULL
+ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL){
+  return(self$pdfPNorm(p = 2, lower = lower, upper = upper))
+})
 
 #-------------------------------------------------------------
 # Public Methods - survivalPNorm
@@ -317,15 +361,16 @@ ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper =
 #' @param upper upper limit for integration, default is supremum.
 #'
 #' @details The p-norm of the survival function is defined by
-#' \deqn{\int_a^b |S_X|^p d\mu)^1/p}
+#' \deqn{(\int_a^b |S_X|^p d\mu)^{1/p}}
 #' where X is the distribution, \eqn{S_X} is the survival function and a,b are the limits of integration.
 #'
 #' Returns NULL if distribution is not continuous.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{ExoticStatistics}} decorator.
+#' Can only be used after decorating with \code{\link{ExoticStatistics}}.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
+#'
+#' @return Given p-norm of survival function evaluated between limits as a numeric.
 #'
 #' @export
 ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, upper = NULL){
@@ -334,4 +379,4 @@ ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, up
 
   if(testContinuous(self))
     return(generalPNorm(self$survival, p, lower, upper))
-}) # NEEDS TESTING
+})

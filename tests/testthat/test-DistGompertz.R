@@ -22,10 +22,11 @@ test_that("properties & traits",{
 g = Gompertz$new()
 test_that("statistics",{
   expect_error(g$mean())
-  expect_error(g$var())
+  expect_error(g$variance())
   expect_error(g$skewness())
   expect_error(g$kurtosis())
   expect_error(g$entropy())
+  expect_equal(g$pgf(1), NaN)
   expect_error(g$mgf())
   expect_error(g$cf())
   expect_error(g$mode())

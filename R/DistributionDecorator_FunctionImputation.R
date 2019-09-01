@@ -1,45 +1,53 @@
-#' @title Numeric Pdf/Cdf/Quantile/Rand Functions
-#'
-#' @description Numeric statistical functions including density/mass function, distribution function,
-#' inverse distribution and simulation.
 #' @name FunctionImputation
 #'
-#' @details Decorator objects add functionality to the given Distribution object
-#'  by copying methods in the decorator environment to the chosen Distribution environment. Use the
-#'  \code{\link{decorate}} function to decorate a Distribution. The functions are imputed based on
-#'  which are already available in the distribution. For example if the pdf is known then this is used
-#'  to generate the cdf, quantile and rand. But if the cdf and pdf are both known, then cdf is used to
-#'  generate the quantile.
+#' @title Imputed Pdf/Cdf/Quantile/Rand Functions
 #'
-#'  All methods in this decorator use numerical approximations and therefore better results may be available
-#'  from analytic computations.
+#' @description This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
+#' by using strategies dependent on which methods are already present in the distribution.
+#'
+#' @details Decorator objects add functionality to the given Distribution object by copying methods
+#' in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
+#' below to find details of the methods that are added to the Distribution. Methods already
+#' present in the distribution are not overwritten by the decorator.
+#'
+#' Use \code{\link{decorate}} to decorate a Distribution.
+#'
+#' All methods in this decorator use numerical approximations and therefore better results may be available
+#' from analytic computations.
+#'
+#' @section Constructor: FunctionImputation$new(distribution)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{dist} \tab distribution \tab Distribution to decorate. \cr
+#' \code{distribution} \tab distribution \tab Distribution to decorate. \cr
 #' }
 #'
-#' @section Public Methods:
+#' @section Added Methods:
 #' \tabular{lll}{
-#' \strong{Method} \tab \strong{Input -> Output} \tab \strong{Details} \cr
-#' \code{pdf(x1)} \tab numeric x numeric -> numeric \tab Numeric pdf evaluated at x1. \cr
-#' \code{cdf(x1)} \tab numeric x numeric -> numeric \tab Numeric cdf evaluated at x1. \cr
-#' \code{quantile(p)} \tab numeric x numeric -> numeric \tab Numeric inverse cdf evaluated at x1. \cr
-#' \code{rand(n)} \tab integer x numeric -> numeric \tab n simulations from distribution. \cr
+#' \strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
+#' \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab Density/mass function \tab \code{\link{pdf}} \cr
+#' \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Distribution function \tab \code{\link{cdf}}\cr
+#' \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Quantile function \tab \code{\link{quantile.Distribution}} \cr
+#' \code{rand(n, simplify = TRUE)} \tab Simulation function \tab \code{\link{rand}} \cr
 #' }
 #'
-#' @seealso \code{\link{DistributionDecorator}}
+#' @seealso \code{\link{decorate}}, \code{\link{listDecorators}}
+#'
+#' @return Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
+#' imputed if previously missing.
 #'
 #' @examples
-#' x = Distribution$new("Test", pdf = function(x) 1/(4-1), support = Interval$new(1,4),
+#' x = Distribution$new("Test", pdf = function(x) 1/(4-1),
+#' support = Interval$new(1,4),
 #' type = Reals$new())
 #' decorate(x, FunctionImputation)
 #' plot(x$pdf(0:5))
 #' plot(x$cdf(0:5))
 #'
 #' @examples
-#' x = Distribution$new("Test", pdf = function(x) 1/(4-1), decorators = ExoticStatistics)
+#' x = Distribution$new("Test", pdf = function(x) 1/(4-1),
+#' decorators = ExoticStatistics)
 #' x$cdf(1)
 NULL
 
@@ -54,16 +62,18 @@ FunctionImputation$set("public","pdf",function(x1){
         return(self$cdf(x1) - self$cdf(x1-1))
       } else if(testContinuous(self)){
         message(.distr6$message_numeric)
-        return(as.numeric(attr(deriv(y~self$cdf(x1),"x1", func = TRUE)(x1),"gradient")))
+        return(pracma::fderiv(self$cdf,x1))
       }
-  } else
-    return("FunctionImputation is currently only supported for univariate distributions.")
+  }
 })
 FunctionImputation$set("public","cdf",function(x1){
   # PDF2CDF
   if(testUnivariate(self)){
     if(testDiscrete(self)){
-      return(sum(self$pdf(self$inf():x1)))
+      if(length(x1)>1)
+        return(sapply(x1,function(x) sum(self$pdf(self$inf():x))))
+      else
+        return(sum(self$pdf(self$inf():x1)))
     } else if(testContinuous(self)){
       message(.distr6$message_numeric)
       if(length(x1)>1)
@@ -72,13 +82,12 @@ FunctionImputation$set("public","cdf",function(x1){
         return(integrate(self$pdf, lower = self$inf(), upper = x1)$value)
 
     }
-  } else
-    return("FunctionImputation is currently only supported for univariate distributions.")
+  }
 })
 FunctionImputation$set("public","quantile",function(p){
   message(.distr6$message_numeric)
 
- # if(!RSmisc::testMessage(self$cdf(1))){
+ # if(!testMessage(self$cdf(1))){
     #CDF2QUANTILE - DISCRETE/CONT
     if(testDiscrete(self)){
       to = ifelse(self$sup() == Inf, 1e+08, self$sup())
@@ -97,21 +106,22 @@ FunctionImputation$set("public","quantile",function(p){
         lower = ifelse(self$inf() == -Inf, -1e+08, self$inf())
 
         if(length(p)>1)
-          return(unlist(sapply(p, function(p0) return(suppressMessages(GoFKernel::inverse(self$cdf)(p0))))))
+          return(unlist(sapply(p, function(p0)
+            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = self$inf(),upper = self$sup())(p0))))))
         else
-          return(suppressMessages(GoFKernel::inverse(self$cdf)(p)))
+          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf(), upper = self$sup())(p)))
     }
  #   }
  # }
 })
 FunctionImputation$set("public","rand",function(n){
-  message(.distr6$message_numeric)
-  if(!RSmisc::testMessage(self$quantile(1))){
-    # QUANTILE2RAND - DISCRETE/CONT
-    return(sapply(1:n, function(x) self$quantile(runif(1))))
-  }
-  if(!RSmisc::testMessage(self$pdf(1)) & testDiscrete(self)){
-    # PDF2RAND - DISCRETE
-    return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
-  }
+  strategy = "q2r"
+  if(strategy == "q2r"){
+    message(.distr6$message_numeric)
+    return(suppressMessages(sapply(1:n, function(x) self$quantile(runif(1)))))
+  } #else if(strategy == "p2r"){
+  #   message(.distr6$message_numeric)
+  #   if(testDiscrete(self))
+  #     return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
+  # }
 })

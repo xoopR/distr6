@@ -11,6 +11,9 @@ mgf(object, t)
 
 \item{t}{integer to evaluate moment generating function at.}
 }
+\value{
+Moment generating function evaluated at t as a numeric.
+}
 \description{
 Moment generating function of a distribution
 }

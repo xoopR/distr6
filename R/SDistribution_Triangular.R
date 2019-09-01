@@ -2,43 +2,51 @@
 #-------------------------------------------------------------
 # Triangular Distribution Documentation
 #-------------------------------------------------------------
-#' @title (Symmetric) Triangular Distribution
-#'
-#' @description Mathematical and statistical functions for the Triangular distribution parameterised
-#' with lower limit, upper limit and mode and defined by the pdf,
-#' \deqn{f(x) = 0, x < a}
-#' \deqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c}
-#' \deqn{f(x) = 2/(b-a), x = c}
-#' \deqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b}
-#' \deqn{f(x) = 0, x > b}
-#'
-#' where \eqn{a \epsilon R} is the lower limit, \eqn{b > a} is the upper limit and \eqn{a \le c \le b}
-#' is the mode.
-#'
 #' @name Triangular
+#' @template SDist
+#' @aliases SymmetricTriangular
+#' @templateVar ClassName Triangular
+#' @templateVar DistName Triangular
+#' @templateVar uses to model population data where only the minimum, mode and maximum are known (or can be reliably estimated), also to model the sum of standard uniform distributions
+#' @templateVar params lower limit, \eqn{a}, upper limit, \eqn{b}, and mode, \eqn{c},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b}
+#' @templateVar paramsupport \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}
+#' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar constructor lower = 0, upper = 1, mode = 0.5, symmetric = FALSE
+#' @templateVar arg1 \code{lower} \tab numeric \tab lower limit. \cr
+#' @templateVar arg2 \code{upper} \tab numeric \tab upper limit. \cr
+#' @templateVar arg3 \code{mode} \tab numeric \tab mode. \cr
+#' @templateVar arg4 \code{symmetric} \tab logical \tab see details. \cr
+#' @templateVar constructorDets \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} can be updated after construction.
+#' @templateVar additionalSeeAlso \code{\link{Uniform}} for the Uniform distribution.
 #'
-#' @section Constructor: Triangular$new(lower = 0, upper = 1, mode = 0.5, symmetric = FALSE,
-#' decorators = NULL, verbose = FALSE)
+#' @examples
+#' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
+#' Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
+#' Triangular$new(lower = 2, upper = 5, mode = 4)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{lower} \tab numeric \tab lower limit. \cr
-#' \code{upper} \tab numeric \tab upper limit. \cr
-#' \code{mode} \tab numeric \tab mode. \cr
-#' \code{symmetric} \tab logical \tab see details. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # You can view the type of Triangular distribution with $description
+#' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
+#' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
 #'
-#' @section Constructor Details: The (non-symmetric) Triangular distribution is parameterised with
-#' lower = 0, upper = 1 and mode = 0.5 by default. If \code{symmetric = TRUE} then the \code{mode}
-#' parameter is not-settable and is defined by \eqn{mode = (lower + upper) /2}, this cannot be changed
-#' after construction.If \code{symmetric = FALSE} (default) then \eqn{mode} is settable after
-#' construction.
+#' x = Triangular$new(lower = -1, upper = 1)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Update parameters
+#' x$setParameterValue(lower = 2, upper = 7)
+#' x$parameters()
+#'
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -48,16 +56,13 @@ NULL
 Triangular <- R6::R6Class("Triangular", inherit = SDistribution, lock_objects = F)
 Triangular$set("public","name","Triangular")
 Triangular$set("public","short_name","Tri")
-Triangular$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Triangular$set("public","package","distr6")
 Triangular$set("private",".type","symmetric")
 
 Triangular$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode"))/3)
 })
-Triangular$set("public","var",function(){
+Triangular$set("public","variance",function(){
   return((self$getParameterValue("lower")^2 + self$getParameterValue("upper")^2 +
             self$getParameterValue("mode")^2 - self$getParameterValue("lower")*self$getParameterValue("upper") -
             self$getParameterValue("lower")*self$getParameterValue("mode")-
@@ -91,6 +96,9 @@ Triangular$set("public", "mgf", function(t){
 
   return(num/den)
 })
+Triangular$set("public", "pgf", function(z){
+  return(NaN)
+})
 Triangular$set("public", "cf", function(t){
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")
@@ -113,7 +121,9 @@ Triangular$set("private",".getRefParams", function(paramlst){
     if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
   return(lst)
 })
-Triangular$set("public","setParameterValue",function(lst, error = "warn"){
+Triangular$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  if(is.null(lst))
+    lst <- list(...)
   if("lower" %in% names(lst) & "upper" %in% names(lst))
     checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
   else if("lower" %in% names(lst))
@@ -134,7 +144,7 @@ Triangular$set("public","setParameterValue",function(lst, error = "warn"){
     }
   }
 
-  super$setParameterValue(lst = lst, error)
+  super$setParameterValue(lst = lst, error = error)
 
   private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
   if(private$.type != "symmetric"){
@@ -164,7 +174,7 @@ Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lowe
   }
 
   private$.parameters <- getParameterSet(self, lower, upper, mode, symmetric, verbose)
-  self$setParameterValue(list(lower = lower, upper = upper, mode = mode))
+  self$setParameterValue(lower = lower, upper = upper, mode = mode)
 
   pdf <- function(x1){
     lower = self$getParameterValue("lower")
@@ -209,7 +219,9 @@ Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lowe
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(lower, upper), distrDomain = Reals$new(),
-                   symmetric = symmetry, description = description)
+                   rand = rand, support = Interval$new(lower, upper),
+                   symmetric = symmetry, description = description,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

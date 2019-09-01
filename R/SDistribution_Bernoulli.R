@@ -2,37 +2,45 @@
 #-------------------------------------------------------------
 # Bernoulli Distribution Documentation
 #-------------------------------------------------------------
-#' @title Bernoulli Distribution
-#'
-#' @description Mathematical and statistical functions for the Bernoulli distribution parameterised
-#' with prob or \eqn{qprob = 1 - prob}. The prob parameterisation is defined by the pmf,
-#' \deqn{f(x) = p, if x =1; 1-p, if x = 0}
-#'
-#' where \eqn{p \epsilon [0,1]} is the prob parameter.
-#'
-#' @details The default parameterisation of probability of success is favoured over the probability
-#' of failure as this is more common in practice, however the two are mathematically identical (subject to
-#' a simple translation).
-#'
 #' @name Bernoulli
+#' @template SDist
+#' @templateVar ClassName Bernoulli
+#' @templateVar DistName Bernoulli
+#' @templateVar uses to model a two-outcome scenario
+#' @templateVar params probability of success, \eqn{p},
+#' @templateVar pdfpmf pmf
+#' @templateVar pdfpmfeq \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0}
+#' @templateVar paramsupport \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}
+#' @templateVar distsupport \eqn{\{0,1\}}{{0,1}}
+#' @templateVar constructor prob = 0.5, qprob = NULL
+#' @templateVar arg1 \code{prob} \tab numeric \tab probability of success. \cr
+#' @templateVar arg2 \code{qprob} \tab numeric \tab probability of failure. \cr
+#' @templateVar constructorDets \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then {prob is ignored}.
+#' @templateVar additionalSeeAlso \code{\link{Binomial}} for a generalisation of the Bernoulli distribution.
 #'
-#' @section Constructor: Bernoulli$new(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE)
+#' @examples
+#' # Can be parameterised with probability of success or failure
+#' Bernoulli$new(prob = 0.2)
+#' Bernoulli$new(qprob = 0.3)
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{prob} \tab numeric \tab probability of success. \cr
-#' \code{qprob} \tab numeric \tab probability of failure. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' x = Bernoulli$new(verbose = TRUE) # Default is with prob = 0.5
 #'
-#' @section Constructor Details: The Bernoulli distribution is parameterised with prob (probability of
-#' success) or qprob (probability of failure) as a number between 0 and 1. If \code{qprob} is given then
-#' \code{prob} is ignored.
+#' # Update parameters
+#' # When any parameter is updated, all others are too!
+#' x$setParameterValue(qprob = 0.3)
+#' x$parameters()
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
+#'
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -42,23 +50,20 @@ NULL
 Bernoulli <- R6::R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
 Bernoulli$set("public","name","Bernoulli")
 Bernoulli$set("public","short_name","Bern")
-Bernoulli$set("public","traits",list(type = PosIntegers$new(zero = T),
-                                    valueSupport = "discrete",
-                                    variateForm = "univariate"))
 Bernoulli$set("public","description","Bernoulli Probability Distribution.")
-Bernoulli$set("public","package","distr6")
+Bernoulli$set("public","package","stats")
 
 Bernoulli$set("public","mean",function(){
   self$getParameterValue("prob")
 })
-Bernoulli$set("public","var",function(){
+Bernoulli$set("public","variance",function(){
   self$getParameterValue("prob") * self$getParameterValue("qprob")
 })
 Bernoulli$set("public","skewness",function(){
-  (1 - (2*self$getParameterValue("prob"))) / self$sd()
+  (1 - (2*self$getParameterValue("prob"))) / self$stdev()
 })
 Bernoulli$set("public","kurtosis",function(excess = TRUE){
-  exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$var()
+  exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
   if(excess)
     return(exkurtosis)
   else
@@ -102,7 +107,7 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
 
   private$.parameters <- getParameterSet(self, prob, qprob, verbose)
   if(!is.null(qprob)) prob <- NULL
-  self$setParameterValue(list(prob = prob, qprob = qprob))
+  self$setParameterValue(prob = prob, qprob = qprob)
 
   pdf = function(x1) dbinom(x1, 1, self$getParameterValue("prob"))
   cdf = function(x1) pbinom(x1, 1, self$getParameterValue("prob"))
@@ -110,7 +115,9 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
   rand = function(n) dbinom(n, 1, self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0,1), distrDomain = PosIntegers$new(zero = T),
-                   symmetric = FALSE)
+                   rand = rand, support = Set$new(0,1),
+                   symmetric = FALSE,type = Naturals$new(),
+                   valueSupport = "discrete",
+                   variateForm = "univariate")
   invisible(self)
 })

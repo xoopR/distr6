@@ -2,16 +2,22 @@
 % Please edit documentation in R/SDistribution_Pareto.R
 \name{Pareto}
 \alias{Pareto}
-\title{Pareto Distribution}
+\title{Pareto Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
-Mathematical and statistical functions for the Pareto distribution parameterised
-with shape and scale and defined by the pdf,
-\deqn{f(x) = (\alpha * \beta^\alpha)/(x^(\alpha+1))}
-where \eqn{\alpha > 0} is the shape parameter and \eqn{\beta > 0} is the scale parameter.
+Mathematical and statistical functions for the Pareto distribution, which
+is commonly used in Economics to model the distribution of wealth and the 80-20 rule.
 }
 \details{
-\code{cf} is omitted as no analytic expression involving the incomplete gamma function
-with complex numbers could be found.
+The Pareto distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})} for \eqn{\alpha, \beta > 0}.
+
+The distribution is supported on \eqn{[\beta, \infty)}.
+
+\code{cf}
+is
+omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
 }
 \section{Constructor}{
  Pareto$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
@@ -20,28 +26,34 @@ with complex numbers could be found.
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{shape} \tab numeric \tab shape parameter. \cr
-\code{scale} \tab numeric \tab scale parameter. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{shape} \tab numeric \tab shape parameter. \cr
+  \code{scale} \tab numeric \tab scale parameter. \cr
+  
+  
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Pareto distribution is parameterised with shape and scale parameters.
-Default parameterisation is with shape = 1 and scale = 1.
+ The Pareto distribution is parameterised with \code{shape} and \code{scale} as positive numerics.
 }
 
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -50,12 +62,12 @@ Default parameterisation is with shape = 1 and scale = 1.
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -67,13 +79,14 @@ Default parameterisation is with shape = 1 and scale = 1.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-  \code{var()} \tab \code{\link{var}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
+  \code{variance()} \tab \code{\link{variance}} \cr
+  \code{stdev()} \tab \code{\link{stdev}} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -81,7 +94,6 @@ Default parameterisation is with shape = 1 and scale = 1.
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{sd()} \tab \code{\link{sd}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -90,23 +102,49 @@ Default parameterisation is with shape = 1 and scale = 1.
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
+\examples{
+x = Pareto$new(shape = 2, scale = 1)
+
+# Update parameters
+x$setParameterValue(scale = 5.1)
+x$parameters()
+
+# d/p/q/r
+x$pdf(5)
+x$cdf(5)
+x$quantile(0.42)
+x$rand(4)
+
+# Statistics
+x$mean()
+x$variance()
+
+summary(x)
+
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions.  \code{\link{CoreStatistics}} for numerical results.
+}

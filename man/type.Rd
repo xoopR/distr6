@@ -9,6 +9,9 @@ type(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+An R6 object of class SetInterval.
+}
 \description{
 Returns the scientific type of the distribution.
 }

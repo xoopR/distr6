@@ -2,54 +2,61 @@
 % Please edit documentation in R/SDistribution_Multinomial.R
 \name{Multinomial}
 \alias{Multinomial}
-\title{Multinomial Distribution}
+\title{Multinomial Distribution Class}
+\value{
+Returns an R6 object inheriting from class SDistribution.
+}
 \description{
-Mathematical and statistical functions for the Multinomial distribution parameterised
-with size and probabilites and defined by the pmf,
-\deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}}
-where \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1} are the probabilities for each of the \eqn{K} categories and
-\eqn{n = 1,2,\ldots} is the number of trials.
+Mathematical and statistical functions for the Multinomial distribution, which
+is commonly used to extend the binomial distribution to multiple variables, for example to model the rolls of multiple dice multiple times.
 }
 \details{
-The multinomial is constructed with a size and probs parameter. Size, number of trials,
-should not be confused with the \code{K} parameter for number of categories. \code{K} is determined
-automatically by the number of probabilities supplied to the \code{probs} argument, this also tells the
-object how many inputs to expect in \code{pdf} and \code{rand}. \code{cdf} and \code{quantile} are omitted
-as no closed form analytic expression could be found.
+The Multinomial distribution parameterised with  number of trials, \eqn{n}, and probabilities of success, \eqn{p_1,...,p_k}, is defined by the pmf, \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}} for \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}.
+
+The distribution is supported on \eqn{\sum x_i = N}.
+
+
+
+
+\code{cdf} and \code{quantile}
+are
+omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
 }
 \section{Constructor}{
- Multinomial$new(size, probs, decorators = NULL, verbose = FALSE)
+ Multinomial$new(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{size} \tab integer \tab number of trials. See details. \cr
-\code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+  \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+  \code{size} \tab numeric \tab number of trials. See details. \cr
+  \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
+  
+  
+  
+  
+  
+  
+  
+  
+  \code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
+  \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
+  }
 }
 
 \section{Constructor Details}{
- The Multinomial distribution is parameterised by size and prob.
-Size, N, is given as a single integer greater than zero, such that if \eqn{x} is a vector of \eqn{K} parameters
-passed to the pmf then it should be true that \eqn{\sum x_i = N}.
-The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect
-to be passed to the pmf function. The probability vector is automatically normalised with
-\deqn{probs = probs/sum(probs)}.
+ The Multinomial distribution is parameterised with \code{size} as a positive whole number and \code{probs} as a vector of numerics between 0 and 1. The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect to be passed to the maths/stats methods. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)}.
 }
 
 \section{Public Variables}{
 
  \tabular{ll}{
-  \strong{Method} \tab \strong{Return} \cr
+  \strong{Variable} \tab \strong{Return} \cr
   \code{name} \tab Name of distribution. \cr
   \code{short_name} \tab Id of distribution. \cr
   \code{description} \tab Brief description of distribution. \cr
-  \code{traits} \tab List: type, valueSupport, variateForm. \cr
-  \code{package} \tab The package p/d/q/r are implemented in.
+  \code{package} \tab The package d/p/q/r are implemented in.
  }
 }
 
@@ -58,12 +65,12 @@ to be passed to the pmf function. The probability vector is automatically normal
  \tabular{ll}{
   \strong{Accessor Methods} \tab \strong{Link} \cr
   \code{decorators()} \tab \code{\link{decorators}} \cr
+  \code{traits()} \tab \code{\link{traits}} \cr
   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
   \code{variateForm()} \tab \code{\link{variateForm}} \cr
   \code{type()} \tab \code{\link{type}} \cr
   \code{properties()} \tab \code{\link{properties}} \cr
   \code{support()} \tab \code{\link{support}} \cr
-  \code{distrDomain()} \tab \code{\link{distrDomain}} \cr
   \code{symmetry()} \tab \code{\link{symmetry}} \cr
   \code{sup()}  \tab \code{\link{sup}} \cr
   \code{inf()} \tab \code{\link{inf}} \cr
@@ -75,13 +82,14 @@ to be passed to the pmf function. The probability vector is automatically normal
   \tab \cr \tab \cr \tab \cr
 
   \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n)} \tab \code{\link{rand}} \cr
+  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-  \code{var()} \tab \code{\link{var}} \cr
-  \code{cov()} \tab \code{\link{cov}} \cr
+  \code{variance()} \tab \code{\link{variance}} \cr
+  \code{stdev()} \tab \code{\link{stdev}} \cr
+  \code{prec()} \tab \code{\link{prec}} \cr
   \code{cor()} \tab \code{\link{cor}} \cr
   \code{skewness()} \tab \code{\link{skewness}} \cr
   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
@@ -89,7 +97,6 @@ to be passed to the pmf function. The probability vector is automatically normal
   \code{mgf(t)} \tab \code{\link{mgf}} \cr
   \code{cf(t)} \tab \code{\link{cf}} \cr
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-  \code{sd()} \tab \code{\link{sd}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
 
@@ -98,23 +105,53 @@ to be passed to the pmf function. The probability vector is automatically normal
   \strong{Parameter Methods} \tab \strong{Link} \cr
   \code{parameters(id)} \tab \code{\link{parameters}} \cr
   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(lst, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Validation Methods} \tab \strong{Link} \cr
   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE)} \tab \code{\link{liesInType}} \cr
-  \code{liesInDistrDomain(x, all = TRUE)} \tab \code{\link{liesInDistrDomain}} \cr
+  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
 
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link[RSmisc]{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
+\examples{
+x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
+
+# Update parameters
+x$setParameterValue(size = 10)
+# Number of categories cannot be changed after construction
+x$setParameterValue(probs = c(1,2,3))
+x$parameters()
+
+# d/p/q/r
+# Note the difference from R stats
+x$pdf(4, 4, 2)
+# This allows vectorisation:
+x$pdf(c(1,4),c(2,4),c(7,2))
+
+x$rand(4)
+
+# Statistics
+x$mean()
+x$variance()
+
+summary(x)
+
+}
+\references{
+McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
+Michael P. McLaughlin.
+}
+\seealso{
+\code{\link{listDistributions}} for all available distributions. \code{\link{Binomial}} for a special case of the Multinomial distribution.  \code{\link{FunctionImputation}} to numerically impute d/p/q/r.
+}

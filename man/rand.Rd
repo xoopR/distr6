@@ -4,12 +4,18 @@
 \alias{rand}
 \title{Random Simulation Function}
 \usage{
-rand(object, n)
+rand(object, n, simplify = TRUE)
 }
 \arguments{
 \item{object}{Distribution.}
 
 \item{n}{number of observations. If length(n) > 1, the length is taken to be the number required.}
+
+\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
+}
+\value{
+Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
+or as a data.table.
 }
 \description{
 Returns a given number of points sampled from the distribution.
@@ -24,10 +30,10 @@ Additional named arguments can be passed, which are required for composite distr
 \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 }
 \section{R6 Usage}{
- $rand(n)
+ $rand(n, simplify = TRUE)
 }
 
 \seealso{
-\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistial functions.
+\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
 \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 }

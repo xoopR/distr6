@@ -96,23 +96,19 @@ If a participant engages in behaviour that violates this Code of Conduct, any me
 ### 2.4 Feedback
 
 This Code of Conduct is not intended as a static set of rules by which everyone must abide.
-Rather, you are invited to make suggestions for updates or clarifications by contacting Dr Franz Király at [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk), Raphael Sonabend [raphael.sonabend.15@ucl.ac.uk](raphael.sonabend.15@ucl.ac.uk) or by making a pull request to this document on GitHub.
+Rather, you are invited to make suggestions for updates or clarifications by contacting Dr Franz Király at [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk), Raphael Sonabend [raphael.sonabend.15@ucl.ac.uk](mailto:raphael.sonabend.15@ucl.ac.uk) or by making a pull request to this document on GitHub.
 
 ## 3 Incident Reporting Guidelines
 
 ### 3.1 Contact points
 
-If you feel able to, please contact Dr Franz Király or Raphael Sonabend by email at [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk) or [raphael.sonabend.15@ucl.ac.uk](raphael.sonabend.15@ucl.ac.uk).
+If you feel able to, please contact Dr Franz Király or Raphael Sonabend by email at [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk) or [raphael.sonabend.15@ucl.ac.uk](mailto:raphael.sonabend.15@ucl.ac.uk).
 
-### 3.2 Alternate contact points
-
-If you do not feel comfortable contacting either Dr Franz Király or Raphael Sonabend, please report an incident to Dr Matina Rassias.
-
-### 3.3 What to do if someone is in physical danger
+### 3.2 What to do if someone is in physical danger
 
 If you believe someone is in physical danger, please contact the appropriate emergency responders.
 
-### 3.4 Code of Conduct Enforcement
+### 3.3 Code of Conduct Enforcement
 
 We believe it is important to have an actionable plan before something happens. We therefore have a detailed enforcement policy which is available in the Enforcement Manual below.
 
@@ -126,8 +122,8 @@ Enforcement of the Code of Conduct should be respectful and not include any hara
 
 The provisional Code of Conduct committee is:
 
-* Dr Franz Király: fkiraly@turing.ac.uk
-* Raphael Sonabend: raphael.sonabend.15@ucl.ac.uk
+* Dr Franz Király:  [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk)
+* Raphael Sonabend: [raphael.sonabend.15@ucl.ac.uk](mailto:raphael.sonabend.15@ucl.ac.uk)
 
 As the community grows, we will seek to build a larger committee including members outside of the core development team.
 
@@ -163,7 +159,7 @@ In the event that a resolution can't be determined in that time, a member of the
 
 The Code of Conduct committee will seek to agree on a resolution by consensus of all members investigating the report in question.
 If the committee cannot reach consensus and deadlocks for over a week, Dr Franz Király or Raphael Sonabend, as lead investigators of the distr6 project, will break the tie.
-If Dr Franz Király is unable to take part in the discussion due to a conflict of interest, Dr Matina Rassias, as an external member of the Code of Conduct committee, will make the decision.
+If Dr Franz Király is unable to take part in the discussion due to a conflict of interest, an external member of the Code of Conduct committee, will make the decision.
 
 Possible responses may include:
 

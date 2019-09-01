@@ -9,6 +9,9 @@ iqr(object)
 \arguments{
 \item{object}{Distribution.}
 }
+\value{
+Interquartile range of distribution as a numeric.
+}
 \description{
 Interquartile range of a distribution
 }

@@ -3,17 +3,34 @@
 \name{Complex}
 \alias{Complex}
 \title{Set of Complex Numbers}
+\value{
+Returns R6 object of class Complex.
+}
 \description{
 The mathematical set of complex numbers.
 }
+\details{
+The set of Complex numbers is defined as the set of reals with possibly imaginary components, i.e.
+\deqn{Complex = \{a + bi \ | \ a,b \in R\}}{Complex = {a + bi | a,b \epsilon R}}
+where \eqn{R} is the set of reals.
+}
+\section{Constructor}{
+ Complex$new(dim = 1)
+}
+
 \section{Constructor Arguments}{
 
  \tabular{lll}{
    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim = 1} \tab numeric \tab Dimension of the set. \cr
+   \code{dim} \tab numeric \tab Dimension of the set. \cr
 }
 }
 
+\examples{
+Complex$new()
+Complex$new(dim = 2)
+
+}
 \seealso{
 \code{\link{listSpecialSets}}
 }

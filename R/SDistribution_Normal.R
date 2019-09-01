@@ -2,43 +2,47 @@
 #-------------------------------------------------------------
 # Normal Distribution Documentation
 #-------------------------------------------------------------
-#' @title Normal Distribution
-#'
-#' @description Mathematical and statistical functions for the Normal distribution parameterised
-#' with mean and variance or \eqn{standard deviation = \sqrt(variance)} or \eqn{precision = 1/variance}.
-#' The mean/variance parameterisation is defined by the pdf,
-#' \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt(2\pi\sigma^2)}
-#' where \eqn{\mu \epsilon R} is the mean parameter and \eqn{\sigma^2} is the variance parameter.
-#'
-#' @details Whilst we recognise that the standard deviation parameterisation is used by R stats,
-#' we opt for the variance parameterisation as default as this appears slightly more common in popular
-#' online resources and textbooks.
-#'
 #' @name Normal
+#' @template SDist
+#' @templateVar ClassName Normal
+#' @templateVar DistName Normal
+#' @templateVar uses in significance testing, for representing models with a bell curve, and as a result of the central limit theorem
+#' @templateVar params variance, \eqn{\sigma^2}, and mean, \eqn{\mu},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt{2\pi\sigma^2}}
+#' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}
+#' @templateVar distsupport the Reals
+#' @templateVar aka Gaussian
+#' @aliases Gaussian
+#' @templateVar constructor mean = 0, var = 1, sd = NULL, prec = NULL
+#' @templateVar arg1 \code{mean} \tab numeric \tab mean, location parameter. \cr
+#' @templateVar arg2 \code{var} \tab numeric \tab variance, squared scale parameter. \cr
+#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
+#' @templateVar arg4 \code{prec} \tab numeric \tab precision, inverse squared scale parameter. \cr
+#' @templateVar constructorDets \code{mean} as a numeric, and either \code{var}, \code{sd} or \code{prec} as numerics. These are related via, \deqn{sd = \sqrt(var)}\deqn{prec = 1/var} If \code{prec} is given then \code{sd} and \code{var} are ignored. If \code{sd} is given then \code{var} is ignored.
 #'
-#' @section Constructor: Normal$new(mean = 0, var = 1, sd = NULL, prec = NULL, decorators = NULL, verbose = FALSE)
+#' @examples
+#' # Different parameterisations
+#' Normal$new(var = 1, mean = 1)
+#' Normal$new(prec = 2, mean = 1)
+#' Normal$new(mean = 1, sd = 2)
+#' x <- Normal$new(verbose = TRUE) # Standard normal default
 #'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{mean} \tab numeric \tab mean, location parameter. \cr
-#' \code{var} \tab numeric \tab variance, squared scale parameter. \cr
-#' \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
-#' \code{precision} \tab numeric \tab precision, squared scale parameter. \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' \code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-#' }
+#' # Update parameters
+#' x$setParameterValue(var = 2)
+#' x$parameters()
 #'
-#' @section Constructor Details: The Normal distribution can either be parameterised with variance,
-#' standard deviation or precision. If none are provided then var parameterisation is used with var = 1.
-#' If multiple are provided then parameterisatin takes the hierarchy: var, sd, prec.
-#' sd is defined by
-#' \deqn{sd = var^2}
-#' prec is defined by
-#' \deqn{prec = var^-1}
+#' # d/p/q/r
+#' x$pdf(5)
+#' x$cdf(5)
+#' x$quantile(0.42)
+#' x$rand(4)
 #'
-#' @inheritSection SDistribution Public Variables
-#' @inheritSection SDistribution Public Methods
+#' # Statistics
+#' x$mean()
+#' x$variance()
+#'
+#' summary(x)
 #'
 #' @export
 NULL
@@ -48,16 +52,13 @@ NULL
 Normal <- R6::R6Class("Normal", inherit = SDistribution, lock_objects = F)
 Normal$set("public","name","Normal")
 Normal$set("public","short_name","Norm")
-Normal$set("public","traits",list(type = Reals$new(),
-                                  valueSupport = "continuous",
-                                  variateForm = "univariate"))
 Normal$set("public","description","Normal Probability Distribution.")
 Normal$set("public","package","stats")
 
 Normal$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-Normal$set("public","var",function(){
+Normal$set("public","variance",function(){
   return(self$getParameterValue("var"))
 })
 Normal$set("public","skewness",function(){
@@ -75,6 +76,9 @@ Normal$set("public","entropy",function(base = 2){
 Normal$set("public", "mgf", function(t){
   return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
 })
+Normal$set("public", "pgf", function(z){
+  return(NaN)
+})
 Normal$set("public", "cf", function(t){
   return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
 })
@@ -86,8 +90,8 @@ Normal$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
   if(!is.null(paramlst$var)) lst = c(lst, list(var = paramlst$var))
-  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
   if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
+  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
   return(lst)
 })
 
@@ -95,7 +99,7 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, var, sd, prec, verbose)
-  self$setParameterValue(list(mean = mean, var = var, sd = sd, prec = prec))
+  self$setParameterValue(mean = mean, var = var, sd = sd, prec = prec)
 
   pdf <- function(x1) dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
   cdf <- function(x1) pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
@@ -103,7 +107,9 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
   rand <- function(n) rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T), distrDomain = Reals$new(zero = T),
-                   symmetric = TRUE)
+                   rand = rand, support = Reals$new(zero = T),
+                   symmetric = TRUE,type = Reals$new(),
+                   valueSupport = "continuous",
+                   variateForm = "univariate")
   invisible(self)
 })

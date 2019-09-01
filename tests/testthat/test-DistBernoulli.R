@@ -2,6 +2,15 @@ library(testthat)
 
 context("Bernoulli distribution")
 
+test_that("constructor", {
+  expect_silent(Bernoulli$new())
+  expect_silent(Bernoulli$new(prob = 0.2))
+  expect_silent(Bernoulli$new(qprob = 0.2))
+  expect_message(Bernoulli$new(qprob = 0.2, verbose = T))
+  expect_equal(Bernoulli$new(prob = 0.2)$getParameterValue("qprob"), 0.8)
+  expect_equal(Bernoulli$new(qprob = 0.2)$getParameterValue("prob"), 0.8)
+})
+
 test_that("properties & traits",{
   expect_equal(Bernoulli$new()$valueSupport(), "discrete")
   expect_equal(Bernoulli$new()$variateForm(), "univariate")
@@ -16,7 +25,7 @@ test_that("properties & traits",{
 b = Bernoulli$new(prob = 0.2)
 test_that("statistics",{
   expect_equal(b$mean(), 0.2)
-  expect_equal(b$var(), 0.2*0.8)
+  expect_equal(b$variance(), 0.2*0.8)
   expect_equal(b$skewness(), 1.5)
   expect_equal(b$kurtosis(T), 0.25)
   expect_equal(b$kurtosis(F), 3.25)

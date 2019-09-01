@@ -1,22 +1,16 @@
 R62S3::R62Fun(Distribution, assignEnvir = topenv(), mask = T)
-R62S3::R62Fun(Binomial, assignEnvir = topenv(), mask = T, dispatchClasses = list(Distribution))
-R62S3::R62Fun(Normal, assignEnvir = topenv(), mask = T, dispatchClasses = list(Distribution))
+R62S3::R62Fun(SDistribution, assignEnvir = topenv(), mask = T)
+R62S3::R62Fun(Kernel, assignEnvir = topenv(), mask = T)
 R62S3::R62Fun(ParameterSet, assignEnvir = topenv())
 R62S3::R62Fun(ExoticStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
 R62S3::R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
 R62S3::R62Fun(DistributionWrapper, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
 
-# # #
-# # #   # y = sapply(ls(name=".GlobalEnv"),function(x){
-# # #   #   if(inherits(get(x),"R6ClassGenerator")){
-# # #   #     if(environmentName(get(x)$get_inherit()) == "Distribution_generator")
-# # #   #       return(get(x)$classname)
-# # #   #     else
-# # #   #       return(FALSE)
-# # #   #   } else
-# # #   #     return(FALSE)
-# # #   # })
-# # #   # y = (y[y!="FALSE"])
-# # #   # lapply(y,R62S3::R62Fun, assignEnvir = parent.env(environment()))
-# #
-# #
+
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage("\n-----------------------------")
+  packageStartupMessage("\tdistr6 v",utils::packageVersion("distr6"),
+"\n\nGet started:\t?distr6
+Changelog:\tdistr6News()")
+  packageStartupMessage("-----------------------------\n")
+}
