@@ -37,12 +37,12 @@
 #                 be added as additional arguments.
 #
 #######################################################################
-qqplot.Distribution <- function(x, y, nPoints = 3000, pos = 0.5,
+#' @export
+qqplot <- function(x, y, nPoints = 3000, pos = 0.5,
                                 withIdLine = TRUE, withConf = TRUE,
                                 withConf.pw  = withConf, withConf.sim = withConf,
                                 plot = TRUE, xlab = deparse(substitute(x)),
                                 ylab = deparse(substitute(y)), ...){
-
 
   # random number generator: sample quantiles from 0 to 1 (cdf)
   points <- seq(0,1,length.out = nPoints)
@@ -132,26 +132,26 @@ qqplot.Distribution <- function(x, y, nPoints = 3000, pos = 0.5,
 
 
 
+#
+# ##Example
+#qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15))
+#
+# qqplot(Empirical$new(rnorm(n=3000,mean=15,sd=sqrt(30))), Empirical$new(rchisq(n=3000,df=15)))
+# qqplot(rnorm(n=3000,mean=15,sd=sqrt(30)), rchisq(n=3000,df=15),
+#                     pos = 0.9)
+#
+# qqplot(rnorm(n=20,mean=15,sd=sqrt(30)), c(3,6,8,2,0,6,2,7,9,4,3,7,4,5,11,1,10,6,6,3))
+#
+# qqplot(Normal$new(mean = 15, sd = sqrt(30)), Empirical$new(rchisq(n=3000,df=15)))
+# qqplot(rnorm(n=3000,mean=15,sd=sqrt(30)), ChiSquared$new(df = 15))
+#
+# qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
+#                     withIdLine = FALSE)
 
-##Example
-qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15))
-
-qqplot.Distribution(Empirical$new(rnorm(n=3000,mean=15,sd=sqrt(30))), Empirical$new(rchisq(n=3000,df=15)))
-qqplot.Distribution(rnorm(n=3000,mean=15,sd=sqrt(30)), rchisq(n=3000,df=15),
-                    pos = 0.9)
-
-qqplot.Distribution(rnorm(n=20,mean=15,sd=sqrt(30)), c(3,6,8,2,0,6,2,7,9,4,3,7,4,5,11,1,10,6,6,3))
-
-qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), Empirical$new(rchisq(n=3000,df=15)))
-qqplot.Distribution(rnorm(n=3000,mean=15,sd=sqrt(30)), ChiSquared$new(df = 15))
-
-qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
-                    withIdLine = FALSE)
-
-#qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
+#qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
 #                    withConf = FALSE)
-#qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
+#qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
 #                    withConf.pw = FALSE)
-#qqplot.Distribution(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
+#qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
 #                    withConf.sim = FALSE)
 

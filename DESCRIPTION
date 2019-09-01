@@ -163,6 +163,7 @@ Collate:
     'listWrappers.R'
     'makeUniqueDistributions.R'
     'measures.R'
+    'qqplot.R'
     'simulateEmpiricalDistribution.R'
     'skewType.R'
     'zzz.R'
