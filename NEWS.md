@@ -8,6 +8,25 @@
 
 ### Added Functions and Classes
 
+### Deprecated Functions
+
+### Updated Functions
+
+## Patches
+
+- Added `errormsg` argument to assertions so a custom error message can be provided
+
+
+# distr6 1.1.0
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
 - `Empirical` distribution for distributions arising from observed samples (e.g. from MC sampling methods)
 - `simulateEmpiricalDistribution`: function for sampling *without* replacement from an `Empirical` distribution
 

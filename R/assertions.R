@@ -20,7 +20,7 @@ assertDistribution <- function(){}
 
 makeChecks(assertionName = "Distribution",
            cond = inherits(object, "Distribution"),
-           errormsg = paste(object, "is not an R6 Distribution object"),
+           defaulterrormsg = paste(object, "is not an R6 Distribution object"),
            pos = environment())
 
 #' @title assert/check/test/DistributionList
@@ -45,7 +45,7 @@ assertDistributionList <- function(){}
 
 makeChecks(assertionName =  "DistributionList",
            cond = all(unlist(lapply(object, inherits,"Distribution"))),
-           errormsg = "One or more items in the list are not Distributions",
+           defaulterrormsg = "One or more items in the list are not Distributions",
            pos = environment())
 
 #' @title assert/check/test/Univariate
@@ -70,7 +70,7 @@ assertUnivariate <- function(){}
 
 makeChecks(assertionName =  "Univariate",
            cond = object[["variateForm"]]() == "univariate",
-           errormsg = paste(object$short_name,"is not univariate"),
+           defaulterrormsg = paste(object$short_name,"is not univariate"),
            pos = environment())
 
 #' @title assert/check/test/Multivariate
@@ -95,7 +95,7 @@ assertMultivariate <- function(){}
 
 makeChecks(assertionName =  "Multivariate",
            cond = object[["variateForm"]]() == "multivariate",
-           errormsg = paste(object$short_name,"is not multivariate"),
+           defaulterrormsg = paste(object$short_name,"is not multivariate"),
            pos = environment())
 
 #' @title assert/check/test/Matrixvariate
@@ -120,7 +120,7 @@ assertMatrixvariate <- function(){}
 
 makeChecks(assertionName =  "Matrixvariate",
            cond = object[["variateForm"]]() == "matrixvariate",
-           errormsg = paste(object$short_name,"is not matrixvariate"),
+           defaulterrormsg = paste(object$short_name,"is not matrixvariate"),
            pos = environment())
 
 #' @title assert/check/test/Continuous
@@ -145,7 +145,7 @@ assertContinuous <- function(){}
 
 makeChecks(assertionName =  "Continuous",
            cond = object[["valueSupport"]]() == "continuous",
-           errormsg = paste(object$short_name,"is not continuous"),
+           defaulterrormsg = paste(object$short_name,"is not continuous"),
            pos = environment())
 
 #' @title assert/check/test/Discrete
@@ -170,7 +170,7 @@ assertDiscrete <- function(){}
 
 makeChecks(assertionName =  "Discrete",
            cond = object[["valueSupport"]]() == "discrete",
-           errormsg = paste(object$short_name,"is not discrete"),
+           defaulterrormsg = paste(object$short_name,"is not discrete"),
            pos = environment())
 
 #' @title assert/check/test/Mixture
@@ -195,7 +195,7 @@ assertMixture <- function(){}
 
 makeChecks(assertionName =  "Mixture",
            cond = object[["valueSupport"]]() == "mixture",
-           errormsg = paste(object$short_name,"is not mixture"),
+           defaulterrormsg = paste(object$short_name,"is not mixture"),
            pos = environment())
 
 #' @title assert/check/test/Symmetric
@@ -220,7 +220,7 @@ assertSymmetric <- function(){}
 
 makeChecks(assertionName =  "Symmetric",
            cond = object[["symmetry"]]() == "symmetric",
-           errormsg = paste(object$short_name,"is not symmetric"),
+           defaulterrormsg = paste(object$short_name,"is not symmetric"),
            args = alist(object=),
            pos = environment())
 
@@ -246,7 +246,7 @@ assertNegativeSkew <- function(){}
 
 makeChecks(assertionName =  "NegativeSkew",
            cond = object[["skewnessType"]]() == "Negative Skew",
-           errormsg = paste(object$short_name,"is not negative skew"),
+           defaulterrormsg = paste(object$short_name,"is not negative skew"),
            pos = environment())
 
 #' @title assert/check/test/PositiveSkew
@@ -271,7 +271,7 @@ assertPositiveSkew <- function(){}
 
 makeChecks(assertionName =  "PositiveSkew",
            cond = object[["skewnessType"]]() == "Positive Skew",
-           errormsg = paste(object$short_name,"is not positive skew"),
+           defaulterrormsg = paste(object$short_name,"is not positive skew"),
            pos = environment())
 
 #' @title assert/check/test/NoSkew
@@ -297,7 +297,7 @@ assertNoSkew <- function(){}
 
 makeChecks(assertionName =  "NoSkew",
            cond = object[["skewnessType"]]() == "No Skew",
-           errormsg = paste(object$short_name,"is not no skew"),
+           defaulterrormsg = paste(object$short_name,"is not no skew"),
            pos = environment())
 
 #' @title assert/check/test/Platykurtic
@@ -322,7 +322,7 @@ assertPlatykurtic <- function(){}
 
 makeChecks(assertionName =  "Platykurtic",
            cond = object[["kurtosisType"]]() == "platykurtic",
-           errormsg = paste(object$short_name,"is not platykurtic"),
+           defaulterrormsg = paste(object$short_name,"is not platykurtic"),
            pos = environment())
 
 #' @title assert/check/test/Mesokurtic
@@ -347,7 +347,7 @@ assertMesokurtic <- function(){}
 
 makeChecks(assertionName =  "Mesokurtic",
            cond = object[["kurtosisType"]]() == "mesokurtic",
-           errormsg = paste(object$short_name,"is not mesokurtic"),
+           defaulterrormsg = paste(object$short_name,"is not mesokurtic"),
            pos = environment())
 
 #' @title assert/check/test/Leptokurtic
@@ -372,5 +372,5 @@ assertLeptokurtic <- function(){}
 
 makeChecks(assertionName =  "Leptokurtic",
            cond = object[["kurtosisType"]]() == "leptokurtic",
-           errormsg = paste(object$short_name,"is not leptokurtic"),
+           defaulterrormsg = paste(object$short_name,"is not leptokurtic"),
            pos = environment())
