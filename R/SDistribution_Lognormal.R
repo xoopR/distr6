@@ -93,6 +93,9 @@ Lognormal$set("public","entropy",function(base = 2){
 Lognormal$set("public", "mgf", function(t){
   return(NaN)
 })
+Lognormal$set("public", "pgf", function(z){
+  return(NaN)
+})
 Lognormal$set("public","mode",function(){
   return(exp(self$getParameterValue("meanlog")-self$getParameterValue("varlog")))
 })

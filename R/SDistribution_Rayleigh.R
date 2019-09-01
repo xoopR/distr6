@@ -68,6 +68,9 @@ Rayleigh$set("public","kurtosis",function(excess = TRUE){
 Rayleigh$set("public","entropy",function(base = 2){
   return(1 + log(self$getParameterValue("mode")/sqrt(2), base) - digamma(1)/2)
 })
+Rayleigh$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Rayleigh$set("private",".getRefParams", function(paramlst){
   lst = list()

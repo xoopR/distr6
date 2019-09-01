@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Bernoulli distribution, which
 is commonly used to model a two-outcome scenario.
 }
 \details{
-The Bernoulli distribution parameterised with probability of success, \eqn{p}, is defined by the pmf,
-\deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0} for \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}.
+The Bernoulli distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0} for \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}.
 
 The distribution is supported on \eqn{\{0,1\}}{{0,1}}.
 }
@@ -110,8 +109,8 @@ The distribution is supported on \eqn{\{0,1\}}{{0,1}}.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

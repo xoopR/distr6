@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Cauchy distribution, which
 is commonly used in physics and finance.
 }
 \details{
-The Cauchy distribution parameterised with location, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))} for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
+The Cauchy distribution parameterised with  location, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))} for \eqn{\alpha \epsilon R} and \eqn{\beta > 0}.
 
 The distribution is supported on the Reals.
 
@@ -120,8 +119,8 @@ The mean and variance are undefined, hence \code{NaN} is returned.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

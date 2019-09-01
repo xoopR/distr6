@@ -96,6 +96,9 @@ Triangular$set("public", "mgf", function(t){
 
   return(num/den)
 })
+Triangular$set("public", "pgf", function(z){
+  return(NaN)
+})
 Triangular$set("public", "cf", function(t){
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")

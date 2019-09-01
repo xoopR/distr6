@@ -83,6 +83,9 @@ Weibull$set("public","entropy",function(base = 2){
   shape <- self$getParameterValue("shape")
   return(-digamma(1)*(1-1/shape)+log(scale/shape, base)+1)
 })
+Weibull$set("public", "pgf", function(z){
+  return(NaN)
+})
 Weibull$set("public","mode",function(){
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")

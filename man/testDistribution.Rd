@@ -6,14 +6,19 @@
 \alias{assertDistribution}
 \title{assert/check/test/Distribution}
 \usage{
-testDistribution(object)
+testDistribution(object, errormsg = paste(object,
+  "is not an R6 Distribution object"))
 
-checkDistribution(object)
+checkDistribution(object, errormsg = paste(object,
+  "is not an R6 Distribution object"))
 
-assertDistribution(object)
+assertDistribution(object, errormsg = paste(object,
+  "is not an R6 Distribution object"))
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

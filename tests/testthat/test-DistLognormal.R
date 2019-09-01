@@ -55,6 +55,7 @@ test_that("statistics",{
   expect_equal(ln$skewness(), (exp(1)+2)*sqrt(exp(1)-1))
   expect_equal(ln$kurtosis(T), exp(4)+2*exp(3)+3*exp(2)-6)
   expect_equal(ln$kurtosis(F), exp(4)+2*exp(3)+3*exp(2)-3)
+  expect_equal(ln$pgf(1), NaN)
   expect_equal(ln$entropy(), log(exp(0.5)*sqrt(2*pi), 2))
   expect_equal(ln$mgf(1), NaN)
   expect_error(ln$cf(1))

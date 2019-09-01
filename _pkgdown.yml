@@ -112,6 +112,7 @@ reference:
       - prec
       - quantile.Distribution
       - rand
+      - simulateEmpiricalDistribution
       - stdev
       - skewness
       - skewnessType
@@ -154,7 +155,6 @@ reference:
     contents:
       - DistributionWrapper
       - wrappedModels
-      - ArrayDistribution
       - ProductDistribution
       - VectorDistribution
       - HuberizedDistribution
@@ -168,7 +168,9 @@ reference:
       - Bernoulli
       - Binomial
       - Categorical
+      - Degenerate
       - DiscreteUniform
+      - Empirical
       - Geometric
       - Hypergeometric
       - Logarithmic
@@ -179,7 +181,6 @@ reference:
       - Beta
       - Cauchy
       - ChiSquared
-      - Degenerate
       - Exponential
       - FDistribution
       - Frechet

@@ -97,6 +97,9 @@ Loglogistic$set("public","mode",function(){
   return(self$getParameterValue("location") +
            self$getParameterValue("scale")*((shape-1)/(shape+1))^(1/shape))
 })
+Loglogistic$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Loglogistic$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)

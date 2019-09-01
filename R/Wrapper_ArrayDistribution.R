@@ -1,4 +1,4 @@
-#' @name ArrayDistribution
+#' @name ArrayDistribution-deprecated
 #' @title Product Array Distribution
 #'
 #' @section Constructor: ArrayDistribution$new(distribution, paramList, name = NULL, short_name = NULL,
@@ -22,7 +22,7 @@
 #' \deqn{F_A(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}
 #' where \eqn{f_A}/\eqn{F_A} is the pdf/cdf of the array distribution \eqn{A} and \eqn{X1,...,XN} are independent distributions.
 #'
-#' @seealso \code{\link{listWrappers}}
+#' @seealso \code{\link{distr6-deprecated}}
 #'
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods
@@ -38,22 +38,22 @@
 #' a$cdf(x1=1,x2=2,x3=3)
 #' a$rand(10)
 #'
+#' @keywords internal
+NULL
+
+
+#' @name ArrayDistribution
+#' @rdname distr6-deprecated
+#' @section Deprecated Functions:
+#' \tabular{ll}{
+#' \strong{Deprecated} \tab \strong{Replacement} \cr
+#' \code{ArrayDistribution} \tab \code{\link{ProductDistribution}} \cr
+#' }
+#'
 #' @export
 NULL
 ArrayDistribution <- R6::R6Class("ArrayDistribution", inherit = ProductDistribution)
-ArrayDistribution$set("public","initialize",function(distribution, paramList, name = NULL,
-                                                     short_name = NULL, description = NULL){
-  distribution = paste0(substitute(distribution))
-  if(!(distribution %in% listDistributions(simplify = T)))
-    stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
-
-  distribution = get(distribution)
-
-  distlist = makeUniqueDistributions(sapply(paramList, function(x) do.call(distribution$new, x)))
-
-  if(is.null(name)) name = paste0("Array",length(distlist),distribution$public_fields$name)
-  if(is.null(short_name)) short_name = paste0("Arr",length(distlist),distribution$public_fields$short_name)
-  if(is.null(description)) description = paste0("Array of ",length(paramList)," ",distribution$public_fields$description)
-
-  super$initialize(distlist, name, short_name, description)
+ArrayDistribution$set("public","initialize",function(...){
+  .Deprecated("ProductDistribution", "distr6", "The ArrayDistribution wrapper is now deprecated and has
+been merged with the ProductDistribution wrapper.")
 })

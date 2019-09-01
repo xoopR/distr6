@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Binomial distribution, which
 is commonly used to model the number of successes out of a number of independent trials.
 }
 \details{
-The Binomial distribution parameterised with number of trials, n, and probability of success, p, is defined by the pmf,
-\deqn{f(x) = C(n, x)p^x(1-p)^{n-x}} for \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+The Binomial distribution parameterised with  number of trials, n, and probability of success, p, is defined by the pmf, \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}} for \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
 The distribution is supported on \eqn{{0, 1,...,n}}.
 }
@@ -110,8 +109,8 @@ The distribution is supported on \eqn{{0, 1,...,n}}.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

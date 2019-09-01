@@ -80,6 +80,9 @@ Gamma$set("public", "mgf", function(t){
   else
     return(NaN)
 })
+Gamma$set("public", "pgf", function(z){
+  return(NaN)
+})
 Gamma$set("public", "cf", function(t){
   return((1-self$getParameterValue("scale")*1i*t)^(-self$getParameterValue("shape"))   )
 })

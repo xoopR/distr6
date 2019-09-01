@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Negative Binomial distribution, w
 is commonly used to model the number of successes, trials or failures before a given number of failures or successes.
 }
 \details{
-The Negative Binomial distribution parameterised with number of failures before successes, \eqn{n}, and probability of success, \eqn{p}, is defined by the pmf,
-\deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x} for \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+The Negative Binomial distribution parameterised with  number of failures before successes, \eqn{n}, and probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x} for \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
 The distribution is supported on \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below).
 
@@ -120,8 +119,8 @@ The Negative Binomial distribution can refer to one of four distributions (forms
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

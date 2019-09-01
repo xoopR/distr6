@@ -83,6 +83,9 @@ Dirichlet$set("public","entropy",function(base = 2){
   return(log(prod(gamma(params))/gamma(sum(params)),2) + (sum(params) - length(params))*digamma(sum(params)) -
     sum((params-1)*digamma(params)))
 })
+Dirichlet$set("public", "pgf", function(z){
+  return(NaN)
+})
 
 Dirichlet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))

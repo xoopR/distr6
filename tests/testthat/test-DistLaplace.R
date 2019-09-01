@@ -31,6 +31,7 @@ test_that("statistics",{
   expect_equal(Laplace$new()$skewness(), 0)
   expect_equal(Laplace$new()$kurtosis(T), 3)
   expect_equal(Laplace$new()$kurtosis(F), 6)
+  expect_equal(Laplace$new()$pgf(1), NaN)
   expect_equal(Laplace$new()$entropy(), log(2*exp(1),2))
   expect_equal(Laplace$new()$mgf(2), NaN)
   expect_equal(Laplace$new()$mgf(0.5), (1-0.5^2)^-1)

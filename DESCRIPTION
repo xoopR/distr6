@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.0.1
+Version: 1.1.1
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -62,9 +62,9 @@ Authors@R:
              role = "ctb",
              email = "zcakqz1@ucl.ac.uk") 
         )
-Description: An R6 object oriented distributions package. Unified interface for 36 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation. Design patterns including wrappers and decorators are described in Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of probability distributions including d/p/q/r functions and results we refer to McLaughlin, M. P. (2001). Additionally Devroye (1986, ISBN:0-387-96305-7) for sampling the Dirichlet distribution, Gentle (2009) <doi:10.1007/978-0-387-98144-4> for sampling the Multivariate Normal distribution and Michael et al. (1976) <doi:10.2307/2683801> for sampling the Wald distribution.
-Imports: checkmate, R6, R62S3 (>= 1.3.1), GoFKernel, stats, extraDistr, utils, expint, data.table, pracma, crayon
-Suggests:  knitr, testthat, devtools, rmarkdown, magrittr, actuar, remotes
+Description: An R6 object oriented distributions package. Unified interface for 37 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation. Design patterns including wrappers and decorators are described in Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of probability distributions including d/p/q/r functions and results we refer to McLaughlin, M. P. (2001). Additionally Devroye (1986, ISBN:0-387-96305-7) for sampling the Dirichlet distribution, Gentle (2009) <doi:10.1007/978-0-387-98144-4> for sampling the Multivariate Normal distribution and Michael et al. (1976) <doi:10.2307/2683801> for sampling the Wald distribution.
+Imports: checkmate, R6, R62S3 (>= 1.3.1), GoFKernel, stats, extraDistr, utils, expint, data.table, pracma
+Suggests: knitr, testthat, devtools, rmarkdown, magrittr, actuar, remotes
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
@@ -109,6 +109,7 @@ Collate:
     'SDistribution_Degenerate.R'
     'SDistribution_Dirichlet.R'
     'SDistribution_DiscreteUniform.R'
+    'SDistribution_Empirical.R'
     'SDistribution_Exponential.R'
     'SDistribution_FDistribution.R'
     'SDistribution_Frechet.R'
@@ -148,7 +149,9 @@ Collate:
     'assertions.R'
     'decomposeMixture.R'
     'decorate.R'
+    'distr6-deprecated.R'
     'distr6.R'
+    'distr6.news.R'
     'distr6_globals.R'
     'exkurtosisType.R'
     'generalPNorm.R'
@@ -160,5 +163,6 @@ Collate:
     'listWrappers.R'
     'makeUniqueDistributions.R'
     'measures.R'
+    'simulateEmpiricalDistribution.R'
     'skewType.R'
     'zzz.R'

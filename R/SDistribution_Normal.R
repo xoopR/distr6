@@ -76,6 +76,9 @@ Normal$set("public","entropy",function(base = 2){
 Normal$set("public", "mgf", function(t){
   return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
 })
+Normal$set("public", "pgf", function(z){
+  return(NaN)
+})
 Normal$set("public", "cf", function(t){
   return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
 })

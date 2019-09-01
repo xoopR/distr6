@@ -21,6 +21,7 @@ test_that("check discrete Huberized wrapper", {
   expect_equal(hubBin$pdf(2), Binomial$new()$cdf(2))
   expect_equal(hubBin$pdf(5), Binomial$new()$cdf(5, lower.tail=F)+Binomial$new()$pdf(5))
   expect_equal(hubBin$pdf(3), Binomial$new()$pdf(3))
+  expect_equal(hubBin$quantile(0.9), 5)
 })
 
 test_that("check huberization constructor",{

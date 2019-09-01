@@ -6,14 +6,19 @@
 \alias{assertDistributionList}
 \title{assert/check/test/DistributionList}
 \usage{
-testDistributionList(object)
+testDistributionList(object,
+  errormsg = "One or more items in the list are not Distributions")
 
-checkDistributionList(object)
+checkDistributionList(object,
+  errormsg = "One or more items in the list are not Distributions")
 
-assertDistributionList(object)
+assertDistributionList(object,
+  errormsg = "One or more items in the list are not Distributions")
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

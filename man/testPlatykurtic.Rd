@@ -6,14 +6,19 @@
 \alias{assertPlatykurtic}
 \title{assert/check/test/Platykurtic}
 \usage{
-testPlatykurtic(object)
+testPlatykurtic(object, errormsg = paste(object$short_name,
+  "is not platykurtic"))
 
-checkPlatykurtic(object)
+checkPlatykurtic(object, errormsg = paste(object$short_name,
+  "is not platykurtic"))
 
-assertPlatykurtic(object)
+assertPlatykurtic(object, errormsg = paste(object$short_name,
+  "is not platykurtic"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

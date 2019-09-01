@@ -6,14 +6,18 @@
 \alias{assertNoSkew}
 \title{assert/check/test/NoSkew}
 \usage{
-testNoSkew(object)
+testNoSkew(object, errormsg = paste(object$short_name, "is not no skew"))
 
-checkNoSkew(object)
+checkNoSkew(object, errormsg = paste(object$short_name,
+  "is not no skew"))
 
-assertNoSkew(object)
+assertNoSkew(object, errormsg = paste(object$short_name,
+  "is not no skew"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

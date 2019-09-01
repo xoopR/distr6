@@ -82,6 +82,10 @@ MultivariateNormal$set("public", "cf", function(t){
   checkmate::assert(length(t) == self$getParameterValue("K"))
   return(exp((1i * self$getParameterValue("mean") %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
 })
+MultivariateNormal$set("public", "pgf", function(z){
+  return(NaN)
+})
+
 
 MultivariateNormal$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))

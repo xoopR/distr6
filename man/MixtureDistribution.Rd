@@ -20,9 +20,12 @@ and the cdf, F_M is given by
 If weights are given, they should be provided as a vector of numerics. If they don't sum to one
 then they are normalised automatically. If NULL, they are taken to be uniform, i.e. for n
 distributions, \eqn{w_i = 1/n, \ \forall \ i \ \in \ [1,n]}{w_i = 1/n, for all i \epsilon [1,n]}.
+
+Can optionally be constructed using a \code{VectorDistribution}, in which case \code{distlist} is ignored
+and the mixture is constructed with the wrapped models in the vector.
 }
 \section{Constructor}{
- MixtureDistribution$new(distlist, weights = NULL)
+ MixtureDistribution$new(distlist, weights = NULL, vectordist = NULL)
 }
 
 \section{Constructor Arguments}{
@@ -31,6 +34,7 @@ distributions, \eqn{w_i = 1/n, \ \forall \ i \ \in \ [1,n]}{w_i = 1/n, for all i
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
 \code{weights} \tab numeric \tab Vector of weights. See Details. \cr
+\code{vectordist} \tab numeric \tab Vector Distribution. See Details. \cr
 }
 }
 
@@ -88,8 +92,8 @@ distributions, \eqn{w_i = 1/n, \ \forall \ i \ \in \ [1,n]}{w_i = 1/n, for all i
   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
   \tab \cr \tab \cr \tab \cr
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

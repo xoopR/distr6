@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Laplace distribution, which
 is commonly used in signal processing and finance.
 }
 \details{
-The Laplace distribution parameterised with mean, \eqn{\mu}, and scale, \eqn{\beta}, is defined by the pdf,
-\deqn{f(x) = exp(-|x-\mu|/\beta)/(2\beta)} for \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
+The Laplace distribution parameterised with  mean, \eqn{\mu}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = exp(-|x-\mu|/\beta)/(2\beta)} for \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
 
 The distribution is supported on the Reals.
 }
@@ -110,8 +109,8 @@ The distribution is supported on the Reals.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

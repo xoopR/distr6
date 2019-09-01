@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Exponential distribution, which
 is commonly used to model inter-arrival times in a Poisson process and has the memoryless property.
 }
 \details{
-The Exponential distribution parameterised with rate, \eqn{\lambda}, is defined by the pdf,
-\deqn{f(x) = \lambda exp(-x\lambda)} for \eqn{\lambda > 0}.
+The Exponential distribution parameterised with  rate, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = \lambda exp(-x\lambda)} for \eqn{\lambda > 0}.
 
 The distribution is supported on the Positive Reals.
 }
@@ -110,8 +109,8 @@ The distribution is supported on the Positive Reals.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

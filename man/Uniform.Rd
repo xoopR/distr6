@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Uniform distribution, which
 is commonly used to model continuous events occurring with equal probability, as an uninformed prior in Bayesian modelling, and for inverse transform sampling.
 }
 \details{
-The Uniform distribution parameterised with lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pdf,
-\deqn{f(x) = 1/(b-a)} for \eqn{-\infty < a < b < \infty}.
+The Uniform distribution parameterised with  lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pdf, \deqn{f(x) = 1/(b-a)} for \eqn{-\infty < a < b < \infty}.
 
 The distribution is supported on \eqn{[a, b]}.
 }
@@ -110,8 +109,8 @@ The distribution is supported on \eqn{[a, b]}.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

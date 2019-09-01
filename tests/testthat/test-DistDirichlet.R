@@ -37,7 +37,7 @@ test_that("statistics",{
   expect_error(mn$kurtosis())
   expect_equal(round(mn$entropy(), 5), round(log(1/12,base=2) + 3*digamma(5) - 2.268353,5))
   expect_error(mn$mgf(1))
-  expect_equal(mn$pgf(1),NaN)
+  expect_equal(mn$pgf(1), NaN)
   expect_error(mn$cf(1))
   expect_equal(mn$mode(),c(1/3,2/3))
   expect_equal(mn$pdf(0.2,0.8), extraDistr::ddirichlet(c(0.2,0.8),params))

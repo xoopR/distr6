@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Student's T distribution, which
 is commonly used to estimate the mean of populations with unknown variance from a small sample size, as well as in t-testing for difference of means and regression analysis.
 }
 \details{
-The Student's T distribution parameterised with degrees of freedom, \eqn{\nu}, is defined by the pdf,
-\deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)} for \eqn{\nu > 0}.
+The Student's T distribution parameterised with  degrees of freedom, \eqn{\nu}, is defined by the pdf, \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)} for \eqn{\nu > 0}.
 
 The distribution is supported on the Reals.
 }
@@ -110,8 +109,8 @@ The distribution is supported on the Reals.
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

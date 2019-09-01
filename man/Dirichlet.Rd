@@ -11,8 +11,7 @@ Mathematical and statistical functions for the Dirichlet distribution, which
 is commonly used as a prior in Bayesian modelling and is multivariate generalisation of the Beta distribution.
 }
 \details{
-The Dirichlet distribution parameterised with concentration parameters, \eqn{\alpha_1,...,\alpha_k}, is defined by the pdf,
-\deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i))\prod(x_i^{\alpha_i - 1})} for \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function.
+The Dirichlet distribution parameterised with  concentration parameters, \eqn{\alpha_1,...,\alpha_k}, is defined by the pdf, \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i))\prod(x_i^{\alpha_i - 1})} for \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function.
 
 The distribution is supported on \eqn{x_i \ \epsilon \ (0,1), \sum x_i = 1}{x_i \epsilon (0,1), \sum x_i = 1}.
 
@@ -120,8 +119,8 @@ Sampling is performed via sampling independent Gamma distributions and normalisi
   \tab \cr \tab \cr \tab \cr
 
   \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint()} \tab \code{\link{strprint}} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
+  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
   \code{plot()} \tab Coming Soon. \cr
   \code{qqplot()} \tab Coming Soon. \cr

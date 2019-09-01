@@ -6,7 +6,6 @@ test_that("parameterisation",{
   expect_silent(ChiSquared$new())
   expect_silent(ChiSquared$new(df = 10))
   expect_error(ChiSquared$new(df = -1))
-  expect_equal(ChiSquared$new(df = 1.1)$getParameterValue("df"), 1)
   expect_equal(ChiSquared$new(df = 10)$getParameterValue("df"), 10)
 })
 

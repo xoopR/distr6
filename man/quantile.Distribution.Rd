@@ -21,7 +21,7 @@
 \item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
 }
 \value{
-Inverse cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 or as a data.table.
 }
 \description{
@@ -40,7 +40,7 @@ To impute the quantile, use \code{decorate(distribution, FunctionImputation)}, t
 calculation for the quantile with warning.
 
 Additional named arguments can be passed, which are required for composite distributions such as
-\code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
+\code{\link{ProductDistribution}} and \code{\link{VectorDistribution}}.
 }
 \section{R6 Usage}{
  $quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)

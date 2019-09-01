@@ -91,6 +91,9 @@ InverseGamma$set("public","entropy",function(base = 2){
 InverseGamma$set("public", "mgf", function(t){
   return(NaN)
 })
+InverseGamma$set("public", "pgf", function(z){
+  return(NaN)
+})
 # InverseGamma$set("public", "cf", function(t){
 #   p1 = (2 * (-1i * self$getParameterValue("scale") *t)^(self$getParameterValue("shape")/2))/gamma(self$getParameterValue("shape"))
 #   p2 = Bessel::BesselK(sqrt(-4i*self$getParameterValue("scale")*t), self$getParameterValue("shape"))

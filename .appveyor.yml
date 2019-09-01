@@ -43,10 +43,6 @@ artifacts:
 
 version: 1.0.{build}-{branch}
 
-#branches:
-#  except:
-#    - gh-pages
-
 skip_tags: true
 
 max_jobs: 1
@@ -60,11 +56,11 @@ environment:
     - R_VERSION: release
       R_ARCH: x64
 
- #   - R_VERSION: devel
- #     R_ARCH: x64
+#    - R_VERSION: devel
+#      R_ARCH: x64
 
-    - R_VERSION: oldrel
-      R_ARCH: x64
+#    - R_VERSION: oldrel
+#      R_ARCH: x64
 
 cache:
   - C:\RLibrary\

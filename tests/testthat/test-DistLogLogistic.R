@@ -35,7 +35,7 @@ test_that("statistics",{
   expect_equal(round(Loglogistic$new(shape = 5, scale = 2)$kurtosis(F),4), 15.0900)
   expect_equal(round(Loglogistic$new(shape = 5, scale = 2)$kurtosis(T),4), 12.0900)
   expect_equal(round(g$mode(),5), 2.73205)
-
+  expect_equal(g$pgf(1), NaN)
   expect_error(g$entropy())
   expect_error(g$mgf())
   expect_error(g$cf())

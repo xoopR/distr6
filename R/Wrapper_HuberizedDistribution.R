@@ -81,7 +81,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
     quantile = p
     if(any(p <= self$inf()))
       quantile[p <= self$inf()] = self$inf()
-    if(any(p >= self$inf()))
+    if(any(p >= self$sup()))
       quantile[p >= self$sup()] = self$sup()
     if(any(p < self$sup() & p > self$inf()))
       quantile[p < self$sup() & p > self$inf()] = p[p < self$sup() & p > self$inf()]
