@@ -37,10 +37,6 @@
 #                 be added as additional arguments.
 #
 #######################################################################
-
-library(distr6)
-#library(EnvStats)
-
 qqplot.Distribution <- function(x, y, nPoints = 3000, pos = 0.5,
                                 withIdLine = TRUE, withConf = TRUE,
                                 withConf.pw  = withConf, withConf.sim = withConf,
