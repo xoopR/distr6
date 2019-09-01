@@ -104,15 +104,19 @@ getParameterSet.Cauchy <- function(x, location, scale, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.ChiSquared <- function(x, df, verbose = FALSE){
+getParameterSet.ChiSquared <- function(x, df, location, verbose = FALSE){
 
-  if(verbose) message("Parameterised with df.")
+  if(verbose)
+    if (missing(location))
+      message("Parameterised with df.")
+    else
+      message("Parameterised with df and location.")
 
-  ps <- ParameterSet$new(id = list("df"), value = list(1),
-                         support = list(Naturals$new()),
-                         settable = list(TRUE),
-                         updateFunc = list(NA),
-                         description = list("Degrees of Freedom"))
+  ps <- ParameterSet$new(id = list("df", "location"), value = list(1, 0),
+                         support = list(PosReals$new(zero = TRUE), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = list(NA, NA),
+                         description = list("Degrees of Freedom", "Non-centrality parameter"))
 
   return(ps)
 }
