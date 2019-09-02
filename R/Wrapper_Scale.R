@@ -11,25 +11,25 @@
 #' \tabular{lll}{
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{dist} \tab distribution \tab Distribution to scale. \cr
-#' \code{ScaleMean} \tab numeric \tab Desired mean after distribution scale. \cr
-#' \code{ScaleSd} \tab numeric \tab Desired standard deviation after distribution scale.\cr
-#' \code{ScaleVar}\tab numeric \tab Desired variance after distribution scale.\cr
+#' \code{mean} \tab numeric \tab Desired mean after distribution scale. \cr
+#' \code{sd} \tab numeric \tab Desired standard deviation after distribution scale.\cr
+#' \code{var}\tab numeric \tab Desired variance after distribution scale.\cr
 #' }
 #'
 #' @section getParameterValue:
 #' \tabular{lll}{
 #' \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-#' \code{getParameterValue("ScaleMean")} \tab numeric \tab Return mean of scaled distribution. \cr
-#' \code{getParameterValue("ScaleSd")} \tab numeric \tab Return standard deviation of scaled distribution.\cr
-#' \code{getParameterValue("ScaleVar")} \tab numeric \tab Return variance of scaled distribution.\cr
+#' \code{getParameterValue("scaledmean")} \tab numeric \tab Return mean of scaled distribution. \cr
+#' \code{getParameterValue("scaledsd")} \tab numeric \tab Return standard deviation of scaled distribution.\cr
+#' \code{getParameterValue("scaledvar")} \tab numeric \tab Return variance of scaled distribution.\cr
 #' }
 #'
 #'@section setParameterValue:
 #' \tabular{lll}{
 #' \strong{Method} \tab \strong{Input Type} \tab \strong{Details} \cr
-#' \code{setParameterValue(ScaleMean=value)} \tab numeric \tab Set the mean of scale distribution to value. \cr
-#' \code{setParameterValue(ScaleSd=value))} \tab numeric \tab Set the standard deviation of scale distribution to a value. \cr
-#' \code{setParameterValue(ScaleVar=value))} \tab numeric \tab Set the variance of scale distribution to a value. \cr
+#' \code{setParameterValue(scaledmean=value)} \tab numeric \tab Set the mean of scale distribution to value. \cr
+#' \code{setParameterValue(scaledsd=value))} \tab numeric \tab Set the standard deviation of scale distribution to a value. \cr
+#' \code{setParameterValue(scaledvar=value))} \tab numeric \tab Set the variance of scale distribution to a value. \cr
 #' }
 #'
 #' @examples
