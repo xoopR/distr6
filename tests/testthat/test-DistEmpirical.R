@@ -35,6 +35,6 @@ test_that("statistics",{
   expect_equal(Empirical$new(c(1,2,3,2,2))$cdf(c(1,2.5)), c(1/5, 4/5))
   set.seed(42)
   emp = Empirical$new(runif(1000)*100)
-  expect_equal(round(emp$quantile(emp$cdf(c(2,5,6,4,1,30,20)))),c(2,5,6,4,1,30,20))
+  expect_equal(round(emp$quantile(emp$cdf(c(2,5,6,4,1,30,20,2,2,2)))),c(2,5,6,4,1,30,20,2,2,2))
   expect_equal(length(emp$rand(10)),10)
 })

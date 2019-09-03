@@ -1,4 +1,4 @@
-# distr6 1.1.0
+# distr6 1.1.1
 
 ## Major Updates
 
@@ -15,7 +15,7 @@
 ## Patches
 
 - Added `errormsg` argument to assertions so a custom error message can be provided
-
+- Fixed error in quantile function in `Empirical` that was causing results to be dropped
 
 # distr6 1.1.0
 

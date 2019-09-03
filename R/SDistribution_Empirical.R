@@ -85,7 +85,7 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
   }
   quantile <- function(p){
     p = p * private$.total
-    return(as.numeric(unlist(private$.data[findInterval(p, private$.data$cumN), "samples"])))
+    return(as.numeric(unlist(private$.data[findInterval(p, private$.data$cumN, all.inside = TRUE), "samples"])))
   }
 
   rand <- function(n){
