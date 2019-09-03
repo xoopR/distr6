@@ -149,18 +149,18 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
 
   if("cumHazard" %in% fun){
       cumH_plot = ~plot(x = plotStructure[,"points"], y = plotStructure[,"cumHazard"],
-           type = "l",main="cumHazard",xlab='x',ylab="H(x)",...)
+           type = "l",main=paste(name,"cumHazard"),xlab='x',ylab="H(x)",...)
   }
 
   if("quantile" %in% fun){
     quan_plot <- ~plot(x = plotStructure[,"cdf"],
            y = plotStructure[,"points"], type = "l",
-           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)",...))
+           main = paste(name,"quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)",...))
   }
 
   if("pdf" %in% fun){
     pdf_plot <- ~plot(x = plotStructure[,"points"], y = plotStructure[,"pdf"], type = "l",
-                               main = "Pdf", xlab = "x", ylab = "f(x)",...)
+                               main = paste(name,"Pdf"), xlab = "x", ylab = "f(x)",...)
   }
 
   if ("cdf" %in% fun){
@@ -170,12 +170,12 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
 
   if ("survival" %in% fun){
     surv_plot <- ~plot(x = plotStructure[,"points"], y = plotStructure[,"survival"], type = "l",
-                               main = "Survival", xlab = "x", ylab = "S(x)",...)
+                               main = paste(name,"Survival"), xlab = "x", ylab = "S(x)",...)
   }
 
   if ("hazard" %in% fun){
     hazard_plot <- ~plot(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "l",
-                               main = "Hazard", xlab = "x", ylab = "h(x)",...)
+                               main = paste(name,"Hazard"), xlab = "x", ylab = "h(x)",...)
   }
 
   list_plots <- list(pdf = pdf_plot,cdf = cdf_plot, quantile = quan_plot, cumHazard = cumH_plot,survival = surv_plot,
@@ -197,10 +197,10 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
 
   if("pdf" %in% fun)
       pdf_plot <- ~plot(x = plotStructure[,"points"], y = plotStructure[,"pdf"], type = "h",
-                               main = "Pdf", xlab = "x", ylab = "f(x)", ...)
+                               main = paste(name,"Pdf"), xlab = "x", ylab = "f(x)", ...)
   if("cumHazard" %in% fun)
       cumH_plot <- ~plot(x = plotStructure[,"points"], y = plotStructure[,"cumHazard"], type = "h",
-           main="cumHazard",xlab='x',ylab=expression(Lambda(x)), ...)
+           main=paste(name,"cumHazard"),xlab='x',ylab=expression(Lambda(x)), ...)
   if("cdf" %in% fun)
     cdf_plot<- ~{
       plot(x = plotStructure$points, y = plotStructure$cdf, type = "n",
@@ -211,13 +211,13 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), nPoints = 3000,
     }
   if('quantile' %in% fun)
       quan_plot<- ~plot(x = plotStructure[,"cdf"], y = plotStructure[,"points"], type = "s",
-           main = "quantile", xlab = "q", ylab = parse(text = "F^-1*(q)"), ...)
+           main = paste(name,"quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)"), ...)
   if("survival" %in% fun)
       surv_plot <- ~plot(x = plotStructure[,"points"], y = plotStructure[,"survival"], type = "h",
-           main="Survival",xlab='x',ylab="S(x)", ...)
+           main=paste(name,"Survival"),xlab='x',ylab="S(x)", ...)
   if("hazard" %in% fun)
     hazard_plot <- ~plot(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "h",
-           main = "Hazard", xlab = "x", ylab = "h(x)", ...)
+           main = paste(name,"Hazard"), xlab = "x", ylab = "h(x)", ...)
 
   list_plots <- list(pdf = pdf_plot,cdf = cdf_plot, quantile = quan_plot, cumHazard = cumH_plot,survival = surv_plot,
                      hazard = hazard_plot)
