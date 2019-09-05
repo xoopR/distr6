@@ -16,6 +16,7 @@
 
 - Added `errormsg` argument to assertions so a custom error message can be provided
 - Fixed error in quantile function in `Empirical` that was causing results to be dropped
+- Fixed bug in `TruncatedDistribution` that prevented multivariate distributions being truncated
 
 # distr6 1.1.0
 
