@@ -15,6 +15,7 @@
 #' @templateVar omittedVars \code{mgf} and \code{cf}
 #' @templateVar constructor shape1 = 1, shape2 = 1
 #' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
+#' @templateVar arg2 \code{location} \tab numeric \tab non-centrality parameter (ncp in rstats). \cr
 #' @templateVar constructorDets  \code{shape1} and \code{shape2} as positive numerics.
 #'
 #' @examples
@@ -49,51 +50,66 @@ Beta$set("public","package","stats")
 
 
 Beta$set("public","mean",function(){
-  return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
+  if (self$getParameterValue("location") == 0)
+    return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
+  else
+    return(NaN)
 })
 Beta$set("public","variance",function(){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-
-  return(shape1*shape2*((shape1+shape2)^-2)*(shape1+shape2+1)^-1)
+  if (self$getParameterValue("location") == 0)
+    return(shape1*shape2*((shape1+shape2)^-2)*(shape1+shape2+1)^-1)
+  else
+    return(NaN)
 })
 Beta$set("public","mode",function(which = "all"){
-
-  if(self$getParameterValue("shape1")<=1 & self$getParameterValue("shape2")>1)
-    return(0)
-  else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")<=1)
-    return(1)
-  else if(self$getParameterValue("shape1")<1 & self$getParameterValue("shape2")<1){
-    if(which == "all")
-      return(c(0,1))
-    else
-      return(c(0,1)[which])
-  } else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")>1)
-    return((self$getParameterValue("shape1")-1)/(self$getParameterValue("shape1")+self$getParameterValue("shape2")-2))
-
+  if (self$getParameterValue("location") == 0){
+    if(self$getParameterValue("shape1")<=1 & self$getParameterValue("shape2")>1)
+      return(0)
+    else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")<=1)
+      return(1)
+    else if(self$getParameterValue("shape1")<1 & self$getParameterValue("shape2")<1){
+      if(which == "all")
+        return(c(0,1))
+      else
+        return(c(0,1)[which])
+    } else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")>1)
+      return((self$getParameterValue("shape1")-1)/(self$getParameterValue("shape1")+self$getParameterValue("shape2")-2))
+  } else
+    return(NaN)
+  
 })
 Beta$set("public","skewness",function(){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-
-  return(2*(shape2-shape1)*((shape1+shape2+1)^0.5)*((shape1+shape2+2)^-1)*((shape1*shape2)^-0.5))
+  if (self$getParameterValue("location") == 0)
+    return(2*(shape2-shape1)*((shape1+shape2+1)^0.5)*((shape1+shape2+2)^-1)*((shape1*shape2)^-0.5))
+  else
+    return(NaN)
 })
 Beta$set("public","kurtosis",function(excess = TRUE){
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-
-  ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-(shape1*shape2*(shape1+shape2+2))}/
-    (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
-  if (excess)
-    return(ex_kurtosis)
-  else
-    return(ex_kurtosis+3)
+  if (self$getParameterValue("location") == 0){
+    shape1 <- self$getParameterValue("shape1")
+    shape2 <- self$getParameterValue("shape2")
+    
+    ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-(shape1*shape2*(shape1+shape2+2))}/
+      (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
+    if (excess)
+      return(ex_kurtosis)
+    else
+      return(ex_kurtosis+3)
+  } else
+    return(NaN)
 })
 Beta$set("public", "entropy", function(base = 2){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-  return(log(beta(shape1,shape2), base) - ((shape1-1)*digamma(shape1)) -
+  if (self$getParameterValue("location") == 0)
+    return(log(beta(shape1,shape2), base) - ((shape1-1)*digamma(shape1)) -
            ((shape2-1) * digamma(shape2)) + ((shape1+shape2-2)*digamma(shape1+shape2)))
+  else
+    return(NaN)
 })
 Beta$set("public", "pgf", function(z){
   return(NaN)
@@ -103,19 +119,20 @@ Beta$set("private", ".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$shape1)) lst = c(lst,list(shape1 = paramlst$shape1))
   if(!is.null(paramlst$shape2)) lst = c(lst,list(shape2 = paramlst$shape2))
+  if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
 
-Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,
+Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
                                           verbose = FALSE){
 
-  private$.parameters <- getParameterSet.Beta(self, shape1, shape2, verbose)
-  self$setParameterValue(shape1=shape1,shape2=shape2)
+  private$.parameters <- getParameterSet.Beta(self, shape1, shape2, locaiton, verbose)
+  self$setParameterValue(shape1=shape1,shape2=shape2, location = location)
 
-  pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
-  cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
-  quantile <- function(p) qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
-  rand <- function(n) rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
+  pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+  cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+  quantile <- function(p) qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+  rand <- function(n) rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
 
 
   if (shape1 == shape2)

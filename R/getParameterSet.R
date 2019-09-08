@@ -38,16 +38,19 @@ getParameterSet.Bernoulli <- function(x, prob, qprob = NULL, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.Beta <- function(x, shape1, shape2, verbose = FALSE){
+getParameterSet.Beta <- function(x, shape1, shape2, location, verbose = FALSE){
 
-  if(verbose) message("Parameterised with shape1 and shape2.")
+  if(verbose){
+    if (missing(location)) message("Parameterised with shape1 and shape2.")
+    else message("Parameterised with shape1, shape2 and location.")
+  }
 
 
-  ps <- ParameterSet$new(id = list("shape1","shape2"), value = list(1,1),
-                         support = list(PosReals$new(), PosReals$new()),
-                         settable = list(TRUE, TRUE),
+  ps <- ParameterSet$new(id = list("shape1","shape2", "location"), value = list(1,1, 0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE, TRUE),
                          updateFunc = NULL,
-                         description = list("Shape Parameter (alpha)","Shape Parameter (beta)"))
+                         description = list("Shape Parameter (alpha)","Shape Parameter (beta)", "Non-centrality parameter"))
 
   return(ps)
 }
@@ -106,16 +109,15 @@ getParameterSet.Cauchy <- function(x, location, scale, verbose = FALSE){
 
 getParameterSet.ChiSquared <- function(x, df, location, verbose = FALSE){
 
-  if(verbose)
-    if (missing(location))
-      message("Parameterised with df.")
-    else
-      message("Parameterised with df and location.")
+  if(verbose){
+    if (missing(location)) message("Parameterised with df.")
+    else message("Parameterised with df and location.")
+  }
 
   ps <- ParameterSet$new(id = list("df", "location"), value = list(1, 0),
                          support = list(PosReals$new(zero = TRUE), PosReals$new(zero = TRUE)),
                          settable = list(TRUE, TRUE),
-                         updateFunc = list(NA, NA),
+                         updateFunc = NULL,
                          description = list("Degrees of Freedom", "Non-centrality parameter"))
 
   return(ps)
@@ -194,15 +196,19 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
-  if (verbose) message("Parameterised with df1 and df2.")
+getParameterSet.FDistribution <- function(x, df1, df2, location, verbose = FALSE){
+  if (verbose){
+    if (missing(location)) message("Parameterised with df1 and df2.")
+    else message("Parameterised with df1, df2 and location.")
+  }
 
-  ps <- ParameterSet$new(id = list("df1", "df2"), value = list(1, 1),
-                         support = list(PosReals$new(), PosReals$new()),
-                         settable = list(TRUE, TRUE),
+  ps <- ParameterSet$new(id = list("df1", "df2", "location"), value = list(1, 1, 0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE, TRUE),
                          updateFunc = NULL,
                          description = list("Degrees of freedom 1",
-                                            "Degrees of freedom 2"))
+                                            "Degrees of freedom 2",
+                                            "Non-centrality parameter"))
 }
 
 getParameterSet.Frechet <- function(x, shape, scale, minimum, verbose = FALSE){
@@ -667,15 +673,18 @@ getParameterSet.Rayleigh <- function(x, mode, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.StudentT <- function(x, df, verbose = FALSE){
+getParameterSet.StudentT <- function(x, df, location, verbose = FALSE){
 
-  if(verbose) message("Parameterised with df.")
+  if(verbose){
+    if (missing(location)) message("Parameterised with df.")
+    else message("Parameterised with df and location.")
+  }
 
-  ps <- ParameterSet$new(id = list("df"), value = list(1),
-                         support = list(PosReals$new()),
-                         settable = list(TRUE),
+  ps <- ParameterSet$new(id = list("df", "location"), value = list(1, 0),
+                         support = list(PosReals$new(), Reals$new()),
+                         settable = list(TRUE, TRUE),
                          updateFunc = NULL,
-                         description = list("Degrees of Freedom"))
+                         description = list("Degrees of Freedom", "Non-centrality parameter"))
 
   return(ps)
 }
