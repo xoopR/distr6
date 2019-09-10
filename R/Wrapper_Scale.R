@@ -45,18 +45,18 @@ Scale <- R6::R6Class("Scale", inherit = DistributionWrapper, lock_objects = FALS
 Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...){
   assertDistribution(dist)
   dist = dist$clone(deep = TRUE)
-  
+
   name = dist$name
   short_name = dist$short_name
-  
+
   distlist = list(dist)
   names(distlist) = short_name
-  
+
   if(!is.null(var))
     sd = sqrt(var)
   else
     var = sd^2
-  
+
   private$.outerParameters <- ParameterSet$new(id = list("scaledmean","scaledsd","scaledvar"),
                                                value = list(mean, sd, var),
                                                support = list(Reals$new(), PosReals$new(), PosReals$new()),
@@ -66,7 +66,7 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
                                                description = list("Mean of the output scaled distribution.",
                                                                   "Standard deviation of the output scaled distribution.",
                                                                   "Variance of the output scaled distribution"))
-  
+
   if(dist$.__enclos_env__$private$.isPdf){
     pdf <- function(x1){}
     body(pdf) <- substitute({
@@ -75,7 +75,7 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
     }, list(name = short_name))
   } else
     pdf <- NULL
-  
+
   if(dist$.__enclos_env__$private$.isCdf){
     cdf <- function(x1){}
     body(cdf) <- substitute({
@@ -84,14 +84,13 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
     }, list(name = short_name))
   } else
     cdf <- NULL
-  
+
   name = paste("Scaled",name)
   short_name = paste0("Scaled",short_name)
-  
-  type = dist$type()
-  
+
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                   short_name = short_name, type = type,...)
+                   short_name = short_name, type = Reals$new(),
+                   support = Reals$new(),...)
 }) # IN PROGRESS
 
 
