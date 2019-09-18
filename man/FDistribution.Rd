@@ -146,5 +146,5 @@ McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link{Normal}} and \code{\link{ChiSquared}} for the Normal and Chi-Squared distributions. \code{\link{CoreStatistics}} for numerical results.
+\code{\link{listDistributions}} for all available distributions. \code{\link{Normal}}, \code{\link{ChiSquared}} and \code{\link{FDistributionNoncentral}} for the Normal, Chi-Squared and noncentral F distributions. \code{\link{CoreStatistics}} for numerical results.
 }
