@@ -12,11 +12,10 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (x^{\nu/2-1} exp(-x/2))/(2^{\nu/2}\Gamma(\nu/2))}
 #' @templateVar paramsupport \eqn{\nu > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar constructor df = 1, location = 0
+#' @templateVar constructor df = 1
 #' @templateVar arg1 \code{df} \tab numeric \tab  degrees of freedom. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab non-centrality parameter (ncp in rstats). \cr
-#' @templateVar constructorDets \code{df} and \code{location} as non-negative numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
+#' @templateVar constructorDets \code{df} as a positive numeric.
+#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{ChiSquaredNoncentral}} for the noncentral Chi-Squared distribution.
 #'
 #' @examples
 #' x = ChiSquared$new(df = 2)
@@ -49,66 +48,47 @@ ChiSquared$set("public", "description", "ChiSquared Probability Distribution")
 ChiSquared$set("public","package","stats")
 
 ChiSquared$set("public", "mean", function(){
-  return(self$getParameterValue("df") + self$getParameterValue("location"))
+  return(self$getParameterValue("df"))
 })
 ChiSquared$set("public", "variance", function(){
-  return(2*(self$getParameterValue("df") + 2*self$getParameterValue("location")))
+  return(self$getParameterValue("df")*2)
 })
 ChiSquared$set("public", "skewness", function(){
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  if (df + ncp == 0)
-    return(NaN)
-  else
-    return(((2^(3/2))*(df + 3*ncp))/((df + 2*ncp)^(3/2)))
+  return(sqrt(8/self$getParameterValue("df")))
 })
 ChiSquared$set("public", "kurtosis", function(excess = TRUE){
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
   if(excess)
-    if (df + ncp == 0)
-      return(NaN)
-    else
-      return((12*(df + 4*ncp))/((df + 2*ncp)^2))
+    return(12/self$getParameterValue("df"))
   else
-    if (df + ncp == 0)
-      return(NaN)
-    else
-      return((12*(df + 4*ncp))/((df + 2*ncp)^2) + 3)
+    return(12/self$getParameterValue("df") + 3)
 })
 ChiSquared$set("public", "entropy", function(base = 2){
-  if (self$getParameterValue("location") == 0)
-    return(self$getParameterValue("df")/2 + log(2*gamma(self$getParameterValue("df")/2), base) +
-      ((1 - self$getParameterValue("df")/2)*digamma(self$getParameterValue("df")/2)))
-  else
-    return(NaN)
+  return(self$getParameterValue("df")/2 + log(2*gamma(self$getParameterValue("df")/2), base) +
+           ((1 - self$getParameterValue("df")/2)*digamma(self$getParameterValue("df")/2)))
 })
 ChiSquared$set("public", "mgf", function(t){
   if(t < 0.5){
-    return(exp(self$getParameterValue("location")*t/(1 - 2*t))/((1 - 2*t)^(self$getParameterValue("df")/2)))
+    return((1 - 2*t)^(-self$getParameterValue("df")/2))
   } else{
     return(NaN)
   }
 })
 ChiSquared$set("public", "cf", function(t){
-  return(exp(self$getParameterValue("location")*1i*t/(1 - 2i*t))/((1 - 2i*t)^(self$getParameterValue("df")/2)))
+  return((1 - 2i*t)^(-self$getParameterValue("df")/2))
 })
 ChiSquared$set("public", "pgf", function(z){
-  if (self$getParameterValue("location") == 0 & z > 0 & z < sqrt(exp(1)))
+  if(z > 0 & z < sqrt(exp(1)))
     return((1 - 2 * log(z))^(-self$getParameterValue("df")/2))
   else
     return(NaN)
 })
 ChiSquared$set("public", "mode", function(){
-  if (self$getParameterValue("location") == 0)
-    return(max(self$getParameterValue("df") - 2, 0))
-  else
-    return(NaN)
+  return(max(self$getParameterValue("df") - 2, 0))
 })
 
 ChiSquared$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
-  if(self$getParameterValue("df") <= 1)
+  if(self$getParameterValue("df") == 1)
     private$.properties$support <- PosReals$new(zero = F)
   else
     private$.properties$support <- PosReals$new(zero = T)
@@ -117,28 +97,27 @@ ChiSquared$set("public","setParameterValue",function(..., lst = NULL, error = "w
 ChiSquared$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
-  if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
 
-ChiSquared$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
-
-  private$.parameters <- getParameterSet(self, df, location, verbose)
-  self$setParameterValue(df = df, location = location)
-
-  pdf <- function(x1) dchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  cdf <- function(x1) pchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  quantile <- function(p) qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"))
-  rand <- function(n) rchisq(n, self$getParameterValue("df"), self$getParameterValue("location"))
-
+ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
+  
+  private$.parameters <- getParameterSet(self, df, verbose)
+  self$setParameterValue(df = df)
+  
+  pdf <- function(x1) dchisq(x1, self$getParameterValue("df"))
+  cdf <- function(x1) pchisq(x1, self$getParameterValue("df"))
+  quantile <- function(p) qchisq(p, self$getParameterValue("df"))
+  rand <- function(n) rchisq(n, self$getParameterValue("df"))
+  
   if(df == 1)
     support <- PosReals$new(zero = F)
   else
     support <- PosReals$new(zero = T)
-
+  
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = support,
-                   symmetric  = FALSE, type = PosReals$new(zero = TRUE),
+                   symmetric  = FALSE,type = PosReals$new(zero = TRUE),
                    valueSupport = "continuous",
                    variateForm = "univariate")
   invisible(self)

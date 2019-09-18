@@ -15,9 +15,8 @@
 #' @templateVar omittedVars \code{cf}
 #' @templateVar constructor df1 = 1, df2 = 1
 #' @templateVar arg1 \code{df1, df2} \tab numeric \tab degrees of freedom. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab non-centrality parameter (ncp in rstats). \cr
 #' @templateVar constructorDets \code{df1} and \code{df2} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} and \code{\link{ChiSquared}} for the Normal and Chi-Squared distributions.
+#' @templateVar additionalSeeAlso \code{\link{Normal}}, \code{\link{ChiSquared}} and \code{\link{FDistributionNoncentral}} for the Normal, Chi-Squared and noncentral F distributions.
 #'
 #' @examples
 #' x <- FDistribution$new(df1 = 1, df2 = 3)
@@ -53,8 +52,7 @@ FDistribution$set("public", "mean", function(){
   if(self$getParameterValue("df2") > 2){
     df1 <- self$getParameterValue("df1")
     df2 <- self$getParameterValue("df2")
-    loc <- self$getParameterValue("location")
-    return(df2*(df1 + loc)/(df1*(df2 - 2)))
+    return(df2/(df2 - 2))
   }
   else
     return(NaN)
@@ -63,14 +61,13 @@ FDistribution$set("public", "variance", function(){
   if(self$getParameterValue("df2") > 4){
     df1 <- self$getParameterValue("df1")
     df2 <- self$getParameterValue("df2")
-    loc <- self$getParameterValue("location")
-    return(2*(df2/df1)^2*((df1 + loc)^2 + (df1 + 2*loc)*(df2 - 2))/((df2 - 2)^2*(df2 - 4)))
+    return(2*(df2)^2*(df1 + df2 - 2)/(df1*(df2 - 2)^2*(df2 - 4)))
   }
   else
     return(NaN)
 })
 FDistribution$set("public", "skewness", function(){
-  if (self$getParameterValue("df2") > 6 & self$getParameterValue("location") == 0){
+  if (self$getParameterValue("df2") > 6){
     df1 <- self$getParameterValue("df1")
     df2 <- self$getParameterValue("df2")
     return(((2*df1 + df2 - 2)*sqrt(8*(df2 - 4)))/(((df2 - 6)*sqrt(df1*(df1 + df2 - 2)))))
@@ -78,7 +75,7 @@ FDistribution$set("public", "skewness", function(){
     return(NaN)
 })
 FDistribution$set("public", "kurtosis", function(excess = TRUE){
-  if (self$getParameterValue("df2") > 8 & self$getParameterValue("location") == 0){
+  if (self$getParameterValue("df2") > 8){
     df1 <- self$getParameterValue("df1")
     df2 <- self$getParameterValue("df2")
     exkurtosis <- (12*(df1*(5*df2 - 22)*(df1 + df2 - 2) + (df2 - 4)*(df2 - 2)^2))/
@@ -92,21 +89,17 @@ FDistribution$set("public", "kurtosis", function(excess = TRUE){
   }
 })
 FDistribution$set("public", "entropy", function(base = 2){
-  if (self$getParameterValue("location") == 0){
-    df1 <- self$getParameterValue("df1")
-    df2 <- self$getParameterValue("df2")
-    return(log(gamma(df1/2), base) + log(gamma(df2/2), base) - log(gamma((df1 + df2)/2), base) +
-             log(df1/df2, base) + (1 - df1/2)*digamma(1 + df1/2) - (1 + df2/2)*digamma(1 + df2/2) +
-             ((df1 + df2)/2)*digamma((df1 + df2)/2))
-  }else
-    return(NaN)
-  
+  df1 <- self$getParameterValue("df1")
+  df2 <- self$getParameterValue("df2")
+  return(log(gamma(df1/2), base) + log(gamma(df2/2), base) - log(gamma((df1 + df2)/2), base) +
+           log(df1/df2, base) + (1 - df1/2)*digamma(1 + df1/2) - (1 + df2/2)*digamma(1 + df2/2) +
+           ((df1 + df2)/2)*digamma((df1 + df2)/2))
 })
 FDistribution$set("public", "mgf", function(t){
   return(NaN)
 })
 FDistribution$set("public", "mode", function(){
-  if(self$getParameterValue("df1") > 2 & self$getParameterValue("location") == 0)
+  if(self$getParameterValue("df1") > 2)
     return(((self$getParameterValue("df1") - 2)*self$getParameterValue("df2"))/
              (self$getParameterValue("df1")*(self$getParameterValue("df2") + 2)))
   else
@@ -128,19 +121,18 @@ FDistribution$set("private", ".getRefParams", function(paramlst){
   lst = list()
   if (!is.null(paramlst$df1)) lst = c(lst, list(df1 = paramlst$df1))
   if (!is.null(paramlst$df2)) lst = c(lst, list(df2 = paramlst$df2))
-  if (!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
 
-FDistribution$set("public", "initialize", function(df1 = 1, df2 = 1, location = 0, decorators = NULL, verbose = FALSE){
+FDistribution$set("public", "initialize", function(df1 = 1, df2 = 1, decorators = NULL, verbose = FALSE){
 
-  private$.parameters <- getParameterSet(self, df1, df2, location, verbose)
-  self$setParameterValue(df1 = df1, df2 = df2, location = location)
+  private$.parameters <- getParameterSet(self, df1, df2, verbose)
+  self$setParameterValue(df1 = df1, df2 = df2)
 
-  pdf <- function(x1) df(x1, df1, df2, location)
-  cdf <- function(x1) pf(x1, df1, df2, location)
-  quantile <- function(p) qf(p, df1, df2, location)
-  rand <- function(n) rf(n, df1, df2, location)
+  pdf <- function(x1) df(x1, df1, df2)
+  cdf <- function(x1) pf(x1, df1, df2)
+  quantile <- function(p) qf(p, df1, df2)
+  rand <- function(n) rf(n, df1, df2)
 
   if (df1 == 1)
     support <- PosReals$new(zero = FALSE)

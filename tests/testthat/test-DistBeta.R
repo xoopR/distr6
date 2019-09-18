@@ -4,11 +4,9 @@ context("Beta distribution")
 
 test_that("parameterisation",{
   expect_silent(Beta$new())
-  expect_silent(Beta$new(shape1 = 1, shape2 = 1, location = 1))
+  expect_silent(Beta$new(shape1 = 1, shape2 = 1))
   expect_equal(Beta$new(shape2 = 2)$getParameterValue("shape2"), 2)
   expect_equal(Beta$new()$getParameterValue("shape1"), 1)
-  expect_equal(Beta$new(location = 3)$getParameterValue("location"), 3)
-  expect_error(Beta$new(location = -2))
 })
 
 test_that("properties & traits",{
@@ -24,19 +22,13 @@ test_that("properties & traits",{
 
 
 B = Beta$new()
-B_nc = Beta$new(location = 2)
 test_that("statistics",{
   expect_equal(B$mean(), 0.5)
-  expect_equal(B_nc$mean(), NaN)
   expect_equal(B$variance(), 1/12)
-  expect_equal(B_nc$variance(), NaN)
   expect_equal(B$skewness(), 0)
-  expect_equal(B_nc$skewness(), NaN)
   expect_equal(B$kurtosis(T), -1.2)
   expect_equal(B$kurtosis(F), 1.8)
-  expect_equal(B_nc$kurtosis(), NaN)
   expect_equal(B$entropy(), 0)
-  expect_equal(B_nc$entropy(), NaN)
   expect_error(B$mgf(0))
   expect_equal(B$pgf(1), NaN)
   expect_error(B$cf(1))
@@ -45,15 +37,9 @@ test_that("statistics",{
   expect_equal(Beta$new(shape1 = 0.1, shape2 = 0.1)$mode(), c(0,1))
   expect_equal(Beta$new(shape1 = 0.1, shape2 = 0.1)$mode(1), 0)
   expect_equal(Beta$new(shape1 = 2, shape2 = 2)$mode(), 1/2)
-  expect_equal(B_nc$mode(), NaN)
   expect_equal(B$pdf(1), dbeta(1,shape1=1,shape2=1))
-  expect_equal(B_nc$pdf(1), dbeta(1, 1, 1, 2))
   expect_equal(B$cdf(1), pbeta(1,shape1=1,shape2=1))
-  expect_equal(B_nc$cdf(1), pbeta(1, 1, 1, 2))
   expect_equal(B$quantile(0.324), qbeta(0.324,shape=1,shape2=1))
-  expect_equal(B_nc$quantile(0.2), qbeta(0.2, 1, 1, 2))
   expect_equal(B$cdf(B$quantile(0.324)), 0.324)
-  expect_equal(B_nc$cdf(B_nc$quantile(0.324)), 0.324)
   expect_silent(B$rand(10))
-  expect_silent(B_nc$rand(10))
 })
