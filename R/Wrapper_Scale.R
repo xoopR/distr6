@@ -71,7 +71,7 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
     pdf <- function(x1){}
     body(pdf) <- substitute({
       scaleTrafo <- self$getParameterValue("scaledsd")/self$wrappedModels()[[1]]$stdev()
-      self$wrappedModels()[[1]]$pdf(-self$getParameterValue("scaledmean")+(x1+self$wrappedModels()[[1]]$mean())*scaleTrafo)
+      self$wrappedModels()[[1]]$pdf(self$getParameterValue("scaledmean")+(-x1+self$wrappedModels()[[1]]$mean())*scaleTrafo)
     }, list(name = short_name))
   } else
     pdf <- NULL
@@ -80,7 +80,7 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
     cdf <- function(x1){}
     body(cdf) <- substitute({
       scaleTrafo <- self$getParameterValue("scaledsd")/self$wrappedModels(name)$stdev()
-      self$wrappedModels(name)$cdf(-self$getParameterValue("scaledmean")+(x1+self$wrappedModels(name)$mean())*scaleTrafo)
+      self$wrappedModels(name)$cdf(self$getParameterValue("scaledmean")+(-x1+self$wrappedModels(name)$mean())*scaleTrafo)
     }, list(name = short_name))
   } else
     cdf <- NULL
@@ -88,10 +88,9 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
   name = paste("Scaled",name)
   short_name = paste0("Scaled",short_name)
   
-  type = dist$type()
-  
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                   short_name = short_name, type = type,...)
+                   short_name = short_name, type = Reals$new(),
+                   support = Reals$new(),...)
 }) # IN PROGRESS
 
 
@@ -107,7 +106,3 @@ Scale$set("public","setParameterValue",function(..., lst = NULL, error = "warn")
   }
   super$setParameterValue(lst=lst,error=error)
 })
-
-
-
-
