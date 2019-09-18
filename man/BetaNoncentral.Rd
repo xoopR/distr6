@@ -23,10 +23,6 @@ x$cdf(5)
 x$quantile(0.42)
 x$rand(4)
 
-# Statistics
-x$mean()
-x$variance()
-
 summary(x)
 
 }
