@@ -1,3 +1,4 @@
+
 #' @title Distribution Scale Wrapper
 #'
 #' @description Scales a distribution to a given mean and standard deviation. By default the distribution
@@ -71,7 +72,7 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
     pdf <- function(x1){}
     body(pdf) <- substitute({
       scaleTrafo <- self$getParameterValue("scaledsd")/self$wrappedModels()[[1]]$stdev()
-      self$wrappedModels()[[1]]$pdf(self$getParameterValue("scaledmean")+(-x1+self$wrappedModels()[[1]]$mean())*scaleTrafo)
+      self$wrappedModels()[[1]]$pdf(-self$getParameterValue("scaledmean")+(x1+self$wrappedModels()[[1]]$mean())*scaleTrafo)
     }, list(name = short_name))
   } else
     pdf <- NULL
@@ -80,7 +81,7 @@ Scale$set("public","initialize",function(dist, mean = 0, sd = 1, var = NULL,...)
     cdf <- function(x1){}
     body(cdf) <- substitute({
       scaleTrafo <- self$getParameterValue("scaledsd")/self$wrappedModels(name)$stdev()
-      self$wrappedModels(name)$cdf(self$getParameterValue("scaledmean")+(-x1+self$wrappedModels(name)$mean())*scaleTrafo)
+      self$wrappedModels(name)$cdf(-self$getParameterValue("scaledmean")+(x1+self$wrappedModels(name)$mean())*scaleTrafo)
     }, list(name = short_name))
   } else
     cdf <- NULL
@@ -106,3 +107,4 @@ Scale$set("public","setParameterValue",function(..., lst = NULL, error = "warn")
   }
   super$setParameterValue(lst=lst,error=error)
 })
+
