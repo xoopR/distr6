@@ -7,12 +7,16 @@
 #' @templateVar ClassName StudentTNoncentral
 #' @templateVar DistName Noncentral Student's T
 #' @templateVar uses to estimate the mean of populations with unknown variance from a small sample size, as well as in t-testing for difference of means and regression analysis
+#' @templateVar params degrees of freedom, \eqn{\nu} and location, \eqn{\lambda},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = (\nu^{\nu/2}exp(-(\nu\lambda^2)/(2(x^2+\nu)))/(\sqrt{\pi} \Gamma(\nu/2) 2^{(\nu-1)/2} (x^2+\nu)^{(\nu+1)/2}))\int_{0}^{\infty} y^\nu exp(-1/2(y-x\lambda/\sqrt{x^2+\nu})^2)}
+#' @templateVar paramsupport \eqn{\nu > 0}, \eqn{\lambda \epsilon R}
 #' @templateVar distsupport the Reals
 #' @templateVar omittedVars \code{skewness}, \code{kurtosis}, \code{mode}, \code{entropy}, \code{pgf}, \code{mgf} and \code{cf}
 #' @templateVar constructor df = 1, location = 0
 #' @templateVar arg1 \code{df} \tab numeric \tab degrees of freedom. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab non-centrality parameter (ncp in rstats). \cr
-#' @templateVar constructorDets \code{df} and \code{location} as positive numerics.
+#' @templateVar arg2 \code{location} \tab numeric \tab location (ncp in rstats). \cr
+#' @templateVar constructorDets \code{df} as positive numeric and \code{location} as real numeric.
 #' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{StudentT}} for the central Student's T distribution.
 #'
 #' @examples

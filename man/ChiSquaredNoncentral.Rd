@@ -11,7 +11,7 @@ Mathematical and statistical functions for the Noncentral Chi-Squared distributi
 is commonly used to model the sum of independent squared Normal distributions and for confidence intervals.
 }
 \details{
-The Noncentral Chi-Squared distribution parameterised with  degrees of freedom, \eqn{\nu}, and non-centrality parameter, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = exp(-\lambda/2) SUM_{r=0}^\infty ((\lambda/2)^r/r!) dchisq(x, \nu + 2r)} for \eqn{\nu \geq 0}, \eqn{\lambda \geq 0}.
+The Noncentral Chi-Squared distribution parameterised with  degrees of freedom, \eqn{\nu}, and location, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) dchisq(x, \nu + 2r)} for \eqn{\nu \geq 0}, \eqn{\lambda \geq 0}.
 
 The distribution is supported on the Positive Reals.
 
@@ -28,7 +28,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 \tabular{lll}{
   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
   \code{df} \tab numeric \tab  degrees of freedom. \cr
-  \code{location} \tab numeric \tab non-centrality parameter (ncp in rstats). \cr
+  \code{location} \tab numeric \tab location (ncp in rstats). \cr
   
   
   

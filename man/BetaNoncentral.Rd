@@ -8,7 +8,9 @@ Mathematical and statistical functions for the Noncentral Beta distribution, whi
 is commonly used as the prior in Bayesian modelling.
 }
 \details{
-The Noncentral Beta distribution   is defined by the
+The Noncentral Beta distribution parameterised with  two shape parameters, \eqn{\alpha, \beta}, and location, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{\alpha+r-1}(1-x)^{\beta-1})/B(\alpha+r, \beta)} for \eqn{\alpha, \beta > 0, \lambda \geq 0}, where \eqn{B} is the Beta function.
+
+The distribution is supported on
 }
 \examples{
 x = BetaNoncentral$new(shape1 = 2, shape2 = 5, location = 3)

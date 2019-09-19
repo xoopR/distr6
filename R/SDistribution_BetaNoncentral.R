@@ -7,11 +7,15 @@
 #' @templateVar ClassName BetaNoncentral
 #' @templateVar DistName Noncentral Beta
 #' @templateVar uses as the prior in Bayesian modelling
+#' @templateVar params two shape parameters, \eqn{\alpha, \beta}, and location, \eqn{\lambda},
+#' @templateVar pdfpmf pdf
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{\alpha+r-1}(1-x)^{\beta-1})/B(\alpha+r, \beta)}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0, \lambda \geq 0}, where \eqn{B} is the Beta function
 #' @templateVar omittedVars \code{mean}, \code{variance}, \code{skewness}, \code{kurtosis}, \code{entropy}, \code{mode}, \code{mgf} and \code{cf}
-#' @templateVar constructor shape1 = 1, shape2 = 1
+#' @templateVar constructor shape1 = 1, shape2 = 1, location = 0
 #' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab non-centrality parameter (ncp in rstats). \cr
-#' @templateVar constructorDets  \code{shape1} and \code{shape2} as positive numerics.
+#' @templateVar arg2 \code{location} \tab numeric \tab location (ncp in rstats). \cr
+#' @templateVar constructorDets  \code{shape1}, \code{shape2} as positive numerics, \code{location} as non-negative numeric.
 #'
 #' @examples
 #' x = BetaNoncentral$new(shape1 = 2, shape2 = 5, location = 3)
