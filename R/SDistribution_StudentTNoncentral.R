@@ -8,10 +8,10 @@
 #' @templateVar DistName Noncentral Student's T
 #' @templateVar uses to estimate the mean of populations with unknown variance from a small sample size, as well as in t-testing for difference of means and regression analysis
 #' @templateVar distsupport the Reals
+#' @templateVar omittedVars \code{skewness}, \code{kurtosis}, \code{mode}, \code{entropy}, \code{pgf}, \code{mgf} and \code{cf}
 #' @templateVar constructor df = 1, location = 0
 #' @templateVar arg1 \code{df} \tab numeric \tab degrees of freedom. \cr
 #' @templateVar arg2 \code{location} \tab numeric \tab non-centrality parameter (ncp in rstats). \cr
-#' @templateVar omittedVars \code{skewness}, \code{kurtosis}, \code{mode}, \code{entropy}, \code{pgf}, \code{mgf} and \code{cf}
 #' @templateVar constructorDets \code{df} and \code{location} as positive numerics.
 #' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{StudentT}} for the central Student's T distribution.
 #'
