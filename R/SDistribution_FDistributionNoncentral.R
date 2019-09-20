@@ -7,7 +7,7 @@
 #' @template SDist
 #' @templateVar ClassName FDistributionNoncentral
 #' @templateVar DistName Noncentral F
-#' @templateVar uses in ANOVA testing and is the ratio of scaled Chi-Squared distributions.
+#' @templateVar uses in ANOVA testing and is the ratio of scaled Chi-Squared distributions
 #' @templateVar params two degrees of freedom parameters, \eqn{\mu, \nu}, and location, \eqn{\lambda},
 #' @templateVar pdfpmf pdf
 #' @templateVar pdfpmfeq \deqn{f(x) = \sum_{r=0}^{\infty} ((exp(-\lambda/2)(\lambda/2)^r)/(B(\nu/2, \mu/2+r)r!))(\mu/\nu)^{\mu/2+r}(\nu/(\nu+x\mu))^{(\mu+\nu)/2+r}x^{\mu/2-1+r}}
