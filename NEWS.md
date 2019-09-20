@@ -1,4 +1,4 @@
-# distr6 1.1.1
+# distr6 1.2.0
 
 ## Major Updates
 
@@ -7,6 +7,8 @@
 ## Minor Updates
 
 ### Added Functions and Classes
+
+- Added non-central F, T, Chi-Squared, and Beta distributions
 
 ### Deprecated Functions
 
