@@ -31,18 +31,16 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
                                                  description = list("a","b"))
     
     if(dist$.__enclos_env__$private$.isPdf){
-        pdf <- function(x2){}
+        pdf <- function(x1){}
         body(pdf) <- substitute({
-            x1 = (x2-b)/a
             self$wrappedModels()[[1]]$pdf((x1 - b)/a)/a
         }, list(name = short_name))
     } else
         pdf <- NULL
     
     if(dist$.__enclos_env__$private$.isCdf){
-        cdf <- function(x2){}
+        cdf <- function(x1){}
         body(cdf) <- substitute({
-            x1 = (x2-b)/a
             self$wrappedModels()[[1]]$cdf((x1 - b)/a)/a
         }, list(name = short_name))
     } else
@@ -60,4 +58,9 @@ AffineTransform$set("public","setParameterValue",function(..., lst = NULL, error
     if(is.null(lst))
         lst <- list(...)
     super$setParameterValue(lst=lst,error=error)
+
 })
+
+
+
+
