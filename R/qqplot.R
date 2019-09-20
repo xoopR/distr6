@@ -96,9 +96,9 @@ qqplot <- function(x, y, nPoints = 3000, pos = 0.5,
     b <- coef[2]
     
     conf <- if (conf == FALSE) 0.95 else conf
-    xx <- x$quantile(1 - (1 - conf)/2)
+    xx <- Normal$new()$quantile(1 - (1 - conf)/2)
       
-    SE <- (b / x$pdf(x$quantile(ppoints(nPoints)))) * sqrt(ppoints(nPoints)*(1 - ppoints(nPoints))/nPoints)
+    SE <- (b / Normal$new()$pdf(Normal$new()$quantile(ppoints(nPoints)))) * sqrt(ppoints(nPoints)*(1 - ppoints(nPoints))/nPoints)
       
     fit.value <- a + b*x0
     upper <- fit.value + (xx*SE)
