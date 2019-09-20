@@ -3,6 +3,7 @@
 # Noncentral Chi-Squared Distribution Documentation
 #-------------------------------------------------------------
 #' @name ChiSquaredNoncentral
+#' @author Jordan Deenichin
 #' @template SDist
 #' @templateVar ClassName ChiSquaredNoncentral
 #' @templateVar DistName Noncentral Chi-Squared
@@ -104,20 +105,20 @@ ChiSquaredNoncentral$set("private",".getRefParams", function(paramlst){
 })
 
 ChiSquaredNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
-  
+
   private$.parameters <- getParameterSet(self, df, location, verbose)
   self$setParameterValue(df = df, location = location)
-  
+
   pdf <- function(x1) dchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
   cdf <- function(x1) pchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
   quantile <- function(p) qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"))
   rand <- function(n) rchisq(n, self$getParameterValue("df"), self$getParameterValue("location"))
-  
+
   if(df == 1)
     support <- PosReals$new(zero = F)
   else
     support <- PosReals$new(zero = T)
-  
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = support,
                    symmetric  = FALSE, type = PosReals$new(zero = TRUE),

@@ -148,3 +148,6 @@ Michael P. McLaughlin.
 \seealso{
 \code{\link{listDistributions}} for all available distributions. \code{\link{Normal}}, \code{\link{ChiSquared}} and \code{\link{FDistribution}} for the Normal, Chi-Squared and central F distributions. \code{\link{CoreStatistics}} for numerical results.
 }
+\author{
+Jordan Deenichin
+}

@@ -3,6 +3,7 @@
 # Noncentral Student's t Distribution Documentation
 #-------------------------------------------------------------
 #' @name StudentTNoncentral
+#' @author Jordan Deenichin
 #' @template SDist
 #' @templateVar ClassName StudentTNoncentral
 #' @templateVar DistName Noncentral Student's T
@@ -73,15 +74,15 @@ StudentTNoncentral$set("private",".getRefParams", function(paramlst){
 })
 
 StudentTNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
-  
+
   private$.parameters <- getParameterSet(self, df, location, verbose)
   self$setParameterValue(df = df, location = location)
-  
+
   pdf <- function(x1) dt(x1, self$getParameterValue("df"), self$getParameterValue("location"))
   cdf <- function(x1) pt(x1, self$getParameterValue("df"), self$getParameterValue("location"))
   quantile <- function(p) qt(p, self$getParameterValue("df"), self$getParameterValue("location"))
   rand <- function(n) rt(n, self$getParameterValue("df"), self$getParameterValue("location"))
-  
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Reals$new(zero = T),
                    symmetric  = TRUE,type = Reals$new(),

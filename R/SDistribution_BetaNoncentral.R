@@ -3,6 +3,7 @@
 # Noncentral Beta Distribution Documentation
 #-------------------------------------------------------------
 #' @name BetaNoncentral
+#' @author Jordan Deenichin
 #' @template SDist
 #' @templateVar ClassName BetaNoncentral
 #' @templateVar DistName Noncentral Beta
@@ -10,7 +11,8 @@
 #' @templateVar params two shape parameters, \eqn{\alpha, \beta}, and location, \eqn{\lambda},
 #' @templateVar pdfpmf pdf
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{\alpha+r-1}(1-x)^{\beta-1})/B(\alpha+r, \beta)}
-#' @templateVar paramsupport \eqn{\alpha, \beta > 0, \lambda \geq 0}, where \eqn{B} is the Beta function
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0, \lambda \ge 0}, where \eqn{B} is the Beta function
+#' @templateVar distsupport \eqn{[0, 1]}
 #' @templateVar omittedVars \code{mean}, \code{variance}, \code{skewness}, \code{kurtosis}, \code{entropy}, \code{mode}, \code{mgf} and \code{cf}
 #' @templateVar constructor shape1 = 1, shape2 = 1, location = 0
 #' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
@@ -53,26 +55,26 @@ BetaNoncentral$set("private", ".getRefParams", function(paramlst){
 
 BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
                                           verbose = FALSE){
-  
+
   private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, locaiton, verbose)
   self$setParameterValue(shape1=shape1,shape2=shape2, location = location)
-  
+
   pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
   cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
   quantile <- function(p) qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
   rand <- function(n) rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
-  
-  
+
+
   if (shape1 == shape2)
     symmetric <- TRUE
   else
     symmetric <- FALSE
-  
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Interval$new(0,1),
                    symmetric = symmetric, type = PosReals$new(zero = T),
                    valueSupport ="continuous",
                    variateForm = "univariate")
-  
+
   invisible(self)
 })

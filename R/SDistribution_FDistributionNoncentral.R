@@ -3,6 +3,7 @@
 # Noncentral F Distribution Documentation
 #-------------------------------------------------------------
 #' @name FDistributionNoncentral
+#' @author Jordan Deenichin
 #' @template SDist
 #' @templateVar ClassName FDistributionNoncentral
 #' @templateVar DistName Noncentral F
@@ -87,20 +88,20 @@ FDistributionNoncentral$set("private", ".getRefParams", function(paramlst){
 })
 
 FDistributionNoncentral$set("public", "initialize", function(df1 = 1, df2 = 1, location = 0, decorators = NULL, verbose = FALSE){
-  
+
   private$.parameters <- getParameterSet(self, df1, df2, location, verbose)
   self$setParameterValue(df1 = df1, df2 = df2, location = location)
-  
+
   pdf <- function(x1) df(x1, df1, df2, location)
   cdf <- function(x1) pf(x1, df1, df2, location)
   quantile <- function(p) qf(p, df1, df2, location)
   rand <- function(n) rf(n, df1, df2, location)
-  
+
   if (df1 == 1)
     support <- PosReals$new(zero = FALSE)
   else
     support <- PosReals$new(zero = TRUE)
-  
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = support,
                    symmetric = FALSE,type = PosReals$new(zero = TRUE),
