@@ -3,6 +3,7 @@
 # Student's t Distribution Documentation
 #-------------------------------------------------------------
 #' @name StudentT
+#' @author Chijing Zeng
 #' @template SDist
 #' @templateVar ClassName StudentT
 #' @templateVar DistName Student's T
@@ -73,7 +74,7 @@ StudentT$set("public","kurtosis",function(excess = TRUE){
     exkurtosis = 6/(df-4)
   else
     return(NaN)
-  
+
   if(excess)
     return(exkurtosis)
   else
