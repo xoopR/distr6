@@ -25,12 +25,8 @@
 #   withConf      A logical factor indicated whether to produce plots for
 #                 confidence lines, only works if plot = TRUE.
 #                 The default is set to be TRUE.
-#   withConf.pw   A logical factor indicated whether to produce plots for
-#                 pointwise confidence lines, only works if withConf = TRUE.
-#                 The default is set to be TRUE.
-#   withConf.sim  A logical factor indicated whether to produce plots for
-#                 simultaneous confidence lines, only works if withConf = TRUE.
-#                 The default is set to be TRUE.
+#   conf          A numerical parameter between 0 and 1, indicating the
+#                 value of confidence level, the default is set to be 0.95.
 #   xlab          x-lable.
 #   ylab          y-lable.
 #   ...           All graphical parameters in current R plot function can
@@ -39,27 +35,27 @@
 #######################################################################
 #' @export
 qqplot <- function(x, y, nPoints = 3000, pos = 0.5,
-                                withIdLine = TRUE, withConf = TRUE,
-                                withConf.pw  = withConf, withConf.sim = withConf,
-                                plot = TRUE, xlab = deparse(substitute(x)),
-                                ylab = deparse(substitute(y)), ...){
-
+                   withIdLine = TRUE, withConf = TRUE,
+                   conf = 0.95, plot = TRUE, 
+                   xlab = deparse(substitute(x)),
+                   ylab = deparse(substitute(y)), ...){
+  
   # random number generator: sample quantiles from 0 to 1 (cdf)
   points <- seq(0,1,length.out = nPoints)
-
+  
   if(is.numeric(x))
     x <- Empirical$new(x)
   if(is.numeric(y))
     y <- Empirical$new(y)
-
+  
   assertDistributionList(list(x, y), "x and y should both be distributions")
-
+  
   quantile.X <- x$quantile(points)
   quantile.Y <- y$quantile(points)
-
+  
   nx <- length(quantile.X)
   ny <- length(quantile.Y)
-
+  
   if (nx != ny) {
     ppoints.x <- ppoints(nx, a = pos)
     ppoints.y <- ppoints(ny, a = pos)
@@ -72,62 +68,55 @@ qqplot <- function(x, y, nPoints = 3000, pos = 0.5,
                            rule = 2)$y
     }
   }
-
+  
   #Now plot!
-
+  
   ##Quantile vs Quantile##
   if(plot == TRUE){
     plot(x = quantile.X, y = quantile.Y, type = "p", col = "black",
          xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),...)
-
+    
     ##Identity Line##
     if(withIdLine == TRUE){
       abline(a = 0, b = 1, col = "blue", lty = 2, lwd = 2)
     }
-
+    
     ##Confidence Lines##
-    #if(withConf == TRUE){
-
-      #x0 <- quantile.X
-      #y0 <- quantile.Y
-
-      #quantile.df <- data.frame(x0, y0)
-
-      #quantile.fit <- lm(y0 ~ x0, data = quantile.df)
-
-      #new.x0 <- seq(min(x0), max(x0), length=100)  #how to generate newdata?
-
-      #predict.quantile <- predict(quantile.fit,
-                                  #newdata = data.frame(x0 = new.x0), se.fit = TRUE)
-
-      ##Pointwise Confidence Interval##
-      #if(withConf.pw == TRUE){
-        #ci.pw <- pointwise(predict.quantile, coverage=0.95)
-
-        #lines(new.x0, ci.pw$lower, lty=3, col = "orange", lwd = 2)
-        #lines(new.x0, ci.pw$upper, lty=3, col = "orange", lwd = 2)
-      #}
-
-      ##Simultaneous Confidence Interval##
-      #if(withConf.sim==TRUE){
-        #ci.sim <- pointwise(predict.quantile, coverage=0.95,
-                            #simultaneous=TRUE)
-
-        #lines(new.x0, ci.sim$lower, lty=4, col = "red", lwd = 2)
-        #lines(new.x0, ci.sim$upper, lty=4, col = "red", lwd = 2)
-      #}
-
-      ##Legend
-      #legend("topleft", legend = c("Pintwise CI", "Simultaneous CI"), col = c("orange", "red"),
-             #lty = c(3,4), cex = 0.8)
-    #}
-
+    x0 <- quantile.X
+    y0 <- quantile.Y
+      
+    x0[is.infinite(x0)] <- NA
+    y0[is.infinite(y0)] <- NA
+      
+    quantile.df <- data.frame(x0, y0)
+    quantile.df_no_na <- na.omit(quantile.df)
+      
+    coef <- coef(MASS::rlm(y0 ~ x0, data = quantile.df_no_na))
+    a <- coef[1]
+    b <- coef[2]
+    
+    conf <- if (conf == FALSE) 0.95 else conf
+    xx <- x$quantile(1 - (1 - conf)/2)
+      
+    SE <- (b / x$pdf(x$quantile(ppoints(nPoints)))) * sqrt(ppoints(nPoints)*(1 - ppoints(nPoints))/nPoints)
+      
+    fit.value <- a + b*x0
+    upper <- fit.value + (xx*SE)
+    lower <- fit.value - (xx*SE)
+      
+    if (withConf != FALSE) {
+      lines(x0, upper, lty=3, col = "orange", lwd = 2)
+      lines(x0, lower, lty=3, col = "orange", lwd = 2)
+    }
+      
+    
   }else{
     returnList = list(x0 = quantile.X, y0 = quantile.Y)
-
+    
     return(returnList)
   }
 }
+
 
 
 
@@ -150,8 +139,4 @@ qqplot <- function(x, y, nPoints = 3000, pos = 0.5,
 
 #qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
 #                    withConf = FALSE)
-#qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
-#                    withConf.pw = FALSE)
-#qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15),
-#                    withConf.sim = FALSE)
 
