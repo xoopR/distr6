@@ -52,6 +52,20 @@ getParameterSet.Beta <- function(x, shape1, shape2, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.BetaNoncentral <- function(x, shape1, shape2, location, verbose = FALSE){
+  
+  if(verbose) message("Parameterised with shape1, shape2 and location.")
+  
+  
+  ps <- ParameterSet$new(id = list("shape1","shape2", "location"), value = list(1,1, 0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape Parameter (alpha)","Shape Parameter (beta)", "Non-centrality parameter"))
+  
+  return(ps)
+}
+
 getParameterSet.Binomial <- function(x, size, prob, qprob = NULL, verbose = FALSE){
 
   prob.bool = qprob.bool = FALSE
@@ -109,11 +123,24 @@ getParameterSet.ChiSquared <- function(x, df, verbose = FALSE){
   if(verbose) message("Parameterised with df.")
 
   ps <- ParameterSet$new(id = list("df"), value = list(1),
-                         support = list(Naturals$new()),
+                         support = list(PosReals$new(zero = TRUE)),
                          settable = list(TRUE),
-                         updateFunc = list(NA),
+                         updateFunc = NULL,
                          description = list("Degrees of Freedom"))
 
+  return(ps)
+}
+
+getParameterSet.ChiSquaredNoncentral <- function(x, df, location, verbose = FALSE){
+  
+  if(verbose) message("Parameterised with df and location.")
+  
+  ps <- ParameterSet$new(id = list("df", "location"), value = list(1, 0),
+                         support = list(PosReals$new(zero = TRUE), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Degrees of Freedom", "Non-centrality parameter"))
+  
   return(ps)
 }
 
@@ -199,6 +226,18 @@ getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
                          updateFunc = NULL,
                          description = list("Degrees of freedom 1",
                                             "Degrees of freedom 2"))
+}
+
+getParameterSet.FDistributionNoncentral <- function(x, df1, df2, location, verbose = FALSE){
+  if (verbose) message("Parameterised with df1, df2 and location.")
+  
+  ps <- ParameterSet$new(id = list("df1", "df2", "location"), value = list(1, 1, 0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Degrees of freedom 1",
+                                            "Degrees of freedom 2",
+                                            "Non-centrality parameter"))
 }
 
 getParameterSet.Frechet <- function(x, shape, scale, minimum, verbose = FALSE){
@@ -673,6 +712,19 @@ getParameterSet.StudentT <- function(x, df, verbose = FALSE){
                          updateFunc = NULL,
                          description = list("Degrees of Freedom"))
 
+  return(ps)
+}
+
+getParameterSet.StudentTNoncentral <- function(x, df, location, verbose = FALSE){
+  
+  if(verbose) message("Parameterised with df and location.")
+  
+  ps <- ParameterSet$new(id = list("df", "location"), value = list(1, 0),
+                         support = list(PosReals$new(), Reals$new()),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Degrees of Freedom", "Non-centrality parameter"))
+  
   return(ps)
 }
 

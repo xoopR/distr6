@@ -15,7 +15,7 @@
 #' @templateVar constructor df = 1
 #' @templateVar arg1 \code{df} \tab numeric \tab degrees of freedom. \cr
 #' @templateVar constructorDets \code{df} as a positive numeric.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
+#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{StudentTNoncentral}} for the noncentral Student's T distribution.
 #'
 #' @examples
 #' x = StudentT$new(df = 2)
@@ -47,8 +47,9 @@ StudentT$set("public","short_name","T")
 StudentT$set("public","description","Student's t Probability Distribution.")
 StudentT$set("public","package","stats")
 
-StudentT$set("public","mean",function(){
-  if(self$getParameterValue("df") > 1)
+StudentT$set("public", "mean", function(){
+  df <- self$getParameterValue("df")
+  if (df > 1)
     return(0)
   else
     return(NaN)
@@ -57,8 +58,6 @@ StudentT$set("public","variance",function(){
   df <- self$getParameterValue("df")
   if(df > 2)
     return(df/(df-2))
-  else if(df > 1 & df <= 2)
-    return(Inf)
   else
     return(NaN)
 })
@@ -72,20 +71,17 @@ StudentT$set("public","kurtosis",function(excess = TRUE){
   df <- self$getParameterValue("df")
   if(df > 4)
     exkurtosis = 6/(df-4)
-  else if(df > 2 & df <= 4)
-    return(Inf)
   else
     return(NaN)
-
+  
   if(excess)
     return(exkurtosis)
   else
     return(exkurtosis + 3)
-
 })
 StudentT$set("public","entropy",function(base = 2){
   df <- self$getParameterValue("df")
-  (((df+1)/2)*(digamma((1+df)/2) - digamma(df/2))) + (log(sqrt(df)*beta(df/2, 1/2), base))
+  return((((df+1)/2)*(digamma((1+df)/2) - digamma(df/2))) + (log(sqrt(df)*beta(df/2, 1/2), base)))
 })
 StudentT$set("public", "mgf", function(t){
   return(NaN)

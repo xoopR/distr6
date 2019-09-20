@@ -16,7 +16,7 @@
 #' @templateVar constructor df1 = 1, df2 = 1
 #' @templateVar arg1 \code{df1, df2} \tab numeric \tab degrees of freedom. \cr
 #' @templateVar constructorDets \code{df1} and \code{df2} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} and \code{\link{ChiSquared}} for the Normal and Chi-Squared distributions.
+#' @templateVar additionalSeeAlso \code{\link{Normal}}, \code{\link{ChiSquared}} and \code{\link{FDistributionNoncentral}} for the Normal, Chi-Squared and noncentral F distributions.
 #'
 #' @examples
 #' x <- FDistribution$new(df1 = 1, df2 = 3)
@@ -49,15 +49,20 @@ FDistribution$set("public", "description", "F Probability Distribution")
 FDistribution$set("public", "package", "stats")
 
 FDistribution$set("public", "mean", function(){
-  if(self$getParameterValue("df2") > 2)
-    return(self$getParameterValue("df2")/(self$getParameterValue("df2") - 2))
+  if(self$getParameterValue("df2") > 2){
+    df1 <- self$getParameterValue("df1")
+    df2 <- self$getParameterValue("df2")
+    return(df2/(df2 - 2))
+  }
   else
     return(NaN)
 })
 FDistribution$set("public", "variance", function(){
-  if(self$getParameterValue("df2") > 4)
-    return((2*self$getParameterValue("df2")^2*(self$getParameterValue("df1") + self$getParameterValue("df2") - 2))/
-             (self$getParameterValue("df1")*(self$getParameterValue("df2") - 2)^2*(self$getParameterValue("df2") - 4)))
+  if(self$getParameterValue("df2") > 4){
+    df1 <- self$getParameterValue("df1")
+    df2 <- self$getParameterValue("df2")
+    return(2*(df2)^2*(df1 + df2 - 2)/(df1*(df2 - 2)^2*(df2 - 4)))
+  }
   else
     return(NaN)
 })

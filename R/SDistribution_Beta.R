@@ -54,11 +54,9 @@ Beta$set("public","mean",function(){
 Beta$set("public","variance",function(){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-
   return(shape1*shape2*((shape1+shape2)^-2)*(shape1+shape2+1)^-1)
 })
 Beta$set("public","mode",function(which = "all"){
-
   if(self$getParameterValue("shape1")<=1 & self$getParameterValue("shape2")>1)
     return(0)
   else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")<=1)
@@ -70,18 +68,16 @@ Beta$set("public","mode",function(which = "all"){
       return(c(0,1)[which])
   } else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")>1)
     return((self$getParameterValue("shape1")-1)/(self$getParameterValue("shape1")+self$getParameterValue("shape2")-2))
-
 })
 Beta$set("public","skewness",function(){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-
   return(2*(shape2-shape1)*((shape1+shape2+1)^0.5)*((shape1+shape2+2)^-1)*((shape1*shape2)^-0.5))
 })
 Beta$set("public","kurtosis",function(excess = TRUE){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-
+  
   ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-(shape1*shape2*(shape1+shape2+2))}/
     (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
   if (excess)
@@ -106,8 +102,7 @@ Beta$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 
-Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,
-                                          verbose = FALSE){
+Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,verbose = FALSE){
 
   private$.parameters <- getParameterSet.Beta(self, shape1, shape2, verbose)
   self$setParameterValue(shape1=shape1,shape2=shape2)

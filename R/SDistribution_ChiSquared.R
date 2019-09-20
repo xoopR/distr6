@@ -15,13 +15,13 @@
 #' @templateVar constructor df = 1
 #' @templateVar arg1 \code{df} \tab numeric \tab  degrees of freedom. \cr
 #' @templateVar constructorDets \code{df} as a positive numeric.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
+#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{ChiSquaredNoncentral}} for the noncentral Chi-Squared distribution.
 #'
 #' @examples
 #' x = ChiSquared$new(df = 2)
 #'
 #' # Update parameters
-#' x$setParameterValue(df = 3)
+#' x$setParameterValue(location = 3)
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -64,7 +64,7 @@ ChiSquared$set("public", "kurtosis", function(excess = TRUE){
 })
 ChiSquared$set("public", "entropy", function(base = 2){
   return(self$getParameterValue("df")/2 + log(2*gamma(self$getParameterValue("df")/2), base) +
-    ((1 - self$getParameterValue("df")/2)*digamma(self$getParameterValue("df")/2)))
+           ((1 - self$getParameterValue("df")/2)*digamma(self$getParameterValue("df")/2)))
 })
 ChiSquared$set("public", "mgf", function(t){
   if(t < 0.5){
@@ -101,20 +101,20 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
 })
 
 ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
-
+  
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(df = df)
-
+  
   pdf <- function(x1) dchisq(x1, self$getParameterValue("df"))
   cdf <- function(x1) pchisq(x1, self$getParameterValue("df"))
   quantile <- function(p) qchisq(p, self$getParameterValue("df"))
   rand <- function(n) rchisq(n, self$getParameterValue("df"))
-
+  
   if(df == 1)
     support <- PosReals$new(zero = F)
   else
     support <- PosReals$new(zero = T)
-
+  
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = support,
                    symmetric  = FALSE,type = PosReals$new(zero = TRUE),
