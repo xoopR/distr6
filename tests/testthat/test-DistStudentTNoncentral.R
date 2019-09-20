@@ -25,6 +25,7 @@ test_that("properties & traits",{
 s = StudentTNoncentral$new(df = 2, location = 3)
 test_that("statistics",{
   expect_equal(s$mean(), 3*gamma(1/2))
+  expect_equal(StudentTNoncentral$new(df = 1)$mean(), NaN)
   expect_equal(s$variance(), NaN)
   expect_equal(StudentTNoncentral$new(df = 3, location = 3)$variance(), 30 - 54/pi)
   expect_error(s$skewness())

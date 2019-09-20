@@ -67,16 +67,15 @@ ChiSquaredNoncentral$set("public", "skewness", function(){
 ChiSquaredNoncentral$set("public", "kurtosis", function(excess = TRUE){
   df <- self$getParameterValue("df")
   ncp <- self$getParameterValue("location")
+  if (df + ncp == 0)
+    return(NaN)
+  else
+    kur = (12*(df + 4*ncp))/((df + 2*ncp)^2)
+
   if(excess)
-    if (df + ncp == 0)
-      return(NaN)
+    return(kur)
   else
-    return((12*(df + 4*ncp))/((df + 2*ncp)^2))
-  else
-    if (df + ncp == 0)
-      return(NaN)
-  else
-    return((12*(df + 4*ncp))/((df + 2*ncp)^2) + 3)
+    return(kur + 3)
 })
 ChiSquaredNoncentral$set("public", "mgf", function(t){
   if(t < 0.5){

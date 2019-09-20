@@ -30,7 +30,9 @@ test_that("properties & traits", {
 f <- FDistributionNoncentral$new(df1 = 1, df2 = 5, location = 2)
 test_that("statistics", {
   expect_equal(f$mean(), 5)
+  expect_equal(FDistributionNoncentral$new(df2 = 2)$mean(), NaN)
   expect_equal(f$variance(), 400/3)
+  expect_equal(FDistributionNoncentral$new(df2 = 2)$variance(), NaN)
   expect_error(f$skewness())
   expect_error(f$kurtosis())
   expect_error(f$entropy())
