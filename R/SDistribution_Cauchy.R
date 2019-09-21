@@ -3,6 +3,7 @@
 # Cauchy Distribution Documentation
 #-------------------------------------------------------------
 #' @name Cauchy
+#' @author Chijing Zeng
 #' @template SDist
 #' @templateVar ClassName Cauchy
 #' @templateVar DistName Cauchy

@@ -144,3 +144,6 @@ Michael P. McLaughlin.
 \seealso{
 \code{\link{listDistributions}} for all available distributions. \code{\link{Normal}} for the Normal distribution, \code{\link{StudentTNoncentral}} for the noncentral Student's T distribution.
 }
+\author{
+Chijing Zeng
+}
