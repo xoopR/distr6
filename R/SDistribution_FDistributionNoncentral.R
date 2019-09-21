@@ -11,7 +11,7 @@
 #' @templateVar params two degrees of freedom parameters, \eqn{\mu, \nu}, and location, \eqn{\lambda},
 #' @templateVar pdfpmf pdf
 #' @templateVar pdfpmfeq \deqn{f(x) = \sum_{r=0}^{\infty} ((exp(-\lambda/2)(\lambda/2)^r)/(B(\nu/2, \mu/2+r)r!))(\mu/\nu)^{\mu/2+r}(\nu/(\nu+x\mu))^{(\mu+\nu)/2+r}x^{\mu/2-1+r}}
-#' @templateVar paramsupport \eqn{\mu, \nu > 0, \lambda \geq 0}
+#' @templateVar paramsupport \eqn{\mu, \nu > 0, \lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedVars \code{skewness}, \code{kurtosis}, \code{entropy}, \code{mode}, \code{mgf} and \code{cf}
 #' @templateVar constructor df1 = 1, df2 = 1, location = 0

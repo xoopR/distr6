@@ -10,8 +10,8 @@
 #' @templateVar uses to model the sum of independent squared Normal distributions and for confidence intervals
 #' @templateVar params degrees of freedom, \eqn{\nu}, and location, \eqn{\lambda},
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) dchisq(x, \nu + 2r)}
-#' @templateVar paramsupport \eqn{\nu \geq 0}, \eqn{\lambda \geq 0}
+#' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{(\nu+2r)/2-1}exp(-x/2))/(2^{(\nu+2r)/2}\Gamma((\nu+2r)/2))}
+#' @templateVar paramsupport \eqn{\nu \ge 0}, \eqn{\lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar constructor df = 1, location = 0
 #' @templateVar arg1 \code{df} \tab numeric \tab  degrees of freedom. \cr

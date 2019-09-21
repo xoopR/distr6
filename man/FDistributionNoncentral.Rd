@@ -8,10 +8,10 @@ Returns an R6 object inheriting from class SDistribution.
 }
 \description{
 Mathematical and statistical functions for the Noncentral F distribution, which
-is commonly used in ANOVA testing and is the ratio of scaled Chi-Squared distributions..
+is commonly used in ANOVA testing and is the ratio of scaled Chi-Squared distributions.
 }
 \details{
-The Noncentral F distribution parameterised with  two degrees of freedom parameters, \eqn{\mu, \nu}, and location, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = \sum_{r=0}^{\infty} ((exp(-\lambda/2)(\lambda/2)^r)/(B(\nu/2, \mu/2+r)r!))(\mu/\nu)^{\mu/2+r}(\nu/(\nu+x\mu))^{(\mu+\nu)/2+r}x^{\mu/2-1+r}} for \eqn{\mu, \nu > 0, \lambda \geq 0}.
+The Noncentral F distribution parameterised with  two degrees of freedom parameters, \eqn{\mu, \nu}, and location, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = \sum_{r=0}^{\infty} ((exp(-\lambda/2)(\lambda/2)^r)/(B(\nu/2, \mu/2+r)r!))(\mu/\nu)^{\mu/2+r}(\nu/(\nu+x\mu))^{(\mu+\nu)/2+r}x^{\mu/2-1+r}} for \eqn{\mu, \nu > 0, \lambda \ge 0}.
 
 The distribution is supported on the Positive Reals.
 
