@@ -41,7 +41,13 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
     if(dist$.__enclos_env__$private$.isCdf){
         cdf <- function(x1){}
         body(cdf) <- substitute({
-            self$wrappedModels()[[1]]$cdf((x1 - b)/a)/a
+            if(a>0){
+                self$wrappedModels()[[1]]$cdf((x1 - b)/a)
+            }else if(a<0){
+                1-self$wrappedModels()[[1]]$cdf((x1 - b)/a)
+            }else{
+                self$wrappedModels()[[1]]$cdf(b)
+                }
         }, list(name = short_name))
     } else
         cdf <- NULL
