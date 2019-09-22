@@ -51,8 +51,6 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
             }else{
                 self$wrappedModels()[[1]]$cdf(b)
                 }
-
-            self$wrappedModels()[[1]]$cdf((x1 - b)/a)
         }, list(name = short_name))
     } else
         cdf <- NULL
