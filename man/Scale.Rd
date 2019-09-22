@@ -15,26 +15,29 @@ STILL IN DEVELOPMENT. Results are likely sub-optimal.
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{dist} \tab distribution \tab Distribution to scale. \cr
-\code{mean} \tab numeric \tab Desired mean after distribution shift. \cr
-\code{sd} \tab numeric \tab Desired standard deviation after distribution scale.
+\code{mean} \tab numeric \tab Desired mean after distribution scale. \cr
+\code{sd} \tab numeric \tab Desired standard deviation after distribution scale.\cr
+\code{var}\tab numeric \tab Desired variance after distribution scale.\cr
 }
 }
 
-\section{Getters}{
+\section{getParameterValue}{
 
 \tabular{lll}{
 \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
-\code{getScaleMean()} \tab numeric \tab Return mean of scaled distribution. \cr
-\code{getScaleSd()} \tab numeric \tab Return standard deviation of scaled distribution. \cr
+\code{getParameterValue("scaledmean")} \tab numeric \tab Return mean of scaled distribution. \cr
+\code{getParameterValue("scaledsd")} \tab numeric \tab Return standard deviation of scaled distribution.\cr
+\code{getParameterValue("scaledvar")} \tab numeric \tab Return variance of scaled distribution.\cr
 }
 }
 
-\section{Setters}{
+\section{setParameterValue}{
 
 \tabular{lll}{
 \strong{Method} \tab \strong{Input Type} \tab \strong{Details} \cr
-\code{setScaleMean(mean)} \tab numeric \tab Set mean to scale distribution to. \cr
-\code{setScaleSd(sd)} \tab numeric \tab Set standard deviation to scale distribution to. \cr
+\code{setParameterValue(scaledmean=value)} \tab numeric \tab Set the mean of scale distribution to value. \cr
+\code{setParameterValue(scaledsd=value))} \tab numeric \tab Set the standard deviation of scale distribution to a value. \cr
+\code{setParameterValue(scaledvar=value))} \tab numeric \tab Set the variance of scale distribution to a value. \cr
 }
 }
 
