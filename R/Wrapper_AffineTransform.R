@@ -33,7 +33,7 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
                                                  updateFunc = list(NA, NA),
                                                  description = list("a","b"))
 
-    if(dist$.__enclos_env__$private$.isPdf){
+    if(dist$isPdf){
         pdf <- function(x1){}
         body(pdf) <- substitute({
             self$wrappedModels()[[1]]$pdf((x1 - b)/a)/abs(a)
@@ -41,7 +41,7 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
     } else
         pdf <- NULL
 
-    if(dist$.__enclos_env__$private$.isCdf){
+    if(dist$isCdf){
         cdf <- function(x1){}
         body(cdf) <- substitute({
             if(a>0){
