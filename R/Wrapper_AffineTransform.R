@@ -59,8 +59,8 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
     short_name = paste0("AffineTransformed",short_name)
 
     super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
-                     short_name = short_name, type = dist$type(),
-                     support = dist$type(),...)
+                     short_name = short_name, type = Reals$new(),
+                     support = Reals$new(),...)
 }) # IN PROGRESS
 
 AffineTransform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
