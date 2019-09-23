@@ -1169,7 +1169,6 @@ Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
 #' @return Returns \code{TRUE} if an expression for the pdf is defined for the distribution, \code{FALSE}
 #' otherwise.
 #' @seealso \code{\link{isCdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
-#' @export
 NULL
 Distribution$set("active","isPdf",function() return(private$.isPdf))
 #' @name isCdf
@@ -1180,7 +1179,6 @@ Distribution$set("active","isPdf",function() return(private$.isPdf))
 #' @return Returns \code{TRUE} if an expression for the Cdf is defined for the distribution, \code{FALSE}
 #' otherwise.
 #' @seealso \code{\link{isPdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
-#' @export
 NULL
 Distribution$set("active","isCdf",function() return(private$.isCdf))
 #' @name isQuantile
@@ -1191,7 +1189,6 @@ Distribution$set("active","isCdf",function() return(private$.isCdf))
 #' @return Returns \code{TRUE} if an expression for the Quantile is defined for the distribution, \code{FALSE}
 #' otherwise.
 #' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isRand}}
-#' @export
 NULL
 Distribution$set("active","isQuantile",function() return(private$.isQuantile))
 #' @name isRand
@@ -1202,7 +1199,6 @@ Distribution$set("active","isQuantile",function() return(private$.isQuantile))
 #' @return Returns \code{TRUE} if an expression for the Rand is defined for the distribution, \code{FALSE}
 #' otherwise.
 #' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isQuantile}}
-#' @export
 NULL
 Distribution$set("active","isRand",function() return(private$.isRand))
 
