@@ -102,11 +102,20 @@
 #'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint()} \tab \code{\link{strprint}} \cr
-#'   \code{print()} \tab \code{\link[base]{print}} \cr
+#'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+#'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
 #'   \code{plot()} \tab Coming Soon. \cr
 #'   \code{qqplot()} \tab Coming Soon. \cr
+#'   }
+#'
+#' @section Active Bindings:
+#'  \tabular{ll}{
+#'   \strong{Active Binding} \tab \strong{Link} \cr
+#'   \code{isPdf} \tab \code{\link{isPdf}} \cr
+#'   \code{isCdf} \tab \code{\link{isCdf}} \cr
+#'   \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+#'   \code{isRand} \tab \code{\link{isRand}} \cr
 #'   }
 #'
 #'
@@ -318,24 +327,35 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #' parse R6 objects into data-frames, see examples.
 #'
 #' @param object R6 object
-#' @usage strprint(object)
+#' @param n Number of parameters to display before & after ellipsis
+#' @usage strprint(object, n = 2)
 #'
 #' @return String representation of the distribution.
 #'
+#' @examples
+#' Triangular$new()$strprint()
+#' Triangular$new()$strprint(1)
+#'
 #' @export
-Distribution$set("public","strprint",function(){
+Distribution$set("public","strprint",function(n = 2){
   if(length(private$.parameters)!=0){
     settable = self$parameters()$as.data.table()$settable
     id = self$parameters()$as.data.table()[settable, "id"]
     value = self$parameters()$as.data.table()[settable, "value"]
-    string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+    lng <- length(id)
+    if(lng >(2*n))
+      string = paste0(self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
+                      ",...,", paste(id[(lng-n+1):lng], value[(lng-n+1):lng], sep = " = ", collapse = ", "),")")
+    else
+      string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+
   } else {
     string = paste0(self$short_name)
   }
   return(string)
 })
-Distribution$set("public","print",function(...){
-  cat(self$strprint())
+Distribution$set("public","print",function(n = 2, ...){
+  cat(self$strprint(n = n),"\n")
   invisible(self)
 })
 
@@ -364,7 +384,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
                       self$parameters()$as.data.table()[settable, "value"],
                       sep = " = ", collapse = ", "))
     } else
-      cat(self$name,"\n")
+      cat(self$description)
 
 
     a_exp = suppressMessages(try(self$mean(), silent = T))
@@ -374,7 +394,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
 
     if(!inherits(a_exp,"try-error") | !inherits(a_var,"try-error") |
        !inherits(a_skew,"try-error") | !inherits(a_kurt,"try-error"))
-      cat("\n\n ",crayon::underline("Quick Statistics"),"\n")
+      cat("\n\n ", "Quick Statistics","\n")
 
     if(!inherits(a_exp,"try-error")){
       cat("\tMean:")
@@ -423,6 +443,8 @@ Distribution$set("public","summary",function(full = TRUE,...){
     cat("\nScientific Type:",self$type()$getSymbol(),"\t See $traits() for more")
     cat("\nSupport:",self$support()$getSymbol(),"\t See $properties() for more")
   }
+  cat("\n")
+  invisible(self)
 })
 
 Distribution$set("public","plot",function(){}) # TO DO
@@ -719,7 +741,7 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 #' Additional named arguments can be passed, which are required for composite distributions such as
 #' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
 #'
-#' @return Probability density funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' @return Probability density function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
 #'
 #' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
@@ -788,7 +810,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 #' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
-#' @return Cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' @return Cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
 #'
 #' @export
@@ -799,10 +821,18 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
+    if(self$type()$class() == "integer")
+       x1 <- floor(x1)
     cdf = numeric(length(x1))
     cdf[x1 > self$sup()] = 1
-    if(any(self$liesInSupport(x1, all = F)))
-      cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
+
+    if(getR6Class(self) == "Empirical"){
+      if(any(x1 >= self$inf()) | any(x1 <= self$sup()))
+        cdf[x1 >= self$inf() | x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() | x1 <= self$sup()])
+    } else {
+      if(any(self$liesInSupport(x1, all = F)))
+        cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
+    }
   } else {
       cdf = private$.cdf(x1, ...)
   }
@@ -853,12 +883,12 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' calculation for the quantile with warning.
 #'
 #' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
+#' \code{\link{ProductDistribution}} and \code{\link{VectorDistribution}}.
 #'
 #' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
 #' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
-#' @return Inverse cumulative distribution funciton evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' @return Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
 #'
 #' @export
@@ -884,7 +914,6 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
       quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
   } else{
     p = c(list(p), list(...))
-
     if(log.p)
       p = lapply(p, exp)
 
@@ -1128,6 +1157,54 @@ NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
   return(self$type()$liesInSetInterval(x, all, bound))
 })
+
+#-------------------------------------------------------------
+# Distribution Active Bindings
+#-------------------------------------------------------------
+#' @name isPdf
+#' @rdname isPdf
+#' @title Test the Distribution Pdf Exist?
+#' @description Returns whether or not the distribution has a defined expression for the pdf.
+#' @section R6 Usage: $isPdf
+#' @return Returns \code{TRUE} if an expression for the pdf is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isCdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
+#' @export
+NULL
+Distribution$set("active","isPdf",function() return(private$.isPdf))
+#' @name isCdf
+#' @rdname isCdf
+#' @title Test the Distribution Cdf Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Cdf.
+#' @section R6 Usage: $isCdf
+#' @return Returns \code{TRUE} if an expression for the Cdf is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
+#' @export
+NULL
+Distribution$set("active","isCdf",function() return(private$.isCdf))
+#' @name isQuantile
+#' @rdname isQuantile
+#' @title Test the Distribution Quantile Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Quantile.
+#' @section R6 Usage: $isQuantile
+#' @return Returns \code{TRUE} if an expression for the Quantile is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isRand}}
+#' @export
+NULL
+Distribution$set("active","isQuantile",function() return(private$.isQuantile))
+#' @name isRand
+#' @rdname isRand
+#' @title Test the Distribution Rand Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Rand.
+#' @section R6 Usage: $isRand
+#' @return Returns \code{TRUE} if an expression for the Rand is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isQuantile}}
+#' @export
+NULL
+Distribution$set("active","isRand",function() return(private$.isRand))
 
 #-------------------------------------------------------------
 # Distribution Public Variables
