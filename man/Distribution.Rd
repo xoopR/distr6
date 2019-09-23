@@ -120,6 +120,17 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   }
 }
 
+\section{Active Bindings}{
+
+ \tabular{ll}{
+  \strong{Active Binding} \tab \strong{Link} \cr
+  \code{isPdf} \tab \code{\link{isPdf}} \cr
+  \code{isCdf} \tab \code{\link{isCdf}} \cr
+  \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+  \code{isRand} \tab \code{\link{isRand}} \cr
+  }
+}
+
 \seealso{
 See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 Intervals. See \code{\link{ParameterSet}} for parameter details. See

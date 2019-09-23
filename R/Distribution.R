@@ -109,6 +109,15 @@
 #'   \code{qqplot()} \tab Coming Soon. \cr
 #'   }
 #'
+#' @section Active Bindings:
+#'  \tabular{ll}{
+#'   \strong{Active Binding} \tab \strong{Link} \cr
+#'   \code{isPdf} \tab \code{\link{isPdf}} \cr
+#'   \code{isCdf} \tab \code{\link{isCdf}} \cr
+#'   \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+#'   \code{isRand} \tab \code{\link{isRand}} \cr
+#'   }
+#'
 #'
 #' @seealso See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 #' Intervals. See \code{\link{ParameterSet}} for parameter details. See
@@ -1148,6 +1157,54 @@ NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
   return(self$type()$liesInSetInterval(x, all, bound))
 })
+
+#-------------------------------------------------------------
+# Distribution Active Bindings
+#-------------------------------------------------------------
+#' @name isPdf
+#' @rdname isPdf
+#' @title Test the Distribution Pdf Exist?
+#' @description Returns whether or not the distribution has a defined expression for the pdf.
+#' @section R6 Usage: $isPdf
+#' @return Returns \code{TRUE} if an expression for the pdf is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isCdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
+#' @export
+NULL
+Distribution$set("active","isPdf",function() return(private$.isPdf))
+#' @name isCdf
+#' @rdname isCdf
+#' @title Test the Distribution Cdf Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Cdf.
+#' @section R6 Usage: $isCdf
+#' @return Returns \code{TRUE} if an expression for the Cdf is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
+#' @export
+NULL
+Distribution$set("active","isCdf",function() return(private$.isCdf))
+#' @name isQuantile
+#' @rdname isQuantile
+#' @title Test the Distribution Quantile Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Quantile.
+#' @section R6 Usage: $isQuantile
+#' @return Returns \code{TRUE} if an expression for the Quantile is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isRand}}
+#' @export
+NULL
+Distribution$set("active","isQuantile",function() return(private$.isQuantile))
+#' @name isRand
+#' @rdname isRand
+#' @title Test the Distribution Rand Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Rand.
+#' @section R6 Usage: $isRand
+#' @return Returns \code{TRUE} if an expression for the Rand is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isQuantile}}
+#' @export
+NULL
+Distribution$set("active","isRand",function() return(private$.isRand))
 
 #-------------------------------------------------------------
 # Distribution Public Variables
