@@ -54,7 +54,7 @@ Empirical$set("public","mean",function(){
   return(mean(self$support()$elements()))
 })
 Empirical$set("public","variance",function(){
-  return(var(self$support()$elements()))
+  return(sum((self$support()$elements() - self$mean())^2)/private$.total)
 })
 
 Empirical$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){

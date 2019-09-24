@@ -20,7 +20,7 @@ test_that("properties & traits",{
 
 test_that("statistics",{
   expect_equal(emp$mean(), mean(1:10))
-  expect_equal(emp$variance(), var(1:10))
+  expect_equal(emp$variance(), var(1:10)*9/10)
   expect_error(emp$skewness())
   expect_error(emp$kurtosis())
   expect_error(emp$entropy())
