@@ -140,6 +140,7 @@ Collate:
     'SDistribution_Uniform.R'
     'SDistribution_Wald.R'
     'SDistribution_Weibull.R'
+    'SDistribution_WeightedDiscrete.R'
     'SetInterval_Set.R'
     'Wrapper.R'
     'Wrapper_ArrayDistribution.R'

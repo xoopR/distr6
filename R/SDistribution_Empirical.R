@@ -16,7 +16,7 @@
 #' @templateVar constructor samples
 #' @templateVar arg1 \code{samples} \tab numeric \tab vector of observed samples. \cr
 #' @templateVar constructorDets a vector of elements for the support set.
-#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function.
+#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function and \code{\link{WeightedDiscrete}} for the closely related WeightedDiscrete distribution.
 #'
 #' @examples
 #' x = Empirical$new(stats::runif(1000)*10)

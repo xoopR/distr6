@@ -9,6 +9,7 @@
 ### Added Functions and Classes
 
 - Added non-central F, T, Chi-Squared, and Beta distributions
+- Added WeightedDiscrete distribution. This allows users to supply a data.frame of samples and pdf/cdfs for more efficient usage with empirical discrete estimators (e.g. Kaplan-Meier)
 
 ### Deprecated Functions
 

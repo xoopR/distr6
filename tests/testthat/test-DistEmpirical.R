@@ -2,12 +2,27 @@ library(testthat)
 
 context("Empirical distribution")
 
-test_that("constructor",{
+test_that("samples constructor",{
   expect_silent(Empirical$new(1:100))
   expect_error(Empirical$new(1,2,3))
   expect_error(Empirical$new())
   expect_null(Empirical$new(1:10)$getParameterValue(1))
   expect_message(expect_null(Empirical$new(1:10)$setParameterValue(1)))
+})
+
+test_that("sample.frame constructor",{
+  expect_silent(Empirical$new(sample.frame = data.frame(samples = 1, pdf = 1, cdf = 1)))
+  expect_error(Empirical$new(sample.frame = data.frame(samples = 1, pdf = 2, cdf = 1)))
+  expect_error(Empirical$new(sample.frame = data.frame(samples = 1, pdf = 1, cdfs = 1)))
+  expect_error(Empirical$new(sample.frame = data.frame(samples = 1)))
+  expect_error(Empirical$new(sample.frame = data.frame(sample = 1)))
+})
+
+test_that("equivalent constructors",{
+  expect_equal(Empirical$new(1)$pdf(0:2),
+               Empirical$new(sample.frame = data.frame(samples = 1, pdf = 1, cdf = 1))$pdf(0:2))
+  expect_equal(Empirical$new(c(1,2,3,2,2))$pdf(1:3),
+               Empirical$new(sample.frame = data.frame(samples = 1:3, pdf = c(1/5,3/5,1/5)))$pdf(1:3))
 })
 
 
