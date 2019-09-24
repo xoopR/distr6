@@ -77,7 +77,7 @@ Beta$set("public","skewness",function(){
 Beta$set("public","kurtosis",function(excess = TRUE){
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-  
+
   ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-(shape1*shape2*(shape1+shape2+2))}/
     (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
   if (excess)
@@ -126,3 +126,9 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
 
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Beta", ClassName = "Beta",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

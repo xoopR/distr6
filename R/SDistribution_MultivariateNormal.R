@@ -177,3 +177,9 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
                    variateForm = "multivariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "MultiNorm", ClassName = "MultivariateNormal",
+                                                     Type = "\u211D^K", ValueSupport = "continuous",
+                                                     VariateForm = "multivariate",
+                                                     Package = "distr6"))

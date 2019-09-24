@@ -53,6 +53,7 @@ test_that("no parameters",{
 
 
 test_that("verbose ps",{
-  expect_message(lapply(listDistributions(simplify = T)[listDistributions(simplify = T)!="Empirical"],
+  expect_message(lapply(listDistributions(simplify = T)[listDistributions(simplify = T)!="Empirical" &
+                                                          listDistributions(simplify = T)!="WeightedDiscrete"],
                         function(x) get(x)$new(verbose = T)))
 })

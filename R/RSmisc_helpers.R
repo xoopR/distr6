@@ -1,3 +1,5 @@
+#' @include distr6_globals.R
+
 assertThat <- function(x, cond, errormsg){
   if(cond)
     invisible(x)

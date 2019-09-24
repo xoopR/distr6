@@ -132,3 +132,9 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Lap", ClassName = "Laplace",
+                                                     Type = "\u211D", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))

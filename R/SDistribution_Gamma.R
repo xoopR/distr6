@@ -127,12 +127,8 @@ Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean 
   invisible(self)
 })
 
-
-
-
-
-
-
-
-
-
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Gamma", ClassName = "Gamma",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

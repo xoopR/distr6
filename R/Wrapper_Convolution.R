@@ -30,6 +30,8 @@
 #' @export
 NULL
 Convolution <- R6::R6Class("Convolution", inherit = DistributionWrapper, lock_objects = FALSE)
+.distr6$wrappers <- append(.distr6$wrappers, list(Convolution = Convolution))
+
 Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
                                                type = NULL){
   distlist = list(dist1$clone(), dist2$clone())

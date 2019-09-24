@@ -10,22 +10,6 @@ test_that("samples constructor",{
   expect_message(expect_null(Empirical$new(1:10)$setParameterValue(1)))
 })
 
-test_that("sample.frame constructor",{
-  expect_silent(Empirical$new(sample.frame = data.frame(samples = 1, pdf = 1, cdf = 1)))
-  expect_error(Empirical$new(sample.frame = data.frame(samples = 1, pdf = 2, cdf = 1)))
-  expect_error(Empirical$new(sample.frame = data.frame(samples = 1, pdf = 1, cdfs = 1)))
-  expect_error(Empirical$new(sample.frame = data.frame(samples = 1)))
-  expect_error(Empirical$new(sample.frame = data.frame(sample = 1)))
-})
-
-test_that("equivalent constructors",{
-  expect_equal(Empirical$new(1)$pdf(0:2),
-               Empirical$new(sample.frame = data.frame(samples = 1, pdf = 1, cdf = 1))$pdf(0:2))
-  expect_equal(Empirical$new(c(1,2,3,2,2))$pdf(1:3),
-               Empirical$new(sample.frame = data.frame(samples = 1:3, pdf = c(1/5,3/5,1/5)))$pdf(1:3))
-})
-
-
 emp = Empirical$new(1:10)
 test_that("properties & traits",{
   expect_equal(emp$valueSupport(), "discrete")

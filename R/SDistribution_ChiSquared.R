@@ -101,20 +101,20 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
 })
 
 ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
-  
+
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(df = df)
-  
+
   pdf <- function(x1) dchisq(x1, self$getParameterValue("df"))
   cdf <- function(x1) pchisq(x1, self$getParameterValue("df"))
   quantile <- function(p) qchisq(p, self$getParameterValue("df"))
   rand <- function(n) rchisq(n, self$getParameterValue("df"))
-  
+
   if(df == 1)
     support <- PosReals$new(zero = F)
   else
     support <- PosReals$new(zero = T)
-  
+
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = support,
                    symmetric  = FALSE,type = PosReals$new(zero = TRUE),
@@ -122,3 +122,9 @@ ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "ChiSq", ClassName = "ChiSquared",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

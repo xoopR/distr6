@@ -121,3 +121,9 @@ StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose =
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "T", ClassName = "StudentT",
+                                                     Type = "\u211D", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

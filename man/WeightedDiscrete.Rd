@@ -8,7 +8,7 @@ Returns an R6 object inheriting from class SDistribution.
 }
 \description{
 Mathematical and statistical functions for the WeightedDiscrete distribution, which
-is commonly used in empriical estimators such as Kaplan-Meier..
+is commonly used in empirical estimators such as Kaplan-Meier.
 }
 \details{
 The WeightedDiscrete distribution   is defined by the pmf, \deqn{f(x_i) = p_i} for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
@@ -23,17 +23,17 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 
 
 
-Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the samples and the pdf as the probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
+Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the x values and the pdf as the probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
 }
 \section{Constructor}{
- WeightedDiscrete$new(data.frame, decorators = NULL, verbose = FALSE)
+ WeightedDiscrete$new(data, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-  \code{data.frame} \tab data.frame \tab matrix-style object of observations and probabilities. See details. \cr
+  \code{data} \tab data.frame \tab matrix-style object of observations and probabilities. See details. \cr
   
   
   
@@ -128,8 +128,8 @@ Sampling from this distribution is performed with the \code{\link[base]{sample}}
 }
 
 \examples{
-x = WeightedDiscrete$new(data.frame = data.frame(samples = 1:3, pdf = c(1/5, 3/5, 1/5)))
-WeightedDiscrete$new(data.frame = data.frame(samples = 1:3, cdf = c(1/5, 4/5, 1))) # equivalently
+x = WeightedDiscrete$new(data = data.frame(x = 1:3, pdf = c(1/5, 3/5, 1/5)))
+WeightedDiscrete$new(data = data.frame(x = 1:3, cdf = c(1/5, 4/5, 1))) # equivalently
 
 # d/p/q/r
 x$pdf(1:5)

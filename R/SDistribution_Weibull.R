@@ -121,3 +121,9 @@ Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NUL
 
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Weibull", ClassName = "Weibull",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

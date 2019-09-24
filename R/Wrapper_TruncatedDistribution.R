@@ -40,6 +40,8 @@
 #' @export
 NULL
 TruncatedDistribution <- R6::R6Class("TruncatedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+.distr6$wrappers <- append(.distr6$wrappers, list(TruncatedDistribution = TruncatedDistribution))
+
 TruncatedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){
 
   assertDistribution(distribution)

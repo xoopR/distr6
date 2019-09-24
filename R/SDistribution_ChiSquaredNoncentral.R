@@ -125,3 +125,10 @@ ChiSquaredNoncentral$set("public","initialize",function(df = 1, location = 0, de
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "ChiSqNC", ClassName = "ChiSquaredNoncentral",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))
+

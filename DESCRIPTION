@@ -74,6 +74,7 @@ VignetteBuilder:
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
+    'distr6_globals.R'
     'RSmisc_helpers.R'
     'SetInterval_operations.R'
     'Distribution.R'
@@ -157,7 +158,6 @@ Collate:
     'distr6-deprecated.R'
     'distr6.R'
     'distr6.news.R'
-    'distr6_globals.R'
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'

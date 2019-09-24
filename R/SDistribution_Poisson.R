@@ -94,11 +94,16 @@ Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose 
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Naturals$new(),
-
-                   symmetric = FALSE,type = PosIntegers$new(zero = T),
+                   symmetric = FALSE,type = Naturals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")
 
 
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Pois", ClassName = "Poisson",
+                                                     Type = "\u21150", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

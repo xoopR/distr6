@@ -99,3 +99,10 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Emp", ClassName = "Empirical",
+                                                     Type = "\u211D", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))
+

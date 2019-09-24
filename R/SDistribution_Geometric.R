@@ -147,8 +147,6 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = 
         description = "Geometric (Trials) Probability Distribution."
     }
 
-
-
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = support,
                      symmetric  = FALSE, description = description,type = Naturals$new(),
@@ -159,4 +157,8 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = 
 
 })
 
-
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Geom", ClassName = "Geometric",
+                                                     Type = "\u21150", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

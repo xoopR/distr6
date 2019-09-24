@@ -78,3 +78,10 @@ BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, loca
 
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "BetaNC", ClassName = "BetaNoncentral",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))
+

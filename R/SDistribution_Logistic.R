@@ -110,3 +110,9 @@ Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Logis", ClassName = "Logistic",
+                                                     Type = "\u211D", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))
