@@ -11,7 +11,8 @@
 #'
 #' @section Constructor: Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
 #' symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-#' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
+#' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL,
+#' suppressMoments = TRUE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -29,7 +30,8 @@
 #' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 #' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 #' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-#' \code{description} \tab character \tab short description of distribution. \cr
+#' \code{description} \tab character \tab Short description of distribution. \cr
+#' \code{suppressMoments} \tab character \tab See Details. \cr
 #' }
 #'
 #' @section Constructor Details:
@@ -52,6 +54,10 @@
 #'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
 #'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
 #'   If not given these are automatically filled from \code{type} and \code{support}.
+#'
+#'   \code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
+#'   calculated in construction. This has the benefit of drastically decreasing computational time but
+#'   at the cost of losing these in the distribution properties.
 #'
 #' @section Public Variables:
 #'  \tabular{ll}{
@@ -141,10 +147,14 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       symmetric = FALSE,
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                       parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                      description=NULL
+                      description=NULL, suppressMoments = FALSE, .suppressChecks = FALSE
                       ){
 
-  if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+  if(.suppressChecks){
+    self$name <- name
+    self$short_name <- short_name
+    private$.parameters <- parameters$clone(deep = TRUE)
+  } else if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
     if(is.null(pdf) & is.null(cdf))
       stop("One of pdf or cdf must be provided.")
@@ -280,7 +290,8 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   if(!is.null(rand)){
       private$.rand <- rand
       private$.isRand <- TRUE
-    }
+  }
+
   if(!is.null(support)) private$.properties$support <- support
   if(!is.null(type)) private$.traits$type <- type
   if(!is.null(valueSupport)) private$.traits$valueSupport <- valueSupport
@@ -293,18 +304,20 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   if(!is.null(decorators))
     suppressMessages(decorate(self, decorators))
 
-  # Update skewness and kurtosis
-  x = try(self$kurtosis(excess = TRUE), silent = TRUE)
-  if(class(x) == "try-error")
-    private$.properties$kurtosis <- NULL
-  else
-    private$.properties$kurtosis <- exkurtosisType(x)
+  if(!suppressMoments){
+    # Update skewness and kurtosis
+    x = try(self$kurtosis(excess = TRUE), silent = TRUE)
+    if(class(x) == "try-error")
+      private$.properties$kurtosis <- NULL
+    else
+      private$.properties$kurtosis <- exkurtosisType(x)
 
-  x = try(self$skewness(), silent = TRUE)
-  if(class(x) == "try-error")
-    private$.properties$skewness <- NULL
-  else
-    private$.properties$skewness <- skewType(x)
+    x = try(self$skewness(), silent = TRUE)
+    if(class(x) == "try-error")
+      private$.properties$skewness <- NULL
+    else
+      private$.properties$skewness <- skewType(x)
+  }
 
   # private$.setWorkingSupport()
   lockBinding("name",self)
@@ -312,7 +325,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   lockBinding("description",self)
   lockBinding("traits",self)
   lockBinding("parameters",self)
-
   invisible(self)
 })
 
@@ -828,7 +840,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 
     if(getR6Class(self) %in% c("Empirical","WeightedDiscrete")){
       if(any(x1 >= self$inf() & x1 <= self$sup()))
-        cdf[x1 >= self$inf() | x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() | x1 <= self$sup()])
+        cdf[x1 >= self$inf() & x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() & x1 <= self$sup()])
     } else {
       if(any(self$liesInSupport(x1, all = F)))
         cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])

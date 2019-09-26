@@ -17,6 +17,7 @@
 
 - Added the common survival parameterisation of Weibull distribution
 - Updated the listX functions to make them quicker and functional when distr6 is not attached
+- Added `suppressMoments` argument to `Distribution` constructor to allow for faster construction
 
 ## Patches
 
