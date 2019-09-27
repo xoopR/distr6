@@ -12,6 +12,29 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
 
     distlist = list(dist)
     names(distlist) = short_name
+    
+    # type setting
+    if(class(dist$support())==class(Binomial$new(prob = 0.1,size = 10)$support()) ){
+        
+        min1 = dist$support()$min()
+        max1 = dist$support()$max()
+        support1 = Set$new(min1:max1)
+        
+    }else if(class(dist$support())==class(Normal$new(mean = 2,sd=2)$support()) ){
+        
+        support1 = Reals$new()
+        
+    }else if(class(dist$support())==class(Exponential$new(0.3)$support()){
+        
+        if(b<0){
+            support1 = Reals$new()
+        }else if(b>=0){
+            support1 = PosReals$new()
+        }
+        
+    }
+    
+    if(a==0){stop("a cannot be zero",call. = TRUE)}
 
     if(is.null(a)){
         if(verbose == TRUE){
@@ -33,7 +56,7 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
                                                  updateFunc = list(NA, NA),
                                                  description = list("a","b"))
 
-    if(dist$.__enclos_env__$private$.isPdf){
+    if(dist$isPdf){
         pdf <- function(x1){}
         body(pdf) <- substitute({
             self$wrappedModels()[[1]]$pdf((x1 - b)/a)/abs(a)
@@ -41,16 +64,14 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
     } else
         pdf <- NULL
 
-    if(dist$.__enclos_env__$private$.isCdf){
+    if(dist$isCdf){
         cdf <- function(x1){}
         body(cdf) <- substitute({
             if(a>0){
                 self$wrappedModels()[[1]]$cdf((x1 - b)/a)
             }else if(a<0){
                 1-self$wrappedModels()[[1]]$cdf((x1 - b)/a)
-            }else{
-                self$wrappedModels()[[1]]$cdf(b)
-                }
+            }
         }, list(name = short_name))
     } else
         cdf <- NULL
@@ -60,7 +81,7 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
 
     super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, name = name,
                      short_name = short_name, type = Reals$new(),
-                     support = Reals$new(),...)
+                     support = support1,...)
 }) # IN PROGRESS
 
 AffineTransform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
