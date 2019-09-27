@@ -24,7 +24,7 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
         
         support1 = Reals$new()
         
-    }else if(class(dist$support())==class(Exponential$new(0.3)$support()){
+    }else if(class(dist$support())==class(Exponential$new(0.3)$support())){
         
         if(b<0){
             support1 = Reals$new()
