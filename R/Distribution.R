@@ -153,7 +153,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   if(.suppressChecks){
     self$name <- name
     self$short_name <- short_name
-    private$.parameters <- parameters$clone(deep = TRUE)
+    if(!is.null(parameters)) private$.parameters <- parameters$clone(deep = TRUE)
     if(!is.null(pdf)) formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
     if(!is.null(cdf)) formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
     if(!is.null(quantile)) formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
