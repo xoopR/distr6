@@ -14,17 +14,17 @@ AffineTransform$set("public","initialize",function(dist, a= 1,b=0,verbose=TRUE,.
     names(distlist) = short_name
     
     # type setting
-    if(class(dist$support())==class(Binomial$new(prob = 0.1,size = 10)$support()) ){
+    if(class(dist$support())[1]==class(Binomial$new(prob = 0.1,size = 10)$support())[1] ){
         
         min1 = dist$support()$min()
         max1 = dist$support()$max()
         support1 = Set$new(min1:max1)
         
-    }else if(class(dist$support())==class(Normal$new(mean = 2,sd=2)$support()) ){
+    }else if(class(dist$support())[1]==class(Normal$new(mean = 2,sd=2)$support())[1] ){
         
         support1 = Reals$new()
         
-    }else if(class(dist$support())==class(Exponential$new(0.3)$support())){
+    }else if(class(dist$support())[1]==class(Exponential$new(0.3)$support())[1]){
         
         if(b<0){
             support1 = Reals$new()
