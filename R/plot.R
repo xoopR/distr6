@@ -213,7 +213,7 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   }
 
   if("hazard" %in% fun)
-    plots$hazard = list(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "h",
+    plots$hazard = list(x = plotStructure$points, y = plotStructure$hazard, type = "h",
            main = paste(name,"Hazard"), xlab = "x", ylab = "h(x)")
 
   if(length(fun) > 1)
