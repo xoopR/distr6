@@ -98,9 +98,10 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   #######################################################################
 
   if(plot){
-    def.par <- par(no.readonly = TRUE)
-
-    par(ask = ask)
+    if(ask | arrange){
+      def.par <- par(no.readonly = TRUE)
+      par(ask = ask)
+    }
 
     if(arrange & !ask){
       data = 1:length(fun)
@@ -124,7 +125,8 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
     else if(testDiscrete(x))
       .plot_discrete(fun,plotStructure,x$strprint())
 
-    par(def.par)
+    if(ask | arrange)
+      par(def.par)
   }
 
   invisible(plotStructure)
