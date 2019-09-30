@@ -144,3 +144,6 @@ Michael P. McLaughlin.
 \seealso{
 \code{\link{listDistributions}} for all available distributions.
 }
+\author{
+Yumi Zhou
+}

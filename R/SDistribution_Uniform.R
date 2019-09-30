@@ -3,6 +3,7 @@
 # Uniform Distribution Documentation
 #-------------------------------------------------------------
 #' @name Uniform
+#' @author Yumi Zhou
 #' @template SDist
 #' @templateVar ClassName Uniform
 #' @templateVar DistName Uniform
