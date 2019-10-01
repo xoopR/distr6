@@ -84,3 +84,14 @@ Abstract class that cannot be constructed directly.
   }
 }
 
+\section{Active Bindings}{
+
+ \tabular{ll}{
+  \strong{Active Binding} \tab \strong{Link} \cr
+  \code{isPdf} \tab \code{\link{isPdf}} \cr
+  \code{isCdf} \tab \code{\link{isCdf}} \cr
+  \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+  \code{isRand} \tab \code{\link{isRand}} \cr
+  }
+}
+

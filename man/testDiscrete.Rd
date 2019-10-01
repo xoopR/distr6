@@ -6,14 +6,19 @@
 \alias{assertDiscrete}
 \title{assert/check/test/Discrete}
 \usage{
-testDiscrete(object)
+testDiscrete(object, errormsg = paste(object$short_name,
+  "is not discrete"))
 
-checkDiscrete(object)
+checkDiscrete(object, errormsg = paste(object$short_name,
+  "is not discrete"))
 
-assertDiscrete(object)
+assertDiscrete(object, errormsg = paste(object$short_name,
+  "is not discrete"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

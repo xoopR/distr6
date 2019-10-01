@@ -59,6 +59,8 @@
 #' @export
 NULL
 ProductDistribution <- R6::R6Class("ProductDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+.distr6$wrappers <- append(.distr6$wrappers, list(ProductDistribution = ProductDistribution))
+
 ProductDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,
                                                        name = NULL, short_name = NULL, description = NULL){
 

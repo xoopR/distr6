@@ -43,6 +43,8 @@
 #' @export
 NULL
 MixtureDistribution <- R6::R6Class("MixtureDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+.distr6$wrappers <- append(.distr6$wrappers, list(MixtureDistribution = MixtureDistribution))
+
 MixtureDistribution$set("public","initialize",function(distlist, weights = NULL, vectordist = NULL){
 
   name = short_name = description = NULL

@@ -16,4 +16,5 @@ README\.Rmd
 man-roxygen
 ^doc$
 ^Meta$
-cheatsheet\.pdf
+^.*\.Rproj$
+^\.Rproj\.user$

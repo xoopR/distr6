@@ -16,7 +16,7 @@
 #' @templateVar constructor samples
 #' @templateVar arg1 \code{samples} \tab numeric \tab vector of observed samples. \cr
 #' @templateVar constructorDets a vector of elements for the support set.
-#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function.
+#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function and \code{\link{WeightedDiscrete}} for the closely related WeightedDiscrete distribution.
 #'
 #' @examples
 #' x = Empirical$new(stats::runif(1000)*10)
@@ -54,7 +54,7 @@ Empirical$set("public","mean",function(){
   return(mean(self$support()$elements()))
 })
 Empirical$set("public","variance",function(){
-  return(var(self$support()$elements()))
+  return(sum((self$support()$elements() - self$mean())^2)/private$.total)
 })
 
 Empirical$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
@@ -85,7 +85,7 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
   }
   quantile <- function(p){
     p = p * private$.total
-    return(as.numeric(unlist(private$.data[findInterval(p, private$.data$cumN), "samples"])))
+    return(as.numeric(unlist(private$.data[findInterval(p, private$.data$cumN, all.inside = TRUE), "samples"])))
   }
 
   rand <- function(n){
@@ -99,3 +99,10 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Emp", ClassName = "Empirical",
+                                                     Type = "\u211D", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))
+

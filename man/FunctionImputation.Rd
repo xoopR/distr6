@@ -50,12 +50,9 @@ x = Distribution$new("Test", pdf = function(x) 1/(4-1),
 support = Interval$new(1,4),
 type = Reals$new())
 decorate(x, FunctionImputation)
-plot(x$pdf(0:5))
-plot(x$cdf(0:5))
+x$pdf(0:5)
+x$cdf(0:5)
 
-x = Distribution$new("Test", pdf = function(x) 1/(4-1),
-decorators = ExoticStatistics)
-x$cdf(1)
 }
 \seealso{
 \code{\link{decorate}}, \code{\link{listDecorators}}

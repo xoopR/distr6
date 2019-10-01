@@ -26,6 +26,7 @@
 #' Normal$new(var = 1, mean = 1)
 #' Normal$new(prec = 2, mean = 1)
 #' Normal$new(mean = 1, sd = 2)
+#'
 #' x <- Normal$new(verbose = TRUE) # Standard normal default
 #'
 #' # Update parameters

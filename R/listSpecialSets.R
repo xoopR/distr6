@@ -14,26 +14,8 @@ listSpecialSets <- function(simplify = FALSE){
   if(simplify)
     return(as.character(y))
   else{
-    symbols = do.call(rbind.data.frame,c(lapply(y, function(x){
-      x = get(x)
-      zero = "zero" %in% names(formals(PosReals$public_methods$initialize))
-      ClassName = x$classname
-      x = x$new()
-      Symbol = x$getSymbol()
-      if(zero & grepl("Pos",ClassName))
-        Infimum = "0/1"
-      else
-        Infimum = x$inf()
-      if(is.null(Infimum)) Infimum = "NULL"
-      if(zero & grepl("Neg",ClassName))
-        Supremum = "-1/0"
-      else
-        Supremum = x$sup()
-      if(is.null(Supremum)) Supremum = "NULL"
-      return(cbind(ClassName, Symbol, Infimum, Supremum))
-    }), list(stringsAsFactors = FALSE)))
-    row.names(symbols) = NULL
-
-    return(data.table::data.table(symbols))
+    return(data.table::data.table(ClassName = y, Symbol = unname(sapply(y, setSymbol)),
+                           Infimum = c("NULL","0","0/1","-Inf","0/1","-Inf","-Inf","0/1","-Inf","-Inf","0/1",rep("-Inf",3)),
+                           Supremum = c("NULL",rep("Inf",4),"-1/0","Inf","Inf","-1/0","Inf","Inf","-1/0","Inf","Inf")))
   }
 }

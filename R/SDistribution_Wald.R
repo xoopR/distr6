@@ -128,3 +128,9 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Wald", ClassName = "Wald",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))

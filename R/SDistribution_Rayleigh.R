@@ -103,3 +103,9 @@ Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Rayl", ClassName = "Rayleigh",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))

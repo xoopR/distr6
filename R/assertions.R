@@ -1,6 +1,7 @@
 #' @title assert/check/test/Distribution
 #' @description Validation checks to test if a given object is an R6 Distribution.
 #' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -20,12 +21,13 @@ assertDistribution <- function(){}
 
 makeChecks(assertionName = "Distribution",
            cond = inherits(object, "Distribution"),
-           errormsg = paste(object, "is not an R6 Distribution object"),
+           defaulterrormsg = paste(object, "is not an R6 Distribution object"),
            pos = environment())
 
 #' @title assert/check/test/DistributionList
 #' @description Validation checks to test if a given object is a list of R6 Distributions.
 #' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -45,13 +47,14 @@ assertDistributionList <- function(){}
 
 makeChecks(assertionName =  "DistributionList",
            cond = all(unlist(lapply(object, inherits,"Distribution"))),
-           errormsg = "One or more items in the list are not Distributions",
+           defaulterrormsg = "One or more items in the list are not Distributions",
            pos = environment())
 
 #' @title assert/check/test/Univariate
 #' @name testUnivariate
 #' @description Validation checks to test if Distribution is univariate.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -70,13 +73,14 @@ assertUnivariate <- function(){}
 
 makeChecks(assertionName =  "Univariate",
            cond = object[["variateForm"]]() == "univariate",
-           errormsg = paste(object$short_name,"is not univariate"),
+           defaulterrormsg = paste(object$short_name,"is not univariate"),
            pos = environment())
 
 #' @title assert/check/test/Multivariate
 #' @name testMultivariate
 #' @description Validation checks to test if Distribution is multivariate.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -95,13 +99,14 @@ assertMultivariate <- function(){}
 
 makeChecks(assertionName =  "Multivariate",
            cond = object[["variateForm"]]() == "multivariate",
-           errormsg = paste(object$short_name,"is not multivariate"),
+           defaulterrormsg = paste(object$short_name,"is not multivariate"),
            pos = environment())
 
 #' @title assert/check/test/Matrixvariate
 #' @name testMatrixvariate
 #' @description Validation checks to test if Distribution is matrixvariate.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -120,13 +125,14 @@ assertMatrixvariate <- function(){}
 
 makeChecks(assertionName =  "Matrixvariate",
            cond = object[["variateForm"]]() == "matrixvariate",
-           errormsg = paste(object$short_name,"is not matrixvariate"),
+           defaulterrormsg = paste(object$short_name,"is not matrixvariate"),
            pos = environment())
 
 #' @title assert/check/test/Continuous
 #' @name testContinuous
 #' @description Validation checks to test if Distribution is continuous.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -145,13 +151,14 @@ assertContinuous <- function(){}
 
 makeChecks(assertionName =  "Continuous",
            cond = object[["valueSupport"]]() == "continuous",
-           errormsg = paste(object$short_name,"is not continuous"),
+           defaulterrormsg = paste(object$short_name,"is not continuous"),
            pos = environment())
 
 #' @title assert/check/test/Discrete
 #' @name testDiscrete
 #' @description Validation checks to test if Distribution is discrete.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -170,13 +177,14 @@ assertDiscrete <- function(){}
 
 makeChecks(assertionName =  "Discrete",
            cond = object[["valueSupport"]]() == "discrete",
-           errormsg = paste(object$short_name,"is not discrete"),
+           defaulterrormsg = paste(object$short_name,"is not discrete"),
            pos = environment())
 
 #' @title assert/check/test/Mixture
 #' @name testMixture
 #' @description Validation checks to test if Distribution is mixture.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -195,13 +203,14 @@ assertMixture <- function(){}
 
 makeChecks(assertionName =  "Mixture",
            cond = object[["valueSupport"]]() == "mixture",
-           errormsg = paste(object$short_name,"is not mixture"),
+           defaulterrormsg = paste(object$short_name,"is not mixture"),
            pos = environment())
 
 #' @title assert/check/test/Symmetric
 #' @name testSymmetric
 #' @description Validation checks to test if Distribution is symmetric.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -220,7 +229,7 @@ assertSymmetric <- function(){}
 
 makeChecks(assertionName =  "Symmetric",
            cond = object[["symmetry"]]() == "symmetric",
-           errormsg = paste(object$short_name,"is not symmetric"),
+           defaulterrormsg = paste(object$short_name,"is not symmetric"),
            args = alist(object=),
            pos = environment())
 
@@ -228,6 +237,7 @@ makeChecks(assertionName =  "Symmetric",
 #' @name testNegativeSkew
 #' @description Validation checks to test if Distribution is negative skew.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -246,13 +256,14 @@ assertNegativeSkew <- function(){}
 
 makeChecks(assertionName =  "NegativeSkew",
            cond = object[["skewnessType"]]() == "Negative Skew",
-           errormsg = paste(object$short_name,"is not negative skew"),
+           defaulterrormsg = paste(object$short_name,"is not negative skew"),
            pos = environment())
 
 #' @title assert/check/test/PositiveSkew
 #' @name testPositiveSkew
 #' @description Validation checks to test if Distribution is positive skew.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -271,13 +282,14 @@ assertPositiveSkew <- function(){}
 
 makeChecks(assertionName =  "PositiveSkew",
            cond = object[["skewnessType"]]() == "Positive Skew",
-           errormsg = paste(object$short_name,"is not positive skew"),
+           defaulterrormsg = paste(object$short_name,"is not positive skew"),
            pos = environment())
 
 #' @title assert/check/test/NoSkew
 #' @name testNoSkew
 #' @description Validation checks to test if Distribution is no skew.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -297,13 +309,14 @@ assertNoSkew <- function(){}
 
 makeChecks(assertionName =  "NoSkew",
            cond = object[["skewnessType"]]() == "No Skew",
-           errormsg = paste(object$short_name,"is not no skew"),
+           defaulterrormsg = paste(object$short_name,"is not no skew"),
            pos = environment())
 
 #' @title assert/check/test/Platykurtic
 #' @name testPlatykurtic
 #' @description Validation checks to test if Distribution is platykurtic.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -322,13 +335,14 @@ assertPlatykurtic <- function(){}
 
 makeChecks(assertionName =  "Platykurtic",
            cond = object[["kurtosisType"]]() == "platykurtic",
-           errormsg = paste(object$short_name,"is not platykurtic"),
+           defaulterrormsg = paste(object$short_name,"is not platykurtic"),
            pos = environment())
 
 #' @title assert/check/test/Mesokurtic
 #' @name testMesokurtic
 #' @description Validation checks to test if Distribution is mesokurtic.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -347,13 +361,14 @@ assertMesokurtic <- function(){}
 
 makeChecks(assertionName =  "Mesokurtic",
            cond = object[["kurtosisType"]]() == "mesokurtic",
-           errormsg = paste(object$short_name,"is not mesokurtic"),
+           defaulterrormsg = paste(object$short_name,"is not mesokurtic"),
            pos = environment())
 
 #' @title assert/check/test/Leptokurtic
 #' @name testLeptokurtic
 #' @description Validation checks to test if Distribution is leptokurtic.
 #' @param object Distribution
+#' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
@@ -372,5 +387,5 @@ assertLeptokurtic <- function(){}
 
 makeChecks(assertionName =  "Leptokurtic",
            cond = object[["kurtosisType"]]() == "leptokurtic",
-           errormsg = paste(object$short_name,"is not leptokurtic"),
+           defaulterrormsg = paste(object$short_name,"is not leptokurtic"),
            pos = environment())

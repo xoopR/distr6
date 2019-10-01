@@ -54,3 +54,5 @@ LogisticKernel$set("public","initialize",function(decorators = NULL){
                    support = Reals$new(),  symmetric = TRUE)
   invisible(self)
 })
+
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel", Support = "\u211D"))

@@ -256,3 +256,10 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
 
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "NBinom", ClassName = "NegativeBinomial",
+                                                     Type = "\u21150", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))
+

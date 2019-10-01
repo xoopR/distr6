@@ -156,3 +156,10 @@ Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL
                    variateForm = "multivariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Diri", ClassName = "Dirichlet",
+                                                     Type = "[0,1]^K", ValueSupport = "continuous",
+                                                     VariateForm = "multivariate",
+                                                     Package = "distr6"))
+

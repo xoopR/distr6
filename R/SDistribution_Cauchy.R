@@ -3,6 +3,7 @@
 # Cauchy Distribution Documentation
 #-------------------------------------------------------------
 #' @name Cauchy
+#' @author Chijing Zeng
 #' @template SDist
 #' @templateVar ClassName Cauchy
 #' @templateVar DistName Cauchy
@@ -101,3 +102,10 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Cauchy", ClassName = "Cauchy",
+                                                     Type = "\u211D", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))
+

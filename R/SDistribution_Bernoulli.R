@@ -121,3 +121,10 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Bern", ClassName = "Bernoulli",
+                                                     Type = "\u21150", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))
+

@@ -8,19 +8,9 @@
 #' listWrappers(TRUE)
 #' @export
 listWrappers <- function(simplify = TRUE){
-  y = sapply(ls(name="package:distr6"),function(x){
-    if(inherits(get(x),"R6ClassGenerator")){
-      if(environmentName(get(x)$get_inherit()) == "DistributionWrapper_generator" |
-         environmentName(get(x)$get_inherit()) == "ProductDistribution_generator")
-        return(get(x)$classname)
-      else
-        return(FALSE)
-    } else
-      return(FALSE)
-  })
-  y = y[y!="FALSE"]
+  y = .distr6$wrappers[order(names(.distr6$wrappers))]
   if(simplify)
-    return(as.character(y))
+    return(names(y))
   else
-    return(lapply(y, get))
+    return(y)
 }

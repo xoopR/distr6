@@ -125,3 +125,10 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "DUnif", ClassName = "DiscreteUniform",
+                                                     Type = "\u2124", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))
+

@@ -148,5 +148,5 @@ McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function. \code{\link{CoreStatistics}} for numerical results.
+\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function and \code{\link{WeightedDiscrete}} for the closely related WeightedDiscrete distribution. \code{\link{CoreStatistics}} for numerical results.
 }

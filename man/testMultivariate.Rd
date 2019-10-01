@@ -6,14 +6,19 @@
 \alias{assertMultivariate}
 \title{assert/check/test/Multivariate}
 \usage{
-testMultivariate(object)
+testMultivariate(object, errormsg = paste(object$short_name,
+  "is not multivariate"))
 
-checkMultivariate(object)
+checkMultivariate(object, errormsg = paste(object$short_name,
+  "is not multivariate"))
 
-assertMultivariate(object)
+assertMultivariate(object, errormsg = paste(object$short_name,
+  "is not multivariate"))
 }
 \arguments{
 \item{object}{Distribution}
+
+\item{errormsg}{custom error message to return if assert/check fails}
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}

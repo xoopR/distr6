@@ -13,13 +13,18 @@
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedVars \code{mgf} and \code{cf}
-#' @templateVar constructor shape = 1, scale = 1
+#' @templateVar constructor shape = 1, scale = 1, altscale = NULL
 #' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
 #' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
+#' @templateVar arg3 \code{altscale} \tab numeric \tab alternative scale parameter. \cr
+#' @templateVar constructorDets \code{shape}, \code{scale}, and \code{altscale} as positive numerics.
 #' @templateVar additionalSeeAlso \code{\link{Frechet}} and \code{\link{Gumbel}} for other special cases of the generalized extreme value distribution.
 #'
 #' @examples
+#' # Different parameterisations
+#' Weibull$new(shape = 1, scale = 2)
+#' Weibull$new(shape = 2, altscale = 2)
+#'
 #' x <- Weibull$new(shape = 2, scale = 3)
 #'
 #' # Update parameters
@@ -101,13 +106,18 @@ Weibull$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$shape)) lst = c(lst, list(shape=paramlst$shape))
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale=paramlst$scale))
+  if(!is.null(paramlst$shape) & !is.null(paramlst$altscale))
+    lst = c(lst, list(scale=exp(log(paramlst$altscale)/(-paramlst$shape))))
+  if(is.null(paramlst$shape) & !is.null(paramlst$altscale))
+    lst = c(lst, list(scale=exp(log(paramlst$altscale)/(-self$getParameterValue("shape")))))
+
   return(lst)
 })
 
-Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NULL, verbose = FALSE){
+Weibull$set("public","initialize",function(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE){
 
-  private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  self$setParameterValue(shape=shape, scale = scale)
+  private$.parameters <- getParameterSet(self, shape, scale, altscale, verbose)
+  self$setParameterValue(shape = shape, scale = scale, altscale = altscale)
 
   pdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
   cdf <- function(x1) pweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
@@ -121,3 +131,9 @@ Weibull$set("public","initialize",function(shape = 1, scale= 1, decorators = NUL
 
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Weibull", ClassName = "Weibull",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

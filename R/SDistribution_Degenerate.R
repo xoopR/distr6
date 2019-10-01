@@ -103,3 +103,9 @@ Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbo
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Degen", ClassName = "Degenerate",
+                                                     Type = "\u211D", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))

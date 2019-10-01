@@ -11,7 +11,8 @@
 #'
 #' @section Constructor: Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
 #' symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-#' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
+#' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL,
+#' suppressMoments = TRUE)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -29,7 +30,8 @@
 #' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 #' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 #' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-#' \code{description} \tab character \tab short description of distribution. \cr
+#' \code{description} \tab character \tab Short description of distribution. \cr
+#' \code{suppressMoments} \tab character \tab See Details. \cr
 #' }
 #'
 #' @section Constructor Details:
@@ -52,6 +54,10 @@
 #'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
 #'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
 #'   If not given these are automatically filled from \code{type} and \code{support}.
+#'
+#'   \code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
+#'   calculated in construction. This has the benefit of drastically decreasing computational time but
+#'   at the cost of losing these in the distribution properties.
 #'
 #' @section Public Variables:
 #'  \tabular{ll}{
@@ -109,6 +115,15 @@
 #'   \code{qqplot()} \tab Coming Soon. \cr
 #'   }
 #'
+#' @section Active Bindings:
+#'  \tabular{ll}{
+#'   \strong{Active Binding} \tab \strong{Link} \cr
+#'   \code{isPdf} \tab \code{\link{isPdf}} \cr
+#'   \code{isCdf} \tab \code{\link{isCdf}} \cr
+#'   \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+#'   \code{isRand} \tab \code{\link{isRand}} \cr
+#'   }
+#'
 #'
 #' @seealso See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
 #' Intervals. See \code{\link{ParameterSet}} for parameter details. See
@@ -132,10 +147,18 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       symmetric = FALSE,
                       pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                       parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                      description=NULL
+                      description=NULL, suppressMoments = FALSE, .suppressChecks = FALSE
                       ){
 
-  if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+  if(.suppressChecks){
+    self$name <- name
+    self$short_name <- short_name
+    if(!is.null(parameters)) private$.parameters <- parameters$clone(deep = TRUE)
+    if(!is.null(pdf)) formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
+    if(!is.null(cdf)) formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
+    if(!is.null(quantile)) formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
+    if(!is.null(rand)) formals(rand) = c(formals(rand),list(self=self),alist(...=))
+  } else if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
 
     if(is.null(pdf) & is.null(cdf))
       stop("One of pdf or cdf must be provided.")
@@ -271,7 +294,8 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   if(!is.null(rand)){
       private$.rand <- rand
       private$.isRand <- TRUE
-    }
+  }
+
   if(!is.null(support)) private$.properties$support <- support
   if(!is.null(type)) private$.traits$type <- type
   if(!is.null(valueSupport)) private$.traits$valueSupport <- valueSupport
@@ -284,18 +308,20 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   if(!is.null(decorators))
     suppressMessages(decorate(self, decorators))
 
-  # Update skewness and kurtosis
-  x = try(self$kurtosis(excess = TRUE), silent = TRUE)
-  if(class(x) == "try-error")
-    private$.properties$kurtosis <- NULL
-  else
-    private$.properties$kurtosis <- exkurtosisType(x)
+  if(!suppressMoments){
+    # Update skewness and kurtosis
+    x = try(self$kurtosis(excess = TRUE), silent = TRUE)
+    if(class(x) == "try-error")
+      private$.properties$kurtosis <- NULL
+    else
+      private$.properties$kurtosis <- exkurtosisType(x)
 
-  x = try(self$skewness(), silent = TRUE)
-  if(class(x) == "try-error")
-    private$.properties$skewness <- NULL
-  else
-    private$.properties$skewness <- skewType(x)
+    x = try(self$skewness(), silent = TRUE)
+    if(class(x) == "try-error")
+      private$.properties$skewness <- NULL
+    else
+      private$.properties$skewness <- skewType(x)
+  }
 
   # private$.setWorkingSupport()
   lockBinding("name",self)
@@ -303,7 +329,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   lockBinding("description",self)
   lockBinding("traits",self)
   lockBinding("parameters",self)
-
   invisible(self)
 })
 
@@ -817,9 +842,9 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     cdf = numeric(length(x1))
     cdf[x1 > self$sup()] = 1
 
-    if(getR6Class(self) == "Empirical"){
-      if(any(x1 >= self$inf()) | any(x1 <= self$sup()))
-        cdf[x1 >= self$inf() | x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() | x1 <= self$sup()])
+    if(getR6Class(self) %in% c("Empirical","WeightedDiscrete")){
+      if(any(x1 >= self$inf() & x1 <= self$sup()))
+        cdf[x1 >= self$inf() & x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() & x1 <= self$sup()])
     } else {
       if(any(self$liesInSupport(x1, all = F)))
         cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
@@ -1148,6 +1173,50 @@ NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
   return(self$type()$liesInSetInterval(x, all, bound))
 })
+
+#-------------------------------------------------------------
+# Distribution Active Bindings
+#-------------------------------------------------------------
+#' @name isPdf
+#' @rdname isPdf
+#' @title Test the Distribution Pdf Exist?
+#' @description Returns whether or not the distribution has a defined expression for the pdf.
+#' @section R6 Usage: $isPdf
+#' @return Returns \code{TRUE} if an expression for the pdf is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isCdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
+NULL
+Distribution$set("active","isPdf",function() return(private$.isPdf))
+#' @name isCdf
+#' @rdname isCdf
+#' @title Test the Distribution Cdf Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Cdf.
+#' @section R6 Usage: $isCdf
+#' @return Returns \code{TRUE} if an expression for the Cdf is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
+NULL
+Distribution$set("active","isCdf",function() return(private$.isCdf))
+#' @name isQuantile
+#' @rdname isQuantile
+#' @title Test the Distribution Quantile Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Quantile.
+#' @section R6 Usage: $isQuantile
+#' @return Returns \code{TRUE} if an expression for the Quantile is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isRand}}
+NULL
+Distribution$set("active","isQuantile",function() return(private$.isQuantile))
+#' @name isRand
+#' @rdname isRand
+#' @title Test the Distribution Rand Exist?
+#' @description Returns whether or not the distribution has a defined expression for the Rand.
+#' @section R6 Usage: $isRand
+#' @return Returns \code{TRUE} if an expression for the Rand is defined for the distribution, \code{FALSE}
+#' otherwise.
+#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isQuantile}}
+NULL
+Distribution$set("active","isRand",function() return(private$.isRand))
 
 #-------------------------------------------------------------
 # Distribution Public Variables

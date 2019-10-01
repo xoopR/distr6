@@ -8,18 +8,9 @@
 #' listDecorators(FALSE)
 #' @export
 listDecorators <- function(simplify = TRUE){
-  y = sapply(ls(name="package:distr6"),function(x){
-    if(inherits(get(x),"R6ClassGenerator")){
-      if(environmentName(get(x)$get_inherit()) == "DistributionDecorator_generator")
-        return(get(x)$classname)
-      else
-        return(FALSE)
-    } else
-      return(FALSE)
-  })
-  y = y[y!="FALSE"]
+  y = .distr6$decorators[order(names(.distr6$decorators))]
   if(simplify)
-    return(as.character(y))
+    return(names(y))
   else
-    return(lapply(y, get))
+    return(y)
 }
