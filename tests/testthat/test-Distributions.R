@@ -73,6 +73,13 @@ test_that("check r/d/p/q", {
   expect_null(Distribution$new("Test", pdf = dbinom)$rand(1))
 })
 
+test_that("check is", {
+  expect_true(Distribution$new("Test", pdf = dbin, parameters = ps)$isPdf)
+  expect_false(Distribution$new("Test", pdf = dbin, parameters = ps)$isCdf)
+  expect_false(Distribution$new("Test", pdf = dbin, parameters = ps)$isQuantile)
+  expect_false(Distribution$new("Test", pdf = dbin, parameters = ps)$isRand)
+})
+
 test_that("working_support",{
   set.seed(1)
   expect_silent(expect_equal(Exponential$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
@@ -95,7 +102,7 @@ test_that("print",{
 test_that("suppress",{
   expect_silent(Distribution$new("name","name",Reals$new(),Reals$new(),TRUE,function(x) return(x),
                                  function(x) return(x), function(x) return(x), function(x) return(x),
-                                 NULL, CoreStatistics, "continuous", "univariate", "test", TRUE, TRUE))
+                                 ps, CoreStatistics, "continuous", "univariate", "test", TRUE, TRUE))
   expect_message(Distribution$new("name","name",Reals$new(),Reals$new(),TRUE,function(x) return(x),
                                  function(x) return(x), function(x) return(x), function(x) return(x),
                                  NULL, CoreStatistics, "continuous", "univariate", "test", FALSE, TRUE))
