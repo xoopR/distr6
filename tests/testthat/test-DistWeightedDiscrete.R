@@ -8,6 +8,8 @@ test_that("constructor",{
   expect_error(WeightedDiscrete$new(data.frame(x = 1, pdf = 1, cdfs = 1)))
   expect_error(WeightedDiscrete$new(data.frame(x = 1)))
   expect_error(WeightedDiscrete$new(data.frame(xs = 1)))
+  expect_null(WeightedDiscrete$new(data.frame(x = 1, pdf = 1, cdf = 1))$getParameterValue(1))
+  expect_message(expect_null(WeightedDiscrete$new(data.frame(x = 1, pdf = 1, cdf = 1))$setParameterValue(1)))
 })
 
 gd = WeightedDiscrete$new(data.frame(x = 1:10, pdf = rep(0.1,10)))

@@ -13,6 +13,8 @@
 
 ### Deprecated Functions
 
+- None
+
 ### Updated Functions
 
 - Added the common survival parameterisation of Weibull distribution
@@ -24,7 +26,8 @@
 - Added `errormsg` argument to assertions so a custom error message can be provided
 - Fixed error in quantile function in `Empirical` that was causing results to be dropped
 - Fixed bug in `TruncatedDistribution` that prevented multivariate distributions being truncated
-- Fixed error in variance of `Empirical` that was calculating sample not population variance
+- Fixed error in variance of `Empirical` that was calculating sample not population 
+- Moved rare imports to suggests
 
 # distr6 1.1.0
 

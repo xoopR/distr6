@@ -8,6 +8,7 @@ test_that("constructor",{
   expect_silent(Weibull$new(scale = 2))
   expect_silent(Weibull$new(shape=2.5,scale=1))
   expect_silent(Weibull$new(shape=2.5,altscale=2))
+  expect_message(Weibull$new(shape=2.5,altscale=2, verbose = T))
   expect_silent(Weibull$new(shape=2.5,altscale=2,scale = 1))
   expect_warning(Weibull$new(shape=2.5,altscale=-2))
 

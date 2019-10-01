@@ -91,3 +91,12 @@ test_that("print",{
   expect_output(Binomial$new()$print(1))
   expect_output(Binomial$new()$print(5))
 })
+
+test_that("suppress",{
+  expect_silent(Distribution$new("name","name",Reals$new(),Reals$new(),TRUE,function(x) return(x),
+                                 function(x) return(x), function(x) return(x), function(x) return(x),
+                                 NULL, CoreStatistics, "continuous", "univariate", "test", TRUE))
+  expect_message(Distribution$new("name","name",Reals$new(),Reals$new(),TRUE,function(x) return(x),
+                                 function(x) return(x), function(x) return(x), function(x) return(x),
+                                 NULL, CoreStatistics, "continuous", "univariate", "test", FALSE))
+})
