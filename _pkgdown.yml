@@ -87,6 +87,10 @@ reference:
       - skewType
       - liesInSupport
       - liesInType
+      - isCdf
+      - isPdf
+      - isQuantile
+      - isRand
   - title: "Mathematical and Statistical"
     desc: "Mathematical and statistical functions acting on Distribution objects."
     contents: 
@@ -175,14 +179,18 @@ reference:
       - Hypergeometric
       - Logarithmic
       - Poisson
+      - WeightedDiscrete
   - title: "Univariate Continuous Distributions"
     contents:
       - Arcsine
       - Beta
+      - BetaNoncentral
       - Cauchy
       - ChiSquared
+      - ChiSquaredNoncentral
       - Exponential
       - FDistribution
+      - FDistributionNoncentral
       - Frechet
       - Gamma
       - Gompertz
@@ -196,6 +204,7 @@ reference:
       - Pareto
       - Rayleigh
       - StudentT
+      - StudentTNoncentral
       - Triangular
       - Uniform
       - Wald
@@ -266,6 +275,7 @@ reference:
       - listKernels
       - listWrappers
       - distr6-package
+      - distr6News
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
