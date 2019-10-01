@@ -16,7 +16,7 @@ Local:
 check_win:
   * x86_64-w64_mingw32 (64-bit); R devel (2019-09-30 r77236) - OK
   * x86_64-w64_mingw32 (64-bit); R 3.5.3 - NOTE (DOI, see below)
- # * x86_64-w64_mingw32 (64-bit); R 3.6.1 - NOTE (DOI, see below)
+ <!-- * x86_64-w64_mingw32 (64-bit); R 3.6.1 - NOTE (DOI, see below) -->
 
 R-hub:
  * Fedora Linux, R-devel, clang, gfortran - NOTE (spelling, see below)
