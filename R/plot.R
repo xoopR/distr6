@@ -97,6 +97,9 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   #######                     graphical parameters                #######
   #######################################################################
 
+  if(length(fun) == 1)
+    ask = arrange = FALSE
+
   if(plot){
     if(ask | arrange){
       def.par <- par(no.readonly = TRUE)
