@@ -1,13 +1,13 @@
 ## Test environments
 On travis:
-#* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R 3.5.3 - OK
-#* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R 3.6.0 - OK
-#* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R devel (2019-06-25 r76738) - OK
-#*  x86_64-apple-darwin15.6.0 (64-bit); macOS High Sierra 10.13.3; R 3.5.3 - OK
-#*  x86_64-apple-darwin15.6.0 (64-bit); macOS High Sierra 10.13.3; R 3.6.0 - OK
+* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R 3.5.3 - OK
+* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R 3.6.1 - OK
+* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R devel (2019-10-01 r77242) - OK
+*  x86_64-apple-darwin15.6.0 (64-bit); macOS High Sierra 10.13.3; R 3.5.3 - OK
+*  x86_64-apple-darwin15.6.0 (64-bit); macOS High Sierra 10.13.3; R 3.6.1 - OK
 
 On appveyor:
-#* x86_64-w64-mingw32/x64 (64-bit); Windows Server 2012 R2 x64 (build 9600); R 3.5.3 - OK
+* x86_64-w64-mingw32/x64 (64-bit); Windows Server 2012 R2 x64 (build 9600); R 3.5.3 - OK
 * x86_64-w64-mingw32/x64 (64-bit); Windows Server 2012 R2 x64 (build 9600); R 3.6.1 - OK
 
 Local:
@@ -19,8 +19,7 @@ check_win:
  # * x86_64-w64_mingw32 (64-bit); R 3.6.1 - NOTE (DOI, see below)
 
 R-hub:
- #* Fedora Linux, R-devel, clang, gfortran - NOTE (spelling, see below)
- #* Ubuntu Linux 16.04 LTS, R-release, GCC - NOTE (DOI, see below)
+ * Fedora Linux, R-devel, clang, gfortran - NOTE (spelling, see below)
  * Windows Server 2008 R2 SP1, R-devel, 32/64 bit - NOTE (spelling, see below)
 
 ## R CMD check results
