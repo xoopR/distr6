@@ -1,5 +1,5 @@
 #' @export
-lines.Distribution <- function(x, fun, nPoints = 3000,...){
+lines.Distribution <- function(x, fun, npoints = 3000,...){
 
   #######################################################################
   #######                         validations                     #######
