@@ -17,7 +17,7 @@
 }
 \description{
 One of six plots can be selected to ber superimposed in the plotting window,
-including: pdf, cdf, quantile, survival, hazard and cumulativehazard.
+including: pdf, cdf, quantile, survival, hazard and cumulative hazard.
 }
 \details{
 Unlike the \code{\link{plot.Distribution}} function, no internal checks are performed

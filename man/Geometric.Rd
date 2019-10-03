@@ -122,8 +122,6 @@ The Geometric distribution is used to either refer to modelling the number of tr
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 

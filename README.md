@@ -183,12 +183,8 @@ remotes::install_github("alan-turing-institute/distr6")
 
 ## Future Plans
 
-The v1.0 release focuses on the core features of the SDistribution class
-as well as analytic methods in wrappers including but not limit to
-truncation, huberization, product distributions and mixture
-distributions. In our next release we plan to include
+Our plans for the next update include
 
-  - A `plot` method for Distributions
   - A generalised `qqplot` for comparing any distributions
   - A finalised `FunctionImputation` decorator with different imputation
     strategies
@@ -222,7 +218,7 @@ Prof. Dr. Matthias Kohl in developing the original distr family of
 packages. Secondly their significant contributions to the planning and
 design of distr6 including the distribution and probability family class
 structures. A team of undergraduates at University College London
-implemented many of the probability distributions and are designing the
+implemented many of the probability distributions and designed the
 plotting interface. The team consists of Shen Chen (@ShenSeanChen),
 Jordan Deenichin (@jdeenichin), Chengyang Gao (@garoc371), Chloe
 Zhaoyuan Gu (@gzy823), Yunjie He (@RoyaHe), Xiaowen Huang (@w090613),

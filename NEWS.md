@@ -1,3 +1,27 @@
+# distr6 1.3.0
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- Added a `plot` and `lines` function for plotting and superimposing `distr6` objects
+
+### Deprecated Functions
+
+- None
+
+### Updated Functions
+
+- None
+
+## Patches
+
+- None
+
 # distr6 1.2.0
 
 ## Major Updates
