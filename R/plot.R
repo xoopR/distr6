@@ -9,7 +9,7 @@
 #' @name plot.Distribution
 #'
 #' @param x \code{distr6} object.
-#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.
+#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard", and "all"; partial matching available.
 #' @param npoints number of evaluation points.
 #' @param plot logical; if TRUE (default), figures are displayed in the plot window; otherwise a \code{data.table} of points and calculated values is returned.
 #' @param ask logical; if TRUE, the user is asked before each plot, see \code{\link[graphics]{par}}.
@@ -32,9 +32,10 @@
 #'
 #' @examples
 #' plot(Normal$new())
-#' plot(Gamma$new(), ask = TRUE)
-#' plot(Binomial$new(), fun = "pdf")
-#' plot(Gamma$new(), plot = FALSE)
+#' plot(Normal$new(), lwd = 2, col = "red")
+#' plot(Geometric$new(), ask = TRUE)
+#' plot(Binomial$new(), fun = "all")
+#' x = plot(Gamma$new(), plot = FALSE)
 #'
 #' @export
 plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
@@ -46,10 +47,12 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   #######################################################################
 
   if(!testUnivariate(x) | testMixture(x))
-    stop("Currently only plotting univariate, discrete or continuous distributions are supported.")
+    stop("Currently only plotting univariate, discrete or continuous, distributions are supported.")
 
-  plotFuns <- c("pdf","cdf","quantile","survival","hazard","cumhazard")
+  plotFuns <- c("pdf","cdf","quantile","survival","hazard","cumhazard","all")
   fun = unique(plotFuns[charmatch(fun, plotFuns)])
+  if("all" %in% fun)
+    fun = plotFuns[-7]
 
   if("cdf" %in% fun & !x$isCdf){
     message("This distribution does not have a cdf expression. Use the
@@ -126,9 +129,9 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
     }
 
     if(testContinuous(x))
-      .plot_continuous(fun,plotStructure,x$strprint())
+      .plot_continuous(fun,plotStructure,x$strprint(),...)
     else if(testDiscrete(x))
-      .plot_discrete(fun,plotStructure,x$strprint())
+      .plot_discrete(fun,plotStructure,x$strprint(),...)
 
     if(ask | arrange)
       par(def.par)

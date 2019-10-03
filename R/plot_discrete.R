@@ -7,7 +7,7 @@
 
   if("cumhazard" %in% fun){
     plots$cumhazard$plot = list(x = plotStructure$points, y = plotStructure$cumhazard, type = "n",
-                                main= paste(name,"cumhazard"),xlab='x',ylab=expression(Lambda(x)),...)
+                                main= paste(name,"CumHazard"),xlab='x',ylab=expression(Lambda(x)),...)
     plots$cumhazard$points = list(x = plotStructure$points, y = plotStructure$cumhazard, pch = 16,...)
     plots$cumhazard$segments = list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
                                     y0 = plotStructure$cumhazard,...)
@@ -15,7 +15,7 @@
 
   if("cdf" %in% fun){
     plots$cdf$plot = list(x = plotStructure$points, y = plotStructure$cdf, type = "n",
-                          main = paste(name,"cdf"), xlab = "x", ylab = parse(text = "F(x)"),...)
+                          main = paste(name,"Cdf"), xlab = "x", ylab = parse(text = "F(x)"),...)
     plots$cdf$points = list(x = plotStructure$points, y = plotStructure$cdf, pch = 16,...)
     plots$cdf$segments = list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
                               y0 = plotStructure$cdf,...)
@@ -23,7 +23,7 @@
 
   if('quantile' %in% fun){
     plots$quantile$plot = list(x = plotStructure$cdf, y = plotStructure$points, type = "n",
-                               main = paste(name,"quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
+                               main = paste(name,"Quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
     plots$quantile$points = list(x = plotStructure$cdf, y = plotStructure$points, pch = 16,...)
     plots$quantile$segments = list(x0 = plotStructure$cdf, y0 = plotStructure$points,
                                    y1 = plotStructure$points+1,...)

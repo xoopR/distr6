@@ -8,13 +8,13 @@
 
   if ("cdf" %in% fun){
     plots$cdf = list(x = plotStructure$points, y = plotStructure$cdf, type = "l",
-                     main = paste(name,"cdf"), xlab = "x", ylab = "F(x)",...)
+                     main = paste(name,"Cdf"), xlab = "x", ylab = "F(x)",...)
   }
 
   if("quantile" %in% fun){
     plots$quantile = list(x = plotStructure$cdf,
                           y = plotStructure$points, type = "l",
-                          main = paste(name,"quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
+                          main = paste(name,"Quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
   }
 
   if ("survival" %in% fun){
@@ -29,7 +29,7 @@
 
   if("cumhazard" %in% fun){
     plots$cumhazard = list(x = plotStructure$points, y = plotStructure$cumhazard,
-                           type = "l",main=paste(name,"cumhazard"),xlab='x',ylab="H(x)",...)
+                           type = "l",main=paste(name,"CumHazard"),xlab='x',ylab="H(x)",...)
   }
 
   if(length(fun) > 1)

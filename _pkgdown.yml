@@ -227,6 +227,10 @@ reference:
       - Silverman
       - Tricube
       - Triweight
+  - title: "Visualisation"
+    contents:
+      - plot
+      - lines
   - title: "Assertions"
     desc: "Validation checks for Distributions."
     contents:

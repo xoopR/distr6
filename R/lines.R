@@ -8,7 +8,7 @@
 #' @name lines.Distribution
 #'
 #' @param x \code{distr6} object.
-#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.
+#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", and "cumhazard"; partial matching available.
 #' @param npoints number of evaluation points.
 #' @param ... graphical parameters to be passed through to plotting functions.
 #'
@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' plot(Normal$new(mean = 2), "pdf")
-#' lines(Normal$new(mean = 3), "pdf")
+#' lines(Normal$new(mean = 3), "pdf", col = "red", lwd = 2)
 #'
 #' \dontrun{
 #' # The code below gives examples of how not to use this function.
@@ -47,7 +47,7 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
   #######################################################################
 
   if(!testUnivariate(x) | testMixture(x))
-    stop("Currently only plotting univariate, discrete or continuous distributions are supported.")
+    stop("Currently only plotting univariate, discrete or continuous, distributions are supported.")
 
   plotFuns <- c("pdf","cdf","quantile","survival","hazard","cumhazard")
   # check user input plot names are correct
