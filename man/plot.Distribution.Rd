@@ -41,8 +41,8 @@ The evaluation points are generated via inverse transform sampling method
     other figures onto the same device throughout \emph{mfrow} in \code{\link[graphics]{par}} or \code{\link[graphics]{layout}}.
 }
 \examples{
-normal <- Normal$new()
-plot(normal, fun = c("pdf", "cdf", "quantile", "survival", "hazard", "cumhazard"))
+x <- Normal$new()
+plot(x, fun = c("pdf", "cdf", "quantile", "survival", "hazard", "cumhazard"))
 
 }
 \seealso{
