@@ -32,5 +32,12 @@ test_that("silent",{
   expect_silent(lines(Binomial$new(), "quantile"))
   expect_silent(lines(Binomial$new(), "hazard"))
   expect_silent(lines(Binomial$new(), "cumhazard"))
-  expect_silent(lines(Binomial$new(), "survival"))
+  expect_silent(lines(Geometric$new(), "survival"))
+
+  expect_silent(lines(Normal$new(), "pdf"))
+  expect_silent(lines(Normal$new(), "cdf"))
+  expect_silent(lines(Normal$new(), "quantile"))
+  expect_silent(lines(Normal$new(), "hazard"))
+  expect_silent(lines(Normal$new(), "cumhazard"))
+  expect_silent(lines(Normal$new(), "survival"))
 })

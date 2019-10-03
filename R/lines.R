@@ -89,7 +89,7 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
     plotStructure <- plotStructure[,2:1]
 
     if(testDiscrete(x))
-      plotStructure <- aggregate(cdf ~ points, plotStructure, max)
+      plotStructure <- stats::aggregate(cdf ~ points, plotStructure, max)
   }
 
   plotStructure$pdf <- x$pdf(plotStructure$points)

@@ -229,8 +229,9 @@ reference:
       - Triweight
   - title: "Visualisation"
     contents:
-      - plot
-      - lines
+      - plot.Distribution
+      - lines.Distribution
+      - qqplot
   - title: "Assertions"
     desc: "Validation checks for Distributions."
     contents:

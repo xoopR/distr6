@@ -39,3 +39,10 @@ test_that("structure",{
   expect_equal(plot(Binomial$new(), "pdf", npoints = 1, plot = FALSE)[,1:2],
                data.table::data.table(points = 0:10, cdf = pbinom(0:10,10,0.5)))
 })
+
+test_that("pars",{
+  expect_silent(plot(Geometric$new(), fun = "all", ask = TRUE, pdf_col = 1, cdf_col = 2,
+          quantile_col = 3, hazard_col = 4, cumhazard_col = 5, survival_col = 6))
+  expect_silent(plot(Normal$new(), fun = "all", ask = TRUE, pdf_col = 1, cdf_col = 2,
+                     quantile_col = 3, hazard_col = 4, cumhazard_col = 5, survival_col = 6))
+})
