@@ -1,35 +1,41 @@
-#' @title Add Distribution Lines to a plot
+#' @include lines_discrete.R lines_continuous.R
 #'
-#' @description
-#' A function that adds pdf/pmf, cdf, quantile, survival, hazard and cumulative
-#'   hazard lines of a discrete or continuous distribution to an exisitng plot.
+#' @title Superimpose Distribution Functions Plots for a distr6 Object
+#'
+#' @description One of six plots can be selected to ber superimposed in the plotting window,
+#' including: pdf, cdf, quantile, survival, hazard and cumulative hazard.
 #'
 #' @name lines.Distribution
 #'
-#' @usage ## S3 method for class "Distribution"
-#'   lines(x, fun, npoints = 3000,...)
-#'
-#' @param x A distribution object.
-#' @param fun A list of plottable functions, either one or more of "pdf","cdf","quantile", "survival", "hazard" and "cumhazard".
+#' @param x \code{distr6} object.
+#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.
 #' @param npoints number of evaluation points.
-#' @param ... graphical parameters to be passed through to plotting methods, see \code{\link[graphics]{par}}.
+#' @param ... graphical parameters to be passed through to plotting functions.
 #'
+#' @details Unlike the \code{\link{plot.Distribution}} function, no internal checks are performed
+#' to ensure that the added plot makes sense in the context of the current plotting window. Therefore
+#' this function assumes that the current plot is of the same value support, see examples.
 #'
-#'
-#' @details
-#' The lines function only works for overlaying distributions of the same value
-#' support type. Therefore bugs can be expected when trying to add continuous to
-#' discrete distributions, and vice versa. The users are responsible for adjusting
-#' the limits of x and y axes based on the parameters of distributions they choose.
-#'
-#'
-#'
-#'
-#' @seealso \code{\link{plot.Distribution}} for drawing a distribution plot.
+#' @seealso \code{\link{plot.Distribution}} for plotting a \code{distr6} object.
 #'
 #' @examples
-#' plot(Normal$new(), "pdf")
-#' lines(Normal$new(mean = 0.5, sd = 0.5), "pdf")
+#' plot(Normal$new(mean = 2), "pdf")
+#' lines(Normal$new(mean = 3), "pdf")
+#'
+#' \dontrun{
+#' # The code below gives examples of how not to use this function.
+#' # Different value supports
+#' plot(Binomial$new(), "cdf")
+#' lines(Normal$new(), "cdf")
+#'
+#' # Different functions
+#' plot(Binomial$new(), "pdf")
+#' lines(Binomial$new(), "cdf")
+#'
+#' # Too many functions
+#' plot(Binomial$new(), c("pdf","cdf"))
+#' lines(Binomial$new(), "cdf")
+#' }
 #'
 #' @export
 #'
@@ -40,24 +46,30 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
   #######                         validations                     #######
   #######################################################################
 
+  if(!testUnivariate(x) | testMixture(x))
+    stop("Currently only plotting univariate, discrete or continuous distributions are supported.")
+
   plotFuns <- c("pdf","cdf","quantile","survival","hazard","cumhazard")
   # check user input plot names are correct
-  if(!all(fun %in% plotFuns))
-    stop("invalid plot function")
+  if(length(fun) > 1){
+    message("Only the first function is used, the rest are ignored.")
+    fun = fun[[1]]
+  }
+  fun = unique(plotFuns[charmatch(fun, plotFuns)])
 
-  if("cdf" %in% fun & !x$.__enclos_env__$private$.isCdf){
+  if("cdf" %in% fun & !x$isCdf){
     message("This distribution does not have a cdf expression. Use the
             FunctionImputation decorator to impute a numerical cdf.")
     fun = fun[!(fun %in% c("cdf", "survival", "hazard","cumhazard"))]
   }
 
-  if("pdf" %in% fun & !x$.__enclos_env__$private$.isPdf){
+  if("pdf" %in% fun & !x$isPdf){
     message("This distribution does not have a pdf expression. Use the
             FunctionImputation decorator to impute a numerical pdf.")
     fun = fun[!(fun %in% c("pdf", "hazard"))]
   }
 
-  if("quantile" %in% fun & !x$.__enclos_env__$private$.isQuantile){
+  if("quantile" %in% fun & !x$isQuantile){
     message("This distribution does not have a quantile expression. Use the
             FunctionImputation decorator to impute a numerical quantile.")
     fun = fun[!(fun %in% c("quantile"))]
@@ -90,65 +102,9 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
     plotStructure$cumhazard <- -log(1 - plotStructure$cdf)
 
   if(testContinuous(x)){
-    .plot_continuous_lines(fun,plotStructure,...)}
-  # discrete case
-  if(testDiscrete(x)){
-    .plot_discrete_lines(fun,plotStructure,...)}
+    .lines_continuous(fun,plotStructure,...)}
+  else if(testDiscrete(x)){
+    .lines_discrete(fun,plotStructure,...)}
 
-  invisible(plotStructure)
+  invisible(data.table::data.table(plotStructure))
 }
-
-
-
-# FUN_TWO: continuous distribution: adding (a) line(s)
-.plot_continuous_lines <- function(fun,plotStructure,...){
-  if("pdf" %in% fun)
-    lines(data.frame(x = plotStructure$points, y = plotStructure$pdf),...)
-  if("cdf" %in% fun)
-    lines(data.frame(x = plotStructure$points, y = plotStructure$cdf),...)
-  if("quantile" %in% fun)
-    lines(data.frame(x = plotStructure$cdf, y = plotStructure$points),...)
-  if("survival" %in% fun)
-    lines(data.frame(x = plotStructure$points, y = plotStructure$survival),...)
-  if("hazard" %in% fun)
-    lines(data.frame(x = plotStructure$points, y = plotStructure$hazard),...)
-  if("cumhazard" %in% fun)
-    lines(data.frame(plotStructure$points, y = plotStructure$cumhazard),...)
-}
-
-# FUN_FOUR: discrete distribution: adding (a) line(s)
-.plot_discrete_lines <- function(fun,plotStructure,...){
-  if("pdf" %in% fun)
-    lines(x = plotStructure$points, y = plotStructure$pdf,
-          type = "h",...)
-
-  if("cdf" %in% fun){
-    points(x = plotStructure$points, y = plotStructure$cdf, pch = 16,...)
-    segments(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-             y0 = plotStructure$cdf,...)
-
-  }
-
-  if("quantile" %in% fun){
-    points(x = plotStructure$cdf, y = plotStructure$points, pch = 16,...)
-    segments(x0 = plotStructure$cdf, y0 = plotStructure$points,
-             y1 = plotStructure$points+1,...)
-  }
-  if("survival" %in% fun){
-    points(x = plotStructure$points, y = plotStructure$survival, pch = 16,...)
-    segments(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-             y0 = plotStructure$survival,...)
-  }
-
-  if("hazard" %in% fun)
-    lines(x = plotStructure$points, y = plotStructure$hazard, type = "h",...)
-
-  if ("cumhazard" %in% fun){
-    points(x = plotStructure$points, y = plotStructure$cumhazard, pch = 16,...)
-    segments(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-             y0 = plotStructure$cumhazard,...)
-  }
-
-}
-
-

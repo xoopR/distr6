@@ -2,49 +2,49 @@
 % Please edit documentation in R/plot.R
 \name{plot.Distribution}
 \alias{plot.Distribution}
-\title{Draw Distribution Plots}
+\title{Plot Distribution Functions for a distr6 Object}
 \usage{
-## S3 method for class "Distribution"
-  plot(x, fun=c('pdf','cdf'), npoints = 3000, plot = TRUE, ask = FALSE,
-  arrange = TRUE, ...)
+\method{plot}{Distribution}(x, fun = c("pdf", "cdf"), npoints = 3000,
+  plot = TRUE, ask = FALSE, arrange = TRUE, ...)
 }
 \arguments{
-\item{x}{A distribution object.}
+\item{x}{\code{distr6} object.}
 
-\item{fun}{A list of plottable functions, either one or more of "pdf","cdf","quantile", "survival", "hazard" and "cumhazard".}
+\item{fun}{vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.}
 
 \item{npoints}{number of evaluation points.}
 
-\item{plot}{logical; if TRUE, figures are shown in the plot window; if FALSE, a table containing relevant amounts is returned.}
+\item{plot}{logical; if TRUE (default), figures are displayed in the plot window; otherwise a \code{data.table} of points and calculated values is returned.}
 
-\item{ask}{logical; if TRUE, the user is asked before each plot, see arguement in \code{\link[graphics]{par}}.}
+\item{ask}{logical; if TRUE, the user is asked before each plot, see \code{\link[graphics]{par}}.}
 
-\item{arrange}{logical; if TRUE, layout is adjusted when producing multiple plots.}
+\item{arrange}{logical; if TRUE (default), margins are automatically adjusted with \code{\link[graphics]{layout}} to accomodate all plotted functions.}
 
-\item{...}{graphical parameters to be passed through to plotting methods, see \code{\link[graphics]{par}}.}
+\item{...}{graphical parameters to be passed through to plotting functions.}
 }
 \description{
-There are currently six figures available for any univariate continuous
-  or discerte distribution: pdf/pmf, cdf, quantile, survival, hazard and cumulative
-  hazard. By default, the first two are produced.
+Six plots, which can be selected with \code{fun} are available for discrete and
+continuous univarite distributions: pdf, cdf, quantile, survival, hazard and cumulative
+hazard. By default, the first two are plotted side by side.
 }
 \details{
-The evaluation points are generated via inverse transform sampling method
-  (see \url{https://en.wikipedia.org/wiki/Inverse_transform_sampling}).
-  By default, 3000 points are produced for each distributions and the relevant
-  amounts (pdf, cdf, etc.) are calculated. When \emph{arrange = TRUE} and there are
-   more than one figures, figures are allocated via \code{\link[graphics]{layout}}. Users
-  can also customise the layout by setting \emph{arrange = FALSE} then through
-  \code{\link[graphics]{par}}. Notice that additional plotting parameters will pass
-   through all the plottable functions. If users wish to change only one of the
-   figures, a solution is to plot this figure separately, then integrate with
-    other figures onto the same device throughout \emph{mfrow} in \code{\link[graphics]{par}} or \code{\link[graphics]{layout}}.
+The evaluation points are calculted using inverse transform on a uniform grid between 0 and 1 with
+length given by \code{npoints}. Therefore any distribution without an analytical \code{quantile} method
+will first need to be imputed with the \code{\link{FunctionImputation}} decorator.
+
+The order that the functions are supplied to \code{fun} determines the order in which they are
+plotted. If \code{ask} is \code{TRUE} then \code{arrange} is ignored. Titles, labels and other
+parameters are set automatically, note that parameters supplied in \code{...} will be passed to
+all plots. For maximum flexibility in plotting, set \code{arrange} and \code{ask} to \code{FALSE}.
 }
 \examples{
-x <- Normal$new()
-plot(x, fun = c("pdf", "cdf", "quantile", "survival", "hazard", "cumhazard"))
+plot(Normal$new())
+plot(Gamma$new(), ask = TRUE)
+plot(Binomial$new(), fun = "pdf")
+plot(Gamma$new(), plot = FALSE)
 
 }
 \seealso{
-\code{\link{lines.Distribution}} for adding a new distribution plot superimposed on an existing one
+\code{\link{lines.Distribution}} for superimposing a distr6 object and \code{\link{listDistributions}}
+for plottable distributions.
 }

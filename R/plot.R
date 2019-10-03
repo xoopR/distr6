@@ -1,49 +1,42 @@
-#' @title Draw Distribution Plots
+#' @include plot_discrete.R plot_continuous.R
 #'
-#' @description There are currently six figures available for any univariate continuous
-#'   or discerte distribution: pdf/pmf, cdf, quantile, survival, hazard and cumulative
-#'   hazard. By default, the first two are produced.
+#' @title Plot Distribution Functions for a distr6 Object
+#'
+#' @description Six plots, which can be selected with \code{fun} are available for discrete and
+#' continuous univarite distributions: pdf, cdf, quantile, survival, hazard and cumulative
+#' hazard. By default, the first two are plotted side by side.
 #'
 #' @name plot.Distribution
 #'
-#' @usage ## S3 method for class "Distribution"
-#'   plot(x, fun=c('pdf','cdf'), npoints = 3000, plot = TRUE, ask = FALSE,
-#'   arrange = TRUE, ...)
-#'
-#' @param x A distribution object.
-#' @param fun A list of plottable functions, either one or more of "pdf","cdf","quantile", "survival", "hazard" and "cumhazard".
+#' @param x \code{distr6} object.
+#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.
 #' @param npoints number of evaluation points.
-#' @param plot logical; if TRUE, figures are shown in the plot window; if FALSE, a table containing relevant amounts is returned.
-#' @param ask logical; if TRUE, the user is asked before each plot, see arguement in \code{\link[graphics]{par}}.
-#' @param arrange logical; if TRUE, layout is adjusted when producing multiple plots.
-#' @param ... graphical parameters to be passed through to plotting methods, see \code{\link[graphics]{par}}.
-#'
+#' @param plot logical; if TRUE (default), figures are displayed in the plot window; otherwise a \code{data.table} of points and calculated values is returned.
+#' @param ask logical; if TRUE, the user is asked before each plot, see \code{\link[graphics]{par}}.
+#' @param arrange logical; if TRUE (default), margins are automatically adjusted with \code{\link[graphics]{layout}} to accomodate all plotted functions.
+#' @param ... graphical parameters to be passed through to plotting functions.
 #'
 #'
 #' @details
-#' The evaluation points are generated via inverse transform sampling method
-#'   (see \url{https://en.wikipedia.org/wiki/Inverse_transform_sampling}).
-#'   By default, 3000 points are produced for each distributions and the relevant
-#'   amounts (pdf, cdf, etc.) are calculated. When \emph{arrange = TRUE} and there are
-#'    more than one figures, figures are allocated via \code{\link[graphics]{layout}}. Users
-#'   can also customise the layout by setting \emph{arrange = FALSE} then through
-#'   \code{\link[graphics]{par}}. Notice that additional plotting parameters will pass
-#'    through all the plottable functions. If users wish to change only one of the
-#'    figures, a solution is to plot this figure separately, then integrate with
-#'     other figures onto the same device throughout \emph{mfrow} in \code{\link[graphics]{par}} or \code{\link[graphics]{layout}}.
+#' The evaluation points are calculted using inverse transform on a uniform grid between 0 and 1 with
+#' length given by \code{npoints}. Therefore any distribution without an analytical \code{quantile} method
+#' will first need to be imputed with the \code{\link{FunctionImputation}} decorator.
 #'
+#' The order that the functions are supplied to \code{fun} determines the order in which they are
+#' plotted. If \code{ask} is \code{TRUE} then \code{arrange} is ignored. Titles, labels and other
+#' parameters are set automatically, note that parameters supplied in \code{...} will be passed to
+#' all plots. For maximum flexibility in plotting, set \code{arrange} and \code{ask} to \code{FALSE}.
 #'
-#'
-#'
-#' @seealso \code{\link{lines.Distribution}} for adding a new distribution plot superimposed on an existing one
+#' @seealso \code{\link{lines.Distribution}} for superimposing a distr6 object and \code{\link{listDistributions}}
+#' for plottable distributions.
 #'
 #' @examples
-#' x <- Normal$new()
-#' plot(x, fun = c("pdf", "cdf", "quantile", "survival", "hazard", "cumhazard"))
+#' plot(Normal$new())
+#' plot(Gamma$new(), ask = TRUE)
+#' plot(Binomial$new(), fun = "pdf")
+#' plot(Gamma$new(), plot = FALSE)
 #'
 #' @export
-#'
-#'
 plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
                               plot = TRUE, ask = FALSE, arrange = TRUE,...){
 
@@ -52,24 +45,25 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   #######                         validations                     #######
   #######################################################################
 
-  plotFuns <- c("pdf","cdf","quantile","survival","hazard","cumhazard")
-  # check user input plot names are correct
-  if(!all(fun %in% plotFuns))
-    stop("invalid plot function")
+  if(!testUnivariate(x) | testMixture(x))
+    stop("Currently only plotting univariate, discrete or continuous distributions are supported.")
 
-  if("cdf" %in% fun & !x$.__enclos_env__$private$.isCdf){
+  plotFuns <- c("pdf","cdf","quantile","survival","hazard","cumhazard")
+  fun = unique(plotFuns[charmatch(fun, plotFuns)])
+
+  if("cdf" %in% fun & !x$isCdf){
     message("This distribution does not have a cdf expression. Use the
             FunctionImputation decorator to impute a numerical cdf.")
     fun = fun[!(fun %in% c("cdf", "survival", "hazard","cumhazard"))]
   }
 
-  if("pdf" %in% fun & !x$.__enclos_env__$private$.isPdf){
+  if("pdf" %in% fun & !x$isPdf){
     message("This distribution does not have a pdf expression. Use the
             FunctionImputation decorator to impute a numerical pdf.")
     fun = fun[!(fun %in% c("pdf", "hazard"))]
   }
 
-  if("quantile" %in% fun & !x$.__enclos_env__$private$.isQuantile){
+  if("quantile" %in% fun & !x$isQuantile){
     message("This distribution does not have a quantile expression. Use the
             FunctionImputation decorator to impute a numerical quantile.")
     fun = fun[!(fun %in% c("quantile"))]
@@ -104,10 +98,10 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   #######################################################################
   #######                     graphical parameters                #######
   #######################################################################
-  
+
   if(length(fun) == 1)
     ask = arrange = FALSE
-  
+
   if(plot){
     if(ask | arrange){
       def.par <- par(no.readonly = TRUE)
@@ -140,109 +134,5 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
       par(def.par)
   }
 
-  invisible(plotStructure)
+  invisible(data.table::data.table(plotStructure))
 }
-
-
-# FUN_ONE: continuous distribution
-.plot_continuous <- function(fun,plotStructure,name,...){
-  plots = list()
-
-  if("pdf" %in% fun){
-    plots$pdf = list(x = plotStructure$points, y = plotStructure$pdf, type = "l",
-                     main = paste(name,"Pdf"), xlab = "x", ylab = "f(x)",...)
-  }
-
-  if ("cdf" %in% fun){
-    plots$cdf = list(x = plotStructure$points, y = plotStructure$cdf, type = "l",
-                     main = paste(name,"cdf"), xlab = "x", ylab = "F(x)",...)
-  }
-
-  if("quantile" %in% fun){
-    plots$quantile = list(x = plotStructure$cdf,
-                          y = plotStructure$points, type = "l",
-                          main = paste(name,"quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
-  }
-
-  if ("survival" %in% fun){
-    plots$survival = list(x = plotStructure$points, y = plotStructure$survival, type = "l",
-                          main = paste(name,"Survival"), xlab = "x", ylab = "S(x)",...)
-  }
-
-  if ("hazard" %in% fun){
-    plots$hazard = list(x = plotStructure$points, y = plotStructure$hazard, type = "l",
-                        main = paste(name,"Hazard"), xlab = "x", ylab = "h(x)",...)
-  }
-
-  if("cumhazard" %in% fun){
-    plots$cumhazard = list(x = plotStructure$points, y = plotStructure$cumhazard,
-                           type = "l",main=paste(name,"cumhazard"),xlab='x',ylab="H(x)",...)
-  }
-
-  if(length(fun) > 1)
-    plots = plots[match(fun, names(plots))]
-  lapply(plots, function(x) do.call(plot, x))
-}
-
-
-# FUN_THREE: discrete distribution
-.plot_discrete <- function(fun,plotStructure,name,...){
-  plots = list()
-
-  if("pdf" %in% fun)
-    plots$pdf = list(x = plotStructure$points, y = plotStructure$pdf, type = "h",
-                     main = paste(name,"Pdf"), xlab = "x", ylab = "f(x)",...)
-
-  if("cumhazard" %in% fun){
-    plots$cumhazard$plot = list(x = plotStructure$points, y = plotStructure$cumhazard, type = "n",
-                                main= paste(name,"cumhazard"),xlab='x',ylab=expression(Lambda(x)),...)
-    plots$cumhazard$points = list(x = plotStructure$points, y = plotStructure$cumhazard, pch = 16,...)
-    plots$cumhazard$segments = list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-                                    y0 = plotStructure$cumhazard,...)
-  }
-
-  if("cdf" %in% fun){
-    plots$cdf$plot = list(x = plotStructure$points, y = plotStructure$cdf, type = "n",
-                          main = paste(name,"cdf"), xlab = "x", ylab = parse(text = "F(x)"),...)
-    plots$cdf$points = list(x = plotStructure$points, y = plotStructure$cdf, pch = 16,...)
-    plots$cdf$segments = list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-                              y0 = plotStructure$cdf,...)
-  }
-
-  if('quantile' %in% fun){
-    plots$quantile$plot = list(x = plotStructure$cdf, y = plotStructure$points, type = "n",
-                               main = paste(name,"quantile"), xlab = "q", ylab = parse(text = "F^-1*(q)"),...)
-    plots$quantile$points = list(x = plotStructure$cdf, y = plotStructure$points, pch = 16,...)
-    plots$quantile$segments = list(x0 = plotStructure$cdf, y0 = plotStructure$points,
-                                   y1 = plotStructure$points+1,...)
-  }
-
-  if("survival" %in% fun){
-    plots$survival$plot = list(x = plotStructure$points, y = plotStructure$survival, type = "n",
-                               main=paste(name,"Survival"),xlab='x',ylab="S(x)",...)
-    plots$survival$points = list(x = plotStructure$points, y = plotStructure$survival, pch = 16,...)
-    plots$survival$segments = list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-                                   y0 = plotStructure$survival,...)
-  }
-
-  if("hazard" %in% fun)
-    plots$hazard = list(x = plotStructure[,"points"], y = plotStructure[,"hazard"], type = "h",
-                        main = paste(name,"Hazard"), xlab = "x", ylab = "h(x)",...)
-
-  if(length(fun) > 1)
-    plots = plots[match(fun, names(plots))]
-
-  lapply(plots, function(x){
-    if(length(x) != 3)
-      do.call(plot, x)
-    else{
-      do.call(plot, x$plot)
-      do.call(points, x$points)
-      do.call(segments, x$segments)
-    }
-  })
-}
-
-
-
-

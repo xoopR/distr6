@@ -2,35 +2,48 @@
 % Please edit documentation in R/lines.R
 \name{lines.Distribution}
 \alias{lines.Distribution}
-\title{Add Distribution Lines to a plot}
+\title{Superimpose Distribution Functions Plots for a distr6 Object}
 \usage{
-## S3 method for class "Distribution"
-  lines(x, fun, npoints = 3000,...)
+\method{lines}{Distribution}(x, fun, npoints = 3000, ...)
 }
 \arguments{
-\item{x}{A distribution object.}
+\item{x}{\code{distr6} object.}
 
-\item{fun}{A list of plottable functions, either one or more of "pdf","cdf","quantile", "survival", "hazard" and "cumhazard".}
+\item{fun}{vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.}
 
 \item{npoints}{number of evaluation points.}
 
-\item{...}{graphical parameters to be passed through to plotting methods, see \code{\link[graphics]{par}}.}
+\item{...}{graphical parameters to be passed through to plotting functions.}
 }
 \description{
-A function that adds pdf/pmf, cdf, quantile, survival, hazard and cumulative
-  hazard lines of a discrete or continuous distribution to an exisitng plot.
+One of six plots can be selected to ber superimposed in the plotting window,
+including: pdf, cdf, quantile, survival, hazard and cumulativehazard.
 }
 \details{
-The lines function only works for overlaying distributions of the same value
-support type. Therefore bugs can be expected when trying to add continuous to
-discrete distributions, and vice versa. The users are responsible for adjusting
-the limits of x and y axes based on the parameters of distributions they choose.
+Unlike the \code{\link{plot.Distribution}} function, no internal checks are performed
+to ensure that the added plot makes sense in the context of the current plotting window. Therefore
+this function assumes that the current plot is of the same value support, see examples.
 }
 \examples{
-plot(Normal$new(), "pdf")
-lines(Normal$new(mean = 0.5, sd = 0.5), "pdf")
+plot(Normal$new(mean = 2), "pdf")
+lines(Normal$new(mean = 3), "pdf")
+
+\dontrun{
+# The code below gives examples of how not to use this function.
+# Different value supports
+plot(Binomial$new(), "cdf")
+lines(Normal$new(), "cdf")
+
+# Different functions
+plot(Binomial$new(), "pdf")
+lines(Binomial$new(), "cdf")
+
+# Too many functions
+plot(Binomial$new(), c("pdf","cdf"))
+lines(Binomial$new(), "cdf")
+}
 
 }
 \seealso{
-\code{\link{plot.Distribution}} for drawing a distribution plot.
+\code{\link{plot.Distribution}} for plotting a \code{distr6} object.
 }
