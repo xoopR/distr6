@@ -188,6 +188,7 @@ Collate:
     'listWrappers.R'
     'makeUniqueDistributions.R'
     'measures.R'
+    'qqplot.R'
     'plot_continuous.R'
     'plot_discrete.R'
     'plot.R'
