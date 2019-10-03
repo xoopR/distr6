@@ -9,7 +9,7 @@ install:
 branches:
   only:
   - master
-  - dev1.1
+  - dev
 
 build_script:
   - travis-tool.sh install_deps
@@ -43,10 +43,6 @@ artifacts:
 
 version: 1.0.{build}-{branch}
 
-#branches:
-#  except:
-#    - gh-pages
-
 skip_tags: true
 
 max_jobs: 1
@@ -63,8 +59,8 @@ environment:
 #    - R_VERSION: devel
 #      R_ARCH: x64
 
-#    - R_VERSION: oldrel
-#      R_ARCH: x64
+    - R_VERSION: oldrel
+      R_ARCH: x64
 
 cache:
   - C:\RLibrary\
