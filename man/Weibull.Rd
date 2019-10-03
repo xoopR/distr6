@@ -20,7 +20,7 @@ are
 omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
 }
 \section{Constructor}{
- Weibull$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
+ Weibull$new(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -29,7 +29,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
   \code{shape} \tab numeric \tab shape parameter. \cr
   \code{scale} \tab numeric \tab scale parameter. \cr
-  
+  \code{altscale} \tab numeric \tab alternative scale parameter. \cr
   
   
   
@@ -43,7 +43,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 }
 
 \section{Constructor Details}{
- The Weibull distribution is parameterised with \code{shape} and \code{scale} as positive numerics.
+ The Weibull distribution is parameterised with \code{shape}, \code{scale}, and \code{altscale} as positive numerics.
 }
 
 \section{Public Variables}{
@@ -116,12 +116,14 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
 \examples{
+# Different parameterisations
+Weibull$new(shape = 1, scale = 2)
+Weibull$new(shape = 2, altscale = 2)
+
 x <- Weibull$new(shape = 2, scale = 3)
 
 # Update parameters

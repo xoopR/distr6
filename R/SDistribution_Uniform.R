@@ -3,6 +3,7 @@
 # Uniform Distribution Documentation
 #-------------------------------------------------------------
 #' @name Uniform
+#' @author Yumi Zhou
 #' @template SDist
 #' @templateVar ClassName Uniform
 #' @templateVar DistName Uniform
@@ -125,3 +126,9 @@ Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Unif", ClassName = "Uniform",
+                                                     Type = "\u211D", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

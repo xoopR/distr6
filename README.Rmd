@@ -24,7 +24,7 @@ set.seed(42)
 
 ## What is distr6?
 
-distr6 is a unified and clean interface to organise the probability distributions implemented in R into one R6 object oriented package, as well as adding distributions yet to implemented in R, currently we have 36 probability distributions as well as 11 kernels. Building the package from the ground up and making use of tried and tested design patterns (as per Gamma et al. 1994), distr6 aims to make probability distributions easy to use, understand and analyse.
+distr6 is a unified and clean interface to organise the probability distributions implemented in R into one R6 object oriented package, as well as adding distributions yet to implemented in R, currently we have 42 probability distributions as well as 11 kernels. Building the package from the ground up and making use of tried and tested design patterns (as per Gamma et al. 1994), distr6 aims to make probability distributions easy to use, understand and analyse.
 
 distr6 extends the work of Peter Ruckdeschel, Matthias Kohl et al. who created the first object-oriented (OO) interface for distributions using S4. Their [distr package](http://distr.r-forge.r-project.org/) is currently the gold-standard in R for OO distribution handling. Using R6 we aim to take this even further and to create a scalable interface that can continue to grow with the community. Full details of the API and class structure can be seen in the [distr6 website](https://alan-turing-institute.github.io/distr6/).
 
@@ -114,9 +114,8 @@ remotes::install_github("alan-turing-institute/distr6")
 
 ## Future Plans
 
-The v1.0 release focuses on the core features of the SDistribution class as well as analytic methods in wrappers including but not limit to truncation, huberization, product distributions and mixture distributions. In our next release we plan to include
+Our plans for the next update include
 
-* A `plot` method for Distributions
 * A generalised `qqplot` for comparing any distributions
 * A finalised `FunctionImputation` decorator with different imputation strategies
 * Discrete distribution subtraction (negative convolution)
@@ -130,4 +129,4 @@ distr6 is released under the [MIT licence](https://opensource.org/licenses/MIT) 
 
 ## Acknowledgements
 
-distr6 is the result of a collaboration between many people, universities and institutions across the world, without whom the speed and performance of the package would not be up to the standard it is. Firstly we acknowledge all the work of Prof. Dr. Peter Ruckdeschel and Prof. Dr. Matthias Kohl in developing the original distr family of packages. Secondly their significant contributions to the planning and design of distr6 including the distribution and probability family class structures. A team of undergraduates at University College London implemented many of the probability distributions and are designing the plotting interface. The team consists of Shen Chen (@ShenSeanChen), Jordan Deenichin (@jdeenichin), Chengyang Gao (@garoc371), Chloe Zhaoyuan Gu (@gzy823), Yunjie He (@RoyaHe), Xiaowen Huang (@w090613), Shuhan Liu (@shliu99), Runlong Yu (@Edwinyrl), Chijing Zeng (@britneyzeng) and Qian Zhou (@yumizhou47). We also want to thank Prof. Dr. Bernd Bischl for discussions about design choices and useful features, particularly advice on the ParameterSet class. Finally University College London and The Alan Turing Institute for hosting workshops, meetings and providing coffee whenever needed.
+distr6 is the result of a collaboration between many people, universities and institutions across the world, without whom the speed and performance of the package would not be up to the standard it is. Firstly we acknowledge all the work of Prof. Dr. Peter Ruckdeschel and Prof. Dr. Matthias Kohl in developing the original distr family of packages. Secondly their significant contributions to the planning and design of distr6 including the distribution and probability family class structures. A team of undergraduates at University College London implemented many of the probability distributions and designed the plotting interface. The team consists of Shen Chen (@ShenSeanChen), Jordan Deenichin (@jdeenichin), Chengyang Gao (@garoc371), Chloe Zhaoyuan Gu (@gzy823), Yunjie He (@RoyaHe), Xiaowen Huang (@w090613), Shuhan Liu (@shliu99), Runlong Yu (@Edwinyrl), Chijing Zeng (@britneyzeng) and Qian Zhou (@yumizhou47). We also want to thank Prof. Dr. Bernd Bischl for discussions about design choices and useful features, particularly advice on the ParameterSet class. Finally University College London and The Alan Turing Institute for hosting workshops, meetings and providing coffee whenever needed.

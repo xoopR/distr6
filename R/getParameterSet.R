@@ -52,6 +52,20 @@ getParameterSet.Beta <- function(x, shape1, shape2, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.BetaNoncentral <- function(x, shape1, shape2, location, verbose = FALSE){
+
+  if(verbose) message("Parameterised with shape1, shape2 and location.")
+
+
+  ps <- ParameterSet$new(id = list("shape1","shape2", "location"), value = list(1,1, 0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Shape Parameter (alpha)","Shape Parameter (beta)", "Non-centrality parameter"))
+
+  return(ps)
+}
+
 getParameterSet.Binomial <- function(x, size, prob, qprob = NULL, verbose = FALSE){
 
   prob.bool = qprob.bool = FALSE
@@ -109,10 +123,23 @@ getParameterSet.ChiSquared <- function(x, df, verbose = FALSE){
   if(verbose) message("Parameterised with df.")
 
   ps <- ParameterSet$new(id = list("df"), value = list(1),
-                         support = list(Naturals$new()),
+                         support = list(PosReals$new(zero = TRUE)),
                          settable = list(TRUE),
-                         updateFunc = list(NA),
+                         updateFunc = NULL,
                          description = list("Degrees of Freedom"))
+
+  return(ps)
+}
+
+getParameterSet.ChiSquaredNoncentral <- function(x, df, location, verbose = FALSE){
+
+  if(verbose) message("Parameterised with df and location.")
+
+  ps <- ParameterSet$new(id = list("df", "location"), value = list(1, 0),
+                         support = list(PosReals$new(zero = TRUE), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Degrees of Freedom", "Non-centrality parameter"))
 
   return(ps)
 }
@@ -199,6 +226,18 @@ getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
                          updateFunc = NULL,
                          description = list("Degrees of freedom 1",
                                             "Degrees of freedom 2"))
+}
+
+getParameterSet.FDistributionNoncentral <- function(x, df1, df2, location, verbose = FALSE){
+  if (verbose) message("Parameterised with df1, df2 and location.")
+
+  ps <- ParameterSet$new(id = list("df1", "df2", "location"), value = list(1, 1, 0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
+                         settable = list(TRUE, TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Degrees of freedom 1",
+                                            "Degrees of freedom 2",
+                                            "Non-centrality parameter"))
 }
 
 getParameterSet.Frechet <- function(x, shape, scale, minimum, verbose = FALSE){
@@ -676,6 +715,19 @@ getParameterSet.StudentT <- function(x, df, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.StudentTNoncentral <- function(x, df, location, verbose = FALSE){
+
+  if(verbose) message("Parameterised with df and location.")
+
+  ps <- ParameterSet$new(id = list("df", "location"), value = list(1, 0),
+                         support = list(PosReals$new(), Reals$new()),
+                         settable = list(TRUE, TRUE),
+                         updateFunc = NULL,
+                         description = list("Degrees of Freedom", "Non-centrality parameter"))
+
+  return(ps)
+}
+
 getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric, verbose = FALSE){
 
   checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
@@ -734,15 +786,24 @@ getParameterSet.Wald <- function(x, mean, shape, verbose = FALSE){
   return(ps)
 }
 
-getParameterSet.Weibull <- function(x, shape, scale, verbose = FALSE){
+getParameterSet.Weibull <- function(x, shape, scale, altscale, verbose = FALSE){
 
-  if(verbose) message("Parameterised with shape and scale.")
+  scale.bool = altscale.bool = FALSE
 
-  ps <-  ParameterSet$new(id = list("shape","scale"), value = list(1,1),
-                          support = list(PosReals$new(), PosReals$new()),
-                          settable = list(TRUE,TRUE),
-                          updateFunc = NULL,
-                          description = list("Shape paramer", "Scale parameter"))
+  if(!is.null(altscale)){
+    if(verbose) message("Parameterised with shape and altscale.")
+    altscale.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with shape and scale.")
+    scale.bool = TRUE
+  }
+
+  ps <-  ParameterSet$new(id = list("shape","scale","altscale"), value = list(1,1,1),
+                          support = list(PosReals$new(), PosReals$new(), PosReals$new()),
+                          settable = list(TRUE,scale.bool,altscale.bool),
+                          updateFunc = list(NA, NA,
+                                            function(self) self$getParameterValue('scale')^-self$getParameterValue('shape')),
+                          description = list("Shape paramer", "Scale parameter", "Alternate scale parameter"))
 
   return(ps)
 }

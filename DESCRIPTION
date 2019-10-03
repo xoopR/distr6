@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.1.1
+Version: 1.3.0
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -62,9 +62,26 @@ Authors@R:
              role = "ctb",
              email = "zcakqz1@ucl.ac.uk") 
         )
-Description: An R6 object oriented distributions package. Unified interface for 37 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation. Design patterns including wrappers and decorators are described in Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of probability distributions including d/p/q/r functions and results we refer to McLaughlin, M. P. (2001). Additionally Devroye (1986, ISBN:0-387-96305-7) for sampling the Dirichlet distribution, Gentle (2009) <doi:10.1007/978-0-387-98144-4> for sampling the Multivariate Normal distribution and Michael et al. (1976) <doi:10.2307/2683801> for sampling the Wald distribution.
-Imports: checkmate, R6, R62S3 (>= 1.3.1), GoFKernel, stats, extraDistr, utils, expint, data.table, pracma
-Suggests: knitr, testthat, devtools, rmarkdown, magrittr, actuar, remotes
+Description: An R6 object oriented distributions package. Unified interface for 42 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation. Design patterns including wrappers and decorators are described in Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of probability distributions including d/p/q/r functions and results we refer to McLaughlin, M. P. (2001). Additionally Devroye (1986, ISBN:0-387-96305-7) for sampling the Dirichlet distribution, Gentle (2009) <doi:10.1007/978-0-387-98144-4> for sampling the Multivariate Normal distribution and Michael et al. (1976) <doi:10.2307/2683801> for sampling the Wald distribution.
+Imports:
+  checkmate,
+  R6,
+  R62S3 (>= 1.3.1),
+  stats,
+  utils,
+  data.table,
+  pracma
+Suggests:
+  expint,
+  GoFKernel,
+  knitr,
+  testthat,
+  devtools,
+  rmarkdown,
+  magrittr,
+  extraDistr,
+  actuar,
+  remotes
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
@@ -74,6 +91,7 @@ VignetteBuilder:
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
+    'distr6_globals.R'
     'RSmisc_helpers.R'
     'SetInterval_operations.R'
     'Distribution.R'
@@ -102,16 +120,19 @@ Collate:
     'SDistribution_Arcsine.R'
     'SDistribution_Bernoulli.R'
     'SDistribution_Beta.R'
+    'SDistribution_BetaNoncentral.R'
     'SDistribution_Binomial.R'
     'SDistribution_Categorical.R'
     'SDistribution_Cauchy.R'
     'SDistribution_ChiSquared.R'
+    'SDistribution_ChiSquaredNoncentral.R'
     'SDistribution_Degenerate.R'
     'SDistribution_Dirichlet.R'
     'SDistribution_DiscreteUniform.R'
     'SDistribution_Empirical.R'
     'SDistribution_Exponential.R'
     'SDistribution_FDistribution.R'
+    'SDistribution_FDistributionNoncentral.R'
     'SDistribution_Frechet.R'
     'SDistribution_Gamma.R'
     'SDistribution_Geometric.R'
@@ -132,10 +153,12 @@ Collate:
     'SDistribution_Poisson.R'
     'SDistribution_Rayleigh.R'
     'SDistribution_StudentT.R'
+    'SDistribution_StudentTNoncentral.R'
     'SDistribution_Triangular.R'
     'SDistribution_Uniform.R'
     'SDistribution_Wald.R'
     'SDistribution_Weibull.R'
+    'SDistribution_WeightedDiscrete.R'
     'SetInterval_Set.R'
     'Wrapper.R'
     'Wrapper_ArrayDistribution.R'
@@ -152,10 +175,12 @@ Collate:
     'distr6-deprecated.R'
     'distr6.R'
     'distr6.news.R'
-    'distr6_globals.R'
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'
+    'lines_continuous.R'
+    'lines_discrete.R'
+    'lines.R'
     'listDecorators.R'
     'listDistributions.R'
     'listKernels.R'
@@ -164,6 +189,9 @@ Collate:
     'makeUniqueDistributions.R'
     'measures.R'
     'qqplot.R'
+    'plot_continuous.R'
+    'plot_discrete.R'
+    'plot.R'
     'simulateEmpiricalDistribution.R'
     'skewType.R'
     'zzz.R'

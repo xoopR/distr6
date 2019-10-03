@@ -1,4 +1,7 @@
-# distr6 <img src="man/figures/logo.png" align="right" alt="" width="120" />
+distr6
+================
+
+<img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![Travis Build
 Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](https://travis-ci.com/alan-turing-institute/distr6)
@@ -16,9 +19,9 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 ## What is distr6?
 
 distr6 is a unified and clean interface to organise the probability
-distributions implemented in R into one R6 object oriented package, As
-well as adding distributions that are not yet implemented in R. Currently we have
-37 probability distributions as well as 11 kernels. Building the package
+distributions implemented in R into one R6 object oriented package, as
+well as adding distributions yet to implemented in R, currently we have
+42 probability distributions as well as 11 kernels. Building the package
 from the ground up and making use of tried and tested design patterns
 (as per Gamma et al. 1994), distr6 aims to make probability
 distributions easy to use, understand and analyse.
@@ -128,7 +131,7 @@ N <- Normal$new()
 MixtureDistribution$new(list(B,N), weights = c(0.1, 0.9))
 #> BinomMixNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
 ProductDistribution$new(list(B,N))
-#> BinomXNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
+#> BinomProdNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
 ```
 
 Additionally we introduce a SetSymbol class for a purely symbolic
@@ -180,12 +183,8 @@ remotes::install_github("alan-turing-institute/distr6")
 
 ## Future Plans
 
-The v1.0 release focuses on the core features of the SDistribution class
-as well as analytic methods in wrappers including but not limit to
-truncation, huberization, product distributions and mixture
-distributions. In our next release we plan to include
+Our plans for the next update include
 
-  - A `plot` method for Distributions
   - A generalised `qqplot` for comparing any distributions
   - A finalised `FunctionImputation` decorator with different imputation
     strategies
@@ -219,7 +218,7 @@ Prof. Dr. Matthias Kohl in developing the original distr family of
 packages. Secondly their significant contributions to the planning and
 design of distr6 including the distribution and probability family class
 structures. A team of undergraduates at University College London
-implemented many of the probability distributions and are designing the
+implemented many of the probability distributions and designed the
 plotting interface. The team consists of Shen Chen (@ShenSeanChen),
 Jordan Deenichin (@jdeenichin), Chengyang Gao (@garoc371), Chloe
 Zhaoyuan Gu (@gzy823), Yunjie He (@RoyaHe), Xiaowen Huang (@w090613),

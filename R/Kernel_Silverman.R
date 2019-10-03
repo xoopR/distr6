@@ -51,3 +51,5 @@ Silverman$set("public","initialize",function(decorators = NULL){
                    support = Reals$new(),  symmetric = TRUE)
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING
+
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Silv", ClassName = "Silverman", Support = "\u211D"))

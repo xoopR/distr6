@@ -128,3 +128,10 @@ Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL,
 
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Log", ClassName = "Logarithmic",
+                                                     Type = "\u21150", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "extraDistr"))
+

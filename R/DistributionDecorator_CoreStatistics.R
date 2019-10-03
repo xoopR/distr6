@@ -56,7 +56,7 @@
 #' @export
 NULL
 CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
-
+.distr6$decorators <- append(.distr6$decorators, list(CoreStatistics = CoreStatistics))
 #-------------------------------------------------------------
 # mgf
 #-------------------------------------------------------------
@@ -397,7 +397,7 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     formals(trafo) = alist(x = )
   }
 
-  if(testDiscrete(self)){
+  if(self$support()$class() == "integer"){
     rng = try(self$inf():self$sup(),silent = T)
     if(inherits(rng,"try-error")){
       lower = ifelse(self$inf() == -Inf, -1e03, self$inf())
@@ -408,7 +408,7 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     xs = trafo(rng)
     xs[pdfs==0] = 0
     return(sum(pdfs * xs))
-  } else if(testContinuous(self)){
+  } else {
     message(.distr6$message_numeric)
     return(suppressMessages(integrate(function(x) {
       pdfs = self$pdf(x)

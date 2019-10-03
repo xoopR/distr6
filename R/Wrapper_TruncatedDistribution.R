@@ -40,11 +40,13 @@
 #' @export
 NULL
 TruncatedDistribution <- R6::R6Class("TruncatedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+.distr6$wrappers <- append(.distr6$wrappers, list(TruncatedDistribution = TruncatedDistribution))
+
 TruncatedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){
 
   assertDistribution(distribution)
 
-  if(is.null(distribution$cdf(1)) | is.null(distribution$pdf(1)))
+  if(!distribution$.__enclos_env__$private$.isCdf | !distribution$.__enclos_env__$private$.isPdf)
     stop("pdf and cdf is required for truncation. Try decorate(Distribution, FunctionImputation) first.")
 
   if(is.null(lower))

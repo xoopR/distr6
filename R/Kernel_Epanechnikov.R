@@ -54,3 +54,5 @@ Epanechnikov$set("public","initialize",function(decorators = NULL){
                    support = Interval$new(-1, 1),  symmetric = TRUE)
   invisible(self)
 })
+
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]"))

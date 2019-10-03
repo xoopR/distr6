@@ -83,3 +83,10 @@ Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = N
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Gomp", ClassName = "Gompertz",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))
+

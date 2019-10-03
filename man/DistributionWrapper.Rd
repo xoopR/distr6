@@ -10,9 +10,9 @@ Returns error. Abstract classes cannot be constructed directly.
 The abstract parent class to wrappers.
 }
 \details{
-Wrapping is the process of adapting the interface of a class into another (Gamma et al. 1994).
-After wrapping, the parameters of a distribution are prefixed with the distribution name to ensure
-uniqueness of parameter IDs.
+Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped distribution
+has the same methods and fields as an unwrapped one. After wrapping, the parameters of a distribution
+are prefixed with the distribution name to ensure uniqueness of parameter IDs.
 
 Abstract classes cannot be implemented directly. Use the \code{listWrappers} function to see constructable wrappers.
 }
@@ -62,8 +62,17 @@ Abstract classes cannot be implemented directly. Use the \code{listWrappers} fun
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
+  }
+}
+
+\section{Active Bindings}{
+
+ \tabular{ll}{
+  \strong{Active Binding} \tab \strong{Link} \cr
+  \code{isPdf} \tab \code{\link{isPdf}} \cr
+  \code{isCdf} \tab \code{\link{isCdf}} \cr
+  \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+  \code{isRand} \tab \code{\link{isRand}} \cr
   }
 }
 

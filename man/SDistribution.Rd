@@ -79,8 +79,17 @@ Abstract class that cannot be constructed directly.
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
+  }
+}
+
+\section{Active Bindings}{
+
+ \tabular{ll}{
+  \strong{Active Binding} \tab \strong{Link} \cr
+  \code{isPdf} \tab \code{\link{isPdf}} \cr
+  \code{isCdf} \tab \code{\link{isCdf}} \cr
+  \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+  \code{isRand} \tab \code{\link{isRand}} \cr
   }
 }
 

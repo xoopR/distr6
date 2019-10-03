@@ -13,7 +13,8 @@ A generalised distribution object for defining custom probability distributions
 \section{Constructor}{
  Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
 symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL)
+parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL,
+suppressMoments = TRUE)
 }
 
 \section{Constructor Arguments}{
@@ -33,7 +34,8 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
 \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
 \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
 \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-\code{description} \tab character \tab short description of distribution. \cr
+\code{description} \tab character \tab Short description of distribution. \cr
+\code{suppressMoments} \tab character \tab See Details. \cr
 }
 }
 
@@ -58,6 +60,10 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
   If not given these are automatically filled from \code{type} and \code{support}.
+
+  \code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
+  calculated in construction. This has the benefit of drastically decreasing computational time but
+  at the cost of losing these in the distribution properties.
 }
 
 \section{Public Variables}{
@@ -115,8 +121,17 @@ parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, d
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
+  }
+}
+
+\section{Active Bindings}{
+
+ \tabular{ll}{
+  \strong{Active Binding} \tab \strong{Link} \cr
+  \code{isPdf} \tab \code{\link{isPdf}} \cr
+  \code{isCdf} \tab \code{\link{isCdf}} \cr
+  \code{isQuantile} \tab \code{\link{isQuantile}} \cr
+  \code{isRand} \tab \code{\link{isRand}} \cr
   }
 }
 

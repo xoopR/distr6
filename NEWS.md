@@ -1,4 +1,4 @@
-# distr6 1.1.0
+# distr6 1.3.0
 
 ## Major Updates
 
@@ -8,14 +8,50 @@
 
 ### Added Functions and Classes
 
+- Added a `plot` and `lines` function for plotting and superimposing `distr6` objects
+
 ### Deprecated Functions
 
+- None
+
 ### Updated Functions
+
+- None
+
+## Patches
+
+- None
+
+# distr6 1.2.0
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- Added non-central F, T, Chi-Squared, and Beta distributions
+- Added WeightedDiscrete distribution. This allows users to supply a data.frame of samples and pdf/cdfs for more efficient usage with empirical discrete estimators (e.g. Kaplan-Meier)
+
+### Deprecated Functions
+
+- None
+
+### Updated Functions
+
+- Added the common survival parameterisation of Weibull distribution
+- Updated the listX functions to make them quicker and functional when distr6 is not attached
+- Added `suppressMoments` argument to `Distribution` constructor to allow for faster construction
 
 ## Patches
 
 - Added `errormsg` argument to assertions so a custom error message can be provided
-
+- Fixed error in quantile function in `Empirical` that was causing results to be dropped
+- Fixed bug in `TruncatedDistribution` that prevented multivariate distributions being truncated
+- Fixed error in variance of `Empirical` that was calculating sample not population 
+- Moved rare imports to suggests
 
 # distr6 1.1.0
 

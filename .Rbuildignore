@@ -16,3 +16,5 @@ README\.Rmd
 man-roxygen
 ^doc$
 ^Meta$
+^.*\.Rproj$
+^\.Rproj\.user$

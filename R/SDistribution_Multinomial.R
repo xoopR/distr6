@@ -157,3 +157,10 @@ Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), d
                    variateForm = "multivariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Multinom", ClassName = "Multinomial",
+                                                     Type = "\u21150^K", ValueSupport = "discrete",
+                                                     VariateForm = "multivariate",
+                                                     Package = "stats"))
+

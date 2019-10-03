@@ -51,7 +51,7 @@ NULL
 #-------------------------------------------------------------
 Hypergeometric <- R6::R6Class("Hypergeometric", inherit = SDistribution, lock_objects = FALSE)
 Hypergeometric$set("public", "name", "Hypergeometric")
-Hypergeometric$set("public", "short_name", "Hypergeom")
+Hypergeometric$set("public", "short_name", "Hyper")
 Hypergeometric$set("public", "description", "Hypergeometric Probability Distribution")
 Hypergeometric$set("public","package","stats")
 
@@ -151,4 +151,9 @@ Hypergeometric$set("public","initialize",function(size = 50, successes = 5, fail
     invisible(self)
 })
 
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Hyper", ClassName = "Hypergeometric",
+                                                     Type = "\u21150", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))
 

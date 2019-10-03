@@ -51,3 +51,5 @@ Sigmoid$set("public","initialize",function(decorators = NULL){
                    symmetric = TRUE)
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING
+
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D"))

@@ -54,3 +54,5 @@ Triweight$set("public","initialize",function(decorators = NULL){
                    support = Interval$new(-1, 1),  symmetric = TRUE)
   invisible(self)
 }) # QUANTILE & VAR MISSING
+
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]"))

@@ -122,8 +122,6 @@ Also known as the Gaussian distribution.
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
@@ -132,6 +130,7 @@ Also known as the Gaussian distribution.
 Normal$new(var = 1, mean = 1)
 Normal$new(prec = 2, mean = 1)
 Normal$new(mean = 1, sd = 2)
+
 x <- Normal$new(verbose = TRUE) # Standard normal default
 
 # Update parameters

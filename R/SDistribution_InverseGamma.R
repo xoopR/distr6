@@ -126,3 +126,8 @@ InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators 
   invisible(self)
 })
 
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "invgam", ClassName = "InverseGamma",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "extraDistr"))

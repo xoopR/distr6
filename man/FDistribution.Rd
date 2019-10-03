@@ -116,8 +116,6 @@ omitted as no closed form analytic expression could be found, decorate with \cod
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
@@ -146,5 +144,5 @@ McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link{Normal}} and \code{\link{ChiSquared}} for the Normal and Chi-Squared distributions. \code{\link{CoreStatistics}} for numerical results.
+\code{\link{listDistributions}} for all available distributions. \code{\link{Normal}}, \code{\link{ChiSquared}} and \code{\link{FDistributionNoncentral}} for the Normal, Chi-Squared and noncentral F distributions. \code{\link{CoreStatistics}} for numerical results.
 }

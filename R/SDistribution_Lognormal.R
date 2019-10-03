@@ -65,7 +65,7 @@ NULL
 #-------------------------------------------------------------
 Lognormal <- R6::R6Class("Lognormal", inherit = SDistribution, lock_objects = F)
 Lognormal$set("public","name","Log-Normal")
-Lognormal$set("public","short_name","Lognormal")
+Lognormal$set("public","short_name","Lnorm")
 Lognormal$set("public","description","Log-Normal Probability Distribution.")
 Lognormal$set("public","package","stats")
 
@@ -152,3 +152,8 @@ Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NU
   invisible(self)
 })
 
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Lnorm", ClassName = "Lognormal",
+                                                     Type = "\u211D+", ValueSupport = "continuous",
+                                                     VariateForm = "univariate",
+                                                     Package = "stats"))

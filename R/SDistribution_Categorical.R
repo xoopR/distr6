@@ -131,3 +131,9 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
                    variateForm = "univariate")
   invisible(self)
 })
+
+.distr6$distributions = rbind(.distr6$distributions,
+                              data.table::data.table(ShortName = "Cat", ClassName = "Categorical",
+                                                     Type = "\u2102", ValueSupport = "discrete",
+                                                     VariateForm = "univariate",
+                                                     Package = "distr6"))

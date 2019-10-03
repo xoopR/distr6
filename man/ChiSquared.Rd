@@ -112,8 +112,6 @@ The distribution is supported on the Positive Reals.
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
@@ -121,7 +119,7 @@ The distribution is supported on the Positive Reals.
 x = ChiSquared$new(df = 2)
 
 # Update parameters
-x$setParameterValue(df = 3)
+x$setParameterValue(location = 3)
 x$parameters()
 
 # d/p/q/r
@@ -142,5 +140,5 @@ McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link{Normal}} for the Normal distribution.
+\code{\link{listDistributions}} for all available distributions. \code{\link{Normal}} for the Normal distribution, \code{\link{ChiSquaredNoncentral}} for the noncentral Chi-Squared distribution.
 }

@@ -16,14 +16,16 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 This document is for understanding how and when distr6 uses analytical or numerical results. For a tutorial on how to use decorators, [see here](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html).
 
-distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernels, of class `Kernel`, should only contain analytical methods. This ensures that all results are as precise as possible and ensure optimal efficiency. The figure below gives a visual representation of how this looks. 
+distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernels, of class `Kernel`, should only contain analytical methods. This ensures that all results are as precise as possible and ensure optimal efficiency.
+
+<!-- The figure below gives a visual representation of how this looks.  -->
 
 It was not a straightforward decision deciding which methods should be included in the core distribution interfaces. We made the decision that methods involving infinite sums should not be included as any approximation via numerical integration would not be sufficiently accurate. However we allowed the use of the `beta`, `gamma`, and `digamma` functions from base R packages, as these are widely used in the community, have good documentation and have been widely tested. We additionally chose to include the `gammaz` and `gammainc` methods from `pracma` and `expint`, both packages use C implementations and appear to be in wide usage although we encourage the user to examine these further if interested.
 
 For distributions where no closed form analytical expression can be found, details of this are found in the 'Details' section of the distribution's help page, and attempting to run the function will throw an error. To impute numerical results, decorators are used.
 
 
-![](decorators.png)
+<!-- ![](img/decorators.png) -->
 
 
 Currently distr6 has three decorators:
