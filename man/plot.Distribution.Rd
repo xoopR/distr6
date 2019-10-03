@@ -4,7 +4,7 @@
 \alias{plot.Distribution}
 \title{Plot Distribution Functions for a distr6 Object}
 \usage{
-\method{plot}{Distribution}(x, fun = c("pdf", "cdf"), npoints = 3000,
+plot.Distribution(x, fun = c("pdf", "cdf"), npoints = 3000,
   plot = TRUE, ask = FALSE, arrange = TRUE, ...)
 }
 \arguments{
@@ -20,7 +20,7 @@
 
 \item{arrange}{logical; if TRUE (default), margins are automatically adjusted with \code{\link[graphics]{layout}} to accomodate all plotted functions.}
 
-\item{...}{graphical parameters to be passed through to plotting functions.}
+\item{...}{graphical parameters, see details.}
 }
 \description{
 Six plots, which can be selected with \code{fun} are available for discrete and
@@ -48,4 +48,7 @@ x = plot(Gamma$new(), plot = FALSE)
 \seealso{
 \code{\link{lines.Distribution}} for superimposing a distr6 object and \code{\link{listDistributions}}
 for plottable distributions.
+}
+\author{
+Chengyang Gao, Runlong Yu and Shuhan Liu
 }

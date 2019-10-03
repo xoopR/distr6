@@ -1,12 +1,11 @@
 #' @include plot_discrete.R plot_continuous.R
 #'
 #' @title Plot Distribution Functions for a distr6 Object
+#' @author Chengyang Gao, Runlong Yu and Shuhan Liu
 #'
 #' @description Six plots, which can be selected with \code{fun} are available for discrete and
 #' continuous univarite distributions: pdf, cdf, quantile, survival, hazard and cumulative
 #' hazard. By default, the first two are plotted side by side.
-#'
-#' @name plot.Distribution
 #'
 #' @param x \code{distr6} object.
 #' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard", and "all"; partial matching available.
@@ -14,7 +13,7 @@
 #' @param plot logical; if TRUE (default), figures are displayed in the plot window; otherwise a \code{data.table} of points and calculated values is returned.
 #' @param ask logical; if TRUE, the user is asked before each plot, see \code{\link[graphics]{par}}.
 #' @param arrange logical; if TRUE (default), margins are automatically adjusted with \code{\link[graphics]{layout}} to accomodate all plotted functions.
-#' @param ... graphical parameters to be passed through to plotting functions.
+#' @param ... graphical parameters, see details.
 #'
 #'
 #' @details

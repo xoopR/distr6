@@ -13,7 +13,7 @@
 
 \item{npoints}{number of evaluation points.}
 
-\item{...}{graphical parameters to be passed through to plotting functions.}
+\item{...}{graphical parameters.}
 }
 \description{
 One of six plots can be selected to ber superimposed in the plotting window,
@@ -46,4 +46,7 @@ lines(Binomial$new(), "cdf")
 }
 \seealso{
 \code{\link{plot.Distribution}} for plotting a \code{distr6} object.
+}
+\author{
+Chengyang Gao, Runlong Yu and Shuhan Liu
 }

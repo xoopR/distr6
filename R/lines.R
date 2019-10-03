@@ -1,16 +1,15 @@
 #' @include lines_discrete.R lines_continuous.R
 #'
 #' @title Superimpose Distribution Functions Plots for a distr6 Object
+#' @author Chengyang Gao, Runlong Yu and Shuhan Liu
 #'
 #' @description One of six plots can be selected to ber superimposed in the plotting window,
 #' including: pdf, cdf, quantile, survival, hazard and cumulative hazard.
 #'
-#' @name lines.Distribution
-#'
 #' @param x \code{distr6} object.
 #' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", and "cumhazard"; partial matching available.
 #' @param npoints number of evaluation points.
-#' @param ... graphical parameters to be passed through to plotting functions.
+#' @param ... graphical parameters.
 #'
 #' @details Unlike the \code{\link{plot.Distribution}} function, no internal checks are performed
 #' to ensure that the added plot makes sense in the context of the current plotting window. Therefore
@@ -38,8 +37,6 @@
 #' }
 #'
 #' @export
-#'
-#'
 lines.Distribution <- function(x, fun, npoints = 3000,...){
 
   #######################################################################

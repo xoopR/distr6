@@ -81,8 +81,8 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
     data$pdf = c(data$cdf[1], diff(data$cdf))
   }
 
-  checkmate::assertNumeric(data$pdf, lower = 0, upper = 1)
-  checkmate::assertNumeric(data$cdf, lower = 0, upper = 1)
+  checkmate::assertNumeric(data$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
+  checkmate::assertNumeric(data$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid")
 
   private$.data <- data
 
@@ -94,8 +94,11 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
   cdf <- function(x1){
     return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$x), "cdf"])))
   }
-  quantile <- function(x1){
-    return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$cdf), "x"])))
+  quantile <- function(p){
+    mat = p < matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+    which = apply(mat, 1, function(x) which(x)[1])
+    which[is.na(which)] = ncol(mat)
+    return(as.numeric(unlist(private$.data[which, "x"])))
   }
   rand <- function(n){
     return(sample(private$.data$x, n, TRUE, private$.data$pdf))
