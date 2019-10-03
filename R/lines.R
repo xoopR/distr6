@@ -1,4 +1,39 @@
+#' @title Add Distribution Lines to a plot
+#'
+#' @description
+#' A function that adds pdf/pmf, cdf, quantile, survival, hazard and cumulative
+#'   hazard lines of a discrete or continuous distribution to an exisitng plot.
+#'
+#' @name lines.Distribution
+#'
+#' @usage ## S3 method for class "Distribution"
+#'   lines(x, fun, npoints = 3000,...)
+#'
+#' @param x A distribution object.
+#' @param fun A list of plottable functions, either one or more of "pdf","cdf","quantile", "survival", "hazard" and "cumhazard".
+#' @param npoints number of evaluation points.
+#' @param ... graphical parameters to be passed through to plotting methods, see \code{\link[graphics]{par}}.
+#'
+#'
+#'
+#' @details
+#' The lines function only works for overlaying distributions of the same value
+#' support type. Therefore bugs can be expected when trying to add continuous to
+#' discrete distributions, and vice versa. The users are responsible for adjusting
+#' the limits of x and y axes based on the parameters of distributions they choose.
+#'
+#'
+#'
+#'
+#' @seealso \code{\link{plot.Distribution}} for drawing a distribution plot.
+#'
+#' @examples
+#' plot(Normal$new(), "pdf")
+#' lines(Normal$new(mean = 0.5, sd = 0.5), "pdf")
+#'
 #' @export
+#'
+#'
 lines.Distribution <- function(x, fun, npoints = 3000,...){
 
   #######################################################################
@@ -55,10 +90,10 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
     plotStructure$cumhazard <- -log(1 - plotStructure$cdf)
 
   if(testContinuous(x)){
-   .plot_continuous_lines(fun,plotStructure,...)}
+    .plot_continuous_lines(fun,plotStructure,...)}
   # discrete case
   if(testDiscrete(x)){
-   .plot_discrete_lines(fun,plotStructure,...)}
+    .plot_discrete_lines(fun,plotStructure,...)}
 
   invisible(plotStructure)
 }
@@ -79,7 +114,7 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
     lines(data.frame(x = plotStructure$points, y = plotStructure$hazard),...)
   if("cumhazard" %in% fun)
     lines(data.frame(plotStructure$points, y = plotStructure$cumhazard),...)
-  }
+}
 
 # FUN_FOUR: discrete distribution: adding (a) line(s)
 .plot_discrete_lines <- function(fun,plotStructure,...){
@@ -88,16 +123,16 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
           type = "h",...)
 
   if("cdf" %in% fun){
-      points(x = plotStructure$points, y = plotStructure$cdf, pch = 16,...)
-      segments(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-                y0 = plotStructure$cdf,...)
+    points(x = plotStructure$points, y = plotStructure$cdf, pch = 16,...)
+    segments(x0 = plotStructure$points, x1 = plotStructure$points + 1,
+             y0 = plotStructure$cdf,...)
 
   }
 
   if("quantile" %in% fun){
-      points(x = plotStructure$cdf, y = plotStructure$points, pch = 16,...)
-      segments(x0 = plotStructure$cdf, y0 = plotStructure$points,
-               y1 = plotStructure$points+1,...)
+    points(x = plotStructure$cdf, y = plotStructure$points, pch = 16,...)
+    segments(x0 = plotStructure$cdf, y0 = plotStructure$points,
+             y1 = plotStructure$points+1,...)
   }
   if("survival" %in% fun){
     points(x = plotStructure$points, y = plotStructure$survival, pch = 16,...)
@@ -115,7 +150,5 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
   }
 
 }
-
-
 
 
