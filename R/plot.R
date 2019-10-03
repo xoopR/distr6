@@ -54,6 +54,9 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   if("all" %in% fun)
     fun = plotFuns[-7]
 
+  if(any(is.na(fun)))
+    stop("Function unrecognised, should be one of: ", paste0(plotFuns,collapse=","))
+
   if("cdf" %in% fun & !x$isCdf){
     message("This distribution does not have a cdf expression. Use the
             FunctionImputation decorator to impute a numerical cdf.")

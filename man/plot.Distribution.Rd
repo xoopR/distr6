@@ -10,7 +10,7 @@
 \arguments{
 \item{x}{\code{distr6} object.}
 
-\item{fun}{vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.}
+\item{fun}{vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard", and "all"; partial matching available.}
 
 \item{npoints}{number of evaluation points.}
 
@@ -39,9 +39,10 @@ all plots. For maximum flexibility in plotting, set \code{arrange} and \code{ask
 }
 \examples{
 plot(Normal$new())
-plot(Gamma$new(), ask = TRUE)
-plot(Binomial$new(), fun = "pdf")
-plot(Gamma$new(), plot = FALSE)
+plot(Normal$new(), lwd = 2, col = "red")
+plot(Geometric$new(), ask = TRUE)
+plot(Binomial$new(), fun = "all")
+x = plot(Gamma$new(), plot = FALSE)
 
 }
 \seealso{

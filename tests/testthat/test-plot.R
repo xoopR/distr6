@@ -16,10 +16,15 @@ test_that("missing d/p/q",{
                               "does not have a quantile expression"))
 })
 
+test_that("errors",{
+  expect_error(plot(Binomial$new(), fun = "los"), 'Function unrecognised')
+})
+
 test_that("silent",{
   expect_silent(plot(Binomial$new(), "all"))
   expect_silent(plot(Binomial$new()))
   expect_silent(plot(Binomial$new(), "pdf"))
+  expect_silent(plot(Binomial$new(), c("pdf","cdf","quantile")))
   expect_silent(plot(Binomial$new(), plot = FALSE))
   expect_silent(plot(Binomial$new(), arrange = FALSE))
   expect_silent(plot(Normal$new(), "all"))
@@ -27,6 +32,7 @@ test_that("silent",{
   expect_silent(plot(Normal$new(), "pdf"))
   expect_silent(plot(Normal$new(), plot = FALSE))
   expect_silent(plot(Normal$new(), arrange = FALSE))
+  expect_silent(plot(Geometric$new(), "all"))
 })
 
 test_that("structure",{

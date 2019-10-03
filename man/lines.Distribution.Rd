@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{\code{distr6} object.}
 
-\item{fun}{vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard" and "cumhazard"; partial matching available.}
+\item{fun}{vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", and "cumhazard"; partial matching available.}
 
 \item{npoints}{number of evaluation points.}
 
@@ -26,7 +26,7 @@ this function assumes that the current plot is of the same value support, see ex
 }
 \examples{
 plot(Normal$new(mean = 2), "pdf")
-lines(Normal$new(mean = 3), "pdf")
+lines(Normal$new(mean = 3), "pdf", col = "red", lwd = 2)
 
 \dontrun{
 # The code below gives examples of how not to use this function.

@@ -57,6 +57,9 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
   }
   fun = unique(plotFuns[charmatch(fun, plotFuns)])
 
+  if(any(is.na(fun)))
+    stop("Function unrecognised, should be one of: ", paste0(plotFuns,collapse=","))
+
   if("cdf" %in% fun & !x$isCdf){
     message("This distribution does not have a cdf expression. Use the
             FunctionImputation decorator to impute a numerical cdf.")
