@@ -61,11 +61,11 @@ qqplot <- function(x, y, npoints = 3000, idline = TRUE, plot = TRUE, ...){
 
   ##Quantile vs Quantile##
   if(plot){
-    plot(x = quantile.X, y = quantile.Y, type = "p",...)
+    graphics::plot(x = quantile.X, y = quantile.Y, type = "p",...)
 
     ##Identity Line##
     if(idline)
-      abline(a = 0, b = 1, col = "blue", lty = 2, lwd = 2)
+      graphics::abline(a = 0, b = 1, col = "blue", lty = 2, lwd = 2)
   }
 
 #

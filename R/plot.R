@@ -22,18 +22,32 @@
 #' will first need to be imputed with the \code{\link{FunctionImputation}} decorator.
 #'
 #' The order that the functions are supplied to \code{fun} determines the order in which they are
-#' plotted. If \code{ask} is \code{TRUE} then \code{arrange} is ignored. Titles, labels and other
-#' parameters are set automatically, note that parameters supplied in \code{...} will be passed to
-#' all plots. For maximum flexibility in plotting, set \code{arrange} and \code{ask} to \code{FALSE}.
+#' plotted. If \code{ask} is \code{TRUE} then \code{arrange} is ignored. For maximum flexibility in plotting
+#' layouts, set \code{arrange} and \code{ask} to \code{FALSE}.
+#'
+#' The graphical parameters passed to \code{...} can either apply to all plots or selected plots. If
+#' parameters in \code{\link[graphics]{par}} are prefixed with the plotted function name, then the
+#' parameter only applies to that funciton, otherwise it applies to them all. See examples for a clearer
+#' description.
 #'
 #' @seealso \code{\link{lines.Distribution}} for superimposing a distr6 object and \code{\link{listDistributions}}
 #' for plottable distributions.
 #'
 #' @examples
+#' # Plot pdf and cdf of Normal
 #' plot(Normal$new())
-#' plot(Normal$new(), lwd = 2, col = "red")
-#' plot(Geometric$new(), ask = TRUE)
-#' plot(Binomial$new(), fun = "all")
+#'
+#' # Colour both plots red
+#' plot(Normal$new(), col = "red")
+#'
+#' # Change the colours of individual plotted functions
+#' plot(Normal$new(), pdf_col = "red", cdf_col = "green")
+#'
+#' # Interactive plotting in order - par still works here
+#' plot(Geometric$new(), fun = "all", ask = TRUE, pdf_col = 1, cdf_col = 2,
+#'   quantile_col = 3, hazard_col = 4, cumhazard_col = 5, survival_col = 6)
+#'
+#' # Return plotting structure
 #' x = plot(Gamma$new(), plot = FALSE)
 #'
 #' @export
@@ -109,8 +123,8 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
 
   if(plot){
     if(ask | arrange){
-      def.par <- par(no.readonly = TRUE)
-      par(ask = ask)
+      def.par <- graphics::par(no.readonly = TRUE)
+      graphics::par(ask = ask)
     }
 
     if(arrange & !ask){
@@ -126,18 +140,19 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
                  "6" = list(nrow = 2, ncol = 3)
       )
 
-      layout(do.call(matrix, c(list(byrow = TRUE, data = data), n)))
+      graphics::layout(do.call(matrix, c(list(byrow = TRUE, data = data), n)))
 
     }
 
     if(testContinuous(x))
-      .plot_continuous(fun,plotStructure,x$strprint(),...)
+      .plot_continuous(fun, plotStructure, x$strprint(), ...)
     else if(testDiscrete(x))
-      .plot_discrete(fun,plotStructure,x$strprint(),...)
+      .plot_discrete(fun, plotStructure, x$strprint(), ...)
 
     if(ask | arrange)
-      par(def.par)
+      graphics::par(def.par)
   }
 
   invisible(data.table::data.table(plotStructure))
 }
+

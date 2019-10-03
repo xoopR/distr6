@@ -4,7 +4,7 @@
 \alias{plot.Distribution}
 \title{Plot Distribution Functions for a distr6 Object}
 \usage{
-plot.Distribution(x, fun = c("pdf", "cdf"), npoints = 3000,
+\method{plot}{Distribution}(x, fun = c("pdf", "cdf"), npoints = 3000,
   plot = TRUE, ask = FALSE, arrange = TRUE, ...)
 }
 \arguments{
@@ -33,15 +33,29 @@ length given by \code{npoints}. Therefore any distribution without an analytical
 will first need to be imputed with the \code{\link{FunctionImputation}} decorator.
 
 The order that the functions are supplied to \code{fun} determines the order in which they are
-plotted. If \code{ask} is \code{TRUE} then \code{arrange} is ignored. Titles, labels and other
-parameters are set automatically, note that parameters supplied in \code{...} will be passed to
-all plots. For maximum flexibility in plotting, set \code{arrange} and \code{ask} to \code{FALSE}.
+plotted. If \code{ask} is \code{TRUE} then \code{arrange} is ignored. For maximum flexibility in plotting
+layouts, set \code{arrange} and \code{ask} to \code{FALSE}.
+
+The graphical parameters passed to \code{...} can either apply to all plots or selected plots. If
+parameters in \code{\link[graphics]{par}} are prefixed with the plotted function name, then the
+parameter only applies to that funciton, otherwise it applies to them all. See examples for a clearer
+description.
 }
 \examples{
+# Plot pdf and cdf of Normal
 plot(Normal$new())
-plot(Normal$new(), lwd = 2, col = "red")
-plot(Geometric$new(), ask = TRUE)
-plot(Binomial$new(), fun = "all")
+
+# Colour both plots red
+plot(Normal$new(), col = "red")
+
+# Change the colours of individual plotted functions
+plot(Normal$new(), pdf_col = "red", cdf_col = "green")
+
+# Interactive plotting in order - par still works here
+plot(Geometric$new(), fun = "all", ask = TRUE, pdf_col = 1, cdf_col = 2,
+  quantile_col = 3, hazard_col = 4, cumhazard_col = 5, survival_col = 6)
+
+# Return plotting structure
 x = plot(Gamma$new(), plot = FALSE)
 
 }

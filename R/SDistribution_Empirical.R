@@ -85,7 +85,7 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
   }
   quantile <- function(p){
     p = p * private$.total
-    mat = p < matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+    mat = p <= matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
     which = apply(mat, 1, function(x) which(x)[1])
     which[is.na(which)] = ncol(mat)
     return(as.numeric(unlist(private$.data[which, "samples"])))

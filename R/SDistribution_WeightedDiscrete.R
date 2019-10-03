@@ -95,7 +95,7 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
     return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$x), "cdf"])))
   }
   quantile <- function(p){
-    mat = p < matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+    mat = p <= matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
     which = apply(mat, 1, function(x) which(x)[1])
     which[is.na(which)] = ncol(mat)
     return(as.numeric(unlist(private$.data[which, "x"])))
