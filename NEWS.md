@@ -8,7 +8,9 @@
 
 ### Added Functions and Classes
 
-- Added a `plot` and `lines` function for plotting and superimposing `distr6` objects
+- `plot` function for plotting the `pdf, cdf, survival, quantile, hazard, cumhazard` or `distr6` objects
+- `lines` function for superimposing `distr6` plots
+- `qqplot` function for comparing `distr6` distributions to each other or to other theoretical distributions
 
 ### Deprecated Functions
 
