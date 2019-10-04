@@ -17,25 +17,6 @@
                   args)
   }
 
-  if("cumhazard" %in% fun){
-    args = dots[grepl("^cumhazard", names(dots))]
-    if(length(args) > 0) names(args) = substr(names(args), 11, 1000)
-    args = c(args, common_args)
-    args = args[unique(names(args))]
-
-    if(!("main" %in% names(args))) args$main = paste(name,"CumHazard")
-    if(!("xlab" %in% names(args))) args$xlab = "x"
-    if(!("ylab" %in% names(args))) args$ylab = parse(text = "H(x)")
-
-    plots$cumhazard$plot = c(list(x = plotStructure$points, y = plotStructure$cumhazard, type = "n"),
-                             args)
-    plots$cumhazard$points = c(list(x = plotStructure$points, y = plotStructure$cumhazard, pch = 16),
-                               args)
-    plots$cumhazard$segments = c(list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-                                    y0 = plotStructure$cumhazard),
-                                 args)
-  }
-
   if("cdf" %in% fun){
     args = dots[grepl("^cdf", names(dots))]
     if(length(args) > 0) names(args) = substr(names(args), 5, 1000)
@@ -70,7 +51,7 @@
     plots$quantile$points = c(list(x = plotStructure$cdf, y = plotStructure$points, pch = 16),
                               args)
     plots$quantile$segments = c(list(x0 = plotStructure$cdf, y0 = plotStructure$points,
-                                   y1 = plotStructure$points+1),
+                                     y1 = plotStructure$points+1),
                                 args)
   }
 
@@ -89,8 +70,27 @@
     plots$survival$points = c(list(x = plotStructure$points, y = plotStructure$survival, pch = 16),
                               args)
     plots$survival$segments = c(list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-                                   y0 = plotStructure$survival),
+                                     y0 = plotStructure$survival),
                                 args)
+  }
+
+  if("cumhazard" %in% fun){
+    args = dots[grepl("^cumhazard", names(dots))]
+    if(length(args) > 0) names(args) = substr(names(args), 11, 1000)
+    args = c(args, common_args)
+    args = args[unique(names(args))]
+
+    if(!("main" %in% names(args))) args$main = paste(name,"CumHazard")
+    if(!("xlab" %in% names(args))) args$xlab = "x"
+    if(!("ylab" %in% names(args))) args$ylab = parse(text = "H(x)")
+
+    plots$cumhazard$plot = c(list(x = plotStructure$points, y = plotStructure$cumhazard, type = "n"),
+                             args)
+    plots$cumhazard$points = c(list(x = plotStructure$points, y = plotStructure$cumhazard, pch = 16),
+                               args)
+    plots$cumhazard$segments = c(list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
+                                    y0 = plotStructure$cumhazard),
+                                 args)
   }
 
   if("hazard" %in% fun){

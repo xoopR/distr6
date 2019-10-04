@@ -55,7 +55,7 @@ WeightedDiscrete$set("public","mean",function(){
   return(sum(private$.data$x * private$.data$pdf))
 })
 WeightedDiscrete$set("public","variance",function(){
-  return(sum((private$.data$x - self$mean())^2)/nrow(private$.data))
+  return(sum((private$.data$x - self$mean())^2 * private$.data$pdf))
 })
 
 WeightedDiscrete$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){

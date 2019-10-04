@@ -20,7 +20,7 @@
 
 ## Patches
 
-- None
+- Bug fix in `WeightedDiscrete` distribution `variance` calculation
 
 # distr6 1.2.0
 

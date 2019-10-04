@@ -22,7 +22,8 @@ test_that("properties & traits",{
 
 test_that("statistics",{
   expect_equal(gd$mean(), mean(1:10))
-  expect_equal(gd$variance(), var(1:10)*(9/10))
+  expect_equal(WeightedDiscrete$new(data.frame(x=1:3, pdf = c(0.1,0.7,0.2)))$variance(), 0.29)
+  expect_equal(gd$variance(), var(1:10)*9/10)
   expect_error(gd$skewness())
   expect_error(gd$kurtosis())
   expect_error(gd$entropy())

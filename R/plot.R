@@ -22,8 +22,9 @@
 #' will first need to be imputed with the \code{\link{FunctionImputation}} decorator.
 #'
 #' The order that the functions are supplied to \code{fun} determines the order in which they are
-#' plotted. If \code{ask} is \code{TRUE} then \code{arrange} is ignored. For maximum flexibility in plotting
-#' layouts, set \code{arrange} and \code{ask} to \code{FALSE}.
+#' plotted, however this is ignored if \code{ask} is \code{TRUE}. If \code{ask} is \code{TRUE} then
+#' \code{arrange} is ignored. For maximum flexibility in plotting layouts, set \code{arrange} and
+#' \code{ask} to \code{FALSE}.
 #'
 #' The graphical parameters passed to \code{...} can either apply to all plots or selected plots. If
 #' parameters in \code{\link[graphics]{par}} are prefixed with the plotted function name, then the
@@ -44,8 +45,9 @@
 #' plot(Normal$new(), pdf_col = "red", cdf_col = "green")
 #'
 #' # Interactive plotting in order - par still works here
-#' plot(Geometric$new(), fun = "all", ask = TRUE, pdf_col = 1, cdf_col = 2,
-#'   quantile_col = 3, hazard_col = 4, cumhazard_col = 5, survival_col = 6)
+#' plot(Geometric$new(), fun = "all", ask = TRUE, pdf_col = "black",
+#'   cdf_col = "red", quantile_col = "blue", survival_col = "purple",
+#'   hazard_col = "brown", cumhazard_col = "yellow")
 #'
 #' # Return plotting structure
 #' x = plot(Gamma$new(), plot = FALSE)
