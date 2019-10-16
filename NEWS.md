@@ -18,7 +18,7 @@
 
 ### Updated Functions
 
-- None
+- `decorate` now allows users to specify the Decorator as a character as well as supplying the object, this makes it simpler when using distr6 whilst unattached
 
 ## Patches
 
