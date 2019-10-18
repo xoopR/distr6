@@ -13,7 +13,7 @@ cexpo = function(x){
 }
 
 ps = ParameterSet$new(id = list("rate", "scale","test"), value = list(1, 1, 0),
-                      support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0,5)),
+                      support = list(PosReals$new(zero = T), PosReals$new(zero = T), Reals$new()),
                       settable = list(TRUE, FALSE, FALSE),
                       updateFunc = list(NULL,
                       function(self) 1/self$getParameterValue('rate'),
@@ -32,7 +32,7 @@ test_that("check all accessors are working", {
   expect_equal(continuousTester$valueSupport(), "continuous")
   expect_equal(continuousTester$variateForm(), "univariate")
   expect_equal(continuousTester$symmetry(), "symmetric")
-  expect_warning(continuousTester$getParameterValue("size"))
+  expect_warning(expect_null(continuousTester$getParameterValue("dsfdf")))
 })
 
 test_that("check core statistics", {

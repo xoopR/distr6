@@ -199,7 +199,7 @@ ParameterSet$set("public","update", function(...){
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       newval = x[[6]](self)
-      if(!x[[3]]$liesInSetInterval(newval))
+      if(!x[[3]]$liesInSetInterval(newval, all = TRUE))
         stop(newval, " does not lie in the support of parameter ", x[[1]])
       return(newval)
       })
@@ -294,8 +294,8 @@ NULL
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
   if(missing(id))
     return(stopwarn(error, "Argument 'id' is missing, with no default."))
-  val = self$parameters(id)[["value"]]
-  if(length(val)==0){
+  val = try(self$parameters(id)[["value"]], silent = T)
+  if(class(val)=="try-error"){
     return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
   }else
     return(unlist(val[[1]]))
