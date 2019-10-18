@@ -23,7 +23,7 @@ test_that("getters",{
   expect_silent(Binomial$new()$parameters("prob"))
   expect_silent(Binomial$new()$parameters("prodsdsb"))
   expect_silent(Binomial$new()$parameters())
-  expect_warning(Binomial$new()$getParameterValue("prob2"))
+  expect_silent(Binomial$new()$getParameterValue("prob2"))
   expect_silent(Binomial$new()$parameters())
   expect_equal(Binomial$new()$parameters()$getParameterSupport("prob"), Interval$new(0,1))
   expect_warning(expect_null(Binomial$new()$parameters()$getParameterSupport()))
