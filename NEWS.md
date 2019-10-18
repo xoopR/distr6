@@ -23,6 +23,9 @@
 ## Patches
 
 - Bug fix in `WeightedDiscrete` distribution `variance` calculation
+- Fixed bug in `Empirical` that was stopping the cdf of the first point in the distribution being evaluated 
+- Fixed bug that allowed invalid parameter values to be set for non-reference parameters
+- Updated parameter error messages to be more informative
 
 # distr6 1.2.0
 

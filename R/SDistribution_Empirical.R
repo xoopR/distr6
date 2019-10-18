@@ -77,11 +77,13 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
 
 
   pdf <- function(x1){
-    return(as.numeric(unlist(private$.data[match(x1, private$.data$samples), "N"]/private$.total)))
+    return(as.numeric(unlist(private$.data[match(round(x1, 10), round(private$.data$samples, 10)), "N"]/private$.total)))
   }
 
   cdf <- function(x1){
-    return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$samples), "cumN"]/private$.total)))
+    find = findInterval(x1, private$.data$samples)
+    find[find == 0] = 1
+    return(as.numeric(unlist(private$.data[find, "cumN"]/private$.total)))
   }
   quantile <- function(p){
     p = p * private$.total

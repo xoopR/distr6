@@ -92,7 +92,9 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
     return(as.numeric(unlist(private$.data[match(x1, private$.data$x), "pdf"])))
   }
   cdf <- function(x1){
-    return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$x), "cdf"])))
+    find = findInterval(x1, private$.data$x)
+    find[find == 0] = 1
+    return(as.numeric(unlist(private$.data[find, "cdf"])))
   }
   quantile <- function(p){
     mat = p <= matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)

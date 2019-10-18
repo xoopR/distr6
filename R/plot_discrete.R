@@ -31,7 +31,9 @@
                        args)
     plots$cdf$points = c(list(x = plotStructure$points, y = plotStructure$cdf, pch = 16),
                          args)
-    plots$cdf$segments = c(list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
+    plots$cdf$segments = c(list(x0 = plotStructure$points,
+                                x1 = c(plotStructure$points[2:length(plotStructure$points)],
+                                       plotStructure$points[length(plotStructure$points)] + 1),
                                 y0 = plotStructure$cdf),
                            args)
   }
@@ -50,8 +52,11 @@
                             args)
     plots$quantile$points = c(list(x = plotStructure$cdf, y = plotStructure$points, pch = 16),
                               args)
-    plots$quantile$segments = c(list(x0 = plotStructure$cdf, y0 = plotStructure$points,
-                                     y1 = plotStructure$points+1),
+    plots$quantile$segments = c(list(x0 = plotStructure$cdf,
+                                     y0 = plotStructure$points,
+                                     y1 = c(plotStructure$points[2:length(plotStructure$points)],
+                                            plotStructure$points[length(plotStructure$points)] + 1)
+                                     ),
                                 args)
   }
 
@@ -69,7 +74,9 @@
                             args)
     plots$survival$points = c(list(x = plotStructure$points, y = plotStructure$survival, pch = 16),
                               args)
-    plots$survival$segments = c(list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
+    plots$survival$segments = c(list(x0 = plotStructure$points,
+                                     x1 = c(plotStructure$points[2:length(plotStructure$points)],
+                                            plotStructure$points[length(plotStructure$points)] + 1),
                                      y0 = plotStructure$survival),
                                 args)
   }
@@ -88,8 +95,10 @@
                              args)
     plots$cumhazard$points = c(list(x = plotStructure$points, y = plotStructure$cumhazard, pch = 16),
                                args)
-    plots$cumhazard$segments = c(list(x0 = plotStructure$points, x1 = plotStructure$points + 1,
-                                    y0 = plotStructure$cumhazard),
+    plots$cumhazard$segments = c(list(x0 = plotStructure$points,
+                                      x1 = c(plotStructure$points[2:length(plotStructure$points)],
+                                             plotStructure$points[length(plotStructure$points)] + 1),
+                                      y0 = plotStructure$cumhazard),
                                  args)
   }
 
