@@ -39,6 +39,7 @@ test_that("setters",{
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa=2))))
   expect_error(Exponential$new() %>% setParameterValue(rate = 0))
+  expect_error(Exponential$new() %>% setParameterValue(rate = Inf))
 })
 
 test_that("merge",{
