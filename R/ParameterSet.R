@@ -295,7 +295,7 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
   if(missing(id))
     return(stopwarn(error, "Argument 'id' is missing, with no default."))
   val = try(self$parameters(id)[["value"]], silent = T)
-  if(class(val)=="try-error"){
+  if(class(val)=="try-error" | length(val) == 0){
     return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
   }else
     return(unlist(val[[1]]))

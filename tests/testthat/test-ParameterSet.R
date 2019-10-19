@@ -23,7 +23,7 @@ test_that("getters",{
   expect_silent(Binomial$new()$parameters("prob"))
   expect_silent(Binomial$new()$parameters("prodsdsb"))
   expect_silent(Binomial$new()$parameters())
-  expect_silent(Binomial$new()$getParameterValue("prob2"))
+  expect_warning(Binomial$new()$getParameterValue("prob2"))
   expect_silent(Binomial$new()$parameters())
   expect_equal(Binomial$new()$parameters()$getParameterSupport("prob"), Interval$new(0,1))
   expect_warning(expect_null(Binomial$new()$parameters()$getParameterSupport()))
@@ -38,6 +38,7 @@ test_that("setters",{
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa=2))))
+  expect_error(Exponential$new() %>% setParameterValue(rate = 0))
 })
 
 test_that("merge",{

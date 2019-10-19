@@ -32,7 +32,7 @@ test_that("check all accessors are working", {
   expect_equal(continuousTester$valueSupport(), "continuous")
   expect_equal(continuousTester$variateForm(), "univariate")
   expect_equal(continuousTester$symmetry(), "symmetric")
-  expect_silent(expect_null(continuousTester$getParameterValue("dsfdf")))
+  expect_warning(expect_null(continuousTester$getParameterValue("dsfdf")))
 })
 
 test_that("check core statistics", {
