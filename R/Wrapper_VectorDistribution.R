@@ -41,7 +41,7 @@
 #' vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
 #' vecBin$rand(10)
 #'
-#' vecBin = VectorDistribution$new(distribution = Binomial,
+#' vecBin = VectorDistribution$new(distribution = "Binomial",
 #'        params = list(list(prob = 0.1, size = 2),
 #'                    list(prob = 0.6, size = 4),
 #'                    list(prob = 0.2, size = 6)))
@@ -50,7 +50,7 @@
 #' vecBin$rand(10)
 #'
 #' #Equivalently
-#' vecBin = VectorDistribution$new(distribution = Binomial,
+#' vecBin = VectorDistribution$new(distribution = "Binomial",
 #'        params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
 #' vecBin$pdf(x1=1,x2=2,x3=3)
 #' vecBin$cdf(x1=1,x2=2,x3=3)
@@ -68,79 +68,130 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     if(is.null(distribution) | is.null(params))
       stop("Either distlist or distribution and params must be provided.")
 
-    distribution = paste0(substitute(distribution))
-    if(!(distribution %in% listDistributions(simplify = T)))
+    # assumes distribution is a character
+    if(!(any(distribution %in% listDistributions(simplify = T))))
       stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
 
-    distribution = get(distribution)
-    if(checkmate::testList(params)){
-      x <- params
-      params <- data.table::as.data.table(t(data.table::as.data.table(x)))
-      colnames(params) <- unique(names(unlist(x)))
-    }
 
-      if(inherits(params, "list") | inherits(params, "data.frame") | inherits(params, "matrix")){
-      distlist = apply(params, 1, function(x) do.call(distribution$new, as.list(x)))
-      name = paste0("Vector: ",nrow(params)," ",distribution$classname,"s")
-      short_name = paste0("Vec",nrow(params),distribution$public_fields$short_name)
-      description = paste("Vector of:",nrow(params),distribution$classname,"distributions")
-    } else
-      stop("params must inherit one of: list, data.frame, or matrix.")
+    if(!checkmate::testList(params))
+      params = apply(params, 1, as.list)
+
+    private$.wrappedModels = data.table::data.table(distribution = distribution, params = params,
+                                                    shortname = utils::getFromNamespace(distribution,"distr6")$public_fields$short_name)
+
+    if(length(unique(distribution)) == 1)
+      distribution = rep(distribution, length(params))
+
   } else {
-    if(is.null(name)) name = paste("Vector:",paste0(lapply(distlist, function(x) x$name),collapse=", "))
-    if(is.null(short_name)) short_name = paste0(lapply(distlist, function(x) x$short_name),collapse="Vec")
+    distlist = lapply(distlist, function(x) x$clone(deep = TRUE))
+    private$.wrappedModels = data.table::data.table(distribution = distlist, params = NA,
+                                                    shortname = sapply(distlist, function(x) x$short_name))
+    distribution = sapply(distlist, function(x) x$name)
+    private$.distlist = TRUE
+  }
+
+  ndist = nrow(private$.wrappedModels)
+
+  if(length(unique(distribution)) == 1){
+    if(is.null(name)) name = paste0("Vector: ", ndist," ",utils::getFromNamespace(distribution,"distr6")$classname,"s")
+    if(is.null(short_name)) short_name = paste0("Vec", ndist,utils::getFromNamespace(distribution,"distr6")$public_fields$short_name)
+    if(is.null(description)) description = paste("Vector of:", ndist,utils::getFromNamespace(distribution,"distr6")$classname,"distributions")
+  } else{
+    if(is.null(name)) name = paste("Vector:",paste0(distribution, collapse=", "))
+    if(is.null(short_name)) short_name = paste0(distribution, collapse="Vec")
     if(is.null(description)) description = paste0("Vector of:",paste0(lapply(distlist, function(x) x$description), collapse=" "))
   }
 
-  distlist = makeUniqueDistributions(distlist)
+  private$.wrappedModels[,3] <- makeUniqueNames(private$.wrappedModels[,3])
 
-  lst <- rep(list(bquote()), length(distlist))
-  names(lst) <- paste("x",1:length(distlist),sep="")
+  lst <- rep(list(bquote()), ndist)
+  names(lst) <- paste("x",1:ndist,sep="")
 
   pdf = function() {}
   formals(pdf) = lst
   body(pdf) = substitute({
     pdfs = NULL
     for(i in 1:n)
-      pdfs = c(pdfs,self$wrappedModels()[[i]]$pdf(get(paste0("x",i))))
+      pdfs = c(pdfs, self[i]$pdf(get(paste0("x",i))))
     y = data.table::data.table(matrix(pdfs, ncol = n))
-    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    colnames(y) <- unlist(self$wrappedModels()[,3])
     return(y)
-  },list(n = length(distlist)))
+  },list(n = ndist))
 
   cdf = function() {}
   formals(cdf) = lst
   body(cdf) = substitute({
     cdfs = NULL
     for(i in 1:n)
-      cdfs = c(cdfs,self$wrappedModels()[[i]]$cdf(get(paste0("x",i))))
+      cdfs = c(cdfs, self[i]$cdf(get(paste0("x",i))))
     y = data.table::data.table(matrix(cdfs, ncol = n))
-    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    colnames(y) <- unlist(self$wrappedModels()[,3])
     return(y)
-  },list(n = length(distlist)))
+  },list(n = ndist))
 
   quantile = function() {}
   formals(quantile) = lst
   body(quantile) = substitute({
     quantiles = NULL
     for(i in 1:n)
-      quantiles = c(quantiles,self$wrappedModels()[[i]]$quantile(get(paste0("x",i))))
+      quantiles = c(quantiles, self[i]$quantile(get(paste0("x",i))))
     y = data.table::data.table(matrix(quantiles, ncol = n))
-    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    colnames(y) <- unlist(self$wrappedModels()[,3])
     return(y)
-  },list(n = length(distlist)))
+  },list(n = ndist))
 
   rand = function(n) {
-    rand <- sapply(self$wrappedModels(), function(x) x$rand(n))
+    rand <- sapply(1:nrow(self$wrappedModels()), function(x) self[x]$rand(n))
     if(n == 1) rand <- t(rand)
-    rand < data.table::as.data.table(rand)
-    colnames(rand) = unlist(lapply(self$wrappedModels(), function(x) x$short_name))
+    rand <- data.table::as.data.table(rand)
+    colnames(rand) <- unlist(self$wrappedModels()[,3])
     return(rand)
   }
 
-  type = do.call(product.SetInterval, lapply(distlist,function(x) x$type()))
-  support = do.call(product.SetInterval, lapply(distlist,function(x) x$support()))
+  type = Reals$new(dim = ndist)
+  support = Reals$new(dim = ndist)
 
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand, name = name,
+  super$initialize(pdf = pdf, cdf = cdf, quantile = quantile, rand = rand, name = name,
                    short_name = short_name, description = description, support = support, type = type)
 })
+
+VectorDistribution$set("private", ".distlist", FALSE)
+
+#' @title Extract one or more Distributions from a VectorDistribution
+#' @description Once a \code{VectorDistribution} has been constructed, use \code{[}
+#' to extract one or more \code{Distribution}s from inside it.
+#' @param vecdist VectorDistribution from which to extract Distributions.
+#' @param i indices specifying distributions to extract.
+#' @export
+Extract.VectorDistribution <- function(vecdist, i){
+  i = i[i %in% (1:nrow(vecdist$wrappedModels()))]
+  if(length(i) == 0)
+    stop("index too large, should be less than or equal to ", nrow(vecdist$wrappedModels()))
+
+  if(!vecdist$.__enclos_env__$private$.distlist){
+    if(length(i) == 1){
+      par = vecdist$wrappedModels()[i, 2][[1]]
+
+      if(!checkmate::testList(par))
+        par = list(par)
+
+      return(do.call(get(vecdist$wrappedModels()[i, 1][[1]])$new, par))
+
+    }else
+      return(VectorDistribution$new(distribution = vecdist$wrappedModels()[i, 1],
+                                    params = vecdist$wrappedModels()[i, 2]))
+  } else {
+    if(length(i) == 1)
+      return(vecdist$wrappedModels()[i, 1][[1]])
+    else
+      return(VectorDistribution$new(distlist = vecdist$wrappedModels()[i, 1]))
+  }
+}
+
+#' @rdname Extract.VectorDistribution
+#' @usage \method{[}{VectorDistribution}(object, i)
+#' @export
+'[.VectorDistribution' <- function(vecdist, i){
+  Extract.VectorDistribution(vecdist, i)
+}
+

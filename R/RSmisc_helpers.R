@@ -83,3 +83,20 @@ modal = function(data){
   modal = as.numeric(names(tab)[tab==max(tab)])
   return(modal)
 }
+
+makeUniqueNames <- function(y){
+  if (any(duplicated(sort(y)))) {
+    count = table(y)
+    x = 1
+    for(i in 1:length(y)){
+      if(x == as.numeric(count[names(count) %in% y[[i]]])){
+        y[[i]] <- paste0(y[[i]], x)
+        x = 1
+      } else {
+        y[[i]] <- paste0(y[[i]], x)
+        x = x + 1
+      }
+    }
+  }
+  return(y)
+}

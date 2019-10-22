@@ -108,7 +108,7 @@ vecBin$cdf(1:5, 12:16)
 vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
 vecBin$rand(10)
 
-vecBin = VectorDistribution$new(distribution = Binomial,
+vecBin = VectorDistribution$new(distribution = "Binomial",
        params = list(list(prob = 0.1, size = 2),
                    list(prob = 0.6, size = 4),
                    list(prob = 0.2, size = 6)))
@@ -117,7 +117,7 @@ vecBin$cdf(x1=1,x2=2,x3=3)
 vecBin$rand(10)
 
 #Equivalently
-vecBin = VectorDistribution$new(distribution = Binomial,
+vecBin = VectorDistribution$new(distribution = "Binomial",
        params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
 vecBin$pdf(x1=1,x2=2,x3=3)
 vecBin$cdf(x1=1,x2=2,x3=3)
