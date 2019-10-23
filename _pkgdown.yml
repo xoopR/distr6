@@ -161,6 +161,7 @@ reference:
       - wrappedModels
       - ProductDistribution
       - VectorDistribution
+      - Extract.VectorDistribution
       - HuberizedDistribution
       - huberize
       - TruncatedDistribution
