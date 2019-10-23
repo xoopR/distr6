@@ -295,7 +295,7 @@ Extract.VectorDistribution <- function(vecdist, i){
 }
 
 #' @rdname Extract.VectorDistribution
-#' @usage \method{[}{VectorDistribution}(object, i)
+#' @usage \method{[}{VectorDistribution}(vecdist, i)
 #' @export
 '[.VectorDistribution' <- function(vecdist, i){
   Extract.VectorDistribution(vecdist, i)

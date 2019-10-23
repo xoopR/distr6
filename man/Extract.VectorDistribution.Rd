@@ -7,7 +7,7 @@
 \usage{
 Extract.VectorDistribution(vecdist, i)
 
-\method{[}{VectorDistribution}(object, i)
+\method{[}{VectorDistribution}(vecdist, i)
 }
 \arguments{
 \item{vecdist}{VectorDistribution from which to extract Distributions.}
