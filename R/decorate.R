@@ -38,8 +38,13 @@
 #'
 #' @export
 decorate <- function(distribution, decorators){
-  if(!checkmate::testList(decorators))
-    decorators = as.list(decorators)
+  if(!checkmate::testList(decorators)){
+    if(class(decorator) == "character")
+      decorators = as.list(decorators)
+    else
+      decorators = list(decorators)
+  }
+
 
   decorators = lapply(decorators, function(x){
     if (checkmate::testCharacter(x))
