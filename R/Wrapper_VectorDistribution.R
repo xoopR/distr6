@@ -281,14 +281,14 @@ VectorDistribution$set("private", ".distlist", FALSE)
 Extract.VectorDistribution <- function(vecdist, i){
   i = i[i %in% (1:nrow(vecdist$modelTable()))]
   if(length(i) == 0)
-    stop("index too large, should be less than or equal to ", nrow(vecdist$modelTable()))
+    stop("Index i too large, should be less than or equal to ", nrow(vecdist$modelTable()))
 
   if(!vecdist$.__enclos_env__$private$.distlist){
     if(length(i) == 1){
       par = vecdist$modelTable()[i, 2][[1]]
 
-      if(!checkmate::testList(par))
-        par = list(par)
+      # if(!checkmate::testList(par))
+      #   par = list(par)
 
       return(do.call(get(vecdist$modelTable()[i, 1][[1]])$new, par))
 

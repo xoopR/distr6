@@ -63,6 +63,8 @@ test_that("wrapped models",{
   expect_equal(a$wrappedModels("Binom1"), Binomial$new(prob=0.1,size=2))
   expect_equal(a$wrappedModels(), list(Binomial$new(prob=0.1,size=2),Binomial$new(prob=0.6,size=4),
                                        Binomial$new(prob=0.2,size=6)))
+  expect_equal(a$wrappedModels("dsdsdsd"), list(Binomial$new(prob=0.1,size=2),Binomial$new(prob=0.6,size=4),
+                                       Binomial$new(prob=0.2,size=6)))
   a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
   expect_equal(a$wrappedModels(), list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
   expect_equal(a$wrappedModels("Binom"), Binomial$new())
@@ -76,3 +78,20 @@ test_that("parameters",{
   expect_null(expect_message(a$setParameterValue(f), "Vector Distribution should not"))
   expect_equal(expect_message(a$parameters(s), "Vector Distribution should not"), data.table::data.table())
 })
+
+test_that("extract",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)))
+  expect_equal(a[1], Binomial$new(prob = 0.1, size = 2))
+  expect_equal(a[1:2]$wrappedModels(), list(Binomial$new(prob = 0.1, size = 2),
+                                                   Binomial$new(prob = 0.6, size = 4)))
+  expect_error(a[4], "Index i too large")
+  a = VectorDistribution$new(list(Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
+                                  Binomial$new(prob = 0.2, size = 6)))
+  expect_equal(a[1], Binomial$new(prob = 0.1, size = 2))
+  expect_equal(a[1:2], VectorDistribution$new(list(Binomial$new(prob = 0.1, size = 2),
+                                                   Binomial$new(prob = 0.6, size = 4))))
+  expect_error(a[4], "Index i too large")
+})
+
+

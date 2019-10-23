@@ -18,6 +18,8 @@ test_that("parameters",{
 test_that("wrapped models",{
   mix = MixtureDistribution$new(list(Binomial$new(),Normal$new()))
   expect_equal(mix$wrappedModels("Binom"),Binomial$new())
+  expect_equal(mix$wrappedModels(), list(Binom = Binomial$new(),Norm = Normal$new()))
+  expect_equal(mix$wrappedModels("sdsd"), list(Binom = Binomial$new(),Norm = Normal$new()))
   expect_equal(mix$wrappedModels(c("Binom","Norm")), list(Binom=Binomial$new(),Norm=Normal$new()))
 })
 
