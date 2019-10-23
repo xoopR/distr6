@@ -16,12 +16,9 @@ test_that("parameters",{
 })
 
 test_that("wrapped models",{
-  mix = VectorDistribution$new(list(Binomial$new(),Normal$new()))
+  mix = MixtureDistribution$new(list(Binomial$new(),Normal$new()))
   expect_equal(mix$wrappedModels("Binom"),Binomial$new())
   expect_equal(mix$wrappedModels(c("Binom","Norm")), list(Binom=Binomial$new(),Norm=Normal$new()))
-  expect_equal(mix$wrappedModels("asds"), data.table::data.table(distribution = list(Binomial$new(),Normal$new()),
-                                                     params = NA,
-                                                     shortname = c("Binom", "Norm")))
 })
 
 test_that("unique parameters",{
