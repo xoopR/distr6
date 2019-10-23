@@ -91,9 +91,9 @@ test_that("working_support",{
 })
 
 test_that("print",{
-  expect_equal(print(VectorDistribution$new(distribution = Bernoulli, params = list(list(prob = 0.2), list(prob = 0.8),
+  expect_equal(print(VectorDistribution$new(distribution = "Bernoulli", params = list(list(prob = 0.2), list(prob = 0.8),
                                                                                        list(prob=0.1),list(prob=0.9),list(prob=0.67)))),
-                     VectorDistribution$new(distribution = Bernoulli, params = list(list(prob = 0.2), list(prob = 0.8),list(prob=0.1),
+                     VectorDistribution$new(distribution = "Bernoulli", params = list(list(prob = 0.2), list(prob = 0.8),list(prob=0.1),
                                                                                              list(prob=0.9),list(prob=0.67)))$print(2))
   expect_output(Binomial$new()$print(1))
   expect_output(Binomial$new()$print(5))

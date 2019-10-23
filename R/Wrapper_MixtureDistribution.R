@@ -50,7 +50,8 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL,
   name = short_name = description = NULL
 
   if(!is.null(vectordist)){
-    distlist <- vectordist$wrappedModels()
+    distlist <- makeUniqueDistributions(apply(vectordist$wrappedModels(), 1,
+                                              function(x) do.call(get(x[[1]])$new, x[[2]])))
     name = gsub("Vector","Mixture",vectordist$name)
     short_name = gsub("Vec","Mix",vectordist$short_name)
     description = gsub("Vector","Mixture",vectordist$description)

@@ -86,9 +86,11 @@ DistributionWrapper$set("public","initialize",function(distlist = NULL,...){
     private$.wrappedModels <- distlist
 
     params <- data.table::rbindlist(lapply(distlist, function(x){
-      params = x[["parameters"]]()$as.data.table()
-      params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
-      return(params)
+      if(!("VectorDistribution" %in% class(x))){
+        params = x[["parameters"]]()$as.data.table()
+        params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
+        return(params)
+      }
     }))
     row.names(params) <- NULL
     if(!is.null(private$.outerParameters))

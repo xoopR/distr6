@@ -42,4 +42,17 @@ test_that("type/support",{
   expect_equal(a$support()$getSymbol(), Reals$new(dim = 3)$getSymbol())
 })
 
+test_that("stats", {
+  vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_equal(vecDist$mean(), data.table::data.table(Binom = 5, Gomp = NaN))
+  expect_equal(vecDist$mode(), data.table::data.table(Binom = vecDist[1]$mode(), Gomp = NaN))
+  expect_equal(vecDist$variance(), data.table::data.table(Binom = 2.5, Gomp = NaN))
+  expect_equal(vecDist$skewness(), data.table::data.table(Binom = 0, Gomp = NaN))
+  expect_equal(vecDist$kurtosis(), data.table::data.table(Binom = -0.2, Gomp = NaN))
+  expect_equal(vecDist$entropy(), data.table::data.table(Binom = Binomial$new()$entropy(), Gomp = NaN))
+  expect_equal(vecDist$mgf(2), data.table::data.table(Binom =  Binomial$new()$mgf(2), Gomp = NaN))
+  expect_equal(vecDist$cf(2), data.table::data.table(Binom = Binomial$new()$cf(2), Gomp = NaN+0i))
+  expect_equal(vecDist$pgf(2), data.table::data.table(Binom = Binomial$new()$pgf(2), Gomp = NaN))
+})
+
 

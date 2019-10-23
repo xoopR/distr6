@@ -57,7 +57,10 @@ ifnerror <- function(expr, noerror, error = NULL, silent = T){
     else
       error
   } else {
-    noerror
+    if(missing(noerror))
+      return(x)
+    else
+      return(noerror)
   }
 }
 

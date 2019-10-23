@@ -10,10 +10,11 @@ Returns an R6 object of class VectorDistribution.
 A wrapper for creating a vector of distributions.
 }
 \details{
-A vector of distributions has the following relationship
-\deqn{f_V(X1 = x1,...,XN = xN) = f_{X1}(x1), ..., f_{XN}(xn)}{f_V(X1 = x1,...,XN = xN) = f_X1(x1), ..., f_XN(xn)}
-\deqn{F_V(X1 = x1,...,XN = xN) = F_{X1}(x1), ..., F_{XN}(xn)}{F_V(X1 = x1,...,XN = xN) = F_X1(x1), ..., F_XN(xn)}
-where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} and \eqn{X1,...,XN} are distributions.
+A vector distribution is intented to vectorize distributions more efficiently than storing
+a list of distributions. To improve speed and reduce memory usage, distributions are only constructed
+when methods (e.g. d/p/q/r) are called. Whilst it is recommended to first extract distributions
+using `[` before querying them for results, all common methods are available in
+`VectorDistribution` as they are wrapped in `apply`.
 }
 \section{Constructor}{
  VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
@@ -24,7 +25,7 @@ where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
-\code{distribution} \tab distribution \tab Distribution to wrap. \cr
+\code{distribution} \tab character \tab Distribution to wrap. \cr
 \code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
 \code{name} \tab list \tab Optional new name for distribution. \cr
 \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
@@ -34,10 +35,10 @@ where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} 
 
 \section{Constructor Details}{
  A vector distribution can either be constructed by a list of
-distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
-to \code{distribution}, as well as a list or table of parameters to \code{params}. The former case provides more flexibility
-in the ability to use multiple distributions but the latter is useful for quickly combining many
-distributions of the same type. See examples.
+distributions passed to \code{distlist} or by passing the name of one or more distributions
+implemented in distr6 to \code{distribution}, as well as a list or table of parameters to \code{params}.
+The former case provides more flexibility in the ability to use custom or wrapped distributions
+but the latter is vastly faster for distributions of class \code{SDistribution}.
 }
 
 \section{Public Variables}{
@@ -101,12 +102,20 @@ distributions of the same type. See examples.
 }
 
 \examples{
-vecBin <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
+vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
                            size = 10), Normal$new(mean = 15)))
-vecBin$pdf(x1 = 2, x2 =3)
-vecBin$cdf(1:5, 12:16)
-vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
-vecBin$rand(10)
+vecDist$pdf(x1 = 2, x2 =3)
+# Equivalently
+vecDist[1]$pdf(2); vecDist[2]$pdf(3)
+
+# Same wrapping for statistical functions
+vecDist$mean()
+c(vecDist[1]$mean(), vecDist[2]$mean())
+vecDist$entropy()
+c(vecDist[1]$entropy(), vecDist[2]$entropy())
+
+vecDist$cdf(1:5, 12:16)
+vecDist$rand(10)
 
 vecBin = VectorDistribution$new(distribution = "Binomial",
        params = list(list(prob = 0.1, size = 2),
