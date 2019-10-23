@@ -128,7 +128,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     for(i in 1:n)
       pdfs = c(pdfs, self[i]$pdf(get(paste0("x",i))))
     y = data.table::data.table(matrix(pdfs, ncol = n))
-    colnames(y) <- unlist(self$wrappedModels()[,3])
+    colnames(y) <- unlist(private$.wrappedModels[,3])
     return(y)
   },list(n = ndist))
 
@@ -139,7 +139,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     for(i in 1:n)
       cdfs = c(cdfs, self[i]$cdf(get(paste0("x",i))))
     y = data.table::data.table(matrix(cdfs, ncol = n))
-    colnames(y) <- unlist(self$wrappedModels()[,3])
+    colnames(y) <- unlist(private$.wrappedModels[,3])
     return(y)
   },list(n = ndist))
 
@@ -150,15 +150,15 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     for(i in 1:n)
       quantiles = c(quantiles, self[i]$quantile(get(paste0("x",i))))
     y = data.table::data.table(matrix(quantiles, ncol = n))
-    colnames(y) <- unlist(self$wrappedModels()[,3])
+    colnames(y) <- unlist(private$.wrappedModels[,3])
     return(y)
   },list(n = ndist))
 
   rand = function(n) {
-    rand <- sapply(1:nrow(self$wrappedModels()), function(x) self[x]$rand(n))
+    rand <- sapply(1:nrow(private$.wrappedModels), function(x) self[x]$rand(n))
     if(n == 1) rand <- t(rand)
     rand <- data.table::as.data.table(rand)
-    colnames(rand) <- unlist(self$wrappedModels()[,3])
+    colnames(rand) <- unlist(private$.wrappedModels[,3])
     return(rand)
   }
 
@@ -170,16 +170,19 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
                    suppressMoments = TRUE)
 })
 VectorDistribution$set("public","wrappedModels", function(model = NULL){
-  if(is.null(model))
-    return(private$.wrappedModels)
-  else{
-    model = model[model %in% self$wrappedModels()[, "shortname"]]
+  if(is.null(model)){
+    if (private$.distlist)
+      return(private$.wrappedModels[, "distribution"])
+    else
+      return(apply(private$.wrappedModels, 1, function(x) do.call(get(x[[1]])$new, x[[2]])))
+  } else {
+    model = model[model %in% private$.wrappedModels[, "shortname"]]
 
     if(length(model) == 0)
-      return(private$.wrappedModels)
+      return(self$wrappedModels())
 
     if (private$.distlist) {
-      x = subset(private$.wrappedModels, shortname == model, distribution)
+      x = subset(private$.wrappedModels, shortname %in% model, distribution)
       if(nrow(x) == 1)
         return(x[[1]][[1]])
       else{
@@ -188,11 +191,17 @@ VectorDistribution$set("public","wrappedModels", function(model = NULL){
         return(x)
       }
     } else{
-      x = subset(private$.wrappedModels, shortname == model)
-      return(apply(x, 1, function(x) do.call(x[[1]]$new, x[[2]])))
+      x = subset(private$.wrappedModels, shortname %in% model)
+      x = apply(x, 1, function(y) do.call(get(y[[1]])$new, y[[2]]))
+      if(length(x) == 1)
+        return(x[[1]])
     }
   }
 })
+VectorDistribution$set("public","modelTable", function(){
+  private$.wrappedModels
+})
+
 VectorDistribution$set("public", "getParameterValue", function(...){
   message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
   return(NULL)
@@ -207,57 +216,57 @@ VectorDistribution$set("public", "parameters", function(...){
 })
 
 VectorDistribution$set("public", "mean", function(){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$mean(), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "mode", function(){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$mode(), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "variance", function(){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$variance(), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "skewness", function(){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$skewness(), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "kurtosis", function(excess = TRUE){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$kurtosis(excess), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "entropy", function(base = 2){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$entropy(base), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "mgf", function(t){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$mgf(t), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "cf", function(t){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$cf(t), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 VectorDistribution$set("public", "pgf", function(z){
-  ret = matrix(sapply(1:nrow(self$wrappedModels()), function(i)
+  ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
     ifnerror(self[i]$pgf(z), error = NaN)), nrow = 1)
-  colnames(ret) = unlist(self$wrappedModels()[,"shortname"])
+  colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
 
@@ -270,27 +279,27 @@ VectorDistribution$set("private", ".distlist", FALSE)
 #' @param i indices specifying distributions to extract.
 #' @export
 Extract.VectorDistribution <- function(vecdist, i){
-  i = i[i %in% (1:nrow(vecdist$wrappedModels()))]
+  i = i[i %in% (1:nrow(vecdist$modelTable()))]
   if(length(i) == 0)
-    stop("index too large, should be less than or equal to ", nrow(vecdist$wrappedModels()))
+    stop("index too large, should be less than or equal to ", nrow(vecdist$modelTable()))
 
   if(!vecdist$.__enclos_env__$private$.distlist){
     if(length(i) == 1){
-      par = vecdist$wrappedModels()[i, 2][[1]]
+      par = vecdist$modelTable()[i, 2][[1]]
 
       if(!checkmate::testList(par))
         par = list(par)
 
-      return(do.call(get(vecdist$wrappedModels()[i, 1][[1]])$new, par))
+      return(do.call(get(vecdist$modelTable()[i, 1][[1]])$new, par))
 
     }else
-      return(VectorDistribution$new(distribution = vecdist$wrappedModels()[i, 1],
-                                    params = vecdist$wrappedModels()[i, 2]))
+      return(VectorDistribution$new(distribution = vecdist$modelTable()[i, 1],
+                                    params = vecdist$modelTable()[i, 2]))
   } else {
     if(length(i) == 1)
-      return(vecdist$wrappedModels()[i, 1][[1]])
+      return(vecdist$modelTable()[i, 1][[1]])
     else
-      return(VectorDistribution$new(distlist = vecdist$wrappedModels()[i, 1]))
+      return(VectorDistribution$new(distlist = vecdist$modelTable()[i, 1]))
   }
 }
 

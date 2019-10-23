@@ -5,6 +5,8 @@ context("Vector Distribution")
 test_that("constructor",{
   expect_silent(VectorDistribution$new(list(Binomial$new(),Binomial$new(size = 20, prob = 0.6))))
   expect_silent(VectorDistribution$new(list(Binomial$new(),Exponential$new(rate=1))))
+  expect_error(VectorDistribution$new(), "Either distlist")
+  expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "Gerald is not")
 })
 
 test_that("pdf/cdf/quantile",{
@@ -55,4 +57,22 @@ test_that("stats", {
   expect_equal(vecDist$pgf(2), data.table::data.table(Binom = Binomial$new()$pgf(2), Gomp = NaN))
 })
 
+test_that("wrapped models",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)))
+  expect_equal(a$wrappedModels("Binom1"), Binomial$new(prob=0.1,size=2))
+  expect_equal(a$wrappedModels(), list(Binomial$new(prob=0.1,size=2),Binomial$new(prob=0.6,size=4),
+                                       Binomial$new(prob=0.2,size=6)))
+  a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_equal(a$wrappedModels(), list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_equal(a$wrappedModels("Binom"), Binomial$new())
+  expect_equal(a$wrappedModels(c("Binom","Gomp")), list(Binom=Binomial$new(prob = 0.5, size = 10),
+                                                        Gomp=Gompertz$new()))
+})
 
+test_that("parameters",{
+  a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_null(expect_message(a$getParameterValue(1), "Vector Distribution should not"))
+  expect_null(expect_message(a$setParameterValue(f), "Vector Distribution should not"))
+  expect_equal(expect_message(a$parameters(s), "Vector Distribution should not"), data.table::data.table())
+})
