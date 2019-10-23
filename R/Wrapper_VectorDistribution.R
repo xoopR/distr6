@@ -8,7 +8,8 @@
 #' using `[` before querying them for results, all common methods are available in
 #' `VectorDistribution` as they are wrapped in `apply`.
 #'
-#' @section Constructor: VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
+#' @section Constructor: VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL,
+#' name = NULL, short_name = NULL, description = NULL, decorators = NULL)
 #'
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -19,6 +20,7 @@
 #' \code{name} \tab list \tab Optional new name for distribution. \cr
 #' \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 #' \code{description} \tab list \tab Optional new description for distribution. \cr
+#' \code{decorators} \tab list \tab Decorators to pass to wrapped distributions on construction. \cr
 #' }
 #'
 #' @section Constructor Details: A vector distribution can either be constructed by a list of
@@ -71,7 +73,11 @@ VectorDistribution <- R6::R6Class("VectorDistribution", inherit = DistributionWr
 .distr6$wrappers <- append(.distr6$wrappers, list(VectorDistribution = VectorDistribution))
 
 VectorDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,
-                                                      name = NULL, short_name = NULL, description = NULL){
+                                                      name = NULL, short_name = NULL, description = NULL,
+                                                      decorators = NULL){
+
+  if(!is.null(decorators))
+    private$.decorators <- unlist(decorators)
 
   if(is.null(distlist)){
     if(is.null(distribution) | is.null(params))
@@ -81,12 +87,15 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     if(!(any(distribution %in% listDistributions(simplify = T))))
       stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
 
-
     if(!checkmate::testList(params))
       params = apply(params, 1, as.list)
 
+    if(!checkmate::testList(params[[1]]))
+      params = lapply(params, list)
+
+
     private$.wrappedModels = data.table::data.table(distribution = distribution, params = params,
-                                                    shortname = utils::getFromNamespace(distribution,"distr6")$public_fields$short_name)
+                                                    shortname = get(distribution)$public_fields$short_name)
 
     if(length(unique(distribution)) == 1)
       distribution = rep(distribution, length(params))
@@ -109,8 +118,8 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
   ndist = nrow(private$.wrappedModels)
 
   if(length(unique(distribution)) == 1){
-    if(is.null(name)) name = paste0("Vector: ", ndist," ",utils::getFromNamespace(distribution,"distr6")$classname,"s")
-    if(is.null(short_name)) short_name = paste0("Vec", ndist,utils::getFromNamespace(distribution,"distr6")$public_fields$short_name)
+    if(is.null(name)) name = paste0("Vector: ", ndist," ", private$.wrappedModels[1, 1],"s")
+    if(is.null(short_name)) short_name = paste0("Vec", ndist, private$.wrappedModels[1, 3])
   } else{
     if(is.null(name)) name = paste("Vector:",paste0(distribution, collapse=", "))
     if(is.null(short_name)) short_name = paste0(private$.wrappedModels[,"shortname"], collapse="Vec")
@@ -170,7 +179,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
                    suppressMoments = TRUE)
 })
 VectorDistribution$set("public","wrappedModels", function(model = NULL){
-  if(is.null(model)){
+  if(is.null(model)){params
     if (private$.distlist)
       return(private$.wrappedModels[, "distribution"])
     else
@@ -290,15 +299,23 @@ Extract.VectorDistribution <- function(vecdist, i){
       # if(!checkmate::testList(par))
       #   par = list(par)
 
+      dec = vecdist$decorators()
+      if(!is.null(dec))
+        par = c(par, list(decorators = dec))
+
       return(do.call(get(vecdist$modelTable()[i, 1][[1]])$new, par))
 
     }else
       return(VectorDistribution$new(distribution = vecdist$modelTable()[i, 1],
                                     params = vecdist$modelTable()[i, 2]))
   } else {
-    if(length(i) == 1)
-      return(vecdist$modelTable()[i, 1][[1]])
-    else
+    if(length(i) == 1){
+      dec = vecdist$decorators()
+      if(!is.null(dec))
+        return(decorate(vecdist$modelTable()[i, 1][[1]]), dec)
+      else
+        return(vecdist$modelTable()[i, 1][[1]])
+    } else
       return(VectorDistribution$new(distlist = vecdist$modelTable()[i, 1]))
   }
 }

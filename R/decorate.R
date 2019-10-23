@@ -11,7 +11,7 @@
 #' or a single decorator class; see examples.
 #'
 #' @param distribution distribution to decorate
-#' @param decorators list of decorators. See Details.
+#' @param decorators list or vector of decorators. See Details.
 #'
 #'
 #' @seealso \code{\link{listDecorators}} for available decorators.
@@ -26,6 +26,9 @@
 #' E <- Exponential$new()
 #' decorate(E, list(CoreStatistics, "ExoticStatistics"))
 #'
+#' E <- Exponential$new()
+#' decorate(E, c("CoreStatistics", "ExoticStatistics"))
+#'
 #' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed
 #' from one of the available decorators added to the SDistribution methods.
 #'
@@ -36,7 +39,7 @@
 #' @export
 decorate <- function(distribution, decorators){
   if(!checkmate::testList(decorators))
-    decorators = list(decorators)
+    decorators = as.list(decorators)
 
   decorators = lapply(decorators, function(x){
     if (checkmate::testCharacter(x))

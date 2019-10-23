@@ -94,4 +94,17 @@ test_that("extract",{
   expect_error(a[4], "Index i too large")
 })
 
-
+test_that("decorators",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)),
+                             decorators = c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)),
+                             decorators = list("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  a = VectorDistribution$new(list(Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
+                                  Binomial$new(prob = 0.2, size = 6)),
+                             decorators = "ExoticStatistics")
+  expect_equal(a$decorators(), "ExoticStatistics")
+})
