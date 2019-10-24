@@ -312,7 +312,7 @@ Extract.VectorDistribution <- function(vecdist, i){
     if(length(i) == 1){
       dec = vecdist$decorators()
       if(!is.null(dec))
-        return(decorate(vecdist$modelTable()[i, 1][[1]]), dec)
+        return(suppressMessages(decorate(vecdist$modelTable()[i, 1][[1]], dec)))
       else
         return(vecdist$modelTable()[i, 1][[1]])
     } else

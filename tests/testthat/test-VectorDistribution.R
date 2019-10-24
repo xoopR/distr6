@@ -5,6 +5,9 @@ context("Vector Distribution")
 test_that("constructor",{
   expect_silent(VectorDistribution$new(list(Binomial$new(),Binomial$new(size = 20, prob = 0.6))))
   expect_silent(VectorDistribution$new(list(Binomial$new(),Exponential$new(rate=1))))
+  expect_silent(VectorDistribution$new(distribution = "WeightedDiscrete", params = list(
+    list(data = data.frame(x = 1, prob = 1))
+  )))
   expect_error(VectorDistribution$new(), "Either distlist")
   expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "Gerald is not")
 })
@@ -99,6 +102,7 @@ test_that("decorators",{
                                                                       list(prob = 0.2, size = 6)),
                              decorators = c("CoreStatistics", "ExoticStatistics"))
   expect_equal(a$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a[1]$decorators(), c("CoreStatistics", "ExoticStatistics"))
   a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                       list(prob = 0.2, size = 6)),
                              decorators = list("CoreStatistics", "ExoticStatistics"))
@@ -107,4 +111,5 @@ test_that("decorators",{
                                   Binomial$new(prob = 0.2, size = 6)),
                              decorators = "ExoticStatistics")
   expect_equal(a$decorators(), "ExoticStatistics")
+  expect_equal(a[1]$decorators(), "ExoticStatistics")
 })
