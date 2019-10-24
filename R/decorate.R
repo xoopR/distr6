@@ -39,7 +39,7 @@
 #' @export
 decorate <- function(distribution, decorators){
   if(!checkmate::testList(decorators)){
-    if(class(decorator) == "character")
+    if(class(decorators) == "character")
       decorators = as.list(decorators)
     else
       decorators = list(decorators)
