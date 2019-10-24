@@ -179,7 +179,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
                    suppressMoments = TRUE)
 })
 VectorDistribution$set("public","wrappedModels", function(model = NULL){
-  if(is.null(model)){params
+  if(is.null(model)){
     if (private$.distlist)
       return(private$.wrappedModels[, "distribution"])
     else
