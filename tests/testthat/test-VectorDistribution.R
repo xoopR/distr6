@@ -6,8 +6,8 @@ test_that("constructor",{
   expect_silent(VectorDistribution$new(list(Binomial$new(),Binomial$new(size = 20, prob = 0.6))))
   expect_silent(VectorDistribution$new(list(Binomial$new(),Exponential$new(rate=1))))
   expect_silent(VectorDistribution$new(distribution = "WeightedDiscrete", params = list(
-    list(data = data.frame(x = 1, prob = 1))
-  )))
+    data = data.frame(x = 1, prob = 1))
+  ))
   expect_error(VectorDistribution$new(), "Either distlist")
   expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "Gerald is not")
 })
