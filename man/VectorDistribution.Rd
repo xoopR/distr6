@@ -17,7 +17,8 @@ using `[` before querying them for results, all common methods are available in
 `VectorDistribution` as they are wrapped in `apply`.
 }
 \section{Constructor}{
- VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
+ VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL,
+name = NULL, short_name = NULL, description = NULL, decorators = NULL)
 }
 
 \section{Constructor Arguments}{
@@ -30,6 +31,7 @@ using `[` before querying them for results, all common methods are available in
 \code{name} \tab list \tab Optional new name for distribution. \cr
 \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 \code{description} \tab list \tab Optional new description for distribution. \cr
+\code{decorators} \tab list \tab Decorators to pass to wrapped distributions on construction. \cr
 }
 }
 

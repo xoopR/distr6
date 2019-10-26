@@ -99,9 +99,12 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
   short_name = paste0(distlist[[1]]$short_name,distlist[[2]]$short_name)
 
   type = distlist[[2]]$type()
+  valueSupport = distlist[[2]]$valueSupport()
+  variateForm = distlist[[2]]$variateForm()
 
   super$initialize(distlist = distlist, pdf = fnc, name = name,
-                   short_name = short_name, type = type)
+                   short_name = short_name, type = type, valueSupport = valueSupport,
+                   variateForm = variateForm, support = type)
 }) # IN PROGRESS
 
 `+.Distribution` <- function(dist1, dist2){

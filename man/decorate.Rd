@@ -9,7 +9,7 @@ decorate(distribution, decorators)
 \arguments{
 \item{distribution}{distribution to decorate}
 
-\item{decorators}{list of decorators. See Details.}
+\item{decorators}{list or vector of decorators. See Details.}
 }
 \value{
 Returns a decorated R6 object inheriting from class SDistribution with the methods listed
@@ -36,6 +36,9 @@ decorate(E, list(CoreStatistics, ExoticStatistics))
 
 E <- Exponential$new()
 decorate(E, list(CoreStatistics, "ExoticStatistics"))
+
+E <- Exponential$new()
+decorate(E, c("CoreStatistics", "ExoticStatistics"))
 
 }
 \references{

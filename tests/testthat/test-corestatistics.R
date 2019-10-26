@@ -132,7 +132,7 @@ discreteTester = Distribution$new("Discrete Test","TestDistr",support=Naturals$n
                                   symmetric=TRUE, type = PosNaturals$new(),
                                   pdf = dbin,
                                   parameters = ps,
-                                  decorators = CoreStatistics
+                                  decorators = CoreStatistics, suppressMoments = T
 )
 
 test_that("infinite mean",{

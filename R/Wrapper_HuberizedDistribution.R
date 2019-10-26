@@ -121,7 +121,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
                      name = name, short_name = short_name, type = distribution$type(),
                      support = support,
                      description = description,
-                     valueSupport = "mixture")
+                     valueSupport = "mixture", variateForm = "univariate")
   }else if(testContinuous(distribution)){
     support <- Interval$new(lower, upper)
 
@@ -129,7 +129,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
                      short_name = short_name, type = distribution$type(),
                      support = support,
                      description = description,
-                     valueSupport = "mixture")
+                     valueSupport = "mixture", variateForm = "univariate")
   } else
     stop(.distr6$huberize_discrete)
 })

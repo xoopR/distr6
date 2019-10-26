@@ -398,7 +398,9 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
   }
 
   if(self$support()$class() == "integer"){
-    rng = try(self$inf():self$sup(),silent = T)
+    rng = try(self$support()$elements(), silent = TRUE)
+    if(inherits(rng, "try-error"))
+      rng = try(self$inf():self$sup(),silent = TRUE)
     if(inherits(rng,"try-error")){
       lower = ifelse(self$inf() == -Inf, -1e03, self$inf())
       upper = ifelse(self$sup() == Inf, 1e03, self$sup())

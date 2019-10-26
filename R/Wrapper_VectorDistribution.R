@@ -84,7 +84,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
       stop("Either distlist or distribution and params must be provided.")
 
     # assumes distribution is a character
-    if(!(any(distribution %in% listDistributions(simplify = T))))
+    if(!(any(distribution %in% c(listDistributions(simplify = T), "Distribution"))))
       stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
 
     if(!checkmate::testList(params))
@@ -94,8 +94,15 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
       params = lapply(params, list)
 
 
+    shortname = character(length(params))
+    shortname[distribution %in% "Distribution"] = sapply(params[distribution %in% "Distribution"],
+                                                          function(x) x$short_name)
+    shortname[!(distribution %in% "Distribution")] = sapply(distribution[!(distribution %in% "Distribution")],
+                                                          function(x) get(x)$public_fields$short_name)
+    shortname = unlist(shortname)
+
     private$.wrappedModels = data.table::data.table(distribution = distribution, params = params,
-                                                    shortname = get(distribution)$public_fields$short_name)
+                                                    shortname = shortname)
 
     if(length(unique(distribution)) == 1)
       distribution = rep(distribution, length(params))
@@ -134,8 +141,13 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
   formals(pdf) = lst
   body(pdf) = substitute({
     pdfs = NULL
-    for(i in 1:n)
-      pdfs = c(pdfs, self[i]$pdf(get(paste0("x",i))))
+    if(class(try(get("x2"), silent = T)) == "try-error"){
+      for(i in 1:n)
+        pdfs = c(pdfs, self[i]$pdf(get("x1")))
+    } else {
+      for(i in 1:n)
+        pdfs = c(pdfs, self[i]$pdf(get(paste0("x",i))))
+    }
     y = data.table::data.table(matrix(pdfs, ncol = n))
     colnames(y) <- unlist(private$.wrappedModels[,3])
     return(y)
@@ -145,8 +157,13 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
   formals(cdf) = lst
   body(cdf) = substitute({
     cdfs = NULL
-    for(i in 1:n)
-      cdfs = c(cdfs, self[i]$cdf(get(paste0("x",i))))
+    if(class(try(get("x2"), silent = T)) == "try-error"){
+      for(i in 1:n)
+        cdfs = c(cdfs, self[i]$cdf(get("x1")))
+    } else {
+      for(i in 1:n)
+        cdfs = c(cdfs, self[i]$cdf(get(paste0("x",i))))
+    }
     y = data.table::data.table(matrix(cdfs, ncol = n))
     colnames(y) <- unlist(private$.wrappedModels[,3])
     return(y)
@@ -156,8 +173,13 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
   formals(quantile) = lst
   body(quantile) = substitute({
     quantiles = NULL
-    for(i in 1:n)
-      quantiles = c(quantiles, self[i]$quantile(get(paste0("x",i))))
+    if(class(try(get("x2"), silent = T)) == "try-error"){
+      for(i in 1:n)
+        quantiles = c(quantiles, self[i]$quantile(get("x1")))
+    } else {
+      for(i in 1:n)
+        quantiles = c(quantiles, self[i]$quantile(get(paste0("x",i))))
+    }
     y = data.table::data.table(matrix(quantiles, ncol = n))
     colnames(y) <- unlist(private$.wrappedModels[,3])
     return(y)
@@ -175,7 +197,8 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
   support = Reals$new(dim = ndist)
 
   super$initialize(pdf = pdf, cdf = cdf, quantile = quantile, rand = rand, name = name,
-                   short_name = short_name, description = description, support = support, type = type,
+                   short_name = short_name, description = description, support = support,
+                   type = type, variateForm = "multivariate", valueSupport = "mixture",
                    suppressMoments = TRUE)
 })
 VectorDistribution$set("public","wrappedModels", function(model = NULL){
