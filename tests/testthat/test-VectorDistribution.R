@@ -5,12 +5,11 @@ context("Vector Distribution")
 test_that("constructor",{
   expect_silent(VectorDistribution$new(list(Binomial$new(),Binomial$new(size = 20, prob = 0.6))))
   expect_silent(VectorDistribution$new(list(Binomial$new(),Exponential$new(rate=1))))
-})
-
-test_that("type/support",{
-  expect_equal(VectorDistribution$new(list(Binomial$new(), Binomial$new()))$type()$getSymbol(), Naturals$new(2)$getSymbol())
-  expect_equal(VectorDistribution$new(list(Binomial$new(size = 2), Binomial$new(size = 3)))$support()$getSymbol(),
-               product.SetInterval(Set$new(0:2),Set$new(0:3))$getSymbol())
+  expect_silent(VectorDistribution$new(distribution = "WeightedDiscrete", params = list(
+    data = data.frame(x = 1, prob = 1))
+  ))
+  expect_error(VectorDistribution$new(), "Either distlist")
+  expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "Gerald is not")
 })
 
 test_that("pdf/cdf/quantile",{
@@ -35,21 +34,107 @@ test_that("rand",{
 
 
 test_that("pdf/cdf - array",{
-  a = VectorDistribution$new(distribution = Binomial, params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                         list(prob = 0.2, size = 6)))
   expect_equal(a$pdf(1,x2 = 2,x3 = 3), data.table::data.table(Binom1 = Binomial$new(2,0.1)$pdf(1), Binom2 = Binomial$new(4,0.6)$pdf(2), Binom3 = Binomial$new(6,0.2)$pdf(3)))
   expect_equal(a$cdf(1,x2 = 2,x3 = 3), data.table::data.table(Binom1 = Binomial$new(2,0.1)$cdf(1), Binom2 = Binomial$new(4,0.6)$cdf(2), Binom3 = Binomial$new(6,0.2)$cdf(3)))
 })
 
-test_that("type/support - array",{
-  a = VectorDistribution$new(distribution = Binomial, params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+test_that("type/support",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                         list(prob = 0.2, size = 6)))
-  expect_equal(a$type()$getSymbol(), Naturals$new(dim = 3)$getSymbol())
-  expect_equal(a$support()$getSymbol(), (Set$new(0:2) * Set$new(0:4) * Set$new(0:6))$getSymbol())
-  expect_error(VectorDistribution$new(distribution = sd, params = list()))
-  expect_error(VectorDistribution$new())
-  expect_equal(VectorDistribution$new(distribution = Binomial, params = data.table::data.table(prob = c(0.1,0.6,0.2),size = c(2,4,6))), a)
-  expect_error(VectorDistribution$new(distribution = Binomial, params = c(prob = 1)))
+  expect_equal(a$type()$getSymbol(), Reals$new(dim = 3)$getSymbol())
+  expect_equal(a$support()$getSymbol(), Reals$new(dim = 3)$getSymbol())
 })
 
+test_that("stats", {
+  vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_equal(vecDist$mean(), data.table::data.table(Binom = 5, Gomp = NaN))
+  expect_equal(vecDist$mode(), data.table::data.table(Binom = vecDist[1]$mode(), Gomp = NaN))
+  expect_equal(vecDist$variance(), data.table::data.table(Binom = 2.5, Gomp = NaN))
+  expect_equal(vecDist$skewness(), data.table::data.table(Binom = 0, Gomp = NaN))
+  expect_equal(vecDist$kurtosis(), data.table::data.table(Binom = -0.2, Gomp = NaN))
+  expect_equal(vecDist$entropy(), data.table::data.table(Binom = Binomial$new()$entropy(), Gomp = NaN))
+  expect_equal(vecDist$mgf(2), data.table::data.table(Binom =  Binomial$new()$mgf(2), Gomp = NaN))
+  expect_equal(vecDist$cf(2), data.table::data.table(Binom = Binomial$new()$cf(2), Gomp = NaN+0i))
+  expect_equal(vecDist$pgf(2), data.table::data.table(Binom = Binomial$new()$pgf(2), Gomp = NaN))
+})
+
+test_that("wrapped models",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)))
+  expect_equal(a$wrappedModels("Binom1"), Binomial$new(prob=0.1,size=2))
+  expect_equal(a$wrappedModels(), list(Binomial$new(prob=0.1,size=2),Binomial$new(prob=0.6,size=4),
+                                       Binomial$new(prob=0.2,size=6)))
+  expect_equal(a$wrappedModels("dsdsdsd"), list(Binomial$new(prob=0.1,size=2),Binomial$new(prob=0.6,size=4),
+                                       Binomial$new(prob=0.2,size=6)))
+  a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_equal(a$wrappedModels(), list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_equal(a$wrappedModels("Binom"), Binomial$new())
+  expect_equal(a$wrappedModels(c("Binom","Gomp")), list(Binom=Binomial$new(prob = 0.5, size = 10),
+                                                        Gomp=Gompertz$new()))
+})
+
+test_that("parameters",{
+  a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_null(expect_message(a$getParameterValue(1), "Vector Distribution should not"))
+  expect_null(expect_message(a$setParameterValue(f), "Vector Distribution should not"))
+  expect_equal(expect_message(a$parameters(s), "Vector Distribution should not"), data.table::data.table())
+})
+
+test_that("extract",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)))
+  expect_equal(a[1], Binomial$new(prob = 0.1, size = 2))
+  expect_equal(a[1:2]$wrappedModels(), list(Binomial$new(prob = 0.1, size = 2),
+                                                   Binomial$new(prob = 0.6, size = 4)))
+  expect_error(a[4], "Index i too large")
+  a = VectorDistribution$new(list(Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
+                                  Binomial$new(prob = 0.2, size = 6)))
+  expect_equal(a[1], Binomial$new(prob = 0.1, size = 2))
+  expect_equal(a[1:2], VectorDistribution$new(list(Binomial$new(prob = 0.1, size = 2),
+                                                   Binomial$new(prob = 0.6, size = 4))))
+  expect_error(a[4], "Index i too large")
+})
+
+test_that("decorators",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)),
+                             decorators = c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a[1]$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)),
+                             decorators = list("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  a = VectorDistribution$new(list(Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
+                                  Binomial$new(prob = 0.2, size = 6)),
+                             decorators = "ExoticStatistics")
+  expect_equal(a$decorators(), "ExoticStatistics")
+  expect_equal(a[1]$decorators(), "ExoticStatistics")
+})
+
+test_that("shared params",{
+  shared_params = data.table::data.table(prob = 0.2, size = 2)
+  expect_silent(VectorDistribution$new(distribution = "Binomial",
+                                       shared_params = shared_params))
+  shared_params = data.table::data.table(short_name = "test", pdf = dbinom)
+  expect_silent(VectorDistribution$new(distribution = "Distribution",
+                                       shared_params = shared_params))
+})
+
+test_that("shared d/p/q/r",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2),
+                                                                      list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)))
+  expect_equal(a$pdf(1), data.table::data.table(Binom1 = dbinom(1,2,0.1),
+                                                Binom2 = dbinom(1,4,0.6),
+                                                Binom3 = dbinom(1,6,0.2)))
+  expect_equal(a$cdf(1), data.table::data.table(Binom1 = pbinom(1,2,0.1),
+                                                Binom2 = pbinom(1,4,0.6),
+                                                Binom3 = pbinom(1,6,0.2)))
+  expect_equal(a$quantile(0.42), data.table::data.table(Binom1 = qbinom(0.42,2,0.1),
+                                                Binom2 = qbinom(0.42,4,0.6),
+                                                Binom3 = qbinom(0.42,6,0.2)))
+})
 

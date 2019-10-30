@@ -59,8 +59,6 @@
 #'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
 #'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-#'   \code{plot()} \tab Coming Soon. \cr
-#'   \code{qqplot()} \tab Coming Soon. \cr
 #'   }
 #' @section Active Bindings:
 #'  \tabular{ll}{
@@ -77,24 +75,29 @@
 #'@export
 NULL
 DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
-DistributionWrapper$set("public","initialize",function(distlist,...){
+DistributionWrapper$set("public","initialize",function(distlist = NULL,...){
   if(getR6Class(self) == "DistributionWrapper")
     stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
-  assertDistributionList(distlist)
+  if(!is.null(distlist)){
+    assertDistributionList(distlist)
 
-  #lapply(distlist, function(x) x$parameters()$update())
-  private$.wrappedModels <- distlist
+    #lapply(distlist, function(x) x$parameters()$update())
+    private$.wrappedModels <- distlist
 
-  params <- data.table::rbindlist(lapply(distlist, function(x){
-    params = x[["parameters"]]()$as.data.table()
-    params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
-    return(params)
-  }))
-  row.names(params) <- NULL
-  if(!is.null(private$.outerParameters))
-    params <- rbind(params, private$.outerParameters$as.data.table())
-  params <- as.ParameterSet(params)
+    params <- data.table::rbindlist(lapply(distlist, function(x){
+      if(!("VectorDistribution" %in% class(x))){
+        params = x[["parameters"]]()$as.data.table()
+        params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
+        return(params)
+      }
+    }))
+    row.names(params) <- NULL
+    if(!is.null(private$.outerParameters))
+      params <- rbind(params, private$.outerParameters$as.data.table())
+    params <- as.ParameterSet(params)
+  } else
+    params = NULL
 
   super$initialize(parameters = params, ...)
 })

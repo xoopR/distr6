@@ -12,7 +12,6 @@
 #' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
 #' @templateVar additionalDetails Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and uniform probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#' @templateVar omittedVars skewness, kurtosis, entropy, mgf, cf
 #' @templateVar constructor samples
 #' @templateVar arg1 \code{samples} \tab numeric \tab vector of observed samples. \cr
 #' @templateVar constructorDets a vector of elements for the support set.
@@ -56,6 +55,56 @@ Empirical$set("public","mean",function(){
 Empirical$set("public","variance",function(){
   return(sum((self$support()$elements() - self$mean())^2)/private$.total)
 })
+Empirical$set("public","skewness",function(){
+  return(sum(((self$support()$elements() - self$mean())/self$stdev())^3)/private$.total)
+})
+Empirical$set("public","kurtosis",function(excess = TRUE){
+  kurt = sum(((self$support()$elements() - self$mean())/self$stdev())^4)/private$.total
+  if(excess)
+    return(kurt - 3)
+  else
+    return(kurt)
+})
+Empirical$set("public","entropy",function(base = 2){
+  p = private$.data$N/private$.total
+  return(-sum(p * log(p, base)))
+})
+Empirical$set("public","mgf",function(t){
+  if(length(t) == 1)
+    return(sum(exp(private$.data$samples*t) * (private$.data$N/private$.total)))
+  else{
+    nr = length(t)
+    nc = length(private$.data$samples)
+    return(as.numeric(
+      exp(matrix(private$.data$samples, nrow = nr, ncol = nc, byrow = T) *
+          matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$N/private$.total, nrow = nc, ncol = 1)
+    ))
+  }
+})
+Empirical$set("public","cf",function(t){
+  if(length(t) == 1)
+    return(sum(exp(private$.data$samples*t*1i) * (private$.data$N/private$.total)))
+  else{
+    nr = length(t)
+    nc = length(private$.data$samples)
+    return(as.complex(
+      exp(matrix(private$.data$samples*1i, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$N/private$.total, nrow = nc, ncol = 1)
+    ))
+  }
+})
+Empirical$set("public","pgf",function(z){
+  if(length(z) == 1)
+    return(sum((z^private$.data$samples) * (private$.data$N/private$.total)))
+  else{
+    nr = length(z)
+    nc = length(private$.data$samples)
+    return(as.numeric(
+      (matrix(z, nrow = nr, ncol = nc) ^ matrix(private$.data$samples, nrow = nr, ncol = nc, byrow = z)) %*%
+        matrix(private$.data$N/private$.total, nrow = nc, ncol = 1)
+    ))
+  }
+})
 
 Empirical$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   message("There are no parameters to set.")
@@ -77,15 +126,20 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
 
 
   pdf <- function(x1){
-    return(as.numeric(unlist(private$.data[match(x1, private$.data$samples), "N"]/private$.total)))
+    return(as.numeric(unlist(private$.data[match(round(x1, 10), round(private$.data$samples, 10)), "N"]/private$.total)))
   }
 
   cdf <- function(x1){
-    return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$samples), "cumN"]/private$.total)))
+    find = findInterval(x1, private$.data$samples)
+    find[find == 0] = 1
+    return(as.numeric(unlist(private$.data[find, "cumN"]/private$.total)))
   }
   quantile <- function(p){
     p = p * private$.total
-    return(as.numeric(unlist(private$.data[findInterval(p, private$.data$cumN, all.inside = TRUE), "samples"])))
+    mat = p <= matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+    which = apply(mat, 1, function(x) which(x)[1])
+    which[is.na(which)] = ncol(mat)
+    return(as.numeric(unlist(private$.data[which, "samples"])))
   }
 
   rand <- function(n){

@@ -161,6 +161,7 @@ reference:
       - wrappedModels
       - ProductDistribution
       - VectorDistribution
+      - Extract.VectorDistribution
       - HuberizedDistribution
       - huberize
       - TruncatedDistribution
@@ -227,6 +228,11 @@ reference:
       - Silverman
       - Tricube
       - Triweight
+  - title: "Visualisation"
+    contents:
+      - plot.Distribution
+      - lines.Distribution
+      - qqplot
   - title: "Assertions"
     desc: "Validation checks for Distributions."
     contents:

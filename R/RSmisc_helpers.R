@@ -57,7 +57,10 @@ ifnerror <- function(expr, noerror, error = NULL, silent = T){
     else
       error
   } else {
-    noerror
+    if(missing(noerror))
+      return(x)
+    else
+      return(noerror)
   }
 }
 
@@ -83,3 +86,35 @@ modal = function(data){
   modal = as.numeric(names(tab)[tab==max(tab)])
   return(modal)
 }
+
+makeUniqueNames <- function(y){
+  if (any(duplicated(sort(y)))) {
+    count = table(y)
+    x = 1
+    for(i in 1:length(y)){
+      if(x == as.numeric(count[names(count) %in% y[[i]]])){
+        y[[i]] <- paste0(y[[i]], x)
+        x = 1
+      } else {
+        y[[i]] <- paste0(y[[i]], x)
+        x = x + 1
+      }
+    }
+  }
+  return(y)
+}
+
+#' @title Coerce String to Proper Case
+#' @description Helper function for string coercion to proper case
+#' @param str String to coerce
+#' @param split see \code{\link[base]{strsplit}}
+#' @param fixed see \code{\link[base]{strsplit}}
+#' @export
+toproper <- function(str, split = " ", fixed = TRUE){
+  str = strsplit(str, split, fixed)
+  str = lapply(str, function(x){
+    paste0(toupper(substr(x,1,1)), tolower(substr(x,2,1000)), collapse = split)
+  })
+  return(unlist(str))
+}
+

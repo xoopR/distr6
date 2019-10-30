@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.2.0
+Version: 1.3.0
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -178,6 +178,9 @@ Collate:
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'
+    'lines_continuous.R'
+    'lines_discrete.R'
+    'lines.R'
     'listDecorators.R'
     'listDistributions.R'
     'listKernels.R'
@@ -185,6 +188,10 @@ Collate:
     'listWrappers.R'
     'makeUniqueDistributions.R'
     'measures.R'
+    'plot_continuous.R'
+    'plot_discrete.R'
+    'plot.R'
+    'qqplot.R'
     'simulateEmpiricalDistribution.R'
     'skewType.R'
     'zzz.R'

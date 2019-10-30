@@ -111,8 +111,6 @@
 #'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
 #'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
 #'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-#'   \code{plot()} \tab Coming Soon. \cr
-#'   \code{qqplot()} \tab Coming Soon. \cr
 #'   }
 #'
 #' @section Active Bindings:
@@ -150,15 +148,13 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       description=NULL, suppressMoments = FALSE, .suppressChecks = FALSE
                       ){
 
-  if(.suppressChecks){
-    self$name <- name
-    self$short_name <- short_name
-    if(!is.null(parameters)) private$.parameters <- parameters$clone(deep = TRUE)
+  if(.suppressChecks | inherits(self, "DistributionWrapper")){
+    if(!is.null(parameters)) parameters = parameters$clone(deep = TRUE)
     if(!is.null(pdf)) formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
     if(!is.null(cdf)) formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
     if(!is.null(quantile)) formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
     if(!is.null(rand)) formals(rand) = c(formals(rand),list(self=self),alist(...=))
-  } else if(getR6Class(self) == "Distribution" | inherits(self,"DistributionWrapper")){
+  } else if(getR6Class(self) == "Distribution"){
 
     if(is.null(pdf) & is.null(cdf))
       stop("One of pdf or cdf must be provided.")
@@ -174,9 +170,6 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                                .var.name = "'name' and 'short_name' must be of class 'character'.")
     checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
                       .var.name = "'short_name' must be one word only.")
-
-    self$name <- name
-    self$short_name <- short_name
 
     #------------------------
     # Type and Support Checks
@@ -267,17 +260,17 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         formals(rand) = c(formals(rand),list(self=self),alist(...=))
     }
 
-    #--------------------
-    # ParameterSet Checks
-    #--------------------
+    #-------------------------
+    # Parameter Checks
+    #-------------------------
     if(!is.null(parameters)){
       checkmate::assertClass(parameters,"ParameterSet")
-      if(!inherits(self, "DistributionWrapper"))
-        private$.parameters <- parameters$clone()$update()
-      else
-        private$.parameters <- parameters$clone()
+      parameters <- parameters$clone(deep = TRUE)$update()
     }
   }
+
+  if(!is.null(parameters))
+    private$.parameters <- parameters
 
   if(!is.null(pdf)){
       private$.pdf <- pdf
@@ -296,12 +289,16 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       private$.isRand <- TRUE
   }
 
-  if(!is.null(support)) private$.properties$support <- support
-  if(!is.null(type)) private$.traits$type <- type
-  if(!is.null(valueSupport)) private$.traits$valueSupport <- valueSupport
-  if(!is.null(variateForm)) private$.traits$variateForm <- variateForm
+  if(!is.null(name)) self$name <- name
+  if(!is.null(short_name)) self$short_name <- short_name
+
+  private$.properties$support <- support
+  private$.traits$type <- type
+  private$.traits$valueSupport <- valueSupport
+  private$.traits$variateForm <- variateForm
 
   if(!is.null(description)) self$description <- description
+
   symm = ifelse(symmetric,"symmetric","asymmetric")
   private$.properties$symmetry <- symm
 
@@ -462,9 +459,6 @@ Distribution$set("public","summary",function(full = TRUE,...){
   cat("\n")
   invisible(self)
 })
-
-Distribution$set("public","plot",function(){}) # TO DO
-Distribution$set("public","qqplot",function(){}) # TO DO
 
 #-------------------------------------------------------------
 # Public Methods - Accessors

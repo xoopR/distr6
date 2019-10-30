@@ -197,7 +197,12 @@ ParameterSet$set("public","update", function(...){
   if(any(!is.na(private$.parameters$updateFunc))){
     update_filter = !is.na(private$.parameters$updateFunc)
     updates = private$.parameters[update_filter,]
-    newvals = apply(updates, 1, function(x) return(x[[6]](self)))
+    newvals = apply(updates, 1, function(x){
+      newval = x[[6]](self)
+      if(!x[[3]]$liesInSetInterval(newval, all = TRUE))
+        stop(newval, " does not lie in the support of parameter ", x[[1]])
+      return(newval)
+      })
     suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
   }
 
@@ -289,8 +294,8 @@ NULL
 ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
   if(missing(id))
     return(stopwarn(error, "Argument 'id' is missing, with no default."))
-  val = self$parameters(id)[["value"]]
-  if(length(val)==0){
+  val = try(self$parameters(id)[["value"]], silent = T)
+  if(class(val)=="try-error" | length(val) == 0){
     return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
   }else
     return(unlist(val[[1]]))
@@ -351,7 +356,8 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
       # if(param$support[[1]]$class() == "integer")
       #   value <- round(value)
 
-      checkmate::assert(param$support[[1]]$liesInSetInterval(value, all = TRUE))
+      if(!param$support[[1]]$liesInSetInterval(value, all = TRUE))
+        stop(value, " does not lie in the support of parameter ", aid)
 
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
     }

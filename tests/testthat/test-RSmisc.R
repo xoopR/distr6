@@ -52,3 +52,8 @@ test_that("modal",{
   expect_equal(modal(c(1,2,2,4,5,6,7,2,4,4,2,4,2)), 2)
   expect_equal(modal(c(1,2,2,4,5,6,7,2,4,4,2,4,2,4)), c(2,4))
 })
+
+test_that("toproper",{
+  expect_equal(toproper("a long SenTENCe"), "A Long Sentence")
+  expect_equal(toproper("DifFERent-spLIT", split = "-"), "Different-Split")
+})

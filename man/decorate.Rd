@@ -9,7 +9,7 @@ decorate(distribution, decorators)
 \arguments{
 \item{distribution}{distribution to decorate}
 
-\item{decorators}{list of decorators}
+\item{decorators}{list or vector of decorators. See Details.}
 }
 \value{
 Returns a decorated R6 object inheriting from class SDistribution with the methods listed
@@ -24,7 +24,7 @@ interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators
 use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
 to impute missing d/p/q/r functions.
 
-The \code{decorators} parameter should either be a list of decorator classes (i.e. not as strings)
+The \code{decorators} parameter should either be a list of decorator classes or their names
 or a single decorator class; see examples.
 }
 \examples{
@@ -33,6 +33,12 @@ decorate(B, CoreStatistics)
 
 E <- Exponential$new()
 decorate(E, list(CoreStatistics, ExoticStatistics))
+
+E <- Exponential$new()
+decorate(E, list(CoreStatistics, "ExoticStatistics"))
+
+E <- Exponential$new()
+decorate(E, c("CoreStatistics", "ExoticStatistics"))
 
 }
 \references{

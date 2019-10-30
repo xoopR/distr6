@@ -1,3 +1,38 @@
+# distr6 1.3.0
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- `plot` function for plotting the `pdf, cdf, survival, quantile, hazard, cumhazard` or `distr6` objects
+- `lines` function for superimposing `distr6` plots
+- `qqplot` function for comparing `distr6` distributions to each other or to other theoretical distributions
+- Added `Extract.VectorDistribution` for extracted distributions from inside a `VectorDistribution`, see the big update below.
+
+### Deprecated Functions
+
+- None
+
+### Updated Functions
+
+- `decorate` now allows users to specify the Decorator as a character as well as supplying the object, this makes it simpler when using distr6 whilst unattached
+- **Big changes** (and hopefully final) to the `VectorDistribution`. Now the `VectorDistribution` only constructs the internal wrapped distributions when they are extracted or when a function, such as d/p/q/r, are called. This massively reduces a bottleneck in constructing the distribution. Additionally added functions for extracting distributions from inside the `VectorDistribution`. The only difference that should affect backwards compatibility is that the `distribution` argument must now be a character and not an object. Custom (i.e. non-`SDistribution`) distributions should be used in conjunction with the `distlist` initializer.
+- Changed the lower bound of positive Sets to .Machine$double.xmin as the previous value of 1.1e-15 was too restrictive
+- Added `skewness`, `kurtosis`, `entropy`, `mgf`, `cf`, and `pgf` to `WeightedDiscrete` and `Empirical`
+- Added support for custom distributions in `VectorDistribution` and for `CoreStatistics` functions as well as support for only one arguments passed to d/p/q/r for fast comparisons between wrapped distributions
+
+## Patches
+
+- Bug fix in `WeightedDiscrete` distribution `variance` calculation
+- Fixed bug in `Empirical` that was stopping the cdf of the first point in the distribution being evaluated 
+- Fixed bug that allowed invalid parameter values to be set for non-reference parameters
+- Updated parameter error messages to be more informative
+- Improved speed and efficiency in `Distribution` constructor for wrappers
+
 # distr6 1.2.0
 
 ## Major Updates

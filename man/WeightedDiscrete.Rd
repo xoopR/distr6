@@ -15,9 +15,9 @@ The WeightedDiscrete distribution   is defined by the pmf, \deqn{f(x_i) = p_i} f
 
 The distribution is supported on \eqn{x_1,...,x_k}.
 
-skewness, kurtosis, entropy, mgf, cf
-are
-omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
+
+
+
 
 
 
@@ -122,8 +122,6 @@ Sampling from this distribution is performed with the \code{\link[base]{sample}}
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
@@ -149,5 +147,5 @@ McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function and \code{\link{Empirical}} for the closely related Empirical distribution. \code{\link{CoreStatistics}} for numerical results.
+\code{\link{listDistributions}} for all available distributions. \code{\link[base]{sample}} for the sampling function and \code{\link{Empirical}} for the closely related Empirical distribution.
 }

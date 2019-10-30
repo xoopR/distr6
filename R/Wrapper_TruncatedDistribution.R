@@ -91,7 +91,8 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf,
                    name = name, short_name = short_name, support = support,
                    type = distribution$type(),
-                   description = description)
+                   description = description,
+                   valueSupport = distribution$valueSupport(), variateForm = "univariate")
 })
 TruncatedDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))

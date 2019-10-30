@@ -7,11 +7,12 @@
 #' use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
 #' to impute missing d/p/q/r functions.
 #'
-#' The \code{decorators} parameter should either be a list of decorator classes (i.e. not as strings)
+#' The \code{decorators} parameter should either be a list of decorator classes or their names
 #' or a single decorator class; see examples.
 #'
 #' @param distribution distribution to decorate
-#' @param decorators list of decorators
+#' @param decorators list or vector of decorators. See Details.
+#'
 #'
 #' @seealso \code{\link{listDecorators}} for available decorators.
 #'
@@ -22,6 +23,12 @@
 #' E <- Exponential$new()
 #' decorate(E, list(CoreStatistics, ExoticStatistics))
 #'
+#' E <- Exponential$new()
+#' decorate(E, list(CoreStatistics, "ExoticStatistics"))
+#'
+#' E <- Exponential$new()
+#' decorate(E, c("CoreStatistics", "ExoticStatistics"))
+#'
 #' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed
 #' from one of the available decorators added to the SDistribution methods.
 #'
@@ -31,8 +38,19 @@
 #'
 #' @export
 decorate <- function(distribution, decorators){
-  if(!checkmate::testList(decorators))
-    decorators = list(decorators)
+  if(!checkmate::testList(decorators)){
+    if(class(decorators) == "character")
+      decorators = as.list(decorators)
+    else
+      decorators = list(decorators)
+  }
+
+
+  decorators = lapply(decorators, function(x){
+    if (checkmate::testCharacter(x))
+      x = utils::getFromNamespace(x, "distr6")
+    return(x)
+    })
 
   dist_decors = distribution$decorators()
   decors_names = lapply(decorators, function(x) x$classname)

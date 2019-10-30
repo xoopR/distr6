@@ -10,13 +10,15 @@ Returns an R6 object of class VectorDistribution.
 A wrapper for creating a vector of distributions.
 }
 \details{
-A vector of distributions has the following relationship
-\deqn{f_V(X1 = x1,...,XN = xN) = f_{X1}(x1), ..., f_{XN}(xn)}{f_V(X1 = x1,...,XN = xN) = f_X1(x1), ..., f_XN(xn)}
-\deqn{F_V(X1 = x1,...,XN = xN) = F_{X1}(x1), ..., F_{XN}(xn)}{F_V(X1 = x1,...,XN = xN) = F_X1(x1), ..., F_XN(xn)}
-where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} and \eqn{X1,...,XN} are distributions.
+A vector distribution is intented to vectorize distributions more efficiently than storing
+a list of distributions. To improve speed and reduce memory usage, distributions are only constructed
+when methods (e.g. d/p/q/r) are called. Whilst it is recommended to first extract distributions
+using `[` before querying them for results, all common methods are available in
+`VectorDistribution` as they are wrapped in `apply`.
 }
 \section{Constructor}{
- VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
+ VectorDistribution$new(distlist = NULL, distribution = NULL, params = NULL,
+name = NULL, short_name = NULL, description = NULL, decorators = NULL)
 }
 
 \section{Constructor Arguments}{
@@ -24,20 +26,24 @@ where \eqn{f_V}/\eqn{F_V} is the pdf/cdf of the vector of distributions \eqn{V} 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{distlist} \tab list \tab List of distributions. \cr
-\code{distribution} \tab distribution \tab Distribution to wrap. \cr
+\code{distribution} \tab character \tab Distribution to wrap. \cr
 \code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
+\code{shared_params} \tab a R object \tab Either list of shared parameters or matrix-type frame, see examples. \cr
 \code{name} \tab list \tab Optional new name for distribution. \cr
 \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 \code{description} \tab list \tab Optional new description for distribution. \cr
+\code{decorators} \tab list \tab Decorators to pass to wrapped distributions on construction. \cr
 }
 }
 
 \section{Constructor Details}{
  A vector distribution can either be constructed by a list of
-distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
-to \code{distribution}, as well as a list or table of parameters to \code{params}. The former case provides more flexibility
-in the ability to use multiple distributions but the latter is useful for quickly combining many
-distributions of the same type. See examples.
+distributions passed to \code{distlist} or by passing the name of one or more distributions
+implemented in distr6 to \code{distribution}, as well as a list or table of parameters to \code{params}.
+The former case provides more flexibility in the ability to use wrapped distributions
+but the latter is vastly faster for distributions of class \code{SDistribution} or custom distributions.
+The \code{shared_params} parameter decreases memory usage and improves speed by storing any parameters
+shared between distributions only once (instead of repeated in a list).
 }
 
 \section{Public Variables}{
@@ -97,20 +103,28 @@ distributions of the same type. See examples.
   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  \code{plot()} \tab Coming Soon. \cr
-  \code{qqplot()} \tab Coming Soon. \cr
   }
 }
 
 \examples{
-vecBin <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
+vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
                            size = 10), Normal$new(mean = 15)))
-vecBin$pdf(x1 = 2, x2 =3)
-vecBin$cdf(1:5, 12:16)
-vecBin$quantile(c(0.1,0.2),c(0.3,0.4))
-vecBin$rand(10)
+vecDist$pdf(x1 = 2, x2 =3)
+# Equivalently
+vecDist[1]$pdf(2); vecDist[2]$pdf(3)
+# Or to evaluate every distribution at the same point
+vecDist$pdf(1)
 
-vecBin = VectorDistribution$new(distribution = Binomial,
+# Same wrapping for statistical functions
+vecDist$mean()
+c(vecDist[1]$mean(), vecDist[2]$mean())
+vecDist$entropy()
+c(vecDist[1]$entropy(), vecDist[2]$entropy())
+
+vecDist$cdf(1:5, 12:16)
+vecDist$rand(10)
+
+vecBin = VectorDistribution$new(distribution = "Binomial",
        params = list(list(prob = 0.1, size = 2),
                    list(prob = 0.6, size = 4),
                    list(prob = 0.2, size = 6)))
@@ -119,11 +133,18 @@ vecBin$cdf(x1=1,x2=2,x3=3)
 vecBin$rand(10)
 
 #Equivalently
-vecBin = VectorDistribution$new(distribution = Binomial,
+vecBin = VectorDistribution$new(distribution = "Binomial",
        params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
 vecBin$pdf(x1=1,x2=2,x3=3)
 vecBin$cdf(x1=1,x2=2,x3=3)
 vecBin$rand(10)
+
+# sharedparams is very useful for vectorized custom distributions
+shared_params = list(name = "A Distribution", short_name = "Dist", type = Reals$new())
+params = list(list(pdf = function(x) return(1)), list(pdf = function(x) return(2)))
+vecdist = VectorDistribution$new(distribution = "Distribution", params = params,
+                                   shared_params = shared_params)
+vecdist$pdf(1)
 
 }
 \seealso{

@@ -12,7 +12,6 @@
 #' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
 #' @templateVar additionalDetails Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the x values and the pdf as the probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#' @templateVar omittedVars skewness, kurtosis, entropy, mgf, cf
 #' @templateVar constructor data
 #' @templateVar arg1 \code{data} \tab data.frame \tab matrix-style object of observations and probabilities. See details. \cr
 #' @templateVar constructorDets an object that can be coerced to a data.frame containing columns 'sample' and at least one of 'pdf' and 'cdf', see examples.
@@ -55,7 +54,56 @@ WeightedDiscrete$set("public","mean",function(){
   return(sum(private$.data$x * private$.data$pdf))
 })
 WeightedDiscrete$set("public","variance",function(){
-  return(sum((private$.data$x - self$mean())^2)/nrow(private$.data))
+  return(sum((private$.data$x - self$mean())^2 * private$.data$pdf))
+})
+WeightedDiscrete$set("public","skewness",function(){
+  return(sum(((private$.data$x - self$mean())/self$stdev())^3 * private$.data$pdf))
+})
+WeightedDiscrete$set("public","kurtosis",function(excess = TRUE){
+  kurt = sum(((private$.data$x - self$mean())/self$stdev())^4 * private$.data$pdf)
+  if(excess)
+    return(kurt - 3)
+  else
+    return(kurt)
+})
+WeightedDiscrete$set("public","entropy",function(base = 2){
+  return(-sum(private$.data$pdf * log(private$.data$pdf, base)))
+})
+WeightedDiscrete$set("public","mgf",function(t){
+  if(length(t) == 1)
+    return(sum(exp(private$.data$x*t) * (private$.data$pdf)))
+  else{
+    nr = length(t)
+    nc = length(private$.data$x)
+    return(as.numeric(
+      exp(matrix(private$.data$x, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$pdf, nrow = nc, ncol = 1)
+    ))
+  }
+})
+WeightedDiscrete$set("public","cf",function(t){
+  if(length(t) == 1)
+    return(sum(exp(private$.data$x*t*1i) * (private$.data$pdf)))
+  else{
+    nr = length(t)
+    nc = length(private$.data$x)
+    return(as.complex(
+      exp(matrix(private$.data$x*1i, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$pdf, nrow = nc, ncol = 1)
+    ))
+  }
+})
+WeightedDiscrete$set("public","pgf",function(z){
+  if(length(z) == 1)
+    return(sum((z^private$.data$x) * private$.data$pdf))
+  else{
+    nr = length(z)
+    nc = length(private$.data$x)
+    return(as.numeric(
+      (matrix(z, nrow = nr, ncol = nc) ^ matrix(private$.data$x, nrow = nr, ncol = nc, byrow = z)) %*%
+        matrix(private$.data$pdf, nrow = nc, ncol = 1)
+    ))
+  }
 })
 
 WeightedDiscrete$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
@@ -81,8 +129,8 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
     data$pdf = c(data$cdf[1], diff(data$cdf))
   }
 
-  checkmate::assertNumeric(data$pdf, lower = 0, upper = 1)
-  checkmate::assertNumeric(data$cdf, lower = 0, upper = 1)
+  checkmate::assertNumeric(data$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
+  checkmate::assertNumeric(data$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid")
 
   private$.data <- data
 
@@ -92,10 +140,15 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
     return(as.numeric(unlist(private$.data[match(x1, private$.data$x), "pdf"])))
   }
   cdf <- function(x1){
-    return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$x), "cdf"])))
+    find = findInterval(x1, private$.data$x)
+    find[find == 0] = 1
+    return(as.numeric(unlist(private$.data[find, "cdf"])))
   }
-  quantile <- function(x1){
-    return(as.numeric(unlist(private$.data[findInterval(x1, private$.data$cdf), "x"])))
+  quantile <- function(p){
+    mat = p <= matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+    which = apply(mat, 1, function(x) which(x)[1])
+    which[is.na(which)] = ncol(mat)
+    return(as.numeric(unlist(private$.data[which, "x"])))
   }
   rand <- function(n){
     return(sample(private$.data$x, n, TRUE, private$.data$pdf))

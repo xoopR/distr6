@@ -50,7 +50,7 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL,
   name = short_name = description = NULL
 
   if(!is.null(vectordist)){
-    distlist <- vectordist$wrappedModels()
+    distlist <- makeUniqueDistributions(vectordist$wrappedModels())
     name = gsub("Vector","Mixture",vectordist$name)
     short_name = gsub("Vec","Mix",vectordist$short_name)
     description = gsub("Vector","Mixture",vectordist$description)
@@ -121,6 +121,6 @@ MixtureDistribution$set("public","initialize",function(distlist, weights = NULL,
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
                    short_name = short_name, description = description, type = type,
-                   support = support, valueSupport = "mixture")
+                   support = support, valueSupport = "mixture", variateForm = "univariate")
 })
 MixtureDistribution$set("private",".weights",numeric(0))

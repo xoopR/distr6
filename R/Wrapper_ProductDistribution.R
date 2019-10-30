@@ -126,7 +126,12 @@ ProductDistribution$set("public","initialize",function(distlist = NULL, distribu
 
   type = do.call(product.SetInterval, lapply(distlist,function(x) x$type()))
   support = do.call(product.SetInterval, lapply(distlist,function(x) x$support()))
+  if("discrete" %in% lapply(distlist, valueSupport))
+    valueSupport = "discrete"
+  else
+    valueSupport = "continuous"
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
-                   short_name = short_name, description = description, support = support, type = type)
+                   short_name = short_name, description = description, support = support, type = type,
+                   variateForm = "multivariate", valueSupport = valueSupport)
 })

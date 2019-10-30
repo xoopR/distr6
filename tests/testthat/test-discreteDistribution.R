@@ -24,6 +24,31 @@ discreteTester = Distribution$new("Discrete Test","TestDistr",support=Set$new(0:
                                   decorators = list(CoreStatistics)
 )
 
+test_that("self in arg",{
+  dbin = function(x, self){
+    m1 = choose(self$getParameterValue(id="size"), x)
+    m2 = self$getParameterValue(id="prob")^x
+    m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
+    return(m1 * m2 * m3)
+  }
+
+  pbin = function(x, self){
+    m1 = choose(self$getParameterValue(id="size"), x)
+    m2 = self$getParameterValue(id="prob")^x
+    m3 = (1-self$getParameterValue(id="prob"))^(self$getParameterValue(id="size") - x)
+    return(m1 * m2 * m3)
+  }
+
+  rbin = function(n, self){
+    return(n)
+  }
+
+  expect_silent(Distribution$new("Discrete Test","TestDistr",support=Set$new(0:10),
+                                 symmetric=TRUE, type = PosNaturals$new(),
+                                 pdf = dbin, cdf = pbin, rand = rbin,
+                                 parameters = ps))
+})
+
 test_that("check all accessors are working", {
   expect_equal(discreteTester$strprint(), "TestDistr(prob = 0.2, size = 100)")
   expect_equal(discreteTester$name, "Discrete Test")
