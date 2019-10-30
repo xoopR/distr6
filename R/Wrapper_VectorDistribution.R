@@ -17,6 +17,7 @@
 #' \code{distlist} \tab list \tab List of distributions. \cr
 #' \code{distribution} \tab character \tab Distribution to wrap. \cr
 #' \code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
+#' \code{shared_params} \tab a R object \tab Either list of shared parameters or matrix-type frame, see examples. \cr
 #' \code{name} \tab list \tab Optional new name for distribution. \cr
 #' \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 #' \code{description} \tab list \tab Optional new description for distribution. \cr
@@ -26,8 +27,10 @@
 #' @section Constructor Details: A vector distribution can either be constructed by a list of
 #' distributions passed to \code{distlist} or by passing the name of one or more distributions
 #' implemented in distr6 to \code{distribution}, as well as a list or table of parameters to \code{params}.
-#' The former case provides more flexibility in the ability to use custom or wrapped distributions
-#' but the latter is vastly faster for distributions of class \code{SDistribution}.
+#' The former case provides more flexibility in the ability to use wrapped distributions
+#' but the latter is vastly faster for distributions of class \code{SDistribution} or custom distributions.
+#' The \code{shared_params} parameter decreases memory usage and improves speed by storing any parameters
+#' shared between distributions only once (instead of repeated in a list).
 #'
 #' @inheritSection DistributionWrapper Public Variables
 #' @inheritSection DistributionWrapper Public Methods
@@ -42,6 +45,8 @@
 #' vecDist$pdf(x1 = 2, x2 =3)
 #' # Equivalently
 #' vecDist[1]$pdf(2); vecDist[2]$pdf(3)
+#' # Or to evaluate every distribution at the same point
+#' vecDist$pdf(1)
 #'
 #' # Same wrapping for statistical functions
 #' vecDist$mean()
@@ -67,42 +72,60 @@
 #' vecBin$cdf(x1=1,x2=2,x3=3)
 #' vecBin$rand(10)
 #'
+#' # sharedparams is very useful for vectorized custom distributions
+#' shared_params = list(name = "A Distribution", short_name = "Dist", type = Reals$new())
+#' params = list(list(pdf = function(x) return(1)), list(pdf = function(x) return(2)))
+#' vecdist = VectorDistribution$new(distribution = "Distribution", params = params,
+#'                                    shared_params = shared_params)
+#' vecdist$pdf(1)
+#'
 #' @export
 NULL
 VectorDistribution <- R6::R6Class("VectorDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 .distr6$wrappers <- append(.distr6$wrappers, list(VectorDistribution = VectorDistribution))
 
 VectorDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,
-                                                      name = NULL, short_name = NULL, description = NULL,
+                                                      shared_params = NULL, name = NULL, short_name = NULL, description = NULL,
                                                       decorators = NULL){
 
   if(!is.null(decorators))
     private$.decorators <- unlist(decorators)
 
   if(is.null(distlist)){
-    if(is.null(distribution) | is.null(params))
-      stop("Either distlist or distribution and params must be provided.")
+    if(is.null(distribution) | (is.null(params) & is.null(shared_params)))
+      stop("Either distlist or distribution and shared_params/params must be provided.")
 
     # assumes distribution is a character
     if(!(any(distribution %in% c(listDistributions(simplify = T), "Distribution"))))
       stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
 
-    if(!checkmate::testList(params))
-      params = apply(params, 1, as.list)
+    if(is.null(params)){
+      params <- list()
+    } else {
+      if(!checkmate::testList(params))  params = apply(params, 1, as.list)
+      if(!checkmate::testList(params[[1]])) params = lapply(params, list)
+    }
+    if(is.null(shared_params)){
+      shared_params <- list()
+    } else {
+      if(!checkmate::testList(shared_params))  shared_params = apply(shared_params, 1, as.list)
+    }
 
-    if(!checkmate::testList(params[[1]]))
-      params = lapply(params, list)
 
-
-    shortname = character(length(params))
-    shortname[distribution %in% "Distribution"] = sapply(params[distribution %in% "Distribution"],
-                                                          function(x) x$short_name)
-    shortname[!(distribution %in% "Distribution")] = sapply(distribution[!(distribution %in% "Distribution")],
-                                                          function(x) get(x)$public_fields$short_name)
-    shortname = unlist(shortname)
+    if("short_name" %in% names(shared_params))
+      shortname = shared_params$short_name
+    else {
+      shortname = character(length(params))
+      shortname[distribution %in% "Distribution"] = sapply(params[distribution %in% "Distribution"],
+                                                           function(x) x$short_name)
+      shortname[!(distribution %in% "Distribution")] = sapply(distribution[!(distribution %in% "Distribution")],
+                                                              function(x) get(x)$public_fields$short_name)
+      shortname = unlist(shortname)
+    }
 
     private$.wrappedModels = data.table::data.table(distribution = distribution, params = params,
                                                     shortname = shortname)
+    private$.sharedparams = shared_params
 
     if(length(unique(distribution)) == 1)
       distribution = rep(distribution, length(params))
@@ -302,7 +325,11 @@ VectorDistribution$set("public", "pgf", function(z){
   return(data.table::data.table(ret))
 })
 
+VectorDistribution$set("active", "distlist", function() return(private$.distlist))
+VectorDistribution$set("active", "shared_params", function() return(private$.sharedparams))
+
 VectorDistribution$set("private", ".distlist", FALSE)
+VectorDistribution$set("private", ".sharedparams", list())
 
 #' @title Extract one or more Distributions from a VectorDistribution
 #' @description Once a \code{VectorDistribution} has been constructed, use \code{[}
@@ -315,9 +342,9 @@ Extract.VectorDistribution <- function(vecdist, i){
   if(length(i) == 0)
     stop("Index i too large, should be less than or equal to ", nrow(vecdist$modelTable()))
 
-  if(!vecdist$.__enclos_env__$private$.distlist){
+  if(!vecdist$distlist){
     if(length(i) == 1){
-      par = vecdist$modelTable()[i, 2][[1]]
+      par = c(vecdist$modelTable()[i, 2][[1]], vecdist$shared_params)
 
       # if(!checkmate::testList(par))
       #   par = list(par)

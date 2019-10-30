@@ -28,6 +28,7 @@ name = NULL, short_name = NULL, description = NULL, decorators = NULL)
 \code{distlist} \tab list \tab List of distributions. \cr
 \code{distribution} \tab character \tab Distribution to wrap. \cr
 \code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
+\code{shared_params} \tab a R object \tab Either list of shared parameters or matrix-type frame, see examples. \cr
 \code{name} \tab list \tab Optional new name for distribution. \cr
 \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
 \code{description} \tab list \tab Optional new description for distribution. \cr
@@ -39,8 +40,10 @@ name = NULL, short_name = NULL, description = NULL, decorators = NULL)
  A vector distribution can either be constructed by a list of
 distributions passed to \code{distlist} or by passing the name of one or more distributions
 implemented in distr6 to \code{distribution}, as well as a list or table of parameters to \code{params}.
-The former case provides more flexibility in the ability to use custom or wrapped distributions
-but the latter is vastly faster for distributions of class \code{SDistribution}.
+The former case provides more flexibility in the ability to use wrapped distributions
+but the latter is vastly faster for distributions of class \code{SDistribution} or custom distributions.
+The \code{shared_params} parameter decreases memory usage and improves speed by storing any parameters
+shared between distributions only once (instead of repeated in a list).
 }
 
 \section{Public Variables}{
@@ -109,6 +112,8 @@ vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
 vecDist$pdf(x1 = 2, x2 =3)
 # Equivalently
 vecDist[1]$pdf(2); vecDist[2]$pdf(3)
+# Or to evaluate every distribution at the same point
+vecDist$pdf(1)
 
 # Same wrapping for statistical functions
 vecDist$mean()
@@ -133,6 +138,13 @@ vecBin = VectorDistribution$new(distribution = "Binomial",
 vecBin$pdf(x1=1,x2=2,x3=3)
 vecBin$cdf(x1=1,x2=2,x3=3)
 vecBin$rand(10)
+
+# sharedparams is very useful for vectorized custom distributions
+shared_params = list(name = "A Distribution", short_name = "Dist", type = Reals$new())
+params = list(list(pdf = function(x) return(1)), list(pdf = function(x) return(2)))
+vecdist = VectorDistribution$new(distribution = "Distribution", params = params,
+                                   shared_params = shared_params)
+vecdist$pdf(1)
 
 }
 \seealso{
