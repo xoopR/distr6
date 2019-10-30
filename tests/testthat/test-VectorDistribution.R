@@ -113,3 +113,28 @@ test_that("decorators",{
   expect_equal(a$decorators(), "ExoticStatistics")
   expect_equal(a[1]$decorators(), "ExoticStatistics")
 })
+
+test_that("shared params",{
+  shared_params = data.table::data.table(prob = 0.2, size = 2)
+  expect_silent(VectorDistribution$new(distribution = "Binomial",
+                                       shared_params = shared_params))
+  shared_params = data.table::data.table(short_name = "test", pdf = dbinom)
+  expect_silent(VectorDistribution$new(distribution = "Distribution",
+                                       shared_params = shared_params))
+})
+
+test_that("shared d/p/q/r",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2),
+                                                                      list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)))
+  expect_equal(a$pdf(1), data.table::data.table(Binom1 = dbinom(1,2,0.1),
+                                                Binom2 = dbinom(1,4,0.6),
+                                                Binom3 = dbinom(1,6,0.2)))
+  expect_equal(a$cdf(1), data.table::data.table(Binom1 = pbinom(1,2,0.1),
+                                                Binom2 = pbinom(1,4,0.6),
+                                                Binom3 = pbinom(1,6,0.2)))
+  expect_equal(a$quantile(0.42), data.table::data.table(Binom1 = qbinom(0.42,2,0.1),
+                                                Binom2 = qbinom(0.42,4,0.6),
+                                                Binom3 = qbinom(0.42,6,0.2)))
+})
+

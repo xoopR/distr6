@@ -108,7 +108,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     if(is.null(shared_params)){
       shared_params <- list()
     } else {
-      if(!checkmate::testList(shared_params))  shared_params = apply(shared_params, 1, as.list)
+      if(!checkmate::testList(shared_params))  shared_params = as.list(shared_params)
     }
 
 
