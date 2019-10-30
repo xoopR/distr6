@@ -3,7 +3,7 @@
 #' @title Superimpose Distribution Functions Plots for a distr6 Object
 #' @author Chengyang Gao, Runlong Yu and Shuhan Liu
 #'
-#' @description One of six plots can be selected to ber superimposed in the plotting window,
+#' @description One of six plots can be selected to be superimposed in the plotting window,
 #' including: pdf, cdf, quantile, survival, hazard and cumulative hazard.
 #'
 #' @param x \code{distr6} object.

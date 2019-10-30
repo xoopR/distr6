@@ -18,17 +18,17 @@
 
 \item{ask}{logical; if TRUE, the user is asked before each plot, see \code{\link[graphics]{par}}.}
 
-\item{arrange}{logical; if TRUE (default), margins are automatically adjusted with \code{\link[graphics]{layout}} to accomodate all plotted functions.}
+\item{arrange}{logical; if TRUE (default), margins are automatically adjusted with \code{\link[graphics]{layout}} to accommodate all plotted functions.}
 
 \item{...}{graphical parameters, see details.}
 }
 \description{
 Six plots, which can be selected with \code{fun} are available for discrete and
-continuous univarite distributions: pdf, cdf, quantile, survival, hazard and cumulative
+continuous univariate distributions: pdf, cdf, quantile, survival, hazard and cumulative
 hazard. By default, the first two are plotted side by side.
 }
 \details{
-The evaluation points are calculted using inverse transform on a uniform grid between 0 and 1 with
+The evaluation points are calculated using inverse transform on a uniform grid between 0 and 1 with
 length given by \code{npoints}. Therefore any distribution without an analytical \code{quantile} method
 will first need to be imputed with the \code{\link{FunctionImputation}} decorator.
 
@@ -39,7 +39,7 @@ plotted, however this is ignored if \code{ask} is \code{TRUE}. If \code{ask} is 
 
 The graphical parameters passed to \code{...} can either apply to all plots or selected plots. If
 parameters in \code{\link[graphics]{par}} are prefixed with the plotted function name, then the
-parameter only applies to that funciton, otherwise it applies to them all. See examples for a clearer
+parameter only applies to that function, otherwise it applies to them all. See examples for a clearer
 description.
 }
 \examples{
