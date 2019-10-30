@@ -17,11 +17,10 @@ Local:
 check_win:
   * x86_64-w64_mingw32 (64-bit); R devel (2019-10-29 r77335) - NOTE (DOI, see below)
   * x86_64-w64_mingw32 (64-bit); R 3.5.3 - NOTE (DOI, see below)
- <!-- * x86_64-w64_mingw32 (64-bit); R 3.6.1 - NOTE (DOI, see below) -->
+  * x86_64-w64_mingw32 (64-bit); R 3.6.1 - NOTE (DOI, see below)
 
 R-hub:
  * Fedora Linux, R-devel, clang, gfortran - NOTE (spelling, see below)
-<!-- * Windows Server 2008 R2 SP1, R-devel, 32/64 bit - NOTE (spelling, see below) -->
  * Ubuntu Linux 16.04 LTS, R-release, GCC - 1 NOTE (DOI, see below), 1 WARNING (see below)
 
 ## R CMD check results
