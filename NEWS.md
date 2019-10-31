@@ -1,3 +1,28 @@
+# distr6 1.3.1
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- None
+
+### Deprecated Functions
+
+- None
+
+### Updated Functions
+
+- None
+
+## Patches
+
+- None
+
+
 # distr6 1.3.0
 
 ## Major Updates
