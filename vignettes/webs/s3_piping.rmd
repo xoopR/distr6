@@ -43,7 +43,7 @@ The next set of tutorials focuses on more advanced functionality in distr6. This
 
 ## S3
 
-Using the R62S3 package [@r62s3] most R6 methods in distr6 can instead be called as an S3 method. Even if you're not aware of it, you've probably used S3 every time you've opened R. For example the `plot` function produces a different plot depending on what object it's called on, a numeric, a linear regression model, or something more complicated, this is because of the S3 dispatch system. Every distribution, kernel, parameterset, wrapper and decorator method is available through S3. Note that constructors always use R6 syntax, i.e. `$new()`. Below are some examples, see the documentation help pages for the different S3 and R6 syntax but remember these are almost identical except that the first argument in S3 will be the object whereas this is omitted in the R6 usage.
+Using the R62S3 package [@r62s3] most R6 methods in distr6 can instead be called as an S3 method. Even if you're not aware of it, you've probably used S3 every time you've opened R. For example the `plot` function produces a different plot depending on what object it's called on, a numeric, a linear regression model, or something more complicated, this is because of the S3 dispatch system. Every distribution, kernel, parameter set, wrapper and decorator method is available through S3. Note that constructors always use R6 syntax, i.e. `$new()`. Below are some examples, see the documentation help pages for the different S3 and R6 syntax but remember these are almost identical except that the first argument in S3 will be the object whereas this is omitted in the R6 usage.
 
 ```{r}
 N <- Normal$new()

@@ -16,7 +16,7 @@
 \item{...}{graphical parameters.}
 }
 \description{
-One of six plots can be selected to ber superimposed in the plotting window,
+One of six plots can be selected to be superimposed in the plotting window,
 including: pdf, cdf, quantile, survival, hazard and cumulative hazard.
 }
 \details{
