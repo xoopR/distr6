@@ -41,10 +41,8 @@ test_that("statistics",{
                                                   cdf = c(1/5,4/5,1)))$pdf(1:3), c(1/5,3/5,1/5))
   expect_equal(WeightedDiscrete$new(data.frame(x = 1:2,
                                                   pdf = c(0.5, 0.5)))$cdf(1:2), c(0.5, 1))
-  set.seed(42)
-  x = round(runif(1000, 0, 50))
-  gd = WeightedDiscrete$new(data.frame(x = sort(unique(x)),
-                                          pdf = as.numeric(table(x)/length(x))))
-  expect_equal(round(gd$quantile(gd$cdf(c(2,5,6,4,1,30,20,2,2,2)))),c(2,5,6,4,1,30,20,2,2,2))
+
+  gd = WeightedDiscrete$new(data.frame(x = 1:10, pdf = rep(0.1,10)))
+  expect_equal(round(gd$quantile(gd$cdf(c(2,5,6,4,1,30,20,2,2,2)))),c(2,5,6,4,1,10,10,2,2,2))
   expect_equal(length(gd$rand(10)),10)
 })

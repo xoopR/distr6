@@ -22,18 +22,19 @@ check_win:
 R-hub:
  * Fedora Linux, R-devel, clang, gfortran - NOTE (spelling, see below)
  * Ubuntu Linux 16.04 LTS, R-release, GCC - 1 NOTE (DOI, see below), 1 WARNING (see below)
+ * Debian Linux, R-devel, GCC, no long double - NOTE (imports, see below)
 
 ## R CMD check results
 There were no ERRORs.
 
 There was 1 WARNING:
 
-Conversion of â€˜README.mdâ€™ failed:
+Conversion of README.md€™ failed:
 pandoc: Could not fetch https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg
 
 * This link works normally for me and in all other builds, I am unsure why there's a problem in the Ubuntu Linux 16.04 LTS R-release.
 
-There were 2 NOTEs:
+There were 3 NOTEs:
 
 Found the following (possibly) invalid DOIs:
   DOI: 10.2307/2683801
@@ -50,6 +51,11 @@ Found the following (possibly) invalid DOIs:
   
   * These are respectively a name and the phrase 'et al' (not spelling mistakes)
   
+Namespaces in Imports field not imported from:
+  ?pracma? ?R6? ?R62S3?
+  All declared Imports should be used.
+  
+  * All imports are used in the package
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
