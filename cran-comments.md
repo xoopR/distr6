@@ -52,7 +52,7 @@ Found the following (possibly) invalid DOIs:
   * These are respectively a name and the phrase 'et al' (not spelling mistakes)
   
 Namespaces in Imports field not imported from:
-  ?pracma? ?R6? ?R62S3?
+  `pracma' `R6' `R62S3'
   All declared Imports should be used.
   
   * All imports are used in the package
