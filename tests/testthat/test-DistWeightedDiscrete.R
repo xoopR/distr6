@@ -39,8 +39,8 @@ test_that("statistics",{
   expect_equal(gd$pdf(2), 1/10)
   expect_equal(WeightedDiscrete$new(data.frame(x = 1:3,
                                                   cdf = c(1/5,4/5,1)))$pdf(1:3), c(1/5,3/5,1/5))
-  expect_equal(WeightedDiscrete$new(data.frame(x = 1:3,
-                                                  pdf = c(1/5,3/5,1/5)))$cdf(1:3), c(1/5,4/5,1))
+  expect_equal(WeightedDiscrete$new(data.frame(x = 1:2,
+                                                  pdf = c(0.5, 0.5)))$cdf(1:2), c(0.5, 1))
   set.seed(42)
   x = round(runif(1000, 0, 50))
   gd = WeightedDiscrete$new(data.frame(x = sort(unique(x)),
