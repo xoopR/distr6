@@ -28,6 +28,18 @@ c.Distribution <- function(..., name = NULL, short_name = NULL, description = NU
   distlist = list(...)
   assertDistributionList(distlist)
 
+  # If all distributions in the list are VectorDistributions then try and return a VectorDistribution
+  # with distribution/params constructor.
+  if (all(sapply(distlist, getR6Class) %in% "VectorDistribution")) {
+    if (any(sapply(distlist, function(x) x$distlist)))
+      return(VectorDistribution$new(unlist(lapply(distlist, function(x) x$wrappedModels()))))
+    else {
+      distribution = unlist(lapply(distlist, function(x) as.character(unlist(x$modelTable()[, "distribution"]))))
+      params = lapply(distlist, function(x) x$modelTable()[,"params"][[1]])
+      return(VectorDistribution$new(distribution = distribution, params = params))
+    }
+  }
+
   # If any are VectorDistributions then get the wrapped list
   distlist = unlist(lapply(distlist, function(x)
     ifelse(getR6Class(x) == "VectorDistribution", list(x$wrappedModels()), list(x))))

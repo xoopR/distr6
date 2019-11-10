@@ -19,3 +19,12 @@ test_that("VectorDistributions",{
   expect_silent(c(v1, v2))
   expect_silent(c(v1, v2, Normal$new(), truncate(Binomial$new(), 2, 6)))
 })
+
+test_that("distribution/param VectorDistributions",{
+  v1 = VectorDistribution$new(distribution = c("Binomial","Normal"),
+                              params = list(list(size = 2), list(mean = 0, var = 2)))
+  v2 = VectorDistribution$new(distribution = "Gamma", params  = data.table::data.table(shape = 1:2, rate = 1:2))
+  expect_silent(c(v1, v2))
+  v3 = c(v1, v2)
+  expect_false(v3$distlist)
+})
