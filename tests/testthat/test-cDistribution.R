@@ -28,3 +28,13 @@ test_that("distribution/param VectorDistributions",{
   v3 = c(v1, v2)
   expect_false(v3$distlist)
 })
+
+test_that("weighteddiscrete vec",{
+  v1 = VectorDistribution$new(distribution = "WeightedDiscrete",
+                              params = list(data = data.frame(x = 1, pdf = 1),
+                                            data = data.frame(x = 2, pdf = 1)))
+  v2 = VectorDistribution$new(distribution = "WeightedDiscrete",
+                              params = list(data = data.frame(x = 3, pdf = 1),
+                                            data = data.frame(x = 4, pdf = 1)))
+  expect_silent(c(v1, v2))
+})
