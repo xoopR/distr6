@@ -170,6 +170,7 @@ Collate:
     'Wrapper_TruncatedDistribution.R'
     'Wrapper_VectorDistribution.R'
     'assertions.R'
+    'c.Distribution.R'
     'decomposeMixture.R'
     'decorate.R'
     'distr6-deprecated.R'

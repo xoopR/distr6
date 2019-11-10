@@ -20,7 +20,7 @@
 
 ## Patches
 
-- None
+- Added wrapper for VectorDistribution for quick concatenation of constructed distributions, `c.Distribution`
 
 
 # distr6 1.3.0
