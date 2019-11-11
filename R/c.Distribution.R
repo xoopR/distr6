@@ -34,9 +34,10 @@ c.Distribution <- function(..., name = NULL, short_name = NULL, description = NU
     if (any(sapply(distlist, function(x) x$distlist)))
       return(VectorDistribution$new(unlist(lapply(distlist, function(x) x$wrappedModels()))))
     else {
-      distribution = unlist(lapply(distlist, function(x) as.character(unlist(x$modelTable()[, "distribution"]))))
-      params = lapply(distlist, function(x) x$modelTable()[,"params"][[1]])
-      # return(list(distribution = distribution, params = params))
+      distribution = unlist(lapply(distlist, function(x) as.character(unlist(x$modelTable()$distribution))))
+      params = lapply(distlist, function(x) x$modelTable()$params)
+      if (length(params) != length(distribution))
+        params = unlist(params, FALSE)
       return(VectorDistribution$new(distribution = distribution, params = params))
     }
   }
