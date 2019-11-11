@@ -1,3 +1,29 @@
+# distr6 1.3.1
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- None
+
+### Deprecated Functions
+
+- None
+
+### Updated Functions
+
+- None
+
+## Patches
+
+- Added wrapper for VectorDistribution for quick concatenation of constructed distributions, `c.Distribution`
+- `VectorDistribution` `print` method more in line with base R vectors
+
+
 # distr6 1.3.0
 
 ## Major Updates
