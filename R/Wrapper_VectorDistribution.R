@@ -257,6 +257,14 @@ VectorDistribution$set("public","modelTable", function(){
   private$.wrappedModels
 })
 
+VectorDistribution$set("public", "strprint", function(n = 100){
+  names <- as.character(self$modelTable()$shortname)
+  lng <- length(names)
+  if(lng >(2*n))
+    names = c(names[1:n], "...", names[(lng-n+1):lng])
+
+  return(names)
+})
 VectorDistribution$set("public", "getParameterValue", function(...){
   message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
   return(NULL)

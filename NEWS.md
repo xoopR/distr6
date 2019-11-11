@@ -21,6 +21,7 @@
 ## Patches
 
 - Added wrapper for VectorDistribution for quick concatenation of constructed distributions, `c.Distribution`
+- `VectorDistribution` `print` method more in line with base R vectors
 
 
 # distr6 1.3.0

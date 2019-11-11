@@ -138,3 +138,12 @@ test_that("shared d/p/q/r",{
                                                 Binom3 = qbinom(0.42,6,0.2)))
 })
 
+test_that("print",{
+  a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2),
+                                                                      list(prob = 0.6, size = 4),
+                                                                      list(prob = 0.2, size = 6)))
+  expect_equal(a$strprint(), c("Binom1","Binom2","Binom3"))
+  expect_equal(a$strprint(1), c("Binom1","...","Binom3"))
+  expect_output(a$print(), "Binom1")
+})
+
