@@ -18,11 +18,6 @@ A VectorDistribution
 \description{
 Helper function for quickly combining distributions into a \code{\link{VectorDistribution}}.
 }
-\details{
-Currently this can only handle the VectorDistibution constructor that uses a list of constructed
-distributions, however as this function should only be used with distributions that are already constructed,
-this should not take too long to construct.
-}
 \examples{
 # Construct and combine
 c(Binomial$new(), Normal$new())

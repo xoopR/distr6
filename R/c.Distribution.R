@@ -2,9 +2,6 @@
 #' @description Helper function for quickly combining distributions into a \code{\link{VectorDistribution}}.
 #' @param ... distributions to be concatenated.
 #' @param name,short_name,description,decorators See \code{\link{VectorDistribution}}
-#' @details Currently this can only handle the VectorDistibution constructor that uses a list of constructed
-#' distributions, however as this function should only be used with distributions that are already constructed,
-#' this should not take too long to construct.
 #' @return A VectorDistribution
 #' @seealso \code{\link{VectorDistribution}}
 #' @examples
