@@ -162,6 +162,7 @@ reference:
       - ProductDistribution
       - VectorDistribution
       - Extract.VectorDistribution
+      - c.Distribution
       - HuberizedDistribution
       - huberize
       - TruncatedDistribution
