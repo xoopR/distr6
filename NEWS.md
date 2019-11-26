@@ -1,3 +1,27 @@
+# distr6 1.3.2
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- None
+
+### Deprecated Functions
+
+- None
+
+### Updated Functions
+
+- None
+
+## Patches
+
+- Bug fix in `VectorDistribution` - missing `which` argument
+
 # distr6 1.3.1
 
 ## Major Updates
