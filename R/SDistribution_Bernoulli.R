@@ -112,7 +112,7 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
   pdf = function(x1) dbinom(x1, 1, self$getParameterValue("prob"))
   cdf = function(x1) pbinom(x1, 1, self$getParameterValue("prob"))
   quantile = function(p) qbinom(p, 1, self$getParameterValue("prob"))
-  rand = function(n) dbinom(n, 1, self$getParameterValue("prob"))
+  rand = function(n) rbinom(n, 1, self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                    rand = rand, support = Set$new(0,1),

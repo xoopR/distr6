@@ -21,6 +21,7 @@
 ## Patches
 
 - Bug fix in `VectorDistribution` - missing `which` argument
+- Bug fix in `Bernoulli` - `rand` was incorrectly calling `dbinom` not `rbinom`
 
 # distr6 1.3.1
 
