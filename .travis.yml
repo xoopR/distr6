@@ -17,8 +17,6 @@ matrix:
       r: oldrel
     - os: osx
       r: release
-    - os: osx
-      r: devel
 
 sudo: false
 
