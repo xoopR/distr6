@@ -6,14 +6,20 @@
 \alias{assertDistributionList}
 \title{assert/check/test/DistributionList}
 \usage{
-testDistributionList(object,
-  errormsg = "One or more items in the list are not Distributions")
+testDistributionList(
+  object,
+  errormsg = "One or more items in the list are not Distributions"
+)
 
-checkDistributionList(object,
-  errormsg = "One or more items in the list are not Distributions")
+checkDistributionList(
+  object,
+  errormsg = "One or more items in the list are not Distributions"
+)
 
-assertDistributionList(object,
-  errormsg = "One or more items in the list are not Distributions")
+assertDistributionList(
+  object,
+  errormsg = "One or more items in the list are not Distributions"
+)
 }
 \arguments{
 \item{object}{object to test}

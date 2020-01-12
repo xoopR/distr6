@@ -63,7 +63,7 @@ InverseGamma$set("public","variance",function(){
   else
     return(NaN)
 })
-InverseGamma$set("public","mode",function(){
+InverseGamma$set("public","mode",function(which = NULL){
   return(self$getParameterValue("scale")/(self$getParameterValue("shape")+1))
 })
 InverseGamma$set("public","skewness",function() {

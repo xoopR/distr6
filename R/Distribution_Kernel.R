@@ -40,7 +40,7 @@
 #'   \strong{Statistical Methods} \tab \strong{Link} \cr
 #'   \code{prec()} \tab \code{\link{prec}} \cr
 #'   \code{stdev()} \tab \code{\link{stdev}}\cr
-#'   \code{mode()} \tab \code{\link{mode}} \cr
+#'   \code{mode(which = "all")} \tab \code{\link{mode}} \cr
 #'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
 #'   \code{median()} \tab \code{\link{median.Distribution}} \cr
 #'   \code{iqr()} \tab \code{\link{iqr}} \cr
@@ -89,7 +89,7 @@ Kernel$set("public","traits",function(){
               valueSupport = "continuous",
               variateForm = "univariate"))
 })
-Kernel$set("public","mode",function(){
+Kernel$set("public","mode",function(which = NULL){
   return(0)
 })
 Kernel$set("public","mean",function(){

@@ -6,14 +6,20 @@
 \alias{assertMatrixvariate}
 \title{assert/check/test/Matrixvariate}
 \usage{
-testMatrixvariate(object, errormsg = paste(object$short_name,
-  "is not matrixvariate"))
+testMatrixvariate(
+  object,
+  errormsg = paste(object$short_name, "is not matrixvariate")
+)
 
-checkMatrixvariate(object, errormsg = paste(object$short_name,
-  "is not matrixvariate"))
+checkMatrixvariate(
+  object,
+  errormsg = paste(object$short_name, "is not matrixvariate")
+)
 
-assertMatrixvariate(object, errormsg = paste(object$short_name,
-  "is not matrixvariate"))
+assertMatrixvariate(
+  object,
+  errormsg = paste(object$short_name, "is not matrixvariate")
+)
 }
 \arguments{
 \item{object}{Distribution}

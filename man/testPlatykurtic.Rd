@@ -6,14 +6,20 @@
 \alias{assertPlatykurtic}
 \title{assert/check/test/Platykurtic}
 \usage{
-testPlatykurtic(object, errormsg = paste(object$short_name,
-  "is not platykurtic"))
+testPlatykurtic(
+  object,
+  errormsg = paste(object$short_name, "is not platykurtic")
+)
 
-checkPlatykurtic(object, errormsg = paste(object$short_name,
-  "is not platykurtic"))
+checkPlatykurtic(
+  object,
+  errormsg = paste(object$short_name, "is not platykurtic")
+)
 
-assertPlatykurtic(object, errormsg = paste(object$short_name,
-  "is not platykurtic"))
+assertPlatykurtic(
+  object,
+  errormsg = paste(object$short_name, "is not platykurtic")
+)
 }
 \arguments{
 \item{object}{Distribution}

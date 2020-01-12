@@ -94,7 +94,7 @@ StudentT$set("public", "cf", function(t){
 StudentT$set("public", "pgf", function(z){
   return(NaN)
 })
-StudentT$set("public","mode",function(){
+StudentT$set("public","mode",function(which = NULL){
   return(0)
 })
 

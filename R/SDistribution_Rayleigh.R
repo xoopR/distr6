@@ -50,7 +50,7 @@ Rayleigh$set("public","package","distr6")
 Rayleigh$set("public","mean",function(){
   return(self$getParameterValue("mode")*sqrt(pi/2))
 })
-Rayleigh$set("public","mode",function(){
+Rayleigh$set("public","mode",function(which = NULL){
   return(self$getParameterValue("mode"))
 })
 Rayleigh$set("public","variance",function(){

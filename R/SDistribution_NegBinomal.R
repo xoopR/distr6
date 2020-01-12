@@ -124,7 +124,7 @@ NegativeBinomial$set("public", "pgf", function(z){
     return(NaN)
 })
 
-NegativeBinomial$set("public","mode",function(){
+NegativeBinomial$set("public","mode",function(which = NULL){
   if(private$.form == "sbf"){
     if(self$getParameterValue("size") <= 1)
       return(0)

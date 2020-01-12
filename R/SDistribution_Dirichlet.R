@@ -61,7 +61,7 @@ Dirichlet$set("public","package","distr6")
 Dirichlet$set("public","mean",function(){
   return(self$getParameterValue("params")/sum(self$getParameterValue("params")))
 })
-Dirichlet$set("public","mode",function(){
+Dirichlet$set("public","mode",function(which = NULL){
   params <- self$getParameterValue("params")
   K <- self$getParameterValue("K")
   mode = rep(NaN, K)

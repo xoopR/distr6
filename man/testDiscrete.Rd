@@ -6,14 +6,11 @@
 \alias{assertDiscrete}
 \title{assert/check/test/Discrete}
 \usage{
-testDiscrete(object, errormsg = paste(object$short_name,
-  "is not discrete"))
+testDiscrete(object, errormsg = paste(object$short_name, "is not discrete"))
 
-checkDiscrete(object, errormsg = paste(object$short_name,
-  "is not discrete"))
+checkDiscrete(object, errormsg = paste(object$short_name, "is not discrete"))
 
-assertDiscrete(object, errormsg = paste(object$short_name,
-  "is not discrete"))
+assertDiscrete(object, errormsg = paste(object$short_name, "is not discrete"))
 }
 \arguments{
 \item{object}{Distribution}

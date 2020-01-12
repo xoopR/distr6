@@ -100,7 +100,7 @@ Pareto$set("public", "mgf", function(t){
 Pareto$set("public", "pgf", function(z){
   return(NaN)
 })
-Pareto$set("public","mode",function(){
+Pareto$set("public","mode",function(which = NULL){
   return(self$getParameterValue("scale"))
 })
 

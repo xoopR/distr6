@@ -6,14 +6,20 @@
 \alias{assertMesokurtic}
 \title{assert/check/test/Mesokurtic}
 \usage{
-testMesokurtic(object, errormsg = paste(object$short_name,
-  "is not mesokurtic"))
+testMesokurtic(
+  object,
+  errormsg = paste(object$short_name, "is not mesokurtic")
+)
 
-checkMesokurtic(object, errormsg = paste(object$short_name,
-  "is not mesokurtic"))
+checkMesokurtic(
+  object,
+  errormsg = paste(object$short_name, "is not mesokurtic")
+)
 
-assertMesokurtic(object, errormsg = paste(object$short_name,
-  "is not mesokurtic"))
+assertMesokurtic(
+  object,
+  errormsg = paste(object$short_name, "is not mesokurtic")
+)
 }
 \arguments{
 \item{object}{Distribution}

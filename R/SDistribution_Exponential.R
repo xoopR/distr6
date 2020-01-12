@@ -76,7 +76,7 @@ Exponential$set("public", "mgf", function(t){
 Exponential$set("public", "cf", function(t){
   return(self$getParameterValue("rate") / (self$getParameterValue("rate") -  ((0+1i) * t)))
 })
-Exponential$set("public","mode",function(){
+Exponential$set("public","mode",function(which = NULL){
   return(0)
 })
 Exponential$set("public", "pgf", function(z){

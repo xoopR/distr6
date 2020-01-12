@@ -6,14 +6,20 @@
 \alias{assertUnivariate}
 \title{assert/check/test/Univariate}
 \usage{
-testUnivariate(object, errormsg = paste(object$short_name,
-  "is not univariate"))
+testUnivariate(
+  object,
+  errormsg = paste(object$short_name, "is not univariate")
+)
 
-checkUnivariate(object, errormsg = paste(object$short_name,
-  "is not univariate"))
+checkUnivariate(
+  object,
+  errormsg = paste(object$short_name, "is not univariate")
+)
 
-assertUnivariate(object, errormsg = paste(object$short_name,
-  "is not univariate"))
+assertUnivariate(
+  object,
+  errormsg = paste(object$short_name, "is not univariate")
+)
 }
 \arguments{
 \item{object}{Distribution}

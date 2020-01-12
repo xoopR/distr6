@@ -84,7 +84,7 @@ Uniform$set("public", "cf", function(t){
     return((exp(self$getParameterValue("upper") * t * 1i) - exp(self$getParameterValue("lower") * t * 1i)) /
              (t*1i*(self$getParameterValue("upper")-self$getParameterValue("lower"))))
 })
-Uniform$set("public","mode",function(){
+Uniform$set("public","mode",function(which = NULL){
   return(NaN)
 })
 

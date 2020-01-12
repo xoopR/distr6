@@ -76,7 +76,7 @@ Gumbel$set("public", "pgf", function(z){
 Gumbel$set("public", "cf", function(t){
   return(pracma::gammaz(1 - self$getParameterValue("scale")*t*1i) * exp(1i*self$getParameterValue("location")*t))
 })
-Gumbel$set("public","mode",function(){
+Gumbel$set("public","mode",function(which = NULL){
   return(self$getParameterValue("location"))
 })
 Gumbel$set("private",".getRefParams", function(paramlst){

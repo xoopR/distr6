@@ -91,7 +91,7 @@ Weibull$set("public","entropy",function(base = 2){
 Weibull$set("public", "pgf", function(z){
   return(NaN)
 })
-Weibull$set("public","mode",function(){
+Weibull$set("public","mode",function(which = NULL){
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
 

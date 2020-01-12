@@ -83,7 +83,7 @@ Normal$set("public", "pgf", function(z){
 Normal$set("public", "cf", function(t){
   return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
 })
-Normal$set("public","mode",function(){
+Normal$set("public","mode",function(which = NULL){
   return(self$getParameterValue("mean"))
 })
 

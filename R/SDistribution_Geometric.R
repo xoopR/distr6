@@ -109,7 +109,7 @@ Geometric$set("public","pgf",function(z){
     else
         return(self$getParameterValue("prob")/(1-z*self$getParameterValue("qprob")))
 })
-Geometric$set("public","mode",function(){
+Geometric$set("public","mode",function(which = NULL){
     if(private$.trials)
         return(1)
     else

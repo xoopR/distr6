@@ -4,8 +4,14 @@
 \alias{setOperation}
 \title{Symbolic Operations for SetInterval}
 \usage{
-setOperation(unicode, sets, lower = NULL, upper = NULL, type = NULL,
-  dim = NULL)
+setOperation(
+  unicode,
+  sets,
+  lower = NULL,
+  upper = NULL,
+  type = NULL,
+  dim = NULL
+)
 }
 \arguments{
 \item{unicode}{unicode symbol for the setOperation.}

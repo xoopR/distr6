@@ -88,7 +88,7 @@ Frechet$set("public","kurtosis",function(excess = TRUE){
       return(-3 + num/den)
   }
 })
-Frechet$set("public","mode",function(){
+Frechet$set("public","mode",function(which = NULL){
   return(self$getParameterValue("minimum") +
     self$getParameterValue("scale")*
       (self$getParameterValue("shape")/

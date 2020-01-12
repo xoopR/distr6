@@ -4,8 +4,15 @@
 \alias{plot.Distribution}
 \title{Plot Distribution Functions for a distr6 Object}
 \usage{
-\method{plot}{Distribution}(x, fun = c("pdf", "cdf"), npoints = 3000,
-  plot = TRUE, ask = FALSE, arrange = TRUE, ...)
+\method{plot}{Distribution}(
+  x,
+  fun = c("pdf", "cdf"),
+  npoints = 3000,
+  plot = TRUE,
+  ask = FALSE,
+  arrange = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{\code{distr6} object.}

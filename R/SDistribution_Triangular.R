@@ -109,7 +109,7 @@ Triangular$set("public", "cf", function(t){
 
   return(num/den)
 })
-Triangular$set("public","mode",function(){
+Triangular$set("public","mode",function(which = NULL){
   return(self$getParameterValue("mode"))
 })
 

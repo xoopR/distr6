@@ -58,7 +58,7 @@ Hypergeometric$set("public","package","stats")
 Hypergeometric$set("public", "mean", function(){
     return(self$getParameterValue("draws")*self$getParameterValue("successes")/self$getParameterValue("size"))
 })
-Hypergeometric$set("public","mode",function(){
+Hypergeometric$set("public","mode",function(which = NULL){
     draws <- self$getParameterValue("draws")
     successes <- self$getParameterValue("successes")
     size <- self$getParameterValue("size")
