@@ -104,6 +104,7 @@ Sampling is performed as per Michael, Schucany, Haas (1976).
   \code{pgf(z)} \tab \code{\link{pgf}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr
+  \code{mode(which = "all")} \tab \code{\link{mode}} \cr
 
   \tab \cr \tab \cr \tab \cr
 

@@ -284,9 +284,9 @@ VectorDistribution$set("public", "mean", function(){
   colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })
-VectorDistribution$set("public", "mode", function(){
+VectorDistribution$set("public", "mode", function(which = "all"){
   ret = matrix(sapply(1:nrow(private$.wrappedModels), function(i)
-    ifnerror(self[i]$mode(), error = NaN)), nrow = 1)
+    ifnerror(self[i]$mode(which), error = NaN)), nrow = 1)
   colnames(ret) = unlist(private$.wrappedModels[,"shortname"])
   return(data.table::data.table(ret))
 })

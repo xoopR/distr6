@@ -6,14 +6,20 @@
 \alias{assertContinuous}
 \title{assert/check/test/Continuous}
 \usage{
-testContinuous(object, errormsg = paste(object$short_name,
-  "is not continuous"))
+testContinuous(
+  object,
+  errormsg = paste(object$short_name, "is not continuous")
+)
 
-checkContinuous(object, errormsg = paste(object$short_name,
-  "is not continuous"))
+checkContinuous(
+  object,
+  errormsg = paste(object$short_name, "is not continuous")
+)
 
-assertContinuous(object, errormsg = paste(object$short_name,
-  "is not continuous"))
+assertContinuous(
+  object,
+  errormsg = paste(object$short_name, "is not continuous")
+)
 }
 \arguments{
 \item{object}{Distribution}

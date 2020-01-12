@@ -6,14 +6,20 @@
 \alias{assertDistribution}
 \title{assert/check/test/Distribution}
 \usage{
-testDistribution(object, errormsg = paste(object,
-  "is not an R6 Distribution object"))
+testDistribution(
+  object,
+  errormsg = paste(object, "is not an R6 Distribution object")
+)
 
-checkDistribution(object, errormsg = paste(object,
-  "is not an R6 Distribution object"))
+checkDistribution(
+  object,
+  errormsg = paste(object, "is not an R6 Distribution object")
+)
 
-assertDistribution(object, errormsg = paste(object,
-  "is not an R6 Distribution object"))
+assertDistribution(
+  object,
+  errormsg = paste(object, "is not an R6 Distribution object")
+)
 }
 \arguments{
 \item{object}{object to test}

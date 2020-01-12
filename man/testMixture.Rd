@@ -6,14 +6,11 @@
 \alias{assertMixture}
 \title{assert/check/test/Mixture}
 \usage{
-testMixture(object, errormsg = paste(object$short_name,
-  "is not mixture"))
+testMixture(object, errormsg = paste(object$short_name, "is not mixture"))
 
-checkMixture(object, errormsg = paste(object$short_name,
-  "is not mixture"))
+checkMixture(object, errormsg = paste(object$short_name, "is not mixture"))
 
-assertMixture(object, errormsg = paste(object$short_name,
-  "is not mixture"))
+assertMixture(object, errormsg = paste(object$short_name, "is not mixture"))
 }
 \arguments{
 \item{object}{Distribution}

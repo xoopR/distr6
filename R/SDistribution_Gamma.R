@@ -86,7 +86,7 @@ Gamma$set("public", "pgf", function(z){
 Gamma$set("public", "cf", function(t){
   return((1-self$getParameterValue("scale")*1i*t)^(-self$getParameterValue("shape"))   )
 })
-Gamma$set("public","mode",function(){
+Gamma$set("public","mode",function(which = NULL){
   if(self$getParameterValue("shape")>=1)
     return((self$getParameterValue("shape")-1)/self$getParameterValue("rate"))
   else

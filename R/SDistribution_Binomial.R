@@ -56,7 +56,7 @@ Binomial$set("public","package","stats")
 Binomial$set("public","mean",function(){
   self$getParameterValue("size") * self$getParameterValue("prob")
 })
-Binomial$set("public","mode",function(){
+Binomial$set("public","mode",function(which = NULL){
   return(floor((self$getParameterValue("size") + 1) * self$getParameterValue("prob")))
 })
 Binomial$set("public","variance",function(){

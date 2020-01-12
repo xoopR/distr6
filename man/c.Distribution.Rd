@@ -4,8 +4,7 @@
 \alias{c.Distribution}
 \title{Combine Distributions into a VectorDistribution}
 \usage{
-\method{c}{Distribution}(..., name = NULL, short_name = NULL,
-  description = NULL, decorators = NULL)
+\method{c}{Distribution}(..., name = NULL, short_name = NULL, description = NULL, decorators = NULL)
 }
 \arguments{
 \item{...}{distributions to be concatenated.}

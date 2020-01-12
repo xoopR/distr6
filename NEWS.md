@@ -1,3 +1,30 @@
+# distr6 1.3.2
+
+## Major Updates
+
+- None
+
+## Minor Updates
+
+### Added Functions and Classes
+
+- None
+
+### Deprecated Functions
+
+- None
+
+### Updated Functions
+
+- None
+
+## Patches
+
+- Bug fix in `VectorDistribution` - missing `which` argument
+- Bug fix in `Bernoulli` - `rand` was incorrectly calling `dbinom` not `rbinom`
+- Bug fix in the `mode` of distributions
+- Added `mode` to documentation
+
 # distr6 1.3.1
 
 ## Major Updates

@@ -62,7 +62,7 @@ over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
   \strong{Statistical Methods} \tab \strong{Link} \cr
   \code{prec()} \tab \code{\link{prec}} \cr
   \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{mode()} \tab \code{\link{mode}} \cr
+  \code{mode(which = "all")} \tab \code{\link{mode}} \cr
   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
   \code{median()} \tab \code{\link{median.Distribution}} \cr
   \code{iqr()} \tab \code{\link{iqr}} \cr

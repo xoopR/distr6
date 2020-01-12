@@ -8,11 +8,9 @@
 \usage{
 testNoSkew(object, errormsg = paste(object$short_name, "is not no skew"))
 
-checkNoSkew(object, errormsg = paste(object$short_name,
-  "is not no skew"))
+checkNoSkew(object, errormsg = paste(object$short_name, "is not no skew"))
 
-assertNoSkew(object, errormsg = paste(object$short_name,
-  "is not no skew"))
+assertNoSkew(object, errormsg = paste(object$short_name, "is not no skew"))
 }
 \arguments{
 \item{object}{Distribution}

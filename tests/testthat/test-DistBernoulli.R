@@ -40,6 +40,6 @@ test_that("statistics",{
   expect_equal(b$pdf(1), dbinom(1,1,0.2))
   expect_equal(b$cdf(1), pbinom(1,1,0.2))
   expect_equal(b$quantile(0.324), qbinom(0.324,1,0.2))
-  expect_silent(b$rand(10))
+  expect_equal(length(b$rand(10)), 10)
 })
 

@@ -65,7 +65,7 @@ MultivariateNormal$set("public","package","distr6")
 MultivariateNormal$set("public","mean",function(){
   return(self$getParameterValue("mean"))
 })
-MultivariateNormal$set("public","mode",function(){
+MultivariateNormal$set("public","mode",function(which = NULL){
   return(self$getParameterValue("mean"))
 })
 MultivariateNormal$set("public","variance",function(){

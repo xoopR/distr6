@@ -6,14 +6,20 @@
 \alias{assertLeptokurtic}
 \title{assert/check/test/Leptokurtic}
 \usage{
-testLeptokurtic(object, errormsg = paste(object$short_name,
-  "is not leptokurtic"))
+testLeptokurtic(
+  object,
+  errormsg = paste(object$short_name, "is not leptokurtic")
+)
 
-checkLeptokurtic(object, errormsg = paste(object$short_name,
-  "is not leptokurtic"))
+checkLeptokurtic(
+  object,
+  errormsg = paste(object$short_name, "is not leptokurtic")
+)
 
-assertLeptokurtic(object, errormsg = paste(object$short_name,
-  "is not leptokurtic"))
+assertLeptokurtic(
+  object,
+  errormsg = paste(object$short_name, "is not leptokurtic")
+)
 }
 \arguments{
 \item{object}{Distribution}

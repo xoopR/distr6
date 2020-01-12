@@ -81,7 +81,7 @@ Wald$set("public", "cf", function(t){
   shape <- self$getParameterValue("shape")
   return(exp(shape/mean * (1 - sqrt(1 - 2*mean^2*1i*t/shape))))
 })
-Wald$set("public","mode",function(){
+Wald$set("public","mode",function(which = NULL){
   mean <- self$getParameterValue("mean")
   shape <- self$getParameterValue("shape")
   return(mean * ((1 + (9*mean^2)/(4*shape^2))^0.5 - (3*mean)/(2*shape)))

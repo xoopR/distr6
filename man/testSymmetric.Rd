@@ -6,14 +6,14 @@
 \alias{assertSymmetric}
 \title{assert/check/test/Symmetric}
 \usage{
-testSymmetric(object, errormsg = paste(object$short_name,
-  "is not symmetric"))
+testSymmetric(object, errormsg = paste(object$short_name, "is not symmetric"))
 
-checkSymmetric(object, errormsg = paste(object$short_name,
-  "is not symmetric"))
+checkSymmetric(object, errormsg = paste(object$short_name, "is not symmetric"))
 
-assertSymmetric(object, errormsg = paste(object$short_name,
-  "is not symmetric"))
+assertSymmetric(
+  object,
+  errormsg = paste(object$short_name, "is not symmetric")
+)
 }
 \arguments{
 \item{object}{Distribution}

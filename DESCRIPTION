@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.3.1
+Version: 1.3.2
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -89,7 +89,7 @@ BugReports: https://github.com/alan-turing-institute/distr6/issues
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Collate: 
     'distr6_globals.R'
     'RSmisc_helpers.R'

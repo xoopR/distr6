@@ -69,7 +69,7 @@ Degenerate$set("public", "mgf", function(t){
 Degenerate$set("public", "cf", function(t){
   return(exp(self$getParameterValue("mean") * t * 1i))
 })
-Degenerate$set("public","mode",function(){
+Degenerate$set("public","mode",function(which = NULL){
   return(self$getParameterValue("mean"))
 })
 

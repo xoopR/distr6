@@ -96,7 +96,7 @@ Lognormal$set("public", "mgf", function(t){
 Lognormal$set("public", "pgf", function(z){
   return(NaN)
 })
-Lognormal$set("public","mode",function(){
+Lognormal$set("public","mode",function(which = NULL){
   return(exp(self$getParameterValue("meanlog")-self$getParameterValue("varlog")))
 })
 

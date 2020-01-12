@@ -92,7 +92,7 @@ Loglogistic$set("public","kurtosis",function(excess = TRUE){
   } else
     return(NaN)
 })
-Loglogistic$set("public","mode",function(){
+Loglogistic$set("public","mode",function(which = NULL){
   shape <- self$getParameterValue("shape")
   return(self$getParameterValue("location") +
            self$getParameterValue("scale")*((shape-1)/(shape+1))^(1/shape))

@@ -6,14 +6,20 @@
 \alias{assertMultivariate}
 \title{assert/check/test/Multivariate}
 \usage{
-testMultivariate(object, errormsg = paste(object$short_name,
-  "is not multivariate"))
+testMultivariate(
+  object,
+  errormsg = paste(object$short_name, "is not multivariate")
+)
 
-checkMultivariate(object, errormsg = paste(object$short_name,
-  "is not multivariate"))
+checkMultivariate(
+  object,
+  errormsg = paste(object$short_name, "is not multivariate")
+)
 
-assertMultivariate(object, errormsg = paste(object$short_name,
-  "is not multivariate"))
+assertMultivariate(
+  object,
+  errormsg = paste(object$short_name, "is not multivariate")
+)
 }
 \arguments{
 \item{object}{Distribution}

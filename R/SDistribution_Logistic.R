@@ -80,7 +80,7 @@ Logistic$set("public", "cf", function(t){
   return(exp(1i*self$getParameterValue("mean")*t) *
            (self$getParameterValue("scale")*pi*t)/(sinh(pi*self$getParameterValue("scale")*t)))
 })
-Logistic$set("public","mode",function(){
+Logistic$set("public","mode",function(which = NULL){
   return(self$getParameterValue("mean"))
 })
 

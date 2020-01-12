@@ -73,7 +73,7 @@ Cauchy$set("public", "pgf", function(z){
 Cauchy$set("public", "cf", function(t){
   return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
 })
-Cauchy$set("public","mode",function(){
+Cauchy$set("public","mode",function(which = NULL){
   return(self$getParameterValue("location"))
 })
 

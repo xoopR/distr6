@@ -6,14 +6,20 @@
 \alias{assertPositiveSkew}
 \title{assert/check/test/PositiveSkew}
 \usage{
-testPositiveSkew(object, errormsg = paste(object$short_name,
-  "is not positive skew"))
+testPositiveSkew(
+  object,
+  errormsg = paste(object$short_name, "is not positive skew")
+)
 
-checkPositiveSkew(object, errormsg = paste(object$short_name,
-  "is not positive skew"))
+checkPositiveSkew(
+  object,
+  errormsg = paste(object$short_name, "is not positive skew")
+)
 
-assertPositiveSkew(object, errormsg = paste(object$short_name,
-  "is not positive skew"))
+assertPositiveSkew(
+  object,
+  errormsg = paste(object$short_name, "is not positive skew")
+)
 }
 \arguments{
 \item{object}{Distribution}
