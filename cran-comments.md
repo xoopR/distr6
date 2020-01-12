@@ -39,5 +39,3 @@ Found the following (possibly) invalid DOIs:
   
   * Spelled correctly
 
-## Downstream dependencies
-There are currently no downstream dependencies for this package.
