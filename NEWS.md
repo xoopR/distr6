@@ -1,25 +1,5 @@
 # distr6 1.3.2
 
-## Major Updates
-
-- None
-
-## Minor Updates
-
-### Added Functions and Classes
-
-- None
-
-### Deprecated Functions
-
-- None
-
-### Updated Functions
-
-- None
-
-## Patches
-
 - Bug fix in `VectorDistribution` - missing `which` argument
 - Bug fix in `Bernoulli` - `rand` was incorrectly calling `dbinom` not `rbinom`
 - Bug fix in the `mode` of distributions
@@ -27,35 +7,11 @@
 
 # distr6 1.3.1
 
-## Major Updates
-
-- None
-
-## Minor Updates
-
-### Added Functions and Classes
-
-- None
-
-### Deprecated Functions
-
-- None
-
-### Updated Functions
-
-- None
-
-## Patches
-
 - Added wrapper for VectorDistribution for quick concatenation of constructed distributions, `c.Distribution`
 - `VectorDistribution` `print` method more in line with base R vectors
 
 
 # distr6 1.3.0
-
-## Major Updates
-
-- None
 
 ## Minor Updates
 
@@ -65,10 +21,6 @@
 - `lines` function for superimposing `distr6` plots
 - `qqplot` function for comparing `distr6` distributions to each other or to other theoretical distributions
 - Added `Extract.VectorDistribution` for extracted distributions from inside a `VectorDistribution`, see the big update below.
-
-### Deprecated Functions
-
-- None
 
 ### Updated Functions
 
@@ -88,20 +40,12 @@
 
 # distr6 1.2.0
 
-## Major Updates
-
-- None
-
 ## Minor Updates
 
 ### Added Functions and Classes
 
 - Added non-central F, T, Chi-Squared, and Beta distributions
 - Added WeightedDiscrete distribution. This allows users to supply a data.frame of samples and pdf/cdfs for more efficient usage with empirical discrete estimators (e.g. Kaplan-Meier)
-
-### Deprecated Functions
-
-- None
 
 ### Updated Functions
 
@@ -118,10 +62,6 @@
 - Moved rare imports to suggests
 
 # distr6 1.1.0
-
-## Major Updates
-
-- None
 
 ## Minor Updates
 
