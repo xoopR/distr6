@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{ParameterSet}
+
+\item{...}{Ignored.}
 }
 \value{
 A data.table.
