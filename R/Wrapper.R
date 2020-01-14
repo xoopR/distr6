@@ -87,14 +87,14 @@ DistributionWrapper$set("public","initialize",function(distlist = NULL,...){
 
     params <- data.table::rbindlist(lapply(distlist, function(x){
       if(!("VectorDistribution" %in% class(x))){
-        params = x[["parameters"]]()$as.data.table()
+        params = as.data.table(x[["parameters"]]())
         params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
         return(params)
       }
     }))
     row.names(params) <- NULL
     if(!is.null(private$.outerParameters))
-      params <- rbind(params, private$.outerParameters$as.data.table())
+      params <- rbind(params, as.data.table(private$.outerParameters))
     params <- as.ParameterSet(params)
   } else
     params = NULL
@@ -161,12 +161,12 @@ DistributionWrapper$set("public","setParameterValue",function(..., lst = NULL, e
   }
 
   params <- data.table::rbindlist(lapply(self$wrappedModels(), function(x){
-    params = x[["parameters"]]()$as.data.table()
+    params = as.data.table(x[["parameters"]]())
     params[,1] = paste(x[["short_name"]],unlist(params[,1]),sep="_")
     return(params)
   }))
   if(!is.null(private$.outerParameters))
-    params <- rbind(params, private$.outerParameters$as.data.table())
+    params <- rbind(params, as.data.table(private$.outerParameters))
   row.names(params) <- NULL
   private$.parameters <- as.ParameterSet(params)
 

@@ -117,6 +117,9 @@ Multinomial$set("private",".getRefParams", function(paramlst){
 
 Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
 
+  if (length(probs) == 1)
+    stop("Length of probs is '1', use Binomial distribution instead.")
+
   private$.parameters <- getParameterSet(self, size, probs, verbose)
   self$setParameterValue(size = size, probs = probs)
 

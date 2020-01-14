@@ -90,6 +90,9 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
     fun = fun[!(fun %in% c("quantile"))]
   }
 
+  if (length(fun) == 0)
+    stop("No plottable functions.")
+
   #######################################################################
   #######                   plottable structure                   #######
   #######################################################################

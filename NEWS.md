@@ -1,22 +1,10 @@
+# distr6 1.3.3
+
+## Patches
+
+- `as.data.table` has been moved from a `ParameterSet` method to an S3 dispatch. Fixes bug of overloading `as.data.table`
+
 # distr6 1.3.2
-
-## Major Updates
-
-- None
-
-## Minor Updates
-
-### Added Functions and Classes
-
-- None
-
-### Deprecated Functions
-
-- None
-
-### Updated Functions
-
-- None
 
 ## Patches
 

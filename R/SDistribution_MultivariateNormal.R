@@ -134,6 +134,9 @@ MultivariateNormal$set("private",".getRefParams", function(paramlst){
 MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1,0,0,1),
                                                       prec = NULL, decorators = NULL, verbose = FALSE){
 
+  if (length(mean) == 1)
+    stop("Length of mean is '1', use Normal distribution instead.")
+
   private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
   self$setParameterValue(mean = mean, cov = cov, prec = prec)
 

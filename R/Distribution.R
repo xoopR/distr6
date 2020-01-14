@@ -352,9 +352,9 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #' @export
 Distribution$set("public","strprint",function(n = 2){
   if(length(private$.parameters)!=0){
-    settable = self$parameters()$as.data.table()$settable
-    id = self$parameters()$as.data.table()[settable, "id"]
-    value = self$parameters()$as.data.table()[settable, "value"]
+    settable = as.data.table(self$parameters())$settable
+    id = as.data.table(self$parameters())[settable, "id"][[1]]
+    value = as.data.table(self$parameters())[settable, "value"][[1]]
     lng <- length(id)
     if(lng >(2*n))
       string = paste0(self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
@@ -392,9 +392,9 @@ Distribution$set("public","summary",function(full = TRUE,...){
     if(length(private$.parameters)!=0){
 
       cat(self$description,"Parameterised with:\n")
-      settable = self$parameters()$as.data.table()$settable
-      cat(" ", paste(self$parameters()$as.data.table()[settable, "id"],
-                      self$parameters()$as.data.table()[settable, "value"],
+      settable = as.data.table(self$parameters())$settable
+      cat(" ", paste(as.data.table(self$parameters())[settable, "id"],
+                     as.data.table(self$parameters())[settable, "value"],
                       sep = " = ", collapse = ", "))
     } else
       cat(self$description)

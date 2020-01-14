@@ -348,7 +348,7 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
       if(is.null(aid) | is.null(value))
         return(stopwarn(error, "Parameter names and new values must be provided."))
 
-      param <- subset(self$as.data.table(), id == aid)
+      param <- subset(as.data.table(self), id == aid)
 
       if(nrow(param)==0)
         return(stopwarn(error, sprintf("%s is not in the parameter set.",aid)))
@@ -359,7 +359,7 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
       if(!param$support[[1]]$liesInSetInterval(value, all = TRUE))
         stop(value, " does not lie in the support of parameter ", aid)
 
-      private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"][[1]] <- list(value)
+      private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"] <- list(value)
     }
 
     self$update()
@@ -387,8 +387,8 @@ ParameterSet$set("public","merge",function(y, ...){
   newsets = c(list(y), list(...))
   lapply(newsets, function(x) checkmate::assert(inherits(x,"ParameterSet"),.var.name = "All objects in merge must be ParameterSets"))
 
-  newpar = rbind(self$as.data.table(),
-                 data.table::rbindlist(lapply(newsets, function(x) x$as.data.table())))
+  newpar = rbind(as.data.table(self),
+                 data.table::rbindlist(lapply(newsets, function(x) as.data.table(x))))
 
   if(any(table(newpar$id)>1))
     stop("IDs must be unique. Try using makeUniqueDistributions first.")
@@ -397,25 +397,24 @@ ParameterSet$set("public","merge",function(y, ...){
   invisible(self)
 })
 
-#' @name as.data.table
 #' @title Coerce ParameterSet to data.table
 #'
 #' @description Coerces a ParameterSet to a data.table.
 #'
-#' @param object ParameterSet
+#' @param x ParameterSet
+#' @param ... Ignored.
 #'
-#' @usage as.data.table(object)
-#' @section R6 Usage: $as.data.table()
+#' @importFrom data.table as.data.table
+#' @method as.data.table ParameterSet
 #'
 #' @seealso \code{\link{ParameterSet}}
 #'
 #' @return A data.table.
 #'
 #' @export
-NULL
-ParameterSet$set("public","as.data.table",function(){
-  return(private$.parameters)
-})
+as.data.table.ParameterSet <- function(x,...){
+  x$.__enclos_env__$private$.parameters
+}
 
 #' @name as.ParameterSet
 #' @title Coerce to a ParameterSet

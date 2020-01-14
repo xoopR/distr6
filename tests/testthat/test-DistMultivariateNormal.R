@@ -1,12 +1,13 @@
 library(testthat)
 
-context("Multinomial distribution")
+context("Multivariat Normal distribution")
 
 test_that("constructor",{
+  expect_equal(MultivariateNormal$new()$strprint(), "MultiNorm(mean = c(0, 0), cov = c(1, 0, 0, 1))")
   expect_silent(MultivariateNormal$new())
   expect_silent(MultivariateNormal$new(mean = c(0,0,0), prec = c(1,0,0,0,1,0,0,0,1)))
   expect_message(MultivariateNormal$new(mean = c(0,0,0), prec = c(1,0,0,0,1,0,0,0,1), verbose = T))
-  expect_error(MultivariateNormal$new(mean = 5))
+  expect_error(MultivariateNormal$new(mean = 5),"Length of mean")
   expect_warning(MultivariateNormal$new(mean = c(2,3), cov = matrix(c(1,3,4))))
 })
 
@@ -61,8 +62,6 @@ test_that("statistics",{
   expect_equal(mvn$cf(1:3), exp(1i * matrix(c(1,7,3),nrow=1)%*%matrix(1:3,ncol=1) + (0.5 * matrix(1:3,nrow=1)%*%mvn$variance()%*%matrix(1:3,ncol=1))))
   expect_error(mvn$cf(1))
 
-
-  expect_equal(MultivariateNormal$new(mean = 0, cov = 1)$pdf(1:5),dnorm(1:5))
   expect_equal(MultivariateNormal$new(mean = c(1,1), cov = c(1,2,3,4))$pdf(1), NaN)
   expect_equal(signif(mvn$pdf(1,2,3),3), 2.366e-07)
   expect_error(mvn$pdf(1))
@@ -72,3 +71,4 @@ test_that("statistics",{
   expect_equal(signif(mvn$pdf(1:2,2:3,3:4),3), c(2.366e-07, 7.835e-06))
   expect_equal(dim(mvn$rand(10)),c(10,3))
 })
+

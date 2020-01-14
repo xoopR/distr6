@@ -9,11 +9,11 @@ test_that("valueSupport/variateForm",{
 
 test_that("missing d/p/q",{
   expect_error(expect_message(plot(Distribution$new("s", pdf = function(x) x), fun = "cdf"),
-                 "does not have a cdf expression"))
+                 "does not have a cdf expression"),"No plottable")
   expect_error(expect_message(plot(Distribution$new("s", cdf = function(x) x), fun = "pdf"),
-                              "does not have a pdf expression"))
+                              "does not have a pdf expression"),"No plottable")
   expect_error(expect_message(plot(Distribution$new("s", pdf = function(x) x), fun = "quantile"),
-                              "does not have a quantile expression"))
+                              "does not have a quantile expression"),"No plottable")
 })
 
 test_that("errors",{
