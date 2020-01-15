@@ -148,14 +148,14 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
   ndist = nrow(private$.wrappedModels)
 
   if(length(unique(distribution)) == 1){
-    if(is.null(name)) name = paste0("Vector: ", ndist," ", private$.wrappedModels[1, 1],"s")
-    if(is.null(short_name)) short_name = paste0("Vec", ndist, private$.wrappedModels[1, 3])
+    if(is.null(name)) name = paste0("Vector: ", ndist," ", distribution[[1]],"s")
+    if(is.null(short_name)) short_name = paste0("Vec", ndist, private$.wrappedModels[1, 3][[1]])
   } else{
     if(is.null(name)) name = paste("Vector:",paste0(distribution, collapse=", "))
-    if(is.null(short_name)) short_name = paste0(private$.wrappedModels[,"shortname"], collapse="Vec")
+    if(is.null(short_name)) short_name = paste0(private$.wrappedModels[,"shortname"][[1]], collapse="Vec")
   }
 
-  private$.wrappedModels[,3] <- makeUniqueNames(private$.wrappedModels[,3])
+  private$.wrappedModels[,3] <- makeUniqueNames(private$.wrappedModels[,3][[1]])
 
   lst <- rep(list(bquote()), ndist)
   names(lst) <- paste("x",1:ndist,sep="")
@@ -227,11 +227,11 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
 VectorDistribution$set("public","wrappedModels", function(model = NULL){
   if(is.null(model)){
     if (private$.distlist)
-      return(private$.wrappedModels[, "distribution"])
+      return(private$.wrappedModels[, "distribution"][[1]])
     else
       return(apply(private$.wrappedModels, 1, function(x) do.call(get(x[[1]])$new, x[[2]])))
   } else {
-    model = model[model %in% private$.wrappedModels[, "shortname"]]
+    model = model[model %in% private$.wrappedModels[, "shortname"][[1]]]
 
     if(length(model) == 0)
       return(self$wrappedModels())
@@ -352,7 +352,7 @@ Extract.VectorDistribution <- function(vecdist, i){
 
   if(!vecdist$distlist){
     if(length(i) == 1){
-      par = c(vecdist$modelTable()[i, 2][[1]], vecdist$shared_params)
+      par = c(vecdist$modelTable()[i, 2][[1]][[1]], vecdist$shared_params)
 
       # if(!checkmate::testList(par))
       #   par = list(par)
@@ -364,17 +364,17 @@ Extract.VectorDistribution <- function(vecdist, i){
       return(do.call(get(vecdist$modelTable()[i, 1][[1]])$new, par))
 
     }else
-      return(VectorDistribution$new(distribution = vecdist$modelTable()[i, 1],
-                                    params = vecdist$modelTable()[i, 2]))
+      return(VectorDistribution$new(distribution = vecdist$modelTable()[i, 1][[1]],
+                                    params = vecdist$modelTable()[i, 2][[1]]))
   } else {
     if(length(i) == 1){
       dec = vecdist$decorators()
       if(!is.null(dec))
-        return(suppressMessages(decorate(vecdist$modelTable()[i, 1][[1]], dec)))
+        return(suppressMessages(decorate(vecdist$modelTable()[i, 1][[1]][[1]], dec)))
       else
-        return(vecdist$modelTable()[i, 1][[1]])
+        return(vecdist$modelTable()[i, 1][[1]][[1]])
     } else
-      return(VectorDistribution$new(distlist = vecdist$modelTable()[i, 1]))
+      return(VectorDistribution$new(distlist = unlist(vecdist$modelTable()[i, 1])))
   }
 }
 

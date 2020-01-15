@@ -1,3 +1,7 @@
+# distr6 1.3.3
+
+- `as.data.table` has been moved from a `ParameterSet` method to an S3 dispatch. Fixes bug of overloading `as.data.table`
+
 # distr6 1.3.2
 
 - Bug fix in `VectorDistribution` - missing `which` argument
@@ -9,7 +13,6 @@
 
 - Added wrapper for VectorDistribution for quick concatenation of constructed distributions, `c.Distribution`
 - `VectorDistribution` `print` method more in line with base R vectors
-
 
 # distr6 1.3.0
 
