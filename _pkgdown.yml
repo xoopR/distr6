@@ -283,6 +283,7 @@ reference:
       - listWrappers
       - distr6-package
       - distr6News
+      - distrSimulate
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
@@ -291,7 +292,7 @@ reference:
       - getParameterSupport
       - getParameterValue
       - setParameterValue
-      - as.data.table
+      - as.data.table.ParameterSet
       - print.ParameterSet
       - merge.ParameterSet
       - update.ParameterSet
