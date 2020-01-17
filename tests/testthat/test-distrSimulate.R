@@ -6,6 +6,10 @@ test_that("no pars",{
   expect_silent(distrSimulate())
 })
 
+test_that("seed",{
+  expect_silent(distrSimulate(seed = 5))
+})
+
 test_that("abbreviations",{
   expect_equal(distrSimulate(1, distribution = "No", simplify = F)$Distribution$name, "Normal")
   expect_equal(distrSimulate(1, distribution = "Ga", simplify = F)$Distribution$name, "Gamma")
