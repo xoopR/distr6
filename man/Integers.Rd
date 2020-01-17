@@ -20,10 +20,10 @@ component, i.e.
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{...} \tab ANY \tab Additional arguments.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dim} \tab numeric \tab Dimension of the set. \cr
+\code{...} \tab ANY \tab Additional arguments.
 }
 }
 

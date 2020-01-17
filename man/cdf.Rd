@@ -29,9 +29,9 @@ point.
 }
 \details{
 The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
- \deqn{F_X(x) = P(X \le x)}
- If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
- \code{\link{survival}} function.
+\deqn{F_X(x) = P(X \le x)}
+If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
+\code{\link{survival}} function.
 
 If available a cdf will be returned without warning using an analytic expression. Otherwise,
 if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.

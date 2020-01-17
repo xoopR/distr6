@@ -24,7 +24,7 @@ Makes a symbolic representation for the complement of sets/intervals.
 }
 \details{
 This does not calculate the complement of the arguments but
-  is just a symbolic representation using unicode.
+is just a symbolic representation using unicode.
 }
 \examples{
 PosNaturals$new() - Interval$new(-1,10)

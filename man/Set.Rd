@@ -19,36 +19,36 @@ elements that can be printed. The elements can be of any class.
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{...} \tab ANY \tab Elements in the set. \cr
-   \code{dim} \tab integer \tab Dimension of the set.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{...} \tab ANY \tab Elements in the set. \cr
+\code{dim} \tab integer \tab Dimension of the set.
 }
 }
 
 \section{Public Methods}{
 
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{type()} \tab  \code{\link{type.SetInterval}}  \cr
-  \code{dimension()} \tab \code{\link{dimension.SetInterval}}\cr
-  \code{max()} \tab  \code{\link{max.SetInterval}} \cr
-  \code{min()} \tab  \code{\link{min.SetInterval}} \cr
-  \code{sup()} \tab  \code{\link{sup.SetInterval}}  \cr
-  \code{inf()} \tab  \code{\link{inf.SetInterval}}  \cr
-  \code{getSymbol()} \tab  \code{\link{getSymbol.SetInterval}} \cr
-  \code{class()} \tab  \code{\link{class.SetInterval}}  \cr
-  \code{elements()} \tab  \code{\link{elements}}  \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Set Methods} \tab \strong{Link} \cr
-  \code{length()} \tab  \code{\link{length.Set}}  \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSetInterval(x, all = FALSE, bound = FALSE)} \tab \code{\link{liesInSetInterval}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  }
+\tabular{ll}{
+\strong{Accessor Methods} \tab \strong{Link} \cr
+\code{type()} \tab  \code{\link{type.SetInterval}}  \cr
+\code{dimension()} \tab \code{\link{dimension.SetInterval}}\cr
+\code{max()} \tab  \code{\link{max.SetInterval}} \cr
+\code{min()} \tab  \code{\link{min.SetInterval}} \cr
+\code{sup()} \tab  \code{\link{sup.SetInterval}}  \cr
+\code{inf()} \tab  \code{\link{inf.SetInterval}}  \cr
+\code{getSymbol()} \tab  \code{\link{getSymbol.SetInterval}} \cr
+\code{class()} \tab  \code{\link{class.SetInterval}}  \cr
+\code{elements()} \tab  \code{\link{elements}}  \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Set Methods} \tab \strong{Link} \cr
+\code{length()} \tab  \code{\link{length.Set}}  \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Validation Methods} \tab \strong{Link} \cr
+\code{liesInSetInterval(x, all = FALSE, bound = FALSE)} \tab \code{\link{liesInSetInterval}} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{print()} \tab \code{\link[base]{print}} \cr
+}
 }
 
 \seealso{

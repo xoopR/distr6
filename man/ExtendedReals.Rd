@@ -20,9 +20,9 @@ where \eqn{R} is the set of reals.
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dim} \tab numeric \tab Dimension of the set. \cr
 }
 }
 

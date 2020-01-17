@@ -27,10 +27,10 @@ distributions evaluated at a given point.
 }
 \details{
 For discrete distributions the probability mass function (pmf) is returned, defined as
- \deqn{p_X(x) = P(X = x)}
- for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
- \deqn{f_X(x) = P(x < X \le x + dx)}
- for some infinitesimally small \eqn{dx}.
+\deqn{p_X(x) = P(X = x)}
+for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
+\deqn{f_X(x) = P(x < X \le x + dx)}
+for some infinitesimally small \eqn{dx}.
 
 If available a pdf will be returned without warning using an analytic expression. Otherwise,
 if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.

@@ -28,8 +28,8 @@ assertDistributionList(
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-  return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test} returns \code{FALSE}.
+return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if a given object is a list of R6 Distributions.

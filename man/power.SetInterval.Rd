@@ -22,7 +22,7 @@ Makes a symbolic representation for the exponentiation of a given set/interval.
 }
 \details{
 This does not calculate the exponentiation but
-  is just a symbolic representation using unicode.
+is just a symbolic representation using unicode.
 }
 \examples{
 PosNaturals$new() ^ 2
