@@ -19,9 +19,9 @@ The set of Positive Naturals is defined as the positive counting numbers, i.e.
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dim} \tab numeric \tab Dimension of the set. \cr
 }
 }
 

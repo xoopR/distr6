@@ -17,7 +17,7 @@ Gets the unicode symbol for standard mathematical special sets.
 }
 \details{
 Special set can be supplied as a character string or class, case-insensitive.
-  See \code{\link{listSpecialSets}} for full list of currently supported sets.
+See \code{\link{listSpecialSets}} for full list of currently supported sets.
 }
 \examples{
 # Supplied as class

@@ -19,8 +19,8 @@ assertMixture(object, errormsg = paste(object$short_name, "is not mixture"))
 }
 \value{
 If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-  return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-  an error message as string, \code{test} returns \code{FALSE}.
+return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
 Validation checks to test if Distribution is mixture.

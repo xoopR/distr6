@@ -26,7 +26,7 @@ Makes a symbolic representation for the union of sets/intervals.
 }
 \details{
 This does not calculate the union of the arguments but
-  is just a symbolic representation using unicode.
+is just a symbolic representation using unicode.
 }
 \examples{
 PosNaturals$new() * Reals$new()

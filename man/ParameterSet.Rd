@@ -8,7 +8,7 @@ An R6 object of class ParameterSet.
 }
 \description{
 ParameterSets are passed to a \code{Distribution$new} constructor when
- creating a custom probability distribution that takes parameters.
+creating a custom probability distribution that takes parameters.
 }
 \section{Constructor}{
  ParameterSet$new(id, value, support, settable, updateFunc = NULL, description = NULL)
@@ -50,16 +50,16 @@ with a non-NA \code{updateFunc}.
 
 \section{Public Methods}{
 
- \tabular{ll}{
-  \strong{Method} \tab \strong{Link} \cr
-  \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
-  \code{update()} \tab \code{\link{update.ParameterSet}} \cr
-  \code{parameters(id = NULL)} \tab \code{\link{parameters}} \cr
-  \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
-  \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \code{merge(y, ...)} \tab \code{\link{merge.ParameterSet}} \cr
-  \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
+\tabular{ll}{
+\strong{Method} \tab \strong{Link} \cr
+\code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
+\code{update()} \tab \code{\link{update.ParameterSet}} \cr
+\code{parameters(id = NULL)} \tab \code{\link{parameters}} \cr
+\code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
+\code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
+\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+\code{merge(y, ...)} \tab \code{\link{merge.ParameterSet}} \cr
+\code{as.data.table()} \tab \code{\link{as.data.table}} \cr
 }
 }
 

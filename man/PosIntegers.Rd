@@ -21,10 +21,10 @@ be written without a fractional component, i.e.
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{dim} \tab numeric \tab Dimension of the set. \cr
+\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 

@@ -11,7 +11,7 @@ A generic SetInterval class primarily used as the parent class to \code{Set} and
 }
 \details{
 Whilst this is not an abstract class, direct construction is generally not advised.
-  Construction should instead be called on 'Set' or 'Interval'.
+Construction should instead be called on 'Set' or 'Interval'.
 }
 \section{Constructor}{
  SetInterval$new(symbol, lower, upper, type, class = "numeric", dimension)
@@ -19,36 +19,36 @@ Whilst this is not an abstract class, direct construction is generally not advis
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{symbol} \tab character \tab String representation of SetInterval. \cr
-   \code{lower} \tab numeric \tab Lower limit of SetInterval. \cr
-   \code{upper} \tab numeric \tab Upper limit of SetInterval. \cr
-   \code{type} \tab character \tab Interval type, one of (), (], [), []. \cr
-   \code{class} \tab character \tab Atomic class, one of "numeric" or "integer". \cr
-   \code{dimension} \tab integer \tab Dimension of SetInterval.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{symbol} \tab character \tab String representation of SetInterval. \cr
+\code{lower} \tab numeric \tab Lower limit of SetInterval. \cr
+\code{upper} \tab numeric \tab Upper limit of SetInterval. \cr
+\code{type} \tab character \tab Interval type, one of (), (], [), []. \cr
+\code{class} \tab character \tab Atomic class, one of "numeric" or "integer". \cr
+\code{dimension} \tab integer \tab Dimension of SetInterval.
 }
 }
 
 \section{Public Methods}{
 
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{type()} \tab  \code{\link{type.SetInterval}}  \cr
-  \code{dimension()} \tab \code{\link{dimension.SetInterval}}\cr
-  \code{max()} \tab  \code{\link{max.SetInterval}} \cr
-  \code{min()} \tab  \code{\link{min.SetInterval}} \cr
-  \code{sup()} \tab  \code{\link{sup.SetInterval}}  \cr
-  \code{inf()} \tab  \code{\link{inf.SetInterval}}  \cr
-  \code{getSymbol()} \tab  \code{\link{getSymbol.SetInterval}} \cr
-  \code{class()} \tab  \code{\link{class.SetInterval}}  \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSetInterval(x, all = FALSE, bound = FALSE)} \tab \code{\link{liesInSetInterval}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{print()} \tab \code{\link[base]{print}} \cr
-  }
+\tabular{ll}{
+\strong{Accessor Methods} \tab \strong{Link} \cr
+\code{type()} \tab  \code{\link{type.SetInterval}}  \cr
+\code{dimension()} \tab \code{\link{dimension.SetInterval}}\cr
+\code{max()} \tab  \code{\link{max.SetInterval}} \cr
+\code{min()} \tab  \code{\link{min.SetInterval}} \cr
+\code{sup()} \tab  \code{\link{sup.SetInterval}}  \cr
+\code{inf()} \tab  \code{\link{inf.SetInterval}}  \cr
+\code{getSymbol()} \tab  \code{\link{getSymbol.SetInterval}} \cr
+\code{class()} \tab  \code{\link{class.SetInterval}}  \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Validation Methods} \tab \strong{Link} \cr
+\code{liesInSetInterval(x, all = FALSE, bound = FALSE)} \tab \code{\link{liesInSetInterval}} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{print()} \tab \code{\link[base]{print}} \cr
+}
 }
 
 \seealso{

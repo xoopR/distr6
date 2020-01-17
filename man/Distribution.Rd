@@ -8,7 +8,7 @@ Returns R6 object of class Distribution.
 }
 \description{
 A generalised distribution object for defining custom probability distributions
-  as well as serving as the parent class to specific, familiar distributions.
+as well as serving as the parent class to specific, familiar distributions.
 }
 \section{Constructor}{
  Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
@@ -42,97 +42,97 @@ suppressMoments = TRUE)
 \section{Constructor Details}{
 
 
-  The most basic Distribution object consists of a name and one of pdf/cdf.
+The most basic Distribution object consists of a name and one of pdf/cdf.
 
-  If supplied, \code{type} and \code{support} should be given as an R6 SetInterval object. If neither are supplied
-  then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
-  If only \code{type} is supplied then this is taken to also be the support.
+If supplied, \code{type} and \code{support} should be given as an R6 SetInterval object. If neither are supplied
+then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
+If only \code{type} is supplied then this is taken to also be the support.
 
-  By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
-  Use the \code{\link{FunctionImputation}} decorator to generate these.
+By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
+Use the \code{\link{FunctionImputation}} decorator to generate these.
 
-  See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
+See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
 
-  \code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
-  Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
-  for more details.
+\code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
+Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
+for more details.
 
-  \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
-  \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
-  If not given these are automatically filled from \code{type} and \code{support}.
+\code{valueSupport} should be one of continuous/discrete/mixture if supplied.
+\code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
+If not given these are automatically filled from \code{type} and \code{support}.
 
-  \code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
-  calculated in construction. This has the benefit of drastically decreasing computational time but
-  at the cost of losing these in the distribution properties.
+\code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
+calculated in construction. This has the benefit of drastically decreasing computational time but
+at the cost of losing these in the distribution properties.
 }
 
 \section{Public Variables}{
 
- \tabular{ll}{
-  \strong{Variable} \tab \strong{Return} \cr
-  \code{name} \tab Name of distribution. \cr
-  \code{short_name} \tab Id of distribution. \cr
-  \code{description} \tab Brief description of distribution. \cr
-  }
+\tabular{ll}{
+\strong{Variable} \tab \strong{Return} \cr
+\code{name} \tab Name of distribution. \cr
+\code{short_name} \tab Id of distribution. \cr
+\code{description} \tab Brief description of distribution. \cr
+}
 }
 
 \section{Public Methods}{
 
- \tabular{ll}{
-  \strong{Accessor Methods} \tab \strong{Link} \cr
-  \code{decorators()} \tab \code{\link{decorators}} \cr
-  \code{traits()} \tab \code{\link{traits}} \cr
-  \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-  \code{variateForm()} \tab \code{\link{variateForm}} \cr
-  \code{type()} \tab \code{\link{type}} \cr
-  \code{properties()} \tab \code{\link{properties}} \cr
-  \code{support()} \tab \code{\link{support}} \cr
-  \code{symmetry()} \tab \code{\link{symmetry}} \cr
-  \code{sup()}  \tab \code{\link{sup}} \cr
-  \code{inf()} \tab \code{\link{inf}} \cr
-  \code{dmax()}  \tab \code{\link{dmax}} \cr
-  \code{dmin()} \tab \code{\link{dmin}} \cr
-  \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-  \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-  \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-  \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-  \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-  \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Statistical Methods} \tab \strong{Link} \cr
-  \code{prec()} \tab \code{\link{prec}} \cr
-  \code{stdev()} \tab \code{\link{stdev}}\cr
-  \code{median()} \tab \code{\link{median.Distribution}} \cr
-  \code{iqr()} \tab \code{\link{iqr}} \cr
-  \code{correlation()} \tab \code{\link{correlation}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Parameter Methods} \tab \strong{Link} \cr
-  \code{parameters(id)} \tab \code{\link{parameters}} \cr
-  \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-  \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Validation Methods} \tab \strong{Link} \cr
-  \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-  \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-  \tab \cr \tab \cr \tab \cr
-  \strong{Representation Methods} \tab \strong{Link} \cr
-  \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-  \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-  \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-  }
+\tabular{ll}{
+\strong{Accessor Methods} \tab \strong{Link} \cr
+\code{decorators()} \tab \code{\link{decorators}} \cr
+\code{traits()} \tab \code{\link{traits}} \cr
+\code{valueSupport()} \tab \code{\link{valueSupport}} \cr
+\code{variateForm()} \tab \code{\link{variateForm}} \cr
+\code{type()} \tab \code{\link{type}} \cr
+\code{properties()} \tab \code{\link{properties}} \cr
+\code{support()} \tab \code{\link{support}} \cr
+\code{symmetry()} \tab \code{\link{symmetry}} \cr
+\code{sup()}  \tab \code{\link{sup}} \cr
+\code{inf()} \tab \code{\link{inf}} \cr
+\code{dmax()}  \tab \code{\link{dmax}} \cr
+\code{dmin()} \tab \code{\link{dmin}} \cr
+\code{skewnessType()} \tab \code{\link{skewnessType}} \cr
+\code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{d/p/q/r Methods} \tab \strong{Link} \cr
+\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
+\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
+\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
+\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Statistical Methods} \tab \strong{Link} \cr
+\code{prec()} \tab \code{\link{prec}} \cr
+\code{stdev()} \tab \code{\link{stdev}}\cr
+\code{median()} \tab \code{\link{median.Distribution}} \cr
+\code{iqr()} \tab \code{\link{iqr}} \cr
+\code{correlation()} \tab \code{\link{correlation}} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Parameter Methods} \tab \strong{Link} \cr
+\code{parameters(id)} \tab \code{\link{parameters}} \cr
+\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
+\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Validation Methods} \tab \strong{Link} \cr
+\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
+\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
+\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
+\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+}
 }
 
 \section{Active Bindings}{
 
- \tabular{ll}{
-  \strong{Active Binding} \tab \strong{Link} \cr
-  \code{isPdf} \tab \code{\link{isPdf}} \cr
-  \code{isCdf} \tab \code{\link{isCdf}} \cr
-  \code{isQuantile} \tab \code{\link{isQuantile}} \cr
-  \code{isRand} \tab \code{\link{isRand}} \cr
-  }
+\tabular{ll}{
+\strong{Active Binding} \tab \strong{Link} \cr
+\code{isPdf} \tab \code{\link{isPdf}} \cr
+\code{isCdf} \tab \code{\link{isCdf}} \cr
+\code{isQuantile} \tab \code{\link{isQuantile}} \cr
+\code{isRand} \tab \code{\link{isRand}} \cr
+}
 }
 
 \seealso{

@@ -29,9 +29,9 @@ evaluated at a given point between 0 and 1.
 }
 \details{
 The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
- \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
+\deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
 
- If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
+If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
 
 If available a quantile will be returned without warning using an analytic expression. Otherwise,
 if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.

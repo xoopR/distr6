@@ -36,7 +36,7 @@ Operations for SetInterval objects and subclasses, symbolic only.
 }
 \details{
 Generally not recommended to use this function directly but instead
-  via one of the implemented operations.
+via one of the implemented operations.
 }
 \seealso{
 \code{\link{product.SetInterval}}, \code{\link{union.SetInterval}}, \code{\link{complement.SetInterval}},
