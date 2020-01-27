@@ -3,24 +3,12 @@ language: r
 branches:
   only:
     - master
-    - dev
+    
+os:
+ - linux
+ - osx
 
-matrix:
-  include:
-#    - os: linux
-#      r: oldrel
-    - os: linux
-      r: release
-#    - os: linux
-#      r: devel
-#    - os: osx
-#      r: oldrel
-#    - os: osx
-#      r: release
-
-sudo: false
-
-dist: trusty
+dist: xenial
 
 cache: packages
 
@@ -39,10 +27,9 @@ after_success:
       
 deploy:
   provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: false
-  local-dir: docs
+  token: $GITHUB_TOKEN
+  keep_history: false
+  local_dir: docs
   on:
     branch: master
 
