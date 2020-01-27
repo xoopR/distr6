@@ -1,11 +1,11 @@
 #' @importFrom R62S3 R62Fun
-R62Fun(Distribution, assignEnvir = topenv(), mask = T)
-R62Fun(SDistribution, assignEnvir = topenv(), mask = T)
-R62Fun(Kernel, assignEnvir = topenv(), mask = T)
-R62Fun(ParameterSet, assignEnvir = topenv())
-R62Fun(ExoticStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
-R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
-R62Fun(DistributionWrapper, assignEnvir = topenv(), dispatchClasses = list(Distribution), mask = T)
+R62Fun(Distribution, assignEnvir = topenv(), scope = c("public", "active"))
+R62Fun(SDistribution, assignEnvir = topenv(), scope = c("public", "active"))
+R62Fun(Kernel, assignEnvir = topenv(), scope = c("public", "active"))
+R62Fun(ParameterSet, assignEnvir = topenv(), scope = c("public", "active"))
+R62Fun(ExoticStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), scope = c("public", "active"))
+R62Fun(CoreStatistics, assignEnvir = topenv(), dispatchClasses = list(Distribution), scope = c("public", "active"))
+R62Fun(DistributionWrapper, assignEnvir = topenv(), dispatchClasses = list(Distribution), scope = c("public", "active"))
 
 
 .onAttach <- function(libname, pkgname) {

@@ -64,6 +64,7 @@ be found, decorate with FunctionImputation for numeric results.
 \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Statistical Methods} \tab \strong{Link} \cr
+\code{squared2Norm()} \tab \code{\link{squared2Norm}} \cr
 \code{prec()} \tab \code{\link{prec}} \cr
 \code{stdev()} \tab \code{\link{stdev}}\cr
 \code{mode(which = "all")} \tab \code{\link{mode}} \cr

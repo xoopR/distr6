@@ -4,7 +4,7 @@
 \alias{mean.Distribution}
 \title{Distribution Mean}
 \usage{
-\method{mean}{Distribution}(x, ...)
+\method{mean}{Distribution}(x, ..., ...)
 }
 \arguments{
 \item{x}{Distribution.}
