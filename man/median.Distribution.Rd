@@ -4,7 +4,7 @@
 \alias{median.Distribution}
 \title{Median of a Distribution}
 \usage{
-\method{median}{Distribution}(x, na.rm = NULL, ..., ...)
+\method{median}{Distribution}(x, na.rm = NULL, ...)
 }
 \arguments{
 \item{x}{Distribution.}

@@ -4,7 +4,7 @@
 \alias{merge.ParameterSet}
 \title{Combine ParameterSets}
 \usage{
-\method{merge}{ParameterSet}(x, y, ..., ...)
+\method{merge}{ParameterSet}(x, y, ...)
 }
 \arguments{
 \item{x}{ParameterSet}

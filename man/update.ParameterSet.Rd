@@ -4,7 +4,7 @@
 \alias{update.ParameterSet}
 \title{Updates a ParameterSet}
 \usage{
-\method{update}{ParameterSet}(object, ..., ...)
+\method{update}{ParameterSet}(object, ...)
 }
 \arguments{
 \item{object}{ParameterSet}

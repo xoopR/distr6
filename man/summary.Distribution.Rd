@@ -4,7 +4,7 @@
 \alias{summary.Distribution}
 \title{Distribution Summary}
 \usage{
-\method{summary}{Distribution}(object, full = TRUE, ..., ...)
+\method{summary}{Distribution}(object, full = TRUE, ...)
 }
 \arguments{
 \item{object}{Distribution.}
