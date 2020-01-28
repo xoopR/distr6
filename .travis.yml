@@ -28,6 +28,7 @@ after_success:
 deploy:
   provider: pages
   token: $GITHUB_TOKEN
+  skip_cleanup: true
   keep_history: false
   local_dir: docs
   on:
