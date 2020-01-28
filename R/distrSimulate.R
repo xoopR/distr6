@@ -1,9 +1,9 @@
 #' @title Simulate from a Distribution
 #' @description Helper function to quickly simulate from a distribution with given parameters.
 #' @param n number of points to simulate.
-#' @param distribution distribution to simulate from, corresponds to ClassName of distr6 distribution,
+#' @param distribution distribution to simulate from, corresponds to `ClassName` of `distr6` distribution,
 #' abbreviations allowed.
-#' @param pars parameters to pass to `distribution`. If omitted then defaults used.
+#' @param pars parameters to pass to `distribution`. If omitted then `distribution` defaults used.
 #' @param simplify if `TRUE` (default) only the simulations are returned, otherwise the constructed distribution
 #' is also returned.
 #' @param seed passed to [set.seed]

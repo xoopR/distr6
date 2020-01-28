@@ -16,10 +16,10 @@ distrSimulate(
 \arguments{
 \item{n}{number of points to simulate.}
 
-\item{distribution}{distribution to simulate from, corresponds to ClassName of distr6 distribution,
+\item{distribution}{distribution to simulate from, corresponds to \code{ClassName} of \code{distr6} distribution,
 abbreviations allowed.}
 
-\item{pars}{parameters to pass to \code{distribution}. If omitted then defaults used.}
+\item{pars}{parameters to pass to \code{distribution}. If omitted then \code{distribution} defaults used.}
 
 \item{simplify}{if \code{TRUE} (default) only the simulations are returned, otherwise the constructed distribution
 is also returned.}
