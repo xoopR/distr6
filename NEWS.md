@@ -1,6 +1,6 @@
 # distr6 1.3.3
 
-- `as.data.table` has been moved from a `ParameterSet` method to an S3 dispatch. Fixes bug of overloading `as.data.table`
+- `as.data.table` has been moved from a `ParameterSet` method to an S3 dispatch. Fixes an important bug of overloading `as.data.table` but may affect backwards compatibility.
 - Added `distrSimulate` for convenient simulation from any distribution
 
 # distr6 1.3.2
