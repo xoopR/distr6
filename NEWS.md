@@ -2,6 +2,7 @@
 
 - `as.data.table` has been moved from a `ParameterSet` method to an S3 dispatch. Fixes an important bug of overloading `as.data.table` but may affect backwards compatibility.
 - Added `distrSimulate` for convenient simulation from any distribution
+- Updated `plot` to be able to handle distributions without `quantile` or `rand`. Optimised runtime by preventing automatic computation of `pdf` and `cdf`.
 
 # distr6 1.3.2
 

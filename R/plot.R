@@ -99,17 +99,31 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
 
   if(testDiscrete(x) & x$support()$length() != Inf){
     plotStructure <- data.table::data.table(points = x$support()$elements())
-    plotStructure$cdf <- x$cdf(plotStructure$points)
   } else {
-    plotStructure <- data.table::data.table(cdf = seq(0,1,length.out = npoints))
-    plotStructure$points <- x$quantile(plotStructure$cdf)
-    plotStructure <- plotStructure[,2:1]
+    if(x$isQuantile) {
+      plotStructure <- data.table::data.table(cdf = seq(0,1,length.out = npoints))
+      plotStructure$points <- x$quantile(plotStructure$cdf)
+      plotStructure <- plotStructure[,2:1]
+    } else if(x$isRand) {
+      plotStructure <- data.table::data.table(points = sort(x$rand(npoints)))
+    } else {
+      message("No quantile or rand available, representation may not be accurate. Use the
+              FunctionImputation decorator for better accuracy.")
+      max = ifelse(x$dmax() == Inf, 100, x$dmax())
+      min = ifelse(x$dmin() == -Inf, -100, x$dmin())
+      plotStructure <- data.table::data.table(points = seq.int(min, max, length.out = npoints))
+    }
 
-    if(testDiscrete(x))
+    if(testDiscrete(x) & "cdf" %in% fun)
       plotStructure <- stats::aggregate(cdf ~ points, plotStructure, max)
   }
 
-  plotStructure$pdf <- x$pdf(plotStructure$points)
+  if ("cdf" %in% fun & !("cdf" %in% colnames(plotStructure))) {
+    plotStructure$cdf <- x$cdf(plotStructure$points)
+  }
+  if ("pdf" %in% fun) {
+    plotStructure$pdf <- x$pdf(plotStructure$points)
+  }
 
   if("survival" %in% fun)
     plotStructure$survival <- 1 - plotStructure$cdf
