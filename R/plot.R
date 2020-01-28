@@ -73,20 +73,17 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
     stop("Function unrecognised, should be one of: ", paste0(plotFuns,collapse=","))
 
   if("cdf" %in% fun & !x$isCdf){
-    message("This distribution does not have a cdf expression. Use the
-            FunctionImputation decorator to impute a numerical cdf.")
+    message("This distribution does not have a cdf expression. Use the FunctionImputation decorator to impute a numerical cdf.")
     fun = fun[!(fun %in% c("cdf", "survival", "hazard","cumhazard"))]
   }
 
   if("pdf" %in% fun & !x$isPdf){
-    message("This distribution does not have a pdf expression. Use the
-            FunctionImputation decorator to impute a numerical pdf.")
+    message("This distribution does not have a pdf expression. Use the FunctionImputation decorator to impute a numerical pdf.")
     fun = fun[!(fun %in% c("pdf", "hazard"))]
   }
 
   if("quantile" %in% fun & !x$isQuantile){
-    message("This distribution does not have a quantile expression. Use the
-            FunctionImputation decorator to impute a numerical quantile.")
+    message("This distribution does not have a quantile expression. Use the FunctionImputation decorator to impute a numerical quantile.")
     fun = fun[!(fun %in% c("quantile"))]
   }
 
@@ -107,8 +104,7 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
     } else if(x$isRand) {
       plotStructure <- data.table::data.table(points = sort(x$rand(npoints)))
     } else {
-      message("No quantile or rand available, representation may not be accurate. Use the
-              FunctionImputation decorator for better accuracy.")
+      message("No quantile or rand available, representation may not be accurate. Use the FunctionImputation decorator for better accuracy.")
       max = ifelse(x$dmax() == Inf, 100, x$dmax())
       min = ifelse(x$dmin() == -Inf, -100, x$dmin())
       plotStructure <- data.table::data.table(points = seq.int(min, max, length.out = npoints))

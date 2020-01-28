@@ -1,23 +1,9 @@
+## Downstream dependencies
+There is currently one dependency, `mlr3proba`, which I am the maintainer of. This is expected to break after update and will be patched immediately after `distr6` is on CRAN.
+
 ## Test environments
-On travis:
-* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R 3.5.3 - OK
-* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R 3.6.2 - OK
-* x86_64-pc-linux-gnu (64-bit); Ubuntu 14.04.5 LTS;  R devel (2020-01-11 r77654) - OK
-* x86_64-apple-darwin15.6.0 (64-bit); macOS High Sierra 10.13.3; R 3.5.3 - OK
-* x86_64-apple-darwin15.6.0 (64-bit); macOS High Sierra 10.13.3; R 3.6.2 - OK
-
-Local:
- * x86_64-w64-apple-darwin15.6.0 (64-bit); macOS Mojave 10.14.4; R 3.6.1 - OK
-
-check_win:
-  * x86_64-w64_mingw32 (64-bit); R devel (2020-01-03 r77630) - OK
-  * x86_64-w64_mingw32 (64-bit); R 3.5.3 - NOTE (DOI, see below)
-  * x86_64-w64_mingw32 (64-bit); R 3.6.2 - OK
-
-R-hub:
- * Fedora Linux, R-devel, clang, gfortran - NOTE (spelling, see below)
- * Ubuntu Linux 16.04 LTS, R-release, GCC - OK
- * Windows Server 2008 R2 SP1, R-devel, 32/64 bit - OK
+* Fedora Linux, R-devel, clang, gfortran - NOTE (DOI)
+* Ubuntu Linux 16.04 LTS, R-release, GCC - NOTE (DOI)
 
 ## R CMD check results
 There were no WARNINGs or ERRORs.
