@@ -40,6 +40,8 @@
 #' @return Returns an R6 object of class VectorDistribution.
 #'
 #' @examples
+#' # not run to save time
+#' \dontrun{
 #' vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
 #'                            size = 10), Normal$new(mean = 15)))
 #' vecDist$pdf(x1 = 2, x2 =3)
@@ -78,6 +80,7 @@
 #' vecdist = VectorDistribution$new(distribution = "Distribution", params = params,
 #'                                    shared_params = shared_params)
 #' vecdist$pdf(1)
+#' }
 #'
 #' @export
 NULL

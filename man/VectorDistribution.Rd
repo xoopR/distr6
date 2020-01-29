@@ -107,6 +107,8 @@ shared between distributions only once (instead of repeated in a list).
 }
 
 \examples{
+# not run to save time
+\dontrun{
 vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5,
                            size = 10), Normal$new(mean = 15)))
 vecDist$pdf(x1 = 2, x2 =3)
@@ -145,6 +147,7 @@ params = list(list(pdf = function(x) return(1)), list(pdf = function(x) return(2
 vecdist = VectorDistribution$new(distribution = "Distribution", params = params,
                                    shared_params = shared_params)
 vecdist$pdf(1)
+}
 
 }
 \seealso{
