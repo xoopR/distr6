@@ -72,12 +72,12 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   if(any(is.na(fun)))
     stop("Function unrecognised, should be one of: ", paste0(plotFuns,collapse=","))
 
-  if("cdf" %in% fun & !x$isCdf){
+  if(any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & !x$isCdf){
     message("This distribution does not have a cdf expression. Use the FunctionImputation decorator to impute a numerical cdf.")
     fun = fun[!(fun %in% c("cdf", "survival", "hazard","cumhazard"))]
   }
 
-  if("pdf" %in% fun & !x$isPdf){
+  if(any(c("pdf", "hazard") %in% fun) & !x$isPdf){
     message("This distribution does not have a pdf expression. Use the FunctionImputation decorator to impute a numerical pdf.")
     fun = fun[!(fun %in% c("pdf", "hazard"))]
   }
@@ -114,10 +114,10 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
       plotStructure <- stats::aggregate(cdf ~ points, plotStructure, max)
   }
 
-  if ("cdf" %in% fun & !("cdf" %in% colnames(plotStructure))) {
+  if (any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & !("cdf" %in% colnames(plotStructure))) {
     plotStructure$cdf <- x$cdf(plotStructure$points)
   }
-  if ("pdf" %in% fun) {
+  if (any(c("pdf", "hazard") %in% fun) %in% fun) {
     plotStructure$pdf <- x$pdf(plotStructure$points)
   }
 
