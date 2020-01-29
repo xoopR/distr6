@@ -117,7 +117,7 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   if (any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & !("cdf" %in% colnames(plotStructure))) {
     plotStructure$cdf <- x$cdf(plotStructure$points)
   }
-  if (any(c("pdf", "hazard") %in% fun) %in% fun) {
+  if (any(c("pdf", "hazard") %in% fun)) {
     plotStructure$pdf <- x$pdf(plotStructure$points)
   }
 
