@@ -121,6 +121,6 @@ And that's all there is to it! These tutorials have covered everything from the 
 
 The [Extension Guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html) explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The [project wiki](https://github.com/alan-turing-institute/distr6/wiki) includes design documentation and contributor guidelines, please read these before making a pull request.
 
-We hope you find distr6 intuitive to use but if you have any questions or want to report a bug, please don't hesitate to [raise am issue](https://github.com/alan-turing-institute/distr6/issues).
+We hope you find distr6 intuitive to use but if you have any questions or want to report a bug, please don't hesitate to [raise an issue](https://github.com/alan-turing-institute/distr6/issues).
 
 Good luck and happy coding!
