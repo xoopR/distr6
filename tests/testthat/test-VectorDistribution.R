@@ -112,6 +112,11 @@ test_that("decorators",{
                              decorators = "ExoticStatistics")
   expect_equal(a$decorators(), "ExoticStatistics")
   expect_equal(a[1]$decorators(), "ExoticStatistics")
+  expect_silent(a[1])
+  expect_silent(a[1])
+  expect_equal(as.numeric(a$survival(1)), c(1 - Binomial$new(prob = 0.1, size = 2)$cdf(1),
+                                            1 - Binomial$new(prob = 0.6, size = 4)$cdf(1),
+                                            1 - Binomial$new(prob = 0.2, size = 6)$cdf(1)))
 })
 
 test_that("shared params",{

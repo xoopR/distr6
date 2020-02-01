@@ -1,3 +1,8 @@
+# distr6 1.3.4
+
+- Bug fix in `VectorDistribution` that was causing decorators not to be added properly
+- Bug fix in `VectorDistribution` that was causing an error when extracting decorated wrapped distributions
+
 # distr6 1.3.3
 
 - `as.data.table` has been moved from a `ParameterSet` method to an S3 dispatch. Fixes an important bug of overloading `as.data.table` but may affect backwards compatibility.

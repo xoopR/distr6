@@ -91,8 +91,9 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
                                                       shared_params = NULL, name = NULL, short_name = NULL, description = NULL,
                                                       decorators = NULL){
 
-  if(!is.null(decorators))
-    private$.decorators <- unlist(decorators)
+  if(!is.null(decorators)) {
+    suppressMessages(decorate(self, decorators))
+  }
 
   if(is.null(distlist)){
     if(is.null(distribution) | (is.null(params) & is.null(shared_params)))
@@ -372,9 +373,11 @@ Extract.VectorDistribution <- function(vecdist, i){
   } else {
     if(length(i) == 1){
       dec = vecdist$decorators()
-      if(!is.null(dec))
-        return(suppressMessages(decorate(vecdist$modelTable()[i, 1][[1]][[1]], dec)))
-      else
+      if(!is.null(dec)) {
+        dist = vecdist$modelTable()[i, 1][[1]][[1]]
+        suppressMessages(decorate(dist, dec))
+        return(dist)
+      } else
         return(vecdist$modelTable()[i, 1][[1]][[1]])
     } else
       return(VectorDistribution$new(distlist = unlist(vecdist$modelTable()[i, 1])))
