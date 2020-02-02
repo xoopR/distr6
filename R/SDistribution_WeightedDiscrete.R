@@ -42,7 +42,6 @@ WeightedDiscrete <- R6::R6Class("WeightedDiscrete", inherit = SDistribution, loc
 WeightedDiscrete$set("public","name","WeightedDiscrete")
 WeightedDiscrete$set("public","short_name","WeightDisc")
 WeightedDiscrete$set("public","description","WeightedDiscrete Probability Distribution.")
-WeightedDiscrete$set("public","packages","distr6")
 
 WeightedDiscrete$set("public","mode",function(which = "all"){
   if(which == "all")
@@ -166,4 +165,4 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
                               data.table::data.table(ShortName = "WeightDisc", ClassName = "WeightedDiscrete",
                                                      Type = "\u211D", ValueSupport = "discrete",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))

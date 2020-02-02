@@ -46,7 +46,6 @@ DiscreteUniform <- R6::R6Class("DiscreteUniform", inherit = SDistribution, lock_
 DiscreteUniform$set("public","name","DiscreteUniform")
 DiscreteUniform$set("public","short_name","DUnif")
 DiscreteUniform$set("public","description","DiscreteUniform Probability Distribution.")
-DiscreteUniform$set("public","packages","distr6")
 
 DiscreteUniform$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
@@ -130,5 +129,5 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
                               data.table::data.table(ShortName = "DUnif", ClassName = "DiscreteUniform",
                                                      Type = "\u2124", ValueSupport = "discrete",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))
 

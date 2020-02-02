@@ -46,7 +46,6 @@ Categorical <- R6::R6Class("Categorical", inherit = SDistribution, lock_objects 
 Categorical$set("public","name","Categorical")
 Categorical$set("public","short_name","Cat")
 Categorical$set("public","description","Categorical Probability Distribution.")
-Categorical$set("public","packages","distr6")
 
 Categorical$set("public","mode",function(which = "all"){
   if(which == "all")
@@ -136,4 +135,4 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
                               data.table::data.table(ShortName = "Cat", ClassName = "Categorical",
                                                      Type = "\u2102", ValueSupport = "discrete",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))

@@ -51,7 +51,6 @@ Wald <- R6::R6Class("Wald", inherit = SDistribution, lock_objects = F)
 Wald$set("public","name","Wald")
 Wald$set("public","short_name","Wald")
 Wald$set("public","description","Wald Probability Distribution.")
-Wald$set("public","packages","distr6")
 
 Wald$set("public","mean",function(){
   return(self$getParameterValue("mean"))
@@ -133,4 +132,4 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
                               data.table::data.table(ShortName = "Wald", ClassName = "Wald",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))

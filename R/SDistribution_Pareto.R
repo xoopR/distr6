@@ -147,5 +147,5 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
                               data.table::data.table(ShortName = "Pare", ClassName = "Pareto",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))
 

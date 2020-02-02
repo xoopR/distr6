@@ -120,4 +120,4 @@ Gumbel$set("public","initialize",function(location = 0, scale = 1,
                               data.table::data.table(ShortName = "Gumb", ClassName = "Gumbel",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))
