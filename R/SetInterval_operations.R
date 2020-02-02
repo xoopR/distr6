@@ -1,4 +1,4 @@
-#' @include RSmisc_helpers.R
+#' @include helpers.R
 
 #' @title Symbolic Operations for SetInterval
 #'

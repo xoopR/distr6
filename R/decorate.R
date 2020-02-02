@@ -66,6 +66,8 @@ decorate <- function(distribution, decorators){
 
   else{
     lapply(decorators, function(a_decorator){
+      assert_pkgload(a_decorator$public_fields$packages)
+
       if(a_decorator$classname == "FunctionImputation"){
         if(!testUnivariate(distribution))
           stop("FunctionImputation is currently only supported for univariate distributions.")

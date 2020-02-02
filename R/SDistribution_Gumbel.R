@@ -47,7 +47,7 @@ Gumbel <- R6::R6Class("Gumbel", inherit = SDistribution, lock_objects = F)
 Gumbel$set("public","name","Gumbel")
 Gumbel$set("public","short_name","Gumb")
 Gumbel$set("public","description","Gumbel Probability Distribution.")
-Gumbel$set("public","package","distr6")
+Gumbel$set("public","package",c("distr6","gumbel"))
 
 Gumbel$set("public","mean",function(){
   return(self$getParameterValue("location") - digamma(1)*self$getParameterValue("scale"))

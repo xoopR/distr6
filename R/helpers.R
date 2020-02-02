@@ -118,3 +118,10 @@ toproper <- function(str, split = " ", fixed = TRUE){
   return(unlist(str))
 }
 
+assert_pkgload <- function(pkgs) {
+  check = sapply(pkgs, requireNamespace, quietly = TRUE)
+  if(!all(check)) {
+    stop(sprintf("The following packages could not be loaded, please install: %s",
+                 paste0("{", paste0(pkgs[!check], collapse = ","), "}")))
+  }
+}

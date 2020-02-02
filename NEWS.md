@@ -2,6 +2,7 @@
 
 - Bug fix in `VectorDistribution` that was causing decorators not to be added properly
 - Bug fix in `VectorDistribution` that was causing an error when extracting decorated wrapped distributions
+- Moved package `pracma` to suggests
 
 # distr6 1.3.3
 
