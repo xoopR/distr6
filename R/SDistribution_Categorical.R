@@ -46,7 +46,7 @@ Categorical <- R6::R6Class("Categorical", inherit = SDistribution, lock_objects 
 Categorical$set("public","name","Categorical")
 Categorical$set("public","short_name","Cat")
 Categorical$set("public","description","Categorical Probability Distribution.")
-Categorical$set("public","package","distr6")
+Categorical$set("public","packages","distr6")
 
 Categorical$set("public","mode",function(which = "all"){
   if(which == "all")

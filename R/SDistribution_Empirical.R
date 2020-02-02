@@ -41,7 +41,7 @@ Empirical <- R6::R6Class("Empirical", inherit = SDistribution, lock_objects = F)
 Empirical$set("public","name","Empirical")
 Empirical$set("public","short_name","Emp")
 Empirical$set("public","description","Empirical Probability Distribution.")
-Empirical$set("public","package","distr6")
+Empirical$set("public","packages","distr6")
 
 Empirical$set("public","mode",function(which = "all"){
   if(which == "all")

@@ -56,7 +56,7 @@ Dirichlet <- R6::R6Class("Dirichlet", inherit = SDistribution, lock_objects = F)
 Dirichlet$set("public","name","Dirichlet")
 Dirichlet$set("public","short_name","Diri")
 Dirichlet$set("public","description","Multivariate Normal Probability Distribution.")
-Dirichlet$set("public","package","distr6")
+Dirichlet$set("public","packages","distr6")
 
 Dirichlet$set("public","mean",function(){
   return(self$getParameterValue("params")/sum(self$getParameterValue("params")))

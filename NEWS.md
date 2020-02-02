@@ -5,6 +5,7 @@
 - Moved package `pracma` to suggests
 - Added checks to assert all packages are installed when required by distributions
 - Deprecated `package` field in distributions, now called `packages`
+- `packages` lists all packages required to be installed for a distribution, if `NULL` only distr6 required
 
 # distr6 1.3.3
 

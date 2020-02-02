@@ -60,7 +60,7 @@ MultivariateNormal <- R6::R6Class("MultivariateNormal", inherit = SDistribution,
 MultivariateNormal$set("public","name","MultivariateNormal")
 MultivariateNormal$set("public","short_name","MultiNorm")
 MultivariateNormal$set("public","description","Multivariate Normal Probability Distribution.")
-MultivariateNormal$set("public","package","distr6")
+MultivariateNormal$set("public","packages","distr6")
 
 MultivariateNormal$set("public","mean",function(){
   return(self$getParameterValue("mean"))

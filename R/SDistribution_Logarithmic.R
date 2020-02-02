@@ -47,7 +47,7 @@ Logarithmic <- R6::R6Class("Logarithmic", inherit = SDistribution, lock_objects 
 Logarithmic$set("public","name","Logarithmic")
 Logarithmic$set("public","short_name","Log")
 Logarithmic$set("public","description","Logarithmic Probability Distribution.")
-Logarithmic$set("public","package","extraDistr")
+Logarithmic$set("public","packages","extraDistr")
 
 Logarithmic$set("public","mean",function(){
   theta = self$getParameterValue("theta")

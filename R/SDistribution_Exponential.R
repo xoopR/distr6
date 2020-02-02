@@ -49,7 +49,7 @@ Exponential <- R6::R6Class("Exponential", inherit = SDistribution, lock_objects 
 Exponential$set("public","name","Exponential")
 Exponential$set("public","short_name","Exp")
 Exponential$set("public","description","Exponential Probability Distribution.")
-Exponential$set("public","package","stats")
+Exponential$set("public","packages","stats")
 
 Exponential$set("public","mean",function(){
   self$getParameterValue("scale")

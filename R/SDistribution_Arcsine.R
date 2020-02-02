@@ -48,7 +48,7 @@ Arcsine <- R6::R6Class("Arcsine", inherit = SDistribution, lock_objects = F)
 Arcsine$set("public","name","Arcsine")
 Arcsine$set("public","short_name","Arc")
 Arcsine$set("public","description","Arcsine Probability Distribution.")
-Arcsine$set("public","package","distr6")
+Arcsine$set("public","packages","distr6")
 
 Arcsine$set("public","mean",function(){
   return((self$getParameterValue("upper") + self$getParameterValue("lower"))/2)

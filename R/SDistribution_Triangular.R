@@ -56,7 +56,7 @@ NULL
 Triangular <- R6::R6Class("Triangular", inherit = SDistribution, lock_objects = F)
 Triangular$set("public","name","Triangular")
 Triangular$set("public","short_name","Tri")
-Triangular$set("public","package","distr6")
+Triangular$set("public","packages","distr6")
 Triangular$set("private",".type","symmetric")
 
 Triangular$set("public","mean",function(){

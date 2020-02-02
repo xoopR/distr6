@@ -51,7 +51,7 @@ Multinomial <- R6::R6Class("Multinomial", inherit = SDistribution, lock_objects 
 Multinomial$set("public","name","Multinomial")
 Multinomial$set("public","short_name","Multinom")
 Multinomial$set("public","description","Multinomial Probability Distribution.")
-Multinomial$set("public","package","stats")
+Multinomial$set("public","packages","stats")
 
 Multinomial$set("public","mean",function(){
   return(self$getParameterValue("size") * self$getParameterValue("probs"))

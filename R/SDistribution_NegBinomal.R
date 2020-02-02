@@ -64,7 +64,7 @@ NegativeBinomial <- R6::R6Class("NegativeBinomial", inherit = SDistribution, loc
 NegativeBinomial$set("public", "name", "NegativeBinomial")
 NegativeBinomial$set("public", "short_name", "NBinom")
 NegativeBinomial$set("private",".form",NULL)
-NegativeBinomial$set("public","package","distr6")
+NegativeBinomial$set("public","packages","distr6")
 
 NegativeBinomial$set("public", "mean", function(){
   return(self$getParameterValue("mean"))

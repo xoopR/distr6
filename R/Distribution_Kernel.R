@@ -81,11 +81,12 @@ Kernel$set("public","initialize",function(...){
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels() to see the kernels currently implemented in distr6, or Distribution$new() to construct a custom Kernel."))
   }
 
-  assert_pkgload(self$package)
+  assert_pkgload(self$packages)
 
   super$initialize(...)
 })
-Kernel$set("public","package","distr6")
+Kernel$set("public","package","This is now deprecated. Use $packages instead.")
+Kernel$set("public","packages",NULL)
 Kernel$set("private",".type","symmetric")
 Kernel$set("public","traits",function(){
   return(list(type = Reals$new(),

@@ -54,7 +54,7 @@ Normal <- R6::R6Class("Normal", inherit = SDistribution, lock_objects = F)
 Normal$set("public","name","Normal")
 Normal$set("public","short_name","Norm")
 Normal$set("public","description","Normal Probability Distribution.")
-Normal$set("public","package","stats")
+Normal$set("public","packages","stats")
 
 Normal$set("public","mean",function(){
   return(self$getParameterValue("mean"))

@@ -99,7 +99,7 @@ SDistribution$set("public","initialize",function(...){
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listDistributions()
     to see the probability distributions currently implemented in distr6."))
 
-  assert_pkgload(self$package)
+  assert_pkgload(self$packages)
 
   super$initialize(...)
 })
@@ -111,7 +111,8 @@ SDistribution$set("public","setParameterValue",function(..., lst = NULL, error =
   super$setParameterValue(lst = lst, error = error)
   invisible(self)
 })
-SDistribution$set("public","package",NULL)
+SDistribution$set("public","package","This is now deprecated. Use $packages instead.")
+SDistribution$set("public","packages",NULL)
 # SDistribution$set("public","pgf",function(...){
 #   return(NaN)
 # })

@@ -50,7 +50,7 @@ Laplace <- R6::R6Class("Laplace", inherit = SDistribution, lock_objects = F)
 Laplace$set("public","name","Laplace")
 Laplace$set("public","short_name","Lap")
 Laplace$set("public","description","Laplace Probability Distribution.")
-Laplace$set("public","package","distr6")
+Laplace$set("public","packages","distr6")
 
 Laplace$set("public","mean",function(){
   self$getParameterValue("mean")

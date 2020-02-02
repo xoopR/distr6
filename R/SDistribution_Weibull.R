@@ -52,7 +52,7 @@ Weibull <- R6::R6Class("Weibull", inherit = SDistribution, lock_objects = F)
 Weibull$set("public","name","Weibull")
 Weibull$set("public","short_name","Weibull")
 Weibull$set("public","description","Weibull Probability Distribution.")
-Weibull$set("public","package","stats")
+Weibull$set("public","packages","stats")
 
 Weibull$set("public","mean",function(){
   return(self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape")))

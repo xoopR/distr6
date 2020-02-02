@@ -45,7 +45,7 @@ Rayleigh <- R6::R6Class("Rayleigh", inherit = SDistribution, lock_objects = F)
 Rayleigh$set("public","name","Rayleigh")
 Rayleigh$set("public","short_name","Rayl")
 Rayleigh$set("public","description","Rayleigh Probability Distribution.")
-Rayleigh$set("public","package","distr6")
+Rayleigh$set("public","packages","distr6")
 
 Rayleigh$set("public","mean",function(){
   return(self$getParameterValue("mode")*sqrt(pi/2))

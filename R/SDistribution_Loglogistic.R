@@ -50,7 +50,7 @@ Loglogistic <- R6::R6Class("Loglogistic", inherit = SDistribution, lock_objects 
 Loglogistic$set("public","name","Loglogistic")
 Loglogistic$set("public","short_name","LLogis")
 Loglogistic$set("public","description","Log-Logistic Probability Distribution.")
-Loglogistic$set("public","package","distr6")
+Loglogistic$set("public","packages","distr6")
 
 Loglogistic$set("public","mean",function(){
   return(self$getParameterValue("location") +

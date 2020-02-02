@@ -45,7 +45,7 @@ Beta <- R6::R6Class("Beta", inherit = SDistribution, lock_objects = F)
 Beta$set("public","name","Beta")
 Beta$set("public","short_name","Beta")
 Beta$set("public","description","Beta Probability Distribution.")
-Beta$set("public","package","stats")
+Beta$set("public","packages","stats")
 
 
 Beta$set("public","mean",function(){
