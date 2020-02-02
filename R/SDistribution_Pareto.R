@@ -46,7 +46,7 @@ Pareto <- R6::R6Class("Pareto", inherit = SDistribution, lock_objects = F)
 Pareto$set("public","name","Pareto")
 Pareto$set("public","short_name","Pare")
 Pareto$set("public","description","Pareto Probability Distribution.")
-Pareto$set("public","packages",c("distr6","expint"))
+Pareto$set("public","packages", "expint")
 
 Pareto$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)
@@ -147,5 +147,5 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
                               data.table::data.table(ShortName = "Pare", ClassName = "Pareto",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "expint"))
 
