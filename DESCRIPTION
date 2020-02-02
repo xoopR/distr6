@@ -68,7 +68,6 @@ Imports:
   R6,
   R62S3 (>= 1.4.0),
   stats,
-  utils,
   data.table
 Suggests:
   expint,

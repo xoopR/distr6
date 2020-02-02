@@ -48,9 +48,10 @@ decorate <- function(distribution, decorators){
 
   decorators = lapply(decorators, function(x){
     if (checkmate::testCharacter(x))
-      x = utils::getFromNamespace(x, "distr6")
-    return(x)
-    })
+      return(get(x))
+    else
+      return(x)
+  })
 
   dist_decors = distribution$decorators()
   decors_names = lapply(decorators, function(x) x$classname)
