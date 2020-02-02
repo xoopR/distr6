@@ -56,7 +56,7 @@ NULL
 #-------------------------------------------------------------
 # MultivariateNormal Distribution Definition
 #-------------------------------------------------------------
-MultivariateNormal <- R6::R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F)
+MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F)
 MultivariateNormal$set("public","name","MultivariateNormal")
 MultivariateNormal$set("public","short_name","MultiNorm")
 MultivariateNormal$set("public","description","Multivariate Normal Probability Distribution.")

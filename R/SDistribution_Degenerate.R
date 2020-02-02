@@ -42,7 +42,7 @@ NULL
 #-------------------------------------------------------------
 # Degenerate Distribution Definition
 #-------------------------------------------------------------
-Degenerate <- R6::R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
+Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
 Degenerate$set("public","name","Degenerate")
 Degenerate$set("public","short_name","Degen")
 Degenerate$set("public","description","Degenerate Probability Distribution.")

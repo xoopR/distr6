@@ -31,7 +31,7 @@ NULL
 #-------------------------------------------------------------
 # Triweight Kernel Definition
 #-------------------------------------------------------------
-Triweight <- R6::R6Class("Triweight", inherit = Kernel, lock_objects = F)
+Triweight <- R6Class("Triweight", inherit = Kernel, lock_objects = F)
 Triweight$set("public","name","Triweight")
 Triweight$set("public","short_name","Triw")
 Triweight$set("public","description","Triweight Kernel")

@@ -84,7 +84,7 @@
 #'
 #' @export
 NULL
-VectorDistribution <- R6::R6Class("VectorDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 .distr6$wrappers <- append(.distr6$wrappers, list(VectorDistribution = VectorDistribution))
 
 VectorDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,

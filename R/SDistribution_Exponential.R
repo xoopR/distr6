@@ -45,7 +45,7 @@ NULL
 #-------------------------------------------------------------
 # Exponential Distribution Definition
 #-------------------------------------------------------------
-Exponential <- R6::R6Class("Exponential", inherit = SDistribution, lock_objects = F)
+Exponential <- R6Class("Exponential", inherit = SDistribution, lock_objects = F)
 Exponential$set("public","name","Exponential")
 Exponential$set("public","short_name","Exp")
 Exponential$set("public","description","Exponential Probability Distribution.")

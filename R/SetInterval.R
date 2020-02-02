@@ -51,7 +51,7 @@ NULL
 #-------------------------------------------------------------
 # SetInterval Definition
 #-------------------------------------------------------------
-SetInterval <- R6::R6Class("SetInterval")
+SetInterval <- R6Class("SetInterval")
 SetInterval$set("public","initialize",function(symbol, lower, upper, type, class = "numeric", dimension){
   private$.lower = lower
   private$.upper = upper

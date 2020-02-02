@@ -1,4 +1,5 @@
 #' @importFrom R62S3 R62Fun
+#' @importFrom R6 R6Class
 R62Fun(Distribution, assignEnvir = topenv(), scope = c("public", "active"))
 R62Fun(SDistribution, assignEnvir = topenv(), scope = c("public", "active"))
 R62Fun(Kernel, assignEnvir = topenv(), scope = c("public", "active"))

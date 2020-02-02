@@ -93,7 +93,7 @@ NULL
 #-------------------------------------------------------------
 # SDistribution Definition
 #-------------------------------------------------------------
-SDistribution <- R6::R6Class("SDistribution", inherit = Distribution)
+SDistribution <- R6Class("SDistribution", inherit = Distribution)
 SDistribution$set("public","initialize",function(...){
   if(getR6Class(self) == "SDistribution")
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listDistributions()

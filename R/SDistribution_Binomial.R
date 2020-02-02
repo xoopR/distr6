@@ -47,7 +47,7 @@ NULL
 #-------------------------------------------------------------
 # Binomial Distribution Definition
 #-------------------------------------------------------------
-Binomial <- R6::R6Class("Binomial", inherit = SDistribution, lock_objects = F)
+Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F)
 Binomial$set("public","name","Binomial")
 Binomial$set("public","short_name","Binom")
 Binomial$set("public","description","Binomial Probability Distribution.")

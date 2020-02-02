@@ -49,7 +49,7 @@ NULL
 #-------------------------------------------------------------
 # Hypergeometric Distribution Definition
 #-------------------------------------------------------------
-Hypergeometric <- R6::R6Class("Hypergeometric", inherit = SDistribution, lock_objects = FALSE)
+Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_objects = FALSE)
 Hypergeometric$set("public", "name", "Hypergeometric")
 Hypergeometric$set("public", "short_name", "Hyper")
 Hypergeometric$set("public", "description", "Hypergeometric Probability Distribution")

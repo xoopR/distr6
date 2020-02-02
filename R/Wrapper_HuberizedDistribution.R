@@ -45,7 +45,7 @@
 #'
 #' @export
 NULL
-HuberizedDistribution <- R6::R6Class("HuberizedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 .distr6$wrappers <- append(.distr6$wrappers, list(HuberizedDistribution = HuberizedDistribution))
 
 HuberizedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){

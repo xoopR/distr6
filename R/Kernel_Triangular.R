@@ -28,7 +28,7 @@ NULL
 #-------------------------------------------------------------
 # Uniform Kernel Definition
 #-------------------------------------------------------------
-TriangularKernel <- R6::R6Class("TriangularKernel", inherit = Kernel, lock_objects = F)
+TriangularKernel <- R6Class("TriangularKernel", inherit = Kernel, lock_objects = F)
 TriangularKernel$set("public","name","TriangularKernel")
 TriangularKernel$set("public","short_name","Tri")
 TriangularKernel$set("public","description","Triangular Kernel")

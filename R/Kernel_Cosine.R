@@ -28,7 +28,7 @@ NULL
 #-------------------------------------------------------------
 # Cosine Kernel Definition
 #-------------------------------------------------------------
-Cosine <- R6::R6Class("Cosine", inherit = Kernel, lock_objects = F)
+Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F)
 Cosine$set("public","name","Cosine")
 Cosine$set("public","short_name","Cos")
 Cosine$set("public","description","Cosine Kernel")

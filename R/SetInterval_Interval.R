@@ -56,7 +56,7 @@ NULL
 # Interval Definition
 #-------------------------------------------------------------
 #' @export
-Interval <- R6::R6Class("Interval", inherit = SetInterval)
+Interval <- R6Class("Interval", inherit = SetInterval)
 Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]", class = "numeric", dim = 1){
   types = c("()","(]","[]","[)")
   stopifnot(type %in% types)

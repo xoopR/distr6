@@ -28,7 +28,7 @@ NULL
 #-------------------------------------------------------------
 # LogisticKernel Kernel Definition
 #-------------------------------------------------------------
-LogisticKernel <- R6::R6Class("LogisticKernel", inherit = Kernel, lock_objects = F)
+LogisticKernel <- R6Class("LogisticKernel", inherit = Kernel, lock_objects = F)
 LogisticKernel$set("public","name","LogisticKernel")
 LogisticKernel$set("public","short_name","Logis")
 LogisticKernel$set("public","description","Logistic Kernel")

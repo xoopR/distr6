@@ -31,7 +31,7 @@ NULL
 #-------------------------------------------------------------
 # Silverman Kernel Definition
 #-------------------------------------------------------------
-Silverman <- R6::R6Class("Silverman", inherit = Kernel, lock_objects = F)
+Silverman <- R6Class("Silverman", inherit = Kernel, lock_objects = F)
 Silverman$set("public","name","Silverman")
 Silverman$set("public","short_name","Silv")
 Silverman$set("public","description","Silverman Kernel")

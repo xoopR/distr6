@@ -44,7 +44,7 @@ NULL
 #-------------------------------------------------------------
 # ChiSquaredNoncentral Distribution Definition
 #-------------------------------------------------------------
-ChiSquaredNoncentral <- R6::R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = FALSE)
+ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = FALSE)
 ChiSquaredNoncentral$set("public", "name", "ChiSquaredNoncentral")
 ChiSquaredNoncentral$set("public", "short_name", "ChiSqNC")
 ChiSquaredNoncentral$set("public", "description", "Noncentral ChiSquared Probability Distribution")

@@ -74,7 +74,7 @@
 #'
 #'@export
 NULL
-DistributionWrapper <- R6::R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
+DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE)
 DistributionWrapper$set("public","initialize",function(distlist = NULL,...){
   if(getR6Class(self) == "DistributionWrapper")
     stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))

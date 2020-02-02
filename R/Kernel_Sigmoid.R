@@ -31,7 +31,7 @@ NULL
 #-------------------------------------------------------------
 # Sigmoid Kernel Definition
 #-------------------------------------------------------------
-Sigmoid <- R6::R6Class("Sigmoid", inherit = Kernel, lock_objects = F)
+Sigmoid <- R6Class("Sigmoid", inherit = Kernel, lock_objects = F)
 Sigmoid$set("public","name","Sigmoid")
 Sigmoid$set("public","short_name","Sigm")
 Sigmoid$set("public","description","Sigmoid Kernel")

@@ -47,7 +47,7 @@ NULL
 #-------------------------------------------------------------
 # Bernoulli Distribution Definition
 #-------------------------------------------------------------
-Bernoulli <- R6::R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
+Bernoulli <- R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
 Bernoulli$set("public","name","Bernoulli")
 Bernoulli$set("public","short_name","Bern")
 Bernoulli$set("public","description","Bernoulli Probability Distribution.")

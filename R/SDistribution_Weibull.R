@@ -48,7 +48,7 @@ NULL
 #-------------------------------------------------------------
 # Weibull Distribution Definition
 #-------------------------------------------------------------
-Weibull <- R6::R6Class("Weibull", inherit = SDistribution, lock_objects = F)
+Weibull <- R6Class("Weibull", inherit = SDistribution, lock_objects = F)
 Weibull$set("public","name","Weibull")
 Weibull$set("public","short_name","Weibull")
 Weibull$set("public","description","Weibull Probability Distribution.")

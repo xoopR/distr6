@@ -31,7 +31,7 @@ NULL
 #-------------------------------------------------------------
 # Uniform Kernel Definition
 #-------------------------------------------------------------
-Epanechnikov <- R6::R6Class("Epanechnikov", inherit = Kernel, lock_objects = F)
+Epanechnikov <- R6Class("Epanechnikov", inherit = Kernel, lock_objects = F)
 Epanechnikov$set("public","name","Epanechnikov")
 Epanechnikov$set("public","short_name","Epan")
 Epanechnikov$set("public","description","Epanechnikov Kernel")

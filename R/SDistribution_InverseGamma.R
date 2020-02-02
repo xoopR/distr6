@@ -45,7 +45,7 @@ NULL
 #-------------------------------------------------------------
 # InverseGamma Distribution Definition
 #-------------------------------------------------------------
-InverseGamma <- R6::R6Class("InverseGamma", inherit = SDistribution, lock_objects = F)
+InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = F)
 InverseGamma$set("public","name","InverseGamma")
 InverseGamma$set("public","short_name","invgam")
 InverseGamma$set("public","description","Inverse Gamma Probability Distribution.")
