@@ -43,7 +43,7 @@ NULL
 #-------------------------------------------------------------
 # Logistic Distribution Definition
 #-------------------------------------------------------------
-Logistic <- R6::R6Class("Logistic", inherit = SDistribution, lock_objects = F)
+Logistic <- R6Class("Logistic", inherit = SDistribution, lock_objects = F)
 Logistic$set("public","name","Logistic")
 Logistic$set("public","short_name","Logis")
 Logistic$set("public","description","Logistic Probability Distribution.")

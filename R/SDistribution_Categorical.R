@@ -42,7 +42,7 @@ NULL
 #-------------------------------------------------------------
 # Categorical Distribution Definition
 #-------------------------------------------------------------
-Categorical <- R6::R6Class("Categorical", inherit = SDistribution, lock_objects = F)
+Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F)
 Categorical$set("public","name","Categorical")
 Categorical$set("public","short_name","Cat")
 Categorical$set("public","description","Categorical Probability Distribution.")

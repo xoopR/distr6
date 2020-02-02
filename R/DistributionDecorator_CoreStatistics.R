@@ -55,7 +55,7 @@
 #'
 #' @export
 NULL
-CoreStatistics <- R6::R6Class("CoreStatistics", inherit = DistributionDecorator)
+CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator)
 .distr6$decorators <- append(.distr6$decorators, list(CoreStatistics = CoreStatistics))
 #-------------------------------------------------------------
 # mgf

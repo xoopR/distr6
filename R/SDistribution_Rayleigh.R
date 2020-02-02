@@ -41,7 +41,7 @@ NULL
 #-------------------------------------------------------------
 # Rayleigh Distribution Definition
 #-------------------------------------------------------------
-Rayleigh <- R6::R6Class("Rayleigh", inherit = SDistribution, lock_objects = F)
+Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F)
 Rayleigh$set("public","name","Rayleigh")
 Rayleigh$set("public","short_name","Rayl")
 Rayleigh$set("public","description","Rayleigh Probability Distribution.")

@@ -134,7 +134,7 @@ NULL
 #-------------------------------------------------------------
 # Distribution Definition
 #-------------------------------------------------------------
-Distribution <- R6::R6Class("Distribution", lock_objects = FALSE)
+Distribution <- R6Class("Distribution", lock_objects = FALSE)
 
 
 #-------------------------------------------------------------

@@ -57,7 +57,7 @@ NULL
 #-------------------------------------------------------------
 # Geometric Distribution Definition
 #-------------------------------------------------------------
-Geometric <-  R6::R6Class("Geometric", inherit = SDistribution, lock_objects = F)
+Geometric <-  R6Class("Geometric", inherit = SDistribution, lock_objects = F)
 
 Geometric$set("private",".trials",NULL)
 

@@ -42,7 +42,7 @@ NULL
 #-------------------------------------------------------------
 # Pareto Distribution Definition
 #-------------------------------------------------------------
-Pareto <- R6::R6Class("Pareto", inherit = SDistribution, lock_objects = F)
+Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F)
 Pareto$set("public","name","Pareto")
 Pareto$set("public","short_name","Pare")
 Pareto$set("public","description","Pareto Probability Distribution.")

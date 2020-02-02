@@ -42,7 +42,7 @@ NULL
 #-------------------------------------------------------------
 # Poisson Distribution Definition
 #-------------------------------------------------------------
-Poisson <- R6::R6Class("Poisson", inherit = SDistribution, lock_objects = F)
+Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F)
 Poisson$set("public","name","Poisson")
 Poisson$set("public","short_name","Pois")
 Poisson$set("public","description","Poisson Probability Distribution.")

@@ -39,7 +39,7 @@ NULL
 #-------------------------------------------------------------
 # Gompertz Distribution Definition
 #-------------------------------------------------------------
-Gompertz <- R6::R6Class("Gompertz", inherit = SDistribution, lock_objects = F)
+Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F)
 Gompertz$set("public","name","Gompertz")
 Gompertz$set("public","short_name","Gomp")
 Gompertz$set("public","description","Gompertz Probability Distribution.")

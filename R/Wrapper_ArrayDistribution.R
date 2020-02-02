@@ -52,7 +52,7 @@ NULL
 #'
 #' @export
 NULL
-ArrayDistribution <- R6::R6Class("ArrayDistribution", inherit = ProductDistribution)
+ArrayDistribution <- R6Class("ArrayDistribution", inherit = ProductDistribution)
 ArrayDistribution$set("public","initialize",function(...){
   .Deprecated("ProductDistribution", "distr6", "The ArrayDistribution wrapper is now deprecated and has
 been merged with the ProductDistribution wrapper.")

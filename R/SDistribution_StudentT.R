@@ -42,7 +42,7 @@ NULL
 #-------------------------------------------------------------
 # Student's t Distribution Definition
 #-------------------------------------------------------------
-StudentT <- R6::R6Class("StudentT", inherit = SDistribution, lock_objects = F)
+StudentT <- R6Class("StudentT", inherit = SDistribution, lock_objects = F)
 StudentT$set("public","name","StudentT")
 StudentT$set("public","short_name","T")
 StudentT$set("public","description","Student's t Probability Distribution.")

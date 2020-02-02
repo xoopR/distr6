@@ -43,7 +43,7 @@ NULL
 #-------------------------------------------------------------
 # Gumbel Distribution Definition
 #-------------------------------------------------------------
-Gumbel <- R6::R6Class("Gumbel", inherit = SDistribution, lock_objects = F)
+Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F)
 Gumbel$set("public","name","Gumbel")
 Gumbel$set("public","short_name","Gumb")
 Gumbel$set("public","description","Gumbel Probability Distribution.")

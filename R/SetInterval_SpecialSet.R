@@ -19,7 +19,7 @@
 #'
 #' @export
 NULL
-SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
+SpecialSet <- R6Class("SpecialSet", inherit = Interval)
 SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
                                               upper = Inf, type = "()", ...){
   if(getR6Class(self, pos = environment()) == "SpecialSet")
@@ -55,7 +55,7 @@ SpecialSet$set("private",".class","integer")
 #'
 #' @export
 NULL
-Empty <- R6::R6Class("Empty",inherit = SpecialSet)
+Empty <- R6Class("Empty",inherit = SpecialSet)
 Empty$set("public", "initialize", function(){
   super$initialize(dim = 1, lower = NULL, upper = NULL, type = "{}")
 })
@@ -89,7 +89,7 @@ Empty$set("public", "initialize", function(){
 #'
 #' @export
 NULL
-Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
+Naturals <- R6Class("Naturals",inherit = SpecialSet)
 Naturals$set("public", "initialize", function(dim = 1, lower = 0){
   super$initialize(dim, lower = lower, type = "[)")
 })
@@ -119,7 +119,7 @@ Naturals$set("private",".class","integer")
 #'
 #' @export
 NULL
-PosNaturals <- R6::R6Class("PosNaturals",inherit = Naturals)
+PosNaturals <- R6Class("PosNaturals",inherit = Naturals)
 PosNaturals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, lower = 1)
 })
@@ -153,7 +153,7 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 #'
 #' @export
 NULL
-Integers <- R6::R6Class("Integers",inherit = SpecialSet)
+Integers <- R6Class("Integers",inherit = SpecialSet)
 Integers$set("public", "initialize", function(dim = 1,...){
   super$initialize(dim,...)
 })
@@ -187,7 +187,7 @@ Integers$set("private",".class","integer")
 #'
 #' @export
 NULL
-PosIntegers <- R6::R6Class("PosIntegers",inherit = Integers)
+PosIntegers <- R6Class("PosIntegers",inherit = Integers)
 PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, lower = 0, type = "[)")
@@ -223,7 +223,7 @@ PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @export
 NULL
-NegIntegers <- R6::R6Class("NegIntegers",inherit = Integers)
+NegIntegers <- R6Class("NegIntegers",inherit = Integers)
 NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, upper = 0, type = "(]")
@@ -261,7 +261,7 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @export
 NULL
-Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
+Rationals <- R6Class("Rationals",inherit = SpecialSet)
 Rationals$set("public", "initialize", function(dim = 1, ...){
   super$initialize(dim,...)
 })
@@ -297,7 +297,7 @@ Rationals$set("private",".class","numeric")
 #'
 #' @export
 NULL
-PosRationals <- R6::R6Class("PosRationals",inherit = Rationals)
+PosRationals <- R6Class("PosRationals",inherit = Rationals)
 PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, lower = 0, type = "[)")
@@ -335,7 +335,7 @@ PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @export
 NULL
-NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
+NegRationals <- R6Class("NegRationals",inherit = Rationals)
 NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, upper = 0, type = "(]")
@@ -372,7 +372,7 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @export
 NULL
-Reals <- R6::R6Class("Reals",inherit = SpecialSet)
+Reals <- R6Class("Reals",inherit = SpecialSet)
 Reals$set("public", "initialize", function(dim = 1, ...){
   super$initialize(dim, ...)
 })
@@ -408,7 +408,7 @@ Reals$set("private",".class","numeric")
 #'
 #' @export
 NULL
-PosReals <- R6::R6Class("PosReals",inherit = Reals)
+PosReals <- R6Class("PosReals",inherit = Reals)
 PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, lower = 0, type = "[)")
@@ -446,7 +446,7 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @export
 NULL
-NegReals <- R6::R6Class("NegReals",inherit = Reals)
+NegReals <- R6Class("NegReals",inherit = Reals)
 NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
   if(zero)
     super$initialize(dim, upper = 0, type = "(]")
@@ -479,7 +479,7 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #'
 #' @export
 NULL
-ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
+ExtendedReals <- R6Class("ExtendedReals",inherit = Reals)
 ExtendedReals$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
 })
@@ -509,7 +509,7 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 #'
 #' @export
 NULL
-Complex <- R6::R6Class("Complex",inherit = SpecialSet)
+Complex <- R6Class("Complex",inherit = SpecialSet)
 Complex$set("public", "initialize", function(dim = 1){
   super$initialize(dim, type = "[]")
 })

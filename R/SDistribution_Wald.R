@@ -47,7 +47,7 @@ NULL
 #-------------------------------------------------------------
 # Wald Distribution Definition
 #-------------------------------------------------------------
-Wald <- R6::R6Class("Wald", inherit = SDistribution, lock_objects = F)
+Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F)
 Wald$set("public","name","Wald")
 Wald$set("public","short_name","Wald")
 Wald$set("public","description","Wald Probability Distribution.")

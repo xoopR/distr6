@@ -52,7 +52,7 @@ NULL
 #-------------------------------------------------------------
 # Set Definition
 #-------------------------------------------------------------
-Set <- R6::R6Class("Set", inherit = SetInterval)
+Set <- R6Class("Set", inherit = SetInterval)
 Set$set("public","initialize",function(..., dim = 1){
   if(length(list(...)) == 0){
     private$.type <- "{}"

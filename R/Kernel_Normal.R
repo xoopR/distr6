@@ -31,7 +31,7 @@ NULL
 #-------------------------------------------------------------
 # NormalKernel Kernel Definition
 #-------------------------------------------------------------
-NormalKernel <- R6::R6Class("NormalKernel", inherit = Kernel, lock_objects = F)
+NormalKernel <- R6Class("NormalKernel", inherit = Kernel, lock_objects = F)
 NormalKernel$set("public","name","NormalKernel")
 NormalKernel$set("public","short_name","Norm")
 NormalKernel$set("public","description","Normal Kernel")

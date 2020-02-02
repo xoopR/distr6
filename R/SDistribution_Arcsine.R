@@ -44,7 +44,7 @@ NULL
 #-------------------------------------------------------------
 # Arcsine Distribution Definition
 #-------------------------------------------------------------
-Arcsine <- R6::R6Class("Arcsine", inherit = SDistribution, lock_objects = F)
+Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F)
 Arcsine$set("public","name","Arcsine")
 Arcsine$set("public","short_name","Arc")
 Arcsine$set("public","description","Arcsine Probability Distribution.")

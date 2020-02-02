@@ -42,7 +42,7 @@ NULL
 #-------------------------------------------------------------
 # F Distribution Definition
 #-------------------------------------------------------------
-FDistribution <- R6::R6Class("FDistribution", inherit = SDistribution, lock_objects = FALSE)
+FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects = FALSE)
 FDistribution$set("public", "name", "FDistribution")
 FDistribution$set("public", "short_name", "F")
 FDistribution$set("public", "description", "F Probability Distribution")

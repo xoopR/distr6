@@ -48,7 +48,7 @@
 #' @export
 NULL
 
-FunctionImputation <- R6::R6Class("FunctionImputation", inherit = DistributionDecorator)
+FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator)
 .distr6$decorators <- append(.distr6$decorators, list(FunctionImputation = FunctionImputation))
 
 

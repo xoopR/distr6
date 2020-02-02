@@ -82,7 +82,7 @@
 #' @export
 NULL
 
-ParameterSet <- R6::R6Class("ParameterSet")
+ParameterSet <- R6Class("ParameterSet")
 ParameterSet$set("private",".parameters",NULL)
 ParameterSet$set("private",".SetParameterSupport",function(lst){
   id = names(lst)

@@ -60,7 +60,7 @@ NULL
 #-------------------------------------------------------------
 # NegativeBinomial Distribution Definition
 #-------------------------------------------------------------
-NegativeBinomial <- R6::R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F)
+NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F)
 NegativeBinomial$set("public", "name", "NegativeBinomial")
 NegativeBinomial$set("public", "short_name", "NBinom")
 NegativeBinomial$set("private",".form",NULL)

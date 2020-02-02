@@ -53,7 +53,7 @@ NULL
 #-------------------------------------------------------------
 # Triangular Distribution Definition
 #-------------------------------------------------------------
-Triangular <- R6::R6Class("Triangular", inherit = SDistribution, lock_objects = F)
+Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F)
 Triangular$set("public","name","Triangular")
 Triangular$set("public","short_name","Tri")
 Triangular$set("public","package","distr6")
