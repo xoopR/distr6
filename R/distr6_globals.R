@@ -8,6 +8,6 @@
 .distr6$distributions = data.table::data.table(ShortName = "Norm", ClassName = "Normal",
                                                Type = "\u211D", ValueSupport = "continuous", VariateForm = "univariate",
                                                Package = "stats")
-.distr6$kernels = data.table::data.table(ShortName = "Norm", ClassName = "NormalKernel", Support = "\u211D")
+.distr6$kernels = data.table::data.table(ShortName = "Norm", ClassName = "NormalKernel", Support = "\u211D", Packages = "pracma")
 .distr6$decorators = list()
 .distr6$wrappers = list()

@@ -52,4 +52,4 @@ Sigmoid$set("public","initialize",function(decorators = NULL){
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D"))
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D", Packages = "-"))
