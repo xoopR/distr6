@@ -1,6 +1,6 @@
 library(testthat)
 
-context("RSmisc")
+context("helpers")
 
 test_that("assertThat",{
   expect_silent(assertThat(Binomial$new(),Binomial$new()$short_name=="Binom","Not True"))
@@ -56,4 +56,9 @@ test_that("modal",{
 test_that("toproper",{
   expect_equal(toproper("a long SenTENCe"), "A Long Sentence")
   expect_equal(toproper("DifFERent-spLIT", split = "-"), "Different-Split")
+})
+
+test_that("assert_pkgload",{
+  expect_error(assert_pkgload("dsad"),"The following")
+  expect_silent(assert_pkgload("stats"))
 })
