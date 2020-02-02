@@ -43,7 +43,6 @@ Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F)
 Gompertz$set("public","name","Gompertz")
 Gompertz$set("public","short_name","Gomp")
 Gompertz$set("public","description","Gompertz Probability Distribution.")
-Gompertz$set("public","package","distr6")
 
 Gompertz$set("private",".getRefParams", function(paramlst){
   lst = list()
@@ -88,5 +87,5 @@ Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = N
                               data.table::data.table(ShortName = "Gomp", ClassName = "Gompertz",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))
 

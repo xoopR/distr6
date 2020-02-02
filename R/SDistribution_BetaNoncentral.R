@@ -43,7 +43,7 @@ BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_object
 BetaNoncentral$set("public","name","BetaNoncentral")
 BetaNoncentral$set("public","short_name","BetaNC")
 BetaNoncentral$set("public","description","Noncentral Beta Probability Distribution.")
-BetaNoncentral$set("public","package","stats")
+BetaNoncentral$set("public","packages","stats")
 
 BetaNoncentral$set("private", ".getRefParams", function(paramlst){
   lst = list()

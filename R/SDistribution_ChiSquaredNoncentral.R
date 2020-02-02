@@ -48,7 +48,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution,
 ChiSquaredNoncentral$set("public", "name", "ChiSquaredNoncentral")
 ChiSquaredNoncentral$set("public", "short_name", "ChiSqNC")
 ChiSquaredNoncentral$set("public", "description", "Noncentral ChiSquared Probability Distribution")
-ChiSquaredNoncentral$set("public","package","stats")
+ChiSquaredNoncentral$set("public","packages","stats")
 
 ChiSquaredNoncentral$set("public", "mean", function(){
   return(self$getParameterValue("df") + self$getParameterValue("location"))

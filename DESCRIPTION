@@ -68,9 +68,7 @@ Imports:
   R6,
   R62S3 (>= 1.4.0),
   stats,
-  utils,
-  data.table,
-  pracma
+  data.table
 Suggests:
   expint,
   GoFKernel,
@@ -81,7 +79,8 @@ Suggests:
   magrittr,
   extraDistr,
   actuar,
-  remotes
+  remotes,
+  pracma
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
@@ -93,7 +92,7 @@ Roxygen: list(markdown = TRUE, r6 = FALSE)
 RoxygenNote: 7.0.2
 Collate: 
     'distr6_globals.R'
-    'RSmisc_helpers.R'
+    'helpers.R'
     'SetInterval_operations.R'
     'Distribution.R'
     'DistributionDecorator.R'

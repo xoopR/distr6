@@ -63,7 +63,7 @@ Geometric$set("private",".trials",NULL)
 
 Geometric$set("public","name","Geometric")
 Geometric$set("public","short_name","Geom")
-Geometric$set("public","package","stats")
+Geometric$set("public","packages","stats")
 
 Geometric$set("public","mean",function(){
     if(private$.trials)

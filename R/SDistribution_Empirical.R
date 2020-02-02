@@ -41,7 +41,6 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F)
 Empirical$set("public","name","Empirical")
 Empirical$set("public","short_name","Emp")
 Empirical$set("public","description","Empirical Probability Distribution.")
-Empirical$set("public","package","distr6")
 
 Empirical$set("public","mode",function(which = "all"){
   if(which == "all")
@@ -158,5 +157,5 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
                               data.table::data.table(ShortName = "Emp", ClassName = "Empirical",
                                                      Type = "\u211D", ValueSupport = "discrete",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))
 

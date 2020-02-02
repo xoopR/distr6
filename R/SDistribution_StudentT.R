@@ -46,7 +46,7 @@ StudentT <- R6Class("StudentT", inherit = SDistribution, lock_objects = F)
 StudentT$set("public","name","StudentT")
 StudentT$set("public","short_name","T")
 StudentT$set("public","description","Student's t Probability Distribution.")
-StudentT$set("public","package","stats")
+StudentT$set("public","packages","stats")
 
 StudentT$set("public", "mean", function(){
   df <- self$getParameterValue("df")

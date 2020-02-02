@@ -50,7 +50,6 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F)
 Frechet$set("public","name","Frechet")
 Frechet$set("public","short_name","Frec")
 Frechet$set("public","description","Frechet Probability Distribution.")
-Frechet$set("public","package","distr6")
 
 Frechet$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)
@@ -151,4 +150,4 @@ Frechet$set("public","initialize",function(shape = 1, scale = 1, minimum = 0,
                               data.table::data.table(ShortName = "Frec", ClassName = "Frechet",
                                                      Type = "\u211D", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))

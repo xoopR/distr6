@@ -63,4 +63,4 @@ TriangularKernel$set("public","initialize",function(decorators = NULL){
   invisible(self)
 }) # CDF, QUANTILE & VAR MISSING
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]"))
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]", Packages = "-"))

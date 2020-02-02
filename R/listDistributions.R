@@ -16,7 +16,7 @@
 #' listDistributions(filter = list(VaLuESupport = "discrete"))
 #'
 #' # Multiple filters
-#' listDistributions(filter = list(VaLuESupport = "discrete", package = "distr6"))
+#' listDistributions(filter = list(VaLuESupport = "discrete", package = "extraDistr"))
 #'
 #' @export
 listDistributions <- function(simplify=FALSE, filter=NULL){

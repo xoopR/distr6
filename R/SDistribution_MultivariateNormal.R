@@ -60,7 +60,6 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
 MultivariateNormal$set("public","name","MultivariateNormal")
 MultivariateNormal$set("public","short_name","MultiNorm")
 MultivariateNormal$set("public","description","Multivariate Normal Probability Distribution.")
-MultivariateNormal$set("public","package","distr6")
 
 MultivariateNormal$set("public","mean",function(){
   return(self$getParameterValue("mean"))
@@ -185,4 +184,4 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
                               data.table::data.table(ShortName = "MultiNorm", ClassName = "MultivariateNormal",
                                                      Type = "\u211D^K", ValueSupport = "continuous",
                                                      VariateForm = "multivariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))

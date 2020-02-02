@@ -55,4 +55,4 @@ Epanechnikov$set("public","initialize",function(decorators = NULL){
   invisible(self)
 })
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]"))
+.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))

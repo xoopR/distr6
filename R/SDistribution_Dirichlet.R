@@ -56,7 +56,6 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F)
 Dirichlet$set("public","name","Dirichlet")
 Dirichlet$set("public","short_name","Diri")
 Dirichlet$set("public","description","Multivariate Normal Probability Distribution.")
-Dirichlet$set("public","package","distr6")
 
 Dirichlet$set("public","mean",function(){
   return(self$getParameterValue("params")/sum(self$getParameterValue("params")))
@@ -161,5 +160,5 @@ Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL
                               data.table::data.table(ShortName = "Diri", ClassName = "Dirichlet",
                                                      Type = "[0,1]^K", ValueSupport = "continuous",
                                                      VariateForm = "multivariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))
 

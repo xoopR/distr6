@@ -48,7 +48,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, loc
 StudentTNoncentral$set("public","name","StudentTNoncentral")
 StudentTNoncentral$set("public","short_name","TNC")
 StudentTNoncentral$set("public","description","Student's t Probability Distribution.")
-StudentTNoncentral$set("public","package","stats")
+StudentTNoncentral$set("public","packages","stats")
 
 StudentTNoncentral$set("public", "mean", function(){
   df <- self$getParameterValue("df")

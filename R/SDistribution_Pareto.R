@@ -46,7 +46,7 @@ Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F)
 Pareto$set("public","name","Pareto")
 Pareto$set("public","short_name","Pare")
 Pareto$set("public","description","Pareto Probability Distribution.")
-Pareto$set("public","package","distr6")
+Pareto$set("public","packages", "expint")
 
 Pareto$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)
@@ -64,7 +64,6 @@ Pareto$set("public","variance",function(){
 })
 Pareto$set("public","skewness",function(){
   shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
   if(shape > 3){
     return(((2*(1+shape))/(shape-3)) * sqrt((shape-2)/shape))
   } else
@@ -72,7 +71,6 @@ Pareto$set("public","skewness",function(){
 })
 Pareto$set("public","kurtosis",function(excess = TRUE){
   shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
   if(shape > 4){
     kur = (6 * (shape^3 + shape^2 - 6*shape - 2))/(shape*(shape-3)*(shape-4))
   } else
@@ -149,5 +147,5 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
                               data.table::data.table(ShortName = "Pare", ClassName = "Pareto",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "expint"))
 

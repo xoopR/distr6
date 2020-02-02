@@ -48,9 +48,10 @@ decorate <- function(distribution, decorators){
 
   decorators = lapply(decorators, function(x){
     if (checkmate::testCharacter(x))
-      x = utils::getFromNamespace(x, "distr6")
-    return(x)
-    })
+      return(get(x))
+    else
+      return(x)
+  })
 
   dist_decors = distribution$decorators()
   decors_names = lapply(decorators, function(x) x$classname)
@@ -66,6 +67,8 @@ decorate <- function(distribution, decorators){
 
   else{
     lapply(decorators, function(a_decorator){
+      assert_pkgload(a_decorator$public_fields$packages)
+
       if(a_decorator$classname == "FunctionImputation"){
         if(!testUnivariate(distribution))
           stop("FunctionImputation is currently only supported for univariate distributions.")

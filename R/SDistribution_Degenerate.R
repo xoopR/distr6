@@ -46,7 +46,6 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
 Degenerate$set("public","name","Degenerate")
 Degenerate$set("public","short_name","Degen")
 Degenerate$set("public","description","Degenerate Probability Distribution.")
-Degenerate$set("public","package","distr6")
 
 Degenerate$set("public","mean",function(){
   return(self$getParameterValue("mean"))
@@ -108,4 +107,4 @@ Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbo
                               data.table::data.table(ShortName = "Degen", ClassName = "Degenerate",
                                                      Type = "\u211D", ValueSupport = "discrete",
                                                      VariateForm = "univariate",
-                                                     Package = "distr6"))
+                                                     Package = "-"))

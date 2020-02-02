@@ -47,7 +47,7 @@ Logistic <- R6Class("Logistic", inherit = SDistribution, lock_objects = F)
 Logistic$set("public","name","Logistic")
 Logistic$set("public","short_name","Logis")
 Logistic$set("public","description","Logistic Probability Distribution.")
-Logistic$set("public","package","stats")
+Logistic$set("public","packages","stats")
 
 Logistic$set("public","mean",function(){
   return(self$getParameterValue("mean"))

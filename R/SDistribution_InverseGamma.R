@@ -49,7 +49,7 @@ InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = 
 InverseGamma$set("public","name","InverseGamma")
 InverseGamma$set("public","short_name","invgam")
 InverseGamma$set("public","description","Inverse Gamma Probability Distribution.")
-InverseGamma$set("public","package","extraDistr")
+InverseGamma$set("public","packages","extraDistr")
 
 InverseGamma$set("public","mean",function(){
   if(self$getParameterValue("shape") > 1)
