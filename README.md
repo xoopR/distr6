@@ -9,12 +9,17 @@ Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](h
 status](https://ci.appveyor.com/api/projects/status/mrexqbmrtrx865jf/branch/master?svg=true)](https://ci.appveyor.com/project/RaphaelS1/distr6-xsr0j/branch/master)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
-<https://www.r-pkg.org/badges/version-ago/distr6>
-<https://cranlogs.r-pkg.org/badges/grand-total/distr6?color=brightgreen>
+[![CRAN Status
+Badge](https://www.r-pkg.org/badges/version-ago/distr6)](https://cran.r-project.org/package=distr6)
+[![CRAN
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/distr6)](https://cran.r-project.org/package=distr6)
 [![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-<!--[![CRAN Checks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)-->
+[![CRAN
+Checks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
+[![Gitter
+chat](https://badges.gitter.im/xoopR/distr6.png)](https://gitter.im/xoopR/distr6)
 
 ## What is distr6?
 
@@ -58,7 +63,7 @@ B$rand(5)
 #> [1] 7 7 4 7 6
 summary(B)
 #> Binomial Probability Distribution. Parameterised with:
-#>   prob = 0.5, size = 10
+#>   c("prob", "size") = c(0.5, 10)
 #> 
 #>   Quick Statistics 
 #>  Mean:       5
@@ -83,9 +88,9 @@ Normal$new(mean = 0, prec = 2)
 #> Norm(mean = 0, prec = 2)
 Normal$new(mean = 0, sd = 3)$parameters()
 #>      id     value support                                 description
-#> 1: mean         0       ℝ                   Mean - Location Parameter
-#> 2:  var         9      ℝ+          Variance - Squared Scale Parameter
-#> 3:   sd         3      ℝ+        Standard Deviation - Scale Parameter
+#> 1: mean 0.0000000       ℝ                   Mean - Location Parameter
+#> 2:  var 9.0000000      ℝ+          Variance - Squared Scale Parameter
+#> 3:   sd 3.0000000      ℝ+        Standard Deviation - Scale Parameter
 #> 4: prec 0.1111111      ℝ+ Precision - Inverse Squared Scale Parameter
 ```
 
