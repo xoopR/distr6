@@ -1,12 +1,7 @@
 language: r
 
-branches:
-  only:
-    - master
-    
 os:
  - linux
-# - osx
 
 dist: xenial
 
