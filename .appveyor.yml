@@ -67,9 +67,5 @@ cache:
 notifications:
   - provider: Email
     on_build_success: false
-    on_build_failure: false
-    on_build_status_changed: false
-  
-  - provider: Slack
-    incoming_webhook:
-      secure: B6xB+HL9BbAzIABcCOxdDHCBL1q3bSx5LGXnD+lprcJACjK0ce7dumXIp6VHiDURtVmH6EjAUXSPYne3A8Dt2pQaimqwCBMDqhsn/rowDIM=
+    on_build_failure: true
+    on_build_status_changed: true
