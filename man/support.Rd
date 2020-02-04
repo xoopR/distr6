@@ -22,7 +22,7 @@ greater than zero,
 where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
 }
 \section{R6 Usage}{
- $support()
+ $support
 }
 
 \seealso{

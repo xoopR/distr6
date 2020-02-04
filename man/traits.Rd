@@ -16,6 +16,6 @@ List of traits.
 Returns the traits of the distribution.
 }
 \section{R6 Usage}{
- $traits()
+ $traits
 }
 

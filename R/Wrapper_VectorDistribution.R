@@ -257,7 +257,7 @@ VectorDistribution$set("public","wrappedModels", function(model = NULL){
     }
   }
 })
-VectorDistribution$set("public","modelTable", function(){
+VectorDistribution$set("active","modelTable", function(){
   private$.wrappedModels
 })
 

@@ -16,7 +16,7 @@ An R6 object of class \link[set6:Set]{set6::Set}.
 Returns the scientific type of the distribution.
 }
 \section{R6 Usage}{
- $type()
+ $type
 }
 
 \seealso{

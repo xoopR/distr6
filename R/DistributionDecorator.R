@@ -29,3 +29,4 @@ DistributionDecorator$set("public","initialize",function(distribution){
 
   decorate(distribution, get(getR6Class(self)))
 })
+DistributionDecorator$set("active","packages",NULL)

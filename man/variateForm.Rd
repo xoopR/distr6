@@ -16,6 +16,6 @@ One of "univariate"/"multivariate"/"matrixvariate".
 Returns the variateForm of the distribution.
 }
 \section{R6 Usage}{
- $variateForm()
+ $variateForm
 }
 

@@ -16,7 +16,7 @@ Character vector of decorators.
 Returns the decorators added to a distribution.
 }
 \section{R6 Usage}{
- $decorators()
+ $decorators
 }
 
 \seealso{
