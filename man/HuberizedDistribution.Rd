@@ -21,7 +21,7 @@ Huberizes a distribution at lower and upper limits, using the formula
 where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and \eqn{f_X}/\eqn{F_X} is the
 pdf/cdf of the original distribution.
 
-If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+If lower or upper are NULL they are taken to be \code{self$inf} and \code{self$sup} respectively.
 
 The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
 \code{FunctionImputation} first.
@@ -56,20 +56,20 @@ The pdf and cdf of the distribution are required for this wrapper, if unavailabl
 \tabular{ll}{
 \strong{Accessor Methods} \tab \strong{Link} \cr
 \code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
-\code{decorators()} \tab \code{\link{decorators}} \cr
-\code{traits()} \tab \code{\link{traits}} \cr
-\code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-\code{variateForm()} \tab \code{\link{variateForm}} \cr
-\code{type()} \tab \code{\link{type}} \cr
-\code{properties()} \tab \code{\link{properties}} \cr
-\code{support()} \tab \code{\link{support}} \cr
-\code{symmetry()} \tab \code{\link{symmetry}} \cr
-\code{sup()}  \tab \code{\link{sup}} \cr
-\code{inf()} \tab \code{\link{inf}} \cr
-\code{dmax()}  \tab \code{\link{dmax}} \cr
-\code{dmin()} \tab \code{\link{dmin}} \cr
-\code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+\code{decorators} \tab \code{\link{decorators}} \cr
+\code{traits} \tab \code{\link{traits}} \cr
+\code{valueSupport} \tab \code{\link{valueSupport}} \cr
+\code{variateForm} \tab \code{\link{variateForm}} \cr
+\code{type} \tab \code{\link{type}} \cr
+\code{properties} \tab \code{\link{properties}} \cr
+\code{support} \tab \code{\link{support}} \cr
+\code{symmetry} \tab \code{\link{symmetry}} \cr
+\code{sup}  \tab \code{\link{sup}} \cr
+\code{inf} \tab \code{\link{inf}} \cr
+\code{dmax}  \tab \code{\link{dmax}} \cr
+\code{dmin} \tab \code{\link{dmin}} \cr
+\code{skewnessType} \tab \code{\link{skewnessType}} \cr
+\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{d/p/q/r Methods} \tab \strong{Link} \cr
 \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
