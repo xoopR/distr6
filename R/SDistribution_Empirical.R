@@ -44,21 +44,21 @@ Empirical$set("public","description","Empirical Probability Distribution.")
 
 Empirical$set("public","mode",function(which = "all"){
   if(which == "all")
-    return(modal(self$support()$elements()))
+    return(modal(self$support()$elements))
   else
-    return(modal(self$support()$elements())[which])
+    return(modal(self$support()$elements)[which])
 })
 Empirical$set("public","mean",function(){
-  return(mean(self$support()$elements()))
+  return(mean(self$support()$elements))
 })
 Empirical$set("public","variance",function(){
-  return(sum((self$support()$elements() - self$mean())^2)/private$.total)
+  return(sum((self$support()$elements - self$mean())^2)/private$.total)
 })
 Empirical$set("public","skewness",function(){
-  return(sum(((self$support()$elements() - self$mean())/self$stdev())^3)/private$.total)
+  return(sum(((self$support()$elements - self$mean())/self$stdev())^3)/private$.total)
 })
 Empirical$set("public","kurtosis",function(excess = TRUE){
-  kurt = sum(((self$support()$elements() - self$mean())/self$stdev())^4)/private$.total
+  kurt = sum(((self$support()$elements - self$mean())/self$stdev())^4)/private$.total
   if(excess)
     return(kurt - 3)
   else
@@ -142,11 +142,11 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
   }
 
   rand <- function(n){
-    return(sample(self$support()$elements(), n, TRUE))
+    return(sample(self$support()$elements, n, TRUE))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Set$new(samples),
+                   support = Tuple$new(univerise = Reals$new(), elements = as.list(samples), class = "numeric"),
                    symmetric = FALSE, type = Reals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

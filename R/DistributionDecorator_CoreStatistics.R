@@ -397,14 +397,14 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     formals(trafo) = alist(x = )
   }
 
-  if(self$support()$class() == "integer"){
-    rng = try(self$support()$elements(), silent = TRUE)
-    if(inherits(rng, "try-error"))
-      rng = try(self$inf():self$sup(),silent = TRUE)
-    if(inherits(rng,"try-error")){
+  count = self$support()$properties$countability
+  if(count != "uncountable"){
+    if(count == "countably infinite") {
       lower = ifelse(self$inf() == -Inf, -1e03, self$inf())
       upper = ifelse(self$sup() == Inf, 1e03, self$sup())
       rng = lower:upper
+    } else {
+      rng = try(self$inf():self$sup(),silent = TRUE)
     }
     pdfs = self$pdf(rng)
     xs = trafo(rng)

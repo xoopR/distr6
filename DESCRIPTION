@@ -68,7 +68,7 @@ Imports:
   data.table,
   R6,
   R62S3 (>= 1.4.0),
-  set6,
+  set6 (>= 0.1.1),
   stats
 Suggests:
   expint,

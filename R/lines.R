@@ -84,7 +84,7 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
 
 
   if(testDiscrete(x) & x$support()$length() != Inf){
-    plotStructure <- data.table::data.table(points = x$support()$elements())
+    plotStructure <- data.table::data.table(points = unlist(x$support()$elements))
     plotStructure$cdf <- x$cdf(plotStructure$points)
   } else {
     plotStructure <- data.table::data.table(cdf = seq(0,1,length.out = npoints))
