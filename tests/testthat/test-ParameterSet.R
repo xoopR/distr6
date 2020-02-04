@@ -61,6 +61,11 @@ test_that("verbose ps",{
 })
 
 test_that("out of support",{
+  expect_error(ParameterSet$new(id = list("a"), value = list(0), support = list(Set$new(1)),
+                        settable = list(TRUE)), "does not lie")
+  expect_error(ParameterSet$new(id = list("a"), value = list(c(0,0)), support = list(Set$new(1)^2),
+                                settable = list(TRUE)), "does not lie")
+
   ps = ParameterSet$new(id = list("a","b"), value = c(0,1), support = list(Set$new(0,1), Set$new(0,1)),
                         updateFunc = list(NULL, function(self) self$getParameterValue("a")+1),
                         settable = list(TRUE, FALSE))
