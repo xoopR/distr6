@@ -1203,11 +1203,11 @@ NULL
 Distribution$set("active","isRand",function() return(private$.isRand))
 
 #-------------------------------------------------------------
-# Distribution Variables
+# Distribution Public Variables
 #-------------------------------------------------------------
-Distribution$set("active","name",character(0))
-Distribution$set("active","short_name",character(0))
-Distribution$set("active","description",NULL)
+Distribution$set("public","name",character(0))
+Distribution$set("public","short_name",character(0))
+Distribution$set("public","description",NULL)
 Distribution$set("private",".pdf", NULL)
 Distribution$set("private",".cdf", NULL)
 Distribution$set("private",".quantile", NULL)

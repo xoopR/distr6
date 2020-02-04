@@ -112,7 +112,7 @@ SDistribution$set("public","setParameterValue",function(..., lst = NULL, error =
   invisible(self)
 })
 SDistribution$set("public","package","This is now deprecated. Use $packages instead.")
-SDistribution$set("active","packages",NULL)
+SDistribution$set("public","packages",NULL)
 # SDistribution$set("public","pgf",function(...){
 #   return(NaN)
 # })

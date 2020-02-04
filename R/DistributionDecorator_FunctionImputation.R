@@ -50,7 +50,7 @@ NULL
 
 FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator)
 .distr6$decorators <- append(.distr6$decorators, list(FunctionImputation = FunctionImputation))
-FunctionImputation$set("active","packages",c("pracma","GoFKernel"))
+FunctionImputation$set("public","packages",c("pracma","GoFKernel"))
 
 FunctionImputation$set("public","pdf",function(x1){
   # CDF2PDF

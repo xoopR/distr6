@@ -54,7 +54,7 @@
 NULL
 ExoticStatistics <- R6Class("ExoticStatistics", inherit = DistributionDecorator)
 .distr6$decorators <- append(.distr6$decorators, list(ExoticStatistics = ExoticStatistics))
-ExoticStatistics$set("active","packages","pracma")
+ExoticStatistics$set("public","packages","pracma")
 #-------------------------------------------------------------
 # Public Methods - cdfAntiDeriv
 #-------------------------------------------------------------

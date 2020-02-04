@@ -85,7 +85,7 @@ Kernel$set("public","initialize",function(...){
   super$initialize(...)
 })
 Kernel$set("public","package","This is now deprecated. Use $packages instead.")
-Kernel$set("active","packages", NULL)
+Kernel$set("public","packages", NULL)
 Kernel$set("private",".type","symmetric")
 Kernel$set("active","traits",function(){
   return(list(type = Reals$new(),
