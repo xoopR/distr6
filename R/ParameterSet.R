@@ -114,8 +114,7 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
     checkmate::assertLogical(a_settable, .var.name = "'settable' must be logical")
 
     a_support = support[[i]]
-    checkmate::assert(inherits(a_support, "SetInterval"),
-                      .var.name = "'class' must inherit class 'SetInterval'")
+    assertSet(a_support)
 
     if(!is.null(description)){
       a_description = description[[i]]
@@ -132,10 +131,10 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
       a_update = NA
 
     a_value = value[[i]]
-    checkmate::assert(a_support$liesInSetInterval(a_value, all = T), combine = "and",
+    checkmate::assert(a_support$contains(a_value, all = T), combine = "and",
                       .var.name = "'value' should be between 'lower' and 'upper'")
 
-    a_param = data.table::data.table(id = a_id, value = a_support$min(), support = list(a_support),
+    a_param = data.table::data.table(id = a_id, value = a_support$min, support = list(a_support),
                          settable = a_settable,
                          description = a_description,
                          updateFunc = a_update,
@@ -199,7 +198,7 @@ ParameterSet$set("public","update", function(...){
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       newval = x[[6]](self)
-      if(!x[[3]]$liesInSetInterval(newval, all = TRUE))
+      if(!x[[3]]$contains(newval, all = TRUE))
         stop(newval, " does not lie in the support of parameter ", x[[1]])
       return(newval)
       })
@@ -250,14 +249,14 @@ ParameterSet$set("public","parameters",function(id = NULL){
 #' @param id character, id of the parameter to return.
 #' @param error character, value to pass to \code{stopwarn}.
 #' @details Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
-#' the support of the given parameter as a SetInterval object.
+#' the support of the given parameter as a [set6::Set] object.
 #'
 #' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
 #' with warning otherwise.
 #'
-#' @return An R6 object of class SetInterval.
+#' @return An R6 object of class inheriting from [set6::Set]
 #'
-#' @seealso \code{\link{parameters}} and \code{\link{SetInterval}}
+#' @seealso \code{\link{parameters}}
 #' @export
 NULL
 ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
@@ -356,7 +355,7 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
       # if(param$support[[1]]$class() == "integer")
       #   value <- round(value)
 
-      if(!param$support[[1]]$liesInSetInterval(value, all = TRUE))
+      if(!param$support[[1]]$contains(value, all = TRUE))
         stop(value, " does not lie in the support of parameter ", aid)
 
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"] <- list(value)

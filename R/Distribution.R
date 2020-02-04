@@ -19,8 +19,8 @@
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{name} \tab character \tab Full name of distribution. \cr
 #' \code{short_name} \tab character \tab Short name to identify distribution. \cr
-#' \code{type} \tab SetInterval \tab Scientific type. \cr
-#' \code{support} \tab SetInterval \tab Distribution support. See Details. \cr
+#' \code{type} \tab [set6::Set] \tab Scientific type. \cr
+#' \code{support} \tab [set6::Set] \tab Distribution support. See Details. \cr
 #' \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
 #' \code{pdf} \tab function \tab See Details. \cr
 #' \code{cdf} \tab function \tab See Details. \cr
@@ -38,7 +38,7 @@
 #'
 #'   The most basic Distribution object consists of a name and one of pdf/cdf.
 #'
-#'   If supplied, \code{type} and \code{support} should be given as an R6 SetInterval object. If neither are supplied
+#'   If supplied, \code{type} and \code{support} should be given as a [set6::Set] object. If neither are supplied
 #'   then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
 #'   If only \code{type} is supplied then this is taken to also be the support.
 #'
@@ -123,9 +123,8 @@
 #'   }
 #'
 #'
-#' @seealso See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
-#' Intervals. See \code{\link{ParameterSet}} for parameter details. See
-#' \code{\link{decorate}} for Decorator details.
+#' @seealso See \CRANpkg{set6} for details on Sets and Intervals. See \code{\link{ParameterSet}} for
+#' parameter details. See \code{\link{decorate}} for Decorator details.
 #'
 #' @return Returns R6 object of class Distribution.
 #'
@@ -178,15 +177,15 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
       rm = c("...","self")
       if(!is.null(pdf)){
         lng = length(formals(pdf)[!(names(formals(pdf)) %in% rm)])
-        type <- Reals$new(dim = lng)
+        type <- setpower(Reals$new(), lng)
       } else{
         lng = length(formals(cdf)[!(names(formals(cdf)) %in% rm)])
-        type <- Reals$new(dim = lng)
+        type <- setpower(Reals$new(), lng)
       }
     }
     if(is.null(support)) support <- type
-    checkmate::assert(inherits(type,"SetInterval"), inherits(support,"SetInterval"),
-                      .var.name = "'type' and 'support' should be class 'SetInterval'.")
+    assertSet(type)
+    assertSet(support)
 
     #--------------------
     # valueSupport Checks
@@ -522,8 +521,8 @@ Distribution$set("public","variateForm",function(){
 #' @section R6 Usage: $type()
 #' @param object Distribution.
 #' @description Returns the scientific type of the distribution.
-#' @return An R6 object of class SetInterval.
-#' @seealso \code{\link{SetInterval}}
+#' @return An R6 object of class [set6::Set].
+#' @seealso [set6::Set]
 #' @export
 NULL
 Distribution$set("public","type",function(){
@@ -553,8 +552,8 @@ Distribution$set("public","properties",function(){
 #' greater than zero,
 #' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
 #' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
-#' @return An R6 object of class SetInterval.
-#' @seealso \code{\link{SetInterval}} and \code{\link{properties}}
+#' @return An R6 object of class [set6::Set].
+#' @seealso [set6::Set] and \code{\link{properties}}
 #' @export
 NULL
 Distribution$set("public","support",function(){
@@ -586,7 +585,7 @@ Distribution$set("public","symmetry",function(){
 #' @export
 NULL
 Distribution$set("public","sup",function(){
-  return(self$support()$sup())
+  return(self$support()$upper)
 })
 
 #' @name inf
@@ -600,7 +599,7 @@ Distribution$set("public","sup",function(){
 #' @export
 NULL
 Distribution$set("public","inf",function(){
-  return(self$support()$inf())
+  return(self$support()$lower)
 })
 
 #' @name dmax
@@ -616,7 +615,7 @@ Distribution$set("public","inf",function(){
 #' @export
 NULL
 Distribution$set("public","dmax",function(){
-  return(self$support()$max())
+  return(self$support()$max)
 })
 
 #' @name dmin
@@ -632,7 +631,7 @@ Distribution$set("public","dmax",function(){
 #' @export
 NULL
 Distribution$set("public","dmin",function(){
-  return(self$support()$min())
+  return(self$support()$min)
 })
 
 #' @name kurtosisType
@@ -831,7 +830,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
-    if(self$type()$class() == "integer")
+    if(self$type()$class == "integer")
        x1 <- floor(x1)
     cdf = numeric(length(x1))
     cdf[x1 > self$sup()] = 1
@@ -1139,7 +1138,7 @@ Distribution$set("public","correlation",function(){
 #' @export
 NULL
 Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
-  return(self$support()$liesInSetInterval(x, all, bound))
+  return(self$support()$contains(x, all, bound))
 })
 
 #' @name liesInType
@@ -1165,7 +1164,7 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @export
 NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
-  return(self$type()$liesInSetInterval(x, all, bound))
+  return(self$type()$contains(x, all, bound))
 })
 
 #-------------------------------------------------------------

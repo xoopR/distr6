@@ -23,8 +23,8 @@ suppressMoments = TRUE)
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{name} \tab character \tab Full name of distribution. \cr
 \code{short_name} \tab character \tab Short name to identify distribution. \cr
-\code{type} \tab SetInterval \tab Scientific type. \cr
-\code{support} \tab SetInterval \tab Distribution support. See Details. \cr
+\code{type} \tab \link[set6:Set]{set6::Set} \tab Scientific type. \cr
+\code{support} \tab \link[set6:Set]{set6::Set} \tab Distribution support. See Details. \cr
 \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
 \code{pdf} \tab function \tab See Details. \cr
 \code{cdf} \tab function \tab See Details. \cr
@@ -44,7 +44,7 @@ suppressMoments = TRUE)
 
 The most basic Distribution object consists of a name and one of pdf/cdf.
 
-If supplied, \code{type} and \code{support} should be given as an R6 SetInterval object. If neither are supplied
+If supplied, \code{type} and \code{support} should be given as a \link[set6:Set]{set6::Set} object. If neither are supplied
 then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
 If only \code{type} is supplied then this is taken to also be the support.
 
@@ -136,7 +136,6 @@ at the cost of losing these in the distribution properties.
 }
 
 \seealso{
-See \code{\link{SetInterval}} and \code{\link{SpecialSet}} for details on Sets and
-Intervals. See \code{\link{ParameterSet}} for parameter details. See
-\code{\link{decorate}} for Decorator details.
+See \CRANpkg{set6} for details on Sets and Intervals. See \code{\link{ParameterSet}} for
+parameter details. See \code{\link{decorate}} for Decorator details.
 }

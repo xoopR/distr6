@@ -108,7 +108,7 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
   rand <- function(n) rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T),
+                   rand = rand, support = Reals$new(),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")
