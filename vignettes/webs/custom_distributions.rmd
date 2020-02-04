@@ -51,10 +51,10 @@ We have omitted the `updateFunc` and `description` arguments as these are very r
 
 ### Constructing the Distribution
 
-We now have the basics required to construct our custom uniform distribution, the last thing we require is the distribution support. Often the support can be omitted, in which the default set of Reals will be used, but in the case of the uniform distribution the support is very important.
+We now have the basics required to construct our custom uniform distribution, the last thing we require is the distribution support. Often the support can be omitted, in which case, the default set of Reals will be used, but in the case of the uniform distribution the support is very important.
 
 ```{r}
-support = Interval$new(1, 10)
+support = set6::Interval$new(1, 10)
 U <- Distribution$new(name = "Uniform", pdf = pdf, parameters = ps, support = support)
 ```
 
