@@ -102,7 +102,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
   if(testDiscrete(distribution)){
 
-    support <- Set$new(lower:upper)
+    support <- Interval$new(lower, upper, class = "integer")
 
     pdf <- function(x1){
       pdf = x1
@@ -146,8 +146,8 @@ HuberizedDistribution$set("public","setParameterValue",function(..., lst = NULL,
 
 
   super$setParameterValue(lst = lst, error = error)
-  if(inherits(self$support(),"Set"))
-    private$.properties$support <- Set$new(self$getParameterValue("hubLower"):self$getParameterValue("hubUpper"))
+  if(self$support()$class == "integer")
+    private$.properties$support <- Interval$new(self$getParameterValue("hubLower"), self$getParameterValue("hubUpper"), class = "integer")
   else
     private$.properties$support <- Interval$new(self$getParameterValue("hubLower"), self$getParameterValue("hubUpper"))
 

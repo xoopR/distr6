@@ -65,10 +65,11 @@ Authors@R:
 Description: An R6 object oriented distributions package. Unified interface for 42 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation. Design patterns including wrappers and decorators are described in Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of probability distributions including d/p/q/r functions and results we refer to McLaughlin, M. P. (2001). Additionally Devroye (1986, ISBN:0-387-96305-7) for sampling the Dirichlet distribution, Gentle (2009) <doi:10.1007/978-0-387-98144-4> for sampling the Multivariate Normal distribution and Michael et al. (1976) <doi:10.2307/2683801> for sampling the Wald distribution.
 Imports:
   checkmate,
+  data.table,
   R6,
   R62S3 (>= 1.4.0),
-  stats,
-  data.table
+  set6 (>= 0.1.1),
+  stats
 Suggests:
   expint,
   GoFKernel,
@@ -91,21 +92,15 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE, r6 = FALSE)
 RoxygenNote: 7.0.2
 Collate: 
-    'distr6_globals.R'
     'helpers.R'
-    'SetInterval_operations.R'
+    'distr6_globals.R'
     'Distribution.R'
     'DistributionDecorator.R'
     'DistributionDecorator_CoreStatistics.R'
     'DistributionDecorator_ExoticStatistics.R'
     'DistributionDecorator_FunctionImputation.R'
-    'setSymbol.R'
-    'SetInterval.R'
-    'SetInterval_Interval.R'
-    'SetInterval_SpecialSet.R'
     'Distribution_Kernel.R'
     'Distribution_SDistribution.R'
-    'ParameterSet.R'
     'Kernel_Cosine.R'
     'Kernel_Epanechnikov.R'
     'Kernel_Logistic.R'
@@ -117,6 +112,7 @@ Collate:
     'Kernel_Tricube.R'
     'Kernel_Triweight.R'
     'Kernel_Uniform.R'
+    'ParameterSet.R'
     'SDistribution_Arcsine.R'
     'SDistribution_Bernoulli.R'
     'SDistribution_Beta.R'
@@ -159,7 +155,6 @@ Collate:
     'SDistribution_Wald.R'
     'SDistribution_Weibull.R'
     'SDistribution_WeightedDiscrete.R'
-    'SetInterval_Set.R'
     'Wrapper.R'
     'Wrapper_ArrayDistribution.R'
     'Wrapper_Convolution.R'

@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 # DiscreteUniform Distribution Documentation
 #-------------------------------------------------------------
@@ -118,7 +118,7 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
   rand = function(n) return(self$quantile(runif(n)))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(lower:upper),
+                   rand = rand, support = Interval$new(lower, upper, class = "integer"),
                    symmetric = TRUE, type = Integers$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

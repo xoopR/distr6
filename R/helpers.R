@@ -1,5 +1,3 @@
-#' @include distr6_globals.R
-
 assertThat <- function(x, cond, errormsg){
   if(cond)
     invisible(x)
@@ -104,12 +102,6 @@ makeUniqueNames <- function(y){
   return(y)
 }
 
-#' @title Coerce String to Proper Case
-#' @description Helper function for string coercion to proper case
-#' @param str String to coerce
-#' @param split see \code{\link[base]{strsplit}}
-#' @param fixed see \code{\link[base]{strsplit}}
-#' @export
 toproper <- function(str, split = " ", fixed = TRUE){
   str = strsplit(str, split, fixed)
   str = lapply(str, function(x){

@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
@@ -154,8 +154,8 @@ Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), d
   }
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
-                   support = Set$new(0:size, dim = length(probs)),
-                   symmetric = FALSE, type = Naturals$new(dim = "K"),
+                   support = setpower(Set$new(0:size, class = "integer"), length(probs)),
+                   symmetric = FALSE, type = setpower(Naturals$new(), length(probs)),
                    valueSupport = "discrete",
                    variateForm = "multivariate")
   invisible(self)

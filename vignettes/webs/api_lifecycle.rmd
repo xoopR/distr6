@@ -31,6 +31,5 @@ The lists below use the headings name from the [reference page](https://alan-tur
 * [Univariate Continuous Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-univariate-continuous-distributions)
 * [Multivariate Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-multivariate-distributions)
 * [Assertions](https://alan-turing-institute.github.io/distr6/reference/#section-assertions)
-* [Symbolic Sets](https://alan-turing-institute.github.io/distr6/reference/#section-symbolic-sets)
 * [Helper Functions](https://alan-turing-institute.github.io/distr6/reference/#section-helper-functions)
 * [Parameter Sets](https://alan-turing-institute.github.io/distr6/reference/#section-parameter-sets)

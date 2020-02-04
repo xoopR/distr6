@@ -10,7 +10,7 @@ support(object)
 \item{object}{Distribution.}
 }
 \value{
-An R6 object of class SetInterval.
+An R6 object of class \link[set6:Set]{set6::Set}.
 }
 \description{
 Returns the support of the distribution.
@@ -26,5 +26,5 @@ where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pd
 }
 
 \seealso{
-\code{\link{SetInterval}} and \code{\link{properties}}
+\link[set6:Set]{set6::Set} and \code{\link{properties}}
 }

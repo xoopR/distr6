@@ -5,5 +5,12 @@
 #'   the near future. When possible, alternative functions with similar
 #'   functionality are also mentioned. Help pages for deprecated functions are
 #'   available at \code{help("-deprecated")}.
+#'
+#' @section Deprecated Functions:
+#' \tabular{ll}{
+#' \strong{Deprecated} \tab \strong{Replacement} \cr
+#' `ArrayDistribution` \tab [ProductDistribution] \cr
+#' `listSpecialSets` \tab [set6::listSpecialSets()] \cr
+#' }
 #' @keywords internal
 NULL

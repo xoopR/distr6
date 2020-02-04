@@ -84,7 +84,7 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
                                                                   "Upper limit of truncation."))
 
   if(testDiscrete(distribution))
-    support <- Set$new(lower:upper)
+    support <- Interval$new(lower,upper,class="integer")
   else
     support <- Interval$new(lower,upper)
 
@@ -107,8 +107,8 @@ TruncatedDistribution$set("public","setParameterValue",function(..., lst = NULL,
 
 
   super$setParameterValue(lst = lst, error = error)
-  if(inherits(self$support(),"Set"))
-    private$.properties$support <- Set$new(self$getParameterValue("truncLower"):self$getParameterValue("truncUpper"))
+  if(self$support()$class == "integer")
+    private$.properties$support <- Interval$new(self$getParameterValue("truncLower"), self$getParameterValue("truncUpper"), class = "integer")
   else
     private$.properties$support <- Interval$new(self$getParameterValue("truncLower"), self$getParameterValue("truncUpper"))
 

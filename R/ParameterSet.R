@@ -52,7 +52,7 @@
 #' @examples
 #'  id = list("prob", "size")
 #'  value = list(0.2, 5)
-#'  support = list(Interval$new(0,1), PosNaturals$new())
+#'  support = list(set6::Interval$new(0,1), set6::PosNaturals$new())
 #'  settable = list(TRUE, TRUE)
 #'  description = list("Probability of success",NULL)
 #'  ps = ParameterSet$new(id, value, support, settable,
@@ -65,7 +65,7 @@
 #' @examples
 #'  id = list("rate", "scale")
 #'  value = list(1, 1)
-#'  support = list(PosReals$new(), PosReals$new())
+#'  support = list(set6::PosReals$new(), set6::PosReals$new())
 #'  settable = list(TRUE, FALSE)
 #'  updateFunc = list(NULL, function(self) 1/self$getParameterValue('rate'))
 #'  description = list("Arrival rate","Scale parameter")
@@ -114,8 +114,7 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
     checkmate::assertLogical(a_settable, .var.name = "'settable' must be logical")
 
     a_support = support[[i]]
-    checkmate::assert(inherits(a_support, "SetInterval"),
-                      .var.name = "'class' must inherit class 'SetInterval'")
+    assertSet(a_support)
 
     if(!is.null(description)){
       a_description = description[[i]]
@@ -132,10 +131,16 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
       a_update = NA
 
     a_value = value[[i]]
-    checkmate::assert(a_support$liesInSetInterval(a_value, all = T), combine = "and",
-                      .var.name = "'value' should be between 'lower' and 'upper'")
+    if(length(a_value) > 1){
+      if(!a_support$contains(Tuple$new(a_value)))
+        stop(Tuple$new(a_value)$strprint(), " does not lie in the support of parameter ", a_id)
+    } else {
+      if(!a_support$contains(a_value))
+        stop(a_value, " does not lie in the support of parameter ", a_id)
+    }
 
-    a_param = data.table::data.table(id = a_id, value = a_support$min(), support = list(a_support),
+
+    a_param = data.table::data.table(id = a_id, value = 0, support = list(a_support),
                          settable = a_settable,
                          description = a_description,
                          updateFunc = a_update,
@@ -167,7 +172,7 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
 print.ParameterSet <- function(x, hide_cols, ...) {}
 ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable"),...){
   ps <- private$.parameters
-  ps$support <- lapply(ps$support,function(x) x$getSymbol())
+  ps$support <- lapply(ps$support,function(x) x$strprint())
   print(subset(ps, select = !(names(ps) %in% hide_cols)))
 })
 
@@ -199,8 +204,14 @@ ParameterSet$set("public","update", function(...){
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       newval = x[[6]](self)
-      if(!x[[3]]$liesInSetInterval(newval, all = TRUE))
-        stop(newval, " does not lie in the support of parameter ", x[[1]])
+      if(length(newval) > 1) {
+        if(!x[[3]]$contains(Tuple$new(newval)))
+          stop(Tuple$new(newval)$strprint(), " does not lie in the support of parameter ", x[[1]])
+      } else {
+        if(!x[[3]]$contains(newval))
+          stop(newval, " does not lie in the support of parameter ", x[[1]])
+      }
+
       return(newval)
       })
     suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
@@ -250,14 +261,14 @@ ParameterSet$set("public","parameters",function(id = NULL){
 #' @param id character, id of the parameter to return.
 #' @param error character, value to pass to \code{stopwarn}.
 #' @details Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
-#' the support of the given parameter as a SetInterval object.
+#' the support of the given parameter as a [set6::Set] object.
 #'
 #' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
 #' with warning otherwise.
 #'
-#' @return An R6 object of class SetInterval.
+#' @return An R6 object of class inheriting from [set6::Set]
 #'
-#' @seealso \code{\link{parameters}} and \code{\link{SetInterval}}
+#' @seealso \code{\link{parameters}}
 #' @export
 NULL
 ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
@@ -356,8 +367,14 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
       # if(param$support[[1]]$class() == "integer")
       #   value <- round(value)
 
-      if(!param$support[[1]]$liesInSetInterval(value, all = TRUE))
-        stop(value, " does not lie in the support of parameter ", aid)
+      if(length(value) > 1){
+        if(!param$support[[1]]$contains(Tuple$new(value), all = TRUE))
+          stop(Tuple$new(value)$strprint(), " does not lie in the support of parameter ", aid)
+      } else {
+        if(!param$support[[1]]$contains(value, all = TRUE))
+          stop(value, " does not lie in the support of parameter ", aid)
+      }
+
 
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"] <- list(value)
     }

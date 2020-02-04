@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 # Noncentral Student's t Distribution Documentation
 #-------------------------------------------------------------
@@ -84,7 +84,7 @@ StudentTNoncentral$set("public","initialize",function(df = 1, location = 0, deco
   rand <- function(n) rt(n, self$getParameterValue("df"), self$getParameterValue("location"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T),
+                   rand = rand, support = Reals$new(),
                    symmetric  = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

@@ -124,8 +124,8 @@ ProductDistribution$set("public","initialize",function(distlist = NULL, distribu
   }
 
 
-  type = do.call(product.SetInterval, lapply(distlist,function(x) x$type()))
-  support = do.call(product.SetInterval, lapply(distlist,function(x) x$support()))
+  type = do.call(setproduct, lapply(distlist,function(x) x$type()))
+  support = do.call(setproduct, lapply(distlist,function(x) x$support()))
   if("discrete" %in% lapply(distlist, valueSupport))
     valueSupport = "discrete"
   else
