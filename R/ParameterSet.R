@@ -166,7 +166,7 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
 print.ParameterSet <- function(x, hide_cols, ...) {}
 ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable"),...){
   ps <- private$.parameters
-  ps$support <- lapply(ps$support,function(x) x$getSymbol())
+  ps$support <- lapply(ps$support,function(x) x$strprint())
   print(subset(ps, select = !(names(ps) %in% hide_cols)))
 })
 

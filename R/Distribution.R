@@ -438,7 +438,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
     }
     cat("\n")
 
-    cat(" Support:",self$support()$getSymbol(), "\tScientific Type:",self$type()$getSymbol(),"\n")
+    cat(" Support:",self$support()$strprint(), "\tScientific Type:",self$type()$strprint(),"\n")
     cat("\n Traits:\t",self$valueSupport(),"; ",self$variateForm(), sep="")
     cat("\n Properties:\t", self$symmetry(),sep="")
     if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType())
@@ -452,8 +452,8 @@ Distribution$set("public","summary",function(full = TRUE,...){
       cat(self$strprint())
     else
       cat(self$name)
-    cat("\nScientific Type:",self$type()$getSymbol(),"\t See $traits() for more")
-    cat("\nSupport:",self$support()$getSymbol(),"\t See $properties() for more")
+    cat("\nScientific Type:",self$type()$strprint(),"\t See $traits() for more")
+    cat("\nSupport:",self$support()$strprint(),"\t See $properties() for more")
   }
   cat("\n")
   invisible(self)
