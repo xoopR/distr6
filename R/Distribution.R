@@ -834,7 +834,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     if(self$type()$class() == "integer")
        x1 <- floor(x1)
     cdf = numeric(length(x1))
-    cdf[x1 > self$sup()] = 1
+    cdf[x1 >= self$sup()] = 1
 
     if(getR6Class(self) %in% c("Empirical","WeightedDiscrete")){
       if(any(x1 >= self$inf() & x1 <= self$sup()))
