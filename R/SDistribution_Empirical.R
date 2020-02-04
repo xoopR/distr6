@@ -146,7 +146,7 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Tuple$new(univerise = Reals$new(), elements = as.list(samples), class = "numeric"),
+                   support = Tuple$new(universe = Reals$new(), elements = as.list(samples), class = "numeric"),
                    symmetric = FALSE, type = Reals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

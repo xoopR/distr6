@@ -96,7 +96,7 @@ Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbo
   rand <- function(n) return(rep(self$getParameterValue("mean"), n))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(mean),
+                   rand = rand, support = Set$new(mean, class = "integer"),
                    symmetric = TRUE,type = Reals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

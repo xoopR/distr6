@@ -120,7 +120,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
   rand = function(n) rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0:size),
+                   rand = rand, support = Set$new(0:size, class = "integer"),
                    symmetric = symmetric,type = Naturals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

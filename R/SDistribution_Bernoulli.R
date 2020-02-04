@@ -115,7 +115,7 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
   rand = function(n) rbinom(n, 1, self$getParameterValue("prob"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0,1),
+                   rand = rand, support = Set$new(0,1,class="integer"),
                    symmetric = FALSE,type = Naturals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

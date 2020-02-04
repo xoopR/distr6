@@ -141,7 +141,7 @@ Hypergeometric$set("public","initialize",function(size = 50, successes = 5, fail
                               self$getParameterValue("failures"),
                               self$getParameterValue("draws"))
 
-    support <- Set$new(max(0, draws + successes - size):min(draws,successes))
+    support <- Set$new(max(0, draws + successes - size):min(draws,successes), class = "integer")
 
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = support,
