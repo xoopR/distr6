@@ -220,8 +220,8 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     return(rand)
   }
 
-  type = Reals$new(dim = ndist)
-  support = Reals$new(dim = ndist)
+  type = setpower(Reals$new(), ndist)
+  support = setpower(Reals$new(), ndist)
 
   super$initialize(pdf = pdf, cdf = cdf, quantile = quantile, rand = rand, name = name,
                    short_name = short_name, description = description, support = support,

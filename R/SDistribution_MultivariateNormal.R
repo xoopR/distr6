@@ -1,4 +1,4 @@
-  
+
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
@@ -173,8 +173,8 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
   }
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
-                   support = Reals$new(dim = length(mean)),
-                   symmetric = FALSE,type = Reals$new(dim = "K"),
+                   support = setpower(Reals$new(), length(mean)),
+                   symmetric = FALSE,type = setpower(Reals$new(), length(mean)),
                    valueSupport = "continuous",
                    variateForm = "multivariate")
   invisible(self)
