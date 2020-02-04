@@ -148,12 +148,14 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
                       ){
 
   if(.suppressChecks | inherits(self, "DistributionWrapper")){
+
     if(!is.null(parameters)) parameters = parameters$clone(deep = TRUE)
     if(!is.null(pdf)) formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
     if(!is.null(cdf)) formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
     if(!is.null(quantile)) formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
     if(!is.null(rand)) formals(rand) = c(formals(rand),list(self=self),alist(...=))
-  } else if(getR6Class(self) == "Distribution"){
+
+  } else if(getR6Class(self) == "Distribution") {
 
     if(is.null(pdf) & is.null(cdf))
       stop("One of pdf or cdf must be provided.")
@@ -199,7 +201,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
         valueSupport = "mixture"
       else
         stop("valueSupport should be one of: 'continuous', 'discrete','mixture'.")
-    }else if(support$class() == "numeric")
+    }else if(support$class == "numeric")
       valueSupport = "continuous"
      else
       valueSupport = "discrete"
@@ -208,14 +210,12 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     # variateForm Checks
     #-------------------
     if(!is.null(variateForm)){
-      if(grepl("^u",variateForm)) variateForm = "univariate"
-      else if(grepl("^mu",variateForm)) variateForm = "multivariate"
-      else if(grepl("^ma",variateForm)) variateForm = "matrixvariate"
-      else stop("variateForm should be one of: 'univariate', 'multivariate','matrixvariate'.")
-    } else if(type$dimension() == 1)
-      variateForm = "univariate"
-    else
+      variateForm = match.arg(variateForm, c("univariate", "multivariate", "matrixvariate"))
+    } else if(getR6Class(type) %in% c("ProductSet","ExponentSet")) {
       variateForm = "multivariate"
+    } else {
+      variateForm = "univariate"
+    }
 
 
     #-------------------
