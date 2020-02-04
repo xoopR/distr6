@@ -11,13 +11,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(StudentT$new()$valueSupport(), "continuous")
-  expect_equal(StudentT$new()$variateForm(), "univariate")
-  expect_equal(StudentT$new()$symmetry(), "symmetric")
-  expect_equal(StudentT$new()$sup(), Inf)
-  expect_equal(StudentT$new()$inf(), -Inf)
-  expect_equal(StudentT$new()$dmax(), Inf)
-  expect_equal(StudentT$new()$dmin(), -Inf)
+  expect_equal(StudentT$new()$valueSupport, "continuous")
+  expect_equal(StudentT$new()$variateForm, "univariate")
+  expect_equal(StudentT$new()$symmetry, "symmetric")
+  expect_equal(StudentT$new()$sup, Inf)
+  expect_equal(StudentT$new()$inf, -Inf)
+  expect_equal(StudentT$new()$dmax, Inf)
+  expect_equal(StudentT$new()$dmin, -Inf)
 })
 
 s = StudentT$new(df = 1)

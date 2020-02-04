@@ -18,13 +18,13 @@ test_that("parameters", {
 })
 
 test_that("properties & traits",{
-  expect_equal(Uniform$new()$valueSupport(), "continuous")
-  expect_equal(Uniform$new()$variateForm(), "univariate")
-  expect_equal(Uniform$new()$symmetry(), "symmetric")
-  expect_equal(Uniform$new()$sup(), 1)
-  expect_equal(Uniform$new()$inf(), 0)
-  expect_equal(Uniform$new()$dmax(), 1)
-  expect_equal(Uniform$new()$dmin(), 0)
+  expect_equal(Uniform$new()$valueSupport, "continuous")
+  expect_equal(Uniform$new()$variateForm, "univariate")
+  expect_equal(Uniform$new()$symmetry, "symmetric")
+  expect_equal(Uniform$new()$sup, 1)
+  expect_equal(Uniform$new()$inf, 0)
+  expect_equal(Uniform$new()$dmax, 1)
+  expect_equal(Uniform$new()$dmin, 0)
 })
 
 u = Uniform$new()

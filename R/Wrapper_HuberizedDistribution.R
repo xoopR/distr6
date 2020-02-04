@@ -13,7 +13,7 @@
 #' where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and \eqn{f_X}/\eqn{F_X} is the
 #' pdf/cdf of the original distribution.
 #'
-#' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+#' If lower or upper are NULL they are taken to be \code{self$inf} and \code{self$sup} respectively.
 #'
 #' The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
 #' \code{FunctionImputation} first.
@@ -55,8 +55,8 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   if(!distribution$.__enclos_env__$private$.isPdf | !distribution$.__enclos_env__$private$.isCdf)
     stop("pdf and cdf are required for huberization. Try decorate(Distribution, FunctionImputation) first.")
 
-  if(is.null(lower)) lower = distribution$inf()
-  if(is.null(upper)) upper = distribution$sup()
+  if(is.null(lower)) lower = distribution$inf
+  if(is.null(upper)) upper = distribution$sup
 
   name = paste("Huberized",distribution$name)
   short_name = paste0("Hub",distribution$short_name)
@@ -68,12 +68,12 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
   cdf <- function(x1){
     cdf = x1
-    if(any(x1 == self$inf()))
-      cdf[x1 == self$inf()] <- rep(self$wrappedModels()[[1]]$cdf(self$inf()), sum(x1 == self$inf()))
-    if(any(x1 == self$sup()))
-      cdf[x1 == self$sup()] <- rep(1, sum(x1 == self$sup()))
-    if(any(x1 > self$inf() & x1 < self$sup()))
-      cdf[x1 > self$inf() & x1 < self$sup()] <- self$wrappedModels()[[1]]$cdf(cdf[x1 > self$inf() & x1 < self$sup()])
+    if(any(x1 == self$inf))
+      cdf[x1 == self$inf] <- rep(self$wrappedModels()[[1]]$cdf(self$inf), sum(x1 == self$inf))
+    if(any(x1 == self$sup))
+      cdf[x1 == self$sup] <- rep(1, sum(x1 == self$sup))
+    if(any(x1 > self$inf & x1 < self$sup))
+      cdf[x1 > self$inf & x1 < self$sup] <- self$wrappedModels()[[1]]$cdf(cdf[x1 > self$inf & x1 < self$sup])
 
     return(cdf)
   }
@@ -81,12 +81,12 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   quantile <- function(p){
     p = self$wrappedModels()[[1]]$quantile(p)
     quantile = p
-    if(any(p <= self$inf()))
-      quantile[p <= self$inf()] = self$inf()
-    if(any(p >= self$sup()))
-      quantile[p >= self$sup()] = self$sup()
-    if(any(p < self$sup() & p > self$inf()))
-      quantile[p < self$sup() & p > self$inf()] = p[p < self$sup() & p > self$inf()]
+    if(any(p <= self$inf))
+      quantile[p <= self$inf] = self$inf
+    if(any(p >= self$sup))
+      quantile[p >= self$sup] = self$sup
+    if(any(p < self$sup & p > self$inf))
+      quantile[p < self$sup & p > self$inf] = p[p < self$sup & p > self$inf]
 
     return(quantile)
   }
@@ -106,19 +106,19 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
 
     pdf <- function(x1){
       pdf = x1
-      if(any(x1 == self$inf()))
-        pdf[x1 == self$inf()] <- rep(self$wrappedModels()[[1]]$cdf(self$inf()), sum(x1 == self$inf()))
-      if(any(x1 == self$sup()))
-        pdf[x1 == self$sup()] <- rep(self$wrappedModels()[[1]]$cdf(self$sup(), lower.tail = F) +
-          self$wrappedModels()[[1]]$pdf(self$sup()), sum(x1 == self$sup()))
-      if(any(x1 > self$inf() & x1 < self$sup()))
-        pdf[x1 > self$inf() & x1 < self$sup()] <- self$wrappedModels()[[1]]$pdf(pdf[x1 > self$inf() & x1 < self$sup()])
+      if(any(x1 == self$inf))
+        pdf[x1 == self$inf] <- rep(self$wrappedModels()[[1]]$cdf(self$inf), sum(x1 == self$inf))
+      if(any(x1 == self$sup))
+        pdf[x1 == self$sup] <- rep(self$wrappedModels()[[1]]$cdf(self$sup, lower.tail = F) +
+          self$wrappedModels()[[1]]$pdf(self$sup), sum(x1 == self$sup))
+      if(any(x1 > self$inf & x1 < self$sup))
+        pdf[x1 > self$inf & x1 < self$sup] <- self$wrappedModels()[[1]]$pdf(pdf[x1 > self$inf & x1 < self$sup])
 
       return(pdf)
     }
 
     super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                     name = name, short_name = short_name, type = distribution$type(),
+                     name = name, short_name = short_name, type = distribution$type,
                      support = support,
                      description = description,
                      valueSupport = "mixture", variateForm = "univariate")
@@ -126,7 +126,7 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
     support <- Interval$new(lower, upper)
 
     super$initialize(distlist = distlist, cdf = cdf, quantile = quantile, rand = rand, name = name,
-                     short_name = short_name, type = distribution$type(),
+                     short_name = short_name, type = distribution$type,
                      support = support,
                      description = description,
                      valueSupport = "mixture", variateForm = "univariate")
@@ -146,7 +146,7 @@ HuberizedDistribution$set("public","setParameterValue",function(..., lst = NULL,
 
 
   super$setParameterValue(lst = lst, error = error)
-  if(self$support()$class == "integer")
+  if(self$support$class == "integer")
     private$.properties$support <- Interval$new(self$getParameterValue("hubLower"), self$getParameterValue("hubUpper"), class = "integer")
   else
     private$.properties$support <- Interval$new(self$getParameterValue("hubLower"), self$getParameterValue("hubUpper"))

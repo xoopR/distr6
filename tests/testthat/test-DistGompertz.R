@@ -10,13 +10,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Gompertz$new()$valueSupport(), "continuous")
-  expect_equal(Gompertz$new()$variateForm(), "univariate")
-  expect_equal(Gompertz$new()$symmetry(), "asymmetric")
-  expect_equal(Gompertz$new()$sup(), Inf)
-  expect_equal(Gompertz$new()$inf(), 0)
-  expect_equal(Gompertz$new()$dmax(), Inf)
-  expect_equal(Gompertz$new()$dmin(), 0)
+  expect_equal(Gompertz$new()$valueSupport, "continuous")
+  expect_equal(Gompertz$new()$variateForm, "univariate")
+  expect_equal(Gompertz$new()$symmetry, "asymmetric")
+  expect_equal(Gompertz$new()$sup, Inf)
+  expect_equal(Gompertz$new()$inf, 0)
+  expect_equal(Gompertz$new()$dmax, Inf)
+  expect_equal(Gompertz$new()$dmin, 0)
 })
 
 g = Gompertz$new()

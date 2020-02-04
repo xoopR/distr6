@@ -12,14 +12,14 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(BetaNoncentral$new()$valueSupport(), "continuous")
-  expect_equal(BetaNoncentral$new()$variateForm(), "univariate")
-  expect_equal(BetaNoncentral$new()$symmetry(), "symmetric")
-  expect_equal(BetaNoncentral$new(shape2=2)$symmetry(), "asymmetric")
-  expect_equal(BetaNoncentral$new()$sup(), 1)
-  expect_equal(BetaNoncentral$new()$inf(), 0)
-  expect_equal(BetaNoncentral$new()$dmax(), 1)
-  expect_equal(BetaNoncentral$new()$dmin(), 0)
+  expect_equal(BetaNoncentral$new()$valueSupport, "continuous")
+  expect_equal(BetaNoncentral$new()$variateForm, "univariate")
+  expect_equal(BetaNoncentral$new()$symmetry, "symmetric")
+  expect_equal(BetaNoncentral$new(shape2=2)$symmetry, "asymmetric")
+  expect_equal(BetaNoncentral$new()$sup, 1)
+  expect_equal(BetaNoncentral$new()$inf, 0)
+  expect_equal(BetaNoncentral$new()$dmax, 1)
+  expect_equal(BetaNoncentral$new()$dmin, 0)
 })
 
 

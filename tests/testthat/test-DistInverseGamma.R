@@ -10,13 +10,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(InverseGamma$new()$valueSupport(), "continuous")
-  expect_equal(InverseGamma$new()$variateForm(), "univariate")
-  expect_equal(InverseGamma$new()$symmetry(), "asymmetric")
-  expect_equal(InverseGamma$new()$sup(), Inf)
-  expect_equal(InverseGamma$new()$inf(), 0)
-  expect_equal(InverseGamma$new()$dmax(), Inf)
-  expect_equal(InverseGamma$new()$dmin(), .Machine$double.eps)
+  expect_equal(InverseGamma$new()$valueSupport, "continuous")
+  expect_equal(InverseGamma$new()$variateForm, "univariate")
+  expect_equal(InverseGamma$new()$symmetry, "asymmetric")
+  expect_equal(InverseGamma$new()$sup, Inf)
+  expect_equal(InverseGamma$new()$inf, 0)
+  expect_equal(InverseGamma$new()$dmax, Inf)
+  expect_equal(InverseGamma$new()$dmin, .Machine$double.eps)
 })
 
 g = InverseGamma$new()

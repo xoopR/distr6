@@ -13,13 +13,13 @@ test_that("parameters", {
 })
 
 test_that("properties & traits",{
-  expect_equal(Degenerate$new()$valueSupport(), "discrete")
-  expect_equal(Degenerate$new()$variateForm(), "univariate")
-  expect_equal(Degenerate$new()$symmetry(), "symmetric")
-  expect_equal(Degenerate$new()$sup(), 0)
-  expect_equal(Degenerate$new()$inf(), 0)
-  expect_equal(Degenerate$new()$dmin(), 0)
-  expect_equal(Degenerate$new()$dmax(), 0)
+  expect_equal(Degenerate$new()$valueSupport, "discrete")
+  expect_equal(Degenerate$new()$variateForm, "univariate")
+  expect_equal(Degenerate$new()$symmetry, "symmetric")
+  expect_equal(Degenerate$new()$sup, 0)
+  expect_equal(Degenerate$new()$inf, 0)
+  expect_equal(Degenerate$new()$dmin, 0)
+  expect_equal(Degenerate$new()$dmax, 0)
 })
 
 test_that("statistics",{

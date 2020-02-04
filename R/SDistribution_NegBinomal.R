@@ -219,9 +219,9 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     }
     cdf = function(x1){
       if(length(x1) == 1)
-        return(sum(self$pdf(self$inf():x1)))
+        return(sum(self$pdf(self$inf:x1)))
       else{
-        return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
+        return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf:x)))))
       }
     }
     quantile = NULL
@@ -236,9 +236,9 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
     }
     cdf = function(x1){
       if(length(x1) == 1)
-        return(sum(self$pdf(self$inf():x1)))
+        return(sum(self$pdf(self$inf:x1)))
       else{
-        return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf():x)))))
+        return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf:x)))))
       }
     }
     quantile = NULL

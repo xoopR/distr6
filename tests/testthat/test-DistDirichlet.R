@@ -19,13 +19,13 @@ test_that("parameters", {
 })
 
 test_that("properties & traits",{
-  expect_equal(mn$valueSupport(), "continuous")
-  expect_equal(mn$variateForm(), "multivariate")
-  expect_equal(mn$symmetry(), "asymmetric")
-  expect_equal(mn$inf(), Tuple$new(0,0,0))
-  expect_equal(mn$sup(), Tuple$new(1,1,1))
-  expect_equal(mn$dmin(), Tuple$new(0,0,0))
-  expect_equal(mn$dmax(), Tuple$new(1,1,1))
+  expect_equal(mn$valueSupport, "continuous")
+  expect_equal(mn$variateForm, "multivariate")
+  expect_equal(mn$symmetry, "asymmetric")
+  expect_equal(mn$inf, Tuple$new(0,0,0))
+  expect_equal(mn$sup, Tuple$new(1,1,1))
+  expect_equal(mn$dmin, Tuple$new(0,0,0))
+  expect_equal(mn$dmax, Tuple$new(1,1,1))
 })
 
 params = c(2,3)

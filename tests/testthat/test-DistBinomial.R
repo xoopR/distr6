@@ -12,14 +12,14 @@ test_that("constructor", {
 })
 
 test_that("properties & traits",{
-  expect_equal(Binomial$new()$valueSupport(), "discrete")
-  expect_equal(Binomial$new()$variateForm(), "univariate")
-  expect_equal(Binomial$new()$symmetry(), "symmetric")
-  expect_equal(Binomial$new(prob = 0.1)$symmetry(), "asymmetric")
-  expect_equal(Binomial$new(size=12)$sup(), 12)
-  expect_equal(Binomial$new()$inf(), 0)
-  expect_equal(Binomial$new(size=12)$dmax(), 12)
-  expect_equal(Binomial$new()$dmin(), 0)
+  expect_equal(Binomial$new()$valueSupport, "discrete")
+  expect_equal(Binomial$new()$variateForm, "univariate")
+  expect_equal(Binomial$new()$symmetry, "symmetric")
+  expect_equal(Binomial$new(prob = 0.1)$symmetry, "asymmetric")
+  expect_equal(Binomial$new(size=12)$sup, 12)
+  expect_equal(Binomial$new()$inf, 0)
+  expect_equal(Binomial$new(size=12)$dmax, 12)
+  expect_equal(Binomial$new()$dmin, 0)
 })
 
 b = Binomial$new()

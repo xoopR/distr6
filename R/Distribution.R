@@ -70,20 +70,20 @@
 #' @section Public Methods:
 #'  \tabular{ll}{
 #'   \strong{Accessor Methods} \tab \strong{Link} \cr
-#'   \code{decorators()} \tab \code{\link{decorators}} \cr
-#'   \code{traits()} \tab \code{\link{traits}} \cr
-#'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-#'   \code{variateForm()} \tab \code{\link{variateForm}} \cr
-#'   \code{type()} \tab \code{\link{type}} \cr
-#'   \code{properties()} \tab \code{\link{properties}} \cr
-#'   \code{support()} \tab \code{\link{support}} \cr
-#'   \code{symmetry()} \tab \code{\link{symmetry}} \cr
-#'   \code{sup()}  \tab \code{\link{sup}} \cr
-#'   \code{inf()} \tab \code{\link{inf}} \cr
-#'   \code{dmax()}  \tab \code{\link{dmax}} \cr
-#'   \code{dmin()} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+#'   \code{decorators} \tab \code{\link{decorators}} \cr
+#'   \code{traits} \tab \code{\link{traits}} \cr
+#'   \code{valueSupport} \tab \code{\link{valueSupport}} \cr
+#'   \code{variateForm} \tab \code{\link{variateForm}} \cr
+#'   \code{type} \tab \code{\link{type}} \cr
+#'   \code{properties} \tab \code{\link{properties}} \cr
+#'   \code{support} \tab \code{\link{support}} \cr
+#'   \code{symmetry} \tab \code{\link{symmetry}} \cr
+#'   \code{sup}  \tab \code{\link{sup}} \cr
+#'   \code{inf} \tab \code{\link{inf}} \cr
+#'   \code{dmax}  \tab \code{\link{dmax}} \cr
+#'   \code{dmin} \tab \code{\link{dmin}} \cr
+#'   \code{skewnessType} \tab \code{\link{skewnessType}} \cr
+#'   \code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
 #'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
@@ -432,22 +432,22 @@ Distribution$set("public","summary",function(full = TRUE,...){
     }
     cat("\n")
 
-    cat(" Support:",self$support()$strprint(), "\tScientific Type:",self$type()$strprint(),"\n")
-    cat("\n Traits:\t",self$valueSupport(),"; ",self$variateForm(), sep="")
-    cat("\n Properties:\t", self$symmetry(),sep="")
-    if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType())
-    if(!inherits(a_skew,"try-error")) cat(";",self$skewnessType())
+    cat(" Support:",self$support$strprint(), "\tScientific Type:",self$type$strprint(),"\n")
+    cat("\n Traits:\t",self$valueSupport,"; ",self$variateForm, sep="")
+    cat("\n Properties:\t", self$symmetry,sep="")
+    if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType)
+    if(!inherits(a_skew,"try-error")) cat(";",self$skewnessType)
 
-    if(length(self$decorators())!=0)
-      cat("\n\n Decorated with: ", paste0(self$decorators(),collapse=", "))
+    if(length(self$decorators)!=0)
+      cat("\n\n Decorated with: ", paste0(self$decorators,collapse=", "))
 
   } else {
     if(length(private$.parameters)!=0)
       cat(self$strprint())
     else
       cat(self$name)
-    cat("\nScientific Type:",self$type()$strprint(),"\t See $traits() for more")
-    cat("\nSupport:",self$support()$strprint(),"\t See $properties() for more")
+    cat("\nScientific Type:",self$type$strprint(),"\t See $traits for more")
+    cat("\nSupport:",self$support$strprint(),"\t See $properties for more")
   }
   cat("\n")
   invisible(self)
@@ -611,14 +611,14 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
-    if(self$type()$class == "integer")
+    if(self$type$class == "integer")
        x1 <- floor(x1)
     cdf = numeric(length(x1))
-    cdf[x1 >= self$sup()] = 1
+    cdf[x1 >= self$sup] = 1
 
     if(getR6Class(self) %in% c("Empirical","WeightedDiscrete")){
-      if(any(x1 >= self$inf() & x1 <= self$sup()))
-        cdf[x1 >= self$inf() & x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() & x1 <= self$sup()])
+      if(any(x1 >= self$inf & x1 <= self$sup))
+        cdf[x1 >= self$inf & x1 <= self$sup] = private$.cdf(x1[x1 >= self$inf & x1 <= self$sup])
     } else {
       if(any(self$liesInSupport(x1, all = F)))
         cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
@@ -698,8 +698,8 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
     quantile = p
     quantile[p > 1] = NaN
     quantile[p < 0] = NaN
-    quantile[p == 0] = self$inf()
-    quantile[p == 1] = self$sup()
+    quantile[p == 0] = self$inf
+    quantile[p == 1] = self$sup
     if(sum(p > 0 & p < 1)!=0)
       quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
   } else{
@@ -919,7 +919,7 @@ Distribution$set("public","correlation",function(){
 #' @export
 NULL
 Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
-  return(self$support()$contains(x, all, bound))
+  return(self$support$contains(x, all, bound))
 })
 
 #' @name liesInType
@@ -945,7 +945,7 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @export
 NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
-  return(self$type()$contains(x, all, bound))
+  return(self$type$contains(x, all, bound))
 })
 
 #-------------------------------------------------------------
@@ -1229,15 +1229,15 @@ Distribution$set("private",".setWorkingSupport",function(){
   suppressMessages({
     rands = self$rand(1000)
 
-    if(self$sup() != Inf)
-      newsup = self$sup()
+    if(self$sup != Inf)
+      newsup = self$sup
     else{
       newsup = ceiling(max(rands))
       while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
       newsup = ceiling(newsup - 1)
     }
 
-    inf = self$inf()
+    inf = self$inf
     if(inf != -Inf)
       newinf = inf
     else{

@@ -19,16 +19,16 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(NegativeBinomial$new()$valueSupport(), "discrete")
-  expect_equal(NegativeBinomial$new()$variateForm(), "univariate")
-  expect_equal(NegativeBinomial$new()$symmetry(), "asymmetric")
-  expect_equal(NegativeBinomial$new(form = "tbf")$sup(), Inf)
-  expect_equal(NegativeBinomial$new(form = "tbf")$inf(), 10)
-  expect_equal(NegativeBinomial$new(form = "tbs")$inf(), 10)
-  expect_equal(NegativeBinomial$new(form = "fbs")$inf(), 0)
-  expect_equal(NegativeBinomial$new(form = "sbf")$inf(), 0)
-  expect_equal(NegativeBinomial$new()$dmax(),Inf)
-  expect_equal(NegativeBinomial$new()$dmin(), 0)
+  expect_equal(NegativeBinomial$new()$valueSupport, "discrete")
+  expect_equal(NegativeBinomial$new()$variateForm, "univariate")
+  expect_equal(NegativeBinomial$new()$symmetry, "asymmetric")
+  expect_equal(NegativeBinomial$new(form = "tbf")$sup, Inf)
+  expect_equal(NegativeBinomial$new(form = "tbf")$inf, 10)
+  expect_equal(NegativeBinomial$new(form = "tbs")$inf, 10)
+  expect_equal(NegativeBinomial$new(form = "fbs")$inf, 0)
+  expect_equal(NegativeBinomial$new(form = "sbf")$inf, 0)
+  expect_equal(NegativeBinomial$new()$dmax,Inf)
+  expect_equal(NegativeBinomial$new()$dmin, 0)
 })
 
 

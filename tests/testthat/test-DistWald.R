@@ -13,13 +13,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Wald$new()$valueSupport(), "continuous")
-  expect_equal(Wald$new()$variateForm(), "univariate")
-  expect_equal(Wald$new()$symmetry(), "symmetric")
-  expect_equal(Wald$new()$sup(), Inf)
-  expect_equal(Wald$new()$inf(), 0)
-  expect_equal(Wald$new()$dmax(), Inf)
-  expect_equal(Wald$new()$dmin(), .Machine$double.eps)
+  expect_equal(Wald$new()$valueSupport, "continuous")
+  expect_equal(Wald$new()$variateForm, "univariate")
+  expect_equal(Wald$new()$symmetry, "symmetric")
+  expect_equal(Wald$new()$sup, Inf)
+  expect_equal(Wald$new()$inf, 0)
+  expect_equal(Wald$new()$dmax, Inf)
+  expect_equal(Wald$new()$dmin, .Machine$double.eps)
 })
 
 x = Wald$new(mean = 2.5, shape = 3)

@@ -32,13 +32,13 @@ test_that("constructor",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Normal$new()$symmetry(), "symmetric")
-  expect_equal(Normal$new()$inf(), -Inf)
-  expect_equal(Normal$new()$sup(), Inf)
-  expect_equal(Normal$new()$dmin(), -Inf)
-  expect_equal(Normal$new()$dmax(), Inf)
-  expect_equal(Normal$new()$valueSupport(), "continuous")
-  expect_equal(Normal$new()$variateForm(), "univariate")
+  expect_equal(Normal$new()$symmetry, "symmetric")
+  expect_equal(Normal$new()$inf, -Inf)
+  expect_equal(Normal$new()$sup, Inf)
+  expect_equal(Normal$new()$dmin, -Inf)
+  expect_equal(Normal$new()$dmax, Inf)
+  expect_equal(Normal$new()$valueSupport, "continuous")
+  expect_equal(Normal$new()$variateForm, "univariate")
 })
 
 test_that("statistics",{

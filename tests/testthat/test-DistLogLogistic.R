@@ -14,14 +14,14 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Loglogistic$new()$valueSupport(), "continuous")
-  expect_equal(Loglogistic$new()$variateForm(), "univariate")
-  expect_equal(Loglogistic$new()$symmetry(), "asymmetric")
-  expect_equal(Loglogistic$new()$sup(), Inf)
-  expect_equal(Loglogistic$new()$inf(), 0)
-  expect_equal(Loglogistic$new(location=2)$inf(), 2)
-  expect_equal(Loglogistic$new()$dmax(), Inf)
-  expect_equal(Loglogistic$new()$dmin(), .Machine$double.eps)
+  expect_equal(Loglogistic$new()$valueSupport, "continuous")
+  expect_equal(Loglogistic$new()$variateForm, "univariate")
+  expect_equal(Loglogistic$new()$symmetry, "asymmetric")
+  expect_equal(Loglogistic$new()$sup, Inf)
+  expect_equal(Loglogistic$new()$inf, 0)
+  expect_equal(Loglogistic$new(location=2)$inf, 2)
+  expect_equal(Loglogistic$new()$dmax, Inf)
+  expect_equal(Loglogistic$new()$dmin, .Machine$double.eps)
 })
 
 g = Loglogistic$new(location = 1, shape = 2, scale = 3)

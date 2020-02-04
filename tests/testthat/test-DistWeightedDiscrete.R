@@ -14,9 +14,9 @@ test_that("constructor",{
 
 gd = WeightedDiscrete$new(data.frame(x = 1:10, pdf = rep(0.1,10)))
 test_that("properties & traits",{
-  expect_equal(gd$valueSupport(), "discrete")
-  expect_equal(gd$variateForm(), "univariate")
-  expect_equal(gd$symmetry(), "asymmetric")
+  expect_equal(gd$valueSupport, "discrete")
+  expect_equal(gd$variateForm, "univariate")
+  expect_equal(gd$symmetry, "asymmetric")
 })
 
 
