@@ -42,7 +42,7 @@ We have a pdf that accesses parameters, but currently we have no parameters to a
 
 ```{r}
 ps <- ParameterSet$new(id = list("lower","upper"), value = c(1,10),
-                       support = list(Reals$new(),Reals$new()),
+                       support = list(set6::Reals$new(),set6::Reals$new()),
                        settable = list(TRUE, TRUE))
 print(ps)
 ```
@@ -102,7 +102,8 @@ Finally a whole host of other arguments could be supplied to the Distribution to
 ```{r}
 cdf <- function(x1)return((x1 -self$getParameterValue("lower"))/ (self$getParameterValue("upper")-self$getParameterValue("lower")))
 
-U <- Distribution$new(name = "Uniform", short_name = "unif", type = Reals$new(), support = Interval$new(1, 10),  symmetric = TRUE, pdf = pdf, cdf = cdf, parameters = ps, description = "Custom uniform distribution")
+U <- Distribution$new(name = "Uniform", short_name = "unif", type = set6::Reals$new(),
+                      support = set6::Interval$new(1, 10),  symmetric = TRUE, pdf = pdf, cdf = cdf, parameters = ps, description = "Custom uniform distribution")
 
 decorate(U, list(CoreStatistics, ExoticStatistics, FunctionImputation))
 
