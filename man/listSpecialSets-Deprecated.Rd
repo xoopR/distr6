@@ -16,7 +16,4 @@ Lists special sets that can be used in SetInterval.
 listSpecialSets()
 listSpecialSets(TRUE)
 }
-\seealso{
-\code{\link{SpecialSet}}
-}
 \keyword{internal}

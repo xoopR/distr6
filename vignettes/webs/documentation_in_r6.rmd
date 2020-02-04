@@ -32,7 +32,6 @@ We document all R6 classes using the following Roxygen tags:
 ### Example
 
 ````R
-#' @include Distribution_helpers.R SetInterval_operations.R
 #-------------------------------------------------------------
 # Distribution Documentation
 #-------------------------------------------------------------
@@ -54,7 +53,7 @@ We document all R6 classes using the following Roxygen tags:
 #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' \code{name} \tab character \tab Full name of distribution. \cr
 #' \code{short_name} \tab character \tab Short name to identify distribution. \cr
-#' \code{type} \tab SetInterval \tab Scientific type. \cr
+#' \code{type} \tab set6::Set \tab Scientific type. \cr
 #' }
 #'
 #' @section Constructor Details:

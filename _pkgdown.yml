@@ -33,8 +33,6 @@ navbar:
         href: articles/webs/decorators.html
       - text: Wrappers
         href: articles/webs/wrappers.html
-      - text: Sets and Intervals
-        href: articles/webs/sets.html
       - text: Custom Distributions
         href: articles/webs/custom_distributions.html
   - text: Extension Guidelines
@@ -57,8 +55,6 @@ navbar:
       href: articles/webs/api_lifecycle.html
     - text: Analytical and Numerical Methods
       href: articles/webs/analytic_and_numeric_methods.html
-    - text: R vs C
-      href: articles/webs/r_vs_c.html
     - text: R6 and Design Patterns
       href: articles/webs/r6_and_design_patterns.html
     - text: Documentation in R6
@@ -71,8 +67,6 @@ navbar:
     href: news/index.html
   - icon: fa-github fa-lg
     href: https://github.com/RaphaelS1/distr6
- # - icon: fa-slack
- #   href: https://distr6.slack.com
  # - icon: fa-stack-overflow
  #   href: https://stackoverflow.com/questions/tagged/distr6
       
@@ -238,42 +232,6 @@ reference:
     desc: "Validation checks for Distributions."
     contents:
       - starts_with("assert")
-  - title: "Symbolic Sets"
-    desc: "Functions and classes relating to symbolic representation of mathematical sets."
-    contents:
-      - SetInterval
-      - Interval
-      - Set
-      - SpecialSet
-      - Empty
-      - Naturals
-      - Integers
-      - Rationals
-      - Reals
-      - ExtendedReals
-      - Complex
-      - starts_with("Pos")
-      - starts_with("Neg")
-      - setSymbol
-      - setOperation
-      - complement.SetInterval
-      - power.SetInterval
-      - product.SetInterval
-      - union.SetInterval
-      - listSpecialSets
-      - as.numeric.Interval
-      - class.SetInterval
-      - dimension.SetInterval
-      - elements
-      - getSymbol.SetInterval
-      - inf.SetInterval
-      - length.Interval
-      - length.Set
-      - liesInSetInterval
-      - max.SetInterval
-      - min.SetInterval
-      - sup.SetInterval
-      - type.SetInterval
   - title: "Helper Functions"
     desc: "Miscellaneous functions for use in distr6."
     contents: 
