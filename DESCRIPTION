@@ -82,6 +82,8 @@ Suggests:
   actuar,
   remotes,
   pracma
+Remotes:
+  RaphaelS1/set6
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
