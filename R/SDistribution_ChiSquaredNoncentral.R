@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+#' @include  ParameterSet.R
 #-------------------------------------------------------------
 # Noncentral Chi-Squared Distribution Documentation
 #-------------------------------------------------------------

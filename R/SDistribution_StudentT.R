@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+#' @include  ParameterSet.R
 #-------------------------------------------------------------
 # Student's t Distribution Documentation
 #-------------------------------------------------------------
