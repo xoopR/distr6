@@ -95,14 +95,15 @@ Categorical$set("private",".getRefParams", function(paramlst){
 
 Categorical$set("public","initialize",function(..., probs, decorators = NULL, verbose = FALSE){
 
-  dots = list(...)
 
   if(...length() == 0){
     probs = 1
     dots = 1
     support = Set$new(1)
-  } else
+  } else {
+    dots = list(...)
     support = Set$new(...)
+  }
 
   checkmate::assert(length(dots) == length(probs))
 

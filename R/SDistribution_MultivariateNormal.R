@@ -90,14 +90,15 @@ MultivariateNormal$set("public","setParameterValue",function(..., lst = NULL, er
   if(is.null(lst))
     lst <- list(...)
   if(!is.null(lst$cov)){
-    if(any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))))
-      lst$cov <- matrix(lst$cov, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
+    if(any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
+       length(lst$cov) != self$getParameterValue("K")^2)
+      lst$cov <- suppressWarnings(matrix(lst$cov, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K")))
     lst$cov <- as.numeric(lst$cov)
   }
   if(!is.null(lst$prec)){
     if(any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
-       length(dim) != self$getParameterValue("K")^2)
-      lst$prec <- matrix(lst$prec, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K"))
+       length(lst$prec) != self$getParameterValue("K")^2)
+      lst$prec <- suppressWarnings(matrix(lst$prec, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K")))
     lst$prec <- as.numeric(lst$prec)
   }
   if(!is.null(lst$mean)){

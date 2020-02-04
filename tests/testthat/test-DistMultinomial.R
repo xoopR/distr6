@@ -21,10 +21,10 @@ test_that("properties & traits",{
   expect_equal(mn$valueSupport(), "discrete")
   expect_equal(mn$variateForm(), "multivariate")
   expect_equal(mn$symmetry(), "asymmetric")
-  expect_equal(mn$inf(), Tuple$new(0,0,0))
-  expect_equal(mn$sup(), Tuple$new(3,3,3))
-  expect_equal(mn$dmin(), Tuple$new(0,0,0))
-  expect_equal(mn$dmax(), Tuple$new(3,3,3))
+  expect_equal(mn$inf(), Tuple$new(0,0))
+  expect_equal(mn$sup(), Tuple$new(3,3))
+  expect_equal(mn$dmin(), Tuple$new(0,0))
+  expect_equal(mn$dmax(), Tuple$new(3,3))
 })
 
 test_that("normalise", {
@@ -34,7 +34,7 @@ test_that("normalise", {
 
 
 probs = c(0.1, 0.2, 0.7)
-mn = Multinomial$new(size = 3, prob = probs)
+mn = Multinomial$new(size = 3, probs = probs)
 test_that("statistics",{
   expect_equal(mn$mean(), 3 * probs)
   expect_equal(diag(mn$variance()), 3 * probs * (1-probs))

@@ -131,10 +131,16 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
       a_update = NA
 
     a_value = value[[i]]
-    checkmate::assert(a_support$contains(a_value, all = T), combine = "and",
-                      .var.name = "'value' should be between 'lower' and 'upper'")
+    if(length(a_value) > 1){
+      checkmate::assert(a_support$contains(Tuple$new(a_value)),
+                        .var.name = "'value' should be between 'lower' and 'upper'")
+    } else {
+      checkmate::assert(a_support$contains(a_value),
+                        .var.name = "'value' should be between 'lower' and 'upper'")
+    }
 
-    a_param = data.table::data.table(id = a_id, value = a_support$min, support = list(a_support),
+
+    a_param = data.table::data.table(id = a_id, value = 0, support = list(a_support),
                          settable = a_settable,
                          description = a_description,
                          updateFunc = a_update,
@@ -198,8 +204,14 @@ ParameterSet$set("public","update", function(...){
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       newval = x[[6]](self)
-      if(!x[[3]]$contains(newval, all = TRUE))
-        stop(newval, " does not lie in the support of parameter ", x[[1]])
+      if(length(newval) > 1) {
+        if(!x[[3]]$contains(Tuple$new(newval)))
+          stop(newval, " does not lie in the support of parameter ", x[[1]])
+      } else {
+        if(!x[[3]]$contains(newval))
+          stop(newval, " does not lie in the support of parameter ", x[[1]])
+      }
+
       return(newval)
       })
     suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
@@ -355,8 +367,14 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
       # if(param$support[[1]]$class() == "integer")
       #   value <- round(value)
 
-      if(!param$support[[1]]$contains(value, all = TRUE))
-        stop(value, " does not lie in the support of parameter ", aid)
+      if(length(value) > 1){
+        if(!param$support[[1]]$contains(Tuple$new(value), all = TRUE))
+          stop(value, " does not lie in the support of parameter ", aid)
+      } else {
+        if(!param$support[[1]]$contains(value, all = TRUE))
+          stop(value, " does not lie in the support of parameter ", aid)
+      }
+
 
       private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"] <- list(value)
     }
