@@ -86,14 +86,14 @@ describing a class whereas properties describe an object. In simpler terms, this
 trait is present independent of the distribution's parameterisation whereas a property depends
 on the constructed parameters.
 ```{r}
-N$properties()
-N$traits()
+N$properties
+N$traits
 ```
 
 Finally individual properties and traits are accessible via their own 'getters' for example:
 ```{r}
-N$valueSupport()
-N$skewness()
+N$valueSupport
+N$skewness
 ```
 
 ### d/p/q/r

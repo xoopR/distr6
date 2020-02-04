@@ -78,6 +78,30 @@ N$setParameterValue(var = 6)$getParameterValue("var")
 ```
 See how we simply added one method to the end of the other using the same dollar sign syntax. Not all methods can be chained and do not worry if you don't feel comfortable doing this, we're just highlighting it for users more familiar with object-oriented programming.
 
+## Active Bindings
+
+Active bindings are similar to public variables, they are accessed using `$`, and make the R6 object
+look as if its a list. In `distr6` all active bindings are read-only, and exist for object properties
+and traits. They differ from public methods as no `()` is required.
+
+```{r}
+b <- Binomial$new()
+
+# public variable
+b$name
+
+# active bindings
+b$kurtosisType
+b$inf
+
+# public method
+b$kurtosis()
+b$mean()
+```
+
+In distr6, all mathematical functions are public methods (e.g. mean, variance, kurtosis), whereas
+all properties and traits are active bindings (e.g. kurtosisType, symmetry, inf, sup).
+
 ## Cloning
 
 The final thing we discuss is an advanced topic but is very important in R6. The best way to demonstrate cloning is by example but don't worry we won't go into any of the technical details.
