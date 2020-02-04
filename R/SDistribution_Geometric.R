@@ -61,9 +61,9 @@ Geometric <-  R6Class("Geometric", inherit = SDistribution, lock_objects = F)
 
 Geometric$set("private",".trials",NULL)
 
-Geometric$set("active","name","Geometric")
-Geometric$set("active","short_name","Geom")
-Geometric$set("active","packages","stats")
+Geometric$set("public","name","Geometric")
+Geometric$set("public","short_name","Geom")
+Geometric$set("public","packages","stats")
 
 Geometric$set("public","mean",function(){
     if(private$.trials)

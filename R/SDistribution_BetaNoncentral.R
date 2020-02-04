@@ -40,10 +40,10 @@ NULL
 # Noncentral Beta Distribution Definition
 #-------------------------------------------------------------
 BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_objects = F)
-BetaNoncentral$set("active","name","BetaNoncentral")
-BetaNoncentral$set("active","short_name","BetaNC")
-BetaNoncentral$set("active","description","Noncentral Beta Probability Distribution.")
-BetaNoncentral$set("active","packages","stats")
+BetaNoncentral$set("public","name","BetaNoncentral")
+BetaNoncentral$set("public","short_name","BetaNC")
+BetaNoncentral$set("public","description","Noncentral Beta Probability Distribution.")
+BetaNoncentral$set("public","packages","stats")
 
 BetaNoncentral$set("private", ".getRefParams", function(paramlst){
   lst = list()

@@ -64,10 +64,10 @@ NULL
 # Lognormal Distribution Definition
 #-------------------------------------------------------------
 Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F)
-Lognormal$set("active","name","Log-Normal")
-Lognormal$set("active","short_name","Lnorm")
-Lognormal$set("active","description","Log-Normal Probability Distribution.")
-Lognormal$set("active","packages","stats")
+Lognormal$set("public","name","Log-Normal")
+Lognormal$set("public","short_name","Lnorm")
+Lognormal$set("public","description","Log-Normal Probability Distribution.")
+Lognormal$set("public","packages","stats")
 
 Lognormal$set("public","mean",function(){
   return(self$getParameterValue("mean"))

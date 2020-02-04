@@ -53,7 +53,7 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
 Hypergeometric$set("public", "name", "Hypergeometric")
 Hypergeometric$set("public", "short_name", "Hyper")
 Hypergeometric$set("public", "description", "Hypergeometric Probability Distribution")
-Hypergeometric$set("active","packages","stats")
+Hypergeometric$set("public","packages","stats")
 
 Hypergeometric$set("public", "mean", function(){
     return(self$getParameterValue("draws")*self$getParameterValue("successes")/self$getParameterValue("size"))

@@ -43,10 +43,10 @@ NULL
 # Uniform Distribution Definition
 #-------------------------------------------------------------
 Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F)
-Uniform$set("active","name","Uniform")
-Uniform$set("active","short_name","Unif")
-Uniform$set("active","description","Uniform Probability Distribution.")
-Uniform$set("active","packages","stats")
+Uniform$set("public","name","Uniform")
+Uniform$set("public","short_name","Unif")
+Uniform$set("public","description","Uniform Probability Distribution.")
+Uniform$set("public","packages","stats")
 
 
 Uniform$set("public","mean",function(){

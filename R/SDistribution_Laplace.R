@@ -47,9 +47,9 @@ NULL
 # Laplace Distribution Definition
 #-------------------------------------------------------------
 Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F)
-Laplace$set("active","name","Laplace")
-Laplace$set("active","short_name","Lap")
-Laplace$set("active","description","Laplace Probability Distribution.")
+Laplace$set("public","name","Laplace")
+Laplace$set("public","short_name","Lap")
+Laplace$set("public","description","Laplace Probability Distribution.")
 
 Laplace$set("public","mean",function(){
   self$getParameterValue("mean")

@@ -43,10 +43,10 @@ NULL
 # Pareto Distribution Definition
 #-------------------------------------------------------------
 Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F)
-Pareto$set("active","name","Pareto")
-Pareto$set("active","short_name","Pare")
-Pareto$set("active","description","Pareto Probability Distribution.")
-Pareto$set("active","packages", "expint")
+Pareto$set("public","name","Pareto")
+Pareto$set("public","short_name","Pare")
+Pareto$set("public","description","Pareto Probability Distribution.")
+Pareto$set("public","packages", "expint")
 
 Pareto$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)

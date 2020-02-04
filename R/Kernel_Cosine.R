@@ -29,9 +29,9 @@ NULL
 # Cosine Kernel Definition
 #-------------------------------------------------------------
 Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F)
-Cosine$set("active","name","Cosine")
-Cosine$set("active","short_name","Cos")
-Cosine$set("active","description","Cosine Kernel")
+Cosine$set("public","name","Cosine")
+Cosine$set("public","short_name","Cos")
+Cosine$set("public","description","Cosine Kernel")
 Cosine$set("public","squared2Norm",function(){
   return(pi^2 / 16)
 })

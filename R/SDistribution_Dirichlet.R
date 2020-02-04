@@ -53,9 +53,9 @@ NULL
 # Dirichlet Distribution Definition
 #-------------------------------------------------------------
 Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F)
-Dirichlet$set("active","name","Dirichlet")
-Dirichlet$set("active","short_name","Diri")
-Dirichlet$set("active","description","Multivariate Normal Probability Distribution.")
+Dirichlet$set("public","name","Dirichlet")
+Dirichlet$set("public","short_name","Diri")
+Dirichlet$set("public","description","Multivariate Normal Probability Distribution.")
 
 Dirichlet$set("public","mean",function(){
   return(self$getParameterValue("params")/sum(self$getParameterValue("params")))

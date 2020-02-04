@@ -44,10 +44,10 @@ NULL
 # Logarithmic Distribution Definition
 #-------------------------------------------------------------
 Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F)
-Logarithmic$set("active","name","Logarithmic")
-Logarithmic$set("active","short_name","Log")
-Logarithmic$set("active","description","Logarithmic Probability Distribution.")
-Logarithmic$set("active","packages","extraDistr")
+Logarithmic$set("public","name","Logarithmic")
+Logarithmic$set("public","short_name","Log")
+Logarithmic$set("public","description","Logarithmic Probability Distribution.")
+Logarithmic$set("public","packages","extraDistr")
 
 Logarithmic$set("public","mean",function(){
   theta = self$getParameterValue("theta")

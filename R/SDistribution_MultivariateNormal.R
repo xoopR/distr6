@@ -57,9 +57,9 @@ NULL
 # MultivariateNormal Distribution Definition
 #-------------------------------------------------------------
 MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F)
-MultivariateNormal$set("active","name","MultivariateNormal")
-MultivariateNormal$set("active","short_name","MultiNorm")
-MultivariateNormal$set("active","description","Multivariate Normal Probability Distribution.")
+MultivariateNormal$set("public","name","MultivariateNormal")
+MultivariateNormal$set("public","short_name","MultiNorm")
+MultivariateNormal$set("public","description","Multivariate Normal Probability Distribution.")
 
 MultivariateNormal$set("public","mean",function(){
   return(self$getParameterValue("mean"))

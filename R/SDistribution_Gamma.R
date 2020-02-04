@@ -50,10 +50,10 @@ NULL
 # Gamma Distribution Definition
 #-------------------------------------------------------------
 Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F)
-Gamma$set("active","name","Gamma")
-Gamma$set("active","short_name","Gamma")
-Gamma$set("active","description","Gamma Probability Distribution.")
-Gamma$set("active","packages","stats")
+Gamma$set("public","name","Gamma")
+Gamma$set("public","short_name","Gamma")
+Gamma$set("public","description","Gamma Probability Distribution.")
+Gamma$set("public","packages","stats")
 
 Gamma$set("public","mean",function(){
   return(self$getParameterValue("mean"))

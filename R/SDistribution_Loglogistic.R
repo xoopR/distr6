@@ -47,9 +47,9 @@ NULL
 # Loglogistic Distribution Definition
 #-------------------------------------------------------------
 Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F)
-Loglogistic$set("active","name","Loglogistic")
-Loglogistic$set("active","short_name","LLogis")
-Loglogistic$set("active","description","Log-Logistic Probability Distribution.")
+Loglogistic$set("public","name","Loglogistic")
+Loglogistic$set("public","short_name","LLogis")
+Loglogistic$set("public","description","Log-Logistic Probability Distribution.")
 
 Loglogistic$set("public","mean",function(){
   return(self$getParameterValue("location") +

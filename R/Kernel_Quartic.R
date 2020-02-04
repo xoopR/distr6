@@ -32,9 +32,9 @@ NULL
 # Uniform Kernel Definition
 #-------------------------------------------------------------
 Quartic <- R6Class("Quartic", inherit = Kernel, lock_objects = F)
-Quartic$set("active","name","Quartic")
-Quartic$set("active","short_name","Quart")
-Quartic$set("active","description","Quartic Kernel")
+Quartic$set("public","name","Quartic")
+Quartic$set("public","short_name","Quart")
+Quartic$set("public","description","Quartic Kernel")
 Quartic$set("public","squared2Norm",function(){
   return(5/7)
 })

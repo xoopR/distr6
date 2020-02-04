@@ -32,9 +32,9 @@ NULL
 # Sigmoid Kernel Definition
 #-------------------------------------------------------------
 Sigmoid <- R6Class("Sigmoid", inherit = Kernel, lock_objects = F)
-Sigmoid$set("active","name","Sigmoid")
-Sigmoid$set("active","short_name","Sigm")
-Sigmoid$set("active","description","Sigmoid Kernel")
+Sigmoid$set("public","name","Sigmoid")
+Sigmoid$set("public","short_name","Sigm")
+Sigmoid$set("public","description","Sigmoid Kernel")
 Sigmoid$set("public","squared2Norm",function(){
   return(2 / pi^2)
 })

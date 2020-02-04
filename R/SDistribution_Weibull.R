@@ -49,10 +49,10 @@ NULL
 # Weibull Distribution Definition
 #-------------------------------------------------------------
 Weibull <- R6Class("Weibull", inherit = SDistribution, lock_objects = F)
-Weibull$set("active","name","Weibull")
-Weibull$set("active","short_name","Weibull")
-Weibull$set("active","description","Weibull Probability Distribution.")
-Weibull$set("active","packages","stats")
+Weibull$set("public","name","Weibull")
+Weibull$set("public","short_name","Weibull")
+Weibull$set("public","description","Weibull Probability Distribution.")
+Weibull$set("public","packages","stats")
 
 Weibull$set("public","mean",function(){
   return(self$getParameterValue("scale")*gamma(1+1/self$getParameterValue("shape")))

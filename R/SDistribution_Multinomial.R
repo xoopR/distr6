@@ -48,10 +48,10 @@ NULL
 # Multinomial Distribution Definition
 #-------------------------------------------------------------
 Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F)
-Multinomial$set("active","name","Multinomial")
-Multinomial$set("active","short_name","Multinom")
-Multinomial$set("active","description","Multinomial Probability Distribution.")
-Multinomial$set("active","packages","stats")
+Multinomial$set("public","name","Multinomial")
+Multinomial$set("public","short_name","Multinom")
+Multinomial$set("public","description","Multinomial Probability Distribution.")
+Multinomial$set("public","packages","stats")
 
 Multinomial$set("public","mean",function(){
   return(self$getParameterValue("size") * self$getParameterValue("probs"))

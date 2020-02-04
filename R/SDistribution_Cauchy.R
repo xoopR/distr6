@@ -44,10 +44,10 @@ NULL
 # Cauchy Distribution Definition
 #-------------------------------------------------------------
 Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F)
-Cauchy$set("active","name","Cauchy")
-Cauchy$set("active","short_name","Cauchy")
-Cauchy$set("active","description","Cauchy Probability Distribution.")
-Cauchy$set("active","packages","stats")
+Cauchy$set("public","name","Cauchy")
+Cauchy$set("public","short_name","Cauchy")
+Cauchy$set("public","description","Cauchy Probability Distribution.")
+Cauchy$set("public","packages","stats")
 
 Cauchy$set("public","mean",function(){
   return(NaN)

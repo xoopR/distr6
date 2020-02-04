@@ -46,10 +46,10 @@ NULL
 # Exponential Distribution Definition
 #-------------------------------------------------------------
 Exponential <- R6Class("Exponential", inherit = SDistribution, lock_objects = F)
-Exponential$set("active","name","Exponential")
-Exponential$set("active","short_name","Exp")
-Exponential$set("active","description","Exponential Probability Distribution.")
-Exponential$set("active","packages","stats")
+Exponential$set("public","name","Exponential")
+Exponential$set("public","short_name","Exp")
+Exponential$set("public","description","Exponential Probability Distribution.")
+Exponential$set("public","packages","stats")
 
 Exponential$set("public","mean",function(){
   self$getParameterValue("scale")

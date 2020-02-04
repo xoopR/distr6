@@ -45,10 +45,10 @@ NULL
 # Noncentral Student's t Distribution Definition
 #-------------------------------------------------------------
 StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, lock_objects = F)
-StudentTNoncentral$set("active","name","StudentTNoncentral")
-StudentTNoncentral$set("active","short_name","TNC")
-StudentTNoncentral$set("active","description","Student's t Probability Distribution.")
-StudentTNoncentral$set("active","packages","stats")
+StudentTNoncentral$set("public","name","StudentTNoncentral")
+StudentTNoncentral$set("public","short_name","TNC")
+StudentTNoncentral$set("public","description","Student's t Probability Distribution.")
+StudentTNoncentral$set("public","packages","stats")
 
 StudentTNoncentral$set("public", "mean", function(){
   df <- self$getParameterValue("df")

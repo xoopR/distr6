@@ -48,10 +48,10 @@ NULL
 # Bernoulli Distribution Definition
 #-------------------------------------------------------------
 Bernoulli <- R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
-Bernoulli$set("active","name","Bernoulli")
-Bernoulli$set("active","short_name","Bern")
-Bernoulli$set("active","description","Bernoulli Probability Distribution.")
-Bernoulli$set("active","packages","stats")
+Bernoulli$set("public","name","Bernoulli")
+Bernoulli$set("public","short_name","Bern")
+Bernoulli$set("public","description","Bernoulli Probability Distribution.")
+Bernoulli$set("public","packages","stats")
 
 Bernoulli$set("public","mean",function(){
   self$getParameterValue("prob")

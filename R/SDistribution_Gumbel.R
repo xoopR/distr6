@@ -44,10 +44,10 @@ NULL
 # Gumbel Distribution Definition
 #-------------------------------------------------------------
 Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F)
-Gumbel$set("active","name","Gumbel")
-Gumbel$set("active","short_name","Gumb")
-Gumbel$set("active","description","Gumbel Probability Distribution.")
-Gumbel$set("active","packages", "pracma")
+Gumbel$set("public","name","Gumbel")
+Gumbel$set("public","short_name","Gumb")
+Gumbel$set("public","description","Gumbel Probability Distribution.")
+Gumbel$set("public","packages", "pracma")
 
 Gumbel$set("public","mean",function(){
   return(self$getParameterValue("location") - digamma(1)*self$getParameterValue("scale"))
