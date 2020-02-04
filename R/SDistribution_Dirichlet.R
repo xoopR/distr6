@@ -1,4 +1,4 @@
-  #' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
@@ -148,9 +148,9 @@ Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL
   }
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
-                   support = Interval$new(0,1,type="()",dim = length(params)),
+                   support = setpower(Interval$new(0,1,type="()"), length(params)),
                    symmetric = FALSE,
-                   type = Interval$new(0,1,dim = "K"),
+                   type = setpower(Interval$new(0,1,type="()"), length(params)),
                    valueSupport = "continuous",
                    variateForm = "multivariate")
   invisible(self)

@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 #  Distribution Documentation
 #-------------------------------------------------------------
@@ -154,7 +154,7 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Set$new(private$.data$x),
+                   support = Set$new(private$.data$x, class = "numeric"),
                    symmetric = FALSE, type = Reals$new(),
                    valueSupport = "discrete",
                    variateForm = "univariate")

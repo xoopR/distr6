@@ -44,12 +44,6 @@ NULL
 
 #' @name ArrayDistribution
 #' @rdname distr6-deprecated
-#' @section Deprecated Functions:
-#' \tabular{ll}{
-#' \strong{Deprecated} \tab \strong{Replacement} \cr
-#' \code{ArrayDistribution} \tab \code{\link{ProductDistribution}} \cr
-#' }
-#'
 #' @export
 NULL
 ArrayDistribution <- R6Class("ArrayDistribution", inherit = ProductDistribution)

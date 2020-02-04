@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/sets.html) introduced symbolic sets and intervals in distr6. This final tutorial puts everything we've learnt together to create your own custom distribution object (this is not the same as creating a new class!). All distributions implemented in distr6 inherit from class `SDistribution` this tells you that they are the 'special distributions' that we have implemented. `SDistribution` is an 'abstract' class, this means it can't be constructed to make a `SDistribution` object, however the `Distribution` class can be.
+The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html) introduced wrappers in distr6. This final tutorial puts everything we've learnt together to create your own custom distribution object (this is not the same as creating a new class!). All distributions implemented in distr6 inherit from class `SDistribution` this tells you that they are the 'special distributions' that we have implemented. `SDistribution` is an 'abstract' class, this means it can't be constructed to make a `SDistribution` object, however the `Distribution` class can be.
 
 ## Constructing a Custom Distribution
 
@@ -94,7 +94,7 @@ U$cdf(5, lower.tail = FALSE, log.p = TRUE)
 Finally a whole host of other arguments could be supplied to the Distribution to make the results more precise, the full list can be seen in `?Distribution`. A couple of things to take care about are:
 
 1. pdfs and cdfs should have the same number of arguments. For example if the distribution is univariate both should have one argument only (and with the same name).
-2. By default the type and support are taken to be the Reals, if this is not the case then the true ones should be supplied as `SetInterval` objects.
+2. By default the type and support are taken to be the Reals, if this is not the case then the true ones should be supplied as [set6](https://CRAN.R-project.org/package=set6) objects.
 3. valueSupport and variateForm are automatically inferred from the distribution's type. If the type is in the Integers or Naturals then the valueSupport is taken to be discrete, otherwise continuous. If the dimension of the type is $1$ then the variateForm is taken to be univariate, multivariate otherwise. These can be overwritten for mixture and matrixvariate distributions.
 
 ## Putting Everything Together

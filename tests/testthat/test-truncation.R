@@ -24,8 +24,8 @@ test_that("truncation results",{
   expect_equal(t$cdf(4),
                (pbinom(4, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10))/
                  (pbinom(5, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10)))
-  expect_equal(t$support()$getSymbol(),Set$new(1:5)$getSymbol())
-  expect_equal(truncate(Exponential$new(),lower=2,upper=3)$support()$getSymbol(),Interval$new(2,3)$getSymbol())
+  expect_equal(t$support()$strprint(),Interval$new(1,5,class = "integer")$strprint())
+  expect_equal(truncate(Exponential$new(),lower=2,upper=3)$support()$strprint(),Interval$new(2,3)$strprint())
 })
 
 
@@ -53,5 +53,5 @@ test_that("check truncation parameters",{
   expect_silent(x$setParameterValue(truncLower = 2, truncUpper = 10))
   expect_equal(x$inf(), 2)
   expect_equal(x$sup(), 10)
-  expect_true(inherits(x$support(), "Interval"))
+  expect_true(testInterval(x$support()))
 })

@@ -94,8 +94,8 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   #######                   plottable structure                   #######
   #######################################################################
 
-  if(testDiscrete(x) & x$support()$length() != Inf){
-    plotStructure <- data.table::data.table(points = x$support()$elements())
+  if(testDiscrete(x) & x$support()$properties$countability == "countably finite"){
+    plotStructure <- data.table::data.table(points = unlist(x$support()$elements))
   } else {
     if(x$isQuantile) {
       plotStructure <- data.table::data.table(cdf = seq(0,1,length.out = npoints))

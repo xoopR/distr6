@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 # Geometric Distribution Documentation
 #-------------------------------------------------------------
@@ -149,7 +149,8 @@ Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = 
 
     super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
                      rand = rand, support = support,
-                     symmetric  = FALSE, description = description,type = Naturals$new(),
+                     symmetric  = FALSE, description = description,
+                     type = Naturals$new(),
                      valueSupport = "discrete",
                      variateForm = "univariate")
 

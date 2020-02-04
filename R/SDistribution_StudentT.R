@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 # Student's t Distribution Documentation
 #-------------------------------------------------------------
@@ -115,7 +115,7 @@ StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose =
   rand <- function(n) rt(n, self$getParameterValue("df"))
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(zero = T),
+                   rand = rand, support = Reals$new(),
                    symmetric  = TRUE,type = Reals$new(),
                    valueSupport = "continuous",
                    variateForm = "univariate")

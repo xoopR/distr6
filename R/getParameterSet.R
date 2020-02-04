@@ -91,10 +91,10 @@ getParameterSet.Binomial <- function(x, size, prob, qprob = NULL, verbose = FALS
 
 getParameterSet.Categorical <- function(x, probs, verbose = FALSE){
 
-  categories = unlist(length(probs))
+  categories = length(probs)
   ps <- ParameterSet$new(id = list("probs","categories"),
                          value = list(rep(0.5,categories), categories),
-                         support = list(Interval$new(0,1), PosNaturals$new()),
+                         support = list(setpower(Interval$new(0,1), categories), PosNaturals$new()),
                          settable = list(TRUE, FALSE),
                          updateFunc = list(NA,
                                            function(self) length(self$getParameterValue('probs'))),
@@ -165,11 +165,11 @@ getParameterSet.Dirichlet <- function(x, params, verbose = FALSE){
   K = length(params)
   ps <- ParameterSet$new(id = list("params","K"),
                          value = list(rep(1,K), K),
-                         support = list(PosReals$new(), Interval$new(2,Inf,type="[)",class="integer")),
+                         support = list(setpower(PosReals$new(),K), Interval$new(2,Inf,type="[)",class="integer")),
                          settable = list(TRUE, FALSE),
                          updateFunc = list(NA,
                                            function(self) length(self$getParameterValue('params'))),
-                         description = list("Conccentration parameters", "Number of categories"))
+                         description = list("Concentration parameters", "Number of categories"))
 
   if(verbose) message("Parameterised with params.")
 
@@ -547,7 +547,7 @@ getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
   K = unlist(length(probs))
   ps <- ParameterSet$new(id = list("size","K", "probs"),
                          value = list(1, K, rep(0.5,K)),
-                         support = list(PosNaturals$new(), PosNaturals$new(), Interval$new(0,1)),
+                         support = list(PosNaturals$new(), PosNaturals$new(), setpower(Interval$new(0,1),K)),
                          settable = list(TRUE, FALSE, TRUE),
                          updateFunc = list(NA,
                                            function(self) length(self$getParameterValue('probs')),NA),
@@ -575,8 +575,8 @@ getParameterSet.MultivariateNormal <- function(x, mean, cov, prec = NULL, verbos
   ps <- ParameterSet$new(id = list("mean","cov","prec","K"),
                          value = list(rep(0, K), matrix(rep(0,K^2),nrow=K),
                                       matrix(rep(0,K^2),nrow=K), K),
-                         support = list(Reals$new(), Reals$new(dim=2),
-                                        Reals$new(dim=2), PosNaturals$new()),
+                         support = list(setpower(Reals$new(), K), setpower(Reals$new(), K^2),
+                                        setpower(Reals$new(), K^2), PosNaturals$new()),
                          settable = list(TRUE, cov.bool, prec.bool, FALSE),
                          updateFunc = list(NA, NA,
                                            function(self) solve(matrix(self$getParameterValue('cov'),

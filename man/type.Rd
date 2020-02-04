@@ -10,7 +10,7 @@ type(object)
 \item{object}{Distribution.}
 }
 \value{
-An R6 object of class SetInterval.
+An R6 object of class \link[set6:Set]{set6::Set}.
 }
 \description{
 Returns the scientific type of the distribution.
@@ -20,5 +20,5 @@ Returns the scientific type of the distribution.
 }
 
 \seealso{
-\code{\link{SetInterval}}
+\link[set6:Set]{set6::Set}
 }

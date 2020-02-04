@@ -1,4 +1,4 @@
-#' @include SetInterval_SpecialSet.R ParameterSet.R
+
 #-------------------------------------------------------------
 # Chi-Squared Distribution Documentation
 #-------------------------------------------------------------

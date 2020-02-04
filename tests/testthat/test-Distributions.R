@@ -40,21 +40,21 @@ test_that("check variateForm", {
   expect_error(Distribution$new("Discrete Test",variateForm = "m", pdf = dbinom))
   expect_error(Distribution$new("Discrete Test",variateForm = "d", pdf = dbinom))
   expect_equal(Distribution$new("Discrete Test", pdf = dbin)$variateForm(), "univariate")
-  expect_equal(Distribution$new("Discrete Test", pdf = function(x,y) return("Test"), type = Reals$new(2))$variateForm(), "multivariate")
+  expect_equal(Distribution$new("Discrete Test", pdf = function(x,y) return("Test"), type = Reals$new()^2)$variateForm(), "multivariate")
 })
 
 test_that("check multivariate", {
   expect_error(Distribution$new("Test", pdf = function(x,y) return("Test"),
                                 cdf = function(x,z) return("Test"),
-                                type = Reals$new(2)))
+                                type = Reals$new()^2))
   expect_error(Distribution$new("Test", pdf = function(x,y) return("Test"),
                                 cdf = function(x,y,z) return("Test"),
-                                type = Reals$new(2)))
+                                type = Reals$new()^2))
   expect_silent(Distribution$new("Test", pdf = function(x,y) return("Test"),
                                 cdf = function(x,y) return("Test"),
-                                type = Reals$new(2)))
+                                type = Reals$new()^2))
   expect_equal(Distribution$new("Test", pdf = function(x,y) return("Test"),
-                                 cdf = function(x,y) return("Test"))$type()$dimension(),2)
+                                 cdf = function(x,y) return("Test"))$type()$power,2)
 })
 
 ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0.8),

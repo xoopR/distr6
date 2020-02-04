@@ -15,8 +15,6 @@ test_that("lists",{
   expect_silent(listDistributions(filter = list(efsf = "fsdf")))
   expect_silent(listDecorators(F))
   expect_silent(listDecorators(T))
-  expect_silent(listSpecialSets(T))
-  expect_silent(listSpecialSets(F))
   expect_silent(listWrappers(T))
   expect_silent(listWrappers(F))
   expect_silent(listKernels(T))

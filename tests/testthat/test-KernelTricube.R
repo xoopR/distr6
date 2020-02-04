@@ -14,7 +14,7 @@ test_that("var & squared-norm",{
 })
 
 test_that("support",{
-  expect_equal(tric$support()$getSymbol(), Interval$new(-1,1)$getSymbol())
+  expect_equal(tric$support()$strprint(), Interval$new(-1,1)$strprint())
 })
 
 test_that("d/p/q/r",{

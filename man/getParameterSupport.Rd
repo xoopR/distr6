@@ -14,14 +14,14 @@ getParameterSupport(object, id, error = "warn")
 \item{error}{character, value to pass to \code{stopwarn}.}
 }
 \value{
-An R6 object of class SetInterval.
+An R6 object of class inheriting from \link[set6:Set]{set6::Set}
 }
 \description{
 Returns the support of the given parameter.
 }
 \details{
 Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
-the support of the given parameter as a SetInterval object.
+the support of the given parameter as a \link[set6:Set]{set6::Set} object.
 
 \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
 with warning otherwise.
@@ -31,5 +31,5 @@ with warning otherwise.
 }
 
 \seealso{
-\code{\link{parameters}} and \code{\link{SetInterval}}
+\code{\link{parameters}}
 }
