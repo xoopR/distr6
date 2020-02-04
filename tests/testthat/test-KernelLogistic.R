@@ -14,7 +14,7 @@ test_that("var & squared-norm",{
 })
 
 test_that("support",{
-  expect_equal(logis$support()$getSymbol(), Reals$new()$getSymbol())
+  expect_equal(logis$support()$strprint(), Reals$new()$strprint())
 })
 
 test_that("d/p/q/r",{

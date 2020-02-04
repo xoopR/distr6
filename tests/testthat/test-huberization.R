@@ -49,11 +49,11 @@ test_that("check huberization parameters",{
   expect_error(x$setParameterValue(hubUpper = 1))
   expect_error(x$setParameterValue(hubLower = 12))
   expect_error(x$setParameterValue(hubLower = 4, hubUpper = 3))
-  expect_true(inherits(x$support(), "Set"))
+  expect_true(testInterval(x$support()))
   x = huberize(Exponential$new(),lower = 1, upper = 5)
   expect_silent(x$setParameterValue(hubLower = 2, hubUpper = 10))
   expect_equal(x$inf(), 2)
   expect_equal(x$sup(), 10)
-  expect_true(inherits(x$support(), "Interval"))
+  expect_true(testInterval(x$support()))
 })
 

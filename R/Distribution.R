@@ -193,18 +193,12 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
     # valueSupport Checks
     #--------------------
     if(!is.null(valueSupport)){
-      if(grepl("^c",valueSupport))
-        valueSupport = "continuous"
-      else if(grepl("^d",valueSupport))
-        valueSupport = "discrete"
-      else if(grepl("^m",valueSupport))
-        valueSupport = "mixture"
-      else
-        stop("valueSupport should be one of: 'continuous', 'discrete','mixture'.")
-    }else if(support$class == "numeric")
+      valueSupport = match.arg(valueSupport, c("continuous", "discrete", "mixture"))
+    } else if(support$properties$countability == "uncountable") {
       valueSupport = "continuous"
-     else
+     } else {
       valueSupport = "discrete"
+     }
 
     #-------------------
     # variateForm Checks

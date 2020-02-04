@@ -2,7 +2,6 @@
 #' @title Lists Implemented R6 Special Sets
 #' @description Lists special sets that can be used in SetInterval.
 #' @param simplify logical. If FALSE (default) returns data.table of set name and symbol, otherwise set names as characters.
-#' @seealso \code{\link{SpecialSet}}
 #' @return Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SpecialSet}s and their traits.
 #' @examples
 #' listSpecialSets()
