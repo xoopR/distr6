@@ -52,7 +52,7 @@
 #' @examples
 #'  id = list("prob", "size")
 #'  value = list(0.2, 5)
-#'  support = list(Interval$new(0,1), PosNaturals$new())
+#'  support = list(set6::Interval$new(0,1), set6::PosNaturals$new())
 #'  settable = list(TRUE, TRUE)
 #'  description = list("Probability of success",NULL)
 #'  ps = ParameterSet$new(id, value, support, settable,
@@ -65,7 +65,7 @@
 #' @examples
 #'  id = list("rate", "scale")
 #'  value = list(1, 1)
-#'  support = list(PosReals$new(), PosReals$new())
+#'  support = list(set6::PosReals$new(), set6::PosReals$new())
 #'  settable = list(TRUE, FALSE)
 #'  updateFunc = list(NULL, function(self) 1/self$getParameterValue('rate'))
 #'  description = list("Arrival rate","Scale parameter")
