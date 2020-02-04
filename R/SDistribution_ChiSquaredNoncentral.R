@@ -1,4 +1,4 @@
-#' @include  ParameterSet.R
+
 #-------------------------------------------------------------
 # Noncentral Chi-Squared Distribution Documentation
 #-------------------------------------------------------------

@@ -1,4 +1,4 @@
-#' @include  ParameterSet.R
+
 #-------------------------------------------------------------
 # Noncentral Student's t Distribution Documentation
 #-------------------------------------------------------------

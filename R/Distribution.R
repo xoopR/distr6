@@ -1,4 +1,4 @@
-#' @include SetInterval_operations.R
+#' @include distr6_globals.R helpers.R
 #-------------------------------------------------------------
 # Distribution Documentation
 #-------------------------------------------------------------

@@ -68,7 +68,7 @@ Imports:
   data.table,
   R6,
   R62S3 (>= 1.4.0),
-  set6
+  set6,
   stats
 Suggests:
   expint,
@@ -92,16 +92,15 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE, r6 = FALSE)
 RoxygenNote: 7.0.2
 Collate: 
-    'SetInterval_operations.R'
+    'helpers.R'
+    'distr6_globals.R'
     'Distribution.R'
     'DistributionDecorator.R'
     'DistributionDecorator_CoreStatistics.R'
     'DistributionDecorator_ExoticStatistics.R'
     'DistributionDecorator_FunctionImputation.R'
-    'SetInterval_SpecialSet.R'
     'Distribution_Kernel.R'
     'Distribution_SDistribution.R'
-    'ParameterSet.R'
     'Kernel_Cosine.R'
     'Kernel_Epanechnikov.R'
     'Kernel_Logistic.R'
@@ -113,6 +112,7 @@ Collate:
     'Kernel_Tricube.R'
     'Kernel_Triweight.R'
     'Kernel_Uniform.R'
+    'ParameterSet.R'
     'SDistribution_Arcsine.R'
     'SDistribution_Bernoulli.R'
     'SDistribution_Beta.R'
@@ -171,12 +171,10 @@ Collate:
     'distr6-deprecated.R'
     'distr6.R'
     'distr6.news.R'
-    'distr6_globals.R'
     'distrSimulate.R'
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'
-    'helpers.R'
     'lines_continuous.R'
     'lines_discrete.R'
     'lines.R'
