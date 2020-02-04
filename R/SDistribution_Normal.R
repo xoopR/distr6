@@ -51,10 +51,10 @@ NULL
 # Normal Distribution Definition
 #-------------------------------------------------------------
 Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F)
-Normal$set("public","name","Normal")
-Normal$set("public","short_name","Norm")
-Normal$set("public","description","Normal Probability Distribution.")
-Normal$set("public","packages","stats")
+Normal$set("active","name","Normal")
+Normal$set("active","short_name","Norm")
+Normal$set("active","description","Normal Probability Distribution.")
+Normal$set("active","packages","stats")
 
 Normal$set("public","mean",function(){
   return(self$getParameterValue("mean"))

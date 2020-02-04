@@ -42,9 +42,9 @@ NULL
 # Rayleigh Distribution Definition
 #-------------------------------------------------------------
 Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F)
-Rayleigh$set("public","name","Rayleigh")
-Rayleigh$set("public","short_name","Rayl")
-Rayleigh$set("public","description","Rayleigh Probability Distribution.")
+Rayleigh$set("active","name","Rayleigh")
+Rayleigh$set("active","short_name","Rayl")
+Rayleigh$set("active","description","Rayleigh Probability Distribution.")
 
 Rayleigh$set("public","mean",function(){
   return(self$getParameterValue("mode")*sqrt(pi/2))

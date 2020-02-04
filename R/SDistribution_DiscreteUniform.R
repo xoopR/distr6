@@ -43,9 +43,9 @@ NULL
 # DiscreteUniform Distribution Definition
 #-------------------------------------------------------------
 DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F)
-DiscreteUniform$set("public","name","DiscreteUniform")
-DiscreteUniform$set("public","short_name","DUnif")
-DiscreteUniform$set("public","description","DiscreteUniform Probability Distribution.")
+DiscreteUniform$set("active","name","DiscreteUniform")
+DiscreteUniform$set("active","short_name","DUnif")
+DiscreteUniform$set("active","description","DiscreteUniform Probability Distribution.")
 
 DiscreteUniform$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)

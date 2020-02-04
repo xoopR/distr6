@@ -39,9 +39,9 @@ NULL
 # WeightedDiscrete Distribution Definition
 #-------------------------------------------------------------
 WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_objects = F)
-WeightedDiscrete$set("public","name","WeightedDiscrete")
-WeightedDiscrete$set("public","short_name","WeightDisc")
-WeightedDiscrete$set("public","description","WeightedDiscrete Probability Distribution.")
+WeightedDiscrete$set("active","name","WeightedDiscrete")
+WeightedDiscrete$set("active","short_name","WeightDisc")
+WeightedDiscrete$set("active","description","WeightedDiscrete Probability Distribution.")
 
 WeightedDiscrete$set("public","mode",function(which = "all"){
   if(which == "all")

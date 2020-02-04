@@ -32,9 +32,9 @@ NULL
 # Silverman Kernel Definition
 #-------------------------------------------------------------
 Silverman <- R6Class("Silverman", inherit = Kernel, lock_objects = F)
-Silverman$set("public","name","Silverman")
-Silverman$set("public","short_name","Silv")
-Silverman$set("public","description","Silverman Kernel")
+Silverman$set("active","name","Silverman")
+Silverman$set("active","short_name","Silv")
+Silverman$set("active","description","Silverman Kernel")
 Silverman$set("public","squared2Norm",function(){
   return((3 * sqrt(2))/16)
 })

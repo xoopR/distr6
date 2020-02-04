@@ -48,9 +48,9 @@ NULL
 # Wald Distribution Definition
 #-------------------------------------------------------------
 Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F)
-Wald$set("public","name","Wald")
-Wald$set("public","short_name","Wald")
-Wald$set("public","description","Wald Probability Distribution.")
+Wald$set("active","name","Wald")
+Wald$set("active","short_name","Wald")
+Wald$set("active","description","Wald Probability Distribution.")
 
 Wald$set("public","mean",function(){
   return(self$getParameterValue("mean"))

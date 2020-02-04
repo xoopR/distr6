@@ -47,9 +47,9 @@ NULL
 # Frechet Distribution Definition
 #-------------------------------------------------------------
 Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F)
-Frechet$set("public","name","Frechet")
-Frechet$set("public","short_name","Frec")
-Frechet$set("public","description","Frechet Probability Distribution.")
+Frechet$set("active","name","Frechet")
+Frechet$set("active","short_name","Frec")
+Frechet$set("active","description","Frechet Probability Distribution.")
 
 Frechet$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)

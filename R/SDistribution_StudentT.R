@@ -43,10 +43,10 @@ NULL
 # Student's t Distribution Definition
 #-------------------------------------------------------------
 StudentT <- R6Class("StudentT", inherit = SDistribution, lock_objects = F)
-StudentT$set("public","name","StudentT")
-StudentT$set("public","short_name","T")
-StudentT$set("public","description","Student's t Probability Distribution.")
-StudentT$set("public","packages","stats")
+StudentT$set("active","name","StudentT")
+StudentT$set("active","short_name","T")
+StudentT$set("active","description","Student's t Probability Distribution.")
+StudentT$set("active","packages","stats")
 
 StudentT$set("public", "mean", function(){
   df <- self$getParameterValue("df")

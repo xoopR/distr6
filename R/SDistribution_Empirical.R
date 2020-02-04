@@ -38,9 +38,9 @@ NULL
 # Empirical Distribution Definition
 #-------------------------------------------------------------
 Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F)
-Empirical$set("public","name","Empirical")
-Empirical$set("public","short_name","Emp")
-Empirical$set("public","description","Empirical Probability Distribution.")
+Empirical$set("active","name","Empirical")
+Empirical$set("active","short_name","Emp")
+Empirical$set("active","description","Empirical Probability Distribution.")
 
 Empirical$set("public","mode",function(which = "all"){
   if(which == "all")

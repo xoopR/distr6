@@ -29,9 +29,9 @@ NULL
 # Uniform Kernel Definition
 #-------------------------------------------------------------
 UniformKernel <- R6Class("UniformKernel", inherit = Kernel, lock_objects = F)
-UniformKernel$set("public","name","UniformKernel")
-UniformKernel$set("public","short_name","Unif")
-UniformKernel$set("public","description","Uniform Kernel")
+UniformKernel$set("active","name","UniformKernel")
+UniformKernel$set("active","short_name","Unif")
+UniformKernel$set("active","description","Uniform Kernel")
 UniformKernel$set("public","variance",function(){
   return(1/3)
 })

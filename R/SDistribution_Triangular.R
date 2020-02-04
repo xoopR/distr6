@@ -54,8 +54,8 @@ NULL
 # Triangular Distribution Definition
 #-------------------------------------------------------------
 Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F)
-Triangular$set("public","name","Triangular")
-Triangular$set("public","short_name","Tri")
+Triangular$set("active","name","Triangular")
+Triangular$set("active","short_name","Tri")
 Triangular$set("private",".type","symmetric")
 
 Triangular$set("public","mean",function(){

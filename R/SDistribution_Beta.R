@@ -42,10 +42,10 @@ NULL
 # Beta Distribution Definition
 #-------------------------------------------------------------
 Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F)
-Beta$set("public","name","Beta")
-Beta$set("public","short_name","Beta")
-Beta$set("public","description","Beta Probability Distribution.")
-Beta$set("public","packages","stats")
+Beta$set("active","name","Beta")
+Beta$set("active","short_name","Beta")
+Beta$set("active","description","Beta Probability Distribution.")
+Beta$set("active","packages","stats")
 
 
 Beta$set("public","mean",function(){

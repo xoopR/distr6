@@ -43,10 +43,10 @@ NULL
 # Poisson Distribution Definition
 #-------------------------------------------------------------
 Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F)
-Poisson$set("public","name","Poisson")
-Poisson$set("public","short_name","Pois")
-Poisson$set("public","description","Poisson Probability Distribution.")
-Poisson$set("public","packages","stats")
+Poisson$set("active","name","Poisson")
+Poisson$set("active","short_name","Pois")
+Poisson$set("active","description","Poisson Probability Distribution.")
+Poisson$set("active","packages","stats")
 
 Poisson$set("public","mean",function(){
   return(self$getParameterValue("rate"))

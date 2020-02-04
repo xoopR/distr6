@@ -48,10 +48,10 @@ NULL
 # Binomial Distribution Definition
 #-------------------------------------------------------------
 Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F)
-Binomial$set("public","name","Binomial")
-Binomial$set("public","short_name","Binom")
-Binomial$set("public","description","Binomial Probability Distribution.")
-Binomial$set("public","packages","stats")
+Binomial$set("active","name","Binomial")
+Binomial$set("active","short_name","Binom")
+Binomial$set("active","description","Binomial Probability Distribution.")
+Binomial$set("active","packages","stats")
 
 Binomial$set("public","mean",function(){
   self$getParameterValue("size") * self$getParameterValue("prob")
