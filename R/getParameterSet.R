@@ -169,7 +169,7 @@ getParameterSet.Dirichlet <- function(x, params, verbose = FALSE){
                          settable = list(TRUE, FALSE),
                          updateFunc = list(NA,
                                            function(self) length(self$getParameterValue('params'))),
-                         description = list("Conccentration parameters", "Number of categories"))
+                         description = list("Concentration parameters", "Number of categories"))
 
   if(verbose) message("Parameterised with params.")
 

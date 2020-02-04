@@ -59,3 +59,17 @@ test_that("verbose ps",{
                                                           listDistributions(simplify = T)!="WeightedDiscrete"],
                         function(x) get(x)$new(verbose = T)))
 })
+
+test_that("out of support",{
+  ps = ParameterSet$new(id = list("a","b"), value = c(0,1), support = list(Set$new(0,1), Set$new(0,1)),
+                        updateFunc = list(NULL, function(self) self$getParameterValue("a")+1),
+                        settable = list(TRUE, FALSE))
+  expect_error(ps$setParameterValue(a = 1), "does not lie")
+
+  ps = ParameterSet$new(id = list("a","b"), value = list(c(0,0),c(1,1)),
+                        support = list(Set$new(0,1)^2, Set$new(0,1)^2),
+                        updateFunc = list(NULL, function(self) self$getParameterValue("a")+1),
+                        settable = list(TRUE, FALSE))
+  expect_error(ps$setParameterValue(a = c(1,1)), "does not lie")
+})
+

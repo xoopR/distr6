@@ -71,4 +71,3 @@ test_that("statistics",{
   expect_equal(signif(mvn$pdf(1:2,2:3,3:4),3), c(2.366e-07, 7.835e-06))
   expect_equal(dim(mvn$rand(10)),c(10,3))
 })
-

@@ -132,11 +132,11 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
 
     a_value = value[[i]]
     if(length(a_value) > 1){
-      checkmate::assert(a_support$contains(Tuple$new(a_value)),
-                        .var.name = "'value' should be between 'lower' and 'upper'")
+      if(!a_support$contains(Tuple$new(a_value)))
+        stop(Tuple$new(a_value)$strprint(), " does not lie in the support of parameter ", a_id)
     } else {
-      checkmate::assert(a_support$contains(a_value),
-                        .var.name = "'value' should be between 'lower' and 'upper'")
+      if(!a_support$contains(a_value))
+        stop(a_value, " does not lie in the support of parameter ", a_id)
     }
 
 
@@ -206,7 +206,7 @@ ParameterSet$set("public","update", function(...){
       newval = x[[6]](self)
       if(length(newval) > 1) {
         if(!x[[3]]$contains(Tuple$new(newval)))
-          stop(newval, " does not lie in the support of parameter ", x[[1]])
+          stop(Tuple$new(newval)$strprint(), " does not lie in the support of parameter ", x[[1]])
       } else {
         if(!x[[3]]$contains(newval))
           stop(newval, " does not lie in the support of parameter ", x[[1]])
@@ -369,7 +369,7 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
 
       if(length(value) > 1){
         if(!param$support[[1]]$contains(Tuple$new(value), all = TRUE))
-          stop(value, " does not lie in the support of parameter ", aid)
+          stop(Tuple$new(value)$strprint(), " does not lie in the support of parameter ", aid)
       } else {
         if(!param$support[[1]]$contains(value, all = TRUE))
           stop(value, " does not lie in the support of parameter ", aid)
