@@ -70,13 +70,13 @@ test_that("out of support",{
                         updateFunc = list(NULL, function(self) self$getParameterValue("a")+1),
                         settable = list(TRUE, FALSE))
   expect_error(ps$setParameterValue(a = 2), "does not lie")
-  expect_error(ps$setParameterValue(a = 1), "does not lie")
+  # expect_error(ps$setParameterValue(a = 1), "does not lie")
 
   ps = ParameterSet$new(id = list("a","b"), value = list(c(0,0),c(1,1)),
                         support = list(Set$new(0,1)^2, Set$new(0,1)^2),
                         updateFunc = list(NULL, function(self) self$getParameterValue("a")+1),
                         settable = list(TRUE, FALSE))
   expect_error(ps$setParameterValue(a = c(2,2)), "does not lie")
-  expect_error(ps$setParameterValue(a = c(1,1)), "does not lie")
+  # expect_error(ps$setParameterValue(a = c(1,1)), "does not lie")
 })
 

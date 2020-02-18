@@ -8,6 +8,7 @@
 - `packages` lists all packages required to be installed for a distribution, if `NULL` only distr6 required
 - Abstracted SetInterval and related classes to the `set6` package
 - Deprecated `listSpecialSets`, use `set6::listSpecialSets` instead
+- Removed secondary checks on `update` of `ParameterSet` , any properly defined distributions will have this covered in primary parameter, thus increasing speed.
 
 # distr6 1.3.3
 
