@@ -1,33 +1,11 @@
 ## Comments
-Any builds that are currently not passing will pass once R62S3 1.4.0 has been built for that platform.
+
+Any environments not passing will pass once once `set6` 0.1.2 is fully uploaded to CRAN.
 
 ## Downstream dependencies
+
 There is currently one dependency, `mlr3proba`, which I am the maintainer of. This is expected to break after update and will be patched immediately after `distr6` is on CRAN.
 
 ## Test environments
-* Fedora Linux, R-devel, clang, gfortran - NOTE (DOI)
-* Ubuntu Linux 16.04 LTS, R-release, GCC - NOTE (DOI)
-* Windows Server 2008 R2 SP1, R-devel, 32/64 bit - OK
-* x86_64-apple-darwin15.6.0 (64-bit), macOS High Sierra 10.13.6 - Release - OK
-* x86_64-pc-linux-gnu (64-bit), Ubuntu 16.04.6 LTS - Release - OK
-
-## R CMD check results
-There were no WARNINGs or ERRORs.
-
-There were 2 NOTEs:
-
-Found the following (possibly) invalid DOIs:
-  DOI: 10.2307/2683801
-    From: DESCRIPTION
-    Status: Forbidden
-    Message: 403
-    
- * I have manually checked the DOI and it resolves to the correct URL and works on CRAN
- 
- Possibly mis-spelled words in DESCRIPTION:
-  Devroye (65:509)
-  al (65:337, 65:696)
-  et (65:334, 65:693)
-  
-  * Spelled correctly
+* x86_64-apple-darwin15.6.0 (64-bit), macOS Catalina 10.15.3, R 3.6.2
 
