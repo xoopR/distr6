@@ -126,6 +126,7 @@ Collate:
     'SDistribution_Dirichlet.R'
     'SDistribution_DiscreteUniform.R'
     'SDistribution_Empirical.R'
+    'SDistribution_Erlang.R'
     'SDistribution_Exponential.R'
     'SDistribution_FDistribution.R'
     'SDistribution_FDistributionNoncentral.R'

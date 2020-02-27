@@ -1,5 +1,6 @@
 # distr6 1.3.5
 
+* Added Erlang distribution
 * Fixed mistake in documentation for `Weibull`, thanks to Paul Northrop (@paulnorthrop) for pointing this out.
 
 # distr6 1.3.4
