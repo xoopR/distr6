@@ -85,10 +85,7 @@ Erlang$set("public", "cf", function(t){
   (1-self$getParameterValue("scale")*1i*t)^(-self$getParameterValue("shape"))
 })
 Erlang$set("public","mode",function(which = NULL){
-  if(self$getParameterValue("shape")>=1)
-    return((self$getParameterValue("shape")-1)/self$getParameterValue("rate"))
-  else
-    return(NaN)
+  (self$getParameterValue("shape")-1)/self$getParameterValue("rate")
 })
 
 Erlang$set("private",".getRefParams", function(paramlst){
