@@ -8,7 +8,7 @@ Returns an R6 object inheriting from class SDistribution.
 }
 \description{
 Mathematical and statistical functions for the Weibull distribution, which
-is commonly used in survival analysis and is a special case of the Generalized Extreme Value distribution.
+is commonly used in survival analysis as it satisfies both PH and AFT requirements.
 }
 \details{
 The Weibull distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha} for \eqn{\alpha, \beta > 0}.
