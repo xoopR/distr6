@@ -6,7 +6,7 @@
 #' @template SDist
 #' @templateVar ClassName Weibull
 #' @templateVar DistName Weibull
-#' @templateVar uses in survival analysis and is a special case of the Generalized Extreme Value distribution
+#' @templateVar uses in survival analysis as it satisfies both PH and AFT requirements
 #' @templateVar params shape, \eqn{\alpha}, and scale, \eqn{\beta},
 #' @templateVar pdfpmf pdf
 #' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha}

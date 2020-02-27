@@ -1,3 +1,7 @@
+# distr6 1.3.5
+
+* Fixed mistake in documentation for `Weibull`, thanks to Paul Northrop (@paulnorthrop) for pointing this out.
+
 # distr6 1.3.4
 
 - Bug fix in `VectorDistribution` that was causing decorators not to be added properly
