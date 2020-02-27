@@ -1,3 +1,7 @@
+# distr6 1.3.5
+
+* Added Erlang distribution
+
 # distr6 1.3.4
 
 - Bug fix in `VectorDistribution` that was causing decorators not to be added properly
