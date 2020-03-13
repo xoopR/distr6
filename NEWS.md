@@ -2,6 +2,7 @@
 
 * Added Erlang distribution
 * Fixed mistake in documentation for `Weibull`, thanks to Paul Northrop (@paulnorthrop) for pointing this out.
+* Fixed bug in `plot` preventing only `quantile` being plotted on its own
 
 # distr6 1.3.4
 

@@ -33,7 +33,7 @@ The distribution is supported on the Positive Reals.
 }
 
 \section{Constructor Details}{
- The Erlang distribution is parameterised with \code{shape} and either \code{rate} or \code{scale}, all as positive numerics. These are related via, \deqn{scale = 1/rate}. If \code{scale} is given then \code{rate} is ignored.
+ The Erlang distribution is parameterised with \code{shape} and either \code{rate} or \code{scale}, all as positive numerics. These are related via, \deqn{scale = 1/rate} If \code{scale} is given then \code{rate} is ignored.
 }
 
 \section{Public Variables}{

@@ -114,7 +114,7 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
       plotStructure <- stats::aggregate(cdf ~ points, plotStructure, max)
   }
 
-  if (any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & !("cdf" %in% colnames(plotStructure))) {
+  if (any(c("cdf", "survival", "hazard","cumhazard","quantile") %in% fun) & !("cdf" %in% colnames(plotStructure))) {
     plotStructure$cdf <- x$cdf(plotStructure$points)
   }
   if (any(c("pdf", "hazard") %in% fun)) {
