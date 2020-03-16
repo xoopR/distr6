@@ -203,16 +203,16 @@ ParameterSet$set("public","update", function(...){
     update_filter = !is.na(private$.parameters$updateFunc)
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
-      newval = x[[6]](self)
-      if(length(newval) > 1) {
-        if(!x[[3]]$contains(Tuple$new(newval)))
-          stop(Tuple$new(newval)$strprint(), " does not lie in the support of parameter ", x[[1]])
-      } else {
-        if(!x[[3]]$contains(newval))
-          stop(newval, " does not lie in the support of parameter ", x[[1]])
-      }
+      return(x[[6]](self))
+      # if(length(newval) > 1) {
+      #   if(!x[[3]]$contains(Tuple$new(newval)))
+      #     stop(Tuple$new(newval)$strprint(), " does not lie in the support of parameter ", x[[1]])
+      # } else {
+      #   if(!x[[3]]$contains(newval))
+      #     stop(newval, " does not lie in the support of parameter ", x[[1]])
+      # }
 
-      return(newval)
+      # return(newval)
       })
     suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
   }

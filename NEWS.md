@@ -1,3 +1,9 @@
+# distr6 1.3.5
+
+* Added Erlang distribution
+* Fixed mistake in documentation for `Weibull`, thanks to Paul Northrop (@paulnorthrop) for pointing this out.
+* Fixed bug in `plot` preventing only `quantile` being plotted on its own
+
 # distr6 1.3.4
 
 - Bug fix in `VectorDistribution` that was causing decorators not to be added properly
@@ -8,6 +14,7 @@
 - `packages` lists all packages required to be installed for a distribution, if `NULL` only distr6 required
 - Abstracted SetInterval and related classes to the `set6` package
 - Deprecated `listSpecialSets`, use `set6::listSpecialSets` instead
+- Removed secondary checks on `update` of `ParameterSet` , any properly defined distributions will have this covered in primary parameter, thus increasing speed.
 
 # distr6 1.3.3
 

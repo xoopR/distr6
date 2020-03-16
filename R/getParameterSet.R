@@ -195,6 +195,28 @@ getParameterSet.DiscreteUniform <- function(x, lower, upper, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.Erlang <- function(x, shape, rate, scale = NULL, verbose = FALSE){
+
+  rate.bool = scale.bool = FALSE
+
+  if(!is.null(scale)){
+    if(verbose) message("Parameterised with shape and scale.")
+    scale.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with shape and rate.")
+    rate.bool = TRUE
+  }
+
+  ParameterSet$new(id = list("shape","rate","scale"), value = list(1, 1, 1),
+                   support = list(PosIntegers$new(), PosReals$new(), PosReals$new()),
+                   settable = list(TRUE, rate.bool, scale.bool),
+                   updateFunc = list(NA, NA,
+                                     function(self) self$getParameterValue('rate')^-1),
+                   description = list("Shape - Shape Parameter",
+                                      "Rate - Inverse Scale Parameter",
+                                      "Scale - Scale Parameter"))
+}
+
 getParameterSet.Exponential <- function(x, rate, scale = NULL, verbose = FALSE){
 
   rate.bool = scale.bool = FALSE

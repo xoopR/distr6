@@ -96,10 +96,10 @@ HuberizedDistribution$set("public","initialize",function(distribution, lower = N
   }
 
   private$.outerParameters <- ParameterSet$new(id = list("hubLower", "hubUpper"), value = list(lower, upper),
-                         support = list(Reals$new()+Set$new(-Inf,Inf), Reals$new()+Set$new(-Inf,Inf)),
-                         settable = list(FALSE, FALSE),
-                         description = list("Lower limit of huberization.",
-                                            "Upper limit of huberization."))
+                                               support = list(Reals$new() + Set$new(-Inf,Inf), Reals$new() + Set$new(-Inf,Inf)),
+                                               settable = list(FALSE, FALSE),
+                                               description = list("Lower limit of huberization.",
+                                                                  "Upper limit of huberization."))
 
   if(testDiscrete(distribution)){
 

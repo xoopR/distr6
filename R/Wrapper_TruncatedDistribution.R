@@ -79,7 +79,7 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
   description = paste0(distribution$description, " Truncated between ",lower," and ",upper,".")
 
   private$.outerParameters <- ParameterSet$new(id = list("truncLower", "truncUpper"), value = list(lower, upper),
-                                               support = list(Reals$new()+Set$new(-Inf,Inf), Reals$new()+Set$new(-Inf,Inf)),
+                                               support = list(Reals$new() + Set$new(-Inf,Inf), Reals$new() + Set$new(-Inf,Inf)),
                                                settable = list(FALSE, FALSE),
                                                description = list("Lower limit of truncation.",
                                                                   "Upper limit of truncation."))
