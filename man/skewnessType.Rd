@@ -17,7 +17,7 @@ If the distribution skewness is present in properties, returns one of "negative 
 Returns the type of skewness.
 }
 \section{R6 Usage}{
- $skewnessType()
+ $skewnessType
 }
 
 \seealso{

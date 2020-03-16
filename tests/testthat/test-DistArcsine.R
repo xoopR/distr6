@@ -4,13 +4,13 @@ context("Arcsine distribution")
 
 
 test_that("properties & traits",{
-  expect_equal(Arcsine$new()$valueSupport(), "continuous")
-  expect_equal(Arcsine$new()$variateForm(), "univariate")
-  expect_equal(Arcsine$new()$symmetry(), "symmetric")
-  expect_equal(Arcsine$new()$sup(), 1)
-  expect_equal(Arcsine$new()$inf(), 0)
-  expect_equal(Arcsine$new()$dmax(), 1)
-  expect_equal(Arcsine$new()$dmin(), 0)
+  expect_equal(Arcsine$new()$valueSupport, "continuous")
+  expect_equal(Arcsine$new()$variateForm, "univariate")
+  expect_equal(Arcsine$new()$symmetry, "symmetric")
+  expect_equal(Arcsine$new()$sup, 1)
+  expect_equal(Arcsine$new()$inf, 0)
+  expect_equal(Arcsine$new()$dmax, 1)
+  expect_equal(Arcsine$new()$dmin, 0)
 })
 
 a = Arcsine$new()

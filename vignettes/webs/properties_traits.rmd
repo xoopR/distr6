@@ -27,17 +27,17 @@ In distr6 we refer to three traits: type, valueSupport and variateForm. The dist
 To view all the traits of the Normal distribution, call the method `traits()`,
 ```{r}
 N <- Normal$new()
-N$traits()
+N$traits
 
 # You can also do the above in one line
-Normal$new()$traits ()
+Normal$new()$traits
 ```
 
 Or to view a specific trait:
 ```{r}
-N$type()
-N$valueSupport()
-N$variateForm()
+N$type
+N$valueSupport
+N$variateForm
 ```
 
 
@@ -59,10 +59,10 @@ Normal$new()$properties()
 And once again these can be viewed individually
 ```{r}
 N <- Normal$new()
-N$kurtosisType()
-N$skewnessType()
-N$symmetry()
-N$support()
+N$kurtosisType
+N$skewnessType
+N$symmetry
+N$support
 ```
 
 Note that `kurtosisType()` and `skewnessType()` are used as these produce the type of kurtosis and skewness respectively, as opposed to `kurtosis()` and `skewness()` which return the values.

@@ -18,7 +18,7 @@ bounded above then maximum is given by
 \deqn{maximum = supremum - 1.1e-15}
 }
 \section{R6 Usage}{
- $dmax()
+ $dmax
 }
 
 \seealso{

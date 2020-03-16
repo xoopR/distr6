@@ -12,13 +12,13 @@ test_that("constructor", {
 })
 
 test_that("properties & traits",{
-  expect_equal(Bernoulli$new()$valueSupport(), "discrete")
-  expect_equal(Bernoulli$new()$variateForm(), "univariate")
-  expect_equal(Bernoulli$new()$symmetry(), "asymmetric")
-  expect_equal(Bernoulli$new()$sup(), 1)
-  expect_equal(Bernoulli$new()$inf(), 0)
-  expect_equal(Bernoulli$new()$dmax(), 1)
-  expect_equal(Bernoulli$new()$dmin(), 0)
+  expect_equal(Bernoulli$new()$valueSupport, "discrete")
+  expect_equal(Bernoulli$new()$variateForm, "univariate")
+  expect_equal(Bernoulli$new()$symmetry, "asymmetric")
+  expect_equal(Bernoulli$new()$sup, 1)
+  expect_equal(Bernoulli$new()$inf, 0)
+  expect_equal(Bernoulli$new()$dmax, 1)
+  expect_equal(Bernoulli$new()$dmin, 0)
 })
 
 

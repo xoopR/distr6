@@ -397,14 +397,14 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
     formals(trafo) = alist(x = )
   }
 
-  count = self$support()$properties$countability
+  count = self$support$properties$countability
   if(count != "uncountable"){
     if(count == "countably infinite") {
-      lower = ifelse(self$inf() == -Inf, -1e03, self$inf())
-      upper = ifelse(self$sup() == Inf, 1e03, self$sup())
+      lower = ifelse(self$inf == -Inf, -1e03, self$inf)
+      upper = ifelse(self$sup == Inf, 1e03, self$sup)
       rng = lower:upper
     } else {
-      rng = try(self$inf():self$sup(),silent = TRUE)
+      rng = try(self$inf:self$sup,silent = TRUE)
     }
     pdfs = self$pdf(rng)
     xs = trafo(rng)
@@ -417,7 +417,7 @@ CoreStatistics$set("public","genExp",function(trafo = NULL){
       xs = trafo(x)
       xs[pdfs==0] = 0
       return(xs * pdfs)
-    }, lower = self$inf(), upper = self$sup())$value))
+    }, lower = self$inf, upper = self$sup)$value))
   }
 })
 #-------------------------------------------------------------
@@ -449,11 +449,11 @@ CoreStatistics$set("public","mode",function(which = "all"){
   if(private$.isRand)
     return(modal(round(self$rand(1e5),4)))
   else{
-    lower <- ifelse(self$inf() == -Inf, -1e3, self$inf())
-    upper <- ifelse(self$sup() == Inf, 1e3, self$sup())
+    lower <- ifelse(self$inf == -Inf, -1e3, self$inf)
+    upper <- ifelse(self$sup == Inf, 1e3, self$sup)
 
     if(testDiscrete(self))
-      return((self$inf():self$sup())[which.max(self$pdf(self$inf():self$sup()))])
+      return((self$inf:self$sup)[which.max(self$pdf(self$inf:self$sup))])
     else
       return(optimize(self$pdf, interval=c(lower, upper), maximum = T)$maximum)
   }

@@ -53,20 +53,20 @@ Also known as the Dirac distribution.
 
 \tabular{ll}{
 \strong{Accessor Methods} \tab \strong{Link} \cr
-\code{decorators()} \tab \code{\link{decorators}} \cr
-\code{traits()} \tab \code{\link{traits}} \cr
-\code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-\code{variateForm()} \tab \code{\link{variateForm}} \cr
-\code{type()} \tab \code{\link{type}} \cr
-\code{properties()} \tab \code{\link{properties}} \cr
-\code{support()} \tab \code{\link{support}} \cr
-\code{symmetry()} \tab \code{\link{symmetry}} \cr
-\code{sup()}  \tab \code{\link{sup}} \cr
-\code{inf()} \tab \code{\link{inf}} \cr
-\code{dmax()}  \tab \code{\link{dmax}} \cr
-\code{dmin()} \tab \code{\link{dmin}} \cr
-\code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+\code{decorators} \tab \code{\link{decorators}} \cr
+\code{traits} \tab \code{\link{traits}} \cr
+\code{valueSupport} \tab \code{\link{valueSupport}} \cr
+\code{variateForm} \tab \code{\link{variateForm}} \cr
+\code{type} \tab \code{\link{type}} \cr
+\code{properties} \tab \code{\link{properties}} \cr
+\code{support} \tab \code{\link{support}} \cr
+\code{symmetry} \tab \code{\link{symmetry}} \cr
+\code{sup}  \tab \code{\link{sup}} \cr
+\code{inf} \tab \code{\link{inf}} \cr
+\code{dmax}  \tab \code{\link{dmax}} \cr
+\code{dmin} \tab \code{\link{dmin}} \cr
+\code{skewnessType} \tab \code{\link{skewnessType}} \cr
+\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
 
 \tab \cr \tab \cr \tab \cr
 

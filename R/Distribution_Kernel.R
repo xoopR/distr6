@@ -15,20 +15,20 @@
 #' @section Public Methods:
 #'  \tabular{ll}{
 #'   \strong{Accessor Methods} \tab \strong{Link} \cr
-#'   \code{decorators()} \tab \code{\link{decorators}} \cr
-#'   \code{traits()} \tab \code{\link{traits}} \cr
-#'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-#'   \code{variateForm()} \tab \code{\link{variateForm}} \cr
-#'   \code{type()} \tab \code{\link{type}} \cr
-#'   \code{properties()} \tab \code{\link{properties}} \cr
-#'   \code{support()} \tab \code{\link{support}} \cr
-#'   \code{symmetry()} \tab \code{\link{symmetry}} \cr
-#'   \code{sup()}  \tab \code{\link{sup}} \cr
-#'   \code{inf()} \tab \code{\link{inf}} \cr
-#'   \code{dmax()}  \tab \code{\link{dmax}} \cr
-#'   \code{dmin()} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+#'   \code{decorators} \tab \code{\link{decorators}} \cr
+#'   \code{traits} \tab \code{\link{traits}} \cr
+#'   \code{valueSupport} \tab \code{\link{valueSupport}} \cr
+#'   \code{variateForm} \tab \code{\link{variateForm}} \cr
+#'   \code{type} \tab \code{\link{type}} \cr
+#'   \code{properties} \tab \code{\link{properties}} \cr
+#'   \code{support} \tab \code{\link{support}} \cr
+#'   \code{symmetry} \tab \code{\link{symmetry}} \cr
+#'   \code{sup}  \tab \code{\link{sup}} \cr
+#'   \code{inf} \tab \code{\link{inf}} \cr
+#'   \code{dmax}  \tab \code{\link{dmax}} \cr
+#'   \code{dmin} \tab \code{\link{dmin}} \cr
+#'   \code{skewnessType} \tab \code{\link{skewnessType}} \cr
+#'   \code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
 #'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
@@ -87,7 +87,7 @@ Kernel$set("public","initialize",function(...){
 Kernel$set("public","package","This is now deprecated. Use $packages instead.")
 Kernel$set("public","packages", NULL)
 Kernel$set("private",".type","symmetric")
-Kernel$set("public","traits",function(){
+Kernel$set("active","traits",function(){
   return(list(type = Reals$new(),
               valueSupport = "continuous",
               variateForm = "univariate"))

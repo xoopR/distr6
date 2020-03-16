@@ -8,13 +8,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Pareto$new()$symmetry(), "asymmetric")
-  expect_equal(Pareto$new(scale = 3)$inf(), 3)
-  expect_equal(Pareto$new(scale = 3)$sup(), Inf)
-  expect_equal(Pareto$new()$dmax(), Inf)
-  expect_equal(Pareto$new(scale=3)$dmin(), 3)
-  expect_equal(Pareto$new(scale = 3)$valueSupport(), "continuous")
-  expect_equal(Pareto$new(scale = 3)$variateForm(), "univariate")
+  expect_equal(Pareto$new()$symmetry, "asymmetric")
+  expect_equal(Pareto$new(scale = 3)$inf, 3)
+  expect_equal(Pareto$new(scale = 3)$sup, Inf)
+  expect_equal(Pareto$new()$dmax, Inf)
+  expect_equal(Pareto$new(scale=3)$dmin, 3)
+  expect_equal(Pareto$new(scale = 3)$valueSupport, "continuous")
+  expect_equal(Pareto$new(scale = 3)$variateForm, "univariate")
 })
 
 test_that("statistics",{

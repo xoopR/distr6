@@ -16,7 +16,7 @@ Supremum as a numeric.
 Returns the distribution supremum as the supremum of the support.
 }
 \section{R6 Usage}{
- $sup()
+ $sup
 }
 
 \seealso{

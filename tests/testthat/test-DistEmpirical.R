@@ -12,9 +12,9 @@ test_that("samples constructor",{
 
 emp = Empirical$new(1:10)
 test_that("properties & traits",{
-  expect_equal(emp$valueSupport(), "discrete")
-  expect_equal(emp$variateForm(), "univariate")
-  expect_equal(emp$symmetry(), "asymmetric")
+  expect_equal(emp$valueSupport, "discrete")
+  expect_equal(emp$variateForm, "univariate")
+  expect_equal(emp$symmetry, "asymmetric")
 })
 
 

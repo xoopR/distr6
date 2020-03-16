@@ -24,13 +24,13 @@ test_that("constructor",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Weibull$new()$symmetry(), "asymmetric")
-  expect_equal(Weibull$new()$inf(), 0)
-  expect_equal(Weibull$new()$sup(), Inf)
-  expect_equal(Weibull$new()$dmin(), 0)
-  expect_equal(Weibull$new()$dmax(), Inf)
-  expect_equal(Weibull$new()$valueSupport(), "continuous")
-  expect_equal(Weibull$new()$variateForm(), "univariate")
+  expect_equal(Weibull$new()$symmetry, "asymmetric")
+  expect_equal(Weibull$new()$inf, 0)
+  expect_equal(Weibull$new()$sup, Inf)
+  expect_equal(Weibull$new()$dmin, 0)
+  expect_equal(Weibull$new()$dmax, Inf)
+  expect_equal(Weibull$new()$valueSupport, "continuous")
+  expect_equal(Weibull$new()$variateForm, "univariate")
 })
 
 test_that("statistics",{

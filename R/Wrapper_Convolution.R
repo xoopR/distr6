@@ -67,7 +67,7 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
         message(.distr6$message_numeric)
 
         return(sapply(x1,function(z){
-          support <- try(self$wrappedModels(name2)$inf():self$wrappedModels(name2)$sup(), silent = T)
+          support <- try(self$wrappedModels(name2)$inf:self$wrappedModels(name2)$sup, silent = T)
           if(inherits(support,"try-error")){
             self$wrappedModels(name2)$.__enclos_env__$private$.setWorkingSupport()
             support <- self$wrappedModels(name2)$.__enclos_env__$private$.getWorkingSupport()
@@ -83,7 +83,7 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
       #   message(.distr6$message_numeric)
       #
       #   return(sapply(x1,function(z){
-      #     support <- try(self$wrappedModels(name1)$inf():self$wrappedModels(name1)$sup())
+      #     support <- try(self$wrappedModels(name1)$inf:self$wrappedModels(name1)$sup)
       #               if(inherits(support,"try-error")){
       #                 self$wrappedModels(name2)$.__enclos_env__$private$.setWorkingSupport()
       #                 support <- self$wrappedModels(name2)$.__enclos_env__$private$.getWorkingSupport()
@@ -98,9 +98,9 @@ Convolution$set("public","initialize",function(dist1, dist2, add = TRUE,
   name = paste("Convolution of",distlist[[1]]$short_name,"and",distlist[[2]]$short_name)
   short_name = paste0(distlist[[1]]$short_name,distlist[[2]]$short_name)
 
-  type = distlist[[2]]$type()
-  valueSupport = distlist[[2]]$valueSupport()
-  variateForm = distlist[[2]]$variateForm()
+  type = distlist[[2]]$type
+  valueSupport = distlist[[2]]$valueSupport
+  variateForm = distlist[[2]]$variateForm
 
   super$initialize(distlist = distlist, pdf = fnc, name = name,
                    short_name = short_name, type = type, valueSupport = valueSupport,

@@ -20,11 +20,11 @@ dbin = function(x, log,...){
   return(m1 * m2 * m3)
 }
 test_that("check support", {
-  expect_equal(Distribution$new("Discrete Test",valueSupport = "c", pdf = dbinom)$valueSupport(), "continuous")
-  expect_equal(Distribution$new("Discrete Test",valueSupport = "d", pdf = dbinom)$valueSupport(), "discrete")
-  expect_equal(Distribution$new("Discrete Test",valueSupport = "m", pdf = dbinom)$valueSupport(), "mixture")
+  expect_equal(Distribution$new("Discrete Test",valueSupport = "c", pdf = dbinom)$valueSupport, "continuous")
+  expect_equal(Distribution$new("Discrete Test",valueSupport = "d", pdf = dbinom)$valueSupport, "discrete")
+  expect_equal(Distribution$new("Discrete Test",valueSupport = "m", pdf = dbinom)$valueSupport, "mixture")
   expect_error(Distribution$new("Discrete Test",valueSupport = "r", pdf = dbinom))
-  expect_equal(Distribution$new("Discrete Test", pdf = dbinom)$valueSupport(), "continuous")
+  expect_equal(Distribution$new("Discrete Test", pdf = dbinom)$valueSupport, "continuous")
 })
 
 test_that("check variateForm", {
@@ -34,13 +34,13 @@ test_that("check variateForm", {
     m3 = (1-self$getParameterValue("prob"))^(self$getParameterValue("size") - x)
     return(m1 * m2 * m3)
   }
-  expect_equal(Distribution$new("Discrete Test",variateForm = "u", pdf = dbinom)$variateForm(), "univariate")
-  expect_equal(Distribution$new("Discrete Test",variateForm = "mu", pdf = dbinom)$variateForm(), "multivariate")
-  expect_equal(Distribution$new("Discrete Test",variateForm = "ma", pdf = dbinom)$variateForm(), "matrixvariate")
+  expect_equal(Distribution$new("Discrete Test",variateForm = "u", pdf = dbinom)$variateForm, "univariate")
+  expect_equal(Distribution$new("Discrete Test",variateForm = "mu", pdf = dbinom)$variateForm, "multivariate")
+  expect_equal(Distribution$new("Discrete Test",variateForm = "ma", pdf = dbinom)$variateForm, "matrixvariate")
   expect_error(Distribution$new("Discrete Test",variateForm = "m", pdf = dbinom))
   expect_error(Distribution$new("Discrete Test",variateForm = "d", pdf = dbinom))
-  expect_equal(Distribution$new("Discrete Test", pdf = dbin)$variateForm(), "univariate")
-  expect_equal(Distribution$new("Discrete Test", pdf = function(x,y) return("Test"), type = Reals$new()^2)$variateForm(), "multivariate")
+  expect_equal(Distribution$new("Discrete Test", pdf = dbin)$variateForm, "univariate")
+  expect_equal(Distribution$new("Discrete Test", pdf = function(x,y) return("Test"), type = Reals$new()^2)$variateForm, "multivariate")
 })
 
 test_that("check multivariate", {
@@ -54,7 +54,7 @@ test_that("check multivariate", {
                                 cdf = function(x,y) return("Test"),
                                 type = Reals$new()^2))
   expect_equal(Distribution$new("Test", pdf = function(x,y) return("Test"),
-                                 cdf = function(x,y) return("Test"))$type()$power,2)
+                                 cdf = function(x,y) return("Test"))$type$power,2)
 })
 
 ps = ParameterSet$new(id = list("prob","size","qprob"), value = list(0.2, 100, 0.8),

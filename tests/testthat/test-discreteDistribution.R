@@ -54,10 +54,10 @@ test_that("check all accessors are working", {
   expect_equal(discreteTester$name, "Discrete Test")
   expect_equal(discreteTester$short_name, "TestDistr")
   expect_equal(discreteTester$description, NULL)
-  expect_equal(discreteTester$decorators(), "CoreStatistics")
-  expect_equal(discreteTester$valueSupport(), "discrete")
-  expect_equal(discreteTester$variateForm(), "univariate")
-  expect_equal(discreteTester$symmetry(),"symmetric")
+  expect_equal(discreteTester$decorators, "CoreStatistics")
+  expect_equal(discreteTester$valueSupport, "discrete")
+  expect_equal(discreteTester$variateForm, "univariate")
+  expect_equal(discreteTester$symmetry,"symmetric")
   expect_equal(discreteTester$getParameterValue("size"), 100)
 })
 
@@ -77,9 +77,9 @@ test_that("check basic maths functions as expected", {
 
 test_that("check kurtosis and skewness", {
   expect_equal(round(discreteTester$kurtosis(), 2), 2.56)
-  expect_equal(discreteTester$kurtosisType(), "leptokurtic")
+  expect_equal(discreteTester$kurtosisType, "leptokurtic")
   expect_equal(round(discreteTester$skewness(), 2), -1.89)
-  expect_equal(discreteTester$skewnessType(), "negative skew")
+  expect_equal(discreteTester$skewnessType, "negative skew")
 })
 
 test_that("check exotic functions silent",{

@@ -111,7 +111,7 @@ U$mean()
 U$variance()
 U$hazard(5)
 U$rand(5)
-U$kurtosis()
+U$kurtosis
 U$survivalPNorm(3, 2, 6)
 ```
 

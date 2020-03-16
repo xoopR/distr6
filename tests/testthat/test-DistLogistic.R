@@ -16,13 +16,13 @@ test_that("constructor",{
 
 l = Logistic$new()
 test_that("properties & traits",{
-  expect_equal(l$symmetry(), "symmetric")
-  expect_equal(l$inf(), -Inf)
-  expect_equal(l$sup(), Inf)
-  expect_equal(l$dmin(), -Inf)
-  expect_equal(l$dmax(), Inf)
-  expect_equal(l$valueSupport(), "continuous")
-  expect_equal(l$variateForm(), "univariate")
+  expect_equal(l$symmetry, "symmetric")
+  expect_equal(l$inf, -Inf)
+  expect_equal(l$sup, Inf)
+  expect_equal(l$dmin, -Inf)
+  expect_equal(l$dmax, Inf)
+  expect_equal(l$valueSupport, "continuous")
+  expect_equal(l$variateForm, "univariate")
 })
 
 test_that("statistics",{

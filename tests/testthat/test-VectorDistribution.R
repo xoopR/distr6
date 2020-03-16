@@ -43,8 +43,8 @@ test_that("pdf/cdf - array",{
 test_that("type/support",{
   a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                         list(prob = 0.2, size = 6)))
-  expect_equal(a$type()$strprint(), setpower(Reals$new(),3)$strprint())
-  expect_equal(a$support()$strprint(), setpower(Reals$new(),3)$strprint())
+  expect_equal(a$type$strprint(), setpower(Reals$new(),3)$strprint())
+  expect_equal(a$support$strprint(), setpower(Reals$new(),3)$strprint())
 })
 
 test_that("stats", {
@@ -101,17 +101,17 @@ test_that("decorators",{
   a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                       list(prob = 0.2, size = 6)),
                              decorators = c("CoreStatistics", "ExoticStatistics"))
-  expect_equal(a$decorators(), c("CoreStatistics", "ExoticStatistics"))
-  expect_equal(a[1]$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a$decorators, c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a[1]$decorators, c("CoreStatistics", "ExoticStatistics"))
   a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                       list(prob = 0.2, size = 6)),
                              decorators = list("CoreStatistics", "ExoticStatistics"))
-  expect_equal(a$decorators(), c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a$decorators, c("CoreStatistics", "ExoticStatistics"))
   a = VectorDistribution$new(list(Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
                                   Binomial$new(prob = 0.2, size = 6)),
                              decorators = "ExoticStatistics")
-  expect_equal(a$decorators(), "ExoticStatistics")
-  expect_equal(a[1]$decorators(), "ExoticStatistics")
+  expect_equal(a$decorators, "ExoticStatistics")
+  expect_equal(a[1]$decorators, "ExoticStatistics")
   expect_silent(a[1])
   expect_silent(a[1])
   expect_equal(as.numeric(a$survival(1)), c(1 - Binomial$new(prob = 0.1, size = 2)$cdf(1),

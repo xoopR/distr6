@@ -13,13 +13,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(StudentTNoncentral$new()$valueSupport(), "continuous")
-  expect_equal(StudentTNoncentral$new()$variateForm(), "univariate")
-  expect_equal(StudentTNoncentral$new()$symmetry(), "symmetric")
-  expect_equal(StudentTNoncentral$new()$sup(), Inf)
-  expect_equal(StudentTNoncentral$new()$inf(), -Inf)
-  expect_equal(StudentTNoncentral$new()$dmax(), Inf)
-  expect_equal(StudentTNoncentral$new()$dmin(), -Inf)
+  expect_equal(StudentTNoncentral$new()$valueSupport, "continuous")
+  expect_equal(StudentTNoncentral$new()$variateForm, "univariate")
+  expect_equal(StudentTNoncentral$new()$symmetry, "symmetric")
+  expect_equal(StudentTNoncentral$new()$sup, Inf)
+  expect_equal(StudentTNoncentral$new()$inf, -Inf)
+  expect_equal(StudentTNoncentral$new()$dmax, Inf)
+  expect_equal(StudentTNoncentral$new()$dmin, -Inf)
 })
 
 s = StudentTNoncentral$new(df = 2, location = 3)

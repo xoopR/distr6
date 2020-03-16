@@ -17,7 +17,7 @@ otherwise returns NULL.
 Returns the type of kurtosis (in relation to Normal distribution)
 }
 \section{R6 Usage}{
- $kurtosisType()
+ $kurtosisType
 }
 
 \seealso{

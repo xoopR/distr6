@@ -19,13 +19,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-    expect_equal(Hypergeometric$new()$valueSupport(), "discrete")
-    expect_equal(Hypergeometric$new()$variateForm(), "univariate")
-    expect_equal(Hypergeometric$new()$symmetry(), "asymmetric")
-    expect_equal(Hypergeometric$new()$sup(), 5)
-    expect_equal(Hypergeometric$new()$inf(), 0)
-    expect_equal(Hypergeometric$new()$dmax(), 5)
-    expect_equal(Hypergeometric$new()$dmin(), 0)
+    expect_equal(Hypergeometric$new()$valueSupport, "discrete")
+    expect_equal(Hypergeometric$new()$variateForm, "univariate")
+    expect_equal(Hypergeometric$new()$symmetry, "asymmetric")
+    expect_equal(Hypergeometric$new()$sup, 5)
+    expect_equal(Hypergeometric$new()$inf, 0)
+    expect_equal(Hypergeometric$new()$dmax, 5)
+    expect_equal(Hypergeometric$new()$dmin, 0)
 })
 
 

@@ -10,14 +10,14 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Beta$new()$valueSupport(), "continuous")
-  expect_equal(Beta$new()$variateForm(), "univariate")
-  expect_equal(Beta$new()$symmetry(), "symmetric")
-  expect_equal(Beta$new(shape2=2)$symmetry(), "asymmetric")
-  expect_equal(Beta$new()$sup(), 1)
-  expect_equal(Beta$new()$inf(), 0)
-  expect_equal(Beta$new()$dmax(), 1)
-  expect_equal(Beta$new()$dmin(), 0)
+  expect_equal(Beta$new()$valueSupport, "continuous")
+  expect_equal(Beta$new()$variateForm, "univariate")
+  expect_equal(Beta$new()$symmetry, "symmetric")
+  expect_equal(Beta$new(shape2=2)$symmetry, "asymmetric")
+  expect_equal(Beta$new()$sup, 1)
+  expect_equal(Beta$new()$inf, 0)
+  expect_equal(Beta$new()$dmax, 1)
+  expect_equal(Beta$new()$dmin, 0)
 })
 
 

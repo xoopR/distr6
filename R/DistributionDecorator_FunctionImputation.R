@@ -68,15 +68,15 @@ FunctionImputation$set("public","cdf",function(x1){
   if(testUnivariate(self)){
     if(testDiscrete(self)){
       if(length(x1)>1)
-        return(sapply(x1,function(x) sum(self$pdf(self$inf():x))))
+        return(sapply(x1,function(x) sum(self$pdf(self$inf:x))))
       else
-        return(sum(self$pdf(self$inf():x1)))
+        return(sum(self$pdf(self$inf:x1)))
     } else if(testContinuous(self)){
       message(.distr6$message_numeric)
       if(length(x1)>1)
-        return(unlist(sapply(x1, function(x0) integrate(self$pdf, lower = self$inf(), upper = x0)$value)))
+        return(unlist(sapply(x1, function(x0) integrate(self$pdf, lower = self$inf, upper = x0)$value)))
       else
-        return(integrate(self$pdf, lower = self$inf(), upper = x1)$value)
+        return(integrate(self$pdf, lower = self$inf, upper = x1)$value)
 
     }
   }
@@ -87,8 +87,8 @@ FunctionImputation$set("public","quantile",function(p){
  # if(!testMessage(self$cdf(1))){
     #CDF2QUANTILE - DISCRETE/CONT
     if(testDiscrete(self)){
-      to = ifelse(self$sup() == Inf, 1e+08, self$sup())
-      from = ifelse(self$inf() == -Inf, -1e+08, self$inf())
+      to = ifelse(self$sup == Inf, 1e+08, self$sup)
+      from = ifelse(self$inf == -Inf, -1e+08, self$inf)
       x1 = seq.int(from,to,by = 1)
       y = self$cdf(x1)
 
@@ -99,14 +99,14 @@ FunctionImputation$set("public","quantile",function(p){
 
     } else if(testContinuous(self)){
  #     if(strategy == "inversion"){
-        upper = ifelse(self$sup() == Inf, 1e+08, self$sup())
-        lower = ifelse(self$inf() == -Inf, -1e+08, self$inf())
+        upper = ifelse(self$sup == Inf, 1e+08, self$sup)
+        lower = ifelse(self$inf == -Inf, -1e+08, self$inf)
 
         if(length(p)>1)
           return(unlist(sapply(p, function(p0)
-            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = self$inf(),upper = self$sup())(p0))))))
+            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = self$inf,upper = self$sup)(p0))))))
         else
-          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf(), upper = self$sup())(p)))
+          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf, upper = self$sup)(p)))
     }
  #   }
  # }
@@ -119,6 +119,6 @@ FunctionImputation$set("public","rand",function(n){
   } #else if(strategy == "p2r"){
   #   message(.distr6$message_numeric)
   #   if(testDiscrete(self))
-  #     return(sample(self$inf():self$sup(), n, TRUE, self$pdf(self$inf():self$sup())))
+  #     return(sample(self$inf:self$sup, n, TRUE, self$pdf(self$inf:self$sup)))
   # }
 })

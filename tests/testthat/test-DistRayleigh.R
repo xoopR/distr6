@@ -12,13 +12,13 @@ test_that("parameterisation",{
 
 x = Rayleigh$new()
 test_that("properties & traits",{
-  expect_equal(x$valueSupport(), "continuous")
-  expect_equal(x$variateForm(), "univariate")
-  expect_equal(x$symmetry(), "asymmetric")
-  expect_equal(x$sup(), Inf)
-  expect_equal(x$inf(), 0)
-  expect_equal(x$dmax(), Inf)
-  expect_equal(x$dmin(), 0)
+  expect_equal(x$valueSupport, "continuous")
+  expect_equal(x$variateForm, "univariate")
+  expect_equal(x$symmetry, "asymmetric")
+  expect_equal(x$sup, Inf)
+  expect_equal(x$inf, 0)
+  expect_equal(x$dmax, Inf)
+  expect_equal(x$dmin, 0)
 })
 
 x = Rayleigh$new(2)

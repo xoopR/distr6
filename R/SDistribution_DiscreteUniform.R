@@ -81,9 +81,9 @@ DiscreteUniform$set("public","pgf",function(z){
 })
 DiscreteUniform$set("public","mode",function(which="all"){
   if(which=="all")
-    return(self$inf():self$sup())
+    return(self$inf:self$sup)
   else
-    return((self$inf():self$sup())[which])
+    return((self$inf:self$sup)[which])
 })
 DiscreteUniform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))

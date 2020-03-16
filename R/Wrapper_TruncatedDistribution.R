@@ -8,7 +8,7 @@
 #' where \eqn{f_T}/\eqn{F_T} is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and
 #' \eqn{f_X}, \eqn{F_X} is the pdf/cdf of the original distribution.
 #'
-#' If lower or upper are NULL they are taken to be \code{self$inf()} and \code{self$sup()} respectively.
+#' If lower or upper are NULL they are taken to be \code{self$inf} and \code{self$sup} respectively.
 #' The support of the new distribution is the interval of points between lower and upper.
 #'
 #' The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
@@ -50,22 +50,22 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
     stop("pdf and cdf is required for truncation. Try decorate(Distribution, FunctionImputation) first.")
 
   if(is.null(lower))
-    lower <- distribution$inf()
-  else if(lower < distribution$inf())
-    lower <- distribution$inf()
+    lower <- distribution$inf
+  else if(lower < distribution$inf)
+    lower <- distribution$inf
   if(is.null(upper))
-    upper <- distribution$sup()
-  else if(upper > distribution$sup())
-    upper <- distribution$sup()
+    upper <- distribution$sup
+  else if(upper > distribution$sup)
+    upper <- distribution$sup
 
   pdf <- function(x1,...) {
-    self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$sup()) - self$wrappedModels()[[1]]$cdf(self$inf()))
+    self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$sup) - self$wrappedModels()[[1]]$cdf(self$inf))
   }
   formals(pdf)$self <- self
 
   cdf <- function(x1,...){
-    num = self$wrappedModels()[[1]]$cdf(x1) - self$wrappedModels()[[1]]$cdf(self$inf())
-    den = self$wrappedModels()[[1]]$cdf(self$sup()) - self$wrappedModels()[[1]]$cdf(self$inf())
+    num = self$wrappedModels()[[1]]$cdf(x1) - self$wrappedModels()[[1]]$cdf(self$inf)
+    den = self$wrappedModels()[[1]]$cdf(self$sup) - self$wrappedModels()[[1]]$cdf(self$inf)
     return(num/den)
   }
   formals(cdf)$self <- self
@@ -91,9 +91,9 @@ TruncatedDistribution$set("public","initialize",function(distribution, lower = N
 
   super$initialize(distlist = distlist, pdf = pdf, cdf = cdf,
                    name = name, short_name = short_name, support = support,
-                   type = distribution$type(),
+                   type = distribution$type,
                    description = description,
-                   valueSupport = distribution$valueSupport(), variateForm = "univariate")
+                   valueSupport = distribution$valueSupport, variateForm = "univariate")
 })
 TruncatedDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))
@@ -108,7 +108,7 @@ TruncatedDistribution$set("public","setParameterValue",function(..., lst = NULL,
 
 
   super$setParameterValue(lst = lst, error = error)
-  if(self$support()$class == "integer")
+  if(self$support$class == "integer")
     private$.properties$support <- Interval$new(self$getParameterValue("truncLower"), self$getParameterValue("truncUpper"), class = "integer")
   else
     private$.properties$support <- Interval$new(self$getParameterValue("truncLower"), self$getParameterValue("truncUpper"))

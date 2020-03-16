@@ -16,7 +16,7 @@ One of "symmetric" or "asymmetric".
 Returns the distribution symmetry.
 }
 \section{R6 Usage}{
- $symmetry()
+ $symmetry
 }
 
 \seealso{

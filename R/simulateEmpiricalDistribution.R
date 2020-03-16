@@ -28,8 +28,8 @@ simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL){
   if(length(n) > 1)
     n <- length(n)
 
-  if(n > EmpiricalDist$support()$length)
-    n <- EmpiricalDist$support()$length
+  if(n > EmpiricalDist$support$length)
+    n <- EmpiricalDist$support$length
 
-  return(sample(EmpiricalDist$support()$elements, n))
+  return(sample(EmpiricalDist$support$elements, n))
 }

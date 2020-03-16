@@ -14,13 +14,13 @@ test_that("parameterisations",{
 })
 
 test_that("properties & traits",{
-    expect_equal(Geometric$new()$valueSupport(), "discrete")
-    expect_equal(Geometric$new()$variateForm(), "univariate")
-    expect_equal(Geometric$new()$symmetry(), "asymmetric")
-    expect_equal(Geometric$new()$sup(), Inf)
-    expect_equal(Geometric$new()$inf(), 0)
-    expect_equal(Geometric$new()$dmax(), Inf)
-    expect_equal(Geometric$new()$dmin(), 0)
+    expect_equal(Geometric$new()$valueSupport, "discrete")
+    expect_equal(Geometric$new()$variateForm, "univariate")
+    expect_equal(Geometric$new()$symmetry, "asymmetric")
+    expect_equal(Geometric$new()$sup, Inf)
+    expect_equal(Geometric$new()$inf, 0)
+    expect_equal(Geometric$new()$dmax, Inf)
+    expect_equal(Geometric$new()$dmin, 0)
 })
 
 

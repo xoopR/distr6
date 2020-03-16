@@ -53,7 +53,7 @@ decorate <- function(distribution, decorators){
       return(x)
   })
 
-  dist_decors = distribution$decorators()
+  dist_decors = distribution$decorators
   decors_names = lapply(decorators, function(x) x$classname)
   decorators = decorators[!(decors_names %in% dist_decors)]
 

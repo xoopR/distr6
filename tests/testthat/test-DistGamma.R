@@ -23,13 +23,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Gamma$new()$valueSupport(), "continuous")
-  expect_equal(Gamma$new()$variateForm(), "univariate")
-  expect_equal(Gamma$new()$symmetry(), "asymmetric")
-  expect_equal(Gamma$new()$sup(), Inf)
-  expect_equal(Gamma$new()$inf(), 0)
-  expect_equal(Gamma$new()$dmax(), Inf)
-  expect_equal(Gamma$new()$dmin(), .Machine$double.eps)
+  expect_equal(Gamma$new()$valueSupport, "continuous")
+  expect_equal(Gamma$new()$variateForm, "univariate")
+  expect_equal(Gamma$new()$symmetry, "asymmetric")
+  expect_equal(Gamma$new()$sup, Inf)
+  expect_equal(Gamma$new()$inf, 0)
+  expect_equal(Gamma$new()$dmax, Inf)
+  expect_equal(Gamma$new()$dmin, .Machine$double.eps)
 })
 
 

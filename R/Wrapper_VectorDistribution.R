@@ -257,12 +257,12 @@ VectorDistribution$set("public","wrappedModels", function(model = NULL){
     }
   }
 })
-VectorDistribution$set("public","modelTable", function(){
+VectorDistribution$set("active","modelTable", function(){
   private$.wrappedModels
 })
 
 VectorDistribution$set("public", "strprint", function(n = 100){
-  names <- as.character(self$modelTable()$shortname)
+  names <- as.character(self$modelTable$shortname)
   lng <- length(names)
   if(lng >(2*n))
     names = c(names[1:n], "...", names[(lng-n+1):lng])
@@ -350,37 +350,37 @@ VectorDistribution$set("private", ".sharedparams", list())
 #' @param i indices specifying distributions to extract.
 #' @export
 Extract.VectorDistribution <- function(vecdist, i){
-  i = i[i %in% (1:nrow(vecdist$modelTable()))]
+  i = i[i %in% (1:nrow(vecdist$modelTable))]
   if(length(i) == 0)
-    stop("Index i too large, should be less than or equal to ", nrow(vecdist$modelTable()))
+    stop("Index i too large, should be less than or equal to ", nrow(vecdist$modelTable))
 
   if(!vecdist$distlist){
     if(length(i) == 1){
-      par = c(vecdist$modelTable()[i, 2][[1]][[1]], vecdist$shared_params)
+      par = c(vecdist$modelTable[i, 2][[1]][[1]], vecdist$shared_params)
 
       # if(!checkmate::testList(par))
       #   par = list(par)
 
-      dec = vecdist$decorators()
+      dec = vecdist$decorators
       if(!is.null(dec))
         par = c(par, list(decorators = dec))
 
-      return(do.call(get(vecdist$modelTable()[i, 1][[1]])$new, par))
+      return(do.call(get(vecdist$modelTable[i, 1][[1]])$new, par))
 
     }else
-      return(VectorDistribution$new(distribution = vecdist$modelTable()[i, 1][[1]],
-                                    params = vecdist$modelTable()[i, 2][[1]]))
+      return(VectorDistribution$new(distribution = vecdist$modelTable[i, 1][[1]],
+                                    params = vecdist$modelTable[i, 2][[1]]))
   } else {
     if(length(i) == 1){
-      dec = vecdist$decorators()
+      dec = vecdist$decorators
       if(!is.null(dec)) {
-        dist = vecdist$modelTable()[i, 1][[1]][[1]]
+        dist = vecdist$modelTable[i, 1][[1]][[1]]
         suppressMessages(decorate(dist, dec))
         return(dist)
       } else
-        return(vecdist$modelTable()[i, 1][[1]][[1]])
+        return(vecdist$modelTable[i, 1][[1]][[1]])
     } else
-      return(VectorDistribution$new(distlist = unlist(vecdist$modelTable()[i, 1])))
+      return(VectorDistribution$new(distlist = unlist(vecdist$modelTable[i, 1])))
   }
 }
 

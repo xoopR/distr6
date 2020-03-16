@@ -12,8 +12,8 @@ test_that("constructor",{
 })
 
 test_that("type/support",{
-  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$type()$strprint(), setpower(Naturals$new(),2)$strprint())
-  expect_equal(ProductDistribution$new(list(Binomial$new(size = 2), Binomial$new(size = 3)))$support()$strprint(),
+  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new()))$type$strprint(), setpower(Naturals$new(),2)$strprint())
+  expect_equal(ProductDistribution$new(list(Binomial$new(size = 2), Binomial$new(size = 3)))$support$strprint(),
                setproduct(Set$new(0:2),Set$new(0:3))$strprint())
 })
 
@@ -41,8 +41,8 @@ test_that("pdf/cdf - array",{
 test_that("type/support - array",{
   a = ProductDistribution$new(distribution = Binomial, params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                         list(prob = 0.2, size = 6)))
-  expect_equal(a$type()$strprint(), setpower(Naturals$new(),3)$strprint())
-  expect_equal(a$support()$strprint(), (Set$new(0:2) * Set$new(0:4) * Set$new(0:6))$strprint())
+  expect_equal(a$type$strprint(), setpower(Naturals$new(),3)$strprint())
+  expect_equal(a$support$strprint(), (Set$new(0:2) * Set$new(0:4) * Set$new(0:6))$strprint())
   expect_error(ProductDistribution$new(distribution = sd, params = list()))
   expect_error(ProductDistribution$new())
   expect_equal(ProductDistribution$new(distribution = Binomial, params = data.table::data.table(prob = c(0.1,0.6,0.2),size = c(2,4,6))), a)

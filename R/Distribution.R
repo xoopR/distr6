@@ -70,20 +70,20 @@
 #' @section Public Methods:
 #'  \tabular{ll}{
 #'   \strong{Accessor Methods} \tab \strong{Link} \cr
-#'   \code{decorators()} \tab \code{\link{decorators}} \cr
-#'   \code{traits()} \tab \code{\link{traits}} \cr
-#'   \code{valueSupport()} \tab \code{\link{valueSupport}} \cr
-#'   \code{variateForm()} \tab \code{\link{variateForm}} \cr
-#'   \code{type()} \tab \code{\link{type}} \cr
-#'   \code{properties()} \tab \code{\link{properties}} \cr
-#'   \code{support()} \tab \code{\link{support}} \cr
-#'   \code{symmetry()} \tab \code{\link{symmetry}} \cr
-#'   \code{sup()}  \tab \code{\link{sup}} \cr
-#'   \code{inf()} \tab \code{\link{inf}} \cr
-#'   \code{dmax()}  \tab \code{\link{dmax}} \cr
-#'   \code{dmin()} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType()} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType()} \tab \code{\link{kurtosisType}} \cr
+#'   \code{decorators} \tab \code{\link{decorators}} \cr
+#'   \code{traits} \tab \code{\link{traits}} \cr
+#'   \code{valueSupport} \tab \code{\link{valueSupport}} \cr
+#'   \code{variateForm} \tab \code{\link{variateForm}} \cr
+#'   \code{type} \tab \code{\link{type}} \cr
+#'   \code{properties} \tab \code{\link{properties}} \cr
+#'   \code{support} \tab \code{\link{support}} \cr
+#'   \code{symmetry} \tab \code{\link{symmetry}} \cr
+#'   \code{sup}  \tab \code{\link{sup}} \cr
+#'   \code{inf} \tab \code{\link{inf}} \cr
+#'   \code{dmax}  \tab \code{\link{dmax}} \cr
+#'   \code{dmin} \tab \code{\link{dmin}} \cr
+#'   \code{skewnessType} \tab \code{\link{skewnessType}} \cr
+#'   \code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
 #'   \tab \cr \tab \cr \tab \cr
 #'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
 #'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
@@ -432,238 +432,25 @@ Distribution$set("public","summary",function(full = TRUE,...){
     }
     cat("\n")
 
-    cat(" Support:",self$support()$strprint(), "\tScientific Type:",self$type()$strprint(),"\n")
-    cat("\n Traits:\t",self$valueSupport(),"; ",self$variateForm(), sep="")
-    cat("\n Properties:\t", self$symmetry(),sep="")
-    if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType())
-    if(!inherits(a_skew,"try-error")) cat(";",self$skewnessType())
+    cat(" Support:",self$support$strprint(), "\tScientific Type:",self$type$strprint(),"\n")
+    cat("\n Traits:\t",self$valueSupport,"; ",self$variateForm, sep="")
+    cat("\n Properties:\t", self$symmetry,sep="")
+    if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType)
+    if(!inherits(a_skew,"try-error")) cat(";",self$skewnessType)
 
-    if(length(self$decorators())!=0)
-      cat("\n\n Decorated with: ", paste0(self$decorators(),collapse=", "))
+    if(length(self$decorators)!=0)
+      cat("\n\n Decorated with: ", paste0(self$decorators,collapse=", "))
 
   } else {
     if(length(private$.parameters)!=0)
       cat(self$strprint())
     else
       cat(self$name)
-    cat("\nScientific Type:",self$type()$strprint(),"\t See $traits() for more")
-    cat("\nSupport:",self$support()$strprint(),"\t See $properties() for more")
+    cat("\nScientific Type:",self$type$strprint(),"\t See $traits for more")
+    cat("\nSupport:",self$support$strprint(),"\t See $properties for more")
   }
   cat("\n")
   invisible(self)
-})
-
-#-------------------------------------------------------------
-# Public Methods - Accessors
-#-------------------------------------------------------------
-#' @name decorators
-#' @title Decorators Accessor
-#' @usage decorators(object)
-#' @section R6 Usage: $decorators()
-#' @param object Distribution.
-#' @description Returns the decorators added to a distribution.
-#' @seealso \code{\link{decorate}}
-#' @return Character vector of decorators.
-#' @export
-NULL
-Distribution$set("public","decorators", function(){
-  return(private$.decorators)
-})
-
-#' @name traits
-#' @title Traits Accessor
-#' @usage traits(object)
-#' @section R6 Usage: $traits()
-#' @param object Distribution.
-#' @description Returns the traits of the distribution.
-#' @return List of traits.
-#' @export
-NULL
-Distribution$set("public","traits",function(){
-  return(private$.traits)
-})
-
-#' @name valueSupport
-#' @title Value Support Accessor
-#' @usage valueSupport(object)
-#' @section R6 Usage: $valueSupport()
-#' @param object Distribution.
-#' @description Returns the valueSupport of the distribution.
-#' @return One of "discrete"/"continuous"/"mixture".
-#' @export
-NULL
-Distribution$set("public","valueSupport",function(){
-  return(self$traits()[["valueSupport"]])
-})
-
-#' @name variateForm
-#' @title Variate Form Accessor
-#' @usage variateForm(object)
-#' @section R6 Usage: $variateForm()
-#' @param object Distribution.
-#' @description Returns the variateForm of the distribution.
-#' @return One of "univariate"/"multivariate"/"matrixvariate".
-#' @export
-NULL
-Distribution$set("public","variateForm",function(){
-  return(self$traits()[["variateForm"]])
-})
-
-#' @name type
-#' @title Type Accessor
-#' @usage type(object)
-#' @section R6 Usage: $type()
-#' @param object Distribution.
-#' @description Returns the scientific type of the distribution.
-#' @return An R6 object of class [set6::Set].
-#' @seealso [set6::Set]
-#' @export
-NULL
-Distribution$set("public","type",function(){
-  return(self$traits()[["type"]])
-})
-
-#' @name properties
-#' @title Properties Accessor
-#' @usage properties(object)
-#' @section R6 Usage: $properties()
-#' @param object Distribution.
-#' @description Returns the properties of the distribution.
-#' @return List of distribution properties.
-#' @export
-NULL
-Distribution$set("public","properties",function(){
-  return(private$.properties)
-})
-
-#' @name support
-#' @title Support Accessor
-#' @usage support(object)
-#' @section R6 Usage: $support()
-#' @param object Distribution.
-#' @description Returns the support of the distribution.
-#' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
-#' greater than zero,
-#' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
-#' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
-#' @return An R6 object of class [set6::Set].
-#' @seealso [set6::Set] and \code{\link{properties}}
-#' @export
-NULL
-Distribution$set("public","support",function(){
-  return(self$properties()[["support"]])
-})
-
-#' @name symmetry
-#' @title Symmetry Accessor
-#' @usage symmetry(object)
-#' @section R6 Usage: $symmetry()
-#' @param object Distribution.
-#' @description Returns the distribution symmetry.
-#' @return One of "symmetric" or "asymmetric".
-#' @seealso \code{\link{properties}}
-#' @export
-NULL
-Distribution$set("public","symmetry",function(){
-  return(self$properties()[["symmetry"]])
-})
-
-#' @name sup
-#' @title Supremum Accessor
-#' @usage sup(object)
-#' @section R6 Usage: $sup()
-#' @param object Distribution.
-#' @description Returns the distribution supremum as the supremum of the support.
-#' @return Supremum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
-#' @export
-NULL
-Distribution$set("public","sup",function(){
-  return(self$support()$upper)
-})
-
-#' @name inf
-#' @title Infimum Accessor
-#' @usage inf(object)
-#' @section R6 Usage: $inf()
-#' @param object Distribution.
-#' @description Returns the distribution infimum as the infimum of the support.
-#' @return Infimum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
-#' @export
-NULL
-Distribution$set("public","inf",function(){
-  return(self$support()$lower)
-})
-
-#' @name dmax
-#' @title Distribution Maximum Accessor
-#' @usage dmax(object)
-#' @section R6 Usage: $dmax()
-#' @param object Distribution.
-#' @description Returns the distribution maximum as the maximum of the support. If the support is not
-#' bounded above then maximum is given by
-#' \deqn{maximum = supremum - 1.1e-15}
-#' @return Maximum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
-#' @export
-NULL
-Distribution$set("public","dmax",function(){
-  return(self$support()$max)
-})
-
-#' @name dmin
-#' @title Distribution Minimum Accessor
-#' @usage dmin(object)
-#' @section R6 Usage: $dmin()
-#' @param object Distribution.
-#' @description Returns the distribution minimum as the minimum of the support. If the support is not
-#' bounded below then minimum is given by
-#' \deqn{minimum = infimum + 1.1e-15}
-#' @return Minimum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
-#' @export
-NULL
-Distribution$set("public","dmin",function(){
-  return(self$support()$min)
-})
-
-#' @name kurtosisType
-#' @title Type of Kurtosis Accessor
-#' @usage kurtosisType(object)
-#' @section R6 Usage: $kurtosisType()
-#' @param object Distribution.
-#' @description Returns the type of kurtosis (in relation to Normal distribution)
-#' @return If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
-#' otherwise returns NULL.
-#' @seealso \code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
-#' @export
-NULL
-Distribution$set("public", "kurtosisType", function() {
-  x = self$properties()$kurtosis
-  if(is.null(x))
-    return(NA)
-  else
-    return(x)
-})
-
-#' @name skewnessType
-#' @title Type of Skewness Accessor
-#' @usage skewnessType(object)
-#' @section R6 Usage: $skewnessType()
-#' @param object Distribution.
-#' @description Returns the type of skewness.
-#' @return If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
-#' "positive skew", otherwise returns NULL.
-#' @seealso \code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
-#' @export
-NULL
-Distribution$set("public", "skewnessType", function() {
-  x = self$properties()$skewness
-  if(is.null(x))
-    return(NA)
-  else
-    return(x)
 })
 
 #-------------------------------------------------------------
@@ -824,14 +611,14 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     return(NULL)
 
   if(testUnivariate(self)){
-    if(self$type()$class == "integer")
+    if(self$type$class == "integer")
        x1 <- floor(x1)
     cdf = numeric(length(x1))
-    cdf[x1 >= self$sup()] = 1
+    cdf[x1 >= self$sup] = 1
 
     if(getR6Class(self) %in% c("Empirical","WeightedDiscrete")){
-      if(any(x1 >= self$inf() & x1 <= self$sup()))
-        cdf[x1 >= self$inf() & x1 <= self$sup()] = private$.cdf(x1[x1 >= self$inf() & x1 <= self$sup()])
+      if(any(x1 >= self$inf & x1 <= self$sup))
+        cdf[x1 >= self$inf & x1 <= self$sup] = private$.cdf(x1[x1 >= self$inf & x1 <= self$sup])
     } else {
       if(any(self$liesInSupport(x1, all = F)))
         cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
@@ -911,8 +698,8 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
     quantile = p
     quantile[p > 1] = NaN
     quantile[p < 0] = NaN
-    quantile[p == 0] = self$inf()
-    quantile[p == 1] = self$sup()
+    quantile[p == 0] = self$inf
+    quantile[p == 1] = self$sup
     if(sum(p > 0 & p < 1)!=0)
       quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
   } else{
@@ -1132,7 +919,7 @@ Distribution$set("public","correlation",function(){
 #' @export
 NULL
 Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
-  return(self$support()$contains(x, all, bound))
+  return(self$support$contains(x, all, bound))
 })
 
 #' @name liesInType
@@ -1158,12 +945,222 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @export
 NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
-  return(self$type()$contains(x, all, bound))
+  return(self$type$contains(x, all, bound))
 })
 
 #-------------------------------------------------------------
 # Distribution Active Bindings
 #-------------------------------------------------------------
+#' @name decorators
+#' @title Decorators Accessor
+#' @usage decorators(object)
+#' @section R6 Usage: $decorators
+#' @param object Distribution.
+#' @description Returns the decorators added to a distribution.
+#' @seealso \code{\link{decorate}}
+#' @return Character vector of decorators.
+#' @export
+NULL
+Distribution$set("active","decorators", function(){
+  return(private$.decorators)
+})
+
+#' @name traits
+#' @title Traits Accessor
+#' @usage traits(object)
+#' @section R6 Usage: $traits
+#' @param object Distribution.
+#' @description Returns the traits of the distribution.
+#' @return List of traits.
+#' @export
+NULL
+Distribution$set("active","traits",function(){
+  return(private$.traits)
+})
+
+#' @name valueSupport
+#' @title Value Support Accessor
+#' @usage valueSupport(object)
+#' @section R6 Usage: $valueSupport
+#' @param object Distribution.
+#' @description Returns the valueSupport of the distribution.
+#' @return One of "discrete"/"continuous"/"mixture".
+#' @export
+NULL
+Distribution$set("active","valueSupport",function(){
+  return(self$traits$valueSupport)
+})
+
+#' @name variateForm
+#' @title Variate Form Accessor
+#' @usage variateForm(object)
+#' @section R6 Usage: $variateForm
+#' @param object Distribution.
+#' @description Returns the variateForm of the distribution.
+#' @return One of "univariate"/"multivariate"/"matrixvariate".
+#' @export
+NULL
+Distribution$set("active","variateForm",function(){
+  return(self$traits$variateForm)
+})
+
+#' @name type
+#' @title Type Accessor
+#' @usage type(object)
+#' @section R6 Usage: $type
+#' @param object Distribution.
+#' @description Returns the scientific type of the distribution.
+#' @return An R6 object of class [set6::Set].
+#' @seealso [set6::Set]
+#' @export
+NULL
+Distribution$set("active","type",function(){
+  return(self$traits$type)
+})
+
+#' @name properties
+#' @title Properties Accessor
+#' @usage properties(object)
+#' @section R6 Usage: $properties
+#' @param object Distribution.
+#' @description Returns the properties of the distribution.
+#' @return List of distribution properties.
+#' @export
+NULL
+Distribution$set("active","properties",function(){
+  return(private$.properties)
+})
+
+#' @name support
+#' @title Support Accessor
+#' @usage support(object)
+#' @section R6 Usage: $support
+#' @param object Distribution.
+#' @description Returns the support of the distribution.
+#' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
+#' greater than zero,
+#' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
+#' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
+#' @return An R6 object of class [set6::Set].
+#' @seealso [set6::Set] and \code{\link{properties}}
+#' @export
+NULL
+Distribution$set("active","support",function(){
+  return(self$properties$support)
+})
+
+#' @name symmetry
+#' @title Symmetry Accessor
+#' @usage symmetry(object)
+#' @section R6 Usage: $symmetry
+#' @param object Distribution.
+#' @description Returns the distribution symmetry.
+#' @return One of "symmetric" or "asymmetric".
+#' @seealso \code{\link{properties}}
+#' @export
+NULL
+Distribution$set("active","symmetry",function(){
+  return(self$properties$symmetry)
+})
+
+#' @name sup
+#' @title Supremum Accessor
+#' @usage sup(object)
+#' @section R6 Usage: $sup
+#' @param object Distribution.
+#' @description Returns the distribution supremum as the supremum of the support.
+#' @return Supremum as a numeric.
+#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
+#' @export
+NULL
+Distribution$set("active","sup",function(){
+  return(self$support$upper)
+})
+
+#' @name inf
+#' @title Infimum Accessor
+#' @usage inf(object)
+#' @section R6 Usage: $inf
+#' @param object Distribution.
+#' @description Returns the distribution infimum as the infimum of the support.
+#' @return Infimum as a numeric.
+#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
+#' @export
+NULL
+Distribution$set("active","inf",function(){
+  return(self$support$lower)
+})
+
+#' @name dmax
+#' @title Distribution Maximum Accessor
+#' @usage dmax(object)
+#' @section R6 Usage: $dmax
+#' @param object Distribution.
+#' @description Returns the distribution maximum as the maximum of the support. If the support is not
+#' bounded above then maximum is given by
+#' \deqn{maximum = supremum - 1.1e-15}
+#' @return Maximum as a numeric.
+#' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
+#' @export
+NULL
+Distribution$set("active","dmax",function(){
+  return(self$support$max)
+})
+
+#' @name dmin
+#' @title Distribution Minimum Accessor
+#' @usage dmin(object)
+#' @section R6 Usage: $dmin
+#' @param object Distribution.
+#' @description Returns the distribution minimum as the minimum of the support. If the support is not
+#' bounded below then minimum is given by
+#' \deqn{minimum = infimum + 1.1e-15}
+#' @return Minimum as a numeric.
+#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
+#' @export
+NULL
+Distribution$set("active","dmin",function(){
+  return(self$support$min)
+})
+
+#' @name kurtosisType
+#' @title Type of Kurtosis Accessor
+#' @usage kurtosisType(object)
+#' @section R6 Usage: $kurtosisType
+#' @param object Distribution.
+#' @description Returns the type of kurtosis (in relation to Normal distribution)
+#' @return If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
+#' otherwise returns NULL.
+#' @seealso \code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
+#' @export
+NULL
+Distribution$set("active", "kurtosisType", function() {
+  x = self$properties$kurtosis
+  if(is.null(x))
+    return(NA)
+  else
+    return(x)
+})
+
+#' @name skewnessType
+#' @title Type of Skewness Accessor
+#' @usage skewnessType(object)
+#' @section R6 Usage: $skewnessType
+#' @param object Distribution.
+#' @description Returns the type of skewness.
+#' @return If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
+#' "positive skew", otherwise returns NULL.
+#' @seealso \code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
+#' @export
+NULL
+Distribution$set("active", "skewnessType", function() {
+  x = self$properties$skewness
+  if(is.null(x))
+    return(NA)
+  else
+    return(x)
+})
+
 #' @name isPdf
 #' @rdname isPdf
 #' @title Test the Distribution Pdf Exist?
@@ -1232,15 +1229,15 @@ Distribution$set("private",".setWorkingSupport",function(){
   suppressMessages({
     rands = self$rand(1000)
 
-    if(self$sup() != Inf)
-      newsup = self$sup()
+    if(self$sup != Inf)
+      newsup = self$sup
     else{
       newsup = ceiling(max(rands))
       while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
       newsup = ceiling(newsup - 1)
     }
 
-    inf = self$inf()
+    inf = self$inf
     if(inf != -Inf)
       newinf = inf
     else{

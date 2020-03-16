@@ -28,10 +28,10 @@ continuousTester = Distribution$new("Continuous Test","ContTest",support=PosReal
 )
 
 test_that("check all accessors are working", {
-  expect_equal(continuousTester$decorators(), NULL)
-  expect_equal(continuousTester$valueSupport(), "continuous")
-  expect_equal(continuousTester$variateForm(), "univariate")
-  expect_equal(continuousTester$symmetry(), "symmetric")
+  expect_equal(continuousTester$decorators, NULL)
+  expect_equal(continuousTester$valueSupport, "continuous")
+  expect_equal(continuousTester$variateForm, "univariate")
+  expect_equal(continuousTester$symmetry, "symmetric")
   expect_warning(expect_null(continuousTester$getParameterValue("dsfdf")))
 })
 

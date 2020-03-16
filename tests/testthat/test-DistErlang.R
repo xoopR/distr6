@@ -16,13 +16,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Erlang$new()$valueSupport(), "continuous")
-  expect_equal(Erlang$new()$variateForm(), "univariate")
-  expect_equal(Erlang$new()$symmetry(), "asymmetric")
-  expect_equal(Erlang$new()$sup(), Inf)
-  expect_equal(Erlang$new()$inf(), 0)
-  expect_equal(Erlang$new()$dmax(), Inf)
-  expect_equal(Erlang$new()$dmin(), .Machine$double.eps)
+  expect_equal(Erlang$new()$valueSupport, "continuous")
+  expect_equal(Erlang$new()$variateForm, "univariate")
+  expect_equal(Erlang$new()$symmetry, "asymmetric")
+  expect_equal(Erlang$new()$sup, Inf)
+  expect_equal(Erlang$new()$inf, 0)
+  expect_equal(Erlang$new()$dmax, Inf)
+  expect_equal(Erlang$new()$dmin, 0)
 })
 
 

@@ -83,8 +83,8 @@ ExoticStatistics$set("public","packages","pracma")
 #' @export
 NULL
 ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NULL){
-  if(is.null(lower)) lower <- self$inf()
-  if(is.null(upper)) upper <- self$sup()
+  if(is.null(lower)) lower <- self$inf
+  if(is.null(upper)) upper <- self$sup
   return(self$cdfPNorm(p = 1, lower, upper))
 })
 
@@ -117,8 +117,8 @@ ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NU
 #' @export
 NULL
 ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper = NULL) {
-  if(is.null(lower)) lower <- self$inf()
-  if(is.null(upper)) upper <- self$sup()
+  if(is.null(lower)) lower <- self$inf
+  if(is.null(upper)) upper <- self$sup
   return(self$survivalPNorm(p = 1, lower, upper))
 }) # NEEDS TESTING (p-norm)
 
@@ -154,7 +154,7 @@ ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
     self$cdf(x1 = x1, lower.tail = FALSE, log.p = log)
   else {
     message(.distr6$message_numeric)
-    surv = integrate(self$pdf, x1, self$sup())$value
+    surv = integrate(self$pdf, x1, self$sup)$value
     if(log)
       return(log(surv))
     else
@@ -271,8 +271,8 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
 #'
 #' @export
 ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
-  if(is.null(lower)) lower <- self$inf()
-  if(is.null(upper)) upper <- self$sup()
+  if(is.null(lower)) lower <- self$inf
+  if(is.null(upper)) upper <- self$sup
 
   if(testContinuous(self))
     return(generalPNorm(self$cdf, p, lower, upper))
@@ -307,8 +307,8 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 #'
 #' @export
 ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
-  if(is.null(lower)) lower <- self$inf()
-  if(is.null(upper)) upper <- self$sup()
+  if(is.null(lower)) lower <- self$inf
+  if(is.null(upper)) upper <- self$sup
 
   if(testContinuous(self))
     return(generalPNorm(self$pdf, p, lower, upper))
@@ -375,8 +375,8 @@ ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL
 #'
 #' @export
 ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, upper = NULL){
-  if(is.null(lower)) lower <- self$inf()
-  if(is.null(upper)) upper <- self$sup()
+  if(is.null(lower)) lower <- self$inf
+  if(is.null(upper)) upper <- self$sup
 
   if(testContinuous(self))
     return(generalPNorm(self$survival, p, lower, upper))

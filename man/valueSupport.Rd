@@ -16,6 +16,6 @@ One of "discrete"/"continuous"/"mixture".
 Returns the valueSupport of the distribution.
 }
 \section{R6 Usage}{
- $valueSupport()
+ $valueSupport
 }
 

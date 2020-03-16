@@ -18,7 +18,7 @@ bounded below then minimum is given by
 \deqn{minimum = infimum + 1.1e-15}
 }
 \section{R6 Usage}{
- $dmin()
+ $dmin
 }
 
 \seealso{

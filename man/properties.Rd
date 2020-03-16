@@ -16,6 +16,6 @@ List of distribution properties.
 Returns the properties of the distribution.
 }
 \section{R6 Usage}{
- $properties()
+ $properties
 }
 

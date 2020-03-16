@@ -16,7 +16,7 @@ Infimum as a numeric.
 Returns the distribution infimum as the infimum of the support.
 }
 \section{R6 Usage}{
- $inf()
+ $inf
 }
 
 \seealso{

@@ -16,13 +16,13 @@ test_that("parameterisation",{
 })
 
 test_that("properties & traits",{
-  expect_equal(Exponential$new()$valueSupport(), "continuous")
-  expect_equal(Exponential$new()$variateForm(), "univariate")
-  expect_equal(Exponential$new()$symmetry(), "asymmetric")
-  expect_equal(Exponential$new()$sup(), Inf)
-  expect_equal(Exponential$new()$inf(), 0)
-  expect_equal(Exponential$new()$dmax(), Inf)
-  expect_equal(Exponential$new()$dmin(), 0)
+  expect_equal(Exponential$new()$valueSupport, "continuous")
+  expect_equal(Exponential$new()$variateForm, "univariate")
+  expect_equal(Exponential$new()$symmetry, "asymmetric")
+  expect_equal(Exponential$new()$sup, Inf)
+  expect_equal(Exponential$new()$inf, 0)
+  expect_equal(Exponential$new()$dmax, Inf)
+  expect_equal(Exponential$new()$dmin, 0)
 })
 
 e = Exponential$new(rate = 1)
