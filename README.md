@@ -8,16 +8,19 @@ Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](h
 [![Appveyor Build
 status](https://ci.appveyor.com/api/projects/status/mrexqbmrtrx865jf/branch/master?svg=true)](https://ci.appveyor.com/project/RaphaelS1/distr6-xsr0j/branch/master)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
+[![Repo
+Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/distr6)](https://cran.r-project.org/package=distr6)
 [![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/distr6)](https://cran.r-project.org/package=distr6)
-[![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
+Checks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
+[![DOI](https://zenodo.org/badge/177962537.svg)](https://zenodo.org/badge/latestdoi/177962537)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CRAN
-Checks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/distr6)](https://cran.r-project.org/package=distr6)
+[![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
 [![Gitter
 chat](https://badges.gitter.im/xoopR/distr6.png)](https://gitter.im/xoopR/distr6)
 
@@ -71,7 +74,7 @@ summary(B)
 #>  Skewness:   0
 #>  Ex. Kurtosis:   -0.2
 #> 
-#>  Support: {0,...,10}     Scientific Type: ℕ0 
+#>  Support: {0, 1,...,9, 10}   Scientific Type: ℕ0 
 #> 
 #>  Traits: discrete; univariate
 #>  Properties: symmetric; platykurtic; no skew
@@ -139,20 +142,14 @@ ProductDistribution$new(list(B,N))
 #> BinomProdNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
 ```
 
-Additionally we introduce a SetSymbol class for a purely symbolic
-representation of sets for Distribution typing
+Additionally [set6](https://CRAN.R-project.org/package=set6) is used for
+symbolic representation of sets for Distribution typing
 
 ``` r
-Binomial$new()$type()
-#> [1] "ℕ0"
-Binomial$new()$support()
-#> [1] "{0,...,10}"
-Set$new(1:5)
-#> [1] "{1,...,5}"
-Interval$new(1,5)
-#> [1] "[1,5]"
-PosReals$new()
-#> [1] "ℝ+"
+Binomial$new()$type
+#> ℕ0
+Binomial$new()$support
+#> {0, 1,...,9, 10}
 ```
 
 ## Usage

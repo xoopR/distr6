@@ -1,3 +1,5 @@
+# distr6 1.3.5.9000
+
 # distr6 1.3.5
 
 * Added Erlang distribution
