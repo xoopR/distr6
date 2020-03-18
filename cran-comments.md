@@ -1,7 +1,3 @@
-## Comments
-
-Any environments not passing will pass once once `set6` 0.1.2 is fully uploaded to CRAN.
-
 ## Downstream dependencies
 
 There is currently one dependency, `mlr3proba`, which I am the maintainer of. This is expected to break after update and will be patched immediately after `distr6` is on CRAN.
