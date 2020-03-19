@@ -113,7 +113,7 @@ library(magrittr)
 Normal$new() %>% decorate(list(CoreStatistics, ExoticStatistics))
 ```
 
-And that's all there is to it! Just make sure you pass the Decorator object (not the name) to the decorators argument. If you forget which decorators are available, just run `listDecorators()`, or `listDecorators(simplify = FALSE)` if you want to see which methods they include at the same time.
+And that's all there is to it! If you forget which decorators are available, just run `listDecorators()`, or `listDecorators(simplify = FALSE)` if you want to see which methods they include at the same time.
 
 ## Summary
 

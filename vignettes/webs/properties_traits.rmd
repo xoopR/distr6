@@ -53,7 +53,7 @@ Symmetry is one of 'symmetric' or 'asymmetric' and is an informal way of identif
 
 To view properties in distr6, we use the `properties()` method
 ```{r}
-Normal$new()$properties()
+Normal$new()$properties
 ```
 
 And once again these can be viewed individually

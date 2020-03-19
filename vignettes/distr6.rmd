@@ -93,7 +93,7 @@ N$traits
 Finally individual properties and traits are accessible via their own 'getters' for example:
 ```{r}
 N$valueSupport
-N$skewness
+N$skewnessType
 ```
 
 ### d/p/q/r

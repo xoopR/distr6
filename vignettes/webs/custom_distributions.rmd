@@ -60,8 +60,8 @@ U <- Distribution$new(name = "Uniform", pdf = pdf, parameters = ps, support = su
 
 The other intervals are filled in with the defaults,
 ```{r}
-U$type()
-U$support()
+U$type
+U$support
 ```
 
 And now we can use your distribution:
@@ -111,14 +111,14 @@ U$mean()
 U$variance()
 U$hazard(5)
 U$rand(5)
-U$kurtosis
+U$kurtosis()
 U$survivalPNorm(3, 2, 6)
 ```
 
 
 ## Summary
 
-And that's all there is to it! These tutorials have covered everything from the basics of constructing an implemented `SDistribution` right the way through, accessing and setting parameters, analysis distributions, manipulating them with decorators and wrappers, and finally adding your own custom distribution and using decorators to analyse it. Everything we have covered also applies to the Kernels in distr6, although these have less functionality, to see which are implemented run `listKernels()`.
+These tutorials have covered everything from the basics of constructing an implemented `SDistribution` right the way through, accessing and setting parameters, analysis distributions, manipulating them with decorators and wrappers, and finally adding your own custom distribution and using decorators to analyse it. Everything we have covered also applies to the Kernels in distr6, although these have less functionality, to see which are implemented run `listKernels()`.
 
 The [Extension Guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html) explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The [project wiki](https://github.com/alan-turing-institute/distr6/wiki) includes design documentation and contributor guidelines, please read these before making a pull request.
 
