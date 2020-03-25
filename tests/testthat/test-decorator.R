@@ -17,4 +17,6 @@ test_that("decorate",{
   E <- Exponential$new(rate = 1)
   CoreStatistics$new(E)
   expect_equal(E$decorators,"CoreStatistics")
+  expect_message(decorate(E, "ExoticStatistics"))
+  expect_equal(E$decorators,c("CoreStatistics","ExoticStatistics"))
 })

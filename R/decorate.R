@@ -110,7 +110,8 @@ decorate <- function(distribution, decorators){
       }
     })
 
-    distribution$.__enclos_env__$private$.updateDecorators(unlist(decors_names))
+
+    distribution$.__enclos_env__$private$.updateDecorators(c(distribution$decorators, unlist(decors_names)))
 
     message(paste(dist_name,"is now decorated with", paste0(decors_names,collapse = ",")))
     return(distribution)
