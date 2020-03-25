@@ -1,5 +1,7 @@
 # distr6 1.3.5.9000
 
+* Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending
+
 # distr6 1.3.5
 
 * Added Erlang distribution
