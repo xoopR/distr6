@@ -3,46 +3,31 @@ library(testthat)
 context("Binomial distribution")
 
 test_that("autottest",{
-  autotest_sdistribution(Binomial)
+  autotest_sdistribution(Binomial,
+                         pars = list(prob = 0.5, size = 10),
+                         traits = list(type = Naturals$new(), valueSupport = "discrete", variateForm = "univariate"),
+                         support = Set$new(0:10, class = "integer"),
+                         symmetry = "symmetric",
+                         mean = 5,
+                         mode = 5,
+                         variance = 2.5,
+                         skewness = 0,
+                         exkur = -0.2,
+                         entropy = 2.7081,
+                         mgf = 493.3136,
+                         cf = 0.0769-0.2598i,
+                         pgf = 1,
+                         pdf = dbinom(1:3, size = 10, prob = 0.5),
+                         cdf = pbinom(1:3, size = 10, prob = 0.5)
+  )
 })
 
-test_that("constructor", {
-  expect_silent(Binomial$new())
-  expect_silent(Binomial$new(prob = 0.2))
+test_that("manual test - alternate constructor", {
   expect_silent(Binomial$new(qprob = 0.2))
-  expect_message(Binomial$new(qprob = 0.2, verbose = T))
   expect_equal(Binomial$new(prob = 0.2)$getParameterValue("qprob"), 0.8)
   expect_equal(Binomial$new(qprob = 0.2)$getParameterValue("prob"), 0.8)
 })
 
-test_that("properties & traits",{
-  expect_equal(Binomial$new()$valueSupport, "discrete")
-  expect_equal(Binomial$new()$variateForm, "univariate")
-  expect_equal(Binomial$new()$symmetry, "symmetric")
+test_that("manual test - symmetry",{
   expect_equal(Binomial$new(prob = 0.1)$symmetry, "asymmetric")
-  expect_equal(Binomial$new(size=12)$sup, 12)
-  expect_equal(Binomial$new()$inf, 0)
-  expect_equal(Binomial$new(size=12)$dmax, 12)
-  expect_equal(Binomial$new()$dmin, 0)
 })
-
-b = Binomial$new()
-test_that("statistics",{
-  expect_equal(b$mean(), 5)
-  expect_equal(b$variance(), 2.5)
-  expect_equal(b$skewness(), 0)
-  expect_equal(b$kurtosis(T), -0.2)
-  expect_equal(b$kurtosis(F), 2.8)
-  expect_equal(round(b$entropy(), 5), 2.70806)
-  expect_equal(b$mgf(1), (0.5+0.5*exp(1))^10)
-  expect_equal(b$cf(1), (0.5+0.5*exp(1i))^10)
-  expect_equal(b$pgf(1), 1)
-  expect_equal(b$mode(), 5)
-  expect_equal(b$pdf(1), dbinom(1,size=10,0.5))
-  expect_equal(b$pdf(1.8), 0)
-  expect_equal(b$cdf(1), pbinom(1,size=10,0.5))
-  expect_equal(b$cdf(1.8), pbinom(1,size=10,0.5))
-  expect_equal(b$quantile(0.56), qbinom(0.56,size=10,0.5))
-  expect_silent(b$rand(10))
-})
-
