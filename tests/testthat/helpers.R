@@ -53,7 +53,8 @@ autotest_sdistribution = function(sdist){
 }
 
 autotest_kernel = function(kern, shortname, support, variance, squared2Norm, pdf, cdf){
-  context("fields")
+  context("public fields")
+  checkmate::expect_subset(names(kern$public_fields), c("name", "short_name", "description"))
   expect_equal(as.character(kern$inherit), "Kernel")
   checkmate::expect_names(c(kern$public_fields$name,
                             kern$public_fields$short_name,
@@ -64,6 +65,8 @@ autotest_kernel = function(kern, shortname, support, variance, squared2Norm, pdf
   }
 
   context("public methods")
+  checkmate::expect_subset(names(kern$public_methods), c("clone", "squared2Norm", "variance", "initialize"))
+
   if(!is.null(kern$public_methods$setParameterValue)){
     expect_equal(names(formals(kern$public_methods$setParameterValue)), c("...","lst","error"))
   }
@@ -79,6 +82,8 @@ autotest_kernel = function(kern, shortname, support, variance, squared2Norm, pdf
 
 
   context("private methods")
+  checkmate::expect_subset(names(kern$private_methods), c(".pdf", ".cdf", ".quantile", ".rand"))
+
   checkmate::expect_subset(names(formals(kern$private_methods$.pdf)), c("x","log"))
   if(!is.null(kern$private_methods$.cdf)){
     checkmate::expect_subset(names(formals(kern$private_methods$.cdf)), c("x","lower.tail", "log.p"))
@@ -87,13 +92,13 @@ autotest_kernel = function(kern, shortname, support, variance, squared2Norm, pdf
     checkmate::expect_subset(names(formals(kern$private_methods$.quantile)), c("p","lower.tail", "log.p"))
   }
 
-  # check no incorrect naming
+  context("incorrect names")
   expect_null(kern$private_methods$pdf)
   expect_null(kern$private_methods$cdf)
   expect_null(kern$private_methods$quantile)
   expect_null(kern$private_methods$rand)
 
-  # kernel specific tests
+  context("kernel specific")
   kern = kern$new()
   expect_equal(kern$mean(), 0)
   expect_equal(kern$median(), 0)
@@ -104,6 +109,8 @@ autotest_kernel = function(kern, shortname, support, variance, squared2Norm, pdf
   expect_equal(kern$strprint(), shortname)
   expect_output(kern$summary())
   expect_output(kern$summary(F))
+
+  context("d/p/q/r")
   expect_equal(round(kern$pdf(c(-0.1,0,0.1)),4), pdf)
   if(!is.null(kern$private_methods$.cdf)){
     expect_equal(round(kern$cdf(c(-0.1,0,0.1)),4), cdf)
