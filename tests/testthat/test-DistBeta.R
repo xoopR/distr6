@@ -2,6 +2,10 @@ library(testthat)
 
 context("Beta distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Beta)
+})
+
 test_that("parameterisation",{
   expect_silent(Beta$new())
   expect_silent(Beta$new(shape1 = 1, shape2 = 1))

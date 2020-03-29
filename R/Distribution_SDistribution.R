@@ -94,12 +94,32 @@ NULL
 # SDistribution Definition
 #-------------------------------------------------------------
 SDistribution <- R6Class("SDistribution", inherit = Distribution)
-SDistribution$set("public","initialize",function(...){
+SDistribution$set("public","initialize",function(decorators, support, type,
+                                                 symmetry = c("asymmetric", "symmetric"),
+                                                 valueSupport = c("discrete","continuous","mixture"),
+                                                 variateForm = c("univariate","multivariate","matrixvariate")){
+
   if(getR6Class(self) == "SDistribution")
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listDistributions()
     to see the probability distributions currently implemented in distr6."))
 
   assert_pkgload(self$packages)
+
+  if(!is.null(decorators))  suppressMessages(decorate(self, decorators))
+
+  private$.traits = list(type = assertSet(type),
+                         valueSupport = match.arg(valueSupport),
+                         variateForm = match.arg(variateForm))
+
+
+  kur = try(self$kurtosis(excess = TRUE), silent = TRUE)
+  skew = try(self$skewness(excess = TRUE), silent = TRUE)
+
+  private$.properties = list(kurtosis = ifnerror(kur, exkurtosisType(kur), "NULL"),
+                             skewness = ifnerror(skew, skewnessType(skew), "NULL"),
+                             support = assertSet(support),
+                             symmetry = match.arg(symmetry))
+
 
   super$initialize(...)
 })

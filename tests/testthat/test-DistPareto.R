@@ -2,6 +2,10 @@ library(testthat)
 
 context("Pareto distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Pareto)
+})
+
 test_that("parameterisation",{
   expect_silent(Pareto$new())
   expect_silent(Pareto$new(shape = 2, scale = 3))

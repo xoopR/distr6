@@ -2,6 +2,10 @@ library(testthat)
 
 context("Bernoulli distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Bernoulli)
+})
+
 test_that("constructor", {
   expect_silent(Bernoulli$new())
   expect_silent(Bernoulli$new(prob = 0.2))

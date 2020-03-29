@@ -2,6 +2,10 @@ library(testthat)
 
 context("Uniform distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Uniform)
+})
+
 test_that("constructor",{
   expect_silent(Uniform$new())
   expect_error(Uniform$new(lower = 5, upper = 3))

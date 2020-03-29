@@ -2,6 +2,10 @@ library(testthat)
 
 context("Dirichlet distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Dirichlet)
+})
+
 test_that("constructor",{
   expect_equal(Dirichlet$new()$getParameterValue("params"), c(1,1))
   expect_error(Dirichlet$new(params = c(0,1,2)))

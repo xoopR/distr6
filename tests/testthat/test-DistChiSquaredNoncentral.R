@@ -2,6 +2,10 @@ library(testthat)
 
 context("ChiSquaredNoncentral distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(ChiSquaredNoncentral)
+})
+
 test_that("parameterisation", {
   expect_silent(ChiSquaredNoncentral$new())
   expect_silent(ChiSquaredNoncentral$new(df = 5, location = 5))

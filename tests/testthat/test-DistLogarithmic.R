@@ -2,6 +2,10 @@ library(testthat)
 
 context("Logarithmic distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Logarithmic)
+})
+
 test_that("properties & traits",{
   expect_equal(Logarithmic$new()$valueSupport, "discrete")
   expect_equal(Logarithmic$new()$variateForm, "univariate")

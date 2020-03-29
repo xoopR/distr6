@@ -2,6 +2,10 @@ library(testthat)
 
 context("Cauchy distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Cauchy)
+})
+
 test_that("parameterisation",{
   expect_silent(Cauchy$new())
   expect_silent(Cauchy$new(location = 10))

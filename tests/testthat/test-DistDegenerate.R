@@ -2,6 +2,10 @@ library(testthat)
 
 context("Degenerate distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Degenerate)
+})
+
 test_that("constructor",{
   expect_silent(Degenerate$new())
   expect_silent(Degenerate$new(5))

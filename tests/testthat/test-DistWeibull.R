@@ -2,6 +2,10 @@ library(testthat)
 
 context("Weibull distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Weibull)
+})
+
 test_that("constructor",{
   expect_silent(Weibull$new())
   expect_silent(Weibull$new(shape = 2))

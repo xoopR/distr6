@@ -2,6 +2,10 @@ library(testthat)
 
 context("Loglogistic distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Loglogistic)
+})
+
 test_that("parameterisation",{
   expect_silent(Loglogistic$new())
   expect_silent(Loglogistic$new(shape = 2, scale = 3, location = 4))

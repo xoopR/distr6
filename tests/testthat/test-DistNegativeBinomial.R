@@ -2,6 +2,10 @@ library(testthat)
 
 context("NegativeBinomial distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(NegativeBinomial)
+})
+
 test_that("parameterisation",{
   expect_equal(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3)$mean(), 5)
   expect_message(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3, verbose = T))

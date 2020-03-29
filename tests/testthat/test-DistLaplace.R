@@ -2,6 +2,10 @@ library(testthat)
 
 context("Laplace distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Laplace)
+})
+
 test_that("constructor",{
   expect_silent(Laplace$new())
   expect_silent(Laplace$new(var = 1))

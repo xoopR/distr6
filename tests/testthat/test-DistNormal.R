@@ -2,6 +2,10 @@ library(testthat)
 
 context("Normal distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Normal)
+})
+
 test_that("constructor",{
   expect_silent(Normal$new())
   expect_silent(Normal$new(var = 1))

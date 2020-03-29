@@ -2,6 +2,10 @@ library(testthat)
 
 context("Frechet distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Frechet)
+})
+
 test_that("parameterisation",{
   expect_silent(Frechet$new())
   expect_silent(Frechet$new(shape = 2, scale = 3))

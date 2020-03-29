@@ -2,6 +2,10 @@ library(testthat)
 
 context("Categorical distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Categorical)
+})
+
 test_that("constructor",{
   expect_equal(Categorical$new()$getParameterValue("probs"),1)
   expect_equal(Categorical$new()$support,Set$new(1))

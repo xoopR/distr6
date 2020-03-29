@@ -2,6 +2,10 @@ library(testthat)
 
 context("Erlang distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Erlang)
+})
+
 test_that("parameterisation",{
   expect_silent(Erlang$new())
   expect_silent(Erlang$new(shape = 2, rate = 3))

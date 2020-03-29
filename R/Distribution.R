@@ -285,7 +285,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   if(!is.null(name)) self$name <- name
   if(!is.null(short_name)) self$short_name <- short_name
 
-  private$.properties$support <- support
+  public$properties$support <- support
   private$.traits$type <- type
   private$.traits$valueSupport <- valueSupport
   private$.traits$variateForm <- variateForm
@@ -300,17 +300,10 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 
   if(!suppressMoments){
     # Update skewness and kurtosis
-    x = try(self$kurtosis(excess = TRUE), silent = TRUE)
-    if(class(x) == "try-error")
-      private$.properties$kurtosis <- NULL
-    else
-      private$.properties$kurtosis <- exkurtosisType(x)
-
-    x = try(self$skewness(), silent = TRUE)
-    if(class(x) == "try-error")
-      private$.properties$skewness <- NULL
-    else
-      private$.properties$skewness <- skewType(x)
+    kur = try(self$kurtosis(excess = TRUE), silent = TRUE)
+    skew = try(self$skewness(excess = TRUE), silent = TRUE)
+    private$.properties$kurtosis <- ifnerror(kur, exkurtosisType(kur), "NULL")
+    private$.properties$skewness <- ifnerror(skew, skewnessType(skew), "NULL")
   }
 
   # private$.setWorkingSupport()
@@ -979,43 +972,41 @@ Distribution$set("active","traits",function(){
 })
 
 #' @name valueSupport
-#' @title Value Support Accessor
+#' @title Value Support Accessor - Deprecated
 #' @usage valueSupport(object)
-#' @section R6 Usage: $valueSupport
 #' @param object Distribution.
-#' @description Returns the valueSupport of the distribution.
+#' @description Deprecated. Use $traits$valueSupport
 #' @return One of "discrete"/"continuous"/"mixture".
 #' @export
 NULL
 Distribution$set("active","valueSupport",function(){
-  return(self$traits$valueSupport)
+  return("Deprecated. Use $properties$valueSupport instead.")
 })
 
 #' @name variateForm
-#' @title Variate Form Accessor
+#' @title Variate Form Accessor - Deprecated
 #' @usage variateForm(object)
-#' @section R6 Usage: $variateForm
 #' @param object Distribution.
-#' @description Returns the variateForm of the distribution.
+#' @description Deprecated. Use $traits$variateForm
 #' @return One of "univariate"/"multivariate"/"matrixvariate".
 #' @export
 NULL
 Distribution$set("active","variateForm",function(){
-  return(self$traits$variateForm)
+  return("Deprecated. Use $traits$variateForm instead.")
 })
 
 #' @name type
-#' @title Type Accessor
+#' @title Type Accessor - Deprecated
 #' @usage type(object)
 #' @section R6 Usage: $type
 #' @param object Distribution.
-#' @description Returns the scientific type of the distribution.
+#' @description Deprecated. Use $traits$type
 #' @return An R6 object of class [set6::Set].
 #' @seealso [set6::Set]
 #' @export
 NULL
 Distribution$set("active","type",function(){
-  return(self$traits$type)
+  return("Deprecated. Use $traits$type instead.")
 })
 
 #' @name properties
@@ -1027,16 +1018,16 @@ Distribution$set("active","type",function(){
 #' @return List of distribution properties.
 #' @export
 NULL
-Distribution$set("active","properties",function(){
-  return(private$.properties)
+Distribution$set("active","properties",function(x){
+  private$.properties
 })
 
 #' @name support
-#' @title Support Accessor
+#' @title Support Accessor - Deprecated
 #' @usage support(object)
 #' @section R6 Usage: $support
 #' @param object Distribution.
-#' @description Returns the support of the distribution.
+#' @description Deprecated. Use $properties$support
 #' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
 #' greater than zero,
 #' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
@@ -1046,21 +1037,20 @@ Distribution$set("active","properties",function(){
 #' @export
 NULL
 Distribution$set("active","support",function(){
-  return(self$properties$support)
+  return("Deprecated. Use $properties$support instead.")
 })
 
 #' @name symmetry
-#' @title Symmetry Accessor
+#' @title Symmetry Accessor - Deprecated
 #' @usage symmetry(object)
-#' @section R6 Usage: $symmetry
 #' @param object Distribution.
-#' @description Returns the distribution symmetry.
+#' @description Deprecated. Use $properties$symmetry.
 #' @return One of "symmetric" or "asymmetric".
 #' @seealso \code{\link{properties}}
 #' @export
 NULL
 Distribution$set("active","symmetry",function(){
-  return(self$properties$symmetry)
+  return("Deprecated. Use $properties$symmetry instead.")
 })
 
 #' @name sup
@@ -1074,7 +1064,7 @@ Distribution$set("active","symmetry",function(){
 #' @export
 NULL
 Distribution$set("active","sup",function(){
-  return(self$support$upper)
+  return(self$properties$support$upper)
 })
 
 #' @name inf
@@ -1088,7 +1078,7 @@ Distribution$set("active","sup",function(){
 #' @export
 NULL
 Distribution$set("active","inf",function(){
-  return(self$support$lower)
+  return(self$properties$support$lower)
 })
 
 #' @name dmax
@@ -1104,7 +1094,7 @@ Distribution$set("active","inf",function(){
 #' @export
 NULL
 Distribution$set("active","dmax",function(){
-  return(self$support$max)
+  return(self$properties$support$max)
 })
 
 #' @name dmin
@@ -1120,45 +1110,35 @@ Distribution$set("active","dmax",function(){
 #' @export
 NULL
 Distribution$set("active","dmin",function(){
-  return(self$support$min)
+  return(self$properties$support$min)
 })
 
 #' @name kurtosisType
-#' @title Type of Kurtosis Accessor
+#' @title Type of Kurtosis Accessor - Deprecated
 #' @usage kurtosisType(object)
-#' @section R6 Usage: $kurtosisType
 #' @param object Distribution.
-#' @description Returns the type of kurtosis (in relation to Normal distribution)
+#' @description Deprecated. Use $properties$kurtosis.
 #' @return If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
 #' otherwise returns NULL.
 #' @seealso \code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
 #' @export
 NULL
 Distribution$set("active", "kurtosisType", function() {
-  x = self$properties$kurtosis
-  if(is.null(x))
-    return(NA)
-  else
-    return(x)
+  return("Deprecated. Use $properties$kurtosis instead.")
 })
 
 #' @name skewnessType
-#' @title Type of Skewness Accessor
+#' @title Type of Skewness Accessor - Deprecated
 #' @usage skewnessType(object)
-#' @section R6 Usage: $skewnessType
 #' @param object Distribution.
-#' @description Returns the type of skewness.
+#' @description Deprecated. Use $properties$skewness.
 #' @return If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
 #' "positive skew", otherwise returns NULL.
 #' @seealso \code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
 #' @export
 NULL
 Distribution$set("active", "skewnessType", function() {
-  x = self$properties$skewness
-  if(is.null(x))
-    return(NA)
-  else
-    return(x)
+  return("Deprecated. Use $properties$skewness instead.")
 })
 
 #' @name isPdf
@@ -1215,7 +1195,7 @@ Distribution$set("private",".rand", NULL)
 Distribution$set("private",".parameters",NULL)
 Distribution$set("private",".workingSupport",NULL)
 Distribution$set("private",".decorators", NULL)
-Distribution$set("private",".properties",NULL)
+Distribution$set("private",".properties", list())
 Distribution$set("private",".traits",NULL)
 Distribution$set("private",".isPdf", FALSE)
 Distribution$set("private",".isCdf", FALSE)

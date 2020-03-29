@@ -2,6 +2,10 @@ library(testthat)
 
 context("Gamma distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Gamma)
+})
+
 test_that("parameterisation",{
   expect_silent(Gamma$new())
   expect_silent(Gamma$new(shape = 2, rate = 3))

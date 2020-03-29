@@ -2,6 +2,10 @@ library(testthat)
 
 context("Noncentral Beta distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(BetaNoncentral)
+})
+
 test_that("parameterisation",{
   expect_silent(BetaNoncentral$new())
   expect_silent(BetaNoncentral$new(shape1 = 1, shape2 = 1, location = 1))

@@ -2,6 +2,10 @@ library(testthat)
 
 context("Multinomial distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Multinomial)
+})
+
 test_that("constructor",{
   expect_error(Multinomial$new(probs = 0.2), "Length of")
   expect_silent(Multinomial$new())

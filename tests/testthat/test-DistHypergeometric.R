@@ -2,6 +2,10 @@ library(testthat)
 
 context("Hypergeometric distribution")
 
+test_that("autottest",{
+    autotest_sdistribution(Hypergeometric)
+})
+
 test_that("parameterisation",{
     expect_silent(Hypergeometric$new())
     expect_silent(Hypergeometric$new(size = 10, successes = 5, draws=2))

@@ -2,6 +2,10 @@ library(testthat)
 
 context("FDistribution")
 
+test_that("autottest",{
+  autotest_sdistribution(FDistribution)
+})
+
 test_that("parameterisation", {
   expect_silent(FDistribution$new())
   expect_silent(FDistribution$new(df1 = 3, df2 = 5))

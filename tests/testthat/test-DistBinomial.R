@@ -2,6 +2,10 @@ library(testthat)
 
 context("Binomial distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Binomial)
+})
+
 test_that("constructor", {
   expect_silent(Binomial$new())
   expect_silent(Binomial$new(prob = 0.2))

@@ -2,6 +2,10 @@ library(testthat)
 
 context("WeightedDiscrete distribution")
 
+test_that("autotest",{
+  autotest_sdistribution(WeightedDiscrete)
+})
+
 test_that("constructor",{
   expect_silent(WeightedDiscrete$new(data = data.frame(x = 1, pdf = 1, cdf = 1)))
   expect_error(WeightedDiscrete$new(data = data.frame(x = 1, pdf = 2, cdf = 1)))

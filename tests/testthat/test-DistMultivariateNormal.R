@@ -2,6 +2,10 @@ library(testthat)
 
 context("Multivariate Normal distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(MultivariateNormal)
+})
+
 test_that("constructor",{
   expect_equal(MultivariateNormal$new()$strprint(), "MultiNorm(mean = c(0, 0), cov = c(1, 0, 0, 1))")
   expect_silent(MultivariateNormal$new())

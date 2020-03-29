@@ -2,6 +2,10 @@ library(testthat)
 
 context("Geometric distribution")
 
+test_that("autottest",{
+    autotest_sdistribution(Geometric)
+})
+
 test_that("parameterisations",{
     expect_silent(Geometric$new())
     expect_silent(Geometric$new(prob = 0.3))

@@ -1,6 +1,15 @@
-# distr6 1.3.5.9000
+# distr6 1.4.0.9000
+
+## Minor Updates
+
+### Deprecated Functions/Fields/Methods
+
+* Individual property and trait accessors deprecated: `$support, $symmetry, $kurtosisType, $skewnessType, $valueSupport, $variateForm, $type`
+
+## Patches
 
 * Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending
+* Vastly improved speed of construction of `SDistribution` 
 
 # distr6 1.3.5
 

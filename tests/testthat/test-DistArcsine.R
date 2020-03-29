@@ -2,6 +2,9 @@ library(testthat)
 
 context("Arcsine distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Arcsine)
+})
 
 test_that("properties & traits",{
   expect_equal(Arcsine$new()$valueSupport, "continuous")

@@ -2,6 +2,10 @@ library(testthat)
 
 context("Student's t distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(StudentT)
+})
+
 test_that("parameterisation",{
   expect_silent(StudentT$new())
   expect_silent(StudentT$new(df = 10))

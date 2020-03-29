@@ -2,6 +2,10 @@ library(testthat)
 
 context("InverseGamma distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(InverseGamma)
+})
+
 test_that("parameterisation",{
   expect_silent(InverseGamma$new())
   expect_silent(InverseGamma$new(shape = 2, scale = 3))

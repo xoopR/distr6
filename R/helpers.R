@@ -52,6 +52,8 @@ ifnerror <- function(expr, noerror, error = NULL, silent = T){
       stopwarn("warn", "Error not Nerror!")
     else if(error == "stop")
       stopwarn("stop", "Error not Nerror!")
+    else if(error == "NULL")
+      return(NULL)
     else
       error
   } else {

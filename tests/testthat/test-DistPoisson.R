@@ -2,6 +2,10 @@ library(testthat)
 
 context("Poisson distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Poisson)
+})
+
 test_that("properties & traits",{
   expect_equal(Poisson$new()$valueSupport, "discrete")
   expect_equal(Poisson$new()$variateForm, "univariate")

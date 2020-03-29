@@ -2,6 +2,10 @@ library(testthat)
 
 context("ChiSquared distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(ChiSquared)
+})
+
 test_that("parameterisation",{
   expect_silent(ChiSquared$new())
   expect_silent(ChiSquared$new(df = 10))

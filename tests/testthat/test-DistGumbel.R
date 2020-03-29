@@ -2,6 +2,10 @@ library(testthat)
 
 context("Gumbel distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Gumbel)
+})
+
 test_that("parameterisation",{
   expect_silent(Gumbel$new())
   expect_silent(Gumbel$new(location = 10))

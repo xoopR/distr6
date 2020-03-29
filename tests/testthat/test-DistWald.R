@@ -2,6 +2,10 @@ library(testthat)
 
 context("Wald distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Wald)
+})
+
 test_that("parameterisation",{
   expect_silent(Wald$new())
   expect_silent(Wald$new(mean = 10))

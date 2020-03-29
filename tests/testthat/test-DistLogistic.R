@@ -2,6 +2,10 @@ library(testthat)
 
 context("Logistic distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Logistic)
+})
+
 test_that("constructor",{
   expect_silent(Logistic$new())
   expect_silent(Logistic$new(mean = 1))

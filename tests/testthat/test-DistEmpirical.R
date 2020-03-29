@@ -2,6 +2,10 @@ library(testthat)
 
 context("Empirical distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Empirical)
+})
+
 test_that("samples constructor",{
   expect_silent(Empirical$new(1:100))
   expect_error(Empirical$new(1,2,3))

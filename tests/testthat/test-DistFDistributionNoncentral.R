@@ -2,6 +2,10 @@ library(testthat)
 
 context("Noncentral F distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(FDistributionNoncentral)
+})
+
 test_that("parameterisation", {
   expect_silent(FDistributionNoncentral$new())
   expect_silent(FDistributionNoncentral$new(df1 = 3, df2 = 5, location = 2))

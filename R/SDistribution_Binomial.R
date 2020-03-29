@@ -88,7 +88,7 @@ Binomial$set("public","pgf",function(z){
 Binomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Set$new(0:self$getParameterValue("size"))
-  if(self$getParameterValue("prob")==0.5)
+  if(self$getParameterValue("prob") == 0.5)
     private$.properties$symmetry <- "asymmetric"
   else
     private$.properties$symmetry <- "symmetric"
@@ -102,26 +102,41 @@ Binomial$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   return(lst)
 })
-
+Binomial$set("private", ".pdf", function(x, log){
+  dbinom(x = x,
+         size = self$getParameterValue("size"),
+         prob = self$getParameterValue("prob"),
+         log = log)
+})
+Binomial$set("private", ".cdf", function(x, lower.tail, log.p){
+  pbinom(x = x,
+         size = self$getParameterValue("size"),
+         prob = self$getParameterValue("prob"),
+         lower.tail = lower.tail,
+         log.p = log.p)
+})
+Binomial$set("private", ".quantile", function(p, lower.tail, log.p){
+  qbinom(p = p,
+         size = self$getParameterValue("size"),
+         prob = self$getParameterValue("prob"),
+         lower.tail = lower.tail,
+         log.p = log.p)
+})
+Binomial$set("private", ".rand", function(n){
+  rbinom(n = n,
+         size = self$getParameterValue("size"),
+         prob = self$getParameterValue("prob"))
+})
 
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, size, prob, qprob, verbose)
   self$setParameterValue(size = size, prob = prob, qprob = qprob)
 
-  if(prob == 0.5)
-    symmetric <- TRUE
-  else
-    symmetric <- FALSE
-
-  pdf = function(x1) dbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-  cdf = function(x1) pbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-  quantile = function(p) qbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
-  rand = function(n) rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0:size, class = "integer"),
-                   symmetric = symmetric,type = Naturals$new(),
+  super$initialize(decorators = decorators,
+                   support = Set$new(0:size, class = "integer"),
+                   type = Naturals$new(),
+                   symmetry = if(prob == 0.5) "symmetric" else "asymmetric",
                    valueSupport = "discrete",
                    variateForm = "univariate")
   invisible(self)

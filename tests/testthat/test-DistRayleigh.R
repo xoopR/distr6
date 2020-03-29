@@ -2,6 +2,9 @@ library(testthat)
 
 context("Rayleigh distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Rayleigh)
+})
 
 test_that("parameterisation",{
   expect_silent(Rayleigh$new())

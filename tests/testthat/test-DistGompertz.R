@@ -2,6 +2,10 @@ library(testthat)
 
 context("Gompertz distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Gompertz)
+})
+
 test_that("parameterisation",{
   expect_silent(Gompertz$new())
   expect_silent(Gompertz$new(shape = 2, scale = 3))

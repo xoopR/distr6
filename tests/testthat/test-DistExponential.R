@@ -2,6 +2,10 @@ library(testthat)
 
 context("Exponential distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Exponential)
+})
+
 test_that("parameterisation",{
   expect_silent(Exponential$new())
   expect_silent(Exponential$new(rate = 2, scale = 3))

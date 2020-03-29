@@ -2,6 +2,10 @@ library(testthat)
 
 context("Triangular distribution")
 
+test_that("autottest",{
+  autotest_sdistribution(Triangular)
+})
+
 test_that("constructor",{
   expect_silent(Triangular$new())
   expect_error(Triangular$new(lower = 5, upper = 3))
