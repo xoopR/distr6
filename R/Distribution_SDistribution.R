@@ -111,7 +111,6 @@ SDistribution$set("public","initialize",function(decorators, support, type,
                          valueSupport = match.arg(valueSupport),
                          variateForm = match.arg(variateForm))
 
-
   kur = try(self$kurtosis(excess = TRUE), silent = TRUE)
   skew = try(self$skewness(excess = TRUE), silent = TRUE)
 
@@ -120,8 +119,7 @@ SDistribution$set("public","initialize",function(decorators, support, type,
                              support = assertSet(support),
                              symmetry = match.arg(symmetry))
 
-
-  super$initialize(...)
+  invisible(self)
 })
 
 SDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
