@@ -9,7 +9,7 @@
 ## Patches
 
 * Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending
-* Vastly improved speed of construction of `SDistribution` 
+* Vastly improved speed of construction of `SDistribution` and `Kernel`
 
 # distr6 1.3.5
 

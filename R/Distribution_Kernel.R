@@ -75,23 +75,28 @@
 #' @export
 NULL
 Kernel <- R6Class("Kernel", inherit = Distribution)
-Kernel$set("public","initialize",function(...){
+Kernel$set("public","initialize",function(decorators, support){
   if(getR6Class(self) == "Kernel") {
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels() to see the kernels currently implemented in distr6, or Distribution$new() to construct a custom Kernel."))
   }
 
   assert_pkgload(self$packages)
 
-  super$initialize(...)
+  if(!is.null(decorators))  suppressMessages(decorate(self, decorators))
+
+  private$.properties = list(kurtosis = NULL,
+                             skewness = NULL,
+                             support = assertSet(support),
+                             symmetry = "symmetric")
+
+  private$.traits = list(type = Reals$new(),
+                         valueSupport = "continuous",
+                         variateForm = "univariate")
+
+  invisible(self)
 })
 Kernel$set("public","package","This is now deprecated. Use $packages instead.")
 Kernel$set("public","packages", NULL)
-Kernel$set("private",".type","symmetric")
-Kernel$set("active","traits",function(){
-  return(list(type = Reals$new(),
-              valueSupport = "continuous",
-              variateForm = "univariate"))
-})
 Kernel$set("public","mode",function(which = NULL){
   return(0)
 })
@@ -101,18 +106,8 @@ Kernel$set("public","mean",function(){
 Kernel$set("public","median",function(){
   return(0)
 })
-Kernel$set("public","rand",function(n, simplify = TRUE){
-  if(length(n) > 1)
-    n <- length(n)
-
-  rand <- self$quantile(runif(n))
-
-  if(simplify)
-    return(rand)
-  else{
-    rand = data.table::data.table(rand)
-    colnames(rand) = self$short_name
-    return(rand)
-  }
+Kernel$set("private",".rand",function(n){
+  if(!is.null(private$.quantile))
+    self$quantile(runif(n))
 })
 

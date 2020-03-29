@@ -39,20 +39,17 @@ UniformKernel$set("public","squared2Norm",function(){
   return(0.5)
 })
 UniformKernel$set("public","initialize",function(decorators = NULL){
-
-  pdf <- function(x1){
-    return(rep(0.5,length(x1)))
-  }
-  cdf <- function(x1){
-    return(0.5*x1 + 0.5)
-  }
-  quantile <- function(p){
-    return(2 * (p - 0.5))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(-1, 1))
+})
+UniformKernel$set("private",".pdf",function(x){
+  rep(0.5,length(x))
+})
+UniformKernel$set("private",".cdf",function(x){
+  (0.5 * x) + 0.5
+})
+UniformKernel$set("private",".quantile",function(p){
+  2 * (p - 0.5)
 })
 
 .distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Unif", ClassName = "UniformKernel", Support = "[-1,1]", Packages = "-"))

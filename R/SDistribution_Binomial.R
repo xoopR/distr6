@@ -139,7 +139,6 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
                    symmetry = if(prob == 0.5) "symmetric" else "asymmetric",
                    valueSupport = "discrete",
                    variateForm = "univariate")
-  invisible(self)
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

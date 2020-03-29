@@ -425,7 +425,7 @@ Distribution$set("public","summary",function(full = TRUE,...){
     }
     cat("\n")
 
-    cat(" Support:",self$support$strprint(), "\tScientific Type:",self$type$strprint(),"\n")
+    cat(" Support:",self$properties$support$strprint(), "\tScientific Type:",self$traits$type$strprint(),"\n")
     cat("\n Traits:\t",self$valueSupport,"; ",self$variateForm, sep="")
     cat("\n Properties:\t", self$symmetry,sep="")
     if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType)
@@ -439,8 +439,8 @@ Distribution$set("public","summary",function(full = TRUE,...){
       cat(self$strprint())
     else
       cat(self$name)
-    cat("\nScientific Type:",self$type$strprint(),"\t See $traits for more")
-    cat("\nSupport:",self$support$strprint(),"\t See $properties for more")
+    cat("\nScientific Type:",self$traits$type$strprint(),"\t See $traits for more")
+    cat("\nSupport:",self$properties$support$strprint(),"\t See $properties for more")
   }
   cat("\n")
   invisible(self)
@@ -534,7 +534,7 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 NULL
 Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 
-  if(!private$.isPdf)
+  if(is.null(private$.pdf))
     return(NULL)
 
   if(testUnivariate(self)){
@@ -600,7 +600,7 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 NULL
 Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
 
-  if(!private$.isCdf)
+  if(is.null(private$.cdf))
     return(NULL)
 
   if(testUnivariate(self)){
@@ -678,7 +678,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE) {}
 Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
 
-  if(!private$.isQuantile)
+  if(is.null(private$.quantile))
     return(NULL)
 
   if(testUnivariate(self)){
@@ -750,22 +750,26 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
 NULL
 Distribution$set("public","rand",function(n, simplify = TRUE){
 
-  if(!private$.isRand)
+  if(is.null(private$.rand))
     return(NULL)
 
   if(length(n) > 1)
     n = length(n)
 
   rand = private$.rand(n)
-  if(inherits(rand,"data.table"))
+  if (inherits(rand,"data.table")) {
     return(rand)
-  else{
-    if(simplify)
+  } else {
+    if(simplify) {
       return(rand)
-    else{
-      rand = data.table::data.table(rand)
-      colnames(rand) = self$short_name
-      return(rand)
+    } else {
+      if(is.null(rand)){
+        return(data.table::data.table())
+      } else {
+        rand = data.table::data.table(rand)
+        colnames(rand) = self$short_name
+        return(rand)
+      }
     }
   }
 
@@ -912,7 +916,7 @@ Distribution$set("public","correlation",function(){
 #' @export
 NULL
 Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
-  return(self$support$contains(x, all, bound))
+  return(self$properties$support$contains(x, all, bound))
 })
 
 #' @name liesInType
@@ -1188,19 +1192,19 @@ Distribution$set("active","isRand",function() return(private$.isRand))
 Distribution$set("public","name",character(0))
 Distribution$set("public","short_name",character(0))
 Distribution$set("public","description",NULL)
-Distribution$set("private",".pdf", NULL)
-Distribution$set("private",".cdf", NULL)
-Distribution$set("private",".quantile", NULL)
-Distribution$set("private",".rand", NULL)
+# Distribution$set("private",".pdf", function() {})
+# Distribution$set("private",".cdf", function() {})
+# Distribution$set("private",".quantile", function() {})
+# Distribution$set("private",".rand", function() {})
 Distribution$set("private",".parameters",NULL)
 Distribution$set("private",".workingSupport",NULL)
 Distribution$set("private",".decorators", NULL)
 Distribution$set("private",".properties", list())
 Distribution$set("private",".traits",NULL)
-Distribution$set("private",".isPdf", FALSE)
-Distribution$set("private",".isCdf", FALSE)
-Distribution$set("private",".isQuantile", FALSE)
-Distribution$set("private",".isRand", FALSE)
+# Distribution$set("private",".isPdf", FALSE)
+# Distribution$set("private",".isCdf", FALSE)
+# Distribution$set("private",".isQuantile", FALSE)
+# Distribution$set("private",".isRand", FALSE)
 
 #-------------------------------------------------------------
 # Distribution Private Methods

@@ -42,17 +42,14 @@ Epanechnikov$set("public","variance",function(){
   return(1/5)
 })
 Epanechnikov$set("public","initialize",function(decorators = NULL){
-
-  pdf <- function(x1){
-    return(0.75 * (1-x1^2))
-  }
-  cdf <- function(x1){
-    return(3/4*x1 - 1/4*x1^3 + 1/2)
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(-1, 1))
+})
+Epanechnikov$set("private",".pdf",function(x){
+  0.75 * (1-x^2)
+})
+Epanechnikov$set("private",".cdf",function(x){
+  3/4*x - 1/4*x^3 + 1/2
 })
 
 .distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))

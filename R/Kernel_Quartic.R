@@ -42,17 +42,14 @@ Quartic$set("public","variance",function(){
   return(1/7)
 })
 Quartic$set("public","initialize",function(decorators = NULL){
-
-  pdf <- function(x1){
-    return(15/16 * (1-x1^2)^2)
-  }
-  cdf <- function(x1){
-    return(15/16 * (x1 - 2/3*x1^3 + 1/5*x1^5 + 8/15))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
-}) # QUANTILE & VAR MISSING
+  super$initialize(decorators = decorators,
+                   support = Interval$new(-1, 1))
+})
+Quartic$set("private",".pdf",function(x){
+  return(15/16 * (1-x^2)^2)
+})
+Quartic$set("private",".cdf",function(x){
+  return(15/16 * (x - 2/3*x^3 + 1/5*x^5 + 8/15))
+})
 
 .distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Quart", ClassName = "Quartic", Support = "[-1,1]", Packages = "-"))

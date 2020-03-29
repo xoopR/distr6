@@ -42,14 +42,11 @@ Silverman$set("public","variance",function(){
   return(0)
 })
 Silverman$set("public","initialize",function(decorators = NULL){
-
-  pdf <- function(x1){
-    return(1/2 * exp(-abs(x1)/sqrt(2)) * sin(abs(x1)/sqrt(2) + pi/4))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf,
-                   support = Reals$new(),  symmetric = TRUE)
-  invisible(self)
-}) # CDF, QUANTILE & VAR MISSING
+  super$initialize(decorators = decorators,
+                   support = Reals$new())
+})
+Silverman$set("private",".pdf",function(x){
+  1/2 * exp(-abs(x)/sqrt(2)) * sin(abs(x)/sqrt(2) + pi/4)
+})
 
 .distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Silv", ClassName = "Silverman", Support = "\u211D", Packages = "-"))

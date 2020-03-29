@@ -42,17 +42,14 @@ Triweight$set("public","variance",function(){
   return(1/9)
 })
 Triweight$set("public","initialize",function(decorators = NULL){
-
-  pdf <- function(x1){
-    return(35/32 * (1-x1^2)^3)
-  }
-  cdf <- function(x1){
-    return(35/32 * (x1 - x1^3 + 3/5*x1^5 - 1/7*x1^7 + 16/35))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
-}) # QUANTILE & VAR MISSING
+  super$initialize(decorators = decorators,
+                   support = Interval$new(-1, 1))
+})
+Triweight$set("private",".pdf",function(x){
+  35/32 * (1-x^2)^3
+})
+Triweight$set("private",".cdf",function(x){
+  35/32 * (x - x^3 + 3/5*x^5 - 1/7*x^7 + 16/35)
+})
 
 .distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]", Packages = "-"))

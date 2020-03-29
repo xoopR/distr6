@@ -42,14 +42,11 @@ Tricube$set("public","variance",function(){
   return(35/243)
 })
 Tricube$set("public","initialize",function(decorators = NULL){
-
-  pdf <- function(x1){
-    return(70/81 * (1-abs(x1)^3)^3)
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
-}) # CDF, QUANTILE & VAR MISSING
+  super$initialize(decorators = decorators,
+                   support = Interval$new(-1, 1))
+})
+Tricube$set("private",".pdf",function(x){
+  70/81 * (1-abs(x)^3)^3
+})
 
 .distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Tric", ClassName = "Tricube", Support = "[-1,1]", Packages = "-"))

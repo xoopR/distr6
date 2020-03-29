@@ -39,20 +39,17 @@ LogisticKernel$set("public","variance",function(){
   return(pi^2/3)
 })
 LogisticKernel$set("public","initialize",function(decorators = NULL){
-
-  pdf <- function(x1){
-    return((exp(x1) + 2 + exp(-x1))^-1)
-  }
-  cdf <- function(x1){
-    return(exp(x1)/(exp(x1)+1))
-  }
-  quantile <- function(p){
-    return(-log(-(p-1)/p))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Reals$new(),  symmetric = TRUE)
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Reals$new())
+})
+LogisticKernel$set("private",".pdf",function(x){
+  (exp(x) + 2 + exp(-x))^-1
+})
+LogisticKernel$set("private",".cdf",function(x){
+  exp(x)/(exp(x)+1)
+})
+LogisticKernel$set("private",".quantile",function(p){
+  log(p/(1-p))
 })
 
 .distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel", Support = "\u211D", Packages = "-"))

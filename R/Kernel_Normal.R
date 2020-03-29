@@ -1,4 +1,3 @@
-
 #-------------------------------------------------------------
 # Normal Kernel
 #-------------------------------------------------------------
@@ -31,30 +30,36 @@ NULL
 #-------------------------------------------------------------
 # NormalKernel Kernel Definition
 #-------------------------------------------------------------
-NormalKernel <- R6Class("NormalKernel", inherit = Kernel, lock_objects = F)
-NormalKernel$set("public","name","NormalKernel")
-NormalKernel$set("public","short_name","Norm")
-NormalKernel$set("public","description","Normal Kernel")
-NormalKernel$set("public","packages", "pracma")
-NormalKernel$set("public","squared2Norm",function(){
-  return((2*sqrt(pi))^-1)
-})
-NormalKernel$set("public","variance",function(){
-  return(1)
-})
-NormalKernel$set("public","initialize",function(decorators = NULL){
+NormalKernel <- R6Class("NormalKernel", inherit = Kernel, lock_objects = F,
+                        public = list(
+                          name = "NormalKernel",
+                          short_name = "Norm",
+                          description = "Normal Kernel",
+                          package = "pracma",
 
-  pdf <- function(x1){
-    return(1/sqrt(2*pi) * exp(-0.5 * x1^2))
-  }
-  cdf <- function(x1){
-    return(1/2 * (pracma::erf(x1/sqrt(2)) + 1))
-  }
-  quantile <- function(p){
-    return(sqrt(2) * pracma::erfinv(2*p - 1))
-  }
+                          initialize = function(decorators = NULL){
+                            super$initialize(decorators = decorators,
+                                             support = Reals$new())
+                          },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Reals$new(),  symmetric = TRUE)
-  invisible(self)
-})
+                          squared2Norm = function(){
+                            return((2*sqrt(pi))^-1)
+                          },
+
+                          variance = function(){
+                            return(1)
+                          }
+                        ),
+
+                        private = list(
+                          .pdf = function(x){
+                            return(1/sqrt(2*pi) * exp(-0.5 * x^2))
+                          },
+                          .cdf = function(x){
+                            return(1/2 * (pracma::erf(x/sqrt(2)) + 1))
+                          },
+                          .quantile = function(p){
+                            return(sqrt(2) * pracma::erfinv(2*p - 1))
+                          }
+                        )
+                        )
