@@ -76,31 +76,28 @@ Rayleigh$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
   return(lst)
 })
+Rayleigh$set("private",".pdf", function(x){
+  x/self$getParameterValue("mode")^2 * exp((-x^2)/(2*self$getParameterValue("mode")^2))
+})
+Rayleigh$set("private",".cdf", function(x){
+  1 - exp((-x1^2)/(2*self$getParameterValue("mode")^2))
+})
+Rayleigh$set("private",".quantile", function(p){
+  self$getParameterValue("mode")*sqrt(-2*log(1-p))
+})
+Rayleigh$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
 
 Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mode, verbose)
   self$setParameterValue(mode = mode)
 
-  pdf <- function(x1){
-    return(x1/self$getParameterValue("mode")^2 * exp((-x1^2)/(2*self$getParameterValue("mode")^2)))
-  }
-  cdf <- function(x1){
-    return(1 - exp((-x1^2)/(2*self$getParameterValue("mode")^2)))
-  }
-  quantile <- function(p){
-    return(self$getParameterValue("mode")*sqrt(-2*log(1-p)))
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T),
-                   symmetric = FALSE,type = PosReals$new(zero = T),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(zero = T),
+                   type = PosReals$new(zero = T),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

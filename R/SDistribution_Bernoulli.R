@@ -101,7 +101,18 @@ Bernoulli$set("private",".getRefParams", function(paramlst){
   else if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   return(lst)
 })
-
+Bernoulli$set("private", ".pdf", function(x){
+  dbinom(x, 1, self$getParameterValue("prob"))
+})
+Bernoulli$set("private", ".cdf", function(x){
+  pbinom(x, 1, self$getParameterValue("prob"))
+})
+Bernoulli$set("private", ".quantile", function(p){
+  qbinom(p, 1, self$getParameterValue("prob"))
+})
+Bernoulli$set("private", ".rand", function(n){
+  rbinom(n, 1, self$getParameterValue("prob"))
+})
 
 Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 
@@ -109,17 +120,9 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
   if(!is.null(qprob)) prob <- NULL
   self$setParameterValue(prob = prob, qprob = qprob)
 
-  pdf = function(x1) dbinom(x1, 1, self$getParameterValue("prob"))
-  cdf = function(x1) pbinom(x1, 1, self$getParameterValue("prob"))
-  quantile = function(p) qbinom(p, 1, self$getParameterValue("prob"))
-  rand = function(n) rbinom(n, 1, self$getParameterValue("prob"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0,1,class="integer"),
-                   symmetric = FALSE,type = Naturals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Set$new(0,1,class="integer"),
+                   type = Naturals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

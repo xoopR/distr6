@@ -92,6 +92,30 @@ Wald$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$shape)) lst = c(lst, list(shape = paramlst$shape))
   return(lst)
 })
+Wald$set("private",".pdf", function(x){
+  mean <- self$getParameterValue("mean")
+  shape <- self$getParameterValue("shape")
+
+  return((shape/(2*pi*x^3))^0.5 * exp((-shape*(x-mean)^2)/(2*mean^2*x)))
+})
+Wald$set("private",".cdf", function(x){
+  mean <- self$getParameterValue("mean")
+  shape <- self$getParameterValue("shape")
+
+  return(pnorm(sqrt(shape/x)*(x/mean-1)) + exp(2*shape/mean)*pnorm(-sqrt(shape/x)*(x/mean + 1)))
+})
+Wald$set("private",".rand", function(n){
+  mean <- self$getParameterValue("mean")
+  shape <- self$getParameterValue("shape")
+  y = rnorm(n)^2
+  x = mean + (mean^2*y)/(2*shape) - (mean/2*shape)*sqrt(4*mean*shape*y + mean^2*y^2)
+  z = runif(n)
+
+  rand = x
+  rand[z > mean/(mean+x)] = mean^2/x[z > mean/(mean+x)]
+
+  return(rand)
+})
 
 Wald$set("public","initialize",function(mean = 1, shape = 1,
                                           decorators = NULL, verbose = FALSE){
@@ -99,33 +123,11 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
   private$.parameters <- getParameterSet(self, mean, shape, verbose)
   self$setParameterValue(mean = mean, shape = shape)
 
-  pdf <- function(x1){
-    mean <- self$getParameterValue("mean")
-    shape <- self$getParameterValue("shape")
-    return((shape/(2*pi*x1^3))^0.5 * exp((-shape*(x1-mean)^2)/(2*mean^2*x1)))
-  }
-  cdf <- function(x1){
-    mean <- self$getParameterValue("mean")
-    shape <- self$getParameterValue("shape")
-    return(pnorm(sqrt(shape/x1)*(x1/mean-1)) + exp(2*shape/mean)*pnorm(-sqrt(shape/x1)*(x1/mean + 1)))
-  }
-  rand <- function(n){
-    mean <- self$getParameterValue("mean")
-    shape <- self$getParameterValue("shape")
-    y = rnorm(n)^2
-    x = mean + (mean^2*y)/(2*shape) - (mean/2*shape)*sqrt(4*mean*shape*y + mean^2*y^2)
-    z = runif(n)
-
-    rand = x
-    rand[z > mean/(mean+x)] = mean^2/x[z > mean/(mean+x)]
-    return(rand)
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   rand = rand, support = PosReals$new(),
-                   symmetric = TRUE, type = PosReals$new(), valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(),
+                   symmetry = "sym",
+                   type = PosReals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

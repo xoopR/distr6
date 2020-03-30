@@ -52,6 +52,18 @@ BetaNoncentral$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
+BetaNoncentral$set("private", ".pdf", function(x){
+  dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+})
+BetaNoncentral$set("private", ".cdf", function(x){
+  pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+})
+BetaNoncentral$set("private", ".quantile", function(p){
+  qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+})
+BetaNoncentral$set("private", ".rand", function(n){
+  rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+})
 
 BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
                                           verbose = FALSE){
@@ -59,24 +71,11 @@ BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, loca
   private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, locaiton, verbose)
   self$setParameterValue(shape1=shape1,shape2=shape2, location = location)
 
-  pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
-  cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
-  quantile <- function(p) qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
-  rand <- function(n) rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
-
-
-  if (shape1 == shape2)
-    symmetric <- TRUE
-  else
-    symmetric <- FALSE
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(0,1),
-                   symmetric = symmetric, type = PosReals$new(zero = T),
-                   valueSupport ="continuous",
-                   variateForm = "univariate")
-
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(0, 1),
+                   symmetric = if (shape1 == shape2) "symmetric" else "asymmetric",
+                   type = PosReals$new(zero = T),
+                   valueSupport ="continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

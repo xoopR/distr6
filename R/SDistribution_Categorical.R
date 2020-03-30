@@ -84,6 +84,12 @@ Categorical$set("public","setParameterValue",function(..., lst = NULL, error = "
   if("probs" %in% names(lst)) lst$probs <- lst$probs/sum(lst$probs)
   checkmate::assert(length(lst$probs) == self$getParameterValue("categories"))
   super$setParameterValue(lst = lst, error = error)
+
+  if(length(unique(self$getParameterValue("probs"))) == 1)
+    private$.properties$symmetry <- "asymmetric"
+  else
+    private$.properties$symmetry <- "symmetric"
+
   invisible(self)
 })
 
@@ -91,6 +97,19 @@ Categorical$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$probs)) lst = c(lst, list(probs = paramlst$probs))
   return(lst)
+})
+Categorical$set("private",".pdf",function(x){
+  self$getParameterValue("probs")[self$support$elements %in% x]
+})
+Categorical$set("private",".cdf",function(x){
+  cumsum(self$pdf(self$support$elements))[self$support$elements %in% x]
+})
+Categorical$set("private",".quantile",function(p){
+  cdf = matrix(self$cdf(self$support$elements), ncol = self$support$length, nrow = length(p), byrow = T)
+  return(self$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
+})
+Categorical$set("private",".rand",function(n){
+  sample(self$support$elements, n, TRUE, self$getParameterValue("probs"))
 })
 
 Categorical$set("public","initialize",function(..., probs, decorators = NULL, verbose = FALSE){
@@ -110,26 +129,10 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
   private$.parameters <- getParameterSet(self, probs, verbose)
   self$setParameterValue(probs = probs)
 
-  pdf <- function(x1){
-    return(self$getParameterValue("probs")[self$support$elements %in% x1])
-  }
-  cdf <- function(x1){
-    return(cumsum(self$pdf(self$support$elements))[self$support$elements %in% x1])
-  }
-  quantile <- function(p){
-    cdf = matrix(self$cdf(self$support$elements), ncol = self$support$length, nrow = length(p), byrow = T)
-    return(self$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
-  }
-  rand <- function(n){
-    return(sample(self$support$elements, n, TRUE, self$getParameterValue("probs")))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
+  super$initialize(decorators = decorators,
                    support = support,
-                   symmetric = FALSE, type = Complex$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
+                   type = Complex$new(),
+                   symmetry = if(length(unique(self$getParameterValue("probs"))) == 1) "symmetric" else "asymmetric")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

@@ -112,7 +112,26 @@ Empirical$set("public","setParameterValue",function(..., lst = NULL, error = "wa
 
 Empirical$set("private",".data",data.table::data.table())
 Empirical$set("private",".total", numeric(1))
+Empirical$set("private",".pdf", function(x){
+  as.numeric(unlist(private$.data[match(round(x, 10), round(private$.data$samples, 10)), "N"]/private$.total))
+})
+Empirical$set("private",".cdf", function(x){
+  find = findInterval(x, private$.data$samples)
+  find[find == 0] = 1
 
+  return(as.numeric(unlist(private$.data[find, "cumN"]/private$.total)))
+})
+Empirical$set("private",".quantile", function(p){
+  p = p * private$.total
+  mat = p <= matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+  which = apply(mat, 1, function(x) which(x)[1])
+  which[is.na(which)] = ncol(mat)
+
+  return(as.numeric(unlist(private$.data[which, "samples"])))
+})
+Empirical$set("private",".rand", function(n){
+  sample(unlist(self$properties$support$elements), n, TRUE)
+})
 
 Empirical$set("public","initialize",function(samples, decorators = NULL, verbose = FALSE){
 
@@ -123,34 +142,9 @@ Empirical$set("public","initialize",function(samples, decorators = NULL, verbose
   private$.data <- cbind(private$.data, cumN = cumsum(private$.data$N))
   private$.total <- length(samples)
 
-
-  pdf <- function(x1){
-    return(as.numeric(unlist(private$.data[match(round(x1, 10), round(private$.data$samples, 10)), "N"]/private$.total)))
-  }
-
-  cdf <- function(x1){
-    find = findInterval(x1, private$.data$samples)
-    find[find == 0] = 1
-    return(as.numeric(unlist(private$.data[find, "cumN"]/private$.total)))
-  }
-  quantile <- function(p){
-    p = p * private$.total
-    mat = p <= matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
-    which = apply(mat, 1, function(x) which(x)[1])
-    which[is.na(which)] = ncol(mat)
-    return(as.numeric(unlist(private$.data[which, "samples"])))
-  }
-
-  rand <- function(n){
-    return(sample(unlist(self$support$elements), n, TRUE))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Tuple$new(universe = Reals$new(), elements = as.list(samples), class = "numeric"),
-                   symmetric = FALSE, type = Reals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Tuple$new(universe = Reals$new(),elements = as.list(samples), class = "numeric"),
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

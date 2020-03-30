@@ -53,7 +53,7 @@ NULL
 #-------------------------------------------------------------
 # Triangular Distribution Definition
 #-------------------------------------------------------------
-Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F)
+Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = FALSE)
 Triangular$set("public","name","Triangular")
 Triangular$set("public","short_name","Tri")
 Triangular$set("private",".type","symmetric")
@@ -111,15 +111,6 @@ Triangular$set("public", "cf", function(t){
 Triangular$set("public","mode",function(which = NULL){
   return(self$getParameterValue("mode"))
 })
-
-Triangular$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$lower)) lst = c(lst, list(lower = paramlst$lower))
-  if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
-  if(private$.type != "symmetric")
-    if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
-  return(lst)
-})
 Triangular$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))
     lst <- list(...)
@@ -137,9 +128,9 @@ Triangular$set("public","setParameterValue",function(..., lst = NULL, error = "w
       else
         checkmate::assert(lst[["mode"]] >= self$getParameterValue("lower"), .var.name = "mode must be >= lower")
       if("upper" %in% names(lst))
-         checkmate::assert(lst[["mode"]] <= lst[["upper"]], .var.name = "mode must be <= upper")
+        checkmate::assert(lst[["mode"]] <= lst[["upper"]], .var.name = "mode must be <= upper")
       else
-         checkmate::assert(lst[["mode"]] <= self$getParameterValue("upper"), .var.name = "mode must be <= upper")
+        checkmate::assert(lst[["mode"]] <= self$getParameterValue("upper"), .var.name = "mode must be <= upper")
     }
   }
 
@@ -155,74 +146,80 @@ Triangular$set("public","setParameterValue",function(..., lst = NULL, error = "w
   invisible(self)
 })
 
+Triangular$set("private",".getRefParams", function(paramlst){
+  lst = list()
+  if(!is.null(paramlst$lower)) lst = c(lst, list(lower = paramlst$lower))
+  if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
+  if(private$.type != "symmetric")
+    if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
+  return(lst)
+})
+Triangular$set("private",".pdf", function(x){
+  lower = self$getParameterValue("lower")
+  upper = self$getParameterValue("upper")
+  mode = self$getParameterValue("mode")
+  pdf = x
+
+  pdf[lower <= x & x < mode] = (2*(pdf[lower <= x & x < mode]-lower)) /((upper-lower)*(mode-lower))
+  pdf[x == mode] = 2/(upper-lower)
+  pdf[x > mode & x <= upper] = (2*(upper-pdf[x > mode & x <= upper]))/((upper-lower)*(upper-mode))
+  return(pdf)
+})
+Triangular$set("private",".cdf", function(x){
+  lower = self$getParameterValue("lower")
+  upper = self$getParameterValue("upper")
+  mode = self$getParameterValue("mode")
+  cdf = x
+
+  cdf[x == lower] = 0
+  cdf[x == upper] = 1
+
+  cdf[lower < x & x <= mode] = ((cdf[lower < x & x <= mode]-lower)^2) / ((upper-lower)*(mode-lower))
+  cdf[x > mode & x < upper] = 1 - (((upper-cdf[x > mode & x < upper])^2)/((upper-lower)*(upper-mode)))
+  return(cdf)
+})
+Triangular$set("private",".quantile", function(p){
+  lower = self$getParameterValue("lower")
+  upper = self$getParameterValue("upper")
+  mode = self$getParameterValue("mode")
+  quantile = p
+
+  quantile[p == 0] = lower
+  quantile[p == 1] = upper
+
+  quantile[0 < p & p <= (mode-lower)/(upper-lower)] = lower + sqrt((upper-lower)*(mode-lower)*quantile[0 < p & p <= (mode-lower)/(upper-lower)])
+  quantile[(mode-lower)/(upper-lower) < p & p < 1] = upper - sqrt((1-quantile[(mode-lower)/(upper-lower) < p & p < 1])*(upper-lower)*(upper-mode))
+
+  return(quantile)
+})
+Triangular$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
+
 Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lower+upper)/2, symmetric = FALSE,
                                               decorators = NULL, verbose = FALSE){
 
 
-  if(symmetric){
-    description = "Symmetric Triangular Probability Distribution."
-    symmetry = TRUE
-    private$.type <- "symmetric"
+  if (symmetric) {
+    self$description = "Symmetric Triangular Probability Distribution."
+    symmetry = "symmetric"
   } else {
-    description = "Triangular Probability Distribution."
-    private$.type <- "asymmetric"
-    if(mode == (lower + upper)/2)
-      symmetry = TRUE
-    else
-      symmetry = FALSE
+    self$description = "Triangular Probability Distribution."
+    if (mode == (lower + upper)/2) {
+      symmetry = "symmetric"
+    } else {
+      symmetry = "asymmetric"
+    }
   }
 
   private$.parameters <- getParameterSet(self, lower, upper, mode, symmetric, verbose)
   self$setParameterValue(lower = lower, upper = upper, mode = mode)
 
-  pdf <- function(x1){
-    lower = self$getParameterValue("lower")
-    upper = self$getParameterValue("upper")
-    mode = self$getParameterValue("mode")
-    pdf = x1
-
-    pdf[lower <= x1 & x1 < mode] = (2*(pdf[lower <= x1 & x1 < mode]-lower)) /((upper-lower)*(mode-lower))
-    pdf[x1 == mode] = 2/(upper-lower)
-    pdf[x1 > mode & x1 <= upper] = (2*(upper-pdf[x1 > mode & x1 <= upper]))/((upper-lower)*(upper-mode))
-    return(pdf)
-  }
-  cdf <- function(x1){
-    lower = self$getParameterValue("lower")
-    upper = self$getParameterValue("upper")
-    mode = self$getParameterValue("mode")
-    cdf = x1
-
-    cdf[x1 == lower] = 0
-    cdf[x1 == upper] = 1
-
-    cdf[lower < x1 & x1 <= mode] = ((cdf[lower < x1 & x1 <= mode]-lower)^2) / ((upper-lower)*(mode-lower))
-    cdf[x1 > mode & x1 < upper] = 1 - (((upper-cdf[x1 > mode & x1 < upper])^2)/((upper-lower)*(upper-mode)))
-    return(cdf)
-  }
-  quantile <- function(p){
-    lower = self$getParameterValue("lower")
-    upper = self$getParameterValue("upper")
-    mode = self$getParameterValue("mode")
-    quantile = p
-
-    quantile[p == 0] = lower
-    quantile[p == 1] = upper
-
-    quantile[0 < p & p <= (mode-lower)/(upper-lower)] = lower + sqrt((upper-lower)*(mode-lower)*quantile[0 < p & p <= (mode-lower)/(upper-lower)])
-    quantile[(mode-lower)/(upper-lower) < p & p < 1] = upper - sqrt((1-quantile[(mode-lower)/(upper-lower) < p & p < 1])*(upper-lower)*(upper-mode))
-
-    return(quantile)
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(lower, upper),
-                   symmetric = symmetry, description = description,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(lower, upper),
+                   symmetry = symmetry,
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

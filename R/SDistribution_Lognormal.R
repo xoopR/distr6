@@ -127,6 +127,18 @@ Lognormal$set("private",".getRefParams", function(paramlst){
     return(lst)
 
 })
+Lognormal$set("private", ".pdf", function(x){
+  dlnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+})
+Lognormal$set("private", ".cdf", function(x){
+  plnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+})
+Lognormal$set("private", ".quantile", function(p){
+  qlnorm(p, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+})
+Lognormal$set("private", ".rand", function(n){
+  rlnorm(n, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+})
 
 Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
                                              mean = 1, var = NULL, sd = NULL, prec = NULL,
@@ -139,17 +151,10 @@ Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NU
   self$setParameterValue(meanlog = meanlog, varlog = varlog, sdlog = sdlog, preclog = preclog,
                               mean = mean, var = var, sd = sd, prec = prec)
 
-  pdf <- function(x1) dlnorm(x1, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
-  cdf <- function(x1) plnorm(x1, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
-  quantile <- function(p) qlnorm(p, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
-  rand <- function(n) rlnorm(n, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(),
-                   symmetric = FALSE,type = PosReals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(),
+                   type = PosReals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

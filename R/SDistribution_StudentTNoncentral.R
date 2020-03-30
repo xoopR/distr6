@@ -72,23 +72,29 @@ StudentTNoncentral$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
+StudentTNoncentral$set("private", ".pdf", function(x){
+  dt(x, self$getParameterValue("df"), self$getParameterValue("location"))
+})
+StudentTNoncentral$set("private", ".cdf", function(x){
+  pt(x, self$getParameterValue("df"), self$getParameterValue("location"))
+})
+StudentTNoncentral$set("private", ".quantile", function(p){
+  qt(p, self$getParameterValue("df"), self$getParameterValue("location"))
+})
+StudentTNoncentral$set("private", ".rand", function(n){
+  rt(n, self$getParameterValue("df"), self$getParameterValue("location"))
+})
 
 StudentTNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, location, verbose)
   self$setParameterValue(df = df, location = location)
 
-  pdf <- function(x1) dt(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  cdf <- function(x1) pt(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  quantile <- function(p) qt(p, self$getParameterValue("df"), self$getParameterValue("location"))
-  rand <- function(n) rt(n, self$getParameterValue("df"), self$getParameterValue("location"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric  = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Reals$new(),
+                   symmetric  = "sym",
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

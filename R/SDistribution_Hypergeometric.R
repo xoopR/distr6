@@ -121,6 +121,30 @@ Hypergeometric$set("private",".getRefParams", function(paramlst){
 
     return(lst)
 })
+Hypergeometric$set("private", ".pdf", function(x){
+    dhyper(x,
+           self$getParameterValue("successes"),
+           self$getParameterValue("failures"),
+           self$getParameterValue("draws"))
+})
+Hypergeometric$set("private", ".cdf", function(x){
+    phyper(x,
+           self$getParameterValue("successes"),
+           self$getParameterValue("failures"),
+           self$getParameterValue("draws"))
+})
+Hypergeometric$set("private", ".quantile", function(p){
+    qhyper(p,
+           self$getParameterValue("successes"),
+           self$getParameterValue("failures"),
+           self$getParameterValue("draws"))
+})
+Hypergeometric$set("private", ".rand", function(n){
+    rhyper(n,
+           self$getParameterValue("successes"),
+           self$getParameterValue("failures"),
+           self$getParameterValue("draws"))
+})
 
 Hypergeometric$set("public","initialize",function(size = 50, successes = 5, failures = NULL, draws = 10,
                                                   decorators = NULL, verbose = FALSE){
@@ -128,27 +152,11 @@ Hypergeometric$set("public","initialize",function(size = 50, successes = 5, fail
     private$.parameters <- getParameterSet(self, size, successes, failures, draws, verbose)
     self$setParameterValue(size = size, successes=successes, failures = failures, draws = draws)
 
-    pdf = function(x1) dhyper(x1, self$getParameterValue("successes"),
-                              self$getParameterValue("failures"),
-                              self$getParameterValue("draws"))
-    cdf = function(x1) phyper(x1, self$getParameterValue("successes"),
-                              self$getParameterValue("failures"),
-                              self$getParameterValue("draws"))
-    quantile = function(p) qhyper(p, self$getParameterValue("successes"),
-                                  self$getParameterValue("failures"),
-                                  self$getParameterValue("draws"))
-    rand = function(n) rhyper(n, self$getParameterValue("successes"),
-                              self$getParameterValue("failures"),
-                              self$getParameterValue("draws"))
-
     support <- Set$new(max(0, draws + successes - size):min(draws,successes), class = "integer")
 
-    super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                     rand = rand, support = support,
-                     symmetric = FALSE,type = Naturals$new(),
-                     valueSupport = "discrete",
-                     variateForm = "univariate")
-    invisible(self)
+    super$initialize(decorators = decorators,
+                     support = support,
+                     type = Naturals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

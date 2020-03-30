@@ -104,10 +104,28 @@ WeightedDiscrete$set("public","pgf",function(z){
     ))
   }
 })
-
 WeightedDiscrete$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   message("There are no parameters to set.")
   return(NULL)
+})
+
+WeightedDiscrete$set("private",".pdf",function(x){
+  as.numeric(unlist(private$.data[match(x, private$.data$x), "pdf"]))
+})
+WeightedDiscrete$set("private",".cdf",function(x){
+  find = findInterval(x, private$.data$x)
+  find[find == 0] = 1
+
+  return(as.numeric(unlist(private$.data[find, "cdf"])))
+})
+WeightedDiscrete$set("private",".quantile",function(p){
+  mat = p <= matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+  which = apply(mat, 1, function(x) which(x)[1])
+  which[is.na(which)] = ncol(mat)
+  return(as.numeric(unlist(private$.data[which, "x"])))
+})
+WeightedDiscrete$set("private",".rand",function(x){
+  sample(private$.data$x, n, TRUE, private$.data$pdf)
 })
 
 WeightedDiscrete$set("private",".data",data.table::data.table())
@@ -133,32 +151,9 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
 
   private$.data <- data
 
-  pdf = cdf = quantile = rand = NULL
-
-  pdf <- function(x1){
-    return(as.numeric(unlist(private$.data[match(x1, private$.data$x), "pdf"])))
-  }
-  cdf <- function(x1){
-    find = findInterval(x1, private$.data$x)
-    find[find == 0] = 1
-    return(as.numeric(unlist(private$.data[find, "cdf"])))
-  }
-  quantile <- function(p){
-    mat = p <= matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
-    which = apply(mat, 1, function(x) which(x)[1])
-    which[is.na(which)] = ncol(mat)
-    return(as.numeric(unlist(private$.data[which, "x"])))
-  }
-  rand <- function(n){
-    return(sample(private$.data$x, n, TRUE, private$.data$pdf))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
+  super$initialize(decorators = decorators,
                    support = Set$new(private$.data$x, class = "numeric"),
-                   symmetric = FALSE, type = Reals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

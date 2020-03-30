@@ -102,28 +102,34 @@ ChiSquaredNoncentral$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
+ChiSquaredNoncentral$set("private", ".pdf", function(x){
+  dchisq(x, self$getParameterValue("df"), self$getParameterValue("location"))
+})
+ChiSquaredNoncentral$set("private", ".cdf", function(x){
+  pchisq(x, self$getParameterValue("df"), self$getParameterValue("location"))
+})
+ChiSquaredNoncentral$set("private", ".quantile", function(p){
+  qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"))
+})
+ChiSquaredNoncentral$set("private", ".rand", function(n){
+  rchisq(n, self$getParameterValue("df"), self$getParameterValue("location"))
+})
+
 
 ChiSquaredNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, location, verbose)
   self$setParameterValue(df = df, location = location)
 
-  pdf <- function(x1) dchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  cdf <- function(x1) pchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  quantile <- function(p) qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"))
-  rand <- function(n) rchisq(n, self$getParameterValue("df"), self$getParameterValue("location"))
-
   if(df == 1)
     support <- PosReals$new(zero = F)
   else
     support <- PosReals$new(zero = T)
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = support,
-                   symmetric  = FALSE, type = PosReals$new(zero = TRUE),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = support,
+                   type = PosReals$new(zero = TRUE),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

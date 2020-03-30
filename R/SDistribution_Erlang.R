@@ -96,6 +96,19 @@ Erlang$set("private",".getRefParams", function(paramlst){
 
   return(lst)
 })
+Erlang$set("private", ".pdf", function(x){
+  dgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
+Erlang$set("private", ".cdf", function(x){
+  pgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
+Erlang$set("private", ".quantile", function(p){
+  qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
+Erlang$set("private", ".rand", function(n){
+  rgamma(n, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
+
 
 Erlang$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, decorators = NULL,
                                          verbose = FALSE){
@@ -103,17 +116,10 @@ Erlang$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, deco
   private$.parameters <- getParameterSet.Erlang(self, shape, rate, scale, verbose)
   self$setParameterValue(shape = shape, rate = rate, scale = scale)
 
-  pdf <- function(x1) dgamma(x1, self$getParameterValue("shape"),self$getParameterValue('rate'))
-  cdf <- function(x1) pgamma(x1, self$getParameterValue("shape"),self$getParameterValue('rate'))
-  quantile <- function(p) qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'))
-  rand <- function(n) rgamma(n, self$getParameterValue("shape"),self$getParameterValue('rate'))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T),
-                   symmetric  = FALSE, type = PosReals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(zero = T),
+                   type = PosReals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

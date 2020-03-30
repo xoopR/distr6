@@ -55,32 +55,29 @@ Gompertz$set("public", "pgf", function(z){
   return(NaN)
 })
 
+Gompertz$set("private",".pdf", function(x){
+  self$getParameterValue("shape") * self$getParameterValue("scale")*exp(self$getParameterValue("shape")) *
+    exp(self$getParameterValue("scale") * x) * exp(-self$getParameterValue("shape") * exp(self$getParameterValue("scale") * x))
+})
+Gompertz$set("private",".cdf", function(x){
+  1 - exp(-self$getParameterValue("shape")*(exp(self$getParameterValue("scale")*x)-1))
+})
+Gompertz$set("private",".quantile", function(p){
+  log(1 + (log(1-p)/-self$getParameterValue("shape")))/self$getParameterValue("scale")
+})
+Gompertz$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
+
 Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
   suppressMessages(self$setParameterValue(shape = shape, scale = scale))
 
-  pdf <- function(x1){
-    return(self$getParameterValue("shape")*self$getParameterValue("scale")*exp(self$getParameterValue("shape"))*
-             exp(self$getParameterValue("scale")*x1)*exp(-self$getParameterValue("shape")*exp(self$getParameterValue("scale")*x1)))
-  }
-  cdf <- function(x1){
-    return(1 - exp(-self$getParameterValue("shape")*(exp(self$getParameterValue("scale")*x1)-1)))
-  }
-  quantile <- function(p){
-    return(log(1 + (log(1-p)/-self$getParameterValue("shape")))/self$getParameterValue("scale"))
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T),
-                   symmetric  = FALSE,type = PosReals$new(zero = T),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(zero = T),
+                   type = PosReals$new(zero = T),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

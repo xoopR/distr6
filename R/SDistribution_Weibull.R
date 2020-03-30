@@ -113,23 +113,28 @@ Weibull$set("private",".getRefParams", function(paramlst){
 
   return(lst)
 })
+Weibull$set("private", ".pdf", function(x){
+  dweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
+Weibull$set("private", ".cdf", function(x){
+  pweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
+Weibull$set("private", ".quantile", function(p){
+  qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
+Weibull$set("private", ".rand", function(n){
+  rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
 
 Weibull$set("public","initialize",function(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, altscale, verbose)
   self$setParameterValue(shape = shape, scale = scale, altscale = altscale)
 
-  pdf <- function(x1) dweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  cdf <- function(x1) pweibull(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  quantile <- function(p) qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  rand <- function(n) rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T),
-                   symmetric = FALSE, type = PosReals$new(zero=T), valueSupport = "continuous",
-                   variateForm = "univariate")
-
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(zero = T),
+                   type = PosReals$new(zero=T),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

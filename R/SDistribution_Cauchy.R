@@ -77,6 +77,20 @@ Cauchy$set("public","mode",function(which = NULL){
   return(self$getParameterValue("location"))
 })
 
+Cauchy$set("private",".pdf", function(x){
+  dcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"))
+})
+Cauchy$set("private",".cdf", function(x){
+  pcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"))
+})
+Cauchy$set("private",".quantile", function(p){
+  qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"))
+})
+Cauchy$set("private",".rand", function(n){
+  rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
+})
+
+
 Cauchy$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
@@ -90,17 +104,11 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
   private$.parameters <- getParameterSet(self, location, scale, verbose)
   self$setParameterValue(location = location, scale = scale)
 
-  pdf <- function(x1) dcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
-  cdf <- function(x1) pcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
-  quantile <- function(p) qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"))
-  rand <- function(n) rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Reals$new(),
+                   symmetry = "symmetric",
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

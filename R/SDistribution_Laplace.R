@@ -92,6 +92,31 @@ Laplace$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$var)) lst = c(lst, list(scale = sqrt(paramlst$var/2)))
   return(lst)
 })
+Laplace$set("private",".pdf", function(x){
+  (2*self$getParameterValue("scale"))^-1 * exp(-abs(x-self$getParameterValue("mean")))
+})
+Laplace$set("private",".cdf", function(x){
+  cdf = x
+  cdf[x <= self$getParameterValue("mean")] = 0.5 * exp((cdf[x <= self$getParameterValue("mean")]-
+                                                           self$getParameterValue("mean"))/
+                                                          self$getParameterValue("scale"))
+  cdf[x > self$getParameterValue("mean")] = 1 - (0.5 * exp(-(cdf[x > self$getParameterValue("mean")]-
+                                                                self$getParameterValue("mean"))/
+                                                              self$getParameterValue("scale")))
+
+  return(cdf)
+})
+Laplace$set("private",".quantile", function(p){
+  quantile = p
+  quantile[p <= 0.5] = self$getParameterValue("mean") + (self$getParameterValue("scale")*
+                                                           log(2*quantile[p <= 0.5]))
+  quantile[p > 0.5] = self$getParameterValue("mean") - (self$getParameterValue("scale")*
+                                                          log(2 - 2*quantile[p > 0.5]))
+  return(quantile)
+})
+Laplace$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
 
 Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
                                           decorators = NULL, verbose = FALSE){
@@ -99,37 +124,11 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
   private$.parameters <- getParameterSet(self, mean, scale, var, verbose)
   self$setParameterValue(mean = mean, scale = scale, var = var)
 
-  pdf <- function(x1){
-    return((2*self$getParameterValue("scale"))^-1 * exp(-abs(x1-self$getParameterValue("mean"))))
-  }
-  cdf <- function(x1){
-    cdf = x1
-    cdf[x1 <= self$getParameterValue("mean")] = 0.5 * exp((cdf[x1 <= self$getParameterValue("mean")]-
-                                                             self$getParameterValue("mean"))/
-                                                            self$getParameterValue("scale"))
-    cdf[x1 > self$getParameterValue("mean")] = 1 - (0.5 * exp(-(cdf[x1 > self$getParameterValue("mean")]-
-                                                                  self$getParameterValue("mean"))/
-                                                                self$getParameterValue("scale")))
-    return(cdf)
-  }
-  quantile <- function(p){
-    quantile = p
-    quantile[p <= 0.5] = self$getParameterValue("mean") + (self$getParameterValue("scale")*
-                                                             log(2*quantile[p <= 0.5]))
-    quantile[p > 0.5] = self$getParameterValue("mean") - (self$getParameterValue("scale")*
-                                                            log(2 - 2*quantile[p > 0.5]))
-    return(quantile)
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
+  super$initialize(decorators = decorators,
                    support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+                   symmetry = "sym",
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

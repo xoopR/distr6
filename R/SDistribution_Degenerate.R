@@ -83,24 +83,28 @@ Degenerate$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
   return(lst)
 })
-
+Degenerate$set("private", ".pdf", function(x){
+  if(x == self$getParameterValue("mean")) return(1) else return(0)
+})
+Degenerate$set("private", ".cdf", function(x){
+  if(x >= self$getParameterValue("mean")) return(1) else return(0)
+})
+Degenerate$set("private", ".quantile", function(p){
+  if(p > 0) return(self$getParameterValue("mean")) else return(-Inf)
+})
+Degenerate$set("private", ".rand", function(n){
+  rep(self$getParameterValue("mean"), n)
+})
 
 Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, verbose)
   self$setParameterValue(mean = mean)
 
-  pdf <- function(x1) if(x1 == self$getParameterValue("mean")) return(1) else return(0)
-  cdf <- function(x1) if(x1 >= self$getParameterValue("mean")) return(1) else return(0)
-  quantile <- function(p) if(p > 0) return(self$getParameterValue("mean")) else return(-Inf)
-  rand <- function(n) return(rep(self$getParameterValue("mean"), n))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(mean, class = "integer"),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Set$new(mean, class = "integer"),
+                   symmetry = "sym",
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

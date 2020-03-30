@@ -81,25 +81,27 @@ Poisson$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
   return(lst)
 })
+Poisson$set("private", ".pdf", function(x){
+  dpois(x, self$getParameterValue("rate"))
+})
+Poisson$set("private", ".cdf", function(x){
+  ppois(x, self$getParameterValue("rate"))
+})
+Poisson$set("private", ".quantile", function(p){
+  qpois(p, self$getParameterValue("rate"))
+})
+Poisson$set("private", ".rand", function(n){
+  rpois(n, self$getParameterValue("rate"))
+})
 
 Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose = FALSE, ...){
 
   private$.parameters <- getParameterSet(self, rate, verbose)
   self$setParameterValue(rate = rate)
 
-  pdf <- function(x1) dpois(x1, self$getParameterValue("rate"))
-  cdf <- function(x1) ppois(x1, self$getParameterValue("rate"))
-  quantile <- function(p) qpois(p, self$getParameterValue("rate"))
-  rand <- function(n) rpois(n, self$getParameterValue("rate"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Naturals$new(),
-                   symmetric = FALSE,type = Naturals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-
-
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Naturals$new(),
+                   type = Naturals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

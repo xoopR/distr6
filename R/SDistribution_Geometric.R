@@ -11,7 +11,7 @@
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = (1 - p)^{k-1}p}
 #' @templateVar paramsupport \eqn{p \epsilon [0,1]}
-#' @templateVar distsupport the Naturals (zero is included if modelling number of failures before success).
+#' @templateVar distsupport the Naturals (zero is included if modelling number of failures before success)
 #' @templateVar additionalDetails The Geometric distribution is used to either refer to modelling the number of trials or number of failures before the first success.
 #' @templateVar constructor prob = 0.5, qprob = NULL, trials = FALSE
 #' @templateVar arg1 \code{prob} \tab numeric \tab probability of success. \cr
@@ -59,8 +59,6 @@ NULL
 #-------------------------------------------------------------
 Geometric <-  R6Class("Geometric", inherit = SDistribution, lock_objects = F)
 
-Geometric$set("private",".trials",NULL)
-
 Geometric$set("public","name","Geometric")
 Geometric$set("public","short_name","Geom")
 Geometric$set("public","packages","stats")
@@ -72,7 +70,7 @@ Geometric$set("public","mean",function(){
         return((1-self$getParameterValue("prob"))/self$getParameterValue("prob"))
 })
 Geometric$set("public","variance",function(){
-   return((1-self$getParameterValue("prob"))/(self$getParameterValue("prob")^2))
+    return((1-self$getParameterValue("prob"))/(self$getParameterValue("prob")^2))
 })
 Geometric$set("public","skewness",function(){
     return((2-self$getParameterValue("prob"))/sqrt(1-self$getParameterValue("prob")))
@@ -122,40 +120,54 @@ Geometric$set("private",".getRefParams", function(paramlst){
     if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1 - paramlst$qprob))
     return(lst)
 })
+Geometric$set("private",".trials", logical(0))
+Geometric$set("private", ".pdf", function(x) {
+    if (private$.trials) {
+        return(dgeom(x + 1, self$getParameterValue("prob")))
+    } else {
+        return(dgeom(x, self$getParameterValue("prob")))
+    }
+})
+Geometric$set("private", ".cdf", function(x){
+    if (private$.trials) {
+        return(pgeom(x + 1, self$getParameterValue("prob")))
+    } else {
+        return(pgeom(x, self$getParameterValue("prob")))
+    }
+})
+Geometric$set("private", ".quantile", function(p){
+    if (private$.trials) {
+        return(qgeom(p, self$getParameterValue("prob")) + 1)
+    } else {
+        return(qgeom(p, self$getParameterValue("prob")))
+    }
+})
+Geometric$set("private", ".rand", function(n){
+    if (private$.trials) {
+        return(rgeom(n, self$getParameterValue("prob")) + 1)
+    } else {
+        return(rgeom(n, self$getParameterValue("prob")))
+    }
+})
 
 Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
                                              verbose = FALSE,...){
 
-    checkmate::assertLogical(trials)
-    private$.trials <- trials
+    private$.trials <- checkmate::assertLogical(trials)
     private$.parameters <- getParameterSet(x=self, prob=prob, qprob=qprob, trials=trials, verbose=verbose)
     self$setParameterValue(prob = prob, qprob = qprob)
 
     if(!trials){
-        pdf <- function(x1) dgeom(x1, self$getParameterValue("prob"))
-        cdf <- function(x1) pgeom(x1, self$getParameterValue("prob"))
-        quantile <- function(p) qgeom(p, self$getParameterValue("prob"))
-        rand <- function(n) rgeom(n, self$getParameterValue("prob"))
         support <- Naturals$new()
-        description = "Geometric (Failures) Probability Distribution."
+        self$description = "Geometric (Failures) Probability Distribution."
     } else {
-        pdf <- function(x1) dgeom(x1+1, self$getParameterValue("prob"))
-        cdf <- function(x1) pgeom(x1+1, self$getParameterValue("prob"))
-        quantile <- function(p) qgeom(p, self$getParameterValue("prob"))+1
-        rand <- function(n) rgeom(n, self$getParameterValue("prob"))
         support <- PosNaturals$new()
-        description = "Geometric (Trials) Probability Distribution."
+        self$description = "Geometric (Trials) Probability Distribution."
     }
 
-    super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                     rand = rand, support = support,
-                     symmetric  = FALSE, description = description,
-                     type = Naturals$new(),
-                     valueSupport = "discrete",
-                     variateForm = "univariate")
-
-    invisible(self)
-
+    super$initialize(decorators = decorators,
+                     support = support,
+                     type = Naturals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

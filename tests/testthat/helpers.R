@@ -74,10 +74,10 @@ autotest_sdistribution = function(sdist, pars, traits, support, symmetry, mean, 
   expect_output(sdist$summary(F))
 
   context("d/p/q/r")
-  if(!is.null(sdist$private_methods$.pdf)){
+  if(!is.null(sdist$private_methods$.pdf) & !missing(pdf)){
     expect_equal(round(sdist$pdf(1:3),4), pdf)
   }
-  if(!is.null(sdist$private_methods$.cdf)){
+  if(!is.null(sdist$private_methods$.cdf) & !missing(cdf)){
     expect_equal(round(sdist$cdf(1:3),4), cdf)
   }
   if(!is.null(sdist$private_methods$.quantile)){

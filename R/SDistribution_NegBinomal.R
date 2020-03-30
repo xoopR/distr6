@@ -192,68 +192,58 @@ NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qpro
   self$setParameterValue(size = size, prob = prob, qprob = qprob, mean = mean)
 
   if(form == "fbs"){
-    pdf = function(x1) dnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-    cdf = function(x1) pnbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-    quantile = function(p) qnbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
-    rand = function(n) rnbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
+    private$.pdf = function(x) dnbinom(x, self$getParameterValue("size"), self$getParameterValue("prob"))
+    private$.cdf = function(x) pnbinom(x, self$getParameterValue("size"), self$getParameterValue("prob"))
+    private$.quantile = function(p) qnbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
+    private$.rand = function(n) rnbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
     support = Naturals$new()
-    description = "Negative Binomial (fbs) Probability Distribution."
+    self$description = "Negative Binomial (fbs) Probability Distribution."
   } else if(form == "sbf"){
-    pdf = function(x1){
-      return(choose(x1 + self$getParameterValue("size") - 1, x1) *
-               self$getParameterValue("prob")^x1 *
+    private$.pdf = function(x){
+      return(choose(x + self$getParameterValue("size") - 1, x) *
+               self$getParameterValue("prob")^x *
                self$getParameterValue("qprob")^self$getParameterValue("size"))
     }
-    cdf = function(x1){
-      return(1 - pbeta(self$getParameterValue("prob"), x1+1, self$getParameterValue("size")))
+    private$.cdf = function(x){
+      return(1 - pbeta(self$getParameterValue("prob"), x+1, self$getParameterValue("size")))
     }
-    quantile = NULL
-    rand = NULL
     support = Naturals$new()
-    description = "Negative Binomial (sbf) Probability Distribution."
+    self$description = "Negative Binomial (sbf) Probability Distribution."
   } else if(form == "tbf"){
-    pdf = function(x1){
-      return(choose(x1 - 1, self$getParameterValue("size")-1) *
-               self$getParameterValue("prob")^(x1 - self$getParameterValue("size")) *
+    private$.pdf = function(x){
+      return(choose(x - 1, self$getParameterValue("size")-1) *
+               self$getParameterValue("prob")^(x - self$getParameterValue("size")) *
                self$getParameterValue("qprob")^self$getParameterValue("size"))
     }
-    cdf = function(x1){
-      if(length(x1) == 1)
-        return(sum(self$pdf(self$inf:x1)))
+    private$.cdf = function(x){
+      if(length(x) == 1)
+        return(sum(self$pdf(self$inf:x)))
       else{
-        return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf:x)))))
+        return(unlist(sapply(x, function(x) sum(self$pdf(self$inf:x)))))
       }
     }
-    quantile = NULL
-    rand = NULL
     support = Interval$new(size, Inf, type = "[)", class = "integer")
-    description = "Negative Binomial (tbf) Probability Distribution."
+    self$description = "Negative Binomial (tbf) Probability Distribution."
   } else{
-    pdf = function(x1){
-      return(choose(x1 - 1, self$getParameterValue("size")-1) *
+    private$.pdf = function(x){
+      return(choose(x - 1, self$getParameterValue("size")-1) *
                self$getParameterValue("prob")^self$getParameterValue("size") *
-               self$getParameterValue("qprob")^(x1 - self$getParameterValue("size")))
+               self$getParameterValue("qprob")^(x - self$getParameterValue("size")))
     }
-    cdf = function(x1){
-      if(length(x1) == 1)
-        return(sum(self$pdf(self$inf:x1)))
+    private$.cdf = function(x){
+      if(length(x) == 1)
+        return(sum(self$pdf(self$inf:x)))
       else{
-        return(unlist(sapply(x1, function(x) sum(self$pdf(self$inf:x)))))
+        return(unlist(sapply(x, function(x) sum(self$pdf(self$inf:x)))))
       }
     }
-    quantile = NULL
-    rand = NULL
     support = Interval$new(size, Inf, type = "[)", class = "integer")
-    description = "Negative Binomial (tbs) Probability Distribution."
+    self$description = "Negative Binomial (tbs) Probability Distribution."
   }
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = support,
-                   symmetric = FALSE, description = description, type = Naturals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = support,
+                   type = Naturals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

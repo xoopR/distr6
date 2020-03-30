@@ -119,6 +119,11 @@ SDistribution$set("public","initialize",function(decorators, support, type,
                              support = assertSet(support),
                              symmetry = match.arg(symmetry))
 
+  sapply(c(names(Binomial$public_fields), names(Binomial$public_methods)),
+         function(x) try(lockBinding(x, self), silent = TRUE))
+  sapply(c(names(Binomial$private_fields), names(Binomial$private_methods)),
+         function(x) try(lockBinding(x, private), silent = TRUE))
+
   invisible(self)
 })
 

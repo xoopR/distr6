@@ -106,6 +106,18 @@ InverseGamma$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
+InverseGamma$set("private", ".pdf", function(x){
+  extraDistr::dinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
+InverseGamma$set("private", ".cdf", function(x){
+  extraDistr::pinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
+InverseGamma$set("private", ".quantile", function(p){
+  extraDistr::qinvgamma(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
+InverseGamma$set("private", ".rand", function(n){
+  extraDistr::rinvgamma(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+})
 
 InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators = NULL,
                                          verbose = FALSE){
@@ -113,17 +125,10 @@ InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators 
   private$.parameters <- getParameterSet.InverseGamma(self, shape, scale, verbose)
   self$setParameterValue(shape=shape, scale = scale)
 
-  pdf <- function(x1) extraDistr::dinvgamma(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  cdf <- function(x1) extraDistr::pinvgamma(x1, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  quantile <- function(p) extraDistr::qinvgamma(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  rand <- function(n) extraDistr::rinvgamma(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(),
-                   symmetric  = FALSE,type = PosReals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(),
+                   type = PosReals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

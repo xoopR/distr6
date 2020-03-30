@@ -106,23 +106,28 @@ DiscreteUniform$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
   return(lst)
 })
+DiscreteUniform$set("private",".pdf", function(x){
+  rep(1/self$getParameterValue("N"), length(x))
+})
+DiscreteUniform$set("private",".cdf", function(x){
+  (x - self$getParameterValue("lower") + 1)/ self$getParameterValue("N")
+})
+DiscreteUniform$set("private",".quantile", function(p){
+  self$getParameterValue("lower") + floor(p * self$getParameterValue("N"))
+})
+DiscreteUniform$set("private",".rand", function(n){
+  sample(unlist(self$properties$support$elements), n, TRUE)
+})
 
 DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
   self$setParameterValue(lower = lower, upper = upper)
 
-  pdf = function(x1) return(1 / self$getParameterValue("N"))
-  cdf = function(x1) return((x1 - self$getParameterValue("lower") + 1)/ self$getParameterValue("N"))
-  quantile = function(p) return(self$getParameterValue("lower") + floor(p * self$getParameterValue("N")))
-  rand = function(n) return(self$quantile(runif(n)))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(lower, upper, class = "integer"),
-                   symmetric = TRUE, type = Integers$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(lower, upper, class = "integer"),
+                   symmetry = "sym",
+                   type = Integers$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

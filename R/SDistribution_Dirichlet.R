@@ -101,59 +101,40 @@ Dirichlet$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$params)) lst = c(lst, list(params = paramlst$params))
   return(lst)
 })
+Dirichlet$set("private",".pdf",function(x){
+  K <- self$getParameterValue("K")
+
+  checkmate::assertDataTable(x, ncol = K)
+
+  params <- self$getParameterValue("params")
+  p1 = prod(gamma(params))/gamma(sum(params))
+  p1 = rep(p1, nrow(x))
+
+  p2 = x ^ matrix(params - 1, ncol = K, nrow = nrow(x), byrow = T)
+  p2 = apply(p2, 1, prod)
+
+  pdf = p2 / p1
+  pdf[rowSums(x) != 1] = 0
+
+  return(pdf)
+})
+Dirichlet$set("private",".rand",function(n){
+  rand = sapply(params, function(x) rgamma(n, shape = x))
+  rand = if(n > 1) apply(rand,1,function(x) x/sum(x)) else rand/sum(rand)
+
+  return(data.table::data.table(t(rand)))
+})
 
 Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, params, verbose)
   self$setParameterValue(params = params)
 
-  lst <- rep(list(bquote()), length(params))
-  names(lst) <- paste("x",1:length(params),sep="")
-
-  pdf <- function(){
-    K <- self$getParameterValue("K")
-
-    call <- mget(paste0("x",1:K))
-
-    if(!all(unlist(lapply(call, is.numeric))))
-      stop(paste(self$getParameterValue("K"),"arguments expected."))
-
-    if(length(unique(unlist(lapply(call,length)))) > 1)
-      stop("The same number of points must be passed to each variable.")
-
-    args <- matrix(as.numeric(unlist(call)), ncol = K)
-
-    params <- self$getParameterValue("params")
-    p1 = prod(gamma(params))/gamma(sum(params))
-    p1 = rep(p1, length(x1))
-
-    p2 = args ^ matrix(params - 1, ncol = K, nrow = length(x1), byrow = T)
-    p2 = apply(p2,1,prod)
-
-    pdf = p2 / p1
-    pdf[rowSums(args) != 1] = 0
-
-    return(pdf)
-  }
-  formals(pdf) <- lst
-
-  rand <- function(n){
-    rand = sapply(params, function(x) rgamma(n, shape = x))
-    if(n > 1)
-      rand = apply(rand,1,function(x) x/sum(x))
-    else
-      rand = rand/sum(rand)
-
-    return(data.table::data.table(t(rand)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, rand = rand,
+  super$initialize(decorators = decorators,
                    support = setpower(Interval$new(0,1,type="()"), length(params)),
-                   symmetric = FALSE,
                    type = setpower(Interval$new(0,1,type="()"), length(params)),
                    valueSupport = "continuous",
                    variateForm = "multivariate")
-  invisible(self)
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

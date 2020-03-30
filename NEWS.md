@@ -10,6 +10,8 @@
 
 * Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending
 * Vastly improved speed of construction of `SDistribution` and `Kernel`
+* Bugfix in `$rand` for `Geometric` distribution with `trials == TRUE` , previously was randomising between $[1, Inf)$ not $[0, Inf)$
+* Changed default `form` parameter in `NegativeBinomial`, now errors if supplied argument is not in one of the four choices (previously reverted to "fbs")
 
 # distr6 1.3.5
 

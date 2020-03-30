@@ -109,24 +109,27 @@ Logarithmic$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$theta)) lst = c(lst,list(theta = paramlst$theta))
   return(lst)
 })
+Logarithmic$set("private", ".pdf", function(x){
+  extraDistr::dlgser(x, self$getParameterValue("theta"))
+})
+Logarithmic$set("private", ".cdf", function(x){
+  extraDistr::plgser(x, self$getParameterValue("theta"))
+})
+Logarithmic$set("private", ".quantile", function(p){
+  extraDistr::qlgser(p, self$getParameterValue("theta"))
+})
+Logarithmic$set("private", ".rand", function(n){
+  extraDistr::rlgser(n, self$getParameterValue("theta"))
+})
 
 Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet.Logarithmic(self, theta, verbose)
   self$setParameterValue(theta=theta)
 
-  pdf <- function(x1) extraDistr::dlgser(x1, self$getParameterValue("theta"))
-  cdf <- function(x1) extraDistr::plgser(x1, self$getParameterValue("theta"))
-  quantile <- function(p) extraDistr::qlgser(p, self$getParameterValue("theta"))
-  rand <- function(n) extraDistr::rlgser(n, self$getParameterValue("theta"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosNaturals$new(),
-                   symmetric = FALSE,type = Naturals$new(),
-                   valueSupport ="discrete",
-                   variateForm = "univariate")
-
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosNaturals$new(),
+                   type = Naturals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

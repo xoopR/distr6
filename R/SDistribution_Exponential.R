@@ -89,23 +89,28 @@ Exponential$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
   return(lst)
 })
+Exponential$set("private", ".pdf", function(x){
+  dexp(x, self$getParameterValue("rate"))
+})
+Exponential$set("private", ".cdf", function(x){
+  pexp(x, self$getParameterValue("rate"))
+})
+Exponential$set("private", ".quantile", function(p){
+  qexp(p, self$getParameterValue("rate"))
+})
+Exponential$set("private", ".rand", function(n){
+  rexp(n, self$getParameterValue("rate"))
+})
 
 Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, rate, scale, verbose)
   self$setParameterValue(rate = rate, scale = scale)
 
-  pdf <- function(x1) dexp(x1, self$getParameterValue("rate"))
-  cdf <- function(x1) pexp(x1, self$getParameterValue("rate"))
-  quantile <- function(p) qexp(p, self$getParameterValue("rate"))
-  rand <- function(n) rexp(n, self$getParameterValue("rate"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T),
-                   symmetric  = FALSE, type = PosReals$new(zero = T),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(zero = T),
+                   type = PosReals$new(zero = T),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

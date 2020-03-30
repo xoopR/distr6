@@ -130,55 +130,40 @@ MultivariateNormal$set("private",".getRefParams", function(paramlst){
                                                                    ncol = self$getParameterValue("K")))))
   return(lst)
 })
+MultivariateNormal$set("private",".pdf",function(x){
+  if(isSymmetric.matrix(self$variance()) & all(eigen(self$variance(),only.values = TRUE)$values > 0)){
+    K <- self$getParameterValue("K")
+    x <- as.matrix(checkmate::assertDataTable(x, ncol = self$getParameterValue("K")))
+
+    cov <- self$getParameterValue("cov")
+    mean <- matrix(self$getParameterValue("mean"), nrow = nrow(x), ncol = K, byrow = TRUE)
+
+    return(as.numeric((2*pi)^(-K/2) * det(cov)^-0.5 *
+                        exp(-0.5 * rowSums((x - mean) %*% solve(cov) * (x - mean)))))
+  } else {
+    return(NaN)
+  }
+})
+MultivariateNormal$set("private",".rand",function(n){
+  ch <- chol(self$variance())
+  xs <- matrix(rnorm(self$getParameterValue("K")*n), ncol = n)
+
+  return(data.table::data.table(t(mean + ch %*% xs)))
+})
 
 MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1,0,0,1),
                                                       prec = NULL, decorators = NULL, verbose = FALSE){
 
-  if (length(mean) == 1)
-    stop("Length of mean is '1', use Normal distribution instead.")
+  if (length(mean) == 1)  stop("Length of mean is '1', use Normal distribution instead.")
 
   private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
   self$setParameterValue(mean = mean, cov = cov, prec = prec)
 
-  lst <- rep(list(bquote()), length(mean))
-  names(lst) <- paste("x",1:length(mean),sep="")
-
-  pdf <- function(){
-
-    if(isSymmetric.matrix(self$variance()) & all(eigen(self$variance(),only.values = T)$values > 0)){
-
-      K <- self$getParameterValue("K")
-      call <- mget(paste0("x",1:K))
-
-      if(!all(unlist(lapply(call, is.numeric))))
-        stop(paste(K,"arguments expected."))
-
-      if(length(unique(unlist(lapply(call,length)))) > 1)
-        stop("The same number of points must be passed to each variable.")
-
-      cov <- self$getParameterValue("cov")
-      xs <- matrix(unlist(mget(paste0("x",1:K))), ncol = K)
-      mean <- matrix(self$getParameterValue("mean"), nrow = nrow(xs), ncol = K, byrow = T)
-
-      return(as.numeric((2*pi)^(-K/2) * det(cov)^-0.5 *
-               exp(-0.5 * rowSums((xs - mean) %*% solve(cov) * (xs - mean)))))
-    } else
-      return(NaN)
-  }
-  formals(pdf) <- lst
-
-  rand <- function(n){
-    ch <- chol(self$variance())
-    xs <- matrix(rnorm(self$getParameterValue("K")*n), ncol = n)
-    return(data.table::data.table(t(mean + ch %*% xs)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, rand = rand,
+  super$initialize(decorators = decorators,
                    support = setpower(Reals$new(), length(mean)),
-                   symmetric = FALSE,type = setpower(Reals$new(), length(mean)),
+                   type = setpower(Reals$new(), length(mean)),
                    valueSupport = "continuous",
                    variateForm = "multivariate")
-  invisible(self)
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

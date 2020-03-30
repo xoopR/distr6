@@ -108,6 +108,18 @@ FDistribution$set("public", "mode", function(){
 FDistribution$set("public", "pgf", function(z){
   return(NaN)
 })
+FDistribution$set("private", ".pdf", function(x){
+  df(x, df1, df2)
+})
+FDistribution$set("private", ".cdf", function(x){
+  pf(x, df1, df2)
+})
+FDistribution$set("private", ".quantile", function(p){
+  qf(p, df1, df2)
+})
+FDistribution$set("private", ".rand", function(n){
+  rf(n, df1, df2)
+})
 
 FDistribution$set("public", "setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
@@ -129,21 +141,15 @@ FDistribution$set("public", "initialize", function(df1 = 1, df2 = 1, decorators 
   private$.parameters <- getParameterSet(self, df1, df2, verbose)
   self$setParameterValue(df1 = df1, df2 = df2)
 
-  pdf <- function(x1) df(x1, df1, df2)
-  cdf <- function(x1) pf(x1, df1, df2)
-  quantile <- function(p) qf(p, df1, df2)
-  rand <- function(n) rf(n, df1, df2)
-
   if (df1 == 1)
     support <- PosReals$new(zero = FALSE)
   else
     support <- PosReals$new(zero = TRUE)
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = support,
-                   symmetric = FALSE,type = PosReals$new(zero = TRUE),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
+  super$initialize(decorators = decorators,
+                   support = support,
+                   type = PosReals$new(zero = TRUE),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

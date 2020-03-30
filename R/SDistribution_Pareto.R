@@ -114,33 +114,31 @@ Pareto$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
+Pareto$set("private",".pdf", function(x){
+  shape <- self$getParameterValue("shape")
+  scale <- self$getParameterValue("scale")
+
+  return((shape * scale^shape)/(x^(shape+1)))
+})
+Pareto$set("private",".cdf", function(x){
+  1 - ((self$getParameterValue("scale")/x)^self$getParameterValue("shape"))
+})
+Pareto$set("private",".quantile", function(p){
+  self$getParameterValue("scale") * (1-p)^(-1/self$getParameterValue("shape"))
+})
+Pareto$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
 
 Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
   self$setParameterValue(shape = shape, scale = scale)
 
-  pdf <- function(x1){
-    shape <- self$getParameterValue("shape")
-    scale <- self$getParameterValue("scale")
-    return((shape * scale^shape)/(x1^(shape+1)))
-  }
-  cdf <- function(x1){
-    return(1 - ((self$getParameterValue("scale")/x1)^self$getParameterValue("shape")))
-  }
-  quantile <- function(p){
-    return(self$getParameterValue("scale") * (1-p)^(-1/self$getParameterValue("shape")))
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(scale, Inf, type = "[)"),
-                   symmetric  = FALSE,type = PosReals$new(zero = T),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(scale, Inf, type = "[)"),
+                   type = PosReals$new(zero = T),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

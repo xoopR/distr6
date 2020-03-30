@@ -98,50 +98,46 @@ Arcsine$set("public","setParameterValue",function(..., lst = NULL, error = "warn
   private$.properties$support <- Interval$new(self$getParameterValue("lower"),self$getParameterValue("upper"))
   invisible(self)
 })
+Arcsine$set("private",".pdf",function(x){
+  if(self$getParameterValue("lower") == 0 & self$getParameterValue("upper") == 1)
+    return(dbeta(x, 0.5, 0.5))
+  else
+    return((pi * sqrt((x - self$getParameterValue("lower")) * (self$getParameterValue("upper") - x)))^-1)
+})
+Arcsine$set("private",".cdf",function(x){
+  if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1) {
+    return(pbeta(x, 0.5, 0.5))
+  } else {
+    return((2/pi) * (asin(sqrt(
+      (x - self$getParameterValue("lower")) /
+        (self$getParameterValue("upper") - self$getParameterValue("lower"))))))
+  }
+})
+Arcsine$set("private",".quantile",function(p){
+  if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
+    return(qbeta(p, 0.5, 0.5))
+  else
+    return(((self$getParameterValue("upper") - self$getParameterValue("lower")) *
+              sin(p * pi * 0.5)^2) +
+             self$getParameterValue("lower"))
+})
+Arcsine$set("private",".rand",function(n){
+  if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
+    return(rbeta(n, 0.5, 0.5))
+  else
+    return(self$quantile(runif(n)))
+})
 
 Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
   self$setParameterValue(lower = lower, upper = upper)
 
-  pdf <- function(x1){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(dbeta(x1, 0.5, 0.5))
-    else
-      return((pi * sqrt((x1 - self$getParameterValue("lower")) * (self$getParameterValue("upper") - x1)))^-1)
-  }
-
-  cdf <- function(x1){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(pbeta(x1, 0.5, 0.5))
-    else
-      return((2/pi) * (asin(sqrt(
-      (x1 - self$getParameterValue("lower")) /
-      (self$getParameterValue("upper") - self$getParameterValue("lower"))))))
-  }
-
-  quantile <- function(p){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(qbeta(p, 0.5, 0.5))
-    else
-      return(((self$getParameterValue("upper") - self$getParameterValue("lower")) *
-                sin(p * pi * 0.5)^2) +
-               self$getParameterValue("lower"))
-  }
-
-  rand <- function(n){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(rbeta(n, 0.5, 0.5))
-    else
-      return(self$quantile(runif(n)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Interval$new(lower,upper),  symmetric = TRUE,
+  super$initialize(decorators = decorators,
+                   support = Interval$new(lower,upper),
+                   symmetry = "symmetry",
                    type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

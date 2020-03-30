@@ -86,34 +86,34 @@ Gumbel$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
+Gumbel$set("private",".pdf", function(x){
+  location <- self$getParameterValue("location")
+  scale <- self$getParameterValue("scale")
+  z <- (x - location)/scale
+
+  return(exp(-(z + exp(-z)))/scale)
+})
+Gumbel$set("private",".cdf", function(x){
+  exp(-exp(-(x - self$getParameterValue("location"))/self$getParameterValue("scale")))
+})
+Gumbel$set("private",".quantile", function(p){
+  -log(-log(p))*self$getParameterValue("scale") + self$getParameterValue("location")
+})
+Gumbel$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
+
 Gumbel$set("public","initialize",function(location = 0, scale = 1,
                                           decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, location, scale, verbose)
   self$setParameterValue(location = location, scale = scale)
 
-  pdf <- function(x1){
-    location <- self$getParameterValue("location")
-    scale <- self$getParameterValue("scale")
-    z <- (x1 - location)/scale
-    return(exp(-(z + exp(-z)))/scale)
-  }
-  cdf <- function(x1){
-    return(exp(-exp(-(x1 - self$getParameterValue("location"))/self$getParameterValue("scale"))))
-  }
-  quantile <- function(p){
-    return(-log(-log(p))*self$getParameterValue("scale") + self$getParameterValue("location"))
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Reals$new(),
+                   symmetry = "sym",
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

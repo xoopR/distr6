@@ -95,6 +95,19 @@ Normal$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
   return(lst)
 })
+Normal$set("private", ".pdf", function(x){
+  dnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"))
+})
+Normal$set("private", ".cdf", function(x){
+  pnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"))
+})
+Normal$set("private", ".quantile", function(p){
+  qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"))
+})
+Normal$set("private", ".rand", function(n){
+  rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
+})
+
 
 Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = NULL,
                                           decorators = NULL, verbose = FALSE){
@@ -102,15 +115,9 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
   private$.parameters <- getParameterSet(self, mean, var, sd, prec, verbose)
   self$setParameterValue(mean = mean, var = var, sd = sd, prec = prec)
 
-  pdf <- function(x1) dnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
-  cdf <- function(x1) pnorm(x1, self$getParameterValue("mean"), self$getParameterValue("sd"))
-  quantile <- function(p) qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"))
-  rand <- function(n) rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
+  super$initialize(decorators = decorators,
+                   support = Reals$new(),
+                   symmetry = "sym",
+                   type = Reals$new(),
                    variateForm = "univariate")
-  invisible(self)
 })

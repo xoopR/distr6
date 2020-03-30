@@ -108,6 +108,22 @@ Frechet$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
+Frechet$set("private",".pdf", function(x){
+  scale <- self$getParameterValue("scale")
+  shape <- self$getParameterValue("shape")
+  minimum <- self$getParameterValue("minimum")
+
+  return(shape/scale * (((x - minimum)/scale)^(-1-shape)) * exp(-((x-minimum)/scale)^-shape))
+})
+Frechet$set("private",".cdf", function(x){
+  exp((-(x-self$getParameterValue("minimum"))/self$getParameterValue("scale"))^-self$getParameterValue("shape"))
+})
+Frechet$set("private",".quantile", function(p){
+  self$getParameterValue("scale") * (-1/log(p))^(1/self$getParameterValue("shape")) + self$getParameterValue("minimum")
+})
+Frechet$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
 
 Frechet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
@@ -121,29 +137,10 @@ Frechet$set("public","initialize",function(shape = 1, scale = 1, minimum = 0,
   private$.parameters <- getParameterSet(self, shape, scale, minimum, verbose)
   self$setParameterValue(shape = shape, scale = scale, minimum = minimum)
 
-  pdf <- function(x1){
-    scale <- self$getParameterValue("scale")
-    shape <- self$getParameterValue("shape")
-    minimum <- self$getParameterValue("minimum")
-    return(shape/scale * (((x1 - minimum)/scale)^(-1-shape)) * exp(-((x1-minimum)/scale)^-shape))
-  }
-  cdf <- function(x1){
-    return(exp((-(x1-self$getParameterValue("minimum"))/self$getParameterValue("scale"))^-self$getParameterValue("shape")))
-  }
-  quantile <- function(p){
-    return(self$getParameterValue("scale") * (-1/log(p))^(1/self$getParameterValue("shape")) +
-             self$getParameterValue("minimum"))
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(minimum, Inf, type = "()"),
-                   symmetric = FALSE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(minimum, Inf, type = "()"),
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

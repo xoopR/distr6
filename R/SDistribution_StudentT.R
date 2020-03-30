@@ -103,23 +103,29 @@ StudentT$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
   return(lst)
 })
+StudentT$set("private", ".pdf", function(x){
+  dt(x, self$getParameterValue("df"))
+})
+StudentT$set("private", ".cdf", function(x){
+  pt(x, self$getParameterValue("df"))
+})
+StudentT$set("private", ".quantile", function(p){
+  qt(p, self$getParameterValue("df"))
+})
+StudentT$set("private", ".rand", function(n){
+  rt(n, self$getParameterValue("df"))
+})
 
 StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(df = df)
 
-  pdf <- function(x1) dt(x1, self$getParameterValue("df"))
-  cdf <- function(x1) pt(x1, self$getParameterValue("df"))
-  quantile <- function(p) qt(p, self$getParameterValue("df"))
-  rand <- function(n) rt(n, self$getParameterValue("df"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric  = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Reals$new(),
+                   symmetry  = "sym",
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

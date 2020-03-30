@@ -91,6 +91,18 @@ Logistic$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$sd)) lst = c(lst, list(scale = paramlst$sd*sqrt(3)/pi))
   return(lst)
 })
+Logistic$set("private", ".pdf", function(x){
+  dlogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"))
+})
+Logistic$set("private", ".cdf", function(x){
+  plogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"))
+})
+Logistic$set("private", ".quantile", function(p){
+  qlogis(p, self$getParameterValue("mean"), self$getParameterValue("scale"))
+})
+Logistic$set("private", ".rand", function(n){
+  rlogis(n, self$getParameterValue("mean"), self$getParameterValue("scale"))
+})
 
 Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
                                           decorators = NULL, verbose = FALSE){
@@ -98,17 +110,11 @@ Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
   private$.parameters <- getParameterSet(self, mean, scale, sd, verbose)
   self$setParameterValue(mean = mean, scale = scale, sd = sd)
 
-  pdf <- function(x1) dlogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))
-  cdf <- function(x1) plogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))
-  quantile <- function(p) qlogis(p, self$getParameterValue("mean"), self$getParameterValue("scale"))
-  rand <- function(n) rlogis(n, self$getParameterValue("mean"), self$getParameterValue("scale"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Reals$new(),
+                   symmetry = "symmetric",
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

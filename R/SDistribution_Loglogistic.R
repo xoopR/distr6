@@ -113,6 +113,22 @@ Loglogistic$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$shape)) lst = c(lst, list(shape = paramlst$shape))
   return(lst)
 })
+Loglogistic$set("private",".pdf", function(x){
+  location <- self$getParameterValue("location")
+  shape <- self$getParameterValue("shape")
+  scale <- self$getParameterValue("scale")
+
+  return((shape/scale) * (((x - location)/scale)^(shape-1)) * (1 + ((x - location)/scale)^shape)^-2)
+})
+Loglogistic$set("private",".cdf", function(x){
+  (1 + ((x - self$getParameterValue("location"))/self$getParameterValue("scale"))^-self$getParameterValue("shape"))^-1
+})
+Loglogistic$set("private",".quantile", function(p){
+  self$getParameterValue("scale")*(p/(1-p))^(1/self$getParameterValue("shape")) + self$getParameterValue("location")
+})
+Loglogistic$set("private",".rand", function(n){
+  self$quantile(runif(n))
+})
 
 Loglogistic$set("public","initialize",function(scale = 1, shape = 1, location = 0,
                                                decorators = NULL, verbose = FALSE){
@@ -120,28 +136,10 @@ Loglogistic$set("public","initialize",function(scale = 1, shape = 1, location = 
   private$.parameters <- getParameterSet(self, scale, shape, location, verbose)
   self$setParameterValue(scale = scale, shape = shape, location = location)
 
-  pdf <- function(x1){
-    location <- self$getParameterValue("location")
-    shape <- self$getParameterValue("shape")
-    scale <- self$getParameterValue("scale")
-
-    return((shape/scale) * (((x1 - location)/scale)^(shape-1)) * (1 + ((x1 - location)/scale)^shape)^-2)
-  }
-  cdf <- function(x1){
-    return((1 + ((x1 -self$getParameterValue("location"))/self$getParameterValue("scale"))^-self$getParameterValue("shape"))^-1)
-  }
-  quantile <- function(p){
-    return(self$getParameterValue("scale")*(p/(1-p))^(1/self$getParameterValue("shape")) + self$getParameterValue("location"))
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(location,Inf,type="()"),
-                   symmetric = FALSE,type = PosReals$new(zero = T),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(location,Inf,type="()"),
+                   type = PosReals$new(zero = T),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

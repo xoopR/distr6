@@ -95,7 +95,6 @@ Multinomial$set("public", "pgf", function(z){
   checkmate::assert(length(z) == self$getParameterValue("K"))
   return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
 }) # TEST
-
 Multinomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   if(is.null(lst))
     lst <- list(...)
@@ -114,51 +113,33 @@ Multinomial$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$probs)) lst = c(lst, list(probs = paramlst$probs))
   return(lst)
 })
+Multinomial$set("private",".pdf",function(x){
+  checkmate::assertDataTable(x, ncol = self$getParameterValue("K"))
+  z = apply(x, 1, function(y){
+    if(sum(y) != self$getParameterValue("size")){
+      return(0)
+    } else {
+      return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")))
+    }
+  })
+
+  return(z)
+})
+Multinomial$set("private",".rand",function(n){
+  data.table::data.table(t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs"))))
+})
 
 Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
 
-  if (length(probs) == 1)
-    stop("Length of probs is '1', use Binomial distribution instead.")
+  if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")
 
   private$.parameters <- getParameterSet(self, size, probs, verbose)
   self$setParameterValue(size = size, probs = probs)
 
-  lst <- rep(list(bquote()), length(probs))
-  names(lst) <- paste("x",1:length(probs),sep="")
-
-  pdf <- function(){
-
-    call = mget(paste0("x",1:self$getParameterValue("K")))
-
-    if(!all(unlist(lapply(call, is.numeric))))
-      stop(paste(self$getParameterValue("K"),"arguments expected."))
-
-    if(length(unique(unlist(lapply(call,length)))) > 1)
-      stop("The same number of points must be passed to each variable.")
-
-    x = do.call(cbind,mget(paste0("x",1:self$getParameterValue("K"))))
-    z = apply(x, 1, function(y){
-      if(sum(y) != self$getParameterValue("size"))
-        return(0)
-      else
-        return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")))
-    })
-
-    return(z)
-
-  }
-  formals(pdf) <- lst
-
-  rand <- function(n){
-    return(data.table::data.table(t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs")))))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, rand = rand,
+  super$initialize(decorators = decorators,
                    support = setpower(Set$new(0:size, class = "integer"), length(probs)),
-                   symmetric = FALSE, type = setpower(Naturals$new(), length(probs)),
-                   valueSupport = "discrete",
+                   type = setpower(Naturals$new(), length(probs)),
                    variateForm = "multivariate")
-  invisible(self)
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

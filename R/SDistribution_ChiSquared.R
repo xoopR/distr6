@@ -100,26 +100,33 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
+ChiSquared$set("private",".pdf", function(x){
+  dchisq(x, self$getParameterValue("df"))
+})
+ChiSquared$set("private",".cdf", function(x1){
+  pchisq(x, self$getParameterValue("df"))
+})
+ChiSquared$set("private",".quantile", function(p){
+  qchisq(p, self$getParameterValue("df"))
+})
+ChiSquared$set("private",".rand", function(n){
+  rchisq(n, self$getParameterValue("df"))
+})
+
 ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(df = df)
-
-  pdf <- function(x1) dchisq(x1, self$getParameterValue("df"))
-  cdf <- function(x1) pchisq(x1, self$getParameterValue("df"))
-  quantile <- function(p) qchisq(p, self$getParameterValue("df"))
-  rand <- function(n) rchisq(n, self$getParameterValue("df"))
 
   if(df == 1)
     support <- PosReals$new(zero = F)
   else
     support <- PosReals$new(zero = T)
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = support,
-                   symmetric  = FALSE,type = PosReals$new(zero = TRUE),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
+  super$initialize(decorators = decorators,
+                   support = support,
+                   type = PosReals$new(zero = TRUE),
+                   valueSupport = "continuous")
   invisible(self)
 })
 

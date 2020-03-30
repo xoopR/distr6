@@ -108,23 +108,29 @@ Uniform$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
   return(lst)
 })
+Uniform$set("private", ".pdf", function(x){
+  dunif(x, self$getParameterValue("lower"), self$getParameterValue("upper"))
+})
+Uniform$set("private", ".cdf", function(x){
+  punif(x, self$getParameterValue("lower"), self$getParameterValue("upper"))
+})
+Uniform$set("private", ".quantile", function(p){
+  qunif(p, self$getParameterValue("lower"), self$getParameterValue("upper"))
+})
+Uniform$set("private", ".rand", function(n){
+  runif(n, self$getParameterValue("lower"), self$getParameterValue("upper"))
+})
 
 Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, lower, upper, verbose)
   self$setParameterValue(lower = lower, upper = upper)
 
-  pdf <- function(x1) dunif(x1, self$getParameterValue("lower"), self$getParameterValue("upper"))
-  cdf <- function(x1) punif(x1, self$getParameterValue("lower"), self$getParameterValue("upper"))
-  quantile <- function(p) qunif(p, self$getParameterValue("lower"), self$getParameterValue("upper"))
-  rand <- function(n) runif(n, self$getParameterValue("lower"), self$getParameterValue("upper"))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(lower, upper),
-                    symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = Interval$new(lower, upper),
+                   symmetric = "sym",
+                   type = Reals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

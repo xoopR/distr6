@@ -107,6 +107,18 @@ Gamma$set("private",".getRefParams", function(paramlst){
 
   return(lst)
 })
+Gamma$set("private", ".pdf", function(x){
+  dgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
+Gamma$set("private", ".cdf", function(x){
+  pgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
+Gamma$set("private", ".quantile", function(p){
+  qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
+Gamma$set("private", ".rand", function(n){
+  rgamma(n, self$getParameterValue("shape"),self$getParameterValue('rate'))
+})
 
 Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean = NULL, decorators = NULL,
                                          verbose = FALSE){
@@ -114,17 +126,10 @@ Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean 
   private$.parameters <- getParameterSet.Gamma(self, shape, rate, scale, mean, verbose)
   self$setParameterValue(shape = shape, rate = rate, scale = scale, mean = mean)
 
-  pdf <- function(x1) dgamma(x1, self$getParameterValue("shape"),self$getParameterValue('rate'))
-  cdf <- function(x1) pgamma(x1, self$getParameterValue("shape"),self$getParameterValue('rate'))
-  quantile <- function(p) qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'))
-  rand <- function(n) rgamma(n, self$getParameterValue("shape"),self$getParameterValue('rate'))
-
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = F),
-                   symmetric  = FALSE,type = PosReals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
+  super$initialize(decorators = decorators,
+                   support = PosReals$new(zero = F),
+                   type = PosReals$new(),
+                   valueSupport = "continuous")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,
