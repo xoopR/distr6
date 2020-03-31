@@ -170,7 +170,7 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
   rand <- function(n){
     ch <- chol(self$variance())
     xs <- matrix(rnorm(self$getParameterValue("K")*n), ncol = n)
-    return(data.table::data.table(t(mean + ch %*% xs)))
+    return(data.table::data.table(t(self$mean() + t(ch) %*% xs)))
   }
 
   super$initialize(decorators = decorators, pdf = pdf, rand = rand,
