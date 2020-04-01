@@ -2,7 +2,7 @@
 #'
 #' @description Helper function to more easily plot distributions inside a [VectorDistribution].
 #'
-#' @param vecdist [VectorDistribution].
+#' @param x [VectorDistribution].
 #' @param fun function to plot, one of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard".
 #' @param n `integer`. First n distributions in the [VectorDistribution] to plot.
 #' @param `ind` `integer`. Indices of the distributions in the [VectorDistribution] to plot. If given then `n` is ignored.
@@ -23,17 +23,17 @@
 #' plot(vd, fun = "quantile", ylim = c(-4, 4), col = c("blue", "purple"))
 #'
 #' @export
-plot.VectorDistribution <- function(vecdist, fun = "pdf", n, ind, cols, ...){
- checkmate::assertClass(vecdist, "VectorDistribution")
+plot.VectorDistribution <- function(x, fun = "pdf", n, ind, cols, ...){
+ checkmate::assertClass(x, "VectorDistribution")
  if(!missing(ind)){
-   dist = vecdist[ind]
+   dist = x[ind]
  } else if(!missing(n)) {
-   dist = vecdist[1:n]
+   dist = x[1:n]
  } else {
-   if(nrow(vecdist$modelTable) > 10){
+   if(nrow(x$modelTable) > 10){
      stop("More than 10 distributions in vector, please supply 'n' or 'ind'.")
    } else {
-     dist = vecdist
+     dist = x
    }
  }
   if(getR6Class(dist) != "VectorDistribution"){
@@ -42,9 +42,9 @@ plot.VectorDistribution <- function(vecdist, fun = "pdf", n, ind, cols, ...){
   } else {
     col = if(missing(cols)) 1 else cols[1]
     plot(dist[1], fun = fun, col = col, ...)
-    for(i in 2:nrow(vecdist$modelTable)){
+    for(i in 2:nrow(x$modelTable)){
       col = if(missing(cols)) i else cols[i]
-      lines(vecdist[i], fun, col = col,...)
+      lines(x[i], fun, col = col,...)
     }
   }
 

@@ -4,10 +4,10 @@
 \alias{plot.VectorDistribution}
 \title{Plotting Distribution Functions for a VectorDistribution}
 \usage{
-\method{plot}{VectorDistribution}(vecdist, fun = "pdf", n, ind, cols, ...)
+\method{plot}{VectorDistribution}(x, fun = "pdf", n, ind, cols, ...)
 }
 \arguments{
-\item{vecdist}{\link{VectorDistribution}.}
+\item{x}{\link{VectorDistribution}.}
 
 \item{fun}{function to plot, one of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard".}
 
@@ -27,25 +27,11 @@ If \code{n} and \code{ind} are both missing then all distributions are plotted i
 Otherwise the function will error.
 }
 \examples{
-# Plot pdf and cdf of Normal
+# Plot pdf of Normal distribution
 vd = VectorDistribution$new(list(Normal$new(), Normal$new(mean = 2)))
 plot(vd)
-
-plot(Normal$new())
-
-# Colour both plots red
-plot(Normal$new(), col = "red")
-
-# Change the colours of individual plotted functions
-plot(Normal$new(), pdf_col = "red", cdf_col = "green")
-
-# Interactive plotting in order - par still works here
-plot(Geometric$new(), fun = "all", ask = TRUE, pdf_col = "black",
-  cdf_col = "red", quantile_col = "blue", survival_col = "purple",
-  hazard_col = "brown", cumhazard_col = "yellow")
-
-# Return plotting structure
-x = plot(Gamma$new(), plot = FALSE)
+plot(vd, fun = "surv")
+plot(vd, fun = "quantile", ylim = c(-4, 4), col = c("blue", "purple"))
 
 }
 \seealso{
