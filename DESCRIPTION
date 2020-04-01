@@ -90,7 +90,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, r6 = FALSE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Collate: 
     'helpers.R'
     'distr6_globals.R'
@@ -188,7 +188,8 @@ Collate:
     'measures.R'
     'plot_continuous.R'
     'plot_discrete.R'
-    'plot.R'
+    'plot_distribution.R'
+    'plot_vectordistribution.R'
     'qqplot.R'
     'simulateEmpiricalDistribution.R'
     'skewType.R'
