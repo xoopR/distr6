@@ -13,11 +13,11 @@
 
 \item{n}{\code{integer}. First n distributions in the \link{VectorDistribution} to plot.}
 
+\item{ind}{\code{integer}. Indices of the distributions in the \link{VectorDistribution} to plot. If given then \code{n} is ignored.}
+
+\item{cols}{\code{character}. Vector of colours for plotting the curves. If missing \code{1:9} are used.}
+
 \item{...}{Other parameters passed to \link{plot.Distribution}.}
-
-\item{`ind`}{\code{integer}. Indices of the distributions in the \link{VectorDistribution} to plot. If given then \code{n} is ignored.}
-
-\item{`cols`.}{Vector of colours for plotting the curves. If missing \code{1:9} are used.}
 }
 \description{
 Helper function to more easily plot distributions inside a \link{VectorDistribution}.
