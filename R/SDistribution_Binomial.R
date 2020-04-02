@@ -103,29 +103,66 @@ Binomial$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Binomial$set("private", ".pdf", function(x, log){
-  dbinom(x = x,
-         size = self$getParameterValue("size"),
-         prob = self$getParameterValue("prob"),
-         log = log)
+  if(checkmate::testList(self$getParameterValue("size"))){
+    mapply(dbinom,
+           size = self$getParameterValue("size"),
+           prob = self$getParameterValue("prob"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dbinom(x, size = self$getParameterValue("size"), prob = self$getParameterValue("prob"), log = log)
+  }
 })
 Binomial$set("private", ".cdf", function(x, lower.tail, log.p){
-  pbinom(x = x,
-         size = self$getParameterValue("size"),
-         prob = self$getParameterValue("prob"),
-         lower.tail = lower.tail,
-         log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("size"))) {
+    mapply(
+      pbinom,
+      size = self$getParameterValue("size"),
+      prob = self$getParameterValue("prob"),
+      MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pbinom(
+      x,
+      size = self$getParameterValue("size"),
+      prob = self$getParameterValue("prob"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
 Binomial$set("private", ".quantile", function(p, lower.tail, log.p){
-  qbinom(p = p,
-         size = self$getParameterValue("size"),
-         prob = self$getParameterValue("prob"),
-         lower.tail = lower.tail,
-         log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("size"))) {
+    mapply(
+      qbinom,
+      size = self$getParameterValue("size"),
+      prob = self$getParameterValue("prob"),
+      MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qbinom(
+      p,
+      size = self$getParameterValue("size"),
+      prob = self$getParameterValue("prob"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
 Binomial$set("private", ".rand", function(n){
-  rbinom(n = n,
-         size = self$getParameterValue("size"),
-         prob = self$getParameterValue("prob"))
+  if (checkmate::testList(self$getParameterValue("size"))) {
+    mapply(
+      rbinom,
+      size = self$getParameterValue("size"),
+      prob = self$getParameterValue("prob"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    rbinom(
+      n,
+      size = self$getParameterValue("size"),
+      prob = self$getParameterValue("prob")
+    )
+  }
 })
 
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){

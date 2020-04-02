@@ -6,7 +6,7 @@ test_that("constructor",{
   expect_silent(VectorDistribution$new(list(Binomial$new(),Binomial$new(size = 20, prob = 0.6))))
   expect_silent(VectorDistribution$new(list(Binomial$new(),Exponential$new(rate=1))))
   expect_silent(VectorDistribution$new(distribution = "WeightedDiscrete", params = list(
-    data = data.frame(x = 1, prob = 1))
+    data = data.frame(x = 1, pdf = 1))
   ))
   expect_error(VectorDistribution$new(), "Either distlist")
   expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "Gerald is not")
@@ -33,7 +33,7 @@ test_that("rand",{
 })
 
 
-test_that("pdf/cdf - array",{
+test_that("pdf/cdf - !distlist",{
   a = VectorDistribution$new(distribution = "Binomial", params = list(list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
                                                                         list(prob = 0.2, size = 6)))
   expect_equal(a$pdf(1,x2 = 2,x3 = 3), data.table::data.table(Binom1 = Binomial$new(2,0.1)$pdf(1), Binom2 = Binomial$new(4,0.6)$pdf(2), Binom3 = Binomial$new(6,0.2)$pdf(3)))
