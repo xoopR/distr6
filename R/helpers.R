@@ -88,19 +88,15 @@ modal = function(data){
 }
 
 makeUniqueNames <- function(y){
-  if (any(duplicated(sort(y)))) {
+  if (any(duplicated(y))) {
     count = table(y)
-    x = 1
-    for(i in 1:length(y)){
-      if(x == as.numeric(count[names(count) %in% y[[i]]])){
-        y[[i]] <- paste0(y[[i]], x)
-        x = 1
-      } else {
-        y[[i]] <- paste0(y[[i]], x)
-        x = x + 1
+    for(i in seq_along(count)){
+      if(count[i] > 1){
+        y[y == names(count[i])] = paste0(names(count[i]), 1:count[i])
       }
     }
   }
+
   return(y)
 }
 

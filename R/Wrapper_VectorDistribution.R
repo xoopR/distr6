@@ -88,7 +88,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
 .distr6$wrappers <- append(.distr6$wrappers, list(VectorDistribution = VectorDistribution))
 
 VectorDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,
-                                                      shared_params = NULL, name = NULL, short_name = NULL, description = NULL,
+                                                      shared_params = NULL, name = NULL, short_name = NULL,
                                                       decorators = NULL){
 
   if(!is.null(decorators)) {
@@ -122,19 +122,23 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
 
     if ("short_name" %in% names(shared_params)) {
       shortname = shared_params$short_name
+      self$short_name = if(is.null(short_name)) self$short_name = paste0("Vec", length(params), shortname) else short_name
     } else {
       if (distribution == "Distribution") {
-        shortname = unlist(sapply(params[distribution %in% "Distribution"], function(x) x$short_name))
+        shortname = unlist(sapply(params, function(x) x$short_name))
+        self$short_name = if(is.null(short_name)) self$short_name = paste0("Vec", length(params), "CustomDists") else short_name
       } else {
         shortname = get(distribution)$public_fields$short_name
+        self$short_name = if(is.null(short_name)) self$short_name = paste0("Vec", length(params), shortname) else short_name
       }
     }
 
     private$.wrappedModels = data.table::data.table(distribution = distribution,
                                                     params = params,
-                                                    shortname = shortname)
+                                                    shortname = makeUniqueNames(shortname))
     private$.sharedparams = shared_params
 
+    pdist = get(distribution)[["private_methods"]]
     private$.pdf = function(x1, log){}
     body(private$.pdf) = substitute({
       fun = function(x, log){}
@@ -147,7 +151,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
         dpqr = cbind(dpqr, a_dpqr)
       }
       return(dpqr)
-    }, list(FUN = body(get(self$modelTable[[1]][[1]])$new()[[".__enclos_env__"]][["private"]][[".pdf"]])))
+    }, list(FUN = body(pdist[[".pdf"]])))
 
     private$.cdf = function(x, lower.tail, log.p){}
     body(private$.cdf) = substitute({
@@ -161,7 +165,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
         dpqr = cbind(dpqr, a_dpqr)
       }
       return(dpqr)
-    }, list(FUN = body(get(self$modelTable[[1]][[1]])$new()[[".__enclos_env__"]][["private"]][[".cdf"]])))
+    }, list(FUN = body(pdist[[".cdf"]])))
 
     private$.quantile = function(p, lower.tail, log.p){}
     body(private$.quantile) = substitute({
@@ -175,11 +179,20 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
         dpqr = cbind(dpqr, a_dpqr)
       }
       return(dpqr)
-    }, list(FUN = body(get(self$modelTable[[1]][[1]])$new()[[".__enclos_env__"]][["private"]][[".quantile"]])))
+    }, list(FUN = body(pdist[[".quantile"]])))
 
     private$.rand = function(n){}
-    body(private$.rand) = body(self[1]$.__enclos_env__$private$.rand)
+    body(private$.rand) = body(pdist[[".rand"]])
 
+    if(is.null(name)){
+      if(distribution == "Distribution"){
+        self$name = paste0("Vector: ", length(params)," CustomDistributions")
+      } else {
+        self$name = paste0("Vector: ", length(params)," ", distribution,"s")
+      }
+    } else {
+      self$name = name
+    }
   } else {
 
     private$.distlist = TRUE
@@ -253,25 +266,21 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
       colnames(rand) <- unlist(private$.wrappedModels[,3])
       return(rand)
     }
+
+    ndist = nrow(private$.wrappedModels)
+
+    if(length(unique(distribution)) == 1){
+      if(is.null(name)) self$name = paste0("Vector: ", ndist," ", distribution[[1]],"s") #FIXME
+      if(is.null(short_name)) self$short_name = paste0("Vec", ndist, private$.wrappedModels[1, 3][[1]]) #FIXME
+    } else{
+      if(is.null(name)) self$name = paste("Vector:",paste0(distribution, collapse=", ")) #FIXME
+      if(is.null(short_name)) self$short_name = paste0(private$.wrappedModels[,"shortname"][[1]], collapse="Vec") #FIXME
+    }
   }
 
-  ndist = nrow(private$.wrappedModels)
-
-  if(length(unique(distribution)) == 1){
-    if(is.null(name)) name = paste0("Vector: ", ndist," ", distribution[[1]],"s")
-    if(is.null(short_name)) short_name = paste0("Vec", ndist, private$.wrappedModels[1, 3][[1]])
-  } else{
-    if(is.null(name)) name = paste("Vector:",paste0(distribution, collapse=", "))
-    if(is.null(short_name)) short_name = paste0(private$.wrappedModels[,"shortname"][[1]], collapse="Vec")
-  }
-
-  private$.wrappedModels[,3] <- makeUniqueNames(private$.wrappedModels[,3][[1]])
-
-  self$name = name #FIXME
-  self$short_name = short_name #FIXME
-  self$description = description #FIXME
-  private$.properties$support = setpower(Reals$new(), ndist)   # FIXME
-  private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
+  #self$description = description #TODO
+  # private$.properties$support = setpower(Reals$new(), ndist)   # FIXME
+  # private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
 
 })
 VectorDistribution$set("public","wrappedModels", function(model = NULL){
