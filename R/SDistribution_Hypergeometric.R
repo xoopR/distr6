@@ -134,7 +134,7 @@ Hypergeometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FAL
            self$getParameterValue("draws"),
            lower.tail = lower.tail, log.p = log.p)
 })
-Hypergeometric$set("private", ".quantile", function(p, lower.tail, log.p){
+Hypergeometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
     qhyper(p,
            self$getParameterValue("successes"),
            self$getParameterValue("failures"),

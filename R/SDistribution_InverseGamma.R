@@ -113,7 +113,7 @@ InverseGamma$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE
   extraDistr::pinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"),
                         lower.tail = lower.tail, log.p = log.p)
 })
-InverseGamma$set("private", ".quantile", function(p, lower.tail, log.p){
+InverseGamma$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   extraDistr::qinvgamma(p, self$getParameterValue("shape"), self$getParameterValue("scale"),
                         lower.tail = lower.tail, log.p = log.p)
 })

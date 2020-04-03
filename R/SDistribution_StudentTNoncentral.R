@@ -79,7 +79,7 @@ StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p =
   pt(x, self$getParameterValue("df"), self$getParameterValue("location"),
      lower.tail = lower.tail, log.p = log.p)
 })
-StudentTNoncentral$set("private", ".quantile", function(p, lower.tail, log.p){
+StudentTNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qt(p, self$getParameterValue("df"), self$getParameterValue("location"),
      lower.tail = lower.tail, log.p = log.p)
 })

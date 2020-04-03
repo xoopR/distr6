@@ -116,7 +116,7 @@ Logarithmic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE)
   extraDistr::plgser(x, self$getParameterValue("theta"),
                      lower.tail = lower.tail, log.p = log.p)
 })
-Logarithmic$set("private", ".quantile", function(p, lower.tail, log.p){
+Logarithmic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   extraDistr::qlgser(p, self$getParameterValue("theta"),
                      lower.tail = lower.tail, log.p = log.p)
 })

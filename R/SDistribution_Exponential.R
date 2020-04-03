@@ -96,7 +96,7 @@ Exponential$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE)
   pexp(x, self$getParameterValue("rate"),
        lower.tail = lower.tail, log.p = log.p)
 })
-Exponential$set("private", ".quantile", function(p, lower.tail, log.p){
+Exponential$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qexp(p, self$getParameterValue("rate"),
        lower.tail = lower.tail, log.p = log.p)
 })

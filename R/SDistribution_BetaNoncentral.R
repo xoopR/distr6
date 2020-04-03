@@ -59,7 +59,7 @@ BetaNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FAL
   pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"),
         lower.tail = lower.tail, log.p = log.p)
 })
-BetaNoncentral$set("private", ".quantile", function(p, lower.tail, log.p){
+BetaNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"),
         lower.tail = lower.tail, log.p = log.p)
 })

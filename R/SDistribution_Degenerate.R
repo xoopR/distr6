@@ -97,7 +97,7 @@ Degenerate$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
 
   return(cdf)
 })
-Degenerate$set("private", ".quantile", function(p, lower.tail, log.p){
+Degenerate$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   if(log.p) p = exp(p)
   if(lower.tail) p = 1 - p
   if(p > 0) return(self$getParameterValue("mean")) else return(-Inf)

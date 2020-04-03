@@ -137,7 +137,7 @@ Geometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
                lower.tail = lower.tail, log.p = log.p))
     }
 })
-Geometric$set("private", ".quantile", function(p, lower.tail, log.p){
+Geometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
     if (private$.trials) {
         return(qgeom(p, self$getParameterValue("prob"),
                      lower.tail = lower.tail, log.p = log.p) + 1)

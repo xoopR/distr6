@@ -120,7 +120,7 @@ Binomial$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
            lower.tail = lower.tail, log.p = log.p)
   }
 })
-Binomial$set("private", ".quantile", function(p, lower.tail, log.p){
+Binomial$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("size"))) {
     mapply(qbinom, size = self$getParameterValue("size"), prob = self$getParameterValue("prob"),
       MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)

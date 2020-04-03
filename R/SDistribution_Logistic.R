@@ -98,7 +98,7 @@ Logistic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   plogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"),
          lower.tail = lower.tail, log.p = log.p)
 })
-Logistic$set("private", ".quantile", function(p, lower.tail, log.p){
+Logistic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qlogis(p, self$getParameterValue("mean"), self$getParameterValue("scale"),
          lower.tail = lower.tail, log.p = log.p)
 })

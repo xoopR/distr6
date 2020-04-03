@@ -120,7 +120,7 @@ Weibull$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"),
            lower.tail = lower.tail, log.p = log.p)
 })
-Weibull$set("private", ".quantile", function(p, lower.tail, log.p){
+Weibull$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"),
            lower.tail = lower.tail, log.p = log.p)
 })

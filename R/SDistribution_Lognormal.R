@@ -134,7 +134,7 @@ Lognormal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   plnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"),
          lower.tail = lower.tail, log.p = log.p)
 })
-Lognormal$set("private", ".quantile", function(p, lower.tail, log.p){
+Lognormal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qlnorm(p, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"),
          lower.tail = lower.tail, log.p = log.p)
 })

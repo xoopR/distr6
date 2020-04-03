@@ -84,7 +84,7 @@ Cauchy$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"),
           lower.tail = lower.tail, log.p = log.p)
 })
-Cauchy$set("private",".quantile", function(p, lower.tail, log.p){
+Cauchy$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"),
           lower.tail = lower.tail, log.p = log.p)
 })

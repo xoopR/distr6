@@ -102,7 +102,7 @@ Normal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"),
         lower.tail = lower.tail, log.p = log.p)
 })
-Normal$set("private", ".quantile", function(p, lower.tail, log.p){
+Normal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"),
         lower.tail = lower.tail, log.p = log.p)
 })

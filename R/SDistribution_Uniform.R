@@ -115,7 +115,7 @@ Uniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   punif(x, self$getParameterValue("lower"), self$getParameterValue("upper"),
         lower.tail = lower.tail, log.p = log.p)
 })
-Uniform$set("private", ".quantile", function(p, lower.tail, log.p){
+Uniform$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qunif(p, self$getParameterValue("lower"), self$getParameterValue("upper"),
         lower.tail = lower.tail, log.p = log.p)
 })

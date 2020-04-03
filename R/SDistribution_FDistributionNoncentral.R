@@ -93,7 +93,7 @@ FDistributionNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, lo
   pf(x, df1, df2, location,
      lower.tail = lower.tail, log.p = log.p)
 })
-FDistributionNoncentral$set("private", ".quantile", function(p, lower.tail, log.p){
+FDistributionNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qf(p, df1, df2, location,
      lower.tail = lower.tail, log.p = log.p)
 })

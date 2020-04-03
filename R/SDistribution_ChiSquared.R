@@ -107,7 +107,7 @@ ChiSquared$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pchisq(x, self$getParameterValue("df"),
          lower.tail = lower.tail, log.p = log.p)
 })
-ChiSquared$set("private",".quantile", function(p, lower.tail, log.p){
+ChiSquared$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qchisq(p, self$getParameterValue("df"),
          lower.tail = lower.tail, log.p = log.p)
 })

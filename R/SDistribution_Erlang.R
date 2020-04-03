@@ -103,7 +103,7 @@ Erlang$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'),
          lower.tail = lower.tail, log.p = log.p)
 })
-Erlang$set("private", ".quantile", function(p, lower.tail, log.p){
+Erlang$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'),
          lower.tail = lower.tail, log.p = log.p)
 })

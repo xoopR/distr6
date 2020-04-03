@@ -108,7 +108,7 @@ Bernoulli$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pbinom(x, 1, self$getParameterValue("prob"),
          lower.tail = lower.tail, log.p = log.p)
 })
-Bernoulli$set("private", ".quantile", function(p, lower.tail, log.p){
+Bernoulli$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qbinom(p, 1, self$getParameterValue("prob"),
          lower.tail = lower.tail, log.p = log.p)
 })

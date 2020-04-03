@@ -110,7 +110,7 @@ StudentT$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pt(x, self$getParameterValue("df"),
      lower.tail = lower.tail, log.p = log.p)
 })
-StudentT$set("private", ".quantile", function(p, lower.tail, log.p){
+StudentT$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qt(p, self$getParameterValue("df"),
      lower.tail = lower.tail, log.p = log.p)
 })

@@ -108,7 +108,7 @@ Beta$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"),
         lower.tail = lower.tail, log.p = log.p)
 })
-Beta$set("private", ".quantile", function(p, lower.tail, log.p){
+Beta$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"),
         lower.tail = lower.tail, log.p = log.p)
 })

@@ -88,7 +88,7 @@ Poisson$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   ppois(x, self$getParameterValue("rate"),
         lower.tail = lower.tail, log.p = log.p)
 })
-Poisson$set("private", ".quantile", function(p, lower.tail, log.p){
+Poisson$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qpois(p, self$getParameterValue("rate"),
         lower.tail = lower.tail, log.p = log.p)
 })

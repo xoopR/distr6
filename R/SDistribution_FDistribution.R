@@ -115,7 +115,7 @@ FDistribution$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALS
   pf(x, df1, df2,
      lower.tail = lower.tail, log.p = log.p)
 })
-FDistribution$set("private", ".quantile", function(p, lower.tail, log.p){
+FDistribution$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   qf(p, df1, df2,
      lower.tail = lower.tail, log.p = log.p)
 })
