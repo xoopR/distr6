@@ -4,16 +4,16 @@
 \alias{plot.VectorDistribution}
 \title{Plotting Distribution Functions for a VectorDistribution}
 \usage{
-\method{plot}{VectorDistribution}(x, fun = "pdf", n, ind, cols, ...)
+\method{plot}{VectorDistribution}(x, fun = "pdf", topn, ind, cols, ...)
 }
 \arguments{
 \item{x}{\link{VectorDistribution}.}
 
 \item{fun}{function to plot, one of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard".}
 
-\item{n}{\code{integer}. First n distributions in the \link{VectorDistribution} to plot.}
+\item{topn}{\code{integer}. First n distributions in the \link{VectorDistribution} to plot.}
 
-\item{ind}{\code{integer}. Indices of the distributions in the \link{VectorDistribution} to plot. If given then \code{n} is ignored.}
+\item{ind}{\code{integer}. Indices of the distributions in the \link{VectorDistribution} to plot. If given then \code{topn} is ignored.}
 
 \item{cols}{\code{character}. Vector of colours for plotting the curves. If missing \code{1:9} are used.}
 
@@ -23,7 +23,7 @@
 Helper function to more easily plot distributions inside a \link{VectorDistribution}.
 }
 \details{
-If \code{n} and \code{ind} are both missing then all distributions are plotted if there are 10 or less in the vector.
+If \code{topn} and \code{ind} are both missing then all distributions are plotted if there are 10 or less in the vector.
 Otherwise the function will error.
 }
 \examples{
