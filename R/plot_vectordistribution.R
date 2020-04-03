@@ -41,10 +41,10 @@ plot.VectorDistribution <- function(x, fun = "pdf", n, ind, cols, ...){
     plot(dist, fun = fun, col = col, ...)
   } else {
     col = if(missing(cols)) 1 else cols[1]
-    plot(dist[1], fun = fun, col = col, ...)
-    for(i in 2:nrow(x$modelTable)){
+    plot(dist[1], fun = fun, col = col,...)
+    for(i in 2:nrow(dist$modelTable)){
       col = if(missing(cols)) i else cols[i]
-      lines(x[i], fun, col = col,...)
+      lines(dist[i], fun, col = col,...)
     }
   }
 
