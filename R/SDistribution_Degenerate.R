@@ -90,7 +90,7 @@ Degenerate$set("private", ".pdf", function(x, log = FALSE){
     if(log) return(-Inf) else return(0)
   }
 })
-Degenerate$set("private", ".cdf", function(x, lower.tail, log.p){
+Degenerate$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   cdf = if(x >= self$getParameterValue("mean")) 1 else 0
   if(lower.tail) cdf = 1 - cdf
   if(log.p) cdf = log(cdf)

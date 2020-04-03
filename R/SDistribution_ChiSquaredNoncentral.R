@@ -105,7 +105,7 @@ ChiSquaredNoncentral$set("private",".getRefParams", function(paramlst){
 ChiSquaredNoncentral$set("private", ".pdf", function(x, log = FALSE){
   dchisq(x, self$getParameterValue("df"), self$getParameterValue("location"), log = log)
 })
-ChiSquaredNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){
+ChiSquaredNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pchisq(x, self$getParameterValue("df"), self$getParameterValue("location"),
          lower.tail = lower.tail, log.p = log.p)
 })

@@ -89,7 +89,7 @@ FDistributionNoncentral$set("private", ".getRefParams", function(paramlst){
 FDistributionNoncentral$set("private", ".pdf", function(x, log = FALSE){
   df(x, df1, df2, location, log = log)
 })
-FDistributionNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){
+FDistributionNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pf(x, df1, df2, location,
      lower.tail = lower.tail, log.p = log.p)
 })

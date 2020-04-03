@@ -128,7 +128,7 @@ Geometric$set("private", ".pdf", function(x, log = FALSE) {
         return(dgeom(x, self$getParameterValue("prob"), log = log))
     }
 })
-Geometric$set("private", ".cdf", function(x, lower.tail, log.p){
+Geometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
     if (private$.trials) {
         return(pgeom(x + 1, self$getParameterValue("prob"),
                lower.tail = lower.tail, log.p = log.p))

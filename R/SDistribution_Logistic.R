@@ -94,7 +94,7 @@ Logistic$set("private",".getRefParams", function(paramlst){
 Logistic$set("private", ".pdf", function(x, log = FALSE){
   dlogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"), log = log)
 })
-Logistic$set("private", ".cdf", function(x, lower.tail, log.p){
+Logistic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   plogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"),
          lower.tail = lower.tail, log.p = log.p)
 })

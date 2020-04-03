@@ -80,7 +80,7 @@ Cauchy$set("public","mode",function(which = NULL){
 Cauchy$set("private",".pdf", function(x, log = FALSE){
   dcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"), log = log)
 })
-Cauchy$set("private",".cdf", function(x, lower.tail, log.p){
+Cauchy$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"),
           lower.tail = lower.tail, log.p = log.p)
 })

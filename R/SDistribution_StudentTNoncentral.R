@@ -75,7 +75,7 @@ StudentTNoncentral$set("private",".getRefParams", function(paramlst){
 StudentTNoncentral$set("private", ".pdf", function(x, log = FALSE){
   dt(x, self$getParameterValue("df"), self$getParameterValue("location"), log = log)
 })
-StudentTNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){
+StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pt(x, self$getParameterValue("df"), self$getParameterValue("location"),
      lower.tail = lower.tail, log.p = log.p)
 })

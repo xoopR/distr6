@@ -104,7 +104,7 @@ Beta$set("private", ".getRefParams", function(paramlst){
 Beta$set("private", ".pdf", function(x, log = FALSE){
   dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), log = log)
 })
-Beta$set("private", ".cdf", function(x, lower.tail, log.p){
+Beta$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"),
         lower.tail = lower.tail, log.p = log.p)
 })

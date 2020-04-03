@@ -127,7 +127,7 @@ Hypergeometric$set("private", ".pdf", function(x, log = FALSE){
            self$getParameterValue("failures"),
            self$getParameterValue("draws"), log = log)
 })
-Hypergeometric$set("private", ".cdf", function(x, lower.tail, log.p){
+Hypergeometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
     phyper(x,
            self$getParameterValue("successes"),
            self$getParameterValue("failures"),

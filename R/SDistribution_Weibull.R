@@ -116,7 +116,7 @@ Weibull$set("private",".getRefParams", function(paramlst){
 Weibull$set("private", ".pdf", function(x, log = FALSE){
   dweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"), log = log)
 })
-Weibull$set("private", ".cdf", function(x, lower.tail, log.p){
+Weibull$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"),
            lower.tail = lower.tail, log.p = log.p)
 })

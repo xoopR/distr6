@@ -99,7 +99,7 @@ Erlang$set("private",".getRefParams", function(paramlst){
 Erlang$set("private", ".pdf", function(x, log = FALSE){
   dgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'), log = log)
 })
-Erlang$set("private", ".cdf", function(x, lower.tail, log.p){
+Erlang$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'),
          lower.tail = lower.tail, log.p = log.p)
 })

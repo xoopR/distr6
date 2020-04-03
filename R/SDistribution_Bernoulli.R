@@ -104,7 +104,7 @@ Bernoulli$set("private",".getRefParams", function(paramlst){
 Bernoulli$set("private", ".pdf", function(x, log = FALSE){
   dbinom(x, 1, self$getParameterValue("prob"), log = log)
 })
-Bernoulli$set("private", ".cdf", function(x, lower.tail, log.p){
+Bernoulli$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   pbinom(x, 1, self$getParameterValue("prob"),
          lower.tail = lower.tail, log.p = log.p)
 })

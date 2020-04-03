@@ -111,7 +111,7 @@ Uniform$set("private",".getRefParams", function(paramlst){
 Uniform$set("private", ".pdf", function(x, log = FALSE){
   dunif(x, self$getParameterValue("lower"), self$getParameterValue("upper"), log = log)
 })
-Uniform$set("private", ".cdf", function(x, lower.tail, log.p){
+Uniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   punif(x, self$getParameterValue("lower"), self$getParameterValue("upper"),
         lower.tail = lower.tail, log.p = log.p)
 })
