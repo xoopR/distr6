@@ -534,28 +534,32 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 NULL
 Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 
-  if(is.null(private$.pdf))
+  if (is.null(private$.pdf))
     return(NULL)
 
-  if(testUnivariate(self)){
-    pdf = numeric(length(x1))
-    if(any(self$liesInSupport(x1, all = F)))
-      pdf[self$liesInSupport(x1, all = F)] = private$.pdf(x1[self$liesInSupport(x1, all = F)])
+  if(log){
+    if(private$.log){
+      pdqr = private$.pdf(x, log = log)
+    } else {
+      if(!("CoreStatistics" %in% self$decorators)){
+        stop("No analytical method for log available. Use CoreStatistics decorator to numerically estimate this.")
+      } else {
+        pdqr = log(private$.pdf(x))
+      }
+    }
   } else {
-    pdf = private$.pdf(x1, ...)
+    pdqr = private$.pdf(x)
   }
 
-  if(log) pdf <- log(pdf)
-
-  if(inherits(pdf,"data.table"))
-    return(pdf)
-  else{
-    if(simplify)
-      return(pdf)
-    else{
-      pdf = data.table::data.table(pdf)
-      colnames(pdf) = self$short_name
-      return(pdf)
+  if (inherits(pdqr,"data.table")) {
+    return(pdqr)
+  } else{
+    if (simplify) {
+      return(pdqr)
+    } else {
+      pdqr = data.table::data.table(pdqr)
+      colnames(pdqr) = self$short_name
+      return(pdqr)
     }
   }
 })
@@ -600,40 +604,34 @@ Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 NULL
 Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
 
-  if(is.null(private$.cdf))
+  if (is.null(private$.cdf))
     return(NULL)
 
-  if(testUnivariate(self)){
-    if(self$type$class == "integer")
-       x1 <- floor(x1)
-    cdf = numeric(length(x1))
-    cdf[x1 >= self$sup] = 1
-
-    if(getR6Class(self) %in% c("Empirical","WeightedDiscrete")){
-      if(any(x1 >= self$inf & x1 <= self$sup))
-        cdf[x1 >= self$inf & x1 <= self$sup] = private$.cdf(x1[x1 >= self$inf & x1 <= self$sup])
+  if(log.p | !lower.tail){
+    if(private$.log){
+      pdqr = private$.cdf(x, log.p = log.p, lower.tail = lower.tail)
     } else {
-      if(any(self$liesInSupport(x1, all = F)))
-        cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
+      if(!("CoreStatistics" %in% self$decorators)){
+        stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
+      } else {
+        pdqr = private$.cdf(x)
+        if(!lower.tail) pdqr = 1 - cdf
+        if(log.p) pdqr = log(cdf)
+      }
     }
   } else {
-      cdf = private$.cdf(x1, ...)
+    pdqr = private$.cdf(x)
   }
 
-  if(log.p & lower.tail) cdf = log(cdf)
-  else if(log.p & !lower.tail) cdf = log(1 - cdf)
-  else if(!log.p & lower.tail) cdf = cdf
-  else cdf = 1 - cdf
-
-  if(inherits(cdf,"data.table"))
-    return(cdf)
-  else{
-    if(simplify)
-      return(cdf)
-    else{
-      cdf = data.table::data.table(cdf)
-      colnames(cdf) = self$short_name
-      return(cdf)
+  if (inherits(pdqr,"data.table")) {
+    return(pdqr)
+  } else{
+    if (simplify) {
+      return(pdqr)
+    } else {
+      pdqr = data.table::data.table(pdqr)
+      colnames(pdqr) = self$short_name
+      return(pdqr)
     }
   }
 
@@ -678,32 +676,35 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE) {}
 Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
 
-  if(is.null(private$.quantile))
+  if (is.null(private$.quantile))
     return(NULL)
 
-  if(testUnivariate(self)){
-    if(log.p)
-      p = exp(p)
+  if(log.p | !lower.tail){
+    if(private$.log){
+      pdqr = private$.quantile(p, log.p = log.p, lower.tail = lower.tail)
+    } else {
+      if(!("CoreStatistics" %in% self$decorators)){
+        stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
+      } else {
+        if(log.p) p = exp(p)
+        if(!lower.tail) p = 1 - p
+        pdqr = private$.quantile(p)
+      }
+    }
+  } else {
+    pdqr = private$.quantile(p)
+  }
 
-    if(!lower.tail)
-      p = 1 - p
-
-    quantile = p
-    quantile[p > 1] = NaN
-    quantile[p < 0] = NaN
-    quantile[p == 0] = self$inf
-    quantile[p == 1] = self$sup
-    if(sum(p > 0 & p < 1)!=0)
-      quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
+  if (inherits(pdqr,"data.table")) {
+    return(pdqr)
   } else{
-    p = c(list(p), list(...))
-    if(log.p)
-      p = lapply(p, exp)
-
-    if(!lower.tail)
-      p = lapply(p, function(x) 1 - x)
-
-    quantile = do.call(private[[".quantile"]], args = p)
+    if (simplify) {
+      return(pdqr)
+    } else {
+      pdqr = data.table::data.table(pdqr)
+      colnames(pdqr) = self$short_name
+      return(pdqr)
+    }
   }
 
   if(inherits(quantile,"data.table")){
@@ -756,23 +757,19 @@ Distribution$set("public","rand",function(n, simplify = TRUE){
   if(length(n) > 1)
     n = length(n)
 
-  rand = private$.rand(n)
-  if (inherits(rand,"data.table")) {
-    return(rand)
-  } else {
-    if(simplify) {
-      return(rand)
+  pdqr = private$.rand(n)
+
+  if (inherits(pdqr,"data.table")) {
+    return(pdqr)
+  } else{
+    if (simplify) {
+      return(pdqr)
     } else {
-      if(is.null(rand)){
-        return(data.table::data.table())
-      } else {
-        rand = data.table::data.table(rand)
-        colnames(rand) = self$short_name
-        return(rand)
-      }
+      pdqr = data.table::data.table(pdqr)
+      colnames(pdqr) = self$short_name
+      return(pdqr)
     }
   }
-
 })
 
 #-------------------------------------------------------------
