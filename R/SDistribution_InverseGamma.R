@@ -106,18 +106,21 @@ InverseGamma$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
-InverseGamma$set("private", ".pdf", function(x){
-  extraDistr::dinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+InverseGamma$set("private", ".pdf", function(x, log){
+  extraDistr::dinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"), log = log)
 })
-InverseGamma$set("private", ".cdf", function(x){
-  extraDistr::pinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+InverseGamma$set("private", ".cdf", function(x, lower.tail, log.p){
+  extraDistr::pinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"),
+                        lower.tail = lower.tail, log.p = log.p)
 })
-InverseGamma$set("private", ".quantile", function(p){
-  extraDistr::qinvgamma(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
+InverseGamma$set("private", ".quantile", function(p, lower.tail, log.p){
+  extraDistr::qinvgamma(p, self$getParameterValue("shape"), self$getParameterValue("scale"),
+                        lower.tail = lower.tail, log.p = log.p)
 })
 InverseGamma$set("private", ".rand", function(n){
   extraDistr::rinvgamma(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
 })
+InverseGamma$set("private", ".log", TRUE)
 
 InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators = NULL,
                                          verbose = FALSE){

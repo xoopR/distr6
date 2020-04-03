@@ -89,18 +89,21 @@ Exponential$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
   return(lst)
 })
-Exponential$set("private", ".pdf", function(x){
-  dexp(x, self$getParameterValue("rate"))
+Exponential$set("private", ".pdf", function(x, log){
+  dexp(x, self$getParameterValue("rate"), log = log)
 })
-Exponential$set("private", ".cdf", function(x){
-  pexp(x, self$getParameterValue("rate"))
+Exponential$set("private", ".cdf", function(x, lower.tail, log.p){
+  pexp(x, self$getParameterValue("rate"),
+       lower.tail = lower.tail, log.p = log.p)
 })
-Exponential$set("private", ".quantile", function(p){
-  qexp(p, self$getParameterValue("rate"))
+Exponential$set("private", ".quantile", function(p, lower.tail, log.p){
+  qexp(p, self$getParameterValue("rate"),
+       lower.tail = lower.tail, log.p = log.p)
 })
 Exponential$set("private", ".rand", function(n){
   rexp(n, self$getParameterValue("rate"))
 })
+Exponential$set("private", ".log", TRUE)
 
 Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE){
 

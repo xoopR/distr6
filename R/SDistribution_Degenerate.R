@@ -83,18 +83,29 @@ Degenerate$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
   return(lst)
 })
-Degenerate$set("private", ".pdf", function(x){
-  if(x == self$getParameterValue("mean")) return(1) else return(0)
+Degenerate$set("private", ".pdf", function(x, log){
+  if(x == self$getParameterValue("mean")){
+    if(log) return(0) else return(1)
+  } else {
+    if(log) return(-Inf) else return(0)
+  }
 })
-Degenerate$set("private", ".cdf", function(x){
-  if(x >= self$getParameterValue("mean")) return(1) else return(0)
+Degenerate$set("private", ".cdf", function(x, lower.tail, log.p){
+  cdf = if(x >= self$getParameterValue("mean")) 1 else 0
+  if(lower.tail) cdf = 1 - cdf
+  if(log.p) cdf = log(cdf)
+
+  return(cdf)
 })
-Degenerate$set("private", ".quantile", function(p){
+Degenerate$set("private", ".quantile", function(p, lower.tail, log.p){
+  if(log.p) p = exp(p)
+  if(lower.tail) p = 1 - p
   if(p > 0) return(self$getParameterValue("mean")) else return(-Inf)
 })
 Degenerate$set("private", ".rand", function(n){
   rep(self$getParameterValue("mean"), n)
 })
+Degenerate$set("private", ".log", TRUE)
 
 Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
 

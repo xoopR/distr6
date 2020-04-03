@@ -52,18 +52,21 @@ BetaNoncentral$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
-BetaNoncentral$set("private", ".pdf", function(x){
-  dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+BetaNoncentral$set("private", ".pdf", function(x, log){
+  dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"), log = log)
 })
-BetaNoncentral$set("private", ".cdf", function(x){
-  pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+BetaNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){
+  pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"),
+        lower.tail = lower.tail, log.p = log.p)
 })
-BetaNoncentral$set("private", ".quantile", function(p){
-  qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
+BetaNoncentral$set("private", ".quantile", function(p, lower.tail, log.p){
+  qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"),
+        lower.tail = lower.tail, log.p = log.p)
 })
 BetaNoncentral$set("private", ".rand", function(n){
   rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"))
 })
+BetaNoncentral$set("private", ".log", TRUE)
 
 BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
                                           verbose = FALSE){

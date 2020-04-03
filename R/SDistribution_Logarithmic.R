@@ -109,18 +109,21 @@ Logarithmic$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$theta)) lst = c(lst,list(theta = paramlst$theta))
   return(lst)
 })
-Logarithmic$set("private", ".pdf", function(x){
-  extraDistr::dlgser(x, self$getParameterValue("theta"))
+Logarithmic$set("private", ".pdf", function(x, log){
+  extraDistr::dlgser(x, self$getParameterValue("theta"), log = log)
 })
-Logarithmic$set("private", ".cdf", function(x){
-  extraDistr::plgser(x, self$getParameterValue("theta"))
+Logarithmic$set("private", ".cdf", function(x, lower.tail, log.p){
+  extraDistr::plgser(x, self$getParameterValue("theta"),
+                     lower.tail = lower.tail, log.p = log.p)
 })
-Logarithmic$set("private", ".quantile", function(p){
-  extraDistr::qlgser(p, self$getParameterValue("theta"))
+Logarithmic$set("private", ".quantile", function(p, lower.tail, log.p){
+  extraDistr::qlgser(p, self$getParameterValue("theta"),
+                     lower.tail = lower.tail, log.p = log.p)
 })
 Logarithmic$set("private", ".rand", function(n){
   extraDistr::rlgser(n, self$getParameterValue("theta"))
 })
+Logarithmic$set("private", ".log", TRUE)
 
 Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL, verbose = FALSE){
 

@@ -91,18 +91,21 @@ Logistic$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$sd)) lst = c(lst, list(scale = paramlst$sd*sqrt(3)/pi))
   return(lst)
 })
-Logistic$set("private", ".pdf", function(x){
-  dlogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"))
+Logistic$set("private", ".pdf", function(x, log){
+  dlogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"), log = log)
 })
-Logistic$set("private", ".cdf", function(x){
-  plogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"))
+Logistic$set("private", ".cdf", function(x, lower.tail, log.p){
+  plogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"),
+         lower.tail = lower.tail, log.p = log.p)
 })
-Logistic$set("private", ".quantile", function(p){
-  qlogis(p, self$getParameterValue("mean"), self$getParameterValue("scale"))
+Logistic$set("private", ".quantile", function(p, lower.tail, log.p){
+  qlogis(p, self$getParameterValue("mean"), self$getParameterValue("scale"),
+         lower.tail = lower.tail, log.p = log.p)
 })
 Logistic$set("private", ".rand", function(n){
   rlogis(n, self$getParameterValue("mean"), self$getParameterValue("scale"))
 })
+Logistic$set("private", ".log", TRUE)
 
 Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
                                           decorators = NULL, verbose = FALSE){

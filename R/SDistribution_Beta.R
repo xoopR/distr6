@@ -101,18 +101,21 @@ Beta$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$shape2)) lst = c(lst,list(shape2 = paramlst$shape2))
   return(lst)
 })
-Beta$set("private", ".pdf", function(x){
-  dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
+Beta$set("private", ".pdf", function(x, log){
+  dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), log = log)
 })
-Beta$set("private", ".cdf", function(x){
-  pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
+Beta$set("private", ".cdf", function(x, lower.tail, log.p){
+  pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"),
+        lower.tail = lower.tail, log.p = log.p)
 })
-Beta$set("private", ".quantile", function(p){
-  qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
+Beta$set("private", ".quantile", function(p, lower.tail, log.p){
+  qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"),
+        lower.tail = lower.tail, log.p = log.p)
 })
 Beta$set("private", ".rand", function(n){
   rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
 })
+Beta$set("private", ".log", TRUE)
 
 Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,verbose = FALSE){
 

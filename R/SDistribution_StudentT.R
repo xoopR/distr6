@@ -103,18 +103,21 @@ StudentT$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
   return(lst)
 })
-StudentT$set("private", ".pdf", function(x){
-  dt(x, self$getParameterValue("df"))
+StudentT$set("private", ".pdf", function(x, log){
+  dt(x, self$getParameterValue("df"), log = log)
 })
-StudentT$set("private", ".cdf", function(x){
-  pt(x, self$getParameterValue("df"))
+StudentT$set("private", ".cdf", function(x, lower.tail, log.p){
+  pt(x, self$getParameterValue("df"),
+     lower.tail = lower.tail, log.p = log.p)
 })
-StudentT$set("private", ".quantile", function(p){
-  qt(p, self$getParameterValue("df"))
+StudentT$set("private", ".quantile", function(p, lower.tail, log.p){
+  qt(p, self$getParameterValue("df"),
+     lower.tail = lower.tail, log.p = log.p)
 })
 StudentT$set("private", ".rand", function(n){
   rt(n, self$getParameterValue("df"))
 })
+StudentT$set("private", ".log", TRUE)
 
 StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 

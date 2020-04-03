@@ -38,7 +38,9 @@ autotest_sdistribution = function(sdist, pars, traits, support, symmetry, mean, 
   if(!is.null(sdist$public_methods$pgf)) expect_equal(names(formals(sdist$public_methods$pgf)), "z")
 
   context("private methods")
-  checkmate::expect_subset(names(sdist$private_methods), c(".pdf", ".cdf", ".quantile", ".rand", ".getRefParams"))
+  checkmate::expect_subset(names(sdist$private_methods), c(".pdf", ".cdf", ".quantile", ".rand", ".getRefParams",
+                                                           ".log"))
+  checkmate::expect_flag(sdist$private_methods$.log)
 
   checkmate::expect_subset(names(formals(sdist$private_methods$.pdf)), c("x","log"))
   if(!is.null(sdist$private_methods$.cdf))  checkmate::expect_subset(names(formals(sdist$private_methods$.cdf)), c("x","lower.tail", "log.p"))

@@ -108,18 +108,21 @@ Uniform$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
   return(lst)
 })
-Uniform$set("private", ".pdf", function(x){
-  dunif(x, self$getParameterValue("lower"), self$getParameterValue("upper"))
+Uniform$set("private", ".pdf", function(x, log){
+  dunif(x, self$getParameterValue("lower"), self$getParameterValue("upper"), log = log)
 })
-Uniform$set("private", ".cdf", function(x){
-  punif(x, self$getParameterValue("lower"), self$getParameterValue("upper"))
+Uniform$set("private", ".cdf", function(x, lower.tail, log.p){
+  punif(x, self$getParameterValue("lower"), self$getParameterValue("upper"),
+        lower.tail = lower.tail, log.p = log.p)
 })
-Uniform$set("private", ".quantile", function(p){
-  qunif(p, self$getParameterValue("lower"), self$getParameterValue("upper"))
+Uniform$set("private", ".quantile", function(p, lower.tail, log.p){
+  qunif(p, self$getParameterValue("lower"), self$getParameterValue("upper"),
+        lower.tail = lower.tail, log.p = log.p)
 })
 Uniform$set("private", ".rand", function(n){
   runif(n, self$getParameterValue("lower"), self$getParameterValue("upper"))
 })
+Uniform$set("private", ".log", TRUE)
 
 Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 

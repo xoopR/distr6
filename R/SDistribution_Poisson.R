@@ -81,18 +81,21 @@ Poisson$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
   return(lst)
 })
-Poisson$set("private", ".pdf", function(x){
-  dpois(x, self$getParameterValue("rate"))
+Poisson$set("private", ".pdf", function(x, log){
+  dpois(x, self$getParameterValue("rate"), log = log)
 })
-Poisson$set("private", ".cdf", function(x){
-  ppois(x, self$getParameterValue("rate"))
+Poisson$set("private", ".cdf", function(x, lower.tail, log.p){
+  ppois(x, self$getParameterValue("rate"),
+        lower.tail = lower.tail, log.p = log.p)
 })
-Poisson$set("private", ".quantile", function(p){
-  qpois(p, self$getParameterValue("rate"))
+Poisson$set("private", ".quantile", function(p, lower.tail, log.p){
+  qpois(p, self$getParameterValue("rate"),
+        lower.tail = lower.tail, log.p = log.p)
 })
 Poisson$set("private", ".rand", function(n){
   rpois(n, self$getParameterValue("rate"))
 })
+Poisson$set("private", ".log", TRUE)
 
 Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose = FALSE, ...){
 

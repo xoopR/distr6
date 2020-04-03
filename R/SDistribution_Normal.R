@@ -95,18 +95,21 @@ Normal$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
   return(lst)
 })
-Normal$set("private", ".pdf", function(x){
-  dnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"))
+Normal$set("private", ".pdf", function(x, log){
+  dnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"), log = log)
 })
-Normal$set("private", ".cdf", function(x){
-  pnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"))
+Normal$set("private", ".cdf", function(x, lower.tail, log.p){
+  pnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"),
+        lower.tail = lower.tail, log.p = log.p)
 })
-Normal$set("private", ".quantile", function(p){
-  qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"))
+Normal$set("private", ".quantile", function(p, lower.tail, log.p){
+  qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"),
+        lower.tail = lower.tail, log.p = log.p)
 })
 Normal$set("private", ".rand", function(n){
   rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
 })
+Normal$set("private", ".log", TRUE)
 
 
 Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = NULL,

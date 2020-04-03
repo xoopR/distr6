@@ -72,18 +72,21 @@ StudentTNoncentral$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
-StudentTNoncentral$set("private", ".pdf", function(x){
-  dt(x, self$getParameterValue("df"), self$getParameterValue("location"))
+StudentTNoncentral$set("private", ".pdf", function(x, log){
+  dt(x, self$getParameterValue("df"), self$getParameterValue("location"), log = log)
 })
-StudentTNoncentral$set("private", ".cdf", function(x){
-  pt(x, self$getParameterValue("df"), self$getParameterValue("location"))
+StudentTNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){
+  pt(x, self$getParameterValue("df"), self$getParameterValue("location"),
+     lower.tail = lower.tail, log.p = log.p)
 })
-StudentTNoncentral$set("private", ".quantile", function(p){
-  qt(p, self$getParameterValue("df"), self$getParameterValue("location"))
+StudentTNoncentral$set("private", ".quantile", function(p, lower.tail, log.p){
+  qt(p, self$getParameterValue("df"), self$getParameterValue("location"),
+     lower.tail = lower.tail, log.p = log.p)
 })
 StudentTNoncentral$set("private", ".rand", function(n){
   rt(n, self$getParameterValue("df"), self$getParameterValue("location"))
 })
+StudentTNoncentral$set("private", ".log", TRUE)
 
 StudentTNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
 

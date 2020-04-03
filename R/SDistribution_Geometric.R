@@ -121,25 +121,29 @@ Geometric$set("private",".getRefParams", function(paramlst){
     return(lst)
 })
 Geometric$set("private",".trials", logical(0))
-Geometric$set("private", ".pdf", function(x) {
+Geometric$set("private", ".pdf", function(x, log) {
     if (private$.trials) {
-        return(dgeom(x + 1, self$getParameterValue("prob")))
+        return(dgeom(x + 1, self$getParameterValue("prob"), log = log))
     } else {
-        return(dgeom(x, self$getParameterValue("prob")))
+        return(dgeom(x, self$getParameterValue("prob"), log = log))
     }
 })
-Geometric$set("private", ".cdf", function(x){
+Geometric$set("private", ".cdf", function(x, lower.tail, log.p){
     if (private$.trials) {
-        return(pgeom(x + 1, self$getParameterValue("prob")))
+        return(pgeom(x + 1, self$getParameterValue("prob"),
+               lower.tail = lower.tail, log.p = log.p))
     } else {
-        return(pgeom(x, self$getParameterValue("prob")))
+        return(pgeom(x, self$getParameterValue("prob"),
+               lower.tail = lower.tail, log.p = log.p))
     }
 })
-Geometric$set("private", ".quantile", function(p){
+Geometric$set("private", ".quantile", function(p, lower.tail, log.p){
     if (private$.trials) {
-        return(qgeom(p, self$getParameterValue("prob")) + 1)
+        return(qgeom(p, self$getParameterValue("prob"),
+                     lower.tail = lower.tail, log.p = log.p) + 1)
     } else {
-        return(qgeom(p, self$getParameterValue("prob")))
+        return(qgeom(p, self$getParameterValue("prob"),
+                     lower.tail = lower.tail, log.p = log.p))
     }
 })
 Geometric$set("private", ".rand", function(n){
@@ -149,6 +153,7 @@ Geometric$set("private", ".rand", function(n){
         return(rgeom(n, self$getParameterValue("prob")))
     }
 })
+Geometric$set("private", ".log", TRUE)
 
 Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
                                              verbose = FALSE,...){

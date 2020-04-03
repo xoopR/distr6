@@ -101,18 +101,21 @@ Bernoulli$set("private",".getRefParams", function(paramlst){
   else if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   return(lst)
 })
-Bernoulli$set("private", ".pdf", function(x){
-  dbinom(x, 1, self$getParameterValue("prob"))
+Bernoulli$set("private", ".pdf", function(x, log){
+  dbinom(x, 1, self$getParameterValue("prob"), log = log)
 })
-Bernoulli$set("private", ".cdf", function(x){
-  pbinom(x, 1, self$getParameterValue("prob"))
+Bernoulli$set("private", ".cdf", function(x, lower.tail, log.p){
+  pbinom(x, 1, self$getParameterValue("prob"),
+         lower.tail = lower.tail, log.p = log.p)
 })
-Bernoulli$set("private", ".quantile", function(p){
-  qbinom(p, 1, self$getParameterValue("prob"))
+Bernoulli$set("private", ".quantile", function(p, lower.tail, log.p){
+  qbinom(p, 1, self$getParameterValue("prob"),
+         lower.tail = lower.tail, log.p = log.p)
 })
 Bernoulli$set("private", ".rand", function(n){
   rbinom(n, 1, self$getParameterValue("prob"))
 })
+Bernoulli$set("private", ".log", TRUE)
 
 Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 

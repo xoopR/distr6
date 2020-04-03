@@ -107,18 +107,21 @@ Gamma$set("private",".getRefParams", function(paramlst){
 
   return(lst)
 })
-Gamma$set("private", ".pdf", function(x){
-  dgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'))
+Gamma$set("private", ".pdf", function(x, log){
+  dgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'), log = log)
 })
-Gamma$set("private", ".cdf", function(x){
-  pgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'))
+Gamma$set("private", ".cdf", function(x, lower.tail, log.p){
+  pgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'),
+         lower.tail = lower.tail, log.p = log.p)
 })
-Gamma$set("private", ".quantile", function(p){
-  qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'))
+Gamma$set("private", ".quantile", function(p, lower.tail, log.p){
+  qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'),
+         lower.tail = lower.tail, log.p = log.p)
 })
 Gamma$set("private", ".rand", function(n){
   rgamma(n, self$getParameterValue("shape"),self$getParameterValue('rate'))
 })
+Gamma$set("private", ".log", TRUE)
 
 Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean = NULL, decorators = NULL,
                                          verbose = FALSE){

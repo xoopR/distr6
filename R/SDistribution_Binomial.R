@@ -139,6 +139,7 @@ Binomial$set("private", ".rand", function(n){
     rbinom(n, size = self$getParameterValue("size"), prob = self$getParameterValue("prob"))
   }
 })
+Binomial$set("private", ".log", TRUE)
 
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 

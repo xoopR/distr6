@@ -121,23 +121,25 @@ Hypergeometric$set("private",".getRefParams", function(paramlst){
 
     return(lst)
 })
-Hypergeometric$set("private", ".pdf", function(x){
+Hypergeometric$set("private", ".pdf", function(x, log){
     dhyper(x,
            self$getParameterValue("successes"),
            self$getParameterValue("failures"),
-           self$getParameterValue("draws"))
+           self$getParameterValue("draws"), log = log)
 })
-Hypergeometric$set("private", ".cdf", function(x){
+Hypergeometric$set("private", ".cdf", function(x, lower.tail, log.p){
     phyper(x,
            self$getParameterValue("successes"),
            self$getParameterValue("failures"),
-           self$getParameterValue("draws"))
+           self$getParameterValue("draws"),
+           lower.tail = lower.tail, log.p = log.p)
 })
-Hypergeometric$set("private", ".quantile", function(p){
+Hypergeometric$set("private", ".quantile", function(p, lower.tail, log.p){
     qhyper(p,
            self$getParameterValue("successes"),
            self$getParameterValue("failures"),
-           self$getParameterValue("draws"))
+           self$getParameterValue("draws"),
+           lower.tail = lower.tail, log.p = log.p)
 })
 Hypergeometric$set("private", ".rand", function(n){
     rhyper(n,
@@ -145,6 +147,7 @@ Hypergeometric$set("private", ".rand", function(n){
            self$getParameterValue("failures"),
            self$getParameterValue("draws"))
 })
+Hypergeometric$set("private", ".log", TRUE)
 
 Hypergeometric$set("public","initialize",function(size = 50, successes = 5, failures = NULL, draws = 10,
                                                   decorators = NULL, verbose = FALSE){

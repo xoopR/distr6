@@ -113,13 +113,13 @@ Multinomial$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$probs)) lst = c(lst, list(probs = paramlst$probs))
   return(lst)
 })
-Multinomial$set("private",".pdf",function(x){
+Multinomial$set("private",".pdf",function(x, log){
   checkmate::assertDataTable(x, ncol = self$getParameterValue("K"))
   z = apply(x, 1, function(y){
     if(sum(y) != self$getParameterValue("size")){
-      return(0)
+      if(log) return(-Inf) else return(0)
     } else {
-      return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")))
+      return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")), log = log)
     }
   })
 
@@ -128,6 +128,7 @@ Multinomial$set("private",".pdf",function(x){
 Multinomial$set("private",".rand",function(n){
   data.table::data.table(t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs"))))
 })
+Multinomial$set("private", ".log", TRUE)
 
 Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
 

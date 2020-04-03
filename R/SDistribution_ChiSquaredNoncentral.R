@@ -102,18 +102,21 @@ ChiSquaredNoncentral$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
-ChiSquaredNoncentral$set("private", ".pdf", function(x){
-  dchisq(x, self$getParameterValue("df"), self$getParameterValue("location"))
+ChiSquaredNoncentral$set("private", ".pdf", function(x, log){
+  dchisq(x, self$getParameterValue("df"), self$getParameterValue("location"), log = log)
 })
-ChiSquaredNoncentral$set("private", ".cdf", function(x){
-  pchisq(x, self$getParameterValue("df"), self$getParameterValue("location"))
+ChiSquaredNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){
+  pchisq(x, self$getParameterValue("df"), self$getParameterValue("location"),
+         lower.tail = lower.tail, log.p = log.p)
 })
-ChiSquaredNoncentral$set("private", ".quantile", function(p){
-  qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"))
+ChiSquaredNoncentral$set("private", ".quantile", function(p, lower.tail, log.p){
+  qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"),
+         lower.tail = lower.tail, log.p = log.p)
 })
 ChiSquaredNoncentral$set("private", ".rand", function(n){
   rchisq(n, self$getParameterValue("df"), self$getParameterValue("location"))
 })
+ChiSquaredNoncentral$set("private", ".log", TRUE)
 
 
 ChiSquaredNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){

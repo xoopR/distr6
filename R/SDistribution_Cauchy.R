@@ -77,18 +77,21 @@ Cauchy$set("public","mode",function(which = NULL){
   return(self$getParameterValue("location"))
 })
 
-Cauchy$set("private",".pdf", function(x){
-  dcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"))
+Cauchy$set("private",".pdf", function(x, log){
+  dcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"), log = log)
 })
-Cauchy$set("private",".cdf", function(x){
-  pcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"))
+Cauchy$set("private",".cdf", function(x, lower.tail, log.p){
+  pcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"),
+          lower.tail = lower.tail, log.p = log.p)
 })
-Cauchy$set("private",".quantile", function(p){
-  qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"))
+Cauchy$set("private",".quantile", function(p, lower.tail, log.p){
+  qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"),
+          lower.tail = lower.tail, log.p = log.p)
 })
 Cauchy$set("private",".rand", function(n){
   rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
 })
+Cauchy$set("private", ".log", TRUE)
 
 
 Cauchy$set("private",".getRefParams", function(paramlst){

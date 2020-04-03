@@ -127,18 +127,21 @@ Lognormal$set("private",".getRefParams", function(paramlst){
     return(lst)
 
 })
-Lognormal$set("private", ".pdf", function(x){
-  dlnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+Lognormal$set("private", ".pdf", function(x, log){
+  dlnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"), log = log)
 })
-Lognormal$set("private", ".cdf", function(x){
-  plnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+Lognormal$set("private", ".cdf", function(x, lower.tail, log.p){
+  plnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"),
+         lower.tail = lower.tail, log.p = log.p)
 })
-Lognormal$set("private", ".quantile", function(p){
-  qlnorm(p, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+Lognormal$set("private", ".quantile", function(p, lower.tail, log.p){
+  qlnorm(p, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"),
+         lower.tail = lower.tail, log.p = log.p)
 })
 Lognormal$set("private", ".rand", function(n){
   rlnorm(n, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
 })
+Lognormal$set("private", ".log", TRUE)
 
 Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
                                              mean = 1, var = NULL, sd = NULL, prec = NULL,

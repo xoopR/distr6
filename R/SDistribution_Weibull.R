@@ -113,18 +113,21 @@ Weibull$set("private",".getRefParams", function(paramlst){
 
   return(lst)
 })
-Weibull$set("private", ".pdf", function(x){
-  dweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+Weibull$set("private", ".pdf", function(x, log){
+  dweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"), log = log)
 })
-Weibull$set("private", ".cdf", function(x){
-  pweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"))
+Weibull$set("private", ".cdf", function(x, lower.tail, log.p){
+  pweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"),
+           lower.tail = lower.tail, log.p = log.p)
 })
-Weibull$set("private", ".quantile", function(p){
-  qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"))
+Weibull$set("private", ".quantile", function(p, lower.tail, log.p){
+  qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"),
+           lower.tail = lower.tail, log.p = log.p)
 })
 Weibull$set("private", ".rand", function(n){
   rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
 })
+Weibull$set("private", ".log", TRUE)
 
 Weibull$set("public","initialize",function(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE){
 

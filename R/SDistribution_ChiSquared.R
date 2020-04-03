@@ -100,18 +100,21 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-ChiSquared$set("private",".pdf", function(x){
-  dchisq(x, self$getParameterValue("df"))
+ChiSquared$set("private",".pdf", function(x, log){
+  dchisq(x, self$getParameterValue("df"), log = log)
 })
-ChiSquared$set("private",".cdf", function(x1){
-  pchisq(x, self$getParameterValue("df"))
+ChiSquared$set("private",".cdf", function(x, lower.tail, log.p){
+  pchisq(x, self$getParameterValue("df"),
+         lower.tail = lower.tail, log.p = log.p)
 })
-ChiSquared$set("private",".quantile", function(p){
-  qchisq(p, self$getParameterValue("df"))
+ChiSquared$set("private",".quantile", function(p, lower.tail, log.p){
+  qchisq(p, self$getParameterValue("df"),
+         lower.tail = lower.tail, log.p = log.p)
 })
 ChiSquared$set("private",".rand", function(n){
   rchisq(n, self$getParameterValue("df"))
 })
+ChiSquared$set("private", ".log", TRUE)
 
 ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
