@@ -121,7 +121,7 @@ Hypergeometric$set("private",".getRefParams", function(paramlst){
 
     return(lst)
 })
-Hypergeometric$set("private", ".pdf", function(x, log){
+Hypergeometric$set("private", ".pdf", function(x, log = FALSE){
     dhyper(x,
            self$getParameterValue("successes"),
            self$getParameterValue("failures"),

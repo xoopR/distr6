@@ -95,7 +95,7 @@ Normal$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
   return(lst)
 })
-Normal$set("private", ".pdf", function(x, log){
+Normal$set("private", ".pdf", function(x, log = FALSE){
   dnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"), log = log)
 })
 Normal$set("private", ".cdf", function(x, lower.tail, log.p){

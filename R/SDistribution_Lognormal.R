@@ -127,7 +127,7 @@ Lognormal$set("private",".getRefParams", function(paramlst){
     return(lst)
 
 })
-Lognormal$set("private", ".pdf", function(x, log){
+Lognormal$set("private", ".pdf", function(x, log = FALSE){
   dlnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"), log = log)
 })
 Lognormal$set("private", ".cdf", function(x, lower.tail, log.p){

@@ -86,7 +86,7 @@ FDistributionNoncentral$set("private", ".getRefParams", function(paramlst){
   if (!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
-FDistributionNoncentral$set("private", ".pdf", function(x, log){
+FDistributionNoncentral$set("private", ".pdf", function(x, log = FALSE){
   df(x, df1, df2, location, log = log)
 })
 FDistributionNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){

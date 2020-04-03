@@ -108,7 +108,7 @@ FDistribution$set("public", "mode", function(){
 FDistribution$set("public", "pgf", function(z){
   return(NaN)
 })
-FDistribution$set("private", ".pdf", function(x, log){
+FDistribution$set("private", ".pdf", function(x, log = FALSE){
   df(x, df1, df2, log = log)
 })
 FDistribution$set("private", ".cdf", function(x, lower.tail, log.p){

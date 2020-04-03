@@ -109,7 +109,7 @@ Logarithmic$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$theta)) lst = c(lst,list(theta = paramlst$theta))
   return(lst)
 })
-Logarithmic$set("private", ".pdf", function(x, log){
+Logarithmic$set("private", ".pdf", function(x, log = FALSE){
   extraDistr::dlgser(x, self$getParameterValue("theta"), log = log)
 })
 Logarithmic$set("private", ".cdf", function(x, lower.tail, log.p){

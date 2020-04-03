@@ -89,7 +89,7 @@ Exponential$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
   return(lst)
 })
-Exponential$set("private", ".pdf", function(x, log){
+Exponential$set("private", ".pdf", function(x, log = FALSE){
   dexp(x, self$getParameterValue("rate"), log = log)
 })
 Exponential$set("private", ".cdf", function(x, lower.tail, log.p){

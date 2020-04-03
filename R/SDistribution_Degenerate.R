@@ -83,7 +83,7 @@ Degenerate$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
   return(lst)
 })
-Degenerate$set("private", ".pdf", function(x, log){
+Degenerate$set("private", ".pdf", function(x, log = FALSE){
   if(x == self$getParameterValue("mean")){
     if(log) return(0) else return(1)
   } else {

@@ -102,7 +102,7 @@ Binomial$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   return(lst)
 })
-Binomial$set("private", ".pdf", function(x, log){
+Binomial$set("private", ".pdf", function(x, log = FALSE){
   if(checkmate::testList(self$getParameterValue("size"))){
     mapply(dbinom, size = self$getParameterValue("size"), prob = self$getParameterValue("prob"),
            MoreArgs = list(x = x, log = log))

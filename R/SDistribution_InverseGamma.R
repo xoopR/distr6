@@ -106,7 +106,7 @@ InverseGamma$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
-InverseGamma$set("private", ".pdf", function(x, log){
+InverseGamma$set("private", ".pdf", function(x, log = FALSE){
   extraDistr::dinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"), log = log)
 })
 InverseGamma$set("private", ".cdf", function(x, lower.tail, log.p){

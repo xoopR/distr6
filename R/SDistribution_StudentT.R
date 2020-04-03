@@ -103,7 +103,7 @@ StudentT$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
   return(lst)
 })
-StudentT$set("private", ".pdf", function(x, log){
+StudentT$set("private", ".pdf", function(x, log = FALSE){
   dt(x, self$getParameterValue("df"), log = log)
 })
 StudentT$set("private", ".cdf", function(x, lower.tail, log.p){

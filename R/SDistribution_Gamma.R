@@ -107,7 +107,7 @@ Gamma$set("private",".getRefParams", function(paramlst){
 
   return(lst)
 })
-Gamma$set("private", ".pdf", function(x, log){
+Gamma$set("private", ".pdf", function(x, log = FALSE){
   dgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'), log = log)
 })
 Gamma$set("private", ".cdf", function(x, lower.tail, log.p){

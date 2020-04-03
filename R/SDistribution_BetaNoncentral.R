@@ -52,7 +52,7 @@ BetaNoncentral$set("private", ".getRefParams", function(paramlst){
   if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
   return(lst)
 })
-BetaNoncentral$set("private", ".pdf", function(x, log){
+BetaNoncentral$set("private", ".pdf", function(x, log = FALSE){
   dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), self$getParameterValue("location"), log = log)
 })
 BetaNoncentral$set("private", ".cdf", function(x, lower.tail, log.p){

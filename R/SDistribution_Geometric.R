@@ -121,7 +121,7 @@ Geometric$set("private",".getRefParams", function(paramlst){
     return(lst)
 })
 Geometric$set("private",".trials", logical(0))
-Geometric$set("private", ".pdf", function(x, log) {
+Geometric$set("private", ".pdf", function(x, log = FALSE) {
     if (private$.trials) {
         return(dgeom(x + 1, self$getParameterValue("prob"), log = log))
     } else {

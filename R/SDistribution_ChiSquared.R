@@ -100,7 +100,7 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-ChiSquared$set("private",".pdf", function(x, log){
+ChiSquared$set("private",".pdf", function(x, log = FALSE){
   dchisq(x, self$getParameterValue("df"), log = log)
 })
 ChiSquared$set("private",".cdf", function(x, lower.tail, log.p){

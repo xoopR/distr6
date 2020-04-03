@@ -101,7 +101,7 @@ Bernoulli$set("private",".getRefParams", function(paramlst){
   else if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   return(lst)
 })
-Bernoulli$set("private", ".pdf", function(x, log){
+Bernoulli$set("private", ".pdf", function(x, log = FALSE){
   dbinom(x, 1, self$getParameterValue("prob"), log = log)
 })
 Bernoulli$set("private", ".cdf", function(x, lower.tail, log.p){

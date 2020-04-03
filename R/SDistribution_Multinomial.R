@@ -113,7 +113,7 @@ Multinomial$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$probs)) lst = c(lst, list(probs = paramlst$probs))
   return(lst)
 })
-Multinomial$set("private",".pdf",function(x, log){
+Multinomial$set("private",".pdf",function(x, log = FALSE){
   checkmate::assertDataTable(x, ncol = self$getParameterValue("K"))
   z = apply(x, 1, function(y){
     if(sum(y) != self$getParameterValue("size")){
