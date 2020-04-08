@@ -15,7 +15,8 @@
 * Changed default `form` parameter in `NegativeBinomial`, now errors if supplied argument is not in one of the four choices (previously reverted to "fbs")
 * Fixed bug in `MultivariateNormal` `rand()` which was not adding the `mean` correctly
 * Massive bottleneck in `VectorDistribution` for same distribution type removed in d/p/q/r functions
-* `Triangular` now implemented from package `extraDistr`
+* `DiscreteUniform, Frechet Gumbel, Triangular, Wald, Rayleigh` now implemented from package `extraDistr`
+* Bug fix in `Frechet` `$cdf`
 
 # distr6 1.3.5
 

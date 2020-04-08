@@ -46,6 +46,7 @@ DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_obje
 DiscreteUniform$set("public","name","DiscreteUniform")
 DiscreteUniform$set("public","short_name","DUnif")
 DiscreteUniform$set("public","description","DiscreteUniform Probability Distribution.")
+DiscreteUniform$set("public","packages", "extraDistr")
 
 DiscreteUniform$set("public","mean",function(){
   return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
@@ -106,18 +107,84 @@ DiscreteUniform$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
   return(lst)
 })
-DiscreteUniform$set("private",".pdf", function(x){
-  rep(1/self$getParameterValue("N"), length(x))
+DiscreteUniform$set("private",".pdf", function(x, log = FALSE){
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      extraDistr::ddunif,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper"),
+      MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    extraDistr::ddunif(
+      x,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper"),
+      log = log
+    )
+  }
 })
-DiscreteUniform$set("private",".cdf", function(x){
-  (x - self$getParameterValue("lower") + 1)/ self$getParameterValue("N")
+DiscreteUniform$set("private",".cdf", function(x, lower.tail = TRUE, log.p = TRUE){
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      extraDistr::pdunif,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper"),
+      MoreArgs = list(
+        q = x,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::pdunif(
+      x,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
-DiscreteUniform$set("private",".quantile", function(p){
-  self$getParameterValue("lower") + floor(p * self$getParameterValue("N"))
+DiscreteUniform$set("private",".quantile", function(p, lower.tail = TRUE, log.p = TRUE){
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      extraDistr::qdunif,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper"),
+      MoreArgs = list(
+        p = p,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::qdunif(
+      p,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
 DiscreteUniform$set("private",".rand", function(n){
-  sample(unlist(self$properties$support$elements), n, TRUE)
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      extraDistr::rdunif,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rdunif(
+      n,
+      min = self$getParameterValue("lower"),
+      max = self$getParameterValue("upper")
+    )
+  }
 })
+DiscreteUniform$set("private",".log", TRUE)
 
 DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
@@ -134,5 +201,5 @@ DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorat
                               data.table::data.table(ShortName = "DUnif", ClassName = "DiscreteUniform",
                                                      Type = "\u2124", ValueSupport = "discrete",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "extraDistr"))
 

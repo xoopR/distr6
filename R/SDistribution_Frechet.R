@@ -50,6 +50,7 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F)
 Frechet$set("public","name","Frechet")
 Frechet$set("public","short_name","Frec")
 Frechet$set("public","description","Frechet Probability Distribution.")
+Frechet$set("public","packages", "extraDistr")
 
 Frechet$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)
@@ -108,22 +109,93 @@ Frechet$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
-Frechet$set("private",".pdf", function(x){
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
-  minimum <- self$getParameterValue("minimum")
 
-  return(shape/scale * (((x - minimum)/scale)^(-1-shape)) * exp(-((x-minimum)/scale)^-shape))
+Frechet$set("private",".pdf", function(x, log = FALSE){
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::dfrechet,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    extraDistr::dfrechet(
+      x,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale"),
+      log = log
+    )
+  }
 })
-Frechet$set("private",".cdf", function(x){
-  exp((-(x-self$getParameterValue("minimum"))/self$getParameterValue("scale"))^-self$getParameterValue("shape"))
+Frechet$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::pfrechet,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(
+        q = x,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::pfrechet(
+      x,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
-Frechet$set("private",".quantile", function(p){
-  self$getParameterValue("scale") * (-1/log(p))^(1/self$getParameterValue("shape")) + self$getParameterValue("minimum")
+Frechet$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::qfrechet,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(
+        p = p,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::qfrechet(
+      p,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
 Frechet$set("private",".rand", function(n){
-  self$quantile(runif(n))
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::rfrechet,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rfrechet(
+      n,
+      lambda = self$getParameterValue("shape"),
+      mu = self$getParameterValue("minimum"),
+      sigma = self$getParameterValue("scale")
+    )
+  }
 })
+Frechet$set("private", ".log", TRUE)
 
 Frechet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
@@ -147,4 +219,4 @@ Frechet$set("public","initialize",function(shape = 1, scale = 1, minimum = 0,
                               data.table::data.table(ShortName = "Frec", ClassName = "Frechet",
                                                      Type = "\u211D", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "extraDistr"))

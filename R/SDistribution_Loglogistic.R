@@ -143,6 +143,7 @@ Loglogistic$set("private",".rand", function(n){
     actuar::rllogis(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))
   }
 })
+Loglogistic$set("private", ".log", TRUE)
 
 Loglogistic$set("public","initialize",function(scale = 1, shape = 1, rate = NULL,
                                                decorators = NULL, verbose = FALSE){

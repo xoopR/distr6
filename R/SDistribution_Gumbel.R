@@ -47,7 +47,7 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F)
 Gumbel$set("public","name","Gumbel")
 Gumbel$set("public","short_name","Gumb")
 Gumbel$set("public","description","Gumbel Probability Distribution.")
-Gumbel$set("public","packages", "pracma")
+Gumbel$set("public","packages", c("extraDistr", "pracma"))
 
 Gumbel$set("public","mean",function(){
   return(self$getParameterValue("location") - digamma(1)*self$getParameterValue("scale"))
@@ -86,22 +86,84 @@ Gumbel$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-Gumbel$set("private",".pdf", function(x){
-  location <- self$getParameterValue("location")
-  scale <- self$getParameterValue("scale")
-  z <- (x - location)/scale
-
-  return(exp(-(z + exp(-z)))/scale)
+Gumbel$set("private",".pdf", function(x, log = FALSE){
+  if (checkmate::testList(self$getParameterValue("location"))) {
+    mapply(
+      extraDistr::dgumbel,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    extraDistr::dgumbel(
+      x,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale"),
+      log = log
+    )
+  }
 })
-Gumbel$set("private",".cdf", function(x){
-  exp(-exp(-(x - self$getParameterValue("location"))/self$getParameterValue("scale")))
+Gumbel$set("private",".cdf", function(x, lower.tail = TRUE, log.p = TRUE){
+  if (checkmate::testList(self$getParameterValue("location"))) {
+    mapply(
+      extraDistr::pgumbel,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(
+        q = x,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::pgumbel(
+      x,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
-Gumbel$set("private",".quantile", function(p){
-  -log(-log(p))*self$getParameterValue("scale") + self$getParameterValue("location")
+Gumbel$set("private",".quantile", function(p, lower.tail = TRUE, log.p = TRUE){
+  if (checkmate::testList(self$getParameterValue("location"))) {
+    mapply(
+      extraDistr::qgumbel,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(
+        p = p,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::qgumbel(
+      p,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
 Gumbel$set("private",".rand", function(n){
-  self$quantile(runif(n))
+  if (checkmate::testList(self$getParameterValue("location"))) {
+    mapply(
+      extraDistr::rgumbel,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rgumbel(
+      n,
+      mu = self$getParameterValue("location"),
+      sigma = self$getParameterValue("scale")
+    )
+  }
 })
+Gumbel$set("private",".log", TRUE)
 
 Gumbel$set("public","initialize",function(location = 0, scale = 1,
                                           decorators = NULL, verbose = FALSE){
@@ -120,4 +182,4 @@ Gumbel$set("public","initialize",function(location = 0, scale = 1,
                               data.table::data.table(ShortName = "Gumb", ClassName = "Gumbel",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "pracma"))
+                                                     Package = "extraDistr"))

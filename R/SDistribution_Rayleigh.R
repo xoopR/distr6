@@ -45,6 +45,7 @@ Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F)
 Rayleigh$set("public","name","Rayleigh")
 Rayleigh$set("public","short_name","Rayl")
 Rayleigh$set("public","description","Rayleigh Probability Distribution.")
+Rayleigh$set("public","packages", "extraDistr")
 
 Rayleigh$set("public","mean",function(){
   return(self$getParameterValue("mode")*sqrt(pi/2))
@@ -77,17 +78,75 @@ Rayleigh$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Rayleigh$set("private",".pdf", function(x){
-  x/self$getParameterValue("mode")^2 * exp((-x^2)/(2*self$getParameterValue("mode")^2))
+  if (checkmate::testList(self$getParameterValue("mode"))) {
+    mapply(
+      extraDistr::drayleigh,
+      sigma = self$getParameterValue("mode"),
+      MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    extraDistr::drayleigh(
+      x,
+      sigma = self$getParameterValue("mode"),
+      log = log
+    )
+  }
 })
 Rayleigh$set("private",".cdf", function(x){
-  1 - exp((-x1^2)/(2*self$getParameterValue("mode")^2))
+  if (checkmate::testList(self$getParameterValue("mode"))) {
+    mapply(
+      extraDistr::prayleigh,
+      sigma = self$getParameterValue("mode"),
+      MoreArgs = list(
+        q = x,
+        mode.tail = mode.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::prayleigh(
+      x,
+      sigma = self$getParameterValue("mode"),
+      mode.tail = mode.tail,
+      log.p = log.p
+    )
+  }
 })
 Rayleigh$set("private",".quantile", function(p){
-  self$getParameterValue("mode")*sqrt(-2*log(1-p))
+  if (checkmate::testList(self$getParameterValue("mode"))) {
+    mapply(
+      extraDistr::qrayleigh,
+      sigma = self$getParameterValue("mode"),
+      MoreArgs = list(
+        p = p,
+        mode.tail = mode.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::qrayleigh(
+      p,
+      sigma = self$getParameterValue("mode"),
+      mode.tail = mode.tail,
+      log.p = log.p
+    )
+  }
 })
 Rayleigh$set("private",".rand", function(n){
-  self$quantile(runif(n))
+  if (checkmate::testList(self$getParameterValue("mode"))) {
+    mapply(
+      extraDistr::rrayleigh,
+      sigma = self$getParameterValue("mode"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rrayleigh(
+      n,
+      sigma = self$getParameterValue("mode")
+    )
+  }
 })
+Rayleigh$set("private",".log", TRUE)
 
 Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose = FALSE){
 
@@ -104,4 +163,4 @@ Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose
                               data.table::data.table(ShortName = "Rayl", ClassName = "Rayleigh",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "extraDistr"))

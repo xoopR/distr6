@@ -50,6 +50,7 @@ Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F)
 Laplace$set("public","name","Laplace")
 Laplace$set("public","short_name","Lap")
 Laplace$set("public","description","Laplace Probability Distribution.")
+Laplace$set("public","packages","extraDistr")
 
 Laplace$set("public","mean",function(){
   self$getParameterValue("mean")
@@ -93,30 +94,60 @@ Laplace$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Laplace$set("private",".pdf", function(x){
-  (2*self$getParameterValue("scale"))^-1 * exp(-abs(x-self$getParameterValue("mean")))
+  if(checkmate::testList(self$getParameterValue("mean"))){
+    mapply(extraDistr::dlaplace,
+           mu = self$getParameterValue("mean"),
+           sigma = self$getParameterValue("scale"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    extraDistr::dlaplace(x,
+                         mu = self$getParameterValue("mean"),
+                         sigma = self$getParameterValue("scale"),
+                         log = log)
+  }
 })
 Laplace$set("private",".cdf", function(x){
-  cdf = x
-  cdf[x <= self$getParameterValue("mean")] = 0.5 * exp((cdf[x <= self$getParameterValue("mean")]-
-                                                           self$getParameterValue("mean"))/
-                                                          self$getParameterValue("scale"))
-  cdf[x > self$getParameterValue("mean")] = 1 - (0.5 * exp(-(cdf[x > self$getParameterValue("mean")]-
-                                                                self$getParameterValue("mean"))/
-                                                              self$getParameterValue("scale")))
-
-  return(cdf)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(extraDistr::plaplace,
+           mu = self$getParameterValue("mean"),
+           sigma = self$getParameterValue("scale"),
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    extraDistr::plaplace(x,
+                         mu = self$getParameterValue("mean"),
+                         sigma = self$getParameterValue("scale"),
+                         lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Laplace$set("private",".quantile", function(p){
-  quantile = p
-  quantile[p <= 0.5] = self$getParameterValue("mean") + (self$getParameterValue("scale")*
-                                                           log(2*quantile[p <= 0.5]))
-  quantile[p > 0.5] = self$getParameterValue("mean") - (self$getParameterValue("scale")*
-                                                          log(2 - 2*quantile[p > 0.5]))
-  return(quantile)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(extraDistr::qlaplace,
+           mu = self$getParameterValue("mean"),
+           sigma = self$getParameterValue("scale"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    extraDistr::qlaplace(p,
+                         mu = self$getParameterValue("mean"),
+                         sigma = self$getParameterValue("scale"),
+                         lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Laplace$set("private",".rand", function(n){
-  self$quantile(runif(n))
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(extraDistr::rlaplace,
+           mu = self$getParameterValue("mean"),
+           sigma = self$getParameterValue("scale"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rlaplace(n,
+                         mu = self$getParameterValue("mean"),
+                         sigma = self$getParameterValue("scale"))
+  }
 })
+Laplace$set("private", ".log", TRUE)
 
 Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
                                           decorators = NULL, verbose = FALSE){
@@ -135,4 +166,4 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
                               data.table::data.table(ShortName = "Lap", ClassName = "Laplace",
                                                      Type = "\u211D", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "extraDistr"))

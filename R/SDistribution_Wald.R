@@ -22,7 +22,6 @@
 #' @templateVar arg2 \code{shape} \tab numeric \tab shape parameter. \cr
 #' @templateVar constructorDets \code{mean} and \code{shape} as positive numerics.
 #' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
-#' @templateVar additionalReferences  Michael, John R.; Schucany, William R.; Haas, Roy W. (May 1976). "Generating Random Variates Using Transformations with Multiple Roots". The American Statistician. 30 (2): 88–90. doi:10.2307/2683801. JSTOR 2683801.
 #'
 #' @examples
 #' x = Wald$new(mean = 2, shape = 5)
@@ -51,6 +50,7 @@ Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F)
 Wald$set("public","name","Wald")
 Wald$set("public","short_name","Wald")
 Wald$set("public","description","Wald Probability Distribution.")
+Wald$set("public","packages","extraDistr")
 
 Wald$set("public","mean",function(){
   return(self$getParameterValue("mean"))
@@ -92,30 +92,49 @@ Wald$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$shape)) lst = c(lst, list(shape = paramlst$shape))
   return(lst)
 })
-Wald$set("private",".pdf", function(x){
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-
-  return((shape/(2*pi*x^3))^0.5 * exp((-shape*(x-mean)^2)/(2*mean^2*x)))
+Wald$set("private",".pdf", function(x, log = FALSE){
+  if(checkmate::testList(self$getParameterValue("mean"))){
+    mapply(extraDistr::dwald,
+           mu = self$getParameterValue("mean"),
+           lambda = self$getParameterValue("shape"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    extraDistr::dwald(x,
+                      mu = self$getParameterValue("mean"),
+                      lambda = self$getParameterValue("shape"),
+                      log = log
+    )
+  }
 })
-Wald$set("private",".cdf", function(x){
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-
-  return(pnorm(sqrt(shape/x)*(x/mean-1)) + exp(2*shape/mean)*pnorm(-sqrt(shape/x)*(x/mean + 1)))
+Wald$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(
+      extraDistr::pwald,
+      mu = self$getParameterValue("mean"),
+      lambda = self$getParameterValue("shape"),
+      MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    extraDistr::pwald(x,
+                      mu = self$getParameterValue("mean"),
+                      lambda = self$getParameterValue("shape"),
+                      lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Wald$set("private",".rand", function(n){
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-  y = rnorm(n)^2
-  x = mean + (mean^2*y)/(2*shape) - (mean/2*shape)*sqrt(4*mean*shape*y + mean^2*y^2)
-  z = runif(n)
-
-  rand = x
-  rand[z > mean/(mean+x)] = mean^2/x[z > mean/(mean+x)]
-
-  return(rand)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(extraDistr::rwald,
+           mu = self$getParameterValue("mean"),
+           lambda = self$getParameterValue("shape"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rwald(n,
+                      mu = self$getParameterValue("mean"),
+                      lambda = self$getParameterValue("shape"))
+  }
 })
+Wald$set("private", ".log", TRUE)
 
 Wald$set("public","initialize",function(mean = 1, shape = 1,
                                           decorators = NULL, verbose = FALSE){
@@ -134,4 +153,4 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
                               data.table::data.table(ShortName = "Wald", ClassName = "Wald",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "extraDistr"))

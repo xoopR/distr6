@@ -177,18 +177,18 @@ Triangular$set("private",".pdf", function(x, log = FALSE){
 Triangular$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(
-      ptriang,
+      extraDistr::ptriang,
       a = self$getParameterValue("lower"),
       b = self$getParameterValue("upper"),
       c = self$getParameterValue("mode"),
       MoreArgs = list(
-        q = q,
+        q = x,
         lower.tail = lower.tail,
         log.p = log.p
       )
     )
   } else {
-    ptriang(
+    extraDistr::ptriang(
       x,
       a = self$getParameterValue("lower"),
       b = self$getParameterValue("upper"),
@@ -240,6 +240,7 @@ Triangular$set("private",".rand", function(n){
     )
   }
 })
+Triangular$set("private", ".log", TRUE)
 
 Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lower+upper)/2, symmetric = FALSE,
                                               decorators = NULL, verbose = FALSE){
