@@ -47,7 +47,7 @@ NULL
 #-------------------------------------------------------------
 InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = F)
 InverseGamma$set("public","name","InverseGamma")
-InverseGamma$set("public","short_name","invgam")
+InverseGamma$set("public","short_name","InvGamma")
 InverseGamma$set("public","description","Inverse Gamma Probability Distribution.")
 InverseGamma$set("public","packages","extraDistr")
 
@@ -106,19 +106,86 @@ InverseGamma$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
-InverseGamma$set("private", ".pdf", function(x, log = FALSE){
-  extraDistr::dinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"), log = log)
+InverseGamma$set("private", ".pdf", function(x, log = FALSE) {
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::dinvgamma,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale"),
+      MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    extraDistr::dinvgamma(
+      x,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale"),
+      log = log
+    )
+  }
 })
-InverseGamma$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  extraDistr::pinvgamma(x, self$getParameterValue("shape"), self$getParameterValue("scale"),
-                        lower.tail = lower.tail, log.p = log.p)
+InverseGamma$set("private", ".cdf", function(x,
+                                             lower.tail = TRUE,
+                                             log.p = FALSE) {
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::pinvgamma,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale"),
+      MoreArgs = list(
+        x = x,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::pinvgamma(
+      x,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
-InverseGamma$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  extraDistr::qinvgamma(p, self$getParameterValue("shape"), self$getParameterValue("scale"),
-                        lower.tail = lower.tail, log.p = log.p)
+InverseGamma$set("private", ".quantile", function(p,
+                                                  lower.tail = TRUE,
+                                                  log.p = FALSE) {
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::qinvgamma,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale"),
+      MoreArgs = list(
+        p = p,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::qinvgamma(
+      p,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
-InverseGamma$set("private", ".rand", function(n){
-  extraDistr::rinvgamma(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+InverseGamma$set("private", ".rand", function(n) {
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::rinvgamma,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rinvgamma(
+      n,
+      alpha = self$getParameterValue("shape"),
+      beta = self$getParameterValue("scale")
+    )
+  }
 })
 InverseGamma$set("private", ".log", TRUE)
 
@@ -135,7 +202,7 @@ InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators 
 })
 
 .distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "invgam", ClassName = "InverseGamma",
+                              data.table::data.table(ShortName = "InvGamma", ClassName = "InverseGamma",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
                                                      Package = "extraDistr"))

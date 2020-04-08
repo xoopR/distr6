@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution.R
 \name{variateForm}
 \alias{variateForm}
-\title{Variate Form Accessor}
+\title{Variate Form Accessor - Deprecated}
 \usage{
 variateForm(object)
 }
@@ -13,9 +13,5 @@ variateForm(object)
 One of "univariate"/"multivariate"/"matrixvariate".
 }
 \description{
-Returns the variateForm of the distribution.
+Deprecated. Use $traits$variateForm
 }
-\section{R6 Usage}{
- $variateForm
-}
-

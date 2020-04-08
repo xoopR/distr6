@@ -101,18 +101,41 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
 })
 
 ChiSquared$set("private",".pdf", function(x, log = FALSE){
-  dchisq(x, self$getParameterValue("df"), log = log)
+  if(checkmate::testList(self$getParameterValue("df"))){
+    mapply(dchisq, df = self$getParameterValue("df"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dchisq(x, df = self$getParameterValue("df"),  log = log)
+  }
 })
 ChiSquared$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pchisq(x, self$getParameterValue("df"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(pchisq, df = self$getParameterValue("df"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pchisq(x, df = self$getParameterValue("df"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 ChiSquared$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qchisq(p, self$getParameterValue("df"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(qchisq, df = self$getParameterValue("df"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qchisq(p, df = self$getParameterValue("df"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 ChiSquared$set("private",".rand", function(n){
-  rchisq(n, self$getParameterValue("df"))
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(rchisq, df = self$getParameterValue("df"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rchisq(n, df = self$getParameterValue("df"))
+  }
 })
 ChiSquared$set("private", ".log", TRUE)
 

@@ -114,18 +114,43 @@ Weibull$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Weibull$set("private", ".pdf", function(x, log = FALSE){
-  dweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"), log = log)
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(dweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    dweibull(x, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
+             log = log)
+  }
 })
 Weibull$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pweibull(x, self$getParameterValue("shape"), self$getParameterValue("scale"),
-           lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(pweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pweibull(x, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
+             lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Weibull$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qweibull(p, self$getParameterValue("shape"), self$getParameterValue("scale"),
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(qweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qweibull(p, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
            lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Weibull$set("private", ".rand", function(n){
-  rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(rweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
+  }
 })
 Weibull$set("private", ".log", TRUE)
 

@@ -87,18 +87,49 @@ FDistributionNoncentral$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 FDistributionNoncentral$set("private", ".pdf", function(x, log = FALSE){
-  df(x, df1, df2, location, log = log)
+  if(checkmate::testList(self$getParameterValue("df1"))){
+    mapply(df, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           ncp = self$getParameterValue("location"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    df(x, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+       ncp = self$getParameterValue("location"), log = log)
+  }
 })
 FDistributionNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pf(x, df1, df2, location,
-     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df1"))) {
+    mapply(pf, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           ncp = self$getParameterValue("location"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pf(x, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+       ncp = self$getParameterValue("location"),
+       lower.tail = lower.tail, log.p = log.p)
+  }
 })
 FDistributionNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qf(p, df1, df2, location,
-     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df1"))) {
+    mapply(qf, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           ncp = self$getParameterValue("location"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qf(p, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+       ncp = self$getParameterValue("location"),
+       lower.tail = lower.tail, log.p = log.p)
+  }
 })
 FDistributionNoncentral$set("private", ".rand", function(n){
-  rf(n, df1, df2, location)
+  if (checkmate::testList(self$getParameterValue("df1"))) {
+    mapply(rf, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           ncp = self$getParameterValue("location"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rf(n, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+       ncp = self$getParameterValue("location"))
+  }
 })
 FDistributionNoncentral$set("private", ".log", TRUE)
 

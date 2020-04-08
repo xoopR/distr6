@@ -109,18 +109,41 @@ Uniform$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Uniform$set("private", ".pdf", function(x, log = FALSE){
-  dunif(x, self$getParameterValue("lower"), self$getParameterValue("upper"), log = log)
+  if(checkmate::testList(self$getParameterValue("lower"))){
+    mapply(dunif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dunif(x, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"), log = log)
+  }
 })
 Uniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  punif(x, self$getParameterValue("lower"), self$getParameterValue("upper"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(punif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    punif(x, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Uniform$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qunif(p, self$getParameterValue("lower"), self$getParameterValue("upper"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(qunif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qunif(p, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Uniform$set("private", ".rand", function(n){
-  runif(n, self$getParameterValue("lower"), self$getParameterValue("upper"))
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(runif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    runif(n, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"))
+  }
 })
 Uniform$set("private", ".log", TRUE)
 

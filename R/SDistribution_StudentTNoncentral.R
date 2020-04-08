@@ -73,18 +73,41 @@ StudentTNoncentral$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 StudentTNoncentral$set("private", ".pdf", function(x, log = FALSE){
-  dt(x, self$getParameterValue("df"), self$getParameterValue("location"), log = log)
+  if(checkmate::testList(self$getParameterValue("df"))){
+    mapply(dt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dt(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"), log = log)
+  }
 })
 StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pt(x, self$getParameterValue("df"), self$getParameterValue("location"),
-     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(pt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pt(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+       lower.tail = lower.tail, log.p = log.p)
+  }
 })
 StudentTNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qt(p, self$getParameterValue("df"), self$getParameterValue("location"),
-     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(qt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qt(p, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+       lower.tail = lower.tail, log.p = log.p)
+  }
 })
 StudentTNoncentral$set("private", ".rand", function(n){
-  rt(n, self$getParameterValue("df"), self$getParameterValue("location"))
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(rt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rt(n, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"))
+  }
 })
 StudentTNoncentral$set("private", ".log", TRUE)
 

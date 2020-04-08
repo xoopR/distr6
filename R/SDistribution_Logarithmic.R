@@ -110,18 +110,41 @@ Logarithmic$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 Logarithmic$set("private", ".pdf", function(x, log = FALSE){
-  extraDistr::dlgser(x, self$getParameterValue("theta"), log = log)
+  if(checkmate::testList(self$getParameterValue("theta"))){
+    mapply(extraDistr::dlgser, theta = self$getParameterValue("theta"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    extraDistr::dlgser(x, theta = self$getParameterValue("theta"), log = log)
+  }
 })
 Logarithmic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  extraDistr::plgser(x, self$getParameterValue("theta"),
-                     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("theta"))) {
+    mapply(extraDistr::plgser, theta = self$getParameterValue("theta"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    extraDistr::plgser(x, theta = self$getParameterValue("theta"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Logarithmic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  extraDistr::qlgser(p, self$getParameterValue("theta"),
-                     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("theta"))) {
+    mapply(extraDistr::qlgser, theta = self$getParameterValue("theta"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    extraDistr::qlgser(p, theta = self$getParameterValue("theta"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Logarithmic$set("private", ".rand", function(n){
-  extraDistr::rlgser(n, self$getParameterValue("theta"))
+  if (checkmate::testList(self$getParameterValue("theta"))) {
+    mapply(extraDistr::rlgser, theta = self$getParameterValue("theta"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rlgser(n, theta = self$getParameterValue("theta"))
+  }
 })
 Logarithmic$set("private", ".log", TRUE)
 

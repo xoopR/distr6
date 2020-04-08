@@ -103,18 +103,41 @@ ChiSquaredNoncentral$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 ChiSquaredNoncentral$set("private", ".pdf", function(x, log = FALSE){
-  dchisq(x, self$getParameterValue("df"), self$getParameterValue("location"), log = log)
+  if(checkmate::testList(self$getParameterValue("df"))){
+    mapply(dchisq, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dchisq(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),  log = log)
+  }
 })
 ChiSquaredNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pchisq(x, self$getParameterValue("df"), self$getParameterValue("location"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(pchisq, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pchisq(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 ChiSquaredNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(qchisq, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qchisq(p, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 ChiSquaredNoncentral$set("private", ".rand", function(n){
-  rchisq(n, self$getParameterValue("df"), self$getParameterValue("location"))
+  if (checkmate::testList(self$getParameterValue("df"))) {
+    mapply(rchisq, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rchisq(n, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"))
+  }
 })
 ChiSquaredNoncentral$set("private", ".log", TRUE)
 

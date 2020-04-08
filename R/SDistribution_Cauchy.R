@@ -78,18 +78,41 @@ Cauchy$set("public","mode",function(which = NULL){
 })
 
 Cauchy$set("private",".pdf", function(x, log = FALSE){
-  dcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"), log = log)
+  if(checkmate::testList(self$getParameterValue("location"))){
+    mapply(dcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dcauchy(x, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"), log = log)
+  }
 })
 Cauchy$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pcauchy(x, self$getParameterValue("location"), self$getParameterValue("scale"),
-          lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("location"))) {
+    mapply(pcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pcauchy(x, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Cauchy$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"),
-          lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("location"))) {
+    mapply(qcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qcauchy(p, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Cauchy$set("private",".rand", function(n){
-  rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
+  if (checkmate::testList(self$getParameterValue("location"))) {
+    mapply(rcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rcauchy(n, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"))
+  }
 })
 Cauchy$set("private", ".log", TRUE)
 

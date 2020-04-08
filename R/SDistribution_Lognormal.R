@@ -128,18 +128,42 @@ Lognormal$set("private",".getRefParams", function(paramlst){
 
 })
 Lognormal$set("private", ".pdf", function(x, log = FALSE){
-  dlnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"), log = log)
+  if (checkmate::testList(self$getParameterValue("meanlog"))) {
+    mapply(dlnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
+           MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    dlnorm(x, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"), log = log)
+  }
 })
 Lognormal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  plnorm(x, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("meanlog"))) {
+    mapply(plnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    plnorm(x, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
+          lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Lognormal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qlnorm(p, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("meanlog"))) {
+    mapply(qlnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qlnorm(p, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
+          lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Lognormal$set("private", ".rand", function(n){
-  rlnorm(n, self$getParameterValue("meanlog"), self$getParameterValue("sdlog"))
+  if (checkmate::testList(self$getParameterValue("meanlog"))) {
+    mapply(rlnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rlnorm(n, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"))
+  }
 })
 Lognormal$set("private", ".log", TRUE)
 

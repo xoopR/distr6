@@ -109,18 +109,41 @@ FDistribution$set("public", "pgf", function(z){
   return(NaN)
 })
 FDistribution$set("private", ".pdf", function(x, log = FALSE){
-  df(x, df1, df2, log = log)
+  if(checkmate::testList(self$getParameterValue("df1"))){
+    mapply(df, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    df(x, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"), log = log)
+  }
 })
 FDistribution$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pf(x, df1, df2,
-     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df1"))) {
+    mapply(pf, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pf(x, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 FDistribution$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qf(p, df1, df2,
-     lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("df1"))) {
+    mapply(qf, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qf(p, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 FDistribution$set("private", ".rand", function(n){
-  rf(n, df1, df2)
+  if (checkmate::testList(self$getParameterValue("df1"))) {
+    mapply(rf, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rf(n, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"))
+  }
 })
 FDistribution$set("private", ".log", TRUE)
 

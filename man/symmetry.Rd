@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution.R
 \name{symmetry}
 \alias{symmetry}
-\title{Symmetry Accessor}
+\title{Symmetry Accessor - Deprecated}
 \usage{
 symmetry(object)
 }
@@ -13,12 +13,8 @@ symmetry(object)
 One of "symmetric" or "asymmetric".
 }
 \description{
-Returns the distribution symmetry.
+Deprecated. Use $properties$symmetry.
 }
-\section{R6 Usage}{
- $symmetry
-}
-
 \seealso{
 \code{\link{properties}}
 }

@@ -82,18 +82,41 @@ Poisson$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Poisson$set("private", ".pdf", function(x, log = FALSE){
-  dpois(x, self$getParameterValue("rate"), log = log)
+  if(checkmate::testList(self$getParameterValue("rate"))){
+    mapply(dpois, lambda = self$getParameterValue("rate"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dpois(x, lambda = self$getParameterValue("rate"), log = log)
+  }
 })
 Poisson$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  ppois(x, self$getParameterValue("rate"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("rate"))) {
+    mapply(ppois, lambda = self$getParameterValue("rate"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    ppois(x, lambda = self$getParameterValue("rate"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Poisson$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qpois(p, self$getParameterValue("rate"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("rate"))) {
+    mapply(qpois, lambda = self$getParameterValue("rate"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qpois(p, lambda = self$getParameterValue("rate"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Poisson$set("private", ".rand", function(n){
-  rpois(n, self$getParameterValue("rate"))
+  if (checkmate::testList(self$getParameterValue("rate"))) {
+    mapply(rpois, lambda = self$getParameterValue("rate"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rpois(n, lambda = self$getParameterValue("rate"))
+  }
 })
 Poisson$set("private", ".log", TRUE)
 

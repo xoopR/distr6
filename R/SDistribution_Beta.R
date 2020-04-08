@@ -102,18 +102,41 @@ Beta$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 Beta$set("private", ".pdf", function(x, log = FALSE){
-  dbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"), log = log)
+  if(checkmate::testList(self$getParameterValue("shape1"))){
+    mapply(dbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dbeta(x, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"), log = log)
+  }
 })
 Beta$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pbeta(x, self$getParameterValue("shape1"), self$getParameterValue("shape2"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("shape1"))) {
+    mapply(pbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pbeta(x, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Beta$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("shape1"))) {
+    mapply(qbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qbeta(p, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Beta$set("private", ".rand", function(n){
-  rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
+  if (checkmate::testList(self$getParameterValue("shape1"))) {
+    mapply(rbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rbeta(n, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"))
+  }
 })
 Beta$set("private", ".log", TRUE)
 

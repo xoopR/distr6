@@ -96,18 +96,42 @@ Normal$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Normal$set("private", ".pdf", function(x, log = FALSE){
-  dnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"), log = log)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(dnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
+           MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    dnorm(x, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"), log = log)
+  }
 })
 Normal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pnorm(x, self$getParameterValue("mean"), self$getParameterValue("sd"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(pnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pnorm(x, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
+          lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Normal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qnorm(p, self$getParameterValue("mean"), self$getParameterValue("sd"),
-        lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(qnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qnorm(p, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
+          lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Normal$set("private", ".rand", function(n){
-  rnorm(n, self$getParameterValue("mean"), self$getParameterValue("sd"))
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(rnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rnorm(n, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"))
+  }
 })
 Normal$set("private", ".log", TRUE)
 

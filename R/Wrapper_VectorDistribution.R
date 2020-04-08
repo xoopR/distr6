@@ -135,7 +135,8 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
 
     private$.wrappedModels = data.table::data.table(distribution = distribution,
                                                     params = params,
-                                                    shortname = makeUniqueNames(shortname))
+                                                    shortname = shortname)
+    private$.wrappedModels$shortname = makeUniqueNames(private$.wrappedModels$shortname)
     private$.sharedparams = shared_params
 
     pdist = get(distribution)[["private_methods"]]
@@ -282,6 +283,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
   # private$.properties$support = setpower(Reals$new(), ndist)   # FIXME
   # private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
 
+  invisible(self)
 })
 VectorDistribution$set("public","wrappedModels", function(model = NULL){
   if(is.null(model)){
@@ -441,6 +443,7 @@ VectorDistribution$set("public", "rand", function(..., lower.tail = TRUE, log.p 
   }
 
   dpqr = as.data.table(private$.rand(x))
+  if(ncol(dpqr) == 1) dpqr = transpose(dpqr)
   colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
   return(dpqr)
 })

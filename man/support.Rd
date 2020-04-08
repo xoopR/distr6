@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution.R
 \name{support}
 \alias{support}
-\title{Support Accessor}
+\title{Support Accessor - Deprecated}
 \usage{
 support(object)
 }
@@ -13,7 +13,7 @@ support(object)
 An R6 object of class \link[set6:Set]{set6::Set}.
 }
 \description{
-Returns the support of the distribution.
+Deprecated. Use $properties$support
 }
 \details{
 The support of a probability distribution is defined as the interval where the pmf/pdf is

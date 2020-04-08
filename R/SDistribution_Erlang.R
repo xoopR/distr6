@@ -97,18 +97,41 @@ Erlang$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Erlang$set("private", ".pdf", function(x, log = FALSE){
-  dgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'), log = log)
+  if(checkmate::testList(self$getParameterValue("shape"))){
+    mapply(dgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dgamma(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
+  }
 })
 Erlang$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pgamma(x, self$getParameterValue("shape"),self$getParameterValue('rate'),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(pgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pgamma(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Erlang$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qgamma(p, self$getParameterValue("shape"),self$getParameterValue('rate'),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(qgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qgamma(p, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Erlang$set("private", ".rand", function(n){
-  rgamma(n, self$getParameterValue("shape"),self$getParameterValue('rate'))
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(rgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rgamma(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))
+  }
 })
 Erlang$set("private", ".log", TRUE)
 

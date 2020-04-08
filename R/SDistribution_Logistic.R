@@ -92,18 +92,41 @@ Logistic$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Logistic$set("private", ".pdf", function(x, log = FALSE){
-  dlogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"), log = log)
+  if(checkmate::testList(self$getParameterValue("mean"))){
+    mapply(dlogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    dlogis(x, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"), log = log)
+  }
 })
 Logistic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  plogis(x, self$getParameterValue("mean"), self$getParameterValue("scale"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(plogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    plogis(x, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Logistic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qlogis(p, self$getParameterValue("mean"), self$getParameterValue("scale"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(qlogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qlogis(p, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Logistic$set("private", ".rand", function(n){
-  rlogis(n, self$getParameterValue("mean"), self$getParameterValue("scale"))
+  if (checkmate::testList(self$getParameterValue("mean"))) {
+    mapply(rlogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    rlogis(n, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"))
+  }
 })
 Logistic$set("private", ".log", TRUE)
 

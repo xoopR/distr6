@@ -102,18 +102,42 @@ Bernoulli$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Bernoulli$set("private", ".pdf", function(x, log = FALSE){
-  dbinom(x, 1, self$getParameterValue("prob"), log = log)
+  if(checkmate::testList(self$getParameterValue("prob"))){
+    mapply(dbinom, prob = self$getParameterValue("prob"),
+           MoreArgs = list(x = x, log = log, size = 1))
+  } else {
+    dbinom(x, size = 1, prob = self$getParameterValue("prob"), log = log)
+  }
+
 })
 Bernoulli$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  pbinom(x, 1, self$getParameterValue("prob"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("prob"))) {
+    mapply(pbinom, prob = self$getParameterValue("prob"),
+           MoreArgs = list(x = x, size = 1, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    pbinom(x, size = 1, prob = self$getParameterValue("prob"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Bernoulli$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  qbinom(p, 1, self$getParameterValue("prob"),
-         lower.tail = lower.tail, log.p = log.p)
+  if (checkmate::testList(self$getParameterValue("prob"))) {
+    mapply(qbinom, prob = self$getParameterValue("prob"),
+           MoreArgs = list(p = p, size = 1, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    qbinom(p, size = 1, prob = self$getParameterValue("prob"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Bernoulli$set("private", ".rand", function(n){
-  rbinom(n, 1, self$getParameterValue("prob"))
+  if (checkmate::testList(self$getParameterValue("prob"))) {
+    mapply(rbinom, prob = self$getParameterValue("prob"),
+           MoreArgs = list(n = n, size = 1)
+    )
+  } else {
+    rbinom(n, size = 1, prob = self$getParameterValue("prob"))
+  }
 })
 Bernoulli$set("private", ".log", TRUE)
 
