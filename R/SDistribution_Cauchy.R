@@ -88,7 +88,7 @@ Cauchy$set("private",".pdf", function(x, log = FALSE){
 Cauchy$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("location"))) {
     mapply(pcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     pcauchy(x, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),

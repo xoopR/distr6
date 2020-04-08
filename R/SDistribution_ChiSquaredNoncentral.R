@@ -113,7 +113,7 @@ ChiSquaredNoncentral$set("private", ".pdf", function(x, log = FALSE){
 ChiSquaredNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("df"))) {
     mapply(pchisq, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     pchisq(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),

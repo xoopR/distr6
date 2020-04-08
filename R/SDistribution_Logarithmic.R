@@ -120,7 +120,7 @@ Logarithmic$set("private", ".pdf", function(x, log = FALSE){
 Logarithmic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("theta"))) {
     mapply(extraDistr::plgser, theta = self$getParameterValue("theta"),
-           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     extraDistr::plgser(x, theta = self$getParameterValue("theta"),

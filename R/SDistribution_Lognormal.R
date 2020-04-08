@@ -139,7 +139,7 @@ Lognormal$set("private", ".pdf", function(x, log = FALSE){
 Lognormal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("meanlog"))) {
     mapply(plnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
-           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     plnorm(x, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),

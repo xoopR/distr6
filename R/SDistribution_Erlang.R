@@ -107,7 +107,7 @@ Erlang$set("private", ".pdf", function(x, log = FALSE){
 Erlang$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(pgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     pgamma(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),

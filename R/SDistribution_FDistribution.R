@@ -119,7 +119,7 @@ FDistribution$set("private", ".pdf", function(x, log = FALSE){
 FDistribution$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("df1"))) {
     mapply(pf, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),
-           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     pf(x, df1 = self$getParameterValue("df1"), df2 = self$getParameterValue("df2"),

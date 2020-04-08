@@ -83,7 +83,7 @@ StudentTNoncentral$set("private", ".pdf", function(x, log = FALSE){
 StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("df"))) {
     mapply(pt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     pt(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
