@@ -18,6 +18,8 @@ The distribution is supported on \eqn{[\beta, \infty)}.
 \code{cf}
 is
 omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
+
+Currently this is implemented as the Type I Pareto distribution, other types
 }
 \section{Constructor}{
  Pareto$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)

@@ -106,7 +106,7 @@ Loglogistic$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$shape)) lst = c(lst, list(shape = paramlst$shape))
   return(lst)
 })
-Loglogistic$set("private",".pdf", function(x){
+Loglogistic$set("private",".pdf", function(x, log = FALSE){
   if(checkmate::testList(self$getParameterValue("shape"))){
     mapply(actuar::dllogis, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
            MoreArgs = list(x = x, log = log))
@@ -114,7 +114,7 @@ Loglogistic$set("private",".pdf", function(x){
     actuar::dllogis(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
   }
 })
-Loglogistic$set("private",".cdf", function(x){
+Loglogistic$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(actuar::pllogis, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
            MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
@@ -124,7 +124,7 @@ Loglogistic$set("private",".cdf", function(x){
            lower.tail = lower.tail, log.p = log.p)
   }
 })
-Loglogistic$set("private",".quantile", function(p){
+Loglogistic$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(actuar::qllogis, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
            MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)

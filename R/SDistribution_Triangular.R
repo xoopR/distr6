@@ -56,6 +56,7 @@ NULL
 Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = FALSE)
 Triangular$set("public","name","Triangular")
 Triangular$set("public","short_name","Tri")
+Triangular$set("public","packages", "extraDistr")
 Triangular$set("private",".type","symmetric")
 
 Triangular$set("public","mean",function(){
@@ -154,46 +155,90 @@ Triangular$set("private",".getRefParams", function(paramlst){
     if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
   return(lst)
 })
-Triangular$set("private",".pdf", function(x){
-  lower = self$getParameterValue("lower")
-  upper = self$getParameterValue("upper")
-  mode = self$getParameterValue("mode")
-  pdf = x
-
-  pdf[lower <= x & x < mode] = (2*(pdf[lower <= x & x < mode]-lower)) /((upper-lower)*(mode-lower))
-  pdf[x == mode] = 2/(upper-lower)
-  pdf[x > mode & x <= upper] = (2*(upper-pdf[x > mode & x <= upper]))/((upper-lower)*(upper-mode))
-  return(pdf)
+Triangular$set("private",".pdf", function(x, log = FALSE){
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      extraDistr::dtriang,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode"),
+      MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    extraDistr::dtriang(
+      x,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode"),
+      log = log
+    )
+  }
 })
-Triangular$set("private",".cdf", function(x){
-  lower = self$getParameterValue("lower")
-  upper = self$getParameterValue("upper")
-  mode = self$getParameterValue("mode")
-  cdf = x
-
-  cdf[x == lower] = 0
-  cdf[x == upper] = 1
-
-  cdf[lower < x & x <= mode] = ((cdf[lower < x & x <= mode]-lower)^2) / ((upper-lower)*(mode-lower))
-  cdf[x > mode & x < upper] = 1 - (((upper-cdf[x > mode & x < upper])^2)/((upper-lower)*(upper-mode)))
-  return(cdf)
+Triangular$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      ptriang,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode"),
+      MoreArgs = list(
+        q = q,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    ptriang(
+      x,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
-Triangular$set("private",".quantile", function(p){
-  lower = self$getParameterValue("lower")
-  upper = self$getParameterValue("upper")
-  mode = self$getParameterValue("mode")
-  quantile = p
-
-  quantile[p == 0] = lower
-  quantile[p == 1] = upper
-
-  quantile[0 < p & p <= (mode-lower)/(upper-lower)] = lower + sqrt((upper-lower)*(mode-lower)*quantile[0 < p & p <= (mode-lower)/(upper-lower)])
-  quantile[(mode-lower)/(upper-lower) < p & p < 1] = upper - sqrt((1-quantile[(mode-lower)/(upper-lower) < p & p < 1])*(upper-lower)*(upper-mode))
-
-  return(quantile)
+Triangular$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      extraDistr::qtriang,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode"),
+      MoreArgs = list(
+        p = p,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::qtriang(
+      p,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
 Triangular$set("private",".rand", function(n){
-  self$quantile(runif(n))
+  if (checkmate::testList(self$getParameterValue("lower"))) {
+    mapply(
+      extraDistr::rtriang,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rtriang(
+      n,
+      a = self$getParameterValue("lower"),
+      b = self$getParameterValue("upper"),
+      c = self$getParameterValue("mode")
+    )
+  }
 })
 
 Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lower+upper)/2, symmetric = FALSE,
@@ -226,4 +271,4 @@ Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lowe
                               data.table::data.table(ShortName = "Tri", ClassName = "Triangular",
                                                      Type = "\u211D", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "extraDistr"))

@@ -17,6 +17,8 @@
 #' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
 #' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
 #' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
+#' @templateVar additionalDetails Currently this is implemented as the Type I Pareto distribution, other types
+#' will be added in the future.
 #'
 #' @examples
 #' x = Pareto$new(shape = 2, scale = 1)
@@ -43,7 +45,7 @@ NULL
 # Pareto Distribution Definition
 #-------------------------------------------------------------
 Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F)
-Pareto$set("public","name","Pareto")
+Pareto$set("public","name","Pareto Type I")
 Pareto$set("public","short_name","Pare")
 Pareto$set("public","description","Pareto Probability Distribution.")
 Pareto$set("public","packages", "expint")

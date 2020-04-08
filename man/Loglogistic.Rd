@@ -12,7 +12,7 @@ Mathematical and statistical functions for the Log-Logistic distribution, which
 is commonly used in survival analysis for its non-monotonic hazard as well as in economics.
 }
 \details{
-The Log-Logistic distribution parameterised with  shape, \eqn{\beta}, scale, \eqn{\alpha}, and location, \eqn{\gamma}, is defined by the pdf, \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}} for \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}.
+The Log-Logistic distribution parameterised with  shape, \eqn{\beta}, and scale, \eqn{\alpha} is defined by the pdf, \deqn{f(x) = (\beta/\alpha)(x/\alpha)^{\beta-1}(1 + (x/\alpha)^\beta)^{-2}} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on the non-negative Reals.
 
@@ -23,7 +23,7 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 Also known as the Fisk distribution.
 }
 \section{Constructor}{
- Loglogistic$new(scale = 1, shape = 1, location = 0, decorators = NULL, verbose = FALSE)
+ Loglogistic$new(scale = 1, shape = 1, decorators = NULL, verbose = FALSE)
 }
 
 \section{Constructor Arguments}{
@@ -40,7 +40,7 @@ Also known as the Fisk distribution.
 }
 
 \section{Constructor Details}{
- The Log-Logistic distribution is parameterised with \code{shape} and \code{scale} as positive numerics and \code{location} as a numeric.
+ The Log-Logistic distribution is parameterised with \code{shape} and \code{scale} as positive numerics.
 }
 
 \section{Public Variables}{

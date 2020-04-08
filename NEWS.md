@@ -5,7 +5,7 @@
 ### Deprecated Functions/Fields/Methods
 
 * Individual property and trait accessors deprecated: `$support, $symmetry, $kurtosisType, $skewnessType, $valueSupport, $variateForm, $type`
-* Separated `Loglogistic` and `ShiftedLoglogistic` so only the latter has a `location` parameter. Additionally added an analytical `rand` expression to `ShiftedLoglogistic`
+* Separated `Loglogistic` and `ShiftedLoglogistic` so only the latter has a `location` parameter. Additionally added an analytical `rand` expression to `ShiftedLoglogistic`, and `Loglogistic` now implemented from package `actuar`
 
 ## Patches
 
@@ -15,6 +15,7 @@
 * Changed default `form` parameter in `NegativeBinomial`, now errors if supplied argument is not in one of the four choices (previously reverted to "fbs")
 * Fixed bug in `MultivariateNormal` `rand()` which was not adding the `mean` correctly
 * Massive bottleneck in `VectorDistribution` for same distribution type removed in d/p/q/r functions
+* `Triangular` now implemented from package `extraDistr`
 
 # distr6 1.3.5
 
