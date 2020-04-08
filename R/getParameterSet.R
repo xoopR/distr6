@@ -461,17 +461,27 @@ getParameterSet.Logistic <- function(x, mean, scale, sd = NULL, verbose = FALSE)
   return(ps)
 }
 
-getParameterSet.Loglogistic <- function(x, scale, shape, location, verbose = FALSE){
+getParameterSet.Loglogistic <- function(x, scale, shape, rate = NULL, verbose = FALSE){
 
-  if(verbose) message("Parameterised with scale, shape and location.")
+  rate.bool = scale.bool = FALSE
 
-  ps <- ParameterSet$new(id = list("scale","shape","location"), value = list(1,1,0),
-                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = T)),
-                         settable = list(TRUE, TRUE, TRUE),
-                         updateFunc = NULL,
+  if(!is.null(rate)){
+    if(verbose) message("Parameterised with rate and shape.")
+    rate.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with scale and shape.")
+    scale.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("scale","rate","shape"), value = list(1,1,1),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new()),
+                         settable = list(scale.bool, rate.bool, TRUE),
+                         updateFunc = list(NA,
+                                           function(self) self$getParameterValue('scale')^-1,
+                                           NA),
                          description = list("Scale Parameter",
-                                            "Shape Parameter",
-                                            "Location Parameter"))
+                                            "Rate Parameter",
+                                            "Shape Parameter"))
   return(ps)
 }
 
@@ -721,6 +731,31 @@ getParameterSet.Rayleigh <- function(x, mode, verbose = FALSE){
                           updateFunc = NULL,
                           description = list("Mode - Scale Parameter"))
 
+  return(ps)
+}
+
+getParameterSet.ShiftedLoglogistic <- function(x, scale, shape, location, rate = NULL, verbose = FALSE){
+
+  rate.bool = scale.bool = FALSE
+
+  if(!is.null(rate)){
+    if(verbose) message("Parameterised with rate, shape and location.")
+    rate.bool = TRUE
+  } else{
+    if(verbose) message("Parameterised with scale, shape and location.")
+    scale.bool = TRUE
+  }
+
+  ps <- ParameterSet$new(id = list("scale","rate","shape","location"), value = list(1,1,1,0),
+                         support = list(PosReals$new(), PosReals$new(), PosReals$new(), Reals$new()),
+                         settable = list(scale.bool, rate.bool, TRUE, TRUE),
+                         updateFunc = list(NA,
+                                           function(self) self$getParameterValue('scale')^-1,
+                                           NA, NA),
+                         description = list("Scale Parameter",
+                                            "Rate Parameter",
+                                            "Shape Parameter",
+                                            "Location Parameter"))
   return(ps)
 }
 

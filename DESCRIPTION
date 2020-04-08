@@ -149,6 +149,7 @@ Collate:
     'SDistribution_Pareto.R'
     'SDistribution_Poisson.R'
     'SDistribution_Rayleigh.R'
+    'SDistribution_ShiftedLoglogistic.R'
     'SDistribution_StudentT.R'
     'SDistribution_StudentTNoncentral.R'
     'SDistribution_Triangular.R'

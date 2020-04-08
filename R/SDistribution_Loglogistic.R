@@ -7,19 +7,19 @@
 #' @templateVar ClassName Loglogistic
 #' @templateVar DistName Log-Logistic
 #' @templateVar uses in survival analysis for its non-monotonic hazard as well as in economics
-#' @templateVar params shape, \eqn{\beta}, scale, \eqn{\alpha}, and location, \eqn{\gamma},
+#' @templateVar params shape, \eqn{\beta}, and scale, \eqn{\alpha}
 #' @templateVar pdfpmf pdf
-#' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
-#' @templateVar paramsupport \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}
+#' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)(x/\alpha)^{\beta-1}(1 + (x/\alpha)^\beta)^{-2}}
+#' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the non-negative Reals
 #' @templateVar omittedVars \code{entropy}, \code{mgf} and \code{cf}
 #' @templateVar aka Fisk
 #' @aliases Fisk
-#' @templateVar constructor scale = 1, shape = 1, location = 0
+#' @templateVar constructor scale = 1, shape = 1
 #' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
 #' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
 #' @templateVar arg3 \code{location} \tab numeric \tab location parameter. \cr
-#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics and \code{location} as a numeric.
+#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
 #' @templateVar additionalSeeAlso \code{\link{Logistic}} for the Logistic distribution.
 #'
 #' @examples
@@ -50,10 +50,10 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F)
 Loglogistic$set("public","name","Loglogistic")
 Loglogistic$set("public","short_name","LLogis")
 Loglogistic$set("public","description","Log-Logistic Probability Distribution.")
+Loglogistic$set("public","packages","actuar")
 
 Loglogistic$set("public","mean",function(){
-  return(self$getParameterValue("location") +
-           (self$getParameterValue("scale")*pi/self$getParameterValue("shape"))/
+  return((self$getParameterValue("scale")*pi/self$getParameterValue("shape"))/
            sin(pi/self$getParameterValue("shape")))
 })
 Loglogistic$set("public","variance",function(){
@@ -93,51 +93,65 @@ Loglogistic$set("public","kurtosis",function(excess = TRUE){
 })
 Loglogistic$set("public","mode",function(which = NULL){
   shape <- self$getParameterValue("shape")
-  return(self$getParameterValue("location") +
-           self$getParameterValue("scale")*((shape-1)/(shape+1))^(1/shape))
+  return(self$getParameterValue("scale")*((shape-1)/(shape+1))^(1/shape))
 })
 Loglogistic$set("public", "pgf", function(z){
   return(NaN)
 })
 
-Loglogistic$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  super$setParameterValue(..., lst = lst, error = error)
-  private$.properties$support <- Interval$new(self$getParameterValue("location"),Inf,type="()")
-  invisible(self)
-})
-
 Loglogistic$set("private",".getRefParams", function(paramlst){
   lst = list()
-  if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
+  if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale))
+  if(!is.null(paramlst$rate)) lst = c(lst, list(scale = paramlst$rate^-1))
   if(!is.null(paramlst$shape)) lst = c(lst, list(shape = paramlst$shape))
   return(lst)
 })
 Loglogistic$set("private",".pdf", function(x){
-  location <- self$getParameterValue("location")
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
-
-  return((shape/scale) * (((x - location)/scale)^(shape-1)) * (1 + ((x - location)/scale)^shape)^-2)
+  if(checkmate::testList(self$getParameterValue("shape"))){
+    mapply(actuar::dllogis, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    actuar::dllogis(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
+  }
 })
 Loglogistic$set("private",".cdf", function(x){
-  (1 + ((x - self$getParameterValue("location"))/self$getParameterValue("scale"))^-self$getParameterValue("shape"))^-1
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(actuar::pllogis, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    actuar::pllogis(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Loglogistic$set("private",".quantile", function(p){
-  self$getParameterValue("scale")*(p/(1-p))^(1/self$getParameterValue("shape")) + self$getParameterValue("location")
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(actuar::qllogis, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+    )
+  } else {
+    actuar::qllogis(p, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           lower.tail = lower.tail, log.p = log.p)
+  }
 })
 Loglogistic$set("private",".rand", function(n){
-  self$quantile(runif(n))
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(actuar::rllogis, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    actuar::rllogis(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))
+  }
 })
 
-Loglogistic$set("public","initialize",function(scale = 1, shape = 1, location = 0,
+Loglogistic$set("public","initialize",function(scale = 1, shape = 1, rate = NULL,
                                                decorators = NULL, verbose = FALSE){
 
-  private$.parameters <- getParameterSet(self, scale, shape, location, verbose)
-  self$setParameterValue(scale = scale, shape = shape, location = location)
+  private$.parameters <- getParameterSet(self, scale, shape, rate, verbose)
+  self$setParameterValue(scale = scale, shape = shape, rate = rate)
 
   super$initialize(decorators = decorators,
-                   support = Interval$new(location,Inf,type="()"),
+                   support = PosReals$new(zero = T),
                    type = PosReals$new(zero = T),
                    valueSupport = "continuous")
 })
@@ -146,4 +160,4 @@ Loglogistic$set("public","initialize",function(scale = 1, shape = 1, location = 
                               data.table::data.table(ShortName = "LLogis", ClassName = "Loglogistic",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "-"))
+                                                     Package = "actuar"))
