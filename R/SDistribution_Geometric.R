@@ -140,7 +140,7 @@ Geometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
 
     if (checkmate::testList(self$getParameterValue("prob"))) {
         mapply(pgeom, prob = self$getParameterValue("prob"),
-               MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+               MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
         )
     } else {
         pgeom(x, prob = self$getParameterValue("prob"),

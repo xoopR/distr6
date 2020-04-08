@@ -92,7 +92,7 @@ Poisson$set("private", ".pdf", function(x, log = FALSE){
 Poisson$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("rate"))) {
     mapply(ppois, lambda = self$getParameterValue("rate"),
-           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     ppois(x, lambda = self$getParameterValue("rate"),

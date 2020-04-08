@@ -113,7 +113,7 @@ Binomial$set("private", ".pdf", function(x, log = FALSE){
 Binomial$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("size"))) {
     mapply(pbinom, size = self$getParameterValue("size"), prob = self$getParameterValue("prob"),
-      MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+      MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     pbinom(x, size = self$getParameterValue("size"), prob = self$getParameterValue("prob"),

@@ -100,7 +100,7 @@ Exponential$set("private", ".pdf", function(x, log = FALSE){
 Exponential$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("rate"))) {
     mapply(pexp, rate = self$getParameterValue("rate"),
-           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     pexp(x, rate = self$getParameterValue("rate"),

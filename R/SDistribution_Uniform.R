@@ -119,7 +119,7 @@ Uniform$set("private", ".pdf", function(x, log = FALSE){
 Uniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(punif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
-           MoreArgs = list(x = x, lower.tail = lower.tail, log.p = log.p)
+           MoreArgs = list(q = q, lower.tail = lower.tail, log.p = log.p)
     )
   } else {
     punif(x, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
