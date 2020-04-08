@@ -48,7 +48,7 @@ Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F)
 Pareto$set("public","name","Pareto Type I")
 Pareto$set("public","short_name","Pare")
 Pareto$set("public","description","Pareto Probability Distribution.")
-Pareto$set("public","packages", "expint")
+Pareto$set("public","packages", c("extraDistr", "expint"))
 
 Pareto$set("public","mean",function(){
   if(self$getParameterValue("shape") <= 1)
@@ -116,21 +116,85 @@ Pareto$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
   return(lst)
 })
-Pareto$set("private",".pdf", function(x){
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
 
-  return((shape * scale^shape)/(x^(shape+1)))
+Pareto$set("private",".pdf", function(x, log = FALSE){
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::dpareto,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale"),
+      MoreArgs = list(x = x, log = log)
+    )
+  } else {
+    extraDistr::dpareto(
+      x,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale"),
+      log = log
+    )
+  }
 })
-Pareto$set("private",".cdf", function(x){
-  1 - ((self$getParameterValue("scale")/x)^self$getParameterValue("shape"))
+Pareto$set("private",".cdf", function(x, lower.tail = TRUE, log.p = TRUE){
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::ppareto,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale"),
+      MoreArgs = list(
+        q = x,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::ppareto(
+      x,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
-Pareto$set("private",".quantile", function(p){
-  self$getParameterValue("scale") * (1-p)^(-1/self$getParameterValue("shape"))
+Pareto$set("private",".quantile", function(p, lower.tail = TRUE, log.p = TRUE){
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::qpareto,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale"),
+      MoreArgs = list(
+        p = p,
+        lower.tail = lower.tail,
+        log.p = log.p
+      )
+    )
+  } else {
+    extraDistr::qpareto(
+      p,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale"),
+      lower.tail = lower.tail,
+      log.p = log.p
+    )
+  }
 })
 Pareto$set("private",".rand", function(n){
-  self$quantile(runif(n))
+  if (checkmate::testList(self$getParameterValue("shape"))) {
+    mapply(
+      extraDistr::rpareto,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale"),
+      MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rpareto(
+      n,
+      a = self$getParameterValue("shape"),
+      b = self$getParameterValue("scale")
+    )
+  }
 })
+Pareto$set("private",".log", TRUE)
 
 Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
@@ -147,5 +211,5 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
                               data.table::data.table(ShortName = "Pare", ClassName = "Pareto",
                                                      Type = "\u211D+", ValueSupport = "continuous",
                                                      VariateForm = "univariate",
-                                                     Package = "expint"))
+                                                     Package = "extraDistr"))
 
