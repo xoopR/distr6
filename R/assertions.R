@@ -72,7 +72,7 @@ checkUnivariate <- function(){}
 assertUnivariate <- function(){}
 
 makeChecks(assertionName =  "Univariate",
-           cond = object$variateForm == "univariate",
+           cond = object$traits$variateForm == "univariate",
            defaulterrormsg = paste(object$short_name,"is not univariate"),
            pos = environment())
 
@@ -98,7 +98,7 @@ checkMultivariate <- function(){}
 assertMultivariate <- function(){}
 
 makeChecks(assertionName =  "Multivariate",
-           cond = object$variateForm == "multivariate",
+           cond = object$traits$variateForm == "multivariate",
            defaulterrormsg = paste(object$short_name,"is not multivariate"),
            pos = environment())
 
@@ -124,7 +124,7 @@ checkMatrixvariate <- function(){}
 assertMatrixvariate <- function(){}
 
 makeChecks(assertionName =  "Matrixvariate",
-           cond = object$variateForm == "matrixvariate",
+           cond = object$traits$variateForm == "matrixvariate",
            defaulterrormsg = paste(object$short_name,"is not matrixvariate"),
            pos = environment())
 
@@ -150,7 +150,7 @@ checkContinuous <- function(){}
 assertContinuous <- function(){}
 
 makeChecks(assertionName =  "Continuous",
-           cond = object$valueSupport == "continuous",
+           cond = object$traits$valueSupport == "continuous",
            defaulterrormsg = paste(object$short_name,"is not continuous"),
            pos = environment())
 
@@ -176,7 +176,7 @@ checkDiscrete <- function(){}
 assertDiscrete <- function(){}
 
 makeChecks(assertionName =  "Discrete",
-           cond = object$valueSupport == "discrete",
+           cond = object$traits$valueSupport == "discrete",
            defaulterrormsg = paste(object$short_name,"is not discrete"),
            pos = environment())
 
@@ -202,7 +202,7 @@ checkMixture <- function(){}
 assertMixture <- function(){}
 
 makeChecks(assertionName =  "Mixture",
-           cond = object$valueSupport == "mixture",
+           cond = object$traits$valueSupport == "mixture",
            defaulterrormsg = paste(object$short_name,"is not mixture"),
            pos = environment())
 

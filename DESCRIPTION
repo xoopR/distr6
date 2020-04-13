@@ -176,6 +176,7 @@ Collate:
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'
+    'helpers_pdq.R'
     'lines_continuous.R'
     'lines_discrete.R'
     'lines.R'

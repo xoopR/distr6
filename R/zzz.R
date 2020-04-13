@@ -2,6 +2,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom data.table data.table as.data.table
 #' @import set6
+#' @import checkmate assert
 R62Fun(Distribution, assignEnvir = topenv(), scope = c("public", "active"))
 R62Fun(SDistribution, assignEnvir = topenv(), scope = c("public", "active"))
 R62Fun(Kernel, assignEnvir = topenv(), scope = c("public", "active"))

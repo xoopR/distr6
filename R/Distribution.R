@@ -534,42 +534,29 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 NULL
 Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data){
 
-  if (missing(data)) {
-    if (!private$.univariate) {
-      stop("Points to evaluate must be passed to `data` for multivariate and matrixvariate distributions.")
-    } else {
-      data = data.table(...)
-    }
+  if (is.null(private$.pdf)){
+    return(NULL)
   }
 
-  if (is.null(private$.pdf))
-    return(NULL)
+  data = pdq_point_assert(..., self = self, data)
+  assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
+         .var.name = "Do all points lie in Distribution domain?")
 
   if(log){
     if(private$.log){
-      pdqr = private$.pdf(x, log = log)
+      pdqr = private$.pdf(data, log = log)
     } else {
       if(!("CoreStatistics" %in% self$decorators)){
         stop("No analytical method for log available. Use CoreStatistics decorator to numerically estimate this.")
       } else {
-        pdqr = log(private$.pdf(x))
+        pdqr = log(private$.pdf(data))
       }
     }
   } else {
-    pdqr = private$.pdf(x)
+    pdqr = private$.pdf(data)
   }
 
-  if (inherits(pdqr,"data.table")) {
-    return(pdqr)
-  } else{
-    if (simplify) {
-      return(pdqr)
-    } else {
-      pdqr = data.table::data.table(pdqr)
-      colnames(pdqr) = self$short_name
-      return(pdqr)
-    }
-  }
+  pdqr_returner(pdqr, simplify)
 })
 #-------------------------------------------------------------
 # Public Methods - cdf
@@ -610,10 +597,15 @@ Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data
 #'
 #' @export
 NULL
-Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
+Distribution$set("public","cdf",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data){
 
-  if (is.null(private$.cdf))
+  if (is.null(private$.cdf)) {
     return(NULL)
+  }
+
+  data = pdq_point_assert(..., self = self, data)
+  assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
+         .var.name = "Do all points lie in Distribution domain?")
 
   if(log.p | !lower.tail){
     if(private$.log){
@@ -631,18 +623,7 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
     pdqr = private$.cdf(x)
   }
 
-  if (inherits(pdqr,"data.table")) {
-    return(pdqr)
-  } else{
-    if (simplify) {
-      return(pdqr)
-    } else {
-      pdqr = data.table::data.table(pdqr)
-      colnames(pdqr) = self$short_name
-      return(pdqr)
-    }
-  }
-
+  pdqr_returner(pdqr, simplify)
 })
 #-------------------------------------------------------------
 # Public Methods - quantile
@@ -681,11 +662,16 @@ Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FAL
 #' or as a data.table.
 #'
 #' @export
-quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE) {}
-Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
+quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data) {}
+Distribution$set("public","quantile",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data){
 
-  if (is.null(private$.quantile))
+  if (is.null(private$.quantile)) {
     return(NULL)
+  }
+
+  data = pdq_point_assert(..., self = self, data)
+  assert(Interval$new(0,1)$contains(as.numeric(data), all = TRUE),
+         .var.name = "Do all quantiles lie in [0,1]?")
 
   if(log.p | !lower.tail){
     if(private$.log){
@@ -703,29 +689,7 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
     pdqr = private$.quantile(p)
   }
 
-  if (inherits(pdqr,"data.table")) {
-    return(pdqr)
-  } else{
-    if (simplify) {
-      return(pdqr)
-    } else {
-      pdqr = data.table::data.table(pdqr)
-      colnames(pdqr) = self$short_name
-      return(pdqr)
-    }
-  }
-
-  if(inherits(quantile,"data.table")){
-    return(quantile)
-  }else{
-    if(simplify)
-      return(quantile)
-    else{
-      quantile = data.table::data.table(quantile)
-      colnames(quantile) = self$short_name
-      return(quantile)
-    }
-  }
+  pdqr_returner(pdqr, simplify)
 })
 #-------------------------------------------------------------
 # Public Methods - rand
@@ -759,25 +723,15 @@ Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p =
 NULL
 Distribution$set("public","rand",function(n, simplify = TRUE){
 
-  if(is.null(private$.rand))
+  if (is.null(private$.rand)) {
     return(NULL)
+  }
 
-  if(length(n) > 1)
-    n = length(n)
+  if(length(n) > 1) n = length(n)
 
   pdqr = private$.rand(n)
 
-  if (inherits(pdqr,"data.table")) {
-    return(pdqr)
-  } else{
-    if (simplify) {
-      return(pdqr)
-    } else {
-      pdqr = data.table::data.table(pdqr)
-      colnames(pdqr) = self$short_name
-      return(pdqr)
-    }
-  }
+  pdqr_returner(pdqr, simplify)
 })
 
 #-------------------------------------------------------------
