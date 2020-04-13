@@ -109,24 +109,34 @@ WeightedDiscrete$set("public","setParameterValue",function(..., lst = NULL, erro
   return(NULL)
 })
 
-WeightedDiscrete$set("private",".pdf",function(x){
-  as.numeric(unlist(private$.data[match(x, private$.data$x), "pdf"]))
+WeightedDiscrete$set("private",".pdf",function(x, log = FALSE){
+  pdf = as.numeric(unlist(private$.data[match(x, private$.data$x), "pdf"]))
+  if(log) pdf = log(pdf)
+  return(pdf)
 })
-WeightedDiscrete$set("private",".cdf",function(x){
+WeightedDiscrete$set("private",".cdf",function(x, lower.tail = TRUE, log.p = FALSE){
   find = findInterval(x, private$.data$x)
   find[find == 0] = 1
+  cdf = as.numeric(unlist(private$.data[find, "cdf"]))
+  if(!lower.tail) cdf = 1 - cdf
+  if(log.p) cdf = log(cdf)
 
-  return(as.numeric(unlist(private$.data[find, "cdf"])))
+  return(cdf)
 })
-WeightedDiscrete$set("private",".quantile",function(p){
+WeightedDiscrete$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
+  if(log.p) p = exp(p)
+  if(!lower.tail) p = 1 - p
+
   mat = p <= matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
   which = apply(mat, 1, function(x) which(x)[1])
   which[is.na(which)] = ncol(mat)
   return(as.numeric(unlist(private$.data[which, "x"])))
 })
-WeightedDiscrete$set("private",".rand",function(x){
+WeightedDiscrete$set("private",".rand",function(n){
   sample(private$.data$x, n, TRUE, private$.data$pdf)
 })
+WeightedDiscrete$set("private", ".log", TRUE)
+WeightedDiscrete$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 WeightedDiscrete$set("private",".data",data.table::data.table())
 

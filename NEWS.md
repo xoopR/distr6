@@ -6,6 +6,8 @@
 
 * Individual property and trait accessors deprecated: `$support, $symmetry, $kurtosisType, $skewnessType, $valueSupport, $variateForm, $type`
 * Separated `Loglogistic` and `ShiftedLoglogistic` so only the latter has a `location` parameter. Additionally added an analytical `rand` expression to `ShiftedLoglogistic`, and `Loglogistic` now implemented from package `actuar`
+* Removed deprecated classes: `ArrayDistribution`
+* Removed deprecated functions: `listSpecialSets`
 
 ## Patches
 
@@ -15,8 +17,9 @@
 * Changed default `form` parameter in `NegativeBinomial`, now errors if supplied argument is not in one of the four choices (previously reverted to "fbs")
 * Fixed bug in `MultivariateNormal` `rand()` which was not adding the `mean` correctly
 * Massive bottleneck in `VectorDistribution` for same distribution type removed in d/p/q/r functions
-* `DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald` now implemented from package `extraDistr`
+* `Dirichlet, DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald` now implemented from package `extraDistr`
 * Bug fix in `Frechet` `$cdf`
+* Analytical `log` and `lower.tail` now available for all `SDistributions` and imputation possible for customs with `CoreStatistics`
 
 # distr6 1.3.5
 

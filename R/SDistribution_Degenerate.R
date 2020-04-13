@@ -84,14 +84,36 @@ Degenerate$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Degenerate$set("private", ".pdf", function(x, log = FALSE){
-  if(x == self$getParameterValue("mean")){
-    if(log) return(0) else return(1)
+  mean = self$getParameterValue("mean")
+
+  if(checkmate::testList(mean)){
+    pdf = matrix(ncol = length(mean), nrow = length(x))
+    for(i in seq_along(mean)){
+      for(j in seq_along(x)){
+        pdf[j,i] = as.numeric(x[j] == mean[[i]])
+      }
+    }
   } else {
-    if(log) return(-Inf) else return(0)
+    pdf = as.numeric(x == mean)
   }
+
+  if(log) pdf = log(pdf)
+  return(pdf)
 })
 Degenerate$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  cdf = if(x >= self$getParameterValue("mean")) 1 else 0
+  mean = self$getParameterValue("mean")
+
+  if(checkmate::testList(mean)){
+    cdf = matrix(ncol = length(mean), nrow = length(x))
+    for(i in seq_along(mean)){
+      for(j in seq_along(x)){
+        cdf[j,i] = as.numeric(x[j] >= mean[[i]])
+      }
+    }
+  } else {
+    cdf = as.numeric(x >= mean)
+  }
+
   if(lower.tail) cdf = 1 - cdf
   if(log.p) cdf = log(cdf)
 
@@ -100,12 +122,27 @@ Degenerate$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
 Degenerate$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   if(log.p) p = exp(p)
   if(lower.tail) p = 1 - p
-  if(p > 0) return(self$getParameterValue("mean")) else return(-Inf)
+
+  mean = self$getParameterValue("mean")
+
+  if(checkmate::testList(mean)){
+    quantile = matrix(ncol = length(mean), nrow = length(p))
+    for(i in seq_along(mean)){
+      for(j in seq_along(p)){
+        quantile[j,i] = if(p[j] > 0) mean else -Inf
+      }
+    }
+  } else {
+    quantile = if(p > 0) mean else -Inf
+  }
+
+  return(quantile)
 })
 Degenerate$set("private", ".rand", function(n){
   rep(self$getParameterValue("mean"), n)
 })
 Degenerate$set("private", ".log", TRUE)
+Degenerate$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
 

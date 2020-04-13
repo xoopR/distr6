@@ -143,8 +143,6 @@ summary(x)
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
-
-Michael, John R.; Schucany, William R.; Haas, Roy W. (May 1976). "Generating Random Variates Using Transformations with Multiple Roots". The American Statistician. 30 (2): 88–90. doi:10.2307/2683801. JSTOR 2683801.
 }
 \seealso{
 \code{\link{listDistributions}} for all available distributions. \code{\link{Normal}} for the Normal distribution. \code{\link{CoreStatistics}} for numerical results. \code{\link{FunctionImputation}} to numerically impute d/p/q/r.

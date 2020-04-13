@@ -98,34 +98,57 @@ Arcsine$set("public","setParameterValue",function(..., lst = NULL, error = "warn
   private$.properties$support <- Interval$new(self$getParameterValue("lower"),self$getParameterValue("upper"))
   invisible(self)
 })
-Arcsine$set("private",".pdf",function(x){
-  if(self$getParameterValue("lower") == 0 & self$getParameterValue("upper") == 1)
-    return(dbeta(x, 0.5, 0.5))
-  else
-    return((pi * sqrt((x - self$getParameterValue("lower")) * (self$getParameterValue("upper") - x)))^-1)
-})
-Arcsine$set("private",".cdf",function(x){
-  if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1) {
-    return(pbeta(x, 0.5, 0.5))
-  } else {
-    return((2/pi) * (asin(sqrt(
-      (x - self$getParameterValue("lower")) /
-        (self$getParameterValue("upper") - self$getParameterValue("lower"))))))
+Arcsine$set("private",".pdf",function(x, log = FALSE){
+  lower = self$getParameterValue("lower")
+  upper = self$getParameterValue("upper")
+
+  pdf = matrix(nrow = nrow(x), ncol = length(lower))
+  for(i in seq_along(lower)){
+    for(j in 1:nrow(x)) {
+      if(!log){
+        pdf[j,i] = (pi * sqrt((x[j] - lower[i]) * (upper[i] - x[j])))^-1
+      } else {
+        pdf[j,i] = -log(pi) - log(x[j]-lower[i])/2 - log(upper[i]-x[j])/2
+      }
+    }
   }
+
+  return(pdf)
 })
-Arcsine$set("private",".quantile",function(p){
-  if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-    return(qbeta(p, 0.5, 0.5))
-  else
-    return(((self$getParameterValue("upper") - self$getParameterValue("lower")) *
-              sin(p * pi * 0.5)^2) +
-             self$getParameterValue("lower"))
+Arcsine$set("private",".cdf",function(x, lower.tail = TRUE, log.p = FALSE){
+  lower = self$getParameterValue("lower")
+  upper = self$getParameterValue("upper")
+
+  cdf = matrix(nrow = nrow(x), ncol = length(lower))
+  for(i in seq_along(lower)){
+    for(j in 1:nrow(x)) {
+      cdf[j,i] = (2/pi) * (asin(sqrt((x - lower) / (upper - lower))))
+    }
+  }
+
+  if(!lower.tail) cdf = 1 - cdf
+  if(log.p) cdf = log(cdf)
+
+  return(cdf)
+})
+Arcsine$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
+  lower = self$getParameterValue("lower")
+  upper = self$getParameterValue("upper")
+
+  if(log.p) p = exp(p)
+  if(!lower.tail) p = 1 - p
+
+  quantile = matrix(nrow = nrow(x), ncol = length(lower))
+  for(i in seq_along(lower)){
+    for(j in 1:nrow(x)) {
+      quantile[j,i] = ((upper - lower) * (sin(p * pi * 0.5)^2)) + lower
+    }
+  }
+
+  return(quantile)
 })
 Arcsine$set("private",".rand",function(n){
-  if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-    return(rbeta(n, 0.5, 0.5))
-  else
-    return(self$quantile(runif(n)))
+  self$quantile(runif(n))
 })
 
 Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){

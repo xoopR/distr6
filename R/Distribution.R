@@ -532,7 +532,15 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 #'
 #' @export
 NULL
-Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
+Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data){
+
+  if (missing(data)) {
+    if (!private$.univariate) {
+      stop("Points to evaluate must be passed to `data` for multivariate and matrixvariate distributions.")
+    } else {
+      data = data.table(...)
+    }
+  }
 
   if (is.null(private$.pdf))
     return(NULL)

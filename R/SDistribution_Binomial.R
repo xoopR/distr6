@@ -140,6 +140,7 @@ Binomial$set("private", ".rand", function(n){
   }
 })
 Binomial$set("private", ".log", TRUE)
+Binomial$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 
@@ -149,9 +150,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
   super$initialize(decorators = decorators,
                    support = Set$new(0:size, class = "integer"),
                    type = Naturals$new(),
-                   symmetry = if(prob == 0.5) "symmetric" else "asymmetric",
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
+                   symmetry = if(prob == 0.5) "symmetric" else "asymmetric")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

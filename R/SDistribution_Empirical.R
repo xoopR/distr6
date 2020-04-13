@@ -112,16 +112,25 @@ Empirical$set("public","setParameterValue",function(..., lst = NULL, error = "wa
 
 Empirical$set("private",".data",data.table::data.table())
 Empirical$set("private",".total", numeric(1))
-Empirical$set("private",".pdf", function(x){
-  as.numeric(unlist(private$.data[match(round(x, 10), round(private$.data$samples, 10)), "N"]/private$.total))
+Empirical$set("private",".pdf", function(x, log = FALSE){
+  pdf = as.numeric(unlist(private$.data[match(round(x, 10), round(private$.data$samples, 10)), "N"]/private$.total))
+  if(log) pdf = log(pdf)
+
+  return(pdf)
 })
-Empirical$set("private",".cdf", function(x){
+Empirical$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   find = findInterval(x, private$.data$samples)
   find[find == 0] = 1
+  cdf = as.numeric(unlist(private$.data[find, "cumN"]/private$.total))
+  if(!lower.tail) cdf = 1 - cdf
+  if(log.p) cdf = log(cdf)
 
-  return(as.numeric(unlist(private$.data[find, "cumN"]/private$.total)))
+  return(cdf)
 })
-Empirical$set("private",".quantile", function(p){
+Empirical$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
+  if(log.p) p = exp(p)
+  if(!lower.tail) p = 1 - p
+
   p = p * private$.total
   mat = p <= matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
   which = apply(mat, 1, function(x) which(x)[1])
@@ -132,6 +141,8 @@ Empirical$set("private",".quantile", function(p){
 Empirical$set("private",".rand", function(n){
   sample(unlist(self$properties$support$elements), n, TRUE)
 })
+Empirical$set("private", ".log", TRUE)
+Empirical$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Empirical$set("public","initialize",function(samples, decorators = NULL, verbose = FALSE){
 

@@ -98,19 +98,32 @@ Categorical$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$probs)) lst = c(lst, list(probs = paramlst$probs))
   return(lst)
 })
-Categorical$set("private",".pdf",function(x){
-  self$getParameterValue("probs")[self$support$elements %in% x]
+Categorical$set("private",".pdf",function(x, log = FALSE){
+  pdf = self$getParameterValue("probs")[self$support$elements %in% x]
+  if(log) pdf = log(pdf)
+
+  return(pdf)
 })
-Categorical$set("private",".cdf",function(x){
-  cumsum(self$pdf(self$support$elements))[self$support$elements %in% x]
+Categorical$set("private",".cdf",function(x, lower.tail = TRUE, log.p = FALSE){
+  cdf = cumsum(self$pdf(self$support$elements))[self$support$elements %in% x]
+  if(!lower.tail) cdf = 1 - cdf
+  if(log.p) cdf = log(cdf)
+
+  return(cdf)
 })
-Categorical$set("private",".quantile",function(p){
+Categorical$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
+  if(log.p) p = exp(p)
+  if(!lower.tail) p = 1 - p
+
   cdf = matrix(self$cdf(self$support$elements), ncol = self$support$length, nrow = length(p), byrow = T)
   return(self$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
 })
 Categorical$set("private",".rand",function(n){
   sample(self$support$elements, n, TRUE, self$getParameterValue("probs"))
 })
+Categorical$set("private", ".log", TRUE)
+Categorical$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
+
 
 Categorical$set("public","initialize",function(..., probs, decorators = NULL, verbose = FALSE){
 

@@ -56,6 +56,7 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F)
 Dirichlet$set("public","name","Dirichlet")
 Dirichlet$set("public","short_name","Diri")
 Dirichlet$set("public","description","Multivariate Normal Probability Distribution.")
+Dirichlet$set("public","packages","extraDistr")
 
 Dirichlet$set("public","mean",function(){
   return(self$getParameterValue("params")/sum(self$getParameterValue("params")))
@@ -101,29 +102,34 @@ Dirichlet$set("private",".getRefParams", function(paramlst){
   if(!is.null(paramlst$params)) lst = c(lst, list(params = paramlst$params))
   return(lst)
 })
-Dirichlet$set("private",".pdf",function(x){
-  K <- self$getParameterValue("K")
+Dirichlet$set("private",".pdf",function(x, log = FALSE){
+  params = self$getParameterValue("params")
 
-  checkmate::assertDataTable(x, ncol = K)
+  checkmate::assertMatrix(x, ncols = length(params))
 
-  params <- self$getParameterValue("params")
-  p1 = prod(gamma(params))/gamma(sum(params))
-  p1 = rep(p1, nrow(x))
-
-  p2 = x ^ matrix(params - 1, ncol = K, nrow = nrow(x), byrow = T)
-  p2 = apply(p2, 1, prod)
-
-  pdf = p2 / p1
-  pdf[rowSums(x) != 1] = 0
-
-  return(pdf)
+  if(checkmate::testList(params)){
+    mapply(extraDistr::ddirichlet,
+           alpha = params,
+           MoreArgs = list(x = x, log = log))
+  } else {
+    extraDistr::ddirichlet(x,
+                           alpha = params,
+                           log = log)
+  }
 })
 Dirichlet$set("private",".rand",function(n){
-  rand = sapply(params, function(x) rgamma(n, shape = x))
-  rand = if(n > 1) apply(rand,1,function(x) x/sum(x)) else rand/sum(rand)
-
-  return(data.table::data.table(t(rand)))
+  if (checkmate::testList(self$getParameterValue("params"))) {
+    mapply(extraDistr::rdirichlet,
+           alpha = self$getParameterValue("params"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rdirichlet(n,
+                           alpha = self$getParameterValue("params"))
+  }
 })
+Dirichlet$set("private", ".log", TRUE)
+Dirichlet$set("private", ".traits", list(valueSupport = "continuous", variateForm = "multivariate"))
 
 Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL, verbose = FALSE){
 
@@ -132,14 +138,12 @@ Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL
 
   super$initialize(decorators = decorators,
                    support = setpower(Interval$new(0,1,type="()"), length(params)),
-                   type = setpower(Interval$new(0,1,type="()"), length(params)),
-                   valueSupport = "continuous",
-                   variateForm = "multivariate")
+                   type = setpower(Interval$new(0,1,type="()"), length(params)))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,
                               data.table::data.table(ShortName = "Diri", ClassName = "Dirichlet",
                                                      Type = "[0,1]^K", ValueSupport = "continuous",
                                                      VariateForm = "multivariate",
-                                                     Package = "-"))
+                                                     Package = "extraDistr"))
 

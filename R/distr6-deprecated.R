@@ -9,8 +9,6 @@
 #' @section Deprecated Functions:
 #' \tabular{ll}{
 #' \strong{Deprecated} \tab \strong{Replacement} \cr
-#' `ArrayDistribution` \tab [ProductDistribution] \cr
-#' `listSpecialSets` \tab [set6::listSpecialSets()] \cr
 #' }
 #' @keywords internal
 NULL

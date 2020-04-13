@@ -51,7 +51,7 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F)
 Multinomial$set("public","name","Multinomial")
 Multinomial$set("public","short_name","Multinom")
 Multinomial$set("public","description","Multinomial Probability Distribution.")
-Multinomial$set("public","packages","stats")
+Multinomial$set("public","packages","extraDistr")
 
 Multinomial$set("public","mean",function(){
   return(self$getParameterValue("size") * self$getParameterValue("probs"))
@@ -114,19 +114,33 @@ Multinomial$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Multinomial$set("private",".pdf",function(x, log = FALSE){
-  checkmate::assertDataTable(x, ncol = self$getParameterValue("K"))
-  z = apply(x, 1, function(y){
-    if(sum(y) != self$getParameterValue("size")){
-      if(log) return(-Inf) else return(0)
-    } else {
-      return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")), log = log)
-    }
-  })
 
-  return(z)
+  checkmate::assertMatrix(x, ncols = length(self$getParameterValue("prob")))
+
+  if(checkmate::testList(self$getParameterValue("prob"))){
+    mapply(extraDistr::dmnom,
+           size = self$getParameterValue("size"),
+           prob = self$getParameterValue("prob"),
+           MoreArgs = list(x = x, log = log))
+  } else {
+    extraDistr::dmnom(x,
+                      size = self$getParameterValue("size"),
+                      prob = self$getParameterValue("prob"),
+                      log = log)
+  }
 })
 Multinomial$set("private",".rand",function(n){
-  data.table::data.table(t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs"))))
+  if (checkmate::testList(self$getParameterValue("prob"))) {
+    mapply(extraDistr::rmnom,
+           size = self$getParameterValue("size"),
+           prob = self$getParameterValue("prob"),
+           MoreArgs = list(n = n)
+    )
+  } else {
+    extraDistr::rmnom(x,
+                      size = self$getParameterValue("size"),
+                      prob = self$getParameterValue("prob"))
+  }
 })
 Multinomial$set("private", ".log", TRUE)
 
@@ -147,5 +161,5 @@ Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), d
                               data.table::data.table(ShortName = "Multinom", ClassName = "Multinomial",
                                                      Type = "\u21150^K", ValueSupport = "discrete",
                                                      VariateForm = "multivariate",
-                                                     Package = "stats"))
+                                                     Package = "extraDistr"))
 

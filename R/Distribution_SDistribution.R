@@ -95,9 +95,7 @@ NULL
 #-------------------------------------------------------------
 SDistribution <- R6Class("SDistribution", inherit = Distribution)
 SDistribution$set("public","initialize",function(decorators, support, type,
-                                                 symmetry = c("asymmetric", "symmetric"),
-                                                 valueSupport = c("discrete","continuous","mixture"),
-                                                 variateForm = c("univariate","multivariate","matrixvariate")){
+                                                 symmetry = c("asymmetric", "symmetric")){
 
   if(getR6Class(self) == "SDistribution")
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listDistributions()
@@ -107,9 +105,7 @@ SDistribution$set("public","initialize",function(decorators, support, type,
 
   if(!is.null(decorators))  suppressMessages(decorate(self, decorators))
 
-  private$.traits = list(type = assertSet(type),
-                         valueSupport = match.arg(valueSupport),
-                         variateForm = match.arg(variateForm))
+  private$.traits$type = assertSet(type)
 
   kur = try(self$kurtosis(excess = TRUE), silent = TRUE)
   skew = try(self$skewness(excess = TRUE), silent = TRUE)
