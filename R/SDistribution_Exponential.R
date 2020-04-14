@@ -127,6 +127,7 @@ Exponential$set("private", ".rand", function(n){
   }
 })
 Exponential$set("private", ".log", TRUE)
+Exponential$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE){
 
@@ -135,8 +136,7 @@ Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorator
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(zero = T),
-                   type = PosReals$new(zero = T),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

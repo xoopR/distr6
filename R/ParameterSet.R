@@ -34,7 +34,7 @@
 #' and should start with \code{function(self)}, see examples.
 #'
 #' Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
-#' with a non-NA \code{updateFunc}.
+#' with a non-NULL \code{updateFunc}.
 #'
 #'@section Public Methods:
 #'  \tabular{ll}{
@@ -94,63 +94,54 @@ ParameterSet$set("private",".SetParameterSupport",function(lst){
 ParameterSet$set("public","initialize", function(id, value, support, settable,
                                                  updateFunc = NULL, description = NULL){
 
-  checkmate::assert(length(id)==length(value), length(id)==length(settable),
-                    length(id)==length(support), combine = "and",
-                    .var.name = "all arguments must be of same length")
-  if(!is.null(description))
-    checkmate::assert(length(id)==length(description), .var.name = "all arguments must be of same length")
-  if(!is.null(updateFunc))
-    checkmate::assert(length(id)==length(updateFunc), .var.name = "all arguments must be of same length")
+  # coerce all to lists except id, and settable (should be same type)
+  id = unlist(id)
+  if(!checkmate::testList(value)){
+    value = if(length(value) > 1) as.list(value) else list(value)
+  }
+  if(!checkmate::testList(support)) support = list(support)
+  settable = unlist(settable)
+
+  # check lengths
+  checkmate::assert(length(unique(length(id), length(value), length(settable), length(support))) == 1,
+                    .var.name = "arguments of same length")
+
+  # id checks
   checkmate::assert(!any(duplicated(id)), .var.name = "'id's must be unique")
+  assertOneWord(id)
 
-  params = data.table::data.table()
-  for(i in 1:length(id)){
-    a_id = id[[i]]
-    checkmate::assertCharacter(a_id,.var.name = "'id' must be character")
-    checkmate::assert(length(strsplit(a_id," ",fixed=T)[[1]])==1,
-                      .var.name = "'id' must be one word")
+  # support checks
+  assertSetList(support)
 
-    a_settable  = settable[[i]]
-    checkmate::assertLogical(a_settable, .var.name = "'settable' must be logical")
+  # settable checks
+  checkmate::assertLogical(settable)
 
-    a_support = support[[i]]
-    assertSet(a_support)
-
-    if(!is.null(description)){
-      a_description = description[[i]]
-      if(is.null(a_description)) a_description = "None"
-      checkmate::assertCharacter(a_description,.var.name = "'description' must be character")
-    } else
-      a_description = "None"
-
-    if(!is.null(updateFunc)){
-      a_update = updateFunc[[i]]
-      if(is.null(a_update))
-        a_update = NA
-    } else
-      a_update = NA
-
-    a_value = value[[i]]
-    if(length(a_value) > 1){
-      if(!a_support$contains(Tuple$new(a_value)))
-        stop(Tuple$new(a_value)$strprint(), " does not lie in the support of parameter ", a_id)
+  # value checks
+  mapply(function(x, y){
+    if(length(x) > 1){
+      assertContains(y, Tuple$new(x), paste(strCollapse(x, "()"), "does not lie in the set", y$strprint()))
     } else {
-      if(!a_support$contains(a_value))
-        stop(a_value, " does not lie in the support of parameter ", a_id)
+      assertContains(y, x, paste(x, "does not lie in the set", y$strprint()))
     }
+  }, value, support)
 
-
-    a_param = data.table::data.table(id = a_id, value = 0, support = list(a_support),
-                         settable = a_settable,
-                         description = a_description,
-                         updateFunc = a_update,
-                         stringsAsFactors = F)
-    a_param$value <- list(a_value)
-
-    params = rbind(params, a_param)
+  # description checks
+  if(!is.null(description)) {
+    checkmate::assert(length(id)==length(description), .var.name = "arguments of same length")
+    description[sapply(description, is.null)] = "None"
+    description = unlist(description)
+    checkmate::assertCharacter(description, null.ok = TRUE)
   }
 
-  private$.parameters <- params
+  # update checks
+  if(!is.null(updateFunc)) {
+    if(!checkmate::testList(updateFunc)) updateFunc = list(updateFunc)
+    checkmate::assert(length(id)==length(updateFunc), .var.name = "arguments of same length")
+    sapply(updateFunc, checkmate::assertFunction, null.ok = TRUE)
+  }
+
+  private$.parameters <- data.table(id = id, value = value, support = support, settable = settable,
+                                    description = description, updateFunc = updateFunc)
   invisible(self)
 })
 #' @name print.ParameterSet
@@ -199,8 +190,8 @@ ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable
 #' @export
 update.ParameterSet <- function(object, ...) {}
 ParameterSet$set("public","update", function(...){
-  if(any(!is.na(private$.parameters$updateFunc))){
-    update_filter = !is.na(private$.parameters$updateFunc)
+  if(any(!is.null(private$.parameters$updateFunc))){
+    update_filter = !sapply(private$.parameters$updateFunc, is.null)
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){
       return(x[[6]](self))
@@ -213,7 +204,7 @@ ParameterSet$set("public","update", function(...){
       # }
 
       # return(newval)
-      })
+    })
     suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
   }
 
@@ -248,7 +239,7 @@ ParameterSet$set("public","parameters",function(id = NULL){
     else
       return(subset(private$.parameters, id %in% id0))
   } else {
-      return(self)
+    return(self)
   }
 })
 
@@ -345,43 +336,47 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 #' @export
 NULL
 ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-    if(is.null(lst))
-      lst <- list(...)
-    checkmate::assertList(lst)
-    for(i in 1:length(lst)){
+  if(is.null(lst)) lst <- list(...)
+  checkmate::assertList(lst)
+  for(i in 1:length(lst)){
 
-      if(any(is.null(lst[[i]])) | any(is.nan(lst[[i]])))
-        return(stopwarn(error, paste(names(lst)[[i]],"must be a number.")))
-
-      aid <- names(lst)[[i]]
-      value <- lst[[i]]
-
-      if(is.null(aid) | is.null(value))
-        return(stopwarn(error, "Parameter names and new values must be provided."))
-
-      param <- subset(as.data.table(self), id == aid)
-
-      if(nrow(param)==0)
-        return(stopwarn(error, sprintf("%s is not in the parameter set.",aid)))
-
-      # if(param$support[[1]]$class() == "integer")
-      #   value <- round(value)
-
-      if(length(value) > 1){
-        if(!param$support[[1]]$contains(Tuple$new(value), all = TRUE))
-          stop(Tuple$new(value)$strprint(), " does not lie in the support of parameter ", aid)
-      } else {
-        if(!param$support[[1]]$contains(value, all = TRUE))
-          stop(value, " does not lie in the support of parameter ", aid)
-      }
-
-
-      private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"] <- list(value)
+    if (any(is.null(lst[[i]])) | any(is.nan(lst[[i]]))) {
+      return(stopwarn(error, paste(names(lst)[[i]],"must be a number.")))
     }
 
-    self$update()
+    aid <- names(lst)[[i]]
+    value <- lst[[i]]
 
-    invisible(self)
+    if(is.null(aid) | is.null(value)) {
+      return(stopwarn(error, "Parameter names and new values must be provided."))
+    }
+
+    param <- subset(as.data.table(self), id == aid)
+
+    if (nrow(param)==0)  {
+      return(stopwarn(error, sprintf("%s is not in the parameter set.",aid)))
+    }
+
+    # if(param$support[[1]]$class() == "integer")
+    #   value <- round(value)
+
+    if (length(value) > 1) {
+      if(!param$support[[1]]$contains(Tuple$new(value), all = TRUE)) {
+        stop(Tuple$new(value)$strprint(), " does not lie in the support of parameter ", aid)
+      }
+    } else {
+      if(!param$support[[1]]$contains(value, all = TRUE)) {
+        stop(value, " does not lie in the support of parameter ", aid)
+      }
+    }
+
+
+    private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"] <- list(value)
+  }
+
+  self$update()
+
+  invisible(self)
 })
 
 #' @title Combine ParameterSets

@@ -140,7 +140,8 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     private$.sharedparams = shared_params
 
     pdist = get(distribution)
-    private$.univariate = pdist$private_fields$.traits$variateForm == "univariate"
+    private$.dimension = pdist$private_fields$.traits$dimension
+
     pdist = pdist[["private_methods"]]
     if (!is.null(pdist[[".pdf"]])) {
       private$.pdf = function(x1, log){}
@@ -149,7 +150,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
         body(fun) = substitute(FUN)
 
         dpqr = data.table()
-        if(private$.univariate){
+        if(private$.dimension == 1){
           for (i in seq_along(x1)) {
             a_dpqr = fun(unlist(x1[, ..i]), log = log)
             a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
@@ -413,18 +414,24 @@ VectorDistribution$set("public", "pgf", function(z){
 })
 
 VectorDistribution$set("public", "pdf", function(..., log = FALSE, data){
-  if (missing(data)) {
-    if (!private$.univariate) {
-      stop("Points to evaluate must be passed to `data` for multivariate and matrixvariate distributions.")
-    } else {
-      data = data.table(...)
+  if (missing(data)) data = as.matrix(data.table(...))
+
+  if (private$.dimension == 1) {
+    if (ncol(data) == 1) {
+      data = matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
+    }
+  } else {
+    if (ncol(data) == 1 & class(data) != "array") {
+      data = array(rep(data, nrow(private$.wrappedModels) * private$.dimension),
+            dim = c(nrow(data), private$.dimension, nrow(private$.wrappedModels)))
+    } else if (class(data) == "array") {
+      if(dim(data)[3] == 1) {
+        data = array(rep(data, nrow(private$.wrappedModels)),
+              dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels)))
+      }
     }
   }
-  if (ncol(data) == 1 & private$.univariate) {
-    data = as.data.table(rep(data, nrow(private$.wrappedModels)))
-  } else if (class(data) == "matrix") {
-    data = array(rep(data, 2), dim = c(dim(data), 2))
-  }
+
   dpqr = as.data.table(private$.pdf(data, log = log))
   colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
   return(dpqr)
@@ -474,7 +481,7 @@ VectorDistribution$set("public", "rand", function(..., lower.tail = TRUE, log.p 
 VectorDistribution$set("active", "distlist", function() return(private$.distlist))
 VectorDistribution$set("active", "shared_params", function() return(private$.sharedparams))
 
-VectorDistribution$set("private", ".univariate", logical(0))
+VectorDistribution$set("private", ".dimension", integer(0))
 VectorDistribution$set("private", ".distlist", FALSE)
 VectorDistribution$set("private", ".sharedparams", list())
 VectorDistribution$set("private", ".properties", list())

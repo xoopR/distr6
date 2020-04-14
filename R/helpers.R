@@ -117,3 +117,16 @@ assert_pkgload <- function(pkgs) {
     }
   }
 }
+
+assertOneWord <- function(x, errormsg = "All values must be one word."){
+  check = grepl(" ", x, fixed = TRUE)
+  if (any(check)) {
+    stop(errormsg)
+  } else {
+    invisible(x)
+  }
+}
+
+strCollapse <- function(x, par = "{}"){
+  paste0(substr(par, 1, 1), paste0(x, collapse = ", "), substr(par, 2, 2))
+}

@@ -45,7 +45,7 @@ the parameterisation. These should be given as a function that could be understo
 and should start with \code{function(self)}, see examples.
 
 Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
-with a non-NA \code{updateFunc}.
+with a non-NULL \code{updateFunc}.
 }
 
 \section{Public Methods}{

@@ -69,19 +69,19 @@ NegativeBinomial$set("public", "mean", function(){
   return(self$getParameterValue("mean"))
 })
 NegativeBinomial$set("public","variance",function(){
-  if(private$.form == "sbf" | private$.form == "tbf")
+  if(self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf")
     return(self$getParameterValue("size") * self$getParameterValue("prob") / (self$getParameterValue("qprob")^2))
-  else if(private$.form == "fbs" | private$.form == "tbs")
+  else if(self$getParameterValue("form") == "fbs" | self$getParameterValue("form") == "tbs")
     return(self$getParameterValue("size") * self$getParameterValue("qprob") / (self$getParameterValue("prob")^2))
 })
 NegativeBinomial$set("public", "skewness", function(){
-  if(private$.form == "sbf" | private$.form == "tbf")
+  if(self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf")
     return((1 + self$getParameterValue("prob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("prob")))
   else
     return((1 + self$getParameterValue("qprob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("qprob")))
 })
 NegativeBinomial$set("public", "kurtosis", function(excess = TRUE){
-  if(private$.form == "sbf" | private$.form == "tbf")
+  if(self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf")
     exkurtosis = (self$getParameterValue("qprob")^2 - 6*self$getParameterValue("qprob") + 6)/
       (self$getParameterValue("size") * self$getParameterValue("prob"))
   else
@@ -96,7 +96,7 @@ NegativeBinomial$set("public", "kurtosis", function(excess = TRUE){
 
 NegativeBinomial$set("public", "mgf", function(t){
   if(t < -log(self$getParameterValue("prob"))){
-    if(private$.form == "sbf" | private$.form == "tbf")
+    if(self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf")
       return((self$getParameterValue("qprob")/(1 - self$getParameterValue("prob")*exp(t)))^self$getParameterValue("size"))
     else
       return((self$getParameterValue("prob")/(1 - self$getParameterValue("qprob")*exp(t)))^self$getParameterValue("size"))
@@ -104,37 +104,37 @@ NegativeBinomial$set("public", "mgf", function(t){
     return(NaN)
 })
 NegativeBinomial$set("public", "cf", function(t){
-  if(private$.form == "sbf" | private$.form == "tbf")
+  if(self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf")
     return((self$getParameterValue("qprob")/(1 - self$getParameterValue("prob")*exp(t*1i)))^self$getParameterValue("size"))
   else
     return((self$getParameterValue("prob")/(1 - self$getParameterValue("qprob")*exp(t*1i)))^self$getParameterValue("size"))
 })
 NegativeBinomial$set("public", "pgf", function(z){
   if(abs(z) < 1/self$getParameterValue("prob")){
-    if(private$.form == "sbf")
+    if(self$getParameterValue("form") == "sbf")
       return((self$getParameterValue("qprob") / (1 - self$getParameterValue("prob")*z))^self$getParameterValue("size"))
-    else if(private$.form == "tbs")
+    else if(self$getParameterValue("form") == "tbs")
       return(((self$getParameterValue("prob")*z) / (1 - self$getParameterValue("qprob")*z))^self$getParameterValue("size"))
-    else if(private$.form == "fbs")
+    else if(self$getParameterValue("form") == "fbs")
       return((self$getParameterValue("prob") / (1 - self$getParameterValue("qprob")*z))^self$getParameterValue("size"))
-    else if(private$.form == "tbf")
+    else if(self$getParameterValue("form") == "tbf")
       return(((self$getParameterValue("qprob")*z) / (1 - self$getParameterValue("prob")*z))^self$getParameterValue("size"))
   } else
     return(NaN)
 })
 
 NegativeBinomial$set("public","mode",function(which = NULL){
-  if(private$.form == "sbf"){
+  if(self$getParameterValue("form") == "sbf"){
     if(self$getParameterValue("size") <= 1)
       return(0)
     else
       return(floor(((self$getParameterValue("size")-1) * self$getParameterValue("prob")) / (self$getParameterValue("qprob"))))
-  } else if(private$.form == "tbf") {
+  } else if(self$getParameterValue("form") == "tbf") {
     if(self$getParameterValue("size") <= 1)
       return(1)
     else
       return(floor(((self$getParameterValue("size")-1) * self$getParameterValue("prob")) / (self$getParameterValue("qprob"))) + 10)
-  } else if(private$.form == "fbs"){
+  } else if(self$getParameterValue("form") == "fbs"){
     if(self$getParameterValue("size") <= 1)
       return(0)
     else
@@ -150,53 +150,51 @@ NegativeBinomial$set("public","mode",function(which = NULL){
 
 NegativeBinomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
-  if(private$.form == "tbf" | private$.form == "tbs")
+  if(self$getParameterValue("form") == "tbf" | self$getParameterValue("form") == "tbs") {
     private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf, type = "[)", class = "integer")
+  }
   invisible(self)
 })
 NegativeBinomial$set("private", ".getRefParams", function(paramlst){
   lst = list()
-  if(!is.null(paramlst$size))
+  if(!is.null(paramlst$size)) {
     lst = c(lst, list(size = paramlst$size))
-  else
+  } else {
     paramlst$size = self$getParameterValue("size")
+  }
+  if(!is.null(paramlst$form)) stop("Distribution form cannot be changed after construction.")
   if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
   if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
   if(!is.null(paramlst$mean)){
-    if(private$.form == "sbf")
+    if(self$getParameterValue("form") == "sbf")
       lst = c(lst, list(prob = paramlst$mean/(paramlst$size + paramlst$mean)))
-    else if(private$.form == "tbf"){
+    else if(self$getParameterValue("form") == "tbf"){
       if(paramlst$mean <= paramlst$size)
         stop("Mean must be > number of failures")
       lst = c(lst, list(prob = (paramlst$mean - paramlst$size)/paramlst$mean))
-    } else if(private$.form == "tbs"){
+    } else if(self$getParameterValue("form") == "tbs"){
       if(paramlst$mean <= paramlst$size)
         stop("Mean must be > number of successes")
       lst = c(lst, list(prob = paramlst$size/paramlst$mean))
-    } else if(private$.form == "fbs")
+    } else if(self$getParameterValue("form") == "fbs")
       lst = c(lst, list(prob = paramlst$size/(paramlst$mean+paramlst$size)))
   }
   return(lst)
 })
-NegativeBinomial$set("private", ".pdf", function(x){
-  if(private$.form == "fbs"){
-    return(dnbinom(x, self$getParameterValue("size"), self$getParameterValue("prob")))
-  } else if (form == "sbf") {
-    return(choose(x + self$getParameterValue("size") - 1, x) *
-             self$getParameterValue("prob")^x *
-             self$getParameterValue("qprob")^self$getParameterValue("size"))
-  } else if (form == "tbf") {
-    return(choose(x - 1, self$getParameterValue("size")-1) *
-             self$getParameterValue("prob")^(x - self$getParameterValue("size")) *
-             self$getParameterValue("qprob")^self$getParameterValue("size"))
+NegativeBinomial$set("private", ".pdf", function(x, log = FALSE){
+  pdf = C_NegativeBinomialPdf(x = x,
+                              size = as.numeric(self$getParameterValue("size")),
+                              prob = as.numeric(self$getParameterValue("prob")),
+                              form = self$getParameterValue("form"))
+
+  if (ncol(pdf) == 1) {
+    return(as.numeric(pdf))
   } else {
-    return(choose(x - 1, self$getParameterValue("size")-1) *
-             self$getParameterValue("prob")^self$getParameterValue("size") *
-             self$getParameterValue("qprob")^(x - self$getParameterValue("size")))
+    return(pdf)
   }
 })
 NegativeBinomial$set("private", ".cdf", function(x){
-  if(private$.form == "fbs"){
+  if(self$getParameterValue("form") == "fbs"){
     return(pnbinom(x, self$getParameterValue("size"), self$getParameterValue("prob")))
   } else if (form == "sbf") {
     return(1 - pbeta(self$getParameterValue("prob"), x + 1, self$getParameterValue("size")))
@@ -215,7 +213,7 @@ NegativeBinomial$set("private", ".cdf", function(x){
   }
 })
 NegativeBinomial$set("private", ".quantile", function(p){
-  if(private$.form == "fbs"){
+  if(self$getParameterValue("form") == "fbs"){
     return(qnbinom(p, self$getParameterValue("size"), self$getParameterValue("prob")))
   } else if (form == "sbf") {
     return(NULL) # TODO
@@ -226,7 +224,7 @@ NegativeBinomial$set("private", ".quantile", function(p){
   }
 })
 NegativeBinomial$set("private", ".rand", function(n){
-  if(private$.form == "fbs"){
+  if(self$getParameterValue("form") == "fbs"){
     return(rnbinom(n, self$getParameterValue("size"), self$getParameterValue("prob")))
   } else if (form == "sbf") {
     return(NULL) # TODO
@@ -236,14 +234,13 @@ NegativeBinomial$set("private", ".rand", function(n){
     return(NULL) # TODO
   }
 })
+NegativeBinomial$set("private", ".traits", list(variateForm = "univariate", valueSupport = "discrete"))
 
-NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qprob = NULL, mean= NULL, form = "fbs",
+NegativeBinomial$set("public","initialize", function(size = 10, prob = 0.5, qprob = NULL, mean = NULL,
+                                                     form = c("fbs", "sbf", "tbf", "tbs"),
                                                      decorators = NULL, verbose = FALSE){
 
-  if(!(form %in% c("fbs", "sbf", "tbf", "tbs")))
-    form <- "fbs"
-
-  private$.form <- form
+  form <- match.arg(form)
 
   private$.parameters <- getParameterSet(self, size, prob, qprob, mean, form, verbose)
   self$setParameterValue(size = size, prob = prob, qprob = qprob, mean = mean)

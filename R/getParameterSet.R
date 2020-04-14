@@ -96,7 +96,7 @@ getParameterSet.Categorical <- function(x, probs, verbose = FALSE){
                          value = list(rep(0.5,categories), categories),
                          support = list(setpower(Interval$new(0,1), categories), PosNaturals$new()),
                          settable = list(TRUE, FALSE),
-                         updateFunc = list(NA,
+                         updateFunc = list(NULL,
                                            function(self) length(self$getParameterValue('probs'))),
                          description = list("Probability of success i", "Number of categories"))
 
@@ -154,7 +154,7 @@ getParameterSet.Degenerate <- function(x, mean, verbose = FALSE){
   ps <- ParameterSet$new(id = list("mean"), value = list(0),
                          support = list(Reals$new()),
                          settable = list(TRUE),
-                         updateFunc = list(NA),
+                         updateFunc = list(NULL),
                          description = list("Location Parameter"))
 
   return(ps)
@@ -167,7 +167,7 @@ getParameterSet.Dirichlet <- function(x, params, verbose = FALSE){
                          value = list(rep(1,K), K),
                          support = list(setpower(PosReals$new(),K), Interval$new(2,Inf,type="[)",class="integer")),
                          settable = list(TRUE, FALSE),
-                         updateFunc = list(NA,
+                         updateFunc = list(NULL,
                                            function(self) length(self$getParameterValue('params'))),
                          description = list("Concentration parameters", "Number of categories"))
 
@@ -210,7 +210,7 @@ getParameterSet.Erlang <- function(x, shape, rate, scale = NULL, verbose = FALSE
   ParameterSet$new(id = list("shape","rate","scale"), value = list(1, 1, 1),
                    support = list(PosIntegers$new(), PosReals$new(), PosReals$new()),
                    settable = list(TRUE, rate.bool, scale.bool),
-                   updateFunc = list(NA, NA,
+                   updateFunc = list(NULL, NULL,
                                      function(self) self$getParameterValue('rate')^-1),
                    description = list("Shape - Shape Parameter",
                                       "Rate - Inverse Scale Parameter",
@@ -232,7 +232,7 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, verbose = FALSE){
   ps <-  ParameterSet$new(id = list("rate","scale"), value = list(1, 1),
                           support = list(PosReals$new(), PosReals$new()),
                           settable = list(rate.bool, scale.bool),
-                          updateFunc = list(NA,
+                          updateFunc = list(NULL,
                                             function(self) self$getParameterValue('rate')^-1),
                           description = list("Arrival Rate", "Scale"))
 
@@ -242,24 +242,24 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL, verbose = FALSE){
 getParameterSet.FDistribution <- function(x, df1, df2, verbose = FALSE){
   if (verbose) message("Parameterised with df1 and df2.")
 
-  ps <- ParameterSet$new(id = list("df1", "df2"), value = list(1, 1),
-                         support = list(PosReals$new(), PosReals$new()),
-                         settable = list(TRUE, TRUE),
-                         updateFunc = NULL,
-                         description = list("Degrees of freedom 1",
-                                            "Degrees of freedom 2"))
+  ParameterSet$new(id = list("df1", "df2"), value = list(1, 1),
+                   support = list(PosReals$new(), PosReals$new()),
+                   settable = list(TRUE, TRUE),
+                   updateFunc = NULL,
+                   description = list("Degrees of freedom 1",
+                                      "Degrees of freedom 2"))
 }
 
 getParameterSet.FDistributionNoncentral <- function(x, df1, df2, location, verbose = FALSE){
   if (verbose) message("Parameterised with df1, df2 and location.")
 
-  ps <- ParameterSet$new(id = list("df1", "df2", "location"), value = list(1, 1, 0),
-                         support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
-                         settable = list(TRUE, TRUE, TRUE),
-                         updateFunc = NULL,
-                         description = list("Degrees of freedom 1",
-                                            "Degrees of freedom 2",
-                                            "Non-centrality parameter"))
+  ParameterSet$new(id = list("df1", "df2", "location"), value = list(1, 1, 0),
+                   support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
+                   settable = list(TRUE, TRUE, TRUE),
+                   updateFunc = NULL,
+                   description = list("Degrees of freedom 1",
+                                      "Degrees of freedom 2",
+                                      "Non-centrality parameter"))
 }
 
 getParameterSet.Frechet <- function(x, shape, scale, minimum, verbose = FALSE){
@@ -294,7 +294,7 @@ getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL, ver
   ps <- ParameterSet$new(id = list("shape","rate","scale","mean"), value = list(1, 1, 1, 1),
                          support = list(PosReals$new(), PosReals$new(), PosReals$new(), PosReals$new()),
                          settable = list(TRUE, rate.bool, scale.bool, mean.bool),
-                         updateFunc = list(NA, NA,
+                         updateFunc = list(NULL, NULL,
                                            function(self) self$getParameterValue('rate')^-1,
                                            function(self) (self$getParameterValue('shape'))/(self$getParameterValue('rate'))),
                          description = list("Shape - Shape Parameter",
@@ -378,9 +378,9 @@ getParameterSet.Hypergeometric <- function(x, size, successes, failures = NULL, 
                          value = list(1e08, 1e08, 0, 1e08),
                          support = list(Naturals$new(),Naturals$new(),Naturals$new(),Naturals$new()),
                          settable = list(TRUE, successes.bool,failures.bool,TRUE),
-                         updateFunc = list(NA,NA,
+                         updateFunc = list(NULL,NULL,
                                            function(self) self$getParameterValue('size') - self$getParameterValue('successes'),
-                                           NA),
+                                           NULL),
                          description = list("Population size",
                                             "Number of successes in the population.",
                                             "Number of failures in the population.",
@@ -417,7 +417,7 @@ getParameterSet.Laplace <- function(x, mean, scale, var = NULL, verbose = FALSE)
   ps <- ParameterSet$new(id = list("mean","scale","var"), value = list(0, 1, 2),
                          support = list(Reals$new(),PosReals$new(),PosReals$new()),
                          settable = list(TRUE, scale.bool, var.bool),
-                         updateFunc = list(NA, NA,
+                         updateFunc = list(NULL, NULL,
                                            function(self) 2*self$getParameterValue('scale')^2),
                          description = list("Mean - Location Parameter",
                                             "Scale - Scale Parameter",
@@ -453,7 +453,7 @@ getParameterSet.Logistic <- function(x, mean, scale, sd = NULL, verbose = FALSE)
   ps <- ParameterSet$new(id = list("mean","scale","sd"), value = list(0, 1, pi/sqrt(3)),
                          support = list(Reals$new(), PosReals$new(), PosReals$new()),
                          settable = list(TRUE, scale.bool, sd.bool),
-                         updateFunc = list(NA,NA,
+                         updateFunc = list(NULL,NULL,
                                            function(self) self$getParameterValue('scale')*pi/sqrt(3)),
                          description = list("Mean - Location Parameter",
                                             "Scale - Scale Parameter",
@@ -476,9 +476,9 @@ getParameterSet.Loglogistic <- function(x, scale, shape, rate = NULL, verbose = 
   ps <- ParameterSet$new(id = list("scale","rate","shape"), value = list(1,1,1),
                          support = list(PosReals$new(), PosReals$new(), PosReals$new()),
                          settable = list(scale.bool, rate.bool, TRUE),
-                         updateFunc = list(NA,
+                         updateFunc = list(NULL,
                                            function(self) self$getParameterValue('scale')^-1,
-                                           NA),
+                                           NULL),
                          description = list("Scale Parameter",
                                             "Rate Parameter",
                                             "Shape Parameter"))
@@ -518,7 +518,7 @@ getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog 
                                           PosReals$new(), PosReals$new(), PosReals$new()),
                            settable = list(TRUE, varlog.bool, sdlog.bool, preclog.bool, FALSE,
                                            var.bool, sd.bool, prec.bool),
-                           updateFunc = list(NA, NA,
+                           updateFunc = list(NULL, NULL,
                                              function(self) self$getParameterValue('varlog')^0.5,
                                              function(self) self$getParameterValue('varlog')^-1,
                                              function(self) exp(self$getParameterValue('meanlog') + self$getParameterValue('varlog')/2),
@@ -557,8 +557,8 @@ getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog 
                                              function(self) log(1 + self$getParameterValue('var')/self$getParameterValue('mean')^2),
                                              function(self) (log(1 + self$getParameterValue('var')/self$getParameterValue('mean')^2))^0.5,
                                              function(self) (log(1 + self$getParameterValue('var')/self$getParameterValue('mean')^2))^-1,
-                                             NA,
-                                             NA,
+                                             NULL,
+                                             NULL,
                                              function(self) self$getParameterValue('var')^0.5,
                                              function(self) self$getParameterValue('var')^-1),
                            description = list("meanlog - Location Parameter on log scale",
@@ -581,8 +581,8 @@ getParameterSet.Multinomial <- function(x, size, probs, verbose = FALSE){
                          value = list(1, K, rep(0.5,K)),
                          support = list(PosNaturals$new(), PosNaturals$new(), setpower(Interval$new(0,1),K)),
                          settable = list(TRUE, FALSE, TRUE),
-                         updateFunc = list(NA,
-                                           function(self) length(self$getParameterValue('probs')),NA),
+                         updateFunc = list(NULL,
+                                           function(self) length(self$getParameterValue('probs')),NULL),
                          description = list("Number of trials", "Number of categories",
                                             "Probability of success i"))
 
@@ -610,7 +610,7 @@ getParameterSet.MultivariateNormal <- function(x, mean, cov, prec = NULL, verbos
                          support = list(setpower(Reals$new(), K), setpower(Reals$new(), K^2),
                                         setpower(Reals$new(), K^2), PosNaturals$new()),
                          settable = list(TRUE, cov.bool, prec.bool, FALSE),
-                         updateFunc = list(NA, NA,
+                         updateFunc = list(NULL, NULL,
                                            function(self) solve(matrix(self$getParameterValue('cov'),
                                            nrow = self$getParameterValue('K'))),
                                            function(self) length(self$getParameterValue('mean'))),
@@ -651,17 +651,20 @@ getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean =
     desc <- "Number of successes"
   }
 
-  ps <- ParameterSet$new(id = list("prob","qprob","mean","size"), value = list(0.5, 0.5, 20, 10),
+  ps <- ParameterSet$new(id = list("prob","qprob","mean","size","form"),
+                         value = list(0.5, 0.5, 20, 10, form),
                          support = list(Interval$new(0,1,type="()"),
                                         Interval$new(0,1,type="()"),
                                         PosReals$new(),
-                                        PosNaturals$new()),
-                         settable = list(prob.bool, qprob.bool, mean.bool, TRUE),
+                                        PosNaturals$new(),
+                                        Set$new("sbf", "tbf", "tbs", "fbs")),
+                         settable = list(prob.bool, qprob.bool, mean.bool, TRUE, FALSE),
                          updateFunc = list(NULL,
-                                           function(self) 1 - self$getParameterValue('prob'), updateFunc, NULL),
+                                           function(self) 1 - self$getParameterValue('prob'),
+                                           updateFunc, NULL, NULL),
                          description = list("Probability of Success",
                                             "Probability of failure",
-                                            "Mean - Location Parameter",desc))
+                                            "Mean - Location Parameter",desc,"Distribution form"))
 
   return(ps)
 }
@@ -685,7 +688,7 @@ getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose
                          value = list(0, 1, 1, 1),
                          support = list(Reals$new(), PosReals$new(), PosReals$new(), PosReals$new()),
                          settable = list(TRUE, var.bool, sd.bool, prec.bool),
-                         updateFunc = list(NA, NA,
+                         updateFunc = list(NULL, NULL,
                                            function(self) self$getParameterValue('var')^0.5,
                                            function(self) self$getParameterValue('var')^-1),
                          description = list("Mean - Location Parameter",
@@ -749,9 +752,9 @@ getParameterSet.ShiftedLoglogistic <- function(x, scale, shape, location, rate =
   ps <- ParameterSet$new(id = list("scale","rate","shape","location"), value = list(1,1,1,0),
                          support = list(PosReals$new(), PosReals$new(), PosReals$new(), Reals$new()),
                          settable = list(scale.bool, rate.bool, TRUE, TRUE),
-                         updateFunc = list(NA,
+                         updateFunc = list(NULL,
                                            function(self) self$getParameterValue('scale')^-1,
-                                           NA, NA),
+                                           NULL, NULL),
                          description = list("Scale Parameter",
                                             "Rate Parameter",
                                             "Shape Parameter",
@@ -796,7 +799,7 @@ getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric, verbose
     if(verbose) message("Parameterised with lower and upper.")
   } else{
     checkmate::assert(mode >= lower, mode <= upper, combine = "and", .var.name = "mode must be between lower and upper")
-    updateFunc = NA
+    updateFunc = NULL
     settable = TRUE
     if(verbose) message("Parameterised with lower, upper and mode.")
   }
@@ -805,7 +808,7 @@ getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric, verbose
                          value = list(0, 1, 0.5),
                          support = list(Reals$new(),Reals$new(),Reals$new()),
                          settable = list(TRUE, TRUE, settable),
-                         updateFunc = list(NA, NA, updateFunc),
+                         updateFunc = list(NULL, NULL, updateFunc),
                          description = list("Lower distribution limit.", "Upper distribution limit.",
                                             "Distribution mode."))
 
@@ -858,7 +861,7 @@ getParameterSet.Weibull <- function(x, shape, scale, altscale, verbose = FALSE){
   ps <-  ParameterSet$new(id = list("shape","scale","altscale"), value = list(1,1,1),
                           support = list(PosReals$new(), PosReals$new(), PosReals$new()),
                           settable = list(TRUE,scale.bool,altscale.bool),
-                          updateFunc = list(NA, NA,
+                          updateFunc = list(NULL, NULL,
                                             function(self) self$getParameterValue('scale')^-self$getParameterValue('shape')),
                           description = list("Shape paramer", "Scale parameter", "Alternate scale parameter"))
 

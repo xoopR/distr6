@@ -4,12 +4,10 @@
 \alias{quantile.Distribution}
 \title{Inverse Cumulative Distribution Function}
 \usage{
-\method{quantile}{Distribution}(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
+\method{quantile}{Distribution}(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data)
 }
 \arguments{
 \item{x}{Distribution.}
-
-\item{p}{vector of probabilities to evaluate function at.}
 
 \item{...}{additional arguments.}
 
@@ -18,6 +16,8 @@
 \item{log.p}{logical; if TRUE then \eqn{q_X(exp(p))} is returned.}
 
 \item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
+
+\item{p}{vector of probabilities to evaluate function at.}
 }
 \value{
 Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
