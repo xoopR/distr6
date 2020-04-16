@@ -21,7 +21,7 @@ jobs:
         config:
           # comment out lines if you do not want to build on certain platforms
           - { os: windows-latest, r: "release" }
-          - { os: macOS-latest, r: "release" }
+          - { os: macOS-latest, r: "release", pkgdown: "true" }
    #       - { os: ubuntu-latest, r: "devel" }
           - { os: ubuntu-latest, r: "release" }
 
@@ -39,7 +39,9 @@ jobs:
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
       # prevent rgl issues because no X11 display is available
       RGL_USE_NULL: true
-
+      BUILD_PKGDOWN: ${{ matrix.config.pkgdown }}
+      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+      
     steps:
       - uses: actions/checkout@v2
 
