@@ -3,10 +3,8 @@ distr6
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-[![Travis Build
-Status](https://travis-ci.com/alan-turing-institute/distr6.svg?branch=master)](https://travis-ci.com/alan-turing-institute/distr6)
-[![Appveyor Build
-status](https://ci.appveyor.com/api/projects/status/mrexqbmrtrx865jf/branch/master?svg=true)](https://ci.appveyor.com/project/RaphaelS1/distr6-xsr0j/branch/master)
+![R CMD Check via
+{tic}](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
