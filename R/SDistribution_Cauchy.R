@@ -77,42 +77,46 @@ Cauchy$set("public","mode",function(which = NULL){
   return(self$getParameterValue("location"))
 })
 
-Cauchy$set("private",".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("location"))){
-    mapply(dcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dcauchy(x, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"), log = log)
-  }
+Cauchy$set("private", ".pdf", function(x, log = FALSE){
+  location = self$getParameterValue("location")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "dcauchy",
+                   x = x,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   log = log,
+                   vec = test_list(location))
 })
-Cauchy$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("location"))) {
-    mapply(pcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pcauchy(x, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+Cauchy$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
+  location = self$getParameterValue("location")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "pcauchy",
+                   x = x,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(location))
 })
-Cauchy$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("location"))) {
-    mapply(qcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qcauchy(p, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+Cauchy$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
+  location = self$getParameterValue("location")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "qcauchy",
+                   x = p,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(location))
 })
-Cauchy$set("private",".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("location"))) {
-    mapply(rcauchy, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rcauchy(n, location = self$getParameterValue("location"), scale = self$getParameterValue("scale"))
-  }
+Cauchy$set("private", ".rand", function(n){
+  location = self$getParameterValue("location")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "rcauchy",
+                   x = n,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   vec = test_list(location))
 })
 Cauchy$set("private", ".log", TRUE)
 

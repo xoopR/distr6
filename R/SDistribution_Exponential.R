@@ -90,41 +90,37 @@ Exponential$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Exponential$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("rate"))){
-    mapply(dexp, rate = self$getParameterValue("rate"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dexp(x, rate = self$getParameterValue("rate"), log = log)
-  }
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "dexp",
+                   x = x,
+                   args = list(rate = unlist(rate)),
+                   log = log,
+                   vec = test_list(rate))
 })
 Exponential$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("rate"))) {
-    mapply(pexp, rate = self$getParameterValue("rate"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pexp(x, rate = self$getParameterValue("rate"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "pexp",
+                   x = x,
+                   args = list(rate = unlist(rate)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(rate))
 })
 Exponential$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("rate"))) {
-    mapply(qexp, rate = self$getParameterValue("rate"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qexp(p, rate = self$getParameterValue("rate"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "qexp",
+                   x = p,
+                   args = list(rate = unlist(rate)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(rate))
 })
 Exponential$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("rate"))) {
-    mapply(rexp, rate = self$getParameterValue("rate"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rexp(n, rate = self$getParameterValue("rate"))
-  }
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "rexp",
+                   x = n,
+                   args = list(rate = unlist(rate)),
+                   vec = test_list(rate))
 })
 Exponential$set("private", ".log", TRUE)
 Exponential$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))

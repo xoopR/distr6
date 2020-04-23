@@ -102,42 +102,49 @@ Bernoulli$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Bernoulli$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("prob"))){
-    mapply(dbinom, prob = self$getParameterValue("prob"),
-           MoreArgs = list(x = x, log = log, size = 1))
-  } else {
-    dbinom(x, size = 1, prob = self$getParameterValue("prob"), log = log)
-  }
+  prob = self$getParameterValue("prob")
 
+  call_C_base_pdqr(fun = "dbinom",
+                   x = x,
+                   args = list(size = 1,
+                               prob = unlist(prob)),
+                   log = log,
+                   vec = test_list(prob)
+  )
 })
 Bernoulli$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("prob"))) {
-    mapply(pbinom, prob = self$getParameterValue("prob"),
-           MoreArgs = list(x = x, size = 1, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pbinom(x, size = 1, prob = self$getParameterValue("prob"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  prob = self$getParameterValue("prob")
+
+  call_C_base_pdqr(fun = "pbinom",
+                   x = x,
+                   args = list(size = 1,
+                               prob = unlist(prob)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(prob)
+  )
 })
 Bernoulli$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("prob"))) {
-    mapply(qbinom, prob = self$getParameterValue("prob"),
-           MoreArgs = list(p = p, size = 1, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qbinom(p, size = 1, prob = self$getParameterValue("prob"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  prob = self$getParameterValue("prob")
+
+  call_C_base_pdqr(fun = "qbinom",
+                   x = p,
+                   args = list(size = 1,
+                               prob = unlist(prob)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(prob)
+  )
 })
 Bernoulli$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("prob"))) {
-    mapply(rbinom, prob = self$getParameterValue("prob"),
-           MoreArgs = list(n = n, size = 1)
-    )
-  } else {
-    rbinom(n, size = 1, prob = self$getParameterValue("prob"))
-  }
+  prob = self$getParameterValue("prob")
+
+  call_C_base_pdqr(fun = "rbinom",
+                   x = n,
+                   args = list(size = 1,
+                               prob = unlist(prob)),
+                   vec = test_list(prob)
+  )
 })
 Bernoulli$set("private", ".log", TRUE)
 

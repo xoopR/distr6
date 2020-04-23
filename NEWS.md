@@ -20,6 +20,8 @@
 * `Dirichlet, DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald` now implemented from package `extraDistr`
 * Bug fix in `Frechet` `$cdf`
 * Analytical `log` and `lower.tail` now available for all `SDistributions` and imputation possible for customs with `CoreStatistics`
+* `NegativeBinomial` now uses Rcpp for d/p/q/r
+* Distributions from `stats` are now vectorised across parameters in C
 
 # distr6 1.3.5
 

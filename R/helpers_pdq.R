@@ -52,3 +52,22 @@ pdqr_returner = function(pdqr, simplify){
     }
   }
 }
+call_C_base_pdqr = function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) {
+  if (vec) {
+    type = substr(fun, 1, 1)
+    if (type == "r") {
+      return(C_r(fun, x, args))
+    } else if (type %in% c("d", "p", "q")) {
+      return(C_dpq(fun = fun,
+                   x = x,
+                   args = args,
+                   lower = lower.tail,
+                   log = log)
+      )
+    } else {
+      stop("Function must start with one of: {d, p, q, r}.")
+    }
+  } else {
+    return(do.call(get(fun), c(list(x = x), args)))
+  }
+}

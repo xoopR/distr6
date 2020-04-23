@@ -108,41 +108,45 @@ Gamma$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Gamma$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("shape"))){
-    mapply(dgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dgamma(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
-  }
+  shape = self$getParameterValue("shape")
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "dgamma",
+                   x = x,
+                   args = list(shape = unlist(shape),
+                               rate = unlist(rate)),
+                   log = log,
+                   vec = test_list(shape))
 })
 Gamma$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(pgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pgamma(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  shape = self$getParameterValue("shape")
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "pgamma",
+                   x = x,
+                   args = list(shape = unlist(shape),
+                               rate = unlist(rate)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape))
 })
 Gamma$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(qgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qgamma(p, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  shape = self$getParameterValue("shape")
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "qgamma",
+                   x = p,
+                   args = list(shape = unlist(shape),
+                               rate = unlist(rate)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape))
 })
 Gamma$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(rgamma, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rgamma(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))
-  }
+  shape = self$getParameterValue("shape")
+  rate = self$getParameterValue("rate")
+  call_C_base_pdqr(fun = "rgamma",
+                   x = n,
+                   args = list(shape = unlist(shape),
+                               rate = unlist(rate)),
+                   vec = test_list(shape))
 })
 Gamma$set("private", ".log", TRUE)
 

@@ -100,60 +100,56 @@ ChiSquared$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 
-ChiSquared$set("private",".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("df"))){
-    mapply(dchisq, df = self$getParameterValue("df"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dchisq(x, df = self$getParameterValue("df"),  log = log)
-  }
+ChiSquared$set("private", ".pdf", function(x, log = FALSE){
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "dchisq",
+                   x = x,
+                   args = list(df = unlist(df)),
+                   log = log,
+                   vec = test_list(df))
 })
-ChiSquared$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(pchisq, df = self$getParameterValue("df"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pchisq(x, df = self$getParameterValue("df"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+ChiSquared$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "pchisq",
+                   x = x,
+                   args = list(df = unlist(df)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(df))
 })
-ChiSquared$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(qchisq, df = self$getParameterValue("df"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qchisq(p, df = self$getParameterValue("df"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+ChiSquared$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "qchisq",
+                   x = p,
+                   args = list(df = unlist(df)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(df))
 })
-ChiSquared$set("private",".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(rchisq, df = self$getParameterValue("df"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rchisq(n, df = self$getParameterValue("df"))
-  }
+ChiSquared$set("private", ".rand", function(n){
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "rchisq",
+                   x = n,
+                   args = list(df = unlist(df)),
+                   vec = test_list(df))
 })
 ChiSquared$set("private", ".log", TRUE)
+ChiSquared$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 ChiSquared$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, df, verbose)
   self$setParameterValue(df = df)
 
-  if(df == 1)
+  if(df == 1) {
     support <- PosReals$new(zero = F)
-  else
+  } else {
     support <- PosReals$new(zero = T)
+  }
 
   super$initialize(decorators = decorators,
                    support = support,
-                   type = PosReals$new(zero = TRUE),
-                   valueSupport = "continuous")
-  invisible(self)
+                   type = PosReals$new(zero = TRUE))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

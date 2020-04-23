@@ -104,43 +104,44 @@ StudentT$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 StudentT$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("df"))){
-    mapply(dt, df = self$getParameterValue("df"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dt(x, df = self$getParameterValue("df"), log = log)
-  }
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "dt",
+                   x = x,
+                   args = list(df = unlist(df)),
+                   log = log,
+                   vec = test_list(df)
+  )
 })
 StudentT$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(pt, df = self$getParameterValue("df"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pt(x, df = self$getParameterValue("df"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "pt",
+                   x = x,
+                   args = list(df = unlist(df)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(df)
+  )
 })
 StudentT$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(qt, df = self$getParameterValue("df"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qt(p, df = self$getParameterValue("df"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "qt",
+                   x = p,
+                   args = list(df = unlist(df)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(df)
+  )
 })
 StudentT$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(rt, df = self$getParameterValue("df"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rt(n, df = self$getParameterValue("df"))
-  }
+  df = self$getParameterValue("df")
+  call_C_base_pdqr(fun = "rt",
+                   x = n,
+                   args = list(df = unlist(df)),
+                   vec = test_list(df)
+  )
 })
 StudentT$set("private", ".log", TRUE)
+StudentT$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose = FALSE){
 
@@ -150,8 +151,7 @@ StudentT$set("public","initialize",function(df = 1, decorators = NULL, verbose =
   super$initialize(decorators = decorators,
                    support = Reals$new(),
                    symmetry  = "sym",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

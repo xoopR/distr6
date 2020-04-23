@@ -73,43 +73,56 @@ StudentTNoncentral$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 StudentTNoncentral$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("df"))){
-    mapply(dt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dt(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"), log = log)
-  }
+  df = self$getParameterValue("df")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "dt",
+                   x = x,
+                   args = list(df = unlist(df),
+                               ncp = unlist(ncp)),
+                   log = log,
+                   vec = test_list(df)
+  )
 })
 StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(pt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pt(x, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-       lower.tail = lower.tail, log.p = log.p)
-  }
+  df = self$getParameterValue("df")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "pt",
+                   x = x,
+                   args = list(df = unlist(df),
+                               ncp = unlist(ncp)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(df)
+  )
 })
 StudentTNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(qt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qt(p, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-       lower.tail = lower.tail, log.p = log.p)
-  }
+  df = self$getParameterValue("df")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "qt",
+                   x = p,
+                   args = list(df = unlist(df),
+                               ncp = unlist(ncp)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(df)
+  )
 })
 StudentTNoncentral$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("df"))) {
-    mapply(rt, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rt(n, df = self$getParameterValue("df"), ncp = self$getParameterValue("location"))
-  }
+  df = self$getParameterValue("df")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "rt",
+                   x = n,
+                   args = list(df = unlist(df),
+                               ncp = unlist(ncp)),
+                   vec = test_list(df)
+  )
 })
 StudentTNoncentral$set("private", ".log", TRUE)
+StudentTNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 StudentTNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
 
@@ -119,8 +132,7 @@ StudentTNoncentral$set("public","initialize",function(df = 1, location = 0, deco
   super$initialize(decorators = decorators,
                    support = Reals$new(),
                    symmetric  = "sym",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

@@ -126,36 +126,34 @@ Geometric$set("private", ".pdf", function(x, log = FALSE) {
         x = x + 1
     }
 
-    if(checkmate::testList(self$getParameterValue("prob"))){
-        mapply(dgeom, prob = self$getParameterValue("prob"),
-               MoreArgs = list(x = x, log = log))
-    } else {
-        dgeom(x, prob = self$getParameterValue("prob"), log = log)
-    }
+    prob = self$getParameterValue("prob")
+    call_C_base_pdqr(fun = "dgeom",
+                     x = x,
+                     args = list(prob = unlist(prob)),
+                     log = log,
+                     vec = test_list(prob))
 })
 Geometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
     if (private$.trials) {
         x = x + 1
     }
 
-    if (checkmate::testList(self$getParameterValue("prob"))) {
-        mapply(pgeom, prob = self$getParameterValue("prob"),
-               MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-        )
-    } else {
-        pgeom(x, prob = self$getParameterValue("prob"),
-              lower.tail = lower.tail, log.p = log.p)
-    }
+    prob = self$getParameterValue("prob")
+    call_C_base_pdqr(fun = "pgeom",
+                     x = x,
+                     args = list(prob = unlist(prob)),
+                     lower.tail = lower.tail,
+                     log = log.p,
+                     vec = test_list(prob))
 })
 Geometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-    if (checkmate::testList(self$getParameterValue("prob"))) {
-        geom = mapply(qgeom, prob = self$getParameterValue("prob"),
-                      MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-        )
-    } else {
-        geom = qgeom(p, prob = self$getParameterValue("prob"),
-                     lower.tail = lower.tail, log.p = log.p)
-    }
+    prob = self$getParameterValue("prob")
+    geom = call_C_base_pdqr(fun = "qgeom",
+                            x = p,
+                            args = list(prob = unlist(prob)),
+                            lower.tail = lower.tail,
+                            log = log.p,
+                            vec = test_list(prob))
 
     if (private$.trials) {
         geom = geom + 1
@@ -164,13 +162,11 @@ Geometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FAL
     return(geom)
 })
 Geometric$set("private", ".rand", function(n){
-    if (checkmate::testList(self$getParameterValue("prob"))) {
-        geom = mapply(rgeom, prob = self$getParameterValue("prob"),
-               MoreArgs = list(n = n)
-        )
-    } else {
-        geom = rgeom(n, prob = self$getParameterValue("prob"))
-    }
+    prob = self$getParameterValue("prob")
+    geom = call_C_base_pdqr(fun = "rgeom",
+                            x = n,
+                            args = list(prob = unlist(prob)),
+                            vec = test_list(prob))
 
     if (private$.trials) {
         geom = geom + 1

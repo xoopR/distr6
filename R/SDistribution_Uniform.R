@@ -50,7 +50,7 @@ Uniform$set("public","packages","stats")
 
 
 Uniform$set("public","mean",function(){
- return((self$getParameterValue("lower")+self$getParameterValue("upper"))/2)
+  return((self$getParameterValue("lower")+self$getParameterValue("upper"))/2)
 })
 Uniform$set("public","variance",function(){
   return(((self$getParameterValue("upper")-self$getParameterValue("lower"))^2)/12)
@@ -109,41 +109,53 @@ Uniform$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Uniform$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("lower"))){
-    mapply(dunif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dunif(x, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"), log = log)
-  }
+  min = self$getParameterValue("lower")
+  max = self$getParameterValue("upper")
+
+  call_C_base_pdqr(fun = "dunif",
+                   x = x,
+                   args = list(min = unlist(min),
+                               max = unlist(max)),
+                   log = log,
+                   vec = test_list(min)
+  )
 })
-Uniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("lower"))) {
-    mapply(punif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    punif(x, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+Uniform$set("private", ".cdf", function(x, min.tail = TRUE, log.p = FALSE){
+  min = self$getParameterValue("lower")
+  max = self$getParameterValue("upper")
+
+  call_C_base_pdqr(fun = "punif",
+                   x = x,
+                   args = list(min = unlist(min),
+                               max = unlist(max)),
+                   min.tail = min.tail,
+                   log = log.p,
+                   vec = test_list(min)
+  )
 })
-Uniform$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("lower"))) {
-    mapply(qunif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qunif(p, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+Uniform$set("private", ".quantile", function(p, min.tail = TRUE, log.p = FALSE){
+  min = self$getParameterValue("lower")
+  max = self$getParameterValue("upper")
+
+  call_C_base_pdqr(fun = "qunif",
+                   x = p,
+                   args = list(min = unlist(min),
+                               max = unlist(max)),
+                   min.tail = min.tail,
+                   log = log.p,
+                   vec = test_list(min)
+  )
 })
 Uniform$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("lower"))) {
-    mapply(runif, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    runif(n, min = self$getParameterValue("lower"), max = self$getParameterValue("upper"))
-  }
+  min = self$getParameterValue("lower")
+  max = self$getParameterValue("upper")
+
+  call_C_base_pdqr(fun = "runif",
+                   x = n,
+                   args = list(min = unlist(min),
+                               max = unlist(max)),
+                   vec = test_list(min)
+  )
 })
 Uniform$set("private", ".log", TRUE)
 
@@ -154,10 +166,10 @@ Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
 
   super$initialize(decorators = decorators,
                    support = Interval$new(lower, upper),
-                   symmetric = "sym",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   symmetry = "sym",
+                   type = Reals$new())
 })
+Uniform$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 .distr6$distributions = rbind(.distr6$distributions,
                               data.table::data.table(ShortName = "Unif", ClassName = "Uniform",

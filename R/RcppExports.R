@@ -9,3 +9,11 @@ C_NegativeBinomialPdf <- function(x, size, prob, form) {
     .Call(`_distr6_C_NegativeBinomialPdf`, x, size, prob, form)
 }
 
+C_dpq <- function(fun, x, args, lower = TRUE, log = FALSE) {
+    .Call(`_distr6_C_dpq`, fun, x, args, lower, log)
+}
+
+C_r <- function(fun, x, args) {
+    .Call(`_distr6_C_r`, fun, x, args)
+}
+

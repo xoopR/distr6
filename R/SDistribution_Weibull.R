@@ -114,45 +114,56 @@ Weibull$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Weibull$set("private", ".pdf", function(x, log = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(dweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    dweibull(x, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
-             log = log)
-  }
+  shape = self$getParameterValue("shape")
+  scale = self$getParameterValue("scale")
+
+  call_C_base_pdqr(fun = "dweibull",
+                   x = x,
+                   args = list(shape = unlist(shape),
+                               scale = unlist(scale)),
+                   log = log,
+                   vec = test_list(shape)
+  )
 })
 Weibull$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(pweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pweibull(x, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
-             lower.tail = lower.tail, log.p = log.p)
-  }
+  shape = self$getParameterValue("shape")
+  scale = self$getParameterValue("scale")
+
+  call_C_base_pdqr(fun = "pweibull",
+                   x = x,
+                   args = list(shape = unlist(shape),
+                               scale = unlist(scale)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape)
+  )
 })
 Weibull$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(qweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qweibull(p, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  shape = self$getParameterValue("shape")
+  scale = self$getParameterValue("scale")
+
+  call_C_base_pdqr(fun = "qweibull",
+                   x = p,
+                   args = list(shape = unlist(shape),
+                               scale = unlist(scale)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape)
+  )
 })
 Weibull$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(rweibull, shape = self$getParameterValue("shape"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rweibull(n, self$getParameterValue("shape"), self$getParameterValue("scale"))
-  }
+  shape = self$getParameterValue("shape")
+  scale = self$getParameterValue("scale")
+
+  call_C_base_pdqr(fun = "rweibull",
+                   x = n,
+                   args = list(shape = unlist(shape),
+                               scale = unlist(scale)),
+                   vec = test_list(shape)
+  )
 })
 Weibull$set("private", ".log", TRUE)
+Weibull$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Weibull$set("public","initialize",function(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE){
 
@@ -161,8 +172,7 @@ Weibull$set("public","initialize",function(shape = 1, scale = 1, altscale = NULL
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(zero = T),
-                   type = PosReals$new(zero=T),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero=T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

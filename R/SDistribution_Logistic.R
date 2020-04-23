@@ -92,43 +92,48 @@ Logistic$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Logistic$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("mean"))){
-    mapply(dlogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dlogis(x, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"), log = log)
-  }
+  location = self$getParameterValue("mean")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "dlogis",
+                   x = x,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   log = log,
+                   vec = test_list(location))
 })
 Logistic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(plogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    plogis(x, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  location = self$getParameterValue("mean")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "plogis",
+                   x = x,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(location))
 })
 Logistic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(qlogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qlogis(p, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  location = self$getParameterValue("mean")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "qlogis",
+                   x = p,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(location))
 })
 Logistic$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(rlogis, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rlogis(n, location = self$getParameterValue("mean"), scale = self$getParameterValue("scale"))
-  }
+  location = self$getParameterValue("mean")
+  scale = self$getParameterValue("scale")
+  call_C_base_pdqr(fun = "rlogis",
+                   x = n,
+                   args = list(location = unlist(location),
+                               scale = unlist(scale)),
+                   vec = test_list(location))
 })
 Logistic$set("private", ".log", TRUE)
+Logistic$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
                                           decorators = NULL, verbose = FALSE){
@@ -139,8 +144,7 @@ Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
   super$initialize(decorators = decorators,
                    support = Reals$new(),
                    symmetry = "symmetric",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

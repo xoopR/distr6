@@ -84,14 +84,8 @@ Kernel$set("public","initialize",function(decorators, support){
 
   if(!is.null(decorators))  suppressMessages(decorate(self, decorators))
 
-  private$.properties = list(kurtosis = NULL,
-                             skewness = NULL,
-                             support = assertSet(support),
-                             symmetry = "symmetric")
-
-  private$.traits = list(type = Reals$new(),
-                         valueSupport = "continuous",
-                         variateForm = "univariate")
+  private$.properties$support = assertSet(support)
+  private$.traits$type = Reals$new()
 
   invisible(self)
 })
@@ -110,4 +104,5 @@ Kernel$set("private",".rand",function(n){
   if(!is.null(private$.quantile))
     self$quantile(runif(n))
 })
-
+Kernel$set("private", ".properties", list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"))
+Kernel$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))

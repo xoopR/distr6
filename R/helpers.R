@@ -130,3 +130,7 @@ assertOneWord <- function(x, errormsg = "All values must be one word."){
 strCollapse <- function(x, par = "{}"){
   paste0(substr(par, 1, 1), paste0(x, collapse = ", "), substr(par, 2, 2))
 }
+
+test_list = function(x) {
+  class(x)[1] == "list"
+}

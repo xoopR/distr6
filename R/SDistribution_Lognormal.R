@@ -128,44 +128,48 @@ Lognormal$set("private",".getRefParams", function(paramlst){
 
 })
 Lognormal$set("private", ".pdf", function(x, log = FALSE){
-  if (checkmate::testList(self$getParameterValue("meanlog"))) {
-    mapply(dlnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
-           MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    dlnorm(x, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"), log = log)
-  }
+  meanlog = self$getParameterValue("meanlog")
+  sdlog = self$getParameterValue("sdlog")
+  call_C_base_pdqr(fun = "dlnorm",
+                   x = x,
+                   args = list(meanlog = unlist(meanlog),
+                               sdlog = unlist(sdlog)),
+                   log = log,
+                   vec = test_list(meanlog))
 })
 Lognormal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("meanlog"))) {
-    mapply(plnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    plnorm(x, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
-          lower.tail = lower.tail, log.p = log.p)
-  }
+  meanlog = self$getParameterValue("meanlog")
+  sdlog = self$getParameterValue("sdlog")
+  call_C_base_pdqr(fun = "plnorm",
+                   x = x,
+                   args = list(meanlog = unlist(meanlog),
+                               sdlog = unlist(sdlog)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(meanlog))
 })
 Lognormal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("meanlog"))) {
-    mapply(qlnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qlnorm(p, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
-          lower.tail = lower.tail, log.p = log.p)
-  }
+  meanlog = self$getParameterValue("meanlog")
+  sdlog = self$getParameterValue("sdlog")
+  call_C_base_pdqr(fun = "qlnorm",
+                   x = p,
+                   args = list(meanlog = unlist(meanlog),
+                               sdlog = unlist(sdlog)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(meanlog))
 })
 Lognormal$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("meanlog"))) {
-    mapply(rlnorm, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rlnorm(n, meanlog = self$getParameterValue("meanlog"), sdlog = self$getParameterValue("sdlog"))
-  }
+  meanlog = self$getParameterValue("meanlog")
+  sdlog = self$getParameterValue("sdlog")
+  call_C_base_pdqr(fun = "rlnorm",
+                   x = n,
+                   args = list(meanlog = unlist(meanlog),
+                               sdlog = unlist(sdlog)),
+                   vec = test_list(meanlog))
 })
 Lognormal$set("private", ".log", TRUE)
+Lognormal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
                                              mean = 1, var = NULL, sd = NULL, prec = NULL,
@@ -180,8 +184,7 @@ Lognormal$set("public","initialize",function(meanlog = 0, varlog = 1, sdlog = NU
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(),
-                   type = PosReals$new(),
-                   valueSupport = "continuous")
+                   type = PosReals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

@@ -121,90 +121,58 @@ Hypergeometric$set("private",".getRefParams", function(paramlst){
 
     return(lst)
 })
-Hypergeometric$set("private", ".pdf", function(x, log = FALSE) {
-    if (checkmate::testList(self$getParameterValue("successes"))) {
-        mapply(
-            dhyper,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws"),
-            MoreArgs = list(x = x, log = log)
-        )
-    } else {
-        dhyper(
-            x,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws"),
-            log = log
-        )
-    }
+Hypergeometric$set("private", ".pdf", function(x, log = FALSE){
+    m = self$getParameterValue("successes")
+    n = self$getParameterValue("failures")
+    k = self$getParameterValue("draws")
+
+    call_C_base_pdqr(fun = "dhyper",
+                     x = x,
+                     args = list(m = unlist(m),
+                                 n = unlist(n),
+                                 k = unlist(k)),
+                     log = log,
+                     vec = test_list(m))
 })
-Hypergeometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-    if (checkmate::testList(self$getParameterValue("successes"))) {
-        mapply(
-            phyper,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws"),
-            MoreArgs = list(
-                x = x,
-                lower.tail = lower.tail,
-                log.p = log.p
-            )
-        )
-    } else {
-        phyper(
-            x,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws"),
-            lower.tail = lower.tail,
-            log.p = log.p
-        )
-    }
+Hypergeometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
+    m = self$getParameterValue("successes")
+    n = self$getParameterValue("failures")
+    k = self$getParameterValue("draws")
+
+    call_C_base_pdqr(fun = "phyper",
+                     x = x,
+                     args = list(m = unlist(m),
+                                 n = unlist(n),
+                                 k = unlist(k)),
+                     lower.tail = lower.tail,
+                     log = log.p,
+                     vec = test_list(m))
 })
-Hypergeometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-    if (checkmate::testList(self$getParameterValue("successes"))) {
-        mapply(
-            qhyper,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws"),
-            MoreArgs = list(
-                p = p,
-                lower.tail = lower.tail,
-                log.p = log.p
-            )
-        )
-    } else {
-        qhyper(
-            p,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws"),
-            lower.tail = lower.tail,
-            log.p = log.p
-        )
-    }
+Hypergeometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
+    m = self$getParameterValue("successes")
+    n = self$getParameterValue("failures")
+    k = self$getParameterValue("draws")
+
+    call_C_base_pdqr(fun = "qhyper",
+                     x = p,
+                     args = list(m = unlist(m),
+                                 n = unlist(n),
+                                 k = unlist(k)),
+                     lower.tail = lower.tail,
+                     log = log.p,
+                     vec = test_list(m))
 })
-Hypergeometric$set("private", ".rand", function(n) {
-    if (checkmate::testList(self$getParameterValue("successes"))) {
-        mapply(
-            rhyper,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws"),
-            MoreArgs = list(n = n)
-        )
-    } else {
-        rhyper(
-            n,
-            m = self$getParameterValue("successes"),
-            n = self$getParameterValue("failures"),
-            k = self$getParameterValue("draws")
-        )
-    }
+Hypergeometric$set("private", ".rand", function(n){
+    m = self$getParameterValue("successes")
+    n = self$getParameterValue("failures")
+    k = self$getParameterValue("draws")
+
+    call_C_base_pdqr(fun = "rhyper",
+                     x = n,
+                     args = list(m = unlist(m),
+                                 n = unlist(n),
+                                 k = unlist(k)),
+                     vec = test_list(m))
 })
 Hypergeometric$set("private", ".log", TRUE)
 

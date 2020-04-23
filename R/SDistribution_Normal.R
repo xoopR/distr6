@@ -96,45 +96,48 @@ Normal$set("private",".getRefParams", function(paramlst){
   return(lst)
 })
 Normal$set("private", ".pdf", function(x, log = FALSE){
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(dnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
-           MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    dnorm(x, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"), log = log)
-  }
+  mean = self$getParameterValue("mean")
+  sd = self$getParameterValue("sd")
+  call_C_base_pdqr(fun = "dnorm",
+                   x = x,
+                   args = list(mean = unlist(mean),
+                               sd = unlist(sd)),
+                   log = log,
+                   vec = test_list(mean))
 })
 Normal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(pnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pnorm(x, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
-          lower.tail = lower.tail, log.p = log.p)
-  }
+  mean = self$getParameterValue("mean")
+  sd = self$getParameterValue("sd")
+  call_C_base_pdqr(fun = "pnorm",
+                   x = x,
+                   args = list(mean = unlist(mean),
+                               sd = unlist(sd)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(mean))
 })
 Normal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(qnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qnorm(p, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
-          lower.tail = lower.tail, log.p = log.p)
-  }
+  mean = self$getParameterValue("mean")
+  sd = self$getParameterValue("sd")
+  call_C_base_pdqr(fun = "qnorm",
+                   x = p,
+                   args = list(mean = unlist(mean),
+                               sd = unlist(sd)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(mean))
 })
 Normal$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(rnorm, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rnorm(n, mean = self$getParameterValue("mean"), sd = self$getParameterValue("sd"))
-  }
+  mean = self$getParameterValue("mean")
+  sd = self$getParameterValue("sd")
+  call_C_base_pdqr(fun = "rnorm",
+                   x = n,
+                   args = list(mean = unlist(mean),
+                               sd = unlist(sd)),
+                   vec = test_list(mean))
 })
 Normal$set("private", ".log", TRUE)
-
+Normal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = NULL,
                                           decorators = NULL, verbose = FALSE){
@@ -145,6 +148,5 @@ Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = N
   super$initialize(decorators = decorators,
                    support = Reals$new(),
                    symmetry = "sym",
-                   type = Reals$new(),
-                   variateForm = "univariate")
+                   type = Reals$new())
 })

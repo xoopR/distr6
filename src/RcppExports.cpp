@@ -18,7 +18,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_NegativeBinomialPdf
-NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, const char* form);
+NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, StringVector form);
 RcppExport SEXP _distr6_C_NegativeBinomialPdf(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP formSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -26,8 +26,36 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type prob(probSEXP);
-    Rcpp::traits::input_parameter< const char* >::type form(formSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type form(formSEXP);
     rcpp_result_gen = Rcpp::wrap(C_NegativeBinomialPdf(x, size, prob, form));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_dpq
+NumericMatrix C_dpq(std::string fun, NumericVector x, std::list<NumericVector> args, int lower, int log);
+RcppExport SEXP _distr6_C_dpq(SEXP funSEXP, SEXP xSEXP, SEXP argsSEXP, SEXP lowerSEXP, SEXP logSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type fun(funSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< std::list<NumericVector> >::type args(argsSEXP);
+    Rcpp::traits::input_parameter< int >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< int >::type log(logSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_dpq(fun, x, args, lower, log));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_r
+NumericMatrix C_r(std::string fun, int x, std::list<NumericVector> args);
+RcppExport SEXP _distr6_C_r(SEXP funSEXP, SEXP xSEXP, SEXP argsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type fun(funSEXP);
+    Rcpp::traits::input_parameter< int >::type x(xSEXP);
+    Rcpp::traits::input_parameter< std::list<NumericVector> >::type args(argsSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_r(fun, x, args));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -35,6 +63,8 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_Choose", (DL_FUNC) &_distr6_C_Choose, 2},
     {"_distr6_C_NegativeBinomialPdf", (DL_FUNC) &_distr6_C_NegativeBinomialPdf, 4},
+    {"_distr6_C_dpq", (DL_FUNC) &_distr6_C_dpq, 5},
+    {"_distr6_C_r", (DL_FUNC) &_distr6_C_r, 3},
     {NULL, NULL, 0}
 };
 

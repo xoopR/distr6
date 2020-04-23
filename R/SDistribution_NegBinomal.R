@@ -182,20 +182,31 @@ NegativeBinomial$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 NegativeBinomial$set("private", ".pdf", function(x, log = FALSE){
+
   pdf = C_NegativeBinomialPdf(x = x,
                               size = as.numeric(self$getParameterValue("size")),
                               prob = as.numeric(self$getParameterValue("prob")),
-                              form = self$getParameterValue("form"))
+                              form = as.character(self$getParameterValue("form")))
 
   if (ncol(pdf) == 1) {
     return(as.numeric(pdf))
   } else {
     return(pdf)
   }
+
 })
-NegativeBinomial$set("private", ".cdf", function(x){
+NegativeBinomial$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   if(self$getParameterValue("form") == "fbs"){
-    return(pnbinom(x, self$getParameterValue("size"), self$getParameterValue("prob")))
+    size = self$getParameterValue("size")
+    prob = self$getParameterValue("prob")
+    return(call_C_base_pdqr(fun = "pnbinom",
+                     x = x,
+                     args = list(size = unlist(size),
+                                 prob = unlist(prob)),
+                     lower.tail = lower.tail,
+                     log = log.p,
+                     vec = test_list(size))
+           )
   } else if (form == "sbf") {
     return(1 - pbeta(self$getParameterValue("prob"), x + 1, self$getParameterValue("size")))
   } else if (form == "tbf") {
@@ -214,7 +225,16 @@ NegativeBinomial$set("private", ".cdf", function(x){
 })
 NegativeBinomial$set("private", ".quantile", function(p){
   if(self$getParameterValue("form") == "fbs"){
-    return(qnbinom(p, self$getParameterValue("size"), self$getParameterValue("prob")))
+    size = self$getParameterValue("size")
+    prob = self$getParameterValue("prob")
+    return(call_C_base_pdqr(fun = "qnbinom",
+                            x = p,
+                            args = list(size = unlist(size),
+                                        prob = unlist(prob)),
+                            lower.tail = lower.tail,
+                            log = log.p,
+                            vec = test_list(size))
+    )
   } else if (form == "sbf") {
     return(NULL) # TODO
   } else if (form == "tbf") {
@@ -225,7 +245,14 @@ NegativeBinomial$set("private", ".quantile", function(p){
 })
 NegativeBinomial$set("private", ".rand", function(n){
   if(self$getParameterValue("form") == "fbs"){
-    return(rnbinom(n, self$getParameterValue("size"), self$getParameterValue("prob")))
+    size = self$getParameterValue("size")
+    prob = self$getParameterValue("prob")
+    return(call_C_base_pdqr(fun = "rnbinom",
+                            x = n,
+                            args = list(size = unlist(size),
+                                        prob = unlist(prob)),
+                            vec = test_list(size))
+    )
   } else if (form == "sbf") {
     return(NULL) # TODO
   } else if (form == "tbf") {

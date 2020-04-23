@@ -102,41 +102,45 @@ Beta$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 Beta$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("shape1"))){
-    mapply(dbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dbeta(x, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"), log = log)
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  call_C_base_pdqr(fun = "dbeta",
+                   x = x,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2)),
+                   log = log,
+                   vec = test_list(shape1))
 })
 Beta$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape1"))) {
-    mapply(pbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pbeta(x, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  call_C_base_pdqr(fun = "pbeta",
+                   x = x,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape1))
 })
 Beta$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape1"))) {
-    mapply(qbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qbeta(p, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           lower.tail = lower.tail, log.p = log.p)
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  call_C_base_pdqr(fun = "qbeta",
+                   x = p,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape1))
 })
 Beta$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("shape1"))) {
-    mapply(rbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rbeta(n, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"))
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  call_C_base_pdqr(fun = "rbeta",
+                   x = n,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2)),
+                   vec = test_list(shape1))
 })
 Beta$set("private", ".log", TRUE)
 

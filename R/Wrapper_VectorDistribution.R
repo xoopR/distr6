@@ -100,9 +100,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
       stop("Either distlist or distribution and shared_params/params must be provided.")
     }
 
-    if(!(any(distribution %in% c(listDistributions(simplify = T), "Distribution")))){
-      stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
-    }
+    distribution = match.arg(distribution, listDistributions(simplify = TRUE))
 
     if(is.null(params)){
       params <- list()
@@ -140,7 +138,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     private$.sharedparams = shared_params
 
     pdist = get(distribution)
-    private$.dimension = pdist$private_fields$.traits$dimension
+    private$.univariate = pdist$private_fields$.traits$variateForm == "univariate"
 
     pdist = pdist[["private_methods"]]
     if (!is.null(pdist[[".pdf"]])) {
@@ -150,9 +148,9 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
         body(fun) = substitute(FUN)
 
         dpqr = data.table()
-        if(private$.dimension == 1){
-          for (i in seq_along(x1)) {
-            a_dpqr = fun(unlist(x1[, ..i]), log = log)
+        if(private$.univariate){
+          for (i in 1:ncol(x1)) {
+            a_dpqr = fun(unlist(x1[, i]), log = log)
             a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
             dpqr = cbind(dpqr, a_dpqr)
           }
@@ -176,7 +174,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
 
         dpqr = data.table()
         for (i in seq_along(x1)) {
-          a_dpqr = fun(unlist(x1[, ..i]), lower.tail = lower.tail, log.p = log.p)
+          a_dpqr = fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
           a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
           dpqr = cbind(dpqr, a_dpqr)
         }
@@ -192,7 +190,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
 
         dpqr = data.table()
         for (i in seq_along(x1)) {
-          a_dpqr = fun(unlist(x1[, ..i]), lower.tail = lower.tail, log.p = log.p)
+          a_dpqr = fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
           a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
           dpqr = cbind(dpqr, a_dpqr)
         }
@@ -347,7 +345,11 @@ VectorDistribution$set("public", "strprint", function(n = 100){
   return(names)
 })
 VectorDistribution$set("public", "getParameterValue", function(id){
-  lapply(self$modelTable$params, function(x) x[[id]])
+  if (id %in% names(self$shared_params)) {
+    return(as.list(rep(self$shared_params[[id]], nrow(self$modelTable))))
+  } else {
+    return(lapply(self$modelTable$params, function(x) x[[id]]))
+  }
 })
 VectorDistribution$set("public", "setParameterValue", function(...){
   message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
@@ -416,14 +418,13 @@ VectorDistribution$set("public", "pgf", function(z){
 VectorDistribution$set("public", "pdf", function(..., log = FALSE, data){
   if (missing(data)) data = as.matrix(data.table(...))
 
-  if (private$.dimension == 1) {
+  if (private$.univariate) {
     if (ncol(data) == 1) {
       data = matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
     }
   } else {
-    if (ncol(data) == 1 & class(data) != "array") {
-      data = array(rep(data, nrow(private$.wrappedModels) * private$.dimension),
-            dim = c(nrow(data), private$.dimension, nrow(private$.wrappedModels)))
+    if (ncol(data) == 1) {
+      stop("Only one column of data but distribution is not univariate.")
     } else if (class(data) == "array") {
       if(dim(data)[3] == 1) {
         data = array(rep(data, nrow(private$.wrappedModels)),
@@ -481,7 +482,7 @@ VectorDistribution$set("public", "rand", function(..., lower.tail = TRUE, log.p 
 VectorDistribution$set("active", "distlist", function() return(private$.distlist))
 VectorDistribution$set("active", "shared_params", function() return(private$.sharedparams))
 
-VectorDistribution$set("private", ".dimension", integer(0))
+VectorDistribution$set("private", ".univariate", logical(0))
 VectorDistribution$set("private", ".distlist", FALSE)
 VectorDistribution$set("private", ".sharedparams", list())
 VectorDistribution$set("private", ".properties", list())

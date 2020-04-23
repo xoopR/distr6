@@ -19,30 +19,31 @@ int C_Choose(int x, int y) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, const char* form) {
+NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, StringVector form) {
   int ParamLength = std::max({
     size.length(),
-    prob.length()
+    prob.length(),
+    form.length()
   });
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-      if (strcmp (form, "fbs") == 0) {
+      if (strcmp (form[i], "fbs") == 0) {
         // Return 0 if x not in Naturals
         if (floor (x[j]) != x[j]) {
           mat(j, i) = 0;
         } else {
           mat(j, i) = C_Choose(x[j] + size[i] - 1, size[i] - 1) * pow(prob[i], size[i]) * pow(1-prob[i], x[j]);
         }
-      } else if (strcmp (form, "sbf") == 0) {
+      } else if (strcmp (form[i], "sbf") == 0) {
         // Return 0 if x not in Naturals
         if (floor (x[j]) != x[j]) {
           mat(j, i) = 0;
         } else {
           mat(j, i) = C_Choose(x[j] + size[i] - 1, x[j]) * pow(prob[i], x[j]) * pow(1-prob[i], size[i]);
         }
-      } else if (strcmp (form, "tbf") == 0) {
+      } else if (strcmp (form[i], "tbf") == 0) {
         // Return 0 if x not in Naturals or < size
         if (floor (x[j]) != x[j] | x[j] < size[i]) {
           mat(j, i) = 0;

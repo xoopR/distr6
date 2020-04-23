@@ -53,54 +53,62 @@ BetaNoncentral$set("private", ".getRefParams", function(paramlst){
   return(lst)
 })
 BetaNoncentral$set("private", ".pdf", function(x, log = FALSE){
-  if(checkmate::testList(self$getParameterValue("shape1"))){
-    mapply(dbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           ncp = self$getParameterValue("location"),
-           MoreArgs = list(x = x, log = log))
-  } else {
-    dbeta(x, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-          ncp = self$getParameterValue("location"), log = log)
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "dbeta",
+                   x = x,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2),
+                               ncp = unlist(ncp)),
+                   log = log,
+                   vec = test_list(shape1))
 })
 BetaNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape1"))) {
-    mapply(pbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           ncp = self$getParameterValue("location"),
-           MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    pbeta(x, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-          ncp = self$getParameterValue("location"),
-          lower.tail = lower.tail, log.p = log.p)
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "pbeta",
+                   x = x,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2),
+                               ncp = unlist(ncp)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape1))
 })
 BetaNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if (checkmate::testList(self$getParameterValue("shape1"))) {
-    mapply(qbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           ncp = self$getParameterValue("location"),
-           MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    qbeta(p, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-          ncp = self$getParameterValue("location"),
-          lower.tail = lower.tail, log.p = log.p)
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "qbeta",
+                   x = p,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2),
+                               ncp = unlist(ncp)),
+                   lower.tail = lower.tail,
+                   log = log.p,
+                   vec = test_list(shape1))
 })
 BetaNoncentral$set("private", ".rand", function(n){
-  if (checkmate::testList(self$getParameterValue("shape1"))) {
-    mapply(rbeta, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-           ncp = self$getParameterValue("location"),
-           MoreArgs = list(n = n)
-    )
-  } else {
-    rbeta(n, shape1 = self$getParameterValue("shape1"), shape2 = self$getParameterValue("shape2"),
-          ncp = self$getParameterValue("location"))
-  }
+  shape1 = self$getParameterValue("shape1")
+  shape2 = self$getParameterValue("shape2")
+  ncp = self$getParameterValue("location")
+
+  call_C_base_pdqr(fun = "rbeta",
+                   x = n,
+                   args = list(shape1 = unlist(shape1),
+                               shape2 = unlist(shape2),
+                               ncp = unlist(ncp)),
+                   vec = test_list(shape1))
 })
 BetaNoncentral$set("private", ".log", TRUE)
 
 BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
-                                          verbose = FALSE){
+                                                    verbose = FALSE){
 
   private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, locaiton, verbose)
   self$setParameterValue(shape1=shape1,shape2=shape2, location = location)
