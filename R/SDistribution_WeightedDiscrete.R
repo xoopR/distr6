@@ -210,9 +210,9 @@ WeightedDiscrete$set("public","initialize",function(data, pdf = NULL, cdf = NULL
     stop("At least one of 'pdf' and 'cdf' should be supplied.")
   }
 
-  if (sum(pdf) != 1) {
-    stop("'pdf' should sum to 1")
-  }
+  # if (sum(pdf) != 1) {
+  #   stop("'pdf' should sum to 1")
+  # }
 
   private$.parameters = getParameterSet(self, data, pdf, cdf)
   super$setParameterValue(lst = list(data = data, pdf = pdf, cdf = cdf))
