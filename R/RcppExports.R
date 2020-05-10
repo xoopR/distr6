@@ -9,6 +9,30 @@ C_NegativeBinomialPdf <- function(x, size, prob, form) {
     .Call(`_distr6_C_NegativeBinomialPdf`, x, size, prob, form)
 }
 
+C_WeightedDiscretePdf <- function(x, data, pdf, logp) {
+    .Call(`_distr6_C_WeightedDiscretePdf`, x, data, pdf, logp)
+}
+
+C_Vec_WeightedDiscretePdf <- function(x, data, pdf, logp) {
+    .Call(`_distr6_C_Vec_WeightedDiscretePdf`, x, data, pdf, logp)
+}
+
+C_WeightedDiscreteCdf <- function(x, data, cdf, lower, logp) {
+    .Call(`_distr6_C_WeightedDiscreteCdf`, x, data, cdf, lower, logp)
+}
+
+C_Vec_WeightedDiscreteCdf <- function(x, data, cdf, lower, logp) {
+    .Call(`_distr6_C_Vec_WeightedDiscreteCdf`, x, data, cdf, lower, logp)
+}
+
+C_WeightedDiscreteQuantile <- function(x, data, cdf, lower, logp) {
+    .Call(`_distr6_C_WeightedDiscreteQuantile`, x, data, cdf, lower, logp)
+}
+
+C_Vec_WeightedDiscreteQuantile <- function(x, data, cdf, lower, logp) {
+    .Call(`_distr6_C_Vec_WeightedDiscreteQuantile`, x, data, cdf, lower, logp)
+}
+
 C_dpq <- function(fun, x, args, lower = TRUE, log = FALSE) {
     .Call(`_distr6_C_dpq`, fun, x, args, lower, log)
 }

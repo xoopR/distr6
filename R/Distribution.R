@@ -532,13 +532,13 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 #'
 #' @export
 NULL
-Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data){
+Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data = NULL){
 
   if (is.null(private$.pdf)){
     return(NULL)
   }
 
-  data = pdq_point_assert(..., self = self, data)
+  data = pdq_point_assert(..., self = self, data = data)
   assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
          .var.name = "Do all points lie in Distribution domain?")
 
@@ -597,30 +597,30 @@ Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data
 #'
 #' @export
 NULL
-Distribution$set("public","cdf",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data){
+Distribution$set("public","cdf",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL){
 
   if (is.null(private$.cdf)) {
     return(NULL)
   }
 
-  data = pdq_point_assert(..., self = self, data)
+  data = pdq_point_assert(..., self = self, data = data)
   assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
          .var.name = "Do all points lie in Distribution domain?")
 
   if(log.p | !lower.tail){
     if(private$.log){
-      pdqr = private$.cdf(x, log.p = log.p, lower.tail = lower.tail)
+      pdqr = private$.cdf(data, log.p = log.p, lower.tail = lower.tail)
     } else {
       if(!("CoreStatistics" %in% self$decorators)){
         stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
       } else {
-        pdqr = private$.cdf(x)
+        pdqr = private$.cdf(data)
         if(!lower.tail) pdqr = 1 - cdf
         if(log.p) pdqr = log(cdf)
       }
     }
   } else {
-    pdqr = private$.cdf(x)
+    pdqr = private$.cdf(data)
   }
 
   pdqr_returner(pdqr, simplify)
@@ -662,31 +662,31 @@ Distribution$set("public","cdf",function(..., lower.tail = TRUE, log.p = FALSE, 
 #' or as a data.table.
 #'
 #' @export
-quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data) {}
-Distribution$set("public","quantile",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data){
+quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {}
+Distribution$set("public","quantile",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL){
 
   if (is.null(private$.quantile)) {
     return(NULL)
   }
 
-  data = pdq_point_assert(..., self = self, data)
+  data = pdq_point_assert(..., self = self, data = data)
   assert(Interval$new(0,1)$contains(as.numeric(data), all = TRUE),
          .var.name = "Do all quantiles lie in [0,1]?")
 
   if(log.p | !lower.tail){
     if(private$.log){
-      pdqr = private$.quantile(p, log.p = log.p, lower.tail = lower.tail)
+      pdqr = private$.quantile(data, log.p = log.p, lower.tail = lower.tail)
     } else {
       if(!("CoreStatistics" %in% self$decorators)){
         stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
       } else {
-        if(log.p) p = exp(p)
-        if(!lower.tail) p = 1 - p
-        pdqr = private$.quantile(p)
+        if(log.p) data = exp(data)
+        if(!lower.tail) data = 1 - data
+        pdqr = private$.quantile(data)
       }
     }
   } else {
-    pdqr = private$.quantile(p)
+    pdqr = private$.quantile(data)
   }
 
   pdqr_returner(pdqr, simplify)
@@ -901,7 +901,7 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' @export
 NULL
 Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
-  return(self$type$contains(x, all, bound))
+  return(self$traits$type$contains(x, all, bound))
 })
 
 #-------------------------------------------------------------

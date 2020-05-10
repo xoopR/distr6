@@ -190,7 +190,8 @@ ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable
 #' @export
 update.ParameterSet <- function(object, ...) {}
 ParameterSet$set("public","update", function(...){
-  if(any(!is.null(private$.parameters$updateFunc))){
+  sap = sapply(private$.parameters$updateFunc, is.null)
+  if(any(!sap)){
     update_filter = !sapply(private$.parameters$updateFunc, is.null)
     updates = private$.parameters[update_filter,]
     newvals = apply(updates, 1, function(x){

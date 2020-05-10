@@ -868,3 +868,24 @@ getParameterSet.Weibull <- function(x, shape, scale, altscale, verbose = FALSE){
   return(ps)
 }
 
+getParameterSet.WeightedDiscrete <- function(x, data, pdf = NULL, cdf = NULL, verbose = FALSE){
+
+  n = length(data)
+
+  if(!is.null(cdf)){
+    if(verbose) message("Parameterised with data and cdf.")
+  } else{
+    if(verbose) message("Parameterised with data and pdf.")
+  }
+
+  ps <-  ParameterSet$new(id = list("data","pdf","cdf"),
+                          value = list(rep(1, n), rep(1, n), rep(1, n)),
+                          support = list(Reals$new()^n, Interval$new(0,1)^n, Interval$new(0,1)^n),
+                          settable = list(FALSE, FALSE, FALSE),
+                          updateFunc = list(NULL, NULL, NULL),
+                          description = list("Data", "Probability Density Function",
+                                             "Cumulative Distribution Function"))
+
+  return(ps)
+}
+

@@ -167,40 +167,62 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
     }
 
     if (!is.null(pdist[[".cdf"]])) {
-      private$.cdf = function(x, lower.tail, log.p){}
+      private$.cdf = function(x1, lower.tail, log.p){}
       body(private$.cdf) = substitute({
         fun = function(x, lower.tail, log.p){}
         body(fun) = substitute(FUN)
 
         dpqr = data.table()
-        for (i in seq_along(x1)) {
-          a_dpqr = fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-          a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-          dpqr = cbind(dpqr, a_dpqr)
+        if(private$.univariate){
+          for (i in 1:ncol(x1)) {
+            a_dpqr = fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
+            a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+            dpqr = cbind(dpqr, a_dpqr)
+          }
+        } else {
+          for (i in 1:dim(x1)[3]) {
+            a_dpqr = fun(unlist(x1[,,i]), lower.tail = lower.tail, log.p = log.p)
+            a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+            dpqr = cbind(dpqr, a_dpqr)
+          }
         }
+
         return(dpqr)
       }, list(FUN = body(pdist[[".cdf"]])))
     }
 
     if (!is.null(pdist[[".quantile"]])) {
-      private$.quantile = function(p, lower.tail, log.p){}
+      private$.quantile = function(x1, lower.tail, log.p){}
       body(private$.quantile) = substitute({
         fun = function(x, lower.tail, log.p){}
         body(fun) = substitute(FUN)
 
         dpqr = data.table()
-        for (i in seq_along(x1)) {
-          a_dpqr = fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-          a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-          dpqr = cbind(dpqr, a_dpqr)
+        if(private$.univariate){
+          for (i in 1:ncol(x1)) {
+            a_dpqr = fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
+            a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+            dpqr = cbind(dpqr, a_dpqr)
+          }
+        } else {
+          for (i in 1:dim(x1)[3]) {
+            a_dpqr = fun(unlist(x1[,,i]), lower.tail = lower.tail, log.p = log.p)
+            a_dpqr = if(class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+            dpqr = cbind(dpqr, a_dpqr)
+          }
         }
         return(dpqr)
       }, list(FUN = body(pdist[[".quantile"]])))
     }
 
     if (!is.null(pdist[[".rand"]])) {
-      private$.rand = function(n){}
-      body(private$.rand) = body(pdist[[".rand"]])
+      private$.rand = function(x1){}
+      body(private$.rand) = substitute({
+        fun = function(n){}
+        body(fun) = substitute(FUN)
+
+        return(fun(x1))
+      }, list(FUN = body(pdist[[".rand"]])))
     }
 
     if(is.null(name)){
@@ -438,42 +460,60 @@ VectorDistribution$set("public", "pdf", function(..., log = FALSE, data){
   return(dpqr)
 })
 VectorDistribution$set("public", "cdf", function(..., lower.tail = TRUE, log.p = FALSE, data){
-  if (missing(data)) {
-    x = data.table(...)
+  if (missing(data)) data = as.matrix(data.table(...))
+
+  if (private$.univariate) {
+    if (ncol(data) == 1) {
+      data = matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
+    }
   } else {
-    x = as.data.table(data)
+    if (ncol(data) == 1) {
+      stop("Only one column of data but distribution is not univariate.")
+    } else if (class(data) == "array") {
+      if(dim(data)[3] == 1) {
+        data = array(rep(data, nrow(private$.wrappedModels)),
+                     dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels)))
+      }
+    }
   }
-  if(ncol(x) == 1){
-    x = as.data.table(rep(x, nrow(private$.wrappedModels)))
-  }
-  dpqr = as.data.table(private$.cdf(x, lower.tail = lower.tail, log.p = log.p))
+
+  dpqr = as.data.table(private$.cdf(data, lower.tail = lower.tail, log.p = log.p))
   colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
   return(dpqr)
 })
 VectorDistribution$set("public", "quantile", function(..., lower.tail = TRUE, log.p = FALSE, data){
-  if (missing(data)) {
-    x = data.table(...)
+  if (missing(data)) data = as.matrix(data.table(...))
+
+  if (private$.univariate) {
+    if (ncol(data) == 1) {
+      data = matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
+    }
   } else {
-    x = as.data.table(data)
+    if (ncol(data) == 1) {
+      stop("Only one column of data but distribution is not univariate.")
+    } else if (class(data) == "array") {
+      if(dim(data)[3] == 1) {
+        data = array(rep(data, nrow(private$.wrappedModels)),
+                     dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels)))
+      }
+    }
   }
-  if(ncol(x) == 1){
-    x = as.data.table(rep(x, nrow(private$.wrappedModels)))
-  }
-  dpqr = as.data.table(private$.quantile(x, lower.tail = lower.tail, log.p = log.p))
+
+  dpqr = as.data.table(private$.quantile(data, lower.tail = lower.tail, log.p = log.p))
   colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
   return(dpqr)
 })
-VectorDistribution$set("public", "rand", function(..., lower.tail = TRUE, log.p = FALSE, data){
+VectorDistribution$set("public", "rand", function(..., data){
   if (missing(data)) {
-    x = ...elt(1)
-    if(length(x) > 1){
-      x = length(x)
+    data = ...elt(1)
+    if(length(data) > 1){
+      data = length(data)
     }
   } else {
-    x = unlist(data[1,1])
+    data = unlist(data[1,1])
   }
 
-  dpqr = as.data.table(private$.rand(x))
+  dpqr = as.data.table(private$.rand(data))
   if(ncol(dpqr) == 1) dpqr = transpose(dpqr)
   colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
   return(dpqr)

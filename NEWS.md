@@ -8,6 +8,7 @@
 * Separated `Loglogistic` and `ShiftedLoglogistic` so only the latter has a `location` parameter. Additionally added an analytical `rand` expression to `ShiftedLoglogistic`, and `Loglogistic` now implemented from package `actuar`
 * Removed deprecated classes: `ArrayDistribution`
 * Removed deprecated functions: `listSpecialSets`
+* `WeighedDiscrete` distribution now stores samples and probabilities as parameters. The distribution should now be constructed with parameters `data, pdf, cdf `
 
 ## Patches
 

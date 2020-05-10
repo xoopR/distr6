@@ -1,5 +1,5 @@
 pdq_point_assert = function(..., self, data){
-  if(missing(data)){
+  if(is.null(data)){
     if(...length() == 0){
       stop("Points to evaluate must be passed to `...` or `data`.")
     } else {
@@ -53,8 +53,8 @@ pdqr_returner = function(pdqr, simplify){
   }
 }
 call_C_base_pdqr = function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) {
+  type = substr(fun, 1, 1)
   if (vec) {
-    type = substr(fun, 1, 1)
     if (type == "r") {
       return(C_r(fun, x, args))
     } else if (type %in% c("d", "p", "q")) {
@@ -68,6 +68,12 @@ call_C_base_pdqr = function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) {
       stop("Function must start with one of: {d, p, q, r}.")
     }
   } else {
-    return(do.call(get(fun), c(list(x = x), args)))
+    if (type == "d") {
+      return(do.call(get(fun), c(list(x = x), args)))
+    } else if (type == "p") {
+      return(do.call(get(fun), c(list(q = x), args)))
+    } else {
+      return(do.call(get(fun), c(list(p = x), args)))
+    }
   }
 }
