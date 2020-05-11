@@ -555,9 +555,10 @@ Extract.VectorDistribution <- function(vecdist, i){
 
       return(do.call(get(vecdist$modelTable[i, 1][[1]])$new, par))
 
-    }else
-      return(VectorDistribution$new(distribution = vecdist$modelTable[i, 1][[1]],
+    } else {
+      return(VectorDistribution$new(distribution = vecdist$modelTable[1, 1][[1]],
                                     params = vecdist$modelTable[i, 2][[1]]))
+    }
   } else {
     if(length(i) == 1){
       dec = vecdist$decorators

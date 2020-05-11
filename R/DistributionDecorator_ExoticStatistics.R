@@ -150,9 +150,9 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper
 #' @export
 NULL
 ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
-  if(private$.isCdf)
+  if(!is.null(private$.cdf)) {
     self$cdf(x1 = x1, lower.tail = FALSE, log.p = log)
-  else {
+  } else {
     message(.distr6$message_numeric)
     surv = integrate(self$pdf, x1, self$sup)$value
     if(log)
