@@ -120,7 +120,7 @@ Uniform$set("private", ".pdf", function(x, log = FALSE){
                    vec = test_list(min)
   )
 })
-Uniform$set("private", ".cdf", function(x, min.tail = TRUE, log.p = FALSE){
+Uniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
   min = self$getParameterValue("lower")
   max = self$getParameterValue("upper")
 
@@ -128,12 +128,12 @@ Uniform$set("private", ".cdf", function(x, min.tail = TRUE, log.p = FALSE){
                    x = x,
                    args = list(min = unlist(min),
                                max = unlist(max)),
-                   min.tail = min.tail,
+                   lower.tail = lower.tail,
                    log = log.p,
                    vec = test_list(min)
   )
 })
-Uniform$set("private", ".quantile", function(p, min.tail = TRUE, log.p = FALSE){
+Uniform$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
   min = self$getParameterValue("lower")
   max = self$getParameterValue("upper")
 
@@ -141,7 +141,7 @@ Uniform$set("private", ".quantile", function(p, min.tail = TRUE, log.p = FALSE){
                    x = p,
                    args = list(min = unlist(min),
                                max = unlist(max)),
-                   min.tail = min.tail,
+                   lower.tail = lower.tail,
                    log = log.p,
                    vec = test_list(min)
   )

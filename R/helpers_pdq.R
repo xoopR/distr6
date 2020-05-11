@@ -72,8 +72,12 @@ call_C_base_pdqr = function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) {
       return(do.call(get(fun), c(list(x = x), args)))
     } else if (type == "p") {
       return(do.call(get(fun), c(list(q = x), args)))
-    } else {
+    } else if (type == "q") {
       return(do.call(get(fun), c(list(p = x), args)))
+    } else if (type == "r") {
+      return(do.call(get(fun), c(list(n = x), args)))
+    } else {
+      stop("Function must start with one of: {d, p, q, r}.")
     }
   }
 }
