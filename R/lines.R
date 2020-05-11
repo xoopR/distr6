@@ -83,8 +83,8 @@ lines.Distribution <- function(x, fun, npoints = 3000,...){
   #######################################################################
 
 
-  if(testDiscrete(x) & x$support$properties$countability == "countably finite"){
-    plotStructure <- data.table::data.table(points = unlist(x$support$elements))
+  if(testDiscrete(x) & x$properties$support$properties$countability == "countably finite"){
+    plotStructure <- data.table::data.table(points = unlist(x$properties$support$elements))
     plotStructure$cdf <- x$cdf(plotStructure$points)
   } else {
     plotStructure <- data.table::data.table(cdf = seq(0,1,length.out = npoints))
