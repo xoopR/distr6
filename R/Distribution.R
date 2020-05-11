@@ -615,8 +615,8 @@ Distribution$set("public","cdf",function(..., lower.tail = TRUE, log.p = FALSE, 
         stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
       } else {
         pdqr = private$.cdf(data)
-        if(!lower.tail) pdqr = 1 - cdf
-        if(log.p) pdqr = log(cdf)
+        if(!lower.tail) pdqr = 1 - pdqr
+        if(log.p) pdqr = log(pdqr)
       }
     }
   } else {
