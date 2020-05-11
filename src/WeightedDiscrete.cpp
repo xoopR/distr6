@@ -98,7 +98,7 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, Num
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (data(j,i) >= x[k]) {
+        if (data(j, i) >= x[k]) {
           mat(k, i) = cdf(j, i);
           if (!lower) {
             mat(k, i) = 1 - mat[k];

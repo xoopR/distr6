@@ -285,7 +285,7 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
   if(!is.null(name)) self$name <- name
   if(!is.null(short_name)) self$short_name <- short_name
 
-  public$properties$support <- support
+  private$.properties$support <- support
   private$.traits$type <- type
   private$.traits$valueSupport <- valueSupport
   private$.traits$variateForm <- variateForm
