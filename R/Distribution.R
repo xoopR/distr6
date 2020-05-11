@@ -1164,6 +1164,7 @@ Distribution$set("private",".traits",NULL)
 # Distribution$set("private",".isCdf", FALSE)
 # Distribution$set("private",".isQuantile", FALSE)
 # Distribution$set("private",".isRand", FALSE)
+Distribution$set("private", ".log", FALSE)
 
 #-------------------------------------------------------------
 # Distribution Private Methods
