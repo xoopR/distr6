@@ -72,17 +72,17 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   if(any(is.na(fun)))
     stop("Function unrecognised, should be one of: ", paste0(plotFuns,collapse=","))
 
-  if(any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & !x$isCdf){
+  if(any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & is.null(x$.__enclos_env__$private$.cdf)) {
     message("This distribution does not have a cdf expression. Use the FunctionImputation decorator to impute a numerical cdf.")
     fun = fun[!(fun %in% c("cdf", "survival", "hazard","cumhazard"))]
   }
 
-  if(any(c("pdf", "hazard") %in% fun) & !x$isPdf){
+  if(any(c("pdf", "hazard") %in% fun) & is.null(x$.__enclos_env__$private$.pdf)){
     message("This distribution does not have a pdf expression. Use the FunctionImputation decorator to impute a numerical pdf.")
     fun = fun[!(fun %in% c("pdf", "hazard"))]
   }
 
-  if("quantile" %in% fun & !x$isQuantile){
+  if("quantile" %in% fun & is.null(x$.__enclos_env__$private$.quantile)){
     message("This distribution does not have a quantile expression. Use the FunctionImputation decorator to impute a numerical quantile.")
     fun = fun[!(fun %in% c("quantile"))]
   }
