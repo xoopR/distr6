@@ -100,7 +100,7 @@ VectorDistribution$set("public","initialize",function(distlist = NULL, distribut
       stop("Either distlist or distribution and shared_params/params must be provided.")
     }
 
-    distribution = match.arg(distribution, listDistributions(simplify = TRUE))
+    distribution = match.arg(distribution, c(listDistributions(simplify = TRUE), "Distribution"))
 
     if(is.null(params)){
       params <- list()
