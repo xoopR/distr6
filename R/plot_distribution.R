@@ -72,17 +72,17 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   if(any(is.na(fun)))
     stop("Function unrecognised, should be one of: ", paste0(plotFuns,collapse=","))
 
-  if(any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & is.null(x$.__enclos_env__$private$.cdf)) {
+  if(any(c("cdf", "survival", "hazard","cumhazard") %in% fun) & !isCdf(x)){
     message("This distribution does not have a cdf expression. Use the FunctionImputation decorator to impute a numerical cdf.")
     fun = fun[!(fun %in% c("cdf", "survival", "hazard","cumhazard"))]
   }
 
-  if(any(c("pdf", "hazard") %in% fun) & is.null(x$.__enclos_env__$private$.pdf)){
+  if(any(c("pdf", "hazard") %in% fun) & !isPdf(x)){
     message("This distribution does not have a pdf expression. Use the FunctionImputation decorator to impute a numerical pdf.")
     fun = fun[!(fun %in% c("pdf", "hazard"))]
   }
 
-  if("quantile" %in% fun & is.null(x$.__enclos_env__$private$.quantile)){
+  if(("quantile" %in% fun) & !isQuantile(x)){
     message("This distribution does not have a quantile expression. Use the FunctionImputation decorator to impute a numerical quantile.")
     fun = fun[!(fun %in% c("quantile"))]
   }
@@ -97,7 +97,7 @@ plot.Distribution <- function(x, fun=c('pdf','cdf'), npoints = 3000,
   if(testDiscrete(x) & x$properties$support$properties$countability == "countably finite"){
     plotStructure <- data.table::data.table(points = unlist(x$properties$support$elements))
   } else {
-    if(x$isQuantile) {
+    if(isQuantile(x)) {
       plotStructure <- data.table::data.table(cdf = seq(0,1,length.out = npoints))
       plotStructure$points <- x$quantile(plotStructure$cdf)
       plotStructure <- plotStructure[,2:1]
