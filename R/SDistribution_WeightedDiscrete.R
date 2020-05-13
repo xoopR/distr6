@@ -44,77 +44,77 @@ WeightedDiscrete$set("public","short_name","WeightDisc")
 WeightedDiscrete$set("public","description","WeightedDiscrete Probability Distribution.")
 
 WeightedDiscrete$set("public","mode",function(which = "all"){
-  x = self$getParameterValue("data")
-  pdf = self$getParameterValue("pdf")
+  data = self$getParameterValue("data")
 
   if(which == "all") {
-    return(x[pdf == max(pdf)])
+    return(data$x[data$pdf == max(data$pdf)])
   } else {
-    return(x[pdf == max(pdf)][which])
+    return(data$x[data$pdf == max(data$pdf)][which])
   }
 })
 WeightedDiscrete$set("public","mean",function(){
-  return(sum(self$getParameterValue("data") * self$getParameterValue("pdf")))
+  data = self$getParameterValue("data")
+  return(sum(data$x * data$pdf))
 })
 WeightedDiscrete$set("public","variance",function(){
-  return(sum((self$getParameterValue("data") - self$mean())^2 * self$getParameterValue("pdf")))
+  data = self$getParameterValue("data")
+  return(sum((data$x - self$mean())^2 * data$pdf))
 })
 WeightedDiscrete$set("public","skewness",function(){
-  return(sum(((self$getParameterValue("data") - self$mean())/self$stdev())^3 * self$getParameterValue("pdf")))
+  data = self$getParameterValue("data")
+  return(sum(((data$x - self$mean())/self$stdev())^3 * data$pdf))
 })
 WeightedDiscrete$set("public","kurtosis",function(excess = TRUE){
-  kurt = sum(((self$getParameterValue("data") - self$mean())/self$stdev())^4 * self$getParameterValue("pdf"))
+  data = self$getParameterValue("data")
+  kurt = sum(((data$x - self$mean())/self$stdev())^4 * data$pdf)
   if(excess)
     return(kurt - 3)
   else
     return(kurt)
 })
 WeightedDiscrete$set("public","entropy",function(base = 2){
-  pdf = self$getParameterValue("pdf")
+  pdf = self$getParameterValue("data")$pdf
   return(-sum(pdf * log(pdf, base)))
 })
 WeightedDiscrete$set("public","mgf",function(t){
-  x = self$getParameterValue("data")
-  pdf = self$getParameterValue("pdf")
+  data = self$getParameterValue("data")
 
   if(length(t) == 1)
-    return(sum(exp(x*t) * (pdf)))
+    return(sum(exp(data$x*t) * (data$pdf)))
   else{
     nr = length(t)
-    nc = length(x)
+    nc = length(data$x)
     return(as.numeric(
-      exp(matrix(x, nrow = nr, ncol = nc, byrow = T) *
-            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
+      exp(matrix(data$x, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$pdf, nrow = nc, ncol = 1)
     ))
   }
 })
 WeightedDiscrete$set("public","cf",function(t){
-  x = self$getParameterValue("data")
-  pdf = self$getParameterValue("pdf")
+  data = self$getParameterValue("data")
 
   if(length(t) == 1)
-    return(sum(exp(x*t*1i) * (pdf)))
+    return(sum(exp(data$x*t*1i) * (data$pdf)))
   else{
     nr = length(t)
-    nc = length(x)
+    nc = length(data$x)
     return(as.complex(
-      exp(matrix(x*1i, nrow = nr, ncol = nc, byrow = T) *
-            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
+      exp(matrix(data$x * 1i, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$pdf, nrow = nc, ncol = 1)
     ))
   }
 })
 WeightedDiscrete$set("public","pgf",function(z){
-  x = self$getParameterValue("data")
-  pdf = self$getParameterValue("pdf")
+  data = self$getParameterValue("data")
 
   if(length(z) == 1)
-    return(sum((z^x) * pdf))
+    return(sum((z^data$x) * data$pdf))
   else{
     nr = length(z)
-    nc = length(x)
+    nc = length(data$x)
     return(as.numeric(
-      (matrix(z, nrow = nr, ncol = nc) ^ matrix(x, nrow = nr, ncol = nc, byrow = z)) %*%
-        matrix(pdf, nrow = nc, ncol = 1)
+      (matrix(z, nrow = nr, ncol = nc) ^ matrix(data$x, nrow = nr, ncol = nc, byrow = z)) %*%
+        matrix(data$pdf, nrow = nc, ncol = 1)
     ))
   }
 })
@@ -126,58 +126,52 @@ WeightedDiscrete$set("public","setParameterValue",function(..., lst = NULL, erro
 WeightedDiscrete$set("public","getParameterValue",function(id, error = "warn"){
   if("data" %in% id)
     return(super$getParameterValue("data", error))
-  else if("pdf" %in% id)
-    return(super$getParameterValue("pdf", error))
-  else if("cdf" %in% id)
-    return(super$getParameterValue("cdf", error))
 })
 
 WeightedDiscrete$set("private",".pdf",function(x, log = FALSE){
-  pdf = self$getParameterValue("pdf")
-  if (checkmate::testList(pdf)) {
-    pdf = matrix(unlist(pdf), ncol = length(pdf))
-    data = matrix(unlist(self$getParameterValue("data")), ncol = ncol(pdf))
-    return(C_Vec_WeightedDiscretePdf(x, data, pdf, log))
+  data = self$getParameterValue("data")
+
+  if (checkmate::testList(data)) {
+    data = unlist(data)
+    pdf = matrix(as.numeric(data[names(data)=="pdf"]), ncol = nrow(data))
+    data = matrix(as.numeric(data[names(data)=="x"]), ncol = ncol(pdf))
+    return(C_Vec_WeightedDiscretePdf(x, data$x, data$pdf, log))
   } else {
-    return(C_WeightedDiscretePdf(x, self$getParameterValue("data"), pdf, log))
+    return(C_WeightedDiscretePdf(x, data, pdf, log))
   }
 })
 WeightedDiscrete$set("private",".cdf",function(x, lower.tail = TRUE, log.p = FALSE){
-  cdf = self$getParameterValue("cdf")
-  if (checkmate::testList(cdf)) {
-    if(is.null(cdf[[1]])) {
-      stop("'cdf' must be supplied in VectorDistribution constructor")
-    }
-    cdf = matrix(unlist(cdf), ncol = length(cdf))
-    data = matrix(unlist(self$getParameterValue("data")), ncol = ncol(cdf))
+  data = self$getParameterValue("data")
+
+  if (checkmate::testList(data)) {
+    cdf = matrix(as.numeric(data[names(data)=="cdf"]), ncol = nrow(data))
+    data = matrix(as.numeric(data[names(data)=="x"]), ncol = ncol(cdf))
     return(C_Vec_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p))
   } else {
-    return(C_WeightedDiscreteCdf(x, self$getParameterValue("data"), cdf, lower.tail, log.p))
+    return(C_WeightedDiscreteCdf(x, data$x, data$cdf, lower.tail, log.p))
   }
 })
 WeightedDiscrete$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
-  cdf = self$getParameterValue("cdf")
-  if (checkmate::testList(cdf)) {
-    if(is.null(cdf[[1]])) {
-      stop("'cdf' must be supplied in VectorDistribution constructor")
-    }
-    cdf = matrix(unlist(cdf), ncol = length(cdf))
-    data = matrix(unlist(self$getParameterValue("data")), ncol = ncol(cdf))
+  data = self$getParameterValue("data")
+
+  if (checkmate::testList(data)) {
+    cdf = matrix(as.numeric(data[names(data)=="cdf"]), ncol = nrow(data))
+    data = matrix(as.numeric(data[names(data)=="x"]), ncol = ncol(cdf))
     return(C_Vec_WeightedDiscreteQuantile(x, data, cdf, lower.tail, log.p))
   } else {
-    return(C_WeightedDiscreteQuantile(x, self$getParameterValue("data"), cdf, lower.tail, log.p))
+    return(C_WeightedDiscreteQuantile(x, data$x, data$cdf, lower.tail, log.p))
   }
 })
 WeightedDiscrete$set("private",".rand",function(n){
-  pdf = self$getParameterValue("pdf")
-  if (checkmate::testList(pdf)) {
-    data = self$getParameterValue("data")
-    rand = matrix(nrow = n, ncol = length(pdf))
-    for (i in seq_along(pdf)) {
-      rand[,i] = sample(data[[i]], n, TRUE, pdf[[i]])
+  data = self$getParameterValue("data")
+
+  if (checkmate::testList(data)) {
+    rand = matrix(nrow = n, ncol = nrow(pdf))
+    for (i in seq_along(data)) {
+      rand[,i] = sample(data[[i]]$x, n, TRUE, data[[i]]$pdf)
     }
   } else {
-    rand = sample(self$getParameterValue("data"), n, TRUE, pdf)
+    rand = sample(data$x, n, TRUE, data$pdf)
   }
   return(rand)
 })
@@ -189,30 +183,24 @@ WeightedDiscrete$set("private",".getRefParams", function(paramlst){
   return(paramlst)
 })
 
-WeightedDiscrete$set("public","initialize",function(data, pdf = NULL, cdf = NULL, decorators = NULL, verbose = FALSE){
+WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, verbose = FALSE){
 
-  if(class(data)[1] %in% c("data.frame", "data.table", "matrix")) {
-    warning("'data' argument should now be given as a vector, with other arguments passed to
-            'pdf' and 'cdf'. In the next release this will throw an error if not changed.")
-    pdf = data$pdf
-    cdf = data$cdf
-    data = data$data
+  data <- data.table::as.data.table(data)
+  checkmate::assert(all(colnames(data) %in% c("pdf","cdf","x")),
+                    .var.name = "data column names should be one of 'pdf', 'cdf', 'x")
+  checkmate::assert("x" %in% colnames(data),
+                    .var.name = "'x' must be included in data column names")
+  checkmate::assert(any(c("pdf","cdf") %in% colnames(data)),
+                    .var.name = "at least one of 'pdf' and 'cdf' must be included in data column names")
+
+  if("pdf" %in% colnames(data) & !("cdf" %in% colnames(data))){
+    data$cdf = cumsum(data$pdf)
+  } else if("cdf" %in% colnames(data) & !("pdf" %in% colnames(data))){
+    data$pdf = c(data$cdf[1], diff(data$cdf))
   }
 
-  checkmate::assertNumeric(pdf, lower = 0, upper = 1, .var.name = "pdf is not valid", null.ok = TRUE)
-  checkmate::assertNumeric(cdf, lower = 0, upper = 1, .var.name = "cdf is not valid", null.ok = TRUE)
-
-  if(!is.null(pdf) & is.null(cdf)){
-    cdf = cumsum(pdf)
-  } else if(!is.null(cdf) & is.null(pdf)){
-    pdf = c(cdf[1], diff(cdf))
-  } else if(is.null(pdf) & is.null(cdf)) {
-    stop("At least one of 'pdf' and 'cdf' should be supplied.")
-  }
-
-  # if (sum(pdf) != 1) {
-  #   stop("'pdf' should sum to 1")
-  # }
+  checkmate::assertNumeric(data$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
+  checkmate::assertNumeric(data$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid")
 
   private$.parameters = getParameterSet(self, data, pdf, cdf)
   super$setParameterValue(lst = list(data = data, pdf = pdf, cdf = cdf))
