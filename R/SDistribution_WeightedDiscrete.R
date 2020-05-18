@@ -202,8 +202,12 @@ WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, ver
   checkmate::assertNumeric(data$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
   checkmate::assertNumeric(data$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid")
 
-  private$.parameters = getParameterSet(self, data, pdf, cdf)
-  super$setParameterValue(lst = list(data = data, pdf = pdf, cdf = cdf))
+  private$.parameters = ParameterSet$new(id = "data",
+                                         value = list(data),
+                                         support = UniversalSet$new(),
+                                         settable = FALSE,
+                                         updateFunc = NULL,
+                                         description = "Data")
 
   super$initialize(decorators = decorators,
                    support = Set$new(data, class = "numeric"),

@@ -68,7 +68,7 @@ Imports:
     data.table,
     R6,
     R62S3 (>= 1.4.0),
-    set6 (>= 0.1.2),
+    set6 (>= 0.1.4),
     stats,
     Rcpp
 Suggests:
@@ -179,6 +179,7 @@ Collate:
     'generalPNorm.R'
     'getParameterSet.R'
     'helpers_pdq.R'
+    'helpers_wrappers.R'
     'isPdqr.R'
     'lines_continuous.R'
     'lines_discrete.R'

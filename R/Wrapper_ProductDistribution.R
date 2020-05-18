@@ -58,80 +58,50 @@
 #'
 #' @export
 NULL
-ProductDistribution <- R6Class("ProductDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
-.distr6$wrappers <- append(.distr6$wrappers, list(ProductDistribution = ProductDistribution))
+ProductDistribution <- R6Class("ProductDistribution",
+  inherit = VectorDistribution,
+  lock_objects = FALSE,
+  public = list(
+    initialize = function(distlist = NULL, distribution = NULL, params = NULL,
+                          shared_params = NULL,
+                          name = NULL, short_name = NULL,
+                          decorators = NULL){
 
-ProductDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,
-                                                       name = NULL, short_name = NULL, description = NULL){
+      super$initialize(
+        distlist = distlist,
+        distribution = distribution,
+        params = params,
+        shared_params = shared_params,
+        decorators = decorators
+      )
 
-  if(is.null(distlist)){
-    if(is.null(distribution) | is.null(params))
-      stop("Either distlist or distribution and params must be provided.")
+      self$name = gsub("Vector", "Product", self$name)
+      self$short_name = gsub("Vec", "Prod", self$short_name)
 
-    distribution = paste0(substitute(distribution))
-    if(!(distribution %in% listDistributions(simplify = T)))
-      stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
+      invisible(self)
 
-    distribution = get(distribution)
-    if(checkmate::testList(params)){
-      x <- params
-      params <- data.table::as.data.table(t(data.table::as.data.table(x)))
-      colnames(params) <- unique(names(unlist(x)))
+      # TODO
+      # type = do.call(setproduct, lapply(distlist,function(x) x$type))
+      # support = do.call(setproduct, lapply(distlist,function(x) x$support))
+      # if("discrete" %in% lapply(distlist, valueSupport))
+      #   valueSupport = "discrete"
+      # else
+      #   valueSupport = "continuous"
+    },
+
+    pdf = function(..., log = FALSE, data) {
+      product_dpqr_returner(dpqr = super$pdf(..., log = log, data = data),
+                            univariate = private$.univariate)
+    },
+
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+      product_dpqr_returner(dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
+                            univariate = private$.univariate)
+    },
+
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+      stop("Quantile is currently unavailable for product distributions.")
     }
-
-    if(inherits(params, "list") | inherits(params, "data.frame") | inherits(params, "matrix")){
-      distlist = apply(params, 1, function(x) do.call(distribution$new, as.list(x)))
-      name = paste0("Vector: ",nrow(params)," ",distribution$classname,"s")
-      short_name = paste0("Vec",nrow(params),distribution$public_fields$short_name)
-      description = paste("Vector of:",nrow(params),distribution$classname,"distributions")
-    } else
-      stop("params must inherit one of: list, data.frame, or matrix.")
-  } else {
-    if(is.null(name)) name = paste("Product:",paste0(lapply(distlist, function(x) x$name),collapse=", "))
-    if(is.null(short_name)) short_name = paste0(lapply(distlist, function(x) x$short_name),collapse="Prod")
-    if(is.null(description)) description = paste0("Product of:",paste0(lapply(distlist, function(x) x$description), collapse=" "))
-  }
-
-  distlist = makeUniqueDistributions(distlist)
-
-  lst <- rep(list(bquote()), length(distlist))
-  names(lst) <- paste("x",1:length(distlist),sep="")
-
-  pdf = function() {}
-  formals(pdf) = lst
-  body(pdf) = substitute({
-    pdfs = NULL
-    for(i in 1:n)
-      pdfs = c(pdfs,self$wrappedModels()[[i]]$pdf(get(paste0("x",i))))
-    y = data.table::data.table(matrix(pdfs, ncol = n))
-    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
-    return(apply(y,1,prod))
-  },list(n = length(distlist)))
-
-  cdf = function() {}
-  formals(cdf) = lst
-  body(cdf) = substitute({
-    cdfs = NULL
-    for(i in 1:n)
-      cdfs = c(cdfs,self$wrappedModels()[[i]]$cdf(get(paste0("x",i))))
-    y = data.table::data.table(matrix(cdfs, ncol = n))
-    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
-    return(apply(y,1,prod))
-  },list(n = length(distlist)))
-
-  rand = function(n) {
-    return(data.table::data.table(sapply(self$wrappedModels(), function(x) x$rand(n))))
-  }
-
-
-  type = do.call(setproduct, lapply(distlist,function(x) x$type))
-  support = do.call(setproduct, lapply(distlist,function(x) x$support))
-  if("discrete" %in% lapply(distlist, valueSupport))
-    valueSupport = "discrete"
-  else
-    valueSupport = "continuous"
-
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
-                   short_name = short_name, description = description, support = support, type = type,
-                   variateForm = "multivariate", valueSupport = valueSupport)
-})
+  )
+)
+.distr6$wrappers <- append(.distr6$wrappers, list(ProductDistribution = ProductDistribution))

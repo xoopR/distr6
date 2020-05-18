@@ -539,8 +539,14 @@ Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data
   }
 
   data = pdq_point_assert(..., self = self, data = data)
-  assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
-         .var.name = "Do all points lie in Distribution domain?")
+  if (inherits(data, "matrix")) {
+    assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = FALSE),
+           .var.name = "Do all points lie in Distribution domain?")
+  } else {
+    assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
+           .var.name = "Do all points lie in Distribution domain?")
+  }
+
 
   if(log){
     if(private$.log){

@@ -115,34 +115,35 @@ Multinomial$set("private",".getRefParams", function(paramlst){
 })
 Multinomial$set("private",".pdf",function(x, log = FALSE){
 
-  checkmate::assertMatrix(x, ncols = length(self$getParameterValue("prob")))
+  checkmate::assertMatrix(x, ncols = length(self$getParameterValue("probs")))
 
-  if(checkmate::testList(self$getParameterValue("prob"))){
+  if (checkmate::testList(self$getParameterValue("probs"))) {
     mapply(extraDistr::dmnom,
            size = self$getParameterValue("size"),
-           prob = self$getParameterValue("prob"),
+           prob = self$getParameterValue("probs"),
            MoreArgs = list(x = x, log = log))
   } else {
     extraDistr::dmnom(x,
                       size = self$getParameterValue("size"),
-                      prob = self$getParameterValue("prob"),
+                      prob = self$getParameterValue("probs"),
                       log = log)
   }
 })
 Multinomial$set("private",".rand",function(n){
-  if (checkmate::testList(self$getParameterValue("prob"))) {
+  if (checkmate::testList(self$getParameterValue("probs"))) {
     mapply(extraDistr::rmnom,
            size = self$getParameterValue("size"),
-           prob = self$getParameterValue("prob"),
+           prob = self$getParameterValue("probs"),
            MoreArgs = list(n = n)
     )
   } else {
-    extraDistr::rmnom(x,
+    extraDistr::rmnom(n,
                       size = self$getParameterValue("size"),
-                      prob = self$getParameterValue("prob"))
+                      prob = self$getParameterValue("probs"))
   }
 })
 Multinomial$set("private", ".log", TRUE)
+Multinomial$set("private", ".traits", list(valueSupport = "discrete", variateForm = "multivariate"))
 
 Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
 
@@ -153,8 +154,7 @@ Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), d
 
   super$initialize(decorators = decorators,
                    support = setpower(Set$new(0:size, class = "integer"), length(probs)),
-                   type = setpower(Naturals$new(), length(probs)),
-                   variateForm = "multivariate")
+                   type = setpower(Naturals$new(), length(probs)))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

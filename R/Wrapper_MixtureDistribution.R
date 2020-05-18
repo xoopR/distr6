@@ -36,91 +36,115 @@
 #'
 #' @examples
 #' mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-#'                                    weights = c(0.2,0.8))
+#'   weights = c(0.2, 0.8)
+#' )
 #' mixture$pdf(1)
 #' mixture$cdf(1)
-#'
 #' @export
 NULL
-MixtureDistribution <- R6Class("MixtureDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+MixtureDistribution <- R6Class("MixtureDistribution", inherit = VectorDistribution,
+  lock_objects = FALSE,
+  public = list(
+    initialize = function(distlist = NULL, weights = "uniform", distribution = NULL, params = NULL,
+                          shared_params = NULL,
+                          name = NULL, short_name = NULL,
+                          decorators = NULL) {
+
+      super$initialize(
+        distlist = distlist,
+        distribution = distribution,
+        params = params,
+        shared_params = shared_params,
+        decorators = decorators
+      )
+
+      if (checkmate::testNumeric(weights)) {
+        stopifnot(length(weights) == self$length)
+        weights <- list(weights / sum(weights))
+      } else if (weights != "uniform") {
+        stop (sprintf("weights should either be a numeric of length %s, or 'uniform'", self$length))
+      }
+
+      private$.outerParameters <- ParameterSet$new(id = "weights",
+                                                   value = weights,
+                                                   support = Interval$new(0,1)^self$length + Set$new("uniform"),
+                                                   settable = TRUE,
+                                                   description = "Mixture weights.")
+
+      self$name = gsub("Vector", "Mixture", self$name)
+      self$short_name = gsub("Vec", "Mix", self$short_name)
+
+      invisible(self)
+
+      # TODO
+      # if (is.null(description)) {
+      #   description <- paste0(
+      #     "Mixture of: ", paste0(1:length(distlist), ") ", lapply(distlist, function(x) x$description),
+      #                            collapse = " And "
+      #     ), " - With weights: (",
+      #     paste0(weights, collapse = ", "), ")"
+      #   )
+      # }
+
+      #self$description = description #TODO
+      # private$.properties$support = setpower(Reals$new(), ndist)   # FIXME
+      # private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
+    },
+
+    pdf = function(..., log = FALSE, data) {
+      mixture_dpqr_returner(dpqr = super$pdf(..., log = log, data = data),
+                            weights = private$.outerParameters$getParameterValue("weights"),
+                            univariate = private$.univariate)
+    },
+
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+      mixture_dpqr_returner(dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
+                            weights = private$.outerParameters$getParameterValue("weights"),
+                            univariate = private$.univariate)
+    },
+
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+      stop("Quantile is currently unavailable for mixture distributions.")
+    },
+
+    rand = function(n){
+      weights = private$.outerParameters$getParameterValue("weights")
+
+      if (checkmate::testCharacter(weights)) {
+        weights = rep(1/self$length, self$length)
+      }
+
+      x = Multinomial$new(probs = weights,
+                          size = n)$rand(1)
+
+      if (private$.univariate) {
+        y = c()
+        for (i in seq(self$length)) {
+          y = c(y, self[i]$rand(x[[i]]))
+        }
+      } else {
+        y = data.frame()
+        for (i in seq(self$length)) {
+          y = rbind(y, self[i]$rand(x[[i]]))
+        }
+      }
+
+      if (length(y) == 1) {
+        return(y)
+      } else {
+        if (inherits(y, "data.frame")) {
+          return(apply(y, 2, sample, size = n))
+        } else {
+          return(sample(y, n))
+        }
+      }
+    }
+  ),
+
+  private = list(
+    .weights = numeric(0)
+  )
+)
+
 .distr6$wrappers <- append(.distr6$wrappers, list(MixtureDistribution = MixtureDistribution))
 
-MixtureDistribution$set("public","initialize",function(distlist, weights = NULL, vectordist = NULL){
-
-  name = short_name = description = NULL
-
-  if(!is.null(vectordist)){
-    distlist <- makeUniqueDistributions(vectordist$wrappedModels())
-    name = gsub("Vector","Mixture",vectordist$name)
-    short_name = gsub("Vec","Mix",vectordist$short_name)
-    description = gsub("Vector","Mixture",vectordist$description)
-  } else
-    distlist <- makeUniqueDistributions(distlist)
-
-  distnames = names(distlist)
-
-  if(is.null(weights))
-    weights = "uniform"
-  else{
-    checkmate::assert(length(weights)==length(distlist))
-    weights <- weights/sum(weights)
-  }
-
-  private$.weights <- weights
-
-  pdf <- function(x1,...) {
-    if(length(x1)==1){
-      if(!is.numeric(private$.weights))
-        return(as.numeric(mean(sapply(self$wrappedModels(), function(y) y$pdf(x1)))))
-      else
-        return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$pdf(x1)) * private$.weights)))
-    } else{
-      if(!is.numeric(private$.weights))
-        return(as.numeric(rowMeans(sapply(self$wrappedModels(), function(y) y$pdf(x1)))))
-      else
-        return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$pdf(x1)) %*% diag(private$.weights))))
-    }
-  }
-  formals(pdf)$self <- self
-
-  cdf <- function(x1,...) {
-    if(length(x1)==1){
-      if(!is.numeric(private$.weights))
-        return(as.numeric(mean(sapply(self$wrappedModels(), function(y) y$cdf(x1)))))
-      else
-        return(as.numeric(sum(sapply(self$wrappedModels(), function(y) y$cdf(x1)) * private$.weights)))
-    } else{
-      if(!is.numeric(private$.weights))
-        return(as.numeric(rowMeans(sapply(self$wrappedModels(), function(y) y$cdf(x1)))))
-      else
-        return(as.numeric(rowSums(sapply(self$wrappedModels(), function(y) y$cdf(x1)) %*% diag(private$.weights))))
-    }
-  }
-  formals(cdf)$self <- self
-
-  rand <- function(n){
-    x = Multinomial$new(probs = private$.weights, size = n)$rand(1)
-    y = c()
-    for(i in 1:length(x))
-      y = c(y, self$wrappedModels()[[i]]$rand(x[[i]]))
-    if(length(y) == 1)
-      return(y)
-    else
-      return(sample(y, n))
-  }
-  formals(rand)$self <- self
-
-  if(is.null(name)) name = paste("Mixture of",paste(distnames, collapse = " and "))
-  if(is.null(short_name)) short_name = paste(distnames, collapse = "Mix")
-  type = do.call(setunion, lapply(distlist, type))
-  support = do.call(setunion, lapply(distlist, type))
-
-  if(is.null(description)) description =  paste0("Mixture of: ",paste0(1:length(distlist),") ",lapply(distlist, function(x) x$description),
-                                            collapse = " And "), " - With weights: (",
-                       paste0(weights, collapse=", "), ")")
-
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
-                   short_name = short_name, description = description, type = type,
-                   support = support, valueSupport = "mixture", variateForm = "univariate")
-})
-MixtureDistribution$set("private",".weights",numeric(0))

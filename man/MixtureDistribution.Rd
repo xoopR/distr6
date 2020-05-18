@@ -100,10 +100,10 @@ and the mixture is constructed with the wrapped models in the vector.
 
 \examples{
 mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-                                   weights = c(0.2,0.8))
+  weights = c(0.2, 0.8)
+)
 mixture$pdf(1)
 mixture$cdf(1)
-
 }
 \seealso{
 \code{\link{listWrappers}}

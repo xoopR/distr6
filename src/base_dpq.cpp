@@ -85,9 +85,9 @@ NumericMatrix C_vec_pq1(std::string fun, NumericVector x, NumericVector a1, int 
   NumericMatrix ret(x.size(), n);
 
   for(int i = 0; i < n; i++){
-    if (fun.substr(1, 1).compare("p") == 0) {
+    if (fun.substr(0, 1).compare("p") == 0) {
       ret(_,i) = C_std_p1(fun, x, a1[i], lower, log);
-    } else if (fun.substr(1, 1).compare("q") == 0) {
+    } else if (fun.substr(0, 1).compare("q") == 0) {
       ret(_,i) = C_std_q1(fun, x, a1[i], lower, log);
     }
   }
@@ -257,9 +257,9 @@ NumericMatrix C_vec_pq2(std::string fun, NumericVector x, NumericVector a1, Nume
   NumericMatrix ret(x.size(), n);
 
   for(int i = 0; i < n; i++){
-    if (fun.substr(1, 1).compare("p") == 0) {
+    if (fun.substr(0, 1).compare("p") == 0) {
       ret(_,i) = C_std_p2(fun, x, a1[i % n1], a2[i % n2], lower, log);
-    } else if (fun.substr(1, 1).compare("q") == 0) {
+    } else if (fun.substr(0, 1).compare("q") == 0) {
       ret(_,i) = C_std_q2(fun, x, a1[i % n1], a2[i % n2], lower, log);
     }
   }
@@ -354,9 +354,9 @@ NumericMatrix C_vec_pq3(std::string fun, NumericVector x, NumericVector a1, Nume
   NumericMatrix ret(x.size(), n);
 
   for(int i = 0; i < n; i++){
-    if (fun.substr(1, 1).compare("p") == 0) {
+    if (fun.substr(0, 1).compare("p") == 0) {
       ret(_,i) = C_std_p3(fun, x, a1[i % n1], a2[i % n2], a3[i % n3], lower, log);
-    } else if (fun.substr(1, 1).compare("q") == 0) {
+    } else if (fun.substr(0, 1).compare("q") == 0) {
       ret(_,i) = C_std_q3(fun, x, a1[i % n1], a2[i % n2], a3[i % n3], lower, log);
     }
   }
@@ -383,7 +383,7 @@ NumericMatrix C_dpq(std::string fun, NumericVector x, std::list<NumericVector> a
   NumericVector arg1;
   NumericVector arg2;
   NumericVector arg3;
-  std::string funtype = fun.substr(1, 1);
+  std::string funtype = fun.substr(0, 1);
   int funcode;
   if (funtype.compare("d") == 0) {
     funcode = 0;
