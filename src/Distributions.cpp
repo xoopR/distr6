@@ -21,52 +21,6 @@ int C_Choose(int x, int y) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, StringVector form) {
-  int sl = size.length();
-  int pl = prob.length();
-  int fl = form.length();
-
-  int ParamLength = std::max({sl, pl, fl});
-  int XLength = x.size();
-  NumericMatrix mat(XLength, ParamLength);
-  for (int i = 0; i < ParamLength; i++) {
-    for (int j = 0; j < XLength; j++) {
-      if (strcmp (form[i % fl], "fbs") == 0) {
-        // Return 0 if x not in Naturals
-        if (floor (x[j]) != x[j]) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], x[j]);
-        }
-      } else if (strcmp (form[i % fl], "sbf") == 0) {
-        // Return 0 if x not in Naturals
-        if (floor (x[j]) != x[j]) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, x[j]) * pow(prob[i % pl], x[j]) * pow(1-prob[i % pl], size[i % sl]);
-        }
-      } else if (strcmp (form[i % fl], "tbf") == 0) {
-        // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] | x[j] < size[i % sl]) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], x[j] - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
-        }
-      } else {
-        // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] | x[j] < size[i % sl]) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], x[j] - size[i % sl]);
-        }
-      }
-    }
-  }
-  return mat;
-}
-
-
-// [[Rcpp::export]]
 NumericMatrix C_ArcsinePdf(NumericVector x, NumericVector min, NumericVector max, bool logp) {
   int ll = min.length();
   int ul = max.length();
@@ -168,4 +122,223 @@ NumericMatrix C_ArcsineQuantile(NumericVector x, NumericVector min, NumericVecto
   return mat;
 }
 
+// [[Rcpp::export]]
+NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob,
+                                    StringVector form) {
+  int sl = size.length();
+  int pl = prob.length();
+  int fl = form.length();
 
+  int ParamLength = std::max({sl, pl, fl});
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+      if (strcmp (form[i % fl], "fbs") == 0) {
+        // Return 0 if x not in Naturals
+        if (floor (x[j]) != x[j]) {
+          mat(j, i) = 0;
+        } else {
+          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], x[j]);
+        }
+      } else if (strcmp (form[i % fl], "sbf") == 0) {
+        // Return 0 if x not in Naturals
+        if (floor (x[j]) != x[j]) {
+          mat(j, i) = 0;
+        } else {
+          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, x[j]) * pow(prob[i % pl], x[j]) * pow(1-prob[i % pl], size[i % sl]);
+        }
+      } else if (strcmp (form[i % fl], "tbf") == 0) {
+        // Return 0 if x not in Naturals or < size
+        if (floor (x[j]) != x[j] | x[j] < size[i % sl]) {
+          mat(j, i) = 0;
+        } else {
+          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], x[j] - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
+        }
+      } else {
+        // Return 0 if x not in Naturals or < size
+        if (floor (x[j]) != x[j] | x[j] < size[i % sl]) {
+          mat(j, i) = 0;
+        } else {
+          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], x[j] - size[i % sl]);
+        }
+      }
+    }
+  }
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericVector C_WeightedDiscretePdf(NumericVector x, NumericVector data, NumericVector pdf,
+                                    bool logp) {
+
+  int nr = data.length();
+  int n = x.length();
+
+  NumericVector mat(n);
+
+  for (int k = 0; k < n; k++) {
+    for (int j = 0; j < nr; j++) {
+      if (data[j] == x[k]) {
+        if (logp) {
+          mat[k] = log(pdf[j]);
+        } else {
+          mat[k] = pdf[j];
+        }
+        break;
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data, NumericMatrix pdf,
+                                        bool logp) {
+
+  int nc = data.ncol();
+  int nr = data.nrow();
+  int n = x.length();
+
+  NumericMatrix mat(n, nc);
+
+  // i - distribution
+  // j - data samples
+  // k - evaluates
+
+  for (int i = 0; i < nc; i++) {
+    for (int k = 0; k < n; k++) {
+      for (int j = 0; j < nr; j++) {
+        if (data(j, i) == x[k]) {
+          if (logp) {
+            mat(k, i) = log(pdf(j, i));
+          } else {
+            mat(k, i) = pdf(j, i);
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericVector C_WeightedDiscreteCdf(NumericVector x, NumericVector data, NumericVector cdf,
+                                    bool lower, bool logp) {
+
+  int nr = data.length();
+  int n = x.length();
+
+  NumericVector mat(n);
+
+  for (int k = 0; k < n; k++) {
+    for (int j = 0; j < nr; j++) {
+      if (data[j] >= x[k]) {
+        mat[k] = cdf[j];
+        if (!lower) {
+          mat[k] = 1 - mat[k];
+        }
+        if (logp) {
+          mat[k] = log(mat[k]);
+        }
+        break;
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, NumericMatrix cdf,
+                                        bool lower, bool logp) {
+
+  int nc = data.ncol();
+  int nr = data.nrow();
+  int n = x.length();
+
+  NumericMatrix mat(n, nc);
+
+  for (int i = 0; i < nc; i++) {
+    for (int k = 0; k < n; k++) {
+      for (int j = 0; j < nr; j++) {
+        if (data(j, i) >= x[k]) {
+          mat(k, i) = cdf(j, i);
+          if (!lower) {
+            mat(k, i) = 1 - mat[k];
+          }
+          if (logp) {
+            mat(k, i) = log(mat[k]);
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericVector C_WeightedDiscreteQuantile(NumericVector x, NumericVector data, NumericVector cdf,
+                                         bool lower, bool logp) {
+
+  int nr = data.length();
+  int n = x.length();
+
+  NumericVector mat(n);
+
+  for (int k = 0; k < n; k++) {
+    for (int j = 0; j < nr; j++) {
+
+      if (logp) {
+        x[k] = exp(x[k]);
+      }
+
+      if (!lower) {
+        x[k] = 1 - x[k];
+      }
+
+      if (cdf[j] >= x[k]) {
+        mat[k] = data[j];
+        break;
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data, NumericMatrix cdf,
+                                             bool lower, bool logp) {
+
+  int nc = data.ncol();
+  int nr = data.nrow();
+  int n = x.length();
+
+  NumericMatrix mat(n, nc);
+
+  for (int i = 0; i < nc; i++) {
+    for (int k = 0; k < n; k++) {
+      for (int j = 0; j < nr; j++) {
+        if (logp) {
+          x[k] = exp(x[k]);
+        }
+        if (!lower) {
+          x[k] = 1 - x[k];
+        }
+
+        if (x[k] <= cdf(j, i)) {
+          mat(k, i) = data(j, i);
+          break;
+        }
+      }
+    }
+  }
+
+  return mat;
+}
