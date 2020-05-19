@@ -143,7 +143,7 @@ Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
 
   super$initialize(decorators = decorators,
                    support = Reals$new(),
-                   symmetry = "symmetric",
+                   symmetry = "sym",
                    type = Reals$new())
 })
 

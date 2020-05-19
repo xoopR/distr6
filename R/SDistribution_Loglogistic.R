@@ -144,6 +144,7 @@ Loglogistic$set("private",".rand", function(n){
   }
 })
 Loglogistic$set("private", ".log", TRUE)
+Loglogistic$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Loglogistic$set("public","initialize",function(scale = 1, shape = 1, rate = NULL,
                                                decorators = NULL, verbose = FALSE){
@@ -153,8 +154,7 @@ Loglogistic$set("public","initialize",function(scale = 1, shape = 1, rate = NULL
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(zero = T),
-                   type = PosReals$new(zero = T),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

@@ -138,6 +138,7 @@ Erlang$set("private", ".rand", function(n){
                    vec = test_list(shape))
 })
 Erlang$set("private", ".log", TRUE)
+Erlang$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Erlang$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, decorators = NULL,
                                          verbose = FALSE){
@@ -147,8 +148,7 @@ Erlang$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, deco
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(zero = T),
-                   type = PosReals$new(),
-                   valueSupport = "continuous")
+                   type = PosReals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

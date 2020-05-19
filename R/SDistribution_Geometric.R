@@ -175,9 +175,10 @@ Geometric$set("private", ".rand", function(n){
     return(geom)
 })
 Geometric$set("private", ".log", TRUE)
+Geometric$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
-                                             verbose = FALSE,...){
+                                             verbose = FALSE){
 
     private$.trials <- checkmate::assertLogical(trials)
     private$.parameters <- getParameterSet(x=self, prob=prob, qprob=qprob, trials=trials, verbose=verbose)

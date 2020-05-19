@@ -185,6 +185,7 @@ DiscreteUniform$set("private",".rand", function(n){
   }
 })
 DiscreteUniform$set("private",".log", TRUE)
+DiscreteUniform$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 

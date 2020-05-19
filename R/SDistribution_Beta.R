@@ -95,6 +95,15 @@ Beta$set("public", "pgf", function(z){
   return(NaN)
 })
 
+Beta$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
+  if(self$getParameterValue("shape1") == self$getParameterValue("shape2"))
+    private$.properties$symmetry <- "symmetric"
+  else
+    private$.properties$symmetry <- "asymmetric"
+  invisible(self)
+})
+
 Beta$set("private", ".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$shape1)) lst = c(lst,list(shape1 = paramlst$shape1))
@@ -143,6 +152,7 @@ Beta$set("private", ".rand", function(n){
                    vec = test_list(shape1))
 })
 Beta$set("private", ".log", TRUE)
+Beta$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,verbose = FALSE){
 
@@ -151,9 +161,8 @@ Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = N
 
   super$initialize(decorators = decorators,
                    support = Interval$new(0,1),
-                   symmetric = if(shape1 == shape2) "symmetric" else "asymmetric",
-                   type = PosReals$new(zero = T),
-                   valueSupport ="continuous")
+                   symmetric = if(shape1 == shape2) "sym" else "asym",
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

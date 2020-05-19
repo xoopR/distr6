@@ -162,7 +162,7 @@ Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL,
   super$initialize(decorators = decorators,
                    support = Set$new(0:size, class = "integer"),
                    type = Naturals$new(),
-                   symmetry = if(prob == 0.5) "symmetric" else "asymmetric")
+                   symmetry = if(prob == 0.5) "symm" else "asym")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

@@ -133,6 +133,7 @@ Gompertz$set("private",".rand", function(n){
   }
 })
 Gompertz$set("private",".log", TRUE)
+Gompertz$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
@@ -141,8 +142,7 @@ Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = N
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(zero = T),
-                   type = PosReals$new(zero = T),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

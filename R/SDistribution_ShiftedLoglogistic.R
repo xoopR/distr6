@@ -131,6 +131,7 @@ ShiftedLoglogistic$set("private",".quantile", function(p){
 ShiftedLoglogistic$set("private",".rand", function(n){
   self$getParameterValue("location") + self$getParameterValue("scale") * pracma::nthroot(runif(n)/(1-runif(n)), self$getParameterValue("shape"))
 })
+ShiftedLoglogistic$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 ShiftedLoglogistic$set("public","initialize",function(scale = 1, shape = 1, location = 0,
                                                rate = NULL, decorators = NULL, verbose = FALSE){
@@ -140,8 +141,7 @@ ShiftedLoglogistic$set("public","initialize",function(scale = 1, shape = 1, loca
 
   super$initialize(decorators = decorators,
                    support = Interval$new(location,Inf,type="()"),
-                   type = PosReals$new(zero = T),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

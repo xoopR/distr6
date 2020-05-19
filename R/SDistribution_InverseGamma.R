@@ -188,6 +188,7 @@ InverseGamma$set("private", ".rand", function(n) {
   }
 })
 InverseGamma$set("private", ".log", TRUE)
+InverseGamma$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators = NULL,
                                          verbose = FALSE){
@@ -197,8 +198,7 @@ InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators 
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(),
-                   type = PosReals$new(),
-                   valueSupport = "continuous")
+                   type = PosReals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

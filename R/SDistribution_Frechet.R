@@ -196,6 +196,7 @@ Frechet$set("private",".rand", function(n){
   }
 })
 Frechet$set("private", ".log", TRUE)
+Frechet$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Frechet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
@@ -211,8 +212,7 @@ Frechet$set("public","initialize",function(shape = 1, scale = 1, minimum = 0,
 
   super$initialize(decorators = decorators,
                    support = Interval$new(minimum, Inf, type = "()"),
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

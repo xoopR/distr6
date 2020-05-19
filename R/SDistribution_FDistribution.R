@@ -150,6 +150,7 @@ FDistribution$set("private", ".rand", function(n){
                    vec = test_list(df1))
 })
 FDistribution$set("private", ".log", TRUE)
+FDistribution$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 FDistribution$set("public", "setParameterValue",function(..., lst = NULL, error = "warn"){
   super$setParameterValue(..., lst = lst, error = error)
@@ -178,8 +179,7 @@ FDistribution$set("public", "initialize", function(df1 = 1, df2 = 1, decorators 
 
   super$initialize(decorators = decorators,
                    support = support,
-                   type = PosReals$new(zero = TRUE),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = TRUE))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

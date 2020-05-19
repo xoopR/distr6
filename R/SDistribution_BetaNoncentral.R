@@ -45,6 +45,15 @@ BetaNoncentral$set("public","short_name","BetaNC")
 BetaNoncentral$set("public","description","Noncentral Beta Probability Distribution.")
 BetaNoncentral$set("public","packages","stats")
 
+BetaNoncentral$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
+  if(self$getParameterValue("shape1") == self$getParameterValue("shape2"))
+    private$.properties$symmetry <- "symmetric"
+  else
+    private$.properties$symmetry <- "asymmetric"
+  invisible(self)
+})
+
 BetaNoncentral$set("private", ".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$shape1)) lst = c(lst,list(shape1 = paramlst$shape1))
@@ -106,6 +115,7 @@ BetaNoncentral$set("private", ".rand", function(n){
                    vec = test_list(shape1))
 })
 BetaNoncentral$set("private", ".log", TRUE)
+BetaNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
                                                     verbose = FALSE){
@@ -115,9 +125,8 @@ BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, loca
 
   super$initialize(decorators = decorators,
                    support = Interval$new(0, 1),
-                   symmetric = if (shape1 == shape2) "symmetric" else "asymmetric",
-                   type = PosReals$new(zero = T),
-                   valueSupport ="continuous")
+                   symmetric = if (shape1 == shape2) "sym" else "asym",
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

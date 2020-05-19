@@ -95,6 +95,15 @@ Bernoulli$set("public","mode",function(which = "all"){
   }
 })
 
+Bernoulli$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+  super$setParameterValue(..., lst = lst, error = error)
+  if(self$getParameterValue("prob") == 0.5)
+    private$.properties$symmetry <- "asymmetric"
+  else
+    private$.properties$symmetry <- "symmetric"
+  invisible(self)
+})
+
 Bernoulli$set("private",".getRefParams", function(paramlst){
   lst = list()
   if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
@@ -147,6 +156,7 @@ Bernoulli$set("private", ".rand", function(n){
   )
 })
 Bernoulli$set("private", ".log", TRUE)
+Bernoulli$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
 
@@ -156,7 +166,8 @@ Bernoulli$set("public","initialize",function(prob = 0.5, qprob = NULL, decorator
 
   super$initialize(decorators = decorators,
                    support = Set$new(0,1,class="integer"),
-                   type = Naturals$new())
+                   type = Naturals$new(),
+                   symmetry = if(prob == 0.5) "symmetric" else "asymmetric")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

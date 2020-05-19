@@ -120,6 +120,7 @@ Poisson$set("private", ".rand", function(n){
   )
 })
 Poisson$set("private", ".log", TRUE)
+Poisson$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose = FALSE, ...){
 

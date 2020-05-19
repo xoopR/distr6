@@ -195,6 +195,7 @@ Pareto$set("private",".rand", function(n){
   }
 })
 Pareto$set("private",".log", TRUE)
+Pareto$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
 
@@ -203,8 +204,7 @@ Pareto$set("public","initialize",function(shape = 1, scale = 1, decorators = NUL
 
   super$initialize(decorators = decorators,
                    support = Interval$new(scale, Inf, type = "[)"),
-                   type = PosReals$new(zero = T),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

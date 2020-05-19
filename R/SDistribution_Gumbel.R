@@ -164,6 +164,7 @@ Gumbel$set("private",".rand", function(n){
   }
 })
 Gumbel$set("private",".log", TRUE)
+Gumbel$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Gumbel$set("public","initialize",function(location = 0, scale = 1,
                                           decorators = NULL, verbose = FALSE){
@@ -174,8 +175,7 @@ Gumbel$set("public","initialize",function(location = 0, scale = 1,
   super$initialize(decorators = decorators,
                    support = Reals$new(),
                    symmetry = "sym",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

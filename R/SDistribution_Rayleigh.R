@@ -147,6 +147,7 @@ Rayleigh$set("private",".rand", function(n){
   }
 })
 Rayleigh$set("private",".log", TRUE)
+Rayleigh$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose = FALSE){
 
@@ -155,8 +156,7 @@ Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(zero = T),
-                   type = PosReals$new(zero = T),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = T))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

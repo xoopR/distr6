@@ -158,6 +158,7 @@ Uniform$set("private", ".rand", function(n){
   )
 })
 Uniform$set("private", ".log", TRUE)
+Uniform$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
@@ -169,7 +170,6 @@ Uniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
                    symmetry = "sym",
                    type = Reals$new())
 })
-Uniform$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 .distr6$distributions = rbind(.distr6$distributions,
                               data.table::data.table(ShortName = "Unif", ClassName = "Uniform",

@@ -149,6 +149,7 @@ Gamma$set("private", ".rand", function(n){
                    vec = test_list(shape))
 })
 Gamma$set("private", ".log", TRUE)
+Gamma$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean = NULL, decorators = NULL,
                                          verbose = FALSE){
@@ -158,8 +159,7 @@ Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean 
 
   super$initialize(decorators = decorators,
                    support = PosReals$new(zero = F),
-                   type = PosReals$new(),
-                   valueSupport = "continuous")
+                   type = PosReals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

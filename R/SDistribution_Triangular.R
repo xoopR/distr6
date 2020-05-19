@@ -241,6 +241,7 @@ Triangular$set("private",".rand", function(n){
   }
 })
 Triangular$set("private", ".log", TRUE)
+Triangular$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lower+upper)/2, symmetric = FALSE,
                                               decorators = NULL, verbose = FALSE){
@@ -264,8 +265,7 @@ Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lowe
   super$initialize(decorators = decorators,
                    support = Interval$new(lower, upper),
                    symmetry = symmetry,
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

@@ -175,6 +175,7 @@ Hypergeometric$set("private", ".rand", function(n){
                      vec = test_list(m))
 })
 Hypergeometric$set("private", ".log", TRUE)
+Hypergeometric$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Hypergeometric$set("public","initialize",function(size = 50, successes = 5, failures = NULL, draws = 10,
                                                   decorators = NULL, verbose = FALSE){

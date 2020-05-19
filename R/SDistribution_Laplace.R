@@ -148,6 +148,7 @@ Laplace$set("private",".rand", function(n){
   }
 })
 Laplace$set("private", ".log", TRUE)
+Laplace$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
                                           decorators = NULL, verbose = FALSE){
@@ -158,8 +159,7 @@ Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
   super$initialize(decorators = decorators,
                    support = Reals$new(),
                    symmetry = "sym",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

@@ -136,6 +136,7 @@ FDistributionNoncentral$set("private", ".rand", function(n){
                    vec = test_list(df1))
 })
 FDistributionNoncentral$set("private", ".log", TRUE)
+FDistributionNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 FDistributionNoncentral$set("public", "initialize", function(df1 = 1, df2 = 1, location = 0, decorators = NULL, verbose = FALSE){
 
@@ -149,8 +150,7 @@ FDistributionNoncentral$set("public", "initialize", function(df1 = 1, df2 = 1, l
 
   super$initialize(decorators = decorators,
                    support = support,
-                   type = PosReals$new(zero = TRUE),
-                   valueSupport = "continuous")
+                   type = PosReals$new(zero = TRUE))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

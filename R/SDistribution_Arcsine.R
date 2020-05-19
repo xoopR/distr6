@@ -150,6 +150,7 @@ Arcsine$set("private",".quantile",function(p, lower.tail = TRUE, log.p = FALSE){
 Arcsine$set("private",".rand",function(n){
   self$quantile(runif(n))
 })
+Arcsine$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
 
@@ -158,9 +159,8 @@ Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NU
 
   super$initialize(decorators = decorators,
                    support = Interval$new(lower,upper),
-                   symmetry = "symmetry",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   symmetry = "sym",
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

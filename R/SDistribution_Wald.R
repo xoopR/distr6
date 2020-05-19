@@ -135,6 +135,7 @@ Wald$set("private",".rand", function(n){
   }
 })
 Wald$set("private", ".log", TRUE)
+Wald$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Wald$set("public","initialize",function(mean = 1, shape = 1,
                                           decorators = NULL, verbose = FALSE){
@@ -145,8 +146,7 @@ Wald$set("public","initialize",function(mean = 1, shape = 1,
   super$initialize(decorators = decorators,
                    support = PosReals$new(),
                    symmetry = "sym",
-                   type = PosReals$new(),
-                   valueSupport = "continuous")
+                   type = PosReals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

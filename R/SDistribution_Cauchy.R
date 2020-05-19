@@ -119,7 +119,7 @@ Cauchy$set("private", ".rand", function(n){
                    vec = test_list(location))
 })
 Cauchy$set("private", ".log", TRUE)
-
+Cauchy$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Cauchy$set("private",".getRefParams", function(paramlst){
   lst = list()
@@ -136,9 +136,8 @@ Cauchy$set("public","initialize",function(location = 0, scale = 1,
 
   super$initialize(decorators = decorators,
                    support = Reals$new(),
-                   symmetry = "symmetric",
-                   type = Reals$new(),
-                   valueSupport = "continuous")
+                   symmetry = "sym",
+                   type = Reals$new())
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

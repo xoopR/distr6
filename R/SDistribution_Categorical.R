@@ -124,7 +124,6 @@ Categorical$set("private",".rand",function(n){
 Categorical$set("private", ".log", TRUE)
 Categorical$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
-
 Categorical$set("public","initialize",function(..., probs, decorators = NULL, verbose = FALSE){
 
 
@@ -145,7 +144,7 @@ Categorical$set("public","initialize",function(..., probs, decorators = NULL, ve
   super$initialize(decorators = decorators,
                    support = support,
                    type = Complex$new(),
-                   symmetry = if(length(unique(self$getParameterValue("probs"))) == 1) "symmetric" else "asymmetric")
+                   symmetry = if(length(unique(self$getParameterValue("probs"))) == 1) "sym" else "asym")
 })
 
 .distr6$distributions = rbind(.distr6$distributions,

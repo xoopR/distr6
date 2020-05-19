@@ -150,6 +150,7 @@ MultivariateNormal$set("private",".rand",function(n){
 
   return(data.table::data.table(t(self$mean() + t(ch) %*% xs)))
 })
+MultivariateNormal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "multivariate"))
 
 MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1,0,0,1),
                                                       prec = NULL, decorators = NULL, verbose = FALSE){
@@ -161,9 +162,7 @@ MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1
 
   super$initialize(decorators = decorators,
                    support = setpower(Reals$new(), length(mean)),
-                   type = setpower(Reals$new(), length(mean)),
-                   valueSupport = "continuous",
-                   variateForm = "multivariate")
+                   type = setpower(Reals$new(), length(mean)))
 })
 
 .distr6$distributions = rbind(.distr6$distributions,
