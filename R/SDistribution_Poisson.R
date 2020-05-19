@@ -19,7 +19,7 @@
 #'
 #'
 #' @examples
-#' x = Poisson$new(rate = 2)
+#' x <- Poisson$new(rate = 2)
 #'
 #' # Update parameters
 #' x$setParameterValue(rate = 3)
@@ -36,104 +36,113 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Poisson Distribution Definition
 #-------------------------------------------------------------
 Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F)
-Poisson$set("public","name","Poisson")
-Poisson$set("public","short_name","Pois")
-Poisson$set("public","description","Poisson Probability Distribution.")
-Poisson$set("public","packages","stats")
+Poisson$set("public", "name", "Poisson")
+Poisson$set("public", "short_name", "Pois")
+Poisson$set("public", "description", "Poisson Probability Distribution.")
+Poisson$set("public", "packages", "stats")
 
-Poisson$set("public","mean",function(){
+Poisson$set("public", "mean", function() {
   return(self$getParameterValue("rate"))
 })
-Poisson$set("public","mode",function(which = NULL){
+Poisson$set("public", "mode", function(which = NULL) {
   return(floor(self$getParameterValue("rate")))
 })
-Poisson$set("public","variance",function(){
+Poisson$set("public", "variance", function() {
   return(self$getParameterValue("rate"))
 })
-Poisson$set("public","skewness",function(){
+Poisson$set("public", "skewness", function() {
   return(self$getParameterValue("rate")^(-0.5))
 })
-Poisson$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(1/self$getParameterValue("rate"))
-  else
-    return(1/self$getParameterValue("rate") + 3)
+Poisson$set("public", "kurtosis", function(excess = TRUE) {
+  if (excess) {
+    return(1 / self$getParameterValue("rate"))
+  } else {
+    return(1 / self$getParameterValue("rate") + 3)
+  }
 })
-Poisson$set("public", "mgf", function(t){
-  return(exp(self$getParameterValue("rate")*(exp(t)-1)))
+Poisson$set("public", "mgf", function(t) {
+  return(exp(self$getParameterValue("rate") * (exp(t) - 1)))
 })
-Poisson$set("public", "cf", function(t){
-  return(exp(self$getParameterValue("rate")*(exp(1i*t)-1)))
+Poisson$set("public", "cf", function(t) {
+  return(exp(self$getParameterValue("rate") * (exp(1i * t) - 1)))
 })
-Poisson$set("public","pgf",function(z){
-  return(exp(self$getParameterValue("rate")*(z-1)))
+Poisson$set("public", "pgf", function(z) {
+  return(exp(self$getParameterValue("rate") * (z - 1)))
 })
 
-Poisson$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
+Poisson$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$rate)) lst <- c(lst, list(rate = paramlst$rate))
   return(lst)
 })
-Poisson$set("private", ".pdf", function(x, log = FALSE){
-  lambda = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "dpois",
-                   x = x,
-                   args = list(lambda = unlist(lambda)),
-                   log = log,
-                   vec = test_list(lambda)
+Poisson$set("private", ".pdf", function(x, log = FALSE) {
+  lambda <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "dpois",
+    x = x,
+    args = list(lambda = unlist(lambda)),
+    log = log,
+    vec = test_list(lambda)
   )
 })
-Poisson$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  lambda = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "ppois",
-                   x = x,
-                   args = list(lambda = unlist(lambda)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(lambda)
+Poisson$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  lambda <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "ppois",
+    x = x,
+    args = list(lambda = unlist(lambda)),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(lambda)
   )
 })
-Poisson$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  lambda = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "qpois",
-                   x = p,
-                   args = list(lambda = unlist(lambda)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(lambda)
+Poisson$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  lambda <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "qpois",
+    x = p,
+    args = list(lambda = unlist(lambda)),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(lambda)
   )
 })
-Poisson$set("private", ".rand", function(n){
-  lambda = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "rpois",
-                   x = n,
-                   args = list(lambda = unlist(lambda)),
-                   vec = test_list(lambda)
-
+Poisson$set("private", ".rand", function(n) {
+  lambda <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "rpois",
+    x = n,
+    args = list(lambda = unlist(lambda)),
+    vec = test_list(lambda)
   )
 })
 Poisson$set("private", ".log", TRUE)
 Poisson$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
-Poisson$set("public","initialize",function(rate = 1, decorators = NULL, verbose = FALSE, ...){
+Poisson$set("public", "initialize", function(rate = 1, decorators = NULL, verbose = FALSE, ...) {
 
   private$.parameters <- getParameterSet(self, rate, verbose)
   self$setParameterValue(rate = rate)
 
-  super$initialize(decorators = decorators,
-                   support = Naturals$new(),
-                   type = Naturals$new())
+  super$initialize(
+    decorators = decorators,
+    support = Naturals$new(),
+    type = Naturals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Pois", ClassName = "Poisson",
-                                                     Type = "\u21150", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Pois", ClassName = "Poisson",
+    Type = "\u21150", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

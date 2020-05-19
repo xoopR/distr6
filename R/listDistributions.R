@@ -17,22 +17,24 @@
 #'
 #' # Multiple filters
 #' listDistributions(filter = list(VaLuESupport = "discrete", package = "extraDistr"))
-#'
 #' @export
-listDistributions <- function(simplify=FALSE, filter=NULL){
-  distrs = .distr6$distributions[order(.distr6$distributions$ClassName), ]
-  if(simplify)
+listDistributions <- function(simplify = FALSE, filter = NULL) {
+  distrs <- .distr6$distributions[order(.distr6$distributions$ClassName), ]
+  if (simplify) {
     return(unlist(distrs$ClassName))
-  else{
-    if(!is.null(filter)){
-      names(filter) = tolower(names(filter))
-      if(checkmate::testList(filter)){
-        if(!is.null(filter$variateform))
-          distrs = subset(distrs, distrs$VariateForm == filter$variateform)
-        if(!is.null(filter$valuesupport))
-          distrs = subset(distrs, distrs$ValueSupport == filter$valuesupport)
-        if(!is.null(filter$package))
-          distrs = subset(distrs, distrs$Package == filter$package)
+  } else {
+    if (!is.null(filter)) {
+      names(filter) <- tolower(names(filter))
+      if (checkmate::testList(filter)) {
+        if (!is.null(filter$variateform)) {
+          distrs <- subset(distrs, distrs$VariateForm == filter$variateform)
+        }
+        if (!is.null(filter$valuesupport)) {
+          distrs <- subset(distrs, distrs$ValueSupport == filter$valuesupport)
+        }
+        if (!is.null(filter$package)) {
+          distrs <- subset(distrs, distrs$Package == filter$package)
+        }
       }
     }
 

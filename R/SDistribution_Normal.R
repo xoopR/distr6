@@ -44,109 +44,127 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Normal Distribution Definition
 #-------------------------------------------------------------
 Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F)
-Normal$set("public","name","Normal")
-Normal$set("public","short_name","Norm")
-Normal$set("public","description","Normal Probability Distribution.")
-Normal$set("public","packages","stats")
+Normal$set("public", "name", "Normal")
+Normal$set("public", "short_name", "Norm")
+Normal$set("public", "description", "Normal Probability Distribution.")
+Normal$set("public", "packages", "stats")
 
-Normal$set("public","mean",function(){
+Normal$set("public", "mean", function() {
   return(self$getParameterValue("mean"))
 })
-Normal$set("public","variance",function(){
+Normal$set("public", "variance", function() {
   return(self$getParameterValue("var"))
 })
-Normal$set("public","skewness",function(){
+Normal$set("public", "skewness", function() {
   return(0)
 })
-Normal$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
+Normal$set("public", "kurtosis", function(excess = TRUE) {
+  if (excess) {
     return(0)
-  else
+  } else {
     return(3)
+  }
 })
-Normal$set("public","entropy",function(base = 2){
+Normal$set("public", "entropy", function(base = 2) {
   return(0.5 * log(2 * pi * exp(1) * self$getParameterValue("var"), base))
 })
-Normal$set("public", "mgf", function(t){
+Normal$set("public", "mgf", function(t) {
   return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
 })
-Normal$set("public", "pgf", function(z){
+Normal$set("public", "pgf", function(z) {
   return(NaN)
 })
-Normal$set("public", "cf", function(t){
+Normal$set("public", "cf", function(t) {
   return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
 })
-Normal$set("public","mode",function(which = NULL){
+Normal$set("public", "mode", function(which = NULL) {
   return(self$getParameterValue("mean"))
 })
 
-Normal$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  if(!is.null(paramlst$var)) lst = c(lst, list(var = paramlst$var))
-  if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
-  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
+Normal$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+  if (!is.null(paramlst$var)) lst <- c(lst, list(var = paramlst$var))
+  if (!is.null(paramlst$sd)) lst <- c(lst, list(var = paramlst$sd^2))
+  if (!is.null(paramlst$prec)) lst <- c(lst, list(var = paramlst$prec^-1))
   return(lst)
 })
-Normal$set("private", ".pdf", function(x, log = FALSE){
-  mean = self$getParameterValue("mean")
-  sd = self$getParameterValue("sd")
-  call_C_base_pdqr(fun = "dnorm",
-                   x = x,
-                   args = list(mean = unlist(mean),
-                               sd = unlist(sd)),
-                   log = log,
-                   vec = test_list(mean))
+Normal$set("private", ".pdf", function(x, log = FALSE) {
+  mean <- self$getParameterValue("mean")
+  sd <- self$getParameterValue("sd")
+  call_C_base_pdqr(
+    fun = "dnorm",
+    x = x,
+    args = list(
+      mean = unlist(mean),
+      sd = unlist(sd)
+    ),
+    log = log,
+    vec = test_list(mean)
+  )
 })
-Normal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  mean = self$getParameterValue("mean")
-  sd = self$getParameterValue("sd")
-  call_C_base_pdqr(fun = "pnorm",
-                   x = x,
-                   args = list(mean = unlist(mean),
-                               sd = unlist(sd)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(mean))
+Normal$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  mean <- self$getParameterValue("mean")
+  sd <- self$getParameterValue("sd")
+  call_C_base_pdqr(
+    fun = "pnorm",
+    x = x,
+    args = list(
+      mean = unlist(mean),
+      sd = unlist(sd)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(mean)
+  )
 })
-Normal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  mean = self$getParameterValue("mean")
-  sd = self$getParameterValue("sd")
-  call_C_base_pdqr(fun = "qnorm",
-                   x = p,
-                   args = list(mean = unlist(mean),
-                               sd = unlist(sd)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(mean))
+Normal$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  mean <- self$getParameterValue("mean")
+  sd <- self$getParameterValue("sd")
+  call_C_base_pdqr(
+    fun = "qnorm",
+    x = p,
+    args = list(
+      mean = unlist(mean),
+      sd = unlist(sd)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(mean)
+  )
 })
-Normal$set("private", ".rand", function(n){
-  mean = self$getParameterValue("mean")
-  sd = self$getParameterValue("sd")
-  call_C_base_pdqr(fun = "rnorm",
-                   x = n,
-                   args = list(mean = unlist(mean),
-                               sd = unlist(sd)),
-                   vec = test_list(mean))
+Normal$set("private", ".rand", function(n) {
+  mean <- self$getParameterValue("mean")
+  sd <- self$getParameterValue("sd")
+  call_C_base_pdqr(
+    fun = "rnorm",
+    x = n,
+    args = list(
+      mean = unlist(mean),
+      sd = unlist(sd)
+    ),
+    vec = test_list(mean)
+  )
 })
 Normal$set("private", ".log", TRUE)
 Normal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Normal$set("public","initialize",function(mean = 0, var = 1, sd = NULL, prec = NULL,
-                                          decorators = NULL, verbose = FALSE){
+Normal$set("public", "initialize", function(mean = 0, var = 1, sd = NULL, prec = NULL,
+                                            decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet(self, mean, var, sd, prec, verbose)
   self$setParameterValue(mean = mean, var = var, sd = sd, prec = prec)
 
-  super$initialize(decorators = decorators,
-                   support = Reals$new(),
-                   symmetry = "sym",
-                   type = Reals$new())
+  super$initialize(
+    decorators = decorators,
+    support = Reals$new(),
+    symmetry = "sym",
+    type = Reals$new()
+  )
 })

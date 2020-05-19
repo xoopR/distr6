@@ -25,7 +25,7 @@
 #' Gamma$new(shape = 1, mean = 0.5)
 #'
 #' # Default is shape = 1, rate = 1
-#' x = Gamma$new(verbose = TRUE)
+#' x <- Gamma$new(verbose = TRUE)
 #'
 #' # Update parameters
 #' # When any parameter is updated, all others are too!
@@ -43,127 +43,152 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Gamma Distribution Definition
 #-------------------------------------------------------------
 Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F)
-Gamma$set("public","name","Gamma")
-Gamma$set("public","short_name","Gamma")
-Gamma$set("public","description","Gamma Probability Distribution.")
-Gamma$set("public","packages","stats")
+Gamma$set("public", "name", "Gamma")
+Gamma$set("public", "short_name", "Gamma")
+Gamma$set("public", "description", "Gamma Probability Distribution.")
+Gamma$set("public", "packages", "stats")
 
-Gamma$set("public","mean",function(){
+Gamma$set("public", "mean", function() {
   return(self$getParameterValue("mean"))
 })
-Gamma$set("public","variance",function(){
-  return(self$getParameterValue("mean")*self$getParameterValue("scale"))
+Gamma$set("public", "variance", function() {
+  return(self$getParameterValue("mean") * self$getParameterValue("scale"))
 })
-Gamma$set("public","skewness",function() {
-  2/sqrt(self$getParameterValue("shape"))
+Gamma$set("public", "skewness", function() {
+  2 / sqrt(self$getParameterValue("shape"))
 })
-Gamma$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(6/self$getParameterValue("shape"))
-  else
-    return((6/self$getParameterValue("shape"))+3)
+Gamma$set("public", "kurtosis", function(excess = TRUE) {
+  if (excess) {
+    return(6 / self$getParameterValue("shape"))
+  } else {
+    return((6 / self$getParameterValue("shape")) + 3)
+  }
 })
-Gamma$set("public","entropy",function(base = 2){
+Gamma$set("public", "entropy", function(base = 2) {
   self$getParameterValue("shape") - log(self$getParameterValue("rate"), base) +
-    log(gamma(self$getParameterValue("shape")), base) + (1-self$getParameterValue("shape"))*digamma(self$getParameterValue("shape"))
+    log(gamma(self$getParameterValue("shape")), base) + (1 - self$getParameterValue("shape")) * digamma(self$getParameterValue("shape"))
 })
-Gamma$set("public", "mgf", function(t){
-  if(t < self$getParameterValue("rate"))
-    return((1-self$getParameterValue("scale")*t)^(-self$getParameterValue("shape")))
-  else
+Gamma$set("public", "mgf", function(t) {
+  if (t < self$getParameterValue("rate")) {
+    return((1 - self$getParameterValue("scale") * t)^(-self$getParameterValue("shape")))
+  } else {
     return(NaN)
+  }
 })
-Gamma$set("public", "pgf", function(z){
+Gamma$set("public", "pgf", function(z) {
   return(NaN)
 })
-Gamma$set("public", "cf", function(t){
-  return((1-self$getParameterValue("scale")*1i*t)^(-self$getParameterValue("shape"))   )
+Gamma$set("public", "cf", function(t) {
+  return((1 - self$getParameterValue("scale") * 1i * t)^(-self$getParameterValue("shape")))
 })
-Gamma$set("public","mode",function(which = NULL){
-  if(self$getParameterValue("shape")>=1)
-    return((self$getParameterValue("shape")-1)/self$getParameterValue("rate"))
-  else
+Gamma$set("public", "mode", function(which = NULL) {
+  if (self$getParameterValue("shape") >= 1) {
+    return((self$getParameterValue("shape") - 1) / self$getParameterValue("rate"))
+  } else {
     return(NaN)
+  }
 })
 
-Gamma$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$shape)) lst = c(lst, list(shape= paramlst$shape))
-  if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
-  if(!is.null(paramlst$mean)){
-    if(is.null(paramlst$shape))
-      lst = c(lst, list(rate = self$getParameterValue("shape")/paramlst$mean))
-    else
-      lst = c(lst, list(rate = paramlst$shape/paramlst$mean))
+Gamma$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+  if (!is.null(paramlst$rate)) lst <- c(lst, list(rate = paramlst$rate))
+  if (!is.null(paramlst$scale)) lst <- c(lst, list(rate = paramlst$scale^-1))
+  if (!is.null(paramlst$mean)) {
+    if (is.null(paramlst$shape)) {
+      lst <- c(lst, list(rate = self$getParameterValue("shape") / paramlst$mean))
+    } else {
+      lst <- c(lst, list(rate = paramlst$shape / paramlst$mean))
+    }
   }
 
   return(lst)
 })
-Gamma$set("private", ".pdf", function(x, log = FALSE){
-  shape = self$getParameterValue("shape")
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "dgamma",
-                   x = x,
-                   args = list(shape = unlist(shape),
-                               rate = unlist(rate)),
-                   log = log,
-                   vec = test_list(shape))
+Gamma$set("private", ".pdf", function(x, log = FALSE) {
+  shape <- self$getParameterValue("shape")
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "dgamma",
+    x = x,
+    args = list(
+      shape = unlist(shape),
+      rate = unlist(rate)
+    ),
+    log = log,
+    vec = test_list(shape)
+  )
 })
-Gamma$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  shape = self$getParameterValue("shape")
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "pgamma",
-                   x = x,
-                   args = list(shape = unlist(shape),
-                               rate = unlist(rate)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(shape))
+Gamma$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  shape <- self$getParameterValue("shape")
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "pgamma",
+    x = x,
+    args = list(
+      shape = unlist(shape),
+      rate = unlist(rate)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(shape)
+  )
 })
-Gamma$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  shape = self$getParameterValue("shape")
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "qgamma",
-                   x = p,
-                   args = list(shape = unlist(shape),
-                               rate = unlist(rate)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(shape))
+Gamma$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  shape <- self$getParameterValue("shape")
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "qgamma",
+    x = p,
+    args = list(
+      shape = unlist(shape),
+      rate = unlist(rate)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(shape)
+  )
 })
-Gamma$set("private", ".rand", function(n){
-  shape = self$getParameterValue("shape")
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "rgamma",
-                   x = n,
-                   args = list(shape = unlist(shape),
-                               rate = unlist(rate)),
-                   vec = test_list(shape))
+Gamma$set("private", ".rand", function(n) {
+  shape <- self$getParameterValue("shape")
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "rgamma",
+    x = n,
+    args = list(
+      shape = unlist(shape),
+      rate = unlist(rate)
+    ),
+    vec = test_list(shape)
+  )
 })
 Gamma$set("private", ".log", TRUE)
 Gamma$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Gamma$set("public","initialize",function(shape = 1,rate = 1, scale = NULL, mean = NULL, decorators = NULL,
-                                         verbose = FALSE){
+Gamma$set("public", "initialize", function(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL,
+                                           verbose = FALSE) {
 
   private$.parameters <- getParameterSet.Gamma(self, shape, rate, scale, mean, verbose)
   self$setParameterValue(shape = shape, rate = rate, scale = scale, mean = mean)
 
-  super$initialize(decorators = decorators,
-                   support = PosReals$new(zero = F),
-                   type = PosReals$new())
+  super$initialize(
+    decorators = decorators,
+    support = PosReals$new(zero = F),
+    type = PosReals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Gamma", ClassName = "Gamma",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Gamma", ClassName = "Gamma",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

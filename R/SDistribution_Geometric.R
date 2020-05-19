@@ -51,154 +51,174 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Geometric Distribution Definition
 #-------------------------------------------------------------
-Geometric <-  R6Class("Geometric", inherit = SDistribution, lock_objects = F)
+Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F)
 
-Geometric$set("public","name","Geometric")
-Geometric$set("public","short_name","Geom")
-Geometric$set("public","packages","stats")
+Geometric$set("public", "name", "Geometric")
+Geometric$set("public", "short_name", "Geom")
+Geometric$set("public", "packages", "stats")
 
-Geometric$set("public","mean",function(){
-    if(private$.trials)
-        return(1/self$getParameterValue("prob"))
-    else
-        return((1-self$getParameterValue("prob"))/self$getParameterValue("prob"))
+Geometric$set("public", "mean", function() {
+  if (private$.trials) {
+    return(1 / self$getParameterValue("prob"))
+  } else {
+    return((1 - self$getParameterValue("prob")) / self$getParameterValue("prob"))
+  }
 })
-Geometric$set("public","variance",function(){
-    return((1-self$getParameterValue("prob"))/(self$getParameterValue("prob")^2))
+Geometric$set("public", "variance", function() {
+  return((1 - self$getParameterValue("prob")) / (self$getParameterValue("prob")^2))
 })
-Geometric$set("public","skewness",function(){
-    return((2-self$getParameterValue("prob"))/sqrt(1-self$getParameterValue("prob")))
+Geometric$set("public", "skewness", function() {
+  return((2 - self$getParameterValue("prob")) / sqrt(1 - self$getParameterValue("prob")))
 })
-Geometric$set("public","kurtosis",function(excess = TRUE){
-    exkurtosis = 6 + (self$getParameterValue("prob")^2/(1-self$getParameterValue("prob")))
-    if(excess)
-        return(exkurtosis)
-    else
-        return(exkurtosis + 3)
+Geometric$set("public", "kurtosis", function(excess = TRUE) {
+  exkurtosis <- 6 + (self$getParameterValue("prob")^2 / (1 - self$getParameterValue("prob")))
+  if (excess) {
+    return(exkurtosis)
+  } else {
+    return(exkurtosis + 3)
+  }
 })
-Geometric$set("public","entropy",function(base = 2){
-    prob <- self$getParameterValue("prob")
-    return(((-(1-prob)*log(1-prob,base))-(prob*log(prob,base)))/prob)
+Geometric$set("public", "entropy", function(base = 2) {
+  prob <- self$getParameterValue("prob")
+  return(((-(1 - prob) * log(1 - prob, base)) - (prob * log(prob, base))) / prob)
 })
-Geometric$set("public", "mgf", function(t){
-    if(private$.trials){
-        if(t < -log(1-self$getParameterValue("prob")))
-            return((self$getParameterValue("prob")*exp(t))/(1-(1-self$getParameterValue("prob"))*exp(t)))
-        else
-            return(NaN)
-    } else
-        return((self$getParameterValue("prob"))/(1-(1-self$getParameterValue("prob"))*exp(t)))
+Geometric$set("public", "mgf", function(t) {
+  if (private$.trials) {
+    if (t < -log(1 - self$getParameterValue("prob"))) {
+      return((self$getParameterValue("prob") * exp(t)) / (1 - (1 - self$getParameterValue("prob")) * exp(t)))
+    } else {
+      return(NaN)
+    }
+  } else {
+    return((self$getParameterValue("prob")) / (1 - (1 - self$getParameterValue("prob")) * exp(t)))
+  }
 })
-Geometric$set("public", "cf", function(t){
-    if(private$.trials)
-        return((self$getParameterValue("prob")*exp(1i*t))/(1-(1-self$getParameterValue("prob"))*exp(1i*t)))
-    else
-        return((self$getParameterValue("prob"))/(1-(1-self$getParameterValue("prob"))*exp(1i*t)))
+Geometric$set("public", "cf", function(t) {
+  if (private$.trials) {
+    return((self$getParameterValue("prob") * exp(1i * t)) / (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
+  } else {
+    return((self$getParameterValue("prob")) / (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
+  }
 })
-Geometric$set("public","pgf",function(z){
-    if(private$.trials)
-        return((self$getParameterValue("prob") * z)/(1-z*self$getParameterValue("qprob")))
-    else
-        return(self$getParameterValue("prob")/(1-z*self$getParameterValue("qprob")))
+Geometric$set("public", "pgf", function(z) {
+  if (private$.trials) {
+    return((self$getParameterValue("prob") * z) / (1 - z * self$getParameterValue("qprob")))
+  } else {
+    return(self$getParameterValue("prob") / (1 - z * self$getParameterValue("qprob")))
+  }
 })
-Geometric$set("public","mode",function(which = NULL){
-    if(private$.trials)
-        return(1)
-    else
-        return(0)
+Geometric$set("public", "mode", function(which = NULL) {
+  if (private$.trials) {
+    return(1)
+  } else {
+    return(0)
+  }
 })
 
-Geometric$set("private",".getRefParams", function(paramlst){
-    lst = list()
-    if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
-    if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1 - paramlst$qprob))
-    return(lst)
+Geometric$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$prob)) lst <- c(lst, list(prob = paramlst$prob))
+  if (!is.null(paramlst$qprob)) lst <- c(lst, list(prob = 1 - paramlst$qprob))
+  return(lst)
 })
-Geometric$set("private",".trials", logical(0))
+Geometric$set("private", ".trials", logical(0))
 Geometric$set("private", ".pdf", function(x, log = FALSE) {
-    if (private$.trials) {
-        x = x + 1
-    }
+  if (private$.trials) {
+    x <- x + 1
+  }
 
-    prob = self$getParameterValue("prob")
-    call_C_base_pdqr(fun = "dgeom",
-                     x = x,
-                     args = list(prob = unlist(prob)),
-                     log = log,
-                     vec = test_list(prob))
+  prob <- self$getParameterValue("prob")
+  call_C_base_pdqr(
+    fun = "dgeom",
+    x = x,
+    args = list(prob = unlist(prob)),
+    log = log,
+    vec = test_list(prob)
+  )
 })
-Geometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-    if (private$.trials) {
-        x = x + 1
-    }
+Geometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  if (private$.trials) {
+    x <- x + 1
+  }
 
-    prob = self$getParameterValue("prob")
-    call_C_base_pdqr(fun = "pgeom",
-                     x = x,
-                     args = list(prob = unlist(prob)),
-                     lower.tail = lower.tail,
-                     log = log.p,
-                     vec = test_list(prob))
+  prob <- self$getParameterValue("prob")
+  call_C_base_pdqr(
+    fun = "pgeom",
+    x = x,
+    args = list(prob = unlist(prob)),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(prob)
+  )
 })
-Geometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-    prob = self$getParameterValue("prob")
-    geom = call_C_base_pdqr(fun = "qgeom",
-                            x = p,
-                            args = list(prob = unlist(prob)),
-                            lower.tail = lower.tail,
-                            log = log.p,
-                            vec = test_list(prob))
+Geometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  prob <- self$getParameterValue("prob")
+  geom <- call_C_base_pdqr(
+    fun = "qgeom",
+    x = p,
+    args = list(prob = unlist(prob)),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(prob)
+  )
 
-    if (private$.trials) {
-        geom = geom + 1
-    }
+  if (private$.trials) {
+    geom <- geom + 1
+  }
 
-    return(geom)
+  return(geom)
 })
-Geometric$set("private", ".rand", function(n){
-    prob = self$getParameterValue("prob")
-    geom = call_C_base_pdqr(fun = "rgeom",
-                            x = n,
-                            args = list(prob = unlist(prob)),
-                            vec = test_list(prob))
+Geometric$set("private", ".rand", function(n) {
+  prob <- self$getParameterValue("prob")
+  geom <- call_C_base_pdqr(
+    fun = "rgeom",
+    x = n,
+    args = list(prob = unlist(prob)),
+    vec = test_list(prob)
+  )
 
-    if (private$.trials) {
-        geom = geom + 1
-    }
+  if (private$.trials) {
+    geom <- geom + 1
+  }
 
-    return(geom)
+  return(geom)
 })
 Geometric$set("private", ".log", TRUE)
 Geometric$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
-Geometric$set("public","initialize",function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
-                                             verbose = FALSE){
+Geometric$set("public", "initialize", function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
+                                               verbose = FALSE) {
 
-    private$.trials <- checkmate::assertLogical(trials)
-    private$.parameters <- getParameterSet(x=self, prob=prob, qprob=qprob, trials=trials, verbose=verbose)
-    self$setParameterValue(prob = prob, qprob = qprob)
+  private$.trials <- checkmate::assertLogical(trials)
+  private$.parameters <- getParameterSet(x = self, prob = prob, qprob = qprob, trials = trials, verbose = verbose)
+  self$setParameterValue(prob = prob, qprob = qprob)
 
-    if(!trials){
-        support <- Naturals$new()
-        self$description = "Geometric (Failures) Probability Distribution."
-    } else {
-        support <- PosNaturals$new()
-        self$description = "Geometric (Trials) Probability Distribution."
-    }
+  if (!trials) {
+    support <- Naturals$new()
+    self$description <- "Geometric (Failures) Probability Distribution."
+  } else {
+    support <- PosNaturals$new()
+    self$description <- "Geometric (Trials) Probability Distribution."
+  }
 
-    super$initialize(decorators = decorators,
-                     support = support,
-                     type = Naturals$new())
+  super$initialize(
+    decorators = decorators,
+    support = support,
+    type = Naturals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Geom", ClassName = "Geometric",
-                                                     Type = "\u21150", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Geom", ClassName = "Geometric",
+    Type = "\u21150", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

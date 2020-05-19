@@ -42,19 +42,18 @@
 #' added to the SDistribution methods.
 #'
 #' @examples
-#' x = Exponential$new()
+#' x <- Exponential$new()
 #' decorate(x, ExoticStatistics)
 #' x$survival(1)
 #'
-#' @examples
-#' x = Exponential$new(decorators = ExoticStatistics)
-#' x$survival(4)
 #'
+#' x <- Exponential$new(decorators = ExoticStatistics)
+#' x$survival(4)
 #' @export
 NULL
 ExoticStatistics <- R6Class("ExoticStatistics", inherit = DistributionDecorator)
 .distr6$decorators <- append(.distr6$decorators, list(ExoticStatistics = ExoticStatistics))
-ExoticStatistics$set("public","packages","pracma")
+ExoticStatistics$set("public", "packages", "pracma")
 #-------------------------------------------------------------
 # Public Methods - cdfAntiDeriv
 #-------------------------------------------------------------
@@ -82,9 +81,9 @@ ExoticStatistics$set("public","packages","pracma")
 #'
 #' @export
 NULL
-ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NULL){
-  if(is.null(lower)) lower <- self$inf
-  if(is.null(upper)) upper <- self$sup
+ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NULL) {
+  if (is.null(lower)) lower <- self$inf
+  if (is.null(upper)) upper <- self$sup
   return(self$cdfPNorm(p = 1, lower, upper))
 })
 
@@ -117,8 +116,8 @@ ExoticStatistics$set("public", "cdfAntiDeriv", function(lower = NULL, upper = NU
 #' @export
 NULL
 ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper = NULL) {
-  if(is.null(lower)) lower <- self$inf
-  if(is.null(upper)) upper <- self$sup
+  if (is.null(lower)) lower <- self$inf
+  if (is.null(upper)) upper <- self$sup
   return(self$survivalPNorm(p = 1, lower, upper))
 }) # NEEDS TESTING (p-norm)
 
@@ -150,15 +149,16 @@ ExoticStatistics$set("public", "survivalAntiDeriv", function(lower = NULL, upper
 #' @export
 NULL
 ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
-  if(!is.null(private$.cdf)) {
+  if (!is.null(private$.cdf)) {
     self$cdf(x1 = x1, lower.tail = FALSE, log.p = log)
   } else {
     message(.distr6$message_numeric)
-    surv = integrate(self$pdf, x1, self$sup)$value
-    if(log)
+    surv <- integrate(self$pdf, x1, self$sup)$value
+    if (log) {
       return(log(surv))
-    else
+    } else {
       return(surv)
+    }
   }
 })
 
@@ -189,24 +189,27 @@ ExoticStatistics$set("public", "survival", function(x1, log = FALSE) {
 #'
 #' @export
 ExoticStatistics$set("public", "hazard", function(x1, log = FALSE) {
-  if(private$.isPdf)
-    pdf = self$pdf(x1)
-  else if(private$.isCdf){
+  if (private$.isPdf) {
+    pdf <- self$pdf(x1)
+  } else if (private$.isCdf) {
     message(.distr6$message_numeric)
-    pdf = try(as.numeric(attr(deriv(y~self$cdf(x1),"x1", func = TRUE)(x1),"gradient")),
-            silent = TRUE)
-    if(inherits(pdf,"try-error"))
-      pdf = pracma::fderiv(self$cdf,x1)
+    pdf <- try(as.numeric(attr(deriv(y ~ self$cdf(x1), "x1", func = TRUE)(x1), "gradient")),
+      silent = TRUE
+    )
+    if (inherits(pdf, "try-error")) {
+      pdf <- pracma::fderiv(self$cdf, x1)
+    }
   }
 
-  surv = self$survival(x1)
+  surv <- self$survival(x1)
 
-  haz = pdf/surv
+  haz <- pdf / surv
 
-  if(log)
+  if (log) {
     return(log(haz))
-  else
+  } else {
     return(haz)
+  }
 })
 
 #-------------------------------------------------------------
@@ -236,10 +239,11 @@ ExoticStatistics$set("public", "hazard", function(x1, log = FALSE) {
 #'
 #' @export
 ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
-  if(!log){
+  if (!log) {
     return(-self$survival(x1, log = TRUE))
-  } else
+  } else {
     return(log(-self$survival(x1, log = TRUE)))
+  }
 })
 
 #-------------------------------------------------------------
@@ -271,11 +275,12 @@ ExoticStatistics$set("public", "cumHazard", function(x1, log = FALSE) {
 #'
 #' @export
 ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
-  if(is.null(lower)) lower <- self$inf
-  if(is.null(upper)) upper <- self$sup
+  if (is.null(lower)) lower <- self$inf
+  if (is.null(upper)) upper <- self$sup
 
-  if(testContinuous(self))
+  if (testContinuous(self)) {
     return(generalPNorm(self$cdf, p, lower, upper))
+  }
 })
 
 #-------------------------------------------------------------
@@ -307,11 +312,12 @@ ExoticStatistics$set("public", "cdfPNorm", function(p = 2, lower = NULL, upper =
 #'
 #' @export
 ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper = NULL) {
-  if(is.null(lower)) lower <- self$inf
-  if(is.null(upper)) upper <- self$sup
+  if (is.null(lower)) lower <- self$inf
+  if (is.null(upper)) upper <- self$sup
 
-  if(testContinuous(self))
+  if (testContinuous(self)) {
     return(generalPNorm(self$pdf, p, lower, upper))
+  }
 }) # NEEDS TESTING
 
 #-------------------------------------------------------------
@@ -342,7 +348,7 @@ ExoticStatistics$set("public", "pdfPNorm", function(p = 2, lower = NULL, upper =
 #'
 #' @export
 NULL
-ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL){
+ExoticStatistics$set("public", "squared2Norm", function(lower = NULL, upper = NULL) {
   return(self$pdfPNorm(p = 2, lower = lower, upper = upper))
 })
 
@@ -374,10 +380,11 @@ ExoticStatistics$set("public","squared2Norm",function(lower = NULL, upper = NULL
 #' @return Given p-norm of survival function evaluated between limits as a numeric.
 #'
 #' @export
-ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, upper = NULL){
-  if(is.null(lower)) lower <- self$inf
-  if(is.null(upper)) upper <- self$sup
+ExoticStatistics$set("public", "survivalPNorm", function(p = 2, lower = NULL, upper = NULL) {
+  if (is.null(lower)) lower <- self$inf
+  if (is.null(upper)) upper <- self$sup
 
-  if(testContinuous(self))
+  if (testContinuous(self)) {
     return(generalPNorm(self$survival, p, lower, upper))
+  }
 })

@@ -29,27 +29,29 @@ NULL
 # Cosine Kernel Definition
 #-------------------------------------------------------------
 Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F)
-Cosine$set("public","name","Cosine")
-Cosine$set("public","short_name","Cos")
-Cosine$set("public","description","Cosine Kernel")
-Cosine$set("public","squared2Norm",function(){
+Cosine$set("public", "name", "Cosine")
+Cosine$set("public", "short_name", "Cos")
+Cosine$set("public", "description", "Cosine Kernel")
+Cosine$set("public", "squared2Norm", function() {
   return(pi^2 / 16)
 })
-Cosine$set("public","variance",function(){
-  return(1 - 8/(pi^2))
+Cosine$set("public", "variance", function() {
+  return(1 - 8 / (pi^2))
 })
-Cosine$set("public","initialize",function(decorators = NULL){
-  super$initialize(decorators = decorators,
-                   support = Interval$new(-1,1))
+Cosine$set("public", "initialize", function(decorators = NULL) {
+  super$initialize(
+    decorators = decorators,
+    support = Interval$new(-1, 1)
+  )
 })
-Cosine$set("private",".pdf",function(x){
-  pi/4 * cos(pi/2 * x)
+Cosine$set("private", ".pdf", function(x) {
+  pi / 4 * cos(pi / 2 * x)
 })
-Cosine$set("private",".cdf",function(x){
-  0.5 * (sin((pi*x)/2)+1)
+Cosine$set("private", ".cdf", function(x) {
+  0.5 * (sin((pi * x) / 2) + 1)
 })
-Cosine$set("private",".quantile",function(p){
-  (2*asin(2*p - 1))/pi
+Cosine$set("private", ".quantile", function(p) {
+  (2 * asin(2 * p - 1)) / pi
 })
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Cos", ClassName = "Cosine", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Cos", ClassName = "Cosine", Support = "[-1,1]", Packages = "-"))

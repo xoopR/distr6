@@ -25,9 +25,9 @@
 #'
 #' @examples
 #' # Different parameterisations
-#' MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
-#' MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1)) # Equivalently
-#' MultivariateNormal$new(mean = c(0,0,0), prec = c(3,-1,-1,-1,1,0,-1,0,1))
+#' MultivariateNormal$new(mean = c(0, 0, 0), cov = matrix(c(3, -1, -1, -1, 1, 0, -1, 0, 1), byrow = TRUE, nrow = 3))
+#' MultivariateNormal$new(mean = c(0, 0, 0), cov = c(3, -1, -1, -1, 1, 0, -1, 0, 1)) # Equivalently
+#' MultivariateNormal$new(mean = c(0, 0, 0), prec = c(3, -1, -1, -1, 1, 0, -1, 0, 1))
 #'
 #' # Default is bivariate standard normal
 #' x <- MultivariateNormal$new()
@@ -35,7 +35,7 @@
 #' # Update parameters
 #' x$setParameterValue(mean = c(1, 2))
 #' # When any parameter is updated, all others are too!
-#' x$setParameterValue(prec = c(1,0,0,1))
+#' x$setParameterValue(prec = c(1, 0, 0, 1))
 #' x$parameters()
 #'
 #' # d/p/q/r
@@ -50,101 +50,109 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # MultivariateNormal Distribution Definition
 #-------------------------------------------------------------
 MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F)
-MultivariateNormal$set("public","name","MultivariateNormal")
-MultivariateNormal$set("public","short_name","MultiNorm")
-MultivariateNormal$set("public","description","Multivariate Normal Probability Distribution.")
+MultivariateNormal$set("public", "name", "MultivariateNormal")
+MultivariateNormal$set("public", "short_name", "MultiNorm")
+MultivariateNormal$set("public", "description", "Multivariate Normal Probability Distribution.")
 
-MultivariateNormal$set("public","mean",function(){
+MultivariateNormal$set("public", "mean", function() {
   return(self$getParameterValue("mean"))
 })
-MultivariateNormal$set("public","mode",function(which = NULL){
+MultivariateNormal$set("public", "mode", function(which = NULL) {
   return(self$getParameterValue("mean"))
 })
-MultivariateNormal$set("public","variance",function(){
+MultivariateNormal$set("public", "variance", function() {
   return(self$getParameterValue("cov"))
 })
-MultivariateNormal$set("public","entropy",function(base = 2){
+MultivariateNormal$set("public", "entropy", function(base = 2) {
   return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
 })
-MultivariateNormal$set("public", "mgf", function(t){
+MultivariateNormal$set("public", "mgf", function(t) {
   checkmate::assert(length(t) == self$getParameterValue("K"))
   return(exp((self$getParameterValue("mean") %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
 })
-MultivariateNormal$set("public", "cf", function(t){
+MultivariateNormal$set("public", "cf", function(t) {
   checkmate::assert(length(t) == self$getParameterValue("K"))
   return(exp((1i * self$getParameterValue("mean") %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
 })
-MultivariateNormal$set("public", "pgf", function(z){
+MultivariateNormal$set("public", "pgf", function(z) {
   return(NaN)
 })
 
 
-MultivariateNormal$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
+MultivariateNormal$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
+  if (is.null(lst)) {
     lst <- list(...)
-  if(!is.null(lst$cov)){
-    if(any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
-       length(lst$cov) != self$getParameterValue("K")^2)
+  }
+  if (!is.null(lst$cov)) {
+    if (any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
+      length(lst$cov) != self$getParameterValue("K")^2) {
       lst$cov <- suppressWarnings(matrix(lst$cov, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K")))
+    }
     lst$cov <- as.numeric(lst$cov)
   }
-  if(!is.null(lst$prec)){
-    if(any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
-       length(lst$prec) != self$getParameterValue("K")^2)
+  if (!is.null(lst$prec)) {
+    if (any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
+      length(lst$prec) != self$getParameterValue("K")^2) {
       lst$prec <- suppressWarnings(matrix(lst$prec, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K")))
+    }
     lst$prec <- as.numeric(lst$prec)
   }
-  if(!is.null(lst$mean)){
+  if (!is.null(lst$mean)) {
     lst$mean <- as.numeric(lst$mean)
-    if(length(lst$mean) < self$getParameterValue("K"))
+    if (length(lst$mean) < self$getParameterValue("K")) {
       lst$mean <- rep(lst$mean, self$getParameterValue("K"))
-    if(length(lst$mean) > self$getParameterValue("K"))
+    }
+    if (length(lst$mean) > self$getParameterValue("K")) {
       lst$mean <- lst$mean[1:self$getParameterValue("K")]
+    }
     lst$mean <- as.numeric(lst$mean)
   }
 
   super$setParameterValue(lst = lst, error = error)
   invisible(self)
 })
-MultivariateNormal$set("public","getParameterValue",function(id, error = "warn"){
-  if("cov" %in% id)
-    return(matrix(super$getParameterValue("cov", error),nrow = super$getParameterValue("K", error)))
-  else if("prec" %in% id)
-    return(matrix(super$getParameterValue("prec", error),nrow = super$getParameterValue("K", error)))
-  else
+MultivariateNormal$set("public", "getParameterValue", function(id, error = "warn") {
+  if ("cov" %in% id) {
+    return(matrix(super$getParameterValue("cov", error), nrow = super$getParameterValue("K", error)))
+  } else if ("prec" %in% id) {
+    return(matrix(super$getParameterValue("prec", error), nrow = super$getParameterValue("K", error)))
+  } else {
     return(super$getParameterValue(id, error))
+  }
 })
-MultivariateNormal$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  if(!is.null(paramlst$cov)) lst = c(lst, list(cov = paramlst$cov))
-  if(!is.null(paramlst$prec)) lst = c(lst, list(cov = solve(matrix(paramlst$prec,
-                                                                   nrow = self$getParameterValue("K"),
-                                                                   ncol = self$getParameterValue("K")))))
+MultivariateNormal$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+  if (!is.null(paramlst$cov)) lst <- c(lst, list(cov = paramlst$cov))
+  if (!is.null(paramlst$prec)) {
+    lst <- c(lst, list(cov = solve(matrix(paramlst$prec,
+      nrow = self$getParameterValue("K"),
+      ncol = self$getParameterValue("K")
+    ))))
+  }
   return(lst)
 })
-MultivariateNormal$set("private",".pdf",function(x){
-  if(isSymmetric.matrix(self$variance()) & all(eigen(self$variance(),only.values = TRUE)$values > 0)){
+MultivariateNormal$set("private", ".pdf", function(x) {
+  if (isSymmetric.matrix(self$variance()) & all(eigen(self$variance(), only.values = TRUE)$values > 0)) {
     K <- self$getParameterValue("K")
     x <- as.matrix(checkmate::assertDataTable(x, ncol = self$getParameterValue("K")))
 
     cov <- self$getParameterValue("cov")
     mean <- matrix(self$getParameterValue("mean"), nrow = nrow(x), ncol = K, byrow = TRUE)
 
-    return(as.numeric((2*pi)^(-K/2) * det(cov)^-0.5 *
-                        exp(-0.5 * rowSums((x - mean) %*% solve(cov) * (x - mean)))))
+    return(as.numeric((2 * pi)^(-K / 2) * det(cov)^-0.5 *
+      exp(-0.5 * rowSums((x - mean) %*% solve(cov) * (x - mean)))))
   } else {
     return(NaN)
   }
 })
-MultivariateNormal$set("private",".rand",function(n){
+MultivariateNormal$set("private", ".rand", function(n) {
   ch <- chol(self$variance())
   xs <- matrix(rnorm(self$getParameterValue("K") * n), ncol = n)
 
@@ -152,21 +160,27 @@ MultivariateNormal$set("private",".rand",function(n){
 })
 MultivariateNormal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "multivariate"))
 
-MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1,0,0,1),
-                                                      prec = NULL, decorators = NULL, verbose = FALSE){
+MultivariateNormal$set("public", "initialize", function(mean = rep(0, 2), cov = c(1, 0, 0, 1),
+                                                        prec = NULL, decorators = NULL, verbose = FALSE) {
 
-  if (length(mean) == 1)  stop("Length of mean is '1', use Normal distribution instead.")
+  if (length(mean) == 1) stop("Length of mean is '1', use Normal distribution instead.")
 
   private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
   self$setParameterValue(mean = mean, cov = cov, prec = prec)
 
-  super$initialize(decorators = decorators,
-                   support = setpower(Reals$new(), length(mean)),
-                   type = setpower(Reals$new(), length(mean)))
+  super$initialize(
+    decorators = decorators,
+    support = setpower(Reals$new(), length(mean)),
+    type = setpower(Reals$new(), length(mean))
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "MultiNorm", ClassName = "MultivariateNormal",
-                                                     Type = "\u211D^K", ValueSupport = "continuous",
-                                                     VariateForm = "multivariate",
-                                                     Package = "-"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "MultiNorm", ClassName = "MultivariateNormal",
+    Type = "\u211D^K", ValueSupport = "continuous",
+    VariateForm = "multivariate",
+    Package = "-"
+  )
+)

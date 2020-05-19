@@ -32,24 +32,26 @@ NULL
 # Uniform Kernel Definition
 #-------------------------------------------------------------
 Epanechnikov <- R6Class("Epanechnikov", inherit = Kernel, lock_objects = F)
-Epanechnikov$set("public","name","Epanechnikov")
-Epanechnikov$set("public","short_name","Epan")
-Epanechnikov$set("public","description","Epanechnikov Kernel")
-Epanechnikov$set("public","squared2Norm",function(){
-  return(3/5)
+Epanechnikov$set("public", "name", "Epanechnikov")
+Epanechnikov$set("public", "short_name", "Epan")
+Epanechnikov$set("public", "description", "Epanechnikov Kernel")
+Epanechnikov$set("public", "squared2Norm", function() {
+  return(3 / 5)
 })
-Epanechnikov$set("public","variance",function(){
-  return(1/5)
+Epanechnikov$set("public", "variance", function() {
+  return(1 / 5)
 })
-Epanechnikov$set("public","initialize",function(decorators = NULL){
-  super$initialize(decorators = decorators,
-                   support = Interval$new(-1, 1))
+Epanechnikov$set("public", "initialize", function(decorators = NULL) {
+  super$initialize(
+    decorators = decorators,
+    support = Interval$new(-1, 1)
+  )
 })
-Epanechnikov$set("private",".pdf",function(x){
-  0.75 * (1-x^2)
+Epanechnikov$set("private", ".pdf", function(x) {
+  0.75 * (1 - x^2)
 })
-Epanechnikov$set("private",".cdf",function(x){
-  3/4*x - 1/4*x^3 + 1/2
+Epanechnikov$set("private", ".cdf", function(x) {
+  3 / 4 * x - 1 / 4 * x^3 + 1 / 2
 })
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))

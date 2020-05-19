@@ -21,7 +21,7 @@
 #' Exponential$new(rate = 4)
 #' Exponential$new(scale = 3)
 #'
-#' x = Exponential$new(verbose = TRUE) # Default is rate = 1
+#' x <- Exponential$new(verbose = TRUE) # Default is rate = 1
 #'
 #' # Update parameters
 #' # When any parameter is updated, all others are too!
@@ -39,104 +39,121 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Exponential Distribution Definition
 #-------------------------------------------------------------
 Exponential <- R6Class("Exponential", inherit = SDistribution, lock_objects = F)
-Exponential$set("public","name","Exponential")
-Exponential$set("public","short_name","Exp")
-Exponential$set("public","description","Exponential Probability Distribution.")
-Exponential$set("public","packages","stats")
+Exponential$set("public", "name", "Exponential")
+Exponential$set("public", "short_name", "Exp")
+Exponential$set("public", "description", "Exponential Probability Distribution.")
+Exponential$set("public", "packages", "stats")
 
-Exponential$set("public","mean",function(){
+Exponential$set("public", "mean", function() {
   self$getParameterValue("scale")
 })
-Exponential$set("public","variance",function(){
+Exponential$set("public", "variance", function() {
   self$getParameterValue("scale")^2
 })
-Exponential$set("public","skewness",function() return(2))
-Exponential$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(6)
-  else
-    return(9)
+Exponential$set("public", "skewness", function() {
+  return(2)
 })
-Exponential$set("public","entropy",function(base = 2){
+Exponential$set("public", "kurtosis", function(excess = TRUE) {
+  if (excess) {
+    return(6)
+  } else {
+    return(9)
+  }
+})
+Exponential$set("public", "entropy", function(base = 2) {
   1 - log(self$getParameterValue("rate"), base)
 })
-Exponential$set("public", "mgf", function(t){
-  if(t < self$getParameterValue("rate"))
+Exponential$set("public", "mgf", function(t) {
+  if (t < self$getParameterValue("rate")) {
     return(self$getParameterValue("rate") / (self$getParameterValue("rate") - t))
-  else
+  } else {
     return(NaN)
+  }
 })
-Exponential$set("public", "cf", function(t){
-  return(self$getParameterValue("rate") / (self$getParameterValue("rate") -  ((0+1i) * t)))
+Exponential$set("public", "cf", function(t) {
+  return(self$getParameterValue("rate") / (self$getParameterValue("rate") - ((0 + 1i) * t)))
 })
-Exponential$set("public","mode",function(which = NULL){
+Exponential$set("public", "mode", function(which = NULL) {
   return(0)
 })
-Exponential$set("public", "pgf", function(z){
+Exponential$set("public", "pgf", function(z) {
   return(NaN)
 })
 
-Exponential$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
+Exponential$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$rate)) lst <- c(lst, list(rate = paramlst$rate))
+  if (!is.null(paramlst$scale)) lst <- c(lst, list(rate = paramlst$scale^-1))
   return(lst)
 })
-Exponential$set("private", ".pdf", function(x, log = FALSE){
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "dexp",
-                   x = x,
-                   args = list(rate = unlist(rate)),
-                   log = log,
-                   vec = test_list(rate))
+Exponential$set("private", ".pdf", function(x, log = FALSE) {
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "dexp",
+    x = x,
+    args = list(rate = unlist(rate)),
+    log = log,
+    vec = test_list(rate)
+  )
 })
-Exponential$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "pexp",
-                   x = x,
-                   args = list(rate = unlist(rate)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(rate))
+Exponential$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "pexp",
+    x = x,
+    args = list(rate = unlist(rate)),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(rate)
+  )
 })
-Exponential$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "qexp",
-                   x = p,
-                   args = list(rate = unlist(rate)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(rate))
+Exponential$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "qexp",
+    x = p,
+    args = list(rate = unlist(rate)),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(rate)
+  )
 })
-Exponential$set("private", ".rand", function(n){
-  rate = self$getParameterValue("rate")
-  call_C_base_pdqr(fun = "rexp",
-                   x = n,
-                   args = list(rate = unlist(rate)),
-                   vec = test_list(rate))
+Exponential$set("private", ".rand", function(n) {
+  rate <- self$getParameterValue("rate")
+  call_C_base_pdqr(
+    fun = "rexp",
+    x = n,
+    args = list(rate = unlist(rate)),
+    vec = test_list(rate)
+  )
 })
 Exponential$set("private", ".log", TRUE)
 Exponential$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE){
+Exponential$set("public", "initialize", function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet(self, rate, scale, verbose)
   self$setParameterValue(rate = rate, scale = scale)
 
-  super$initialize(decorators = decorators,
-                   support = PosReals$new(zero = T),
-                   type = PosReals$new(zero = T))
+  super$initialize(
+    decorators = decorators,
+    support = PosReals$new(zero = T),
+    type = PosReals$new(zero = T)
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Exp", ClassName = "Exponential",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Exp", ClassName = "Exponential",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

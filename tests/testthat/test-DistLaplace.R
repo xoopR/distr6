@@ -2,11 +2,11 @@ library(testthat)
 
 context("Laplace distribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(Laplace)
 })
 
-test_that("constructor",{
+test_that("constructor", {
   expect_silent(Laplace$new())
   expect_silent(Laplace$new(var = 1))
   expect_silent(Laplace$new(scale = 1))
@@ -19,7 +19,7 @@ test_that("constructor",{
   expect_equal(Laplace$new(scale = 2)$getParameterValue("scale"), 2)
 })
 
-test_that("properties & traits",{
+test_that("properties & traits", {
   expect_equal(Laplace$new()$symmetry, "symmetric")
   expect_equal(Laplace$new()$inf, -Inf)
   expect_equal(Laplace$new()$sup, Inf)
@@ -29,20 +29,20 @@ test_that("properties & traits",{
   expect_equal(Laplace$new()$variateForm, "univariate")
 })
 
-test_that("statistics",{
+test_that("statistics", {
   expect_equal(Laplace$new()$mean(), 0)
   expect_equal(Laplace$new()$variance(), 2)
   expect_equal(Laplace$new()$skewness(), 0)
   expect_equal(Laplace$new()$kurtosis(T), 3)
   expect_equal(Laplace$new()$kurtosis(F), 6)
   expect_equal(Laplace$new()$pgf(1), NaN)
-  expect_equal(Laplace$new()$entropy(), log(2*exp(1),2))
+  expect_equal(Laplace$new()$entropy(), log(2 * exp(1), 2))
   expect_equal(Laplace$new()$mgf(2), NaN)
-  expect_equal(Laplace$new()$mgf(0.5), (1-0.5^2)^-1)
+  expect_equal(Laplace$new()$mgf(0.5), (1 - 0.5^2)^-1)
   expect_equal(Laplace$new()$cf(1), as.complex(0.5))
   expect_equal(Laplace$new()$mode(), 0)
-  expect_equal(Laplace$new()$pdf(2), 0.5*exp(-2))
-  expect_equal(Laplace$new()$cdf(2), 1-0.5*exp(-2))
-  expect_equal(Laplace$new()$quantile(0.46), log(2*0.46))
+  expect_equal(Laplace$new()$pdf(2), 0.5 * exp(-2))
+  expect_equal(Laplace$new()$cdf(2), 1 - 0.5 * exp(-2))
+  expect_equal(Laplace$new()$quantile(0.46), log(2 * 0.46))
   expect_silent(Laplace$new()$rand(10))
 })

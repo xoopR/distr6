@@ -2,11 +2,11 @@ library(testthat)
 
 context("Noncentral Student's t distribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(StudentTNoncentral)
 })
 
-test_that("parameterisation",{
+test_that("parameterisation", {
   expect_silent(StudentTNoncentral$new())
   expect_silent(StudentTNoncentral$new(df = 10))
   expect_silent(StudentTNoncentral$new(df = 10, location = 5))
@@ -16,7 +16,7 @@ test_that("parameterisation",{
   expect_equal(StudentTNoncentral$new(location = 5)$getParameterValue("location"), 5)
 })
 
-test_that("properties & traits",{
+test_that("properties & traits", {
   expect_equal(StudentTNoncentral$new()$valueSupport, "continuous")
   expect_equal(StudentTNoncentral$new()$variateForm, "univariate")
   expect_equal(StudentTNoncentral$new()$symmetry, "symmetric")
@@ -26,12 +26,12 @@ test_that("properties & traits",{
   expect_equal(StudentTNoncentral$new()$dmin, -Inf)
 })
 
-s = StudentTNoncentral$new(df = 2, location = 3)
-test_that("statistics",{
-  expect_equal(s$mean(), 3*gamma(1/2))
+s <- StudentTNoncentral$new(df = 2, location = 3)
+test_that("statistics", {
+  expect_equal(s$mean(), 3 * gamma(1 / 2))
   expect_equal(StudentTNoncentral$new(df = 1)$mean(), NaN)
   expect_equal(s$variance(), NaN)
-  expect_equal(StudentTNoncentral$new(df = 3, location = 3)$variance(), 30 - 54/pi)
+  expect_equal(StudentTNoncentral$new(df = 3, location = 3)$variance(), 30 - 54 / pi)
   expect_error(s$skewness())
   expect_error(s$kurtosis())
   expect_error(s$entropy())

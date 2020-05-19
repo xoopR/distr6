@@ -30,6 +30,6 @@ NULL
 #'
 #' And for more advanced usage see the complete tutorials at
 #'
-#'\href{https://alan-turing-institute.github.io/distr6/index.html}{https://alan-turing-institute.github.io/distr6/index.html}
+#' \href{https://alan-turing-institute.github.io/distr6/index.html}{https://alan-turing-institute.github.io/distr6/index.html}
 #'
 "_PACKAGE"

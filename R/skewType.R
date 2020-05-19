@@ -15,17 +15,18 @@
 #' skewType(1)
 #' skewType(0)
 #' skewType(-1)
-#'
-#'
 #' @export
-skewType <- function(skew){
+skewType <- function(skew) {
 
-  if(is.nan(skew)) return("undefined")
+  if (is.nan(skew)) {
+    return("undefined")
+  }
 
-  if(skew < 0)
+  if (skew < 0) {
     return("negative skew")
-  else if(skew == 0)
+  } else if (skew == 0) {
     return("no skew")
-  else
+  } else {
     return("positive skew")
+  }
 }

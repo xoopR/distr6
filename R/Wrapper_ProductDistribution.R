@@ -34,28 +34,35 @@
 #' @return Returns an R6 object of class ProductDistribution.
 #'
 #' @examples
-#' prodBin <- ProductDistribution$new(list(Binomial$new(prob = 0.5,
-#'                            size = 10), Normal$new(mean = 15)))
-#' prodBin$pdf(x1 = 2, x2 =3)
+#' prodBin <- ProductDistribution$new(list(Binomial$new(
+#'   prob = 0.5,
+#'   size = 10
+#' ), Normal$new(mean = 15)))
+#' prodBin$pdf(x1 = 2, x2 = 3)
 #' prodBin$cdf(1:5, 12:16)
-#' prodBin$quantile(c(0.1,0.2),c(0.3,0.4))
+#' prodBin$quantile(c(0.1, 0.2), c(0.3, 0.4))
 #' prodBin$rand(10)
 #'
-#' prodBin = ProductDistribution$new(distribution = Binomial,
-#'        params = list(list(prob = 0.1, size = 2),
-#'                    list(prob = 0.6, size = 4),
-#'                    list(prob = 0.2, size = 6)))
-#' prodBin$pdf(x1=1,x2=2,x3=3)
-#' prodBin$cdf(x1=1,x2=2,x3=3)
+#' prodBin <- ProductDistribution$new(
+#'   distribution = Binomial,
+#'   params = list(
+#'     list(prob = 0.1, size = 2),
+#'     list(prob = 0.6, size = 4),
+#'     list(prob = 0.2, size = 6)
+#'   )
+#' )
+#' prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
+#' prodBin$cdf(x1 = 1, x2 = 2, x3 = 3)
 #' prodBin$rand(10)
 #'
-#' #Equivalently
-#' prodBin = ProductDistribution$new(distribution = Binomial,
-#'        params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
-#' prodBin$pdf(x1=1,x2=2,x3=3)
-#' prodBin$cdf(x1=1,x2=2,x3=3)
+#' # Equivalently
+#' prodBin <- ProductDistribution$new(
+#'   distribution = Binomial,
+#'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+#' )
+#' prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
+#' prodBin$cdf(x1 = 1, x2 = 2, x3 = 3)
 #' prodBin$rand(10)
-#'
 #' @export
 NULL
 ProductDistribution <- R6Class("ProductDistribution",
@@ -65,7 +72,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     initialize = function(distlist = NULL, distribution = NULL, params = NULL,
                           shared_params = NULL,
                           name = NULL, short_name = NULL,
-                          decorators = NULL){
+                          decorators = NULL) {
 
       super$initialize(
         distlist = distlist,
@@ -75,8 +82,8 @@ ProductDistribution <- R6Class("ProductDistribution",
         decorators = decorators
       )
 
-      self$name = gsub("Vector", "Product", self$name)
-      self$short_name = gsub("Vec", "Prod", self$short_name)
+      self$name <- gsub("Vector", "Product", self$name)
+      self$short_name <- gsub("Vec", "Prod", self$short_name)
 
       invisible(self)
 
@@ -90,13 +97,17 @@ ProductDistribution <- R6Class("ProductDistribution",
     },
 
     pdf = function(..., log = FALSE, data) {
-      product_dpqr_returner(dpqr = super$pdf(..., log = log, data = data),
-                            univariate = private$.univariate)
+      product_dpqr_returner(
+        dpqr = super$pdf(..., log = log, data = data),
+        univariate = private$.univariate
+      )
     },
 
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
-      product_dpqr_returner(dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
-                            univariate = private$.univariate)
+      product_dpqr_returner(
+        dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
+        univariate = private$.univariate
+      )
     },
 
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {

@@ -2,11 +2,11 @@ library(testthat)
 
 context("Wald distribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(Wald)
 })
 
-test_that("parameterisation",{
+test_that("parameterisation", {
   expect_silent(Wald$new())
   expect_silent(Wald$new(mean = 10))
   expect_silent(Wald$new(shape = 20))
@@ -16,7 +16,7 @@ test_that("parameterisation",{
   expect_equal(Wald$new(shape = 10)$getParameterValue("shape"), 10)
 })
 
-test_that("properties & traits",{
+test_that("properties & traits", {
   expect_equal(Wald$new()$valueSupport, "continuous")
   expect_equal(Wald$new()$variateForm, "univariate")
   expect_equal(Wald$new()$symmetry, "symmetric")
@@ -26,20 +26,20 @@ test_that("properties & traits",{
   expect_equal(Wald$new()$dmin, .Machine$double.eps)
 })
 
-x = Wald$new(mean = 2.5, shape = 3)
-test_that("statistics",{
+x <- Wald$new(mean = 2.5, shape = 3)
+test_that("statistics", {
   expect_equal(x$mean(), 2.5)
   expect_equal(x$variance(), 2.5^3 / 3)
-  expect_equal(round(x$skewness(),6), 2.738613)
+  expect_equal(round(x$skewness(), 6), 2.738613)
   expect_equal(x$kurtosis(T), 12.5)
   expect_equal(x$kurtosis(F), 15.5)
   expect_equal(x$pgf(1), NaN)
   expect_error(x$entropy())
-  expect_equal(x$mgf(0.1), exp(1.2*(1 - sqrt(1 - 1.25/3))))
-  expect_equal(x$cf(0.1), exp(1.2*(1 - sqrt(1 - 1.25i/3))))
-  expect_equal(x$mode(),2.5*(sqrt(2.5625) - 1.25))
-  expect_equal(x$pdf(1:2), extraDistr::dwald(1:2,2.5,3))
-  expect_equal(x$cdf(1:2), extraDistr::pwald(1:2,2.5,3))
-  expect_null(x$quantile(x(0.56,0.12)))
-  expect_equal(length(x$rand(10)),10)
+  expect_equal(x$mgf(0.1), exp(1.2 * (1 - sqrt(1 - 1.25 / 3))))
+  expect_equal(x$cf(0.1), exp(1.2 * (1 - sqrt(1 - 1.25i / 3))))
+  expect_equal(x$mode(), 2.5 * (sqrt(2.5625) - 1.25))
+  expect_equal(x$pdf(1:2), extraDistr::dwald(1:2, 2.5, 3))
+  expect_equal(x$cdf(1:2), extraDistr::pwald(1:2, 2.5, 3))
+  expect_null(x$quantile(x(0.56, 0.12)))
+  expect_equal(length(x$rand(10)), 10)
 })

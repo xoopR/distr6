@@ -32,21 +32,23 @@ NULL
 # Sigmoid Kernel Definition
 #-------------------------------------------------------------
 Sigmoid <- R6Class("Sigmoid", inherit = Kernel, lock_objects = F)
-Sigmoid$set("public","name","Sigmoid")
-Sigmoid$set("public","short_name","Sigm")
-Sigmoid$set("public","description","Sigmoid Kernel")
-Sigmoid$set("public","squared2Norm",function(){
+Sigmoid$set("public", "name", "Sigmoid")
+Sigmoid$set("public", "short_name", "Sigm")
+Sigmoid$set("public", "description", "Sigmoid Kernel")
+Sigmoid$set("public", "squared2Norm", function() {
   return(2 / pi^2)
 })
-Sigmoid$set("public","variance",function(){
-  return(pi^2/4)
+Sigmoid$set("public", "variance", function() {
+  return(pi^2 / 4)
 })
-Sigmoid$set("public","initialize",function(decorators = NULL){
-  super$initialize(decorators = decorators,
-                   support = Reals$new())
+Sigmoid$set("public", "initialize", function(decorators = NULL) {
+  super$initialize(
+    decorators = decorators,
+    support = Reals$new()
+  )
 })
-Sigmoid$set("private",".pdf",function(x){
-  return((2/pi) * (exp(x) + exp(-x))^-1)
+Sigmoid$set("private", ".pdf", function(x) {
+  return((2 / pi) * (exp(x) + exp(-x))^-1)
 })
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D", Packages = "-"))

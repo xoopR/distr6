@@ -29,37 +29,39 @@ NULL
 # Uniform Kernel Definition
 #-------------------------------------------------------------
 TriangularKernel <- R6Class("TriangularKernel", inherit = Kernel, lock_objects = F)
-TriangularKernel$set("public","name","TriangularKernel")
-TriangularKernel$set("public","short_name","Tri")
-TriangularKernel$set("public","description","Triangular Kernel")
-TriangularKernel$set("public","variance",function(){
-  return(1/6)
+TriangularKernel$set("public", "name", "TriangularKernel")
+TriangularKernel$set("public", "short_name", "Tri")
+TriangularKernel$set("public", "description", "Triangular Kernel")
+TriangularKernel$set("public", "variance", function() {
+  return(1 / 6)
 })
-TriangularKernel$set("public","squared2Norm",function(){
-  return(2/3)
+TriangularKernel$set("public", "squared2Norm", function() {
+  return(2 / 3)
 })
-TriangularKernel$set("public","initialize",function(decorators = NULL){
-  super$initialize(decorators = decorators,
-                   support = Interval$new(-1, 1))
+TriangularKernel$set("public", "initialize", function(decorators = NULL) {
+  super$initialize(
+    decorators = decorators,
+    support = Interval$new(-1, 1)
+  )
 })
-TriangularKernel$set("private",".pdf",function(x){
+TriangularKernel$set("private", ".pdf", function(x) {
   1 - abs(x)
 })
-TriangularKernel$set("private",".cdf",function(x){
-  cdf = x
-  cdf[x < 0] = x[x < 0] + 0.5*x[x < 0]^2 + 1/2
-  cdf[x == 0] = 0.5
-  cdf[x > 0] = x[x > 0] - 0.5*x[x > 0]^2 + 1/2
+TriangularKernel$set("private", ".cdf", function(x) {
+  cdf <- x
+  cdf[x < 0] <- x[x < 0] + 0.5 * x[x < 0]^2 + 1 / 2
+  cdf[x == 0] <- 0.5
+  cdf[x > 0] <- x[x > 0] - 0.5 * x[x > 0]^2 + 1 / 2
 
   return(cdf)
 })
-TriangularKernel$set("private",".quantile",function(p){
-  quantile = p
-  quantile[p < 0.5] = -1 + sqrt(2 * p[p < 0.5])
-  quantile[p == 0.5] = 0
-  quantile[p > 0.5] = 1 - sqrt(2 - 2*p[p > 0.5])
+TriangularKernel$set("private", ".quantile", function(p) {
+  quantile <- p
+  quantile[p < 0.5] <- -1 + sqrt(2 * p[p < 0.5])
+  quantile[p == 0.5] <- 0
+  quantile[p > 0.5] <- 1 - sqrt(2 - 2 * p[p > 0.5])
 
   return(quantile)
 })
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]", Packages = "-"))

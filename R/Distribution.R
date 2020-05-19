@@ -139,179 +139,190 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE)
 #-------------------------------------------------------------
 # Public Methods - Constructor
 #-------------------------------------------------------------
-Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
-                      type = NULL, support = NULL,
-                      symmetric = FALSE,
-                      pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-                      parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                      description=NULL, suppressMoments = FALSE, .suppressChecks = FALSE
-                      ){
+Distribution$set("public", "initialize", function(name = NULL, short_name = NULL,
+                                                  type = NULL, support = NULL,
+                                                  symmetric = FALSE,
+                                                  pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+                                                  parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
+                                                  description = NULL, suppressMoments = FALSE, .suppressChecks = FALSE) {
 
-  if(.suppressChecks | inherits(self, "DistributionWrapper")){
+  if (.suppressChecks | inherits(self, "DistributionWrapper")) {
 
-    if(!is.null(parameters)) parameters = parameters$clone(deep = TRUE)
-    if(!is.null(pdf)) formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
-    if(!is.null(cdf)) formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-    if(!is.null(quantile)) formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-    if(!is.null(rand)) formals(rand) = c(formals(rand),list(self=self),alist(...=))
+    if (!is.null(parameters)) parameters <- parameters$clone(deep = TRUE)
+    if (!is.null(pdf)) formals(pdf) <- c(formals(pdf), list(self = self), alist(... = ))
+    if (!is.null(cdf)) formals(cdf) <- c(formals(cdf), list(self = self), alist(... = ))
+    if (!is.null(quantile)) formals(quantile) <- c(formals(quantile), list(self = self), alist(... = ))
+    if (!is.null(rand)) formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
 
-  } else if(getR6Class(self) == "Distribution") {
+  } else if (getR6Class(self) == "Distribution") {
 
-    if(is.null(pdf) & is.null(cdf))
+    if (is.null(pdf) & is.null(cdf)) {
       stop("One of pdf or cdf must be provided.")
+    }
 
     #------------
     # Name Checks
     #------------
-    if(is.null(name) & is.null(short_name))
+    if (is.null(name) & is.null(short_name)) {
       checkmate::assert("One of 'name' or 'short_name' must be provided.")
-    if(is.null(short_name)) short_name = gsub(" ","",name,fixed = T)
-    if(is.null(name)) name = short_name
+    }
+    if (is.null(short_name)) short_name <- gsub(" ", "", name, fixed = T)
+    if (is.null(name)) name <- short_name
     checkmate::assertCharacter(c(name, short_name),
-                               .var.name = "'name' and 'short_name' must be of class 'character'.")
-    checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
-                      .var.name = "'short_name' must be one word only.")
+      .var.name = "'name' and 'short_name' must be of class 'character'."
+    )
+    checkmate::assert(length(strsplit(short_name, split = " ")[[1]]) == 1,
+      .var.name = "'short_name' must be one word only."
+    )
 
     #------------------------
     # Type and Support Checks
     #------------------------
-    if(is.null(type)){
-      rm = c("...","self")
-      if(!is.null(pdf)){
-        lng = length(formals(pdf)[!(names(formals(pdf)) %in% rm)])
+    if (is.null(type)) {
+      rm <- c("...", "self")
+      if (!is.null(pdf)) {
+        lng <- length(formals(pdf)[!(names(formals(pdf)) %in% rm)])
         type <- setpower(Reals$new(), lng)
-      } else{
-        lng = length(formals(cdf)[!(names(formals(cdf)) %in% rm)])
+      } else {
+        lng <- length(formals(cdf)[!(names(formals(cdf)) %in% rm)])
         type <- setpower(Reals$new(), lng)
       }
     }
-    if(is.null(support)) support <- type
+    if (is.null(support)) support <- type
     assertSet(type)
     assertSet(support)
 
     #--------------------
     # valueSupport Checks
     #--------------------
-    if(!is.null(valueSupport)){
-      valueSupport = match.arg(valueSupport, c("continuous", "discrete", "mixture"))
-    } else if(support$properties$countability == "uncountable") {
-      valueSupport = "continuous"
-     } else {
-      valueSupport = "discrete"
-     }
+    if (!is.null(valueSupport)) {
+      valueSupport <- match.arg(valueSupport, c("continuous", "discrete", "mixture"))
+    } else if (support$properties$countability == "uncountable") {
+      valueSupport <- "continuous"
+    } else {
+      valueSupport <- "discrete"
+    }
 
     #-------------------
     # variateForm Checks
     #-------------------
-    if(!is.null(variateForm)){
-      variateForm = match.arg(variateForm, c("univariate", "multivariate", "matrixvariate"))
-    } else if(getR6Class(type) %in% c("ProductSet","ExponentSet")) {
-      variateForm = "multivariate"
+    if (!is.null(variateForm)) {
+      variateForm <- match.arg(variateForm, c("univariate", "multivariate", "matrixvariate"))
+    } else if (getR6Class(type) %in% c("ProductSet", "ExponentSet")) {
+      variateForm <- "multivariate"
     } else {
-      variateForm = "univariate"
+      variateForm <- "univariate"
     }
 
 
     #-------------------
     # pdf and cdf Checks
     #-------------------
-    if(!is.null(pdf)){
-      if(!is.null(formals(pdf)$self))
-        formals(pdf)$self = self
-      else
-        formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
+    if (!is.null(pdf)) {
+      if (!is.null(formals(pdf)$self)) {
+        formals(pdf)$self <- self
+      } else {
+        formals(pdf) <- c(formals(pdf), list(self = self), alist(... = ))
+      }
     }
 
-    if(!is.null(cdf)){
-      if(!is.null(formals(cdf)$self))
-        formals(cdf)$self = self
-      else
-        formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
+    if (!is.null(cdf)) {
+      if (!is.null(formals(cdf)$self)) {
+        formals(cdf)$self <- self
+      } else {
+        formals(cdf) <- c(formals(cdf), list(self = self), alist(... = ))
+      }
     }
 
-    if(!is.null(pdf) & !is.null(cdf)){
+    if (!is.null(pdf) & !is.null(cdf)) {
       checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
-                        .var.name = "'pdf' and 'cdf' must take the same arguments.")
+        .var.name = "'pdf' and 'cdf' must take the same arguments."
+      )
       checkmate::assert(all(names(formals(pdf)) == names(formals(cdf))),
-                        .var.name = "'pdf' and 'cdf' must take the same arguments.")
+        .var.name = "'pdf' and 'cdf' must take the same arguments."
+      )
     }
 
     #-------------------------
     # quantile and rand Checks
     #-------------------------
-    if(!is.null(quantile)){
-      if(!is.null(formals(quantile)$self))
-        formals(quantile)$self = self
-      else
-        formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
+    if (!is.null(quantile)) {
+      if (!is.null(formals(quantile)$self)) {
+        formals(quantile)$self <- self
+      } else {
+        formals(quantile) <- c(formals(quantile), list(self = self), alist(... = ))
+      }
     }
 
-    if(!is.null(rand)){
-      if(!is.null(formals(rand)$self))
-        formals(rand)$self = self
-      else
-        formals(rand) = c(formals(rand),list(self=self),alist(...=))
+    if (!is.null(rand)) {
+      if (!is.null(formals(rand)$self)) {
+        formals(rand)$self <- self
+      } else {
+        formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
+      }
     }
 
     #-------------------------
     # Parameter Checks
     #-------------------------
-    if(!is.null(parameters)){
-      checkmate::assertClass(parameters,"ParameterSet")
+    if (!is.null(parameters)) {
+      checkmate::assertClass(parameters, "ParameterSet")
       parameters <- parameters$clone(deep = TRUE)$update()
     }
   }
 
-  if(!is.null(parameters))
+  if (!is.null(parameters)) {
     private$.parameters <- parameters
-
-  if(!is.null(pdf)){
-      private$.pdf <- pdf
-      private$.isPdf <- TRUE
-    }
-  if(!is.null(cdf)){
-      private$.cdf <- cdf
-      private$.isCdf <- TRUE
-    }
-  if(!is.null(quantile)){
-      private$.quantile <- quantile
-      private$.isQuantile <- TRUE
-    }
-  if(!is.null(rand)){
-      private$.rand <- rand
-      private$.isRand <- TRUE
   }
 
-  if(!is.null(name)) self$name <- name
-  if(!is.null(short_name)) self$short_name <- short_name
+  if (!is.null(pdf)) {
+    private$.pdf <- pdf
+    private$.isPdf <- TRUE
+  }
+  if (!is.null(cdf)) {
+    private$.cdf <- cdf
+    private$.isCdf <- TRUE
+  }
+  if (!is.null(quantile)) {
+    private$.quantile <- quantile
+    private$.isQuantile <- TRUE
+  }
+  if (!is.null(rand)) {
+    private$.rand <- rand
+    private$.isRand <- TRUE
+  }
+
+  if (!is.null(name)) self$name <- name
+  if (!is.null(short_name)) self$short_name <- short_name
 
   private$.properties$support <- support
   private$.traits$type <- type
   private$.traits$valueSupport <- valueSupport
   private$.traits$variateForm <- variateForm
 
-  if(!is.null(description)) self$description <- description
+  if (!is.null(description)) self$description <- description
 
-  symm = ifelse(symmetric,"symmetric","asymmetric")
+  symm <- ifelse(symmetric, "symmetric", "asymmetric")
   private$.properties$symmetry <- symm
 
-  if(!is.null(decorators))
+  if (!is.null(decorators)) {
     suppressMessages(decorate(self, decorators))
+  }
 
-  if(!suppressMoments){
+  if (!suppressMoments) {
     # Update skewness and kurtosis
-    kur = try(self$kurtosis(excess = TRUE), silent = TRUE)
-    skew = try(self$skewness(excess = TRUE), silent = TRUE)
+    kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
+    skew <- try(self$skewness(excess = TRUE), silent = TRUE)
     private$.properties$kurtosis <- ifnerror(kur, exkurtosisType(kur), "NULL")
     private$.properties$skewness <- ifnerror(skew, skewnessType(skew), "NULL")
   }
 
   # private$.setWorkingSupport()
-  lockBinding("name",self)
-  lockBinding("short_name",self)
-  lockBinding("description",self)
-  lockBinding("traits",self)
-  lockBinding("parameters",self)
+  lockBinding("name", self)
+  lockBinding("short_name", self)
+  lockBinding("description", self)
+  lockBinding("traits", self)
+  lockBinding("parameters", self)
   invisible(self)
 })
 
@@ -334,27 +345,29 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #' @examples
 #' Triangular$new()$strprint()
 #' Triangular$new()$strprint(1)
-#'
 #' @export
-Distribution$set("public","strprint",function(n = 2){
-  if(length(private$.parameters)!=0){
-    settable = as.data.table(self$parameters())$settable
-    id = as.data.table(self$parameters())[settable, "id"][[1]]
-    value = as.data.table(self$parameters())[settable, "value"][[1]]
+Distribution$set("public", "strprint", function(n = 2) {
+  if (length(private$.parameters) != 0) {
+    settable <- as.data.table(self$parameters())$settable
+    id <- as.data.table(self$parameters())[settable, "id"][[1]]
+    value <- as.data.table(self$parameters())[settable, "value"][[1]]
     lng <- length(id)
-    if(lng >(2*n))
-      string = paste0(self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
-                      ",...,", paste(id[(lng-n+1):lng], value[(lng-n+1):lng], sep = " = ", collapse = ", "),")")
-    else
-      string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+    if (lng > (2 * n)) {
+      string <- paste0(
+        self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
+        ",...,", paste(id[(lng - n + 1):lng], value[(lng - n + 1):lng], sep = " = ", collapse = ", "), ")"
+      )
+    } else {
+      string <- paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+    }
 
   } else {
-    string = paste0(self$short_name)
+    string <- paste0(self$short_name)
   }
   return(string)
 })
-Distribution$set("public","print",function(n = 2, ...){
-  cat(self$strprint(n = n),"\n")
+Distribution$set("public", "print", function(n = 2, ...) {
+  cat(self$strprint(n = n), "\n")
   invisible(self)
 })
 
@@ -371,76 +384,83 @@ Distribution$set("public","print",function(n = 2, ...){
 #' @return Printed summary of the distribution.
 #'
 #' @export
-summary.Distribution <- function(object, full = TRUE,...) {}
-Distribution$set("public","summary",function(full = TRUE,...){
+summary.Distribution <- function(object, full = TRUE, ...) {}
+Distribution$set("public", "summary", function(full = TRUE, ...) {
 
-  if(full){
-    if(length(private$.parameters)!=0){
+  if (full) {
+    if (length(private$.parameters) != 0) {
 
-      cat(self$description,"Parameterised with:\n")
-      settable = as.data.table(self$parameters())$settable
+      cat(self$description, "Parameterised with:\n")
+      settable <- as.data.table(self$parameters())$settable
       cat(" ", paste(as.data.table(self$parameters())[settable, "id"],
-                     as.data.table(self$parameters())[settable, "value"],
-                      sep = " = ", collapse = ", "))
-    } else
+        as.data.table(self$parameters())[settable, "value"],
+        sep = " = ", collapse = ", "
+      ))
+    } else {
       cat(self$description)
+    }
 
 
-    a_exp = suppressMessages(try(self$mean(), silent = T))
-    a_var = suppressMessages(try(self$variance(), silent = T))
-    a_skew = suppressMessages(try(self$skewness(), silent = T))
-    a_kurt = suppressMessages(try(self$kurtosis(), silent = T))
+    a_exp <- suppressMessages(try(self$mean(), silent = T))
+    a_var <- suppressMessages(try(self$variance(), silent = T))
+    a_skew <- suppressMessages(try(self$skewness(), silent = T))
+    a_kurt <- suppressMessages(try(self$kurtosis(), silent = T))
 
-    if(!inherits(a_exp,"try-error") | !inherits(a_var,"try-error") |
-       !inherits(a_skew,"try-error") | !inherits(a_kurt,"try-error"))
-      cat("\n\n ", "Quick Statistics","\n")
+    if (!inherits(a_exp, "try-error") | !inherits(a_var, "try-error") |
+      !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
+      cat("\n\n ", "Quick Statistics", "\n")
+    }
 
-    if(!inherits(a_exp,"try-error")){
+    if (!inherits(a_exp, "try-error")) {
       cat("\tMean:")
-      if(length(a_exp) > 1)
-        cat("\t\t", paste0(a_exp, collapse = ", "),"\n", sep = "")
-      else
-        cat("\t\t", a_exp,"\n", sep = "")
+      if (length(a_exp) > 1) {
+        cat("\t\t", paste0(a_exp, collapse = ", "), "\n", sep = "")
+      } else {
+        cat("\t\t", a_exp, "\n", sep = "")
+      }
     }
-    if(!inherits(a_var,"try-error")){
+    if (!inherits(a_var, "try-error")) {
       cat("\tVariance:")
-      if(length(a_var) > 1)
-        cat("\t", paste0(a_var, collapse = ", "),"\n", sep = "")
-      else
-        cat("\t", a_var,"\n", sep = "")
+      if (length(a_var) > 1) {
+        cat("\t", paste0(a_var, collapse = ", "), "\n", sep = "")
+      } else {
+        cat("\t", a_var, "\n", sep = "")
+      }
     }
-    if(!inherits(a_skew,"try-error")){
+    if (!inherits(a_skew, "try-error")) {
       cat("\tSkewness:")
       # if(length(a_skew) > 1)
       #   cat("\t", paste0(a_skew, collapse = ", "),"\n", sep = "")
       # else
-        cat("\t", a_skew,"\n", sep = "")
+      cat("\t", a_skew, "\n", sep = "")
     }
-    if(!inherits(a_kurt,"try-error")){
+    if (!inherits(a_kurt, "try-error")) {
       cat("\tEx. Kurtosis:")
       # if(length(a_kurt) > 1)
       #   cat("\t", paste0(a_kurt, collapse = ", "),"\n", sep = "")
       # else
-        cat("\t", a_kurt,"\n", sep = "")
+      cat("\t", a_kurt, "\n", sep = "")
     }
     cat("\n")
 
-    cat(" Support:",self$properties$support$strprint(), "\tScientific Type:",self$traits$type$strprint(),"\n")
-    cat("\n Traits:\t",self$valueSupport,"; ",self$variateForm, sep="")
-    cat("\n Properties:\t", self$symmetry,sep="")
-    if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType)
-    if(!inherits(a_skew,"try-error")) cat(";",self$skewnessType)
+    cat(" Support:", self$properties$support$strprint(), "\tScientific Type:", self$traits$type$strprint(), "\n")
+    cat("\n Traits:\t", self$valueSupport, "; ", self$variateForm, sep = "")
+    cat("\n Properties:\t", self$symmetry, sep = "")
+    if (!inherits(a_kurt, "try-error")) cat(";", self$kurtosisType)
+    if (!inherits(a_skew, "try-error")) cat(";", self$skewnessType)
 
-    if(length(self$decorators)!=0)
-      cat("\n\n Decorated with: ", paste0(self$decorators,collapse=", "))
+    if (length(self$decorators) != 0) {
+      cat("\n\n Decorated with: ", paste0(self$decorators, collapse = ", "))
+    }
 
   } else {
-    if(length(private$.parameters)!=0)
+    if (length(private$.parameters) != 0) {
       cat(self$strprint())
-    else
+    } else {
       cat(self$name)
-    cat("\nScientific Type:",self$traits$type$strprint(),"\t See $traits for more")
-    cat("\nSupport:",self$properties$support$strprint(),"\t See $properties for more")
+    }
+    cat("\nScientific Type:", self$traits$type$strprint(), "\t See $traits for more")
+    cat("\nSupport:", self$properties$support$strprint(), "\t See $properties for more")
   }
   cat("\n")
   invisible(self)
@@ -450,44 +470,49 @@ Distribution$set("public","summary",function(full = TRUE,...){
 # Public Methods - Parameters
 #-------------------------------------------------------------
 # Documented in ParameterSet.R
-Distribution$set("public","parameters",function(id = NULL){
-  if(length(private$.parameters)==0)
+Distribution$set("public", "parameters", function(id = NULL) {
+  if (length(private$.parameters) == 0) {
     return(NULL)
-  else
+  } else {
     return(private$.parameters$parameters(id))
+  }
 })
 # Documented in ParameterSet.R
-Distribution$set("public","getParameterValue",function(id, error = "warn"){
-  if(length(private$.parameters)==0)
+Distribution$set("public", "getParameterValue", function(id, error = "warn") {
+  if (length(private$.parameters) == 0) {
     return(NULL)
-  else
+  } else {
     return(private$.parameters$getParameterValue(id, error))
+  }
 })
 # Documented in ParameterSet.R
-Distribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
+Distribution$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
+  if (is.null(lst)) {
     lst <- list(...)
-  if(length(private$.parameters)==0)
+  }
+  if (length(private$.parameters) == 0) {
     return(NULL)
-  else{
-    if(length(lst)!=0){
+  } else {
+    if (length(lst) != 0) {
 
       self$parameters()$setParameterValue(lst = lst, error = error)
 
       # Update skewness and kurtosis
-      x = suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
-      if(class(x) == "try-error")
+      x <- suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
+      if (class(x) == "try-error") {
         private$.properties$kurtosis <- NULL
-      else
+      } else {
         private$.properties$kurtosis <- exkurtosisType(x)
+      }
 
-      x = suppressMessages(try(self$skewness(), silent = TRUE))
-      if(class(x) == "try-error")
+      x <- suppressMessages(try(self$skewness(), silent = TRUE))
+      if (class(x) == "try-error") {
         private$.properties$skewness <- NULL
-      else
+      } else {
         private$.properties$skewness <- skewType(x)
+      }
 
-      #private$.setWorkingSupport()
+      # private$.setWorkingSupport()
       invisible(self)
     }
   }
@@ -532,34 +557,36 @@ Distribution$set("public","setParameterValue",function(..., lst = NULL, error = 
 #'
 #' @export
 NULL
-Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data = NULL){
+Distribution$set("public", "pdf", function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
-  if (is.null(private$.pdf)){
+  if (is.null(private$.pdf)) {
     return(NULL)
   }
 
-  data = pdq_point_assert(..., self = self, data = data)
+  data <- pdq_point_assert(..., self = self, data = data)
   if (inherits(data, "matrix")) {
     assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = FALSE),
-           .var.name = "Do all points lie in Distribution domain?")
+      .var.name = "Do all points lie in Distribution domain?"
+    )
   } else {
     assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
-           .var.name = "Do all points lie in Distribution domain?")
+      .var.name = "Do all points lie in Distribution domain?"
+    )
   }
 
 
-  if(log){
-    if(private$.log){
-      pdqr = private$.pdf(data, log = log)
+  if (log) {
+    if (private$.log) {
+      pdqr <- private$.pdf(data, log = log)
     } else {
-      if(!("CoreStatistics" %in% self$decorators)){
+      if (!("CoreStatistics" %in% self$decorators)) {
         stop("No analytical method for log available. Use CoreStatistics decorator to numerically estimate this.")
       } else {
-        pdqr = log(private$.pdf(data))
+        pdqr <- log(private$.pdf(data))
       }
     }
   } else {
-    pdqr = private$.pdf(data)
+    pdqr <- private$.pdf(data)
   }
 
   pdqr_returner(pdqr, simplify)
@@ -603,30 +630,31 @@ Distribution$set("public","pdf",function(..., log = FALSE, simplify = TRUE, data
 #'
 #' @export
 NULL
-Distribution$set("public","cdf",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL){
+Distribution$set("public", "cdf", function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
   if (is.null(private$.cdf)) {
     return(NULL)
   }
 
-  data = pdq_point_assert(..., self = self, data = data)
+  data <- pdq_point_assert(..., self = self, data = data)
   assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
-         .var.name = "Do all points lie in Distribution domain?")
+    .var.name = "Do all points lie in Distribution domain?"
+  )
 
-  if(log.p | !lower.tail){
-    if(private$.log){
-      pdqr = private$.cdf(data, log.p = log.p, lower.tail = lower.tail)
+  if (log.p | !lower.tail) {
+    if (private$.log) {
+      pdqr <- private$.cdf(data, log.p = log.p, lower.tail = lower.tail)
     } else {
-      if(!("CoreStatistics" %in% self$decorators)){
+      if (!("CoreStatistics" %in% self$decorators)) {
         stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
       } else {
-        pdqr = private$.cdf(data)
-        if(!lower.tail) pdqr = 1 - pdqr
-        if(log.p) pdqr = log(pdqr)
+        pdqr <- private$.cdf(data)
+        if (!lower.tail) pdqr <- 1 - pdqr
+        if (log.p) pdqr <- log(pdqr)
       }
     }
   } else {
-    pdqr = private$.cdf(data)
+    pdqr <- private$.cdf(data)
   }
 
   pdqr_returner(pdqr, simplify)
@@ -669,30 +697,31 @@ Distribution$set("public","cdf",function(..., lower.tail = TRUE, log.p = FALSE, 
 #'
 #' @export
 quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {}
-Distribution$set("public","quantile",function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL){
+Distribution$set("public", "quantile", function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
   if (is.null(private$.quantile)) {
     return(NULL)
   }
 
-  data = pdq_point_assert(..., self = self, data = data)
-  assert(Interval$new(0,1)$contains(as.numeric(data), all = TRUE),
-         .var.name = "Do all quantiles lie in [0,1]?")
+  data <- pdq_point_assert(..., self = self, data = data)
+  assert(Interval$new(0, 1)$contains(as.numeric(data), all = TRUE),
+    .var.name = "Do all quantiles lie in [0,1]?"
+  )
 
-  if(log.p | !lower.tail){
-    if(private$.log){
-      pdqr = private$.quantile(data, log.p = log.p, lower.tail = lower.tail)
+  if (log.p | !lower.tail) {
+    if (private$.log) {
+      pdqr <- private$.quantile(data, log.p = log.p, lower.tail = lower.tail)
     } else {
-      if(!("CoreStatistics" %in% self$decorators)){
+      if (!("CoreStatistics" %in% self$decorators)) {
         stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
       } else {
-        if(log.p) data = exp(data)
-        if(!lower.tail) data = 1 - data
-        pdqr = private$.quantile(data)
+        if (log.p) data <- exp(data)
+        if (!lower.tail) data <- 1 - data
+        pdqr <- private$.quantile(data)
       }
     }
   } else {
-    pdqr = private$.quantile(data)
+    pdqr <- private$.quantile(data)
   }
 
   pdqr_returner(pdqr, simplify)
@@ -727,15 +756,15 @@ Distribution$set("public","quantile",function(..., lower.tail = TRUE, log.p = FA
 #'
 #' @export
 NULL
-Distribution$set("public","rand",function(n, simplify = TRUE){
+Distribution$set("public", "rand", function(n, simplify = TRUE) {
 
   if (is.null(private$.rand)) {
     return(NULL)
   }
 
-  if(length(n) > 1) n = length(n)
+  if (length(n) > 1) n <- length(n)
 
-  pdqr = private$.rand(n)
+  pdqr <- private$.rand(n)
 
   pdqr_returner(pdqr, simplify)
 })
@@ -758,8 +787,8 @@ Distribution$set("public","rand",function(n, simplify = TRUE){
 #'
 #' @export
 NULL
-Distribution$set("public","prec",function(){
-  return(1/self$variance())
+Distribution$set("public", "prec", function() {
+  return(1 / self$variance())
 })
 
 #' @name stdev
@@ -777,7 +806,7 @@ Distribution$set("public","prec",function(){
 #'
 #' @export
 NULL
-Distribution$set("public","stdev",function(){
+Distribution$set("public", "stdev", function() {
   return(sqrt(self$variance()))
 })
 
@@ -798,7 +827,7 @@ Distribution$set("public","stdev",function(){
 #'
 #' @export
 median.Distribution <- function(x, na.rm = NULL, ...) {}
-Distribution$set("public","median",function(na.rm = NULL,...){
+Distribution$set("public", "median", function(na.rm = NULL, ...) {
   return(self$quantile(0.5))
 })
 
@@ -848,11 +877,12 @@ Distribution$set("public", "iqr", function() {
 #'
 #' @export
 NULL
-Distribution$set("public","correlation",function(){
-  if(testUnivariate(self))
+Distribution$set("public", "correlation", function() {
+  if (testUnivariate(self)) {
     return(1)
-  else
+  } else {
     return(self$variance() / (sqrt(diag(self$variance()) %*% t(diag(self$variance())))))
+  }
 })
 
 #-------------------------------------------------------------
@@ -880,7 +910,7 @@ Distribution$set("public","correlation",function(){
 #'
 #' @export
 NULL
-Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
+Distribution$set("public", "liesInSupport", function(x, all = TRUE, bound = FALSE) {
   return(self$properties$support$contains(x, all, bound))
 })
 
@@ -906,7 +936,7 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #'
 #' @export
 NULL
-Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
+Distribution$set("public", "liesInType", function(x, all = TRUE, bound = FALSE) {
   return(self$traits$type$contains(x, all, bound))
 })
 
@@ -923,7 +953,7 @@ Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
 #' @return Character vector of decorators.
 #' @export
 NULL
-Distribution$set("active","decorators", function(){
+Distribution$set("active", "decorators", function() {
   return(private$.decorators)
 })
 
@@ -936,7 +966,7 @@ Distribution$set("active","decorators", function(){
 #' @return List of traits.
 #' @export
 NULL
-Distribution$set("active","traits",function(){
+Distribution$set("active", "traits", function() {
   return(private$.traits)
 })
 
@@ -948,7 +978,7 @@ Distribution$set("active","traits",function(){
 #' @return One of "discrete"/"continuous"/"mixture".
 #' @export
 NULL
-Distribution$set("active","valueSupport",function(){
+Distribution$set("active", "valueSupport", function() {
   return("Deprecated. Use $properties$valueSupport instead.")
 })
 
@@ -960,7 +990,7 @@ Distribution$set("active","valueSupport",function(){
 #' @return One of "univariate"/"multivariate"/"matrixvariate".
 #' @export
 NULL
-Distribution$set("active","variateForm",function(){
+Distribution$set("active", "variateForm", function() {
   return("Deprecated. Use $traits$variateForm instead.")
 })
 
@@ -974,7 +1004,7 @@ Distribution$set("active","variateForm",function(){
 #' @seealso [set6::Set]
 #' @export
 NULL
-Distribution$set("active","type",function(){
+Distribution$set("active", "type", function() {
   return("Deprecated. Use $traits$type instead.")
 })
 
@@ -987,7 +1017,7 @@ Distribution$set("active","type",function(){
 #' @return List of distribution properties.
 #' @export
 NULL
-Distribution$set("active","properties",function(x){
+Distribution$set("active", "properties", function(x) {
   private$.properties
 })
 
@@ -1005,7 +1035,7 @@ Distribution$set("active","properties",function(x){
 #' @seealso [set6::Set] and \code{\link{properties}}
 #' @export
 NULL
-Distribution$set("active","support",function(){
+Distribution$set("active", "support", function() {
   return("Deprecated. Use $properties$support instead.")
 })
 
@@ -1018,7 +1048,7 @@ Distribution$set("active","support",function(){
 #' @seealso \code{\link{properties}}
 #' @export
 NULL
-Distribution$set("active","symmetry",function(){
+Distribution$set("active", "symmetry", function() {
   return("Deprecated. Use $properties$symmetry instead.")
 })
 
@@ -1032,7 +1062,7 @@ Distribution$set("active","symmetry",function(){
 #' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
 #' @export
 NULL
-Distribution$set("active","sup",function(){
+Distribution$set("active", "sup", function() {
   return(self$properties$support$upper)
 })
 
@@ -1046,7 +1076,7 @@ Distribution$set("active","sup",function(){
 #' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
 #' @export
 NULL
-Distribution$set("active","inf",function(){
+Distribution$set("active", "inf", function() {
   return(self$properties$support$lower)
 })
 
@@ -1062,7 +1092,7 @@ Distribution$set("active","inf",function(){
 #' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
-Distribution$set("active","dmax",function(){
+Distribution$set("active", "dmax", function() {
   return(self$properties$support$max)
 })
 
@@ -1078,7 +1108,7 @@ Distribution$set("active","dmax",function(){
 #' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
-Distribution$set("active","dmin",function(){
+Distribution$set("active", "dmin", function() {
   return(self$properties$support$min)
 })
 
@@ -1113,18 +1143,18 @@ Distribution$set("active", "skewnessType", function() {
 #-------------------------------------------------------------
 # Distribution Public Variables
 #-------------------------------------------------------------
-Distribution$set("public","name",character(0))
-Distribution$set("public","short_name",character(0))
-Distribution$set("public","description",NULL)
+Distribution$set("public", "name", character(0))
+Distribution$set("public", "short_name", character(0))
+Distribution$set("public", "description", NULL)
 # Distribution$set("private",".pdf", function() {})
 # Distribution$set("private",".cdf", function() {})
 # Distribution$set("private",".quantile", function() {})
 # Distribution$set("private",".rand", function() {})
-Distribution$set("private",".parameters",NULL)
-Distribution$set("private",".workingSupport",NULL)
-Distribution$set("private",".decorators", NULL)
-Distribution$set("private",".properties", list())
-Distribution$set("private",".traits",NULL)
+Distribution$set("private", ".parameters", NULL)
+Distribution$set("private", ".workingSupport", NULL)
+Distribution$set("private", ".decorators", NULL)
+Distribution$set("private", ".properties", list())
+Distribution$set("private", ".traits", NULL)
 # Distribution$set("private",".isPdf", FALSE)
 # Distribution$set("private",".isCdf", FALSE)
 # Distribution$set("private",".isQuantile", FALSE)
@@ -1134,34 +1164,34 @@ Distribution$set("private", ".log", FALSE)
 #-------------------------------------------------------------
 # Distribution Private Methods
 #-------------------------------------------------------------
-Distribution$set("private",".setWorkingSupport",function(){
+Distribution$set("private", ".setWorkingSupport", function() {
   suppressMessages({
-    rands = self$rand(1000)
+    rands <- self$rand(1000)
 
-    if(self$sup != Inf)
-      newsup = self$sup
-    else{
-      newsup = ceiling(max(rands))
-      while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
-      newsup = ceiling(newsup - 1)
+    if (self$sup != Inf) {
+      newsup <- self$sup
+    } else {
+      newsup <- ceiling(max(rands))
+      while (self$pdf(newsup) > .Machine$double.eps) newsup <- newsup + 1
+      newsup <- ceiling(newsup - 1)
     }
 
-    inf = self$inf
-    if(inf != -Inf)
-      newinf = inf
-    else{
-      newinf = floor(min(rands))
-      while(self$pdf(newinf) > .Machine$double.eps) newinf = newinf - 1
-      newinf = floor(newinf + 1)
+    inf <- self$inf
+    if (inf != -Inf) {
+      newinf <- inf
+    } else {
+      newinf <- floor(min(rands))
+      while (self$pdf(newinf) > .Machine$double.eps) newinf <- newinf - 1
+      newinf <- floor(newinf + 1)
     }
 
     private$.workingSupport <- list(inf = newinf, sup = newsup)
     invisible(self)
   })
 })
-Distribution$set("private",".getWorkingSupport",function(){
+Distribution$set("private", ".getWorkingSupport", function() {
   return(private$.workingSupport)
 })
-Distribution$set("private",".updateDecorators", function(decs){
+Distribution$set("private", ".updateDecorators", function(decs) {
   private$.decorators <- decs
 })

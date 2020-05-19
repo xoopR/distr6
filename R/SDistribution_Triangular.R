@@ -30,7 +30,7 @@
 #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
 #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
 #'
-#' x = Triangular$new(lower = -1, upper = 1)
+#' x <- Triangular$new(lower = -1, upper = 1)
 #'
 #' # Update parameters
 #' x$setParameterValue(lower = 2, upper = 7)
@@ -47,115 +47,121 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Triangular Distribution Definition
 #-------------------------------------------------------------
 Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = FALSE)
-Triangular$set("public","name","Triangular")
-Triangular$set("public","short_name","Tri")
-Triangular$set("public","packages", "extraDistr")
-Triangular$set("private",".type","symmetric")
+Triangular$set("public", "name", "Triangular")
+Triangular$set("public", "short_name", "Tri")
+Triangular$set("public", "packages", "extraDistr")
+Triangular$set("private", ".type", "symmetric")
 
-Triangular$set("public","mean",function(){
-  return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode"))/3)
+Triangular$set("public", "mean", function() {
+  return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode")) / 3)
 })
-Triangular$set("public","variance",function(){
+Triangular$set("public", "variance", function() {
   return((self$getParameterValue("lower")^2 + self$getParameterValue("upper")^2 +
-            self$getParameterValue("mode")^2 - self$getParameterValue("lower")*self$getParameterValue("upper") -
-            self$getParameterValue("lower")*self$getParameterValue("mode")-
-            self$getParameterValue("upper")*self$getParameterValue("mode"))/18)
+    self$getParameterValue("mode")^2 - self$getParameterValue("lower") * self$getParameterValue("upper") -
+    self$getParameterValue("lower") * self$getParameterValue("mode") -
+    self$getParameterValue("upper") * self$getParameterValue("mode")) / 18)
 })
-Triangular$set("public","skewness",function(){
+Triangular$set("public", "skewness", function() {
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")
   mode <- self$getParameterValue("mode")
 
-  num <- sqrt(2)*(lower+upper-2*mode)*(2*lower-upper-mode)*(lower-2*upper+mode)
-  den <- 5*(lower^2+upper^2+mode^2-lower*upper-lower*mode-upper*mode)^1.5
-  return(num/den)
-  })
-Triangular$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
+  num <- sqrt(2) * (lower + upper - 2 * mode) * (2 * lower - upper - mode) * (lower - 2 * upper + mode)
+  den <- 5 * (lower^2 + upper^2 + mode^2 - lower * upper - lower * mode - upper * mode)^1.5
+  return(num / den)
+})
+Triangular$set("public", "kurtosis", function(excess = TRUE) {
+  if (excess) {
     return(-0.6)
-  else
+  } else {
     return(2.4)
+  }
 })
-Triangular$set("public","entropy",function(base = 2){
-  return(0.5 * log((self$getParameterValue("upper")-self$getParameterValue("lower"))/2, base))
+Triangular$set("public", "entropy", function(base = 2) {
+  return(0.5 * log((self$getParameterValue("upper") - self$getParameterValue("lower")) / 2, base))
 })
-Triangular$set("public", "mgf", function(t){
+Triangular$set("public", "mgf", function(t) {
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")
   mode <- self$getParameterValue("mode")
 
-  num <- 2 * ((upper-mode)*exp(lower*t) - (upper-lower)*exp(mode*t) + (mode-lower)*exp(upper*t))
-  den <- (upper-lower) * (mode-lower) * (upper-mode) * t^2
+  num <- 2 * ((upper - mode) * exp(lower * t) - (upper - lower) * exp(mode * t) + (mode - lower) * exp(upper * t))
+  den <- (upper - lower) * (mode - lower) * (upper - mode) * t^2
 
-  return(num/den)
+  return(num / den)
 })
-Triangular$set("public", "pgf", function(z){
+Triangular$set("public", "pgf", function(z) {
   return(NaN)
 })
-Triangular$set("public", "cf", function(t){
+Triangular$set("public", "cf", function(t) {
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")
   mode <- self$getParameterValue("mode")
 
-  num <- -2 * ((upper-mode)*exp(1i*lower*t) - (upper-lower)*exp(1i*mode*t) + (mode-lower)*exp(1i*upper*t))
-  den <- (upper-lower) * (mode-lower) * (upper-mode) * t^2
+  num <- -2 * ((upper - mode) * exp(1i * lower * t) - (upper - lower) * exp(1i * mode * t) + (mode - lower) * exp(1i * upper * t))
+  den <- (upper - lower) * (mode - lower) * (upper - mode) * t^2
 
-  return(num/den)
+  return(num / den)
 })
-Triangular$set("public","mode",function(which = NULL){
+Triangular$set("public", "mode", function(which = NULL) {
   return(self$getParameterValue("mode"))
 })
-Triangular$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
+Triangular$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
+  if (is.null(lst)) {
     lst <- list(...)
-  if("lower" %in% names(lst) & "upper" %in% names(lst))
+  }
+  if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
     checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
-  else if("lower" %in% names(lst))
+  } else if ("lower" %in% names(lst)) {
     checkmate::assert(lst[["lower"]] < self$getParameterValue("upper"), .var.name = "lower must be < upper")
-  else if("upper" %in% names(lst))
+  } else if ("upper" %in% names(lst)) {
     checkmate::assert(lst[["upper"]] > self$getParameterValue("lower"), .var.name = "upper must be > lower")
+  }
 
-  if(private$.type != "symmetric"){
-    if("mode" %in% names(lst)){
-      if("lower" %in% names(lst))
+  if (private$.type != "symmetric") {
+    if ("mode" %in% names(lst)) {
+      if ("lower" %in% names(lst)) {
         checkmate::assert(lst[["mode"]] >= lst[["lower"]], .var.name = "mode must be >= lower")
-      else
+      } else {
         checkmate::assert(lst[["mode"]] >= self$getParameterValue("lower"), .var.name = "mode must be >= lower")
-      if("upper" %in% names(lst))
+      }
+      if ("upper" %in% names(lst)) {
         checkmate::assert(lst[["mode"]] <= lst[["upper"]], .var.name = "mode must be <= upper")
-      else
+      } else {
         checkmate::assert(lst[["mode"]] <= self$getParameterValue("upper"), .var.name = "mode must be <= upper")
+      }
     }
   }
 
   super$setParameterValue(lst = lst, error = error)
 
   private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
-  if(private$.type != "symmetric"){
-    if(self$getParameterValue("mode") == (self$getParameterValue("lower") + self$getParameterValue("upper"))/2)
+  if (private$.type != "symmetric") {
+    if (self$getParameterValue("mode") == (self$getParameterValue("lower") + self$getParameterValue("upper")) / 2) {
       private$.properties$symmetry <- "symmetric"
-    else
+    } else {
       private$.properties$symmetry <- "asymmetric"
+    }
   }
   invisible(self)
 })
 
-Triangular$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$lower)) lst = c(lst, list(lower = paramlst$lower))
-  if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
-  if(private$.type != "symmetric")
-    if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
+Triangular$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
+  if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
+  if (private$.type != "symmetric") {
+    if (!is.null(paramlst$mode)) lst <- c(lst, list(mode = paramlst$mode))
+  }
   return(lst)
 })
-Triangular$set("private",".pdf", function(x, log = FALSE){
+Triangular$set("private", ".pdf", function(x, log = FALSE) {
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(
       extraDistr::dtriang,
@@ -174,7 +180,7 @@ Triangular$set("private",".pdf", function(x, log = FALSE){
     )
   }
 })
-Triangular$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
+Triangular$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(
       extraDistr::ptriang,
@@ -198,7 +204,7 @@ Triangular$set("private",".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
     )
   }
 })
-Triangular$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
+Triangular$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(
       extraDistr::qtriang,
@@ -222,7 +228,7 @@ Triangular$set("private",".quantile", function(p, lower.tail = TRUE, log.p = FAL
     )
   }
 })
-Triangular$set("private",".rand", function(n){
+Triangular$set("private", ".rand", function(n) {
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(
       extraDistr::rtriang,
@@ -243,33 +249,39 @@ Triangular$set("private",".rand", function(n){
 Triangular$set("private", ".log", TRUE)
 Triangular$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Triangular$set("public","initialize",function(lower = 0, upper = 1, mode = (lower+upper)/2, symmetric = FALSE,
-                                              decorators = NULL, verbose = FALSE){
+Triangular$set("public", "initialize", function(lower = 0, upper = 1, mode = (lower + upper) / 2, symmetric = FALSE,
+                                                decorators = NULL, verbose = FALSE) {
 
 
   if (symmetric) {
-    self$description = "Symmetric Triangular Probability Distribution."
-    symmetry = "symmetric"
+    self$description <- "Symmetric Triangular Probability Distribution."
+    symmetry <- "symmetric"
   } else {
-    self$description = "Triangular Probability Distribution."
-    if (mode == (lower + upper)/2) {
-      symmetry = "symmetric"
+    self$description <- "Triangular Probability Distribution."
+    if (mode == (lower + upper) / 2) {
+      symmetry <- "symmetric"
     } else {
-      symmetry = "asymmetric"
+      symmetry <- "asymmetric"
     }
   }
 
   private$.parameters <- getParameterSet(self, lower, upper, mode, symmetric, verbose)
   self$setParameterValue(lower = lower, upper = upper, mode = mode)
 
-  super$initialize(decorators = decorators,
-                   support = Interval$new(lower, upper),
-                   symmetry = symmetry,
-                   type = Reals$new())
+  super$initialize(
+    decorators = decorators,
+    support = Interval$new(lower, upper),
+    symmetry = symmetry,
+    type = Reals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Tri", ClassName = "Triangular",
-                                                     Type = "\u211D", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "extraDistr"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Tri", ClassName = "Triangular",
+    Type = "\u211D", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "extraDistr"
+  )
+)

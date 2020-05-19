@@ -32,24 +32,26 @@ NULL
 # Triweight Kernel Definition
 #-------------------------------------------------------------
 Triweight <- R6Class("Triweight", inherit = Kernel, lock_objects = F)
-Triweight$set("public","name","Triweight")
-Triweight$set("public","short_name","Triw")
-Triweight$set("public","description","Triweight Kernel")
-Triweight$set("public","squared2Norm",function(){
-  return(350/429)
+Triweight$set("public", "name", "Triweight")
+Triweight$set("public", "short_name", "Triw")
+Triweight$set("public", "description", "Triweight Kernel")
+Triweight$set("public", "squared2Norm", function() {
+  return(350 / 429)
 })
-Triweight$set("public","variance",function(){
-  return(1/9)
+Triweight$set("public", "variance", function() {
+  return(1 / 9)
 })
-Triweight$set("public","initialize",function(decorators = NULL){
-  super$initialize(decorators = decorators,
-                   support = Interval$new(-1, 1))
+Triweight$set("public", "initialize", function(decorators = NULL) {
+  super$initialize(
+    decorators = decorators,
+    support = Interval$new(-1, 1)
+  )
 })
-Triweight$set("private",".pdf",function(x){
-  35/32 * (1-x^2)^3
+Triweight$set("private", ".pdf", function(x) {
+  35 / 32 * (1 - x^2)^3
 })
-Triweight$set("private",".cdf",function(x){
-  35/32 * (x - x^3 + 3/5*x^5 - 1/7*x^7 + 16/35)
+Triweight$set("private", ".cdf", function(x) {
+  35 / 32 * (x - x^3 + 3 / 5 * x^5 - 1 / 7 * x^7 + 16 / 35)
 })
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]", Packages = "-"))

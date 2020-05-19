@@ -18,7 +18,7 @@
 #' @templateVar constructorDets  \code{shape1} and \code{shape2} as positive numerics.
 #'
 #' @examples
-#' x = Beta$new(shape1 = 2, shape2 = 5)
+#' x <- Beta$new(shape1 = 2, shape2 = 5)
 #'
 #' # Update parameters
 #' x$setParameterValue(shape1 = 1)
@@ -35,138 +35,166 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Beta Distribution Definition
 #-------------------------------------------------------------
 Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F)
-Beta$set("public","name","Beta")
-Beta$set("public","short_name","Beta")
-Beta$set("public","description","Beta Probability Distribution.")
-Beta$set("public","packages","stats")
+Beta$set("public", "name", "Beta")
+Beta$set("public", "short_name", "Beta")
+Beta$set("public", "description", "Beta Probability Distribution.")
+Beta$set("public", "packages", "stats")
 
 
-Beta$set("public","mean",function(){
+Beta$set("public", "mean", function() {
   return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
 })
-Beta$set("public","variance",function(){
+Beta$set("public", "variance", function() {
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-  return(shape1*shape2*((shape1+shape2)^-2)*(shape1+shape2+1)^-1)
+  return(shape1 * shape2 * ((shape1 + shape2)^-2) * (shape1 + shape2 + 1)^-1)
 })
-Beta$set("public","mode",function(which = "all"){
-  if(self$getParameterValue("shape1")<=1 & self$getParameterValue("shape2")>1)
+Beta$set("public", "mode", function(which = "all") {
+  if (self$getParameterValue("shape1") <= 1 & self$getParameterValue("shape2") > 1) {
     return(0)
-  else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")<=1)
+  } else if (self$getParameterValue("shape1") > 1 & self$getParameterValue("shape2") <= 1) {
     return(1)
-  else if(self$getParameterValue("shape1")<1 & self$getParameterValue("shape2")<1){
-    if(which == "all")
-      return(c(0,1))
-    else
-      return(c(0,1)[which])
-  } else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")>1)
-    return((self$getParameterValue("shape1")-1)/(self$getParameterValue("shape1")+self$getParameterValue("shape2")-2))
+  } else if (self$getParameterValue("shape1") < 1 & self$getParameterValue("shape2") < 1) {
+    if (which == "all") {
+      return(c(0, 1))
+    } else {
+      return(c(0, 1)[which])
+    }
+  } else if (self$getParameterValue("shape1") > 1 & self$getParameterValue("shape2") > 1) {
+    return((self$getParameterValue("shape1") - 1) / (self$getParameterValue("shape1") + self$getParameterValue("shape2") - 2))
+  }
 })
-Beta$set("public","skewness",function(){
+Beta$set("public", "skewness", function() {
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-  return(2*(shape2-shape1)*((shape1+shape2+1)^0.5)*((shape1+shape2+2)^-1)*((shape1*shape2)^-0.5))
+  return(2 * (shape2 - shape1) * ((shape1 + shape2 + 1)^0.5) * ((shape1 + shape2 + 2)^-1) * ((shape1 * shape2)^-0.5))
 })
-Beta$set("public","kurtosis",function(excess = TRUE){
+Beta$set("public", "kurtosis", function(excess = TRUE) {
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
 
-  ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-(shape1*shape2*(shape1+shape2+2))}/
-    (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
-  if (excess)
+  ex_kurtosis <- 6 *
+    {
+      ((shape1 - shape2)^2) * (shape1 + shape2 + 1) - (shape1 * shape2 * (shape1 + shape2 + 2))
+    } /
+    (shape1 * shape2 * (shape1 + shape2 + 2) * (shape1 + shape2 + 3))
+  if (excess) {
     return(ex_kurtosis)
-  else
-    return(ex_kurtosis+3)
+  } else {
+    return(ex_kurtosis + 3)
+  }
 })
-Beta$set("public", "entropy", function(base = 2){
+Beta$set("public", "entropy", function(base = 2) {
   shape1 <- self$getParameterValue("shape1")
   shape2 <- self$getParameterValue("shape2")
-  return(log(beta(shape1,shape2), base) - ((shape1-1)*digamma(shape1)) -
-           ((shape2-1) * digamma(shape2)) + ((shape1+shape2-2)*digamma(shape1+shape2)))
+  return(log(beta(shape1, shape2), base) - ((shape1 - 1) * digamma(shape1)) -
+    ((shape2 - 1) * digamma(shape2)) + ((shape1 + shape2 - 2) * digamma(shape1 + shape2)))
 })
-Beta$set("public", "pgf", function(z){
+Beta$set("public", "pgf", function(z) {
   return(NaN)
 })
 
-Beta$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+Beta$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
   super$setParameterValue(..., lst = lst, error = error)
-  if(self$getParameterValue("shape1") == self$getParameterValue("shape2"))
+  if (self$getParameterValue("shape1") == self$getParameterValue("shape2")) {
     private$.properties$symmetry <- "symmetric"
-  else
+  } else {
     private$.properties$symmetry <- "asymmetric"
+  }
   invisible(self)
 })
 
-Beta$set("private", ".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$shape1)) lst = c(lst,list(shape1 = paramlst$shape1))
-  if(!is.null(paramlst$shape2)) lst = c(lst,list(shape2 = paramlst$shape2))
+Beta$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$shape1)) lst <- c(lst, list(shape1 = paramlst$shape1))
+  if (!is.null(paramlst$shape2)) lst <- c(lst, list(shape2 = paramlst$shape2))
   return(lst)
 })
-Beta$set("private", ".pdf", function(x, log = FALSE){
-  shape1 = self$getParameterValue("shape1")
-  shape2 = self$getParameterValue("shape2")
-  call_C_base_pdqr(fun = "dbeta",
-                   x = x,
-                   args = list(shape1 = unlist(shape1),
-                               shape2 = unlist(shape2)),
-                   log = log,
-                   vec = test_list(shape1))
+Beta$set("private", ".pdf", function(x, log = FALSE) {
+  shape1 <- self$getParameterValue("shape1")
+  shape2 <- self$getParameterValue("shape2")
+  call_C_base_pdqr(
+    fun = "dbeta",
+    x = x,
+    args = list(
+      shape1 = unlist(shape1),
+      shape2 = unlist(shape2)
+    ),
+    log = log,
+    vec = test_list(shape1)
+  )
 })
-Beta$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  shape1 = self$getParameterValue("shape1")
-  shape2 = self$getParameterValue("shape2")
-  call_C_base_pdqr(fun = "pbeta",
-                   x = x,
-                   args = list(shape1 = unlist(shape1),
-                               shape2 = unlist(shape2)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(shape1))
+Beta$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  shape1 <- self$getParameterValue("shape1")
+  shape2 <- self$getParameterValue("shape2")
+  call_C_base_pdqr(
+    fun = "pbeta",
+    x = x,
+    args = list(
+      shape1 = unlist(shape1),
+      shape2 = unlist(shape2)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(shape1)
+  )
 })
-Beta$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  shape1 = self$getParameterValue("shape1")
-  shape2 = self$getParameterValue("shape2")
-  call_C_base_pdqr(fun = "qbeta",
-                   x = p,
-                   args = list(shape1 = unlist(shape1),
-                               shape2 = unlist(shape2)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(shape1))
+Beta$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  shape1 <- self$getParameterValue("shape1")
+  shape2 <- self$getParameterValue("shape2")
+  call_C_base_pdqr(
+    fun = "qbeta",
+    x = p,
+    args = list(
+      shape1 = unlist(shape1),
+      shape2 = unlist(shape2)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(shape1)
+  )
 })
-Beta$set("private", ".rand", function(n){
-  shape1 = self$getParameterValue("shape1")
-  shape2 = self$getParameterValue("shape2")
-  call_C_base_pdqr(fun = "rbeta",
-                   x = n,
-                   args = list(shape1 = unlist(shape1),
-                               shape2 = unlist(shape2)),
-                   vec = test_list(shape1))
+Beta$set("private", ".rand", function(n) {
+  shape1 <- self$getParameterValue("shape1")
+  shape2 <- self$getParameterValue("shape2")
+  call_C_base_pdqr(
+    fun = "rbeta",
+    x = n,
+    args = list(
+      shape1 = unlist(shape1),
+      shape2 = unlist(shape2)
+    ),
+    vec = test_list(shape1)
+  )
 })
 Beta$set("private", ".log", TRUE)
 Beta$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,verbose = FALSE){
+Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet.Beta(self, shape1, shape2, verbose)
-  self$setParameterValue(shape1=shape1,shape2=shape2)
+  self$setParameterValue(shape1 = shape1, shape2 = shape2)
 
-  super$initialize(decorators = decorators,
-                   support = Interval$new(0,1),
-                   symmetric = if(shape1 == shape2) "sym" else "asym",
-                   type = PosReals$new(zero = T))
+  super$initialize(
+    decorators = decorators,
+    support = Interval$new(0, 1),
+    symmetric = if (shape1 == shape2) "sym" else "asym",
+    type = PosReals$new(zero = T)
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Beta", ClassName = "Beta",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Beta", ClassName = "Beta",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

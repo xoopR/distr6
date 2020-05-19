@@ -17,34 +17,33 @@
 #'
 #' @examples
 #' # Plot pdf of Normal distribution
-#' vd = VectorDistribution$new(list(Normal$new(), Normal$new(mean = 2)))
+#' vd <- VectorDistribution$new(list(Normal$new(), Normal$new(mean = 2)))
 #' plot(vd)
 #' plot(vd, fun = "surv")
 #' plot(vd, fun = "quantile", ylim = c(-4, 4), col = c("blue", "purple"))
-#'
 #' @export
-plot.VectorDistribution <- function(x, fun = "pdf", topn, ind, cols, ...){
- checkmate::assertClass(x, "VectorDistribution")
- if(!missing(ind)){
-   dist = x[ind]
- } else if(!missing(topn)) {
-   dist = x[1:topn]
- } else {
-   if(nrow(x$modelTable) > 10){
-     stop("More than 10 distributions in vector, please supply 'topn' or 'ind'.")
-   } else {
-     dist = x
-   }
- }
-  if(getR6Class(dist) != "VectorDistribution"){
-    col = if(missing(cols)) 1 else cols[1]
+plot.VectorDistribution <- function(x, fun = "pdf", topn, ind, cols, ...) {
+  checkmate::assertClass(x, "VectorDistribution")
+  if (!missing(ind)) {
+    dist <- x[ind]
+  } else if (!missing(topn)) {
+    dist <- x[1:topn]
+  } else {
+    if (nrow(x$modelTable) > 10) {
+      stop("More than 10 distributions in vector, please supply 'topn' or 'ind'.")
+    } else {
+      dist <- x
+    }
+  }
+  if (getR6Class(dist) != "VectorDistribution") {
+    col <- if (missing(cols)) 1 else cols[1]
     graphics::plot(dist, fun = fun, col = col, ...)
   } else {
-    col = if(missing(cols)) 1 else cols[1]
-    graphics::plot(dist[1], fun = fun, col = col,...)
-    for(i in 2:nrow(dist$modelTable)){
-      col = if(missing(cols)) i else cols[i]
-      graphics::lines(dist[i], fun, col = col,...)
+    col <- if (missing(cols)) 1 else cols[1]
+    graphics::plot(dist[1], fun = fun, col = col, ...)
+    for (i in 2:nrow(dist$modelTable)) {
+      col <- if (missing(cols)) i else cols[i]
+      graphics::lines(dist[i], fun, col = col, ...)
     }
   }
 

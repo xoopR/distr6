@@ -38,119 +38,141 @@
 #'
 #' @examples
 #' hubBin <- HuberizedDistribution$new(
-#'           Binomial$new(prob = 0.5, size = 10),
-#'           lower = 2, upper = 4)
+#'   Binomial$new(prob = 0.5, size = 10),
+#'   lower = 2, upper = 4
+#' )
 #' hubBin$getParameterValue("prob")
 #' hubBin$pdf(2)
-#'
 #' @export
 NULL
 HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
 .distr6$wrappers <- append(.distr6$wrappers, list(HuberizedDistribution = HuberizedDistribution))
 
-HuberizedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){
+HuberizedDistribution$set("public", "initialize", function(distribution, lower = NULL, upper = NULL) {
 
   assertDistribution(distribution)
 
-  if(!distribution$.__enclos_env__$private$.isPdf | !distribution$.__enclos_env__$private$.isCdf)
+  if (!distribution$.__enclos_env__$private$.isPdf | !distribution$.__enclos_env__$private$.isCdf) {
     stop("pdf and cdf are required for huberization. Try decorate(Distribution, FunctionImputation) first.")
+  }
 
-  if(is.null(lower)) lower = distribution$inf
-  if(is.null(upper)) upper = distribution$sup
+  if (is.null(lower)) lower <- distribution$inf
+  if (is.null(upper)) upper <- distribution$sup
 
-  name = paste("Huberized",distribution$name)
-  short_name = paste0("Hub",distribution$short_name)
+  name <- paste("Huberized", distribution$name)
+  short_name <- paste0("Hub", distribution$short_name)
 
-  distlist = list(distribution)
-  names(distlist) = distribution$short_name
+  distlist <- list(distribution)
+  names(distlist) <- distribution$short_name
 
-  description = paste0(distribution$description, " Huberized between ",lower," and ",upper,".")
+  description <- paste0(distribution$description, " Huberized between ", lower, " and ", upper, ".")
 
-  cdf <- function(x1){
-    cdf = x1
-    if(any(x1 == self$inf))
+  cdf <- function(x1) {
+    cdf <- x1
+    if (any(x1 == self$inf)) {
       cdf[x1 == self$inf] <- rep(self$wrappedModels()[[1]]$cdf(self$inf), sum(x1 == self$inf))
-    if(any(x1 == self$sup))
+    }
+    if (any(x1 == self$sup)) {
       cdf[x1 == self$sup] <- rep(1, sum(x1 == self$sup))
-    if(any(x1 > self$inf & x1 < self$sup))
+    }
+    if (any(x1 > self$inf & x1 < self$sup)) {
       cdf[x1 > self$inf & x1 < self$sup] <- self$wrappedModels()[[1]]$cdf(cdf[x1 > self$inf & x1 < self$sup])
+    }
 
     return(cdf)
   }
 
-  quantile <- function(p){
-    p = self$wrappedModels()[[1]]$quantile(p)
-    quantile = p
-    if(any(p <= self$inf))
-      quantile[p <= self$inf] = self$inf
-    if(any(p >= self$sup))
-      quantile[p >= self$sup] = self$sup
-    if(any(p < self$sup & p > self$inf))
-      quantile[p < self$sup & p > self$inf] = p[p < self$sup & p > self$inf]
+  quantile <- function(p) {
+    p <- self$wrappedModels()[[1]]$quantile(p)
+    quantile <- p
+    if (any(p <= self$inf)) {
+      quantile[p <= self$inf] <- self$inf
+    }
+    if (any(p >= self$sup)) {
+      quantile[p >= self$sup] <- self$sup
+    }
+    if (any(p < self$sup & p > self$inf)) {
+      quantile[p < self$sup & p > self$inf] <- p[p < self$sup & p > self$inf]
+    }
 
     return(quantile)
   }
 
-  rand <- function(n){
+  rand <- function(n) {
     return(self$quantile(runif(n)))
   }
 
-  private$.outerParameters <- ParameterSet$new(id = list("hubLower", "hubUpper"), value = list(lower, upper),
-                                               support = list(Reals$new() + Set$new(-Inf,Inf), Reals$new() + Set$new(-Inf,Inf)),
-                                               settable = list(FALSE, FALSE),
-                                               description = list("Lower limit of huberization.",
-                                                                  "Upper limit of huberization."))
+  private$.outerParameters <- ParameterSet$new(
+    id = list("hubLower", "hubUpper"), value = list(lower, upper),
+    support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
+    settable = list(FALSE, FALSE),
+    description = list(
+      "Lower limit of huberization.",
+      "Upper limit of huberization."
+    )
+  )
 
-  if(testDiscrete(distribution)){
+  if (testDiscrete(distribution)) {
 
     support <- Interval$new(lower, upper, class = "integer")
 
-    pdf <- function(x1){
-      pdf = x1
-      if(any(x1 == self$inf))
+    pdf <- function(x1) {
+      pdf <- x1
+      if (any(x1 == self$inf)) {
         pdf[x1 == self$inf] <- rep(self$wrappedModels()[[1]]$cdf(self$inf), sum(x1 == self$inf))
-      if(any(x1 == self$sup))
+      }
+      if (any(x1 == self$sup)) {
         pdf[x1 == self$sup] <- rep(self$wrappedModels()[[1]]$cdf(self$sup, lower.tail = F) +
           self$wrappedModels()[[1]]$pdf(self$sup), sum(x1 == self$sup))
-      if(any(x1 > self$inf & x1 < self$sup))
+      }
+      if (any(x1 > self$inf & x1 < self$sup)) {
         pdf[x1 > self$inf & x1 < self$sup] <- self$wrappedModels()[[1]]$pdf(pdf[x1 > self$inf & x1 < self$sup])
+      }
 
       return(pdf)
     }
 
-    super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                     name = name, short_name = short_name, type = distribution$type,
-                     support = support,
-                     description = description,
-                     valueSupport = "mixture", variateForm = "univariate")
-  }else if(testContinuous(distribution)){
+    super$initialize(
+      distlist = distlist, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
+      name = name, short_name = short_name, type = distribution$type,
+      support = support,
+      description = description,
+      valueSupport = "mixture", variateForm = "univariate"
+    )
+  } else if (testContinuous(distribution)) {
     support <- Interval$new(lower, upper)
 
-    super$initialize(distlist = distlist, cdf = cdf, quantile = quantile, rand = rand, name = name,
-                     short_name = short_name, type = distribution$type,
-                     support = support,
-                     description = description,
-                     valueSupport = "mixture", variateForm = "univariate")
-  } else
+    super$initialize(
+      distlist = distlist, cdf = cdf, quantile = quantile, rand = rand, name = name,
+      short_name = short_name, type = distribution$type,
+      support = support,
+      description = description,
+      valueSupport = "mixture", variateForm = "univariate"
+    )
+  } else {
     stop(.distr6$huberize_discrete)
+  }
 })
-HuberizedDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
+HuberizedDistribution$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
+  if (is.null(lst)) {
     lst <- list(...)
+  }
 
-  if("hubLower" %in% names(lst) & "hubUpper" %in% names(lst))
+  if ("hubLower" %in% names(lst) & "hubUpper" %in% names(lst)) {
     checkmate::assert(lst[["hubLower"]] < lst[["hubUpper"]], .var.name = "hubLower must be < hubUpper")
-  else if("hubLower" %in% names(lst))
+  } else if ("hubLower" %in% names(lst)) {
     checkmate::assert(lst[["hubLower"]] < self$getParameterValue("hubUpper"), .var.name = "hubLower must be < hubUpper")
-  else if("hubUpper" %in% names(lst))
+  } else if ("hubUpper" %in% names(lst)) {
     checkmate::assert(lst[["hubUpper"]] > self$getParameterValue("hubLower"), .var.name = "hubUpper must be > hubLower")
+  }
 
 
   super$setParameterValue(lst = lst, error = error)
-  if(self$support$class == "integer")
+  if (self$support$class == "integer") {
     private$.properties$support <- Interval$new(self$getParameterValue("hubLower"), self$getParameterValue("hubUpper"), class = "integer")
-  else
+  } else {
     private$.properties$support <- Interval$new(self$getParameterValue("hubLower"), self$getParameterValue("hubUpper"))
+  }
 
   invisible(self)
 })
@@ -165,13 +187,14 @@ HuberizedDistribution$set("public","setParameterValue",function(..., lst = NULL,
 #' @seealso \code{\link{HuberizedDistribution}}
 #'
 #' @export
-huberize <- function(x,lower,upper){
+huberize <- function(x, lower, upper) {
   UseMethod("huberize", x)
 }
 #' @export
-huberize.Distribution <- function(x, lower = NULL, upper = NULL){
-  if(testDiscrete(x) | testContinuous(x))
+huberize.Distribution <- function(x, lower = NULL, upper = NULL) {
+  if (testDiscrete(x) | testContinuous(x)) {
     HuberizedDistribution$new(x, lower, upper)
-  else
+  } else {
     message(.distr6$huberize_discrete)
+  }
 }

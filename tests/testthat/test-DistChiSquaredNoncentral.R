@@ -2,7 +2,7 @@ library(testthat)
 
 context("ChiSquaredNoncentral distribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(ChiSquaredNoncentral)
 })
 
@@ -23,15 +23,15 @@ test_that("properties & traits", {
   expect_equal(ChiSquaredNoncentral$new()$inf, 0)
   expect_equal(ChiSquaredNoncentral$new()$dmax, Inf)
   expect_equal(ChiSquaredNoncentral$new()$dmin, 0)
-  expect_equal(ChiSquaredNoncentral$new(df=2)$dmax, Inf)
-  expect_equal(ChiSquaredNoncentral$new(df=2)$dmin, .Machine$double.eps)
+  expect_equal(ChiSquaredNoncentral$new(df = 2)$dmax, Inf)
+  expect_equal(ChiSquaredNoncentral$new(df = 2)$dmin, .Machine$double.eps)
 })
 
 chi <- ChiSquaredNoncentral$new(df = 2, location = 3)
 test_that("statistics", {
   expect_equal(chi$mean(), 5)
   expect_equal(chi$variance(), 16)
-  expect_equal(chi$skewness(), 11/8)
+  expect_equal(chi$skewness(), 11 / 8)
   expect_equal(ChiSquaredNoncentral$new(df = 0, location = 0)$skewness(), NaN)
   expect_equal(chi$kurtosis(TRUE), 2.625)
   expect_equal(chi$kurtosis(FALSE), 5.625)

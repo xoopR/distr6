@@ -17,19 +17,23 @@
 #' @return A vector of length \code{n} with elements drawn without replacement from the given Empirical distribution.
 #' @seealso \code{\link[base]{set.seed}}, \code{\link{rand}}, and \code{\link{Empirical}}
 #' @export
-simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL){
+simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL) {
 
-  if(getR6Class(EmpiricalDist) != "Empirical")
+  if (getR6Class(EmpiricalDist) != "Empirical") {
     stop("For Distributions that are not Empirical use $rand.")
+  }
 
-  if(!is.null(set.seed))
+  if (!is.null(set.seed)) {
     set.seed(seed)
+  }
 
-  if(length(n) > 1)
+  if (length(n) > 1) {
     n <- length(n)
+  }
 
-  if(n > EmpiricalDist$support$length)
+  if (n > EmpiricalDist$support$length) {
     n <- EmpiricalDist$support$length
+  }
 
   return(sample(EmpiricalDist$support$elements, n))
 }

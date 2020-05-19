@@ -33,29 +33,28 @@
 #' x$rand(4)
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Gompertz Distribution Definition
 #-------------------------------------------------------------
 Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F)
-Gompertz$set("public","name","Gompertz")
-Gompertz$set("public","short_name","Gomp")
-Gompertz$set("public","description","Gompertz Probability Distribution.")
+Gompertz$set("public", "name", "Gompertz")
+Gompertz$set("public", "short_name", "Gomp")
+Gompertz$set("public", "description", "Gompertz Probability Distribution.")
 
-Gompertz$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$shape)) lst = c(lst, list(shape = paramlst$shape))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
+Gompertz$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
   return(lst)
 })
 
-Gompertz$set("public", "pgf", function(z){
+Gompertz$set("public", "pgf", function(z) {
   return(NaN)
 })
 
-Gompertz$set("private",".pdf", function(x, log = FALSE){
+Gompertz$set("private", ".pdf", function(x, log = FALSE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::dgompertz,
@@ -72,7 +71,7 @@ Gompertz$set("private",".pdf", function(x, log = FALSE){
     )
   }
 })
-Gompertz$set("private",".cdf", function(x, lower.tail = TRUE, log.p = TRUE){
+Gompertz$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::pgompertz,
@@ -94,7 +93,7 @@ Gompertz$set("private",".cdf", function(x, lower.tail = TRUE, log.p = TRUE){
     )
   }
 })
-Gompertz$set("private",".quantile", function(p, lower.tail = TRUE, log.p = TRUE){
+Gompertz$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = TRUE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::qgompertz,
@@ -116,7 +115,7 @@ Gompertz$set("private",".quantile", function(p, lower.tail = TRUE, log.p = TRUE)
     )
   }
 })
-Gompertz$set("private",".rand", function(n){
+Gompertz$set("private", ".rand", function(n) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::rgompertz,
@@ -132,22 +131,27 @@ Gompertz$set("private",".rand", function(n){
     )
   }
 })
-Gompertz$set("private",".log", TRUE)
+Gompertz$set("private", ".log", TRUE)
 Gompertz$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Gompertz$set("public","initialize",function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE){
+Gompertz$set("public", "initialize", function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet(self, shape, scale, verbose)
   suppressMessages(self$setParameterValue(shape = shape, scale = scale))
 
-  super$initialize(decorators = decorators,
-                   support = PosReals$new(zero = T),
-                   type = PosReals$new(zero = T))
+  super$initialize(
+    decorators = decorators,
+    support = PosReals$new(zero = T),
+    type = PosReals$new(zero = T)
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Gomp", ClassName = "Gompertz",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
-
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Gomp", ClassName = "Gompertz",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "-"
+  )
+)

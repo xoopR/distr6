@@ -11,24 +11,27 @@
 #' @return If `simplify` then vector of `n` simulations, otherwise list of simulations and distribution.
 #' @seealso [rand]
 #' @export
-distrSimulate <- function(n = 100, distribution = "Normal", pars = list(), simplify = TRUE, seed,...){
+distrSimulate <- function(n = 100, distribution = "Normal", pars = list(), simplify = TRUE, seed, ...) {
   if (!missing(seed)) {
-    set.seed(seed,...)
+    set.seed(seed, ...)
   }
-  dist = match.arg(distribution, listDistributions(T))
+  dist <- match.arg(distribution, listDistributions(T))
   # checkmate::assert(distribution %in% listDistributions(T))
-  dist = do.call(get(dist)$new, pars)
+  dist <- do.call(get(dist)$new, pars)
 
-  if (length(n) > 1)
-    n = length(n)
+  if (length(n) > 1) {
+    n <- length(n)
+  }
 
-  if (n < 0)
-    n = 0
+  if (n < 0) {
+    n <- 0
+  }
 
-  sim = dist$rand(n)
+  sim <- dist$rand(n)
 
-  if (simplify)
+  if (simplify) {
     return(sim)
-  else
+  } else {
     return(list(Distribution = dist, Simulations = sim))
+  }
 }

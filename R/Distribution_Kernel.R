@@ -75,34 +75,35 @@
 #' @export
 NULL
 Kernel <- R6Class("Kernel", inherit = Distribution)
-Kernel$set("public","initialize",function(decorators, support){
-  if(getR6Class(self) == "Kernel") {
+Kernel$set("public", "initialize", function(decorators, support) {
+  if (getR6Class(self) == "Kernel") {
     stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels() to see the kernels currently implemented in distr6, or Distribution$new() to construct a custom Kernel."))
   }
 
   assert_pkgload(self$packages)
 
-  if(!is.null(decorators))  suppressMessages(decorate(self, decorators))
+  if (!is.null(decorators)) suppressMessages(decorate(self, decorators))
 
-  private$.properties$support = assertSet(support)
-  private$.traits$type = Reals$new()
+  private$.properties$support <- assertSet(support)
+  private$.traits$type <- Reals$new()
 
   invisible(self)
 })
-Kernel$set("public","package","This is now deprecated. Use $packages instead.")
-Kernel$set("public","packages", NULL)
-Kernel$set("public","mode",function(which = NULL){
+Kernel$set("public", "package", "This is now deprecated. Use $packages instead.")
+Kernel$set("public", "packages", NULL)
+Kernel$set("public", "mode", function(which = NULL) {
   return(0)
 })
-Kernel$set("public","mean",function(){
+Kernel$set("public", "mean", function() {
   return(0)
 })
-Kernel$set("public","median",function(){
+Kernel$set("public", "median", function() {
   return(0)
 })
-Kernel$set("private",".rand",function(n){
-  if(!is.null(private$.quantile))
+Kernel$set("private", ".rand", function(n) {
+  if (!is.null(private$.quantile)) {
     self$quantile(runif(n))
+  }
 })
 Kernel$set("private", ".properties", list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"))
 Kernel$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))

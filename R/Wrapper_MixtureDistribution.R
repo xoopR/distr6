@@ -42,7 +42,8 @@
 #' mixture$cdf(1)
 #' @export
 NULL
-MixtureDistribution <- R6Class("MixtureDistribution", inherit = VectorDistribution,
+MixtureDistribution <- R6Class("MixtureDistribution",
+  inherit = VectorDistribution,
   lock_objects = FALSE,
   public = list(
     initialize = function(distlist = NULL, weights = "uniform", distribution = NULL, params = NULL,
@@ -62,17 +63,19 @@ MixtureDistribution <- R6Class("MixtureDistribution", inherit = VectorDistributi
         stopifnot(length(weights) == self$length)
         weights <- list(weights / sum(weights))
       } else if (weights != "uniform") {
-        stop (sprintf("weights should either be a numeric of length %s, or 'uniform'", self$length))
+        stop(sprintf("weights should either be a numeric of length %s, or 'uniform'", self$length))
       }
 
-      private$.outerParameters <- ParameterSet$new(id = "weights",
-                                                   value = weights,
-                                                   support = Interval$new(0,1)^self$length + Set$new("uniform"),
-                                                   settable = TRUE,
-                                                   description = "Mixture weights.")
+      private$.outerParameters <- ParameterSet$new(
+        id = "weights",
+        value = weights,
+        support = Interval$new(0, 1)^self$length + Set$new("uniform"),
+        settable = TRUE,
+        description = "Mixture weights."
+      )
 
-      self$name = gsub("Vector", "Mixture", self$name)
-      self$short_name = gsub("Vec", "Mix", self$short_name)
+      self$name <- gsub("Vector", "Mixture", self$name)
+      self$short_name <- gsub("Vec", "Mix", self$short_name)
 
       invisible(self)
 
@@ -86,46 +89,52 @@ MixtureDistribution <- R6Class("MixtureDistribution", inherit = VectorDistributi
       #   )
       # }
 
-      #self$description = description #TODO
+      # self$description = description #TODO
       # private$.properties$support = setpower(Reals$new(), ndist)   # FIXME
       # private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
     },
 
     pdf = function(..., log = FALSE, data) {
-      mixture_dpqr_returner(dpqr = super$pdf(..., log = log, data = data),
-                            weights = private$.outerParameters$getParameterValue("weights"),
-                            univariate = private$.univariate)
+      mixture_dpqr_returner(
+        dpqr = super$pdf(..., log = log, data = data),
+        weights = private$.outerParameters$getParameterValue("weights"),
+        univariate = private$.univariate
+      )
     },
 
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
-      mixture_dpqr_returner(dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
-                            weights = private$.outerParameters$getParameterValue("weights"),
-                            univariate = private$.univariate)
+      mixture_dpqr_returner(
+        dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
+        weights = private$.outerParameters$getParameterValue("weights"),
+        univariate = private$.univariate
+      )
     },
 
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
       stop("Quantile is currently unavailable for mixture distributions.")
     },
 
-    rand = function(n){
-      weights = private$.outerParameters$getParameterValue("weights")
+    rand = function(n) {
+      weights <- private$.outerParameters$getParameterValue("weights")
 
       if (checkmate::testCharacter(weights)) {
-        weights = rep(1/self$length, self$length)
+        weights <- rep(1 / self$length, self$length)
       }
 
-      x = Multinomial$new(probs = weights,
-                          size = n)$rand(1)
+      x <- Multinomial$new(
+        probs = weights,
+        size = n
+      )$rand(1)
 
       if (private$.univariate) {
-        y = c()
+        y <- c()
         for (i in seq(self$length)) {
-          y = c(y, self[i]$rand(x[[i]]))
+          y <- c(y, self[i]$rand(x[[i]]))
         }
       } else {
-        y = data.frame()
+        y <- data.frame()
         for (i in seq(self$length)) {
-          y = rbind(y, self[i]$rand(x[[i]]))
+          y <- rbind(y, self[i]$rand(x[[i]]))
         }
       }
 
@@ -147,4 +156,3 @@ MixtureDistribution <- R6Class("MixtureDistribution", inherit = VectorDistributi
 )
 
 .distr6$wrappers <- append(.distr6$wrappers, list(MixtureDistribution = MixtureDistribution))
-

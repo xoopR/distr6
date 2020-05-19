@@ -2,11 +2,11 @@ library(testthat)
 
 context("ChiSquared distribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(ChiSquared)
 })
 
-test_that("parameterisation",{
+test_that("parameterisation", {
   expect_silent(ChiSquared$new())
   expect_silent(ChiSquared$new(df = 10))
   expect_error(ChiSquared$new(df = -1))
@@ -21,8 +21,8 @@ test_that("properties & traits", {
   expect_equal(ChiSquared$new()$inf, 0)
   expect_equal(ChiSquared$new()$dmax, Inf)
   expect_equal(ChiSquared$new()$dmin, 0)
-  expect_equal(ChiSquared$new(df=2)$dmax, Inf)
-  expect_equal(ChiSquared$new(df=2)$dmin, .Machine$double.eps)
+  expect_equal(ChiSquared$new(df = 2)$dmax, Inf)
+  expect_equal(ChiSquared$new(df = 2)$dmin, .Machine$double.eps)
 })
 
 chi <- ChiSquared$new(df = 8)
@@ -35,8 +35,8 @@ test_that("statistics", {
   expect_equal(round(chi$entropy(), 5), 3.81661)
   expect_equal(chi$mgf(0), 1)
   expect_equal(chi$mgf(3), NaN)
-  expect_equal(chi$cf(1/2), as.complex(-0.25))
-  expect_equal(chi$pgf(1/2), (1 - log(0.5)*2)^(-4))
+  expect_equal(chi$cf(1 / 2), as.complex(-0.25))
+  expect_equal(chi$pgf(1 / 2), (1 - log(0.5) * 2)^(-4))
   expect_equal(chi$pgf(3), NaN)
   expect_equal(chi$mode(), 6)
   expect_equal(chi$pdf(1), dchisq(1, 8))

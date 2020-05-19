@@ -2,41 +2,41 @@ library(testthat)
 
 context("Pareto distribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(Pareto)
 })
 
-test_that("parameterisation",{
+test_that("parameterisation", {
   expect_silent(Pareto$new())
   expect_silent(Pareto$new(shape = 2, scale = 3))
 })
 
-test_that("properties & traits",{
+test_that("properties & traits", {
   expect_equal(Pareto$new()$symmetry, "asymmetric")
   expect_equal(Pareto$new(scale = 3)$inf, 3)
   expect_equal(Pareto$new(scale = 3)$sup, Inf)
   expect_equal(Pareto$new()$dmax, Inf)
-  expect_equal(Pareto$new(scale=3)$dmin, 3)
+  expect_equal(Pareto$new(scale = 3)$dmin, 3)
   expect_equal(Pareto$new(scale = 3)$valueSupport, "continuous")
   expect_equal(Pareto$new(scale = 3)$variateForm, "univariate")
 })
 
-test_that("statistics",{
+test_that("statistics", {
   expect_equal(Pareto$new(shape = 1)$mean(), Inf)
   expect_equal(Pareto$new(shape = 2)$mean(), 2)
   expect_equal(Pareto$new(shape = 2)$variance(), Inf)
   expect_equal(Pareto$new(shape = 3)$variance(), 0.75)
   expect_equal(Pareto$new(shape = 3)$skewness(), NaN)
-  expect_equal(Pareto$new(shape = 4)$skewness(), 10*sqrt(0.5))
+  expect_equal(Pareto$new(shape = 4)$skewness(), 10 * sqrt(0.5))
   expect_equal(Pareto$new(shape = 4)$kurtosis(), NaN)
   expect_equal(Pareto$new(shape = 5)$kurtosis(T), 70.8)
   expect_equal(Pareto$new(shape = 5)$kurtosis(F), 73.8)
-  expect_equal(Pareto$new()$entropy(), log(exp(2), base=2))
+  expect_equal(Pareto$new()$entropy(), log(exp(2), base = 2))
   expect_equal(Pareto$new()$mgf(1), NaN)
   expect_equal(Pareto$new()$pgf(1), NaN)
-  expect_equal(Pareto$new()$mgf(-1), expint::gammainc(-1,1))
+  expect_equal(Pareto$new()$mgf(-1), expint::gammainc(-1, 1))
   expect_error(Pareto$new()$cf(1))
-  expect_equal(Pareto$new(scale=5)$mode(), 5)
+  expect_equal(Pareto$new(scale = 5)$mode(), 5)
   expect_equal(Pareto$new()$pdf(2), 0.25)
   expect_equal(Pareto$new()$cdf(2), 0.5)
   expect_equal(round(Pareto$new()$quantile(0.46), 5), round(1.851852, 5))

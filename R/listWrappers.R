@@ -7,10 +7,11 @@
 #' listWrappers()
 #' listWrappers(TRUE)
 #' @export
-listWrappers <- function(simplify = TRUE){
-  y = .distr6$wrappers[order(names(.distr6$wrappers))]
-  if(simplify)
+listWrappers <- function(simplify = TRUE) {
+  y <- .distr6$wrappers[order(names(.distr6$wrappers))]
+  if (simplify) {
     return(names(y))
-  else
+  } else {
     return(y)
+  }
 }

@@ -23,7 +23,7 @@
 #'
 #' @examples
 #' # Different parameterisations
-#' x <- Dirichlet$new(params = c(2,5,6))
+#' x <- Dirichlet$new(params = c(2, 5, 6))
 #'
 #' # Update parameters
 #' x$setParameterValue(params = c(3, 2, 3))
@@ -38,7 +38,7 @@
 #' # Note the difference from R stats
 #' x$pdf(0.1, 0.4, 0.5)
 #' # This allows vectorisation:
-#' x$pdf(c(0.3, 0.2), c(0.6, 0.9), c(0.9,0.1))
+#' x$pdf(c(0.3, 0.2), c(0.6, 0.9), c(0.9, 0.1))
 #' x$rand(4)
 #'
 #' # Statistics
@@ -46,104 +46,113 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Dirichlet Distribution Definition
 #-------------------------------------------------------------
 Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F)
-Dirichlet$set("public","name","Dirichlet")
-Dirichlet$set("public","short_name","Diri")
-Dirichlet$set("public","description","Multivariate Normal Probability Distribution.")
-Dirichlet$set("public","packages","extraDistr")
+Dirichlet$set("public", "name", "Dirichlet")
+Dirichlet$set("public", "short_name", "Diri")
+Dirichlet$set("public", "description", "Multivariate Normal Probability Distribution.")
+Dirichlet$set("public", "packages", "extraDistr")
 
-Dirichlet$set("public","mean",function(){
-  return(self$getParameterValue("params")/sum(self$getParameterValue("params")))
+Dirichlet$set("public", "mean", function() {
+  return(self$getParameterValue("params") / sum(self$getParameterValue("params")))
 })
-Dirichlet$set("public","mode",function(which = NULL){
+Dirichlet$set("public", "mode", function(which = NULL) {
   params <- self$getParameterValue("params")
   K <- self$getParameterValue("K")
-  mode = rep(NaN, K)
-  mode[params > 1] <- (params-1)/(sum(params)-K)
+  mode <- rep(NaN, K)
+  mode[params > 1] <- (params - 1) / (sum(params) - K)
   return(mode)
 })
-Dirichlet$set("public","variance",function(){
+Dirichlet$set("public", "variance", function() {
   K <- self$getParameterValue("K")
   params <- self$getParameterValue("params")
-  parami <- params/sum(params)
-  var = (parami * (1 - parami))/(sum(params)+1)
+  parami <- params / sum(params)
+  var <- (parami * (1 - parami)) / (sum(params) + 1)
 
-  covar = matrix((-parami %*% t(parami))/(sum(params) + 1),nrow = K, ncol = K)
-  diag(covar) = var
+  covar <- matrix((-parami %*% t(parami)) / (sum(params) + 1), nrow = K, ncol = K)
+  diag(covar) <- var
   return(covar)
 })
-Dirichlet$set("public","entropy",function(base = 2){
+Dirichlet$set("public", "entropy", function(base = 2) {
   params <- self$getParameterValue("params")
-  return(log(prod(gamma(params))/gamma(sum(params)),2) + (sum(params) - length(params))*digamma(sum(params)) -
-    sum((params-1)*digamma(params)))
+  return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params)) * digamma(sum(params)) -
+    sum((params - 1) * digamma(params)))
 })
-Dirichlet$set("public", "pgf", function(z){
+Dirichlet$set("public", "pgf", function(z) {
   return(NaN)
 })
 
-Dirichlet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
+Dirichlet$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
+  if (is.null(lst)) {
     lst <- list(...)
-  if("params" %in% names(lst)){
+  }
+  if ("params" %in% names(lst)) {
     checkmate::assert(length(lst$params) == self$getParameterValue("K"),
-                      .var.name = "Number of categories cannot be changed after construction.")
+      .var.name = "Number of categories cannot be changed after construction."
+    )
   }
   super$setParameterValue(lst = lst, error = error)
   invisible(self)
 })
-Dirichlet$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$params)) lst = c(lst, list(params = paramlst$params))
+Dirichlet$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$params)) lst <- c(lst, list(params = paramlst$params))
   return(lst)
 })
-Dirichlet$set("private",".pdf",function(x, log = FALSE){
-  params = self$getParameterValue("params")
+Dirichlet$set("private", ".pdf", function(x, log = FALSE) {
+  params <- self$getParameterValue("params")
 
   checkmate::assertMatrix(x, ncols = length(params))
 
-  if(checkmate::testList(params)){
+  if (checkmate::testList(params)) {
     mapply(extraDistr::ddirichlet,
-           alpha = params,
-           MoreArgs = list(x = x, log = log))
+      alpha = params,
+      MoreArgs = list(x = x, log = log)
+    )
   } else {
     extraDistr::ddirichlet(x,
-                           alpha = params,
-                           log = log)
+      alpha = params,
+      log = log
+    )
   }
 })
-Dirichlet$set("private",".rand",function(n){
+Dirichlet$set("private", ".rand", function(n) {
   if (checkmate::testList(self$getParameterValue("params"))) {
     mapply(extraDistr::rdirichlet,
-           alpha = self$getParameterValue("params"),
-           MoreArgs = list(n = n)
+      alpha = self$getParameterValue("params"),
+      MoreArgs = list(n = n)
     )
   } else {
     extraDistr::rdirichlet(n,
-                           alpha = self$getParameterValue("params"))
+      alpha = self$getParameterValue("params")
+    )
   }
 })
 Dirichlet$set("private", ".log", TRUE)
 Dirichlet$set("private", ".traits", list(valueSupport = "continuous", variateForm = "multivariate"))
 
-Dirichlet$set("public","initialize",function(params = c(1, 1), decorators = NULL, verbose = FALSE){
+Dirichlet$set("public", "initialize", function(params = c(1, 1), decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet(self, params, verbose)
   self$setParameterValue(params = params)
 
-  super$initialize(decorators = decorators,
-                   support = setpower(Interval$new(0,1,type="()"), length(params)),
-                   type = setpower(Interval$new(0,1,type="()"), length(params)))
+  super$initialize(
+    decorators = decorators,
+    support = setpower(Interval$new(0, 1, type = "()"), length(params)),
+    type = setpower(Interval$new(0, 1, type = "()"), length(params))
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Diri", ClassName = "Dirichlet",
-                                                     Type = "[0,1]^K", ValueSupport = "continuous",
-                                                     VariateForm = "multivariate",
-                                                     Package = "extraDistr"))
-
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Diri", ClassName = "Dirichlet",
+    Type = "[0,1]^K", ValueSupport = "continuous",
+    VariateForm = "multivariate",
+    Package = "extraDistr"
+  )
+)

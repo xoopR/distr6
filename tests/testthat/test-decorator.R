@@ -3,20 +3,20 @@ library(magrittr)
 
 context("Decorator")
 
-test_that("abstract decorator",{
+test_that("abstract decorator", {
   expect_error(DistributionDecorator$new(Binomial$new()))
   expect_error(DistributionDecorator$new())
 })
 
-test_that("decorate",{
-  expect_message(decorate(Exponential$new(rate=1),CoreStatistics))
-  expect_message(Exponential$new(rate=1) %>% decorate(CoreStatistics))
-  expect_message(Exponential$new(rate=1) %>% decorate("CoreStatistics"))
-  y = Exponential$new(rate=1,decorators = CoreStatistics)
-  expect_message(decorate(y,CoreStatistics),"y is already decorated with CoreStatistics")
+test_that("decorate", {
+  expect_message(decorate(Exponential$new(rate = 1), CoreStatistics))
+  expect_message(Exponential$new(rate = 1) %>% decorate(CoreStatistics))
+  expect_message(Exponential$new(rate = 1) %>% decorate("CoreStatistics"))
+  y <- Exponential$new(rate = 1, decorators = CoreStatistics)
+  expect_message(decorate(y, CoreStatistics), "y is already decorated with CoreStatistics")
   E <- Exponential$new(rate = 1)
   CoreStatistics$new(E)
-  expect_equal(E$decorators,"CoreStatistics")
+  expect_equal(E$decorators, "CoreStatistics")
   expect_message(decorate(E, "ExoticStatistics"))
-  expect_equal(E$decorators,c("CoreStatistics","ExoticStatistics"))
+  expect_equal(E$decorators, c("CoreStatistics", "ExoticStatistics"))
 })

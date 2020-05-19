@@ -21,7 +21,7 @@
 #' @templateVar additionalSeeAlso \code{\link[extraDistr]{InvGamma}} for the d/p/q/r implementation.
 #'
 #' @examples
-#' x  = InverseGamma$new(shape = 1, scale = 4)
+#' x <- InverseGamma$new(shape = 1, scale = 4)
 #'
 #' # Update parameters
 #' # When any parameter is updated, all others are too!
@@ -39,59 +39,63 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # InverseGamma Distribution Definition
 #-------------------------------------------------------------
 InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = F)
-InverseGamma$set("public","name","InverseGamma")
-InverseGamma$set("public","short_name","InvGamma")
-InverseGamma$set("public","description","Inverse Gamma Probability Distribution.")
-InverseGamma$set("public","packages","extraDistr")
+InverseGamma$set("public", "name", "InverseGamma")
+InverseGamma$set("public", "short_name", "InvGamma")
+InverseGamma$set("public", "description", "Inverse Gamma Probability Distribution.")
+InverseGamma$set("public", "packages", "extraDistr")
 
-InverseGamma$set("public","mean",function(){
-  if(self$getParameterValue("shape") > 1)
-    return(self$getParameterValue("scale")/(self$getParameterValue("shape")-1))
-  else
+InverseGamma$set("public", "mean", function() {
+  if (self$getParameterValue("shape") > 1) {
+    return(self$getParameterValue("scale") / (self$getParameterValue("shape") - 1))
+  } else {
     return(NaN)
+  }
 })
-InverseGamma$set("public","variance",function(){
-  if(self$getParameterValue("shape") > 2)
-    return(self$getParameterValue("scale")^2/((self$getParameterValue("shape")-1)^2 * (self$getParameterValue("shape")-2)))
-  else
+InverseGamma$set("public", "variance", function() {
+  if (self$getParameterValue("shape") > 2) {
+    return(self$getParameterValue("scale")^2 / ((self$getParameterValue("shape") - 1)^2 * (self$getParameterValue("shape") - 2)))
+  } else {
     return(NaN)
+  }
 })
-InverseGamma$set("public","mode",function(which = NULL){
-  return(self$getParameterValue("scale")/(self$getParameterValue("shape")+1))
+InverseGamma$set("public", "mode", function(which = NULL) {
+  return(self$getParameterValue("scale") / (self$getParameterValue("shape") + 1))
 })
-InverseGamma$set("public","skewness",function() {
-  if(self$getParameterValue("shape") > 3)
-    return((4 * sqrt(self$getParameterValue("shape")-2))/(self$getParameterValue("shape")-3))
-  else
+InverseGamma$set("public", "skewness", function() {
+  if (self$getParameterValue("shape") > 3) {
+    return((4 * sqrt(self$getParameterValue("shape") - 2)) / (self$getParameterValue("shape") - 3))
+  } else {
     return(NaN)
+  }
 })
-InverseGamma$set("public","kurtosis",function(excess = TRUE){
-  if(self$getParameterValue("shape") > 4){
-    kur = (6*(5*self$getParameterValue("shape") - 11))/
-      ((self$getParameterValue("shape")-3) * (self$getParameterValue("shape")-4))
-    if(excess)
+InverseGamma$set("public", "kurtosis", function(excess = TRUE) {
+  if (self$getParameterValue("shape") > 4) {
+    kur <- (6 * (5 * self$getParameterValue("shape") - 11)) /
+      ((self$getParameterValue("shape") - 3) * (self$getParameterValue("shape") - 4))
+    if (excess) {
       return(kur)
-    else
+    } else {
       return(kur + 3)
-  } else
+    }
+  } else {
     return(NaN)
+  }
 })
-InverseGamma$set("public","entropy",function(base = 2){
+InverseGamma$set("public", "entropy", function(base = 2) {
   return(self$getParameterValue("shape") +
     log(self$getParameterValue("scale") * gamma(self$getParameterValue("shape")), base) -
     (1 + self$getParameterValue("shape")) * digamma(self$getParameterValue("shape")))
 })
-InverseGamma$set("public", "mgf", function(t){
+InverseGamma$set("public", "mgf", function(t) {
   return(NaN)
 })
-InverseGamma$set("public", "pgf", function(z){
+InverseGamma$set("public", "pgf", function(z) {
   return(NaN)
 })
 # InverseGamma$set("public", "cf", function(t){
@@ -100,10 +104,10 @@ InverseGamma$set("public", "pgf", function(z){
 #   return(p1*p2)
 # })
 
-InverseGamma$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$shape)) lst = c(lst, list(shape= paramlst$shape))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
+InverseGamma$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
   return(lst)
 })
 InverseGamma$set("private", ".pdf", function(x, log = FALSE) {
@@ -190,19 +194,25 @@ InverseGamma$set("private", ".rand", function(n) {
 InverseGamma$set("private", ".log", TRUE)
 InverseGamma$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-InverseGamma$set("public","initialize",function(shape = 1,scale = 1, decorators = NULL,
-                                         verbose = FALSE){
+InverseGamma$set("public", "initialize", function(shape = 1, scale = 1, decorators = NULL,
+                                                  verbose = FALSE) {
 
   private$.parameters <- getParameterSet.InverseGamma(self, shape, scale, verbose)
-  self$setParameterValue(shape=shape, scale = scale)
+  self$setParameterValue(shape = shape, scale = scale)
 
-  super$initialize(decorators = decorators,
-                   support = PosReals$new(),
-                   type = PosReals$new())
+  super$initialize(
+    decorators = decorators,
+    support = PosReals$new(),
+    type = PosReals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "InvGamma", ClassName = "InverseGamma",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "extraDistr"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "InvGamma", ClassName = "InverseGamma",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "extraDistr"
+  )
+)

@@ -7,10 +7,11 @@
 #' listDecorators()
 #' listDecorators(FALSE)
 #' @export
-listDecorators <- function(simplify = TRUE){
-  y = .distr6$decorators[order(names(.distr6$decorators))]
-  if(simplify)
+listDecorators <- function(simplify = TRUE) {
+  y <- .distr6$decorators[order(names(.distr6$decorators))]
+  if (simplify) {
     return(names(y))
-  else
+  } else {
     return(y)
+  }
 }

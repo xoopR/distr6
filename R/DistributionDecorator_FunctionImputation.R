@@ -38,85 +38,93 @@
 #' imputed if previously missing.
 #'
 #' @examples
-#' x = Distribution$new("Test", pdf = function(x) 1/(4-1),
-#' support = set6::Interval$new(1,4),
-#' type = set6::Reals$new())
+#' x <- Distribution$new("Test",
+#'   pdf = function(x) 1 / (4 - 1),
+#'   support = set6::Interval$new(1, 4),
+#'   type = set6::Reals$new()
+#' )
 #' decorate(x, FunctionImputation)
 #' x$pdf(0:5)
 #' x$cdf(0:5)
-#'
 #' @export
 NULL
 
 FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator)
 .distr6$decorators <- append(.distr6$decorators, list(FunctionImputation = FunctionImputation))
-FunctionImputation$set("public","packages",c("pracma","GoFKernel"))
+FunctionImputation$set("public", "packages", c("pracma", "GoFKernel"))
 
-FunctionImputation$set("public","pdf",function(x1){
+FunctionImputation$set("public", "pdf", function(x1) {
   # CDF2PDF
-  if(testUnivariate(self)){
-      if(testDiscrete(self)){
-        return(self$cdf(x1) - self$cdf(x1-1))
-      } else if(testContinuous(self)){
-        message(.distr6$message_numeric)
-        return(pracma::fderiv(self$cdf,x1))
-      }
+  if (testUnivariate(self)) {
+    if (testDiscrete(self)) {
+      return(self$cdf(x1) - self$cdf(x1 - 1))
+    } else if (testContinuous(self)) {
+      message(.distr6$message_numeric)
+      return(pracma::fderiv(self$cdf, x1))
+    }
   }
 })
-FunctionImputation$set("public","cdf",function(x1){
+FunctionImputation$set("public", "cdf", function(x1) {
   # PDF2CDF
-  if(testUnivariate(self)){
-    if(testDiscrete(self)){
-      if(length(x1)>1)
-        return(sapply(x1,function(x) sum(self$pdf(self$inf:x))))
-      else
+  if (testUnivariate(self)) {
+    if (testDiscrete(self)) {
+      if (length(x1) > 1) {
+        return(sapply(x1, function(x) sum(self$pdf(self$inf:x))))
+      } else {
         return(sum(self$pdf(self$inf:x1)))
-    } else if(testContinuous(self)){
+      }
+    } else if (testContinuous(self)) {
       message(.distr6$message_numeric)
-      if(length(x1)>1)
+      if (length(x1) > 1) {
         return(unlist(sapply(x1, function(x0) integrate(self$pdf, lower = self$inf, upper = x0)$value)))
-      else
+      } else {
         return(integrate(self$pdf, lower = self$inf, upper = x1)$value)
+      }
 
     }
   }
 })
-FunctionImputation$set("public","quantile",function(p){
+FunctionImputation$set("public", "quantile", function(p) {
   message(.distr6$message_numeric)
 
- # if(!testMessage(self$cdf(1))){
-    #CDF2QUANTILE - DISCRETE/CONT
-    if(testDiscrete(self)){
-      to = ifelse(self$sup == Inf, 1e+08, self$sup)
-      from = ifelse(self$inf == -Inf, -1e+08, self$inf)
-      x1 = seq.int(from,to,by = 1)
-      y = self$cdf(x1)
+  # if(!testMessage(self$cdf(1))){
+  # CDF2QUANTILE - DISCRETE/CONT
+  if (testDiscrete(self)) {
+    to <- ifelse(self$sup == Inf, 1e+08, self$sup)
+    from <- ifelse(self$inf == -Inf, -1e+08, self$inf)
+    x1 <- seq.int(from, to, by = 1)
+    y <- self$cdf(x1)
 
-      if(length(p)>1)
-        return(unlist(sapply(p, function(p0) return(x1[min(which(y == min(y[y>p0])))]))))
-      else
-        return(x1[min(which(y == min(y[y>p])))])
-
-    } else if(testContinuous(self)){
- #     if(strategy == "inversion"){
-        upper = ifelse(self$sup == Inf, 1e+08, self$sup)
-        lower = ifelse(self$inf == -Inf, -1e+08, self$inf)
-
-        if(length(p)>1)
-          return(unlist(sapply(p, function(p0)
-            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = self$inf,upper = self$sup)(p0))))))
-        else
-          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf, upper = self$sup)(p)))
+    if (length(p) > 1) {
+      return(unlist(sapply(p, function(p0) {
+        return(x1[min(which(y == min(y[y > p0])))])
+      })))
+    } else {
+      return(x1[min(which(y == min(y[y > p])))])
     }
- #   }
- # }
+
+  } else if (testContinuous(self)) {
+    #     if(strategy == "inversion"){
+    upper <- ifelse(self$sup == Inf, 1e+08, self$sup)
+    lower <- ifelse(self$inf == -Inf, -1e+08, self$inf)
+
+    if (length(p) > 1) {
+      return(unlist(sapply(p, function(p0) {
+        return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf, upper = self$sup)(p0)))
+      })))
+    } else {
+      return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf, upper = self$sup)(p)))
+    }
+  }
+  #   }
+  # }
 })
-FunctionImputation$set("public","rand",function(n){
-  strategy = "q2r"
-  if(strategy == "q2r"){
+FunctionImputation$set("public", "rand", function(n) {
+  strategy <- "q2r"
+  if (strategy == "q2r") {
     message(.distr6$message_numeric)
     return(suppressMessages(sapply(1:n, function(x) self$quantile(runif(1)))))
-  } #else if(strategy == "p2r"){
+  } # else if(strategy == "p2r"){
   #   message(.distr6$message_numeric)
   #   if(testDiscrete(self))
   #     return(sample(self$inf:self$sup, n, TRUE, self$pdf(self$inf:self$sup)))

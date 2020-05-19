@@ -21,7 +21,7 @@
 #' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{StudentT}} for the central Student's T distribution.
 #'
 #' @examples
-#' x = StudentTNoncentral$new(df = 2, location = 3)
+#' x <- StudentTNoncentral$new(df = 2, location = 3)
 #'
 #' # Update parameters
 #' x$setParameterValue(df = 3)
@@ -38,105 +38,124 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Noncentral Student's t Distribution Definition
 #-------------------------------------------------------------
 StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, lock_objects = F)
-StudentTNoncentral$set("public","name","StudentTNoncentral")
-StudentTNoncentral$set("public","short_name","TNC")
-StudentTNoncentral$set("public","description","Student's t Probability Distribution.")
-StudentTNoncentral$set("public","packages","stats")
+StudentTNoncentral$set("public", "name", "StudentTNoncentral")
+StudentTNoncentral$set("public", "short_name", "TNC")
+StudentTNoncentral$set("public", "description", "Student's t Probability Distribution.")
+StudentTNoncentral$set("public", "packages", "stats")
 
-StudentTNoncentral$set("public", "mean", function(){
+StudentTNoncentral$set("public", "mean", function() {
   df <- self$getParameterValue("df")
-  if (df > 1)
-    return(self$getParameterValue("location")*sqrt(df/2)*gamma((df - 1)/2)/gamma(df/2))
-  else
+  if (df > 1) {
+    return(self$getParameterValue("location") * sqrt(df / 2) * gamma((df - 1) / 2) / gamma(df / 2))
+  } else {
     return(NaN)
+  }
 })
-StudentTNoncentral$set("public","variance",function(){
+StudentTNoncentral$set("public", "variance", function() {
   df <- self$getParameterValue("df")
   mu <- self$getParameterValue("location")
-  if(df > 2)
-    return(df*(1 + mu^2)/(df-2) - (mu^2*df/2)*(gamma((df - 1)/2)/gamma(df/2))^2)
-  else
+  if (df > 2) {
+    return(df * (1 + mu^2) / (df - 2) - (mu^2 * df / 2) * (gamma((df - 1) / 2) / gamma(df / 2))^2)
+  } else {
     return(NaN)
+  }
 })
 
-StudentTNoncentral$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
-  if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
+StudentTNoncentral$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
+  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
   return(lst)
 })
-StudentTNoncentral$set("private", ".pdf", function(x, log = FALSE){
-  df = self$getParameterValue("df")
-  ncp = self$getParameterValue("location")
+StudentTNoncentral$set("private", ".pdf", function(x, log = FALSE) {
+  df <- self$getParameterValue("df")
+  ncp <- self$getParameterValue("location")
 
-  call_C_base_pdqr(fun = "dt",
-                   x = x,
-                   args = list(df = unlist(df),
-                               ncp = unlist(ncp)),
-                   log = log,
-                   vec = test_list(df)
+  call_C_base_pdqr(
+    fun = "dt",
+    x = x,
+    args = list(
+      df = unlist(df),
+      ncp = unlist(ncp)
+    ),
+    log = log,
+    vec = test_list(df)
   )
 })
-StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  df = self$getParameterValue("df")
-  ncp = self$getParameterValue("location")
+StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  df <- self$getParameterValue("df")
+  ncp <- self$getParameterValue("location")
 
-  call_C_base_pdqr(fun = "pt",
-                   x = x,
-                   args = list(df = unlist(df),
-                               ncp = unlist(ncp)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(df)
+  call_C_base_pdqr(
+    fun = "pt",
+    x = x,
+    args = list(
+      df = unlist(df),
+      ncp = unlist(ncp)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(df)
   )
 })
-StudentTNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  df = self$getParameterValue("df")
-  ncp = self$getParameterValue("location")
+StudentTNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  df <- self$getParameterValue("df")
+  ncp <- self$getParameterValue("location")
 
-  call_C_base_pdqr(fun = "qt",
-                   x = p,
-                   args = list(df = unlist(df),
-                               ncp = unlist(ncp)),
-                   lower.tail = lower.tail,
-                   log = log.p,
-                   vec = test_list(df)
+  call_C_base_pdqr(
+    fun = "qt",
+    x = p,
+    args = list(
+      df = unlist(df),
+      ncp = unlist(ncp)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(df)
   )
 })
-StudentTNoncentral$set("private", ".rand", function(n){
-  df = self$getParameterValue("df")
-  ncp = self$getParameterValue("location")
+StudentTNoncentral$set("private", ".rand", function(n) {
+  df <- self$getParameterValue("df")
+  ncp <- self$getParameterValue("location")
 
-  call_C_base_pdqr(fun = "rt",
-                   x = n,
-                   args = list(df = unlist(df),
-                               ncp = unlist(ncp)),
-                   vec = test_list(df)
+  call_C_base_pdqr(
+    fun = "rt",
+    x = n,
+    args = list(
+      df = unlist(df),
+      ncp = unlist(ncp)
+    ),
+    vec = test_list(df)
   )
 })
 StudentTNoncentral$set("private", ".log", TRUE)
 StudentTNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-StudentTNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
+StudentTNoncentral$set("public", "initialize", function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet(self, df, location, verbose)
   self$setParameterValue(df = df, location = location)
 
-  super$initialize(decorators = decorators,
-                   support = Reals$new(),
-                   symmetric  = "sym",
-                   type = Reals$new())
+  super$initialize(
+    decorators = decorators,
+    support = Reals$new(),
+    symmetric = "sym",
+    type = Reals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "TNC", ClassName = "StudentTNoncentral",
-                                                     Type = "\u211D", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "TNC", ClassName = "StudentTNoncentral",
+    Type = "\u211D", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

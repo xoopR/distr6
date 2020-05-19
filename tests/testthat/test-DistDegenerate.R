@@ -2,11 +2,11 @@ library(testthat)
 
 context("Degenerate distribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(Degenerate)
 })
 
-test_that("constructor",{
+test_that("constructor", {
   expect_silent(Degenerate$new())
   expect_silent(Degenerate$new(5))
 })
@@ -16,7 +16,7 @@ test_that("parameters", {
   expect_equal(Degenerate$new(10)$getParameterValue("mean"), 10)
 })
 
-test_that("properties & traits",{
+test_that("properties & traits", {
   expect_equal(Degenerate$new()$valueSupport, "discrete")
   expect_equal(Degenerate$new()$variateForm, "univariate")
   expect_equal(Degenerate$new()$symmetry, "symmetric")
@@ -26,7 +26,7 @@ test_that("properties & traits",{
   expect_equal(Degenerate$new()$dmax, 0)
 })
 
-test_that("statistics",{
+test_that("statistics", {
   expect_equal(Degenerate$new()$kurtosis(), NaN)
   expect_equal(Degenerate$new()$skewness(), NaN)
   expect_equal(Degenerate$new()$entropy(), 0)

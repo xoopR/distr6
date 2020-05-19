@@ -25,7 +25,7 @@
 #' Hypergeometric$new(size = 10, failures = 3, draws = 5)
 #'
 #' # Default is size = 50, successes = 5, draws = 10
-#' x = Hypergeometric$new(verbose = TRUE)
+#' x <- Hypergeometric$new(verbose = TRUE)
 #'
 #' # Update parameters
 #' # When any parameter is updated, all others are too!
@@ -43,7 +43,6 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
@@ -53,146 +52,172 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
 Hypergeometric$set("public", "name", "Hypergeometric")
 Hypergeometric$set("public", "short_name", "Hyper")
 Hypergeometric$set("public", "description", "Hypergeometric Probability Distribution")
-Hypergeometric$set("public","packages","stats")
+Hypergeometric$set("public", "packages", "stats")
 
-Hypergeometric$set("public", "mean", function(){
-    return(self$getParameterValue("draws")*self$getParameterValue("successes")/self$getParameterValue("size"))
+Hypergeometric$set("public", "mean", function() {
+  return(self$getParameterValue("draws") * self$getParameterValue("successes") / self$getParameterValue("size"))
 })
-Hypergeometric$set("public","mode",function(which = NULL){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
-    return(floor(((draws + 1)*(successes + 1))/(size+2)))
+Hypergeometric$set("public", "mode", function(which = NULL) {
+  draws <- self$getParameterValue("draws")
+  successes <- self$getParameterValue("successes")
+  size <- self$getParameterValue("size")
+  return(floor(((draws + 1) * (successes + 1)) / (size + 2)))
 })
-Hypergeometric$set("public","variance",function(){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
-    return((draws*successes*(size-successes)*(size-draws))/(size^2*(size-1))
-    )
+Hypergeometric$set("public", "variance", function() {
+  draws <- self$getParameterValue("draws")
+  successes <- self$getParameterValue("successes")
+  size <- self$getParameterValue("size")
+  return((draws * successes * (size - successes) * (size - draws)) / (size^2 * (size - 1)))
 })
-Hypergeometric$set("public","skewness",function(){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
-    return(((size-2*successes)*((size-1)^0.5)*(size - 2*draws))/
-        (((draws*successes*(size-successes)*(size-draws))^0.5)*(size-2)))
+Hypergeometric$set("public", "skewness", function() {
+  draws <- self$getParameterValue("draws")
+  successes <- self$getParameterValue("successes")
+  size <- self$getParameterValue("size")
+  return(((size - 2 * successes) * ((size - 1)^0.5) * (size - 2 * draws)) /
+    (((draws * successes * (size - successes) * (size - draws))^0.5) * (size - 2)))
 })
-Hypergeometric$set("public","kurtosis",function(excess = TRUE){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
+Hypergeometric$set("public", "kurtosis", function(excess = TRUE) {
+  draws <- self$getParameterValue("draws")
+  successes <- self$getParameterValue("successes")
+  size <- self$getParameterValue("size")
 
-    exkurtosis = ((size-1)*(size^2)*((size*(size+1)) - 6*successes*(size-successes) -
-                                           6*draws*(size-draws)) + 6*draws*successes*(size-successes)*
-                      (size-draws)*(5*size-6))/(draws*successes*(size-successes)*(size-draws)*(size-2)*
-                                                    (size-3))
+  exkurtosis <- ((size - 1) * (size^2) * ((size * (size + 1)) - 6 * successes * (size - successes) -
+    6 * draws * (size - draws)) + 6 * draws * successes * (size - successes) *
+    (size - draws) * (5 * size - 6)) / (draws * successes * (size - successes) * (size - draws) * (size - 2) *
+    (size - 3))
 
-    if(excess)
-        return(exkurtosis)
-    else
-        return(exkurtosis + 3)
-})
-
-Hypergeometric$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-    super$setParameterValue(..., lst = lst, error = error)
-    size = self$getParameterValue("size")
-
-    private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
-                                                   self$getParameterValue("successes") - size):
-                                               min(self$getParameterValue("draws"),
-                                                   self$getParameterValue("successes")))
-
-    self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(successes = Set$new(0:size)))
-    self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(draws = Set$new(0:size)))
-    self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(failures = Set$new(0:size)))
-    invisible(self)
+  if (excess) {
+    return(exkurtosis)
+  } else {
+    return(exkurtosis + 3)
+  }
 })
 
-Hypergeometric$set("private",".getRefParams", function(paramlst){
-    lst = list()
-    if(!is.null(paramlst$size)) lst = c(lst, list(size = paramlst$size))
-    if(!is.null(paramlst$successes)) lst = c(lst, list(successes = paramlst$successes))
-    if(!is.null(paramlst$failures)){
-        if(!is.null(paramlst$size)) lst = c(lst, list(successes = paramlst$size-paramlst$failures))
-        else lst = c(lst, list(successes = self$getParameterValue("size")-paramlst$failures))
+Hypergeometric$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
+  super$setParameterValue(..., lst = lst, error = error)
+  size <- self$getParameterValue("size")
+
+  private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
+    self$getParameterValue("successes") - size):
+  min(
+    self$getParameterValue("draws"),
+    self$getParameterValue("successes")
+  ))
+
+  self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(successes = Set$new(0:size)))
+  self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(draws = Set$new(0:size)))
+  self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(failures = Set$new(0:size)))
+  invisible(self)
+})
+
+Hypergeometric$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
+  if (!is.null(paramlst$successes)) lst <- c(lst, list(successes = paramlst$successes))
+  if (!is.null(paramlst$failures)) {
+    if (!is.null(paramlst$size)) {
+      lst <- c(lst, list(successes = paramlst$size - paramlst$failures))
+    } else {
+      lst <- c(lst, list(successes = self$getParameterValue("size") - paramlst$failures))
     }
-    if(!is.null(paramlst$draws)) lst = c(lst, list(draws = paramlst$draws))
+  }
+  if (!is.null(paramlst$draws)) lst <- c(lst, list(draws = paramlst$draws))
 
-    return(lst)
+  return(lst)
 })
-Hypergeometric$set("private", ".pdf", function(x, log = FALSE){
-    m = self$getParameterValue("successes")
-    n = self$getParameterValue("failures")
-    k = self$getParameterValue("draws")
+Hypergeometric$set("private", ".pdf", function(x, log = FALSE) {
+  m <- self$getParameterValue("successes")
+  n <- self$getParameterValue("failures")
+  k <- self$getParameterValue("draws")
 
-    call_C_base_pdqr(fun = "dhyper",
-                     x = x,
-                     args = list(m = unlist(m),
-                                 n = unlist(n),
-                                 k = unlist(k)),
-                     log = log,
-                     vec = test_list(m))
+  call_C_base_pdqr(
+    fun = "dhyper",
+    x = x,
+    args = list(
+      m = unlist(m),
+      n = unlist(n),
+      k = unlist(k)
+    ),
+    log = log,
+    vec = test_list(m)
+  )
 })
-Hypergeometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-    m = self$getParameterValue("successes")
-    n = self$getParameterValue("failures")
-    k = self$getParameterValue("draws")
+Hypergeometric$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  m <- self$getParameterValue("successes")
+  n <- self$getParameterValue("failures")
+  k <- self$getParameterValue("draws")
 
-    call_C_base_pdqr(fun = "phyper",
-                     x = x,
-                     args = list(m = unlist(m),
-                                 n = unlist(n),
-                                 k = unlist(k)),
-                     lower.tail = lower.tail,
-                     log = log.p,
-                     vec = test_list(m))
+  call_C_base_pdqr(
+    fun = "phyper",
+    x = x,
+    args = list(
+      m = unlist(m),
+      n = unlist(n),
+      k = unlist(k)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(m)
+  )
 })
-Hypergeometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-    m = self$getParameterValue("successes")
-    n = self$getParameterValue("failures")
-    k = self$getParameterValue("draws")
+Hypergeometric$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  m <- self$getParameterValue("successes")
+  n <- self$getParameterValue("failures")
+  k <- self$getParameterValue("draws")
 
-    call_C_base_pdqr(fun = "qhyper",
-                     x = p,
-                     args = list(m = unlist(m),
-                                 n = unlist(n),
-                                 k = unlist(k)),
-                     lower.tail = lower.tail,
-                     log = log.p,
-                     vec = test_list(m))
+  call_C_base_pdqr(
+    fun = "qhyper",
+    x = p,
+    args = list(
+      m = unlist(m),
+      n = unlist(n),
+      k = unlist(k)
+    ),
+    lower.tail = lower.tail,
+    log = log.p,
+    vec = test_list(m)
+  )
 })
-Hypergeometric$set("private", ".rand", function(n){
-    m = self$getParameterValue("successes")
-    n = self$getParameterValue("failures")
-    k = self$getParameterValue("draws")
+Hypergeometric$set("private", ".rand", function(n) {
+  m <- self$getParameterValue("successes")
+  n <- self$getParameterValue("failures")
+  k <- self$getParameterValue("draws")
 
-    call_C_base_pdqr(fun = "rhyper",
-                     x = n,
-                     args = list(m = unlist(m),
-                                 n = unlist(n),
-                                 k = unlist(k)),
-                     vec = test_list(m))
+  call_C_base_pdqr(
+    fun = "rhyper",
+    x = n,
+    args = list(
+      m = unlist(m),
+      n = unlist(n),
+      k = unlist(k)
+    ),
+    vec = test_list(m)
+  )
 })
 Hypergeometric$set("private", ".log", TRUE)
 Hypergeometric$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
-Hypergeometric$set("public","initialize",function(size = 50, successes = 5, failures = NULL, draws = 10,
-                                                  decorators = NULL, verbose = FALSE){
+Hypergeometric$set("public", "initialize", function(size = 50, successes = 5, failures = NULL, draws = 10,
+                                                    decorators = NULL, verbose = FALSE) {
 
-    private$.parameters <- getParameterSet(self, size, successes, failures, draws, verbose)
-    self$setParameterValue(size = size, successes=successes, failures = failures, draws = draws)
+  private$.parameters <- getParameterSet(self, size, successes, failures, draws, verbose)
+  self$setParameterValue(size = size, successes = successes, failures = failures, draws = draws)
 
-    support <- Set$new(max(0, draws + successes - size):min(draws,successes), class = "integer")
+  support <- Set$new(max(0, draws + successes - size):min(draws, successes), class = "integer")
 
-    super$initialize(decorators = decorators,
-                     support = support,
-                     type = Naturals$new())
+  super$initialize(
+    decorators = decorators,
+    support = support,
+    type = Naturals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Hyper", ClassName = "Hypergeometric",
-                                                     Type = "\u21150", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
-
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Hyper", ClassName = "Hypergeometric",
+    Type = "\u21150", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

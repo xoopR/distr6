@@ -2,7 +2,7 @@ library(testthat)
 
 context("FDistribution")
 
-test_that("autottest",{
+test_that("autottest", {
   autotest_sdistribution(FDistribution)
 })
 
@@ -45,7 +45,7 @@ test_that("statistics", {
   expect_equal(f1$mgf(5), NaN)
   expect_equal(f1$pgf(1), NaN)
   expect_error(f1$cf(1))
-  expect_equal(f1$mode(), 1/6)
+  expect_equal(f1$mode(), 1 / 6)
   expect_equal(f2$mode(), NaN)
   expect_equal(round(f1$entropy(exp(1)), 5), 2.45435)
   expect_equal(f1$pdf(2), df(2, 4, 1))

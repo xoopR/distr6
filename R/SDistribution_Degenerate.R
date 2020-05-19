@@ -19,7 +19,7 @@
 #' @templateVar constructorDets \code{mean} as a numeric.
 #'
 #' @examples
-#' x = Degenerate$new(mean = 4)
+#' x <- Degenerate$new(mean = 4)
 #'
 #' # Update parameters
 #' x$setParameterValue(mean = 2.56)
@@ -36,127 +36,132 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Degenerate Distribution Definition
 #-------------------------------------------------------------
 Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
-Degenerate$set("public","name","Degenerate")
-Degenerate$set("public","short_name","Degen")
-Degenerate$set("public","description","Degenerate Probability Distribution.")
+Degenerate$set("public", "name", "Degenerate")
+Degenerate$set("public", "short_name", "Degen")
+Degenerate$set("public", "description", "Degenerate Probability Distribution.")
 
-Degenerate$set("public","mean",function(){
+Degenerate$set("public", "mean", function() {
   return(self$getParameterValue("mean"))
 })
-Degenerate$set("public","variance",function(){
+Degenerate$set("public", "variance", function() {
   return(0)
 })
-Degenerate$set("public","skewness",function(){
+Degenerate$set("public", "skewness", function() {
   return(NaN)
 })
-Degenerate$set("public","kurtosis",function(excess = TRUE){
+Degenerate$set("public", "kurtosis", function(excess = TRUE) {
   return(NaN)
 })
-Degenerate$set("public","entropy",function(base = 2){
+Degenerate$set("public", "entropy", function(base = 2) {
   return(0)
 })
-Degenerate$set("public", "mgf", function(t){
+Degenerate$set("public", "mgf", function(t) {
   return(exp(self$getParameterValue("mean") * t))
 })
-Degenerate$set("public", "cf", function(t){
+Degenerate$set("public", "cf", function(t) {
   return(exp(self$getParameterValue("mean") * t * 1i))
 })
-Degenerate$set("public","mode",function(which = NULL){
+Degenerate$set("public", "mode", function(which = NULL) {
   return(self$getParameterValue("mean"))
 })
 
-Degenerate$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
+Degenerate$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
   super$setParameterValue(..., lst = lst, error = error)
   private$.properties$support <- Set$new(self$getParameterValue("mean"))
   invisible(self)
 })
 
-Degenerate$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
+Degenerate$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
   return(lst)
 })
-Degenerate$set("private", ".pdf", function(x, log = FALSE){
-  mean = self$getParameterValue("mean")
+Degenerate$set("private", ".pdf", function(x, log = FALSE) {
+  mean <- self$getParameterValue("mean")
 
-  if(checkmate::testList(mean)){
-    pdf = matrix(ncol = length(mean), nrow = length(x))
-    for(i in seq_along(mean)){
-      for(j in seq_along(x)){
-        pdf[j,i] = as.numeric(x[j] == mean[[i]])
+  if (checkmate::testList(mean)) {
+    pdf <- matrix(ncol = length(mean), nrow = length(x))
+    for (i in seq_along(mean)) {
+      for (j in seq_along(x)) {
+        pdf[j, i] <- as.numeric(x[j] == mean[[i]])
       }
     }
   } else {
-    pdf = as.numeric(x == mean)
+    pdf <- as.numeric(x == mean)
   }
 
-  if(log) pdf = log(pdf)
+  if (log) pdf <- log(pdf)
   return(pdf)
 })
-Degenerate$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE){
-  mean = self$getParameterValue("mean")
+Degenerate$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  mean <- self$getParameterValue("mean")
 
-  if(checkmate::testList(mean)){
-    cdf = matrix(ncol = length(mean), nrow = length(x))
-    for(i in seq_along(mean)){
-      for(j in seq_along(x)){
-        cdf[j,i] = as.numeric(x[j] >= mean[[i]])
+  if (checkmate::testList(mean)) {
+    cdf <- matrix(ncol = length(mean), nrow = length(x))
+    for (i in seq_along(mean)) {
+      for (j in seq_along(x)) {
+        cdf[j, i] <- as.numeric(x[j] >= mean[[i]])
       }
     }
   } else {
-    cdf = as.numeric(x >= mean)
+    cdf <- as.numeric(x >= mean)
   }
 
-  if(lower.tail) cdf = 1 - cdf
-  if(log.p) cdf = log(cdf)
+  if (lower.tail) cdf <- 1 - cdf
+  if (log.p) cdf <- log(cdf)
 
   return(cdf)
 })
-Degenerate$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE){
-  if(log.p) p = exp(p)
-  if(lower.tail) p = 1 - p
+Degenerate$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  if (log.p) p <- exp(p)
+  if (lower.tail) p <- 1 - p
 
-  mean = self$getParameterValue("mean")
+  mean <- self$getParameterValue("mean")
 
-  if(checkmate::testList(mean)){
-    quantile = matrix(ncol = length(mean), nrow = length(p))
-    for(i in seq_along(mean)){
-      for(j in seq_along(p)){
-        quantile[j,i] = if(p[j] > 0) mean else -Inf
+  if (checkmate::testList(mean)) {
+    quantile <- matrix(ncol = length(mean), nrow = length(p))
+    for (i in seq_along(mean)) {
+      for (j in seq_along(p)) {
+        quantile[j, i] <- if (p[j] > 0) mean else -Inf
       }
     }
   } else {
-    quantile = if(p > 0) mean else -Inf
+    quantile <- if (p > 0) mean else -Inf
   }
 
   return(quantile)
 })
-Degenerate$set("private", ".rand", function(n){
+Degenerate$set("private", ".rand", function(n) {
   rep(self$getParameterValue("mean"), n)
 })
 Degenerate$set("private", ".log", TRUE)
 Degenerate$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
-Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
+Degenerate$set("public", "initialize", function(mean = 0, decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet(self, mean, verbose)
   self$setParameterValue(mean = mean)
 
-  super$initialize(decorators = decorators,
-                   support = Set$new(mean, class = "integer"),
-                   symmetry = "sym",
-                   type = Reals$new())
+  super$initialize(
+    decorators = decorators,
+    support = Set$new(mean, class = "integer"),
+    symmetry = "sym",
+    type = Reals$new()
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Degen", ClassName = "Degenerate",
-                                                     Type = "\u211D", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Degen", ClassName = "Degenerate",
+    Type = "\u211D", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "-"
+  )
+)

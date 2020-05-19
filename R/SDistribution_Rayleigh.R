@@ -35,49 +35,49 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
 NULL
 #-------------------------------------------------------------
 # Rayleigh Distribution Definition
 #-------------------------------------------------------------
 Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F)
-Rayleigh$set("public","name","Rayleigh")
-Rayleigh$set("public","short_name","Rayl")
-Rayleigh$set("public","description","Rayleigh Probability Distribution.")
-Rayleigh$set("public","packages", "extraDistr")
+Rayleigh$set("public", "name", "Rayleigh")
+Rayleigh$set("public", "short_name", "Rayl")
+Rayleigh$set("public", "description", "Rayleigh Probability Distribution.")
+Rayleigh$set("public", "packages", "extraDistr")
 
-Rayleigh$set("public","mean",function(){
-  return(self$getParameterValue("mode")*sqrt(pi/2))
+Rayleigh$set("public", "mean", function() {
+  return(self$getParameterValue("mode") * sqrt(pi / 2))
 })
-Rayleigh$set("public","mode",function(which = NULL){
+Rayleigh$set("public", "mode", function(which = NULL) {
   return(self$getParameterValue("mode"))
 })
-Rayleigh$set("public","variance",function(){
-  return((4-pi)/2 * self$getParameterValue("mode")^2)
+Rayleigh$set("public", "variance", function() {
+  return((4 - pi) / 2 * self$getParameterValue("mode")^2)
 })
-Rayleigh$set("public","skewness",function(){
-  return((2*sqrt(pi)*(pi-3))/((4-pi)^(3/2)))
+Rayleigh$set("public", "skewness", function() {
+  return((2 * sqrt(pi) * (pi - 3)) / ((4 - pi)^(3 / 2)))
 })
-Rayleigh$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(-(6*pi^2 - 24*pi + 16)/(4-pi)^2)
-  else
-    return(-(6*pi^2 - 24*pi + 16)/(4-pi)^2 + 3)
+Rayleigh$set("public", "kurtosis", function(excess = TRUE) {
+  if (excess) {
+    return(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2)
+  } else {
+    return(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2 + 3)
+  }
 })
-Rayleigh$set("public","entropy",function(base = 2){
-  return(1 + log(self$getParameterValue("mode")/sqrt(2), base) - digamma(1)/2)
+Rayleigh$set("public", "entropy", function(base = 2) {
+  return(1 + log(self$getParameterValue("mode") / sqrt(2), base) - digamma(1) / 2)
 })
-Rayleigh$set("public", "pgf", function(z){
+Rayleigh$set("public", "pgf", function(z) {
   return(NaN)
 })
 
-Rayleigh$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mode)) lst = c(lst, list(mode = paramlst$mode))
+Rayleigh$set("private", ".getRefParams", function(paramlst) {
+  lst <- list()
+  if (!is.null(paramlst$mode)) lst <- c(lst, list(mode = paramlst$mode))
   return(lst)
 })
-Rayleigh$set("private",".pdf", function(x){
+Rayleigh$set("private", ".pdf", function(x) {
   if (checkmate::testList(self$getParameterValue("mode"))) {
     mapply(
       extraDistr::drayleigh,
@@ -92,7 +92,7 @@ Rayleigh$set("private",".pdf", function(x){
     )
   }
 })
-Rayleigh$set("private",".cdf", function(x){
+Rayleigh$set("private", ".cdf", function(x) {
   if (checkmate::testList(self$getParameterValue("mode"))) {
     mapply(
       extraDistr::prayleigh,
@@ -112,7 +112,7 @@ Rayleigh$set("private",".cdf", function(x){
     )
   }
 })
-Rayleigh$set("private",".quantile", function(p){
+Rayleigh$set("private", ".quantile", function(p) {
   if (checkmate::testList(self$getParameterValue("mode"))) {
     mapply(
       extraDistr::qrayleigh,
@@ -132,7 +132,7 @@ Rayleigh$set("private",".quantile", function(p){
     )
   }
 })
-Rayleigh$set("private",".rand", function(n){
+Rayleigh$set("private", ".rand", function(n) {
   if (checkmate::testList(self$getParameterValue("mode"))) {
     mapply(
       extraDistr::rrayleigh,
@@ -146,21 +146,27 @@ Rayleigh$set("private",".rand", function(n){
     )
   }
 })
-Rayleigh$set("private",".log", TRUE)
+Rayleigh$set("private", ".log", TRUE)
 Rayleigh$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Rayleigh$set("public","initialize",function(mode = 1, decorators = NULL, verbose = FALSE){
+Rayleigh$set("public", "initialize", function(mode = 1, decorators = NULL, verbose = FALSE) {
 
   private$.parameters <- getParameterSet(self, mode, verbose)
   self$setParameterValue(mode = mode)
 
-  super$initialize(decorators = decorators,
-                   support = PosReals$new(zero = T),
-                   type = PosReals$new(zero = T))
+  super$initialize(
+    decorators = decorators,
+    support = PosReals$new(zero = T),
+    type = PosReals$new(zero = T)
+  )
 })
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Rayl", ClassName = "Rayleigh",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "extraDistr"))
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Rayl", ClassName = "Rayleigh",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "extraDistr"
+  )
+)

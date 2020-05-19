@@ -36,7 +36,7 @@
 #' Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
 #' with a non-NULL \code{updateFunc}.
 #'
-#'@section Public Methods:
+#' @section Public Methods:
 #'  \tabular{ll}{
 #'   \strong{Method} \tab \strong{Link} \cr
 #'   \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
@@ -50,31 +50,33 @@
 #' }
 #'
 #' @examples
-#'  id = list("prob", "size")
-#'  value = list(0.2, 5)
-#'  support = list(set6::Interval$new(0,1), set6::PosNaturals$new())
-#'  settable = list(TRUE, TRUE)
-#'  description = list("Probability of success",NULL)
-#'  ps = ParameterSet$new(id, value, support, settable,
-#'                        description = description)
-#'  ps$parameters()
-#'  ps$getParameterValue("prob")
-#'  ps$getParameterSupport("prob")
+#' id <- list("prob", "size")
+#' value <- list(0.2, 5)
+#' support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
+#' settable <- list(TRUE, TRUE)
+#' description <- list("Probability of success", NULL)
+#' ps <- ParameterSet$new(id, value, support, settable,
+#'   description = description
+#' )
+#' ps$parameters()
+#' ps$getParameterValue("prob")
+#' ps$getParameterSupport("prob")
 #'
 #'
-#' @examples
-#'  id = list("rate", "scale")
-#'  value = list(1, 1)
-#'  support = list(set6::PosReals$new(), set6::PosReals$new())
-#'  settable = list(TRUE, FALSE)
-#'  updateFunc = list(NULL, function(self) 1/self$getParameterValue('rate'))
-#'  description = list("Arrival rate","Scale parameter")
-#'  ps = ParameterSet$new(id, value, support, settable,
-#'                        updateFunc, description)
-#'  ps$parameters(id = "rate")
-#'  ps$setParameterValue(rate = 2) # Automatically calls $update
-#'  ps$getParameterValue("scale") # Auto-updated to 1/2
 #'
+#' id <- list("rate", "scale")
+#' value <- list(1, 1)
+#' support <- list(set6::PosReals$new(), set6::PosReals$new())
+#' settable <- list(TRUE, FALSE)
+#' updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
+#' description <- list("Arrival rate", "Scale parameter")
+#' ps <- ParameterSet$new(
+#'   id, value, support, settable,
+#'   updateFunc, description
+#' )
+#' ps$parameters(id = "rate")
+#' ps$setParameterValue(rate = 2) # Automatically calls $update
+#' ps$getParameterValue("scale") # Auto-updated to 1/2
 #' @seealso \code{\link{Distribution}}
 #'
 #' @return An R6 object of class ParameterSet.
@@ -83,28 +85,29 @@
 NULL
 
 ParameterSet <- R6Class("ParameterSet")
-ParameterSet$set("private",".parameters",NULL)
-ParameterSet$set("private",".SetParameterSupport",function(lst){
-  id = names(lst)
-  support = lst[[1]]
-  which = which(unlist(private$.parameters$id) %in% id)
-  private$.parameters[which,3][[1]] <- list(support)
+ParameterSet$set("private", ".parameters", NULL)
+ParameterSet$set("private", ".SetParameterSupport", function(lst) {
+  id <- names(lst)
+  support <- lst[[1]]
+  which <- which(unlist(private$.parameters$id) %in% id)
+  private$.parameters[which, 3][[1]] <- list(support)
   invisible(self)
 })
-ParameterSet$set("public","initialize", function(id, value, support, settable,
-                                                 updateFunc = NULL, description = NULL){
+ParameterSet$set("public", "initialize", function(id, value, support, settable,
+                                                  updateFunc = NULL, description = NULL) {
 
   # coerce all to lists except id, and settable (should be same type)
-  id = unlist(id)
-  if(!checkmate::testList(value)){
-    value = if(length(value) > 1) as.list(value) else list(value)
+  id <- unlist(id)
+  if (!checkmate::testList(value)) {
+    value <- if (length(value) > 1) as.list(value) else list(value)
   }
-  if(!checkmate::testList(support)) support = list(support)
-  settable = unlist(settable)
+  if (!checkmate::testList(support)) support <- list(support)
+  settable <- unlist(settable)
 
   # check lengths
   checkmate::assert(length(unique(length(id), length(value), length(settable), length(support))) == 1,
-                    .var.name = "arguments of same length")
+    .var.name = "arguments of same length"
+  )
 
   # id checks
   checkmate::assert(!any(duplicated(id)), .var.name = "'id's must be unique")
@@ -117,8 +120,8 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
   checkmate::assertLogical(settable)
 
   # value checks
-  mapply(function(x, y){
-    if(length(x) > 1){
+  mapply(function(x, y) {
+    if (length(x) > 1) {
       assertContains(y, Tuple$new(x), paste(strCollapse(x, "()"), "does not lie in the set", y$strprint()))
     } else {
       assertContains(y, x, paste(x, "does not lie in the set", y$strprint()))
@@ -126,22 +129,24 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
   }, value, support)
 
   # description checks
-  if(!is.null(description)) {
-    checkmate::assert(length(id)==length(description), .var.name = "arguments of same length")
-    description[sapply(description, is.null)] = "None"
-    description = unlist(description)
+  if (!is.null(description)) {
+    checkmate::assert(length(id) == length(description), .var.name = "arguments of same length")
+    description[sapply(description, is.null)] <- "None"
+    description <- unlist(description)
     checkmate::assertCharacter(description, null.ok = TRUE)
   }
 
   # update checks
-  if(!is.null(updateFunc)) {
-    if(!checkmate::testList(updateFunc)) updateFunc = list(updateFunc)
-    checkmate::assert(length(id)==length(updateFunc), .var.name = "arguments of same length")
+  if (!is.null(updateFunc)) {
+    if (!checkmate::testList(updateFunc)) updateFunc <- list(updateFunc)
+    checkmate::assert(length(id) == length(updateFunc), .var.name = "arguments of same length")
     sapply(updateFunc, checkmate::assertFunction, null.ok = TRUE)
   }
 
-  private$.parameters <- data.table(id = id, value = value, support = support, settable = settable,
-                                    description = description, updateFunc = updateFunc)
+  private$.parameters <- data.table(
+    id = id, value = value, support = support, settable = settable,
+    description = description, updateFunc = updateFunc
+  )
   invisible(self)
 })
 #' @name print.ParameterSet
@@ -161,9 +166,9 @@ ParameterSet$set("public","initialize", function(id, value, support, settable,
 #'
 #' @export
 print.ParameterSet <- function(x, hide_cols, ...) {}
-ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable"),...){
+ParameterSet$set("public", "print", function(hide_cols = c("updateFunc", "settable"), ...) {
   ps <- private$.parameters
-  ps$support <- lapply(ps$support,function(x) x$strprint())
+  ps$support <- lapply(ps$support, function(x) x$strprint())
   print(subset(ps, select = !(names(ps) %in% hide_cols)))
 })
 
@@ -189,12 +194,12 @@ ParameterSet$set("public","print", function(hide_cols = c("updateFunc","settable
 #'
 #' @export
 update.ParameterSet <- function(object, ...) {}
-ParameterSet$set("public","update", function(...){
-  sap = sapply(private$.parameters$updateFunc, is.null)
-  if(any(!sap)){
-    update_filter = !sapply(private$.parameters$updateFunc, is.null)
-    updates = private$.parameters[update_filter,]
-    newvals = apply(updates, 1, function(x){
+ParameterSet$set("public", "update", function(...) {
+  sap <- sapply(private$.parameters$updateFunc, is.null)
+  if (any(!sap)) {
+    update_filter <- !sapply(private$.parameters$updateFunc, is.null)
+    updates <- private$.parameters[update_filter, ]
+    newvals <- apply(updates, 1, function(x) {
       return(x[[6]](self))
       # if(length(newval) > 1) {
       #   if(!x[[3]]$contains(Tuple$new(newval)))
@@ -232,13 +237,14 @@ ParameterSet$set("public","update", function(...){
 #'
 #' @export
 NULL
-ParameterSet$set("public","parameters",function(id = NULL){
-  if(!is.null(id)){
-    id0 = id
-    if(nrow(subset(private$.parameters, id %in% id0))==0)
+ParameterSet$set("public", "parameters", function(id = NULL) {
+  if (!is.null(id)) {
+    id0 <- id
+    if (nrow(subset(private$.parameters, id %in% id0)) == 0) {
       return(self)
-    else
+    } else {
       return(subset(private$.parameters, id %in% id0))
+    }
   } else {
     return(self)
   }
@@ -263,15 +269,17 @@ ParameterSet$set("public","parameters",function(id = NULL){
 #' @seealso \code{\link{parameters}}
 #' @export
 NULL
-ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
-  if(missing(id))
+ParameterSet$set("public", "getParameterSupport", function(id, error = "warn") {
+  if (missing(id)) {
     return(stopwarn(error, "Argument 'id' is missing, with no default."))
+  }
 
-  support = self$parameters(id)[["support"]]
-  if(length(support)==0){
+  support <- self$parameters(id)[["support"]]
+  if (length(support) == 0) {
     return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
-  }else
+  } else {
     return(unlist(support[[1]]))
+  }
 
 })
 
@@ -294,14 +302,16 @@ ParameterSet$set("public","getParameterSupport",function(id, error = "warn"){
 #' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
 #' @export
 NULL
-ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
-  if(missing(id))
+ParameterSet$set("public", "getParameterValue", function(id, error = "warn") {
+  if (missing(id)) {
     return(stopwarn(error, "Argument 'id' is missing, with no default."))
-  val = try(self$parameters(id)[["value"]], silent = T)
-  if(class(val)=="try-error" | length(val) == 0){
+  }
+  val <- try(self$parameters(id)[["value"]], silent = T)
+  if (class(val) == "try-error" | length(val) == 0) {
     return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
-  }else
+  } else {
     return(unlist(val[[1]]))
+  }
 
 })
 
@@ -329,50 +339,49 @@ ParameterSet$set("public","getParameterValue",function(id, error = "warn"){
 #'
 #' @examples
 #' ps <- Normal$new()$parameters()
-#' ps$setParameterValue(mean  = 2, var = 5)$print()
+#' ps$setParameterValue(mean = 2, var = 5)$print()
 #'
 #' ps <- MultivariateNormal$new()$parameters()
-#' ps$setParameterValue(lst = list(mean = c(1,1)))$print()
-#'
+#' ps$setParameterValue(lst = list(mean = c(1, 1)))$print()
 #' @export
 NULL
-ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst)) lst <- list(...)
+ParameterSet$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
+  if (is.null(lst)) lst <- list(...)
   checkmate::assertList(lst)
-  for(i in 1:length(lst)){
+  for (i in 1:length(lst)) {
 
     if (any(is.null(lst[[i]])) | any(is.nan(lst[[i]]))) {
-      return(stopwarn(error, paste(names(lst)[[i]],"must be a number.")))
+      return(stopwarn(error, paste(names(lst)[[i]], "must be a number.")))
     }
 
     aid <- names(lst)[[i]]
     value <- lst[[i]]
 
-    if(is.null(aid) | is.null(value)) {
+    if (is.null(aid) | is.null(value)) {
       return(stopwarn(error, "Parameter names and new values must be provided."))
     }
 
     param <- subset(as.data.table(self), id == aid)
 
-    if (nrow(param)==0)  {
-      return(stopwarn(error, sprintf("%s is not in the parameter set.",aid)))
+    if (nrow(param) == 0) {
+      return(stopwarn(error, sprintf("%s is not in the parameter set.", aid)))
     }
 
     # if(param$support[[1]]$class() == "integer")
     #   value <- round(value)
 
     if (length(value) > 1) {
-      if(!param$support[[1]]$contains(Tuple$new(value), all = TRUE)) {
+      if (!param$support[[1]]$contains(Tuple$new(value), all = TRUE)) {
         stop(Tuple$new(value)$strprint(), " does not lie in the support of parameter ", aid)
       }
     } else {
-      if(!param$support[[1]]$contains(value, all = TRUE)) {
+      if (!param$support[[1]]$contains(value, all = TRUE)) {
         stop(value, " does not lie in the support of parameter ", aid)
       }
     }
 
 
-    private$.parameters[unlist(private$.parameters[,"id"]) %in% param$id, "value"] <- list(value)
+    private$.parameters[unlist(private$.parameters[, "id"]) %in% param$id, "value"] <- list(value)
   }
 
   self$update()
@@ -395,18 +404,21 @@ ParameterSet$set("public","setParameterValue",function(..., lst = NULL, error = 
 #' @return An R6 object of class ParameterSet.
 #'
 #' @export
-merge.ParameterSet <- function(x, y, ...){}
-ParameterSet$set("public","merge",function(y, ...){
-  newsets = c(list(y), list(...))
-  lapply(newsets, function(x) checkmate::assert(inherits(x,"ParameterSet"),.var.name = "All objects in merge must be ParameterSets"))
+merge.ParameterSet <- function(x, y, ...) {}
+ParameterSet$set("public", "merge", function(y, ...) {
+  newsets <- c(list(y), list(...))
+  lapply(newsets, function(x) checkmate::assert(inherits(x, "ParameterSet"), .var.name = "All objects in merge must be ParameterSets"))
 
-  newpar = rbind(as.data.table(self),
-                 data.table::rbindlist(lapply(newsets, function(x) as.data.table(x))))
+  newpar <- rbind(
+    as.data.table(self),
+    data.table::rbindlist(lapply(newsets, function(x) as.data.table(x)))
+  )
 
-  if(any(table(newpar$id)>1))
+  if (any(table(newpar$id) > 1)) {
     stop("IDs must be unique. Try using makeUniqueDistributions first.")
-  else
+  } else {
     private$.parameters <- newpar
+  }
   invisible(self)
 })
 
@@ -425,7 +437,7 @@ ParameterSet$set("public","merge",function(y, ...){
 #' @return A data.table.
 #'
 #' @export
-as.data.table.ParameterSet <- function(x,...){
+as.data.table.ParameterSet <- function(x, ...) {
   x$.__enclos_env__$private$.parameters
 }
 
@@ -444,24 +456,28 @@ as.data.table.ParameterSet <- function(x,...){
 #' @return An R6 object of class ParameterSet.
 #'
 #' @export
-as.ParameterSet <- function(x,...){
+as.ParameterSet <- function(x, ...) {
   UseMethod("as.ParameterSet", x)
 }
 
 #' @rdname as.ParameterSet
 #' @export
-as.ParameterSet.data.table <- function(x,...){
-  return(ParameterSet$new(id = x$id, value = x$value, support = x$support,
-                          settable = x$settable,
-                          updateFunc = x$updateFunc,
-                          description = x$description))
+as.ParameterSet.data.table <- function(x, ...) {
+  return(ParameterSet$new(
+    id = x$id, value = x$value, support = x$support,
+    settable = x$settable,
+    updateFunc = x$updateFunc,
+    description = x$description
+  ))
 }
 
 #' @rdname as.ParameterSet
 #' @export
-as.ParameterSet.list <- function(x,...){
-  return(ParameterSet$new(id = x$id, value = x$value, support = x$support,
-                          settable = x$settable,
-                          updateFunc = x$updateFunc,
-                          description = x$description))
+as.ParameterSet.list <- function(x, ...) {
+  return(ParameterSet$new(
+    id = x$id, value = x$value, support = x$support,
+    settable = x$settable,
+    updateFunc = x$updateFunc,
+    description = x$description
+  ))
 }

@@ -29,27 +29,29 @@ NULL
 # LogisticKernel Kernel Definition
 #-------------------------------------------------------------
 LogisticKernel <- R6Class("LogisticKernel", inherit = Kernel, lock_objects = F)
-LogisticKernel$set("public","name","LogisticKernel")
-LogisticKernel$set("public","short_name","Logis")
-LogisticKernel$set("public","description","Logistic Kernel")
-LogisticKernel$set("public","squared2Norm",function(){
-  return(1/6)
+LogisticKernel$set("public", "name", "LogisticKernel")
+LogisticKernel$set("public", "short_name", "Logis")
+LogisticKernel$set("public", "description", "Logistic Kernel")
+LogisticKernel$set("public", "squared2Norm", function() {
+  return(1 / 6)
 })
-LogisticKernel$set("public","variance",function(){
-  return(pi^2/3)
+LogisticKernel$set("public", "variance", function() {
+  return(pi^2 / 3)
 })
-LogisticKernel$set("public","initialize",function(decorators = NULL){
-  super$initialize(decorators = decorators,
-                   support = Reals$new())
+LogisticKernel$set("public", "initialize", function(decorators = NULL) {
+  super$initialize(
+    decorators = decorators,
+    support = Reals$new()
+  )
 })
-LogisticKernel$set("private",".pdf",function(x){
+LogisticKernel$set("private", ".pdf", function(x) {
   (exp(x) + 2 + exp(-x))^-1
 })
-LogisticKernel$set("private",".cdf",function(x){
-  exp(x)/(exp(x)+1)
+LogisticKernel$set("private", ".cdf", function(x) {
+  exp(x) / (exp(x) + 1)
 })
-LogisticKernel$set("private",".quantile",function(p){
-  log(p/(1-p))
+LogisticKernel$set("private", ".quantile", function(p) {
+  log(p / (1 - p))
 })
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel", Support = "\u211D", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel", Support = "\u211D", Packages = "-"))
