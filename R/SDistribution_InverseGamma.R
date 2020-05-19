@@ -191,7 +191,6 @@ InverseGamma$set("private", ".rand", function(n) {
     )
   }
 })
-InverseGamma$set("private", ".log", TRUE)
 InverseGamma$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 InverseGamma$set("public", "initialize", function(shape = 1, scale = 1, decorators = NULL,

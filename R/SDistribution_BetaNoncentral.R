@@ -130,7 +130,6 @@ BetaNoncentral$set("private", ".rand", function(n) {
     vec = test_list(shape1)
   )
 })
-BetaNoncentral$set("private", ".log", TRUE)
 BetaNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,

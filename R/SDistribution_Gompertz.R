@@ -131,7 +131,6 @@ Gompertz$set("private", ".rand", function(n) {
     )
   }
 })
-Gompertz$set("private", ".log", TRUE)
 Gompertz$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Gompertz$set("public", "initialize", function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {

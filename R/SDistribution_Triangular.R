@@ -246,7 +246,6 @@ Triangular$set("private", ".rand", function(n) {
     )
   }
 })
-Triangular$set("private", ".log", TRUE)
 Triangular$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Triangular$set("public", "initialize", function(lower = 0, upper = 1, mode = (lower + upper) / 2, symmetric = FALSE,

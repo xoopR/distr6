@@ -148,7 +148,6 @@ StudentT$set("private", ".rand", function(n) {
     vec = test_list(df)
   )
 })
-StudentT$set("private", ".log", TRUE)
 StudentT$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 StudentT$set("public", "initialize", function(df = 1, decorators = NULL, verbose = FALSE) {

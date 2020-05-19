@@ -164,7 +164,6 @@ Binomial$set("private", ".rand", function(n) {
     vec = test_list(size)
   )
 })
-Binomial$set("private", ".log", TRUE)
 Binomial$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Binomial$set("public", "initialize", function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE) {

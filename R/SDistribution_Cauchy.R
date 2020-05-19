@@ -133,7 +133,6 @@ Cauchy$set("private", ".rand", function(n) {
     vec = test_list(location)
   )
 })
-Cauchy$set("private", ".log", TRUE)
 Cauchy$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Cauchy$set("private", ".getRefParams", function(paramlst) {

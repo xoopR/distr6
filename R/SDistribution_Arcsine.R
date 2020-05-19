@@ -105,50 +105,31 @@ Arcsine$set("private", ".pdf", function(x, log = FALSE) {
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")
 
-  pdf <- matrix(nrow = nrow(x), ncol = length(lower))
-  for (i in seq_along(lower)) {
-    for (j in 1:nrow(x)) {
-      if (!log) {
-        pdf[j, i] <- (pi * sqrt((x[j] - lower[i]) * (upper[i] - x[j])))^-1
-      } else {
-        pdf[j, i] <- -log(pi) - log(x[j] - lower[i]) / 2 - log(upper[i] - x[j]) / 2
-      }
-    }
+  if (checkmate::testList(lower)) {
+    return(C_ArcsinePdf(x, unlist(lower), unlist(upper), log))
+  } else {
+    return(as.numeric(C_ArcsinePdf(x, lower, upper, log)))
   }
-
-  return(pdf)
 })
 Arcsine$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")
 
-  cdf <- matrix(nrow = nrow(x), ncol = length(lower))
-  for (i in seq_along(lower)) {
-    for (j in 1:nrow(x)) {
-      cdf[j, i] <- (2 / pi) * (asin(sqrt((x - lower) / (upper - lower))))
-    }
+  if (checkmate::testList(lower)) {
+    return(C_ArcsineCdf(x, unlist(lower), unlist(upper), lower.tail, log.p))
+  } else {
+    return(as.numeric(C_ArcsineCdf(x, lower, upper, lower.tail, log.p)))
   }
-
-  if (!lower.tail) cdf <- 1 - cdf
-  if (log.p) cdf <- log(cdf)
-
-  return(cdf)
 })
 Arcsine$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   lower <- self$getParameterValue("lower")
   upper <- self$getParameterValue("upper")
 
-  if (log.p) p <- exp(p)
-  if (!lower.tail) p <- 1 - p
-
-  quantile <- matrix(nrow = nrow(x), ncol = length(lower))
-  for (i in seq_along(lower)) {
-    for (j in 1:nrow(x)) {
-      quantile[j, i] <- ((upper - lower) * (sin(p * pi * 0.5)^2)) + lower
-    }
+  if (checkmate::testList(lower)) {
+    return(C_ArcsineQuantile(x, unlist(lower), unlist(upper), lower.tail, log.p))
+  } else {
+    return(as.numeric(C_ArcsineQuantile(x, lower, upper, lower.tail, log.p)))
   }
-
-  return(quantile)
 })
 Arcsine$set("private", ".rand", function(n) {
   self$quantile(runif(n))

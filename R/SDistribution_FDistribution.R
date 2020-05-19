@@ -169,7 +169,6 @@ FDistribution$set("private", ".rand", function(n) {
     vec = test_list(df1)
   )
 })
-FDistribution$set("private", ".log", TRUE)
 FDistribution$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 FDistribution$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {

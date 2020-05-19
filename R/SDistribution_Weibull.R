@@ -177,7 +177,6 @@ Weibull$set("private", ".rand", function(n) {
     vec = test_list(shape)
   )
 })
-Weibull$set("private", ".log", TRUE)
 Weibull$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Weibull$set("public", "initialize", function(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE) {

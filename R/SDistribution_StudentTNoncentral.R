@@ -134,7 +134,6 @@ StudentTNoncentral$set("private", ".rand", function(n) {
     vec = test_list(df)
   )
 })
-StudentTNoncentral$set("private", ".log", TRUE)
 StudentTNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 StudentTNoncentral$set("public", "initialize", function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {

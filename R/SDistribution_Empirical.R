@@ -142,7 +142,6 @@ Empirical$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FAL
 Empirical$set("private", ".rand", function(n) {
   sample(unlist(self$properties$support$elements), n, TRUE)
 })
-Empirical$set("private", ".log", TRUE)
 Empirical$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Empirical$set("public", "initialize", function(samples, decorators = NULL, verbose = FALSE) {

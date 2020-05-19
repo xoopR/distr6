@@ -162,7 +162,6 @@ ChiSquaredNoncentral$set("private", ".rand", function(n) {
     vec = test_list(df)
   )
 })
-ChiSquaredNoncentral$set("private", ".log", TRUE)
 ChiSquaredNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 ChiSquaredNoncentral$set("public", "initialize", function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {

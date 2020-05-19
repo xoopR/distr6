@@ -173,7 +173,6 @@ Uniform$set("private", ".rand", function(n) {
     vec = test_list(min)
   )
 })
-Uniform$set("private", ".log", TRUE)
 Uniform$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Uniform$set("public", "initialize", function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE) {

@@ -153,7 +153,6 @@ Laplace$set("private", ".rand", function(n) {
     )
   }
 })
-Laplace$set("private", ".log", TRUE)
 Laplace$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Laplace$set("public", "initialize", function(mean = 0, scale = 1, var = NULL,

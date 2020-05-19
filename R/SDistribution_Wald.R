@@ -137,7 +137,6 @@ Wald$set("private", ".rand", function(n) {
     )
   }
 })
-Wald$set("private", ".log", TRUE)
 Wald$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Wald$set("public", "initialize", function(mean = 1, shape = 1,

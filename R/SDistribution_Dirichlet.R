@@ -132,7 +132,6 @@ Dirichlet$set("private", ".rand", function(n) {
     )
   }
 })
-Dirichlet$set("private", ".log", TRUE)
 Dirichlet$set("private", ".traits", list(valueSupport = "continuous", variateForm = "multivariate"))
 
 Dirichlet$set("public", "initialize", function(params = c(1, 1), decorators = NULL, verbose = FALSE) {

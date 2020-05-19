@@ -197,7 +197,6 @@ Frechet$set("private", ".rand", function(n) {
     )
   }
 })
-Frechet$set("private", ".log", TRUE)
 Frechet$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Frechet$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {

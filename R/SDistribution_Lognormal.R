@@ -196,7 +196,6 @@ Lognormal$set("private", ".rand", function(n) {
     vec = test_list(meanlog)
   )
 })
-Lognormal$set("private", ".log", TRUE)
 Lognormal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Lognormal$set("public", "initialize", function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,

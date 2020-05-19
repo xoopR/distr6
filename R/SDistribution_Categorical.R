@@ -123,7 +123,6 @@ Categorical$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = F
 Categorical$set("private", ".rand", function(n) {
   sample(self$support$elements, n, TRUE, self$getParameterValue("probs"))
 })
-Categorical$set("private", ".log", TRUE)
 Categorical$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Categorical$set("public", "initialize", function(..., probs, decorators = NULL, verbose = FALSE) {

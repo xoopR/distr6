@@ -140,7 +140,6 @@ Degenerate$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FA
 Degenerate$set("private", ".rand", function(n) {
   rep(self$getParameterValue("mean"), n)
 })
-Degenerate$set("private", ".log", TRUE)
 Degenerate$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Degenerate$set("public", "initialize", function(mean = 0, decorators = NULL, verbose = FALSE) {

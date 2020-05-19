@@ -31,6 +31,50 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// C_ArcsinePdf
+NumericMatrix C_ArcsinePdf(NumericVector x, NumericVector min, NumericVector max, bool logp);
+RcppExport SEXP _distr6_C_ArcsinePdf(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_ArcsinePdf(x, min, max, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_ArcsineCdf
+NumericMatrix C_ArcsineCdf(NumericVector x, NumericVector min, NumericVector max, bool lower, bool logp);
+RcppExport SEXP _distr6_C_ArcsineCdf(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_ArcsineCdf(x, min, max, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_ArcsineQuantile
+NumericMatrix C_ArcsineQuantile(NumericVector x, NumericVector min, NumericVector max, bool lower, bool logp);
+RcppExport SEXP _distr6_C_ArcsineQuantile(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_ArcsineQuantile(x, min, max, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
 // C_WeightedDiscretePdf
 NumericVector C_WeightedDiscretePdf(NumericVector x, NumericVector data, NumericVector pdf, bool logp);
 RcppExport SEXP _distr6_C_WeightedDiscretePdf(SEXP xSEXP, SEXP dataSEXP, SEXP pdfSEXP, SEXP logpSEXP) {
@@ -151,6 +195,9 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_Choose", (DL_FUNC) &_distr6_C_Choose, 2},
     {"_distr6_C_NegativeBinomialPdf", (DL_FUNC) &_distr6_C_NegativeBinomialPdf, 4},
+    {"_distr6_C_ArcsinePdf", (DL_FUNC) &_distr6_C_ArcsinePdf, 4},
+    {"_distr6_C_ArcsineCdf", (DL_FUNC) &_distr6_C_ArcsineCdf, 5},
+    {"_distr6_C_ArcsineQuantile", (DL_FUNC) &_distr6_C_ArcsineQuantile, 5},
     {"_distr6_C_WeightedDiscretePdf", (DL_FUNC) &_distr6_C_WeightedDiscretePdf, 4},
     {"_distr6_C_Vec_WeightedDiscretePdf", (DL_FUNC) &_distr6_C_Vec_WeightedDiscretePdf, 4},
     {"_distr6_C_WeightedDiscreteCdf", (DL_FUNC) &_distr6_C_WeightedDiscreteCdf, 5},

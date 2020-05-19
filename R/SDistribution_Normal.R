@@ -152,7 +152,6 @@ Normal$set("private", ".rand", function(n) {
     vec = test_list(mean)
   )
 })
-Normal$set("private", ".log", TRUE)
 Normal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Normal$set("public", "initialize", function(mean = 0, var = 1, sd = NULL, prec = NULL,

@@ -133,7 +133,6 @@ Exponential$set("private", ".rand", function(n) {
     vec = test_list(rate)
   )
 })
-Exponential$set("private", ".log", TRUE)
 Exponential$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Exponential$set("public", "initialize", function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE) {

@@ -9,6 +9,18 @@ C_NegativeBinomialPdf <- function(x, size, prob, form) {
     .Call(`_distr6_C_NegativeBinomialPdf`, x, size, prob, form)
 }
 
+C_ArcsinePdf <- function(x, min, max, logp) {
+    .Call(`_distr6_C_ArcsinePdf`, x, min, max, logp)
+}
+
+C_ArcsineCdf <- function(x, min, max, lower, logp) {
+    .Call(`_distr6_C_ArcsineCdf`, x, min, max, lower, logp)
+}
+
+C_ArcsineQuantile <- function(x, min, max, lower, logp) {
+    .Call(`_distr6_C_ArcsineQuantile`, x, min, max, lower, logp)
+}
+
 C_WeightedDiscretePdf <- function(x, data, pdf, logp) {
     .Call(`_distr6_C_WeightedDiscretePdf`, x, data, pdf, logp)
 }

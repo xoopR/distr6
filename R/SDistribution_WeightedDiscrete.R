@@ -138,7 +138,7 @@ WeightedDiscrete$set("private", ".pdf", function(x, log = FALSE) {
     data <- matrix(as.numeric(data[names(data) == "x"]), ncol = ncol(pdf))
     return(C_Vec_WeightedDiscretePdf(x, data$x, data$pdf, log))
   } else {
-    return(C_WeightedDiscretePdf(x, data, pdf, log))
+    return(C_WeightedDiscretePdf(x, data$x, data$pdf, log))
   }
 })
 WeightedDiscrete$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
@@ -176,7 +176,6 @@ WeightedDiscrete$set("private", ".rand", function(n) {
   }
   return(rand)
 })
-WeightedDiscrete$set("private", ".log", TRUE)
 WeightedDiscrete$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 WeightedDiscrete$set("private", ".data", "Deprecated - use self$getParameterValue instead.")

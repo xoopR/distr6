@@ -173,7 +173,6 @@ Beta$set("private", ".rand", function(n) {
     vec = test_list(shape1)
   )
 })
-Beta$set("private", ".log", TRUE)
 Beta$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL, verbose = FALSE) {

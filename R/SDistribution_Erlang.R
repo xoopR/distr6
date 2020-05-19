@@ -154,7 +154,6 @@ Erlang$set("private", ".rand", function(n) {
     vec = test_list(shape)
   )
 })
-Erlang$set("private", ".log", TRUE)
 Erlang$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Erlang$set("public", "initialize", function(shape = 1, rate = 1, scale = NULL, decorators = NULL,

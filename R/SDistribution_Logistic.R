@@ -149,7 +149,6 @@ Logistic$set("private", ".rand", function(n) {
     vec = test_list(location)
   )
 })
-Logistic$set("private", ".log", TRUE)
 Logistic$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Logistic$set("public", "initialize", function(mean = 0, scale = 1, sd = NULL,

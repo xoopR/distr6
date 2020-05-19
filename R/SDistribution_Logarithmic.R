@@ -157,7 +157,6 @@ Logarithmic$set("private", ".rand", function(n) {
     extraDistr::rlgser(n, theta = self$getParameterValue("theta"))
   }
 })
-Logarithmic$set("private", ".log", TRUE)
 Logarithmic$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
 
 Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL, verbose = FALSE) {

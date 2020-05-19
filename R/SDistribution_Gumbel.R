@@ -163,7 +163,6 @@ Gumbel$set("private", ".rand", function(n) {
     )
   }
 })
-Gumbel$set("private", ".log", TRUE)
 Gumbel$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 Gumbel$set("public", "initialize", function(location = 0, scale = 1,

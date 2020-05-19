@@ -146,7 +146,6 @@ Multinomial$set("private", ".rand", function(n) {
     )
   }
 })
-Multinomial$set("private", ".log", TRUE)
 Multinomial$set("private", ".traits", list(valueSupport = "discrete", variateForm = "multivariate"))
 
 Multinomial$set("public", "initialize", function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE) {

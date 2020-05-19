@@ -143,7 +143,6 @@ ChiSquared$set("private", ".rand", function(n) {
     vec = test_list(df)
   )
 })
-ChiSquared$set("private", ".log", TRUE)
 ChiSquared$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
 ChiSquared$set("public", "initialize", function(df = 1, decorators = NULL, verbose = FALSE) {
