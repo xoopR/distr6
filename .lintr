@@ -1,0 +1,7 @@
+linters: with_defaults(
+    # lintr defaults: https://github.com/jimhester/lintr#available-linters
+    # the following setup changes/removes certain linters
+    cyclocomp_linter = NULL,
+    commented_code_linter = NULL,
+    line_length_linter = line_length_linter(100)
+    )
