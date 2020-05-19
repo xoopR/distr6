@@ -19,9 +19,9 @@ test_that("properties & traits", {
   expect_equal(FDistribution$new()$symmetry, "asymmetric")
   expect_equal(FDistribution$new()$sup, Inf)
   expect_equal(FDistribution$new()$inf, 0)
-  expect_equal(FDistribution$new()$dmax, Inf)
+  expect_equal(FDistribution$new()$dmax, .Machine$double.xmax)
   expect_equal(FDistribution$new()$dmin, 0)
-  expect_equal(FDistribution$new(df1 = 5, df2 = 5)$dmax, Inf)
+  expect_equal(FDistribution$new(df1 = 5, df2 = 5)$dmax, .Machine$double.xmax)
   expect_equal(FDistribution$new(df1 = 5, df2 = 5)$dmin, .Machine$double.eps)
 })
 

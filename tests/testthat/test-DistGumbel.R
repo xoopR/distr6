@@ -17,8 +17,8 @@ test_that("properties & traits",{
   expect_equal(Gumbel$new()$symmetry, "symmetric")
   expect_equal(Gumbel$new()$sup, Inf)
   expect_equal(Gumbel$new()$inf, -Inf)
-  expect_equal(Gumbel$new()$dmax, Inf)
-  expect_equal(Gumbel$new()$dmin, -Inf)
+  expect_equal(Gumbel$new()$dmax, .Machine$double.xmax)
+  expect_equal(Gumbel$new()$dmin, -.Machine$double.xmax)
 })
 
 c = Gumbel$new(location = 0, scale = 1)

@@ -17,8 +17,8 @@ test_that("properties & traits",{
   expect_equal(Cauchy$new()$symmetry, "symmetric")
   expect_equal(Cauchy$new()$sup, Inf)
   expect_equal(Cauchy$new()$inf, -Inf)
-  expect_equal(Cauchy$new()$dmax, Inf)
-  expect_equal(Cauchy$new()$dmin, -Inf)
+  expect_equal(Cauchy$new()$dmax, .Machine$double.xmax)
+  expect_equal(Cauchy$new()$dmin, -.Machine$double.xmax)
 })
 
 c = Cauchy$new(location = 0, scale = 1)

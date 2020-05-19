@@ -15,7 +15,7 @@ test_that("properties & traits",{
   expect_equal(InverseGamma$new()$symmetry, "asymmetric")
   expect_equal(InverseGamma$new()$sup, Inf)
   expect_equal(InverseGamma$new()$inf, 0)
-  expect_equal(InverseGamma$new()$dmax, Inf)
+  expect_equal(InverseGamma$new()$dmax, .Machine$double.xmax)
   expect_equal(InverseGamma$new()$dmin, .Machine$double.eps)
 })
 

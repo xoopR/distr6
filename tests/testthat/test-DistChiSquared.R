@@ -15,9 +15,9 @@ test_that("properties & traits", {
   expect_equal(ChiSquared$new()$symmetry, "asymmetric")
   expect_equal(ChiSquared$new()$sup, Inf)
   expect_equal(ChiSquared$new()$inf, 0)
-  expect_equal(ChiSquared$new()$dmax, Inf)
+  expect_equal(ChiSquared$new()$dmax, .Machine$double.xmax)
   expect_equal(ChiSquared$new()$dmin, 0)
-  expect_equal(ChiSquared$new(df=2)$dmax, Inf)
+  expect_equal(ChiSquared$new(df=2)$dmax, .Machine$double.xmax)
   expect_equal(ChiSquared$new(df=2)$dmin, .Machine$double.eps)
 })
 

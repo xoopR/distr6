@@ -12,7 +12,7 @@ test_that("properties & traits",{
   expect_equal(Frechet$new()$symmetry, "asymmetric")
   expect_equal(Frechet$new(minimum = 3)$inf, 3)
   expect_equal(Frechet$new(minimum = 3)$sup, Inf)
-  expect_equal(Frechet$new()$dmax, Inf)
+  expect_equal(Frechet$new()$dmax, .Machine$double.xmax)
   expect_equal(Frechet$new(minimum=3)$dmin, 3 + .Machine$double.eps)
   expect_equal(Frechet$new(scale = 3)$valueSupport, "continuous")
   expect_equal(Frechet$new(scale = 3)$variateForm, "univariate")

@@ -20,7 +20,7 @@ test_that("properties & traits",{
   expect_equal(Loglogistic$new()$sup, Inf)
   expect_equal(Loglogistic$new()$inf, 0)
   expect_equal(Loglogistic$new(location=2)$inf, 2)
-  expect_equal(Loglogistic$new()$dmax, Inf)
+  expect_equal(Loglogistic$new()$dmax, .Machine$double.xmax)
   expect_equal(Loglogistic$new()$dmin, .Machine$double.eps)
 })
 
