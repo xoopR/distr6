@@ -1,3 +1,7 @@
+# distr6 1.3.6.9000
+
+* Minor patches for set6 support
+
 # distr6 1.3.6
 
 * Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending

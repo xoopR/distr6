@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.3.6
+Version: 1.3.6.9000
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -68,7 +68,7 @@ Imports:
   data.table,
   R6,
   R62S3 (>= 1.4.0),
-  set6 (>= 0.1.3),
+  set6 (>= 0.1.4),
   stats
 Suggests:
   expint,
@@ -103,9 +103,9 @@ Collate:
     'Distribution_SDistribution.R'
     'Kernel_Cosine.R'
     'Kernel_Epanechnikov.R'
-    'Kernel_Logistic.R'
+    'Kernel_Logis.R'
     'Kernel_Normal.R'
-    'Kernel_Quartic.R'
+    'Kernel_Quart.R'
     'Kernel_Sigmoid.R'
     'Kernel_Silverman.R'
     'Kernel_Triangular.R'
@@ -139,8 +139,8 @@ Collate:
     'SDistribution_InverseGamma.R'
     'SDistribution_Laplace.R'
     'SDistribution_Logarithmic.R'
-    'SDistribution_Logistic.R'
-    'SDistribution_Loglogistic.R'
+    'SDistribution_Logis.R'
+    'SDistribution_Loglogis.R'
     'SDistribution_Lognormal.R'
     'SDistribution_Multinomial.R'
     'SDistribution_MultivariateNormal.R'

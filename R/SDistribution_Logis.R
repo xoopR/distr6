@@ -93,7 +93,7 @@ Logistic$set("private",".getRefParams", function(paramlst){
 })
 
 Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
-                                          decorators = NULL, verbose = FALSE){
+                                            decorators = NULL, verbose = FALSE){
 
   private$.parameters <- getParameterSet(self, mean, scale, sd, verbose)
   self$setParameterValue(mean = mean, scale = scale, sd = sd)
