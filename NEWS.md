@@ -1,3 +1,8 @@
+# distr6 1.3.7
+
+* Minor internal updates
+* Next release will be 1.4.0, due to nature of R6 this will break dependencies.
+
 # distr6 1.3.6
 
 * Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending
