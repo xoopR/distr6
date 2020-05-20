@@ -17,9 +17,9 @@ test_that("properties & traits", {
   expect_equal(ChiSquaredNoncentral$new()$symmetry, "asymmetric")
   expect_equal(ChiSquaredNoncentral$new()$sup, Inf)
   expect_equal(ChiSquaredNoncentral$new()$inf, 0)
-  expect_equal(ChiSquaredNoncentral$new()$dmax, Inf)
+  expect_equal(ChiSquaredNoncentral$new()$dmax, .Machine$double.xmax)
   expect_equal(ChiSquaredNoncentral$new()$dmin, 0)
-  expect_equal(ChiSquaredNoncentral$new(df=2)$dmax, Inf)
+  expect_equal(ChiSquaredNoncentral$new(df=2)$dmax, .Machine$double.xmax)
   expect_equal(ChiSquaredNoncentral$new(df=2)$dmin, .Machine$double.eps)
 })
 

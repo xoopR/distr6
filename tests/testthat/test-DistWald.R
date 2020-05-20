@@ -18,7 +18,7 @@ test_that("properties & traits",{
   expect_equal(Wald$new()$symmetry, "symmetric")
   expect_equal(Wald$new()$sup, Inf)
   expect_equal(Wald$new()$inf, 0)
-  expect_equal(Wald$new()$dmax, Inf)
+  expect_equal(Wald$new()$dmax, .Machine$double.xmax)
   expect_equal(Wald$new()$dmin, .Machine$double.eps)
 })
 

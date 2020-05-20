@@ -17,7 +17,7 @@ test_that("properties & traits",{
   expect_equal(x$symmetry, "asymmetric")
   expect_equal(x$sup, Inf)
   expect_equal(x$inf, 0)
-  expect_equal(x$dmax, Inf)
+  expect_equal(x$dmax, .Machine$double.xmax)
   expect_equal(x$dmin, 0)
 })
 

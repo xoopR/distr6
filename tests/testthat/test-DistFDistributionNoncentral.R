@@ -21,9 +21,9 @@ test_that("properties & traits", {
   expect_equal(FDistributionNoncentral$new()$symmetry, "asymmetric")
   expect_equal(FDistributionNoncentral$new()$sup, Inf)
   expect_equal(FDistributionNoncentral$new()$inf, 0)
-  expect_equal(FDistributionNoncentral$new()$dmax, Inf)
+  expect_equal(FDistributionNoncentral$new()$dmax, .Machine$double.xmax)
   expect_equal(FDistributionNoncentral$new()$dmin, 0)
-  expect_equal(FDistributionNoncentral$new(df1 = 5, df2 = 5)$dmax, Inf)
+  expect_equal(FDistributionNoncentral$new(df1 = 5, df2 = 5)$dmax, .Machine$double.xmax)
   expect_equal(FDistributionNoncentral$new(df1 = 5, df2 = 5)$dmin, .Machine$double.eps)
 })
 

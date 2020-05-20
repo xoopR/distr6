@@ -21,7 +21,7 @@ test_that("properties & traits",{
   expect_equal(Exponential$new()$symmetry, "asymmetric")
   expect_equal(Exponential$new()$sup, Inf)
   expect_equal(Exponential$new()$inf, 0)
-  expect_equal(Exponential$new()$dmax, Inf)
+  expect_equal(Exponential$new()$dmax, .Machine$double.xmax)
   expect_equal(Exponential$new()$dmin, 0)
 })
 

@@ -8,7 +8,7 @@ test_that("properties & traits",{
   expect_equal(Logarithmic$new()$symmetry, "asymmetric")
   expect_equal(Logarithmic$new()$sup, Inf)
   expect_equal(Logarithmic$new()$inf, 1)
-  expect_equal(Logarithmic$new()$dmax, Inf)
+  expect_equal(Logarithmic$new()$dmax, .Machine$double.xmax)
   expect_equal(Logarithmic$new()$dmin, 1)
 })
 

@@ -43,7 +43,7 @@ test_that("properties & traits",{
   expect_equal(Lognormal$new()$inf, 0)
   expect_equal(Lognormal$new()$sup, Inf)
   expect_equal(Lognormal$new()$dmin, .Machine$double.eps)
-  expect_equal(Lognormal$new()$dmax, Inf)
+  expect_equal(Lognormal$new()$dmax, .Machine$double.xmax)
   expect_equal(Lognormal$new()$valueSupport, "continuous")
   expect_equal(Lognormal$new()$variateForm, "univariate")
 })
