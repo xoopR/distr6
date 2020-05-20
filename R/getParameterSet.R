@@ -687,7 +687,7 @@ getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog 
       updateFunc = list(
         function(self) {
           log(self$getParameterValue("mean") / sqrt(1 +
-            self$getParameterValue("var") / self$getParameterValue("mean")^2))
+                                                      self$getParameterValue("var") / self$getParameterValue("mean")^2))
         },
         function(self) log(1 + self$getParameterValue("var") / self$getParameterValue("mean")^2),
         function(self) (log(1 + self$getParameterValue("var") / self$getParameterValue("mean")^2))^0.5,
@@ -750,30 +750,34 @@ getParameterSet.MultivariateNormal <- function(x, mean, cov, prec = NULL, verbos
 
   K <- length(mean)
   ps <- ParameterSet$new(
-    id = list("mean", "cov", "prec", "K"),
+    id = list("mean", "cov", "prec"),
+
     value = list(
-      rep(0, K), matrix(rep(0, K^2), nrow = K),
-      matrix(rep(0, K^2), nrow = K), K
+      rep(0, K),
+      matrix(rep(0, K^2), nrow = K),
+      matrix(rep(0, K^2), nrow = K)
     ),
+
     support = list(
-      setpower(Reals$new(), K), setpower(Reals$new(), K^2),
-      setpower(Reals$new(), K^2), PosNaturals$new()
+      setpower(Reals$new(), K),
+      setpower(Reals$new(), K^2),
+      setpower(Reals$new(), K^2)
     ),
-    settable = list(TRUE, cov.bool, prec.bool, FALSE),
+
+    settable = list(TRUE, cov.bool, prec.bool),
+
     updateFunc = list(
       NULL, NULL,
       function(self) {
-        solve(matrix(self$getParameterValue("cov"),
-          nrow = self$getParameterValue("K")
+        list(solve(matrix(self$getParameterValue("cov"),
+                     nrow = length(self$getParameterValue("mean")))
         ))
-      },
-      function(self) length(self$getParameterValue("mean"))
-    ),
+      }),
+
     description = list(
       "Vector of means - Location Parameter.",
       "Covariance matrix - Scale Parameter.",
-      "Precision matrix - Scale Parameter.",
-      "Number of components"
+      "Precision matrix - Scale Parameter."
     )
   )
 

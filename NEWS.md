@@ -2,6 +2,10 @@
 
 ## Minor Updates
 
+### Added/Edited Functionality
+
+* Multivariate functions in `VectorDistribution` now return arrays
+
 ### Deprecated Functions/Fields/Methods
 
 * Individual property and trait accessors deprecated: `$support, $symmetry, $kurtosisType, $skewnessType, $valueSupport, $variateForm, $type`
@@ -23,6 +27,8 @@
 * Analytical `log` and `lower.tail` now available for all `SDistributions` and imputation possible for customs with `CoreStatistics`
 * `NegativeBinomial` now uses Rcpp for d/p/q/r
 * Distributions from `stats` are now vectorised across parameters in C
+* `Degenerate`, `ShiftedLoglogistic` now Rcpp
+* Removed redundant `K` parameter from `MultivariateNormal`
 
 # distr6 1.3.5
 
