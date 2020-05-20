@@ -17,20 +17,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// C_NegativeBinomialPdf
-NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, StringVector form);
-RcppExport SEXP _distr6_C_NegativeBinomialPdf(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP formSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type size(sizeSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type prob(probSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type form(formSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_NegativeBinomialPdf(x, size, prob, form));
-    return rcpp_result_gen;
-END_RCPP
-}
 // C_ArcsinePdf
 NumericMatrix C_ArcsinePdf(NumericVector x, NumericVector min, NumericVector max, bool logp);
 RcppExport SEXP _distr6_C_ArcsinePdf(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP logpSEXP) {
@@ -72,6 +58,108 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
     rcpp_result_gen = Rcpp::wrap(C_ArcsineQuantile(x, min, max, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_DegeneratePdf
+NumericMatrix C_DegeneratePdf(NumericVector x, NumericVector mean, bool logp);
+RcppExport SEXP _distr6_C_DegeneratePdf(SEXP xSEXP, SEXP meanSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_DegeneratePdf(x, mean, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_DegenerateCdf
+NumericMatrix C_DegenerateCdf(NumericVector x, NumericVector mean, bool lower, bool logp);
+RcppExport SEXP _distr6_C_DegenerateCdf(SEXP xSEXP, SEXP meanSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_DegenerateCdf(x, mean, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_DegenerateQuantile
+NumericMatrix C_DegenerateQuantile(NumericVector x, NumericVector mean, bool lower, bool logp);
+RcppExport SEXP _distr6_C_DegenerateQuantile(SEXP xSEXP, SEXP meanSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_DegenerateQuantile(x, mean, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_NegativeBinomialPdf
+NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, StringVector form);
+RcppExport SEXP _distr6_C_NegativeBinomialPdf(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP formSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type prob(probSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type form(formSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_NegativeBinomialPdf(x, size, prob, form));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_ShiftedLoglogisticPdf
+NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location, NumericVector shape, NumericVector scale, bool logp);
+RcppExport SEXP _distr6_C_ShiftedLoglogisticPdf(SEXP xSEXP, SEXP locationSEXP, SEXP shapeSEXP, SEXP scaleSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type shape(shapeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type scale(scaleSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_ShiftedLoglogisticPdf(x, location, shape, scale, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_ShiftedLoglogisticCdf
+NumericMatrix C_ShiftedLoglogisticCdf(NumericVector x, NumericVector location, NumericVector shape, NumericVector scale, bool lower, bool logp);
+RcppExport SEXP _distr6_C_ShiftedLoglogisticCdf(SEXP xSEXP, SEXP locationSEXP, SEXP shapeSEXP, SEXP scaleSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type shape(shapeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type scale(scaleSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_ShiftedLoglogisticCdf(x, location, shape, scale, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_ShiftedLoglogisticQuantile
+NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector location, NumericVector shape, NumericVector scale, bool lower, bool logp);
+RcppExport SEXP _distr6_C_ShiftedLoglogisticQuantile(SEXP xSEXP, SEXP locationSEXP, SEXP shapeSEXP, SEXP scaleSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type shape(shapeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type scale(scaleSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_ShiftedLoglogisticQuantile(x, location, shape, scale, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -194,10 +282,16 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_Choose", (DL_FUNC) &_distr6_C_Choose, 2},
-    {"_distr6_C_NegativeBinomialPdf", (DL_FUNC) &_distr6_C_NegativeBinomialPdf, 4},
     {"_distr6_C_ArcsinePdf", (DL_FUNC) &_distr6_C_ArcsinePdf, 4},
     {"_distr6_C_ArcsineCdf", (DL_FUNC) &_distr6_C_ArcsineCdf, 5},
     {"_distr6_C_ArcsineQuantile", (DL_FUNC) &_distr6_C_ArcsineQuantile, 5},
+    {"_distr6_C_DegeneratePdf", (DL_FUNC) &_distr6_C_DegeneratePdf, 3},
+    {"_distr6_C_DegenerateCdf", (DL_FUNC) &_distr6_C_DegenerateCdf, 4},
+    {"_distr6_C_DegenerateQuantile", (DL_FUNC) &_distr6_C_DegenerateQuantile, 4},
+    {"_distr6_C_NegativeBinomialPdf", (DL_FUNC) &_distr6_C_NegativeBinomialPdf, 4},
+    {"_distr6_C_ShiftedLoglogisticPdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticPdf, 5},
+    {"_distr6_C_ShiftedLoglogisticCdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticCdf, 6},
+    {"_distr6_C_ShiftedLoglogisticQuantile", (DL_FUNC) &_distr6_C_ShiftedLoglogisticQuantile, 6},
     {"_distr6_C_WeightedDiscretePdf", (DL_FUNC) &_distr6_C_WeightedDiscretePdf, 4},
     {"_distr6_C_Vec_WeightedDiscretePdf", (DL_FUNC) &_distr6_C_Vec_WeightedDiscretePdf, 4},
     {"_distr6_C_WeightedDiscreteCdf", (DL_FUNC) &_distr6_C_WeightedDiscreteCdf, 5},

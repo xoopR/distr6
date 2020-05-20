@@ -86,56 +86,28 @@ Degenerate$set("private", ".pdf", function(x, log = FALSE) {
   mean <- self$getParameterValue("mean")
 
   if (checkmate::testList(mean)) {
-    pdf <- matrix(ncol = length(mean), nrow = length(x))
-    for (i in seq_along(mean)) {
-      for (j in seq_along(x)) {
-        pdf[j, i] <- as.numeric(x[j] == mean[[i]])
-      }
-    }
+    return(C_DegeneratePdf(x, unlist(mean), log))
   } else {
-    pdf <- as.numeric(x == mean)
+    return(as.numeric(C_DegeneratePdf(x, mean, log)))
   }
-
-  if (log) pdf <- log(pdf)
-  return(pdf)
 })
 Degenerate$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   mean <- self$getParameterValue("mean")
 
   if (checkmate::testList(mean)) {
-    cdf <- matrix(ncol = length(mean), nrow = length(x))
-    for (i in seq_along(mean)) {
-      for (j in seq_along(x)) {
-        cdf[j, i] <- as.numeric(x[j] >= mean[[i]])
-      }
-    }
+    return(C_DegenerateCdf(x, unlist(mean), lower.tail, log.p))
   } else {
-    cdf <- as.numeric(x >= mean)
+    return(as.numeric(C_DegenerateCdf(x, mean, lower.tail, log.p)))
   }
-
-  if (lower.tail) cdf <- 1 - cdf
-  if (log.p) cdf <- log(cdf)
-
-  return(cdf)
 })
 Degenerate$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  if (log.p) p <- exp(p)
-  if (lower.tail) p <- 1 - p
-
   mean <- self$getParameterValue("mean")
 
   if (checkmate::testList(mean)) {
-    quantile <- matrix(ncol = length(mean), nrow = length(p))
-    for (i in seq_along(mean)) {
-      for (j in seq_along(p)) {
-        quantile[j, i] <- if (p[j] > 0) mean else -Inf
-      }
-    }
+    return(C_DegenerateQuantile(p, unlist(mean), lower.tail, log.p))
   } else {
-    quantile <- if (p > 0) mean else -Inf
+    return(as.numeric(C_DegenerateQuantile(p, mean, lower.tail, log.p)))
   }
-
-  return(quantile)
 })
 Degenerate$set("private", ".rand", function(n) {
   rep(self$getParameterValue("mean"), n)

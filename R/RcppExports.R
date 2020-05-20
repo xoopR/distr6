@@ -5,10 +5,6 @@ C_Choose <- function(x, y) {
     .Call(`_distr6_C_Choose`, x, y)
 }
 
-C_NegativeBinomialPdf <- function(x, size, prob, form) {
-    .Call(`_distr6_C_NegativeBinomialPdf`, x, size, prob, form)
-}
-
 C_ArcsinePdf <- function(x, min, max, logp) {
     .Call(`_distr6_C_ArcsinePdf`, x, min, max, logp)
 }
@@ -19,6 +15,34 @@ C_ArcsineCdf <- function(x, min, max, lower, logp) {
 
 C_ArcsineQuantile <- function(x, min, max, lower, logp) {
     .Call(`_distr6_C_ArcsineQuantile`, x, min, max, lower, logp)
+}
+
+C_DegeneratePdf <- function(x, mean, logp) {
+    .Call(`_distr6_C_DegeneratePdf`, x, mean, logp)
+}
+
+C_DegenerateCdf <- function(x, mean, lower, logp) {
+    .Call(`_distr6_C_DegenerateCdf`, x, mean, lower, logp)
+}
+
+C_DegenerateQuantile <- function(x, mean, lower, logp) {
+    .Call(`_distr6_C_DegenerateQuantile`, x, mean, lower, logp)
+}
+
+C_NegativeBinomialPdf <- function(x, size, prob, form) {
+    .Call(`_distr6_C_NegativeBinomialPdf`, x, size, prob, form)
+}
+
+C_ShiftedLoglogisticPdf <- function(x, location, shape, scale, logp) {
+    .Call(`_distr6_C_ShiftedLoglogisticPdf`, x, location, shape, scale, logp)
+}
+
+C_ShiftedLoglogisticCdf <- function(x, location, shape, scale, lower, logp) {
+    .Call(`_distr6_C_ShiftedLoglogisticCdf`, x, location, shape, scale, lower, logp)
+}
+
+C_ShiftedLoglogisticQuantile <- function(x, location, shape, scale, lower, logp) {
+    .Call(`_distr6_C_ShiftedLoglogisticQuantile`, x, location, shape, scale, lower, logp)
 }
 
 C_WeightedDiscretePdf <- function(x, data, pdf, logp) {

@@ -114,7 +114,9 @@ Empirical$set("public", "setParameterValue", function(..., lst = NULL, error = "
 Empirical$set("private", ".data", data.table::data.table())
 Empirical$set("private", ".total", numeric(1))
 Empirical$set("private", ".pdf", function(x, log = FALSE) {
-  pdf <- as.numeric(unlist(private$.data[match(round(x, 10), round(private$.data$samples, 10)), "N"] / private$.total))
+  pdf <- as.numeric(unlist(private$.data[match(round(x, 10),
+                                               round(private$.data$samples, 10)), "N"] /
+                             private$.total))
   if (log) pdf <- log(pdf)
 
   return(pdf)

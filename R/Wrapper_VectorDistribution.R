@@ -173,8 +173,12 @@ VectorDistribution$set("public", "initialize", function(distlist = NULL, distrib
               dpqr <- cbind(dpqr, a_dpqr)
             }
           } else {
-            for (i in 1:dim(x1)[3]) {
-              a_dpqr <- fun(unlist(x1[, , i]), log = log)
+            for (i in seq(dim(x1)[3])) {
+              mx <- x1[, , i]
+              if (class(mx)[1] == "numeric") {
+                mx = matrix(mx, nrow = 1)
+              }
+              a_dpqr <- fun(mx, log = log)
               a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
               dpqr <- cbind(dpqr, a_dpqr)
             }
@@ -201,7 +205,7 @@ VectorDistribution$set("public", "initialize", function(distlist = NULL, distrib
               dpqr <- cbind(dpqr, a_dpqr)
             }
           } else {
-            for (i in 1:dim(x1)[3]) {
+            for (i in seq(dim(x1)[3])) {
               a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
               a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
               dpqr <- cbind(dpqr, a_dpqr)
@@ -520,18 +524,21 @@ VectorDistribution$set("public", "pdf", function(..., log = FALSE, data) {
         dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
       )
     } else if (inherits(data, "array")) {
-      if (dim(data)[3] == 1) {
+      if (is.na(dim(data)[3])) {
         data <- array(rep(data, nrow(private$.wrappedModels)),
           dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
         )
       }
     }
     dpqr <- private$.pdf(data, log = log)
-    nc <- prod(dim(dpqr)) / (nrow(dpqr) * dim(data)[3])
-    return(array(as.matrix(dpqr),
-      dim = c(nrow(dpqr), nc, dim(data)[3]),
-      dimnames = list(NULL, colnames(dpqr)[1:nc], NULL)
-    ))
+    colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
+    return(dpqr)
+    #
+    # nc <- prod(dim(dpqr)) / (nrow(dpqr) * dim(data)[3])
+    # return(array(as.matrix(dpqr),
+    #   dim = c(nrow(dpqr), nc, dim(data)[3]),
+    #   dimnames = list(NULL, colnames(dpqr)[1:nc], NULL)
+    # ))
   }
 })
 VectorDistribution$set("public", "cdf", function(..., lower.tail = TRUE, log.p = FALSE, data) {
@@ -590,10 +597,17 @@ VectorDistribution$set("public", "rand", function(..., data) {
     data <- unlist(data[1, 1])
   }
 
-  dpqr <- as.data.table(private$.rand(data))
-  if (ncol(dpqr) == 1) dpqr <- transpose(dpqr)
-  colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
-  return(dpqr)
+  if (private$.univariate) {
+    dpqr <- as.data.table(private$.rand(data))
+    if (ncol(dpqr) == 1) dpqr <- transpose(dpqr)
+    colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
+    return(dpqr)
+  } else {
+    dpqr <- private$.rand(data)
+    dpqr <- array(unlist(dpqr), c(nrow(dpqr[[1]]), ncol(dpqr[[1]]), length(dpqr)))
+    colnames(dpqr) <- paste0("V", seq(ncol(dpqr)))
+    return(dpqr)
+  }
 })
 
 VectorDistribution$set("active", "distlist", function() {

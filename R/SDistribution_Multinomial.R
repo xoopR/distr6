@@ -137,7 +137,8 @@ Multinomial$set("private", ".rand", function(n) {
     mapply(extraDistr::rmnom,
       size = self$getParameterValue("size"),
       prob = self$getParameterValue("probs"),
-      MoreArgs = list(n = n)
+      MoreArgs = list(n = n),
+      SIMPLIFY = FALSE
     )
   } else {
     extraDistr::rmnom(n,

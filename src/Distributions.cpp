@@ -123,6 +123,82 @@ NumericMatrix C_ArcsineQuantile(NumericVector x, NumericVector min, NumericVecto
 }
 
 // [[Rcpp::export]]
+NumericMatrix C_DegeneratePdf(NumericVector x, NumericVector mean, bool logp) {
+  int ParamLength = mean.length();
+
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+      if (logp) {
+        mat(j, i) = log(x[j] == mean[i]);
+      } else {
+        mat(j, i) = x[j] == mean[i];
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_DegenerateCdf(NumericVector x, NumericVector mean, bool lower, bool logp) {
+  int ParamLength = mean.length();
+
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+
+      mat(j, i) = x[j] >= mean[i];
+
+      if (!lower) {
+        mat(j, i) = 1 - mat(j, i);
+      }
+
+      if (logp) {
+        mat(j, i) = log(mat(j, i));
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_DegenerateQuantile(NumericVector x, NumericVector mean, bool lower, bool logp) {
+  int ParamLength = mean.length();
+
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+
+      if (logp) {
+        x[j] = exp(x[j]);
+      }
+
+      if (!lower) {
+        x[j] = 1 - x[j];
+      }
+
+      if (x[j] < 0 || x[j] > 1) {
+        mat(j, i) = R_NaN;
+      } else if (x[j] == 0) {
+        mat(j, i) = R_NegInf;
+      } else {
+        mat(j, i) = mean[i];
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
 NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob,
                                     StringVector form) {
   int sl = size.length();
@@ -165,6 +241,133 @@ NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, Numeric
       }
     }
   }
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location,
+                                      NumericVector shape, NumericVector scale, bool logp) {
+  int locn = location.length();
+  int shan = shape.length();
+  int scan = scale.length();
+  int ParamLength = std::max({locn, shan, scan});
+
+  float z;
+
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+      if ((shape[i % shan] > 0 && (x[j] < location[i & locn] - scale[i & scan]/shape[i % shan])) ||
+          (shape[i % shan] < 0 && (x[j] > location[i & locn] - scale[i & scan]/shape[i % shan]))) {
+
+        if (logp) {
+          mat(j, i) = R_NegInf;
+        } else {
+          mat(j, i) = 0;
+        }
+
+      } else {
+        z = (x[j] - location[i & locn])/scale[i & scan];
+
+        if (logp) {
+          mat(j, i) = (-(1/shape[i % shan] + 1)*log(1 + shape[i % shan]*z)) - log(scale[i & scan]) -
+            2*log(1 + pow(1 + shape[i % shan]*z, -1/shape[i % shan]));
+        } else {
+          mat(j, i) = pow(1 + shape[i % shan]*z, -(1/shape[i % shan] + 1)) * pow(scale[i & scan], -1) *
+            pow(1 + pow(1 + shape[i % shan]*z, -1/shape[i % shan]), -2);
+        }
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_ShiftedLoglogisticCdf(NumericVector x, NumericVector location,
+                                      NumericVector shape, NumericVector scale,
+                                      bool lower, bool logp) {
+  int locn = location.length();
+  int shan = shape.length();
+  int scan = scale.length();
+  int ParamLength = std::max({locn, shan, scan});
+
+  float z;
+
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+      if ((shape[i % shan] > 0 && (x[j] < location[i & locn] - scale[i & scan]/shape[i % shan])) ||
+          (shape[i % shan] < 0 && (x[j] > location[i & locn] - scale[i & scan]/shape[i % shan]))) {
+
+        if (logp) {
+          if (!lower) {
+            mat(j, i) = R_PosInf;
+          } else {
+            mat(j, i) = R_NegInf;
+          }
+        } else {
+          if (!lower) {
+            mat(j, i) = 0;
+          } else {
+            mat(j, i) = 1;
+          }
+        }
+
+      } else {
+        z = (x[j] - location[i & locn])/scale[i & scan];
+        mat(j, i) = pow(1 + pow(1 + shape[i % shan]*z, -1/shape[i % shan]), -1);
+
+        if (!lower) {
+          mat(j, i) = 1 - mat(j, i);
+        }
+
+        if (logp) {
+          mat(j, i) = log(mat(j, i));
+        }
+      }
+    }
+  }
+
+  return mat;
+}
+
+// [[Rcpp::export]]
+NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector location,
+                                      NumericVector shape, NumericVector scale,
+                                      bool lower, bool logp) {
+  int locn = location.length();
+  int shan = shape.length();
+  int scan = scale.length();
+  int ParamLength = std::max({locn, shan, scan});
+
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+
+      if (logp) {
+        x[j] = exp(x[j]);
+      }
+
+      if (!lower) {
+        x[j] = 1 - x[j];
+      }
+
+      if (x[j] < 0 || x[j] > 1) {
+        mat(j, i) = R_NaN;
+      } else {
+        mat(j, i) = ((pow(x[j]/(1-x[j]), shape[i % shan]) - 1) * scale[i & scan]/shape[i % shan]) +
+          location[i & locn];
+      }
+    }
+  }
+
   return mat;
 }
 
