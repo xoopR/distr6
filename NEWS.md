@@ -5,6 +5,7 @@
 ### Added/Edited Functionality
 
 * Multivariate functions in `VectorDistribution` now return arrays
+* Analytical `median` now available for `SDistribution`s where closed form expressions are known
 
 ### Deprecated Functions/Fields/Methods
 

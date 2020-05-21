@@ -71,6 +71,9 @@ Lognormal$set("public", "packages", "stats")
 Lognormal$set("public", "mean", function() {
   return(self$getParameterValue("mean"))
 })
+Lognormal$set("public", "median", function() {
+  return(exp(self$getParameterValue("meanlog")))
+})
 Lognormal$set("public", "variance", function() {
   return(self$getParameterValue("var"))
 })

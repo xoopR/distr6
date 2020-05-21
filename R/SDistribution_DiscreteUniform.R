@@ -127,7 +127,7 @@ DiscreteUniform$set("private", ".pdf", function(x, log = FALSE) {
     )
   }
 })
-DiscreteUniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
+DiscreteUniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(
       extraDistr::pdunif,
@@ -149,7 +149,7 @@ DiscreteUniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TR
     )
   }
 })
-DiscreteUniform$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = TRUE) {
+DiscreteUniform$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("lower"))) {
     mapply(
       extraDistr::qdunif,

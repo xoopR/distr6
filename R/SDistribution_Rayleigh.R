@@ -49,6 +49,9 @@ Rayleigh$set("public", "packages", "extraDistr")
 Rayleigh$set("public", "mean", function() {
   return(self$getParameterValue("mode") * sqrt(pi / 2))
 })
+Rayleigh$set("public", "median", function() {
+  return(self$getParameterValue("mode") * sqrt(2 * log(2)))
+})
 Rayleigh$set("public", "mode", function(which = NULL) {
   return(self$getParameterValue("mode"))
 })
@@ -77,7 +80,7 @@ Rayleigh$set("private", ".getRefParams", function(paramlst) {
   if (!is.null(paramlst$mode)) lst <- c(lst, list(mode = paramlst$mode))
   return(lst)
 })
-Rayleigh$set("private", ".pdf", function(x) {
+Rayleigh$set("private", ".pdf", function(x, log = FALSE) {
   if (checkmate::testList(self$getParameterValue("mode"))) {
     mapply(
       extraDistr::drayleigh,
@@ -92,14 +95,14 @@ Rayleigh$set("private", ".pdf", function(x) {
     )
   }
 })
-Rayleigh$set("private", ".cdf", function(x) {
+Rayleigh$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("mode"))) {
     mapply(
       extraDistr::prayleigh,
       sigma = self$getParameterValue("mode"),
       MoreArgs = list(
         q = x,
-        mode.tail = mode.tail,
+        lower.tail = lower.tail,
         log.p = log.p
       )
     )
@@ -107,19 +110,19 @@ Rayleigh$set("private", ".cdf", function(x) {
     extraDistr::prayleigh(
       x,
       sigma = self$getParameterValue("mode"),
-      mode.tail = mode.tail,
+      lower.tail = lower.tail,
       log.p = log.p
     )
   }
 })
-Rayleigh$set("private", ".quantile", function(p) {
+Rayleigh$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("mode"))) {
     mapply(
       extraDistr::qrayleigh,
       sigma = self$getParameterValue("mode"),
       MoreArgs = list(
         p = p,
-        mode.tail = mode.tail,
+        lower.tail = lower.tail,
         log.p = log.p
       )
     )
@@ -127,7 +130,7 @@ Rayleigh$set("private", ".quantile", function(p) {
     extraDistr::qrayleigh(
       p,
       sigma = self$getParameterValue("mode"),
-      mode.tail = mode.tail,
+      lower.tail = lower.tail,
       log.p = log.p
     )
   }

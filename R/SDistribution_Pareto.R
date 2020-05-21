@@ -56,6 +56,9 @@ Pareto$set("public", "mean", function() {
     return((self$getParameterValue("shape") * self$getParameterValue("scale")) / (self$getParameterValue("shape") - 1))
   }
 })
+Pareto$set("public", "median", function() {
+  return(self$getParameterValue("scale") * 2^(1/self$getParameterValue("shape")))
+})
 Pareto$set("public", "variance", function() {
   shape <- self$getParameterValue("shape")
   scale <- self$getParameterValue("scale")
@@ -139,7 +142,7 @@ Pareto$set("private", ".pdf", function(x, log = FALSE) {
     )
   }
 })
-Pareto$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
+Pareto$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::ppareto,
@@ -161,7 +164,7 @@ Pareto$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
     )
   }
 })
-Pareto$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = TRUE) {
+Pareto$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::qpareto,

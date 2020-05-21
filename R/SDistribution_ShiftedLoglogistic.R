@@ -58,6 +58,9 @@ ShiftedLoglogistic$set("public", "mean", function() {
 
   return(location + ((scale/shape) * (((pi*shape)/(sin(pi*shape))) - 1)))
 })
+ShiftedLoglogistic$set("public", "median", function() {
+  return(self$getParameterValue("location"))
+})
 ShiftedLoglogistic$set("public", "variance", function() {
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")
@@ -85,7 +88,7 @@ ShiftedLoglogistic$set("public", "setParameterValue", function(..., lst = NULL, 
 ShiftedLoglogistic$set("private", ".getRefParams", function(paramlst) {
   lst <- list()
   if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(rate = paramlst$scale))
+  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
   if (!is.null(paramlst$rate)) lst <- c(lst, list(scale = paramlst$rate^-1))
   if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
   return(lst)

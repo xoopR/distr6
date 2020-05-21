@@ -61,6 +61,16 @@ Triangular$set("private", ".type", "symmetric")
 Triangular$set("public", "mean", function() {
   return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode")) / 3)
 })
+Triangular$set("public", "median", function() {
+  lower <- self$getParameterValue("lower")
+  upper <- self$getParameterValue("upper")
+  mode <- self$getParameterValue("mode")
+  if (mode >= (lower + upper)/2) {
+    return(lower + sqrt((upper - lower)*(mode - lower))/sqrt(2))
+  } else {
+    return(upper - sqrt((upper - lower)*(upper - mode))/sqrt(2))
+  }
+})
 Triangular$set("public", "variance", function() {
   return((self$getParameterValue("lower")^2 + self$getParameterValue("upper")^2 +
     self$getParameterValue("mode")^2 - self$getParameterValue("lower") * self$getParameterValue("upper") -
@@ -248,7 +258,8 @@ Triangular$set("private", ".rand", function(n) {
 })
 Triangular$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
 
-Triangular$set("public", "initialize", function(lower = 0, upper = 1, mode = (lower + upper) / 2, symmetric = FALSE,
+Triangular$set("public", "initialize", function(lower = 0, upper = 1, mode = (lower + upper) / 2,
+                                                symmetric = FALSE,
                                                 decorators = NULL, verbose = FALSE) {
 
 
@@ -257,6 +268,8 @@ Triangular$set("public", "initialize", function(lower = 0, upper = 1, mode = (lo
     symmetry <- "symmetric"
   } else {
     self$description <- "Triangular Probability Distribution."
+    private$.type <- "asymmetric"
+
     if (mode == (lower + upper) / 2) {
       symmetry <- "symmetric"
     } else {
