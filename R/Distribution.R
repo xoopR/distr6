@@ -169,10 +169,10 @@ Distribution$set("public", "initialize", function(name = NULL, short_name = NULL
     if (is.null(short_name)) short_name <- gsub(" ", "", name, fixed = T)
     if (is.null(name)) name <- short_name
     checkmate::assertCharacter(c(name, short_name),
-      .var.name = "'name' and 'short_name' must be of class 'character'."
+                               .var.name = "'name' and 'short_name' must be of class 'character'."
     )
     checkmate::assert(length(strsplit(short_name, split = " ")[[1]]) == 1,
-      .var.name = "'short_name' must be one word only."
+                      .var.name = "'short_name' must be one word only."
     )
 
     #------------------------
@@ -236,10 +236,10 @@ Distribution$set("public", "initialize", function(name = NULL, short_name = NULL
 
     if (!is.null(pdf) & !is.null(cdf)) {
       checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
-        .var.name = "'pdf' and 'cdf' must take the same arguments."
+                        .var.name = "'pdf' and 'cdf' must take the same arguments."
       )
       checkmate::assert(all(names(formals(pdf)) == names(formals(cdf))),
-        .var.name = "'pdf' and 'cdf' must take the same arguments."
+                        .var.name = "'pdf' and 'cdf' must take the same arguments."
       )
     }
 
@@ -317,7 +317,6 @@ Distribution$set("public", "initialize", function(name = NULL, short_name = NULL
     private$.properties$skewness <- ifnerror(skew, skewnessType(skew), "NULL")
   }
 
-  # private$.setWorkingSupport()
   lockBinding("name", self)
   lockBinding("short_name", self)
   lockBinding("description", self)
@@ -393,8 +392,8 @@ Distribution$set("public", "summary", function(full = TRUE, ...) {
       cat(self$description, "Parameterised with:\n")
       settable <- as.data.table(self$parameters())$settable
       cat(" ", paste(as.data.table(self$parameters())[settable, "id"],
-        as.data.table(self$parameters())[settable, "value"],
-        sep = " = ", collapse = ", "
+                     as.data.table(self$parameters())[settable, "value"],
+                     sep = " = ", collapse = ", "
       ))
     } else {
       cat(self$description)
@@ -407,7 +406,7 @@ Distribution$set("public", "summary", function(full = TRUE, ...) {
     a_kurt <- suppressMessages(try(self$kurtosis(), silent = T))
 
     if (!inherits(a_exp, "try-error") | !inherits(a_var, "try-error") |
-      !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
+        !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
       cat("\n\n ", "Quick Statistics", "\n")
     }
 
@@ -512,7 +511,6 @@ Distribution$set("public", "setParameterValue", function(..., lst = NULL, error 
         private$.properties$skewness <- skewType(x)
       }
 
-      # private$.setWorkingSupport()
       invisible(self)
     }
   }
@@ -566,11 +564,11 @@ Distribution$set("public", "pdf", function(..., log = FALSE, simplify = TRUE, da
   data <- pdq_point_assert(..., self = self, data = data)
   if (inherits(data, "matrix")) {
     assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = FALSE),
-      .var.name = "Do all points lie in Distribution domain?"
+           .var.name = "Do all points lie in Distribution domain?"
     )
   } else {
     assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
-      .var.name = "Do all points lie in Distribution domain?"
+           .var.name = "Do all points lie in Distribution domain?"
     )
   }
 
@@ -638,7 +636,7 @@ Distribution$set("public", "cdf", function(..., lower.tail = TRUE, log.p = FALSE
 
   data <- pdq_point_assert(..., self = self, data = data)
   assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
-    .var.name = "Do all points lie in Distribution domain?"
+         .var.name = "Do all points lie in Distribution domain?"
   )
 
   if (log.p | !lower.tail) {
@@ -705,7 +703,7 @@ Distribution$set("public", "quantile", function(..., lower.tail = TRUE, log.p = 
 
   data <- pdq_point_assert(..., self = self, data = data)
   assert(Interval$new(0, 1)$contains(as.numeric(data), all = TRUE),
-    .var.name = "Do all quantiles lie in [0,1]?"
+         .var.name = "Do all quantiles lie in [0,1]?"
   )
 
   if (log.p | !lower.tail) {
@@ -828,7 +826,16 @@ Distribution$set("public", "stdev", function() {
 #' @export
 median.Distribution <- function(x, na.rm = NULL, ...) {}
 Distribution$set("public", "median", function(na.rm = NULL, ...) {
-  return(self$quantile(0.5))
+  if (testSymmetric(self)) {
+    med = self$mean()
+    if (is.null(med)) {
+      return(self$quantile(0.5))
+    } else {
+      return(med)
+    }
+  } else {
+    return(self$quantile(0.5))
+  }
 })
 
 #' @title Distribution Interquartile Range
@@ -1140,58 +1147,89 @@ Distribution$set("active", "skewnessType", function() {
   return("Deprecated. Use $properties$skewness instead.")
 })
 
+#' @name workingSupport
+#' @title Approximate Finite Support
+#' @usage workingSupport(object)
+#' @param object Distribution.
+#' @description If the distribution has an infinite support then this function calculates
+#' the approximate finite limits by finding the largest small number for which `cdf == 0` and the
+#' smallest large number for which `cdf == 1`.
+#' @return \CRANpkg{set6} object.
+#' @export
+NULL
+Distribution$set("active", "workingSupport", function() {
+
+  if (testCountablyFinite(self$properties$support)) {
+    return(self$properties$support)
+  }
+
+  lower <- self$inf
+  upper <- self$sup
+
+  if (lower == -Inf) {
+    if (private$.isCdf) {
+      for (i in -c(0, 10^(1:1000))) {
+        if (self$cdf(i) == 0) {
+          lower = i
+          break()
+        }
+      }
+    } else {
+      for (i in -c(0, 10^(1:1000))) {
+        if (self$pdf(i) == 0) {
+          lower = i
+          break()
+        }
+      }
+    }
+
+  }
+
+  if (upper == Inf) {
+    if (private$.isCdf) {
+      for (i in c(0, 10^(1:1000))) {
+        if (self$cdf(i) == 1) {
+          upper = i
+          break()
+        }
+      }
+    } else {
+      for (i in c(0, 10^(1:1000))) {
+        if (i > lower) {
+          if (self$pdf(i) == 0) {
+            upper = i
+            break()
+          }
+        }
+      }
+    }
+  }
+
+  class = if (testDiscrete(self)) "integer" else "numeric"
+
+  Interval$new(lower, upper, class = class)
+})
+
 #-------------------------------------------------------------
 # Distribution Public Variables
 #-------------------------------------------------------------
 Distribution$set("public", "name", character(0))
 Distribution$set("public", "short_name", character(0))
 Distribution$set("public", "description", NULL)
-# Distribution$set("private",".pdf", function() {})
-# Distribution$set("private",".cdf", function() {})
-# Distribution$set("private",".quantile", function() {})
-# Distribution$set("private",".rand", function() {})
 Distribution$set("private", ".parameters", NULL)
 Distribution$set("private", ".workingSupport", NULL)
 Distribution$set("private", ".decorators", NULL)
 Distribution$set("private", ".properties", list())
 Distribution$set("private", ".traits", NULL)
-# Distribution$set("private",".isPdf", FALSE)
-# Distribution$set("private",".isCdf", FALSE)
-# Distribution$set("private",".isQuantile", FALSE)
-# Distribution$set("private",".isRand", FALSE)
+Distribution$set("private",".isPdf", FALSE)
+Distribution$set("private",".isCdf", FALSE)
+Distribution$set("private",".isQuantile", FALSE)
+Distribution$set("private",".isRand", FALSE)
 Distribution$set("private", ".log", FALSE)
 
 #-------------------------------------------------------------
 # Distribution Private Methods
 #-------------------------------------------------------------
-Distribution$set("private", ".setWorkingSupport", function() {
-  suppressMessages({
-    rands <- self$rand(1000)
-
-    if (self$sup != Inf) {
-      newsup <- self$sup
-    } else {
-      newsup <- ceiling(max(rands))
-      while (self$pdf(newsup) > .Machine$double.eps) newsup <- newsup + 1
-      newsup <- ceiling(newsup - 1)
-    }
-
-    inf <- self$inf
-    if (inf != -Inf) {
-      newinf <- inf
-    } else {
-      newinf <- floor(min(rands))
-      while (self$pdf(newinf) > .Machine$double.eps) newinf <- newinf - 1
-      newinf <- floor(newinf + 1)
-    }
-
-    private$.workingSupport <- list(inf = newinf, sup = newsup)
-    invisible(self)
-  })
-})
-Distribution$set("private", ".getWorkingSupport", function() {
-  return(private$.workingSupport)
-})
 Distribution$set("private", ".updateDecorators", function(decs) {
   private$.decorators <- decs
 })

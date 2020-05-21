@@ -214,9 +214,12 @@ NegativeBinomial$set("private", ".pdf", function(x, log = FALSE) {
 
 })
 NegativeBinomial$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  if (self$getParameterValue("form") == "fbs") {
-    size <- self$getParameterValue("size")
-    prob <- self$getParameterValue("prob")
+  form <- self$getParameterValue("form")
+  size <- self$getParameterValue("size")
+  prob <- self$getParameterValue("prob")
+
+  pnbinom = function(form, size, prob)
+  if (form == "fbs") {
     return(call_C_base_pdqr(
       fun = "pnbinom",
       x = x,
@@ -229,22 +232,22 @@ NegativeBinomial$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = F
       vec = test_list(size)
     ))
   } else if (form == "sbf") {
+
     return(1 - pbeta(self$getParameterValue("prob"), x + 1, self$getParameterValue("size")))
-  } else if (form == "tbf") {
-    if (length(x) == 1) {
-      return(sum(self$pdf(self$inf:x)))
-    } else {
-      return(unlist(sapply(x, function(x) sum(self$pdf(self$inf:x)))))
-    }
   } else {
-    if (length(x) == 1) {
-      return(sum(self$pdf(self$inf:x)))
-    } else {
-      return(unlist(sapply(x, function(x) sum(self$pdf(self$inf:x)))))
-    }
+    pdf_x <- self$workingSupport
+    pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
+
+    return(
+      NumericCdf_Discrete(q = x,
+                          x = pdf_x,
+                          pdf = self$pdf(pdf_x),
+                          lower = lower.tail,
+                          logp = log.p)
+    )
   }
 })
-NegativeBinomial$set("private", ".quantile", function(p) {
+NegativeBinomial$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   if (self$getParameterValue("form") == "fbs") {
     size <- self$getParameterValue("size")
     prob <- self$getParameterValue("prob")
@@ -259,12 +262,16 @@ NegativeBinomial$set("private", ".quantile", function(p) {
       log = log.p,
       vec = test_list(size)
     ))
-  } else if (form == "sbf") {
-    return(NULL) # TODO
-  } else if (form == "tbf") {
-    return(NULL) # TODO
   } else {
-    return(NULL) # TODO
+    pdf_x <- self$workingSupport
+    pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
+    return(
+      NumericQuantile(p = p,
+                      x = pdf_x,
+                      cdf = self$cdf(pdf_x),
+                      lower = lower.tail,
+                      logp = log.p)
+    )
   }
 })
 NegativeBinomial$set("private", ".rand", function(n) {
@@ -280,15 +287,17 @@ NegativeBinomial$set("private", ".rand", function(n) {
       ),
       vec = test_list(size)
     ))
-  } else if (form == "sbf") {
-    return(NULL) # TODO
-  } else if (form == "tbf") {
-    return(NULL) # TODO
   } else {
-    return(NULL) # TODO
+    x <- self$workingSupport
+    x <- seq.int(x$lower, x$upper)
+    return(sample(x, n, TRUE, self$pdf(x)))
   }
 })
 NegativeBinomial$set("private", ".traits", list(variateForm = "univariate", valueSupport = "discrete"))
+NegativeBinomial$set("private", ".isCdf", FALSE)
+NegativeBinomial$set("private", ".isQuantile", FALSE)
+NegativeBinomial$set("private", ".isRand", FALSE)
+
 
 NegativeBinomial$set("public", "initialize", function(size = 10, prob = 0.5, qprob = NULL, mean = NULL,
                                                       form = c("fbs", "sbf", "tbf", "tbs"),

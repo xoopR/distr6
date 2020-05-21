@@ -58,6 +58,13 @@ Frechet$set("public", "mean", function() {
     return(self$getParameterValue("minimum") + self$getParameterValue("scale") * gamma(1 - 1 / self$getParameterValue("shape")))
   }
 })
+Frechet$set("public", "median", function() {
+  m = self$getParameterValue("minimum")
+  s = self$getParameterValue("scale")
+  a = self$getParameterValue("shape")
+
+  return(m + s/(log(2)^(1/a)))
+})
 Frechet$set("public", "variance", function() {
   if (self$getParameterValue("shape") <= 2) {
     return(Inf)

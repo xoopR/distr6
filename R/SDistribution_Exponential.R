@@ -53,6 +53,9 @@ Exponential$set("public", "packages", "stats")
 Exponential$set("public", "mean", function() {
   self$getParameterValue("scale")
 })
+Exponential$set("public", "median", function() {
+  self$getParameterValue("scale") * log(2)
+})
 Exponential$set("public", "variance", function() {
   self$getParameterValue("scale")^2
 })

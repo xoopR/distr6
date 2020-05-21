@@ -55,6 +55,16 @@ Bernoulli$set("public", "packages", "stats")
 Bernoulli$set("public", "mean", function() {
   self$getParameterValue("prob")
 })
+Bernoulli$set("public", "median", function() {
+  prob <- self$getParameterValue("prob")
+  if (prob < 0.5) {
+    return(0)
+  } else if (prob < 0.5) {
+    return(1)
+  } else {
+    return(NaN)
+  }
+})
 Bernoulli$set("public", "variance", function() {
   self$getParameterValue("prob") * self$getParameterValue("qprob")
 })

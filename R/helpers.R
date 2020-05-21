@@ -150,3 +150,17 @@ strCollapse <- function(x, par = "{}") {
 test_list <- function(x) {
   class(x)[1] == "list"
 }
+
+impute_genx = function(dist, n = 10001) {
+
+  x <- dist$workingSupport
+  if (testDiscrete(dist)) {
+    x <- seq.int(x$lower, x$upper)
+  } else {
+    if (n %% 2 != 0) {
+      n = n + 1
+    }
+
+    x <- sort(runif(n = n, x$lower, x$upper))
+  }
+}

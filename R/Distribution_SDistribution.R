@@ -141,3 +141,7 @@ SDistribution$set("public", "setParameterValue", function(..., lst = NULL, error
 SDistribution$set("public", "package", "This is now deprecated. Use $packages instead.")
 SDistribution$set("public", "packages", NULL)
 SDistribution$set("private", ".log", TRUE)
+SDistribution$set("private",".isPdf", TRUE)
+SDistribution$set("private",".isCdf", TRUE)
+SDistribution$set("private",".isQuantile", TRUE)
+SDistribution$set("private",".isRand", TRUE)

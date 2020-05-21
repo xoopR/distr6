@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // C_Choose
-int C_Choose(int x, int y);
+long double C_Choose(int x, int y);
 RcppExport SEXP _distr6_C_Choose(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -251,6 +251,51 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// NumericCdf_Discrete
+NumericVector NumericCdf_Discrete(NumericVector q, NumericVector x, NumericVector pdf, bool lower, bool logp);
+RcppExport SEXP _distr6_NumericCdf_Discrete(SEXP qSEXP, SEXP xSEXP, SEXP pdfSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type q(qSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type pdf(pdfSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(NumericCdf_Discrete(q, x, pdf, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// NumericCdf_Continuous
+NumericVector NumericCdf_Continuous(NumericVector q, NumericVector x, NumericVector pdf, bool lower, bool logp);
+RcppExport SEXP _distr6_NumericCdf_Continuous(SEXP qSEXP, SEXP xSEXP, SEXP pdfSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type q(qSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type pdf(pdfSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(NumericCdf_Continuous(q, x, pdf, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// NumericQuantile
+NumericVector NumericQuantile(NumericVector p, NumericVector x, NumericVector cdf, bool lower, bool logp);
+RcppExport SEXP _distr6_NumericQuantile(SEXP pSEXP, SEXP xSEXP, SEXP cdfSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type cdf(cdfSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(NumericQuantile(p, x, cdf, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
 // C_dpq
 NumericMatrix C_dpq(std::string fun, NumericVector x, std::list<NumericVector> args, int lower, int log);
 RcppExport SEXP _distr6_C_dpq(SEXP funSEXP, SEXP xSEXP, SEXP argsSEXP, SEXP lowerSEXP, SEXP logSEXP) {
@@ -298,6 +343,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_Vec_WeightedDiscreteCdf", (DL_FUNC) &_distr6_C_Vec_WeightedDiscreteCdf, 5},
     {"_distr6_C_WeightedDiscreteQuantile", (DL_FUNC) &_distr6_C_WeightedDiscreteQuantile, 5},
     {"_distr6_C_Vec_WeightedDiscreteQuantile", (DL_FUNC) &_distr6_C_Vec_WeightedDiscreteQuantile, 5},
+    {"_distr6_NumericCdf_Discrete", (DL_FUNC) &_distr6_NumericCdf_Discrete, 5},
+    {"_distr6_NumericCdf_Continuous", (DL_FUNC) &_distr6_NumericCdf_Continuous, 5},
+    {"_distr6_NumericQuantile", (DL_FUNC) &_distr6_NumericQuantile, 5},
     {"_distr6_C_dpq", (DL_FUNC) &_distr6_C_dpq, 5},
     {"_distr6_C_r", (DL_FUNC) &_distr6_C_r, 3},
     {NULL, NULL, 0}

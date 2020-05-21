@@ -236,7 +236,7 @@ assertSymmetric <- function() {}
 
 makeChecks(
   assertionName = "Symmetric",
-  cond = object$symmetry == "symmetric",
+  cond = object$properties$symmetry == "symmetric",
   defaulterrormsg = paste(object$short_name, "is not symmetric"),
   args = alist(object = ),
   pos = environment()
@@ -264,7 +264,7 @@ assertNegativeSkew <- function() {}
 
 makeChecks(
   assertionName = "NegativeSkew",
-  cond = object$skewnessType == "Negative Skew",
+  cond = object$properties$skewnessType == "Negative Skew",
   defaulterrormsg = paste(object$short_name, "is not negative skew"),
   pos = environment()
 )
@@ -291,7 +291,7 @@ assertPositiveSkew <- function() {}
 
 makeChecks(
   assertionName = "PositiveSkew",
-  cond = object$skewnessType == "Positive Skew",
+  cond = object$properties$skewnessType == "Positive Skew",
   defaulterrormsg = paste(object$short_name, "is not positive skew"),
   pos = environment()
 )
@@ -319,7 +319,7 @@ assertNoSkew <- function() {}
 
 makeChecks(
   assertionName = "NoSkew",
-  cond = object$skewnessType == "No Skew",
+  cond = object$properties$skewnessType == "No Skew",
   defaulterrormsg = paste(object$short_name, "is not no skew"),
   pos = environment()
 )
@@ -346,7 +346,7 @@ assertPlatykurtic <- function() {}
 
 makeChecks(
   assertionName = "Platykurtic",
-  cond = object$kurtosisType == "platykurtic",
+  cond = object$properties$kurtosisType == "platykurtic",
   defaulterrormsg = paste(object$short_name, "is not platykurtic"),
   pos = environment()
 )
@@ -373,7 +373,7 @@ assertMesokurtic <- function() {}
 
 makeChecks(
   assertionName = "Mesokurtic",
-  cond = object$kurtosisType == "mesokurtic",
+  cond = object$properties$kurtosisType == "mesokurtic",
   defaulterrormsg = paste(object$short_name, "is not mesokurtic"),
   pos = environment()
 )
@@ -400,7 +400,7 @@ assertLeptokurtic <- function() {}
 
 makeChecks(
   assertionName = "Leptokurtic",
-  cond = object$kurtosisType == "leptokurtic",
+  cond = object$properties$kurtosisType == "leptokurtic",
   defaulterrormsg = paste(object$short_name, "is not leptokurtic"),
   pos = environment()
 )

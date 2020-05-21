@@ -46,7 +46,6 @@ Beta$set("public", "short_name", "Beta")
 Beta$set("public", "description", "Beta Probability Distribution.")
 Beta$set("public", "packages", "stats")
 
-
 Beta$set("public", "mean", function() {
   return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
 })

@@ -48,6 +48,9 @@ Gumbel$set("public", "short_name", "Gumb")
 Gumbel$set("public", "description", "Gumbel Probability Distribution.")
 Gumbel$set("public", "packages", c("extraDistr", "pracma"))
 
+Gumbel$set("public", "median", function() {
+  return(self$getParameterValue("location") - self$getParameterValue("scale")*log(log(2)))
+})
 Gumbel$set("public", "mean", function() {
   return(self$getParameterValue("location") - digamma(1) * self$getParameterValue("scale"))
 })
@@ -103,7 +106,7 @@ Gumbel$set("private", ".pdf", function(x, log = FALSE) {
     )
   }
 })
-Gumbel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
+Gumbel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("location"))) {
     mapply(
       extraDistr::pgumbel,
@@ -125,7 +128,7 @@ Gumbel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
     )
   }
 })
-Gumbel$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = TRUE) {
+Gumbel$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("location"))) {
     mapply(
       extraDistr::qgumbel,

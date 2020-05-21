@@ -50,10 +50,15 @@ Gompertz$set("private", ".getRefParams", function(paramlst) {
   return(lst)
 })
 
+Gompertz$set("public", "median", function() {
+  scale <- self$getParameterValue("scale")
+  shape <- self$getParameterValue("shape")
+
+  return((1/scale) * log((-1/shape) * log(1/2) + 1))
+})
 Gompertz$set("public", "pgf", function(z) {
   return(NaN)
 })
-
 Gompertz$set("private", ".pdf", function(x, log = FALSE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
@@ -71,7 +76,7 @@ Gompertz$set("private", ".pdf", function(x, log = FALSE) {
     )
   }
 })
-Gompertz$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
+Gompertz$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::pgompertz,
@@ -93,7 +98,7 @@ Gompertz$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = TRUE) {
     )
   }
 })
-Gompertz$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = TRUE) {
+Gompertz$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
   if (checkmate::testList(self$getParameterValue("shape"))) {
     mapply(
       extraDistr::qgompertz,

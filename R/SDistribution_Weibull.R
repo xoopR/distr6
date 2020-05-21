@@ -56,6 +56,9 @@ Weibull$set("public", "packages", "stats")
 Weibull$set("public", "mean", function() {
   return(self$getParameterValue("scale") * gamma(1 + 1 / self$getParameterValue("shape")))
 })
+Weibull$set("public", "median", function() {
+  return(self$getParameterValue("scale") * (log(2)^(1 / self$getParameterValue("shape"))))
+})
 Weibull$set("public", "variance", function() {
   scale <- self$getParameterValue("scale")
   shape <- self$getParameterValue("shape")

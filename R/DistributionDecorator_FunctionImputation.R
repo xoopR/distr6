@@ -64,69 +64,66 @@ FunctionImputation$set("public", "pdf", function(x1) {
     }
   }
 })
-FunctionImputation$set("public", "cdf", function(x1) {
-  # PDF2CDF
-  if (testUnivariate(self)) {
-    if (testDiscrete(self)) {
-      if (length(x1) > 1) {
-        return(sapply(x1, function(x) sum(self$pdf(self$inf:x))))
-      } else {
-        return(sum(self$pdf(self$inf:x1)))
-      }
-    } else if (testContinuous(self)) {
-      message(.distr6$message_numeric)
-      if (length(x1) > 1) {
-        return(unlist(sapply(x1, function(x0) integrate(self$pdf, lower = self$inf, upper = x0)$value)))
-      } else {
-        return(integrate(self$pdf, lower = self$inf, upper = x1)$value)
-      }
+FunctionImputation$set("public", "cdf", function(x, lower.tail = TRUE, log.p = FALSE, n = 10001,
+                                                 .cdf_x = NULL) {
 
-    }
-  }
-})
-FunctionImputation$set("public", "quantile", function(p) {
   message(.distr6$message_numeric)
 
-  # if(!testMessage(self$cdf(1))){
-  # CDF2QUANTILE - DISCRETE/CONT
-  if (testDiscrete(self)) {
-    to <- ifelse(self$sup == Inf, 1e+08, self$sup)
-    from <- ifelse(self$inf == -Inf, -1e+08, self$inf)
-    x1 <- seq.int(from, to, by = 1)
-    y <- self$cdf(x1)
+  # PDF2CDF
+  if (testUnivariate(self)) {
 
-    if (length(p) > 1) {
-      return(unlist(sapply(p, function(p0) {
-        return(x1[min(which(y == min(y[y > p0])))])
-      })))
+    data <- x
+    # if (testDiscrete(self)) {
+    if (!is.null(.cdf_x)) {
+      x <- .cdf_x
     } else {
-      return(x1[min(which(y == min(y[y > p])))])
+      x <- impute_genx(self, n)
     }
 
-  } else if (testContinuous(self)) {
-    #     if(strategy == "inversion"){
-    upper <- ifelse(self$sup == Inf, 1e+08, self$sup)
-    lower <- ifelse(self$inf == -Inf, -1e+08, self$inf)
 
-    if (length(p) > 1) {
-      return(unlist(sapply(p, function(p0) {
-        return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf, upper = self$sup)(p0)))
-      })))
+    if (testDiscrete(self)) {
+      return(
+        NumericCdf_Discrete(q = data,
+                            x = x,
+                            pdf = self$pdf(x),
+                            lower = lower.tail,
+                            logp = log.p)
+      )
     } else {
-      return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf, upper = self$sup)(p)))
+      return(
+        NumericCdf_Continuous(q = data,
+                              x = x,
+                              pdf = self$pdf(x),
+                              lower = lower.tail,
+                              logp = log.p)
+      )
     }
+  } else {
+    stop("CDF imputation currently only implemented for univariate distributions.")
   }
-  #   }
-  # }
 })
+FunctionImputation$set("public", "quantile", function(p, lower.tail = TRUE, log.p = FALSE,
+                                                      n = 10001) {
+
+  message(.distr6$message_numeric)
+
+  x <- impute_genx(self, n)
+
+  if (private$.isCdf) {
+    return(NumericQuantile(p, x, self$cdf(x), lower.tail, log.p))
+  } else {
+    return(NumericQuantile(p, x, self$cdf(x, n = cdf_n, .cdf_x = x), lower.tail, log.p))
+  }
+
+})
+
 FunctionImputation$set("public", "rand", function(n) {
-  strategy <- "q2r"
-  if (strategy == "q2r") {
-    message(.distr6$message_numeric)
-    return(suppressMessages(sapply(1:n, function(x) self$quantile(runif(1)))))
-  } # else if(strategy == "p2r"){
-  #   message(.distr6$message_numeric)
-  #   if(testDiscrete(self))
-  #     return(sample(self$inf:self$sup, n, TRUE, self$pdf(self$inf:self$sup)))
-  # }
+
+  if (private$.isQuantile) {
+    return(self$quantile(runif(n)))
+  } else {
+    x <- impute_genx(self, n)
+    return(sample(x, n, TRUE, self$pdf(x)))
+  }
+
 })

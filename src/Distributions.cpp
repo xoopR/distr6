@@ -5,13 +5,13 @@ using namespace Rcpp;
 
 // It's quicker to redefine our own choose function than to import the Internal one.
 // [[Rcpp::export]]
-int C_Choose(int x, int y) {
+long double C_Choose(int x, int y) {
   if (y == 0 | y == x) {
     return 1;
   } else if (y < 0 | y > x) {
     return 0;
   } else {
-    int res = x;
+    long double res = x;
     for(int i = 2; i <= y; i++){
       res *= (x-i+1);
       res /= i;
@@ -211,22 +211,22 @@ NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, Numeric
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
       if (strcmp (form[i % fl], "fbs") == 0) {
-        // Return 0 if x not in Naturals
-        if (floor (x[j]) != x[j]) {
+        // Return 0 if x not in PosNaturals
+        if (floor (x[j]) != x[j] || x[j] < 0) {
           mat(j, i) = 0;
         } else {
           mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], x[j]);
         }
       } else if (strcmp (form[i % fl], "sbf") == 0) {
-        // Return 0 if x not in Naturals
-        if (floor (x[j]) != x[j]) {
+        // Return 0 if x not in PosNaturals
+        if (floor (x[j]) != x[j] || x[j] < 0) {
           mat(j, i) = 0;
         } else {
           mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, x[j]) * pow(prob[i % pl], x[j]) * pow(1-prob[i % pl], size[i % sl]);
         }
       } else if (strcmp (form[i % fl], "tbf") == 0) {
         // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] | x[j] < size[i % sl]) {
+        if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
           mat(j, i) = 0;
         } else {
           mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], x[j] - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
