@@ -6,6 +6,7 @@
 
 * Multivariate functions in `VectorDistribution` now return arrays
 * Analytical `median` now available for `SDistribution`s where closed form expressions are known
+* Kernels now implemented in `Rcpp` with analytical log-pdf expressions. Analytical lower.tail and log.p will come in future versions.
 
 ### Deprecated Functions/Fields/Methods
 
