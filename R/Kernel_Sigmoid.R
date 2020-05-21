@@ -47,8 +47,8 @@ Sigmoid$set("public", "initialize", function(decorators = NULL) {
     support = Reals$new()
   )
 })
-Sigmoid$set("private", ".pdf", function(x) {
-  return((2 / pi) * (exp(x) + exp(-x))^-1)
+Sigmoid$set("private", ".pdf", function(x, log = FALSE) {
+  C_SigmoidKernelPdf(x, log)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D", Packages = "-"))

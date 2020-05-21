@@ -44,14 +44,14 @@ UniformKernel$set("public", "initialize", function(decorators = NULL) {
     support = Interval$new(-1, 1)
   )
 })
-UniformKernel$set("private", ".pdf", function(x) {
-  rep(0.5, length(x))
+UniformKernel$set("private", ".pdf", function(x, log = FALSE) {
+  C_UniformKernelPdf(x, log)
 })
-UniformKernel$set("private", ".cdf", function(x) {
-  (0.5 * x) + 0.5
+UniformKernel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  C_UniformKernelCdf(x, lower.tail, log.p)
 })
-UniformKernel$set("private", ".quantile", function(p) {
-  2 * (p - 0.5)
+UniformKernel$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  C_UniformKernelQuantile(x, lower.tail, log.p)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Unif", ClassName = "UniformKernel", Support = "[-1,1]", Packages = "-"))

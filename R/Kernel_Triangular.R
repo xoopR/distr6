@@ -44,24 +44,14 @@ TriangularKernel$set("public", "initialize", function(decorators = NULL) {
     support = Interval$new(-1, 1)
   )
 })
-TriangularKernel$set("private", ".pdf", function(x) {
-  1 - abs(x)
+TriangularKernel$set("private", ".pdf", function(x, log = FALSE) {
+  C_TriangularKernelPdf(x, log)
 })
-TriangularKernel$set("private", ".cdf", function(x) {
-  cdf <- x
-  cdf[x < 0] <- x[x < 0] + 0.5 * x[x < 0]^2 + 1 / 2
-  cdf[x == 0] <- 0.5
-  cdf[x > 0] <- x[x > 0] - 0.5 * x[x > 0]^2 + 1 / 2
-
-  return(cdf)
+TriangularKernel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  C_TriangularKernelCdf(x, lower.tail, log.p)
 })
-TriangularKernel$set("private", ".quantile", function(p) {
-  quantile <- p
-  quantile[p < 0.5] <- -1 + sqrt(2 * p[p < 0.5])
-  quantile[p == 0.5] <- 0
-  quantile[p > 0.5] <- 1 - sqrt(2 - 2 * p[p > 0.5])
-
-  return(quantile)
+TriangularKernel$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  C_TriangularKernelQuantile(x, lower.tail, log.p)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]", Packages = "-"))

@@ -44,14 +44,14 @@ LogisticKernel$set("public", "initialize", function(decorators = NULL) {
     support = Reals$new()
   )
 })
-LogisticKernel$set("private", ".pdf", function(x) {
-  (exp(x) + 2 + exp(-x))^-1
+LogisticKernel$set("private", ".pdf", function(x, log = FALSE) {
+  C_LogisticKernelPdf(x, log)
 })
-LogisticKernel$set("private", ".cdf", function(x) {
-  exp(x) / (exp(x) + 1)
+LogisticKernel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  C_LogisticKernelCdf(x, lower.tail, log.p)
 })
-LogisticKernel$set("private", ".quantile", function(p) {
-  log(p / (1 - p))
+LogisticKernel$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  C_LogisticKernelQuantile(x, lower.tail, log.p)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel", Support = "\u211D", Packages = "-"))

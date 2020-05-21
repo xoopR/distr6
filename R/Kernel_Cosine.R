@@ -44,14 +44,14 @@ Cosine$set("public", "initialize", function(decorators = NULL) {
     support = Interval$new(-1, 1)
   )
 })
-Cosine$set("private", ".pdf", function(x) {
-  pi / 4 * cos(pi / 2 * x)
+Cosine$set("private", ".pdf", function(x, log = FALSE) {
+  C_CosineKernelPdf(x, log)
 })
-Cosine$set("private", ".cdf", function(x) {
-  0.5 * (sin((pi * x) / 2) + 1)
+Cosine$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  C_CosineKernelCdf(x, lower.tail, log.p)
 })
-Cosine$set("private", ".quantile", function(p) {
-  (2 * asin(2 * p - 1)) / pi
+Cosine$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
+  C_CosineKernelQuantile(x, lower.tail, log.p)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Cos", ClassName = "Cosine", Support = "[-1,1]", Packages = "-"))

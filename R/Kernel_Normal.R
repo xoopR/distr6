@@ -55,14 +55,36 @@ NormalKernel <- R6Class("NormalKernel",
   ),
 
   private = list(
-    .pdf = function(x) {
-      return(1 / sqrt(2 * pi) * exp(-0.5 * x^2))
+    .pdf = function(x, log = FALSE) {
+      C_NormalKernelPdf(x, log)
     },
-    .cdf = function(x) {
-      return(1 / 2 * (pracma::erf(x / sqrt(2)) + 1))
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      cdf <- 1 / 2 * (pracma::erf(x / sqrt(2)) + 1)
+      if (!lower.tail) {
+        cdf <- 1 - cdf
+      }
+      if (log.p) {
+        cdf <- log(cdf)
+      }
+
+      return(cdf)
     },
-    .quantile = function(p) {
-      return(sqrt(2) * pracma::erfinv(2 * p - 1))
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      quantile <- numeric(p)
+      if (log.p) {
+        p = exp(p);
+      }
+
+      if (!lower.tail) {
+        p = 1 - p;
+      }
+
+      quantile[p < 0 | p > 1] = NaN
+      quantile[p == 0] = -Inf
+      quantile[p == 1] = Inf
+      quantile[p > 0 & p < 1] = sqrt(2) * pracma::erfinv(2 * p[p > 0 & p < 1] - 1)
+
+      return(quantile)
     }
   )
 )

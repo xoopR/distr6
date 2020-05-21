@@ -47,11 +47,11 @@ Epanechnikov$set("public", "initialize", function(decorators = NULL) {
     support = Interval$new(-1, 1)
   )
 })
-Epanechnikov$set("private", ".pdf", function(x) {
-  0.75 * (1 - x^2)
+Epanechnikov$set("private", ".pdf", function(x, log = FALSE) {
+  C_EpanechnikovKernelPdf(x, log)
 })
-Epanechnikov$set("private", ".cdf", function(x) {
-  3 / 4 * x - 1 / 4 * x^3 + 1 / 2
+Epanechnikov$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  C_EpanechnikovKernelCdf(x, lower.tail, log.p)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))

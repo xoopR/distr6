@@ -47,8 +47,8 @@ Tricube$set("public", "initialize", function(decorators = NULL) {
     support = Interval$new(-1, 1)
   )
 })
-Tricube$set("private", ".pdf", function(x) {
-  70 / 81 * (1 - abs(x)^3)^3
+Tricube$set("private", ".pdf", function(x, log = FALSE) {
+  C_TricubeKernelPdf(x, log)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tric", ClassName = "Tricube", Support = "[-1,1]", Packages = "-"))

@@ -47,8 +47,8 @@ Silverman$set("public", "initialize", function(decorators = NULL) {
     support = Reals$new()
   )
 })
-Silverman$set("private", ".pdf", function(x) {
-  1 / 2 * exp(-abs(x) / sqrt(2)) * sin(abs(x) / sqrt(2) + pi / 4)
+Silverman$set("private", ".pdf", function(x, log = FALSE) {
+  C_SilvermanKernelPdf(x, log)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Silv", ClassName = "Silverman", Support = "\u211D", Packages = "-"))

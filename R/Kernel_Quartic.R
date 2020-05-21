@@ -47,11 +47,11 @@ Quartic$set("public", "initialize", function(decorators = NULL) {
     support = Interval$new(-1, 1)
   )
 })
-Quartic$set("private", ".pdf", function(x) {
-  return(15 / 16 * (1 - x^2)^2)
+Quartic$set("private", ".pdf", function(x, log = FALSE) {
+  C_QuarticKernelPdf(x, log)
 })
-Quartic$set("private", ".cdf", function(x) {
-  return(15 / 16 * (x - 2 / 3 * x^3 + 1 / 5 * x^5 + 8 / 15))
+Quartic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
+  C_QuarticKernelCdf(x, lower.tail, log.p)
 })
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Quart", ClassName = "Quartic", Support = "[-1,1]", Packages = "-"))

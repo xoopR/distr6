@@ -107,3 +107,4 @@ Kernel$set("private", ".rand", function(n) {
 })
 Kernel$set("private", ".properties", list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"))
 Kernel$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+Kernel$set("private", ".log", TRUE)
