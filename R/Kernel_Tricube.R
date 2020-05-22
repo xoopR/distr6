@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Tricube Kernel
-#-------------------------------------------------------------
 #' @title Tricube Kernel
 #'
 #' @description Mathematical and statistical functions for the Tricube kernel defined by the pdf,
@@ -28,27 +25,26 @@
 #'
 #' @export
 NULL
-#-------------------------------------------------------------
-# Tricube Kernel Definition
-#-------------------------------------------------------------
-Tricube <- R6Class("Tricube", inherit = Kernel, lock_objects = F)
-Tricube$set("public", "name", "Tricube")
-Tricube$set("public", "short_name", "Tric")
-Tricube$set("public", "description", "Tricube Kernel")
-Tricube$set("public", "squared2Norm", function() {
-  return(175 / 247)
-})
-Tricube$set("public", "variance", function() {
-  return(35 / 243)
-})
-Tricube$set("public", "initialize", function(decorators = NULL) {
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(-1, 1)
+
+Tricube <- R6Class("Tricube", inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Tricube",
+    short_name = "Tric",
+    description = "Tricube Kernel",
+
+    squared2Norm = function() {
+      return(175 / 247)
+    },
+    variance = function() {
+      return(35 / 243)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_TricubeKernelPdf(x, log)
+    }
   )
-})
-Tricube$set("private", ".pdf", function(x, log = FALSE) {
-  C_TricubeKernelPdf(x, log)
-})
+)
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tric", ClassName = "Tricube", Support = "[-1,1]", Packages = "-"))

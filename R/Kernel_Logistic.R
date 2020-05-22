@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Logistic Kernel
-#-------------------------------------------------------------
 #' @title Logistic Kernel
 #'
 #' @description Mathematical and statistical functions for the LogisticKernel kernel defined by the pdf,
@@ -25,33 +22,38 @@
 #'
 #' @export
 NULL
-#-------------------------------------------------------------
-# LogisticKernel Kernel Definition
-#-------------------------------------------------------------
-LogisticKernel <- R6Class("LogisticKernel", inherit = Kernel, lock_objects = F)
-LogisticKernel$set("public", "name", "LogisticKernel")
-LogisticKernel$set("public", "short_name", "Logis")
-LogisticKernel$set("public", "description", "Logistic Kernel")
-LogisticKernel$set("public", "squared2Norm", function() {
-  return(1 / 6)
-})
-LogisticKernel$set("public", "variance", function() {
-  return(pi^2 / 3)
-})
-LogisticKernel$set("public", "initialize", function(decorators = NULL) {
-  super$initialize(
-    decorators = decorators,
-    support = Reals$new()
+
+LogisticKernel <- R6Class("LogisticKernel", inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "LogisticKernel",
+    short_name = "Logis",
+    description = "Logistic Kernel",
+
+    initialize = function(decorators = NULL) {
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
+    },
+    squared2Norm = function() {
+      return(1 / 6)
+    },
+    variance = function() {
+      return(pi^2 / 3)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_LogisticKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_LogisticKernelCdf(x, lower.tail, log.p)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      C_LogisticKernelQuantile(x, lower.tail, log.p)
+    }
   )
-})
-LogisticKernel$set("private", ".pdf", function(x, log = FALSE) {
-  C_LogisticKernelPdf(x, log)
-})
-LogisticKernel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  C_LogisticKernelCdf(x, lower.tail, log.p)
-})
-LogisticKernel$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  C_LogisticKernelQuantile(x, lower.tail, log.p)
-})
+)
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel", Support = "\u211D", Packages = "-"))

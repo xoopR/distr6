@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Epanechnikov Kernel
-#-------------------------------------------------------------
 #' @title Epanechnikov Kernel
 #'
 #' @description Mathematical and statistical functions for the Epanechnikov kernel defined by the pdf,
@@ -28,30 +25,29 @@
 #'
 #' @export
 NULL
-#-------------------------------------------------------------
-# Uniform Kernel Definition
-#-------------------------------------------------------------
-Epanechnikov <- R6Class("Epanechnikov", inherit = Kernel, lock_objects = F)
-Epanechnikov$set("public", "name", "Epanechnikov")
-Epanechnikov$set("public", "short_name", "Epan")
-Epanechnikov$set("public", "description", "Epanechnikov Kernel")
-Epanechnikov$set("public", "squared2Norm", function() {
-  return(3 / 5)
-})
-Epanechnikov$set("public", "variance", function() {
-  return(1 / 5)
-})
-Epanechnikov$set("public", "initialize", function(decorators = NULL) {
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(-1, 1)
+
+Epanechnikov <- R6Class("Epanechnikov", inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Epanechnikov",
+    short_name = "Epan",
+    description = "Epanechnikov Kernel",
+
+    squared2Norm = function() {
+      return(3 / 5)
+    },
+    variance = function() {
+      return(1 / 5)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_EpanechnikovKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_EpanechnikovKernelCdf(x, lower.tail, log.p)
+    }
   )
-})
-Epanechnikov$set("private", ".pdf", function(x, log = FALSE) {
-  C_EpanechnikovKernelPdf(x, log)
-})
-Epanechnikov$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  C_EpanechnikovKernelCdf(x, lower.tail, log.p)
-})
+)
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))

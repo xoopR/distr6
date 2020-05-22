@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Triweight Kernel
-#-------------------------------------------------------------
 #' @title Triweight Kernel
 #'
 #' @description Mathematical and statistical functions for the Triweight kernel defined by the pdf,
@@ -28,30 +24,29 @@
 #'
 #' @export
 NULL
-#-------------------------------------------------------------
-# Triweight Kernel Definition
-#-------------------------------------------------------------
-Triweight <- R6Class("Triweight", inherit = Kernel, lock_objects = F)
-Triweight$set("public", "name", "Triweight")
-Triweight$set("public", "short_name", "Triw")
-Triweight$set("public", "description", "Triweight Kernel")
-Triweight$set("public", "squared2Norm", function() {
-  return(350 / 429)
-})
-Triweight$set("public", "variance", function() {
-  return(1 / 9)
-})
-Triweight$set("public", "initialize", function(decorators = NULL) {
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(-1, 1)
+
+Triweight <- R6Class("Triweight", inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Triweight",
+    short_name = "Triw",
+    description = "Triweight Kernel",
+
+    squared2Norm = function() {
+      return(350 / 429)
+    },
+    variance = function() {
+      return(1 / 9)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_TriweightKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_TriweightKernelCdf(x, lower.tail, log.p)
+    }
   )
-})
-Triweight$set("private", ".pdf", function(x, log = FALSE) {
-  C_TriweightKernelPdf(x, log)
-})
-Triweight$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  C_TriweightKernelCdf(x, lower.tail, log.p)
-})
+)
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]", Packages = "-"))

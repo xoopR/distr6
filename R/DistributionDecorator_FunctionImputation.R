@@ -48,82 +48,83 @@
 #' x$cdf(0:5)
 #' @export
 NULL
+FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator,
+                              public = list(
+                                packages = c("pracma", "GoFKernel"),
 
-FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator)
+                                pdf = function(x1) {
+                                  # CDF2PDF
+                                  if (testUnivariate(self)) {
+                                    if (testDiscrete(self)) {
+                                      return(self$cdf(x1) - self$cdf(x1 - 1))
+                                    } else if (testContinuous(self)) {
+                                      message(.distr6$message_numeric)
+                                      return(pracma::fderiv(self$cdf, x1))
+                                    }
+                                  }
+                                },
+                                cdf = function(x, lower.tail = TRUE, log.p = FALSE, n = 10001,
+                                               .cdf_x = NULL) {
+
+                                  message(.distr6$message_numeric)
+
+                                  # PDF2CDF
+                                  if (testUnivariate(self)) {
+
+                                    data <- x
+                                    # if (testDiscrete(self)) {
+                                    if (!is.null(.cdf_x)) {
+                                      x <- .cdf_x
+                                    } else {
+                                      x <- impute_genx(self, n)
+                                    }
+
+
+                                    if (testDiscrete(self)) {
+                                      return(
+                                        NumericCdf_Discrete(q = data,
+                                                            x = x,
+                                                            pdf = self$pdf(x),
+                                                            lower = lower.tail,
+                                                            logp = log.p)
+                                      )
+                                    } else {
+                                      return(
+                                        NumericCdf_Continuous(q = data,
+                                                              x = x,
+                                                              pdf = self$pdf(x),
+                                                              lower = lower.tail,
+                                                              logp = log.p)
+                                      )
+                                    }
+                                  } else {
+                                    stop("CDF imputation currently only implemented for univariate distributions.")
+                                  }
+                                },
+                                quantile = function(p, lower.tail = TRUE, log.p = FALSE,
+                                                    n = 10001) {
+
+                                  message(.distr6$message_numeric)
+
+                                  x <- impute_genx(self, n)
+
+                                  if (private$.isCdf) {
+                                    return(NumericQuantile(p, x, self$cdf(x), lower.tail, log.p))
+                                  } else {
+                                    return(NumericQuantile(p, x, self$cdf(x, n = cdf_n, .cdf_x = x), lower.tail, log.p))
+                                  }
+
+                                },
+                                rand = function(n) {
+
+                                  if (private$.isQuantile) {
+                                    return(self$quantile(runif(n)))
+                                  } else {
+                                    x <- impute_genx(self, n)
+                                    return(sample(x, n, TRUE, self$pdf(x)))
+                                  }
+
+                                }
+                              ))
+
 .distr6$decorators <- append(.distr6$decorators, list(FunctionImputation = FunctionImputation))
-FunctionImputation$set("public", "packages", c("pracma", "GoFKernel"))
-
-FunctionImputation$set("public", "pdf", function(x1) {
-  # CDF2PDF
-  if (testUnivariate(self)) {
-    if (testDiscrete(self)) {
-      return(self$cdf(x1) - self$cdf(x1 - 1))
-    } else if (testContinuous(self)) {
-      message(.distr6$message_numeric)
-      return(pracma::fderiv(self$cdf, x1))
-    }
-  }
-})
-FunctionImputation$set("public", "cdf", function(x, lower.tail = TRUE, log.p = FALSE, n = 10001,
-                                                 .cdf_x = NULL) {
-
-  message(.distr6$message_numeric)
-
-  # PDF2CDF
-  if (testUnivariate(self)) {
-
-    data <- x
-    # if (testDiscrete(self)) {
-    if (!is.null(.cdf_x)) {
-      x <- .cdf_x
-    } else {
-      x <- impute_genx(self, n)
-    }
-
-
-    if (testDiscrete(self)) {
-      return(
-        NumericCdf_Discrete(q = data,
-                            x = x,
-                            pdf = self$pdf(x),
-                            lower = lower.tail,
-                            logp = log.p)
-      )
-    } else {
-      return(
-        NumericCdf_Continuous(q = data,
-                              x = x,
-                              pdf = self$pdf(x),
-                              lower = lower.tail,
-                              logp = log.p)
-      )
-    }
-  } else {
-    stop("CDF imputation currently only implemented for univariate distributions.")
-  }
-})
-FunctionImputation$set("public", "quantile", function(p, lower.tail = TRUE, log.p = FALSE,
-                                                      n = 10001) {
-
-  message(.distr6$message_numeric)
-
-  x <- impute_genx(self, n)
-
-  if (private$.isCdf) {
-    return(NumericQuantile(p, x, self$cdf(x), lower.tail, log.p))
-  } else {
-    return(NumericQuantile(p, x, self$cdf(x, n = cdf_n, .cdf_x = x), lower.tail, log.p))
-  }
-
-})
-
-FunctionImputation$set("public", "rand", function(n) {
-
-  if (private$.isQuantile) {
-    return(self$quantile(runif(n)))
-  } else {
-    x <- impute_genx(self, n)
-    return(sample(x, n, TRUE, self$pdf(x)))
-  }
-
-})

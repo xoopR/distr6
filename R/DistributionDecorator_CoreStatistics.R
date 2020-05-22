@@ -54,11 +54,157 @@
 #' x$kthmoment(4)
 #' @export
 NULL
-CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator)
+CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
+  public = list(
+    mgf = function(t) {
+      return(self$genExp(trafo = function(x) {
+        return(exp(x * t))
+      }))
+    },
+    cf = function(t) {
+      if (testDiscrete(self)) {
+        return(self$genExp(trafo = function(x) {
+          return(exp(x * t * 1i))
+        }))
+      } else {
+        return(self$genExp(trafo = function(x) {
+          return(Re(exp(x * t * 1i)))
+        }) +
+          1i * self$genExp(trafo = function(x) {
+            return(Im(exp(x * t * 1i)))
+          }))
+      }
+    },
+    pgf = function(z) {
+      if (testDiscrete(self)) {
+        x <- self$genExp(trafo = function(x) {
+          return(z^x)
+        })
+        return(x)
+      } else {
+        return(NaN)
+      }
+    },
+    entropy = function(base = 2) {
+      message(.distr6$message_numeric)
+      return(suppressMessages(self$genExp(trafo = function(x) -log(self$pdf(x), base))))
+    },
+    skewness = function() {
+      return(self$kthmoment(k = 3, type = "standard"))
+    },
+    kurtosis = function(excess = TRUE) {
+      kurtosis <- suppressMessages(self$kthmoment(k = 4, type = "standard"))
+      if (testContinuous(self)) {
+        message(.distr6$message_numeric)
+      }
+      if (excess) {
+        return(kurtosis - 3)
+      } else {
+        return(kurtosis)
+      }
+    },
+    variance = function() {
+      if (testUnivariate(self)) {
+        message(.distr6$message_numeric)
+        return(suppressMessages(self$genExp(trafo = function(x) x^2) - self$genExp()^2))
+      }
+    },
+    kthmoment = function(k, type = "central") {
+
+      if (testUnivariate(self)) {
+
+        if (grepl("^[c,C]", type)) {
+          type <- "central"
+        } else if (grepl("^[s,S]", type)) {
+          type <- "standard"
+        } else if (grepl("^[r,R]", type)) {
+          type <- "raw"
+        } else {
+          message("Type not recognised, central used")
+          type <- "central"
+        }
+
+        if (type == "central") {
+          if (k == 0) {
+            return(1)
+          }
+          if (k == 1) {
+            return(0)
+          }
+        }
+
+        message(.distr6$message_numeric)
+
+        if (type == "raw") {
+          suppressMessages(return(self$genExp(trafo = function(x) {
+            return(x^k)
+          })))
+        }
+
+        centralMoment <- suppressMessages(self$genExp(trafo = function(x) {
+          return((x - self$genExp())^k)
+        }))
+
+        if (type == "central") {
+          return(centralMoment)
+        } else if (type == "standard") {
+          suppressMessages(return(centralMoment / self$stdev()^k))
+        }
+      }
+    },
+    genExp = function(trafo = NULL) {
+      if (is.null(trafo)) {
+        trafo <- function() {
+          return(x)
+        }
+        formals(trafo) <- alist(x = )
+      }
+
+      count <- self$support$properties$countability
+      if (count != "uncountable") {
+        if (count == "countably infinite") {
+          lower <- ifelse(self$inf == -Inf, -1e03, self$inf)
+          upper <- ifelse(self$sup == Inf, 1e03, self$sup)
+          rng <- lower:upper
+        } else {
+          rng <- try(self$inf:self$sup, silent = TRUE)
+        }
+        pdfs <- self$pdf(rng)
+        xs <- trafo(rng)
+        xs[pdfs == 0] <- 0
+        return(sum(pdfs * xs))
+      } else {
+        message(.distr6$message_numeric)
+        return(suppressMessages(integrate(function(x) {
+          pdfs <- self$pdf(x)
+          xs <- trafo(x)
+          xs[pdfs == 0] <- 0
+          return(xs * pdfs)
+        }, lower = self$inf, upper = self$sup)$value))
+      }
+    },
+    mode = function(which = "all") {
+      if (private$.isRand) {
+        return(modal(round(self$rand(1e5), 4)))
+      } else {
+        lower <- ifelse(self$inf == -Inf, -1e3, self$inf)
+        upper <- ifelse(self$sup == Inf, 1e3, self$sup)
+
+        if (testDiscrete(self)) {
+          return((self$inf:self$sup)[which.max(self$pdf(self$inf:self$sup))])
+        } else {
+          return(optimize(self$pdf, interval = c(lower, upper), maximum = T)$maximum)
+        }
+      }
+    },
+    mean = function(...) {
+      return(self$genExp())
+    }
+  )
+)
+
 .distr6$decorators <- append(.distr6$decorators, list(CoreStatistics = CoreStatistics))
-#-------------------------------------------------------------
-# mgf
-#-------------------------------------------------------------
+
 #' @title Moment Generating Function
 #' @name mgf
 #' @description Moment generating function of a distribution
@@ -82,15 +228,7 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator)
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "mgf", function(t) {
-  return(self$genExp(trafo = function(x) {
-    return(exp(x * t))
-  }))
-})
 
-#-------------------------------------------------------------
-# cf
-#-------------------------------------------------------------
 #' @title Characteristic Function
 #' @name cf
 #' @description Characteristic function of a distribution
@@ -114,24 +252,7 @@ CoreStatistics$set("public", "mgf", function(t) {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "cf", function(t) {
-  if (testDiscrete(self)) {
-    return(self$genExp(trafo = function(x) {
-      return(exp(x * t * 1i))
-    }))
-  } else {
-    return(self$genExp(trafo = function(x) {
-      return(Re(exp(x * t * 1i)))
-    }) +
-      1i * self$genExp(trafo = function(x) {
-        return(Im(exp(x * t * 1i)))
-      }))
-  }
-})
 
-#-------------------------------------------------------------
-# pgf
-#-------------------------------------------------------------
 #' @title Probability Generating Function
 #' @name pgf
 #' @description Probability generating function of a distribution
@@ -156,20 +277,7 @@ CoreStatistics$set("public", "cf", function(t) {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "pgf", function(z) {
-  if (testDiscrete(self)) {
-    x <- self$genExp(trafo = function(x) {
-      return(z^x)
-    })
-    return(x)
-  } else {
-    return(NaN)
-  }
-})
 
-#-------------------------------------------------------------
-# entropy
-#-------------------------------------------------------------
 #' @title Distribution Entropy
 #' @name entropy
 #' @description (Information) Entropy of a distribution
@@ -195,14 +303,7 @@ CoreStatistics$set("public", "pgf", function(z) {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "entropy", function(base = 2) {
-  message(.distr6$message_numeric)
-  return(suppressMessages(self$genExp(trafo = function(x) -log(self$pdf(x), base))))
-})
 
-#-------------------------------------------------------------
-# skewness
-#-------------------------------------------------------------
 #' @title Distribution Skewness
 #' @name skewness
 #' @description Skewness of a distribution
@@ -227,13 +328,7 @@ CoreStatistics$set("public", "entropy", function(base = 2) {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "skewness", function() {
-  return(self$kthmoment(k = 3, type = "standard"))
-})
 
-#-------------------------------------------------------------
-# kurtosis
-#-------------------------------------------------------------
 #' @title Distribution Kurtosis
 #' @name kurtosis
 #' @description Kurtosis of a distribution
@@ -259,21 +354,7 @@ CoreStatistics$set("public", "skewness", function() {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
-  kurtosis <- suppressMessages(self$kthmoment(k = 4, type = "standard"))
-  if (testContinuous(self)) {
-    message(.distr6$message_numeric)
-  }
-  if (excess) {
-    return(kurtosis - 3)
-  } else {
-    return(kurtosis)
-  }
-})
 
-#-------------------------------------------------------------
-# variance
-#-------------------------------------------------------------
 #' @name variance
 #' @title Distribution Variance
 #' @description The variance or covariance of a distribution, either calculated analytically if
@@ -298,16 +379,7 @@ CoreStatistics$set("public", "kurtosis", function(excess = TRUE) {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "variance", function() {
-  if (testUnivariate(self)) {
-    message(.distr6$message_numeric)
-    return(suppressMessages(self$genExp(trafo = function(x) x^2) - self$genExp()^2))
-  }
-})
 
-#-------------------------------------------------------------
-# kthmoment
-#-------------------------------------------------------------
 #' @title Kth Moment
 #' @name kthmoment
 #' @description Kth standardised or central moment of a distribution
@@ -340,53 +412,7 @@ CoreStatistics$set("public", "variance", function() {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "kthmoment", function(k, type = "central") {
 
-  if (testUnivariate(self)) {
-
-    if (grepl("^[c,C]", type)) {
-      type <- "central"
-    } else if (grepl("^[s,S]", type)) {
-      type <- "standard"
-    } else if (grepl("^[r,R]", type)) {
-      type <- "raw"
-    } else {
-      message("Type not recognised, central used")
-      type <- "central"
-    }
-
-    if (type == "central") {
-      if (k == 0) {
-        return(1)
-      }
-      if (k == 1) {
-        return(0)
-      }
-    }
-
-    message(.distr6$message_numeric)
-
-    if (type == "raw") {
-      suppressMessages(return(self$genExp(trafo = function(x) {
-        return(x^k)
-      })))
-    }
-
-    centralMoment <- suppressMessages(self$genExp(trafo = function(x) {
-      return((x - self$genExp())^k)
-    }))
-
-    if (type == "central") {
-      return(centralMoment)
-    } else if (type == "standard") {
-      suppressMessages(return(centralMoment / self$stdev()^k))
-    }
-  }
-})
-
-#-------------------------------------------------------------
-# genExp
-#-------------------------------------------------------------
 #' @title Generalised Expectation of a Distribution
 #' @name genExp
 #'
@@ -414,40 +440,7 @@ CoreStatistics$set("public", "kthmoment", function(k, type = "central") {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "genExp", function(trafo = NULL) {
-  if (is.null(trafo)) {
-    trafo <- function() {
-      return(x)
-    }
-    formals(trafo) <- alist(x = )
-  }
 
-  count <- self$support$properties$countability
-  if (count != "uncountable") {
-    if (count == "countably infinite") {
-      lower <- ifelse(self$inf == -Inf, -1e03, self$inf)
-      upper <- ifelse(self$sup == Inf, 1e03, self$sup)
-      rng <- lower:upper
-    } else {
-      rng <- try(self$inf:self$sup, silent = TRUE)
-    }
-    pdfs <- self$pdf(rng)
-    xs <- trafo(rng)
-    xs[pdfs == 0] <- 0
-    return(sum(pdfs * xs))
-  } else {
-    message(.distr6$message_numeric)
-    return(suppressMessages(integrate(function(x) {
-      pdfs <- self$pdf(x)
-      xs <- trafo(x)
-      xs[pdfs == 0] <- 0
-      return(xs * pdfs)
-    }, lower = self$inf, upper = self$sup)$value))
-  }
-})
-#-------------------------------------------------------------
-# mode
-#-------------------------------------------------------------
 #' @title Mode of a Distribution
 #' @name mode
 #' @description A numeric search for the mode(s) of a distribution.
@@ -470,24 +463,7 @@ CoreStatistics$set("public", "genExp", function(trafo = NULL) {
 #'
 #' @export
 NULL
-CoreStatistics$set("public", "mode", function(which = "all") {
-  if (private$.isRand) {
-    return(modal(round(self$rand(1e5), 4)))
-  } else {
-    lower <- ifelse(self$inf == -Inf, -1e3, self$inf)
-    upper <- ifelse(self$sup == Inf, 1e3, self$sup)
 
-    if (testDiscrete(self)) {
-      return((self$inf:self$sup)[which.max(self$pdf(self$inf:self$sup))])
-    } else {
-      return(optimize(self$pdf, interval = c(lower, upper), maximum = T)$maximum)
-    }
-  }
-})
-
-#-------------------------------------------------------------
-# mean
-#-------------------------------------------------------------
 #' @title Distribution Mean
 #'
 #' @param x Distribution.
@@ -509,6 +485,3 @@ CoreStatistics$set("public", "mode", function(which = "all") {
 #'
 #' @export
 mean.Distribution <- function(x, ...) {}
-CoreStatistics$set("public", "mean", function(...) {
-  return(self$genExp())
-})

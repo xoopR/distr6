@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Cosine Kernel
-#-------------------------------------------------------------
 #' @title Cosine Kernel
 #'
 #' @description Mathematical and statistical functions for the Cosine kernel defined by the pdf,
@@ -25,33 +22,32 @@
 #'
 #' @export
 NULL
-#-------------------------------------------------------------
-# Cosine Kernel Definition
-#-------------------------------------------------------------
-Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F)
-Cosine$set("public", "name", "Cosine")
-Cosine$set("public", "short_name", "Cos")
-Cosine$set("public", "description", "Cosine Kernel")
-Cosine$set("public", "squared2Norm", function() {
-  return(pi^2 / 16)
-})
-Cosine$set("public", "variance", function() {
-  return(1 - 8 / (pi^2))
-})
-Cosine$set("public", "initialize", function(decorators = NULL) {
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(-1, 1)
+
+Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Cosine",
+    short_name = "Cos",
+    description = "Cosine Kernel",
+
+    squared2Norm = function() {
+      return(pi^2 / 16)
+    },
+    variance = function() {
+      return(1 - 8 / (pi^2))
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_CosineKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_CosineKernelCdf(x, lower.tail, log.p)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      C_CosineKernelQuantile(x, lower.tail, log.p)
+    }
   )
-})
-Cosine$set("private", ".pdf", function(x, log = FALSE) {
-  C_CosineKernelPdf(x, log)
-})
-Cosine$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  C_CosineKernelCdf(x, lower.tail, log.p)
-})
-Cosine$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  C_CosineKernelQuantile(x, lower.tail, log.p)
-})
+)
 
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Cos", ClassName = "Cosine", Support = "[-1,1]", Packages = "-"))

@@ -1,6 +1,4 @@
-#-------------------------------------------------------------
-# Normal Kernel
-#-------------------------------------------------------------
+
 #' @title Normal Kernel
 #'
 #' @description Mathematical and statistical functions for the NormalKernel kernel defined by the pdf,
@@ -27,11 +25,8 @@
 #'
 #' @export
 NULL
-#-------------------------------------------------------------
-# NormalKernel Kernel Definition
-#-------------------------------------------------------------
-NormalKernel <- R6Class("NormalKernel",
-  inherit = Kernel, lock_objects = F,
+
+NormalKernel <- R6Class("NormalKernel", inherit = Kernel, lock_objects = F,
   public = list(
     name = "NormalKernel",
     short_name = "Norm",
@@ -44,11 +39,9 @@ NormalKernel <- R6Class("NormalKernel",
         support = Reals$new()
       )
     },
-
     squared2Norm = function() {
       return((2 * sqrt(pi))^-1)
     },
-
     variance = function() {
       return(1)
     }
@@ -88,3 +81,8 @@ NormalKernel <- R6Class("NormalKernel",
     }
   )
 )
+
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Norm", ClassName = "NormalKernel",
+                                                Support = "\u211D", Packages = "pracma"))
+

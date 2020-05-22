@@ -11,6 +11,8 @@
   Type = "\u211D", ValueSupport = "continuous", VariateForm = "univariate",
   Package = "stats"
 )
-.distr6$kernels <- data.table::data.table(ShortName = "Norm", ClassName = "NormalKernel", Support = "\u211D", Packages = "pracma")
+.distr6$kernels <- data.table::data.table(ShortName = NULL, ClassName = NULL, Support = NULL, Packages = NULL)
+
+
 .distr6$decorators <- list()
 .distr6$wrappers <- list()

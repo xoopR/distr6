@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Silverman Kernel
-#-------------------------------------------------------------
 #' @title Silverman Kernel
 #'
 #' @description Mathematical and statistical functions for the Silverman kernel defined by the pdf,
@@ -28,27 +25,31 @@
 #'
 #' @export
 NULL
-#-------------------------------------------------------------
-# Silverman Kernel Definition
-#-------------------------------------------------------------
-Silverman <- R6Class("Silverman", inherit = Kernel, lock_objects = F)
-Silverman$set("public", "name", "Silverman")
-Silverman$set("public", "short_name", "Silv")
-Silverman$set("public", "description", "Silverman Kernel")
-Silverman$set("public", "squared2Norm", function() {
-  return((3 * sqrt(2)) / 16)
-})
-Silverman$set("public", "variance", function() {
-  return(0)
-})
-Silverman$set("public", "initialize", function(decorators = NULL) {
-  super$initialize(
-    decorators = decorators,
-    support = Reals$new()
-  )
-})
-Silverman$set("private", ".pdf", function(x, log = FALSE) {
-  C_SilvermanKernelPdf(x, log)
-})
 
+Silverman <- R6Class("Silverman", inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Silverman",
+    short_name = "Silv",
+    description = "Silverman Kernel",
+
+    initialize = function(decorators = NULL) {
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
+    },
+    squared2Norm = function() {
+      return((3 * sqrt(2)) / 16)
+    },
+    variance = function() {
+      return(0)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_SilvermanKernelPdf(x, log)
+    }
+  )
+)
 .distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Silv", ClassName = "Silverman", Support = "\u211D", Packages = "-"))

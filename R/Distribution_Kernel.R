@@ -1,6 +1,3 @@
-#-------------------------------------------------------------
-# Kernel Documentation
-#-------------------------------------------------------------
 #' @title Abstract Kernel Class
 #'
 #' @description Abstract class that cannot be constructed directly. See \code{listKernels} for a list of
@@ -74,37 +71,46 @@
 #'
 #' @export
 NULL
-Kernel <- R6Class("Kernel", inherit = Distribution)
-Kernel$set("public", "initialize", function(decorators, support) {
-  if (getR6Class(self) == "Kernel") {
-    stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels() to see the kernels currently implemented in distr6, or Distribution$new() to construct a custom Kernel."))
-  }
+Kernel <- R6Class("Kernel", inherit = Distribution,
+                  public = list(
+                    package = "This is now deprecated. Use $packages instead.",
+                    packages = NULL,
 
-  assert_pkgload(self$packages)
+                    initialize = function(decorators = NULL, support = Interval$new(-1, 1)) {
+                      if (getR6Class(self) == "Kernel") {
+                        stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels() to see the kernels currently implemented in distr6, or Distribution$new() to construct a custom Kernel."))
+                      }
 
-  if (!is.null(decorators)) suppressMessages(decorate(self, decorators))
+                      assert_pkgload(self$packages)
 
-  private$.properties$support <- assertSet(support)
-  private$.traits$type <- Reals$new()
+                      if (!is.null(decorators)) suppressMessages(decorate(self, decorators))
 
-  invisible(self)
-})
-Kernel$set("public", "package", "This is now deprecated. Use $packages instead.")
-Kernel$set("public", "packages", NULL)
-Kernel$set("public", "mode", function(which = NULL) {
-  return(0)
-})
-Kernel$set("public", "mean", function() {
-  return(0)
-})
-Kernel$set("public", "median", function() {
-  return(0)
-})
-Kernel$set("private", ".rand", function(n) {
-  if (!is.null(private$.quantile)) {
-    self$quantile(runif(n))
-  }
-})
-Kernel$set("private", ".properties", list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"))
-Kernel$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-Kernel$set("private", ".log", TRUE)
+                      private$.properties$support <- assertSet(support)
+                      private$.traits$type <- Reals$new()
+
+                      invisible(self)
+                    },
+                    mode = function(which = NULL) {
+                      return(0)
+                    },
+                    mean = function() {
+                      return(0)
+                    },
+                    median = function() {
+                      return(0)
+                    }
+                  ),
+
+                  private = list(
+                    .log = TRUE,
+                    .traits = list(valueSupport = "continuous", variateForm = "univariate"),
+                    .properties = list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"),
+                    .rand = function(n) {
+                      if (!is.null(private$.quantile)) {
+                        return(self$quantile(runif(n)))
+                      } else {
+                        return(NULL)
+                      }
+                    }
+                  )
+)
