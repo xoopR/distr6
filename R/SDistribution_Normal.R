@@ -167,3 +167,12 @@ Normal$set("public", "initialize", function(mean = 0, var = 1, sd = NULL, prec =
     type = Reals$new()
   )
 })
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table(
+    ShortName = "Norm", ClassName = "Normal",
+    Type = "\u211D", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  ))

@@ -104,9 +104,9 @@ Hypergeometric$set("public", "setParameterValue", function(..., lst = NULL, erro
     self$getParameterValue("successes")
   ))
 
-  self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(successes = Set$new(0:size)))
-  self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(draws = Set$new(0:size)))
-  self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(failures = Set$new(0:size)))
+  self$parameters()$.__enclos_env__$private$.setParameterSupport(list(successes = Set$new(0:size)))
+  self$parameters()$.__enclos_env__$private$.setParameterSupport(list(draws = Set$new(0:size)))
+  self$parameters()$.__enclos_env__$private$.setParameterSupport(list(failures = Set$new(0:size)))
   invisible(self)
 })
 

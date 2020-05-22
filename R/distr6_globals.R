@@ -6,12 +6,9 @@
   return(paste("No analytic result for", self$name, method, "available. Try decorating with CoreStatistics."))
 }
 
-.distr6$distributions <- data.table::data.table(
-  ShortName = "Norm", ClassName = "Normal",
-  Type = "\u211D", ValueSupport = "continuous", VariateForm = "univariate",
-  Package = "stats"
-)
-.distr6$kernels <- data.table::data.table(ShortName = NULL, ClassName = NULL, Support = NULL, Packages = NULL)
+.distr6$distributions <- data.table(ShortName = NULL, ClassName = NULL, Type = NULL,
+                                    ValueSupport = NULL, VariateForm = NULL, Package = NULL)
+.distr6$kernels <- data.table(ShortName = NULL, ClassName = NULL, Support = NULL, Packages = NULL)
 
 
 .distr6$decorators <- list()
