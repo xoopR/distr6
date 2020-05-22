@@ -99,536 +99,542 @@
 #'
 #' @export
 NULL
-VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
-.distr6$wrappers <- append(.distr6$wrappers, list(VectorDistribution = VectorDistribution))
+VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrapper,
+  lock_objects = FALSE,
+  public = list(
+    initialize = function(distlist = NULL, distribution = NULL, params = NULL,
+                          shared_params = NULL, name = NULL, short_name = NULL,
+                          decorators = NULL) {
 
-VectorDistribution$set("public", "initialize", function(distlist = NULL, distribution = NULL, params = NULL,
-                                                        shared_params = NULL, name = NULL, short_name = NULL,
-                                                        decorators = NULL) {
-
-  if (!is.null(decorators)) {
-    suppressMessages(decorate(self, decorators))
-  }
-
-  if (is.null(distlist)) {
-    if (is.null(distribution) | (is.null(params) & is.null(shared_params))) {
-      stop("Either distlist or distribution and shared_params/params must be provided.")
-    }
-
-    distribution <- match.arg(distribution, c(listDistributions(simplify = TRUE), "Distribution"))
-
-    if (is.null(params)) {
-      params <- list()
-    } else {
-      if (!checkmate::testList(params)) {
-        params <- apply(params, 1, as.list)
+      if (!is.null(decorators)) {
+        suppressMessages(decorate(self, decorators))
       }
-    }
 
-    if (is.null(shared_params)) {
-      shared_params <- list()
-    } else {
-      if (!checkmate::testList(shared_params)) {
-        shared_params <- as.list(shared_params)
-      }
-    }
+      if (is.null(distlist)) {
+        if (is.null(distribution) | (is.null(params) & is.null(shared_params))) {
+          stop("Either distlist or distribution and shared_params/params must be provided.")
+        }
 
-    if ("short_name" %in% names(shared_params)) {
-      shortname <- shared_params$short_name
-      self$short_name <- if (is.null(short_name)) paste0("Vec", length(params), shortname) else short_name
-    } else {
-      if (distribution == "Distribution") {
-        shortname <- unlist(sapply(params, function(x) x$short_name))
-        self$short_name <- if (is.null(short_name)) paste0("Vec", length(params), "CustomDists") else short_name
-      } else {
-        shortname <- get(distribution)$public_fields$short_name
-        self$short_name <- if (is.null(short_name)) paste0("Vec", length(params), shortname) else short_name
-      }
-    }
+        distribution <- match.arg(distribution, c(listDistributions(simplify = TRUE), "Distribution"))
 
-    private$.wrappedModels <- data.table::data.table(
-      distribution = distribution,
-      params = params,
-      shortname = shortname
-    )
-    private$.wrappedModels$shortname <- makeUniqueNames(private$.wrappedModels$shortname)
-    private$.sharedparams <- shared_params
+        if (is.null(params)) {
+          params <- list()
+        } else {
+          if (!checkmate::testList(params)) {
+            params <- apply(params, 1, as.list)
+          }
+        }
 
-    pdist <- get(distribution)
-    private$.univariate <- pdist$private_fields$.traits$variateForm == "univariate"
+        if (is.null(shared_params)) {
+          shared_params <- list()
+        } else {
+          if (!checkmate::testList(shared_params)) {
+            shared_params <- as.list(shared_params)
+          }
+        }
 
-    pdist <- pdist[["private_methods"]]
-    if (!is.null(pdist[[".pdf"]])) {
-      private$.pdf <- function(x1, log) {}
-      body(private$.pdf) <- substitute(
-        {
-          fun <- function(x, log) {}
-          body(fun) <- substitute(FUN)
-
-          dpqr <- data.table()
-          if (private$.univariate) {
-            for (i in 1:ncol(x1)) {
-              a_dpqr <- fun(unlist(x1[, i]), log = log)
-              a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
+        if ("short_name" %in% names(shared_params)) {
+          shortname <- shared_params$short_name
+          self$short_name <- if (is.null(short_name)) paste0("Vec", length(params), shortname) else short_name
+        } else {
+          if (distribution == "Distribution") {
+            shortname <- unlist(sapply(params, function(x) x$short_name))
+            self$short_name <- if (is.null(short_name)) paste0("Vec", length(params), "CustomDists") else short_name
           } else {
-            for (i in seq(dim(x1)[3])) {
-              mx <- x1[, , i]
-              if (class(mx)[1] == "numeric") {
-                mx = matrix(mx, nrow = 1)
+            shortname <- get(distribution)$public_fields$short_name
+            self$short_name <- if (is.null(short_name)) paste0("Vec", length(params), shortname) else short_name
+          }
+        }
+
+        private$.wrappedModels <- data.table::data.table(
+          distribution = distribution,
+          params = params,
+          shortname = shortname
+        )
+        private$.wrappedModels$shortname <- makeUniqueNames(private$.wrappedModels$shortname)
+        private$.sharedparams <- shared_params
+
+        pdist <- get(distribution)
+        private$.univariate <- pdist$private_fields$.traits$variateForm == "univariate"
+
+        pdist <- pdist[["private_methods"]]
+        if (!is.null(pdist[[".pdf"]])) {
+          private$.pdf <- function(x1, log) {}
+          body(private$.pdf) <- substitute(
+            {
+              fun <- function(x, log) {}
+              body(fun) <- substitute(FUN)
+
+              dpqr <- data.table()
+              if (private$.univariate) {
+                for (i in 1:ncol(x1)) {
+                  a_dpqr <- fun(unlist(x1[, i]), log = log)
+                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                  dpqr <- cbind(dpqr, a_dpqr)
+                }
+              } else {
+                for (i in seq(dim(x1)[3])) {
+                  mx <- x1[, , i]
+                  if (class(mx)[1] == "numeric") {
+                    mx = matrix(mx, nrow = 1)
+                  }
+                  a_dpqr <- fun(mx, log = log)
+                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                  dpqr <- cbind(dpqr, a_dpqr)
+                }
               }
-              a_dpqr <- fun(mx, log = log)
-              a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
+
+              return(dpqr)
+            },
+            list(FUN = body(pdist[[".pdf"]]))
+          )
+        }
+
+        if (!is.null(pdist[[".cdf"]])) {
+          private$.cdf <- function(x1, lower.tail, log.p) {}
+          body(private$.cdf) <- substitute(
+            {
+              fun <- function(x, lower.tail, log.p) {}
+              body(fun) <- substitute(FUN)
+
+              dpqr <- data.table()
+              if (private$.univariate) {
+                for (i in 1:ncol(x1)) {
+                  a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
+                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                  dpqr <- cbind(dpqr, a_dpqr)
+                }
+              } else {
+                for (i in seq(dim(x1)[3])) {
+                  a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
+                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                  dpqr <- cbind(dpqr, a_dpqr)
+                }
+              }
+
+              return(dpqr)
+            },
+            list(FUN = body(pdist[[".cdf"]]))
+          )
+        }
+
+        if (!is.null(pdist[[".quantile"]])) {
+          private$.quantile <- function(x1, lower.tail, log.p) {}
+          body(private$.quantile) <- substitute(
+            {
+              fun <- function(x, lower.tail, log.p) {}
+              body(fun) <- substitute(FUN)
+
+              dpqr <- data.table()
+              if (private$.univariate) {
+                for (i in 1:ncol(x1)) {
+                  a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
+                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                  dpqr <- cbind(dpqr, a_dpqr)
+                }
+              } else {
+                for (i in 1:dim(x1)[3]) {
+                  a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
+                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                  dpqr <- cbind(dpqr, a_dpqr)
+                }
+              }
+              return(dpqr)
+            },
+            list(FUN = body(pdist[[".quantile"]]))
+          )
+        }
+
+        if (!is.null(pdist[[".rand"]])) {
+          private$.rand <- function(x1) {}
+          body(private$.rand) <- substitute(
+            {
+              fun <- function(n) {}
+              body(fun) <- substitute(FUN)
+
+              return(fun(x1))
+            },
+            list(FUN = body(pdist[[".rand"]]))
+          )
+        }
+
+        if (is.null(name)) {
+          if (distribution == "Distribution") {
+            self$name <- paste0("Vector: ", length(params), " CustomDistributions")
+          } else {
+            self$name <- paste0("Vector: ", length(params), " ", distribution, "s")
           }
+        } else {
+          self$name <- name
+        }
 
-          return(dpqr)
-        },
-        list(FUN = body(pdist[[".pdf"]]))
-      )
-    }
+      } else {
+        private$.distlist <- TRUE
+        shortname <- distribution <- c()
 
-    if (!is.null(pdist[[".cdf"]])) {
-      private$.cdf <- function(x1, lower.tail, log.p) {}
-      body(private$.cdf) <- substitute(
-        {
-          fun <- function(x, lower.tail, log.p) {}
-          body(fun) <- substitute(FUN)
+        vf <- distlist[[1]]$traits$variateForm
+        for (i in 1:length(distlist)) {
+          shortname <- c(shortname, distlist[[i]]$short_name)
+          distribution <- c(distribution, distlist[[i]]$name)
+          distlist[[i]] <- distlist[[i]]$clone(deep = TRUE)
+          if (distlist[[i]]$traits$variateForm != vf) {
+            stop("All distributions in VectorDistribution must be of same variateForm.")
+          }
+        }
+        private$.univariate <- vf == "univariate"
 
+        private$.wrappedModels <- data.table::data.table(
+          distribution = distlist,
+          params = NA,
+          shortname = shortname
+        )
+
+        ndist <- length(distlist)
+
+        private$.pdf <- function(x1, log) {
           dpqr <- data.table()
           if (private$.univariate) {
-            for (i in 1:ncol(x1)) {
-              a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-              a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+            for (i in seq(ncol(x1))) {
+              a_dpqr <- self[i]$pdf(x1[, i], log = log)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           } else {
             for (i in seq(dim(x1)[3])) {
-              a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
-              a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+              a_dpqr <- self[i]$pdf(x1[, , i], log = log)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           }
 
           return(dpqr)
-        },
-        list(FUN = body(pdist[[".cdf"]]))
-      )
-    }
+        }
 
-    if (!is.null(pdist[[".quantile"]])) {
-      private$.quantile <- function(x1, lower.tail, log.p) {}
-      body(private$.quantile) <- substitute(
-        {
-          fun <- function(x, lower.tail, log.p) {}
-          body(fun) <- substitute(FUN)
 
-          dpqr <- data.table()
-          if (private$.univariate) {
-            for (i in 1:ncol(x1)) {
-              a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-              a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
+        # pdf = function(x1, log) {}
+        # body(pdf) = substitute({
+        #   pdfs = NULL
+        #   if(class(try(get("x2"), silent = T)) == "try-error"){
+        #     for(i in 1:n)
+        #       pdfs = c(pdfs, self[i]$pdf(get("x1")))
+        #   } else {
+        #     for(i in 1:n)
+        #       pdfs = c(pdfs, self[i]$pdf(get(paste0("x",i))))
+        #   }
+        #   y = data.table::data.table(matrix(pdfs, ncol = n))
+        #   colnames(y) <- unlist(private$.wrappedModels[,3])
+        #   return(y)
+        # },list(n = ndist))
+
+        # cdf = function() {}
+        # formals(cdf) = lst
+        # body(cdf) = substitute({
+        #   cdfs = NULL
+        #   if(class(try(get("x2"), silent = T)) == "try-error"){
+        #     for(i in 1:n)
+        #       cdfs = c(cdfs, self[i]$cdf(get("x1")))
+        #   } else {
+        #     for(i in 1:n)
+        #       cdfs = c(cdfs, self[i]$cdf(get(paste0("x",i))))
+        #   }
+        #   y = data.table::data.table(matrix(cdfs, ncol = n))
+        #   colnames(y) <- unlist(private$.wrappedModels[,3])
+        #   return(y)
+        # },list(n = ndist))
+        #
+        # quantile = function() {}
+        # formals(quantile) = lst
+        # body(quantile) = substitute({
+        #   quantiles = NULL
+        #   if(class(try(get("x2"), silent = T)) == "try-error"){
+        #     for(i in 1:n)
+        #       quantiles = c(quantiles, self[i]$quantile(get("x1")))
+        #   } else {
+        #     for(i in 1:n)
+        #       quantiles = c(quantiles, self[i]$quantile(get(paste0("x",i))))
+        #   }
+        #   y = data.table::data.table(matrix(quantiles, ncol = n))
+        #   colnames(y) <- unlist(private$.wrappedModels[,3])
+        #   return(y)
+        # },list(n = ndist))
+        #
+        # rand = function(n) {
+        #   rand <- sapply(1:nrow(private$.wrappedModels), function(x) self[x]$rand(n))
+        #   if(n == 1) rand <- t(rand)
+        #   rand <- data.table::as.data.table(rand)
+        #   colnames(rand) <- unlist(private$.wrappedModels[,3])
+        #   return(rand)
+        # }
+        #
+        # ndist = nrow(private$.wrappedModels)
+
+        if (length(unique(distribution)) == 1) {
+          if (is.null(name)) self$name <- paste0("Vector: ", ndist, " ", distribution[[1]], "s") # FIXME
+          if (is.null(short_name)) self$short_name <- paste0("Vec", ndist, private$.wrappedModels[1, 3][[1]]) # FIXME
+        } else {
+          if (is.null(name)) self$name <- paste("Vector:", paste0(distribution, collapse = ", ")) # FIXME
+          if (is.null(short_name)) self$short_name <- paste0(private$.wrappedModels[, "shortname"][[1]], collapse = "Vec") # FIXME
+        }
+      }
+
+      # self$description = description #TODO
+      # private$.properties$support = setpower(Reals$new(), ndist)   # FIXME
+      # private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
+
+      invisible(self)
+    },
+
+    wrappedModels = function(model = NULL) {
+      if (is.null(model)) {
+        if (private$.distlist) {
+          return(private$.wrappedModels[, "distribution"][[1]])
+        } else {
+          return(apply(private$.wrappedModels, 1, function(x) do.call(get(x[[1]])$new, x[[2]])))
+        }
+      } else {
+        model <- model[model %in% private$.wrappedModels[, "shortname"][[1]]]
+
+        if (length(model) == 0) {
+          return(self$wrappedModels())
+        }
+
+        if (private$.distlist) {
+          x <- subset(private$.wrappedModels, shortname %in% model, distribution)
+          if (nrow(x) == 1) {
+            return(x[[1]][[1]])
           } else {
-            for (i in 1:dim(x1)[3]) {
-              a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
-              a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
+            x <- unlist(as.list(x), recursive = TRUE)
+            names(x) <- model
+            return(x)
           }
-          return(dpqr)
-        },
-        list(FUN = body(pdist[[".quantile"]]))
-      )
-    }
-
-    if (!is.null(pdist[[".rand"]])) {
-      private$.rand <- function(x1) {}
-      body(private$.rand) <- substitute(
-        {
-          fun <- function(n) {}
-          body(fun) <- substitute(FUN)
-
-          return(fun(x1))
-        },
-        list(FUN = body(pdist[[".rand"]]))
-      )
-    }
-
-    if (is.null(name)) {
-      if (distribution == "Distribution") {
-        self$name <- paste0("Vector: ", length(params), " CustomDistributions")
-      } else {
-        self$name <- paste0("Vector: ", length(params), " ", distribution, "s")
+        } else {
+          x <- subset(private$.wrappedModels, shortname %in% model)
+          x <- apply(x, 1, function(y) do.call(get(y[[1]])$new, y[[2]]))
+          if (length(x) == 1) {
+            return(x[[1]])
+          }
+        }
       }
-    } else {
-      self$name <- name
-    }
-
-  } else {
-    private$.distlist <- TRUE
-    shortname <- distribution <- c()
-
-    vf <- distlist[[1]]$traits$variateForm
-    for (i in 1:length(distlist)) {
-      shortname <- c(shortname, distlist[[i]]$short_name)
-      distribution <- c(distribution, distlist[[i]]$name)
-      distlist[[i]] <- distlist[[i]]$clone(deep = TRUE)
-      if (distlist[[i]]$traits$variateForm != vf) {
-        stop("All distributions in VectorDistribution must be of same variateForm.")
+    },
+    strprint = function(n = 10) {
+      names <- as.character(self$modelTable$shortname)
+      lng <- length(names)
+      if (lng > (2 * n)) {
+        names <- c(names[1:n], "...", names[(lng - n + 1):lng])
       }
-    }
-    private$.univariate <- vf == "univariate"
 
-    private$.wrappedModels <- data.table::data.table(
-      distribution = distlist,
-      params = NA,
-      shortname = shortname
-    )
+      return(names)
+    },
 
-    ndist <- length(distlist)
+    getParameterValue = function(id) {
+      if (!self$distlist) {
+        if (id %in% names(self$shared_params)) {
+          return(as.list(rep(self$shared_params[[id]], nrow(self$modelTable))))
+        } else {
+          return(lapply(self$modelTable$params, function(x) x[[id]]))
+        }
+      }
+    },
+    setParameterValue = function(...) {
+      message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
+      return(NULL)
+    },
+    parameters = function(...){
+      message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
+      return(data.table::data.table())
+    },
 
-    private$.pdf <- function(x1, log) {
-      dpqr <- data.table()
+    mean = function() {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$mean(), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    mode = function(which = "all") {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$mode(which), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    variance = function() {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$variance(), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    skewness = function() {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$skewness(), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    kurtosis = function(excess = TRUE) {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$kurtosis(excess), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    entropy = function(base = 2) {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$entropy(base), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    mgf = function(t) {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$mgf(t), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    cf = function(t) {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$cf(t), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+    pgf = function(z) {
+      ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
+        ifnerror(self[i]$pgf(z), error = NaN)
+      }), nrow = 1)
+      colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
+      return(data.table::data.table(ret))
+    },
+
+    pdf = function(..., log = FALSE, data) {
+      if (missing(data)) data <- as.matrix(data.table(...))
+
       if (private$.univariate) {
-        for (i in seq(ncol(x1))) {
-          a_dpqr <- self[i]$pdf(x1[, i], log = log)
-          dpqr <- cbind(dpqr, a_dpqr)
+        if (ncol(data) == 1) {
+          data <- matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
+        }
+        dpqr <- as.data.table(private$.pdf(data, log = log))
+        colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
+        return(dpqr)
+      } else {
+        if (ncol(data) == 1) {
+          data <- array(rep(data, nrow(private$.wrappedModels)),
+                        dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
+          )
+        } else if (inherits(data, "array")) {
+          if (is.na(dim(data)[3])) {
+            data <- array(rep(data, nrow(private$.wrappedModels)),
+                          dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
+            )
+          }
+        }
+        dpqr <- private$.pdf(data, log = log)
+        colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
+        return(dpqr)
+        #
+        # nc <- prod(dim(dpqr)) / (nrow(dpqr) * dim(data)[3])
+        # return(array(as.matrix(dpqr),
+        #   dim = c(nrow(dpqr), nc, dim(data)[3]),
+        #   dimnames = list(NULL, colnames(dpqr)[1:nc], NULL)
+        # ))
+      }
+    },
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+      if (missing(data)) data <- as.matrix(data.table(...))
+
+      if (private$.univariate) {
+        if (ncol(data) == 1) {
+          data <- matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
         }
       } else {
-        for (i in seq(dim(x1)[3])) {
-          a_dpqr <- self[i]$pdf(x1[, , i], log = log)
-          dpqr <- cbind(dpqr, a_dpqr)
+        if (ncol(data) == 1) {
+          stop("Only one column of data but distribution is not univariate.")
+        } else if (class(data) == "array") {
+          if (dim(data)[3] == 1) {
+            data <- array(rep(data, nrow(private$.wrappedModels)),
+                          dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
+            )
+          }
         }
       }
 
+      dpqr <- as.data.table(private$.cdf(data, lower.tail = lower.tail, log.p = log.p))
+      colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
       return(dpqr)
-    }
+    },
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+      if (missing(data)) data <- as.matrix(data.table(...))
 
-
-    # pdf = function(x1, log) {}
-    # body(pdf) = substitute({
-    #   pdfs = NULL
-    #   if(class(try(get("x2"), silent = T)) == "try-error"){
-    #     for(i in 1:n)
-    #       pdfs = c(pdfs, self[i]$pdf(get("x1")))
-    #   } else {
-    #     for(i in 1:n)
-    #       pdfs = c(pdfs, self[i]$pdf(get(paste0("x",i))))
-    #   }
-    #   y = data.table::data.table(matrix(pdfs, ncol = n))
-    #   colnames(y) <- unlist(private$.wrappedModels[,3])
-    #   return(y)
-    # },list(n = ndist))
-
-    # cdf = function() {}
-    # formals(cdf) = lst
-    # body(cdf) = substitute({
-    #   cdfs = NULL
-    #   if(class(try(get("x2"), silent = T)) == "try-error"){
-    #     for(i in 1:n)
-    #       cdfs = c(cdfs, self[i]$cdf(get("x1")))
-    #   } else {
-    #     for(i in 1:n)
-    #       cdfs = c(cdfs, self[i]$cdf(get(paste0("x",i))))
-    #   }
-    #   y = data.table::data.table(matrix(cdfs, ncol = n))
-    #   colnames(y) <- unlist(private$.wrappedModels[,3])
-    #   return(y)
-    # },list(n = ndist))
-    #
-    # quantile = function() {}
-    # formals(quantile) = lst
-    # body(quantile) = substitute({
-    #   quantiles = NULL
-    #   if(class(try(get("x2"), silent = T)) == "try-error"){
-    #     for(i in 1:n)
-    #       quantiles = c(quantiles, self[i]$quantile(get("x1")))
-    #   } else {
-    #     for(i in 1:n)
-    #       quantiles = c(quantiles, self[i]$quantile(get(paste0("x",i))))
-    #   }
-    #   y = data.table::data.table(matrix(quantiles, ncol = n))
-    #   colnames(y) <- unlist(private$.wrappedModels[,3])
-    #   return(y)
-    # },list(n = ndist))
-    #
-    # rand = function(n) {
-    #   rand <- sapply(1:nrow(private$.wrappedModels), function(x) self[x]$rand(n))
-    #   if(n == 1) rand <- t(rand)
-    #   rand <- data.table::as.data.table(rand)
-    #   colnames(rand) <- unlist(private$.wrappedModels[,3])
-    #   return(rand)
-    # }
-    #
-    # ndist = nrow(private$.wrappedModels)
-
-    if (length(unique(distribution)) == 1) {
-      if (is.null(name)) self$name <- paste0("Vector: ", ndist, " ", distribution[[1]], "s") # FIXME
-      if (is.null(short_name)) self$short_name <- paste0("Vec", ndist, private$.wrappedModels[1, 3][[1]]) # FIXME
-    } else {
-      if (is.null(name)) self$name <- paste("Vector:", paste0(distribution, collapse = ", ")) # FIXME
-      if (is.null(short_name)) self$short_name <- paste0(private$.wrappedModels[, "shortname"][[1]], collapse = "Vec") # FIXME
-    }
-  }
-
-  # self$description = description #TODO
-  # private$.properties$support = setpower(Reals$new(), ndist)   # FIXME
-  # private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
-
-  invisible(self)
-})
-VectorDistribution$set("public", "wrappedModels", function(model = NULL) {
-  if (is.null(model)) {
-    if (private$.distlist) {
-      return(private$.wrappedModels[, "distribution"][[1]])
-    } else {
-      return(apply(private$.wrappedModels, 1, function(x) do.call(get(x[[1]])$new, x[[2]])))
-    }
-  } else {
-    model <- model[model %in% private$.wrappedModels[, "shortname"][[1]]]
-
-    if (length(model) == 0) {
-      return(self$wrappedModels())
-    }
-
-    if (private$.distlist) {
-      x <- subset(private$.wrappedModels, shortname %in% model, distribution)
-      if (nrow(x) == 1) {
-        return(x[[1]][[1]])
+      if (private$.univariate) {
+        if (ncol(data) == 1) {
+          data <- matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
+        }
       } else {
-        x <- unlist(as.list(x), recursive = TRUE)
-        names(x) <- model
-        return(x)
+        if (ncol(data) == 1) {
+          stop("Only one column of data but distribution is not univariate.")
+        } else if (class(data) == "array") {
+          if (dim(data)[3] == 1) {
+            data <- array(rep(data, nrow(private$.wrappedModels)),
+                          dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
+            )
+          }
+        }
       }
-    } else {
-      x <- subset(private$.wrappedModels, shortname %in% model)
-      x <- apply(x, 1, function(y) do.call(get(y[[1]])$new, y[[2]]))
-      if (length(x) == 1) {
-        return(x[[1]])
+
+      dpqr <- as.data.table(private$.quantile(data, lower.tail = lower.tail, log.p = log.p))
+      colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
+      return(dpqr)
+    },
+    rand = function(..., data) {
+      if (missing(data)) {
+        data <- ...elt(1)
+        if (length(data) > 1) {
+          data <- length(data)
+        }
+      } else {
+        data <- unlist(data[1, 1])
       }
-    }
-  }
-})
-VectorDistribution$set("active", "modelTable", function() {
-  private$.wrappedModels
-})
 
-VectorDistribution$set("public", "strprint", function(n = 100) {
-  names <- as.character(self$modelTable$shortname)
-  lng <- length(names)
-  if (lng > (2 * n)) {
-    names <- c(names[1:n], "...", names[(lng - n + 1):lng])
-  }
-
-  return(names)
-})
-VectorDistribution$set("public", "getParameterValue", function(id) {
-  if (!self$distlist) {
-    if (id %in% names(self$shared_params)) {
-      return(as.list(rep(self$shared_params[[id]], nrow(self$modelTable))))
-    } else {
-      return(lapply(self$modelTable$params, function(x) x[[id]]))
-    }
-  }
-})
-VectorDistribution$set("public", "setParameterValue", function(...) {
-  message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
-  return(NULL)
-})
-# VectorDistribution$set("public", "parameters", function(...){
-#   message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
-#   return(data.table::data.table())
-# })
-
-VectorDistribution$set("public", "mean", function() {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$mean(), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "mode", function(which = "all") {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$mode(which), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "variance", function() {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$variance(), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "skewness", function() {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$skewness(), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "kurtosis", function(excess = TRUE) {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$kurtosis(excess), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "entropy", function(base = 2) {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$entropy(base), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "mgf", function(t) {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$mgf(t), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "cf", function(t) {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$cf(t), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-VectorDistribution$set("public", "pgf", function(z) {
-  ret <- matrix(sapply(1:nrow(private$.wrappedModels), function(i) {
-    ifnerror(self[i]$pgf(z), error = NaN)
-  }), nrow = 1)
-  colnames(ret) <- unlist(private$.wrappedModels[, "shortname"])
-  return(data.table::data.table(ret))
-})
-
-VectorDistribution$set("public", "pdf", function(..., log = FALSE, data) {
-  if (missing(data)) data <- as.matrix(data.table(...))
-
-  if (private$.univariate) {
-    if (ncol(data) == 1) {
-      data <- matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
-    }
-    dpqr <- as.data.table(private$.pdf(data, log = log))
-    colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
-    return(dpqr)
-  } else {
-    if (ncol(data) == 1) {
-      data <- array(rep(data, nrow(private$.wrappedModels)),
-        dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
-      )
-    } else if (inherits(data, "array")) {
-      if (is.na(dim(data)[3])) {
-        data <- array(rep(data, nrow(private$.wrappedModels)),
-          dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
-        )
+      if (private$.univariate) {
+        dpqr <- as.data.table(private$.rand(data))
+        if (ncol(dpqr) == 1) dpqr <- transpose(dpqr)
+        colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
+        return(dpqr)
+      } else {
+        dpqr <- private$.rand(data)
+        dpqr <- array(unlist(dpqr), c(nrow(dpqr[[1]]), ncol(dpqr[[1]]), length(dpqr)))
+        colnames(dpqr) <- paste0("V", seq(ncol(dpqr)))
+        return(dpqr)
       }
     }
-    dpqr <- private$.pdf(data, log = log)
-    colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
-    return(dpqr)
-    #
-    # nc <- prod(dim(dpqr)) / (nrow(dpqr) * dim(data)[3])
-    # return(array(as.matrix(dpqr),
-    #   dim = c(nrow(dpqr), nc, dim(data)[3]),
-    #   dimnames = list(NULL, colnames(dpqr)[1:nc], NULL)
-    # ))
-  }
-})
-VectorDistribution$set("public", "cdf", function(..., lower.tail = TRUE, log.p = FALSE, data) {
-  if (missing(data)) data <- as.matrix(data.table(...))
+  ),
 
-  if (private$.univariate) {
-    if (ncol(data) == 1) {
-      data <- matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
+  active = list(
+    modelTable = function() {
+      private$.wrappedModels
     }
-  } else {
-    if (ncol(data) == 1) {
-      stop("Only one column of data but distribution is not univariate.")
-    } else if (class(data) == "array") {
-      if (dim(data)[3] == 1) {
-        data <- array(rep(data, nrow(private$.wrappedModels)),
-          dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
-        )
-      }
+    distlist = function() {
+      return(private$.distlist)
+    },
+    shared_params = function() {
+      return(private$.sharedparams)
+    },
+    length = function() {
+      return(nrow(self$modelTable))
     }
-  }
+  ),
 
-  dpqr <- as.data.table(private$.cdf(data, lower.tail = lower.tail, log.p = log.p))
-  colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
-  return(dpqr)
-})
-VectorDistribution$set("public", "quantile", function(..., lower.tail = TRUE, log.p = FALSE, data) {
-  if (missing(data)) data <- as.matrix(data.table(...))
+  private = list(
+    .univariate = logical(0),
+    .distlist = FALSE,
+    .sharedparams = list(),
+    .properties = list(),
+    .traits = list(type = NA, valueSupport = "mixture", variateForm = "multivariate"
+    )
+  )
+)
 
-  if (private$.univariate) {
-    if (ncol(data) == 1) {
-      data <- matrix(rep(data, nrow(private$.wrappedModels)), nrow = nrow(data))
-    }
-  } else {
-    if (ncol(data) == 1) {
-      stop("Only one column of data but distribution is not univariate.")
-    } else if (class(data) == "array") {
-      if (dim(data)[3] == 1) {
-        data <- array(rep(data, nrow(private$.wrappedModels)),
-          dim = c(nrow(data), ncol(data), nrow(private$.wrappedModels))
-        )
-      }
-    }
-  }
-
-  dpqr <- as.data.table(private$.quantile(data, lower.tail = lower.tail, log.p = log.p))
-  colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
-  return(dpqr)
-})
-VectorDistribution$set("public", "rand", function(..., data) {
-  if (missing(data)) {
-    data <- ...elt(1)
-    if (length(data) > 1) {
-      data <- length(data)
-    }
-  } else {
-    data <- unlist(data[1, 1])
-  }
-
-  if (private$.univariate) {
-    dpqr <- as.data.table(private$.rand(data))
-    if (ncol(dpqr) == 1) dpqr <- transpose(dpqr)
-    colnames(dpqr) <- unlist(private$.wrappedModels[, 3])
-    return(dpqr)
-  } else {
-    dpqr <- private$.rand(data)
-    dpqr <- array(unlist(dpqr), c(nrow(dpqr[[1]]), ncol(dpqr[[1]]), length(dpqr)))
-    colnames(dpqr) <- paste0("V", seq(ncol(dpqr)))
-    return(dpqr)
-  }
-})
-
-VectorDistribution$set("active", "distlist", function() {
-  return(private$.distlist)
-})
-VectorDistribution$set("active", "shared_params", function() {
-  return(private$.sharedparams)
-})
-VectorDistribution$set("active", "length", function() {
-  return(nrow(self$modelTable))
-})
-
-VectorDistribution$set("private", ".univariate", logical(0))
-VectorDistribution$set("private", ".distlist", FALSE)
-VectorDistribution$set("private", ".sharedparams", list())
-VectorDistribution$set("private", ".properties", list())
-VectorDistribution$set("private", ".traits", list(
-  type = NA,
-  valueSupport = "mixture",
-  variateForm = "multivariate"
-))
+.distr6$wrappers <- append(.distr6$wrappers, list(VectorDistribution = VectorDistribution))
 
 
 #' @title Extract one or more Distributions from a VectorDistribution
