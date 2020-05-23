@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Frechet Distribution Documentation
-#-------------------------------------------------------------
 #' @name Frechet
 #' @template SDist
 #' @templateVar ClassName Frechet
@@ -42,188 +39,200 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Frechet Distribution Definition
-#-------------------------------------------------------------
-Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F)
-Frechet$set("public", "name", "Frechet")
-Frechet$set("public", "short_name", "Frec")
-Frechet$set("public", "description", "Frechet Probability Distribution.")
-Frechet$set("public", "packages", "extraDistr")
 
-Frechet$set("public", "mean", function() {
-  if (self$getParameterValue("shape") <= 1) {
-    return(Inf)
-  } else {
-    return(self$getParameterValue("minimum") + self$getParameterValue("scale") * gamma(1 - 1 / self$getParameterValue("shape")))
-  }
-})
-Frechet$set("public", "median", function() {
-  m = self$getParameterValue("minimum")
-  s = self$getParameterValue("scale")
-  a = self$getParameterValue("shape")
+Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Frechet",
+    short_name = "Frec",
+    description = "Frechet Probability Distribution.",
+    packages = "extraDistr",
 
-  return(m + s/(log(2)^(1/a)))
-})
-Frechet$set("public", "variance", function() {
-  if (self$getParameterValue("shape") <= 2) {
-    return(Inf)
-  } else {
-    return(self$getParameterValue("scale")^2 * (gamma(1 - 2 / self$getParameterValue("shape")) -
-      gamma(1 - 1 / self$getParameterValue("shape"))^2))
-  }
-})
-Frechet$set("public", "skewness", function() {
-  if (self$getParameterValue("shape") <= 3) {
-    return(Inf)
-  } else {
-    shape <- self$getParameterValue("shape")
-    num <- gamma(1 - 3 / shape) - 3 * gamma(1 - 2 / shape) * gamma(1 - 1 / shape) + 2 * gamma(1 - 1 / shape)^3
-    den <- (gamma(1 - 2 / shape) - gamma(1 - 1 / shape)^2)^(3 / 2)
-    return(num / den)
-  }
-})
-Frechet$set("public", "kurtosis", function(excess = TRUE) {
-  if (self$getParameterValue("shape") <= 4) {
-    return(Inf)
-  } else {
-    shape <- self$getParameterValue("shape")
-    num <- gamma(1 - 4 / shape) - 4 * gamma(1 - 3 / shape) * gamma(1 - 1 / shape) + 3 * gamma(1 - 2 / shape)^2
-    den <- (gamma(1 - 2 / shape) - gamma(1 - 1 / shape)^2)^2
-    if (excess) {
-      return(-6 + num / den)
-    } else {
-      return(-3 + num / den)
+    # Public methods
+    # initialize
+    initialize = function(shape = 1, scale = 1, minimum = 0,
+                          decorators = NULL, verbose = FALSE) {
+
+      private$.parameters <- getParameterSet(self, shape, scale, minimum, verbose)
+      self$setParameterValue(shape = shape, scale = scale, minimum = minimum)
+
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(minimum, Inf, type = "()"),
+        type = Reals$new()
+      )
+    },
+
+    # stats
+    mean = function() {
+      if (self$getParameterValue("shape") <= 1) {
+        return(Inf)
+      } else {
+        return(self$getParameterValue("minimum") + self$getParameterValue("scale") * gamma(1 - 1 / self$getParameterValue("shape")))
+      }
+    },
+    mode = function(which = NULL) {
+      return(self$getParameterValue("minimum") +
+               self$getParameterValue("scale") *
+               (self$getParameterValue("shape") /
+                  (1 + self$getParameterValue("shape")))^(1 / self$getParameterValue("shape")))
+    },
+    median = function() {
+      m = self$getParameterValue("minimum")
+      s = self$getParameterValue("scale")
+      a = self$getParameterValue("shape")
+
+      return(m + s/(log(2)^(1/a)))
+    },
+    variance = function() {
+      if (self$getParameterValue("shape") <= 2) {
+        return(Inf)
+      } else {
+        return(self$getParameterValue("scale")^2 * (gamma(1 - 2 / self$getParameterValue("shape")) -
+                                                      gamma(1 - 1 / self$getParameterValue("shape"))^2))
+      }
+    },
+    skewness = function() {
+      if (self$getParameterValue("shape") <= 3) {
+        return(Inf)
+      } else {
+        shape <- self$getParameterValue("shape")
+        num <- gamma(1 - 3 / shape) - 3 * gamma(1 - 2 / shape) * gamma(1 - 1 / shape) + 2 * gamma(1 - 1 / shape)^3
+        den <- (gamma(1 - 2 / shape) - gamma(1 - 1 / shape)^2)^(3 / 2)
+        return(num / den)
+      }
+    },
+    kurtosis = function(excess = TRUE) {
+      if (self$getParameterValue("shape") <= 4) {
+        return(Inf)
+      } else {
+        shape <- self$getParameterValue("shape")
+        num <- gamma(1 - 4 / shape) - 4 * gamma(1 - 3 / shape) * gamma(1 - 1 / shape) + 3 * gamma(1 - 2 / shape)^2
+        den <- (gamma(1 - 2 / shape) - gamma(1 - 1 / shape)^2)^2
+        if (excess) {
+          return(-6 + num / den)
+        } else {
+          return(-3 + num / den)
+        }
+      }
+    },
+    entropy = function(base = 2) {
+      return(1 - digamma(1) / self$getParameterValue("shape") - digamma(1) +
+               log(self$getParameterValue("scale") / self$getParameterValue("shape"), base))
+    },
+    pgf = function(z) {
+      return(NaN)
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      private$.properties$support <- Interval$new(self$getParameterValue("minimum"), Inf, type = "()")
+      invisible(self)
     }
-  }
-})
-Frechet$set("public", "mode", function(which = NULL) {
-  return(self$getParameterValue("minimum") +
-    self$getParameterValue("scale") *
-      (self$getParameterValue("shape") /
-        (1 + self$getParameterValue("shape")))^(1 / self$getParameterValue("shape")))
-})
-Frechet$set("public", "entropy", function(base = 2) {
-  return(1 - digamma(1) / self$getParameterValue("shape") - digamma(1) +
-    log(self$getParameterValue("scale") / self$getParameterValue("shape"), base))
-})
-Frechet$set("public", "pgf", function(z) {
-  return(NaN)
-})
+  ),
 
-Frechet$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$minimum)) lst <- c(lst, list(minimum = paramlst$minimum))
-  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  return(lst)
-})
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::dfrechet,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dfrechet(
+          x,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale"),
+          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::pfrechet,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(
+            q = x,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::pfrechet(
+          x,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::qfrechet,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(
+            p = p,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::qfrechet(
+          p,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::rfrechet,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rfrechet(
+          n,
+          lambda = self$getParameterValue("shape"),
+          mu = self$getParameterValue("minimum"),
+          sigma = self$getParameterValue("scale")
+        )
+      }
+    },
 
-Frechet$set("private", ".pdf", function(x, log = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::dfrechet,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    extraDistr::dfrechet(
-      x,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale"),
-      log = log
-    )
-  }
-})
-Frechet$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::pfrechet,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(
-        q = x,
-        lower.tail = lower.tail,
-        log.p = log.p
-      )
-    )
-  } else {
-    extraDistr::pfrechet(
-      x,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Frechet$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::qfrechet,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(
-        p = p,
-        lower.tail = lower.tail,
-        log.p = log.p
-      )
-    )
-  } else {
-    extraDistr::qfrechet(
-      p,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Frechet$set("private", ".rand", function(n) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::rfrechet,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(n = n)
-    )
-  } else {
-    extraDistr::rfrechet(
-      n,
-      lambda = self$getParameterValue("shape"),
-      mu = self$getParameterValue("minimum"),
-      sigma = self$getParameterValue("scale")
-    )
-  }
-})
-Frechet$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$minimum)) lst <- c(lst, list(minimum = paramlst$minimum))
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      return(lst)
+    },
 
-Frechet$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  private$.properties$support <- Interval$new(self$getParameterValue("minimum"), Inf, type = "()")
-  invisible(self)
-})
-
-Frechet$set("public", "initialize", function(shape = 1, scale = 1, minimum = 0,
-                                             decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, shape, scale, minimum, verbose)
-  self$setParameterValue(shape = shape, scale = scale, minimum = minimum)
-
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(minimum, Inf, type = "()"),
-    type = Reals$new()
+    # traits
+    .traits =  list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

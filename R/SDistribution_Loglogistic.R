@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Log-Logistic Distribution Documentation
-#-------------------------------------------------------------
 #' @name Loglogistic
 #' @template SDist
 #' @templateVar ClassName Loglogistic
@@ -42,136 +39,148 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Loglogistic Distribution Definition
-#-------------------------------------------------------------
-Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F)
-Loglogistic$set("public", "name", "Loglogistic")
-Loglogistic$set("public", "short_name", "LLogis")
-Loglogistic$set("public", "description", "Log-Logistic Probability Distribution.")
-Loglogistic$set("public", "packages", "actuar")
 
-Loglogistic$set("public", "mean", function() {
-  return((self$getParameterValue("scale") * pi / self$getParameterValue("shape")) /
-    sin(pi / self$getParameterValue("shape")))
-})
-Loglogistic$set("public", "median", function() {
-  return(self$getParameterValue("scale"))
-})
-Loglogistic$set("public", "variance", function() {
-  if (self$getParameterValue("shape") > 2) {
-    scale <- self$getParameterValue("scale")
-    shapi <- pi / self$getParameterValue("shape")
-    return(scale^2 * ((2 * shapi) / sin(2 * shapi) - (shapi^2) / sin(shapi)^2))
-  } else {
-    return(NaN)
-  }
-})
-Loglogistic$set("public", "skewness", function() {
-  if (self$getParameterValue("shape") > 3) {
-    scale <- self$getParameterValue("scale")
-    shapi <- pi / self$getParameterValue("shape")
-    s1 <- (2 * shapi^3 * scale^3) / sin(shapi)^3
-    s2 <- (6 * shapi^2 * scale^3) * (1 / sin(shapi)) * (1 / sin(2 * shapi))
-    s3 <- (3 * shapi * scale^3) / sin(3 * shapi)
-    return(s1 - s2 + s3)
-  } else {
-    return(NaN)
-  }
-})
-Loglogistic$set("public", "kurtosis", function(excess = TRUE) {
-  if (self$getParameterValue("shape") > 4) {
-    scale <- self$getParameterValue("scale")
-    shapi <- pi / self$getParameterValue("shape")
-    s1 <- (3 * shapi^4 * scale^4) / sin(shapi)^4
-    s2 <- (12 * shapi^3 * scale^4) * (1 / sin(shapi)^2) * (1 / sin(2 * shapi))
-    s3 <- (12 * shapi^2 * scale^4) * (1 / sin(shapi)) * (1 / sin(3 * shapi))
-    s4 <- (4 * shapi * scale^4) * (1 / sin(4 * shapi))
-    kurtosis <- -s1 + s2 - s3 + s4
-    if (excess) {
-      return(kurtosis - 3)
-    } else {
-      return(kurtosis)
+Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Loglogistic",
+    short_name = "LLogis",
+    description = "Loglogistic Probability Distribution.",
+    packages = "actuar",
+
+    # Public methods
+    # initialize
+    initialize = function(scale = 1, shape = 1, rate = NULL,
+                          decorators = NULL, verbose = FALSE) {
+
+      private$.parameters <- getParameterSet(self, scale, shape, rate, verbose)
+      self$setParameterValue(scale = scale, shape = shape, rate = rate)
+
+      super$initialize(
+        decorators = decorators,
+        support = PosReals$new(zero = T),
+        type = PosReals$new(zero = T)
+      )
+    },
+
+    # stats
+    mean = function() {
+      return((self$getParameterValue("scale") * pi / self$getParameterValue("shape")) /
+               sin(pi / self$getParameterValue("shape")))
+    },
+    mode = function(which = NULL) {
+      shape <- self$getParameterValue("shape")
+      return(self$getParameterValue("scale") * ((shape - 1) / (shape + 1))^(1 / shape))
+    },
+    median = function() {
+      return(self$getParameterValue("scale"))
+    },
+    variance = function() {
+      if (self$getParameterValue("shape") > 2) {
+        scale <- self$getParameterValue("scale")
+        shapi <- pi / self$getParameterValue("shape")
+        return(scale^2 * ((2 * shapi) / sin(2 * shapi) - (shapi^2) / sin(shapi)^2))
+      } else {
+        return(NaN)
+      }
+    },
+    skewness = function() {
+      if (self$getParameterValue("shape") > 3) {
+        scale <- self$getParameterValue("scale")
+        shapi <- pi / self$getParameterValue("shape")
+        s1 <- (2 * shapi^3 * scale^3) / sin(shapi)^3
+        s2 <- (6 * shapi^2 * scale^3) * (1 / sin(shapi)) * (1 / sin(2 * shapi))
+        s3 <- (3 * shapi * scale^3) / sin(3 * shapi)
+        return(s1 - s2 + s3)
+      } else {
+        return(NaN)
+      }
+    },
+    kurtosis = function(excess = TRUE) {
+      if (self$getParameterValue("shape") > 4) {
+        scale <- self$getParameterValue("scale")
+        shapi <- pi / self$getParameterValue("shape")
+        s1 <- (3 * shapi^4 * scale^4) / sin(shapi)^4
+        s2 <- (12 * shapi^3 * scale^4) * (1 / sin(shapi)^2) * (1 / sin(2 * shapi))
+        s3 <- (12 * shapi^2 * scale^4) * (1 / sin(shapi)) * (1 / sin(3 * shapi))
+        s4 <- (4 * shapi * scale^4) * (1 / sin(4 * shapi))
+        kurtosis <- -s1 + s2 - s3 + s4
+        if (excess) {
+          return(kurtosis - 3)
+        } else {
+          return(kurtosis)
+        }
+      } else {
+        return(NaN)
+      }
+    },
+    pgf = function(z) {
+      return(NaN)
     }
-  } else {
-    return(NaN)
-  }
-})
-Loglogistic$set("public", "mode", function(which = NULL) {
-  shape <- self$getParameterValue("shape")
-  return(self$getParameterValue("scale") * ((shape - 1) / (shape + 1))^(1 / shape))
-})
-Loglogistic$set("public", "pgf", function(z) {
-  return(NaN)
-})
+  ),
 
-Loglogistic$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  if (!is.null(paramlst$rate)) lst <- c(lst, list(scale = paramlst$rate^-1))
-  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-  return(lst)
-})
-Loglogistic$set("private", ".pdf", function(x, log = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(actuar::dllogis,
-      shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    actuar::dllogis(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
-  }
-})
-Loglogistic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(actuar::pllogis,
-      shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-      MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    actuar::pllogis(x,
-      shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-      lower.tail = lower.tail, log.p = log.p
-    )
-  }
-})
-Loglogistic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(actuar::qllogis,
-      shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-      MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    actuar::qllogis(p,
-      shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-      lower.tail = lower.tail, log.p = log.p
-    )
-  }
-})
-Loglogistic$set("private", ".rand", function(n) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(actuar::rllogis,
-      shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-      MoreArgs = list(n = n)
-    )
-  } else {
-    actuar::rllogis(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))
-  }
-})
-Loglogistic$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(actuar::dllogis,
+               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+               MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        actuar::dllogis(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(actuar::pllogis,
+               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+               MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        actuar::pllogis(x,
+                        shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+                        lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(actuar::qllogis,
+               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+               MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        actuar::qllogis(p,
+                        shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+                        lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(actuar::rllogis,
+               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+               MoreArgs = list(n = n)
+        )
+      } else {
+        actuar::rllogis(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))
+      }
+    },
 
-Loglogistic$set("public", "initialize", function(scale = 1, shape = 1, rate = NULL,
-                                                 decorators = NULL, verbose = FALSE) {
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      if (!is.null(paramlst$rate)) lst <- c(lst, list(scale = paramlst$rate^-1))
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      return(lst)
+    },
 
-  private$.parameters <- getParameterSet(self, scale, shape, rate, verbose)
-  self$setParameterValue(scale = scale, shape = shape, rate = rate)
-
-  super$initialize(
-    decorators = decorators,
-    support = PosReals$new(zero = T),
-    type = PosReals$new(zero = T)
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

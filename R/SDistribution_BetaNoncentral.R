@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Noncentral Beta Distribution Documentation
-#-------------------------------------------------------------
 #' @name BetaNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -35,116 +32,130 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Noncentral Beta Distribution Definition
-#-------------------------------------------------------------
-BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_objects = F)
-BetaNoncentral$set("public", "name", "BetaNoncentral")
-BetaNoncentral$set("public", "short_name", "BetaNC")
-BetaNoncentral$set("public", "description", "Noncentral Beta Probability Distribution.")
-BetaNoncentral$set("public", "packages", "stats")
 
-BetaNoncentral$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  if (self$getParameterValue("shape1") == self$getParameterValue("shape2")) {
-    private$.properties$symmetry <- "symmetric"
-  } else {
-    private$.properties$symmetry <- "asymmetric"
-  }
-  invisible(self)
-})
+BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "BetaNoncentral",
+    short_name = "BetaNC",
+    description = "BetaNoncentral Probability Distribution.",
+    packages = "stats",
 
-BetaNoncentral$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$shape1)) lst <- c(lst, list(shape1 = paramlst$shape1))
-  if (!is.null(paramlst$shape2)) lst <- c(lst, list(shape2 = paramlst$shape2))
-  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  return(lst)
-})
-BetaNoncentral$set("private", ".pdf", function(x, log = FALSE) {
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-  ncp <- self$getParameterValue("location")
+    # Public methods
+    # initialize
+    initialize = function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
+                          verbose = FALSE) {
 
-  call_C_base_pdqr(
-    fun = "dbeta",
-    x = x,
-    args = list(
-      shape1 = unlist(shape1),
-      shape2 = unlist(shape2),
-      ncp = unlist(ncp)
-    ),
-    log = log,
-    vec = test_list(shape1)
+      private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, locaiton, verbose)
+      self$setParameterValue(shape1 = shape1, shape2 = shape2, location = location)
+
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(0, 1),
+        symmetric = if (shape1 == shape2) "sym" else "asym",
+        type = PosReals$new(zero = T)
+      )
+    },
+
+    # stats
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      if (self$getParameterValue("shape1") == self$getParameterValue("shape2")) {
+        private$.properties$symmetry <- "symmetric"
+      } else {
+        private$.properties$symmetry <- "asymmetric"
+      }
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "dbeta",
+        x = x,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2),
+          ncp = unlist(ncp)
+        ),
+        log = log,
+        vec = test_list(shape1)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "pbeta",
+        x = x,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(shape1)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "qbeta",
+        x = p,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(shape1)
+      )
+    },
+    .rand = function(n) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "rbeta",
+        x = n,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2),
+          ncp = unlist(ncp)
+        ),
+        vec = test_list(shape1)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$shape1)) lst <- c(lst, list(shape1 = paramlst$shape1))
+      if (!is.null(paramlst$shape2)) lst <- c(lst, list(shape2 = paramlst$shape2))
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-BetaNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-  ncp <- self$getParameterValue("location")
-
-  call_C_base_pdqr(
-    fun = "pbeta",
-    x = x,
-    args = list(
-      shape1 = unlist(shape1),
-      shape2 = unlist(shape2),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(shape1)
-  )
-})
-BetaNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-  ncp <- self$getParameterValue("location")
-
-  call_C_base_pdqr(
-    fun = "qbeta",
-    x = p,
-    args = list(
-      shape1 = unlist(shape1),
-      shape2 = unlist(shape2),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(shape1)
-  )
-})
-BetaNoncentral$set("private", ".rand", function(n) {
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-  ncp <- self$getParameterValue("location")
-
-  call_C_base_pdqr(
-    fun = "rbeta",
-    x = n,
-    args = list(
-      shape1 = unlist(shape1),
-      shape2 = unlist(shape2),
-      ncp = unlist(ncp)
-    ),
-    vec = test_list(shape1)
-  )
-})
-BetaNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-BetaNoncentral$set("public", "initialize", function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
-                                                    verbose = FALSE) {
-
-  private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, locaiton, verbose)
-  self$setParameterValue(shape1 = shape1, shape2 = shape2, location = location)
-
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(0, 1),
-    symmetric = if (shape1 == shape2) "sym" else "asym",
-    type = PosReals$new(zero = T)
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

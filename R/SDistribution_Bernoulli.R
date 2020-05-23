@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Bernoulli Distribution Documentation
-#-------------------------------------------------------------
 #' @name Bernoulli
 #' @template SDist
 #' @templateVar ClassName Bernoulli
@@ -43,159 +40,171 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Bernoulli Distribution Definition
-#-------------------------------------------------------------
-Bernoulli <- R6Class("Bernoulli", inherit = SDistribution, lock_objects = F)
-Bernoulli$set("public", "name", "Bernoulli")
-Bernoulli$set("public", "short_name", "Bern")
-Bernoulli$set("public", "description", "Bernoulli Probability Distribution.")
-Bernoulli$set("public", "packages", "stats")
 
-Bernoulli$set("public", "mean", function() {
-  self$getParameterValue("prob")
-})
-Bernoulli$set("public", "median", function() {
-  prob <- self$getParameterValue("prob")
-  if (prob < 0.5) {
-    return(0)
-  } else if (prob < 0.5) {
-    return(1)
-  } else {
-    return(NaN)
-  }
-})
-Bernoulli$set("public", "variance", function() {
-  self$getParameterValue("prob") * self$getParameterValue("qprob")
-})
-Bernoulli$set("public", "skewness", function() {
-  (1 - (2 * self$getParameterValue("prob"))) / self$stdev()
-})
-Bernoulli$set("public", "kurtosis", function(excess = TRUE) {
-  exkurtosis <- (1 - (6 * self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
-  if (excess) {
-    return(exkurtosis)
-  } else {
-    return(exkurtosis + 3)
-  }
-})
-Bernoulli$set("public", "entropy", function(base = 2) {
-  (-self$getParameterValue("qprob") * log(self$getParameterValue("qprob"), base)) +
-    (-self$getParameterValue("prob") * log(self$getParameterValue("prob"), base))
-})
-Bernoulli$set("public", "mgf", function(t) {
-  return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))
-})
-Bernoulli$set("public", "cf", function(t) {
-  return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(1i * t)))
-})
-Bernoulli$set("public", "pgf", function(z) {
-  return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))
-})
-Bernoulli$set("public", "mode", function(which = "all") {
-  if (self$getParameterValue("prob") < 0.5) {
-    return(0)
-  } else if (self$getParameterValue("prob") > 0.5) {
-    return(1)
-  } else {
-    if (which == "all") {
-      return(c(0, 1))
-    } else {
-      return(c(0, 1)[which])
+Bernoulli <- R6Class("Bernoulli", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Bernoulli",
+    short_name = "Bern",
+    description = "Bernoulli Probability Distribution.",
+    packages = "stats",
+
+    # Public methods
+    # initialize
+    initialize = function(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE) {
+
+      private$.parameters <- getParameterSet(self, prob, qprob, verbose)
+      if (!is.null(qprob)) prob <- NULL
+      self$setParameterValue(prob = prob, qprob = qprob)
+
+      super$initialize(
+        decorators = decorators,
+        support = Set$new(0, 1, class = "integer"),
+        type = Naturals$new(),
+        symmetry = if (prob == 0.5) "symmetric" else "asymmetric"
+      )
+    },
+
+    # stats
+    mean = function() {
+      self$getParameterValue("prob")
+    },
+    mode = function(which = "all") {
+      if (self$getParameterValue("prob") < 0.5) {
+        return(0)
+      } else if (self$getParameterValue("prob") > 0.5) {
+        return(1)
+      } else {
+        if (which == "all") {
+          return(c(0, 1))
+        } else {
+          return(c(0, 1)[which])
+        }
+      }
+    },
+    median = function() {
+      prob <- self$getParameterValue("prob")
+      if (prob < 0.5) {
+        return(0)
+      } else if (prob < 0.5) {
+        return(1)
+      } else {
+        return(NaN)
+      }
+    },
+    variance = function() {
+      self$getParameterValue("prob") * self$getParameterValue("qprob")
+    },
+    skewness = function() {
+      (1 - (2 * self$getParameterValue("prob"))) / self$stdev()
+    },
+    kurtosis = function(excess = TRUE) {
+      exkurtosis <- (1 - (6 * self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
+      if (excess) {
+        return(exkurtosis)
+      } else {
+        return(exkurtosis + 3)
+      }
+    },
+    entropy = function(base = 2) {
+      (-self$getParameterValue("qprob") * log(self$getParameterValue("qprob"), base)) +
+        (-self$getParameterValue("prob") * log(self$getParameterValue("prob"), base))
+    },
+    mgf = function(t) {
+      return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))
+    },
+    cf = function(t) {
+      return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(1i * t)))
+    },
+    pgf = function(z) {
+      return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      if (self$getParameterValue("prob") == 0.5) {
+        private$.properties$symmetry <- "asymmetric"
+      } else {
+        private$.properties$symmetry <- "symmetric"
+      }
+      invisible(self)
     }
-  }
-})
+  ),
 
-Bernoulli$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  if (self$getParameterValue("prob") == 0.5) {
-    private$.properties$symmetry <- "asymmetric"
-  } else {
-    private$.properties$symmetry <- "symmetric"
-  }
-  invisible(self)
-})
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      prob <- self$getParameterValue("prob")
 
-Bernoulli$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$prob)) {
-    lst <- c(lst, list(prob = paramlst$prob))
-  } else if (!is.null(paramlst$qprob)) lst <- c(lst, list(prob = 1 - paramlst$qprob))
-  return(lst)
-})
-Bernoulli$set("private", ".pdf", function(x, log = FALSE) {
-  prob <- self$getParameterValue("prob")
+      call_C_base_pdqr(
+        fun = "dbinom",
+        x = x,
+        args = list(
+          size = 1,
+          prob = unlist(prob)
+        ),
+        log = log,
+        vec = test_list(prob)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      prob <- self$getParameterValue("prob")
 
-  call_C_base_pdqr(
-    fun = "dbinom",
-    x = x,
-    args = list(
-      size = 1,
-      prob = unlist(prob)
-    ),
-    log = log,
-    vec = test_list(prob)
+      call_C_base_pdqr(
+        fun = "pbinom",
+        x = x,
+        args = list(
+          size = 1,
+          prob = unlist(prob)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(prob)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      prob <- self$getParameterValue("prob")
+
+      call_C_base_pdqr(
+        fun = "qbinom",
+        x = p,
+        args = list(
+          size = 1,
+          prob = unlist(prob)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(prob)
+      )
+    },
+    .rand = function(n) {
+      prob <- self$getParameterValue("prob")
+
+      call_C_base_pdqr(
+        fun = "rbinom",
+        x = n,
+        args = list(
+          size = 1,
+          prob = unlist(prob)
+        ),
+        vec = test_list(prob)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$prob)) {
+        lst <- c(lst, list(prob = paramlst$prob))
+      } else if (!is.null(paramlst$qprob)) lst <- c(lst, list(prob = 1 - paramlst$qprob))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )
-})
-Bernoulli$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  prob <- self$getParameterValue("prob")
-
-  call_C_base_pdqr(
-    fun = "pbinom",
-    x = x,
-    args = list(
-      size = 1,
-      prob = unlist(prob)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(prob)
-  )
-})
-Bernoulli$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  prob <- self$getParameterValue("prob")
-
-  call_C_base_pdqr(
-    fun = "qbinom",
-    x = p,
-    args = list(
-      size = 1,
-      prob = unlist(prob)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(prob)
-  )
-})
-Bernoulli$set("private", ".rand", function(n) {
-  prob <- self$getParameterValue("prob")
-
-  call_C_base_pdqr(
-    fun = "rbinom",
-    x = n,
-    args = list(
-      size = 1,
-      prob = unlist(prob)
-    ),
-    vec = test_list(prob)
-  )
-})
-Bernoulli$set("private", ".log", TRUE)
-Bernoulli$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
-
-Bernoulli$set("public", "initialize", function(prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, prob, qprob, verbose)
-  if (!is.null(qprob)) prob <- NULL
-  self$setParameterValue(prob = prob, qprob = qprob)
-
-  super$initialize(
-    decorators = decorators,
-    support = Set$new(0, 1, class = "integer"),
-    type = Naturals$new(),
-    symmetry = if (prob == 0.5) "symmetric" else "asymmetric"
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

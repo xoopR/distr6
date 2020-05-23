@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Gumbel Distribution Documentation
-#-------------------------------------------------------------
 #' @name Gumbel
 #' @template SDist
 #' @templateVar ClassName Gumbel
@@ -39,148 +36,160 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Gumbel Distribution Definition
-#-------------------------------------------------------------
-Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F)
-Gumbel$set("public", "name", "Gumbel")
-Gumbel$set("public", "short_name", "Gumb")
-Gumbel$set("public", "description", "Gumbel Probability Distribution.")
-Gumbel$set("public", "packages", c("extraDistr", "pracma"))
 
-Gumbel$set("public", "median", function() {
-  return(self$getParameterValue("location") - self$getParameterValue("scale")*log(log(2)))
-})
-Gumbel$set("public", "mean", function() {
-  return(self$getParameterValue("location") - digamma(1) * self$getParameterValue("scale"))
-})
-Gumbel$set("public", "variance", function() {
-  return((pi * self$getParameterValue("scale"))^2 / 6)
-})
-Gumbel$set("public", "skewness", function() {
-  return((12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3)
-})
-Gumbel$set("public", "kurtosis", function(excess = TRUE) {
-  if (excess) {
-    return(2.4)
-  } else {
-    return(5.4)
-  }
-})
-Gumbel$set("public", "entropy", function(base = 2) {
-  return(log(self$getParameterValue("scale"), base) - digamma(1) + 1)
-})
-Gumbel$set("public", "mgf", function(t) {
-  return(gamma(1 - self$getParameterValue("scale") * t) * exp(self$getParameterValue("location") * t))
-})
-Gumbel$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Gumbel$set("public", "cf", function(t) {
-  return(pracma::gammaz(1 - self$getParameterValue("scale") * t * 1i) * exp(1i * self$getParameterValue("location") * t))
-})
-Gumbel$set("public", "mode", function(which = NULL) {
-  return(self$getParameterValue("location"))
-})
-Gumbel$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  return(lst)
-})
+Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Gumbel",
+    short_name = "Gumb",
+    description = "Gumbel Probability Distribution.",
+    packages = c("extraDistr", "pracma"),
 
-Gumbel$set("private", ".pdf", function(x, log = FALSE) {
-  if (checkmate::testList(self$getParameterValue("location"))) {
-    mapply(
-      extraDistr::dgumbel,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    extraDistr::dgumbel(
-      x,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale"),
-      log = log
-    )
-  }
-})
-Gumbel$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("location"))) {
-    mapply(
-      extraDistr::pgumbel,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(
-        q = x,
-        lower.tail = lower.tail,
-        log.p = log.p
+    # Public methods
+    # initialize
+    initialize = function(location = 0, scale = 1,
+                          decorators = NULL, verbose = FALSE) {
+
+      private$.parameters <- getParameterSet(self, location, scale, verbose)
+      self$setParameterValue(location = location, scale = scale)
+
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        symmetry = "sym",
+        type = Reals$new()
       )
-    )
-  } else {
-    extraDistr::pgumbel(
-      x,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Gumbel$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("location"))) {
-    mapply(
-      extraDistr::qgumbel,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(
-        p = p,
-        lower.tail = lower.tail,
-        log.p = log.p
-      )
-    )
-  } else {
-    extraDistr::qgumbel(
-      p,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Gumbel$set("private", ".rand", function(n) {
-  if (checkmate::testList(self$getParameterValue("location"))) {
-    mapply(
-      extraDistr::rgumbel,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale"),
-      MoreArgs = list(n = n)
-    )
-  } else {
-    extraDistr::rgumbel(
-      n,
-      mu = self$getParameterValue("location"),
-      sigma = self$getParameterValue("scale")
-    )
-  }
-})
-Gumbel$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+    },
 
-Gumbel$set("public", "initialize", function(location = 0, scale = 1,
-                                            decorators = NULL, verbose = FALSE) {
+    # stats
+    mean = function() {
+      return(self$getParameterValue("location") - digamma(1) * self$getParameterValue("scale"))
+    },
+    mode = function(which = NULL) {
+      return(self$getParameterValue("location"))
+    },
+    median = function() {
+      return(self$getParameterValue("location") - self$getParameterValue("scale")*log(log(2)))
+    },
+    variance = function() {
+      return((pi * self$getParameterValue("scale"))^2 / 6)
+    },
+    skewness = function() {
+      return((12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3)
+    },
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(2.4)
+      } else {
+        return(5.4)
+      }
+    },
+    entropy = function(base = 2) {
+      return(log(self$getParameterValue("scale"), base) - digamma(1) + 1)
+    },
+    mgf = function(t) {
+      return(gamma(1 - self$getParameterValue("scale") * t) * exp(self$getParameterValue("location") * t))
+    },
+    cf = function(t) {
+      return(pracma::gammaz(1 - self$getParameterValue("scale") * t * 1i) * exp(1i * self$getParameterValue("location") * t))
+    },
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
 
-  private$.parameters <- getParameterSet(self, location, scale, verbose)
-  self$setParameterValue(location = location, scale = scale)
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("location"))) {
+        mapply(
+          extraDistr::dgumbel,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dgumbel(
+          x,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale"),
+          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("location"))) {
+        mapply(
+          extraDistr::pgumbel,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(
+            q = x,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::pgumbel(
+          x,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("location"))) {
+        mapply(
+          extraDistr::qgumbel,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(
+            p = p,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::qgumbel(
+          p,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("location"))) {
+        mapply(
+          extraDistr::rgumbel,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rgumbel(
+          n,
+          mu = self$getParameterValue("location"),
+          sigma = self$getParameterValue("scale")
+        )
+      }
+    },
 
-  super$initialize(
-    decorators = decorators,
-    support = Reals$new(),
-    symmetry = "sym",
-    type = Reals$new()
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Noncentral Student's t Distribution Documentation
-#-------------------------------------------------------------
 #' @name StudentTNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -40,114 +37,126 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Noncentral Student's t Distribution Definition
-#-------------------------------------------------------------
-StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, lock_objects = F)
-StudentTNoncentral$set("public", "name", "StudentTNoncentral")
-StudentTNoncentral$set("public", "short_name", "TNC")
-StudentTNoncentral$set("public", "description", "Student's t Probability Distribution.")
-StudentTNoncentral$set("public", "packages", "stats")
 
-StudentTNoncentral$set("public", "mean", function() {
-  df <- self$getParameterValue("df")
-  if (df > 1) {
-    return(self$getParameterValue("location") * sqrt(df / 2) * gamma((df - 1) / 2) / gamma(df / 2))
-  } else {
-    return(NaN)
-  }
-})
-StudentTNoncentral$set("public", "variance", function() {
-  df <- self$getParameterValue("df")
-  mu <- self$getParameterValue("location")
-  if (df > 2) {
-    return(df * (1 + mu^2) / (df - 2) - (mu^2 * df / 2) * (gamma((df - 1) / 2) / gamma(df / 2))^2)
-  } else {
-    return(NaN)
-  }
-})
+StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "StudentTNoncentral",
+    short_name = "TNS",
+    description = "Non-central Student's T Probability Distribution.",
+    packages = "stats",
 
-StudentTNoncentral$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
-  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  return(lst)
-})
-StudentTNoncentral$set("private", ".pdf", function(x, log = FALSE) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
+    # Public methods
+    # initialize
+    initialize = function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {
 
-  call_C_base_pdqr(
-    fun = "dt",
-    x = x,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    log = log,
-    vec = test_list(df)
+      private$.parameters <- getParameterSet(self, df, location, verbose)
+      self$setParameterValue(df = df, location = location)
+
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        symmetric = "sym",
+        type = Reals$new()
+      )
+    },
+
+    # stats
+    mean = function() {
+      df <- self$getParameterValue("df")
+      if (df > 1) {
+        return(self$getParameterValue("location") * sqrt(df / 2) * gamma((df - 1) / 2) / gamma(df / 2))
+      } else {
+        return(NaN)
+      }
+    },
+    variance = function() {
+      df <- self$getParameterValue("df")
+      mu <- self$getParameterValue("location")
+      if (df > 2) {
+        return(df * (1 + mu^2) / (df - 2) - (mu^2 * df / 2) * (gamma((df - 1) / 2) / gamma(df / 2))^2)
+      } else {
+        return(NaN)
+      }
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "dt",
+        x = x,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        log = log,
+        vec = test_list(df)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "pt",
+        x = x,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "qt",
+        x = p,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .rand = function(n) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+
+      call_C_base_pdqr(
+        fun = "rt",
+        x = n,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        vec = test_list(df)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-StudentTNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-
-  call_C_base_pdqr(
-    fun = "pt",
-    x = x,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df)
-  )
-})
-StudentTNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-
-  call_C_base_pdqr(
-    fun = "qt",
-    x = p,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df)
-  )
-})
-StudentTNoncentral$set("private", ".rand", function(n) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-
-  call_C_base_pdqr(
-    fun = "rt",
-    x = n,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    vec = test_list(df)
-  )
-})
-StudentTNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-StudentTNoncentral$set("public", "initialize", function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, df, location, verbose)
-  self$setParameterValue(df = df, location = location)
-
-  super$initialize(
-    decorators = decorators,
-    support = Reals$new(),
-    symmetric = "sym",
-    type = Reals$new()
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

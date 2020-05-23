@@ -1,66 +1,33 @@
-#' @name CoreStatistics
-#'
 #' @title Core Statistical Methods for Distributions
+#'
+#' @template class_decorator
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_mgfcf
+#' @template method_pgf
 #'
 #' @description This decorator adds numeric methods for missing analytic expression in distr6 Distribution
 #' objects as well as adding generalised expectation and moments functions.
 #'
-#' @details Decorator objects add functionality to the given Distribution object by copying methods
-#' in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-#' below to find details of the methods that are added to the Distribution. Methods already
-#' present in the distribution are not overwritten by the decorator.
-#'
-#' Use \code{\link{decorate}} to decorate a Distribution.
-#'
-#' All methods in this decorator use numerical approximations and therefore better results may be available
-#' from analytic computations.
-#'
-#' @section Constructor: CoreStatistics$new(distribution)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distribution} \tab distribution \tab Distribution to decorate. \cr
-#' }
-#'
-#' @section Added Methods:
-#' \tabular{lll}{
-#' \strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
-#' \code{mgf(t)} \tab Moment generating function \tab \code{\link{mgf}} \cr
-#' \code{pgf(t)} \tab Probability generating function \tab \code{\link{pgf}} \cr
-#' \code{cf(t)} \tab Characteristic function \tab \code{\link{cf}} \cr
-#' \code{entropy(base = 2)} \tab (Shannon) Entropy \tab \code{\link{entropy}} \cr
-#' \code{skewness()} \tab Skewness \tab \code{\link{skewness}} \cr
-#' \code{kurtosis(excess = TRUE)} \tab Kurtosis \tab \code{\link{kurtosis}} \cr
-#' \code{kthmoment(type = "central")} \tab Kth Moment \tab \code{\link{kthmoment}} \cr
-#' \code{genExp(trafo)} \tab Generalised Expectation \tab \code{\link{genExp}} \cr
-#' \code{mode(which = "all")} \tab Mode \tab \code{\link{mode}} \cr
-#' \code{variance()} \tab Variance \tab \code{\link{variance}} \cr
-#' \code{mean()} \tab Arithmetic mean \tab \code{\link{mean.Distribution}} \cr
-#' }
-#'
-#' @seealso \code{\link{decorate}}, \code{\link{listDecorators}}
-#'
-#' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
-#' added to the SDistribution methods.
-#'
 #' @examples
-#' x <- Binomial$new()
-#' decorate(x, CoreStatistics)
-#' x$genExp()
+#' decorate(Exponential$new(), CoreStatistics)
+#' Exponential$new(decorators = CoreStatistics)
+#' CoreStatistics$new()$decorate(Exponential$new())
 #'
-#'
-#' x <- Binomial$new(decorators = CoreStatistics)
-#' x$kthmoment(4)
 #' @export
-NULL
 CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
   public = list(
+    #' @description
+    #' Numerically estimates the moment-generating function.
     mgf = function(t) {
       return(self$genExp(trafo = function(x) {
         return(exp(x * t))
       }))
     },
+
+    #' @description
+    #' Numerically estimates the characteristic function.
     cf = function(t) {
       if (testDiscrete(self)) {
         return(self$genExp(trafo = function(x) {
@@ -75,6 +42,9 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
           }))
       }
     },
+
+    #' @description
+    #' Numerically estimates the probability-generating function.
     pgf = function(z) {
       if (testDiscrete(self)) {
         x <- self$genExp(trafo = function(x) {
@@ -85,13 +55,22 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
         return(NaN)
       }
     },
+
+    #' @description
+    #' Numerically estimates the entropy function.
     entropy = function(base = 2) {
       message(.distr6$message_numeric)
       return(suppressMessages(self$genExp(trafo = function(x) -log(self$pdf(x), base))))
     },
+
+    #' @description
+    #' Numerically estimates the distribution skewness.
     skewness = function() {
       return(self$kthmoment(k = 3, type = "standard"))
     },
+
+    #' @description
+    #' Numerically estimates the distribution kurtosis.
     kurtosis = function(excess = TRUE) {
       kurtosis <- suppressMessages(self$kthmoment(k = 4, type = "standard"))
       if (testContinuous(self)) {
@@ -103,26 +82,34 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
         return(kurtosis)
       }
     },
+
+    #' @description
+    #' Numerically estimates the distribution variance.
     variance = function() {
       if (testUnivariate(self)) {
         message(.distr6$message_numeric)
         return(suppressMessages(self$genExp(trafo = function(x) x^2) - self$genExp()^2))
       }
     },
-    kthmoment = function(k, type = "central") {
+
+    #' @description
+    #' The kth central moment of a distribution is defined by
+    #' \deqn{CM(k)_X = E_X[(x - \mu)^k]}
+    #' the kth standardised moment of a distribution is defined by
+    #' \deqn{SM(k)_X = \frac{CM(k)}{\sigma^k}}{SM(k)_X = CM(k)/\sigma^k}
+    #' the kth raw moment of a distribution is defined by
+    #' \deqn{RM(k)_X = E_X[x^k]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
+    #' standard deviation of the distribution.
+    #' @param k `integer(1)` \cr
+    #' The `k`-th moment to evaluate the distribution at.
+    #' @param type `character(1)` \cr
+    #' Type of moment to evaluate.
+    kthmoment = function(k, type = c("central", "standard", "raw")) {
 
       if (testUnivariate(self)) {
 
-        if (grepl("^[c,C]", type)) {
-          type <- "central"
-        } else if (grepl("^[s,S]", type)) {
-          type <- "standard"
-        } else if (grepl("^[r,R]", type)) {
-          type <- "raw"
-        } else {
-          message("Type not recognised, central used")
-          type <- "central"
-        }
+        type <- match.arg(type)
 
         if (type == "central") {
           if (k == 0) {
@@ -152,6 +139,11 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
         }
       }
     },
+
+    #' @description
+    #' Numerically estimates \eqn{E[f(X)]} for some function \eqn{f}.
+    #' @param trafo `function()` \cr
+    #' Transformation function to define the expectation, default is distribution mean.
     genExp = function(trafo = NULL) {
       if (is.null(trafo)) {
         trafo <- function() {
@@ -183,6 +175,9 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
         }, lower = self$inf, upper = self$sup)$value))
       }
     },
+
+    #' @description
+    #' Numerically estimates the distribution mode.
     mode = function(which = "all") {
       if (private$.isRand) {
         return(modal(round(self$rand(1e5), 4)))
@@ -197,7 +192,10 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
         }
       }
     },
-    mean = function(...) {
+
+    #' @description
+    #' Numerically estimates the distribution mean.
+    mean = function() {
       return(self$genExp())
     }
   )
@@ -210,19 +208,11 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
 #' @description Moment generating function of a distribution
 #'
 #' @usage mgf(object, t)
-#' @section R6 Usage: $mgf(t)
 #'
 #' @param object Distribution.
 #' @param t integer to evaluate moment generating function at.
 #'
-#' @details The moment generating function is defined by
-#' \deqn{mgf_X(t) = E_X[exp(xt)]}
-#' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
+#' @details
 #'
 #' @return Moment generating function evaluated at t as a numeric.
 #'
@@ -234,7 +224,6 @@ NULL
 #' @description Characteristic function of a distribution
 #'
 #' @usage cf(object, t)
-#' @section R6 Usage: $cf(t)
 #'
 #' @param object Distribution.
 #' @param t integer to evaluate characteristic function at.
@@ -258,7 +247,6 @@ NULL
 #' @description Probability generating function of a distribution
 #'
 #' @usage pgf(object, z)
-#' @section R6 Usage: $pgf(z)
 #'
 #' @param object Distribution.
 #' @param z integer to evaluate characteristic function at.
@@ -286,7 +274,6 @@ NULL
 #' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
 #'
 #' @usage entropy(object, base = 2)
-#' @section R6 Usage: $entropy(base = 2)
 #'
 #' @details The entropy of a (discrete) distribution is defined by
 #' \deqn{- \sum (f_X)log(f_X)}
@@ -309,7 +296,6 @@ NULL
 #' @description Skewness of a distribution
 #'
 #' @usage skewness(object)
-#' @section R6 Usage: $skewness()
 #'
 #' @param object Distribution.
 #'
@@ -334,7 +320,6 @@ NULL
 #' @description Kurtosis of a distribution
 #'
 #' @usage kurtosis(object, excess = TRUE)
-#' @section R6 Usage: $kurtosis(excess = TRUE)
 #'
 #' @param object Distribution.
 #' @param excess logical, if TRUE (default) excess Kurtosis returned
@@ -361,7 +346,6 @@ NULL
 #' or estimated numerically.
 #'
 #' @usage variance(object)
-#' @section R6 Usage: $variance()
 #'
 #' @param object Distribution.
 #'
@@ -385,28 +369,10 @@ NULL
 #' @description Kth standardised or central moment of a distribution
 #'
 #' @usage kthmoment(object, k, type = "central")
-#' @section R6 Usage: $kthmoment(k, type = "central")
 #'
 #' @param object Distribution.
 #' @param k the kth moment to calculate
 #' @param type one of 'central', 'standard' or 'raw', abbreviations allowed
-#'
-#'
-#' @details The kth central moment of a distribution is defined by
-#' \deqn{CM(k)_X = E_X[(x - \mu)^k]}
-#' the kth standardised moment of a distribution is defined by
-#' \deqn{SM(k)_X = \frac{CM(k)}{\sigma^k}}{SM(k)_X = CM(k)/\sigma^k}
-#' the kth raw moment of a distribution is defined by
-#' \deqn{RM(k)_X = E_X[x^k]}
-#' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-#' standard deviation of the distribution.
-#'
-#' Abbreviations for the type are allowed but if an unfamiliar input is given then the central moment
-#' is computed.
-#'
-#' Can only be used after decorating with \code{\link{CoreStatistics}}.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @return If univariate, the given k-moment as a numeric, otherwise NULL.
 #'
@@ -417,24 +383,12 @@ NULL
 #' @name genExp
 #'
 #' @usage genExp(object, trafo = NULL)
-#' @section R6 Usage: $genExp(trafo = NULL)
 #'
 #' @param object Distribution.
 #' @param trafo transformation for expectation calculation, see details.
 #'
 #' @description A generalised expectation function for distributions, for arithmetic mean and more complex
 #' numeric calculations.
-#' @details The expectation of a probability distribution can be numerically calculated in a variety
-#' of different ways, some more efficient than others depending on what is available, this function first
-#' checks which analytic methods are present before selecting a numeric strategy.
-#'
-#' If trafo = NULL, then the arithmetic mean is calculated, i.e. the approximation to \eqn{E[X]}. Any
-#' transformation must be given as a function, for example \code{trafo = function(x) x^2}
-#' (which is the second moment).
-#'
-#' Can only be used after decorating with \code{\link{CoreStatistics}}.
-#'
-#' @seealso \code{\link{mean}}, \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 #'
 #' @return The given expectation as a numeric, otherwise NULL.
 #'
@@ -446,7 +400,6 @@ NULL
 #' @description A numeric search for the mode(s) of a distribution.
 #'
 #' @usage mode(object, which = "all")
-#' @section R6 Usage: $mode(which = "all")
 #'
 #' @param object Distribution.
 #' @param which which mode of the distribution should be returned, default is all.
@@ -468,8 +421,6 @@ NULL
 #'
 #' @param x Distribution.
 #' @param ... Additional arguments.
-#'
-#' @section R6 Usage: $mean()
 #'
 #' @description Arithmetic mean for the probability distribution.
 #' @details The arithmetic mean of a (discrete) probability distribution X is the expectation

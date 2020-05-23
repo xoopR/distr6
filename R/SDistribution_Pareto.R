@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Pareto Distribution Documentation
-#-------------------------------------------------------------
 #' @name Pareto
 #' @template SDist
 #' @templateVar ClassName Pareto
@@ -40,181 +37,193 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Pareto Distribution Definition
-#-------------------------------------------------------------
-Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F)
-Pareto$set("public", "name", "Pareto Type I")
-Pareto$set("public", "short_name", "Pare")
-Pareto$set("public", "description", "Pareto Probability Distribution.")
-Pareto$set("public", "packages", c("extraDistr", "expint"))
 
-Pareto$set("public", "mean", function() {
-  if (self$getParameterValue("shape") <= 1) {
-    return(Inf)
-  } else {
-    return((self$getParameterValue("shape") * self$getParameterValue("scale")) / (self$getParameterValue("shape") - 1))
-  }
-})
-Pareto$set("public", "median", function() {
-  return(self$getParameterValue("scale") * 2^(1/self$getParameterValue("shape")))
-})
-Pareto$set("public", "variance", function() {
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
-  if (shape <= 2) {
-    return(Inf)
-  } else {
-    return((shape * scale^2) / ((shape - 1)^2 * (shape - 2)))
-  }
-})
-Pareto$set("public", "skewness", function() {
-  shape <- self$getParameterValue("shape")
-  if (shape > 3) {
-    return(((2 * (1 + shape)) / (shape - 3)) * sqrt((shape - 2) / shape))
-  } else {
-    return(NaN)
-  }
-})
-Pareto$set("public", "kurtosis", function(excess = TRUE) {
-  shape <- self$getParameterValue("shape")
-  if (shape > 4) {
-    kur <- (6 * (shape^3 + shape^2 - 6 * shape - 2)) / (shape * (shape - 3) * (shape - 4))
-  } else {
-    return(NaN)
-  }
+Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Pareto",
+    short_name = "Pare",
+    description = "Pareto (Type I) Probability Distribution.",
+    packages = c("extraDistr", "expint"),
 
-  if (excess) {
-    return(kur)
-  } else {
-    return(kur + 3)
-  }
-})
-Pareto$set("public", "entropy", function(base = 2) {
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
+    # Public methods
+    # initialize
+    initialize = function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
 
-  return(log((scale / shape) * exp(1 + 1 / shape), base))
-})
-Pareto$set("public", "mgf", function(t) {
-  if (t < 0) {
-    shape <- self$getParameterValue("shape")
-    scale <- self$getParameterValue("scale")
-    return(shape * (-scale * t)^shape * expint::gammainc(-shape, -scale * t))
-  } else {
-    return(NaN)
-  }
-})
-Pareto$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Pareto$set("public", "mode", function(which = NULL) {
-  return(self$getParameterValue("scale"))
-})
+      private$.parameters <- getParameterSet(self, shape, scale, verbose)
+      self$setParameterValue(shape = shape, scale = scale)
 
-Pareto$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  private$.properties$support <- Interval$new(self$getParameterValue("scale"), Inf, type = "[)")
-  invisible(self)
-})
-
-Pareto$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  return(lst)
-})
-
-Pareto$set("private", ".pdf", function(x, log = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::dpareto,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale"),
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    extraDistr::dpareto(
-      x,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale"),
-      log = log
-    )
-  }
-})
-Pareto$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::ppareto,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale"),
-      MoreArgs = list(
-        q = x,
-        lower.tail = lower.tail,
-        log.p = log.p
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(scale, Inf, type = "[)"),
+        type = PosReals$new(zero = T)
       )
-    )
-  } else {
-    extraDistr::ppareto(
-      x,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Pareto$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::qpareto,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale"),
-      MoreArgs = list(
-        p = p,
-        lower.tail = lower.tail,
-        log.p = log.p
-      )
-    )
-  } else {
-    extraDistr::qpareto(
-      p,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Pareto$set("private", ".rand", function(n) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::rpareto,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale"),
-      MoreArgs = list(n = n)
-    )
-  } else {
-    extraDistr::rpareto(
-      n,
-      a = self$getParameterValue("shape"),
-      b = self$getParameterValue("scale")
-    )
-  }
-})
-Pareto$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+    },
 
-Pareto$set("public", "initialize", function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
+    # stats
+    mean = function() {
+      if (self$getParameterValue("shape") <= 1) {
+        return(Inf)
+      } else {
+        return((self$getParameterValue("shape") * self$getParameterValue("scale")) / (self$getParameterValue("shape") - 1))
+      }
+    },
+    mode = function(which = NULL) {
+      return(self$getParameterValue("scale"))
+    },
+    median = function() {
+      return(self$getParameterValue("scale") * 2^(1/self$getParameterValue("shape")))
+    },
+    variance = function() {
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
+      if (shape <= 2) {
+        return(Inf)
+      } else {
+        return((shape * scale^2) / ((shape - 1)^2 * (shape - 2)))
+      }
+    },
+    skewness = function() {
+      shape <- self$getParameterValue("shape")
+      if (shape > 3) {
+        return(((2 * (1 + shape)) / (shape - 3)) * sqrt((shape - 2) / shape))
+      } else {
+        return(NaN)
+      }
+    },
+    kurtosis = function(excess = TRUE) {
+      shape <- self$getParameterValue("shape")
+      if (shape > 4) {
+        kur <- (6 * (shape^3 + shape^2 - 6 * shape - 2)) / (shape * (shape - 3) * (shape - 4))
+      } else {
+        return(NaN)
+      }
 
-  private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  self$setParameterValue(shape = shape, scale = scale)
+      if (excess) {
+        return(kur)
+      } else {
+        return(kur + 3)
+      }
+    },
+    entropy = function(base = 2) {
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
 
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(scale, Inf, type = "[)"),
-    type = PosReals$new(zero = T)
+      return(log((scale / shape) * exp(1 + 1 / shape), base))
+    },
+    mgf = function(t) {
+      if (t < 0) {
+        shape <- self$getParameterValue("shape")
+        scale <- self$getParameterValue("scale")
+        return(shape * (-scale * t)^shape * expint::gammainc(-shape, -scale * t))
+      } else {
+        return(NaN)
+      }
+    },
+    pgf = function(z) {
+      return(NaN)
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      private$.properties$support <- Interval$new(self$getParameterValue("scale"), Inf, type = "[)")
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::dpareto,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dpareto(
+          x,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale"),
+          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::ppareto,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale"),
+          MoreArgs = list(
+            q = x,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::ppareto(
+          x,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::qpareto,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale"),
+          MoreArgs = list(
+            p = p,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::qpareto(
+          p,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::rpareto,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rpareto(
+          n,
+          a = self$getParameterValue("shape"),
+          b = self$getParameterValue("scale")
+        )
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

@@ -495,7 +495,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         pdqr <- private$.pdf(data)
       }
 
-      pdqr_returner(pdqr, simplify)
+      pdqr_returner(pdqr, simplify, self$short_name)
     },
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
@@ -524,7 +524,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         pdqr <- private$.cdf(data)
       }
 
-      pdqr_returner(pdqr, simplify)
+      pdqr_returner(pdqr, simplify, self$short_name)
     },
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
@@ -533,9 +533,17 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       }
 
       data <- pdq_point_assert(..., self = self, data = data)
-      assert(Interval$new(0, 1)$contains(as.numeric(data), all = TRUE),
-             .var.name = "Do all quantiles lie in [0,1]?"
-      )
+
+      if (!log.p) {
+        assert(Interval$new(0, 1)$contains(as.numeric(data), all = TRUE),
+               .var.name = "Do all quantiles lie in [0,1]?"
+        )
+      } else {
+        assert(Interval$new(0, 1)$contains(as.numeric(exp(data)), all = TRUE),
+               .var.name = "Do all quantiles lie in [0,1]?"
+        )
+      }
+
 
       if (log.p | !lower.tail) {
         if (private$.log) {
@@ -553,7 +561,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         pdqr <- private$.quantile(data)
       }
 
-      pdqr_returner(pdqr, simplify)
+      pdqr_returner(pdqr, simplify, self$short_name)
     },
     rand = function(n, simplify = TRUE) {
 
@@ -565,7 +573,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
 
       pdqr <- private$.rand(n)
 
-      pdqr_returner(pdqr, simplify)
+      pdqr_returner(pdqr, simplify, self$short_name)
     },
     prec = function() {
       return(1 / self$variance())
@@ -581,6 +589,8 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         } else {
           return(med)
         }
+      } else if(!testUnivariate(self)) {
+        return(NaN)
       } else {
         return(self$quantile(0.5))
       }

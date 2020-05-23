@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Gompertz Distribution Documentation
-#-------------------------------------------------------------
 #' @name Gompertz
 #' @template SDist
 #' @templateVar ClassName Gompertz
@@ -35,120 +32,133 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Gompertz Distribution Definition
-#-------------------------------------------------------------
-Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F)
-Gompertz$set("public", "name", "Gompertz")
-Gompertz$set("public", "short_name", "Gomp")
-Gompertz$set("public", "description", "Gompertz Probability Distribution.")
 
-Gompertz$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  return(lst)
-})
+Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Gompertz",
+    short_name = "Gomp",
+    description = "Gompertz Probability Distribution.",
+    packages = "extraDistr",
 
-Gompertz$set("public", "median", function() {
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
+    # Public methods
+    # initialize
+    initialize = function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
 
-  return((1/scale) * log((-1/shape) * log(1/2) + 1))
-})
-Gompertz$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Gompertz$set("private", ".pdf", function(x, log = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::dgompertz,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale"),
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    extraDistr::dgompertz(
-      x,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale"),
-      log = log
-    )
-  }
-})
-Gompertz$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::pgompertz,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale"),
-      MoreArgs = list(
-        q = x,
-        lower.tail = lower.tail,
-        log.p = log.p
+      private$.parameters <- getParameterSet(self, shape, scale, verbose)
+      suppressMessages(self$setParameterValue(shape = shape, scale = scale))
+
+      super$initialize(
+        decorators = decorators,
+        support = PosReals$new(zero = T),
+        type = PosReals$new(zero = T)
       )
-    )
-  } else {
-    extraDistr::pgompertz(
-      x,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Gompertz$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::qgompertz,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale"),
-      MoreArgs = list(
-        p = p,
-        lower.tail = lower.tail,
-        log.p = log.p
-      )
-    )
-  } else {
-    extraDistr::qgompertz(
-      p,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale"),
-      lower.tail = lower.tail,
-      log.p = log.p
-    )
-  }
-})
-Gompertz$set("private", ".rand", function(n) {
-  if (checkmate::testList(self$getParameterValue("shape"))) {
-    mapply(
-      extraDistr::rgompertz,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale"),
-      MoreArgs = list(n = n)
-    )
-  } else {
-    extraDistr::rgompertz(
-      n,
-      b = self$getParameterValue("shape"),
-      a = self$getParameterValue("scale")
-    )
-  }
-})
-Gompertz$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+    },
 
-Gompertz$set("public", "initialize", function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
+    # stats
+    median = function() {
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
 
-  private$.parameters <- getParameterSet(self, shape, scale, verbose)
-  suppressMessages(self$setParameterValue(shape = shape, scale = scale))
+      return((1/scale) * log((-1/shape) * log(1/2) + 1))
+    },
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
 
-  super$initialize(
-    decorators = decorators,
-    support = PosReals$new(zero = T),
-    type = PosReals$new(zero = T)
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::dgompertz,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dgompertz(
+          x,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale"),
+          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::pgompertz,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale"),
+          MoreArgs = list(
+            q = x,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::pgompertz(
+          x,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::qgompertz,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale"),
+          MoreArgs = list(
+            p = p,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::qgompertz(
+          p,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("shape"))) {
+        mapply(
+          extraDistr::rgompertz,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rgompertz(
+          n,
+          b = self$getParameterValue("shape"),
+          a = self$getParameterValue("scale")
+        )
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

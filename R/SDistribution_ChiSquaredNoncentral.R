@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Noncentral Chi-Squared Distribution Documentation
-#-------------------------------------------------------------
 #' @name ChiSquaredNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -40,147 +37,161 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# ChiSquaredNoncentral Distribution Definition
-#-------------------------------------------------------------
-ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = FALSE)
-ChiSquaredNoncentral$set("public", "name", "ChiSquaredNoncentral")
-ChiSquaredNoncentral$set("public", "short_name", "ChiSqNC")
-ChiSquaredNoncentral$set("public", "description", "Noncentral ChiSquared Probability Distribution")
-ChiSquaredNoncentral$set("public", "packages", "stats")
 
-ChiSquaredNoncentral$set("public", "mean", function() {
-  return(self$getParameterValue("df") + self$getParameterValue("location"))
-})
-ChiSquaredNoncentral$set("public", "variance", function() {
-  return(2 * (self$getParameterValue("df") + 2 * self$getParameterValue("location")))
-})
-ChiSquaredNoncentral$set("public", "skewness", function() {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  if (df + ncp == 0) {
-    return(NaN)
-  } else {
-    return(((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2)))
-  }
-})
-ChiSquaredNoncentral$set("public", "kurtosis", function(excess = TRUE) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  if (df + ncp == 0) {
-    return(NaN)
-  } else {
-    kur <- (12 * (df + 4 * ncp)) / ((df + 2 * ncp)^2)
-  }
+ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "ChiSquaredNoncentral",
+    short_name = "ChiSqNC" ,
+    description = "Non-central ChiSquared Probability Distribution.",
+    packages = "stats",
 
-  if (excess) {
-    return(kur)
-  } else {
-    return(kur + 3)
-  }
-})
-ChiSquaredNoncentral$set("public", "mgf", function(t) {
-  if (t < 0.5) {
-    return(exp(self$getParameterValue("location") * t / (1 - 2 * t)) / ((1 - 2 * t)^(self$getParameterValue("df") / 2)))
-  } else {
-    return(NaN)
-  }
-})
-ChiSquaredNoncentral$set("public", "cf", function(t) {
-  return(exp(self$getParameterValue("location") * 1i * t / (1 - 2i * t)) / ((1 - 2i * t)^(self$getParameterValue("df") / 2)))
-})
+    # Public methods
+    # initialize
+    initialize = function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {
 
-ChiSquaredNoncentral$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  if (self$getParameterValue("df") <= 1) {
-    private$.properties$support <- PosReals$new(zero = F)
-  } else {
-    private$.properties$support <- PosReals$new(zero = T)
-  }
-  invisible(self)
-})
-ChiSquaredNoncentral$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
-  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  return(lst)
-})
-ChiSquaredNoncentral$set("private", ".pdf", function(x, log = FALSE) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "dchisq",
-    x = x,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    log = log,
-    vec = test_list(df)
+      private$.parameters <- getParameterSet(self, df, location, verbose)
+      self$setParameterValue(df = df, location = location)
+
+      if (df == 1) {
+        support <- PosReals$new(zero = F)
+      } else {
+        support <- PosReals$new(zero = T)
+      }
+
+      super$initialize(
+        decorators = decorators,
+        support = support,
+        type = PosReals$new(zero = TRUE)
+      )
+    },
+
+    # stats
+    mean = function() {
+      return(self$getParameterValue("df") + self$getParameterValue("location"))
+    },
+    variance = function() {
+      return(2 * (self$getParameterValue("df") + 2 * self$getParameterValue("location")))
+    },
+    skewness = function() {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      if (df + ncp == 0) {
+        return(NaN)
+      } else {
+        return(((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2)))
+      }
+    },
+    kurtosis = function(excess = TRUE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      if (df + ncp == 0) {
+        return(NaN)
+      } else {
+        kur <- (12 * (df + 4 * ncp)) / ((df + 2 * ncp)^2)
+      }
+
+      if (excess) {
+        return(kur)
+      } else {
+        return(kur + 3)
+      }
+    },
+    mgf = function(t) {
+      if (t < 0.5) {
+        return(exp(self$getParameterValue("location") * t / (1 - 2 * t)) / ((1 - 2 * t)^(self$getParameterValue("df") / 2)))
+      } else {
+        return(NaN)
+      }
+    },
+    cf = function(t) {
+      return(exp(self$getParameterValue("location") * 1i * t / (1 - 2i * t)) / ((1 - 2i * t)^(self$getParameterValue("df") / 2)))
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      if (self$getParameterValue("df") <= 1) {
+        private$.properties$support <- PosReals$new(zero = F)
+      } else {
+        private$.properties$support <- PosReals$new(zero = T)
+      }
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "dchisq",
+        x = x,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        log = log,
+        vec = test_list(df)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "pchisq",
+        x = x,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "qchisq",
+        x = p,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .rand = function(n) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "rchisq",
+        x = n,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        vec = test_list(df)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-ChiSquaredNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "pchisq",
-    x = x,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df)
-  )
-})
-ChiSquaredNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "qchisq",
-    x = p,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df)
-  )
-})
-ChiSquaredNoncentral$set("private", ".rand", function(n) {
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "rchisq",
-    x = n,
-    args = list(
-      df = unlist(df),
-      ncp = unlist(ncp)
-    ),
-    vec = test_list(df)
-  )
-})
-ChiSquaredNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-ChiSquaredNoncentral$set("public", "initialize", function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, df, location, verbose)
-  self$setParameterValue(df = df, location = location)
-
-  if (df == 1) {
-    support <- PosReals$new(zero = F)
-  } else {
-    support <- PosReals$new(zero = T)
-  }
-
-  super$initialize(
-    decorators = decorators,
-    support = support,
-    type = PosReals$new(zero = TRUE)
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

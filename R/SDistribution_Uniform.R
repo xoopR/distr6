@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Uniform Distribution Documentation
-#-------------------------------------------------------------
 #' @name Uniform
 #' @author Yumi Zhou
 #' @template SDist
@@ -38,155 +35,168 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Uniform Distribution Definition
-#-------------------------------------------------------------
-Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F)
-Uniform$set("public", "name", "Uniform")
-Uniform$set("public", "short_name", "Unif")
-Uniform$set("public", "description", "Uniform Probability Distribution.")
-Uniform$set("public", "packages", "stats")
 
+Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Uniform",
+    short_name = "Unif",
+    description = "Uniform Probability Distribution.",
+    packages = "stats",
 
-Uniform$set("public", "mean", function() {
-  return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
-})
-Uniform$set("public", "variance", function() {
-  return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2) / 12)
-})
-Uniform$set("public", "skewness", function() {
-  return(0)
-})
-Uniform$set("public", "kurtosis", function(excess = TRUE) {
-  if (excess) {
-    return(-6 / 5)
-  } else {
-    return(1.8)
-  }
-})
-Uniform$set("public", "entropy", function(base = 2) {
-  return(log(self$getParameterValue("upper") - self$getParameterValue("lower"), base))
-})
-Uniform$set("public", "mgf", function(t) {
-  if (t == 0) {
-    return(1)
-  } else {
-    return((exp(self$getParameterValue("upper") * t) - exp(self$getParameterValue("lower") * t)) /
-      (t * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
-  }
-})
-Uniform$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Uniform$set("public", "cf", function(t) {
-  if (t == 0) {
-    return(1)
-  } else {
-    return((exp(self$getParameterValue("upper") * t * 1i) - exp(self$getParameterValue("lower") * t * 1i)) /
-      (t * 1i * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
-  }
-})
-Uniform$set("public", "mode", function(which = NULL) {
-  return(NaN)
-})
+    # Public methods
+    # initialize
+    initialize = function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE) {
 
-Uniform$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  if (is.null(lst)) {
-    lst <- list(...)
-  }
-  if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
-    checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
-  } else if ("lower" %in% names(lst)) {
-    checkmate::assert(lst[["lower"]] < self$getParameterValue("upper"), .var.name = "lower must be < upper")
-  } else if ("upper" %in% names(lst)) {
-    checkmate::assert(lst[["upper"]] > self$getParameterValue("lower"), .var.name = "upper must be > lower")
-  }
+      private$.parameters <- getParameterSet(self, lower, upper, verbose)
+      self$setParameterValue(lower = lower, upper = upper)
 
-  super$setParameterValue(lst = lst, error = error)
-  private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
-  invisible(self)
-})
-Uniform$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
-  if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
-  return(lst)
-})
-Uniform$set("private", ".pdf", function(x, log = FALSE) {
-  min <- self$getParameterValue("lower")
-  max <- self$getParameterValue("upper")
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(lower, upper),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-  call_C_base_pdqr(
-    fun = "dunif",
-    x = x,
-    args = list(
-      min = unlist(min),
-      max = unlist(max)
-    ),
-    log = log,
-    vec = test_list(min)
+    # stats
+    mean = function() {
+      return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
+    },
+    mode = function(which = NULL) {
+      return(NaN)
+    },
+    variance = function() {
+      return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2) / 12)
+    },
+    skewness = function() {
+      return(0)
+    },
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(-6 / 5)
+      } else {
+        return(1.8)
+      }
+    },
+    entropy = function(base = 2) {
+      return(log(self$getParameterValue("upper") - self$getParameterValue("lower"), base))
+    },
+    mgf = function(t) {
+      if (t == 0) {
+        return(1)
+      } else {
+        return((exp(self$getParameterValue("upper") * t) - exp(self$getParameterValue("lower") * t)) /
+                 (t * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
+      }
+    },
+    cf = function(t) {
+      if (t == 0) {
+        return(1)
+      } else {
+        return((exp(self$getParameterValue("upper") * t * 1i) - exp(self$getParameterValue("lower") * t * 1i)) /
+                 (t * 1i * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
+      }
+    },
+    pgf = function(z) {
+      return(NaN)
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
+      } else if ("lower" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] < self$getParameterValue("upper"), .var.name = "lower must be < upper")
+      } else if ("upper" %in% names(lst)) {
+        checkmate::assert(lst[["upper"]] > self$getParameterValue("lower"), .var.name = "upper must be > lower")
+      }
+
+      super$setParameterValue(lst = lst, error = error)
+      private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      min <- self$getParameterValue("lower")
+      max <- self$getParameterValue("upper")
+
+      call_C_base_pdqr(
+        fun = "dunif",
+        x = x,
+        args = list(
+          min = unlist(min),
+          max = unlist(max)
+        ),
+        log = log,
+        vec = test_list(min)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      min <- self$getParameterValue("lower")
+      max <- self$getParameterValue("upper")
+
+      call_C_base_pdqr(
+        fun = "punif",
+        x = x,
+        args = list(
+          min = unlist(min),
+          max = unlist(max)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(min)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      min <- self$getParameterValue("lower")
+      max <- self$getParameterValue("upper")
+
+      call_C_base_pdqr(
+        fun = "qunif",
+        x = p,
+        args = list(
+          min = unlist(min),
+          max = unlist(max)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(min)
+      )
+    },
+    .rand = function(n) {
+      min <- self$getParameterValue("lower")
+      max <- self$getParameterValue("upper")
+
+      call_C_base_pdqr(
+        fun = "runif",
+        x = n,
+        args = list(
+          min = unlist(min),
+          max = unlist(max)
+        ),
+        vec = test_list(min)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
+      if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-Uniform$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  min <- self$getParameterValue("lower")
-  max <- self$getParameterValue("upper")
-
-  call_C_base_pdqr(
-    fun = "punif",
-    x = x,
-    args = list(
-      min = unlist(min),
-      max = unlist(max)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(min)
-  )
-})
-Uniform$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  min <- self$getParameterValue("lower")
-  max <- self$getParameterValue("upper")
-
-  call_C_base_pdqr(
-    fun = "qunif",
-    x = p,
-    args = list(
-      min = unlist(min),
-      max = unlist(max)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(min)
-  )
-})
-Uniform$set("private", ".rand", function(n) {
-  min <- self$getParameterValue("lower")
-  max <- self$getParameterValue("upper")
-
-  call_C_base_pdqr(
-    fun = "runif",
-    x = n,
-    args = list(
-      min = unlist(min),
-      max = unlist(max)
-    ),
-    vec = test_list(min)
-  )
-})
-Uniform$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-Uniform$set("public", "initialize", function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(lower = lower, upper = upper)
-
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(lower, upper),
-    symmetry = "sym",
-    type = Reals$new()
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

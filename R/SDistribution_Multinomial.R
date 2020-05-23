@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-#  Distribution Documentation
-#-------------------------------------------------------------
 #' @name Multinomial
 #' @template SDist
 #' @templateVar ClassName Multinomial
@@ -43,125 +40,138 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Multinomial Distribution Definition
-#-------------------------------------------------------------
-Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F)
-Multinomial$set("public", "name", "Multinomial")
-Multinomial$set("public", "short_name", "Multinom")
-Multinomial$set("public", "description", "Multinomial Probability Distribution.")
-Multinomial$set("public", "packages", "extraDistr")
 
-Multinomial$set("public", "mean", function() {
-  return(self$getParameterValue("size") * self$getParameterValue("probs"))
-}) # TEST
-Multinomial$set("public", "variance", function() {
-  cov <- self$getParameterValue("probs") %*% t(self$getParameterValue("probs")) * -self$getParameterValue("size")
-  diag(cov) <- self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
-  return(cov)
-})
-Multinomial$set("public", "skewness", function() {
-  return(NaN)
-})
-Multinomial$set("public", "kurtosis", function(excess = TRUE) {
-  return(NaN)
-})
-Multinomial$set("public", "entropy", function(base = 2) {
-  size <- self$getParameterValue("size")
-  probs <- self$getParameterValue("probs")
-  K <- self$getParameterValue("K")
+Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Multinomial",
+    short_name = "Multinom",
+    description = "Multinomial Probability Distribution.",
+    packages = "extraDistr",
 
-  s1 <- -log(factorial(size), base)
-  s2 <- -size * sum(probs * log(probs, base))
-  s3 <- 0
-  for (i in 1:K) {
-    for (j in 0:size) {
-      s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
+    # Public methods
+    # initialize
+    initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE) {
+
+      if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")
+
+      private$.parameters <- getParameterSet(self, size, probs, verbose)
+      self$setParameterValue(size = size, probs = probs)
+
+      super$initialize(
+        decorators = decorators,
+        support = setpower(Set$new(0:size, class = "integer"), length(probs)),
+        type = setpower(Naturals$new(), length(probs))
+      )
+    },
+
+    # stats
+    mean = function() {
+      return(self$getParameterValue("size") * self$getParameterValue("probs"))
+    },
+    variance = function() {
+      cov <- self$getParameterValue("probs") %*% t(self$getParameterValue("probs")) * -self$getParameterValue("size")
+      diag(cov) <- self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
+      return(cov)
+    },
+    skewness = function() {
+      return(NaN)
+    },
+    kurtosis = function(excess = TRUE) {
+      return(NaN)
+    },
+    entropy = function(base = 2) {
+      size <- self$getParameterValue("size")
+      probs <- self$getParameterValue("probs")
+      K <- self$getParameterValue("K")
+
+      s1 <- -log(factorial(size), base)
+      s2 <- -size * sum(probs * log(probs, base))
+      s3 <- 0
+      for (i in 1:K) {
+        for (j in 0:size) {
+          s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
+        }
+      }
+
+      return(s1 + s2 + s3)
+    },
+    mgf = function(t) {
+      checkmate::assert(length(t) == self$getParameterValue("K"))
+      return(sum(exp(t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+    },
+    cf = function(t) {
+      checkmate::assert(length(t) == self$getParameterValue("K"))
+      return(sum(exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+    },
+    pgf = function(z) {
+      checkmate::assert(length(z) == self$getParameterValue("K"))
+      return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
+    },
+
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if ("probs" %in% names(lst)) {
+        checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
+                          .var.name = "Number of categories cannot be changed after construction."
+        )
+        lst$probs <- lst$probs / sum(lst$probs)
+      }
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
     }
-  }
+  ),
 
-  return(s1 + s2 + s3)
-}) # TEST
-Multinomial$set("public", "mgf", function(t) {
-  checkmate::assert(length(t) == self$getParameterValue("K"))
-  return(sum(exp(t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
-}) # TEST
-Multinomial$set("public", "cf", function(t) {
-  checkmate::assert(length(t) == self$getParameterValue("K"))
-  return(sum(exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
-}) # TEST
-Multinomial$set("public", "pgf", function(z) {
-  checkmate::assert(length(z) == self$getParameterValue("K"))
-  return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
-}) # TEST
-Multinomial$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  if (is.null(lst)) {
-    lst <- list(...)
-  }
-  if ("probs" %in% names(lst)) {
-    checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
-      .var.name = "Number of categories cannot be changed after construction."
-    )
-    lst$probs <- lst$probs / sum(lst$probs)
-  }
-  super$setParameterValue(lst = lst, error = error)
-  invisible(self)
-})
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
 
-Multinomial$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
-  if (!is.null(paramlst$probs)) lst <- c(lst, list(probs = paramlst$probs))
-  return(lst)
-})
-Multinomial$set("private", ".pdf", function(x, log = FALSE) {
+      checkmate::assertMatrix(x, ncols = length(self$getParameterValue("probs")))
 
-  checkmate::assertMatrix(x, ncols = length(self$getParameterValue("probs")))
+      if (checkmate::testList(self$getParameterValue("probs"))) {
+        mapply(extraDistr::dmnom,
+               size = self$getParameterValue("size"),
+               prob = self$getParameterValue("probs"),
+               MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dmnom(x,
+                          size = self$getParameterValue("size"),
+                          prob = self$getParameterValue("probs"),
+                          log = log
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("probs"))) {
+        mapply(extraDistr::rmnom,
+               size = self$getParameterValue("size"),
+               prob = self$getParameterValue("probs"),
+               MoreArgs = list(n = n),
+               SIMPLIFY = FALSE
+        )
+      } else {
+        extraDistr::rmnom(n,
+                          size = self$getParameterValue("size"),
+                          prob = self$getParameterValue("probs")
+        )
+      }
+    },
 
-  if (checkmate::testList(self$getParameterValue("probs"))) {
-    mapply(extraDistr::dmnom,
-      size = self$getParameterValue("size"),
-      prob = self$getParameterValue("probs"),
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    extraDistr::dmnom(x,
-      size = self$getParameterValue("size"),
-      prob = self$getParameterValue("probs"),
-      log = log
-    )
-  }
-})
-Multinomial$set("private", ".rand", function(n) {
-  if (checkmate::testList(self$getParameterValue("probs"))) {
-    mapply(extraDistr::rmnom,
-      size = self$getParameterValue("size"),
-      prob = self$getParameterValue("probs"),
-      MoreArgs = list(n = n),
-      SIMPLIFY = FALSE
-    )
-  } else {
-    extraDistr::rmnom(n,
-      size = self$getParameterValue("size"),
-      prob = self$getParameterValue("probs")
-    )
-  }
-})
-Multinomial$set("private", ".traits", list(valueSupport = "discrete", variateForm = "multivariate"))
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
+      if (!is.null(paramlst$probs)) lst <- c(lst, list(probs = paramlst$probs))
+      return(lst)
+    },
 
-Multinomial$set("public", "initialize", function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE) {
-
-  if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")
-
-  private$.parameters <- getParameterSet(self, size, probs, verbose)
-  self$setParameterValue(size = size, probs = probs)
-
-  super$initialize(
-    decorators = decorators,
-    support = setpower(Set$new(0:size, class = "integer"), length(probs)),
-    type = setpower(Naturals$new(), length(probs))
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "multivariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

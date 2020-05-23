@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Log-Logistic Distribution Documentation
-#-------------------------------------------------------------
 #' @name ShiftedLoglogistic
 #' @template SDist
 #' @templateVar ClassName ShiftedLoglogistic
@@ -42,107 +39,120 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# ShiftedLoglogistic Distribution Definition
-#-------------------------------------------------------------
-ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, lock_objects = F)
-ShiftedLoglogistic$set("public", "name", "ShiftedLoglogistic")
-ShiftedLoglogistic$set("public", "short_name", "ShiftLLogis")
-ShiftedLoglogistic$set("public", "description", "Shifted Log-Logistic Probability Distribution.")
-ShiftedLoglogistic$set("public", "packages", "pracma")
 
-ShiftedLoglogistic$set("public", "mean", function() {
-  location <- self$getParameterValue("location")
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
+ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "ShiftedLoglogistic",
+    short_name = "ShiftLLogis",
+    description = "Shifted Loglogistic Probability Distribution.",
+    packages = "pracma",
 
-  return(location + ((scale/shape) * (((pi*shape)/(sin(pi*shape))) - 1)))
-})
-ShiftedLoglogistic$set("public", "median", function() {
-  return(self$getParameterValue("location"))
-})
-ShiftedLoglogistic$set("public", "variance", function() {
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
-  shapi <- pi * self$getParameterValue("shape")
+    # Public methods
+    # initialize
+    initialize = function(scale = 1, shape = 1, location = 0,
+                          rate = NULL, decorators = NULL, verbose = FALSE) {
 
-  return((scale^2/shape^2) * ((2 * shapi / sin(2 * shapi)) - ((shapi/sin(shapi))^2)))
-})
-ShiftedLoglogistic$set("public", "mode", function(which = NULL) {
-  location <- self$getParameterValue("location")
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
+      private$.parameters <- getParameterSet(self, scale, shape, location, rate, verbose)
+      self$setParameterValue(scale = scale, shape = shape, location = location, rate = rate)
 
-  return(location + ((scale/shape) * ((((1 - shape)/(1 + shape))^shape) - 1)))
-})
-ShiftedLoglogistic$set("public", "pgf", function(z) {
-  return(NaN)
-})
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(location, Inf, type = "()"),
+        type = PosReals$new(zero = T)
+      )
+    },
 
-ShiftedLoglogistic$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  private$.properties$support <- Interval$new(self$getParameterValue("location"), Inf, type = "()")
-  invisible(self)
-})
+    # stats
+    mean = function() {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
 
-ShiftedLoglogistic$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  if (!is.null(paramlst$rate)) lst <- c(lst, list(scale = paramlst$rate^-1))
-  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-  return(lst)
-})
-ShiftedLoglogistic$set("private", ".pdf", function(x, log = FALSE) {
-  location <- self$getParameterValue("location")
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
+      return(location + ((scale/shape) * (((pi*shape)/(sin(pi*shape))) - 1)))
+    },
+    mode = function(which = NULL) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
 
-  if (checkmate::testList(location)) {
-    return(C_ShiftedLoglogisticPdf(x, unlist(location), unlist(shape), unlist(scale), log))
-  } else {
-    return(as.numeric(C_ShiftedLoglogisticPdf(x, location, shape, scale, log)))
-  }
-})
-ShiftedLoglogistic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  location <- self$getParameterValue("location")
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
+      return(location + ((scale/shape) * ((((1 - shape)/(1 + shape))^shape) - 1)))
+    },
+    median = function() {
+      return(self$getParameterValue("location"))
+    },
+    variance = function() {
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
+      shapi <- pi * self$getParameterValue("shape")
 
-  if (checkmate::testList(location)) {
-    return(C_ShiftedLoglogisticCdf(x, unlist(location), unlist(shape), unlist(scale), lower.tail, log.p))
-  } else {
-    return(as.numeric(C_ShiftedLoglogisticCdf(x, location, shape, scale, lower.tail, log.p)))
-  }
-})
-ShiftedLoglogistic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  location <- self$getParameterValue("location")
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
+      return((scale^2/shape^2) * ((2 * shapi / sin(2 * shapi)) - ((shapi/sin(shapi))^2)))
+    },
+    pgf = function(z) {
+      return(NaN)
+    },
 
-  if (checkmate::testList(location)) {
-    return(C_ShiftedLoglogisticQuantile(p, unlist(location), unlist(shape), unlist(scale), lower.tail, log.p))
-  } else {
-    return(as.numeric(C_ShiftedLoglogisticQuantile(p, location, shape, scale, lower.tail, log.p)))
-  }
-})
-ShiftedLoglogistic$set("private", ".rand", function(n) {
-  self$quantile(runif(n))
-})
-ShiftedLoglogistic$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      private$.properties$support <- Interval$new(self$getParameterValue("location"), Inf, type = "()")
+      invisible(self)
+    }
+  ),
 
-ShiftedLoglogistic$set("public", "initialize", function(scale = 1, shape = 1, location = 0,
-                                                        rate = NULL, decorators = NULL, verbose = FALSE) {
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      location <- self$getParameterValue("location")
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
 
-  private$.parameters <- getParameterSet(self, scale, shape, location, rate, verbose)
-  self$setParameterValue(scale = scale, shape = shape, location = location, rate = rate)
+      if (checkmate::testList(location)) {
+        return(C_ShiftedLoglogisticPdf(x, unlist(location), unlist(shape), unlist(scale), log))
+      } else {
+        return(as.numeric(C_ShiftedLoglogisticPdf(x, location, shape, scale, log)))
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("location")
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
 
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(location, Inf, type = "()"),
-    type = PosReals$new(zero = T)
+      if (checkmate::testList(location)) {
+        return(C_ShiftedLoglogisticCdf(x, unlist(location), unlist(shape), unlist(scale), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_ShiftedLoglogisticCdf(x, location, shape, scale, lower.tail, log.p)))
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("location")
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
+
+      if (checkmate::testList(location)) {
+        return(C_ShiftedLoglogisticQuantile(p, unlist(location), unlist(shape), unlist(scale), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_ShiftedLoglogisticQuantile(p, location, shape, scale, lower.tail, log.p)))
+      }
+    },
+    .rand = function(n) {
+      self$quantile(runif(n))
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      if (!is.null(paramlst$rate)) lst <- c(lst, list(scale = paramlst$rate^-1))
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

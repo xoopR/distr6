@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Cauchy Distribution Documentation
-#-------------------------------------------------------------
 #' @name Cauchy
 #' @author Chijing Zeng
 #' @template SDist
@@ -39,122 +36,133 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Cauchy Distribution Definition
-#-------------------------------------------------------------
-Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F)
-Cauchy$set("public", "name", "Cauchy")
-Cauchy$set("public", "short_name", "Cauchy")
-Cauchy$set("public", "description", "Cauchy Probability Distribution.")
-Cauchy$set("public", "packages", "stats")
 
-Cauchy$set("public", "mean", function() {
-  return(NaN)
-})
-Cauchy$set("public", "variance", function() {
-  return(NaN)
-})
-Cauchy$set("public", "skewness", function() {
-  return(NaN)
-})
-Cauchy$set("public", "kurtosis", function(excess = TRUE) {
-  return(NaN)
-})
-Cauchy$set("public", "entropy", function(base = 2) {
-  return(log(4 * pi * self$getParameterValue("scale"), base))
-})
-Cauchy$set("public", "mgf", function(t) {
-  return(NaN)
-})
-Cauchy$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Cauchy$set("public", "cf", function(t) {
-  return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
-})
-Cauchy$set("public", "mode", function(which = NULL) {
-  return(self$getParameterValue("location"))
-})
+Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Cauchy",
+    short_name = "Cauchy",
+    description = "Cauchy Probability Distribution.",
+    packages = "stats",
 
-Cauchy$set("private", ".pdf", function(x, log = FALSE) {
-  location <- self$getParameterValue("location")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "dcauchy",
-    x = x,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    log = log,
-    vec = test_list(location)
+    # Public methods
+    # initialize
+    initialize = function(location = 0, scale = 1,
+                          decorators = NULL, verbose = FALSE) {
+
+      private$.parameters <- getParameterSet(self, location, scale, verbose)
+      self$setParameterValue(location = location, scale = scale)
+
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
+
+    # stats
+    mean = function() {
+      return(NaN)
+    },
+    mode = function(which = NULL) {
+      return(self$getParameterValue("location"))
+    },
+    variance = function() {
+      return(NaN)
+    },
+    skewness = function() {
+      return(NaN)
+    },
+    kurtosis = function(excess = TRUE) {
+      return(NaN)
+    },
+    entropy = function(base = 2) {
+      return(log(4 * pi * self$getParameterValue("scale"), base))
+    },
+    mgf = function(t) {
+      return(NaN)
+    },
+    cf = function(t) {
+      return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
+    },
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "dcauchy",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        log = log,
+        vec = test_list(location)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "pcauchy",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "qcauchy",
+        x = p,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .rand = function(n) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "rcauchy",
+        x = n,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        vec = test_list(location)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-Cauchy$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  location <- self$getParameterValue("location")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "pcauchy",
-    x = x,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(location)
-  )
-})
-Cauchy$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  location <- self$getParameterValue("location")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "qcauchy",
-    x = p,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(location)
-  )
-})
-Cauchy$set("private", ".rand", function(n) {
-  location <- self$getParameterValue("location")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "rcauchy",
-    x = n,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    vec = test_list(location)
-  )
-})
-Cauchy$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-Cauchy$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  return(lst)
-})
-
-Cauchy$set("public", "initialize", function(location = 0, scale = 1,
-                                            decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, location, scale, verbose)
-  self$setParameterValue(location = location, scale = scale)
-
-  super$initialize(
-    decorators = decorators,
-    support = Reals$new(),
-    symmetry = "sym",
-    type = Reals$new()
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

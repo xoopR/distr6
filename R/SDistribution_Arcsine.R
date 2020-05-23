@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Arcsine Distribution Documentation
-#-------------------------------------------------------------
 #' @name Arcsine
 #' @template SDist
 #' @templateVar ClassName Arcsine
@@ -40,114 +37,127 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Arcsine Distribution Definition
-#-------------------------------------------------------------
-Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F)
-Arcsine$set("public", "name", "Arcsine")
-Arcsine$set("public", "short_name", "Arc")
-Arcsine$set("public", "description", "Arcsine Probability Distribution.")
 
-Arcsine$set("public", "mean", function() {
-  return((self$getParameterValue("upper") + self$getParameterValue("lower")) / 2)
-})
-Arcsine$set("public", "variance", function() {
-  return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2) / 8)
-})
-Arcsine$set("public", "skewness", function() {
-  return(0)
-})
-Arcsine$set("public", "kurtosis", function(excess = TRUE) {
-  if (excess) {
-    return(-3 / 2)
-  } else {
-    return(1.5)
-  }
-})
-Arcsine$set("public", "entropy", function(base = 2) {
-  return(log(pi / 4, base))
-})
-Arcsine$set("public", "mode", function(which = "all") {
-  if (which == "all") {
-    return(c(self$getParameterValue("lower"), self$getParameterValue("upper")))
-  } else {
-    return(c(self$getParameterValue("lower"), self$getParameterValue("upper"))[which])
-  }
-})
-Arcsine$set("public", "pgf", function(z) {
-  return(NaN)
-})
+Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Arcsine",
+    short_name = "Arc",
+    description = "Arcsine Probability Distribution.",
 
-Arcsine$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
-  if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
-  return(lst)
-})
+    # Public methods
+    # initialize
+    initialize = function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE) {
 
-Arcsine$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  if (is.null(lst)) {
-    lst <- list(...)
-  }
-  if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
-    checkmate::assert(lst[["lower"]] <= lst[["upper"]])
-  } else if ("lower" %in% names(lst)) {
-    checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"))
-  } else if ("upper" %in% names(lst)) {
-    checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"))
-  }
+      private$.parameters <- getParameterSet(self, lower, upper, verbose)
+      self$setParameterValue(lower = lower, upper = upper)
 
-  super$setParameterValue(lst = lst, error = error)
-  private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
-  invisible(self)
-})
-Arcsine$set("private", ".pdf", function(x, log = FALSE) {
-  lower <- self$getParameterValue("lower")
-  upper <- self$getParameterValue("upper")
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(lower, upper),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-  if (checkmate::testList(lower)) {
-    return(C_ArcsinePdf(x, unlist(lower), unlist(upper), log))
-  } else {
-    return(as.numeric(C_ArcsinePdf(x, lower, upper, log)))
-  }
-})
-Arcsine$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  lower <- self$getParameterValue("lower")
-  upper <- self$getParameterValue("upper")
+    # stats
+    mean = function() {
+      return((self$getParameterValue("upper") + self$getParameterValue("lower")) / 2)
+    },
+    mode = function(which = "all") {
+      if (which == "all") {
+        return(c(self$getParameterValue("lower"), self$getParameterValue("upper")))
+      } else {
+        return(c(self$getParameterValue("lower"), self$getParameterValue("upper"))[which])
+      }
+    },
+    variance = function() {
+      return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2) / 8)
+    },
+    skewness = function() {
+      return(0)
+    },
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(-3 / 2)
+      } else {
+        return(1.5)
+      }
+    },
+    entropy = function(base = 2) {
+      return(log(pi / 4, base))
+    },
+    pgf = function(z) {
+      return(NaN)
+    },
 
-  if (checkmate::testList(lower)) {
-    return(C_ArcsineCdf(x, unlist(lower), unlist(upper), lower.tail, log.p))
-  } else {
-    return(as.numeric(C_ArcsineCdf(x, lower, upper, lower.tail, log.p)))
-  }
-})
-Arcsine$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  lower <- self$getParameterValue("lower")
-  upper <- self$getParameterValue("upper")
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] <= lst[["upper"]])
+      } else if ("lower" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"))
+      } else if ("upper" %in% names(lst)) {
+        checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"))
+      }
 
-  if (checkmate::testList(lower)) {
-    return(C_ArcsineQuantile(x, unlist(lower), unlist(upper), lower.tail, log.p))
-  } else {
-    return(as.numeric(C_ArcsineQuantile(x, lower, upper, lower.tail, log.p)))
-  }
-})
-Arcsine$set("private", ".rand", function(n) {
-  self$quantile(runif(n))
-})
-Arcsine$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+      super$setParameterValue(lst = lst, error = error)
+      private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
+      invisible(self)
+    }
+  ),
 
-Arcsine$set("public", "initialize", function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE) {
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
 
-  private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(lower = lower, upper = upper)
+      if (checkmate::testList(lower)) {
+        return(C_ArcsinePdf(x, unlist(lower), unlist(upper), log))
+      } else {
+        return(as.numeric(C_ArcsinePdf(x, lower, upper, log)))
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
 
-  super$initialize(
-    decorators = decorators,
-    support = Interval$new(lower, upper),
-    symmetry = "sym",
-    type = Reals$new()
+      if (checkmate::testList(lower)) {
+        return(C_ArcsineCdf(x, unlist(lower), unlist(upper), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_ArcsineCdf(x, lower, upper, lower.tail, log.p)))
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
+
+      if (checkmate::testList(lower)) {
+        return(C_ArcsineQuantile(x, unlist(lower), unlist(upper), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_ArcsineQuantile(x, lower, upper, lower.tail, log.p)))
+      }
+    },
+    .rand = function(n) {
+      self$quantile(runif(n))
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
+      if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

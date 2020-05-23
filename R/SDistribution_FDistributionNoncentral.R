@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Noncentral F Distribution Documentation
-#-------------------------------------------------------------
 #' @name FDistributionNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -40,138 +37,152 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Noncentral F Distribution Definition
-#-------------------------------------------------------------
-FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistribution, lock_objects = FALSE)
-FDistributionNoncentral$set("public", "name", "FDistributionNoncentral")
-FDistributionNoncentral$set("public", "short_name", "FNC")
-FDistributionNoncentral$set("public", "description", "F Probability Distribution")
-FDistributionNoncentral$set("public", "package", "stats")
 
-FDistributionNoncentral$set("public", "mean", function() {
-  if (self$getParameterValue("df2") > 2) {
-    df1 <- self$getParameterValue("df1")
-    df2 <- self$getParameterValue("df2")
-    loc <- self$getParameterValue("location")
-    return(df2 * (df1 + loc) / (df1 * (df2 - 2)))
-  }
-  else {
-    return(NaN)
-  }
-})
-FDistributionNoncentral$set("public", "variance", function() {
-  if (self$getParameterValue("df2") > 4) {
-    df1 <- self$getParameterValue("df1")
-    df2 <- self$getParameterValue("df2")
-    loc <- self$getParameterValue("location")
-    return(2 * (df2 / df1)^2 * ((df1 + loc)^2 + (df1 + 2 * loc) * (df2 - 2)) / ((df2 - 2)^2 * (df2 - 4)))
-  }
-  else {
-    return(NaN)
-  }
-})
+FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "FDistributionNoncentral",
+    short_name = "FNC",
+    description = "Non-central F Probability Distribution.",
+    packages = "stats",
 
-FDistributionNoncentral$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  if (self$getParameterValue("df1") == 1) {
-    private$.properties$support <- PosReals$new(zero = FALSE)
-  } else {
-    private$.properties$support <- PosReals$new(zero = TRUE)
-  }
-  invisible(self)
-})
-FDistributionNoncentral$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$df1)) lst <- c(lst, list(df1 = paramlst$df1))
-  if (!is.null(paramlst$df2)) lst <- c(lst, list(df2 = paramlst$df2))
-  if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-  return(lst)
-})
-FDistributionNoncentral$set("private", ".pdf", function(x, log = FALSE) {
-  df1 <- self$getParameterValue("df1")
-  df2 <- self$getParameterValue("df2")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "df",
-    x = x,
-    args = list(
-      df1 = unlist(df1),
-      df2 = unlist(df2),
-      ncp = unlist(ncp)
-    ),
-    log = log,
-    vec = test_list(df1)
+    # Public methods
+    # initialize
+    initialize = function(df1 = 1, df2 = 1, location = 0, decorators = NULL, verbose = FALSE) {
+
+      private$.parameters <- getParameterSet(self, df1, df2, location, verbose)
+      self$setParameterValue(df1 = df1, df2 = df2, location = location)
+
+      if (df1 == 1) {
+        support <- PosReals$new(zero = FALSE)
+      } else {
+        support <- PosReals$new(zero = TRUE)
+      }
+
+      super$initialize(
+        decorators = decorators,
+        support = support,
+        type = PosReals$new(zero = TRUE)
+      )
+    },
+
+    # stats
+    mean = function() {
+      if (self$getParameterValue("df2") > 2) {
+        df1 <- self$getParameterValue("df1")
+        df2 <- self$getParameterValue("df2")
+        loc <- self$getParameterValue("location")
+        return(df2 * (df1 + loc) / (df1 * (df2 - 2)))
+      }
+      else {
+        return(NaN)
+      }
+    },
+    variance = function() {
+      if (self$getParameterValue("df2") > 4) {
+        df1 <- self$getParameterValue("df1")
+        df2 <- self$getParameterValue("df2")
+        loc <- self$getParameterValue("location")
+        return(2 * (df2 / df1)^2 * ((df1 + loc)^2 + (df1 + 2 * loc) * (df2 - 2)) / ((df2 - 2)^2 * (df2 - 4)))
+      }
+      else {
+        return(NaN)
+      }
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      if (self$getParameterValue("df1") == 1) {
+        private$.properties$support <- PosReals$new(zero = FALSE)
+      } else {
+        private$.properties$support <- PosReals$new(zero = TRUE)
+      }
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      df1 <- self$getParameterValue("df1")
+      df2 <- self$getParameterValue("df2")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "df",
+        x = x,
+        args = list(
+          df1 = unlist(df1),
+          df2 = unlist(df2),
+          ncp = unlist(ncp)
+        ),
+        log = log,
+        vec = test_list(df1)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      df1 <- self$getParameterValue("df1")
+      df2 <- self$getParameterValue("df2")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "pf",
+        x = x,
+        args = list(
+          df1 = unlist(df1),
+          df2 = unlist(df2),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df1)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      df1 <- self$getParameterValue("df1")
+      df2 <- self$getParameterValue("df2")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "qf",
+        x = p,
+        args = list(
+          df1 = unlist(df1),
+          df2 = unlist(df2),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df1)
+      )
+    },
+    .rand = function(n) {
+      df1 <- self$getParameterValue("df1")
+      df2 <- self$getParameterValue("df2")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "rf",
+        x = n,
+        args = list(
+          df1 = unlist(df1),
+          df2 = unlist(df2),
+          ncp = unlist(ncp)
+        ),
+        vec = test_list(df1)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$df1)) lst <- c(lst, list(df1 = paramlst$df1))
+      if (!is.null(paramlst$df2)) lst <- c(lst, list(df2 = paramlst$df2))
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-FDistributionNoncentral$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  df1 <- self$getParameterValue("df1")
-  df2 <- self$getParameterValue("df2")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "pf",
-    x = x,
-    args = list(
-      df1 = unlist(df1),
-      df2 = unlist(df2),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df1)
-  )
-})
-FDistributionNoncentral$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  df1 <- self$getParameterValue("df1")
-  df2 <- self$getParameterValue("df2")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "qf",
-    x = p,
-    args = list(
-      df1 = unlist(df1),
-      df2 = unlist(df2),
-      ncp = unlist(ncp)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df1)
-  )
-})
-FDistributionNoncentral$set("private", ".rand", function(n) {
-  df1 <- self$getParameterValue("df1")
-  df2 <- self$getParameterValue("df2")
-  ncp <- self$getParameterValue("location")
-  call_C_base_pdqr(
-    fun = "rf",
-    x = n,
-    args = list(
-      df1 = unlist(df1),
-      df2 = unlist(df2),
-      ncp = unlist(ncp)
-    ),
-    vec = test_list(df1)
-  )
-})
-FDistributionNoncentral$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-FDistributionNoncentral$set("public", "initialize", function(df1 = 1, df2 = 1, location = 0, decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, df1, df2, location, verbose)
-  self$setParameterValue(df1 = df1, df2 = df2, location = location)
-
-  if (df1 == 1) {
-    support <- PosReals$new(zero = FALSE)
-  } else {
-    support <- PosReals$new(zero = TRUE)
-  }
-
-  super$initialize(
-    decorators = decorators,
-    support = support,
-    type = PosReals$new(zero = TRUE)
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

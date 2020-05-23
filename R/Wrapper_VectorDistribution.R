@@ -612,7 +612,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
   active = list(
     modelTable = function() {
       private$.wrappedModels
-    }
+    },
     distlist = function() {
       return(private$.distlist)
     },

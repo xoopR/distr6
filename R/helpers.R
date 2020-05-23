@@ -163,4 +163,6 @@ impute_genx = function(dist, n = 10001) {
 
     x <- sort(runif(n = n, x$lower, x$upper))
   }
+
+  return(x)
 }

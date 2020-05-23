@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Chi-Squared Distribution Documentation
-#-------------------------------------------------------------
 #' @name ChiSquared
 #' @template SDist
 #' @templateVar ClassName ChiSquared
@@ -37,131 +33,144 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# ChiSquared Distribution Definition
-#-------------------------------------------------------------
-ChiSquared <- R6Class("ChiSquared", inherit = SDistribution, lock_objects = FALSE)
-ChiSquared$set("public", "name", "ChiSquared")
-ChiSquared$set("public", "short_name", "ChiSq")
-ChiSquared$set("public", "description", "ChiSquared Probability Distribution")
-ChiSquared$set("public", "packages", "stats")
 
-ChiSquared$set("public", "mean", function() {
-  return(self$getParameterValue("df"))
-})
-ChiSquared$set("public", "variance", function() {
-  return(self$getParameterValue("df") * 2)
-})
-ChiSquared$set("public", "skewness", function() {
-  return(sqrt(8 / self$getParameterValue("df")))
-})
-ChiSquared$set("public", "kurtosis", function(excess = TRUE) {
-  if (excess) {
-    return(12 / self$getParameterValue("df"))
-  } else {
-    return(12 / self$getParameterValue("df") + 3)
-  }
-})
-ChiSquared$set("public", "entropy", function(base = 2) {
-  return(self$getParameterValue("df") / 2 + log(2 * gamma(self$getParameterValue("df") / 2), base) +
-    ((1 - self$getParameterValue("df") / 2) * digamma(self$getParameterValue("df") / 2)))
-})
-ChiSquared$set("public", "mgf", function(t) {
-  if (t < 0.5) {
-    return((1 - 2 * t)^(-self$getParameterValue("df") / 2))
-  } else {
-    return(NaN)
-  }
-})
-ChiSquared$set("public", "cf", function(t) {
-  return((1 - 2i * t)^(-self$getParameterValue("df") / 2))
-})
-ChiSquared$set("public", "pgf", function(z) {
-  if (z > 0 & z < sqrt(exp(1))) {
-    return((1 - 2 * log(z))^(-self$getParameterValue("df") / 2))
-  } else {
-    return(NaN)
-  }
-})
-ChiSquared$set("public", "mode", function() {
-  return(max(self$getParameterValue("df") - 2, 0))
-})
+ChiSquared <- R6Class("ChiSquared", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "ChiSquared",
+    short_name = "ChiSq",
+    description = "ChiSquared Probability Distribution.",
+    packages = "stats",
 
-ChiSquared$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  super$setParameterValue(..., lst = lst, error = error)
-  if (self$getParameterValue("df") == 1) {
-    private$.properties$support <- PosReals$new(zero = F)
-  } else {
-    private$.properties$support <- PosReals$new(zero = T)
-  }
-  invisible(self)
-})
-ChiSquared$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
-  return(lst)
-})
+    # Public methods
+    # initialize
+    initialize = function(df = 1, decorators = NULL, verbose = FALSE) {
 
-ChiSquared$set("private", ".pdf", function(x, log = FALSE) {
-  df <- self$getParameterValue("df")
-  call_C_base_pdqr(
-    fun = "dchisq",
-    x = x,
-    args = list(df = unlist(df)),
-    log = log,
-    vec = test_list(df)
+      private$.parameters <- getParameterSet(self, df, verbose)
+      self$setParameterValue(df = df)
+
+      if (df == 1) {
+        support <- PosReals$new(zero = F)
+      } else {
+        support <- PosReals$new(zero = T)
+      }
+
+      super$initialize(
+        decorators = decorators,
+        support = support,
+        type = PosReals$new(zero = TRUE)
+      )
+    },
+
+    # stats
+    mean = function() {
+      return(self$getParameterValue("df"))
+    },
+    mode = function() {
+      return(max(self$getParameterValue("df") - 2, 0))
+    },
+    variance = function() {
+      return(self$getParameterValue("df") * 2)
+    },
+    skewness = function() {
+      return(sqrt(8 / self$getParameterValue("df")))
+    },
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(12 / self$getParameterValue("df"))
+      } else {
+        return(12 / self$getParameterValue("df") + 3)
+      }
+    },
+    entropy = function(base = 2) {
+      return(self$getParameterValue("df") / 2 + log(2 * gamma(self$getParameterValue("df") / 2), base) +
+               ((1 - self$getParameterValue("df") / 2) * digamma(self$getParameterValue("df") / 2)))
+    },
+    mgf = function(t) {
+      if (t < 0.5) {
+        return((1 - 2 * t)^(-self$getParameterValue("df") / 2))
+      } else {
+        return(NaN)
+      }
+    },
+    cf = function(t) {
+      return((1 - 2i * t)^(-self$getParameterValue("df") / 2))
+    },
+    pgf = function(z) {
+      if (z > 0 & z < sqrt(exp(1))) {
+        return((1 - 2 * log(z))^(-self$getParameterValue("df") / 2))
+      } else {
+        return(NaN)
+      }
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      if (self$getParameterValue("df") == 1) {
+        private$.properties$support <- PosReals$new(zero = F)
+      } else {
+        private$.properties$support <- PosReals$new(zero = T)
+      }
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      df <- self$getParameterValue("df")
+      call_C_base_pdqr(
+        fun = "dchisq",
+        x = x,
+        args = list(df = unlist(df)),
+        log = log,
+        vec = test_list(df)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      call_C_base_pdqr(
+        fun = "pchisq",
+        x = x,
+        args = list(df = unlist(df)),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      call_C_base_pdqr(
+        fun = "qchisq",
+        x = p,
+        args = list(df = unlist(df)),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .rand = function(n) {
+      df <- self$getParameterValue("df")
+      call_C_base_pdqr(
+        fun = "rchisq",
+        x = n,
+        args = list(df = unlist(df)),
+        vec = test_list(df)
+      )
+    },
+
+      # getRefParams
+      .getRefParams = function(paramlst) {
+        lst <- list()
+        if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
+        return(lst)
+      },
+
+      # traits
+      .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-ChiSquared$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  df <- self$getParameterValue("df")
-  call_C_base_pdqr(
-    fun = "pchisq",
-    x = x,
-    args = list(df = unlist(df)),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df)
-  )
-})
-ChiSquared$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  df <- self$getParameterValue("df")
-  call_C_base_pdqr(
-    fun = "qchisq",
-    x = p,
-    args = list(df = unlist(df)),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(df)
-  )
-})
-ChiSquared$set("private", ".rand", function(n) {
-  df <- self$getParameterValue("df")
-  call_C_base_pdqr(
-    fun = "rchisq",
-    x = n,
-    args = list(df = unlist(df)),
-    vec = test_list(df)
-  )
-})
-ChiSquared$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-ChiSquared$set("public", "initialize", function(df = 1, decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, df, verbose)
-  self$setParameterValue(df = df)
-
-  if (df == 1) {
-    support <- PosReals$new(zero = F)
-  } else {
-    support <- PosReals$new(zero = T)
-  }
-
-  super$initialize(
-    decorators = decorators,
-    support = support,
-    type = PosReals$new(zero = TRUE)
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

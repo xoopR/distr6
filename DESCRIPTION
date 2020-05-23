@@ -90,7 +90,7 @@ BugReports: https://github.com/alan-turing-institute/distr6/issues
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE, r6 = FALSE)
+Roxygen: list(markdown = TRUE, r6 = TRUE)
 RoxygenNote: 7.1.0
 Collate: 
     'helpers.R'

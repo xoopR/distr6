@@ -2,36 +2,61 @@
 #'
 #' @title Abstract DistributionDecorator Class
 #'
-#' @description The abstract parent class to decorators.
+#' @template class_abstract
+#' @template field_packages
+#' @template method_initialize
+#' @template method_decorate
 #'
 #' @details Decorating is the process of adding methods to classes that are not part of the core
-#' interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators are currently available. The primary
-#' use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
-#' to impute missing d/p/q/r functions.
+#' interface (Gamma et al. 1994). Use [listDecorators] to see which decorators are currently
+#' available. The primary use-cases are to add numeric results when analytic ones are missing,
+#' to add complex modelling functions and to impute missing d/p/q/r functions.
 #'
-#' Abstract classes cannot be implemented directly. Use the \code{decorate} function to decorate distributions.
-#'
-#' @seealso \code{\link{decorate}} and \code{\link{listDecorators}}
+#' Use [decorate] to decorate distributions.
 #'
 #' @references
 #' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
 #' of Reusable Object-Oriented Software.” Addison-Wesley.
 #'
-#' @return Returns error. Abstract classes cannot be constructed directly.
-#'
 #' @export
-NULL
 DistributionDecorator <- R6Class("DistributionDecorator",
-                                 public = list(
-                                   packages = NULL,
+  public = list(
+    packages = NULL,
 
-                                   initialize = function(distribution) {
-                                     if (getR6Class(self) == "DistributionDecorator") {
-                                       stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Try using
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function() {
+      if (getR6Class(self) == "DistributionDecorator") {
+        stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Try using
                decorate([distribution], ", getR6Class(self), ")"))
-                                     }
+      }
 
-                                     decorate(distribution, get(getR6Class(self)))
-                                   }
-                                 )
-                                 )
+      invisible(self)
+    },
+
+    #' @description
+    #' Decorates the given distribution with the methods available in this decorator.
+    decorate = function(distribution) {
+      methods <- self[self$methods]
+
+      env = as.environment(distribution)
+      for (i in seq_along(methods)) {
+        formals(methods[[i]]) <- c(formals(methods[[i]]),
+                                   list(self = distribution),
+                                   list(private = distribution$.__enclos_env__$private))
+        assign(names(methods)[[i]], methods[[i]], envir = env)
+      }
+
+      invisible(self)
+    }
+  ),
+
+  active = list(
+    #' @field methods
+    #' Returns the names of the available methods in this decorator.
+    methods = function() {
+      setdiff(names(self),
+              c(".__enclos_env__", "methods", "packages", "clone", "decorate", "initialize"))
+    }
+  )
+)

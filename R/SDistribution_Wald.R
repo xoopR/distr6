@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Wald Distribution Documentation
-#-------------------------------------------------------------
 #' @name Wald
 #' @template SDist
 #' @templateVar ClassName Wald
@@ -42,116 +39,127 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Wald Distribution Definition
-#-------------------------------------------------------------
-Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F)
-Wald$set("public", "name", "Wald")
-Wald$set("public", "short_name", "Wald")
-Wald$set("public", "description", "Wald Probability Distribution.")
-Wald$set("public", "packages", "extraDistr")
 
-Wald$set("public", "mean", function() {
-  return(self$getParameterValue("mean"))
-})
-Wald$set("public", "variance", function() {
-  return(self$getParameterValue("mean")^3 / self$getParameterValue("shape"))
-})
-Wald$set("public", "skewness", function() {
-  return(3 * (self$getParameterValue("mean") / self$getParameterValue("shape"))^0.5)
-})
-Wald$set("public", "kurtosis", function(excess = TRUE) {
-  if (excess) {
-    return(15 * self$getParameterValue("mean") / self$getParameterValue("shape"))
-  } else {
-    return(15 * self$getParameterValue("mean") / self$getParameterValue("shape") + 3)
-  }
-})
-Wald$set("public", "mgf", function(t) {
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-  return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * t / shape))))
-})
-Wald$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Wald$set("public", "cf", function(t) {
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-  return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * 1i * t / shape))))
-})
-Wald$set("public", "mode", function(which = NULL) {
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-  return(mean * ((1 + (9 * mean^2) / (4 * shape^2))^0.5 - (3 * mean) / (2 * shape)))
-})
+Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Wald",
+    short_name = "Wald",
+    description = "Wald Probability Distribution.",
+    packages = "extraDistr",
 
-Wald$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-  return(lst)
-})
-Wald$set("private", ".pdf", function(x, log = FALSE) {
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(extraDistr::dwald,
-      mu = self$getParameterValue("mean"),
-      lambda = self$getParameterValue("shape"),
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    extraDistr::dwald(x,
-      mu = self$getParameterValue("mean"),
-      lambda = self$getParameterValue("shape"),
-      log = log
-    )
-  }
-})
-Wald$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(
-      extraDistr::pwald,
-      mu = self$getParameterValue("mean"),
-      lambda = self$getParameterValue("shape"),
-      MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
-    )
-  } else {
-    extraDistr::pwald(x,
-      mu = self$getParameterValue("mean"),
-      lambda = self$getParameterValue("shape"),
-      lower.tail = lower.tail, log.p = log.p
-    )
-  }
-})
-Wald$set("private", ".rand", function(n) {
-  if (checkmate::testList(self$getParameterValue("mean"))) {
-    mapply(extraDistr::rwald,
-      mu = self$getParameterValue("mean"),
-      lambda = self$getParameterValue("shape"),
-      MoreArgs = list(n = n)
-    )
-  } else {
-    extraDistr::rwald(n,
-      mu = self$getParameterValue("mean"),
-      lambda = self$getParameterValue("shape")
-    )
-  }
-})
-Wald$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+    # Public methods
+    # initialize
+    initialize = function(mean = 1, shape = 1, decorators = NULL, verbose = FALSE) {
 
-Wald$set("public", "initialize", function(mean = 1, shape = 1,
-                                          decorators = NULL, verbose = FALSE) {
+      private$.parameters <- getParameterSet(self, mean, shape, verbose)
+      self$setParameterValue(mean = mean, shape = shape)
 
-  private$.parameters <- getParameterSet(self, mean, shape, verbose)
-  self$setParameterValue(mean = mean, shape = shape)
+      super$initialize(
+        decorators = decorators,
+        support = PosReals$new(),
+        symmetry = "sym",
+        type = PosReals$new()
+      )
+    },
 
-  super$initialize(
-    decorators = decorators,
-    support = PosReals$new(),
-    symmetry = "sym",
-    type = PosReals$new()
+    # stats
+    mean = function() {
+      return(self$getParameterValue("mean"))
+    },
+    mode = function(which = NULL) {
+      mean <- self$getParameterValue("mean")
+      shape <- self$getParameterValue("shape")
+      return(mean * ((1 + (9 * mean^2) / (4 * shape^2))^0.5 - (3 * mean) / (2 * shape)))
+    },
+    variance = function() {
+      return(self$getParameterValue("mean")^3 / self$getParameterValue("shape"))
+    },
+    skewness = function() {
+      return(3 * (self$getParameterValue("mean") / self$getParameterValue("shape"))^0.5)
+    },
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(15 * self$getParameterValue("mean") / self$getParameterValue("shape"))
+      } else {
+        return(15 * self$getParameterValue("mean") / self$getParameterValue("shape") + 3)
+      }
+    },
+    mgf = function(t) {
+      mean <- self$getParameterValue("mean")
+      shape <- self$getParameterValue("shape")
+      return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * t / shape))))
+    },
+    cf = function(t) {
+      mean <- self$getParameterValue("mean")
+      shape <- self$getParameterValue("shape")
+      return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * 1i * t / shape))))
+    },
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::dwald,
+               mu = self$getParameterValue("mean"),
+               lambda = self$getParameterValue("shape"),
+               MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dwald(x,
+                          mu = self$getParameterValue("mean"),
+                          lambda = self$getParameterValue("shape"),
+                          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(
+          extraDistr::pwald,
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        extraDistr::pwald(x,
+                          mu = self$getParameterValue("mean"),
+                          lambda = self$getParameterValue("shape"),
+                          lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::rwald,
+               mu = self$getParameterValue("mean"),
+               lambda = self$getParameterValue("shape"),
+               MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rwald(n,
+                          mu = self$getParameterValue("mean"),
+                          lambda = self$getParameterValue("shape")
+        )
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-#  Distribution Documentation
-#-------------------------------------------------------------
 #' @name Categorical
 #' @template SDist
 #' @templateVar ClassName Categorical
@@ -38,117 +34,130 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Categorical Distribution Definition
-#-------------------------------------------------------------
-Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F)
-Categorical$set("public", "name", "Categorical")
-Categorical$set("public", "short_name", "Cat")
-Categorical$set("public", "description", "Categorical Probability Distribution.")
 
-Categorical$set("public", "mode", function(which = "all") {
-  if (which == "all") {
-    return(unlist(self$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))])
-  } else {
-    return(unlist(self$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))][which])
-  }
-})
-Categorical$set("public", "mean", function() {
-  return(NaN)
-})
-Categorical$set("public", "variance", function() {
-  return(NaN)
-})
-Categorical$set("public", "skewness", function() {
-  return(NaN)
-})
-Categorical$set("public", "kurtosis", function() {
-  return(NaN)
-})
-Categorical$set("public", "entropy", function() {
-  return(NaN)
-})
-Categorical$set("public", "mgf", function(t) {
-  return(NaN)
-})
-Categorical$set("public", "pgf", function(t) {
-  return(NaN)
-})
-Categorical$set("public", "cf", function(t) {
-  return(NaN)
-})
+Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Categorical",
+    short_name = "Cat",
+    description = "Categorical Probability Distribution.",
 
-Categorical$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  if (is.null(lst)) {
-    lst <- list(...)
-  }
-  if ("probs" %in% names(lst)) lst$probs <- lst$probs / sum(lst$probs)
-  checkmate::assert(length(lst$probs) == self$getParameterValue("categories"))
-  super$setParameterValue(lst = lst, error = error)
-
-  if (length(unique(self$getParameterValue("probs"))) == 1) {
-    private$.properties$symmetry <- "asymmetric"
-  } else {
-    private$.properties$symmetry <- "symmetric"
-  }
-
-  invisible(self)
-})
-
-Categorical$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$probs)) lst <- c(lst, list(probs = paramlst$probs))
-  return(lst)
-})
-Categorical$set("private", ".pdf", function(x, log = FALSE) {
-  pdf <- self$getParameterValue("probs")[self$support$elements %in% x]
-  if (log) pdf <- log(pdf)
-
-  return(pdf)
-})
-Categorical$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  cdf <- cumsum(self$pdf(self$support$elements))[self$support$elements %in% x]
-  if (!lower.tail) cdf <- 1 - cdf
-  if (log.p) cdf <- log(cdf)
-
-  return(cdf)
-})
-Categorical$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  if (log.p) p <- exp(p)
-  if (!lower.tail) p <- 1 - p
-
-  cdf <- matrix(self$cdf(self$support$elements), ncol = self$support$length, nrow = length(p), byrow = T)
-  return(self$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
-})
-Categorical$set("private", ".rand", function(n) {
-  sample(self$support$elements, n, TRUE, self$getParameterValue("probs"))
-})
-Categorical$set("private", ".traits", list(valueSupport = "discrete", variateForm = "univariate"))
-
-Categorical$set("public", "initialize", function(..., probs, decorators = NULL, verbose = FALSE) {
+    # Public methods
+    # initialize
+    initialize = function(..., probs, decorators = NULL, verbose = FALSE) {
 
 
-  if (...length() == 0) {
-    probs <- 1
-    dots <- 1
-    support <- Set$new(1)
-  } else {
-    dots <- list(...)
-    support <- Set$new(...)
-  }
+      if (...length() == 0) {
+        probs <- 1
+        dots <- 1
+        support <- Set$new(1)
+      } else {
+        dots <- list(...)
+        support <- Set$new(...)
+      }
 
-  checkmate::assert(length(dots) == length(probs))
+      checkmate::assert(length(dots) == length(probs))
 
-  private$.parameters <- getParameterSet(self, probs, verbose)
-  self$setParameterValue(probs = probs)
+      private$.parameters <- getParameterSet(self, probs, verbose)
+      self$setParameterValue(probs = probs)
 
-  super$initialize(
-    decorators = decorators,
-    support = support,
-    type = Complex$new(),
-    symmetry = if (length(unique(self$getParameterValue("probs"))) == 1) "sym" else "asym"
+      super$initialize(
+        decorators = decorators,
+        support = support,
+        type = Complex$new(),
+        symmetry = if (length(unique(self$getParameterValue("probs"))) == 1) "sym" else "asym"
+      )
+    },
+
+    # stats
+    mean = function() {
+      return(NaN)
+    },
+    mode = function(which = "all") {
+      if (which == "all") {
+        return(unlist(self$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))])
+      } else {
+        return(unlist(self$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))][which])
+      }
+    },
+    variance = function() {
+      return(NaN)
+    },
+    skewness = function() {
+      return(NaN)
+    },
+    kurtosis = function(excess = NULL) {
+      return(NaN)
+    },
+    entropy = function(base = 2) {
+      return(NaN)
+    },
+    mgf = function(t) {
+      return(NaN)
+    },
+    cf = function(t) {
+      return(NaN)
+    },
+    pgf = function(t) {
+      return(NaN)
+    },
+
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if ("probs" %in% names(lst)) lst$probs <- lst$probs / sum(lst$probs)
+      checkmate::assert(length(lst$probs) == self$getParameterValue("categories"))
+      super$setParameterValue(lst = lst, error = error)
+
+      if (length(unique(self$getParameterValue("probs"))) == 1) {
+        private$.properties$symmetry <- "asymmetric"
+      } else {
+        private$.properties$symmetry <- "symmetric"
+      }
+
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      pdf <- self$getParameterValue("probs")[self$support$elements %in% x]
+      if (log) pdf <- log(pdf)
+
+      return(pdf)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      cdf <- cumsum(self$pdf(self$support$elements))[self$support$elements %in% x]
+      if (!lower.tail) cdf <- 1 - cdf
+      if (log.p) cdf <- log(cdf)
+
+      return(cdf)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (log.p) p <- exp(p)
+      if (!lower.tail) p <- 1 - p
+
+      cdf <- matrix(self$cdf(self$support$elements), ncol = self$support$length, nrow = length(p), byrow = T)
+      return(self$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
+    },
+    .rand = function(n) {
+      sample(self$support$elements, n, TRUE, self$getParameterValue("probs"))
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$probs)) lst <- c(lst, list(probs = paramlst$probs))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Weibull Distribution Documentation
-#-------------------------------------------------------------
 #' @name Weibull
 #' @template SDist
 #' @templateVar ClassName Weibull
@@ -44,155 +41,166 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Weibull Distribution Definition
-#-------------------------------------------------------------
-Weibull <- R6Class("Weibull", inherit = SDistribution, lock_objects = F)
-Weibull$set("public", "name", "Weibull")
-Weibull$set("public", "short_name", "Weibull")
-Weibull$set("public", "description", "Weibull Probability Distribution.")
-Weibull$set("public", "packages", "stats")
 
-Weibull$set("public", "mean", function() {
-  return(self$getParameterValue("scale") * gamma(1 + 1 / self$getParameterValue("shape")))
-})
-Weibull$set("public", "median", function() {
-  return(self$getParameterValue("scale") * (log(2)^(1 / self$getParameterValue("shape"))))
-})
-Weibull$set("public", "variance", function() {
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
-  return(scale^2 * (gamma(1 + 2 / shape) - gamma(1 + 1 / shape)^2))
-})
-Weibull$set("public", "skewness", function() {
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
-  mu <- self$mean()
-  sigma <- self$stdev()
-  return(((gamma(1 + 3 / shape) * (scale^3)) - (3 * mu * sigma^2) - (mu^3)) / (sigma^3))
-})
-Weibull$set("public", "kurtosis", function(excess = TRUE) {
-  skew <- self$skewness()
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
-  mu <- self$mean()
-  sigma <- self$stdev()
+Weibull <- R6Class("Weibull", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Weibull",
+    short_name = "Weibull",
+    description = "Weibull Probability Distribution.",
+    packages = "stats",
 
-  kur <- (((scale^4) * gamma(1 + 4 / shape)) - (4 * skew * (sigma^3) * mu) - (6 * (sigma^2) * (mu^2)) - (mu^4)) / (sigma^4)
+    # Public methods
+    # initialize
+    initialize = function(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE) {
 
-  if (excess) {
-    return(kur - 3)
-  } else {
-    return(kur)
-  }
-})
-Weibull$set("public", "entropy", function(base = 2) {
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
-  return(-digamma(1) * (1 - 1 / shape) + log(scale / shape, base) + 1)
-})
-Weibull$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Weibull$set("public", "mode", function(which = NULL) {
-  scale <- self$getParameterValue("scale")
-  shape <- self$getParameterValue("shape")
+      private$.parameters <- getParameterSet(self, shape, scale, altscale, verbose)
+      self$setParameterValue(shape = shape, scale = scale, altscale = altscale)
 
-  if (shape > 1) {
-    return(scale * ((shape - 1) / shape)^(1 / shape))
-  } else {
-    return(0)
-  }
-})
+      super$initialize(
+        decorators = decorators,
+        support = PosReals$new(zero = T),
+        type = PosReals$new(zero = T)
+      )
+    },
 
+    # stats
+    mean = function() {
+      return(self$getParameterValue("scale") * gamma(1 + 1 / self$getParameterValue("shape")))
+    },
+    mode = function(which = NULL) {
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
 
-Weibull$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  if (!is.null(paramlst$shape) & !is.null(paramlst$altscale)) {
-    lst <- c(lst, list(scale = exp(log(paramlst$altscale) / (-paramlst$shape))))
-  }
-  if (is.null(paramlst$shape) & !is.null(paramlst$altscale)) {
-    lst <- c(lst, list(scale = exp(log(paramlst$altscale) / (-self$getParameterValue("shape")))))
-  }
+      if (shape > 1) {
+        return(scale * ((shape - 1) / shape)^(1 / shape))
+      } else {
+        return(0)
+      }
+    },
+    median = function() {
+      return(self$getParameterValue("scale") * (log(2)^(1 / self$getParameterValue("shape"))))
+    },
+    variance = function() {
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
+      return(scale^2 * (gamma(1 + 2 / shape) - gamma(1 + 1 / shape)^2))
+    },
+    skewness = function() {
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
+      mu <- self$mean()
+      sigma <- self$stdev()
+      return(((gamma(1 + 3 / shape) * (scale^3)) - (3 * mu * sigma^2) - (mu^3)) / (sigma^3))
+    },
+    kurtosis = function(excess = TRUE) {
+      skew <- self$skewness()
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
+      mu <- self$mean()
+      sigma <- self$stdev()
 
-  return(lst)
-})
-Weibull$set("private", ".pdf", function(x, log = FALSE) {
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
+      kur <- (((scale^4) * gamma(1 + 4 / shape)) - (4 * skew * (sigma^3) * mu) - (6 * (sigma^2) * (mu^2)) - (mu^4)) / (sigma^4)
 
-  call_C_base_pdqr(
-    fun = "dweibull",
-    x = x,
-    args = list(
-      shape = unlist(shape),
-      scale = unlist(scale)
-    ),
-    log = log,
-    vec = test_list(shape)
+      if (excess) {
+        return(kur - 3)
+      } else {
+        return(kur)
+      }
+    },
+    entropy = function(base = 2) {
+      scale <- self$getParameterValue("scale")
+      shape <- self$getParameterValue("shape")
+      return(-digamma(1) * (1 - 1 / shape) + log(scale / shape, base) + 1)
+    },
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
+
+      call_C_base_pdqr(
+        fun = "dweibull",
+        x = x,
+        args = list(
+          shape = unlist(shape),
+          scale = unlist(scale)
+        ),
+        log = log,
+        vec = test_list(shape)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
+
+      call_C_base_pdqr(
+        fun = "pweibull",
+        x = x,
+        args = list(
+          shape = unlist(shape),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(shape)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
+
+      call_C_base_pdqr(
+        fun = "qweibull",
+        x = p,
+        args = list(
+          shape = unlist(shape),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(shape)
+      )
+    },
+    .rand = function(n) {
+      shape <- self$getParameterValue("shape")
+      scale <- self$getParameterValue("scale")
+
+      call_C_base_pdqr(
+        fun = "rweibull",
+        x = n,
+        args = list(
+          shape = unlist(shape),
+          scale = unlist(scale)
+        ),
+        vec = test_list(shape)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      if (!is.null(paramlst$shape) & !is.null(paramlst$altscale)) {
+        lst <- c(lst, list(scale = exp(log(paramlst$altscale) / (-paramlst$shape))))
+      }
+      if (is.null(paramlst$shape) & !is.null(paramlst$altscale)) {
+        lst <- c(lst, list(scale = exp(log(paramlst$altscale) / (-self$getParameterValue("shape")))))
+      }
+
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
-Weibull$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
-
-  call_C_base_pdqr(
-    fun = "pweibull",
-    x = x,
-    args = list(
-      shape = unlist(shape),
-      scale = unlist(scale)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(shape)
-  )
-})
-Weibull$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
-
-  call_C_base_pdqr(
-    fun = "qweibull",
-    x = p,
-    args = list(
-      shape = unlist(shape),
-      scale = unlist(scale)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(shape)
-  )
-})
-Weibull$set("private", ".rand", function(n) {
-  shape <- self$getParameterValue("shape")
-  scale <- self$getParameterValue("scale")
-
-  call_C_base_pdqr(
-    fun = "rweibull",
-    x = n,
-    args = list(
-      shape = unlist(shape),
-      scale = unlist(scale)
-    ),
-    vec = test_list(shape)
-  )
-})
-Weibull$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
-
-Weibull$set("public", "initialize", function(shape = 1, scale = 1, altscale = NULL, decorators = NULL, verbose = FALSE) {
-
-  private$.parameters <- getParameterSet(self, shape, scale, altscale, verbose)
-  self$setParameterValue(shape = shape, scale = scale, altscale = altscale)
-
-  super$initialize(
-    decorators = decorators,
-    support = PosReals$new(zero = T),
-    type = PosReals$new(zero = T)
-  )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

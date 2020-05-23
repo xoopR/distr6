@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Logistic Distribution Documentation
-#-------------------------------------------------------------
 #' @name Logistic
 #' @template SDist
 #' @templateVar ClassName Logistic
@@ -39,131 +36,143 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# Logistic Distribution Definition
-#-------------------------------------------------------------
-Logistic <- R6Class("Logistic", inherit = SDistribution, lock_objects = F)
-Logistic$set("public", "name", "Logistic")
-Logistic$set("public", "short_name", "Logis")
-Logistic$set("public", "description", "Logistic Probability Distribution.")
-Logistic$set("public", "packages", "stats")
 
-Logistic$set("public", "mean", function() {
-  return(self$getParameterValue("mean"))
-})
-Logistic$set("public", "variance", function() {
-  return(self$getParameterValue("sd")^2)
-})
-Logistic$set("public", "skewness", function() {
-  return(0)
-})
-Logistic$set("public", "kurtosis", function(excess = TRUE) {
-  if (excess) {
-    return(6 / 5)
-  } else {
-    return(6 / 5 + 3)
-  }
-})
-Logistic$set("public", "entropy", function(base = 2) {
-  return(2 + log(self$getParameterValue("scale"), base))
-})
-Logistic$set("public", "mgf", function(t) {
-  if (-1 / self$getParameterValue("scale") < t & t < 1 / self$getParameterValue("scale")) {
-    return(exp(self$getParameterValue("mean") * t) * beta(1 - self$getParameterValue("scale") * t, 1 + self$getParameterValue("scale") * t))
-  } else {
-    return(NaN)
-  }
-})
-Logistic$set("public", "pgf", function(z) {
-  return(NaN)
-})
-Logistic$set("public", "cf", function(t) {
-  return(exp(1i * self$getParameterValue("mean") * t) *
-    (self$getParameterValue("scale") * pi * t) / (sinh(pi * self$getParameterValue("scale") * t)))
-})
-Logistic$set("public", "mode", function(which = NULL) {
-  return(self$getParameterValue("mean"))
-})
+Logistic <- R6Class("Logistic", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Logistic",
+    short_name = "Logis",
+    description = "Logistic Probability Distribution.",
+    packages = "stats",
 
-Logistic$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-  if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-  if (!is.null(paramlst$sd)) lst <- c(lst, list(scale = paramlst$sd * sqrt(3) / pi))
-  return(lst)
-})
-Logistic$set("private", ".pdf", function(x, log = FALSE) {
-  location <- self$getParameterValue("mean")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "dlogis",
-    x = x,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    log = log,
-    vec = test_list(location)
-  )
-})
-Logistic$set("private", ".cdf", function(x, lower.tail = TRUE, log.p = FALSE) {
-  location <- self$getParameterValue("mean")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "plogis",
-    x = x,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(location)
-  )
-})
-Logistic$set("private", ".quantile", function(p, lower.tail = TRUE, log.p = FALSE) {
-  location <- self$getParameterValue("mean")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "qlogis",
-    x = p,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    lower.tail = lower.tail,
-    log = log.p,
-    vec = test_list(location)
-  )
-})
-Logistic$set("private", ".rand", function(n) {
-  location <- self$getParameterValue("mean")
-  scale <- self$getParameterValue("scale")
-  call_C_base_pdqr(
-    fun = "rlogis",
-    x = n,
-    args = list(
-      location = unlist(location),
-      scale = unlist(scale)
-    ),
-    vec = test_list(location)
-  )
-})
-Logistic$set("private", ".traits", list(valueSupport = "continuous", variateForm = "univariate"))
+    # Public methods
+    # initialize
+    initialize = function(mean = 0, scale = 1, sd = NULL,
+                          decorators = NULL, verbose = FALSE) {
 
-Logistic$set("public", "initialize", function(mean = 0, scale = 1, sd = NULL,
-                                              decorators = NULL, verbose = FALSE) {
+      private$.parameters <- getParameterSet(self, mean, scale, sd, verbose)
+      self$setParameterValue(mean = mean, scale = scale, sd = sd)
 
-  private$.parameters <- getParameterSet(self, mean, scale, sd, verbose)
-  self$setParameterValue(mean = mean, scale = scale, sd = sd)
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-  super$initialize(
-    decorators = decorators,
-    support = Reals$new(),
-    symmetry = "sym",
-    type = Reals$new()
+    # stats
+    mean = function() {
+      return(self$getParameterValue("mean"))
+    },
+    mode = function(which = NULL) {
+      return(self$getParameterValue("mean"))
+    },
+    variance = function() {
+      return(self$getParameterValue("sd")^2)
+    },
+    skewness = function() {
+      return(0)
+    },
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(6 / 5)
+      } else {
+        return(6 / 5 + 3)
+      }
+    },
+    entropy = function(base = 2) {
+      return(2 + log(self$getParameterValue("scale"), base))
+    },
+    mgf = function(t) {
+      if (-1 / self$getParameterValue("scale") < t & t < 1 / self$getParameterValue("scale")) {
+        return(exp(self$getParameterValue("mean") * t) * beta(1 - self$getParameterValue("scale") * t, 1 + self$getParameterValue("scale") * t))
+      } else {
+        return(NaN)
+      }
+    },
+    cf = function(t) {
+      return(exp(1i * self$getParameterValue("mean") * t) *
+               (self$getParameterValue("scale") * pi * t) / (sinh(pi * self$getParameterValue("scale") * t)))
+    },
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "dlogis",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        log = log,
+        vec = test_list(location)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "plogis",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "qlogis",
+        x = p,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .rand = function(n) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "rlogis",
+        x = n,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        vec = test_list(location)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      if (!is.null(paramlst$sd)) lst <- c(lst, list(scale = paramlst$sd * sqrt(3) / pi))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,

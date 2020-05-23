@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-#  Distribution Documentation
-#-------------------------------------------------------------
 #' @name MultivariateNormal
 #' @template SDist
 #' @templateVar ClassName MultivariateNormal
@@ -52,182 +49,196 @@
 #' summary(x)
 #' @export
 NULL
-#-------------------------------------------------------------
-# MultivariateNormal Distribution Definition
-#-------------------------------------------------------------
-MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F)
-MultivariateNormal$set("public", "name", "MultivariateNormal")
-MultivariateNormal$set("public", "short_name", "MultiNorm")
-MultivariateNormal$set("public", "description", "Multivariate Normal Probability Distribution.")
 
-MultivariateNormal$set("public", "mean", function() {
-  return(self$getParameterValue("mean"))
-})
-MultivariateNormal$set("public", "mode", function(which = NULL) {
-  return(self$getParameterValue("mean"))
-})
-MultivariateNormal$set("public", "variance", function() {
-  return(self$getParameterValue("cov"))
-})
-MultivariateNormal$set("public", "entropy", function(base = 2) {
-  return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
-})
-MultivariateNormal$set("public", "mgf", function(t) {
-  mean <- self$getParameterValue("mean")
-  checkmate::assert(length(t) == length(mean))
-  return(exp((mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
-})
-MultivariateNormal$set("public", "cf", function(t) {
-  mean <- self$getParameterValue("mean")
-  checkmate::assert(length(t) == length(mean))
-  return(exp((1i * mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
-})
-MultivariateNormal$set("public", "pgf", function(z) {
-  return(NaN)
-})
+MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "MultivariateNormal",
+    short_name = "MultiNorm",
+    description = "Multivariate Normal Probability Distribution.",
 
+    # Public methods
+    # initialize
+    initialize = function(mean = rep(0, 2), cov = c(1, 0, 0, 1),
+                          prec = NULL, decorators = NULL, verbose = FALSE) {
 
-MultivariateNormal$set("public", "setParameterValue", function(..., lst = NULL, error = "warn") {
-  K <- length(self$getParameterValue("mean"))
-  if (is.null(lst)) {
-    lst <- list(...)
-  }
-  if (!is.null(lst$cov)) {
-    if (any(dim(lst$cov) != c(K, K)) |
-      length(lst$cov) != K^2) {
-      lst$cov <- suppressWarnings(matrix(lst$cov, nrow = K, ncol = K))
-    }
-    lst$cov <- as.numeric(lst$cov)
-  }
-  if (!is.null(lst$prec)) {
-    if (any(dim(lst$prec) != c(K, K)) |
-      length(lst$prec) != K^2) {
-      lst$prec <- suppressWarnings(matrix(lst$prec, nrow = K, ncol = K))
-    }
-    lst$prec <- as.numeric(lst$prec)
-  }
-  if (!is.null(lst$mean)) {
-    lst$mean <- as.numeric(lst$mean)
-    if (length(lst$mean) < K) {
-      lst$mean <- rep(lst$mean, K)
-    }
-    if (length(lst$mean) > K) {
-      lst$mean <- lst$mean[1:K]
-    }
-    lst$mean <- as.numeric(lst$mean)
-  }
+      if (length(mean) == 1) stop("Length of mean is '1', use Normal distribution instead.")
 
-  super$setParameterValue(lst = lst, error = error)
-  invisible(self)
-})
-MultivariateNormal$set("public", "getParameterValue", function(id, error = "warn") {
-  if ("cov" %in% id) {
-    return(matrix(super$getParameterValue("cov", error),
-                  nrow = length(super$getParameterValue("mean", error))))
-  } else if ("prec" %in% id) {
-    return(matrix(super$getParameterValue("prec", error),
-                  nrow = length(super$getParameterValue("mean", error))))
-  } else {
-    return(super$getParameterValue(id, error))
-  }
-})
-MultivariateNormal$set("private", ".getRefParams", function(paramlst) {
-  lst <- list()
-  if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-  if (!is.null(paramlst$cov)) lst <- c(lst, list(cov = paramlst$cov))
-  if (!is.null(paramlst$prec)) {
-    K <- length(self$getParameterValue("mean"))
-    lst <- c(lst, list(cov = solve(matrix(paramlst$prec,
-      nrow = K,
-      ncol = K
-    ))))
-  }
-  return(lst)
-})
-MultivariateNormal$set("private", ".pdf", function(x, log = FALSE) {
+      private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
+      self$setParameterValue(mean = mean, cov = cov, prec = prec)
 
-  cov <- self$getParameterValue("cov")
-  mean <- self$getParameterValue("mean")
+      super$initialize(
+        decorators = decorators,
+        support = setpower(Reals$new(), length(mean)),
+        type = setpower(Reals$new(), length(mean))
+      )
+    },
 
-  dmvn <- function(x, cov, mean, log) {
-    K <- length(mean)
+    # stats
+    mean = function() {
+      return(self$getParameterValue("mean"))
+    },
+    mode = function(which = NULL) {
+      return(self$getParameterValue("mean"))
+    },
+    variance = function() {
+      return(self$getParameterValue("cov"))
+    },
+    entropy = function(base = 2) {
+      return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
+    },
+    mgf = function(t) {
+      mean <- self$getParameterValue("mean")
+      checkmate::assert(length(t) == length(mean))
+      return(exp((mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
+    },
+    cf = function(t) {
+      mean <- self$getParameterValue("mean")
+      checkmate::assert(length(t) == length(mean))
+      return(exp((1i * mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
+    },
+    pgf = function(z) {
+      return(NaN)
+    },
 
-    if (checkmate::testNumeric(cov)) {
-      cov <- matrix(cov, nrow = K)
-    }
-
-    if (isSymmetric.matrix(cov) & all(eigen(cov, only.values = TRUE)$values > 0)) {
-
-      checkmate::testMatrix(x, ncols = K)
-      mean <- matrix(mean, nrow = nrow(x), ncol = K, byrow = TRUE)
-
-      if (log) {
-        return(as.numeric(-((K / 2) * log(2 * pi)) - (log(det(cov)) / 2) -
-                     (diag((x - mean) %*% solve(cov) %*% t(x - mean)) / 2)))
-      } else {
-        return(as.numeric((2 * pi)^(-K / 2) * det(cov)^-0.5 *
-          exp(-0.5 * diag((x - mean) %*% solve(cov) %*% t(x - mean)))))
+    # optional setParameterValue
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      K <- length(self$getParameterValue("mean"))
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if (!is.null(lst$cov)) {
+        if (any(dim(lst$cov) != c(K, K)) |
+            length(lst$cov) != K^2) {
+          lst$cov <- suppressWarnings(matrix(lst$cov, nrow = K, ncol = K))
+        }
+        lst$cov <- as.numeric(lst$cov)
+      }
+      if (!is.null(lst$prec)) {
+        if (any(dim(lst$prec) != c(K, K)) |
+            length(lst$prec) != K^2) {
+          lst$prec <- suppressWarnings(matrix(lst$prec, nrow = K, ncol = K))
+        }
+        lst$prec <- as.numeric(lst$prec)
+      }
+      if (!is.null(lst$mean)) {
+        lst$mean <- as.numeric(lst$mean)
+        if (length(lst$mean) < K) {
+          lst$mean <- rep(lst$mean, K)
+        }
+        if (length(lst$mean) > K) {
+          lst$mean <- lst$mean[1:K]
+        }
+        lst$mean <- as.numeric(lst$mean)
       }
 
-    } else {
-      return(NaN)
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
+    },
+
+    getParameterValue = function(id, error = "warn") {
+      if ("cov" %in% id) {
+        return(matrix(super$getParameterValue("cov", error),
+                      nrow = length(super$getParameterValue("mean", error))))
+      } else if ("prec" %in% id) {
+        return(matrix(super$getParameterValue("prec", error),
+                      nrow = length(super$getParameterValue("mean", error))))
+      } else {
+        return(super$getParameterValue(id, error))
+      }
     }
-  }
+  ),
 
-  if (checkmate::testList(cov)) {
-    mapply(dmvn,
-      cov = cov,
-      mean = mean,
-      MoreArgs = list(x = x, log = log)
-    )
-  } else {
-    dmvn(x, cov = cov, mean = mean, log = log)
-  }
-})
-MultivariateNormal$set("private", ".rand", function(n) {
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
 
-  cov <- self$getParameterValue("cov")
-  mean <- self$getParameterValue("mean")
+      cov <- self$getParameterValue("cov")
+      mean <- self$getParameterValue("mean")
 
-  rmvn <- function(n, cov, mean) {
-    K <- length(mean)
+      dmvn <- function(x, cov, mean, log) {
+        K <- length(mean)
 
-    if (checkmate::testNumeric(cov)) {
-      cov <- matrix(cov, nrow = K)
-    }
+        if (checkmate::testNumeric(cov)) {
+          cov <- matrix(cov, nrow = K)
+        }
 
-    xs <- matrix(rnorm(K * n), ncol = n)
+        if (isSymmetric.matrix(cov) & all(eigen(cov, only.values = TRUE)$values > 0)) {
 
-    return(data.table::data.table(t(mean + t(chol(cov)) %*% xs)))
-  }
+          checkmate::testMatrix(x, ncols = K)
+          mean <- matrix(mean, nrow = nrow(x), ncol = K, byrow = TRUE)
 
-  if (checkmate::testList(cov)) {
-    mapply(rmvn,
-           cov = cov,
-           mean = mean,
-           MoreArgs = list(n = n),
-           SIMPLIFY = FALSE
-    )
-  } else {
-    rmvn(n, cov = cov, mean = mean)
-  }
-})
-MultivariateNormal$set("private", ".traits", list(valueSupport = "continuous", variateForm = "multivariate"))
+          if (log) {
+            return(as.numeric(-((K / 2) * log(2 * pi)) - (log(det(cov)) / 2) -
+                                (diag((x - mean) %*% solve(cov) %*% t(x - mean)) / 2)))
+          } else {
+            return(as.numeric((2 * pi)^(-K / 2) * det(cov)^-0.5 *
+                                exp(-0.5 * diag((x - mean) %*% solve(cov) %*% t(x - mean)))))
+          }
 
-MultivariateNormal$set("public", "initialize", function(mean = rep(0, 2), cov = c(1, 0, 0, 1),
-                                                        prec = NULL, decorators = NULL, verbose = FALSE) {
+        } else {
+          return(NaN)
+        }
+      }
 
-  if (length(mean) == 1) stop("Length of mean is '1', use Normal distribution instead.")
+      if (checkmate::testList(cov)) {
+        mapply(dmvn,
+               cov = cov,
+               mean = mean,
+               MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        dmvn(x, cov = cov, mean = mean, log = log)
+      }
+    },
+    .rand = function(n) {
 
-  private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
-  self$setParameterValue(mean = mean, cov = cov, prec = prec)
+      cov <- self$getParameterValue("cov")
+      mean <- self$getParameterValue("mean")
 
-  super$initialize(
-    decorators = decorators,
-    support = setpower(Reals$new(), length(mean)),
-    type = setpower(Reals$new(), length(mean))
+      rmvn <- function(n, cov, mean) {
+        K <- length(mean)
+
+        if (checkmate::testNumeric(cov)) {
+          cov <- matrix(cov, nrow = K)
+        }
+
+        xs <- matrix(rnorm(K * n), ncol = n)
+
+        return(data.table::data.table(t(mean + t(chol(cov)) %*% xs)))
+      }
+
+      if (checkmate::testList(cov)) {
+        mapply(rmvn,
+               cov = cov,
+               mean = mean,
+               MoreArgs = list(n = n),
+               SIMPLIFY = FALSE
+        )
+      } else {
+        rmvn(n, cov = cov, mean = mean)
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      if (!is.null(paramlst$cov)) lst <- c(lst, list(cov = paramlst$cov))
+      if (!is.null(paramlst$prec)) {
+        K <- length(self$getParameterValue("mean"))
+        lst <- c(lst, list(cov = solve(matrix(paramlst$prec,
+                                              nrow = K,
+                                              ncol = K
+        ))))
+      }
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "multivariate")
   )
-})
+)
 
 .distr6$distributions <- rbind(
   .distr6$distributions,
