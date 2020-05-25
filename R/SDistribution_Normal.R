@@ -11,39 +11,18 @@
 #' @templateVar distsupport the Reals
 #' @templateVar aka Gaussian
 #' @aliases Gaussian
-#' @templateVar constructor mean = 0, var = 1, sd = NULL, prec = NULL
-#' @templateVar arg1 \code{mean} \tab numeric \tab mean, location parameter. \cr
-#' @templateVar arg2 \code{var} \tab numeric \tab variance, squared scale parameter. \cr
-#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, scale parameter. \cr
-#' @templateVar arg4 \code{prec} \tab numeric \tab precision, inverse squared scale parameter. \cr
-#' @templateVar constructorDets \code{mean} as a numeric, and either \code{var}, \code{sd} or \code{prec} as numerics. These are related via, \deqn{sd = \sqrt(var)}\deqn{prec = 1/var} If \code{prec} is given then \code{sd} and \code{var} are ignored. If \code{sd} is given then \code{var} is ignored.
 #'
-#' @examples
-#' # Different parameterisations
-#' Normal$new(var = 1, mean = 1)
-#' Normal$new(prec = 2, mean = 1)
-#' Normal$new(mean = 1, sd = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' x <- Normal$new(verbose = TRUE) # Standard normal default
-#'
-#' # Update parameters
-#' x$setParameterValue(var = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -57,6 +36,16 @@ Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of the distribution, defined on the Reals.
+    #' @param var `(numeric(1))`\cr
+    #' Variance of the distribution, defined on the positive Reals.
+    #' @param sd `(numeric(1))`\cr
+    #' Standard deviation of the distribution, defined on the positive Reals. `sd = sqrt(var)`.
+    #' If provided then `var` ignored.
+    #' @param prec `(numeric(1))`\cr
+    #' Precision of the distribution, defined on the positive Reals. `prec = 1/var`.
+    #' If provided then `var` ignored.
     initialize = function(mean = 0, var = 1, sd = NULL, prec = NULL,
                           decorators = NULL) {
 

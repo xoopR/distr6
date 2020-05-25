@@ -10,37 +10,18 @@
 #' @templateVar paramsupport \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}
 #' @templateVar distsupport \eqn{\sum x_i = N}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
-#' @templateVar constructor size = 10, probs = c(0.5, 0.5)
-#' @templateVar arg1 \code{size} \tab numeric \tab number of trials. See details. \cr
-#' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' @templateVar constructorDets \code{size} as a positive whole number and \code{probs} as a vector of numerics between 0 and 1. The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect to be passed to the maths/stats methods. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)}.
-#' @templateVar additionalSeeAlso \code{\link{Binomial}} for a special case of the Multinomial distribution.
 #'
-#' @examples
-#' x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(size = 10)
-#' # Number of categories cannot be changed after construction
-#' x$setParameterValue(probs = c(1, 2, 3))
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' # Note the difference from R stats
-#' x$pdf(4, 4, 2)
-#' # This allows vectorisation:
-#' x$pdf(c(1, 4), c(2, 4), c(7, 2))
-#'
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -54,6 +35,11 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param size `(integer(1))`\cr
+    #' Number of trials, defined on the positive Naturals.
+    #' @param probs `(numeric())`\cr
+    #' Vector of probabilities, each between $[0, 1]$. Automatically normalised by
+    #' `probs = probs/sum(probs)`.
     initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL) {
 
       if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")

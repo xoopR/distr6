@@ -3,85 +3,114 @@
 \name{Cosine}
 \alias{Cosine}
 \title{Cosine Kernel}
-\value{
-Returns an R6 object inheriting from class Kernel.
-}
 \description{
 Mathematical and statistical functions for the Cosine kernel defined by the pdf,
 \deqn{f(x) = (\pi/4)cos(x\pi/2)}
 over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 }
-\section{Constructor}{
- Cosine$new(decorators = NULL)
+\seealso{
+Other kernels: 
+\code{\link{Epanechnikov}},
+\code{\link{LogisticKernel}},
+\code{\link{NormalKernel}},
+\code{\link{Quartic}},
+\code{\link{Sigmoid}},
+\code{\link{Silverman}},
+\code{\link{TriangularKernel}},
+\code{\link{Tricube}},
+\code{\link{Triweight}},
+\code{\link{UniformKernel}}
 }
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{decorators} \tab Decorator \tab decorators to add functionality. \cr
+\concept{kernels}
+\section{Super classes}{
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:Kernel]{distr6::Kernel}} -> \code{Cosine}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{Full name of distribution.}
+
+\item{\code{short_name}}{Short name of distribution for printing.}
+
+\item{\code{description}}{Brief description of the distribution.}
 }
-
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-\code{package} \tab The package d/p/q/r are implemented in.
+\if{html}{\out{</div>}}
 }
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{d/p/q/r Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{squared2Norm()} \tab \code{\link{squared2Norm}} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{stdev()} \tab \code{\link{stdev}}\cr
-\code{mode(which = "all")} \tab \code{\link{mode}} \cr
-\code{mean()} \tab \code{\link{mean.Distribution}} \cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{correlation()} \tab \code{\link{correlation}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-squared2Norm}{\code{Cosine$squared2Norm()}}
+\item \href{#method-variance}{\code{Cosine$variance()}}
+\item \href{#method-clone}{\code{Cosine$clone()}}
 }
 }
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="initialize">}\href{../../distr6/html/Kernel.html#method-initialize}{\code{distr6::Kernel$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean">}\href{../../distr6/html/Kernel.html#method-mean}{\code{distr6::Kernel$mean()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median">}\href{../../distr6/html/Kernel.html#method-median}{\code{distr6::Kernel$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode">}\href{../../distr6/html/Kernel.html#method-mode}{\code{distr6::Kernel$mode()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-squared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-squared2Norm}{}}}
+\subsection{Method \code{squared2Norm()}}{
+The squared 2-norm of the pdf is defined by
+\deqn{\int_a^b (f_X(u))^2 du}
+where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+are the distribution support limits.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cosine$squared2Norm()}\if{html}{\out{</div>}}
+}
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-variance}{}}}
+\subsection{Method \code{variance()}}{
+The variance of a distribution is defined by the formula
+\deqn{var_X = E[X^2] - E[X]^2}
+where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+covariance matrix is returned.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cosine$variance()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cosine$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

@@ -1,6 +1,7 @@
 
 #' @name Bernoulli
 #' @template SDist
+#'
 #' @templateVar ClassName Bernoulli
 #' @templateVar DistName Bernoulli
 #' @templateVar uses to model a two-outcome scenario
@@ -9,38 +10,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0}
 #' @templateVar paramsupport \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}
 #' @templateVar distsupport \eqn{\{0,1\}}{{0,1}}
-#' @templateVar constructor prob = 0.5, qprob = NULL
-#' @templateVar arg1 \code{prob} \tab numeric \tab probability of success. \cr
-#' @templateVar arg2 \code{qprob} \tab numeric \tab probability of failure. \cr
-#' @templateVar constructorDets \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then {prob is ignored}.
-#' @templateVar additionalSeeAlso \code{\link{Binomial}} for a generalisation of the Bernoulli distribution.
 #'
-#' @examples
-#' # Can be parameterised with probability of success or failure
-#' Bernoulli$new(prob = 0.2)
-#' Bernoulli$new(qprob = 0.3)
+#' @template param_prob
+#' @template param_qprob
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' x <- Bernoulli$new(verbose = TRUE) # Default is with prob = 0.5
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(qprob = 0.3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Bernoulli <- R6Class("Bernoulli", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

@@ -8,40 +8,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{\alpha-1}exp(-x\beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar constructor shape = 1, rate = 1, scale = NULL, mean = NULL
-#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar arg2 \code{rate} \tab numeric \tab inverse scale parameter. \cr
-#' @templateVar arg3 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg4 \code{mean} \tab numeric \tab alternate scale parameter. \cr
-#' @templateVar constructorDets \code{shape} and either \code{rate}, \code{scale} or \code{mean}, all as positive numerics. These are related via, \deqn{scale = 1/rate} \deqn{mean = shape/rate} If \code{mean} is given then \code{rate} and \code{scale} are ignored. If \code{scale} is given then \code{rate} is ignored.
 #'
-#' @examples
-#' Gamma$new(shape = 1, rate = 2)
-#' Gamma$new(shape = 1, scale = 4)
-#' Gamma$new(shape = 1, mean = 0.5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_shape
+#' @template param_ratescale
+#' @template field_packages
 #'
-#' # Default is shape = 1, rate = 1
-#' x <- Gamma$new(verbose = TRUE)
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(scale = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -55,8 +35,10 @@ Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL,
-                          verbose = FALSE) {
+    #' @param mean `(numeric(1))`\cr
+    #' Alternative parameterisation of the distribution, defined on the positive Reals.
+    #' If given then `rate` and `scale` are ignored. Related by `mean = shape/rate`.
+    initialize = function(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL) {
 
       private$.parameters <- getParameterSet.Gamma(self, shape, rate, scale, mean)
       self$setParameterValue(shape = shape, rate = rate, scale = scale, mean = mean)

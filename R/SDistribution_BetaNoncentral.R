@@ -10,29 +10,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{\alpha+r-1}(1-x)^{\beta-1})/B(\alpha+r, \beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0, \lambda \ge 0}, where \eqn{B} is the Beta function
 #' @templateVar distsupport \eqn{[0, 1]}
-#' @templateVar omittedVars \code{mean}, \code{variance}, \code{skewness}, \code{kurtosis}, \code{entropy}, \code{mode}, \code{mgf} and \code{cf}
-#' @templateVar constructor shape1 = 1, shape2 = 1, location = 0
-#' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab location (ncp in rstats). \cr
-#' @templateVar constructorDets  \code{shape1}, \code{shape2} as positive numerics, \code{location} as non-negative numeric.
 #'
-#' @examples
-#' x <- BetaNoncentral$new(shape1 = 2, shape2 = 5, location = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_poslocation
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(shape1 = 1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' summary(x)
 #' @export
-NULL
-
 BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -46,8 +36,11 @@ BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_object
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
-                          verbose = FALSE) {
+    #' @param shape1 `(numeric(1))`\cr
+    #' First shape parameter, `shape1 > 0`.
+    #' @param shape2 `(numeric(1))`\cr
+    #' Second shape parameter, `shape2 > 0`.
+    initialize = function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL) {
 
       private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, location)
       self$setParameterValue(shape1 = shape1, shape2 = shape2, location = location)

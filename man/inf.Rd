@@ -19,6 +19,3 @@ Returns the distribution infimum as the infimum of the support.
  $inf
 }
 
-\seealso{
-\code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
-}

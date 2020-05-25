@@ -9,37 +9,22 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)((x-\gamma)/\beta)^{-1-\alpha}exp(-(x-\gamma)/\beta)^{-\alpha}}
 #' @templateVar paramsupport \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}
 #' @templateVar distsupport \eqn{x > \gamma}
-#' @templateVar omittedVars \code{mgf} and \code{cf}
 #' @templateVar aka Inverse Weibull
 #' @aliases InverseWeibull
-#' @templateVar constructor shape = 1, scale = 1, minimum = 0
-#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg3 \code{minimum} \tab numeric \tab location parameter. \cr
-#' @templateVar constructorDets \code{shape}, \code{scale} as positive numerics and \code{minimum} as a numeric.
-#' @templateVar additionalSeeAlso \code{\link{Gumbel}} and \code{\link{Weibull}} for other special cases of the generalized extreme value distribution.
 #'
-#' @examples
-#' x <- Frechet$new(shape = 2, scale = 3, minimum = 6)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_shape
+#' @template param_scale
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(shape = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -53,11 +38,8 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-
-    #' @description
-    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
-    #' \deqn{E_X(X) = \sum p_X(x)*x}
-    #' with an integration analogue for continuous distributions.
+    #' @param minimum `(numeric(1))`\cr
+    #' Minimum of the distribution, defined on the Reals.
     initialize = function(shape = 1, scale = 1, minimum = 0,
                           decorators = NULL) {
 

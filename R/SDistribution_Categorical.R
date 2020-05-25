@@ -8,33 +8,21 @@
 #' @templateVar pdfpmfeq \deqn{f(x_i) = p_i}
 #' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
-#' @templateVar additionalDetails Only the mode, pdf, cdf, quantile and rand are available for this Distribution, all other methods return \code{NaN}. Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and the probabilities from the \code{probs} parameter. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#' @templateVar constructor ..., probs
-#' @templateVar arg1 \code{...} \tab ANY \tab elements in the support Set. See details. \cr
-#' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' @templateVar constructorDets a series of elements for the support set and \code{probs} determining the probability of each category occurring. The length of the probability list should equal the number of elements. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)} If no arguments are given, then defaults to one element '1' with probability one.
-#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function.
+#' @details
+#' Sampling from this distribution is performed with the [sample] function with the elements given
+#' as the support set and the probabilities from the `probs` parameter. The cdf and quantile assumes
+#' that the elements are supplied in an indexed order (otherwise the results are meaningless).
 #'
-#' @examples
-#' # Note probabilities are automatically normalised
-#' x <- Categorical$new("Bapple", "Banana", 2, probs = c(0.2, 0.4, 1))
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
-#' # Only the probabilities can be changed and must the same length as in construction
-#' x$setParameterValue(probs = c(0.1, 0.2, 0.7))
-#'
-#' # d/p/q/r
-#' x$pdf(c("Bapple", "Carrot", 1, 2))
-#' x$cdf("Banana") # Assumes ordered in construction
-#' x$quantile(0.42) # Assumes ordered in construction
-#' x$rand(10)
-#'
-#' # Statistics
-#' x$mode()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -47,6 +35,28 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param ... `(ANY)`\cr
+    #' Categories in the distribution, see examples.
+    #' @param probs `numeric()`\cr
+    #' Probabilities of respective categories occurring, defined in $[0, 1]$.
+    #'
+    #' @examples
+    #' # Note probabilities are automatically normalised
+    #' x <- Categorical$new("Bapple", "Banana", 2, probs = c(0.2, 0.4, 1))
+    #'
+    #' # Only the probabilities can be changed and must the same length as in construction
+    #' x$setParameterValue(probs = c(0.1, 0.2, 0.7))
+    #'
+    #' # d/p/q/r
+    #' x$pdf(c("Bapple", "Carrot", 1, 2))
+    #' x$cdf("Banana") # Assumes ordered in construction
+    #' x$quantile(0.42) # Assumes ordered in construction
+    #' x$rand(10)
+    #'
+    #' # Statistics
+    #' x$mode()
+    #'
+    #' summary(x)
     initialize = function(..., probs, decorators = NULL) {
 
 

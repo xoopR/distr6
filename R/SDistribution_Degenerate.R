@@ -11,31 +11,17 @@
 #' @templateVar distsupport \eqn{{\mu}}
 #' @templateVar aka Dirac
 #' @aliases Dirac Delta
-#' @templateVar constructor mean = 0
-#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar constructorDets \code{mean} as a numeric.
 #'
-#' @examples
-#' x <- Degenerate$new(mean = 4)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
-#' # Update parameters
-#' x$setParameterValue(mean = 2.56)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -48,6 +34,8 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `numeric(1)` \cr
+    #' Mean of the distribution, defined on the Reals.
     initialize = function(mean = 0, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, mean)

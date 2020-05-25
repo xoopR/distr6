@@ -1,4 +1,3 @@
-
 #' @name Pareto
 #' @template SDist
 #' @templateVar ClassName Pareto
@@ -9,35 +8,23 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport \eqn{[\beta, \infty)}
-#' @templateVar omittedVars \code{cf}
-#' @templateVar constructor shape = 1, scale = 1
-#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
-#' @templateVar additionalDetails Currently this is implemented as the Type I Pareto distribution, other types
+#' @details
+#' Currently this is implemented as the Type I Pareto distribution, other types
 #' will be added in the future.
 #'
-#' @examples
-#' x <- Pareto$new(shape = 2, scale = 1)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
+#' @template param_shape
+#' @template param_scale
 #'
-#' # Update parameters
-#' x$setParameterValue(scale = 5.1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -51,11 +38,6 @@ Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-
-    #' @description
-    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
-    #' \deqn{E_X(X) = \sum p_X(x)*x}
-    #' with an integration analogue for continuous distributions.
     initialize = function(shape = 1, scale = 1, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, shape, scale)
@@ -69,6 +51,11 @@ Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       if (self$getParameterValue("shape") <= 1) {
         return(Inf)

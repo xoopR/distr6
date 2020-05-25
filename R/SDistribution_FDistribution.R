@@ -9,33 +9,18 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^{\mu/2} x^{\mu/2 - 1} (1 + (\mu/\nu) x)^{-(\mu + \nu)/2}}
 #' @templateVar paramsupport \eqn{\mu, \nu > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar omittedVars \code{cf}
-#' @templateVar constructor df1 = 1, df2 = 1
-#' @templateVar arg1 \code{df1, df2} \tab numeric \tab degrees of freedom. \cr
-#' @templateVar constructorDets \code{df1} and \code{df2} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}}, \code{\link{ChiSquared}} and \code{\link{FDistributionNoncentral}} for the Normal, Chi-Squared and noncentral F distributions.
 #'
-#' @examples
-#' x <- FDistribution$new(df1 = 1, df2 = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(df2 = 10)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -49,6 +34,10 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param df1 `(numeric(1))`\cr
+    #' First degree of freedom of the distribution defined on the positive Reals.
+    #' @param df2 `(numeric(1))`\cr
+    #' Second degree of freedom of the distribution defined on the positive Reals.
     initialize = function(df1 = 1, df2 = 1, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, df1, df2)

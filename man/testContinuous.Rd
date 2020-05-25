@@ -36,5 +36,4 @@ Validation checks to test if Distribution is continuous.
 }
 \examples{
 testContinuous(Binomial$new()) # FALSE
-
 }

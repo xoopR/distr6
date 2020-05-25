@@ -8,38 +8,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
 #' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0, 1,...,n}}
-#' @templateVar constructor size = 10, prob = 0.5, qprob = NULL
-#' @templateVar arg1 \code{size} \tab numeric \tab number of trials. \cr
-#' @templateVar arg2 \code{prob} \tab numeric \tab probability of success. \cr
-#' @templateVar arg3 \code{qprob} \tab numeric \tab probability of failure. \cr
-#' @templateVar constructorDets \code{size} as a whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then \code{prob} is ignored.
 #'
-#' @examples
-#' # Can be parameterised with probability of success or failure
-#' Binomial$new(prob = 0.2)
-#' Binomial$new(qprob = 0.3)
+#' @template param_prob
+#' @template param_qprob
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' x <- Binomial$new() # Default is with prob = 0.5 and size = 10
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(size = 4, qprob = 0.1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -53,6 +35,8 @@ Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param size `(integer(1))`\cr
+    #' Number of trials, defined on the positive Naturals.
     initialize = function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL) {
 
     private$.parameters <- getParameterSet(self, size, prob, qprob)

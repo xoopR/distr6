@@ -7,29 +7,21 @@
 #' @templateVar pdfpmfeq \deqn{p(x) = \sum I(x = x_i) / k}
 #' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
-#' @templateVar additionalDetails Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and uniform probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#' @templateVar constructor samples
-#' @templateVar arg1 \code{samples} \tab numeric \tab vector of observed samples. \cr
-#' @templateVar constructorDets a vector of elements for the support set.
-#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function and \code{\link{WeightedDiscrete}} for the closely related WeightedDiscrete distribution.
+#' @details
+#' Sampling from this distribution is performed with the [sample] function with the elements given
+#' as the support set and uniform probabilities. The cdf assumes that the elements are supplied
+#' in an indexed order (otherwise the results are meaningless).
 #'
-#' @examples
-#' x <- EmpiricalMV$new(stats::runif(1000) * 10)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
-#' # d/p/q/r
-#' x$pdf(1:5)
-#' x$cdf(1:5) # Assumes ordered in construction
-#' x$quantile(0.42) # Assumes ordered in construction
-#' x$rand(10)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -42,6 +34,11 @@ EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param data `[matrix]` \cr
+    #' Matrix-like object where each column is a vector of observed samples corresponding
+    #' to each variable.
+    #' @examples
+    #' EmpiricalMV$new(MultivariateNormal$new()$rand(100))
     initialize = function(data, decorators = NULL) {
 
       data <- data.table::as.data.table(data)

@@ -20,18 +20,3 @@ Squared 2-norm of pdf evaluated between limits as a numeric.
 The squared 2-norm of the pdf evaluated over the whole support by default or given
 limits.
 }
-\details{
-The squared 2-norm of the pdf is defined by
-\deqn{\int (f_X(u))^2 du}
-where X is the Distribution and \eqn{f_X} is its pdf.
-
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{ExoticStatistics}} decorator.
-}
-\section{R6 Usage}{
- $squared2Norm(lower = NULL, upper = NULL)
-}
-
-\seealso{
-\code{\link{ExoticStatistics}} and \code{\link{decorate}}
-}

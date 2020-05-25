@@ -4,56 +4,398 @@
 \alias{FunctionImputation}
 \title{Imputed Pdf/Cdf/Quantile/Rand Functions}
 \value{
-Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
-imputed if previously missing.
+\link{Distribution} decorated with the methods in the private methods decorator.
 }
 \description{
 This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
 by using strategies dependent on which methods are already present in the distribution.
 }
 \details{
-Decorator objects add functionality to the given Distribution object by copying methods
-in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-below to find details of the methods that are added to the Distribution. Methods already
-present in the distribution are not overwritten by the decorator.
+Decorator objects add functionality to the given \link{Distribution} object by copying methods
+in the decorator environment to the chosen \link{Distribution} environment.
 
-Use \code{\link{decorate}} to decorate a Distribution.
-
-All methods in this decorator use numerical approximations and therefore better results may be available
-from analytic computations.
+All methods implemented in decorators try to exploit analytical results where possible, otherwise
+numerical results are used with a message.
 }
-\section{Constructor}{
- FunctionImputation$new(distribution)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{distribution} \tab distribution \tab Distribution to decorate. \cr
-}
-}
-
-\section{Added Methods}{
-
-\tabular{lll}{
-\strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab Density/mass function \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Distribution function \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Quantile function \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab Simulation function \tab \code{\link{rand}} \cr
-}
-}
-
 \examples{
-x = Distribution$new("Test", pdf = function(x) 1/(4-1),
-support = set6::Interval$new(1,4),
-type = set6::Reals$new())
+x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
+support = set6::Interval$new(1, 4), type = set6::Reals$new())
 decorate(x, FunctionImputation)
-x$pdf(0:5)
-x$cdf(0:5)
+
+x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
+support = set6::Interval$new(1, 4), type = set6::Reals$new(),
+decorators = ExoticStatistics)
+
+x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
+support = set6::Interval$new(1, 4), type = set6::Reals$new())
+ExoticStatistics$new()$decorate(x)
 
 }
 \seealso{
-\code{\link{decorate}}, \code{\link{listDecorators}}
+Other decorators: 
+\code{\link{CoreStatistics}},
+\code{\link{ExoticStatistics}}
+}
+\concept{decorators}
+\section{Super class}{
+\code{\link[distr6:DistributionDecorator]{distr6::DistributionDecorator}} -> \code{FunctionImputation}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-decorate}{\code{FunctionImputation$decorate()}}
+\item \href{#method-pdf}{\code{FunctionImputation$pdf()}}
+\item \href{#method-cdf}{\code{FunctionImputation$cdf()}}
+\item \href{#method-quantile}{\code{FunctionImputation$quantile()}}
+\item \href{#method-rand}{\code{FunctionImputation$rand()}}
+\item \href{#method-clone}{\code{FunctionImputation$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize">}\href{../../distr6/html/DistributionDecorator.html#method-initialize}{\code{distr6::DistributionDecorator$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-decorate"></a>}}
+\if{latex}{\out{\hypertarget{method-decorate}{}}}
+\subsection{Method \code{decorate()}}{
+Decorates the given distribution with the methods available in this decorator.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$decorate(distribution)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{distribution}}{\link{Distribution} \cr
+Distribution to decorate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pdf"></a>}}
+\if{latex}{\out{\hypertarget{method-pdf}{}}}
+\subsection{Method \code{pdf()}}{
+Numerical approximation to pdf. Imputed by subtracting or taking the numerical derivative
+of the cdf with \link[pracma:fderiv]{pracma::fderiv}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{log}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdf"></a>}}
+\if{latex}{\out{\hypertarget{method-cdf}{}}}
+\subsection{Method \code{cdf()}}{
+Numerical approximation to cdf. Imputed by adding or taking the numerical integral
+of the pdf.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$cdf(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL,
+  n = 10001,
+  .cdf_x = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{n}}{\code{(numeric(1))} \cr
+Number of points to use when imputing a continuous cdf from the \code{pdf}, Simpson's rule
+is used for imputation.}
+
+\item{\code{.cdf_x}}{\code{(numeric())} \cr
+Parameter used by internal methods, should be ignored.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-quantile}{}}}
+\subsection{Method \code{quantile()}}{
+Numerical approximation to quantile. Imputed by creating a grid of points over the cdf
+and finding the inverse-cdf at the closest point on the grid.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$quantile(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL,
+  n = 10001
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{n}}{\code{(numeric(1))} \cr
+Number of points to use when imputing the quantile from the \code{cdf}. If an analytical \code{cdf}
+is not available then this is imputed first.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-rand"></a>}}
+\if{latex}{\out{\hypertarget{method-rand}{}}}
+\subsection{Method \code{rand()}}{
+Numerical approximation to simulation. If analytical quantile is available uses inverse-transform
+sampling. Otherwise if pdf is available then imputes by creating a fine grid of points in the
+distribution support and then sampling these. Otherwise uses inverse-transform sampling after
+first imputing the quantile function.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$rand(n, simplify = TRUE, size_n = 10001)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(numeric(1))} \cr
+Number of points to simulate from the distribution. If length greater than \eqn{1}, then
+\code{n <- length(n)},}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{size_n}}{\code{(numeric(1))} \cr
+Determines size of grid of points to sample from if no analytical quantile is available.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

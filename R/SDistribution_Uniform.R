@@ -10,32 +10,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b-a)}
 #' @templateVar paramsupport \eqn{-\infty < a < b < \infty}
 #' @templateVar distsupport \eqn{[a, b]}
-#' @templateVar constructor lower = 0, upper = 1
-#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
-#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
-#' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
 #'
-#' @examples
-#' x <- Uniform$new(lower = -10, upper = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_lower
+#' @template param_upper
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(lower = 2, upper = 7)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

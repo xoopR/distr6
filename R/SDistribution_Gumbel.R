@@ -9,34 +9,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-(z + exp(-z)))/\beta}
 #' @templateVar paramsupport \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
-#' @templateVar additionalDetails Apery's Constant to 16 significant figures is used in the skewness calculation. The \code{gammaz} function from the \code{pracma} package is used in the \code{cf} to allow complex inputs.
-#' @templateVar constructor location = 0, scale = 1
-#' @templateVar arg1 \code{location} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets \code{location} as a numeric and \code{scale} as a positive numeric.
-#' @templateVar additionalSeeAlso \code{\link{Frechet}} and \code{\link{Weibull}} for other special cases of the generalized extreme value distribution. \code{\link[pracma]{gammaz}} for the references for the gamma function with complex inputs.
 #'
-#' @examples
-#' x <- Gumbel$new(location = 2, scale = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_locationscale
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(scale = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -104,6 +89,8 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
+    #'
+    #' Apery's Constant to 16 significant figures is used in the calculation.
     skewness = function() {
       return((12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3)
     },
@@ -141,6 +128,8 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    #'
+    #' [pracma::gammaz()] is used in to allow complex inputs.
     cf = function(t) {
       return(pracma::gammaz(1 - self$getParameterValue("scale") * t * 1i) * exp(1i * self$getParameterValue("location") * t))
     },

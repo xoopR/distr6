@@ -9,36 +9,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \lambda exp(-x\lambda)}
 #' @templateVar paramsupport \eqn{\lambda > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar constructor rate = NULL, scale = NULL
-#' @templateVar arg1 \code{rate} \tab numeric \tab arrival rate. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets  \code{rate} or \code{scale} as positive numerics. These are related via, \deqn{scale = 1/rate} If \code{scale} is given then \code{rate} is ignored.
 #'
-#' @examples
-#' Exponential$new(rate = 4)
-#' Exponential$new(scale = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_ratescale
+#' @template field_packages
 #'
-#' x <- Exponential$new(verbose = TRUE) # Default is rate = 1
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(scale = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Exponential <- R6Class("Exponential", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

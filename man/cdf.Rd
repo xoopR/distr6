@@ -28,24 +28,5 @@ Returns the cumulative distribution function for a distribution evaluated at a g
 point.
 }
 \details{
-The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
-\deqn{F_X(x) = P(X \le x)}
-If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
-\code{\link{survival}} function.
 
-If available a cdf will be returned without warning using an analytic expression. Otherwise,
-if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-To impute the cdf, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-calculation for the cdf with warning.
-
-Additional named arguments can be passed, which are required for composite distributions such as
-\code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-}
-\section{R6 Usage}{
- $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-}
-
-\seealso{
-\code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
-\code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 }

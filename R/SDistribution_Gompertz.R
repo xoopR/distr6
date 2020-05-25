@@ -9,30 +9,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Non-Negative Reals
-#' @templateVar omittedVars \code{mean}, \code{var}, \code{mgf}, \code{cf}, \code{entropy}, \code{skewness} and \code{kurtosis}
-#' @templateVar additionalDetails Unfortunately the Gompertz distribution is quite complex to deal with and as such no closed form expressions exist for its mathematical and statistical properties.
-#' @templateVar constructor shape = 1, scale = 1
-#' @templateVar arg1 \code{shape} \tab numeric \tab positive shape parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab positive scale parameter. \cr
-#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
 #'
-#' @examples
-#' x <- Gompertz$new(shape = 2, scale = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_shape
+#' @template param_scale
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(scale = 1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' summary(x)
 #' @export
-NULL
-
 Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

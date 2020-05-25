@@ -35,7 +35,6 @@ an error message as string, \code{test} returns \code{FALSE}.
 Validation checks to test if a given object is a list of R6 Distributions.
 }
 \examples{
-testDistributionList(list(Binomial$new(),5)) # FALSE
-testDistributionList(list(Binomial$new(),Exponential$new())) # TRUE
-
+testDistributionList(list(Binomial$new(), 5)) # FALSE
+testDistributionList(list(Binomial$new(), Exponential$new())) # TRUE
 }

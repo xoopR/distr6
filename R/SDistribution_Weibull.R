@@ -9,39 +9,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar omittedVars \code{mgf} and \code{cf}
-#' @templateVar constructor shape = 1, scale = 1, altscale = NULL
-#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg3 \code{altscale} \tab numeric \tab alternative scale parameter. \cr
-#' @templateVar constructorDets \code{shape}, \code{scale}, and \code{altscale} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link{Frechet}} and \code{\link{Gumbel}} for other special cases of the generalized extreme value distribution.
 #'
-#' @examples
-#' # Different parameterisations
-#' Weibull$new(shape = 1, scale = 2)
-#' Weibull$new(shape = 2, altscale = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_shape
+#' @template param_scale
+#' @template field_packages
 #'
-#' x <- Weibull$new(shape = 2, scale = 3)
-#'
-#' # Update parameters
-#' x$setParameterValue(scale = 1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Weibull <- R6Class("Weibull", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -55,6 +36,9 @@ Weibull <- R6Class("Weibull", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param altscale `(numeric(1))`\cr
+    #' Alternative scale parameter, if given then `scale` is ignored.
+    #' `altscale = scale^-shape`.
     initialize = function(shape = 1, scale = 1, altscale = NULL, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, shape, scale, altscale)

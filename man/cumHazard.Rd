@@ -20,17 +20,3 @@ Cumulative hazard function as a numeric, natural logarithm returned if \code{log
 The cumulative hazard function of a probability distribution is the anti-derivative of
 the hazard function.
 }
-\details{
-The cumulative hazard function is defined analytically by
-\deqn{H_X(x) = -log(S_X)}
-where X is the distribution and \eqn{S_X} is the survival function.
-
-Can only be used after decorating with \code{\link{ExoticStatistics}}.
-}
-\section{R6 Usage}{
- $cumHazard(x1, log = FALSE)
-}
-
-\seealso{
-\code{\link{ExoticStatistics}} and \code{\link{decorate}}
-}

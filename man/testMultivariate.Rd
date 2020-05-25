@@ -36,5 +36,4 @@ Validation checks to test if Distribution is multivariate.
 }
 \examples{
 testMultivariate(Binomial$new()) # FALSE
-
 }

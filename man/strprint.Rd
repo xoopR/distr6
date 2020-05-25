@@ -25,5 +25,4 @@ parse R6 objects into data-frames, see examples.
 \examples{
 Triangular$new()$strprint()
 Triangular$new()$strprint(1)
-
 }

@@ -16,6 +16,3 @@ If the distribution skewness is present in properties, returns one of "negative 
 \description{
 Deprecated. Use $properties$skewness.
 }
-\seealso{
-\code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
-}

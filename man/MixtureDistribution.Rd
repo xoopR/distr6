@@ -9,102 +9,401 @@ Returns an R6 object of class MixtureDistribution.
 \description{
 Wrapper used to construct a mixture of two or more distributions.
 }
-\details{
-A Mixture Distribution is a weighted combination of two or more distributions such that for
-pdf/cdfs of n distribution \eqn{f_1,...,f_n}/\eqn{F_1,...,F_n} and a given weight associated to each distribution,
-\eqn{w_1,...,w_n}. The pdf of the mixture distribution \eqn{M(X1,...,XN)}, \eqn{f_M} is given by
-\deqn{f_M = \sum_i (f_i)(w_i)}
-and the cdf, F_M is given by
-\deqn{F_M = \sum_i (F_i)(w_i)}
-
-If weights are given, they should be provided as a vector of numerics. If they don't sum to one
-then they are normalised automatically. If NULL, they are taken to be uniform, i.e. for n
-distributions, \eqn{w_i = 1/n, \ \forall \ i \ \in \ [1,n]}{w_i = 1/n, for all i \epsilon [1,n]}.
-
-Can optionally be constructed using a \code{VectorDistribution}, in which case \code{distlist} is ignored
-and the mixture is constructed with the wrapped models in the vector.
-}
-\section{Constructor}{
- MixtureDistribution$new(distlist, weights = NULL, vectordist = NULL)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{distlist} \tab list \tab List of distributions. \cr
-\code{weights} \tab numeric \tab Vector of weights. See Details. \cr
-\code{vectordist} \tab numeric \tab Vector Distribution. See Details. \cr
-}
-}
-
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-\code{package} \tab The package d/p/q/r are implemented in.
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{d/p/q/r Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{stdev()} \tab \code{\link{stdev}}\cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{cor()} \tab \code{\link{cor}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-}
-}
-
 \examples{
-mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-  weights = c(0.2, 0.8)
-)
 mixture$pdf(1)
 mixture$cdf(1)
+
+## ------------------------------------------------
+## Method `MixtureDistribution$new`
+## ------------------------------------------------
+
+MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+  weights = c(0.2, 0.8)
+)
+
+## ------------------------------------------------
+## Method `MixtureDistribution$pdf`
+## ------------------------------------------------
+
+m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+  weights = c(0.2, 0.8)
+)
+m$pdf(1:5)
+m$pdf(1)
+# also possible but unlikely to be used
+m$pdf(1, 2)
 }
 \seealso{
 \code{\link{listWrappers}}
+
+Other wrappers: 
+\code{\link{Convolution}},
+\code{\link{DistributionWrapper}},
+\code{\link{HuberizedDistribution}},
+\code{\link{ProductDistribution}},
+\code{\link{TruncatedDistribution}},
+\code{\link{VectorDistribution}}
+}
+\concept{wrappers}
+\section{Super classes}{
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:DistributionWrapper]{distr6::DistributionWrapper}} -> \code{\link[distr6:VectorDistribution]{distr6::VectorDistribution}} -> \code{MixtureDistribution}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{MixtureDistribution$new()}}
+\item \href{#method-pdf}{\code{MixtureDistribution$pdf()}}
+\item \href{#method-cdf}{\code{MixtureDistribution$cdf()}}
+\item \href{#method-quantile}{\code{MixtureDistribution$quantile()}}
+\item \href{#method-rand}{\code{MixtureDistribution$rand()}}
+\item \href{#method-clone}{\code{MixtureDistribution$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="cf">}\href{../../distr6/html/VectorDistribution.html#method-cf}{\code{distr6::VectorDistribution$cf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="entropy">}\href{../../distr6/html/VectorDistribution.html#method-entropy}{\code{distr6::VectorDistribution$entropy()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="getParameterValue">}\href{../../distr6/html/VectorDistribution.html#method-getParameterValue}{\code{distr6::VectorDistribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="kurtosis">}\href{../../distr6/html/VectorDistribution.html#method-kurtosis}{\code{distr6::VectorDistribution$kurtosis()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mean">}\href{../../distr6/html/VectorDistribution.html#method-mean}{\code{distr6::VectorDistribution$mean()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mgf">}\href{../../distr6/html/VectorDistribution.html#method-mgf}{\code{distr6::VectorDistribution$mgf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mode">}\href{../../distr6/html/VectorDistribution.html#method-mode}{\code{distr6::VectorDistribution$mode()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="parameters">}\href{../../distr6/html/VectorDistribution.html#method-parameters}{\code{distr6::VectorDistribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="pgf">}\href{../../distr6/html/VectorDistribution.html#method-pgf}{\code{distr6::VectorDistribution$pgf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="setParameterValue">}\href{../../distr6/html/VectorDistribution.html#method-setParameterValue}{\code{distr6::VectorDistribution$setParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="skewness">}\href{../../distr6/html/VectorDistribution.html#method-skewness}{\code{distr6::VectorDistribution$skewness()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="strprint">}\href{../../distr6/html/VectorDistribution.html#method-strprint}{\code{distr6::VectorDistribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="variance">}\href{../../distr6/html/VectorDistribution.html#method-variance}{\code{distr6::VectorDistribution$variance()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="wrappedModels">}\href{../../distr6/html/VectorDistribution.html#method-wrappedModels}{\code{distr6::VectorDistribution$wrappedModels()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$new(
+  distlist = NULL,
+  weights = "uniform",
+  distribution = NULL,
+  params = NULL,
+  shared_params = NULL,
+  name = NULL,
+  short_name = NULL,
+  decorators = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{distlist}}{\code{(list())}\cr
+List of \link{Distribution}s.}
+
+\item{\code{weights}}{\code{(character(1)|numeric())}\cr
+Weights to use in the resulting mixture. If all distributions are weighted equally then
+\code{"uniform"} provides a much faster implementation, otherwise a vector of length equal
+to the number of wrapped distributions, this is automatically scaled internally.}
+
+\item{\code{distribution}}{\code{(character(1))} \cr
+Should be supplied with \code{params} and optionally \code{shared_params} as an alternative to \code{distlist}.
+Much faster implementation when only one class of distribution is being wrapped. \code{distribution}
+is the full name of one of the distributions in \code{\link[=listDistributions]{listDistributions()}}, or \code{"Distribution"} if
+constructing custom distributions. See examples in \link{VectorDistribution}.}
+
+\item{\code{params}}{\code{(list()|data.frame())} \cr
+Parameters in the individual distributions for use with \code{distribution}. Can be supplied as a list,
+where each element is the list of parameters to set in the distribution, or as an object
+coercable to \code{data.frame}, where each column is a parameter and each row is a distribution.
+See examples in \link{VectorDistribution}.}
+
+\item{\code{shared_params}}{\code{(list())}\cr
+If any parameters are shared when using the \code{distribution} constructor, this provides a much faster
+implementation to list and query them together. See examples in \link{VectorDistribution}.}
+
+\item{\code{name}}{\code{(character(1))}\cr
+Optional name of wrapped distribution.}
+
+\item{\code{short_name}}{\code{(character(1))}\cr
+Optional short name/ID of wrapped distribution.}
+
+\item{\code{decorators}}{\code{character()} \cr
+Decorators to add to the distribution during construction.}
+
+\item{\code{decorators}}{\code{(character())} \cr
+Optional decorators to decorate the wrapped distribution with.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+  weights = c(0.2, 0.8)
+)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pdf"></a>}}
+\if{latex}{\out{\hypertarget{method-pdf}{}}}
+\subsection{Method \code{pdf()}}{
+Probability density function of the mixture distribution. Computed by
+\deqn{f_M(x) = \sum_i (f_i)(x)*w_i}
+where \eqn{w_i} is the vector of weights and \eqn{f_i} are the pdfs of the wrapped
+distributions.
+
+Note that as this class inherits from \link{VectorDistribution}, it is possible to evaluate
+the distributions at different points, but that this is not the usual use-case for
+mixture distributions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$pdf(..., log = FALSE, data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{log}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+  weights = c(0.2, 0.8)
+)
+m$pdf(1:5)
+m$pdf(1)
+# also possible but unlikely to be used
+m$pdf(1, 2)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdf"></a>}}
+\if{latex}{\out{\hypertarget{method-cdf}{}}}
+\subsection{Method \code{cdf()}}{
+Cumulative distribution function of the mixture distribution. Computed by
+\deqn{F_M(x) = \sum_i (F_i)(x)*w_i}
+where \eqn{w_i} is the vector of weights and \eqn{F_i} are the cdfs of the wrapped
+distributions.
+
+@examples
+m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+weights = c(0.2, 0.8)
+)
+m$cdf(1:5)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-quantile}{}}}
+\subsection{Method \code{quantile()}}{
+The quantile function is not implemented for mixture distributions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$quantile(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-rand"></a>}}
+\if{latex}{\out{\hypertarget{method-rand}{}}}
+\subsection{Method \code{rand()}}{
+Simulation function for mixture distributions. Samples are drawn from a mixture by first
+sampling Multinomial(probs = weights, size = n), then sampling each distribution according
+to the samples from the Multinomial, and finally randomly permuting these draws.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$rand(n)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(numeric(1))} \cr
+Number of points to simulate from the distribution. If length greater than \eqn{1}, then
+\code{n <- length(n)},}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

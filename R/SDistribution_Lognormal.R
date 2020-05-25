@@ -9,54 +9,20 @@
 #' @templateVar pdfpmfeq \deqn{exp(-(log(x)-\mu)^2/2\sigma^2)/(x\sigma\sqrt(2\pi))}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\sigma > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar omittedVars \code{cf}
 #' @templateVar aka Log-Gaussian
 #' @aliases Loggaussian
-#' @templateVar constructor meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL, mean = 1, var = NULL, sd = NULL, prec = NULL
-#' @templateVar arg1 \code{meanlog} \tab numeric \tab mean of the distribution on the log scale. \cr
-#' @templateVar arg2 \code{varlog} \tab numeric \tab variance of the distribution on the log scale. \cr
-#' @templateVar arg3 \code{sdlog} \tab numeric \tab standard deviation of the distribution on the log scale. \cr
-#' @templateVar arg4 \code{preclog} \tab numeric \tab precision of the distribution on the log scale. \cr
-#' @templateVar arg5 \code{mean} \tab numeric \tab mean of the distribution on the natural scale. \cr
-#' @templateVar arg6 \code{var} \tab numeric \tab variance of the distribution on the natural scale. \cr
-#' @templateVar arg7 \code{sd} \tab numeric \tab standard deviation of the distribution on the natural scale. \cr
-#' @templateVar arg8 \code{prec} \tab numeric \tab precision of the distribution on the natural scale. \cr
-#' @templateVar constructorDets either \code{meanlog} and \code{varlog}, \code{sdlog} or \code{preclog}, or \code{mean} and \code{var}, \code{sd} or \code{prec}. These are related via \deqn{var = (exp(var) - 1)) * exp(2 * meanlog + varlog)} \deqn{sdlog = varlog^2} \deqn{sd = var^2} Analogously for \code{prec} and \code{preclog}. If \code{prec} is given then all other parameters other than \code{mean} are ignored. If \code{sd} is given then all other parameters (except \code{prec}) are ignored. If \code{var} is given then all log parameters are ignored. If \code{preclog} is given then \code{varlog} and \code{sdlog} are ignored. Finally if \code{sdlog} is given then \code{varlog} is ignored.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
 #'
-#' @examples
-#' # Many parameterisations are possible
-#' Lognormal$new(var = 2, mean = 1)
-#' Lognormal$new(meanlog = 2, preclog = 5)
-#' # Note parameters must be on same scale (log or natural)
-#' Lognormal$new(meanlog = 4, sd = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' x <- Lognormal$new(verbose = TRUE) # meanlog = 0, sdlog = 1 default
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(meanlog = 3)
-#' x$parameters()
-#'
-#' # But you can only set parameters on the same scale, the below has no effect
-#' x$setParameterValue(sd = 3)
-#' # But this does
-#' x$setParameterValue(sdlog = 3)
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -70,6 +36,32 @@ Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param meanlog `(numeric(1))`\cr
+    #' Mean of the distribution on the log scale, defined on the Reals.
+    #' @param varlog `(numeric(1))`\cr
+    #' Variance of the distribution on the log scale, defined on the positive Reals.
+    #' @param sdlog `(numeric(1))`\cr
+    #' Standard deviation of the distribution on the log scale, defined on the positive Reals.
+    #' \deqn{sdlog = varlog^2}. If `preclog` missing and `sdlog` given then all other parameters except
+    #' `meanlog` are ignored.
+    #' @param preclog `(numeric(1))`\cr
+    #' Precision of the distribution on the log scale, defined on the positive Reals.
+    #' \deqn{preclog = 1/varlog}. If given then all other parameters except `meanlog` are ignored.
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of the distribution on the natural scale, defined on the positive Reals.
+    #' @param var `(numeric(1))`\cr
+    #' Variance of the distribution on the natural scale, defined on the positive Reals.
+    #' \deqn{var = (exp(var) - 1)) * exp(2 * meanlog + varlog)}
+    #' @param sd `(numeric(1))`\cr
+    #' Standard deviation of the distribution on the natural scale, defined on the positive Reals.
+    #' \deqn{sd = var^2}. If `prec` missing and `sd` given then all other parameters except
+    #' `mean` are ignored.
+    #' @param prec `(numeric(1))`\cr
+    #' Precision of the distribution on the natural scale, defined on the Reals.
+    #' \deqn{prec = 1/var}. If given then all other parameters except `mean` are ignored.
+    #' @examples
+    #' Lognormal$new(var = 2, mean = 1)
+    #' Lognormal$new(meanlog = 2, preclog = 5)
     initialize = function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
                           mean = 1, var = NULL, sd = NULL, prec = NULL,
                           decorators = NULL) {

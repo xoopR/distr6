@@ -9,40 +9,18 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
 #' @templateVar paramsupport \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}
-#' @templateVar omittedVars \code{mgf} and \code{cf}
-#' @templateVar constructor size = 10, successes = 5, failures = NULL, draws = 2
-#' @templateVar arg1 \code{size} \tab numeric \tab  population size. \cr
-#' @templateVar arg2 \code{successes} \tab numeric \tab number of population successes. \cr
-#' @templateVar arg3 \code{failures} \tab numeric \tab number of population failures. \cr
-#' @templateVar arg4 \code{draws} \tab numeric \tab number of draws. \cr
-#' @templateVar constructorDets \code{size} and \code{draws} as positive whole numbers, and either \code{successes} or \code{failures} as positive whole numbers. These are related via, \deqn{failures = size - successes} If \code{failures} is given then \code{successes} is ignored.
 #'
-#' @examples
-#' Hypergeometric$new(size = 10, successes = 7, draws = 5)
-#' Hypergeometric$new(size = 10, failures = 3, draws = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Default is size = 50, successes = 5, draws = 10
-#' x <- Hypergeometric$new(verbose = TRUE)
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(failures = 10)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -56,6 +34,15 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param size `(integer(1))`\cr
+    #' Population size. Defined on positive Naturals.
+    #' @param successes `(integer(1))`\cr
+    #' Number of population successes. Defined on positive Naturals.
+    #' @param failures `(integer(1))`\cr
+    #' Number of population failures. `failures = size - successes`. If given then `successes`
+    #' is ignored. Defined on positive Naturals.
+    #' @param draws `(integer(1))`\cr
+    #' Number of draws from the distribution, defined on the positive Naturals.
     initialize = function(size = 50, successes = 5, failures = NULL, draws = 10,
                           decorators = NULL) {
 

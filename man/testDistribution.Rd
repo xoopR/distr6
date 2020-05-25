@@ -37,5 +37,4 @@ Validation checks to test if a given object is an R6 Distribution.
 \examples{
 testDistribution(5) # FALSE
 testDistribution(Binomial$new()) # TRUE
-
 }

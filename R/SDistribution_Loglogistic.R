@@ -9,37 +9,22 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)(x/\alpha)^{\beta-1}(1 + (x/\alpha)^\beta)^{-2}}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the non-negative Reals
-#' @templateVar omittedVars \code{entropy}, \code{mgf} and \code{cf}
 #' @templateVar aka Fisk
 #' @aliases Fisk
-#' @templateVar constructor scale = 1, shape = 1
-#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg3 \code{location} \tab numeric \tab location parameter. \cr
-#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link{Logistic}} for the Logistic distribution.
 #'
-#' @examples
-#' x <- Loglogistic$new(shape = 2, scale = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_scale
+#' @template param_shape
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(scale = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5:6)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -53,6 +38,8 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param rate `(numeric(1))`\cr
+    #' Alternate scale parameter, `rate = 1/scale`. If given then `scale` is ignored.
     initialize = function(scale = 1, shape = 1, rate = NULL,
                           decorators = NULL) {
 

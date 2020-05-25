@@ -9,33 +9,18 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b - a + 1)}
 #' @templateVar paramsupport \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}
 #' @templateVar distsupport \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}
-#' @templateVar constructor lower = 0, upper = 1
-#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
-#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
-#' @templateVar constructorDets \code{lower} and \code{upper} as whole numbers.
-#' @templateVar additionalSeeAlso \code{\link{Uniform}} for the (continuous) Uniform distribution.
 #'
-#' @examples
-#' x <- DiscreteUniform$new(lower = -10, upper = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(lower = 2, upper = 7)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -49,6 +34,10 @@ DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_obje
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param lower `(integer(1))`\cr
+    #' Lower limit of the [Distribution], defined on the Naturals.
+    #' @param upper `(integer(1))`\cr
+    #' Upper limit of the [Distribution], defined on the Naturals.
     initialize = function(lower = 0, upper = 1, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, lower, upper)

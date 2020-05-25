@@ -10,34 +10,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\nu^{\nu/2}exp(-(\nu\lambda^2)/(2(x^2+\nu)))/(\sqrt{\pi} \Gamma(\nu/2) 2^{(\nu-1)/2} (x^2+\nu)^{(\nu+1)/2}))\int_{0}^{\infty} y^\nu exp(-1/2(y-x\lambda/\sqrt{x^2+\nu})^2)}
 #' @templateVar paramsupport \eqn{\nu > 0}, \eqn{\lambda \epsilon R}
 #' @templateVar distsupport the Reals
-#' @templateVar omittedVars \code{skewness}, \code{kurtosis}, \code{mode}, \code{entropy}, \code{pgf}, \code{mgf} and \code{cf}
-#' @templateVar constructor df = 1, location = 0
-#' @templateVar arg1 \code{df} \tab numeric \tab degrees of freedom. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab location (ncp in rstats). \cr
-#' @templateVar constructorDets \code{df} as positive numeric and \code{location} as real numeric.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{StudentT}} for the central Student's T distribution.
 #'
-#' @examples
-#' x <- StudentTNoncentral$new(df = 2, location = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_df
+#' @template param_location
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(df = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

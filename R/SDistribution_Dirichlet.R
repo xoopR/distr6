@@ -9,43 +9,33 @@
 #' @templateVar pdfpmfeq \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i))\prod(x_i^{\alpha_i - 1})}
 #' @templateVar paramsupport \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function
 #' @templateVar distsupport \eqn{x_i \ \epsilon \ (0,1), \sum x_i = 1}{x_i \epsilon (0,1), \sum x_i = 1}
-#' @templateVar omittedVars \code{mgf}, \code{cf}, `skewness`, and `kurtosis`
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
-#' @templateVar additionalDetails Sampling is performed via sampling independent Gamma distributions and normalising the samples (Devroye, 1986).
-#' @templateVar constructor params = c(1, 1)
-#' @templateVar arg1 \code{params} \tab numeric \tab vector of concentration parameters. \cr
-#' @templateVar constructorDets \code{params} as a vector of positive numerics. The parameter \code{K} is automatically calculated by counting the length of the params vector, once constructed this cannot be changed.
-#' @templateVar additionalReferences Devroye, Luc (1986). Non-Uniform Random Variate Generation. Springer-Verlag. ISBN 0-387-96305-7.
-#' @templateVar additionalSeeAlso \code{\link{Beta}} for the Beta distribution.
+#'
+#' @details
+#' Sampling is performed via sampling independent Gamma distributions and normalising the samples
+#' (Devroye, 1986).
+#'
+#' @references
+#' Devroye, Luc (1986).
+#' Non-Uniform Random Variate Generation.
+#' Springer-Verlag. ISBN 0-387-96305-7.
+#'
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
 #' @examples
-#' # Different parameterisations
-#' x <- Dirichlet$new(params = c(2, 5, 6))
+#' d <- Dirichlet$new(params = c(2, 5, 6))
+#' d$pdf(0.1, 0.4, 0.5)
+#' d$pdf(c(0.3, 0.2), c(0.6, 0.9), c(0.9, 0.1))
 #'
-#' # Update parameters
-#' x$setParameterValue(params = c(3, 2, 3))
-#' # 'K' parameter is automatically calculated
-#' x$parameters()
-#' \dontrun{
-#' # This errors as less than three parameters supplied
-#' x$setParameterValue(params = c(1, 2))
-#' }
-#'
-#' # d/p/q/r
-#' # Note the difference from R stats
-#' x$pdf(0.1, 0.4, 0.5)
-#' # This allows vectorisation:
-#' x$pdf(c(0.3, 0.2), c(0.6, 0.9), c(0.9, 0.1))
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -59,6 +49,8 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param params `numeric()`\cr
+    #' Vector of concentration parameters of the distribution defined on the positive Reals.
     initialize = function(params = c(1, 1), decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, params)
@@ -135,11 +127,6 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) {
         lst <- list(...)
-      }
-      if ("params" %in% names(lst)) {
-        checkmate::assert(length(lst$params) == self$getParameterValue("K"),
-                          .var.name = "Number of categories cannot be changed after construction."
-        )
       }
       super$setParameterValue(lst = lst, error = error)
       invisible(self)

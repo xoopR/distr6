@@ -9,37 +9,21 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}
 #' @templateVar distsupport the non-negative Reals
-#' @templateVar omittedVars \code{entropy}, \code{mgf}, \code{skewness}, `kurtosis`, and \code{cf}
-#' @templateVar aka Fisk
-#' @aliases Fisk
-#' @templateVar constructor scale = 1, shape = 1, location = 0
-#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg3 \code{location} \tab numeric \tab location parameter. \cr
-#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics and \code{location} as a numeric.
-#' @templateVar additionalSeeAlso [Logistic], [Loglogistic].
 #'
-#' @examples
-#' x <- ShiftedLoglogistic$new(shape = 2, scale = 3, location = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_ratescale
+#' @template param_location
+#' @template param_shape
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(scale = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5:6)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

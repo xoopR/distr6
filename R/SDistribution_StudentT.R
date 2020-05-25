@@ -10,32 +10,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
 #' @templateVar paramsupport \eqn{\nu > 0}
 #' @templateVar distsupport the Reals
-#' @templateVar constructor df = 1
-#' @templateVar arg1 \code{df} \tab numeric \tab degrees of freedom. \cr
-#' @templateVar constructorDets \code{df} as a positive numeric.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{StudentTNoncentral}} for the noncentral Student's T distribution.
 #'
-#' @examples
-#' x <- StudentT$new(df = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_df
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(df = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 StudentT <- R6Class("StudentT", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

@@ -10,33 +10,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))}
 #' @templateVar paramsupport \eqn{\alpha \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
-#' @templateVar additionalDetails The mean and variance are undefined, hence \code{NaN} is returned.
-#' @templateVar constructor location = 0, scale = 1
-#' @templateVar arg1 \code{location} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets \code{location} as a numeric and \code{scale} as a positive numeric.
 #'
-#' @examples
-#' x <- Cauchy$new(location = 2, scale = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_locationscale
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(scale = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

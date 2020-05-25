@@ -9,53 +9,29 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
 #' @templateVar paramsupport \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below)
-#' @templateVar omittedVars `entropy`
-#' @templateVar additionalDetails The Negative Binomial distribution can refer to one of four distributions (forms): \cr\cr 1. The number of failures before K successes (fbs) \cr\cr 2. The number of successes before K failures (sbf) \cr\cr 3. The number of trials before K failures (tbf) \cr\cr 4. The number of trials before K successes (tbs) \cr\cr For each we refer to the number of K successes/failures as the \code{size} parameter, \code{prob} is always the probability of success and \code{qprob} is the probability of failure. Use \code{$description} to see the Negative Binomial form.
-#' @templateVar constructor size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs"
-#' @templateVar arg1 \code{size} \tab numeric \tab number of failures/successes. \cr
-#' @templateVar arg2 \code{prob} \tab numeric \tab probability of success. \cr
-#' @templateVar arg3 \code{qprob} \tab numeric \tab probability of failure. \cr
-#' @templateVar arg4 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar arg5 \code{form} \tab character \tab form of negative binomial, see details. \cr
-#' @templateVar constructorDets \code{size} as a positive whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1, or \code{mean} as a numeric greater than the number of failures/successes (if form is 'tbf' or 'tbs'). These are related via, \deqn{qprob = 1 - prob} and the \code{mean} formula is dependent on the form. If \code{mean} is given then \code{qprob} and \code{prob} are ignored. If \code{qprob} is given then \code{prob} is ignored. \cr\cr The additional \code{form} argument determines which of the four Negative Binomial distributions should be constructed, this cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures), "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes). "fbs" is taken as default if none are supplied or an unrecognised form is given.
-#' @templateVar additionalSeeAlso \code{\link{Binomial}} for the Binomial distribution and \code{\link{Geometric}} for the Geometric distribution.
-#
-#' @examples
-#' # Different parameterisations
-#' NegativeBinomial$new(size = 5, prob = 0.2)
-#' NegativeBinomial$new(size = 5, qprob = 0.2)
-#' NegativeBinomial$new(size = 5, mean = 4)
+#' @details
+#' The Negative Binomial distribution can refer to one of four distributions (forms):
 #'
-#' # Different forms of the distribution
-#' NegativeBinomial$new(form = "fbs")
-#' NegativeBinomial$new(form = "sbf")
+#' 1. The number of failures before K successes (fbs)
+#' 2. The number of successes before K failures (sbf)
+#' 3. The number of trials before K failures (tbf)
+#' 4. The number of trials before K successes (tbs)
 #'
-#' # Use description to see which form is used
-#' NegativeBinomial$new(form = "tbf")
-#' NegativeBinomial$new(form = "tbs")
+#' For each we refer to the number of K successes/failures as the \code{size} parameter.
 #'
-#' x <- NegativeBinomial$new() # Default is size = 10, prob = 0.5 and failures before successes
+#' @template param_prob
+#' @template param_qprob
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters (form cannot be updated)
-#' x$setParameterValue(qprob = 0.2) # When any parameter is updated, all others are too!
-#' x$parameters()
-#'
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
-#' #
 #' @export
-NULL
-
 NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -69,6 +45,20 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param size `(integer(1))`\cr
+    #' Number of trials/successes.
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of distribution, alternative to `prob` and `qprob`.
+    #' @param form `character(1))`\cr
+    #' Form of the distribution, cannot be changed after construction. Options are to model
+    #' the number of,
+    #' * `"fbs"` - Failures before successes.
+    #' * `"sbf"` - Successes before failures.
+    #' * `"tbf"` - Trials before failures.
+    #' * `"tbs"` - Trials before successes.
+    #' Use `$description` to see the Negative Binomial form.
+    #' @examples
+    #' NegativeBinomial$new(form = "tbf")$description
     initialize = function(size = 10, prob = 0.5, qprob = NULL, mean = NULL,
                           form = c("fbs", "sbf", "tbf", "tbs"),
                           decorators = NULL) {

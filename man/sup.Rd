@@ -19,6 +19,3 @@ Returns the distribution supremum as the supremum of the support.
  $sup
 }
 
-\seealso{
-\code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
-}

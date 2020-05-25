@@ -14,127 +14,129 @@ is commonly used in survival analysis particularly to model adult mortality rate
 The Gompertz distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = \alpha\beta exp(x\beta)exp(\alpha)exp(-exp(x\beta)\alpha)} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on the Non-Negative Reals.
-
-\code{mean}, \code{var}, \code{mgf}, \code{cf}, \code{entropy}, \code{skewness} and \code{kurtosis}
-are
-omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
-
-Unfortunately the Gompertz distribution is quite complex to deal with and as such no closed form expressions exist for its mathematical and statistical properties.
-}
-\section{Constructor}{
- Gompertz$new(shape = 1, scale = 1, decorators = NULL, verbose = FALSE)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{shape} \tab numeric \tab positive shape parameter. \cr
-\code{scale} \tab numeric \tab positive scale parameter. \cr
-
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
-}
-
-\section{Constructor Details}{
- The Gompertz distribution is parameterised with \code{shape} and \code{scale} as positive numerics.
-}
-
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-\code{package} \tab The package d/p/q/r are implemented in.
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\code{mean()} \tab \code{\link{mean.Distribution}} \cr
-\code{variance()} \tab \code{\link{variance}} \cr
-\code{stdev()} \tab \code{\link{stdev}} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{cor()} \tab \code{\link{cor}} \cr
-\code{skewness()} \tab \code{\link{skewness}} \cr
-\code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-\code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-\code{mgf(t)} \tab \code{\link{mgf}} \cr
-\code{cf(t)} \tab \code{\link{cf}} \cr
-\code{pgf(z)} \tab \code{\link{pgf}} \cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{mode(which = "all")} \tab \code{\link{mode}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-}
-}
-
-\examples{
-x <- Gompertz$new(shape = 2, scale = 3)
-
-# Update parameters
-x$setParameterValue(scale = 1)
-x$parameters()
-
-# d/p/q/r
-x$pdf(5)
-x$cdf(5)
-x$quantile(0.42)
-x$rand(4)
-
-summary(x)
-
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
-\seealso{
-\code{\link{listDistributions}} for all available distributions.  \code{\link{CoreStatistics}} for numerical results.
+\section{Super classes}{
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{Gompertz}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{Full name of distribution.}
+
+\item{\code{short_name}}{Short name of distribution for printing.}
+
+\item{\code{description}}{Brief description of the distribution.}
+
+\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Gompertz$new()}}
+\item \href{#method-median}{\code{Gompertz$median()}}
+\item \href{#method-pgf}{\code{Gompertz$pgf()}}
+\item \href{#method-clone}{\code{Gompertz$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="SDistribution" data-id="setParameterValue">}\href{../../distr6/html/SDistribution.html#method-setParameterValue}{\code{distr6::SDistribution$setParameterValue()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Gompertz$new(shape = 1, scale = 1, decorators = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{shape}}{\code{(numeric(1))}\cr
+Shape parameter, defined on the positive Reals.}
+
+\item{\code{scale}}{\code{(numeric(1))}\cr
+Scale parameter, defined on the positive Reals.}
+
+\item{\code{decorators}}{\code{character()} \cr
+Decorators to add to the distribution during construction.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-median"></a>}}
+\if{latex}{\out{\hypertarget{method-median}{}}}
+\subsection{Method \code{median()}}{
+Returns the median of the distribution. If an analytical expression is available
+returns distribution median, otherwise if symmetric returns \code{self$mean}, otherwise
+returns \code{self$quantile(0.5)}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Gompertz$median()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pgf"></a>}}
+\if{latex}{\out{\hypertarget{method-pgf}{}}}
+\subsection{Method \code{pgf()}}{
+The probability generating function is defined by
+\deqn{pgf_X(z) = E_X[exp(z^x)]}
+where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Gompertz$pgf(z)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{z}}{\code{(integer(1))} \cr
+z integer to evaluate probability generating function at.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Gompertz$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

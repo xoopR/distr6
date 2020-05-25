@@ -4,7 +4,7 @@
 \alias{mean.Distribution}
 \title{Distribution Mean}
 \usage{
-\method{mean}{Distribution}(x, ...)
+\method{mean}{Distribution}(x)
 }
 \arguments{
 \item{x}{Distribution.}
@@ -16,19 +16,4 @@ Mean as a numeric.
 }
 \description{
 Arithmetic mean for the probability distribution.
-}
-\details{
-The arithmetic mean of a (discrete) probability distribution X is the expectation
-\deqn{E_X(X) = \sum p_X(x)*x}
-with an integration analogue for continuous distributions.
-
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{CoreStatistics}} decorator.
-}
-\section{R6 Usage}{
- $mean()
-}
-
-\seealso{
-\code{\link{CoreStatistics}}, \code{\link{decorate}} and \code{\link{genExp}}.
 }

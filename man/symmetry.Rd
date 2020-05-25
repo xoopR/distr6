@@ -15,6 +15,3 @@ One of "symmetric" or "asymmetric".
 \description{
 Deprecated. Use $properties$symmetry.
 }
-\seealso{
-\code{\link{properties}}
-}

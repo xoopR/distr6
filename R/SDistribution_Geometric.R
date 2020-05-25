@@ -9,48 +9,23 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (1 - p)^{k-1}p}
 #' @templateVar paramsupport \eqn{p \epsilon [0,1]}
 #' @templateVar distsupport the Naturals (zero is included if modelling number of failures before success)
-#' @templateVar additionalDetails The Geometric distribution is used to either refer to modelling the number of trials or number of failures before the first success.
-#' @templateVar constructor prob = 0.5, qprob = NULL, trials = FALSE
-#' @templateVar arg1 \code{prob} \tab numeric \tab probability of success. \cr
-#' @templateVar arg2 \code{qprob} \tab numeric \tab probability of failure. \cr
-#' @templateVar arg3 \code{trials} \tab logical \tab number of trials or failures, see details. \cr
-#' @templateVar constructorDets \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then {prob is ignored}. \cr\cr The logical parameter \code{trials} determines which Geometric distribution is constructed and cannot be changed after construction. If \code{trials} is TRUE then the Geometric distribution that models the number of trials, \eqn{x}, before the first success is constructed. Otherwise the Geometric distribution calculates the probability of \eqn{y} failures before the first success. Mathematically these are related by \eqn{Y = X - 1}.
+#' @details
+#' The Geometric distribution is used to either refer to modelling the number of trials or number
+#' of failures before the first success.
 #'
-#' @examples
-#' # Different parameterisations
-#' Geometric$new(prob = 0.2)
-#' Geometric$new(qprob = 0.7)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_prob
+#' @template param_qprob
+#' @template field_packages
 #'
-#' # Different forms of the distribution
-#' Geometric$new(trials = TRUE) # Number of trials before first success
-#' Geometric$new(trials = FALSE) # Number of failures before first success
-#'
-#' # Use description to see which form is used
-#' Geometric$new(trials = TRUE)$description
-#' Geometric$new(trials = FALSE)$description
-#'
-#' # Default is prob = 0.5 and number of failures before first success
-#' x <- Geometric$new()
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(qprob = 0.2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -64,8 +39,11 @@ Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
-                          verbose = FALSE) {
+    #' @param trials `(logical(1))` \cr
+    #' If `TRUE` then the distribution models the number of trials, $x$, before the first success.
+    #' Otherwise the distribution calculates the probability of $y$ failures before the first success.
+    #' Mathematically these are related by $Y = X - 1$.
+    initialize = function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL) {
 
       private$.trials <- checkmate::assertLogical(trials)
       private$.parameters <- getParameterSet(x = self, prob = prob, qprob = qprob, trials = trials, verbose = verbose)

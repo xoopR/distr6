@@ -9,37 +9,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-|x-\mu|/\beta)/(2\beta)}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
-#' @templateVar constructor mean = 0, scale = 1, var = NULL
-#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg3 \code{var} \tab numeric \tab alternate scale parameter. \cr
-#' @templateVar constructorDets \code{mean} as a numeric and either \code{scale} or \code{var} as positive numerics. These are related via, \deqn{var = 2 * scale^2} If \code{var} is given then {scale} is ignored.
 #'
-#' @examples
-#' Laplace$new(scale = 2)
-#' Laplace$new(var = 4)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_scale
+#' @template field_packages
 #'
-#' x <- Laplace$new(verbose = TRUE) # Default is mean = 0, scale = 1
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(var = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -53,8 +35,12 @@ Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(mean = 0, scale = 1, var = NULL,
-                          decorators = NULL) {
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of the distribution, defined on the Reals.
+    #' @param var `(numeric(1))`\cr
+    #' Variance of the distribution, defined on the positive Reals. `var = 2*scale^2`.
+    #' If `var` is provided then `scale` is ignored.
+    initialize = function(mean = 0, scale = 1, var = NULL, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, mean, scale, var)
       self$setParameterValue(mean = mean, scale = scale, var = var)

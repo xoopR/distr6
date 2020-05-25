@@ -9,6 +9,7 @@
 * Kernels now implemented in `Rcpp` with analytical log-pdf expressions. Analytical lower.tail and log.p will come in future versions.
 * Adding plotting for bivariate distributions using `{plotly}`
 * Added `EmpiricalMV` for empirical multivariate distributions
+* All documentation now uses roxygen R6
 
 ### Deprecated Functions/Fields/Methods
 

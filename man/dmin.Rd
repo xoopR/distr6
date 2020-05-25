@@ -21,6 +21,3 @@ bounded below then minimum is given by
  $dmin
 }
 
-\seealso{
-\code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
-}

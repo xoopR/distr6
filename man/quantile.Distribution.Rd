@@ -34,25 +34,3 @@ or as a data.table.
 Returns the inverse cumulative distribution, aka quantile, function for a distribution
 evaluated at a given point between 0 and 1.
 }
-\details{
-The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
-\deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
-
-If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
-
-If available a quantile will be returned without warning using an analytic expression. Otherwise,
-if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-To impute the quantile, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-calculation for the quantile with warning.
-
-Additional named arguments can be passed, which are required for composite distributions such as
-\code{\link{ProductDistribution}} and \code{\link{VectorDistribution}}.
-}
-\section{R6 Usage}{
- $quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-}
-
-\seealso{
-\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
-\code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
-}

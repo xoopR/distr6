@@ -25,6 +25,3 @@ where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pd
  $support
 }
 
-\seealso{
-\link[set6:Set]{set6::Set} and \code{\link{properties}}
-}

@@ -10,34 +10,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \sum_{r=0}^{\infty} ((exp(-\lambda/2)(\lambda/2)^r)/(B(\nu/2, \mu/2+r)r!))(\mu/\nu)^{\mu/2+r}(\nu/(\nu+x\mu))^{(\mu+\nu)/2+r}x^{\mu/2-1+r}}
 #' @templateVar paramsupport \eqn{\mu, \nu > 0, \lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar omittedVars \code{skewness}, \code{kurtosis}, \code{entropy}, \code{mode}, \code{mgf} and \code{cf}
-#' @templateVar constructor df1 = 1, df2 = 1, location = 0
-#' @templateVar arg1 \code{df1, df2} \tab numeric \tab degrees of freedom. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab location (ncp in rstats). \cr
-#' @templateVar constructorDets \code{df1} and \code{df2} as positive numerics, \code{location} as non-negative numeric.
-#' @templateVar additionalSeeAlso \code{\link{Normal}}, \code{\link{ChiSquared}} and \code{\link{FDistribution}} for the Normal, Chi-Squared and central F distributions.
 #'
-#' @examples
-#' x <- FDistributionNoncentral$new(df1 = 1, df2 = 3, location = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_location
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(df2 = 10)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -51,6 +36,10 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistrib
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param df1 `(numeric(1))`\cr
+    #' First degree of freedom of the distribution defined on the positive Reals.
+    #' @param df2 `(numeric(1))`\cr
+    #' Second degree of freedom of the distribution defined on the positive Reals.
     initialize = function(df1 = 1, df2 = 1, location = 0, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, df1, df2, location)

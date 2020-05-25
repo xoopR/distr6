@@ -18,17 +18,5 @@ Moment generating function evaluated at t as a numeric.
 Moment generating function of a distribution
 }
 \details{
-The moment generating function is defined by
-\deqn{mgf_X(t) = E_X[exp(xt)]}
-where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{CoreStatistics}} decorator.
-}
-\section{R6 Usage}{
- $mgf(t)
-}
-
-\seealso{
-\code{\link{CoreStatistics}} and \code{\link{decorate}}
 }

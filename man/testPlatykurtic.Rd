@@ -36,5 +36,4 @@ Validation checks to test if Distribution is platykurtic.
 }
 \examples{
 testPlatykurtic(Binomial$new())
-
 }

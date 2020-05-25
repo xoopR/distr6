@@ -10,132 +10,868 @@ Returns R6 object of class Distribution.
 A generalised distribution object for defining custom probability distributions
 as well as serving as the parent class to specific, familiar distributions.
 }
-\section{Constructor}{
- Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL,
-suppressMoments = TRUE)
+\examples{
+
+## ------------------------------------------------
+## Method `Distribution$setParameterValue`
+## ------------------------------------------------
+
+b = Binomial$new()
+b$setParameterValue(size = 4, prob = 0.4)
+b$setParameterValue(lst = list(size = 4, prob = 0.4))
+
+## ------------------------------------------------
+## Method `Distribution$pdf`
+## ------------------------------------------------
+
+b <- Binomial$new()
+b$pdf(1:10)
+b$pdf(1:10, log = TRUE)
+b$pdf(data = matrix(1:10))
+
+mvn <- MultivariateNormal$new()
+mvn$pdf(1, 2)
+mvn$pdf(1:2, 3:4)
+mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
+
+## ------------------------------------------------
+## Method `Distribution$cdf`
+## ------------------------------------------------
+
+b <- Binomial$new()
+b$cdf(1:10)
+b$cdf(1:10, log.p = TRUE, lower.tail = FALSE)
+b$cdf(data = matrix(1:10))
+
+## ------------------------------------------------
+## Method `Distribution$quantile`
+## ------------------------------------------------
+
+b <- Binomial$new()
+b$quantile(0.42)
+b$quantile(log(0.42), log.p = TRUE, lower.tail = TRUE)
+b$quantile(data = matrix(c(0.1,0.2)))
+
+## ------------------------------------------------
+## Method `Distribution$rand`
+## ------------------------------------------------
+
+b <- Binomial$new()
+b$rand(10)
+
+mvn <- MultivariateNormal$new()
+mvn$rand(5)
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{decorators}}{Returns decorators currently used to decorate the distribution.}
 
-\section{Constructor Arguments}{
+\item{\code{traits}}{Returns distribution traits.}
 
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{name} \tab character \tab Full name of distribution. \cr
-\code{short_name} \tab character \tab Short name to identify distribution. \cr
-\code{type} \tab \link[set6:Set]{set6::Set} \tab Scientific type. \cr
-\code{support} \tab \link[set6:Set]{set6::Set} \tab Distribution support. See Details. \cr
-\code{symmetric} \tab logical \tab Is distribution symmetric? \cr
-\code{pdf} \tab function \tab See Details. \cr
-\code{cdf} \tab function \tab See Details. \cr
-\code{quantile} \tab function \tab See Details. \cr
-\code{rand} \tab function \tab See Details. \cr
-\code{parameters} \tab ParameterSet \tab See Details. \cr
-\code{decorators} \tab list \tab R6 decorators to add in construction. \cr
-\code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
-\code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-\code{description} \tab character \tab Short description of distribution. \cr
-\code{suppressMoments} \tab character \tab See Details. \cr
+\item{\code{valueSupport}}{Deprecated, use \verb{$traits$valueSupport}.}
+
+\item{\code{variateForm}}{Deprecated, use \verb{$traits$variateForm}.}
+
+\item{\code{type}}{Deprecated, use \verb{$traits$type}.}
+
+\item{\code{properties}}{Returns distribution properties, including kurtosis type, skewness type, support, and
+symmetry.}
+
+\item{\code{support}}{Deprecated, use \verb{$properties$type}.}
+
+\item{\code{symmetry}}{Deprecated, use \verb{$properties$symmetry}.}
+
+\item{\code{sup}}{Returns supremum (upper bound) of the distribution support.}
+
+\item{\code{inf}}{Returns infimum (lower bound) of the distribution support.}
+
+\item{\code{dmax}}{Returns maximum of the distribution support.}
+
+\item{\code{dmin}}{Returns minimum of the distribution support.}
+
+\item{\code{kurtosisType}}{Deprecated, use \verb{$properties$kurtosis}.}
+
+\item{\code{skewnessType}}{Deprecated, use \verb{$properties$skewness}.}
+
+\item{\code{workingSupport}}{Returns an estimate for the computational support of the distribution.
+If an analytical cdf is available, then this is computed as the smallest interval
+in which the cdf lower bound is \code{0} and the upper bound is \code{1}, bounds are incremented in
+10^i intervals. If no analytical cdf is available, then this is computed as the smallest
+interval in which the lower and upper bounds of the pdf are \code{0}, this is much less precise and
+is more prone to error. Used primarily by decorators.}
 }
+\if{html}{\out{</div>}}
 }
-
-\section{Constructor Details}{
-
-
-The most basic Distribution object consists of a name and one of pdf/cdf.
-
-If supplied, \code{type} and \code{support} should be given as a \link[set6:Set]{set6::Set} object. If neither are supplied
-then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
-If only \code{type} is supplied then this is taken to also be the support.
-
-By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
-Use the \code{\link{FunctionImputation}} decorator to generate these.
-
-See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
-
-\code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
-Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
-for more details.
-
-\code{valueSupport} should be one of continuous/discrete/mixture if supplied.
-\code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
-If not given these are automatically filled from \code{type} and \code{support}.
-
-\code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
-calculated in construction. This has the benefit of drastically decreasing computational time but
-at the cost of losing these in the distribution properties.
-}
-
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{d/p/q/r Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{stdev()} \tab \code{\link{stdev}}\cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{correlation()} \tab \code{\link{correlation}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-}
-}
-
-\section{Active Bindings}{
-
-\tabular{ll}{
-\strong{Active Binding} \tab \strong{Link} \cr
-\code{isPdf} \tab \code{\link{isPdf}} \cr
-\code{isCdf} \tab \code{\link{isCdf}} \cr
-\code{isQuantile} \tab \code{\link{isQuantile}} \cr
-\code{isRand} \tab \code{\link{isRand}} \cr
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Distribution$new()}}
+\item \href{#method-strprint}{\code{Distribution$strprint()}}
+\item \href{#method-print}{\code{Distribution$print()}}
+\item \href{#method-summary}{\code{Distribution$summary()}}
+\item \href{#method-parameters}{\code{Distribution$parameters()}}
+\item \href{#method-getParameterValue}{\code{Distribution$getParameterValue()}}
+\item \href{#method-setParameterValue}{\code{Distribution$setParameterValue()}}
+\item \href{#method-pdf}{\code{Distribution$pdf()}}
+\item \href{#method-cdf}{\code{Distribution$cdf()}}
+\item \href{#method-quantile}{\code{Distribution$quantile()}}
+\item \href{#method-rand}{\code{Distribution$rand()}}
+\item \href{#method-prec}{\code{Distribution$prec()}}
+\item \href{#method-stdev}{\code{Distribution$stdev()}}
+\item \href{#method-median}{\code{Distribution$median()}}
+\item \href{#method-iqr}{\code{Distribution$iqr()}}
+\item \href{#method-correlation}{\code{Distribution$correlation()}}
+\item \href{#method-liesInSupport}{\code{Distribution$liesInSupport()}}
+\item \href{#method-liesInType}{\code{Distribution$liesInType()}}
+\item \href{#method-clone}{\code{Distribution$clone()}}
 }
 }
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$new(
+  name = NULL,
+  short_name = NULL,
+  type = NULL,
+  support = NULL,
+  symmetric = FALSE,
+  pdf = NULL,
+  cdf = NULL,
+  quantile = NULL,
+  rand = NULL,
+  parameters = NULL,
+  decorators = NULL,
+  valueSupport = NULL,
+  variateForm = NULL,
+  description = NULL,
+  suppressMoments = FALSE,
+  .suppressChecks = FALSE
+)}\if{html}{\out{</div>}}
+}
 
-\seealso{
-See \CRANpkg{set6} for details on Sets and Intervals. See \code{\link{ParameterSet}} for
-parameter details. See \code{\link{decorate}} for Decorator details.
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{\code{character(1)} \cr
+Full name of distribution.}
+
+\item{\code{short_name}}{\code{character(1)} \cr
+Short name of distribution for printing.}
+
+\item{\code{type}}{\verb{([set6::Set])} \cr
+Distribution type.}
+
+\item{\code{support}}{\verb{([set6::Set])} \cr
+Distribution support.}
+
+\item{\code{symmetric}}{\code{logical(1)} \cr
+Symmetry type of the distribution.}
+
+\item{\code{pdf}}{\verb{function(1)} \cr
+Probability density function of the distribution. At least one of \code{pdf} and
+\code{cdf} must be provided.}
+
+\item{\code{cdf}}{\verb{function(1)} \cr
+Cumulative distribution function of the distribution. At least one of \code{pdf} and
+\code{cdf} must be provided.}
+
+\item{\code{quantile}}{\verb{function(1)} \cr
+Quantile (inverse-cdf) function of the distribution.}
+
+\item{\code{rand}}{\verb{function(1)} \cr
+Simulation function for drawing random samples from the distribution.}
+
+\item{\code{parameters}}{\verb{([ParameterSet])} \cr
+Parameter set for defining the parameters in the distribution, which should be set before
+construction.}
+
+\item{\code{decorators}}{\code{character()} \cr
+Decorators to add to the distribution during construction.}
+
+\item{\code{valueSupport}}{\code{(character(1))} \cr
+The support type of the distribution, one of \verb{"discrete", "continuous", "mixture"}.
+If \code{NULL}, determined automatically.}
+
+\item{\code{variateForm}}{\code{(character(1))} \cr
+The variate type of the distribution, one of \verb{"univariate", "multivariate", "matrixvariate"}.
+If \code{NULL}, determined automatically.}
+
+\item{\code{description}}{\code{(character(1))} \cr
+Optional short description of the distribution.}
+
+\item{\code{suppressMoments}}{\code{(logical(1))} \cr
+If \code{TRUE} does not calculte skewness and kurtosis types in construction.}
+
+\item{\code{.suppressChecks}}{\code{(logical(1))} \cr
+Used internally.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
+\subsection{Method \code{strprint()}}{
+Printable string representation of the \code{Distribution}. Primarily used internally.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$strprint(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(integer(1))} \cr
+Number of parameters to display when printing.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Prints the \code{Distribution}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$print(n = 2, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(integer(1))} \cr
+Passed to \verb{$strprint}.}
+
+\item{\code{...}}{\cr
+Unused. Added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-summary}{}}}
+\subsection{Method \code{summary()}}{
+Prints a summary of the \code{Distribution}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$summary(full = TRUE, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{full}}{\code{(logical(1))} \cr
+If \code{TRUE} (default) prints a long summary of the distribution,
+otherwise prints a shorter summary.}
+
+\item{\code{...}}{\cr
+Unused. Added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-parameters"></a>}}
+\if{latex}{\out{\hypertarget{method-parameters}{}}}
+\subsection{Method \code{parameters()}}{
+Returns the full parameter details for the supplied parameter.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$parameters(id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character()} \cr
+id of parameter value to return.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-getParameterValue}{}}}
+\subsection{Method \code{getParameterValue()}}{
+Returns the value of the supplied parameter.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$getParameterValue(id, error = "warn")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character()} \cr
+id of parameter value to return.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+Passed to \link{stopwarn}.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+Passed to \link{stopwarn}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
+\subsection{Method \code{setParameterValue()}}{
+Sets the value(s) of the given parameter(s).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lst}}{\code{(list(1))} \cr
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+Passed to \link{stopwarn}.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+Passed to \link{stopwarn}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{b = Binomial$new()
+b$setParameterValue(size = 4, prob = 0.4)
+b$setParameterValue(lst = list(size = 4, prob = 0.4))
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pdf"></a>}}
+\if{latex}{\out{\hypertarget{method-pdf}{}}}
+\subsection{Method \code{pdf()}}{
+For discrete distributions the probability mass function (pmf) is returned, defined as
+\deqn{p_X(x) = P(X = x)}
+for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
+\deqn{f_X(x) = P(x < X \le x + dx)}
+for some infinitesimally small \eqn{dx}.
+
+If available a pdf will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{log}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{b <- Binomial$new()
+b$pdf(1:10)
+b$pdf(1:10, log = TRUE)
+b$pdf(data = matrix(1:10))
+
+mvn <- MultivariateNormal$new()
+mvn$pdf(1, 2)
+mvn$pdf(1:2, 3:4)
+mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdf"></a>}}
+\if{latex}{\out{\hypertarget{method-cdf}{}}}
+\subsection{Method \code{cdf()}}{
+For discrete distributions the probability mass function (pmf) is returned, defined as
+\deqn{p_X(x) = P(X = x)}
+for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
+\deqn{f_X(x) = P(x < X \le x + dx)}
+for some infinitesimally small \eqn{dx}.
+
+If available a pdf will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+
+
+The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
+\deqn{F_X(x) = P(X \le x)}
+If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
+\code{\link{survival}} function.
+
+If available a cdf will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$cdf(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{b <- Binomial$new()
+b$cdf(1:10)
+b$cdf(1:10, log.p = TRUE, lower.tail = FALSE)
+b$cdf(data = matrix(1:10))
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-quantile}{}}}
+\subsection{Method \code{quantile()}}{
+The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
+\deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
+
+If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
+
+If available a quantile will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$quantile(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
+
+\item{\code{lower.tail}}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
+
+\item{\code{log.p}}{\code{logical(1)} \cr
+If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{b <- Binomial$new()
+b$quantile(0.42)
+b$quantile(log(0.42), log.p = TRUE, lower.tail = TRUE)
+b$quantile(data = matrix(c(0.1,0.2)))
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-rand"></a>}}
+\if{latex}{\out{\hypertarget{method-rand}{}}}
+\subsection{Method \code{rand()}}{
+The rand function draws \code{n} simulations from the distribution.
+
+If available simulations will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$rand(n, simplify = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(numeric(1))} \cr
+Number of points to simulate from the distribution. If length greater than \eqn{1}, then
+\code{n <- length(n)},}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{b <- Binomial$new()
+b$rand(10)
+
+mvn <- MultivariateNormal$new()
+mvn$rand(5)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-prec"></a>}}
+\if{latex}{\out{\hypertarget{method-prec}{}}}
+\subsection{Method \code{prec()}}{
+Returns the precision of the distribution as \code{1/self$variance()}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$prec()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-stdev"></a>}}
+\if{latex}{\out{\hypertarget{method-stdev}{}}}
+\subsection{Method \code{stdev()}}{
+Returns the standard deviation of the distribution as \code{sqrt(self$variance())}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$stdev()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-median"></a>}}
+\if{latex}{\out{\hypertarget{method-median}{}}}
+\subsection{Method \code{median()}}{
+Returns the median of the distribution. If an analytical expression is available
+returns distribution median, otherwise if symmetric returns \code{self$mean}, otherwise
+returns \code{self$quantile(0.5)}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$median(na.rm = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{na.rm}}{\cr
+Ignored, addded for consistency.}
+
+\item{\code{...}}{\cr
+Ignored, addded for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-iqr"></a>}}
+\if{latex}{\out{\hypertarget{method-iqr}{}}}
+\subsection{Method \code{iqr()}}{
+Inter-quartile range of the distribution. Estimated as
+\code{self$quantile(0.75) - self$quantile(0.25)}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$iqr()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-correlation"></a>}}
+\if{latex}{\out{\hypertarget{method-correlation}{}}}
+\subsection{Method \code{correlation()}}{
+If univariate returns \code{1}, otherwise returns the distribution correlation.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$correlation()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-liesInSupport"></a>}}
+\if{latex}{\out{\hypertarget{method-liesInSupport}{}}}
+\subsection{Method \code{liesInSupport()}}{
+Tests if the given values lie in the support of the distribution.
+Uses \verb{[set6::Set]$contains}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$liesInSupport(x, all = TRUE, bound = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{ANY} \cr
+Values to test.}
+
+\item{\code{all}}{\code{logical(1)} \cr
+If \code{TRUE} (default) returns \code{TRUE} if all \code{x} are in the distribution,
+otherwise returns a vector of logicals corresponding to each element in
+\code{x}.}
+
+\item{\code{bound}}{\code{logical(1)} \cr
+If \code{TRUE} then tests if \code{x} lie between the upper and lower bounds of the distribution,
+otherwise tests if \code{x} lie between the maximum and minimum of the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-liesInType"></a>}}
+\if{latex}{\out{\hypertarget{method-liesInType}{}}}
+\subsection{Method \code{liesInType()}}{
+Tests if the given values lie in the type of the distribution.
+Uses \verb{[set6::Set]$contains}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$liesInType(x, all = TRUE, bound = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{ANY} \cr
+Values to test.}
+
+\item{\code{all}}{\code{logical(1)} \cr
+If \code{TRUE} (default) returns \code{TRUE} if all \code{x} are in the distribution,
+otherwise returns a vector of logicals corresponding to each element in
+\code{x}.}
+
+\item{\code{bound}}{\code{logical(1)} \cr
+If \code{TRUE} then tests if \code{x} lie between the upper and lower bounds of the distribution,
+otherwise tests if \code{x} lie between the maximum and minimum of the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

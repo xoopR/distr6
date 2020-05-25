@@ -9,32 +9,18 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function
 #' @templateVar distsupport \eqn{[0, 1]}
-#' @templateVar omittedVars \code{mgf} and \code{cf}
-#' @templateVar constructor shape1 = 1, shape2 = 1
-#' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
-#' @templateVar constructorDets  \code{shape1} and \code{shape2} as positive numerics.
 #'
-#' @examples
-#' x <- Beta$new(shape1 = 2, shape2 = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(shape1 = 1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -48,6 +34,10 @@ Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param shape1 `(numeric(1))`\cr
+    #' First shape parameter, `shape1 > 0`.
+    #' @param shape2 `(numeric(1))`\cr
+    #' Second shape parameter, `shape2 > 0`.
     initialize = function(shape1 = 1, shape2 = 1, decorators = NULL) {
 
       private$.parameters <- getParameterSet.Beta(self, shape1, shape2)

@@ -9,36 +9,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{-\alpha-1}exp(-\beta/x)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function
 #' @templateVar distsupport the Positive Reals
-#' @templateVar omittedVars \code{cf}
-#' @templateVar additionalDetails The distribution is implemented by interfacing the \code{extraDistr} package.
-#' @templateVar constructor shape = 1, scale = 1
-#' @templateVar arg1 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets \code{shape} and \code{scale} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link[extraDistr]{InvGamma}} for the d/p/q/r implementation.
 #'
-#' @examples
-#' x <- InverseGamma$new(shape = 1, scale = 4)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_shape
+#' @template param_scale
+#' @template field_packages
 #'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(scale = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -52,8 +36,7 @@ InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = 
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(shape = 1, scale = 1, decorators = NULL,
-                          verbose = FALSE) {
+    initialize = function(shape = 1, scale = 1, decorators = NULL) {
 
       private$.parameters <- getParameterSet.InverseGamma(self, shape, scale)
       self$setParameterValue(shape = shape, scale = scale)

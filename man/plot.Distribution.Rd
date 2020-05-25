@@ -60,13 +60,14 @@ plot(Normal$new(), col = "red")
 plot(Normal$new(), pdf_col = "red", cdf_col = "green")
 
 # Interactive plotting in order - par still works here
-plot(Geometric$new(), fun = "all", ask = TRUE, pdf_col = "black",
+plot(Geometric$new(),
+  fun = "all", ask = TRUE, pdf_col = "black",
   cdf_col = "red", quantile_col = "blue", survival_col = "purple",
-  hazard_col = "brown", cumhazard_col = "yellow")
+  hazard_col = "brown", cumhazard_col = "yellow"
+)
 
 # Return plotting structure
-x = plot(Gamma$new(), plot = FALSE)
-
+x <- plot(Gamma$new(), plot = FALSE)
 }
 \seealso{
 \code{\link{lines.Distribution}} for superimposing a distr6 object and \code{\link{listDistributions}}

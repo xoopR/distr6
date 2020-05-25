@@ -20,17 +20,3 @@ Hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 The hazard function of a probability distribution is the risk of instantaneous event at
 a point x.
 }
-\details{
-The hazard function is defined analytically by
-\deqn{h_X(x) = \frac{f_X}{S_X}}{h_X(x) = f_X/S_X}
-where X is the distribution, \eqn{S_X} is the survival function and \eqn{f_X} is the pdf.
-
-Can only be used after decorating with \code{\link{ExoticStatistics}}.
-}
-\section{R6 Usage}{
- $hazard(x1, log = FALSE)
-}
-
-\seealso{
-\code{\link{ExoticStatistics}} and \code{\link{decorate}}
-}

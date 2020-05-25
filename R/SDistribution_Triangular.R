@@ -10,43 +10,20 @@
 #' @templateVar pdfpmfeq \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b}
 #' @templateVar paramsupport \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}
 #' @templateVar distsupport \eqn{[a, b]}
-#' @templateVar constructor lower = 0, upper = 1, mode = 0.5, symmetric = FALSE
-#' @templateVar arg1 \code{lower} \tab numeric \tab lower limit. \cr
-#' @templateVar arg2 \code{upper} \tab numeric \tab upper limit. \cr
-#' @templateVar arg3 \code{mode} \tab numeric \tab mode. \cr
-#' @templateVar arg4 \code{symmetric} \tab logical \tab see details. \cr
-#' @templateVar constructorDets \code{lower}, \code{upper} and \code{mode} as numerics. If \code{symmetric = TRUE} then the \code{mode} parameter is determined automatically and is defined by \deqn{mode = (lower + upper) /2} this cannot be changed after construction. If \code{symmetric = FALSE} (default) then \code{mode} can be updated after construction.
-#' @templateVar additionalSeeAlso \code{\link{Uniform}} for the Uniform distribution.
 #'
-#' @examples
-#' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-#' Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
-#' Triangular$new(lower = 2, upper = 5, mode = 4)
+#' @template param_lower
+#' @template param_upper
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # You can view the type of Triangular distribution with $description
-#' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
-#' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
-#'
-#' x <- Triangular$new(lower = -1, upper = 1)
-#'
-#' # Update parameters
-#' x$setParameterValue(lower = 2, upper = 7)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -60,6 +37,21 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mode `(numeric(1))`\cr
+    #' Mode of the distribution, if `symmetric = TRUE` then determined automatically.
+    #' @param symmetric `(logical(1))`\cr
+    #' If `TRUE` then the symmetric Triangular distribution is constructed, where the `mode` is
+    #' automatically calculated. Otherwise `mode` can be set manually. Cannot be changed after
+    #' construction.
+    #'
+    #' @examples
+    #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
+    #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
+    #' Triangular$new(lower = 2, upper = 5, mode = 4)
+    #'
+    #' # You can view the type of Triangular distribution with $description
+    #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
+    #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
     initialize = function(lower = 0, upper = 1, mode = (lower + upper) / 2,
                           symmetric = FALSE,
                           decorators = NULL) {

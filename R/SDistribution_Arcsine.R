@@ -8,16 +8,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}}
 #' @templateVar paramsupport \eqn{-\infty < a \le b < \infty}
 #' @templateVar distsupport \eqn{[a, b]}
-#' @templateVar omittedVars \code{cf} and \code{mgf}
-#' @templateVar additionalDetails When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta}} is used for sampling, otherwise via inverse transform
 #'
 #' @template param_lower
 #' @template param_upper
-#' @template class_sdistribution
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
 #' @export
-NULL
-
 Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

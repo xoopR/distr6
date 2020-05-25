@@ -7,86 +7,144 @@
 Returns error. Abstract classes cannot be constructed directly.
 }
 \description{
-The abstract parent class to wrappers.
+Abstract class that cannot be constructed directly.
 }
 \details{
 Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped distribution
 has the same methods and fields as an unwrapped one. After wrapping, the parameters of a distribution
 are prefixed with the distribution name to ensure uniqueness of parameter IDs.
 
-Abstract classes cannot be implemented directly. Use the \code{listWrappers} function to see constructable wrappers.
+Use \link{listWrappers} function to see constructable wrappers.
 }
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{d/p/q/r Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{stdev()} \tab \code{\link{stdev}}\cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{cor()} \tab \code{\link{cor}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
+\references{
+Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
+of Reusable Object-Oriented Software.” Addison-Wesley.
 }
-}
-
-\section{Active Bindings}{
-
-\tabular{ll}{
-\strong{Active Binding} \tab \strong{Link} \cr
-\code{isPdf} \tab \code{\link{isPdf}} \cr
-\code{isCdf} \tab \code{\link{isCdf}} \cr
-\code{isQuantile} \tab \code{\link{isQuantile}} \cr
-\code{isRand} \tab \code{\link{isRand}} \cr
-}
-}
-
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-\code{package} \tab The package d/p/q/r are implemented in.
-}
-}
-
 \seealso{
-\code{\link{listWrappers}}
+Other wrappers: 
+\code{\link{Convolution}},
+\code{\link{HuberizedDistribution}},
+\code{\link{MixtureDistribution}},
+\code{\link{ProductDistribution}},
+\code{\link{TruncatedDistribution}},
+\code{\link{VectorDistribution}}
+}
+\concept{wrappers}
+\section{Super class}{
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{DistributionWrapper}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{DistributionWrapper$new()}}
+\item \href{#method-wrappedModels}{\code{DistributionWrapper$wrappedModels()}}
+\item \href{#method-setParameterValue}{\code{DistributionWrapper$setParameterValue()}}
+\item \href{#method-clone}{\code{DistributionWrapper$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DistributionWrapper$new(distlist = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{distlist}}{\code{(list())} \cr
+List of \link{Distribution}s to wrap.}
+
+\item{\code{...}}{\code{ANY} \cr
+Additional arguements passed to \verb{[Distribution]$new}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-wrappedModels"></a>}}
+\if{latex}{\out{\hypertarget{method-wrappedModels}{}}}
+\subsection{Method \code{wrappedModels()}}{
+Returns model(s) wrapped by this wrapper.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DistributionWrapper$wrappedModels(model = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{model}}{\code{(character(1))} \cr
+id of wrapped \href{s}{Distribution} to return. If \code{NULL} (default), a list of all wrapped \link{Distribution}s
+is returned; if only one \link{Distribution} is matched then this is returned, otherwise a list of
+\link{Distribution}s.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
+\subsection{Method \code{setParameterValue()}}{
+Sets the value(s) of the given parameter(s).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DistributionWrapper$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{lst}}{\code{(list(1))} \cr
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+Passed to \link{stopwarn}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DistributionWrapper$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

@@ -16,6 +16,3 @@ otherwise returns NULL.
 \description{
 Deprecated. Use $properties$kurtosis.
 }
-\seealso{
-\code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
-}

@@ -9,37 +9,30 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\lambda/(2x^3\pi))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
 #' @templateVar paramsupport \eqn{\lambda > 0} and \eqn{\mu > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar omittedVars \code{entropy}
 #' @templateVar omittedDPQR \code{quantile}
 #' @templateVar aka Inverse Normal
 #' @aliases InverseNormal InverseGaussian
-#' @templateVar additionalDetails Sampling is performed as per Michael, Schucany, Haas (1976).
-#' @templateVar constructor mean = 1, shape = 1
-#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar constructorDets \code{mean} and \code{shape} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
 #'
-#' @examples
-#' x <- Wald$new(mean = 2, shape = 5)
+#' @details
+#' Sampling is performed as per Michael, Schucany, Haas (1976).
 #'
-#' # Update parameters
-#' x$setParameterValue(shape = 3)
-#' x$parameters()
+#' @references
+#' Michael, J. R., Schucany, W. R., & Haas, R. W. (1976).
+#' Generating random variates using transformations with multiple roots.
+#' The American Statistician, 30(2), 88-90.
 #'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$rand(4)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_shape
+#' @template field_packages
 #'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -53,6 +46,8 @@ Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of the distribution, location parameter, defined on the positive Reals.
     initialize = function(mean = 1, shape = 1, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, mean, shape)

@@ -25,26 +25,3 @@ or as a data.table.
 Returns the probability density/mass function for continuous/discrete (or mixture)
 distributions evaluated at a given point.
 }
-\details{
-For discrete distributions the probability mass function (pmf) is returned, defined as
-\deqn{p_X(x) = P(X = x)}
-for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
-\deqn{f_X(x) = P(x < X \le x + dx)}
-for some infinitesimally small \eqn{dx}.
-
-If available a pdf will be returned without warning using an analytic expression. Otherwise,
-if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-To impute the pdf, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-calculation for the pdf with warning.
-
-Additional named arguments can be passed, which are required for composite distributions such as
-\code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-}
-\section{R6 Usage}{
- $pdf(x1, ..., log = FALSE, simplify = TRUE)
-}
-
-\seealso{
-\code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
-\code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
-}

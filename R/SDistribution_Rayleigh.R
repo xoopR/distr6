@@ -9,32 +9,18 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = x/\alpha^2 exp(-x^2/(2\alpha^2))}
 #' @templateVar paramsupport \eqn{\alpha > 0}
 #' @templateVar distsupport \eqn{[0, \infty)}
-#' @templateVar omittedVars \code{cf} and \code{mgf}
-#' @templateVar constructor mode = 1
-#' @templateVar arg1 \code{mode} \tab numeric \tab mode, scale parameter. \cr
-#' @templateVar constructorDets \code{mode} as a non-negative numeric.
 #'
-#' @examples
-#' x <- Rayleigh$new(mode = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(mode = 4)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(1:4)
-#' x$cdf(2)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -48,6 +34,8 @@ Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mode `(numeric(1))`\cr
+    #' Mode of the distribution, defined on the positive Reals. Scale parameter.
     initialize = function(mode = 1, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, mode)

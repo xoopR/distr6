@@ -22,16 +22,17 @@ Helper function for quickly combining distributions into a \code{\link{VectorDis
 c(Binomial$new(), Normal$new())
 
 # More complicated distributions
-b = truncate(Binomial$new(), 2, 6)
-n = huberize(Normal$new(), -1, 1)
+b <- truncate(Binomial$new(), 2, 6)
+n <- huberize(Normal$new(), -1, 1)
 c(b, n)
 
 # Concatenate VectorDistributions
-v1 = VectorDistribution$new(list(Binomial$new(), Normal$new()))
-v2 = VectorDistribution$new(distribution = "Gamma",
-             params  = data.table::data.table(shape = 1:2, rate = 1:2))
+v1 <- VectorDistribution$new(list(Binomial$new(), Normal$new()))
+v2 <- VectorDistribution$new(
+  distribution = "Gamma",
+  params = data.table::data.table(shape = 1:2, rate = 1:2)
+)
 c(v1, v2)
-
 }
 \seealso{
 \code{\link{VectorDistribution}}

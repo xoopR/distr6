@@ -8,34 +8,18 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = -\theta^x/xlog(1-\theta)}
 #' @templateVar paramsupport \eqn{0 < \theta < 1}
 #' @templateVar distsupport \eqn{{1,2,3,\ldots}}
-#' @templateVar omittedVars \code{entropy}
-#' @templateVar additionalDetails The distribution is implemented by interfacing the \code{extraDistr} package.
-#' @templateVar constructor theta = 0.5
-#' @templateVar arg1 \code{theta} \tab numeric \tab theta parameter. \cr
-#' @templateVar constructorDets \code{theta} as a number between 0 and 1.
-#' @templateVar additionalSeeAlso \code{\link[extraDistr]{LogSeries}} for the d/p/q/r implementation.
 #'
-#' @examples
-#' x <- Logarithmic$new(theta = 0.2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(theta = 0.3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -49,6 +33,8 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param theta `(numeric(1))`\cr
+    #' Theta parameter defined between $[0, 1]$.
     initialize = function(theta = 0.5, decorators = NULL) {
 
       private$.parameters <- getParameterSet.Logarithmic(self, theta)

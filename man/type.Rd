@@ -19,6 +19,3 @@ Deprecated. Use $traits$type
  $type
 }
 
-\seealso{
-\link[set6:Set]{set6::Set}
-}

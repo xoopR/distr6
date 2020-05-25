@@ -15,142 +15,320 @@ The Negative Binomial distribution parameterised with  number of failures before
 
 The distribution is supported on \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below).
 
-The Negative Binomial distribution can refer to one of four distributions (forms): \cr\cr 1. The number of failures before K successes (fbs) \cr\cr 2. The number of successes before K failures (sbf) \cr\cr 3. The number of trials before K failures (tbf) \cr\cr 4. The number of trials before K successes (tbs) \cr\cr For each we refer to the number of K successes/failures as the \code{size} parameter, \code{prob} is always the probability of success and \code{qprob} is the probability of failure. Use \code{$description} to see the Negative Binomial form.
-}
-\section{Constructor}{
- NegativeBinomial$new(size = 10, prob = 0.5, qprob = NULL, mean = NULL, form = "fbs", decorators = NULL, verbose = FALSE)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{size} \tab numeric \tab number of failures/successes. \cr
-\code{prob} \tab numeric \tab probability of success. \cr
-\code{qprob} \tab numeric \tab probability of failure. \cr
-\code{mean} \tab numeric \tab location parameter. \cr
-\code{form} \tab character \tab form of negative binomial, see details. \cr
-
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
+The Negative Binomial distribution can refer to one of four distributions (forms):
+\enumerate{
+\item The number of failures before K successes (fbs)
+\item The number of successes before K failures (sbf)
+\item The number of trials before K failures (tbf)
+\item The number of trials before K successes (tbs)
 }
 
-\section{Constructor Details}{
- The Negative Binomial distribution is parameterised with \code{size} as a positive whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1, or \code{mean} as a numeric greater than the number of failures/successes (if form is 'tbf' or 'tbs'). These are related via, \deqn{qprob = 1 - prob} and the \code{mean} formula is dependent on the form. If \code{mean} is given then \code{qprob} and \code{prob} are ignored. If \code{qprob} is given then \code{prob} is ignored. \cr\cr The additional \code{form} argument determines which of the four Negative Binomial distributions should be constructed, this cannot be updated after construction. \code{form} should be one of "sbf" (successes before failures), "tbf" (trials before failures), "fbs" (failures before successes) or "tbs" (trials before successes). "fbs" is taken as default if none are supplied or an unrecognised form is given.
+For each we refer to the number of K successes/failures as the \code{size} parameter.
 }
-
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-\code{package} \tab The package d/p/q/r are implemented in.
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\code{mean()} \tab \code{\link{mean.Distribution}} \cr
-\code{variance()} \tab \code{\link{variance}} \cr
-\code{stdev()} \tab \code{\link{stdev}} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{cor()} \tab \code{\link{cor}} \cr
-\code{skewness()} \tab \code{\link{skewness}} \cr
-\code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-\code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-\code{mgf(t)} \tab \code{\link{mgf}} \cr
-\code{cf(t)} \tab \code{\link{cf}} \cr
-\code{pgf(z)} \tab \code{\link{pgf}} \cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{mode(which = "all")} \tab \code{\link{mode}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-}
-}
-
 \examples{
-# Different parameterisations
-NegativeBinomial$new(size = 5, prob = 0.2)
-NegativeBinomial$new(size = 5, qprob = 0.2)
-NegativeBinomial$new(size = 5, mean = 4)
 
-# Different forms of the distribution
-NegativeBinomial$new(form = "fbs")
-NegativeBinomial$new(form = "sbf")
+## ------------------------------------------------
+## Method `NegativeBinomial$new`
+## ------------------------------------------------
 
-# Use description to see which form is used
-NegativeBinomial$new(form = "tbf")
-NegativeBinomial$new(form = "tbs")
-
-x <- NegativeBinomial$new() # Default is size = 10, prob = 0.5 and failures before successes
-
-# Update parameters (form cannot be updated)
-x$setParameterValue(qprob = 0.2)  # When any parameter is updated, all others are too!
-x$parameters()
-
-
-# d/p/q/r
-x$pdf(5)
-x$cdf(5)
-x$quantile(0.42)
-x$rand(4)
-
-# Statistics
-x$mean()
-x$variance()
-
-summary(x)
+NegativeBinomial$new(form = "tbf")$description
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
-\seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link{Binomial}} for the Binomial distribution and \code{\link{Geometric}} for the Geometric distribution.
+\section{Super classes}{
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{NegativeBinomial}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{Full name of distribution.}
+
+\item{\code{short_name}}{Short name of distribution for printing.}
+
+\item{\code{description}}{Brief description of the distribution.}
+
+\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{NegativeBinomial$new()}}
+\item \href{#method-mean}{\code{NegativeBinomial$mean()}}
+\item \href{#method-mode}{\code{NegativeBinomial$mode()}}
+\item \href{#method-variance}{\code{NegativeBinomial$variance()}}
+\item \href{#method-skewness}{\code{NegativeBinomial$skewness()}}
+\item \href{#method-kurtosis}{\code{NegativeBinomial$kurtosis()}}
+\item \href{#method-mgf}{\code{NegativeBinomial$mgf()}}
+\item \href{#method-cf}{\code{NegativeBinomial$cf()}}
+\item \href{#method-pgf}{\code{NegativeBinomial$pgf()}}
+\item \href{#method-setParameterValue}{\code{NegativeBinomial$setParameterValue()}}
+\item \href{#method-clone}{\code{NegativeBinomial$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$new(
+  size = 10,
+  prob = 0.5,
+  qprob = NULL,
+  mean = NULL,
+  form = c("fbs", "sbf", "tbf", "tbs"),
+  decorators = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{size}}{\code{(integer(1))}\cr
+Number of trials/successes.}
+
+\item{\code{prob}}{\code{(numeric(1))} \cr
+Probability of success, should be defined in $\link{0, 1}$.}
+
+\item{\code{qprob}}{\code{(numeric(1))} \cr
+Probability of failure, should be defined in $\link{0, 1}$. \code{qprob = 1 - prob}.
+If provided then \code{prob} is ignored.}
+
+\item{\code{mean}}{\code{(numeric(1))}\cr
+Mean of distribution, alternative to \code{prob} and \code{qprob}.}
+
+\item{\code{form}}{\verb{character(1))}\cr
+Form of the distribution, cannot be changed after construction. Options are to model
+the number of,
+\itemize{
+\item \code{"fbs"} - Failures before successes.
+\item \code{"sbf"} - Successes before failures.
+\item \code{"tbf"} - Trials before failures.
+\item \code{"tbs"} - Trials before successes.
+Use \verb{$description} to see the Negative Binomial form.
+}}
+
+\item{\code{decorators}}{\code{character()} \cr
+Decorators to add to the distribution during construction.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{NegativeBinomial$new(form = "tbf")$description
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-mean"></a>}}
+\if{latex}{\out{\hypertarget{method-mean}{}}}
+\subsection{Method \code{mean()}}{
+The arithmetic mean of a (discrete) probability distribution X is the expectation
+\deqn{E_X(X) = \sum p_X(x)*x}
+with an integration analogue for continuous distributions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$mean()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-mode"></a>}}
+\if{latex}{\out{\hypertarget{method-mode}{}}}
+\subsection{Method \code{mode()}}{
+The mode of a probability distribution is the point at which the pdf is
+a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+maxima).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$mode(which = "all")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{which}}{\verb{(character(1) | numeric(1)}
+Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
+which mode to return.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-variance}{}}}
+\subsection{Method \code{variance()}}{
+The variance of a distribution is defined by the formula
+\deqn{var_X = E[X^2] - E[X]^2}
+where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+covariance matrix is returned.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$variance()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-skewness}{}}}
+\subsection{Method \code{skewness()}}{
+The skewness of a distribution is defined by the third standardised moment,
+\deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+\eqn{\sigma} is the standard deviation of the distribution.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$skewness()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-kurtosis"></a>}}
+\if{latex}{\out{\hypertarget{method-kurtosis}{}}}
+\subsection{Method \code{kurtosis()}}{
+The kurtosis of a distribution is defined by the fourth standardised moment,
+\deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
+Excess Kurtosis is Kurtosis - 3.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{excess}}{\code{(logical(1))} \cr
+If \code{TRUE} (default) excess kurtosis returned.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-mgf"></a>}}
+\if{latex}{\out{\hypertarget{method-mgf}{}}}
+\subsection{Method \code{mgf()}}{
+The moment generating function is defined by
+\deqn{mgf_X(t) = E_X[exp(xt)]}
+where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$mgf(t)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{t}}{\code{(integer(1))} \cr
+t integer to evaluate function at.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cf"></a>}}
+\if{latex}{\out{\hypertarget{method-cf}{}}}
+\subsection{Method \code{cf()}}{
+The characteristic function is defined by
+\deqn{cf_X(t) = E_X[exp(xti)]}
+where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$cf(t)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{t}}{\code{(integer(1))} \cr
+t integer to evaluate function at.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pgf"></a>}}
+\if{latex}{\out{\hypertarget{method-pgf}{}}}
+\subsection{Method \code{pgf()}}{
+The probability generating function is defined by
+\deqn{pgf_X(z) = E_X[exp(z^x)]}
+where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$pgf(z)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{z}}{\code{(integer(1))} \cr
+z integer to evaluate probability generating function at.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
+\subsection{Method \code{setParameterValue()}}{
+Sets the value(s) of the given parameter(s).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{lst}}{\code{(list(1))} \cr
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+Passed to \link{stopwarn}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

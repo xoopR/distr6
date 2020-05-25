@@ -3,61 +3,395 @@
 \name{ExoticStatistics}
 \alias{ExoticStatistics}
 \title{Exotic Statistical Methods for Distributions}
-\value{
-Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
-added to the SDistribution methods.
-}
 \description{
 This decorator adds methods for more complex statistical methods including p-norms,
-survival and hazard functions and anti-derivatives.
+survival and hazard functions and anti-derivatives. If possible analytical expressions are
+exploited, otherwise numerical ones are used with a message.
 }
 \details{
-Decorator objects add functionality to the given Distribution object by copying methods
-in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-below to find details of the methods that are added to the Distribution. Methods already
-present in the distribution are not overwritten by the decorator.
+Decorator objects add functionality to the given \link{Distribution} object by copying methods
+in the decorator environment to the chosen \link{Distribution} environment.
 
-Use \code{\link{decorate}} to decorate a Distribution.
-
-Methods in this decorator may use numerical approximations and therefore better results may be available
-from analytic computations.
+All methods implemented in decorators try to exploit analytical results where possible, otherwise
+numerical results are used with a message.
 }
-\section{Constructor}{
- ExoticStatistics$new(distribution)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{distribution} \tab distribution \tab Distribution to decorate. \cr
-}
-}
-
-\section{Added Methods}{
-
-\tabular{lll}{
-\strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
-\code{survival(x1, log = FALSE)} \tab Survival function \tab \code{\link{survival}} \cr
-\code{hazard(x1, log = FALSE)} \tab Hazard function \tab \code{\link{hazard}} \cr
-\code{cumHazard(x1, log = FALSE)} \tab Cumulative hazard function \tab \code{\link{cumHazard}} \cr
-\code{cdfAntiDeriv(lower = NULL, upper = NULL))} \tab Anti-derivative of cdf \tab \code{\link{cdfAntiDeriv}} \cr
-\code{survivalAntiDeriv(lower = NULL, upper = NULL)} \tab Anti-derivative of survival function \tab \code{\link{survivalAntiDeriv}} \cr
-\code{cdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of cdf \tab \code{\link{cdfPNorm}} \cr
-\code{pdfPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of pdf \tab \code{\link{pdfPNorm}} \cr
-\code{survivalPNorm(p = 2, lower = NULL, upper = NULL)} \tab P-norm of survival function \tab \code{\link{survivalPNorm}} \cr
-}
-}
-
 \examples{
-x = Exponential$new()
-decorate(x, ExoticStatistics)
-x$survival(1)
-
-x = Exponential$new(decorators = ExoticStatistics)
-x$survival(4)
+decorate(Exponential$new(), ExoticStatistics)
+Exponential$new(decorators = ExoticStatistics)
+ExoticStatistics$new()$decorate(Exponential$new())
 
 }
 \seealso{
-\code{\link{decorate}}, \code{\link{listDecorators}}
+Other decorators: 
+\code{\link{CoreStatistics}},
+\code{\link{FunctionImputation}}
+}
+\concept{decorators}
+\section{Super class}{
+\code{\link[distr6:DistributionDecorator]{distr6::DistributionDecorator}} -> \code{ExoticStatistics}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-cdfAntiDeriv}{\code{ExoticStatistics$cdfAntiDeriv()}}
+\item \href{#method-survivalAntiDeriv}{\code{ExoticStatistics$survivalAntiDeriv()}}
+\item \href{#method-survival}{\code{ExoticStatistics$survival()}}
+\item \href{#method-hazard}{\code{ExoticStatistics$hazard()}}
+\item \href{#method-cumHazard}{\code{ExoticStatistics$cumHazard()}}
+\item \href{#method-cdfPNorm}{\code{ExoticStatistics$cdfPNorm()}}
+\item \href{#method-pdfPNorm}{\code{ExoticStatistics$pdfPNorm()}}
+\item \href{#method-survivalPNorm}{\code{ExoticStatistics$survivalPNorm()}}
+\item \href{#method-squared2Norm}{\code{ExoticStatistics$squared2Norm()}}
+\item \href{#method-clone}{\code{ExoticStatistics$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate">}\href{../../distr6/html/DistributionDecorator.html#method-decorate}{\code{distr6::DistributionDecorator$decorate()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize">}\href{../../distr6/html/DistributionDecorator.html#method-initialize}{\code{distr6::DistributionDecorator$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdfAntiDeriv"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfAntiDeriv}{}}}
+\subsection{Method \code{cdfAntiDeriv()}}{
+The cdf anti-derivative is defined by \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
+where X is the distribution, \eqn{F_X} is the cdf of the distribution \eqn{X} and
+\eqn{a, b} are the \code{lower} and \code{upper} limits of integration.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$cdfAntiDeriv(lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{lower}}{\verb{(numeric(1)} \cr
+Lower bounds of integral.}
+
+\item{\code{upper}}{\verb{(numeric(1)} \cr
+Upper bounds of integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-survivalAntiDeriv"></a>}}
+\if{latex}{\out{\hypertarget{method-survivalAntiDeriv}{}}}
+\subsection{Method \code{survivalAntiDeriv()}}{
+The survival anti-derivative is defined by
+\deqn{as(a, b) = \int_a^b S_X(x) dx}
+where X is the distribution, \eqn{S_X} is the survival function of the distribution
+\eqn{X} and \eqn{a, b} are the \code{lower} and \code{upper} limits of integration.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$survivalAntiDeriv(lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{lower}}{\verb{(numeric(1)} \cr
+Lower bounds of integral.}
+
+\item{\code{upper}}{\verb{(numeric(1)} \cr
+Upper bounds of integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-survival"></a>}}
+\if{latex}{\out{\hypertarget{method-survival}{}}}
+\subsection{Method \code{survival()}}{
+The survival function is defined by
+\deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx}
+where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf
+and \eqn{f_X} is the pdf.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$survival(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{log}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hazard"></a>}}
+\if{latex}{\out{\hypertarget{method-hazard}{}}}
+\subsection{Method \code{hazard()}}{
+The hazard function is defined by
+\deqn{h_X(x) = \frac{f_X}{S_X}}{h_X(x) = f_X/S_X}
+where X is the distribution, \eqn{S_X} is the survival function and \eqn{f_X} is the pdf.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$hazard(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{log}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cumHazard"></a>}}
+\if{latex}{\out{\hypertarget{method-cumHazard}{}}}
+\subsection{Method \code{cumHazard()}}{
+The cumulative hazard function is defined analytically by
+\deqn{H_X(x) = -log(S_X)}
+where X is the distribution and \eqn{S_X} is the survival function.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$cumHazard(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{log}}{\code{logical(1)} \cr
+If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdfPNorm"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfPNorm}{}}}
+\subsection{Method \code{cdfPNorm()}}{
+The p-norm of the cdf is defined by
+\deqn{(\int_a^b |F_X|^p d\mu)^{1/p}}
+where X is the distribution, \eqn{F_X} is the cdf and \eqn{a, b}
+are the \code{lower} and \code{upper} limits of integration.
+
+Returns NULL if distribution is not continuous.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$cdfPNorm(p = 2, lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{p}}{\code{(integer(1))}
+Norm to evaluate.}
+
+\item{\code{lower}}{\verb{(numeric(1)} \cr
+Lower bounds of integral.}
+
+\item{\code{upper}}{\verb{(numeric(1)} \cr
+Upper bounds of integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pdfPNorm"></a>}}
+\if{latex}{\out{\hypertarget{method-pdfPNorm}{}}}
+\subsection{Method \code{pdfPNorm()}}{
+The p-norm of the pdf is defined by
+\deqn{(\int_a^b |f_X|^p d\mu)^{1/p}}
+where X is the distribution, \eqn{f_X} is the pdf and \eqn{a, b}
+are the \code{lower} and \code{upper} limits of integration.
+
+Returns NULL if distribution is not continuous.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$pdfPNorm(p = 2, lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{p}}{\code{(integer(1))}
+Norm to evaluate.}
+
+\item{\code{lower}}{\verb{(numeric(1)} \cr
+Lower bounds of integral.}
+
+\item{\code{upper}}{\verb{(numeric(1)} \cr
+Upper bounds of integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-survivalPNorm"></a>}}
+\if{latex}{\out{\hypertarget{method-survivalPNorm}{}}}
+\subsection{Method \code{survivalPNorm()}}{
+The p-norm of the survival function is defined by
+\deqn{(\int_a^b |S_X|^p d\mu)^{1/p}}
+where X is the distribution, \eqn{S_X} is the survival function and \eqn{a, b}
+are the \code{lower} and \code{upper} limits of integration.
+
+Returns NULL if distribution is not continuous.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$survivalPNorm(p = 2, lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{p}}{\code{(integer(1))}
+Norm to evaluate.}
+
+\item{\code{lower}}{\verb{(numeric(1)} \cr
+Lower bounds of integral.}
+
+\item{\code{upper}}{\verb{(numeric(1)} \cr
+Upper bounds of integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-squared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-squared2Norm}{}}}
+\subsection{Method \code{squared2Norm()}}{
+The squared 2-norm of the pdf is defined by
+\deqn{\int_a^b (f_X(u))^2 du}
+where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+are the \code{lower} and \code{upper} limits of integration.
+
+Returns NULL if distribution is not continuous.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$squared2Norm(lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{lower}}{\verb{(numeric(1)} \cr
+Lower bounds of integral.}
+
+\item{\code{upper}}{\verb{(numeric(1)} \cr
+Upper bounds of integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

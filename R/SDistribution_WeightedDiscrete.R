@@ -8,11 +8,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x_i) = p_i}
 #' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
-#' @templateVar additionalDetails Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the x values and the pdf as the probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#' @templateVar constructor data
-#' @templateVar arg1 \code{data} \tab data.frame \tab matrix-style object of observations and probabilities. See details. \cr
-#' @templateVar constructorDets an object that can be coerced to a data.frame containing columns 'sample' and at least one of 'pdf' and 'cdf', see examples.
-#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function and \code{\link{Empirical}} for the closely related Empirical distribution.
+#' @details
+#' Sampling from this distribution is performed with the [sample] function with the elements given
+#' as the x values and the pdf as the probabilities. The cdf and quantile assume that the
+#' elements are supplied in an indexed order (otherwise the results are meaningless).
+#'
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
 #' @examples
 #' x <- WeightedDiscrete$new(data = data.frame(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5)))
@@ -30,8 +38,6 @@
 #'
 #' summary(x)
 #' @export
-NULL
-
 WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
@@ -44,6 +50,10 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param data `([data.frame])`\cr
+    #' Data to define the distribution, should be coercable to a [data.frame]. `data` must include
+    #' `x` as the first column and either one or both of `pdf` and `cdf`. Where they are the respective
+    #' pdf and cdf of the corresponding `x` value.
     initialize = function(data, decorators = NULL) {
 
       data <- data.table::as.data.table(data)

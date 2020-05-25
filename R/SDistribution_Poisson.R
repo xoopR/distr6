@@ -9,33 +9,19 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
 #' @templateVar paramsupport \eqn{\lambda} > 0
 #' @templateVar distsupport the Naturals
-#' @templateVar omittedVars \code{entropy}
-#' @templateVar constructor rate = 1
-#' @templateVar arg1 \code{rate} \tab numeric \tab arrival rate. \cr
-#' @templateVar constructorDets \code{rate} as a positive numeric.
 #'
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_rate
+#' @template field_packages
 #'
-#' @examples
-#' x <- Poisson$new(rate = 2)
-#'
-#' # Update parameters
-#' x$setParameterValue(rate = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields

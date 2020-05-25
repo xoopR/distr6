@@ -10,34 +10,20 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{(\nu+2r)/2-1}exp(-x/2))/(2^{(\nu+2r)/2}\Gamma((\nu+2r)/2))}
 #' @templateVar paramsupport \eqn{\nu \ge 0}, \eqn{\lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar constructor df = 1, location = 0
-#' @templateVar arg1 \code{df} \tab numeric \tab  degrees of freedom. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab location (ncp in rstats). \cr
-#' @templateVar omittedVars \code{entropy} and \code{mode}
-#' @templateVar constructorDets \code{df} and \code{location} as non-negative numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{ChiSquared}} for the central Chi-Squared distribution.
 #'
-#' @examples
-#' x <- ChiSquaredNoncentral$new(df = 2, location = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_df
+#' @template param_poslocation
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(location = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
-NULL
-
 ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
