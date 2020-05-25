@@ -78,18 +78,42 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = NULL) {
+    mode = function(which = 'all') {
       return(self$getParameterValue("location"))
     },
+
+    #' @description
+    #' Returns the median of the distribution. If an analytical expression is available
+    #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
+    #' returns `self$quantile(0.5)`.
     median = function() {
       return(self$getParameterValue("location") - self$getParameterValue("scale")*log(log(2)))
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return((pi * self$getParameterValue("scale"))^2 / 6)
     },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       return((12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3)
     },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
         return(2.4)
@@ -97,15 +121,33 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
         return(5.4)
       }
     },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
     entropy = function(base = 2) {
       return(log(self$getParameterValue("scale"), base) - digamma(1) + 1)
     },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       return(gamma(1 - self$getParameterValue("scale") * t) * exp(self$getParameterValue("location") * t))
     },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       return(pracma::gammaz(1 - self$getParameterValue("scale") * t * 1i) * exp(1i * self$getParameterValue("location") * t))
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
     }

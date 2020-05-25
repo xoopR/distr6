@@ -96,6 +96,12 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
         return(NaN)
       }
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       if (self$getParameterValue("df2") > 4) {
         df1 <- self$getParameterValue("df1")
@@ -106,6 +112,12 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
         return(NaN)
       }
     },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       if (self$getParameterValue("df2") > 6) {
         df1 <- self$getParameterValue("df1")
@@ -115,6 +127,14 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
         return(NaN)
       }
     },
+
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (self$getParameterValue("df2") > 8) {
         df1 <- self$getParameterValue("df1")
@@ -130,6 +150,12 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
         return(NaN)
       }
     },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
     entropy = function(base = 2) {
       df1 <- self$getParameterValue("df1")
       df2 <- self$getParameterValue("df2")
@@ -137,14 +163,24 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
                log(df1 / df2, base) + (1 - df1 / 2) * digamma(1 + df1 / 2) - (1 + df2 / 2) * digamma(1 + df2 / 2) +
                ((df1 + df2) / 2) * digamma((df1 + df2) / 2))
     },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       return(NaN)
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       if (self$getParameterValue("df1") == 1) {

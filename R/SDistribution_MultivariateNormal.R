@@ -93,30 +93,56 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = NULL) {
+    mode = function(which = 'all') {
       return(self$getParameterValue("mean"))
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return(self$getParameterValue("cov"))
     },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
     entropy = function(base = 2) {
       return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
     },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       mean <- self$getParameterValue("mean")
       checkmate::assert(length(t) == length(mean))
       return(exp((mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
     },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       mean <- self$getParameterValue("mean")
       checkmate::assert(length(t) == length(mean))
       return(exp((1i * mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       K <- length(self$getParameterValue("mean"))
       if (is.null(lst)) {

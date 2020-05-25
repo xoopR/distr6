@@ -63,6 +63,8 @@ BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_object
     # stats
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       if (self$getParameterValue("shape1") == self$getParameterValue("shape2")) {

@@ -85,18 +85,30 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = NULL) {
+    mode = function(which = 'all') {
       draws <- self$getParameterValue("draws")
       successes <- self$getParameterValue("successes")
       size <- self$getParameterValue("size")
       return(floor(((draws + 1) * (successes + 1)) / (size + 2)))
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       draws <- self$getParameterValue("draws")
       successes <- self$getParameterValue("successes")
       size <- self$getParameterValue("size")
       return((draws * successes * (size - successes) * (size - draws)) / (size^2 * (size - 1)))
     },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       draws <- self$getParameterValue("draws")
       successes <- self$getParameterValue("successes")
@@ -104,6 +116,13 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
       return(((size - 2 * successes) * ((size - 1)^0.5) * (size - 2 * draws)) /
                (((draws * successes * (size - successes) * (size - draws))^0.5) * (size - 2)))
     },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       draws <- self$getParameterValue("draws")
       successes <- self$getParameterValue("successes")
@@ -122,6 +141,8 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       size <- self$getParameterValue("size")

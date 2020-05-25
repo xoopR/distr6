@@ -75,29 +75,64 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = NULL) {
+    mode = function(which = 'all') {
       return(self$getParameterValue("mean"))
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return(0)
     },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       return(NaN)
     },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       return(NaN)
     },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
     entropy = function(base = 2) {
       return(0)
     },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       return(exp(self$getParameterValue("mean") * t))
     },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       return(exp(self$getParameterValue("mean") * t * 1i))
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       private$.properties$support <- Set$new(self$getParameterValue("mean"))

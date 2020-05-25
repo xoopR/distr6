@@ -78,6 +78,12 @@ StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, loc
         return(NaN)
       }
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       df <- self$getParameterValue("df")
       mu <- self$getParameterValue("location")

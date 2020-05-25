@@ -113,7 +113,7 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = NULL) {
+    mode = function(which = 'all') {
       if (self$getParameterValue("form") == "sbf") {
         if (self$getParameterValue("size") <= 1) {
           return(0)
@@ -140,6 +140,12 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
         }
       }
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
         return(self$getParameterValue("size") * self$getParameterValue("prob") / (self$getParameterValue("qprob")^2))
@@ -147,6 +153,12 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
         return(self$getParameterValue("size") * self$getParameterValue("qprob") / (self$getParameterValue("prob")^2))
       }
     },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
         return((1 + self$getParameterValue("prob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("prob")))
@@ -154,6 +166,13 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
         return((1 + self$getParameterValue("qprob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("qprob")))
       }
     },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
         exkurtosis <- (self$getParameterValue("qprob")^2 - 6 * self$getParameterValue("qprob") + 6) /
@@ -169,6 +188,10 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
         return(exkurtosis + 3)
       }
     },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (t < -log(self$getParameterValue("prob"))) {
         if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
@@ -180,6 +203,10 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
         return(NaN)
       }
     },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
         return((self$getParameterValue("qprob") / (1 - self$getParameterValue("prob") * exp(t * 1i)))^self$getParameterValue("size"))
@@ -187,6 +214,10 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
         return((self$getParameterValue("prob") / (1 - self$getParameterValue("qprob") * exp(t * 1i)))^self$getParameterValue("size"))
       }
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       if (abs(z) < 1 / self$getParameterValue("prob")) {
         if (self$getParameterValue("form") == "sbf") {
@@ -204,6 +235,8 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       if (self$getParameterValue("form") == "tbf" | self$getParameterValue("form") == "tbs") {

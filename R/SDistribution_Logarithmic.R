@@ -79,10 +79,22 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
     mode = function(which = "all") {
       return(1)
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       theta <- self$getParameterValue("theta")
       return((-theta^2 - theta * log(1 - theta)) / ((1 - theta)^2 * (log(1 - theta))^2))
     },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       theta <- self$getParameterValue("theta")
 
@@ -91,6 +103,13 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
 
       return((s1 + s2) / (self$stdev()^3))
     },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       theta <- self$getParameterValue("theta")
 
@@ -112,6 +131,10 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
         return(kurtosis)
       }
     },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (t < -log(self$getParameterValue("theta"))) {
         return(log(1 - self$getParameterValue("theta") * exp(t)) / log(1 - self$getParameterValue("theta")))
@@ -119,9 +142,17 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
         return(NaN)
       }
     },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       return(log(1 - self$getParameterValue("theta") * exp(t * 1i)) / log(1 - self$getParameterValue("theta")))
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       if (abs(z) < 1 / self$getParameterValue("theta")) {
         return(log(1 - self$getParameterValue("theta") * z) / log(1 - self$getParameterValue("theta")))

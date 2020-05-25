@@ -84,16 +84,27 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = NULL) {
+    mode = function(which = 'all') {
       location <- self$getParameterValue("location")
       scale <- self$getParameterValue("scale")
       shape <- self$getParameterValue("shape")
 
       return(location + ((scale/shape) * ((((1 - shape)/(1 + shape))^shape) - 1)))
     },
+
+    #' @description
+    #' Returns the median of the distribution. If an analytical expression is available
+    #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
+    #' returns `self$quantile(0.5)`.
     median = function() {
       return(self$getParameterValue("location"))
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       scale <- self$getParameterValue("scale")
       shape <- self$getParameterValue("shape")
@@ -101,11 +112,17 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
 
       return((scale^2/shape^2) * ((2 * shapi / sin(2 * shapi)) - ((shapi/sin(shapi))^2)))
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       private$.properties$support <- Interval$new(self$getParameterValue("location"), Inf, type = "()")

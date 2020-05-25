@@ -86,6 +86,12 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistrib
         return(NaN)
       }
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       if (self$getParameterValue("df2") > 4) {
         df1 <- self$getParameterValue("df1")
@@ -99,6 +105,8 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistrib
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       if (self$getParameterValue("df1") == 1) {

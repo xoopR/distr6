@@ -59,12 +59,21 @@ Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' Returns the median of the distribution. If an analytical expression is available
+    #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
+    #' returns `self$quantile(0.5)`.
     median = function() {
       scale <- self$getParameterValue("scale")
       shape <- self$getParameterValue("shape")
 
       return((1/scale) * log((-1/shape) * log(1/2) + 1))
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
     }

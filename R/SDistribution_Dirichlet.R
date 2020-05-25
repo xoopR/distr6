@@ -87,13 +87,19 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = NULL) {
+    mode = function(which = 'all') {
       params <- self$getParameterValue("params")
       K <- self$getParameterValue("K")
       mode <- rep(NaN, K)
       mode[params > 1] <- (params - 1) / (sum(params) - K)
       return(mode)
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       K <- self$getParameterValue("K")
       params <- self$getParameterValue("params")
@@ -104,16 +110,28 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
       diag(covar) <- var
       return(covar)
     },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
     entropy = function(base = 2) {
       params <- self$getParameterValue("params")
       return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params)) * digamma(sum(params)) -
                sum((params - 1) * digamma(params)))
     },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
     },
 
     # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) {
         lst <- list(...)

@@ -228,15 +228,6 @@ NULL
 #' @param object Distribution.
 #' @param t integer to evaluate characteristic function at.
 #'
-#' @details The characteristic function is defined by
-#' \deqn{cf_X(t) = E_X[exp(xti)]}
-#' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
-#'
 #' @return Characteristic function evaluated at t as a numeric.
 #'
 #' @export
@@ -250,15 +241,6 @@ NULL
 #'
 #' @param object Distribution.
 #' @param z integer to evaluate characteristic function at.
-#'
-#' @details The probability generating function is defined by
-#' \deqn{pgf_X(z) = E_X[exp(z^x)]}
-#' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @return Probability generating function evaluated at z as a numeric if distribution is discrete,
 #' otherwise NaN.
@@ -275,17 +257,6 @@ NULL
 #'
 #' @usage entropy(object, base = 2)
 #'
-#' @details The entropy of a (discrete) distribution is defined by
-#' \deqn{- \sum (f_X)log(f_X)}
-#' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for continuous distributions.
-#' The base of the logarithm of the equation determines the type of entropy computed. By default we use
-#' base 2 to compute entropy in 'Shannons' or 'bits'.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
-#'
 #' @return Entropy with given base as a numeric.
 #'
 #' @export
@@ -298,17 +269,6 @@ NULL
 #' @usage skewness(object)
 #'
 #' @param object Distribution.
-#'
-#' @details The skewness of a distribution is defined by the third standardised moment of the
-#' distribution,
-#' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-#' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-#' \eqn{\sigma} is the standard deviation of the distribution.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @return Skewness as a numeric.
 #'
@@ -324,18 +284,7 @@ NULL
 #' @param object Distribution.
 #' @param excess logical, if TRUE (default) excess Kurtosis returned
 #'
-#' @details The kurtosis of a distribution is defined by the fourth standardised moment of the
-#' distribution,
-#' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
-#' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-#' standard deviation of the distribution. Excess Kurtosis is Kurtosis - 3.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
 #' @return Kurtosis as a numeric.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}
 #'
 #' @export
 NULL
@@ -349,17 +298,7 @@ NULL
 #'
 #' @param object Distribution.
 #'
-#' @details The variance of a distribution is defined by the formula
-#' \deqn{var_X = E[X^2] - E[X]^2}
-#' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
-#' covariance matrix is returned.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
 #' @return Variance as a numeric.
-#'
-#' @seealso \code{\link{CoreStatistics}}, \code{\link{decorate}} and \code{\link{genExp}}.
 #'
 #' @export
 NULL
