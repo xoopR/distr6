@@ -99,6 +99,11 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
     mean = function() {
       return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode")) / 3)
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       return(self$getParameterValue("mode"))
     },

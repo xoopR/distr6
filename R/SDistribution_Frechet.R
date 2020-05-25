@@ -84,6 +84,11 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
         return(self$getParameterValue("minimum") + self$getParameterValue("scale") * gamma(1 - 1 / self$getParameterValue("shape")))
       }
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       return(self$getParameterValue("minimum") +
                self$getParameterValue("scale") *

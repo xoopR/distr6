@@ -79,6 +79,11 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
 
       return(location + ((scale/shape) * (((pi*shape)/(sin(pi*shape))) - 1)))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       location <- self$getParameterValue("location")
       scale <- self$getParameterValue("scale")

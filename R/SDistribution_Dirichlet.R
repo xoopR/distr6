@@ -82,6 +82,11 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
     mean = function() {
       return(self$getParameterValue("params") / sum(self$getParameterValue("params")))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       params <- self$getParameterValue("params")
       K <- self$getParameterValue("K")

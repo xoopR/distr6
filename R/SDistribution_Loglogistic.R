@@ -76,6 +76,11 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
       return((self$getParameterValue("scale") * pi / self$getParameterValue("shape")) /
                sin(pi / self$getParameterValue("shape")))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       shape <- self$getParameterValue("shape")
       return(self$getParameterValue("scale") * ((shape - 1) / (shape + 1))^(1 / shape))

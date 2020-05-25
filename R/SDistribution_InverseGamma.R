@@ -78,6 +78,11 @@ InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = 
         return(NaN)
       }
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       return(self$getParameterValue("scale") / (self$getParameterValue("shape") + 1))
     },

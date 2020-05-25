@@ -76,6 +76,11 @@ Weibull <- R6Class("Weibull", inherit = SDistribution, lock_objects = F,
     mean = function() {
       return(self$getParameterValue("scale") * gamma(1 + 1 / self$getParameterValue("shape")))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       scale <- self$getParameterValue("scale")
       shape <- self$getParameterValue("shape")

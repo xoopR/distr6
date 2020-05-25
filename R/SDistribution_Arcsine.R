@@ -10,20 +10,10 @@
 #' @templateVar distsupport \eqn{[a, b]}
 #' @templateVar omittedVars \code{cf} and \code{mgf}
 #' @templateVar additionalDetails When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta}} is used for sampling, otherwise via inverse transform
-#' @templateVar constructor lower = 0, upper = 1
-#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
-#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
-#' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
-#' @templateVar additionalSeeAlso \code{\link{rbeta}} for the Beta distribution sampling function.
 #'
-#' @template param_decorators
 #' @template param_lower
 #' @template param_upper
-#' @template class_distribution
-#' @template method_setParameterValue
-#' @template method_mode
-#' @template method_kurtosis
-#' @template method_entropy
+#' @template class_sdistribution
 #'
 #' @export
 NULL
@@ -61,6 +51,11 @@ Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F,
     mean = function() {
       return((self$getParameterValue("upper") + self$getParameterValue("lower")) / 2)
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = "all") {
       if (which == "all") {
         return(c(self$getParameterValue("lower"), self$getParameterValue("upper")))

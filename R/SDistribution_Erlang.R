@@ -76,6 +76,11 @@ Erlang <- R6Class("Erlang", inherit = SDistribution, lock_objects = F,
     mean = function() {
       self$getParameterValue("shape") / self$getParameterValue("rate")
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       (self$getParameterValue("shape") - 1) / self$getParameterValue("rate")
     },

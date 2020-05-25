@@ -71,6 +71,11 @@ DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_obje
     mean = function() {
       return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = "all") {
       if (which == "all") {
         return(self$inf:self$sup)

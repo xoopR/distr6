@@ -108,6 +108,11 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
     mean = function() {
       return(self$getParameterValue("mean"))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       if (self$getParameterValue("form") == "sbf") {
         if (self$getParameterValue("size") <= 1) {

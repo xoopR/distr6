@@ -83,6 +83,11 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
         return(NaN)
       }
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function() {
       if (self$getParameterValue("df1") > 2) {
         return(((self$getParameterValue("df1") - 2) * self$getParameterValue("df2")) /

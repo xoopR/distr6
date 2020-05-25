@@ -70,6 +70,11 @@ Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
     mean = function() {
       return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = "all") {
       if (self$getParameterValue("shape1") <= 1 & self$getParameterValue("shape2") > 1) {
         return(0)

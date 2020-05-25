@@ -92,6 +92,11 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
       data <- self$getParameterValue("data")
       return(sum(data$x * data$pdf))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = "all") {
       data <- self$getParameterValue("data")
 

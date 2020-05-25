@@ -80,6 +80,11 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
     mean = function() {
       return(self$getParameterValue("draws") * self$getParameterValue("successes") / self$getParameterValue("size"))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       draws <- self$getParameterValue("draws")
       successes <- self$getParameterValue("successes")

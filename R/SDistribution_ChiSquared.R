@@ -74,6 +74,11 @@ ChiSquared <- R6Class("ChiSquared", inherit = SDistribution, lock_objects = F,
     mean = function() {
       return(self$getParameterValue("df"))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function() {
       return(max(self$getParameterValue("df") - 2, 0))
     },

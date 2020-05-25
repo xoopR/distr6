@@ -76,6 +76,11 @@ Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
         return((self$getParameterValue("shape") * self$getParameterValue("scale")) / (self$getParameterValue("shape") - 1))
       }
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = NULL) {
       return(self$getParameterValue("scale"))
     },

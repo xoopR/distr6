@@ -423,14 +423,6 @@ NULL
 #' @param ... Additional arguments.
 #'
 #' @description Arithmetic mean for the probability distribution.
-#' @details The arithmetic mean of a (discrete) probability distribution X is the expectation
-#' \deqn{E_X(X) = \sum p_X(x)*x}
-#' with an integration analogue for continuous distributions.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}}, \code{\link{decorate}} and \code{\link{genExp}}.
 #'
 #' @return Mean as a numeric.
 #'

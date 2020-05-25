@@ -71,6 +71,11 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
       theta <- self$getParameterValue("theta")
       return(-theta / (log(1 - theta) * (1 - theta)))
     },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
     mode = function(which = "all") {
       return(1)
     },
