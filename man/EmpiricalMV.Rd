@@ -31,6 +31,28 @@ EmpiricalMV$new(MultivariateNormal$new()$rand(100))
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
+\seealso{
+Other discrete distributions: 
+\code{\link{Bernoulli}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{Empirical}},
+\code{\link{Geometric}},
+\code{\link{Hypergeometric}},
+\code{\link{Logarithmic}},
+\code{\link{Multinomial}},
+\code{\link{NegativeBinomial}},
+\code{\link{WeightedDiscrete}}
+
+Other multivariate distributions: 
+\code{\link{Dirichlet}},
+\code{\link{Multinomial}},
+\code{\link{MultivariateNormal}}
+}
+\concept{discrete distributions}
+\concept{multivariate distributions}
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{EmpiricalMV}
 }
@@ -100,7 +122,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 Matrix-like object where each column is a vector of observed samples corresponding
 to each variable.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
@@ -140,7 +162,7 @@ maxima).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
 Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
 which mode to return.}
 }

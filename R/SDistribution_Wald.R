@@ -13,6 +13,9 @@
 #' @templateVar aka Inverse Normal
 #' @aliases InverseNormal InverseGaussian
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @details
 #' Sampling is performed as per Michael, Schucany, Haas (1976).
 #'

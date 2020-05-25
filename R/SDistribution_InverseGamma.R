@@ -22,6 +22,9 @@
 #' @template param_scale
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = F,
   public = list(

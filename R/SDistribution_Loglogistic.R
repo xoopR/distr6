@@ -24,6 +24,9 @@
 #' @template param_shape
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
   public = list(

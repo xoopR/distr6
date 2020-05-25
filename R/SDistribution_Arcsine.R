@@ -20,6 +20,9 @@
 #' @template method_setParameterValue
 #' @template param_decorators
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F,
   public = list(

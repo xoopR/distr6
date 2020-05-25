@@ -23,6 +23,9 @@
 #' @template param_upper
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F,
   public = list(

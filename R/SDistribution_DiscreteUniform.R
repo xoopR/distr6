@@ -20,6 +20,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F,
   public = list(

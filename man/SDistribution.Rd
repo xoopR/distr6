@@ -68,7 +68,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 
 \item{\code{support}}{\verb{[set6::Set]} \cr

@@ -19,6 +19,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
   public = list(

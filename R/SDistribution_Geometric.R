@@ -25,6 +25,9 @@
 #' @template param_qprob
 #' @template field_packages
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
   public = list(

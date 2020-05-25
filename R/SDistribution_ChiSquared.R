@@ -20,6 +20,9 @@
 #' @template param_df
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 ChiSquared <- R6Class("ChiSquared", inherit = SDistribution, lock_objects = F,
   public = list(

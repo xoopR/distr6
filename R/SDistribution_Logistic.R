@@ -21,6 +21,9 @@
 #' @template param_scale
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Logistic <- R6Class("Logistic", inherit = SDistribution, lock_objects = F,
   public = list(

@@ -21,6 +21,9 @@
 #' @template param_ratescale
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
   public = list(

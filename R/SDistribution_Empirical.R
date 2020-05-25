@@ -22,6 +22,9 @@
 #' @template method_setParameterValue
 #' @template param_decorators
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
   public = list(

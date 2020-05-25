@@ -20,7 +20,7 @@ numerical results are used with a message.
 \examples{
 x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
 support = set6::Interval$new(1, 4), type = set6::Reals$new())
-decorate(x, FunctionImputation)
+decorate(x, "FunctionImputation")
 
 x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
 support = set6::Interval$new(1, 4), type = set6::Reals$new(),

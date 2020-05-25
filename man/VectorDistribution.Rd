@@ -424,7 +424,7 @@ Returns vector of modes from each wrapped \link{Distribution}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
 Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
 which mode to return.}
 }

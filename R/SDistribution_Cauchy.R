@@ -22,6 +22,9 @@
 #' @template param_locationscale
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F,
   public = list(

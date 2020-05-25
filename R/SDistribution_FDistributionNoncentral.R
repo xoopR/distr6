@@ -22,6 +22,9 @@
 #' @template param_location
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistribution, lock_objects = F,
   public = list(

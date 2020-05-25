@@ -19,6 +19,65 @@ The distribution is supported on \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
+\seealso{
+Other discrete distributions: 
+\code{\link{Bernoulli}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{EmpiricalMV}},
+\code{\link{Empirical}},
+\code{\link{Geometric}},
+\code{\link{Logarithmic}},
+\code{\link{Multinomial}},
+\code{\link{NegativeBinomial}},
+\code{\link{WeightedDiscrete}}
+
+Other univariate distributions: 
+\code{\link{Arcsine}},
+\code{\link{Bernoulli}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{Empirical}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Frechet}},
+\code{\link{Gamma}},
+\code{\link{Geometric}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logarithmic}},
+\code{\link{Logistic}},
+\code{\link{Loglogistic}},
+\code{\link{Lognormal}},
+\code{\link{NegativeBinomial}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}},
+\code{\link{WeightedDiscrete}}
+}
+\concept{discrete distributions}
+\concept{univariate distributions}
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{Hypergeometric}
 }
@@ -101,7 +160,7 @@ is ignored. Defined on positive Naturals.}
 \item{\code{draws}}{\code{(integer(1))}\cr
 Number of draws from the distribution, defined on the positive Naturals.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
@@ -133,7 +192,7 @@ maxima).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
 Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
 which mode to return.}
 }

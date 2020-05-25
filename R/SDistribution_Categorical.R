@@ -22,6 +22,9 @@
 #' @template method_setParameterValue
 #' @template param_decorators
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
   public = list(

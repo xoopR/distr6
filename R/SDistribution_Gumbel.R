@@ -21,6 +21,9 @@
 #' @template param_locationscale
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
   public = list(

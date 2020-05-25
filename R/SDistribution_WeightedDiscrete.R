@@ -22,6 +22,9 @@
 #' @template method_setParameterValue
 #' @template param_decorators
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @examples
 #' x <- WeightedDiscrete$new(data = data.frame(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5)))
 #' WeightedDiscrete$new(data = data.frame(x = 1:3, cdf = c(1 / 5, 4 / 5, 1))) # equivalently

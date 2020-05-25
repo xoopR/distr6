@@ -21,6 +21,9 @@
 #' @template param_rate
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F,
   public = list(

@@ -37,14 +37,19 @@ DistributionDecorator <- R6Class("DistributionDecorator",
     #' @description
     #' Decorates the given distribution with the methods available in this decorator.
     decorate = function(distribution) {
-      methods <- self[self$methods]
+
+      assert_pkgload(self$packages)
+
+      methods <- setdiff(self$methods, names(distribution))
 
       env = as.environment(distribution)
       for (i in seq_along(methods)) {
-        formals(methods[[i]]) <- c(formals(methods[[i]]),
+        fun <- function() {}
+        formals(fun) <- c(formals(self[[methods[[i]]]]),
                                    list(self = distribution),
                                    list(private = distribution$.__enclos_env__$private))
-        assign(names(methods)[[i]], methods[[i]], envir = env)
+        body(fun) <- body(self[[methods[[i]]]])
+        assign(methods[[i]], fun, envir = env)
       }
 
       invisible(self)

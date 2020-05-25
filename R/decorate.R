@@ -41,17 +41,23 @@ decorate <- function(distribution, decorators) {
   checkmate::assertSubset(decorators, listDecorators())
   assertDistribution(distribution)
 
-  if (length(setdiff(distribution$decorators, decorators)) == 0) {
-    message(paste(dist_name, "is already decorated with", paste0(decors_names, collapse = ",")))
+  if (length(setdiff(distribution$decorators, decorators)) == 0 &
+      !is.null(distribution$decorators)) {
+    message(paste(distribution$name, "is already decorated with",
+                  paste0(decorators, collapse = ",")))
     return(NULL)
   } else {
+    if (!is.null(distribution$decorators)) {
+      decorators = setdiff(distribution$decorators, decorators)
+    }
+
     lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution))
 
     distribution$.__enclos_env__$private$.updateDecorators(
       c(distribution$decorators,decorators)
     )
 
-    message(paste(dist_name, "is now decorated with", paste0(decors_names, collapse = ",")))
+    message(paste(distribution$name, "is now decorated with", paste0(decorators, collapse = ",")))
     return(distribution)
   }
 }

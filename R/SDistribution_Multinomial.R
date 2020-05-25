@@ -21,6 +21,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family discrete distributions
+#' @family multivariate distributions
+#'
 #' @export
 Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
   public = list(

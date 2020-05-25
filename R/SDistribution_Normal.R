@@ -22,6 +22,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F,
   public = list(

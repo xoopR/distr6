@@ -13,12 +13,19 @@
 #' @template method_cdf
 #' @template method_quantile
 #' @template method_rand
+#' @template class_distribution
 #'
 #' @return Returns R6 object of class Distribution.
 #'
 #' @export
 Distribution <- R6Class("Distribution", lock_objects = FALSE,
   public = list(
+    name = character(0),
+
+    short_name =  character(0),
+
+    description =  NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param name `character(1)` \cr
@@ -837,9 +844,6 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
   ),
 
   private = list(
-    name = character(0),
-    short_name =  character(0),
-    description =  NULL,
     .parameters =  NULL,
     .workingSupport =  NULL,
     .decorators =  NULL,

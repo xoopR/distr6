@@ -36,6 +36,47 @@ Devroye, Luc (1986).
 Non-Uniform Random Variate Generation.
 Springer-Verlag. ISBN 0-387-96305-7.
 }
+\seealso{
+Other continuous distributions: 
+\code{\link{Arcsine}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Frechet}},
+\code{\link{Gamma}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logistic}},
+\code{\link{Loglogistic}},
+\code{\link{Lognormal}},
+\code{\link{MultivariateNormal}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}}
+
+Other multivariate distributions: 
+\code{\link{EmpiricalMV}},
+\code{\link{Multinomial}},
+\code{\link{MultivariateNormal}}
+}
+\concept{continuous distributions}
+\concept{multivariate distributions}
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{Dirichlet}
 }
@@ -102,7 +143,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \item{\code{params}}{\code{numeric()}\cr
 Vector of concentration parameters of the distribution defined on the positive Reals.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
@@ -134,7 +175,7 @@ maxima).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
 Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
 which mode to return.}
 }

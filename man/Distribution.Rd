@@ -62,6 +62,17 @@ b$rand(10)
 mvn <- MultivariateNormal$new()
 mvn$rand(5)
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{Full name of distribution.}
+
+\item{\code{short_name}}{Short name of distribution for printing.}
+
+\item{\code{description}}{Brief description of the distribution.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -189,7 +200,7 @@ Simulation function for drawing random samples from the distribution.}
 Parameter set for defining the parameters in the distribution, which should be set before
 construction.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 
 \item{\code{valueSupport}}{\code{(character(1))} \cr

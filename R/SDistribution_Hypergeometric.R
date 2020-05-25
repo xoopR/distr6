@@ -20,6 +20,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_objects = F,
   public = list(

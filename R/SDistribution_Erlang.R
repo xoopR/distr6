@@ -21,6 +21,9 @@
 #' @template param_ratescale
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Erlang <- R6Class("Erlang", inherit = SDistribution, lock_objects = F,
   public = list(

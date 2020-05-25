@@ -14,7 +14,7 @@
 #' @examples
 #' x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
 #' support = set6::Interval$new(1, 4), type = set6::Reals$new())
-#' decorate(x, FunctionImputation)
+#' decorate(x, "FunctionImputation")
 #'
 #' x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
 #' support = set6::Interval$new(1, 4), type = set6::Reals$new(),
@@ -39,25 +39,25 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
         stop("FunctionImputation is currently only supported for univariate distributions.")
       }
       pdist = distribution$.__enclos_env__$private
-      if (!pdist$.isPdf) {
+      if (!isPdf(distribution)) {
         pdf <- FunctionImputation$public_methods$pdf
         formals(pdf)$self <- distribution
         pdist$.pdf <- pdf
         pdist$.isPdf <- TRUE
       }
-      if (!pdist$.isCdf) {
+      if (!isCdf(distribution)) {
         cdf <- FunctionImputation$public_methods$cdf
         formals(cdf)$self <- distribution
         pdist$.cdf <- cdf
         pdist$.isCdf <- TRUE
       }
-      if (!pdist$.isQuantile) {
+      if (!isQuantile(distribution)) {
         quant <- FunctionImputation$public_methods$quantile
         formals(quant)$self <- distribution
         pdist$.quantile <- quant
         pdist$.isQuantile <- TRUE
       }
-      if (!pdist$.isRand) {
+      if (!isRand(distribution)) {
         rand <- FunctionImputation$public_methods$rand
         formals(rand)$self <- distribution
         pdist$.rand <- rand
@@ -71,15 +71,19 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' Numerical approximation to pdf. Imputed by subtracting or taking the numerical derivative
     #' of the cdf with [pracma::fderiv].
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
-      # CDF2PDF
+
       if (testUnivariate(self)) {
+        data <- pdq_point_assert(..., self = self, data = data)
         if (testDiscrete(self)) {
-          return(self$cdf(..) - self$cdf(... - 1))
+          return(self$cdf(data = data) - self$cdf(data = data - 1))
         } else if (testContinuous(self)) {
           message(.distr6$message_numeric)
-          return(pracma::fderiv(self$cdf, ...))
+          return(pracma::fderiv(self$cdf, data))
         }
+      } else {
+        stop("PDF imputation currently only implemented for univariate distributions.")
       }
+
     },
 
     #' @description
@@ -95,11 +99,10 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
 
       message(.distr6$message_numeric)
 
-      # PDF2CDF
       if (testUnivariate(self)) {
 
-        data <- x
-        # if (testDiscrete(self)) {
+        data <- pdq_point_assert(..., self = self, data = data)
+
         if (!is.null(.cdf_x)) {
           x <- .cdf_x
         } else {
@@ -139,13 +142,13 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
                         n = 10001) {
 
       message(.distr6$message_numeric)
-
+      data <- pdq_point_assert(..., self = self, data = data)
       x <- impute_genx(self, n)
 
       if (private$.isCdf) {
-        return(NumericQuantile(p, x, self$cdf(x), lower.tail, log.p))
+        return(NumericQuantile(data, x, self$cdf(x), lower.tail, log.p))
       } else {
-        return(NumericQuantile(p, x, self$cdf(x, n = n, .cdf_x = x), lower.tail, log.p))
+        return(NumericQuantile(data, x, self$cdf(x, n = n, .cdf_x = x), lower.tail, log.p))
       }
 
     },

@@ -20,6 +20,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
   public = list(

@@ -139,7 +139,7 @@ Optional name of wrapped distribution.}
 \item{\code{short_name}}{\code{(character(1))}\cr
 Optional short name/ID of wrapped distribution.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 
 \item{\code{decorators}}{\code{(character())} \cr

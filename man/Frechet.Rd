@@ -22,6 +22,84 @@ Also known as the Inverse Weibull distribution.
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
+\seealso{
+Other continuous distributions: 
+\code{\link{Arcsine}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Dirichlet}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Gamma}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logistic}},
+\code{\link{Loglogistic}},
+\code{\link{Lognormal}},
+\code{\link{MultivariateNormal}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}}
+
+Other univariate distributions: 
+\code{\link{Arcsine}},
+\code{\link{Bernoulli}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{Empirical}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Gamma}},
+\code{\link{Geometric}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{Hypergeometric}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logarithmic}},
+\code{\link{Logistic}},
+\code{\link{Loglogistic}},
+\code{\link{Lognormal}},
+\code{\link{NegativeBinomial}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}},
+\code{\link{WeightedDiscrete}}
+}
+\concept{continuous distributions}
+\concept{univariate distributions}
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{Frechet}
 }
@@ -96,7 +174,7 @@ Scale parameter, defined on the positive Reals.}
 \item{\code{minimum}}{\code{(numeric(1))}\cr
 Minimum of the distribution, defined on the Reals.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
@@ -128,7 +206,7 @@ maxima).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
 Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
 which mode to return.}
 }

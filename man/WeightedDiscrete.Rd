@@ -39,6 +39,65 @@ summary(x)
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
+\seealso{
+Other discrete distributions: 
+\code{\link{Bernoulli}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{EmpiricalMV}},
+\code{\link{Empirical}},
+\code{\link{Geometric}},
+\code{\link{Hypergeometric}},
+\code{\link{Logarithmic}},
+\code{\link{Multinomial}},
+\code{\link{NegativeBinomial}}
+
+Other univariate distributions: 
+\code{\link{Arcsine}},
+\code{\link{Bernoulli}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{Empirical}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Frechet}},
+\code{\link{Gamma}},
+\code{\link{Geometric}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{Hypergeometric}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logarithmic}},
+\code{\link{Logistic}},
+\code{\link{Loglogistic}},
+\code{\link{Lognormal}},
+\code{\link{NegativeBinomial}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}}
+}
+\concept{discrete distributions}
+\concept{univariate distributions}
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{WeightedDiscrete}
 }
@@ -109,7 +168,7 @@ Data to define the distribution, should be coercable to a \link{data.frame}. \co
 \code{x} as the first column and either one or both of \code{pdf} and \code{cdf}. Where they are the respective
 pdf and cdf of the corresponding \code{x} value.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
@@ -141,7 +200,7 @@ maxima).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
 Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
 which mode to return.}
 }

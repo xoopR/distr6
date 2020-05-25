@@ -22,6 +22,9 @@
 #' @template param_df
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 StudentT <- R6Class("StudentT", inherit = SDistribution, lock_objects = F,
   public = list(

@@ -24,6 +24,9 @@
 #' @template param_shape
 #' @template param_scale
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
   public = list(

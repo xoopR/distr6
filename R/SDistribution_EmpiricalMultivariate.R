@@ -21,6 +21,9 @@
 #' @template method_setParameterValue
 #' @template param_decorators
 #'
+#' @family discrete distributions
+#' @family multivariate distributions
+#'
 #' @export
 EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
   public = list(

@@ -21,6 +21,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
   public = list(

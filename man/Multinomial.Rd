@@ -23,6 +23,28 @@ omitted as no closed form analytic expression could be found, decorate with \cod
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
+\seealso{
+Other discrete distributions: 
+\code{\link{Bernoulli}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{EmpiricalMV}},
+\code{\link{Empirical}},
+\code{\link{Geometric}},
+\code{\link{Hypergeometric}},
+\code{\link{Logarithmic}},
+\code{\link{NegativeBinomial}},
+\code{\link{WeightedDiscrete}}
+
+Other multivariate distributions: 
+\code{\link{Dirichlet}},
+\code{\link{EmpiricalMV}},
+\code{\link{MultivariateNormal}}
+}
+\concept{discrete distributions}
+\concept{multivariate distributions}
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{Multinomial}
 }
@@ -96,7 +118,7 @@ Number of trials, defined on the positive Naturals.}
 Vector of probabilities, each between $\link{0, 1}$. Automatically normalised by
 \code{probs = probs/sum(probs)}.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}

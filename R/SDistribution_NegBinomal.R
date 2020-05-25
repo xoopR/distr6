@@ -31,6 +31,9 @@
 #' @template param_decorators
 #' @template field_packages
 #'
+#' @family discrete distributions
+#' @family univariate distributions
+#'
 #' @export
 NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F,
   public = list(

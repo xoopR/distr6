@@ -30,6 +30,47 @@ Computational Statistics.
 Statistics and Computing. New York: Springer. pp. 315–316.
 doi:10.1007/978-0-387-98144-4. ISBN 978-0-387-98143-7.
 }
+\seealso{
+Other continuous distributions: 
+\code{\link{Arcsine}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Dirichlet}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Frechet}},
+\code{\link{Gamma}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logistic}},
+\code{\link{Loglogistic}},
+\code{\link{Lognormal}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}}
+
+Other multivariate distributions: 
+\code{\link{Dirichlet}},
+\code{\link{EmpiricalMV}},
+\code{\link{Multinomial}}
+}
+\concept{continuous distributions}
+\concept{multivariate distributions}
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{MultivariateNormal}
 }
@@ -110,7 +151,7 @@ Precision of the distribution, inverse of the covariance matrix. If supplied the
 ignored. Given as a matrix or vector coerced to a
 matrix via \code{matrix(cov, nrow = K, byrow = FALSE)}. Must be semi-definite.}
 
-\item{\code{decorators}}{\code{character()} \cr
+\item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
@@ -142,7 +183,7 @@ maxima).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
 Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
 which mode to return.}
 }

@@ -35,6 +35,9 @@
 #' d$pdf(0.1, 0.4, 0.5)
 #' d$pdf(c(0.3, 0.2), c(0.6, 0.9), c(0.9, 0.1))
 #'
+#' @family continuous distributions
+#' @family multivariate distributions
+#'
 #' @export
 Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
   public = list(

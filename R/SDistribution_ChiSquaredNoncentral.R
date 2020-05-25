@@ -23,6 +23,9 @@
 #' @template param_poslocation
 #' @template field_packages
 #'
+#' @family continuous distributions
+#' @family univariate distributions
+#'
 #' @export
 ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = F,
   public = list(

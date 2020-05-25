@@ -27,6 +27,9 @@
 #' @template method_setParameterValue
 #' @template param_decorators
 #'
+#' @family continuous distributions
+#' @family multivariate distributions
+#'
 #' @export
 MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F,
   public = list(
