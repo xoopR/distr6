@@ -45,6 +45,9 @@ Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mode = 1, decorators = NULL, verbose = FALSE) {
 
       private$.parameters <- getParameterSet(self, mode, verbose)

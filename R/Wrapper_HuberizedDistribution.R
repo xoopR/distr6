@@ -1,53 +1,33 @@
 #' @name HuberizedDistribution
 #' @title Distribution Huberization Wrapper
 #' @description A wrapper for huberizing any probability distribution at given limits.
+#' @template class_wrapper
+#' @template class_trunchub
+#' @template method_setParameterValue
 #'
-#' @details Huberizes a distribution at lower and upper limits, using the formula
-#'
-#' \eqn{f_H(x) = F(x), if x \le lower}
-#'
-#' \eqn{f_H(x) = f(x), if lower < x < upper}
-#'
-#' \eqn{f_H(x) = F(x), if x \ge upper}
-#'
+#' @details
+#' Huberizes a distribution at lower and upper limits, using the formula
+#' \deqn{f_H(x) = F(x), if x \le lower}
+#' \deqn{f_H(x) = f(x), if lower < x < upper}
+#' \deqn{f_H(x) = F(x), if x \ge upper}
 #' where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and \eqn{f_X}/\eqn{F_X} is the
 #' pdf/cdf of the original distribution.
 #'
-#' If lower or upper are NULL they are taken to be \code{self$inf} and \code{self$sup} respectively.
-#'
-#' The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
-#' \code{FunctionImputation} first.
-#'
-#' @section Constructor: HuberizedDistribution$new(distribution, lower = NULL, upper = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distribution} \tab distribution \tab Distribution to huberize. \cr
-#' \code{lower} \tab numeric \tab Lower limit for huberization. \cr
-#' \code{upper} \tab numeric \tab Upper limit for huberization.
-#' }
-#'
-#'
-#' @inheritSection DistributionWrapper Public Variables
-#' @inheritSection DistributionWrapper Public Methods
-#'
-#' @seealso \code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{huberize}}
-#'
-#' @return Returns an R6 object of class HuberizedDistribution.
-#'
-#' @examples
-#' hubBin <- HuberizedDistribution$new(
-#'   Binomial$new(prob = 0.5, size = 10),
-#'   lower = 2, upper = 4
-#' )
-#' hubBin$getParameterValue("prob")
-#' hubBin$pdf(2)
 #' @export
-NULL
 HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = DistributionWrapper,
   lock_objects = FALSE,
   public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @examples
+    #' HuberizedDistribution$new(
+    #'   Binomial$new(prob = 0.5, size = 10),
+    #'   lower = 2, upper = 4
+    #' )
+    #'
+    #' # alternate constructor
+    #' huberize(Binomial$new(), lower = 2, upper = 4)
     initialize = function(distribution, lower = NULL, upper = NULL) {
 
       assertDistribution(distribution)
@@ -153,6 +133,9 @@ HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = Distribution
         stop(.distr6$huberize_discrete)
       }
     },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) {
         lst <- list(...)

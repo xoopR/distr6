@@ -2,80 +2,28 @@
 #'
 #' @title Abstract DistributionWrapper Class
 #'
-#' @description The abstract parent class to wrappers.
+#' @template class_wrapper
+#' @template class_abstract
+#' @template method_setParameterValue
+#' @template method_wrappedModels
 #'
 #' @details Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped distribution
 #' has the same methods and fields as an unwrapped one. After wrapping, the parameters of a distribution
 #' are prefixed with the distribution name to ensure uniqueness of parameter IDs.
 #'
-#' Abstract classes cannot be implemented directly. Use the \code{listWrappers} function to see constructable wrappers.
+#' Use [listWrappers] function to see constructable wrappers.
 #'
-#' @seealso \code{\link{listWrappers}}
-#'
-#' @inheritSection SDistribution Public Variables
-#'
-#' @section Public Methods:
-#'  \tabular{ll}{
-#'   \strong{Accessor Methods} \tab \strong{Link} \cr
-#'   \code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
-#'   \code{decorators} \tab \code{\link{decorators}} \cr
-#'   \code{traits} \tab \code{\link{traits}} \cr
-#'   \code{valueSupport} \tab \code{\link{valueSupport}} \cr
-#'   \code{variateForm} \tab \code{\link{variateForm}} \cr
-#'   \code{type} \tab \code{\link{type}} \cr
-#'   \code{properties} \tab \code{\link{properties}} \cr
-#'   \code{support} \tab \code{\link{support}} \cr
-#'   \code{symmetry} \tab \code{\link{symmetry}} \cr
-#'   \code{sup}  \tab \code{\link{sup}} \cr
-#'   \code{inf} \tab \code{\link{inf}} \cr
-#'   \code{dmax}  \tab \code{\link{dmax}} \cr
-#'   \code{dmin} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-#'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Statistical Methods} \tab \strong{Link} \cr
-#'   \code{prec()} \tab \code{\link{prec}} \cr
-#'   \code{stdev()} \tab \code{\link{stdev}}\cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   \code{cor()} \tab \code{\link{cor}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Parameter Methods} \tab \strong{Link} \cr
-#'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
-#'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Validation Methods} \tab \strong{Link} \cr
-#'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-#'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-#'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-#'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-#'   }
-#' @section Active Bindings:
-#'  \tabular{ll}{
-#'   \strong{Active Binding} \tab \strong{Link} \cr
-#'   \code{isPdf} \tab \code{\link{isPdf}} \cr
-#'   \code{isCdf} \tab \code{\link{isCdf}} \cr
-#'   \code{isQuantile} \tab \code{\link{isQuantile}} \cr
-#'   \code{isRand} \tab \code{\link{isRand}} \cr
-#'   }
-#'
-#'
-#' @return Returns error. Abstract classes cannot be constructed directly.
+#' @references
+#' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
+#' of Reusable Object-Oriented Software.” Addison-Wesley.
 #'
 #' @export
-NULL
 DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE,
   public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param ... `ANY` \cr
+    #' Additional arguements passed to `[Distribution]$new`
     initialize = function(distlist = NULL, ...) {
       if (getR6Class(self) == "DistributionWrapper") {
         stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
@@ -105,6 +53,9 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
 
       super$initialize(parameters = params, ...)
     },
+
+    #' @description
+    #' Returns model(s) wrapped by this wrapper.
     wrappedModels = function(model = NULL) {
 
       if (!is.null(model)) {
@@ -121,6 +72,9 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
         private$.wrappedModels
       }
     },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) {
         lst <- list(...)
@@ -169,20 +123,12 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
 #' @description Returns either a list of all the wrapped models or the models named by parameters.
 #'
 #' @usage wrappedModels(object, model = NULL)
-#' @section R6 Usage: $wrappedModels(model = NULL)
 #'
 #' @param object Distribution.
 #' @param model character, see details.
 #'
-#' @details Accessor for internally wrapped models. If the \code{model} parameter is matched by a single named
-#' wrapped model, this model is returned. If a vector is supplied to \code{model} parameter then a list
-#' of internal models is returned if matched, otherwise a list of all internal models is returned. If
-#' \code{model} is NULL (default) then a list of all internal models are returned.
-#'
 #' @return If \code{model} is NULL then returns list of models that are wrapped by the wrapper. Otherwise
 #' returns model given in \code{model}.
-#'
-#' @seealso \code{\link{DistributionWrapper}}
 #'
 #' @export
 NULL

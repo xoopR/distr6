@@ -67,6 +67,9 @@ Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
                           mean = 1, var = NULL, sd = NULL, prec = NULL,
                           decorators = NULL, verbose = FALSE) {

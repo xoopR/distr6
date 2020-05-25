@@ -43,6 +43,9 @@ BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_object
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
                           verbose = FALSE) {
 

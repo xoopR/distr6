@@ -1,4 +1,3 @@
-
 #' @title Quartic Kernel
 #'
 #' @description Mathematical and statistical functions for the Quartic kernel defined by the pdf,
@@ -9,32 +8,30 @@
 #' FunctionImputation for numeric results.
 #'
 #' @name Quartic
-#'
-#' @section Constructor: Quartic$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-
 Quartic <- R6Class("Quartic", inherit = Kernel, lock_objects = F,
   public = list(
     name = "Quartic",
     short_name = "Quart",
     description = "Quartic Kernel",
 
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
     squared2Norm = function() {
       return(5 / 7)
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return(1 / 7)
     }

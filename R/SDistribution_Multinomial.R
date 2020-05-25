@@ -51,12 +51,17 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE) {
 
       if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")
 
       private$.parameters <- getParameterSet(self, size, probs, verbose)
       self$setParameterValue(size = size, probs = probs)
+
+      private$.variates = length(probs)
 
       super$initialize(
         decorators = decorators,
@@ -169,7 +174,10 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
     },
 
     # traits
-    .traits = list(valueSupport = "discrete", variateForm = "multivariate")
+    .traits = list(valueSupport = "discrete", variateForm = "multivariate"),
+
+    .isCdf = FALSE,
+    .isQuantile = FALSE
   )
 )
 

@@ -2,6 +2,7 @@
 #' #'
 #' #' @description Scales a distribution to a given mean and standard deviation. By default the distribution
 #' #' is centered (\code{mean} = 0) with unit variance (\code{sd} = 1)
+#' #' @template class_wrapper
 #' #'
 #' #' @details STILL IN DEVELOPMENT. Results are likely sub-optimal.
 #' #

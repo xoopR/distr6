@@ -44,6 +44,9 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(..., probs, decorators = NULL, verbose = FALSE) {
 
 

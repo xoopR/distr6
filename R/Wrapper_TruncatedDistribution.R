@@ -1,47 +1,32 @@
 #' @name TruncatedDistribution
 #' @title Distribution Truncation Wrapper
 #' @description A wrapper for truncating any probability distribution at given limits.
+#' @template class_wrapper
+#' @template class_trunchub
+#' @template method_setParameterValue
 #'
-#' @details Truncates a distribution at lower and upper limits, using the formulae
+#' @details
+#' Truncates a distribution at lower and upper limits, using the formulae
 #' \deqn{f_T(x) = f_X(x) / (F_X(upper) - F_X(lower))}
 #' \deqn{F_T(x) = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
 #' where \eqn{f_T}/\eqn{F_T} is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and
 #' \eqn{f_X}, \eqn{F_X} is the pdf/cdf of the original distribution.
 #'
-#' If lower or upper are NULL they are taken to be \code{self$inf} and \code{self$sup} respectively.
-#' The support of the new distribution is the interval of points between lower and upper.
-#'
-#' The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
-#' \code{FunctionImputation} first.
-#'
-#' @section Constructor: TruncatedDistribution$new(distribution, lower = NULL, upper = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distribution} \tab distribution \tab Distribution to truncate. \cr
-#' \code{lower} \tab numeric \tab Lower limit for truncation. \cr
-#' \code{upper} \tab numeric \tab Upper limit for truncation.
-#' }
-#'
-#' @inheritSection DistributionWrapper Public Variables
-#' @inheritSection DistributionWrapper Public Methods
-#'
-#' @seealso \code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{truncate}}
-#'
-#' @return Returns an R6 object of class TruncatedDistribution.
-#'
-#' @examples
-#' truncBin <- TruncatedDistribution$new(
-#'   Binomial$new(prob = 0.5, size = 10),
-#'   lower = 2, upper = 4
-#' )
-#' truncBin$getParameterValue("prob")
 #' @export
-NULL
 TruncatedDistribution <- R6Class("TruncatedDistribution", inherit = DistributionWrapper,
   lock_objects = FALSE,
   public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @examples
+    #' TruncatedDistribution$new(
+    #'   Binomial$new(prob = 0.5, size = 10),
+    #'   lower = 2, upper = 4
+    #' )
+    #'
+    #' # alternate constructor
+    #' truncate(Binomial$new(), lower = 2, upper = 4)
     initialize = function(distribution, lower = NULL, upper = NULL) {
 
       assertDistribution(distribution)
@@ -105,6 +90,9 @@ TruncatedDistribution <- R6Class("TruncatedDistribution", inherit = Distribution
         valueSupport = distribution$valueSupport, variateForm = "univariate"
       )
     },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) {
         lst <- list(...)
@@ -139,7 +127,7 @@ TruncatedDistribution <- R6Class("TruncatedDistribution", inherit = Distribution
 #' @param lower lower limit for truncation.
 #' @param upper upper limit for truncation.
 #'
-#' @seealso \code{\link{TruncatedDistribution}}
+#' @seealso [TruncatedDistribution]
 #'
 #' @export
 truncate <- function(x, lower = NULL, upper = NULL) {

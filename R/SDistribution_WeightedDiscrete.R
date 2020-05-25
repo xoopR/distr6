@@ -41,6 +41,9 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(data, decorators = NULL, verbose = FALSE) {
 
       data <- data.table::as.data.table(data)

@@ -5,7 +5,3 @@
 #' are the new values to set.
 #' @param error `(character(1))` \cr
 #' Passed to [stopwarn].
-#' @examples
-#' b = Binomial$new()
-#' b$setParameterValue(size = 4, prob = 0.4)
-#' b$setParameterValue(lst = list(size = 4, prob = 0.4))

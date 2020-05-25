@@ -1,38 +1,30 @@
 #' @title Distribution Convolution Wrapper
 #'
 #' @description Calculates the convolution of two distribution via numerical calculations.
-#'
+#' @template class_wrapper
 #' @details The convolution of two probability distributions \eqn{X}, \eqn{Y} is the sum
 #' \deqn{Z = X + Y}
 #' which has a pmf,
 #' \deqn{P(Z = z) = \sum_x P(X = x)P(Y = z - x)}
 #' with an integration analogue for continuous distributions.
 #'
-#' Currently distr6 supports the addition of discrete and continuous probability distributions, but only
-#' subtraction of continuous distributions.
-#'
-#' @name Convolution
-#'
-#' @section Constructor: Convolution$new(dist1, dist2, add = TRUE, type = NULL)
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{dist1} \tab distribution \tab First distribution in convolution. \cr
-#' \code{dist2} \tab distribution \tab Second distribution in convolution. \cr
-#' \code{add} \tab logical \tab Add or subtract distributions. \cr
-#' \code{type} \tab logical \tab Type of new distribution, automated if NULL. \cr
-#' }
+#' Currently distr6 supports the addition of discrete and continuous probability distributions,
+#' but only subtraction of continuous distributions.
 #'
 #' @return Returns an R6 object of class Convolution.
 #'
-#' @seealso \code{\link{listWrappers}}
-#'
 #' @export
-NULL
 Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_objects = FALSE,
   public = list(
-    initialize = function(dist1, dist2, add = TRUE,
-                          type = NULL) {
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param dist1 `([Distribution])`\cr
+    #' First [Distribution] in convolution, i.e. `dist1 ± dist2`.
+    #' @param dist2 `([Distribution])`\cr
+    #' Second [Distribution] in convolution, i.e. `dist1 ± dist2`.
+    #' @param add `(logical(1))`\cr
+    #' If `TRUE` (default) then adds the distributions together, otherwise substracts.
+    initialize = function(dist1, dist2, add = TRUE) {
       distlist <- list(dist1$clone(), dist2$clone())
       distlist <- makeUniqueDistributions(distlist)
 

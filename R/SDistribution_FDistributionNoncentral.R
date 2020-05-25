@@ -48,6 +48,9 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistrib
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(df1 = 1, df2 = 1, location = 0, decorators = NULL, verbose = FALSE) {
 
       private$.parameters <- getParameterSet(self, df1, df2, location, verbose)

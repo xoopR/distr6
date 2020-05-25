@@ -66,6 +66,9 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(size = 10, prob = 0.5, qprob = NULL, mean = NULL,
                           form = c("fbs", "sbf", "tbf", "tbs"),
                           decorators = NULL, verbose = FALSE) {

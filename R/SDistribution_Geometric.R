@@ -61,6 +61,9 @@ Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL,
                           verbose = FALSE) {
 

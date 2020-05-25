@@ -53,6 +53,9 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(size = 50, successes = 5, failures = NULL, draws = 10,
                           decorators = NULL, verbose = FALSE) {
 

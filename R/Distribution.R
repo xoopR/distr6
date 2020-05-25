@@ -5,131 +5,57 @@
 #'   as well as serving as the parent class to specific, familiar distributions.
 #'
 #' @name Distribution
-#'
-#' @section Constructor: Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-#' symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-#' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL,
-#' suppressMoments = TRUE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{name} \tab character \tab Full name of distribution. \cr
-#' \code{short_name} \tab character \tab Short name to identify distribution. \cr
-#' \code{type} \tab [set6::Set] \tab Scientific type. \cr
-#' \code{support} \tab [set6::Set] \tab Distribution support. See Details. \cr
-#' \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
-#' \code{pdf} \tab function \tab See Details. \cr
-#' \code{cdf} \tab function \tab See Details. \cr
-#' \code{quantile} \tab function \tab See Details. \cr
-#' \code{rand} \tab function \tab See Details. \cr
-#' \code{parameters} \tab ParameterSet \tab See Details. \cr
-#' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
-#' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
-#' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-#' \code{description} \tab character \tab Short description of distribution. \cr
-#' \code{suppressMoments} \tab character \tab See Details. \cr
-#' }
-#'
-#' @section Constructor Details:
-#'
-#'   The most basic Distribution object consists of a name and one of pdf/cdf.
-#'
-#'   If supplied, \code{type} and \code{support} should be given as a [set6::Set] object. If neither are supplied
-#'   then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
-#'   If only \code{type} is supplied then this is taken to also be the support.
-#'
-#'   By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
-#'   Use the \code{\link{FunctionImputation}} decorator to generate these.
-#'
-#'   See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
-#'
-#'   \code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
-#'   Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
-#'   for more details.
-#'
-#'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
-#'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
-#'   If not given these are automatically filled from \code{type} and \code{support}.
-#'
-#'   \code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
-#'   calculated in construction. This has the benefit of drastically decreasing computational time but
-#'   at the cost of losing these in the distribution properties.
-#'
-#' @section Public Variables:
-#'  \tabular{ll}{
-#'   \strong{Variable} \tab \strong{Return} \cr
-#'   \code{name} \tab Name of distribution. \cr
-#'   \code{short_name} \tab Id of distribution. \cr
-#'   \code{description} \tab Brief description of distribution. \cr
-#'   }
-#'
-#' @section Public Methods:
-#'  \tabular{ll}{
-#'   \strong{Accessor Methods} \tab \strong{Link} \cr
-#'   \code{decorators} \tab \code{\link{decorators}} \cr
-#'   \code{traits} \tab \code{\link{traits}} \cr
-#'   \code{valueSupport} \tab \code{\link{valueSupport}} \cr
-#'   \code{variateForm} \tab \code{\link{variateForm}} \cr
-#'   \code{type} \tab \code{\link{type}} \cr
-#'   \code{properties} \tab \code{\link{properties}} \cr
-#'   \code{support} \tab \code{\link{support}} \cr
-#'   \code{symmetry} \tab \code{\link{symmetry}} \cr
-#'   \code{sup}  \tab \code{\link{sup}} \cr
-#'   \code{inf} \tab \code{\link{inf}} \cr
-#'   \code{dmax}  \tab \code{\link{dmax}} \cr
-#'   \code{dmin} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-#'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Statistical Methods} \tab \strong{Link} \cr
-#'   \code{prec()} \tab \code{\link{prec}} \cr
-#'   \code{stdev()} \tab \code{\link{stdev}}\cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   \code{correlation()} \tab \code{\link{correlation}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Parameter Methods} \tab \strong{Link} \cr
-#'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
-#'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Validation Methods} \tab \strong{Link} \cr
-#'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-#'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-#'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-#'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-#'   }
-#'
-#' @section Active Bindings:
-#'  \tabular{ll}{
-#'   \strong{Active Binding} \tab \strong{Link} \cr
-#'   \code{isPdf} \tab \code{\link{isPdf}} \cr
-#'   \code{isCdf} \tab \code{\link{isCdf}} \cr
-#'   \code{isQuantile} \tab \code{\link{isQuantile}} \cr
-#'   \code{isRand} \tab \code{\link{isRand}} \cr
-#'   }
-#'
-#'
-#' @seealso See \CRANpkg{set6} for details on Sets and Intervals. See \code{\link{ParameterSet}} for
-#' parameter details. See \code{\link{decorate}} for Decorator details.
+#' @template param_decorators
+#' @template method_setParameterValue
+#' @template method_getParameterValue
+#' @template method_liesin
+#' @template method_pdf
+#' @template method_cdf
+#' @template method_quantile
+#' @template method_rand
 #'
 #' @return Returns R6 object of class Distribution.
 #'
 #' @export
-NULL
-
 Distribution <- R6Class("Distribution", lock_objects = FALSE,
   public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param name `character(1)` \cr
+    #' Full name of distribution.
+    #' @param short_name `character(1)` \cr
+    #' Short name of distribution for printing.
+    #' @param type `([set6::Set])` \cr
+    #' Distribution type.
+    #' @param support `([set6::Set])` \cr
+    #' Distribution support.
+    #' @param symmetric `logical(1)` \cr
+    #' Symmetry type of the distribution.
+    #' @param pdf `function(1)` \cr
+    #' Probability density function of the distribution. At least one of `pdf` and
+    #' `cdf` must be provided.
+    #' @param cdf `function(1)` \cr
+    #' Cumulative distribution function of the distribution. At least one of `pdf` and
+    #' `cdf` must be provided.
+    #' @param quantile `function(1)` \cr
+    #' Quantile (inverse-cdf) function of the distribution.
+    #' @param rand `function(1)` \cr
+    #' Simulation function for drawing random samples from the distribution.
+    #' @param parameters `([ParameterSet])` \cr
+    #' Parameter set for defining the parameters in the distribution, which should be set before
+    #' construction.
+    #' @param valueSupport `(character(1))` \cr
+    #' The support type of the distribution, one of `"discrete", "continuous", "mixture"`.
+    #' If `NULL`, determined automatically.
+    #' @param variateForm `(character(1))` \cr
+    #' The variate type of the distribution, one of `"univariate", "multivariate", "matrixvariate"`.
+    #' If `NULL`, determined automatically.
+    #' @param description `(character(1))` \cr
+    #' Optional short description of the distribution.
+    #' @param suppressMoments `(logical(1))` \cr
+    #' If `TRUE` does not calculte skewness and kurtosis types in construction.
+    #' @param .suppressChecks `(logical(1))` \cr
+    #' Used internally.
     initialize = function(name = NULL, short_name = NULL,
                           type = NULL, support = NULL,
                           symmetric = FALSE,
@@ -315,6 +241,11 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       lockBinding("parameters", self)
       invisible(self)
     },
+
+    #' @description
+    #' Printable string representation of the `Distribution`. Primarily used internally.
+    #' @param n `(integer(1))` \cr
+    #' Number of parameters to display when printing.
     strprint = function(n = 2) {
       if (length(private$.parameters) != 0) {
         settable <- as.data.table(self$parameters())$settable
@@ -335,10 +266,25 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       }
       return(string)
     },
+
+    #' @description
+    #' Prints the `Distribution`.
+    #' @param n `(integer(1))` \cr
+    #' Passed to `$strprint`.
+    #' @param ... \cr
+    #' Unused. Added for consistency.
     print = function(n = 2, ...) {
       cat(self$strprint(n = n), "\n")
       invisible(self)
     },
+
+    #' @description
+    #' Prints a summary of the `Distribution`.
+    #' @param full `(logical(1))` \cr
+    #' If `TRUE` (default) prints a long summary of the distribution,
+    #' otherwise prints a shorter summary.
+    #' @param ... \cr
+    #' Unused. Added for consistency.
     summary = function(full = TRUE, ...) {
 
       if (full) {
@@ -419,6 +365,9 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       cat("\n")
       invisible(self)
     },
+
+    #' @description
+    #' Returns the full parameter details for the supplied parameter.
     parameters = function(id = NULL) {
       if (length(private$.parameters) == 0) {
         return(NULL)
@@ -426,6 +375,9 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         return(private$.parameters$parameters(id))
       }
     },
+
+    #' @description
+    #' Returns the value of the supplied parameter.
     getParameterValue = function(id, error = "warn") {
       if (length(private$.parameters) == 0) {
         return(NULL)
@@ -433,6 +385,14 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         return(private$.parameters$getParameterValue(id, error))
       }
     },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    #'
+    #' @examples
+    #' b = Binomial$new()
+    #' b$setParameterValue(size = 4, prob = 0.4)
+    #' b$setParameterValue(lst = list(size = 4, prob = 0.4))
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) {
         lst <- list(...)
@@ -463,6 +423,27 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         }
       }
     },
+
+    #' @description
+    #'  For discrete distributions the probability mass function (pmf) is returned, defined as
+    #'  \deqn{p_X(x) = P(X = x)}
+    #'  for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
+    #'  \deqn{f_X(x) = P(x < X \le x + dx)}
+    #'  for some infinitesimally small \eqn{dx}.
+    #'
+    #' If available a pdf will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #'@examples
+    #'b <- Binomial$new()
+    #'b$pdf(1:10)
+    #'b$pdf(1:10, log = TRUE)
+    #'b$pdf(data = matrix(1:10))
+    #'
+    #'mvn <- MultivariateNormal$new()
+    #'mvn$pdf(1, 2)
+    #'mvn$pdf(1:2, 3:4)
+    #'mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
       if (is.null(private$.pdf)) {
@@ -497,6 +478,31 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
 
       pdqr_returner(pdqr, simplify, self$short_name)
     },
+
+    #' @description
+    #'  For discrete distributions the probability mass function (pmf) is returned, defined as
+    #'  \deqn{p_X(x) = P(X = x)}
+    #'  for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
+    #'  \deqn{f_X(x) = P(x < X \le x + dx)}
+    #'  for some infinitesimally small \eqn{dx}.
+    #'
+    #' If available a pdf will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+
+    #' @description
+    #' The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
+    #'  \deqn{F_X(x) = P(X \le x)}
+    #'  If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
+    #'  \code{\link{survival}} function.
+    #'
+    #' If available a cdf will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #'@examples
+    #'b <- Binomial$new()
+    #'b$cdf(1:10)
+    #'b$cdf(1:10, log.p = TRUE, lower.tail = FALSE)
+    #'b$cdf(data = matrix(1:10))
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
       if (is.null(private$.cdf)) {
@@ -504,9 +510,15 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       }
 
       data <- pdq_point_assert(..., self = self, data = data)
-      assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
-             .var.name = "Do all points lie in Distribution domain?"
-      )
+      if (inherits(data, "matrix")) {
+        assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = FALSE),
+               .var.name = "Do all points lie in Distribution domain?"
+        )
+      } else {
+        assert(self$liesInType(as.numeric(data), all = TRUE, bound = FALSE),
+               .var.name = "Do all points lie in Distribution domain?"
+        )
+      }
 
       if (log.p | !lower.tail) {
         if (private$.log) {
@@ -526,6 +538,21 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
 
       pdqr_returner(pdqr, simplify, self$short_name)
     },
+
+    #' @description
+    #'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
+    #'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
+    #'
+    #'  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
+    #'
+    #' If available a quantile will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #'@examples
+    #'b <- Binomial$new()
+    #'b$quantile(0.42)
+    #'b$quantile(log(0.42), log.p = TRUE, lower.tail = TRUE)
+    #'b$quantile(data = matrix(c(0.1,0.2)))
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
       if (is.null(private$.quantile)) {
@@ -563,6 +590,19 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
 
       pdqr_returner(pdqr, simplify, self$short_name)
     },
+
+    #' @description
+    #' The rand function draws `n` simulations from the distribution.
+    #'
+    #' If available simulations will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$rand(10)
+    #'
+    #' mvn <- MultivariateNormal$new()
+    #' mvn$rand(5)
     rand = function(n, simplify = TRUE) {
 
       if (is.null(private$.rand)) {
@@ -575,12 +615,27 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
 
       pdqr_returner(pdqr, simplify, self$short_name)
     },
+
+    #' @description
+    #' Returns the precision of the distribution as `1/self$variance()`.
     prec = function() {
       return(1 / self$variance())
     },
+
+    #' @description
+    #' Returns the standard deviation of the distribution as `sqrt(self$variance())`.
     stdev = function() {
       return(sqrt(self$variance()))
     },
+
+    #' @description
+    #' Returns the median of the distribution. If an analytical expression is available
+    #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
+    #' returns `self$quantile(0.5)`.
+    #' @param na.rm \cr
+    #' Ignored, addded for consistency.
+    #' @param ... \cr
+    #' Ignored, addded for consistency.
     median = function(na.rm = NULL, ...) {
       if (testSymmetric(self)) {
         med = self$mean()
@@ -595,9 +650,16 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         return(self$quantile(0.5))
       }
     },
+
+    #' @description
+    #' Inter-quartile range of the distribution. Estimated as
+    #' `self$quantile(0.75) - self$quantile(0.25)`.
     iqr = function() {
       return(self$quantile(0.75) - self$quantile(0.25))
     },
+
+    #' @description
+    #' If univariate returns `1`, otherwise returns the distribution correlation.
     correlation = function() {
       if (testUnivariate(self)) {
         return(1)
@@ -605,57 +667,121 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         return(self$variance() / (sqrt(diag(self$variance()) %*% t(diag(self$variance())))))
       }
     },
+
+    #' @description
+    #' Tests if the given values lie in the support of the distribution.
+    #' Uses `[set6::Set]$contains`.
     liesInSupport = function(x, all = TRUE, bound = FALSE) {
       return(self$properties$support$contains(x, all, bound))
     },
+
+    #' @description
+    #' Tests if the given values lie in the type of the distribution.
+    #' Uses `[set6::Set]$contains`.
     liesInType = function(x, all = TRUE, bound = FALSE) {
       return(self$traits$type$contains(x, all, bound))
     }
   ),
 
   active = list(
+    #' @field decorators
+    #' Returns decorators currently used to decorate the distribution.
     decorators = function() {
       return(private$.decorators)
     },
+
+    #' @field traits
+    #' Returns distribution traits.
     traits = function() {
       return(private$.traits)
     },
+
+    #' @field valueSupport
+    #' Deprecated, use `$traits$valueSupport`.
     valueSupport = function() {
-      return("Deprecated. Use $properties$valueSupport instead.")
+      message("Deprecated. Use $traits$valueSupport instead.")
+      return(self$traits$valueSupport)
     },
+
+    #' @field variateForm
+    #' Deprecated, use `$traits$variateForm`.
     variateForm = function() {
-      return("Deprecated. Use $traits$variateForm instead.")
+      message("Deprecated. Use $traits$variateForm instead.")
+      return(self$traits$variateForm)
     },
+
+    #' @field type
+    #' Deprecated, use `$traits$type`.
     type = function() {
       return("Deprecated. Use $traits$type instead.")
     },
+
+    #' @field properties
+    #' Returns distribution properties, including kurtosis type, skewness type, support, and
+    #' symmetry.
     properties = function() {
       private$.properties
     },
+
+    #' @field support
+    #' Deprecated, use `$properties$type`.
     support = function() {
-      return("Deprecated. Use $properties$support instead.")
+      message("Deprecated. Use $properties$support instead.")
+      return(self$properties$support)
     },
+
+    #' @field symmetry
+    #' Deprecated, use `$properties$symmetry`.
     symmetry = function() {
-      return("Deprecated. Use $properties$symmetry instead.")
+      message("Deprecated. Use $properties$symmetry instead.")
+      return(self$properties$symmetry)
     },
+
+    #' @field sup
+    #' Returns supremum (upper bound) of the distribution support.
     sup = function() {
       return(self$properties$support$upper)
     },
+
+    #' @field inf
+    #' Returns infimum (lower bound) of the distribution support.
     inf = function() {
       return(self$properties$support$lower)
     },
+
+    #' @field dmax
+    #' Returns maximum of the distribution support.
     dmax = function() {
       return(self$properties$support$max)
     },
+
+    #' @field dmin
+    #' Returns minimum of the distribution support.
     dmin = function() {
       return(self$properties$support$min)
     },
+
+    #' @field kurtosisType
+    #' Deprecated, use `$properties$kurtosis`.
     kurtosisType = function() {
-      return("Deprecated. Use $properties$kurtosis instead.")
+      message("Deprecated. Use $properties$kurtosis instead.")
+      return(self$properties$kurtosis)
     },
+
+    #' @field skewnessType
+    #' Deprecated, use `$properties$skewness`.
     skewnessType = function() {
-      return("Deprecated. Use $properties$skewness instead.")
+      message("Deprecated. Use $properties$skewness instead.")
+      return(self$properties$skewness)
     },
+
+    #' @field workingSupport
+    #' Returns an estimate for the computational support of the distribution.
+    #' If an analytical cdf is available, then this is computed as the smallest interval
+    #' in which the cdf lower bound is `0` and the upper bound is `1`, bounds are incremented in
+    #' 10^i intervals. If no analytical cdf is available, then this is computed as the smallest
+    #' interval in which the lower and upper bounds of the pdf are `0`, this is much less precise and
+    #' is more prone to error. Used primarily by decorators.
     workingSupport = function() {
 
       if (testCountablyFinite(self$properties$support)) {
@@ -719,6 +845,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     .decorators =  NULL,
     .properties =  list(),
     .traits =  NULL,
+    .variates = 1,
     .isPdf =  FALSE,
     .isCdf =  FALSE,
     .isQuantile =  FALSE,
@@ -772,33 +899,14 @@ summary.Distribution <- function(object, full = TRUE, ...) {}
 #' distributions evaluated at a given point.
 #'
 #' @usage pdf(object, x1, ..., log = FALSE, simplify = TRUE)
-#' @section R6 Usage: $pdf(x1, ..., log = FALSE, simplify = TRUE)
 #' @param object Distribution.
 #' @param x1 vector of numerics to evaluate function at.
 #' @param ... additional arguments.
 #' @param log logical; if TRUE, probabilities p are given as log(p).
 #' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
 #'
-#' @details
-#'  For discrete distributions the probability mass function (pmf) is returned, defined as
-#'  \deqn{p_X(x) = P(X = x)}
-#'  for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
-#'  \deqn{f_X(x) = P(x < X \le x + dx)}
-#'  for some infinitesimally small \eqn{dx}.
-#'
-#' If available a pdf will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the pdf, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the pdf with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-#'
 #' @return Probability density function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
-#'
-#' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @export
 NULL
@@ -809,7 +917,6 @@ NULL
 #' point.
 #'
 #' @usage cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-#' @section R6 Usage: $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 #' @param object Distribution.
 #' @param x1 vector of numerics to evaluate function at.
 #' @param ... additional arguments.
@@ -818,21 +925,7 @@ NULL
 #' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
 #'
 #' @details
-#'  The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
-#'  \deqn{F_X(x) = P(X \le x)}
-#'  If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
-#'  \code{\link{survival}} function.
 #'
-#' If available a cdf will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the cdf, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the cdf with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-#'
-#' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @return Cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
@@ -845,30 +938,12 @@ NULL
 #' evaluated at a given point between 0 and 1.
 #'
 #' @importFrom stats quantile
-#' @section R6 Usage: $quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
 #' @param x Distribution.
 #' @param p vector of probabilities to evaluate function at.
 #' @param ... additional arguments.
 #' @param lower.tail logical; if TRUE, probabilities p are given as log(p).
 #' @param log.p logical; if TRUE then \eqn{q_X(exp(p))} is returned.
 #' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
-#'
-#' @details
-#'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
-#'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
-#'
-#'  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
-#'
-#' If available a quantile will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the quantile, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the quantile with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{VectorDistribution}}.
-#'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @return Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
@@ -881,22 +956,9 @@ quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simp
 #' @description Returns a given number of points sampled from the distribution.
 #'
 #' @usage rand(object, n, simplify = TRUE)
-#' @section R6 Usage: $rand(n, simplify = TRUE)
 #' @param object Distribution.
 #' @param n number of observations. If length(n) > 1, the length is taken to be the number required.
 #' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
-#'
-#' @details
-#' If available a rand will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the rand, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the rand with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-#'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
 #'
 #' @return Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
 #' or as a data.table.
@@ -907,16 +969,9 @@ NULL
 #' @name prec
 #' @title Precision of a Distribution
 #' @description Precision of a distribution assuming variance is provided.
-#'
 #' @usage prec(object)
-#' @section R6 Usage: $prec()
 #' @param object Distribution.
-#' @details The precision is analytically computed as the reciprocal of the variance.
-#' If the variance is not found in the distribution (analytically or numerically), returns error.
 #' @return Reciprocal of variance as a numeric.
-#'
-#' @seealso \code{\link{variance}}
-#'
 #' @export
 NULL
 
@@ -925,13 +980,8 @@ NULL
 #' @description Standard deviation of a distribution assuming variance is provided.
 #'
 #' @usage stdev(object)
-#' @section R6 Usage: $stdev()
 #' @param object Distribution.
-#' @details The standard deviation is analytically computed as the square root of the variance.
-#' If the variance is not found in the distribution (analytically or numerically), returns error.
 #' @return Square-root of variance as a numeric.
-#'
-#' @seealso \code{\link{variance}}
 #'
 #' @export
 NULL
@@ -941,36 +991,19 @@ NULL
 #'
 #' @importFrom stats median
 #' @method median Distribution
-#' @section R6 Usage: $median()
 #' @param x Distribution.
 #' @param na.rm ignored, added for consistency with S3 generic.
 #' @param ... ignored, added for consistency with S3 generic.
-#' @details The median is computed as the quantile function evaluated at 0.5.
-#' If the quantile is not found in the distribution (analytically or numerically), returns error.
 #' @return Quantile function evaluated at 0.5 as a numeric.
-#'
-#' @seealso \code{\link{quantile.Distribution}}
-#'
 #' @export
 median.Distribution <- function(x, na.rm = NULL, ...) {}
 
 #' @title Distribution Interquartile Range
 #' @name iqr
 #' @description Interquartile range of a distribution
-#'
 #' @usage iqr(object)
-#' @section R6 Usage: $iqr()
-#'
 #' @param object Distribution.
-#'
-#' @details The interquartile range of a distribution is defined by
-#' \deqn{iqr_X = q(0.75) - q(0.25)}
-#' where q is the quantile, or inverse distribution function.
-#'
-#' Returns error if the quantile function is missing.
-#'
 #' @return Interquartile range of distribution as a numeric.
-#'
 #' @export
 NULL
 
@@ -979,19 +1012,8 @@ NULL
 #' @description Correlation of a distribution.
 #'
 #' @usage correlation(object)
-#' @section R6 Usage: $correlation()
 #'
 #' @param object Distribution.
-#'
-#' @details In terms of covariance, the correlation of a distribution is defined by the equation,
-#' \deqn{\rho_{XY} = \sigma_{XY}/\sigma_X\sigma_Y}
-#' where \eqn{\sigma_{XY}} is the covariance of X and Y and \eqn{\sigma_X, \sigma_Y} and the respective
-#' standard deviations of X and Y.
-#'
-#' If the distribution is univariate then returns \eqn{1}.
-#'
-#' Calculates correlation analytically from variance. If an analytic expression for variance isn't available,
-#' returns error. To impute a numeric expression, use the \code{\link{CoreStatistics}} decorator.
 #'
 #' @return Either '1' if distribution is univariate or the correlation as a numeric or matrix.
 #'
@@ -1004,19 +1026,13 @@ NULL
 #' data lies in the support or any of it.
 #'
 #' @usage liesInSupport(object, x, all = TRUE, bound = FALSE)
-#' @section R6 Usage: $liesInSupport(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
-#' @details If \code{all} is TRUE (default) returns TRUE only if every element in \code{x}
-#' lies in the support. If \code{all} is FALSE then returns a vector of logicals for each corresponding element
-#' in the vector \code{x}.
 #'
 #' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
 #' lies in the distribution support or FALSE otherwise.
-#'
-#' @seealso \code{\link{liesInType}}
 #'
 #' @export
 NULL
@@ -1027,19 +1043,13 @@ NULL
 #' data lies in the type or any of it.
 #'
 #' @usage liesInType(object, x, all = TRUE, bound = FALSE)
-#' @section R6 Usage: $liesInType(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
-#' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
-#' lies in the type. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
-#' in the vector \code{x}.
 #'
 #' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
 #' lies in the distribution type or FALSE otherwise.
-#'
-#' @seealso \code{\link{liesInSupport}}
 #'
 #' @export
 NULL
@@ -1051,7 +1061,6 @@ NULL
 #' @section R6 Usage: $decorators
 #' @param object Distribution.
 #' @description Returns the decorators added to a distribution.
-#' @seealso \code{\link{decorate}}
 #' @return Character vector of decorators.
 #' @export
 NULL
@@ -1091,7 +1100,6 @@ NULL
 #' @param object Distribution.
 #' @description Deprecated. Use $traits$type
 #' @return An R6 object of class [set6::Set].
-#' @seealso [set6::Set]
 #' @export
 NULL
 
@@ -1116,7 +1124,6 @@ NULL
 #' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
 #' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
 #' @return An R6 object of class [set6::Set].
-#' @seealso [set6::Set] and \code{\link{properties}}
 #' @export
 NULL
 
@@ -1126,7 +1133,6 @@ NULL
 #' @param object Distribution.
 #' @description Deprecated. Use $properties$symmetry.
 #' @return One of "symmetric" or "asymmetric".
-#' @seealso \code{\link{properties}}
 #' @export
 NULL
 
@@ -1137,7 +1143,6 @@ NULL
 #' @param object Distribution.
 #' @description Returns the distribution supremum as the supremum of the support.
 #' @return Supremum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
 #' @export
 NULL
 
@@ -1148,7 +1153,6 @@ NULL
 #' @param object Distribution.
 #' @description Returns the distribution infimum as the infimum of the support.
 #' @return Infimum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
 #' @export
 NULL
 
@@ -1174,7 +1178,6 @@ NULL
 #' bounded below then minimum is given by
 #' \deqn{minimum = infimum + 1.1e-15}
 #' @return Minimum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
 
@@ -1185,7 +1188,6 @@ NULL
 #' @description Deprecated. Use $properties$kurtosis.
 #' @return If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
 #' otherwise returns NULL.
-#' @seealso \code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
 #' @export
 NULL
 
@@ -1196,7 +1198,6 @@ NULL
 #' @description Deprecated. Use $properties$skewness.
 #' @return If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
 #' "positive skew", otherwise returns NULL.
-#' @seealso \code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
 #' @export
 NULL
 

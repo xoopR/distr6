@@ -50,6 +50,9 @@ Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = 0, scale = 1, var = NULL,
                           decorators = NULL, verbose = FALSE) {
 

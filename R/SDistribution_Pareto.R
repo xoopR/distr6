@@ -48,6 +48,9 @@ Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
 
       private$.parameters <- getParameterSet(self, shape, scale, verbose)

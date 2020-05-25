@@ -46,6 +46,9 @@ Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(rate = 1, decorators = NULL, verbose = FALSE) {
 
       private$.parameters <- getParameterSet(self, rate, verbose)

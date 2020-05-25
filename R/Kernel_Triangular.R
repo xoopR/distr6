@@ -1,4 +1,3 @@
-
 #' @title Triangular Kernel
 #'
 #' @description Mathematical and statistical functions for the Triangular kernel defined by the pdf,
@@ -6,32 +5,31 @@
 #' over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 #'
 #' @name TriangularKernel
+#' @template class_distribution
+#' @template class_kernel
 #'
-#' @section Constructor: TriangularKernel$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
 #'
 #' @export
-NULL
-
 TriangularKernel <- R6Class("TriangularKernel", inherit = Kernel, lock_objects = F,
   public = list(
     name = "TriangularKernel",
     short_name = "Tri",
     description = "Triangular Kernel",
 
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
     squared2Norm = function() {
       return(2 / 3)
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return(1 / 6)
     }

@@ -54,6 +54,9 @@ Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = 0, var = 1, sd = NULL, prec = NULL,
                           decorators = NULL, verbose = FALSE) {
 

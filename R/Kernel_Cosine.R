@@ -1,4 +1,3 @@
-
 #' @title Cosine Kernel
 #'
 #' @description Mathematical and statistical functions for the Cosine kernel defined by the pdf,
@@ -6,32 +5,30 @@
 #' over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 #'
 #' @name Cosine
-#'
-#' @section Constructor: Cosine$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-
 Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F,
   public = list(
     name = "Cosine",
     short_name = "Cos",
     description = "Cosine Kernel",
 
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
     squared2Norm = function() {
       return(pi^2 / 16)
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return(1 - 8 / (pi^2))
     }

@@ -45,6 +45,9 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = 0, decorators = NULL, verbose = FALSE) {
 
       private$.parameters <- getParameterSet(self, mean, verbose)

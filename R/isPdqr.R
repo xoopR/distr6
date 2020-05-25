@@ -1,19 +1,19 @@
 isPdf <- function(dist) {
   assertDistribution(dist)
-  !is.null(dist$.__enclos_env__$private$.pdf)
+  dist$.__enclos_env__$private$.isPdf
 }
 
 isCdf <- function(dist) {
   assertDistribution(dist)
-  !is.null(dist$.__enclos_env__$private$.cdf)
+  dist$.__enclos_env__$private$.isCdf
 }
 
 isQuantile <- function(dist) {
   assertDistribution(dist)
-  !is.null(dist$.__enclos_env__$private$.quantile)
+  dist$.__enclos_env__$private$.isQuantile
 }
 
 isRand <- function(dist) {
   assertDistribution(dist)
-  !is.null(dist$.__enclos_env__$private$.rand)
+  dist$.__enclos_env__$private$.isRand
 }

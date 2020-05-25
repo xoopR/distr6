@@ -1,91 +1,69 @@
-#' @title Make an R6 Parameter Set for Distributions
+#' @title Parameter Sets for Distributions
 #'
-#' @name ParameterSet
-#' @description ParameterSets are passed to a \code{Distribution$new} constructor when
+#' @template method_setParameterValue
+#' @template method_getParameterValue
+#'
+#' @description
+#' ParameterSets are passed to the [Distribution] constructor when
 #'  creating a custom probability distribution that takes parameters.
 #'
-#' @section Constructor: ParameterSet$new(id, value, support, settable, updateFunc = NULL, description = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{id} \tab character \tab unique one-word identifier. \cr
-#' \code{value} \tab numeric \tab initial parameter value. \cr
-#' \code{support} \tab numeric \tab range of values parameter can take. \cr
-#' \code{settable} \tab logical \tab if TRUE the parameter is printed. See Details. \cr
-#' \code{updateFunc = NULL} \tab function \tab evaluated to update parameter. See Details. \cr
-#' \code{description = NULL} \tab character \tab optional description of parameter.
-#' }
-#'
-#' @section Constructor Details:
-#' An R6 ParameterSet is required to construct a custom Probability Distribution that takes parameters.
-#' This constructor ensures that the correct format of parameters is supplied to the distribution.
-#'
-#' Every argument can either be given as the type listed above or as a list of that type.
-#' If arguments are provided as a list, then each argument must be of the same length list, with values
-#' as NULL where appropriate. See examples for more.
-#'
-#' Each parameter requires a unique one-word \code{id} that is used to get and set parameters
-#' after construction. The parameterisation of the distribution is determined by the parameters
-#' that have \code{settable = TRUE}, this is a slightly confusing term as it actually refers to a parameter
-#' being 'machine-settable'. Here it just means that the given parameter is used in construction and therefore
-#' will be included in a call to \code{$print}. \code{updateFunc} is used to update the parameters not used in
-#' the parameterisation. These should be given as a function that could be understood in the body of a Distribution
-#' and should start with \code{function(self)}, see examples.
-#'
-#' Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
-#' with a non-NULL \code{updateFunc}.
-#'
-#' @section Public Methods:
-#'  \tabular{ll}{
-#'   \strong{Method} \tab \strong{Link} \cr
-#'   \code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
-#'   \code{update()} \tab \code{\link{update.ParameterSet}} \cr
-#'   \code{parameters(id = NULL)} \tab \code{\link{parameters}} \cr
-#'   \code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
-#'   \code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#'   \code{merge(y, ...)} \tab \code{\link{merge.ParameterSet}} \cr
-#'   \code{as.data.table()} \tab \code{\link{as.data.table}} \cr
-#' }
-#'
-#' @examples
-#' id <- list("prob", "size")
-#' value <- list(0.2, 5)
-#' support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
-#' settable <- list(TRUE, TRUE)
-#' description <- list("Probability of success", NULL)
-#' ps <- ParameterSet$new(id, value, support, settable,
-#'   description = description
-#' )
-#' ps$parameters()
-#' ps$getParameterValue("prob")
-#' ps$getParameterSupport("prob")
-#'
-#'
-#'
-#' id <- list("rate", "scale")
-#' value <- list(1, 1)
-#' support <- list(set6::PosReals$new(), set6::PosReals$new())
-#' settable <- list(TRUE, FALSE)
-#' updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
-#' description <- list("Arrival rate", "Scale parameter")
-#' ps <- ParameterSet$new(
-#'   id, value, support, settable,
-#'   updateFunc, description
-#' )
-#' ps$parameters(id = "rate")
-#' ps$setParameterValue(rate = 2) # Automatically calls $update
-#' ps$getParameterValue("scale") # Auto-updated to 1/2
-#' @seealso \code{\link{Distribution}}
-#'
-#' @return An R6 object of class ParameterSet.
-#'
 #' @export
-NULL
-
 ParameterSet <- R6Class("ParameterSet",
   public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @details
+    #' Every argument can either be given as the type listed or as a list of that type.
+    #' If arguments are provided as a list, then each argument must be of the same length,
+    #' with values as NULL where appropriate. See examples for more.
+    #'
+    #' @param id `(character(1)|list())`\cr
+    #' id of the parameter(s) to construct, should be unique.
+    #' @param value `(ANY|list())`\cr
+    #' Value of parameter(s) to set.
+    #' @param support `([set6::Set]|list())`\cr
+    #' Support of parameter(s) to set
+    #' @param settable `(character(1)|list())`\cr
+    #' Logical flag indicating if the parameter(s) can be updated after construction.
+    #' @param updateFunc `(function(1)|list())`\cr
+    #' Optional function to update the parameter(s) based on other parameter values.
+    #' These should be given as a function that could be understood in the body of a [Distribution]
+    #' and should start with `function(self)`, see examples.
+    #' @param description `(character(1)|list())`\cr
+    #' Optional description for the parameter(s).
+    #'
+    #' @examples
+    #' id <- list("prob", "size")
+    #' value <- list(0.2, 5)
+    #' support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
+    #' settable <- list(TRUE, TRUE)
+    #' description <- list("Probability of success", NULL)
+    #' updateFunc <- NULL
+    #' ParameterSet$new(id = id,
+    #'                  value = value,
+    #'                  support = support,
+    #'                  settable = settable,
+    #'                  updateFunc = updateFunc,
+    #'                  description = description
+    #'  )
+    #'
+    #' ParameterSet$new(id = "prob",
+    #'                  value = 0.2,
+    #'                  support = set6::Interval$new(0, 1),
+    #'                  settable = TRUE,
+    #'                  description = "Probability of success"
+    #'  )
+    #'
+    #' id <- list("rate", "scale")
+    #' value <- list(1, 1)
+    #' support <- list(set6::PosReals$new(), set6::PosReals$new())
+    #' settable <- list(TRUE, FALSE)
+    #' updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
+    #' description <- list("Arrival rate", "Scale parameter")
+    #' ps <- ParameterSet$new(
+    #'   id, value, support, settable,
+    #'   updateFunc, description
+    #' )
     initialize = function(id, value, support, settable,
                           updateFunc = NULL, description = NULL) {
 
@@ -142,33 +120,23 @@ ParameterSet <- R6Class("ParameterSet",
       )
       invisible(self)
     },
+
+    #' @description
+    #' Prints the [ParameterSet].
+    #' @param hide_cols `(character())`\cr
+    #' Names of columns in the [ParameterSet] to hide whilst printing.
+    #' @param ... \cr
+    #' Additional arguments, currently unused.
     print = function(hide_cols = c("updateFunc", "settable"), ...) {
       ps <- private$.parameters
       ps$support <- lapply(ps$support, function(x) x$strprint())
       print(subset(ps, select = !(names(ps) %in% hide_cols)))
     },
-    update = function(...) {
-      sap <- sapply(private$.parameters$updateFunc, is.null)
-      if (any(!sap)) {
-        update_filter <- !sapply(private$.parameters$updateFunc, is.null)
-        updates <- private$.parameters[update_filter, ]
-        newvals <- apply(updates, 1, function(x) {
-          return(x[[6]](self))
-          # if(length(newval) > 1) {
-          #   if(!x[[3]]$contains(Tuple$new(newval)))
-          #     stop(Tuple$new(newval)$strprint(), " does not lie in the support of parameter ", x[[1]])
-          # } else {
-          #   if(!x[[3]]$contains(newval))
-          #     stop(newval, " does not lie in the support of parameter ", x[[1]])
-          # }
 
-          # return(newval)
-        })
-        suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
-      }
-
-      invisible(self)
-    },
+    #' @description
+    #' Returns the full parameter details for the supplied parameter.
+    #' @param id `character()` \cr
+    #' id of parameter to return.
     parameters = function(id = NULL) {
       if (!is.null(id)) {
         id0 <- id
@@ -181,6 +149,22 @@ ParameterSet <- R6Class("ParameterSet",
         return(self)
       }
     },
+
+    #' @description
+    #' Returns the support of the supplied parameter.
+    #' @param id `character()` \cr
+    #' id of parameter support to return.
+    #' @return
+    #' A [set6::Set] object.
+    #'
+    #' @examples
+    #' ps <- ParameterSet$new(id = "prob",
+    #'                  value = 0.2,
+    #'                  support = set6::Interval$new(0, 1),
+    #'                  settable = TRUE,
+    #'                  description = "Probability of success"
+    #'  )
+    #' ps$getParameterSupport("prob")
     getParameterSupport = function(id, error = "warn") {
       if (missing(id)) {
         return(stopwarn(error, "Argument 'id' is missing, with no default."))
@@ -194,6 +178,20 @@ ParameterSet <- R6Class("ParameterSet",
       }
 
     },
+
+    #' @description
+    #' Returns the value of the supplied parameter.
+    #' @return
+    #' A [set6::Set] object.
+    #'
+    #' @examples
+    #' ps <- ParameterSet$new(id = "prob",
+    #'                  value = 0.2,
+    #'                  support = set6::Interval$new(0, 1),
+    #'                  settable = TRUE,
+    #'                  description = "Probability of success"
+    #'  )
+    #' ps$getParameterValue("prob")
     getParameterValue = function(id, error = "warn") {
       if (missing(id)) {
         return(stopwarn(error, "Argument 'id' is missing, with no default."))
@@ -202,10 +200,28 @@ ParameterSet <- R6Class("ParameterSet",
       if (class(val) == "try-error" | length(val) == 0) {
         return(stopwarn(error, paste(id, "is not a parameter in this distribution.")))
       } else {
-        return(unlist(val[[1]]))
+        return(val[[1]])
       }
 
     },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    #'
+    #' @examples
+    #' id <- list("rate", "scale")
+    #' value <- list(1, 1)
+    #' support <- list(set6::PosReals$new(), set6::PosReals$new())
+    #' settable <- list(TRUE, FALSE)
+    #' updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
+    #' description <- list("Arrival rate", "Scale parameter")
+    #' ps <- ParameterSet$new(
+    #'   id, value, support, settable,
+    #'   updateFunc, description
+    #' )
+    #' ps$getParameterValue(id = "rate")
+    #' ps$setParameterValue(rate = 2)
+    #' ps$getParameterValue("scale") # Auto-updated to 1/2
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
       checkmate::assertList(lst)
@@ -245,10 +261,29 @@ ParameterSet <- R6Class("ParameterSet",
         private$.parameters[unlist(private$.parameters[, "id"]) %in% param$id, "value"] <- list(value)
       }
 
-      self$update()
+      private$.update()
 
       invisible(self)
     },
+
+    #' @description
+    #' Merges multiple parameter sets.
+    #' @param y [ParameterSet]
+    #' @param ... [ParameterSet]s
+    #' @examples
+    #' ps1 <- ParameterSet$new(id = "prob",
+    #'                  value = 0.2,
+    #'                  support = set6::Interval$new(0, 1),
+    #'                  settable = TRUE,
+    #'                  description = "Probability of success"
+    #'  )
+    #'  ps2 <- ParameterSet$new(id = "size",
+    #'                  value = 10,
+    #'                  support = set6::Interval$new(0, 10, class = "integer"),
+    #'                  settable = TRUE,
+    #'                  description = "Number of trials"
+    #'  )
+    #'  ps1$merge(ps2)$print()
     merge = function(y, ...) {
       newsets <- c(list(y), list(...))
       lapply(newsets, function(x) checkmate::assert(inherits(x, "ParameterSet"), .var.name = "All objects in merge must be ParameterSets"))
@@ -275,6 +310,28 @@ ParameterSet <- R6Class("ParameterSet",
       which <- which(unlist(private$.parameters$id) %in% id)
       private$.parameters[which, 3][[1]] <- list(support)
       invisible(self)
+    },
+    .update = function(...) {
+      sap <- sapply(private$.parameters$updateFunc, is.null)
+      if (any(!sap)) {
+        update_filter <- !sapply(private$.parameters$updateFunc, is.null)
+        updates <- private$.parameters[update_filter, ]
+        newvals <- apply(updates, 1, function(x) {
+          return(x[[6]](self))
+          # if(length(newval) > 1) {
+          #   if(!x[[3]]$contains(Tuple$new(newval)))
+          #     stop(Tuple$new(newval)$strprint(), " does not lie in the support of parameter ", x[[1]])
+          # } else {
+          #   if(!x[[3]]$contains(newval))
+          #     stop(newval, " does not lie in the support of parameter ", x[[1]])
+          # }
+
+          # return(newval)
+        })
+        suppressWarnings(data.table::set(private$.parameters, which(update_filter), "value", as.list(newvals)))
+      }
+
+      invisible(self)
     }
   )
 )
@@ -283,58 +340,22 @@ ParameterSet <- R6Class("ParameterSet",
 #' @title Print a ParameterSet
 #'
 #' @description Prints a ParameterSet as a data.table with strprint variants of R6 classes.
-#' @details If given the \code{hide_cols} argument can be used to hide specific columns from the
-#' data.table.
 #'
 #' @param x ParameterSet
 #' @param hide_cols string, if given the data.table is filtered to hide these columns
 #' @param ... ignored, added for S3 consistency
 #'
-#' @section R6 Usage: $print(hide_cols = c("updateFunc","settable"))
-#'
-#' @seealso \code{\link{ParameterSet}}
-#'
 #' @export
 print.ParameterSet <- function(x, hide_cols, ...) {}
-
-#' @title Updates a ParameterSet
-#'
-#' @importFrom stats update
-#' @section R6 Usage: $update()
-#'
-#' @param object ParameterSet
-#' @param ... ignored, added for S3 consistency
-#'
-#' @description Updates parameter in a ParameterSet using \code{updateFunc}s.
-#'
-#' @details In general this method should never need to be called manually by the user as it is internally
-#' called in \code{setParameterValue}.
-#'
-#' The method works by cycling through parameters in a \code{ParameterSet} that have non-NA \code{updateFunc}s
-#' and parses these as expressions, thereby updating their values.
-#'
-#' @seealso \code{\link{ParameterSet}}
-#'
-#' @return An R6 object of class ParameterSet.
-#'
-#' @export
-update.ParameterSet <- function(object, ...) {}
 
 #' @name parameters
 #' @title Parameters Accessor
 #' @description Returns some or all the parameters in a distribution.
 #'
 #' @usage parameters(object, id = NULL)
-#' @section R6 Usage: $parameters(id = NULL)
 #'
 #' @param object Distribution or ParameterSet.
 #' @param id character, see details.
-#'
-#' @details If \code{id} is given and matches a parameter in the distribution, the parameter is returned
-#' with all details. If \code{id} is given but doesn't match a parameter, an empty data.table is returned.
-#' Finally if \code{id} is not given, returns self.
-#'
-#' @seealso \code{\link{getParameterValue}} and \code{\link{setParameterValue}}
 #'
 #' @return An R6 object of class ParameterSet or a data.table.
 #'
@@ -345,19 +366,13 @@ NULL
 #' @title Parameter Support Accessor
 #' @description Returns the support of the given parameter.
 #' @usage getParameterSupport(object, id, error = "warn")
-#' @section R6 Usage: $getParameterSupport(id, error = "warn")
+#'
 #' @param object Distribution or ParameterSet.
 #' @param id character, id of the parameter to return.
 #' @param error character, value to pass to \code{stopwarn}.
-#' @details Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
-#' the support of the given parameter as a [set6::Set] object.
-#'
-#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
-#' with warning otherwise.
 #'
 #' @return An R6 object of class inheriting from [set6::Set]
 #'
-#' @seealso \code{\link{parameters}}
 #' @export
 NULL
 
@@ -365,19 +380,13 @@ NULL
 #' @title Parameter Value Accessor
 #' @description Returns the value of the given parameter.
 #' @usage getParameterValue(object, id, error = "warn")
-#' @section R6 Usage: $getParameterValue(id, error = "warn")
+#'
 #' @param object Distribution or ParameterSet.
 #' @param id character, id of the parameter to return.
 #' @param error character, value to pass to \code{stopwarn}.
-#' @details Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
-#' the value of the given parameter.
-#'
-#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
-#' with warning otherwise.
 #'
 #' @return The current value of a given parameter as a numeric.
 #'
-#' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
 #' @export
 NULL
 
@@ -386,43 +395,22 @@ NULL
 #' @description Sets the value of the given parameter.
 #'
 #' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
-#' @section R6 Usage: $setParameterValue(..., lst = NULL, error = "warn")
+#'
 #' @param object Distribution or ParameterSet.
 #' @param ... named parameters and values to update, see details.
 #' @param lst optional list, see details.
 #' @param error character, value to pass to \code{stopwarn}.
-#' @details Parameters can be updated in one of two ways, either by passing the parameters to update
-#' as named arguments or as a list with the the list names are parameter IDs and the list values are
-#' the respective values to set the parameters. Using a list may be preferred for parameters that take
-#' multiple values. See examples. If \code{lst} is given then any additional arguments are ignored.
-#'
-#' \code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
-#' with warning otherwise.
-#'
-#' @seealso \code{\link{parameters}} and \code{\link{setParameterValue}}
 #'
 #' @return An R6 object of class ParameterSet.
 #'
-#' @examples
-#' ps <- Normal$new()$parameters()
-#' ps$setParameterValue(mean = 2, var = 5)$print()
-#'
-#' ps <- MultivariateNormal$new()$parameters()
-#' ps$setParameterValue(lst = list(mean = c(1, 1)))$print()
 #' @export
 NULL
 
 #' @title Combine ParameterSets
 #'
-#' @description merge dispatch method to combine parameter sets by rows.
-#'
 #' @param x ParameterSet
 #' @param y ParameterSet
 #' @param ... ParameterSets
-#'
-#' @section R6 Usage: $merge(y, ...)
-#'
-#' @seealso \code{\link{ParameterSet}}
 #'
 #' @return An R6 object of class ParameterSet.
 #'
@@ -436,10 +424,7 @@ merge.ParameterSet <- function(x, y, ...) {}
 #' @param x ParameterSet
 #' @param ... Ignored.
 #'
-#' @importFrom data.table as.data.table
 #' @method as.data.table ParameterSet
-#'
-#' @seealso \code{\link{ParameterSet}}
 #'
 #' @return A data.table.
 #'

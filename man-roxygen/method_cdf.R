@@ -15,9 +15,3 @@
 #'of points to evaluate and columns correspond with number of variables to evaluate. In the special
 #'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
 #'to the distribution in the vector to evaluate.
-#'
-#'@examples
-#'b <- Binomial$new()
-#'b$cdf(1:10)
-#'b$cdf(1:10, log.p = TRUE, lower.tail = FALSE)
-#'b$cdf(data = matrix(1:10))

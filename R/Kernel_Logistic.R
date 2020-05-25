@@ -1,4 +1,3 @@
-
 #' @title Logistic Kernel
 #'
 #' @description Mathematical and statistical functions for the LogisticKernel kernel defined by the pdf,
@@ -6,38 +5,40 @@
 #' over the support \eqn{x \in R}{x \epsilon R}.
 #'
 #' @name LogisticKernel
-#'
-#' @section Constructor: LogisticKernel$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
+#' @template param_decorators
 #'
 #' @export
-NULL
-
 LogisticKernel <- R6Class("LogisticKernel", inherit = Kernel, lock_objects = F,
   public = list(
     name = "LogisticKernel",
     short_name = "Logis",
     description = "Logistic Kernel",
 
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new()
       )
     },
+
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
     squared2Norm = function() {
       return(1 / 6)
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return(pi^2 / 3)
     }

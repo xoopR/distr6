@@ -47,6 +47,9 @@ Logistic <- R6Class("Logistic", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = 0, scale = 1, sd = NULL,
                           decorators = NULL, verbose = FALSE) {
 

@@ -50,6 +50,9 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(shape = 1, scale = 1, minimum = 0,
                           decorators = NULL, verbose = FALSE) {
 

@@ -12,7 +12,7 @@
 #' available. The primary use-cases are to add numeric results when analytic ones are missing,
 #' to add complex modelling functions and to impute missing d/p/q/r functions.
 #'
-#' Use [decorate] to decorate distributions.
+#' Use [decorate] or `$decorate` to decorate distributions.
 #'
 #' @references
 #' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements

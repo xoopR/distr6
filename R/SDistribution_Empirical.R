@@ -40,6 +40,9 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(samples, decorators = NULL, verbose = FALSE) {
 
       samples <- sort(as.numeric(samples))

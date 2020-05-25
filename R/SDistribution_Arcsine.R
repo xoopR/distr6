@@ -1,4 +1,3 @@
-
 #' @name Arcsine
 #' @template SDist
 #' @templateVar ClassName Arcsine
@@ -17,24 +16,15 @@
 #' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
 #' @templateVar additionalSeeAlso \code{\link{rbeta}} for the Beta distribution sampling function.
 #'
-#' @examples
-#' x <- Arcsine$new(lower = 2, upper = 5)
+#' @template param_decorators
+#' @template param_lower
+#' @template param_upper
+#' @template class_distribution
+#' @template method_setParameterValue
+#' @template method_mode
+#' @template method_kurtosis
+#' @template method_entropy
 #'
-#' # Update parameters
-#' x$setParameterValue(upper = 4, lower = 1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
 #' @export
 NULL
 
@@ -47,9 +37,11 @@ Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
-    initialize = function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE) {
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(lower = 0, upper = 1, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, lower, upper, verbose)
+      private$.parameters <- getParameterSet(self, lower, upper)
       self$setParameterValue(lower = lower, upper = upper)
 
       super$initialize(

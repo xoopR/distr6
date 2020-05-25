@@ -45,6 +45,9 @@ Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(shape1 = 1, shape2 = 1, decorators = NULL, verbose = FALSE) {
 
       private$.parameters <- getParameterSet.Beta(self, shape1, shape2, verbose)

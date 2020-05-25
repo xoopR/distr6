@@ -56,10 +56,15 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(params = c(1, 1), decorators = NULL, verbose = FALSE) {
 
       private$.parameters <- getParameterSet(self, params, verbose)
       self$setParameterValue(params = params)
+
+      private$.variates = length(params)
 
       super$initialize(
         decorators = decorators,
@@ -153,7 +158,10 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
     },
 
     # traits
-    .traits = list(valueSupport = "continuous", variateForm = "multivariate")
+    .traits = list(valueSupport = "continuous", variateForm = "multivariate"),
+
+    .isCdf = FALSE,
+    .isQuantile = FALSE
   )
 )
 

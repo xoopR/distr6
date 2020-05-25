@@ -2,50 +2,35 @@
 #' @title Mixture Distribution Wrapper
 #' @description Wrapper used to construct a mixture of two or more distributions.
 #'
-#' @section Constructor: MixtureDistribution$new(distlist, weights = NULL, vectordist = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distlist} \tab list \tab List of distributions. \cr
-#' \code{weights} \tab numeric \tab Vector of weights. See Details. \cr
-#' \code{vectordist} \tab numeric \tab Vector Distribution. See Details. \cr
-#' }
-#'
-#' @details A Mixture Distribution is a weighted combination of two or more distributions such that for
-#' pdf/cdfs of n distribution \eqn{f_1,...,f_n}/\eqn{F_1,...,F_n} and a given weight associated to each distribution,
-#' \eqn{w_1,...,w_n}. The pdf of the mixture distribution \eqn{M(X1,...,XN)}, \eqn{f_M} is given by
-#' \deqn{f_M = \sum_i (f_i)(w_i)}
-#' and the cdf, F_M is given by
-#' \deqn{F_M = \sum_i (F_i)(w_i)}
-#'
-#' If weights are given, they should be provided as a vector of numerics. If they don't sum to one
-#' then they are normalised automatically. If NULL, they are taken to be uniform, i.e. for n
-#' distributions, \eqn{w_i = 1/n, \ \forall \ i \ \in \ [1,n]}{w_i = 1/n, for all i \epsilon [1,n]}.
-#'
-#' Can optionally be constructed using a \code{VectorDistribution}, in which case \code{distlist} is ignored
-#' and the mixture is constructed with the wrapped models in the vector.
-#'
-#'
-#' @inheritSection DistributionWrapper Public Variables
-#' @inheritSection DistributionWrapper Public Methods
+#' @template method_pdf
+#' @template method_cdf
+#' @template method_quantile
+#' @template method_rand
+#' @template param_decorators
+#' @template class_vecdist
 #'
 #' @return Returns an R6 object of class MixtureDistribution.
 #'
 #' @seealso \code{\link{listWrappers}}
 #'
 #' @examples
-#' mixture <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-#'   weights = c(0.2, 0.8)
-#' )
 #' mixture$pdf(1)
 #' mixture$cdf(1)
 #' @export
-NULL
 MixtureDistribution <- R6Class("MixtureDistribution",
   inherit = VectorDistribution,
   lock_objects = FALSE,
   public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param weights `(character(1)|numeric())`\cr
+    #' Weights to use in the resulting mixture. If all distributions are weighted equally then
+    #' `"uniform"` provides a much faster implementation, otherwise a vector of length equal
+    #' to the number of wrapped distributions, this is automatically scaled internally.
+    #' @examples
+    #' MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+    #'   weights = c(0.2, 0.8)
+    #' )
     initialize = function(distlist = NULL, weights = "uniform", distribution = NULL, params = NULL,
                           shared_params = NULL,
                           name = NULL, short_name = NULL,
@@ -94,6 +79,24 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       # private$.traits$type = setpower(Reals$new(), ndist)   # FIXME
     },
 
+    #' @description
+    #' Probability density function of the mixture distribution. Computed by
+    #'  \deqn{f_M(x) = \sum_i (f_i)(x)*w_i}
+    #'  where \eqn{w_i} is the vector of weights and \eqn{f_i} are the pdfs of the wrapped
+    #'  distributions.
+    #'
+    #' Note that as this class inherits from [VectorDistribution], it is possible to evaluate
+    #' the distributions at different points, but that this is not the usual use-case for
+    #' mixture distributions.
+    #'
+    #' @examples
+    #' m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+    #'   weights = c(0.2, 0.8)
+    #' )
+    #' m$pdf(1:5)
+    #' m$pdf(1)
+    #' # also possible but unlikely to be used
+    #' m$pdf(1, 2)
     pdf = function(..., log = FALSE, data) {
       mixture_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
@@ -102,6 +105,17 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       )
     },
 
+    #' @description
+    #' Cumulative distribution function of the mixture distribution. Computed by
+    #'  \deqn{F_M(x) = \sum_i (F_i)(x)*w_i}
+    #'  where \eqn{w_i} is the vector of weights and \eqn{F_i} are the cdfs of the wrapped
+    #'  distributions.
+    #'
+    #'  @examples
+    #'  m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+    #'   weights = c(0.2, 0.8)
+    #' )
+    #' m$cdf(1:5)
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
       mixture_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
@@ -110,10 +124,16 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       )
     },
 
+    #' @description
+    #' The quantile function is not implemented for mixture distributions.
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
       stop("Quantile is currently unavailable for mixture distributions.")
     },
 
+    #' @description
+    #' Simulation function for mixture distributions. Samples are drawn from a mixture by first
+    #' sampling Multinomial(probs = weights, size = n), then sampling each distribution according
+    #' to the samples from the Multinomial, and finally randomly permuting these draws.
     rand = function(n) {
       weights <- private$.outerParameters$getParameterValue("weights")
 

@@ -1,35 +1,21 @@
-#' @name ProductDistribution
 #' @title Product Distribution
 #' @description A wrapper for creating the joint distribution of multiple independent probability distributions.
-#' @seealso \code{\link{listWrappers}} and \code{\link{VectorDistribution}}
+#' @template class_vecdist
+#' @template method_pdf
+#' @template method_cdf
+#' @template method_quantile
+#'
 #' @details Exploits the following relationships of independent distributions
-#' \deqn{f_P(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}{f_P(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
+#'
 #' \deqn{F_P(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}{F_P(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
 #' where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eqn{P} and \eqn{X1,...,XN} are independent distributions.
 #'
-#' \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
-#'
-#' @section Constructor: ProductDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distlist} \tab list \tab List of distributions. \cr
-#' \code{distribution} \tab distribution \tab Distribution to wrap. \cr
-#' \code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
-#' \code{name} \tab list \tab Optional new name for distribution. \cr
-#' \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
-#' \code{description} \tab list \tab Optional new description for distribution. \cr
-#' }
 #'
 #' @section Constructor Details: A product distribution can either be constructed by a list of
 #' distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
 #' to \code{distribution}, as well as a list or table of parameters to \code{params}. The former case provides more flexibility
 #' in the ability to use multiple distributions but the latter is useful for quickly combining many
 #' distributions of the same type. See examples.
-#'
-#' @inheritSection DistributionWrapper Public Variables
-#' @inheritSection DistributionWrapper Public Methods
 #'
 #' @return Returns an R6 object of class ProductDistribution.
 #'
@@ -64,11 +50,12 @@
 #' prodBin$cdf(x1 = 1, x2 = 2, x3 = 3)
 #' prodBin$rand(10)
 #' @export
-NULL
 ProductDistribution <- R6Class("ProductDistribution",
   inherit = VectorDistribution,
   lock_objects = FALSE,
   public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(distlist = NULL, distribution = NULL, params = NULL,
                           shared_params = NULL,
                           name = NULL, short_name = NULL,
@@ -96,6 +83,18 @@ ProductDistribution <- R6Class("ProductDistribution",
       #   valueSupport = "continuous"
     },
 
+    #' @description
+    #' Probability density function of the product distribution. Computed by
+    #'  \deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
+    #'  where \eqn{f_{Xi}} are the pdfs of the wrapped distributions.
+    #'
+    #' @examples
+    #' p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+    #'   weights = c(0.2, 0.8)
+    #' )
+    #' p$pdf(1:5)
+    #' p$pdf(1)
+    #' p$pdf(1, 2)
     pdf = function(..., log = FALSE, data) {
       product_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
@@ -103,6 +102,18 @@ ProductDistribution <- R6Class("ProductDistribution",
       )
     },
 
+    #' @description
+    #' Cumulative distribution function of the product distribution. Computed by
+    #'  \deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
+    #'  where \eqn{F_{Xi}} are the cdfs of the wrapped distributions.
+    #'
+    #' @examples
+    #' p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+    #'   weights = c(0.2, 0.8)
+    #' )
+    #' p$cdf(1:5)
+    #' p$cdf(1)
+    #' p$cdf(1, 2)
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
       product_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
@@ -110,6 +121,8 @@ ProductDistribution <- R6Class("ProductDistribution",
       )
     },
 
+    #' @description
+    #' The quantile function is not implemented for product distributions.
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
       stop("Quantile is currently unavailable for product distributions.")
     }

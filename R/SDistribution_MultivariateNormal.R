@@ -59,6 +59,9 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = rep(0, 2), cov = c(1, 0, 0, 1),
                           prec = NULL, decorators = NULL, verbose = FALSE) {
 
@@ -66,6 +69,8 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
 
       private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
       self$setParameterValue(mean = mean, cov = cov, prec = prec)
+
+      private$.variates = length(mean)
 
       super$initialize(
         decorators = decorators,
@@ -236,7 +241,10 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     },
 
     # traits
-    .traits = list(valueSupport = "continuous", variateForm = "multivariate")
+    .traits = list(valueSupport = "continuous", variateForm = "multivariate"),
+
+    .isCdf = FALSE,
+    .isQuantile = FALSE
   )
 )
 

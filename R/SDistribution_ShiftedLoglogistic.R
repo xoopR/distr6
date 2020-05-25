@@ -50,6 +50,9 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(scale = 1, shape = 1, location = 0,
                           rate = NULL, decorators = NULL, verbose = FALSE) {
 

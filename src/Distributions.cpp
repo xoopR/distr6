@@ -199,6 +199,58 @@ NumericMatrix C_DegenerateQuantile(NumericVector x, NumericVector mean, bool low
 }
 
 // [[Rcpp::export]]
+NumericVector C_EmpiricalMVPdf(NumericMatrix x, NumericMatrix data) {
+
+  float n = data.nrow();
+  float vbj;
+  int vk;
+  NumericVector ret(x.nrow());
+
+  for (int i = 0; i < x.nrow(); i++) {
+    for (int k = 0; k < n; k++) {
+      vbj = 0;
+      vk = 1;
+
+      for (int j = 0; j < x.ncol(); j++) {
+        vk = vk && (data(k, j) ==  x(i, j));
+      }
+
+      vbj += vk;
+
+      ret[i] += (vbj/n);
+    }
+  }
+
+  return ret;
+}
+
+// [[Rcpp::export]]
+NumericVector C_EmpiricalMVCdf(NumericMatrix x, NumericMatrix data) {
+
+  float n = data.nrow();
+  float vbj;
+  int vk;
+  NumericVector ret(x.nrow());
+
+  for (int i = 0; i < x.nrow(); i++) {
+    for (int k = 0; k < n; k++) {
+      vbj = 0;
+      vk = 1;
+
+      for (int j = 0; j < x.ncol(); j++) {
+        vk = vk && (data(k, j) <=  x(i, j));
+      }
+
+      vbj += vk;
+
+      ret[i] += (vbj/n);
+    }
+  }
+
+  return ret;
+}
+
+// [[Rcpp::export]]
 NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob,
                                     StringVector form) {
   int sl = size.length();

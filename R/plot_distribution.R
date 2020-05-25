@@ -62,8 +62,12 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
   #######                         validations                     #######
   #######################################################################
 
-  if (!testUnivariate(x) | testMixture(x)) {
-    stop("Currently only plotting univariate, discrete or continuous, distributions are supported.")
+  if (testMixture(x)) {
+    stop("Mixture distributions not currently supported.")
+  }
+
+  if (x$.__enclos_env__$private$.variates > 2) {
+    stop("Distributions with over two variables not currently supported.")
   }
 
   plotFuns <- c("pdf", "cdf", "quantile", "survival", "hazard", "cumhazard", "all")
@@ -99,84 +103,89 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
   #######                   plottable structure                   #######
   #######################################################################
 
-  if (testDiscrete(x) & x$properties$support$properties$countability == "countably finite") {
-    plotStructure <- data.table::data.table(points = unlist(x$properties$support$elements))
+  if (testMultivariate(x)) {
+    return(.plot_multivariate(x, fun, npoints))
   } else {
-    if (isQuantile(x)) {
-      plotStructure <- data.table::data.table(cdf = seq(0, 1, length.out = npoints))
-      plotStructure$points <- x$quantile(plotStructure$cdf)
-      plotStructure <- plotStructure[, 2:1]
-    } else if (x$isRand) {
-      plotStructure <- data.table::data.table(points = sort(x$rand(npoints)))
+
+    if (testDiscrete(x) & x$properties$support$properties$countability == "countably finite") {
+      plotStructure <- data.table::data.table(points = unlist(x$properties$support$elements))
     } else {
-      message("No quantile or rand available, representation may not be accurate. Use the FunctionImputation decorator for better accuracy.")
-      max <- ifelse(x$dmax == Inf, 100, x$dmax)
-      min <- ifelse(x$dmin == -Inf, -100, x$dmin)
-      plotStructure <- data.table::data.table(points = seq.int(min, max, length.out = npoints))
+      if (isQuantile(x)) {
+        plotStructure <- data.table::data.table(cdf = seq(0, 1, length.out = npoints))
+        plotStructure$points <- x$quantile(plotStructure$cdf)
+        plotStructure <- plotStructure[, 2:1]
+      } else if (isRand(x)) {
+        plotStructure <- data.table::data.table(points = sort(x$rand(npoints)))
+      } else {
+        message("No quantile or rand available, representation may not be accurate. Use the FunctionImputation decorator for better accuracy.")
+        max <- ifelse(x$dmax == Inf, 100, x$dmax)
+        min <- ifelse(x$dmin == -Inf, -100, x$dmin)
+        plotStructure <- data.table::data.table(points = seq.int(min, max, length.out = npoints))
+      }
+
+      if (testDiscrete(x) & "cdf" %in% fun) {
+        plotStructure <- stats::aggregate(cdf ~ points, plotStructure, max)
+      }
     }
 
-    if (testDiscrete(x) & "cdf" %in% fun) {
-      plotStructure <- stats::aggregate(cdf ~ points, plotStructure, max)
+    if (any(c("cdf", "survival", "hazard", "cumhazard", "quantile") %in% fun) & !("cdf" %in% colnames(plotStructure))) {
+      plotStructure$cdf <- x$cdf(plotStructure$points)
     }
-  }
-
-  if (any(c("cdf", "survival", "hazard", "cumhazard", "quantile") %in% fun) & !("cdf" %in% colnames(plotStructure))) {
-    plotStructure$cdf <- x$cdf(plotStructure$points)
-  }
-  if (any(c("pdf", "hazard") %in% fun)) {
-    plotStructure$pdf <- x$pdf(plotStructure$points)
-  }
-
-  if ("survival" %in% fun) {
-    plotStructure$survival <- 1 - plotStructure$cdf
-  }
-  if ("hazard" %in% fun) {
-    plotStructure$hazard <- plotStructure$pdf / (1 - plotStructure$cdf)
-  }
-  if ("cumhazard" %in% fun) {
-    plotStructure$cumhazard <- -log(1 - plotStructure$cdf)
-  }
-
-
-  #######################################################################
-  #######                     graphical parameters                #######
-  #######################################################################
-
-  if (length(fun) == 1) {
-    ask <- arrange <- FALSE
-  }
-
-  if (plot) {
-    if (ask | arrange) {
-      def.par <- graphics::par(no.readonly = TRUE)
-      graphics::par(ask = ask)
+    if (any(c("pdf", "hazard") %in% fun)) {
+      plotStructure$pdf <- x$pdf(plotStructure$points)
     }
 
-    if (arrange & !ask) {
-      data <- 1:length(fun)
-      if (length(fun) == 3 | length(fun) == 5) data <- c(data, 0)
-
-      n <- switch(length(fun),
-        "1" = list(nrow = 1, ncol = 1),
-        "2" = list(nrow = 1, ncol = 2),
-        "3" = list(nrow = 2, ncol = 2),
-        "4" = list(nrow = 2, ncol = 2),
-        "5" = list(nrow = 2, ncol = 3),
-        "6" = list(nrow = 2, ncol = 3)
-      )
-
-      graphics::layout(do.call(matrix, c(list(byrow = TRUE, data = data), n)))
-
+    if ("survival" %in% fun) {
+      plotStructure$survival <- 1 - plotStructure$cdf
+    }
+    if ("hazard" %in% fun) {
+      plotStructure$hazard <- plotStructure$pdf / (1 - plotStructure$cdf)
+    }
+    if ("cumhazard" %in% fun) {
+      plotStructure$cumhazard <- -log(1 - plotStructure$cdf)
     }
 
-    if (testContinuous(x)) {
-      .plot_continuous(fun, plotStructure, x$strprint(), ...)
-    } else if (testDiscrete(x)) {
-      .plot_discrete(fun, plotStructure, x$strprint(), ...)
+
+    #######################################################################
+    #######                     graphical parameters                #######
+    #######################################################################
+
+    if (length(fun) == 1) {
+      ask <- arrange <- FALSE
     }
 
-    if (ask | arrange) {
-      graphics::par(def.par)
+    if (plot) {
+      if (ask | arrange) {
+        def.par <- graphics::par(no.readonly = TRUE)
+        graphics::par(ask = ask)
+      }
+
+      if (arrange & !ask) {
+        data <- 1:length(fun)
+        if (length(fun) == 3 | length(fun) == 5) data <- c(data, 0)
+
+        n <- switch(length(fun),
+                    "1" = list(nrow = 1, ncol = 1),
+                    "2" = list(nrow = 1, ncol = 2),
+                    "3" = list(nrow = 2, ncol = 2),
+                    "4" = list(nrow = 2, ncol = 2),
+                    "5" = list(nrow = 2, ncol = 3),
+                    "6" = list(nrow = 2, ncol = 3)
+        )
+
+        graphics::layout(do.call(matrix, c(list(byrow = TRUE, data = data), n)))
+
+      }
+
+      if (testContinuous(x)) {
+        .plot_continuous(fun, plotStructure, x$strprint(), ...)
+      } else if (testDiscrete(x)) {
+        .plot_discrete(fun, plotStructure, x$strprint(), ...)
+      }
+
+      if (ask | arrange) {
+        graphics::par(def.par)
+      }
     }
   }
 

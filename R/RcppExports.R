@@ -29,6 +29,14 @@ C_DegenerateQuantile <- function(x, mean, lower, logp) {
     .Call(`_distr6_C_DegenerateQuantile`, x, mean, lower, logp)
 }
 
+C_EmpiricalMVPdf <- function(x, data) {
+    .Call(`_distr6_C_EmpiricalMVPdf`, x, data)
+}
+
+C_EmpiricalMVCdf <- function(x, data) {
+    .Call(`_distr6_C_EmpiricalMVCdf`, x, data)
+}
+
 C_NegativeBinomialPdf <- function(x, size, prob, form) {
     .Call(`_distr6_C_NegativeBinomialPdf`, x, size, prob, form)
 }

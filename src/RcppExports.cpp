@@ -102,6 +102,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// C_EmpiricalMVPdf
+NumericVector C_EmpiricalMVPdf(NumericMatrix x, NumericMatrix data);
+RcppExport SEXP _distr6_C_EmpiricalMVPdf(SEXP xSEXP, SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_EmpiricalMVPdf(x, data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_EmpiricalMVCdf
+NumericVector C_EmpiricalMVCdf(NumericMatrix x, NumericMatrix data);
+RcppExport SEXP _distr6_C_EmpiricalMVCdf(SEXP xSEXP, SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_EmpiricalMVCdf(x, data));
+    return rcpp_result_gen;
+END_RCPP
+}
 // C_NegativeBinomialPdf
 NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, StringVector form);
 RcppExport SEXP _distr6_C_NegativeBinomialPdf(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP formSEXP) {
@@ -608,6 +632,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_DegeneratePdf", (DL_FUNC) &_distr6_C_DegeneratePdf, 3},
     {"_distr6_C_DegenerateCdf", (DL_FUNC) &_distr6_C_DegenerateCdf, 4},
     {"_distr6_C_DegenerateQuantile", (DL_FUNC) &_distr6_C_DegenerateQuantile, 4},
+    {"_distr6_C_EmpiricalMVPdf", (DL_FUNC) &_distr6_C_EmpiricalMVPdf, 2},
+    {"_distr6_C_EmpiricalMVCdf", (DL_FUNC) &_distr6_C_EmpiricalMVCdf, 2},
     {"_distr6_C_NegativeBinomialPdf", (DL_FUNC) &_distr6_C_NegativeBinomialPdf, 4},
     {"_distr6_C_ShiftedLoglogisticPdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticPdf, 5},
     {"_distr6_C_ShiftedLoglogisticCdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticCdf, 6},

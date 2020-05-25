@@ -52,6 +52,9 @@ Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL,
                           verbose = FALSE) {
 

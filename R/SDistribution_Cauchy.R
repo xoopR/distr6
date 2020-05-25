@@ -47,6 +47,9 @@ Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(location = 0, scale = 1,
                           decorators = NULL, verbose = FALSE) {
 

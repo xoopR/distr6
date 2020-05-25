@@ -8,32 +8,30 @@
 #' be found, decorate with FunctionImputation for numeric results.
 #'
 #' @name Triweight
-#'
-#' @section Constructor: Triweight$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-
 Triweight <- R6Class("Triweight", inherit = Kernel, lock_objects = F,
   public = list(
     name = "Triweight",
     short_name = "Triw",
     description = "Triweight Kernel",
 
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
     squared2Norm = function() {
       return(350 / 429)
     },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
     variance = function() {
       return(1 / 9)
     }

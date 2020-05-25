@@ -57,6 +57,9 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
 
     # Public methods
     # initialize
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(lower = 0, upper = 1, mode = (lower + upper) / 2,
                           symmetric = FALSE,
                           decorators = NULL, verbose = FALSE) {
