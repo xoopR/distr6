@@ -54,9 +54,9 @@ Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = 0, scale = 1, var = NULL,
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, mean, scale, var, verbose)
+      private$.parameters <- getParameterSet(self, mean, scale, var)
       self$setParameterValue(mean = mean, scale = scale, var = var)
 
       super$initialize(
@@ -68,6 +68,11 @@ Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       self$getParameterValue("mean")
     },

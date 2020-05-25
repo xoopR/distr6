@@ -47,7 +47,7 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(..., probs, decorators = NULL, verbose = FALSE) {
+    initialize = function(..., probs, decorators = NULL) {
 
 
       if (...length() == 0) {
@@ -61,7 +61,7 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
 
       checkmate::assert(length(dots) == length(probs))
 
-      private$.parameters <- getParameterSet(self, probs, verbose)
+      private$.parameters <- getParameterSet(self, probs)
       self$setParameterValue(probs = probs)
 
       super$initialize(
@@ -73,6 +73,11 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(NaN)
     },

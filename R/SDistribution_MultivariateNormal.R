@@ -63,11 +63,11 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = rep(0, 2), cov = c(1, 0, 0, 1),
-                          prec = NULL, decorators = NULL, verbose = FALSE) {
+                          prec = NULL, decorators = NULL) {
 
       if (length(mean) == 1) stop("Length of mean is '1', use Normal distribution instead.")
 
-      private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
+      private$.parameters <- getParameterSet(self, mean, cov, prec)
       self$setParameterValue(mean = mean, cov = cov, prec = prec)
 
       private$.variates = length(mean)
@@ -80,6 +80,11 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("mean"))
     },

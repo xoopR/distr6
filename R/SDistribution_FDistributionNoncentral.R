@@ -51,9 +51,9 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistrib
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(df1 = 1, df2 = 1, location = 0, decorators = NULL, verbose = FALSE) {
+    initialize = function(df1 = 1, df2 = 1, location = 0, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, df1, df2, location, verbose)
+      private$.parameters <- getParameterSet(self, df1, df2, location)
       self$setParameterValue(df1 = df1, df2 = df2, location = location)
 
       if (df1 == 1) {
@@ -70,6 +70,11 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral", inherit = SDistrib
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       if (self$getParameterValue("df2") > 2) {
         df1 <- self$getParameterValue("df1")

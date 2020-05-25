@@ -44,7 +44,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(data, decorators = NULL, verbose = FALSE) {
+    initialize = function(data, decorators = NULL) {
 
       data <- data.table::as.data.table(data)
       checkmate::assert(all(colnames(data) %in% c("pdf", "cdf", "x")),
@@ -83,6 +83,11 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       data <- self$getParameterValue("data")
       return(sum(data$x * data$pdf))

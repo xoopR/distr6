@@ -48,9 +48,9 @@ Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(mode = 1, decorators = NULL, verbose = FALSE) {
+    initialize = function(mode = 1, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, mode, verbose)
+      private$.parameters <- getParameterSet(self, mode)
       self$setParameterValue(mode = mode)
 
       super$initialize(
@@ -61,6 +61,11 @@ Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("mode") * sqrt(pi / 2))
     },

@@ -55,7 +55,7 @@ InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = 
     initialize = function(shape = 1, scale = 1, decorators = NULL,
                           verbose = FALSE) {
 
-      private$.parameters <- getParameterSet.InverseGamma(self, shape, scale, verbose)
+      private$.parameters <- getParameterSet.InverseGamma(self, shape, scale)
       self$setParameterValue(shape = shape, scale = scale)
 
       super$initialize(
@@ -66,6 +66,11 @@ InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = 
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       if (self$getParameterValue("shape") > 1) {
         return(self$getParameterValue("scale") / (self$getParameterValue("shape") - 1))

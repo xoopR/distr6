@@ -53,9 +53,9 @@ Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE) {
+    initialize = function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL) {
 
-    private$.parameters <- getParameterSet(self, size, prob, qprob, verbose)
+    private$.parameters <- getParameterSet(self, size, prob, qprob)
     self$setParameterValue(size = size, prob = prob, qprob = qprob)
 
     super$initialize(
@@ -67,6 +67,11 @@ Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       self$getParameterValue("size") * self$getParameterValue("prob")
     },

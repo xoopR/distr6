@@ -54,11 +54,11 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE) {
+    initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL) {
 
       if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")
 
-      private$.parameters <- getParameterSet(self, size, probs, verbose)
+      private$.parameters <- getParameterSet(self, size, probs)
       self$setParameterValue(size = size, probs = probs)
 
       private$.variates = length(probs)
@@ -71,6 +71,11 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("size") * self$getParameterValue("probs"))
     },

@@ -54,9 +54,9 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(scale = 1, shape = 1, rate = NULL,
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, scale, shape, rate, verbose)
+      private$.parameters <- getParameterSet(self, scale, shape, rate)
       self$setParameterValue(scale = scale, shape = shape, rate = rate)
 
       super$initialize(
@@ -67,6 +67,11 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return((self$getParameterValue("scale") * pi / self$getParameterValue("shape")) /
                sin(pi / self$getParameterValue("shape")))

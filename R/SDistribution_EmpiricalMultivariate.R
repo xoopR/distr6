@@ -42,7 +42,7 @@ EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(data, decorators = NULL, verbose = FALSE) {
+    initialize = function(data, decorators = NULL) {
 
       data <- data.table::as.data.table(data)
       private$.variates = ncol(data)
@@ -64,6 +64,11 @@ EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
     }, # TODO
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(mean(unlist(self$support$elements)))
     }, #TODO

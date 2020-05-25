@@ -87,6 +87,11 @@ Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       if (private$.trials) {
         return(1 / self$getParameterValue("prob"))

@@ -46,9 +46,9 @@ Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
+    initialize = function(shape = 1, scale = 1, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, shape, scale, verbose)
+      private$.parameters <- getParameterSet(self, shape, scale)
       suppressMessages(self$setParameterValue(shape = shape, scale = scale))
 
       super$initialize(

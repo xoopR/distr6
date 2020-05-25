@@ -51,9 +51,9 @@ StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, loc
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {
+    initialize = function(df = 1, location = 0, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, df, location, verbose)
+      private$.parameters <- getParameterSet(self, df, location)
       self$setParameterValue(df = df, location = location)
 
       super$initialize(
@@ -65,6 +65,11 @@ StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, loc
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       df <- self$getParameterValue("df")
       if (df > 1) {

@@ -51,9 +51,14 @@ Pareto <- R6Class("Pareto", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(shape = 1, scale = 1, decorators = NULL, verbose = FALSE) {
 
-      private$.parameters <- getParameterSet(self, shape, scale, verbose)
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    initialize = function(shape = 1, scale = 1, decorators = NULL) {
+
+      private$.parameters <- getParameterSet(self, shape, scale)
       self$setParameterValue(shape = shape, scale = scale)
 
       super$initialize(

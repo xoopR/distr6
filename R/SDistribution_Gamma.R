@@ -58,7 +58,7 @@ Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
     initialize = function(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL,
                           verbose = FALSE) {
 
-      private$.parameters <- getParameterSet.Gamma(self, shape, rate, scale, mean, verbose)
+      private$.parameters <- getParameterSet.Gamma(self, shape, rate, scale, mean)
       self$setParameterValue(shape = shape, rate = rate, scale = scale, mean = mean)
 
       super$initialize(
@@ -69,6 +69,11 @@ Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("mean"))
     },

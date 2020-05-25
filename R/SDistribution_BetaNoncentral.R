@@ -49,7 +49,7 @@ BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_object
     initialize = function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL,
                           verbose = FALSE) {
 
-      private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, locaiton, verbose)
+      private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, location)
       self$setParameterValue(shape1 = shape1, shape2 = shape2, location = location)
 
       super$initialize(

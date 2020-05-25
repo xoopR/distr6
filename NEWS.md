@@ -7,6 +7,8 @@
 * Multivariate functions in `VectorDistribution` now return arrays
 * Analytical `median` now available for `SDistribution`s where closed form expressions are known
 * Kernels now implemented in `Rcpp` with analytical log-pdf expressions. Analytical lower.tail and log.p will come in future versions.
+* Adding plotting for bivariate distributions using `{plotly}`
+* Added `EmpiricalMV` for empirical multivariate distributions
 
 ### Deprecated Functions/Fields/Methods
 
@@ -15,6 +17,7 @@
 * Removed deprecated classes: `ArrayDistribution`
 * Removed deprecated functions: `listSpecialSets`
 * `WeighedDiscrete` distribution now stores samples and probabilities as parameters.
+* Removed `verbose` argument from distribution constructor
 
 ## Patches
 

@@ -82,6 +82,7 @@ Suggests:
   extraDistr,
   actuar,
   remotes,
+  plotly,
   pracma
 License: MIT + file LICENSE
 LazyData: true

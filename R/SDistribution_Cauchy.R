@@ -51,9 +51,9 @@ Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(location = 0, scale = 1,
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, location, scale, verbose)
+      private$.parameters <- getParameterSet(self, location, scale)
       self$setParameterValue(location = location, scale = scale)
 
       super$initialize(
@@ -65,6 +65,11 @@ Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(NaN)
     },

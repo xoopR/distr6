@@ -58,9 +58,9 @@ Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(mean = 0, var = 1, sd = NULL, prec = NULL,
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, mean, var, sd, prec, verbose)
+      private$.parameters <- getParameterSet(self, mean, var, sd, prec)
       self$setParameterValue(mean = mean, var = var, sd = sd, prec = prec)
 
       super$initialize(
@@ -72,6 +72,11 @@ Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("mean"))
     },

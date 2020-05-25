@@ -57,7 +57,7 @@ Erlang <- R6Class("Erlang", inherit = SDistribution, lock_objects = F,
     initialize = function(shape = 1, rate = 1, scale = NULL, decorators = NULL,
                           verbose = FALSE) {
 
-      private$.parameters <- getParameterSet.Erlang(self, shape, rate, scale, verbose)
+      private$.parameters <- getParameterSet.Erlang(self, shape, rate, scale)
       self$setParameterValue(shape = shape, rate = rate, scale = scale)
 
       super$initialize(
@@ -68,6 +68,11 @@ Erlang <- R6Class("Erlang", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       self$getParameterValue("shape") / self$getParameterValue("rate")
     },

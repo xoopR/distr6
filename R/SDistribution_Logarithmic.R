@@ -49,9 +49,9 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(theta = 0.5, decorators = NULL, verbose = FALSE) {
+    initialize = function(theta = 0.5, decorators = NULL) {
 
-      private$.parameters <- getParameterSet.Logarithmic(self, theta, verbose)
+      private$.parameters <- getParameterSet.Logarithmic(self, theta)
       self$setParameterValue(theta = theta)
 
       super$initialize(
@@ -62,6 +62,11 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       theta <- self$getParameterValue("theta")
       return(-theta / (log(1 - theta) * (1 - theta)))

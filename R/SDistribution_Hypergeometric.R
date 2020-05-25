@@ -57,9 +57,9 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(size = 50, successes = 5, failures = NULL, draws = 10,
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, size, successes, failures, draws, verbose)
+      private$.parameters <- getParameterSet(self, size, successes, failures, draws)
       self$setParameterValue(size = size, successes = successes, failures = failures, draws = draws)
 
       support <- Set$new(max(0, draws + successes - size):min(draws, successes), class = "integer")
@@ -72,6 +72,11 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("draws") * self$getParameterValue("successes") / self$getParameterValue("size"))
     },

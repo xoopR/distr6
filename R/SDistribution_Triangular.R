@@ -62,7 +62,7 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(lower = 0, upper = 1, mode = (lower + upper) / 2,
                           symmetric = FALSE,
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
 
       if (symmetric) {
@@ -79,7 +79,7 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
         }
       }
 
-      private$.parameters <- getParameterSet(self, lower, upper, mode, symmetric, verbose)
+      private$.parameters <- getParameterSet(self, lower, upper, mode, symmetric)
       self$setParameterValue(lower = lower, upper = upper, mode = mode)
 
       super$initialize(
@@ -91,6 +91,11 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode")) / 3)
     },

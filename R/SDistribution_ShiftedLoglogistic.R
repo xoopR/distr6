@@ -54,9 +54,9 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(scale = 1, shape = 1, location = 0,
-                          rate = NULL, decorators = NULL, verbose = FALSE) {
+                          rate = NULL, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, scale, shape, location, rate, verbose)
+      private$.parameters <- getParameterSet(self, scale, shape, location, rate)
       self$setParameterValue(scale = scale, shape = shape, location = location, rate = rate)
 
       super$initialize(
@@ -67,6 +67,11 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       location <- self$getParameterValue("location")
       scale <- self$getParameterValue("scale")

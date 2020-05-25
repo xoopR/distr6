@@ -72,13 +72,13 @@ Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
                           mean = 1, var = NULL, sd = NULL, prec = NULL,
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
       if (!is.null(var) | !is.null(sd) | !is.null(prec)) {
         meanlog <- varlog <- sdlog <- preclog <- NULL
       }
 
-      private$.parameters <- getParameterSet(self, meanlog, varlog, sdlog, preclog, mean, var, sd, prec, verbose)
+      private$.parameters <- getParameterSet(self, meanlog, varlog, sdlog, preclog, mean, var, sd, prec)
       self$setParameterValue(
         meanlog = meanlog, varlog = varlog, sdlog = sdlog, preclog = preclog,
         mean = mean, var = var, sd = sd, prec = prec
@@ -92,6 +92,11 @@ Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("mean"))
     },

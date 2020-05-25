@@ -48,9 +48,9 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(mean = 0, decorators = NULL, verbose = FALSE) {
+    initialize = function(mean = 0, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, mean, verbose)
+      private$.parameters <- getParameterSet(self, mean)
       self$setParameterValue(mean = mean)
 
       super$initialize(
@@ -62,6 +62,11 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("mean"))
     },

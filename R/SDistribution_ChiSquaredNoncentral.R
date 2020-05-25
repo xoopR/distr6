@@ -51,9 +51,9 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(df = 1, location = 0, decorators = NULL, verbose = FALSE) {
+    initialize = function(df = 1, location = 0, decorators = NULL) {
 
-      private$.parameters <- getParameterSet(self, df, location, verbose)
+      private$.parameters <- getParameterSet(self, df, location)
       self$setParameterValue(df = df, location = location)
 
       if (df == 1) {
@@ -70,6 +70,11 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution,
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("df") + self$getParameterValue("location"))
     },

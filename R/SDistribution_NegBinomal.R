@@ -71,11 +71,11 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(size = 10, prob = 0.5, qprob = NULL, mean = NULL,
                           form = c("fbs", "sbf", "tbf", "tbs"),
-                          decorators = NULL, verbose = FALSE) {
+                          decorators = NULL) {
 
       form <- match.arg(form)
 
-      private$.parameters <- getParameterSet(self, size, prob, qprob, mean, form, verbose)
+      private$.parameters <- getParameterSet(self, size, prob, qprob, mean, form)
       self$setParameterValue(size = size, prob = prob, qprob = qprob, mean = mean)
 
       if (form == "fbs") {
@@ -100,6 +100,11 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
     },
 
     # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
     mean = function() {
       return(self$getParameterValue("mean"))
     },
