@@ -19,7 +19,7 @@
 #' @export
 simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL) {
 
-  if (getR6Class(EmpiricalDist) != "Empirical") {
+  if (!(getR6Class(EmpiricalDist) %in% c("Empirical", "EmpiricalMV"))) {
     stop("For Distributions that are not Empirical use $rand.")
   }
 
@@ -31,9 +31,19 @@ simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL) {
     n <- length(n)
   }
 
-  if (n > EmpiricalDist$support$length) {
-    n <- EmpiricalDist$support$length
+  if (getR6Class(EmpiricalDist) == "Empirical") {
+    data <- EmpiricalDist$getParameterValue("data")
+    if (n > length(data)) {
+      n <- length(data)
+    }
+    return(sample(data, n))
+  } else {
+    data <- EmpiricalDist$getParameterValue("data")
+    if (n > nrow(data)) {
+      n <- nrow(data)
+    }
+    return(apply(data, 2, function(x) sample(x, n)))
   }
 
-  return(sample(EmpiricalDist$support$elements, n))
+
 }
