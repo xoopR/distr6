@@ -51,14 +51,22 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
 
       samples <- sort(as.numeric(samples))
 
-      private$.data <- data.table::as.data.table(table(samples))
-      private$.data$samples <- as.numeric(private$.data$samples)
-      private$.data <- cbind(private$.data, cumN = cumsum(private$.data$N))
-      private$.total <- length(samples)
+      data <- data.table::as.data.table(table(samples))
+      data$samples <- as.numeric(data$samples)
+      data <- cbind(data, cumN = cumsum(data$N))
+
+      private$.parameters <- ParameterSet$new(
+        id = "data",
+        value = list(data),
+        support = UniversalSet$new(),
+        settable = FALSE,
+        updateFunc = NULL,
+        description = "Data"
+      )
 
       super$initialize(
         decorators = decorators,
-        support = Tuple$new(universe = Reals$new(), elements = as.list(samples), class = "numeric"),
+        support = Tuple$new(samples, universe = Reals$new(), class = "numeric"),
         type = Reals$new()
       )
     },
@@ -70,7 +78,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(mean(unlist(self$properties$support$elements)))
+      return(mean(self$getParameterValue("data")$samples))
     },
 
     #' @description
@@ -79,9 +87,9 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' maxima).
     mode = function(which = "all") {
       if (which == "all") {
-        return(modal(unlist(self$properties$support$elements)))
+        return(modal(self$getParameterValue("data")$samples))
       } else {
-        return(modal(unlist(self$properties$support$elements))[which])
+        return(modal(self$getParameterValue("data")$samples)[which])
       }
     },
 
@@ -91,7 +99,8 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(sum((unlist(self$properties$support$elements) - self$mean())^2) / private$.total)
+      data <- self$getParameterValue("data")$samples
+      return(sum((data - self$mean())^2) / length(data))
     },
 
     #' @description
@@ -100,7 +109,8 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(sum(((unlist(self$properties$support$elements) - self$mean()) / self$stdev())^3) / private$.total)
+      data <- self$getParameterValue("data")$samples
+      return(sum(((data - self$mean()) / self$stdev())^3) / length(data))
     },
 
     #' @description
@@ -110,7 +120,8 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      kurt <- sum(((unlist(self$properties$support$elements) - self$mean()) / self$stdev())^4) / private$.total
+      data <- self$getParameterValue("data")$samples
+      kurt <- sum(((data - self$mean()) / self$stdev())^4) / length(data)
       if (excess) {
         return(kurt - 3)
       } else {
@@ -124,7 +135,8 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      p <- private$.data$N / private$.total
+      data <- self$getParameterValue("data")
+      p <- data$N / nrow(data)
       return(-sum(p * log(p, base)))
     },
 
@@ -132,14 +144,15 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
+      data <- self$getParameterValue("data")
       if (length(t) == 1) {
-        return(sum(exp(private$.data$samples * t) * (private$.data$N / private$.total)))
+        return(sum(exp(data$samples * t) * (data$N / nrow(data))))
       } else {
         nr <- length(t)
-        nc <- length(private$.data$samples)
+        nc <- length(data$samples)
         return(as.numeric(
-          exp(matrix(private$.data$samples, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$N / private$.total, nrow = nc, ncol = 1)
+          exp(matrix(data$samples, nrow = nr, ncol = nc, byrow = T) *
+                matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
         ))
       }
     },
@@ -148,14 +161,15 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
+      data <- self$getParameterValue("data")
       if (length(t) == 1) {
-        return(sum(exp(private$.data$samples * t * 1i) * (private$.data$N / private$.total)))
+        return(sum(exp(data$samples * t * 1i) * (data$N / nrow(data))))
       } else {
         nr <- length(t)
-        nc <- length(private$.data$samples)
+        nc <- length(data$samples)
         return(as.complex(
-          exp(matrix(private$.data$samples * 1i, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$N / private$.total, nrow = nc, ncol = 1)
+          exp(matrix(data$samples * 1i, nrow = nr, ncol = nc, byrow = T) *
+                matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
         ))
       }
     },
@@ -164,14 +178,15 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
+      data <- self$getParameterValue("data")
       if (length(z) == 1) {
-        return(sum((z^private$.data$samples) * (private$.data$N / private$.total)))
+        return(sum((z^data$samples) * (data$N / nrow(data))))
       } else {
         nr <- length(z)
-        nc <- length(private$.data$samples)
+        nc <- length(data$samples)
         return(as.numeric(
-          (matrix(z, nrow = nr, ncol = nc)^matrix(private$.data$samples, nrow = nr, ncol = nc, byrow = z)) %*%
-            matrix(private$.data$N / private$.total, nrow = nc, ncol = 1)
+          (matrix(z, nrow = nr, ncol = nc)^matrix(data$samples, nrow = nr, ncol = nc, byrow = z)) %*%
+            matrix(data$N / nrow(data), nrow = nc, ncol = 1)
         ))
       }
     },
@@ -188,35 +203,38 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
   private = list(
     # dpqr
     .pdf = function(x, log = FALSE) {
-      pdf <- as.numeric(unlist(private$.data[match(round(x, 10),
-                                                   round(private$.data$samples, 10)), "N"] /
-                                 private$.total))
+      data <- self$getParameterValue("data")
+      pdf <- as.numeric(unlist(data[match(round(x, 10),
+                                                   round(data$samples, 10)), "N"] /
+                                 nrow(data)))
       if (log) pdf <- log(pdf)
 
       return(pdf)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      find <- findInterval(x, private$.data$samples)
+      data <- self$getParameterValue("data")
+      find <- findInterval(x, data$samples)
       find[find == 0] <- 1
-      cdf <- as.numeric(unlist(private$.data[find, "cumN"] / private$.total))
+      cdf <- as.numeric(unlist(data[find, "cumN"] / nrow(data)))
       if (!lower.tail) cdf <- 1 - cdf
       if (log.p) cdf <- log(cdf)
 
       return(cdf)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      data <- self$getParameterValue("data")
       if (log.p) p <- exp(p)
       if (!lower.tail) p <- 1 - p
 
-      p <- p * private$.total
-      mat <- p <= matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
+      p <- p * nrow(data)
+      mat <- p <= matrix(data$cumN, nrow = length(p), ncol = nrow(data), byrow = T)
       which <- apply(mat, 1, function(x) which(x)[1])
       which[is.na(which)] <- ncol(mat)
 
-      return(as.numeric(unlist(private$.data[which, "samples"])))
+      return(as.numeric(unlist(data[which, "samples"])))
     },
     .rand = function(n) {
-      sample(unlist(self$properties$support$elements), n, TRUE)
+      sample(self$getParameterValue("data")$samples, n, TRUE)
     },
 
     # traits

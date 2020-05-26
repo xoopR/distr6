@@ -15,8 +15,12 @@ The Empirical distribution   is defined by the pmf, \deqn{p(x) = \sum I(x = x_i)
 
 The distribution is supported on \eqn{x_1,...,x_k}.
 
-Sampling from this distribution is performed with the  \link{sample} function with the elements
-given as the support set and uniform probabilities. The cdf and quantile assumes that the
+Sampling from this distribution is performed with the \link{sample} function with the elements given
+as the support set and uniform probabilities. Sampling is performed with replacement, which is
+consistent with other distributions but non-standard for Empirical distributions. Use
+\link{simulateEmpiricalDistribution} to sample without replacement.
+
+The cdf and quantile assumes that the
 elements are supplied in an indexed order (otherwise the results are meaningless).
 }
 \examples{
@@ -156,7 +160,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{samples}}{\code{(numeric())} \cr
-Vector of observed samples, see examples.}
+Vector of observed samples, see examples.
+Cannot be updated after construction.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

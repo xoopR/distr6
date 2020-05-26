@@ -16,8 +16,11 @@ The EmpiricalMV distribution   is defined by the pmf, \deqn{p(x) = \sum I(x = x_
 The distribution is supported on \eqn{x_1,...,x_k}.
 
 Sampling from this distribution is performed with the \link{sample} function with the elements given
-as the support set and uniform probabilities. The cdf assumes that the elements are supplied
-in an indexed order (otherwise the results are meaningless).
+as the support set and uniform probabilities. Sampling is performed with replacement, which is
+consistent with other distributions but non-standard for Empirical distributions. Use
+\link{simulateEmpiricalDistribution} to sample without replacement.
+
+The cdf assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
 }
 \examples{
 
@@ -72,14 +75,7 @@ Other multivariate distributions:
 \itemize{
 \item \href{#method-new}{\code{EmpiricalMV$new()}}
 \item \href{#method-mean}{\code{EmpiricalMV$mean()}}
-\item \href{#method-mode}{\code{EmpiricalMV$mode()}}
 \item \href{#method-variance}{\code{EmpiricalMV$variance()}}
-\item \href{#method-skewness}{\code{EmpiricalMV$skewness()}}
-\item \href{#method-kurtosis}{\code{EmpiricalMV$kurtosis()}}
-\item \href{#method-entropy}{\code{EmpiricalMV$entropy()}}
-\item \href{#method-mgf}{\code{EmpiricalMV$mgf()}}
-\item \href{#method-cf}{\code{EmpiricalMV$cf()}}
-\item \href{#method-pgf}{\code{EmpiricalMV$pgf()}}
 \item \href{#method-setParameterValue}{\code{EmpiricalMV$setParameterValue()}}
 \item \href{#method-clone}{\code{EmpiricalMV$clone()}}
 }
@@ -120,7 +116,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{data}}{\verb{[matrix]} \cr
 Matrix-like object where each column is a vector of observed samples corresponding
-to each variable.}
+to each variable. Cannot be updated after construction.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
@@ -149,27 +145,6 @@ with an integration analogue for continuous distributions.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mode"></a>}}
-\if{latex}{\out{\hypertarget{method-mode}{}}}
-\subsection{Method \code{mode()}}{
-The mode of a probability distribution is the point at which the pdf is
-a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
-maxima).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$mode(which = "all")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
-Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
-which mode to return.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-variance"></a>}}
 \if{latex}{\out{\hypertarget{method-variance}{}}}
 \subsection{Method \code{variance()}}{
@@ -181,122 +156,6 @@ covariance matrix is returned.
 \if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$variance()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-skewness"></a>}}
-\if{latex}{\out{\hypertarget{method-skewness}{}}}
-\subsection{Method \code{skewness()}}{
-The skewness of a distribution is defined by the third standardised moment,
-\deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-\eqn{\sigma} is the standard deviation of the distribution.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$skewness()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kurtosis"></a>}}
-\if{latex}{\out{\hypertarget{method-kurtosis}{}}}
-\subsection{Method \code{kurtosis()}}{
-The kurtosis of a distribution is defined by the fourth standardised moment,
-\deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
-where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
-distribution and \eqn{\sigma} is the standard deviation of the distribution.
-Excess Kurtosis is Kurtosis - 3.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{excess}}{\code{(logical(1))} \cr
-If \code{TRUE} (default) excess kurtosis returned.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-entropy"></a>}}
-\if{latex}{\out{\hypertarget{method-entropy}{}}}
-\subsection{Method \code{entropy()}}{
-The entropy of a (discrete) distribution is defined by
-\deqn{- \sum (f_X)log(f_X)}
-where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
-continuous distributions.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$entropy(base = 2)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{base}}{\code{(integer(1))} \cr
-Base of the entropy logarithm, default = 2 (Shannon entropy)}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mgf"></a>}}
-\if{latex}{\out{\hypertarget{method-mgf}{}}}
-\subsection{Method \code{mgf()}}{
-The moment generating function is defined by
-\deqn{mgf_X(t) = E_X[exp(xt)]}
-where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$mgf(t)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{t}}{\code{(integer(1))} \cr
-t integer to evaluate function at.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cf"></a>}}
-\if{latex}{\out{\hypertarget{method-cf}{}}}
-\subsection{Method \code{cf()}}{
-The characteristic function is defined by
-\deqn{cf_X(t) = E_X[exp(xti)]}
-where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$cf(t)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{t}}{\code{(integer(1))} \cr
-t integer to evaluate function at.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pgf"></a>}}
-\if{latex}{\out{\hypertarget{method-pgf}{}}}
-\subsection{Method \code{pgf()}}{
-The probability generating function is defined by
-\deqn{pgf_X(z) = E_X[exp(z^x)]}
-where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$pgf(z)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{z}}{\code{(integer(1))} \cr
-z integer to evaluate probability generating function at.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setParameterValue"></a>}}

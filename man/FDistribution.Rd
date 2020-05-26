@@ -195,9 +195,18 @@ The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
 maxima).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FDistribution$mode()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FDistribution$mode(which = "all")}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
+Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
+which mode to return.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-variance"></a>}}

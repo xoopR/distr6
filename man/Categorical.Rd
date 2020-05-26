@@ -274,7 +274,7 @@ where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of t
 distribution and \eqn{\sigma} is the standard deviation of the distribution.
 Excess Kurtosis is Kurtosis - 3.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Categorical$kurtosis(excess = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Categorical$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -355,14 +355,14 @@ The probability generating function is defined by
 \deqn{pgf_X(z) = E_X[exp(z^x)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Categorical$pgf(t)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Categorical$pgf(z)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{t}}{\code{(integer(1))} \cr
-t integer to evaluate function at.}
+\item{\code{z}}{\code{(integer(1))} \cr
+z integer to evaluate probability generating function at.}
 }
 \if{html}{\out{</div>}}
 }

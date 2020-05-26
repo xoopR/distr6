@@ -33,10 +33,10 @@ simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL) {
 
   if (getR6Class(EmpiricalDist) == "Empirical") {
     data <- EmpiricalDist$getParameterValue("data")
-    if (n > length(data)) {
-      n <- length(data)
+    if (n > nrow(data)) {
+      n <- nrow(data)
     }
-    return(sample(data, n))
+    return(sample(data$samples, n))
   } else {
     data <- EmpiricalDist$getParameterValue("data")
     if (n > nrow(data)) {

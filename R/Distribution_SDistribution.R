@@ -34,11 +34,11 @@ SDistribution <- R6Class("SDistribution", inherit = Distribution,
          private$.traits$type <- assertSet(type)
 
          kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
-         skew <- try(self$skewness(excess = TRUE), silent = TRUE)
+         skew <- try(self$skewness(), silent = TRUE)
 
          private$.properties <- list(
             kurtosis = ifnerror(kur, exkurtosisType(kur), "NULL"),
-            skewness = ifnerror(skew, skewnessType(skew), "NULL"),
+            skewness = ifnerror(skew, skewType(skew), "NULL"),
             support = assertSet(support),
             symmetry = match.arg(symmetry)
          )
@@ -47,6 +47,7 @@ SDistribution <- R6Class("SDistribution", inherit = Distribution,
             c(names(Binomial$public_fields), names(Binomial$public_methods)),
             function(x) try(lockBinding(x, self), silent = TRUE)
          )
+
          sapply(
             c(names(Binomial$private_fields), names(Binomial$private_methods)),
             function(x) try(lockBinding(x, private), silent = TRUE)

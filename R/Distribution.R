@@ -236,9 +236,9 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       if (!suppressMoments) {
         # Update skewness and kurtosis
         kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
-        skew <- try(self$skewness(excess = TRUE), silent = TRUE)
+        skew <- try(self$skewness(), silent = TRUE)
         private$.properties$kurtosis <- ifnerror(kur, exkurtosisType(kur), "NULL")
-        private$.properties$skewness <- ifnerror(skew, skewnessType(skew), "NULL")
+        private$.properties$skewness <- ifnerror(skew, skewType(skew), "NULL")
       }
 
       lockBinding("name", self)
