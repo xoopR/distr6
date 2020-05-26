@@ -370,7 +370,7 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
     },
 
     # traits
-    .traits = list(variateForm = "univariate", valueSupport = "discrete"),
+    .traits = list(valueSupport = "discrete", variateForm = "univariate"),
 
     .isCdf = FALSE,
     .isQuantile = FALSE,

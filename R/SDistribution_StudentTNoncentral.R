@@ -48,7 +48,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, loc
       super$initialize(
         decorators = decorators,
         support = Reals$new(),
-        symmetric = "sym",
+        symmetry = "sym",
         type = Reals$new()
       )
     },

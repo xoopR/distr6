@@ -46,10 +46,23 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
       private$.parameters <- getParameterSet(self, scale, shape, location, rate)
       self$setParameterValue(scale = scale, shape = shape, location = location, rate = rate)
 
+      if (self$getParameterValue("shape") == 0) {
+        support = Reals$new()
+      } else if (self$getParameterValue("shape") < 0) {
+        support = Interval$new(-Inf, self$getParameterValue("location") -
+                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
+                               type = "(]")
+      } else {
+        support = Interval$new(self$getParameterValue("location") -
+                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
+                               Inf,
+                               type = "[)")
+      }
+
       super$initialize(
         decorators = decorators,
-        support = Interval$new(location, Inf, type = "()"),
-        type = PosReals$new(zero = T)
+        support = support,
+        type = Reals$new()
       )
     },
 
@@ -112,7 +125,18 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
-      private$.properties$support <- Interval$new(self$getParameterValue("location"), Inf, type = "()")
+      if (self$getParameterValue("shape") == 0) {
+        support = Reals$new()
+      } else if (self$getParameterValue("shape") < 0) {
+        support = Interval$new(-Inf, self$getParameterValue("location") -
+                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
+                               type = "(]")
+      } else {
+        support = Interval$new(self$getParameterValue("location") -
+                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
+                               Inf,
+                               type = "[)")
+      }
       invisible(self)
     }
   ),

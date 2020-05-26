@@ -111,7 +111,7 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     mgf = function(t) {
       mean <- self$getParameterValue("mean")
       checkmate::assert(length(t) == length(mean))
-      return(exp((mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
+      return(as.numeric(exp((mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
     },
 
     #' @description The characteristic function is defined by
@@ -120,7 +120,7 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     cf = function(t) {
       mean <- self$getParameterValue("mean")
       checkmate::assert(length(t) == length(mean))
-      return(exp((1i * mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
+      return(as.complex(exp((1i * mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
     },
 
     #' @description The probability generating function is defined by

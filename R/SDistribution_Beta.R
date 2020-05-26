@@ -49,7 +49,7 @@ Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
       super$initialize(
         decorators = decorators,
         support = Interval$new(0, 1),
-        symmetric = if (shape1 == shape2) "sym" else "asym",
+        symmetry = if (shape1 == shape2) "sym" else "asym",
         type = PosReals$new(zero = T)
       )
     },
@@ -81,6 +81,8 @@ Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
         }
       } else if (self$getParameterValue("shape1") > 1 & self$getParameterValue("shape2") > 1) {
         return((self$getParameterValue("shape1") - 1) / (self$getParameterValue("shape1") + self$getParameterValue("shape2") - 2))
+      } else {
+        return(NaN)
       }
     },
 

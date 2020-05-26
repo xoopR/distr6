@@ -166,9 +166,9 @@ Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F,
       upper <- self$getParameterValue("upper")
 
       if (checkmate::testList(lower)) {
-        return(C_ArcsineQuantile(x, unlist(lower), unlist(upper), lower.tail, log.p))
+        return(C_ArcsineQuantile(p, unlist(lower), unlist(upper), lower.tail, log.p))
       } else {
-        return(as.numeric(C_ArcsineQuantile(x, lower, upper, lower.tail, log.p)))
+        return(as.numeric(C_ArcsineQuantile(p, lower, upper, lower.tail, log.p)))
       }
     },
     .rand = function(n) {

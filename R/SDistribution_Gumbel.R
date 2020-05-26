@@ -47,7 +47,6 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
       super$initialize(
         decorators = decorators,
         support = Reals$new(),
-        symmetry = "sym",
         type = Reals$new()
       )
     },

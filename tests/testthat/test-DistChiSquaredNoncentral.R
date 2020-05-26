@@ -1,50 +1,24 @@
 library(testthat)
 
-context("ChiSquaredNoncentral distribution")
+context("Noncentral ChiSquared distribution")
 
-test_that("autottest", {
-  autotest_sdistribution(ChiSquaredNoncentral)
-})
-
-test_that("parameterisation", {
-  expect_silent(ChiSquaredNoncentral$new())
-  expect_silent(ChiSquaredNoncentral$new(df = 5, location = 5))
-  expect_error(ChiSquaredNoncentral$new(df = -1))
-  expect_error(ChiSquaredNoncentral$new(location = -1))
-  expect_equal(ChiSquaredNoncentral$new(df = 2, location = 4)$getParameterValue("df"), 2)
-  expect_equal(ChiSquaredNoncentral$new(df = 2, location = 4)$getParameterValue("location"), 4)
-})
-
-test_that("properties & traits", {
-  expect_equal(ChiSquaredNoncentral$new()$valueSupport, "continuous")
-  expect_equal(ChiSquaredNoncentral$new()$variateForm, "univariate")
-  expect_equal(ChiSquaredNoncentral$new()$symmetry, "asymmetric")
-  expect_equal(ChiSquaredNoncentral$new()$sup, Inf)
-  expect_equal(ChiSquaredNoncentral$new()$inf, 0)
-  expect_equal(ChiSquaredNoncentral$new()$dmax, Inf)
-  expect_equal(ChiSquaredNoncentral$new()$dmin, 0)
-  expect_equal(ChiSquaredNoncentral$new(df = 2)$dmax, Inf)
-  expect_equal(ChiSquaredNoncentral$new(df = 2)$dmin, .Machine$double.eps)
-})
-
-chi <- ChiSquaredNoncentral$new(df = 2, location = 3)
-test_that("statistics", {
-  expect_equal(chi$mean(), 5)
-  expect_equal(chi$variance(), 16)
-  expect_equal(chi$skewness(), 11 / 8)
-  expect_equal(ChiSquaredNoncentral$new(df = 0, location = 0)$skewness(), NaN)
-  expect_equal(chi$kurtosis(TRUE), 2.625)
-  expect_equal(chi$kurtosis(FALSE), 5.625)
-  expect_equal(ChiSquaredNoncentral$new(df = 0, location = 0)$kurtosis(), NaN)
-  expect_error(chi$entropy())
-  expect_equal(chi$mgf(0), 1)
-  expect_equal(chi$mgf(5), NaN)
-  expect_equal(chi$cf(0), as.complex(1))
-  expect_error(chi$mode())
-  expect_error(chi$pgf())
-  expect_equal(chi$pdf(2), dchisq(2, 2, 3))
-  expect_equal(chi$cdf(2), pchisq(2, 2, 3))
-  expect_equal(chi$quantile(0.75), qchisq(0.75, 2, 3))
-  expect_equal(chi$cdf(chi$quantile(0.5)), 0.5)
-  expect_silent(chi$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(sdist = ChiSquaredNoncentral,
+                         pars = list(df = 8, location = 2),
+                         traits = list(valueSupport = "continuous",
+                                       variateForm = "univariate",
+                                       type = PosReals$new(zero = TRUE)),
+                         support = PosReals$new(zero = TRUE),
+                         symmetry = "asymmetric",
+                         mean = 10,
+                         median = 9.2271,
+                         variance = 24,
+                         skewness = 0.9526,
+                         exkur = 1.3333,
+                         mgf = NaN,
+                         cf = 0.0021 - 0.0179i,
+                         pdf = dchisq(1:3, 8, 2),
+                         cdf = pchisq(1:3, 8, 2),
+                         quantile = qchisq(c(0.24, 0.42, 0.5), 8, 2)
+  )
 })

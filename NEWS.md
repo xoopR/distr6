@@ -35,6 +35,7 @@
 * Distributions from `stats` are now vectorised across parameters in C
 * `Degenerate`, `ShiftedLoglogistic` now Rcpp
 * Removed redundant `K` parameter from `MultivariateNormal`
+* Bugfix in `Wald`, symmetry was incorrectly flagged as "symmetric"
 
 # distr6 1.3.5
 

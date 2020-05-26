@@ -9,8 +9,12 @@
 #' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
 #' @details
-#' Sampling from this distribution is performed with the  [sample] function with the elements
-#' given as the support set and uniform probabilities. The cdf and quantile assumes that the
+#' Sampling from this distribution is performed with the [sample] function with the elements given
+#' as the support set and uniform probabilities. Sampling is performed with replacement, which is
+#' consistent with other distributions but non-standard for Empirical distributions. Use
+#' [simulateEmpiricalDistribution] to sample without replacement.
+#'
+#' The cdf and quantile assumes that the
 #' elements are supplied in an indexed order (otherwise the results are meaningless).
 #'
 #' @template class_distribution
@@ -40,6 +44,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param samples `(numeric())` \cr
     #' Vector of observed samples, see examples.
+    #'  Cannot be updated after construction.
     #' @examples
     #' Empirical$new(runif(1000))
     initialize = function(samples, decorators = NULL) {
@@ -65,7 +70,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(mean(unlist(self$support$elements)))
+      return(mean(unlist(self$properties$support$elements)))
     },
 
     #' @description
@@ -74,9 +79,9 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' maxima).
     mode = function(which = "all") {
       if (which == "all") {
-        return(modal(unlist(self$support$elements)))
+        return(modal(unlist(self$properties$support$elements)))
       } else {
-        return(modal(unlist(self$support$elements))[which])
+        return(modal(unlist(self$properties$support$elements))[which])
       }
     },
 
@@ -86,7 +91,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(sum((unlist(self$support$elements) - self$mean())^2) / private$.total)
+      return(sum((unlist(self$properties$support$elements) - self$mean())^2) / private$.total)
     },
 
     #' @description
@@ -95,7 +100,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(sum(((unlist(self$support$elements) - self$mean()) / self$stdev())^3) / private$.total)
+      return(sum(((unlist(self$properties$support$elements) - self$mean()) / self$stdev())^3) / private$.total)
     },
 
     #' @description
@@ -105,7 +110,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      kurt <- sum(((unlist(self$support$elements) - self$mean()) / self$stdev())^4) / private$.total
+      kurt <- sum(((unlist(self$properties$support$elements) - self$mean()) / self$stdev())^4) / private$.total
       if (excess) {
         return(kurt - 3)
       } else {
@@ -175,7 +180,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      message("There are no parameters to set.")
+      message("Data cannot be updated after construction.")
       return(NULL)
     }
   ),

@@ -207,13 +207,14 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
       )
     },
     .rand = function(n) {
+      nn <- n
       m <- self$getParameterValue("successes")
       n <- self$getParameterValue("failures")
       k <- self$getParameterValue("draws")
 
       call_C_base_pdqr(
         fun = "rhyper",
-        x = n,
+        x = nn,
         args = list(
           m = unlist(m),
           n = unlist(n),

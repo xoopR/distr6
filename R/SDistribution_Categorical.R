@@ -80,7 +80,7 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
       super$initialize(
         decorators = decorators,
         support = support,
-        type = Complex$new(),
+        type = UniversalSet$new(),
         symmetry = if (length(unique(self$getParameterValue("probs"))) == 1) "sym" else "asym"
       )
     },
@@ -101,9 +101,9 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
     #' maxima).
     mode = function(which = "all") {
       if (which == "all") {
-        return(unlist(self$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))])
+        return(unlist(self$properties$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))])
       } else {
-        return(unlist(self$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))][which])
+        return(unlist(self$properties$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))][which])
       }
     },
 
@@ -131,7 +131,7 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = NULL) {
+    kurtosis = function(excess = TRUE) {
       return(NaN)
     },
 
@@ -161,7 +161,7 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(t) {
+    pgf = function(z) {
       return(NaN)
     },
 
@@ -189,13 +189,13 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
   private = list(
     # dpqr
     .pdf = function(x, log = FALSE) {
-      pdf <- self$getParameterValue("probs")[self$support$elements %in% x]
+      pdf <- self$getParameterValue("probs")[self$properties$support$elements %in% x]
       if (log) pdf <- log(pdf)
 
       return(pdf)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      cdf <- cumsum(self$pdf(self$support$elements))[self$support$elements %in% x]
+      cdf <- cumsum(self$pdf(self$properties$support$elements))[self$properties$support$elements %in% x]
       if (!lower.tail) cdf <- 1 - cdf
       if (log.p) cdf <- log(cdf)
 
@@ -205,11 +205,11 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
       if (log.p) p <- exp(p)
       if (!lower.tail) p <- 1 - p
 
-      cdf <- matrix(self$cdf(self$support$elements), ncol = self$support$length, nrow = length(p), byrow = T)
-      return(self$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
+      cdf <- matrix(self$cdf(self$properties$support$elements), ncol = self$properties$support$length, nrow = length(p), byrow = T)
+      return(unlist(self$properties$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))]))
     },
     .rand = function(n) {
-      sample(self$support$elements, n, TRUE, self$getParameterValue("probs"))
+      sample(self$properties$support$elements, n, TRUE, self$getParameterValue("probs"))
     },
 
     # getRefParams
@@ -228,7 +228,7 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
   .distr6$distributions,
   data.table::data.table(
     ShortName = "Cat", ClassName = "Categorical",
-    Type = "\u2102", ValueSupport = "discrete",
+    Type = "V", ValueSupport = "discrete",
     VariateForm = "univariate",
     Package = "-"
   )

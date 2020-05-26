@@ -2,126 +2,26 @@ library(testthat)
 
 context("NegativeBinomial distribution")
 
-test_that("autottest", {
-  autotest_sdistribution(NegativeBinomial)
+test_that("autotest", {
+  autotest_sdistribution(sdist = NegativeBinomial,
+                         pars = list(form = "fbs", prob = 0.2),
+                         traits = list(valueSupport = "discrete",
+                                       variateForm = "univariate",
+                                       type = Naturals$new()),
+                         support = Naturals$new(),
+                         symmetry = "asymmetric",
+                         mean =  8 / 0.2,
+                         mode = 36,
+                         median = qnbinom(0.5, 10, 0.2),
+                         variance = 8 / 0.04,
+                         skewness = 1.8 / sqrt(8),
+                         exkur = 0.605,
+                         mgf = (0.2 / (1 - (0.8 * exp(1))))^10,
+                         cf = (0.2 / (1 - (0.8 * exp(1i))))^10,
+                         pgf = 1,
+                         pdf = dnbinom(1:3, 10, 0.2),
+                         cdf = pnbinom(1, 10, 0.2),
+                         quantile = qnbinom(c(0.24, 0.42, 0.5), 10, 0.2)
+  )
 })
 
-test_that("parameterisation", {
-  expect_equal(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3)$mean(), 5)
-  expect_message(NegativeBinomial$new(size = 10, mean = 5, prob = 0.3, verbose = T))
-  expect_message(NegativeBinomial$new(size = 10, qprob = 0.3, verbose = T))
-  expect_equal(NegativeBinomial$new(form = "dasd")$.__enclos_env__$private$.form, "fbs")
-  expect_equal(NegativeBinomial$new(size = 10, prob = 0.2)$getParameterValue("qprob"), 0.8)
-  expect_equal(NegativeBinomial$new(size = 10, qprob = 0.8)$getParameterValue("mean"), 40)
-  expect_equal(NegativeBinomial$new(size = 10, qprob = 0.8)$setParameterValue(lst = list(prob = 0.2))$getParameterValue("qprob"), 0.8)
-  expect_error(NegativeBinomial$new(form = "tbf")$setParameterValue(lst = list(mean = 2)))
-  expect_equal(NegativeBinomial$new(form = "tbf")$setParameterValue(lst = list(mean = 12))$getParameterValue("prob"), 2 / 12)
-  expect_equal(NegativeBinomial$new(form = "sbf")$setParameterValue(lst = list(mean = 2))$getParameterValue("prob"), 2 / 12)
-  expect_equal(NegativeBinomial$new(form = "fbs")$setParameterValue(lst = list(mean = 2))$getParameterValue("prob"), 10 / 12)
-  expect_error(NegativeBinomial$new(form = "tbs")$setParameterValue(lst = list(mean = 2)))
-  expect_equal(NegativeBinomial$new(form = "tbs")$setParameterValue(lst = list(mean = 12))$getParameterValue("prob"), 10 / 12)
-})
-
-test_that("properties & traits", {
-  expect_equal(NegativeBinomial$new()$valueSupport, "discrete")
-  expect_equal(NegativeBinomial$new()$variateForm, "univariate")
-  expect_equal(NegativeBinomial$new()$symmetry, "asymmetric")
-  expect_equal(NegativeBinomial$new(form = "tbf")$sup, Inf)
-  expect_equal(NegativeBinomial$new(form = "tbf")$inf, 10)
-  expect_equal(NegativeBinomial$new(form = "tbs")$inf, 10)
-  expect_equal(NegativeBinomial$new(form = "fbs")$inf, 0)
-  expect_equal(NegativeBinomial$new(form = "sbf")$inf, 0)
-  expect_equal(NegativeBinomial$new()$dmax, Inf)
-  expect_equal(NegativeBinomial$new()$dmin, 0)
-})
-
-
-test_that("statistics fbs", {
-  nb <- NegativeBinomial$new(form = "fbs", prob = 0.2)
-  expect_equal(nb$mean(), 8 / 0.2)
-  expect_equal(nb$variance(), 8 / 0.04)
-  expect_equal(nb$skewness(), 1.8 / sqrt(8))
-  expect_equal(nb$kurtosis(T), 0.605)
-  expect_equal(nb$kurtosis(F), 3.605)
-  expect_error(nb$entropy())
-  expect_equal(nb$mgf(1), (0.2 / (1 - (0.8 * exp(1))))^10)
-  expect_equal(nb$mgf(2), NaN)
-  expect_equal(nb$cf(1), (0.2 / (1 - (0.8 * exp(1i))))^10)
-  expect_equal(nb$pgf(2), (0.2 / (1 - 0.8 * 2))^10)
-  expect_equal(nb$pgf(6), NaN)
-  expect_equal(nb$mode(), 36)
-  expect_equal(NegativeBinomial$new(form = "fbs", prob = 0.2, size = 1)$mode(), 0)
-  expect_equal(nb$pdf(1), dnbinom(1, 10, 0.2))
-  expect_equal(nb$cdf(1), pnbinom(1, 10, 0.2))
-  expect_equal(nb$quantile(0.564658), qnbinom(0.564658, 10, 0.2))
-  expect_equal(length(nb$rand(10)), 10)
-})
-
-test_that("statistics tbs", {
-  nb <- NegativeBinomial$new(form = "tbs", prob = 0.2)
-  expect_equal(nb$mean(), 8 / 0.2 + 10)
-  expect_equal(nb$variance(), 8 / 0.04)
-  expect_equal(nb$skewness(), 1.8 / sqrt(8))
-  expect_equal(nb$kurtosis(T), 0.605)
-  expect_equal(nb$kurtosis(F), 3.605)
-  expect_error(nb$entropy())
-  expect_equal(nb$mgf(1), (0.2 / (1 - (0.8 * exp(1))))^10)
-  expect_equal(nb$mgf(2), NaN)
-  expect_equal(nb$cf(1), (0.2 / (1 - (0.8 * exp(1i))))^10)
-  expect_equal(nb$pgf(2), (0.4 / (1 - 0.8 * 2))^10)
-  expect_equal(nb$pgf(6), NaN)
-  expect_equal(nb$mode(), 46)
-  expect_equal(NegativeBinomial$new(form = "tbs", prob = 0.2, size = 1)$mode(), 1)
-
-  expect_equal(nb$pdf(11), choose(10, 9) * 0.2^10 * 0.8^1)
-  expect_equal(nb$cdf(12), choose(9, 9) * 0.2^10 + choose(10, 9) * 0.2^10 * 0.8^1 + choose(11, 9) * 0.2^10 * 0.8^2)
-  expect_equal(nb$cdf(11:12), c(nb$pdf(10) + nb$pdf(11), nb$pdf(10) + nb$pdf(11) + nb$pdf(12)))
-  expect_null(nb$quantile(0.564658))
-  expect_null(nb$rand(10))
-})
-
-test_that("statistics sbf", {
-  nb <- NegativeBinomial$new(form = "sbf", prob = 0.2)
-  expect_equal(nb$mean(), 2 / 0.8)
-  expect_equal(nb$variance(), 2 / 0.64)
-  expect_equal(nb$skewness(), 1.2 / sqrt(2))
-  expect_equal(nb$kurtosis(T), 0.92)
-  expect_equal(nb$kurtosis(F), 3.92)
-  expect_error(nb$entropy())
-  expect_equal(nb$mgf(1), (0.8 / (1 - (0.2 * exp(1))))^10)
-  expect_equal(nb$mgf(2), NaN)
-  expect_equal(nb$cf(1), (0.8 / (1 - (0.2 * exp(1i))))^10)
-  expect_equal(nb$pgf(2), (0.8 / (1 - 0.8 * 2))^10)
-  expect_equal(nb$pgf(6), NaN)
-  expect_equal(nb$mode(), 2)
-  expect_equal(NegativeBinomial$new(form = "sbf", prob = 0.2, size = 1)$mode(), 0)
-
-  expect_equal(nb$pdf(11), choose(20, 11) * 0.8^10 * 0.2^11)
-  expect_equal(nb$cdf(1), nb$pdf(0) + nb$pdf(1))
-  expect_equal(nb$cdf(1:2), c(nb$pdf(0) + nb$pdf(1), nb$pdf(0) + nb$pdf(1) + nb$pdf(2)))
-  expect_null(nb$quantile(0.564658))
-  expect_null(nb$rand(10))
-})
-
-test_that("statistics tbf", {
-  nb <- NegativeBinomial$new(form = "tbf", prob = 0.2)
-  expect_equal(nb$mean(), 2 / 0.8 + 10)
-  expect_equal(nb$variance(), 2 / 0.64)
-  expect_equal(nb$skewness(), 1.2 / sqrt(2))
-  expect_equal(nb$kurtosis(T), 0.92)
-  expect_equal(nb$kurtosis(F), 3.92)
-  expect_error(nb$entropy())
-  expect_equal(nb$mgf(1), (0.8 / (1 - (0.2 * exp(1))))^10)
-  expect_equal(nb$mgf(2), NaN)
-  expect_equal(nb$cf(1), (0.8 / (1 - (0.2 * exp(1i))))^10)
-  expect_equal(nb$pgf(2), (1.6 / (1 - 0.8 * 2))^10)
-  expect_equal(nb$pgf(6), NaN)
-  expect_equal(nb$mode(), 12)
-  expect_equal(NegativeBinomial$new(form = "tbf", prob = 0.2, size = 1)$mode(), 1)
-
-  expect_equal(nb$pdf(11), choose(10, 9) * 0.2^1 * 0.8^10)
-  expect_equal(nb$cdf(11), nb$pdf(10) + nb$pdf(11))
-  expect_equal(nb$cdf(11:12), c(nb$pdf(10) + nb$pdf(11), nb$pdf(10) + nb$pdf(11) + nb$pdf(12)))
-  expect_null(nb$quantile(0.564658))
-  expect_null(nb$rand(10))
-})

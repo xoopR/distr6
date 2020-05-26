@@ -351,10 +351,10 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         cat("\n")
 
         cat(" Support:", self$properties$support$strprint(), "\tScientific Type:", self$traits$type$strprint(), "\n")
-        cat("\n Traits:\t", self$valueSupport, "; ", self$variateForm, sep = "")
-        cat("\n Properties:\t", self$symmetry, sep = "")
-        if (!inherits(a_kurt, "try-error")) cat(";", self$kurtosisType)
-        if (!inherits(a_skew, "try-error")) cat(";", self$skewnessType)
+        cat("\n Traits:\t", self$traits$valueSupport, "; ", self$traits$variateForm, sep = "")
+        cat("\n Properties:\t", self$properties$symmetry, sep = "")
+        if (!inherits(a_kurt, "try-error")) cat(";", self$properties$kurtosis)
+        if (!inherits(a_skew, "try-error")) cat(";", self$properties$skewness)
 
         if (length(self$decorators) != 0) {
           cat("\n\n Decorated with: ", paste0(self$decorators, collapse = ", "))
@@ -645,8 +645,10 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' Ignored, addded for consistency.
     median = function(na.rm = NULL, ...) {
       if (testSymmetric(self)) {
-        med = self$mean()
-        if (is.null(med)) {
+        med = try(self$mean(), silent = TRUE)
+        if (class(med) == "try-error") {
+          return(NaN)
+        } else  if (is.null(med)) {
           return(self$quantile(0.5))
         } else {
           return(med)

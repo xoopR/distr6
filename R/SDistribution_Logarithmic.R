@@ -46,7 +46,7 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
       super$initialize(
         decorators = decorators,
         support = PosNaturals$new(),
-        type = Naturals$new()
+        type = PosNaturals$new()
       )
     },
 

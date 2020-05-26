@@ -47,8 +47,13 @@ pdqr_returner <- function(pdqr, simplify, name) {
       return(pdqr)
     } else {
       pdqr <- data.table(pdqr)
-      colnames(pdqr) <- name
-      return(pdqr)
+      if (ncol(pdqr) == 1) {
+        colnames(pdqr) <- name
+        return(pdqr)
+      } else {
+        colnames(pdqr) <- paste0(name, ".V", seq(ncol(pdqr)))
+        return(pdqr)
+      }
     }
   }
 }
@@ -70,13 +75,13 @@ call_C_base_pdqr <- function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) 
     }
   } else {
     if (type == "d") {
-      return(do.call(get(fun), c(list(x = x, log = log), args)))
+      return(do.call(get(fun), c(list(x, log = log), args)))
     } else if (type == "p") {
-      return(do.call(get(fun), c(list(q = x, lower.tail = lower.tail, log.p = log), args)))
+      return(do.call(get(fun), c(list(x, lower.tail = lower.tail, log.p = log), args)))
     } else if (type == "q") {
-      return(do.call(get(fun), c(list(p = x, lower.tail = lower.tail, log.p = log), args)))
+      return(do.call(get(fun), c(list(x, lower.tail = lower.tail, log.p = log), args)))
     } else if (type == "r") {
-      return(do.call(get(fun), c(list(n = x), args)))
+      return(do.call(get(fun), c(list(x), args)))
     } else {
       stop("Function must start with one of: {d, p, q, r}.")
     }

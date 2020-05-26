@@ -59,7 +59,6 @@ Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
       super$initialize(
         decorators = decorators,
         support = PosReals$new(),
-        symmetry = "sym",
         type = PosReals$new()
       )
     },
@@ -199,7 +198,9 @@ Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
     },
 
     # traits
-    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+    .traits = list(valueSupport = "continuous", variateForm = "univariate"),
+
+    .isQuantile = FALSE
   )
 )
 

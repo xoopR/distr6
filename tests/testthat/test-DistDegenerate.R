@@ -2,45 +2,26 @@ library(testthat)
 
 context("Degenerate distribution")
 
-test_that("autottest", {
-  autotest_sdistribution(Degenerate)
-})
-
-test_that("constructor", {
-  expect_silent(Degenerate$new())
-  expect_silent(Degenerate$new(5))
-})
-
-test_that("parameters", {
-  expect_equal(Degenerate$new()$getParameterValue("mean"), 0)
-  expect_equal(Degenerate$new(10)$getParameterValue("mean"), 10)
-})
-
-test_that("properties & traits", {
-  expect_equal(Degenerate$new()$valueSupport, "discrete")
-  expect_equal(Degenerate$new()$variateForm, "univariate")
-  expect_equal(Degenerate$new()$symmetry, "symmetric")
-  expect_equal(Degenerate$new()$sup, 0)
-  expect_equal(Degenerate$new()$inf, 0)
-  expect_equal(Degenerate$new()$dmin, 0)
-  expect_equal(Degenerate$new()$dmax, 0)
-})
-
-test_that("statistics", {
-  expect_equal(Degenerate$new()$kurtosis(), NaN)
-  expect_equal(Degenerate$new()$skewness(), NaN)
-  expect_equal(Degenerate$new()$entropy(), 0)
-  expect_equal(Degenerate$new()$variance(), 0)
-  expect_equal(Degenerate$new()$stdev(), 0)
-  expect_equal(Degenerate$new()$mean(), 0)
-  expect_equal(Degenerate$new()$mode(), 0)
-  expect_silent(Degenerate$new()$mgf(1))
-  expect_silent(Degenerate$new()$cf(1))
-  expect_equal(Degenerate$new()$pdf(1), 0)
-  expect_equal(Degenerate$new()$pdf(0), 1)
-  expect_equal(Degenerate$new()$cdf(-1), 0)
-  expect_equal(Degenerate$new()$cdf(0), 1)
-  expect_equal(Degenerate$new()$quantile(0.4), 0)
-  expect_equal(Degenerate$new()$quantile(0), 0)
-  expect_equal(Degenerate$new()$rand(1), 0)
+test_that("autotest", {
+  autotest_sdistribution(sdist = Degenerate,
+                         pars = list(1),
+                         traits = list(valueSupport = "discrete",
+                                       variateForm = "univariate",
+                                       type = Reals$new()),
+                         support = Set$new(1, class = "numeric"),
+                         symmetry = "symmetric",
+                         mean = 1,
+                         mode = 1,
+                         median = 1,
+                         variance = 0,
+                         skewness = 0,
+                         exkur = NaN,
+                         entropy = 0,
+                         mgf = exp(1),
+                         cf = exp(1i),
+                         pgf = NaN,
+                         pdf = c(1,0,0),
+                         cdf = c(1,1,1),
+                         quantile = c(1,1,1)
+  )
 })

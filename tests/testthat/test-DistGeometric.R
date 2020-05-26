@@ -2,58 +2,27 @@ library(testthat)
 
 context("Geometric distribution")
 
-test_that("autottest", {
-  autotest_sdistribution(Geometric)
+test_that("autotest", {
+  autotest_sdistribution(sdist = Geometric,
+                         pars = list(),
+                         traits = list(valueSupport = "discrete",
+                                       variateForm = "univariate",
+                                       type = Naturals$new()),
+                         support = Naturals$new(),
+                         symmetry = "asymmetric",
+                         mean = 1,
+                         mode = 0,
+                         median = 0,
+                         variance = 2,
+                         skewness = 1.5 / sqrt(0.5),
+                         exkur = 6.5,
+                         entropy = (-0.5 * log(0.5, base = 2) - 0.5 * log(0.5, base = 2)) * 2,
+                         mgf = 0.5 / (1 - 0.5 * exp(1)),
+                         cf = 0.5 / (1 - 0.5 * exp(1i)),
+                         pgf = 1,
+                         pdf = dgeom(1:3, 0.5),
+                         cdf = pgeom(1:3, 0.5),
+                         quantile = qgeom(c(0.24, 0.42, 0.5), 0.5)
+  )
 })
 
-test_that("parameterisations", {
-  expect_silent(Geometric$new())
-  expect_silent(Geometric$new(prob = 0.3))
-  expect_silent(Geometric$new(qprob = 0.2))
-  expect_error(Geometric$new(prob = -1))
-  expect_silent(Geometric$new(trials = TRUE))
-  expect_silent(Geometric$new(trials = FALSE))
-  expect_equal(Geometric$new(prob = 0.2)$getParameterValue("qprob"), 0.8)
-  expect_message(expect_equal(Geometric$new(qprob = 0.2, verbose = T)$getParameterValue("prob"), 0.8))
-})
-
-test_that("properties & traits", {
-  expect_equal(Geometric$new()$valueSupport, "discrete")
-  expect_equal(Geometric$new()$variateForm, "univariate")
-  expect_equal(Geometric$new()$symmetry, "asymmetric")
-  expect_equal(Geometric$new()$sup, Inf)
-  expect_equal(Geometric$new()$inf, 0)
-  expect_equal(Geometric$new()$dmax, Inf)
-  expect_equal(Geometric$new()$dmin, 0)
-})
-
-
-g <- Geometric$new()
-test_that("statistics", {
-  expect_equal(Geometric$new()$mean(), 1)
-  expect_equal(Geometric$new(trials = T)$mean(), 2)
-  expect_equal(g$variance(), 2)
-  expect_equal(g$skewness(), 1.5 / sqrt(0.5))
-  expect_equal(g$kurtosis(T), 6.5)
-  expect_equal(g$kurtosis(F), 9.5)
-  expect_equal(g$mode(), 0)
-  expect_equal(Geometric$new(trials = T)$mode(), 1)
-  expect_equal(round(g$entropy(exp(1)), 5), round((-0.5 * log(0.5) - 0.5 * log(0.5)) * 2, 5))
-  expect_equal(g$mgf(1), 0.5 / (1 - 0.5 * exp(1)))
-  expect_equal(Geometric$new(trials = T)$mgf(0.1), (0.5 * exp(0.1)) / (1 - 0.5 * exp(0.1)))
-  expect_equal(Geometric$new(trials = T)$mgf(1), NaN)
-  expect_equal(g$cf(1), 0.5 / (1 - 0.5 * exp(1i)))
-  expect_equal(Geometric$new(trials = T)$cf(0.1), (0.5 * exp(0.1i)) / (1 - 0.5 * exp(0.1i)))
-  expect_equal(g$pgf(3), -1)
-  expect_equal(Geometric$new(trials = T)$pgf(3), -3)
-
-  expect_equal(g$pdf(1), dgeom(1, 0.5))
-  expect_equal(g$cdf(1), pgeom(1, 0.5))
-  expect_equal(g$quantile(0.324), qgeom(0.324, 0.5))
-  expect_silent(g$rand(10))
-
-  expect_equal(Geometric$new(trials = T)$pdf(1), dgeom(2, 0.5))
-  expect_equal(Geometric$new(trials = T)$cdf(1), pgeom(2, 0.5))
-  expect_equal(Geometric$new(trials = T)$quantile(0.324), qgeom(0.324, 0.5) + 1)
-  expect_silent(Geometric$new(trials = T)$rand(10))
-})

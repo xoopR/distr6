@@ -325,10 +325,10 @@ NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location,
 
         if (logp) {
           mat(j, i) = (-(1/shape[i % shan] + 1)*log(1 + shape[i % shan]*z)) - log(scale[i & scan]) -
-            2*log(1 + pow(1 + shape[i % shan]*z, -1/shape[i % shan]));
+            2*log(1 + pow(1 + shape[i % shan]*z, -1.0/shape[i % shan]));
         } else {
-          mat(j, i) = pow(1 + shape[i % shan]*z, -(1/shape[i % shan] + 1)) * pow(scale[i & scan], -1) *
-            pow(1 + pow(1 + shape[i % shan]*z, -1/shape[i % shan]), -2);
+          mat(j, i) = pow(1 + shape[i % shan]*z, -(1.0/shape[i % shan] + 1)) * pow(scale[i & scan], -1) *
+            pow(1 + pow(1 + shape[i % shan]*z, -1.0/shape[i % shan]), -2);
         }
       }
     }

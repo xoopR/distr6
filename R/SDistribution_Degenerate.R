@@ -46,7 +46,7 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
 
       super$initialize(
         decorators = decorators,
-        support = Set$new(mean, class = "integer"),
+        support = Set$new(mean, class = "numeric"),
         symmetry = "sym",
         type = Reals$new()
       )
@@ -85,7 +85,7 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(NaN)
+      return(0)
     },
 
     #' @description
@@ -126,7 +126,7 @@ Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F,
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
-      private$.properties$support <- Set$new(self$getParameterValue("mean"))
+      private$.properties$support <- Set$new(self$getParameterValue("mean"), class = "numeric")
       invisible(self)
     }
   ),

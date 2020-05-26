@@ -2,48 +2,24 @@ library(testthat)
 
 context("Beta distribution")
 
-test_that("autottest", {
-  autotest_sdistribution(Beta)
-})
-
-test_that("parameterisation", {
-  expect_silent(Beta$new())
-  expect_silent(Beta$new(shape1 = 1, shape2 = 1))
-  expect_equal(Beta$new(shape2 = 2)$getParameterValue("shape2"), 2)
-  expect_equal(Beta$new()$getParameterValue("shape1"), 1)
-})
-
-test_that("properties & traits", {
-  expect_equal(Beta$new()$valueSupport, "continuous")
-  expect_equal(Beta$new()$variateForm, "univariate")
-  expect_equal(Beta$new()$symmetry, "symmetric")
-  expect_equal(Beta$new(shape2 = 2)$symmetry, "asymmetric")
-  expect_equal(Beta$new()$sup, 1)
-  expect_equal(Beta$new()$inf, 0)
-  expect_equal(Beta$new()$dmax, 1)
-  expect_equal(Beta$new()$dmin, 0)
-})
-
-
-B <- Beta$new()
-test_that("statistics", {
-  expect_equal(B$mean(), 0.5)
-  expect_equal(B$variance(), 1 / 12)
-  expect_equal(B$skewness(), 0)
-  expect_equal(B$kurtosis(T), -1.2)
-  expect_equal(B$kurtosis(F), 1.8)
-  expect_equal(B$entropy(), 0)
-  expect_error(B$mgf(0))
-  expect_equal(B$pgf(1), NaN)
-  expect_error(B$cf(1))
-  expect_equal(Beta$new(shape1 = 2, shape2 = 0.34)$mode(), 1)
-  expect_equal(Beta$new(shape2 = 2, shape1 = 0.34)$mode(), 0)
-  expect_equal(Beta$new(shape1 = 0.1, shape2 = 0.1)$mode(), c(0, 1))
-  expect_equal(Beta$new(shape1 = 0.1, shape2 = 0.1)$mode(1), 0)
-  expect_equal(Beta$new(shape1 = 2, shape2 = 2)$mode(), 1 / 2)
-  expect_equal(B$pdf(1), dbeta(1, shape1 = 1, shape2 = 1))
-  expect_equal(B$cdf(1), pbeta(1, shape1 = 1, shape2 = 1))
-  expect_equal(B$quantile(0.324), qbeta(0.324, shape = 1, shape2 = 1))
-  expect_equal(B$cdf(B$quantile(0.324)), 0.324)
-  expect_silent(B$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(sdist = Beta,
+                         pars = list(shape1 = 1, shape2 = 1),
+                         traits = list(valueSupport = "continuous",
+                                       variateForm = "univariate",
+                                       type = PosReals$new(zero = TRUE)),
+                         support = Interval$new(0, 1),
+                         symmetry = "symmetric",
+                         mean = 0.5,
+                         mode = NaN,
+                         median = 0.5,
+                         variance = 1/12,
+                         skewness = 0,
+                         exkur = -1.2,
+                         entropy = 0,
+                         pgf = NaN,
+                         pdf = dbeta(1:3, 1, 1),
+                         cdf = pbeta(1:3, 1, 1),
+                         quantile = qbeta(c(0.24, 0.42, 0.5), 1, 1)
+  )
 })

@@ -1,9 +1,17 @@
-autotest_sdistribution <- function(sdist, pars, traits, support, symmetry, mean, mode,
-                                   variance, skewness, exkur, entropy, mgf, cf,
-                                   pgf, pdf, cdf) {
+expect_rounded_equal <- function(object, expected, dp = 4) {
+  expect_equal(round(object, dp), round(expected, dp),
+               label = as.character(substitute(quote(object)))[2],
+               expected.label = as.character(substitute(quote(expected)))[2])
+}
+
+autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
+                                   mean = NULL, mode = NULL, median = NULL,
+                                   variance = NULL, skewness = NULL, exkur = NULL, entropy = NULL,
+                                   mgf = NULL, cf = NULL,
+                                   pgf = NULL, pdf = NULL, cdf = NULL, quantile = NULL) {
 
   context("public fields")
-  expect_equal(names(sdist$public_fields), c("name", "short_name", "description", "packages"))
+  checkmate::assertSubset(names(sdist$public_fields), c("name", "short_name", "description", "packages"))
   expect_equal(as.character(sdist$inherit), "SDistribution")
   checkmate::expect_names(c(
     sdist$public_fields$name,
@@ -20,21 +28,18 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry, mean,
     names(sdist$public_methods),
     c(
       "clone", "mean", "mode", "variance", "skewness", "kurtosis",
-      "entropy", "mgf", "cf", "pgf", "setParameterValue", "initialize"
+      "entropy", "mgf", "cf", "pgf", "setParameterValue", "initialize",
+      "median", "getParameterValue"
     )
   )
 
   if (!is.null(sdist$public_methods$setParameterValue)) {
     expect_equal(names(formals(sdist$public_methods$setParameterValue)), c("...", "lst", "error"))
   }
-  expect_true(all(c("decorators", "verbose") %in% names(formals(sdist$public_methods$initialize))))
+  expect_true("decorators" %in% names(formals(sdist$public_methods$initialize)))
   if (!is.null(sdist$public_methods$mean)) expect_null(names(formals(sdist$public_methods$mean)))
-  if (!is.null(sdist$public_methods$mode)) {
-    expect_equal(names(formals(sdist$public_methods$mode)), "which")
-    if (!is.null(formals(sdist$public_methods$mode)[[1]])) {
-      expect_true("all" == formals(sdist$public_methods$mode)[[1]])
-    }
-  }
+  if (!is.null(sdist$public_methods$mode))  expect_equal(formals(sdist$public_methods$mode), pairlist(which = "all"))
+  if (!is.null(sdist$public_methods$median)) expect_null(names(formals(sdist$public_methods$median)))
   if (!is.null(sdist$public_methods$variance)) expect_null(names(formals(sdist$public_methods$variance)))
   if (!is.null(sdist$public_methods$skewness)) expect_null(names(formals(sdist$public_methods$skewness)))
   if (!is.null(sdist$public_methods$kurtosis)) expect_equal(formals(sdist$public_methods$kurtosis), pairlist(excess = TRUE))
@@ -48,7 +53,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry, mean,
     ".pdf", ".cdf", ".quantile", ".rand", ".getRefParams",
     ".log"
   ))
-  checkmate::expect_flag(sdist$private_methods$.log)
+  if (!is.null(sdist$private_methods$.log)) checkmate::expect_flag(sdist$private_methods$.log)
 
   checkmate::expect_subset(names(formals(sdist$private_methods$.pdf)), c("x", "log"))
   if (!is.null(sdist$private_methods$.cdf)) checkmate::expect_subset(names(formals(sdist$private_methods$.cdf)), c("x", "lower.tail", "log.p"))
@@ -56,9 +61,6 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry, mean,
   if (!is.null(sdist$private_methods$.rand)) expect_equal(formals(sdist$private_methods$.rand), as.pairlist(alist(n = )))
   if (!is.null(sdist$private_methods$.getRefParams)) expect_equal(formals(sdist$private_methods$.getRefParams), as.pairlist(alist(paramlst = )))
 
-
-  expect_message(do.call(sdist$new, c(pars, list(verbose = TRUE))))
-  expect_silent(sdist$new())
   sdist <- expect_silent({
     do.call(sdist$new, pars)
   })
@@ -69,16 +71,33 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry, mean,
   expect_equal(sdist$properties$symmetry, symmetry)
 
   context("sdist specific - public methods")
-  expect_equal(sdist$mean(), mean)
-  expect_equal(sdist$mode(), mode)
-  expect_equal(sdist$variance(), variance)
-  expect_equal(sdist$skewness(), skewness)
-  expect_equal(sdist$kurtosis(T), exkur)
-  expect_equal(sdist$kurtosis(F), exkur + 3)
-  expect_equal(round(sdist$entropy(), 4), entropy)
-  expect_equal(round(sdist$mgf(1), 4), mgf)
-  expect_equal(round(sdist$cf(1), 4), cf)
-  expect_equal(round(sdist$pgf(1), 4), pgf)
+  if (!is.null(sdist$mean)) expect_rounded_equal(sdist$mean(), mean, 4)
+  if (!is.null(sdist$mode)) expect_rounded_equal(sdist$mode(), mode, 4)
+  if (!is.null(sdist$median)) {
+    if (is.null(median)) {
+      expect_equal(sdist$median(), median)
+    } else {
+      expect_rounded_equal(sdist$median(), median, 4)
+    }
+  }
+  if (!is.null(sdist$variance)) expect_rounded_equal(sdist$variance(), variance, 4)
+  if (!is.null(sdist$skewness)) expect_rounded_equal(sdist$skewness(), skewness, 4)
+  if (!is.null(sdist$kurtosis)) {
+    expect_rounded_equal(sdist$kurtosis(T), exkur, 4)
+    expect_rounded_equal(sdist$kurtosis(F), exkur + 3, 4)
+  }
+  if (!is.null(sdist$entropy)) expect_rounded_equal(sdist$entropy(), entropy, 4)
+  if (testUnivariate(sdist)) {
+    if (!is.null(sdist$mgf)) expect_rounded_equal(sdist$mgf(1), mgf, 4)
+    if (!is.null(sdist$cf)) expect_rounded_equal(sdist$cf(1), cf, 4)
+    if (!is.null(sdist$pgf)) expect_rounded_equal(sdist$pgf(1), pgf, 4)
+  } else {
+    if (!is.null(sdist$mgf)) expect_rounded_equal(sdist$mgf(1:2), mgf, 4)
+    if (!is.null(sdist$cf)) expect_rounded_equal(sdist$cf(1:2), cf, 4)
+    if (!is.null(sdist$pgf)) expect_rounded_equal(sdist$pgf(1:2), pgf, 4)
+  }
+
+
 
   context("sdist specific - representation methods")
   expect_output(sdist$print())
@@ -86,25 +105,34 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry, mean,
   expect_output(sdist$summary(F))
 
   context("d/p/q/r")
-  if (!is.null(sdist$private_methods$.pdf) & !missing(pdf)) {
-    expect_equal(round(sdist$pdf(1:3), 4), pdf)
+  if (testUnivariate(sdist)) {
+    if (isPdf(sdist)) {
+      expect_rounded_equal(sdist$pdf(1:3), pdf)
+    }
+    if (isCdf(sdist)) {
+      expect_rounded_equal(sdist$cdf(1:3), cdf)
+    }
+    if (isQuantile(sdist)) {
+      expect_rounded_equal(sdist$quantile(c(0.24, 0.42, 0.5)), quantile)
+    }
+    if (isRand(sdist)) {
+      r <- sdist$rand(1:3)
+      expect_equal(length(r), 3)
+      expect_true(all(r >= sdist$inf & r <= sdist$sup))
+    }
+  } else {
+    if (isRand(sdist)) {
+      r <- sdist$rand(1:2)
+      expect_equal(dim(r), c(2, 2))
+      expect_true(all(sdist$cdf(data = r) > 0))
+    }
   }
-  if (!is.null(sdist$private_methods$.cdf) & !missing(cdf)) {
-    expect_equal(round(sdist$cdf(1:3), 4), cdf)
-  }
-  if (!is.null(sdist$private_methods$.quantile)) {
-    expect_equal(sdist$quantile(sdist$cdf(1:10)), 1:10)
-  }
-  if (!is.null(sdist$private_methods$.rand)) {
-    r <- sdist$rand(1:3)
-    expect_equal(length(r), 3)
-    epect_true(all(r >= sdist$inf & r <= sdist$sup))
-  }
+
 }
 
 autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pdf, cdf) {
   context("public fields")
-  expect_equal(names(kern$public_fields), c("name", "short_name", "description"))
+  checkmate::expect_subset(names(kern$public_fields), c("name", "short_name", "description", "packages"))
   expect_equal(as.character(kern$inherit), "Kernel")
   checkmate::expect_names(c(
     kern$public_fields$name,
@@ -122,7 +150,7 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
   if (!is.null(kern$public_methods$setParameterValue)) {
     expect_equal(names(formals(kern$public_methods$setParameterValue)), c("...", "lst", "error"))
   }
-  expect_equal(formals(kern$public_methods$initialize), pairlist(decorators = NULL))
+  # expect_equal(formals(kern$public_methods$initialize), pairlist(decorators = NULL))
   if (!is.null(kern$public_methods$squared2Norm)) expect_null(names(formals(kern$public_methods$squared2Norm)))
   if (!is.null(kern$public_methods$variance)) expect_null(names(formals(kern$public_methods$variance)))
   if (!is.null(kern$public_methods$skewness)) expect_null(names(formals(kern$public_methods$skewness)))

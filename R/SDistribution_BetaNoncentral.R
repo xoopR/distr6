@@ -51,7 +51,7 @@ BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_object
       super$initialize(
         decorators = decorators,
         support = Interval$new(0, 1),
-        symmetric = if (shape1 == shape2) "sym" else "asym",
+        symmetry = if (shape1 == shape2) "sym" else "asym",
         type = PosReals$new(zero = T)
       )
     },

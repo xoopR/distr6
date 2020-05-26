@@ -90,7 +90,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
 
       super$initialize(
         decorators = decorators,
-        support = Set$new(data, class = "numeric"),
+        support = Set$new(data$x, class = "numeric"),
         type = Reals$new()
       )
     },
@@ -266,9 +266,9 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
       if (checkmate::testList(data)) {
         cdf <- matrix(as.numeric(data[names(data) == "cdf"]), ncol = nrow(data))
         data <- matrix(as.numeric(data[names(data) == "x"]), ncol = ncol(cdf))
-        return(C_Vec_WeightedDiscreteQuantile(x, data, cdf, lower.tail, log.p))
+        return(C_Vec_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
       } else {
-        return(C_WeightedDiscreteQuantile(x, data$x, data$cdf, lower.tail, log.p))
+        return(C_WeightedDiscreteQuantile(p, data$x, data$cdf, lower.tail, log.p))
       }
     },
     .rand = function(n) {

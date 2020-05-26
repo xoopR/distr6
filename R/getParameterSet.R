@@ -800,7 +800,7 @@ getParameterSet.ShiftedLoglogistic <- function(x, scale, shape, location, rate =
 
   ParameterSet$new(
     id = list("scale", "rate", "shape", "location"), value = list(1, 1, 1, 0),
-    support = list(PosReals$new(), PosReals$new(), PosReals$new(), Reals$new()),
+    support = list(PosReals$new(), PosReals$new(), Reals$new(), Reals$new()),
     settable = list(scale.bool, rate.bool, TRUE, TRUE),
     updateFunc = list(
       NULL,

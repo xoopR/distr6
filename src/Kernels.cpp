@@ -9,9 +9,9 @@ NumericVector C_CosineKernelPdf(NumericVector x, bool logp) {
   for (int i = 0; i < x.size(); i++){
     if (x[i] >= -1 & x[i] <= 1) {
       if (logp) {
-        ret[i] = log(M_PI) - log(4) + log(cos(M_PI / 2 * x[i]));
+        ret[i] = log(M_PI) - log(4) + log(cos(M_PI / 2.0 * x[i]));
       } else {
-        ret[i] = M_PI / 4 * cos(M_PI / 2 * x[i]);
+        ret[i] = M_PI / 4.0 * cos(M_PI / 2.0 * x[i]);
       }
     }
   }
@@ -27,7 +27,7 @@ NumericVector C_CosineKernelCdf(NumericVector x, bool lower, bool logp) {
     } else if (x[i] <= -1) {
       ret[i] = 0;
     } else {
-      ret[i] = 0.5 * (sin((M_PI * x[i]) / 2) + 1);
+      ret[i] = 0.5 * (sin((M_PI * x[i]) / 2.0) + 1);
     }
 
     if (!lower) {
@@ -92,7 +92,7 @@ NumericVector C_EpanechnikovKernelCdf(NumericVector x, bool lower, bool logp) {
     } else if (x[i] <= -1) {
       ret[i] = 0;
     } else {
-      ret[i] = 3 / 4 * x[i] - 1 / 4 * pow(x[i], 3) + 1 / 2;
+      ret[i] = 3.0 / 4.0 * x[i] - 1.0 / 4.0 * pow(x[i], 3) + 1.0 / 2.0;
     }
 
     if (!lower) {
@@ -167,9 +167,9 @@ NumericVector C_NormalKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
     if (logp) {
-      ret[i] = -(log(2*M_PI) + (pow(x[i], 2)))/2;
+      ret[i] = -(log(2*M_PI) + (pow(x[i], 2))) / 2.0;
     } else {
-      ret[i] = 1 / sqrt(2 * M_PI) * exp(-0.5 * pow(x[i], 2));
+      ret[i] = 1.0 / sqrt(2 * M_PI) * exp(-0.5 * pow(x[i], 2));
     }
   }
   return ret;
@@ -183,7 +183,7 @@ NumericVector C_QuarticKernelPdf(NumericVector x, bool logp) {
       if (logp) {
         ret[i] = log(15) - log(16) + 2*log(1 - pow(x[i], 2));
       } else {
-        ret[i] = 15 / 16 * pow((1 - pow(x[i], 2)), 2);
+        ret[i] = 15.0 / 16.0 * pow((1 - pow(x[i], 2)), 2);
       }
     }
   }
@@ -199,7 +199,7 @@ NumericVector C_QuarticKernelCdf(NumericVector x, bool lower, bool logp) {
     } else if (x[i] <= -1) {
       ret[i] = 0;
     } else {
-      ret[i] = 15 / 16 * (x[i] - 2 / 3 * pow(x[i], 3) + 1 / 5 * pow(x[i], 5) + 8 / 15);
+      ret[i] = 15.0 / 16.0 * (x[i] - 2.0 / 3.0 * pow(x[i], 3) + 1.0 / 5.0 * pow(x[i], 5) + 8.0 / 15.0);
     }
 
     if (!lower) {
@@ -262,11 +262,11 @@ NumericVector C_TriangularKernelCdf(NumericVector x, bool lower, bool logp) {
     } else if (x[i] <= -1) {
       ret[i] = 0;
     } else if (x[i] < 0) {
-      ret[i] = x[i] + 0.5 * pow(x[i], 2) + 1 / 2;
+      ret[i] = x[i] + 0.5 * pow(x[i], 2) + 1.0 / 2.0;
     } else if (x[i] == 0) {
       ret[i] = 0.5;
     } else if (x[i] > 0) {
-      ret[i] = x[i] - 0.5 * pow(x[i], 2) + 1 / 2;
+      ret[i] = x[i] - 0.5 * pow(x[i], 2) + 1.0 / 2.0;
     }
 
     if (!lower) {
@@ -319,7 +319,7 @@ NumericVector C_TricubeKernelPdf(NumericVector x, bool logp) {
       if (logp) {
         ret[i] = log(70) - log(81) + 3*log(1 - pow(abs(x[i]), 3));
       } else {
-        ret[i] = 70 / 81 * pow((1 - pow(abs(x[i]), 3)), 3);
+        ret[i] = 70.0 / 81.0 * pow((1 - pow(abs(x[i]), 3)), 3);
       }
     }
   }
@@ -334,7 +334,7 @@ NumericVector C_TriweightKernelPdf(NumericVector x, bool logp) {
       if (logp) {
         ret[i] = log(35) - log(32) + 3*log(1 - pow(x[i], 2));
       } else {
-        ret[i] = 35 / 32 * pow((1 - pow(x[i], 2)), 3);
+        ret[i] = 35.0 / 32.0 * pow((1 - pow(x[i], 2)), 3);
       }
     }
   }
@@ -350,7 +350,7 @@ NumericVector C_TriweightKernelCdf(NumericVector x, bool lower, bool logp) {
     } else if (x[i] <= -1) {
       ret[i] = 0;
     } else {
-      ret[i] = 35 / 32 * (x[i] - pow(x[i], 3) + 3 / 5 * pow(x[i], 5) - 1 / 7 * pow(x[i], 7) + 16 / 35);
+      ret[i] = 35.0 / 32.0 * (x[i] - pow(x[i], 3) + 3.0 / 5.0 * pow(x[i], 5) - 1 / 7.0 * pow(x[i], 7) + 16.0 / 35.0);
     }
 
     if (!lower) {
