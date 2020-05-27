@@ -2,85 +2,33 @@ library(testthat)
 
 context("Distributions")
 
-test_that("check constructor", {
-  expect_error(Distribution$new(short_name = "Test_Distr"))
-  expect_error(Distribution$new(pdf = dbinom))
-  expect_silent(Distribution$new("Discrete Test", "TestDistr", pdf = dbinom))
-  expect_error(Distribution$new(short_name = "Test Distr", pdf = dbinom))
-  expect_silent(Distribution$new(short_name = "TestDistr", pdf = dbinom))
-  expect_silent(Distribution$new(name = "Test Distr", pdf = dbinom))
-  expect_equal(Distribution$new(name = "Test Distr", pdf = dbinom)$strprint(), "TestDistr")
-  expect_null(Distribution$new(name = "Test Distr", pdf = dbinom)$parameters())
-})
-
-dbin <- function(x, log, ...) {
+dbin <- function(x, log) {
   m1 <- choose(self$getParameterValue("size"), x)
   m2 <- self$getParameterValue("prob")^x
   m3 <- (1 - self$getParameterValue("prob"))^(self$getParameterValue("size") - x)
   return(m1 * m2 * m3)
 }
+
+test_that("check constructor", {
+  expect_error(Distribution$new(short_name = "Test_Distr"))
+  expect_error(Distribution$new(pdf = dbin))
+  expect_error(Distribution$new("Discrete Test", "TestDistr", pdf = dbin), "type must be")
+  expect_silent(Distribution$new("Discrete Test", "TestDistr", pdf = dbin, type = Naturals$new()))
+  expect_error(Distribution$new(short_name = "Test Distr", pdf = dbin, type = Naturals$new()))
+  expect_error(Distribution$new(short_name = "TestDistr", pdf = dbinom, type = Naturals$new()), "subset of")
+  expect_silent(Distribution$new(short_name = "TestDistr", pdf = dbin, type = Naturals$new()))
+  expect_silent(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new()))
+  expect_equal(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$strprint(), "TestDistr")
+  expect_null(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$parameters())
+})
+
+
 test_that("check support", {
-  expect_equal(Distribution$new("Discrete Test", valueSupport = "c", pdf = dbinom)$valueSupport, "continuous")
-  expect_equal(Distribution$new("Discrete Test", valueSupport = "d", pdf = dbinom)$valueSupport, "discrete")
-  expect_equal(Distribution$new("Discrete Test", valueSupport = "m", pdf = dbinom)$valueSupport, "mixture")
-  expect_error(Distribution$new("Discrete Test", valueSupport = "r", pdf = dbinom))
-  expect_equal(Distribution$new("Discrete Test", pdf = dbinom)$valueSupport, "continuous")
-})
-
-test_that("check variateForm", {
-  dbin <- function(x) {
-    m1 <- choose(self$getParameterValue("size"), x)
-    m2 <- self$getParameterValue("prob")^x
-    m3 <- (1 - self$getParameterValue("prob"))^(self$getParameterValue("size") - x)
-    return(m1 * m2 * m3)
-  }
-  expect_equal(Distribution$new("Discrete Test", variateForm = "u", pdf = dbinom)$variateForm, "univariate")
-  expect_equal(Distribution$new("Discrete Test", variateForm = "mu", pdf = dbinom)$variateForm, "multivariate")
-  expect_equal(Distribution$new("Discrete Test", variateForm = "ma", pdf = dbinom)$variateForm, "matrixvariate")
-  expect_error(Distribution$new("Discrete Test", variateForm = "m", pdf = dbinom))
-  expect_error(Distribution$new("Discrete Test", variateForm = "d", pdf = dbinom))
-  expect_equal(Distribution$new("Discrete Test", pdf = dbin)$variateForm, "univariate")
-  expect_equal(Distribution$new("Discrete Test", pdf = function(x, y) {
-    return("Test")
-  }, type = Reals$new()^2)$variateForm, "multivariate")
-})
-
-test_that("check multivariate", {
-  expect_error(Distribution$new("Test",
-    pdf = function(x, y) {
-      return("Test")
-    },
-    cdf = function(x, z) {
-      return("Test")
-    },
-    type = Reals$new()^2
-  ))
-  expect_error(Distribution$new("Test",
-    pdf = function(x, y) {
-      return("Test")
-    },
-    cdf = function(x, y, z) {
-      return("Test")
-    },
-    type = Reals$new()^2
-  ))
-  expect_silent(Distribution$new("Test",
-    pdf = function(x, y) {
-      return("Test")
-    },
-    cdf = function(x, y) {
-      return("Test")
-    },
-    type = Reals$new()^2
-  ))
-  expect_equal(Distribution$new("Test",
-    pdf = function(x, y) {
-      return("Test")
-    },
-    cdf = function(x, y) {
-      return("Test")
-    }
-  )$type$power, 2)
+  expect_equal(Distribution$new("Discrete Test", valueSupport = "c", pdf = dbin, type = Naturals$new())$valueSupport, "continuous")
+  expect_equal(Distribution$new("Discrete Test", valueSupport = "d", pdf = dbin, type = Naturals$new())$valueSupport, "discrete")
+  expect_equal(Distribution$new("Discrete Test", valueSupport = "m", pdf = dbin, type = Naturals$new())$valueSupport, "mixture")
+  expect_error(Distribution$new("Discrete Test", valueSupport = "r", pdf = dbin, type = Naturals$new()))
+  expect_equal(Distribution$new("Discrete Test", pdf = dbin, type = Naturals$new())$valueSupport, "discrete")
 })
 
 ps <- ParameterSet$new(
@@ -98,73 +46,57 @@ ps <- ParameterSet$new(
 )
 
 test_that("check r/d/p/q", {
-  expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps)$pdf(1))
-  expect_output(Distribution$new("Test", pdf = dbin, quantile = function(p, self) {
-    print(self)
+  expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())$pdf(1))
+  expect_silent(Distribution$new("Test", pdf = dbin, type = Naturals$new(),
+                                 quantile = function(p) {
     return(p)
   })$quantile(0.4))
-  expect_null(Distribution$new("Test", pdf = dbinom)$cdf(1))
-  expect_null(Distribution$new("Test", pdf = dbinom)$quantile(1))
-  expect_null(Distribution$new("Test", pdf = dbinom)$rand(1))
+  expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$cdf(1))
+  expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$quantile(1))
+  expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$rand(1))
 })
 
 test_that("check is", {
-  expect_true(Distribution$new("Test", pdf = dbin, parameters = ps)$isPdf)
-  expect_false(Distribution$new("Test", pdf = dbin, parameters = ps)$isCdf)
-  expect_false(Distribution$new("Test", pdf = dbin, parameters = ps)$isQuantile)
-  expect_false(Distribution$new("Test", pdf = dbin, parameters = ps)$isRand)
+  expect_true(isPdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
+  expect_false(isCdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
+  expect_false(isQuantile(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
+  expect_false(isRand(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
 })
 
 test_that("working_support", {
-  set.seed(1)
-  expect_silent(expect_equal(
-    Exponential$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
-    list(inf = 0, sup = 36)
-  ))
-  expect_silent(expect_equal(
-    Binomial$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
-    list(inf = 0, sup = 10)
-  ))
-  expect_silent(expect_equal(
-    Normal$new()$.__enclos_env__$private$.setWorkingSupport()$.__enclos_env__$private$.getWorkingSupport(),
-    list(inf = -8, sup = 8)
-  ))
+  expect_equal(Exponential$new()$workingSupport, Interval$new(0, 100))
+  expect_equal(Binomial$new()$workingSupport, Set$new(elements = 0:10, class = "integer"))
+  expect_equal(Normal$new()$workingSupport, Interval$new(-100, 10))
 })
 
 test_that("print", {
-  expect_equal(
-    MixtureDistribution$new(list(Binomial$new(), Normal$new()))$strprint(1),
-    "BinomMixNorm(Binom_prob = 0.5,...,Norm_var = 1)"
-  )
   expect_output(Binomial$new()$print(1))
   expect_output(Binomial$new()$print(5))
 })
 
 test_that("suppress", {
   expect_silent(Distribution$new(
-    "name", "name", Reals$new(), Reals$new(), TRUE, function(x) {
+    name = "name",
+    short_name = "name",
+    type = Reals$new(),
+    support = Reals$new(),
+    symmetric = TRUE,
+    pdf = function(x) {
       return(x)
     },
-    function(x) {
-      return(x)
-    }, function(x) {
-      return(x)
-    }, function(x) {
+    cdf = function(x) {
       return(x)
     },
-    ps, CoreStatistics, "continuous", "univariate", "test", TRUE, TRUE
-  ))
-  expect_message(Distribution$new(
-    "name", "name", Reals$new(), Reals$new(), TRUE, function(x) {
+    quantile = function(x) {
       return(x)
     },
-    function(x) {
-      return(x)
-    }, function(x) {
-      return(x)
-    }, function(x) {
+    rand = function(x) {
       return(x)
     },
-    NULL, CoreStatistics, "continuous", "univariate", "test", FALSE, TRUE
+    parameters = ps,
+    decorators = "CoreStatistics",
+    valueSupport = "continuous",
+    variateForm = "univariate", description = "test",
+    suppressMoments = TRUE, .suppressChecks = TRUE
   ))
 })

@@ -2,16 +2,17 @@ library(testthat)
 
 context("Function Imputation")
 
+#----------
+# Setup
+#----------
 dexpo <- function(x) {
   m1 <- self$getParameterValue("rate")
   m2 <- exp(-1 * self$getParameterValue("rate") * x)
   return(m1 * m2)
 }
-
 cexpo <- function(x) {
   return(1 - exp(-self$getParameterValue("rate") * x))
 }
-
 ps <- ParameterSet$new(
   id = list("rate", "scale", "test"), value = list(1, 1, 0),
   support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0, 5)),
@@ -23,119 +24,173 @@ ps <- ParameterSet$new(
   ),
   description = list("Arrival rate", "Scale parameter", "testpar")
 )
-
-continuousTester <- Distribution$new("Continuous Test", "ContTest",
-  support = PosReals$new(),
-  symmetric = TRUE, type = PosReals$new(zero = T),
-  pdf = dexpo,
-  parameters = ps
+cont_pdf <- Distribution$new("Continuous Test", "ContTest",
+                                     support = PosReals$new(),
+                                     symmetric = TRUE, type = PosReals$new(zero = T),
+                                     pdf = dexpo,
+                                     parameters = ps
+)
+cont_cdf <- Distribution$new("Continuous Test", "ContTest",
+                                         support = PosReals$new(),
+                                         symmetric = TRUE, type = PosReals$new(zero = T),
+                                         cdf = cexpo,
+                                         parameters = ps
 )
 
-test_that("continuous r/d/p/q null d2", {
-  expect_silent(continuousTester$pdf(1))
-  expect_null(continuousTester$cdf(1))
-  expect_null(continuousTester$quantile(1))
-  expect_null(continuousTester$rand(1))
-})
-
-test_that("continuous r/p/q d2", {
-  decorate(continuousTester, FunctionImputation)
-  expect_silent(expect_equal(continuousTester$pdf(1), dexp(1)))
-  expect_message(expect_equal(continuousTester$cdf(1), pexp(1)))
-  expect_message(expect_equal(continuousTester$cdf(1:3), pexp(1:3)))
-  expect_message(expect_equal(round(continuousTester$quantile(0.42), 5), round(qexp(0.42), 5)))
-  expect_message(continuousTester$rand(1))
-})
-
-continuousTester <- Distribution$new("Continuous Test", "ContTest",
-  support = PosReals$new(),
-  symmetric = TRUE, type = PosReals$new(zero = T),
-  cdf = cexpo,
-  parameters = ps
-)
-
-test_that("r/d/p/q null p2", {
-  expect_null(continuousTester$pdf(1))
-  expect_silent(continuousTester$cdf(1))
-  expect_null(continuousTester$quantile(1))
-  expect_null(continuousTester$rand(1))
-})
-
-test_that("r/d/p/q not null p2", {
-  decorate(continuousTester, FunctionImputation)
-  expect_message(expect_equal(continuousTester$pdf(1), dexp(1)))
-  expect_silent(expect_equal(continuousTester$cdf(1), pexp(1)))
-  expect_message(expect_equal(round(continuousTester$quantile(0.42), 5), round(qexp(0.42), 5)))
-  expect_message(expect_equal(round(continuousTester$quantile(c(0.42, 0.24)), 5), round(qexp(c(0.42, 0.24)), 5)))
-  expect_message(continuousTester$rand(1))
-})
-
-
-dbin <- function(x) {
-  m1 <- choose(self$getParameterValue(id = "size"), x)
-  m2 <- self$getParameterValue(id = "prob")^x
-  m3 <- (1 - self$getParameterValue(id = "prob"))^(self$getParameterValue(id = "size") - x)
-  return(m1 * m2 * m3)
+dgeo <- function(x) {
+  (1 - 0.5)^x * 0.5
 }
 
-pbin <- function(x) {
-  sapply(x, function(x1) {
-    return(sum(sapply(0:x1, function(x1) {
-      m1 <- choose(self$getParameterValue(id = "size"), x1)
-      m2 <- self$getParameterValue(id = "prob")^x1
-      m3 <- (1 - self$getParameterValue(id = "prob"))^(self$getParameterValue(id = "size") - x1)
-      return(m1 * m2 * m3)
-    })))
-  })
-
+pgeo <- function(x) {
+  1 - (0.5^(x + 1))
 }
 
-ps <- ParameterSet$new(
-  id = list("prob", "size", "qprob"), value = list(0.5, 10, 0.8),
-  support = list(Interval$new(0, 1), PosNaturals$new(), Interval$new(0, 1)),
-  settable = list(TRUE, TRUE, FALSE),
-  updateFunc = list(
-    NULL, NULL,
-    function(self) 1 - self$getParameterValue("prob")
-  ),
-  description = list(
-    "Probability of Success", "Number of trials",
-    "Probability of failure"
-  )
-)
+disc_pdf <- Distribution$new("Discrete Test",
+                                   support = Interval$new(0, Inf, type = "[)",
+                                                          class = "integer"),
+                                   symmetric = FALSE, type = Naturals$new(),
+                                   pdf = dgeo)
+disc_cdf <- Distribution$new("Discrete Test",
+                             support = Interval$new(0, Inf, type = "[)",
+                                                    class = "integer"),
+                             symmetric = FALSE, type = Naturals$new(),
+                             cdf = pgeo)
 
-discreteTester <- Distribution$new("Discrete Test", "TestDistr",
-  support = Set$new(0:10),
-  symmetric = TRUE, type = PosNaturals$new(),
-  pdf = dbin,
-  parameters = ps,
-  decorators = list(CoreStatistics)
-)
+#----------
+# pdf checks
+#----------
 
-test_that("discrete r/p/q", {
-  decorate(discreteTester, FunctionImputation)
-  expect_silent(expect_equal(discreteTester$pdf(1), dbinom(1, 10, 0.5)))
-  expect_equal(discreteTester$cdf(1), pbinom(1, 10, 0.5))
-  expect_message(expect_equal(discreteTester$quantile(0.42), qbinom(0.42, 10, 0.5)))
-  expect_message(discreteTester$rand(1))
+test_that("basic pdf checks", {
+  expect_silent(cont_pdf$pdf(1))
+  expect_null(cont_pdf$cdf(1))
+  expect_null(cont_pdf$quantile(1))
+  expect_null(cont_pdf$rand(1))
+  expect_message(decorate(cont_pdf, "FunctionImputation"))
+  expect_message(decorate(disc_pdf, "FunctionImputation"))
+  expect_silent(cont_pdf$pdf(1))
+  expect_message(cont_pdf$cdf(1))
+  expect_message(cont_pdf$quantile(0.42))
+  expect_message(cont_pdf$rand(1))
 })
 
-discreteTester <- Distribution$new("Discrete Test", "TestDistr",
-  support = Set$new(0:10),
-  symmetric = TRUE, type = PosNaturals$new(),
-  cdf = pbin,
-  parameters = ps,
-  decorators = list(FunctionImputation)
-)
+#----------
+# pdf2cdf
+#----------
 
-test_that("discrete r/p/q", {
-  expect_silent(expect_equal(discreteTester$cdf(1), pbinom(1, 10, 0.5)))
-  expect_equal(discreteTester$pdf(1), dbinom(1, 10, 0.5))
-  expect_message(expect_equal(discreteTester$quantile(0.42), qbinom(0.42, 10, 0.5)))
-  expect_message(expect_equal(discreteTester$quantile(c(0.42, 0.24)), qbinom(c(0.42, 0.24), 10, 0.5)))
-  expect_message(discreteTester$rand(1))
+test_that("continuous pdf2cdf", {
+  expect_equal(cont_pdf$pdf(1), dexp(1))
+  expect_message(expect_equal(cont_pdf$cdf(1:3), pexp(1:3)))
 })
 
-test_that("multivariate error", {
-  expect_error(MultivariateNormal$new(decorators = FunctionImputation))
+test_that("discrete pdf2cdf", {
+  expect_equal(disc_pdf$pdf(1), dgeom(1, prob = 0.5))
+  expect_message(expect_equal(disc_pdf$cdf(0:10), pgeom(0:10, prob = 0.5)))
+})
+
+#----------
+# pdf2quantile
+#----------
+
+test_that("continuous pdf2quantile", {
+  expect_message(expect_rounded_equal(cont_pdf$quantile(c(0.2, 0.42, 0.6)),
+                                      qexp(c(0.2, 0.42, 0.6)),
+                                      dp = 4))
+})
+
+test_that("discrete pdf2quantile", {
+  expect_message(expect_equal(disc_pdf$quantile(c(0.2, 0.42, 0.6)),
+                                      qgeom(c(0.2, 0.42, 0.6), prob = 0.5)))
+})
+
+#----------
+# pdf2rand
+#----------
+
+test_that("continuous pdf2quantile", {
+  set.seed(2)
+  r <- cont_pdf$rand(1000, size_n = 100001)
+  t <- round(rexp(1000), 1)
+  expect_warning(expect_true(ks.test(r, t)$p.value > 0.05))
+  expect_equal(length(r), 1000)
+  expect_true(all(r >= cont_pdf$inf))
+  expect_true(all(r <= cont_pdf$sup))
+})
+
+test_that("discrete pdf2quantile", {
+  set.seed(1)
+  r <- disc_pdf$rand(10000)
+  t <- rgeom(10000, 0.5)
+  expect_warning(expect_true(ks.test(r, t)$p.value > 0.05))
+  expect_equal(length(r), 10000)
+  expect_true(all(r >= disc_pdf$inf))
+  expect_true(all(r <= disc_pdf$sup))
+})
+
+#----------
+# cdf checks
+#----------
+
+test_that("basic cdf checks", {
+  expect_null(cont_cdf$pdf(1))
+  expect_silent(cont_cdf$cdf(1))
+  expect_null(cont_cdf$quantile(0.42))
+  expect_null(cont_cdf$rand(1))
+  expect_message(decorate(cont_cdf, "FunctionImputation"))
+  expect_message(decorate(disc_cdf, "FunctionImputation"))
+  expect_message(cont_cdf$pdf(1))
+  expect_silent(cont_cdf$cdf(1))
+  expect_message(cont_cdf$quantile(0.42))
+  expect_message(cont_cdf$rand(1))
+})
+#----------
+# cdf2pdf
+#----------
+
+test_that("continuous cdf2pdf", {
+  expect_equal(cont_cdf$pdf(1), dexp(1))
+  expect_message(expect_equal(cont_cdf$pdf(1:3), dexp(1:3)))
+})
+
+test_that("discrete cdf2pdf", {
+  expect_equal(disc_cdf$pdf(1), dgeom(1, prob = 0.5))
+  expect_equal(disc_cdf$cdf(0:10), pgeom(0:10, prob = 0.5))
+})
+
+#----------
+# cdf2quantile
+#----------
+
+test_that("continuous cdf2quantile", {
+  expect_message(expect_rounded_equal(cont_cdf$quantile(c(0.2, 0.42, 0.6)),
+                                      qexp(c(0.2, 0.42, 0.6)),
+                                      dp = 3))
+})
+
+test_that("discrete cdf2quantile", {
+  expect_message(expect_equal(disc_cdf$quantile(c(0.2, 0.42, 0.6)),
+                              qgeom(c(0.2, 0.42, 0.6), prob = 0.5)))
+})
+
+#----------
+# cdf2rand
+#----------
+
+test_that("continuous cdf2rand", {
+  set.seed(2)
+  r <- cont_cdf$rand(100, size_n = 10001)
+  t <- rexp(100)
+  expect_true(ks.test(r, t)$p.value > 0.05)
+  expect_equal(length(r), 100)
+  expect_true(all(r >= cont_cdf$inf))
+  expect_true(all(r <= cont_cdf$sup))
+})
+
+test_that("discrete cdf2rand", {
+  set.seed(1)
+  r <- disc_cdf$rand(100)
+  t <- rgeom(100, 0.5)
+  expect_warning(expect_true(ks.test(r, t)$p.value > 0.05))
+  expect_equal(length(r), 100)
+  expect_true(all(r >= disc_cdf$inf))
+  expect_true(all(r <= disc_cdf$sup))
 })

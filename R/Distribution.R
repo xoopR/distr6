@@ -21,9 +21,7 @@
 Distribution <- R6Class("Distribution", lock_objects = FALSE,
   public = list(
     name = character(0),
-
     short_name =  character(0),
-
     description =  NULL,
 
     #' @description
@@ -64,7 +62,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' @param .suppressChecks `(logical(1))` \cr
     #' Used internally.
     initialize = function(name = NULL, short_name = NULL,
-                          type = NULL, support = NULL,
+                          type, support = NULL,
                           symmetric = FALSE,
                           pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                           parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
@@ -73,10 +71,10 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       if (.suppressChecks | inherits(self, "DistributionWrapper")) {
 
         if (!is.null(parameters)) parameters <- parameters$clone(deep = TRUE)
-        if (!is.null(pdf)) formals(pdf) <- c(formals(pdf), list(self = self), alist(... = ))
-        if (!is.null(cdf)) formals(cdf) <- c(formals(cdf), list(self = self), alist(... = ))
-        if (!is.null(quantile)) formals(quantile) <- c(formals(quantile), list(self = self), alist(... = ))
-        if (!is.null(rand)) formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
+        if (!is.null(pdf)) formals(pdf) <- c(formals(pdf), list(self = self))
+        if (!is.null(cdf)) formals(cdf) <- c(formals(cdf), list(self = self))
+        if (!is.null(quantile)) formals(quantile) <- c(formals(quantile), list(self = self))
+        if (!is.null(rand)) formals(rand) <- c(formals(rand), list(self = self))
 
       } else if (getR6Class(self) == "Distribution") {
 
@@ -102,16 +100,10 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         #------------------------
         # Type and Support Checks
         #------------------------
-        if (is.null(type)) {
-          rm <- c("...", "self")
-          if (!is.null(pdf)) {
-            lng <- length(formals(pdf)[!(names(formals(pdf)) %in% rm)])
-            type <- setpower(Reals$new(), lng)
-          } else {
-            lng <- length(formals(cdf)[!(names(formals(cdf)) %in% rm)])
-            type <- setpower(Reals$new(), lng)
-          }
+        if (missing(type)) {
+          stop("Distribution type must be provided.")
         }
+
         if (is.null(support)) support <- type
         assertSet(type)
         assertSet(support)
@@ -143,47 +135,26 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         # pdf and cdf Checks
         #-------------------
         if (!is.null(pdf)) {
-          if (!is.null(formals(pdf)$self)) {
-            formals(pdf)$self <- self
-          } else {
-            formals(pdf) <- c(formals(pdf), list(self = self), alist(... = ))
-          }
+          checkmate::assertSubset(names(formals(pdf)), c("x", "log"))
+          formals(pdf) <- c(formals(pdf), list(self = self), alist(... = ))
         }
 
         if (!is.null(cdf)) {
-          if (!is.null(formals(cdf)$self)) {
-            formals(cdf)$self <- self
-          } else {
-            formals(cdf) <- c(formals(cdf), list(self = self), alist(... = ))
-          }
-        }
-
-        if (!is.null(pdf) & !is.null(cdf)) {
-          checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
-                            .var.name = "'pdf' and 'cdf' must take the same arguments."
-          )
-          checkmate::assert(all(names(formals(pdf)) == names(formals(cdf))),
-                            .var.name = "'pdf' and 'cdf' must take the same arguments."
-          )
+          checkmate::assertSubset(names(formals(cdf)), c("x", "lower.tail", "log.p"))
+          formals(cdf) <- c(formals(cdf), list(self = self), alist(... = ))
         }
 
         #-------------------------
         # quantile and rand Checks
         #-------------------------
         if (!is.null(quantile)) {
-          if (!is.null(formals(quantile)$self)) {
-            formals(quantile)$self <- self
-          } else {
-            formals(quantile) <- c(formals(quantile), list(self = self), alist(... = ))
-          }
+          checkmate::assertSubset(names(formals(quantile)), c("p", "lower.tail", "log.p"))
+          formals(quantile) <- c(formals(quantile), list(self = self), alist(... = ))
         }
 
         if (!is.null(rand)) {
-          if (!is.null(formals(rand)$self)) {
-            formals(rand)$self <- self
-          } else {
-            formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
-          }
+          stopifnot(names(formals(rand)), "n")
+          formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
         }
 
         #-------------------------
@@ -191,7 +162,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         #-------------------------
         if (!is.null(parameters)) {
           checkmate::assertClass(parameters, "ParameterSet")
-          parameters <- parameters$clone(deep = TRUE)$update()
+          parameters <- parameters$clone(deep = TRUE)$.__enclos_env__$private$.update()
         }
       }
 
@@ -722,7 +693,8 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' @field type
     #' Deprecated, use `$traits$type`.
     type = function() {
-      return("Deprecated. Use $traits$type instead.")
+      message("Deprecated. Use $traits$type instead.")
+      return(self$traits$type)
     },
 
     #' @field properties
@@ -801,18 +773,22 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       upper <- self$sup
 
       if (lower == -Inf) {
-        if (private$.isCdf) {
+        if (private$.isCdf == 1L) {
           for (i in -c(0, 10^(1:1000))) {
-            if (self$cdf(i) == 0) {
-              lower = i
-              break()
+            if (i >= lower & i <= upper) {
+              if (self$cdf(i) == 0) {
+                lower = i
+                break()
+              }
             }
           }
         } else {
           for (i in -c(0, 10^(1:1000))) {
-            if (self$pdf(i) == 0) {
-              lower = i
-              break()
+            if (i >= lower & i <= upper) {
+              if (self$pdf(i) == 0) {
+                lower = i
+                break()
+              }
             }
           }
         }
@@ -820,16 +796,18 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       }
 
       if (upper == Inf) {
-        if (private$.isCdf) {
+        if (private$.isCdf == 1L) {
           for (i in c(0, 10^(1:1000))) {
-            if (self$cdf(i) == 1) {
-              upper = i
-              break()
+            if (i >= lower & i <= upper) {
+              if (self$cdf(i) == 1) {
+                upper = i
+                break()
+              }
             }
           }
         } else {
           for (i in c(0, 10^(1:1000))) {
-            if (i > lower) {
+            if (i >= lower & i <= upper) {
               if (self$pdf(i) == 0) {
                 upper = i
                 break()
@@ -852,10 +830,10 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     .properties =  list(),
     .traits =  NULL,
     .variates = 1,
-    .isPdf =  FALSE,
-    .isCdf =  FALSE,
-    .isQuantile =  FALSE,
-    .isRand =  FALSE,
+    .isPdf =  0L,
+    .isCdf =  0L,
+    .isQuantile =  0L,
+    .isRand =  0L,
     .log =  FALSE,
 
     .updateDecorators = function(decs) {

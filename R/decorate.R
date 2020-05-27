@@ -48,7 +48,7 @@ decorate <- function(distribution, decorators) {
     return(NULL)
   } else {
     if (!is.null(distribution$decorators)) {
-      decorators = setdiff(distribution$decorators, decorators)
+      decorators = setdiff(decorators, distribution$decorators)
     }
 
     lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution))

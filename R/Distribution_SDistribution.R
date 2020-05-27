@@ -70,10 +70,10 @@ SDistribution <- R6Class("SDistribution", inherit = Distribution,
 
    private = list(
       .log = TRUE,
-      .isPdf =  TRUE,
-      .isCdf = TRUE,
-      .isQuantile =  TRUE,
-      .isRand = TRUE
+      .isPdf =  1L,
+      .isCdf = 1L,
+      .isQuantile =  1L,
+      .isRand = 1L
    )
 )
 

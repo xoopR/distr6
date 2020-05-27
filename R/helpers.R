@@ -157,11 +157,11 @@ impute_genx = function(dist, n = 10001) {
   if (testDiscrete(dist)) {
     x <- seq.int(x$lower, x$upper)
   } else {
-    if (n %% 2 != 0) {
+    if (n %% 2 == 0) {
       n = n + 1
     }
 
-    x <- sort(runif(n = n, x$lower, x$upper))
+    x <- seq.int(x$lower, x$upper, length.out = n)
   }
 
   return(x)

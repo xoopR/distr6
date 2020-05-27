@@ -38,30 +38,43 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
       if (!testUnivariate(distribution)) {
         stop("FunctionImputation is currently only supported for univariate distributions.")
       }
+
       pdist = distribution$.__enclos_env__$private
       if (!isPdf(distribution)) {
         pdf <- FunctionImputation$public_methods$pdf
         formals(pdf)$self <- distribution
-        pdist$.pdf <- pdf
-        pdist$.isPdf <- TRUE
+        unlockBinding("pdf", distribution)
+        distribution$pdf <- pdf
+        pdist$.isPdf <- -1L
+        lockBinding("pdf", distribution)
+        lockBinding(".isPdf", pdist)
       }
       if (!isCdf(distribution)) {
         cdf <- FunctionImputation$public_methods$cdf
         formals(cdf)$self <- distribution
-        pdist$.cdf <- cdf
-        pdist$.isCdf <- TRUE
+        unlockBinding("cdf", distribution)
+        distribution$cdf <- cdf
+        pdist$.isCdf <- -1L
+        lockBinding("cdf", distribution)
+        lockBinding(".isCdf", pdist)
       }
       if (!isQuantile(distribution)) {
         quant <- FunctionImputation$public_methods$quantile
         formals(quant)$self <- distribution
-        pdist$.quantile <- quant
-        pdist$.isQuantile <- TRUE
+        unlockBinding("quantile", distribution)
+        distribution$quantile <- quant
+        pdist$.isQuantile <- -1L
+        lockBinding("quantile", distribution)
+        lockBinding(".isQuantile", pdist)
       }
       if (!isRand(distribution)) {
         rand <- FunctionImputation$public_methods$rand
         formals(rand)$self <- distribution
-        pdist$.rand <- rand
-        pdist$.isRand <- TRUE
+        unlockBinding("rand", distribution)
+        distribution$rand <- rand
+        pdist$.isRand <- -1L
+        lockBinding("rand", distribution)
+        lockBinding(".isRand", pdist)
       }
 
       invisible(self)
@@ -69,21 +82,25 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
 
     #' @description
     #' Numerical approximation to pdf. Imputed by subtracting or taking the numerical derivative
-    #' of the cdf with [pracma::fderiv].
+    #' of the cdf with [pracma::fderiv]. For discrete distributions, assumes support
+    #' has no breaks on the integers.
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
-      if (testUnivariate(self)) {
         data <- pdq_point_assert(..., self = self, data = data)
+
         if (testDiscrete(self)) {
-          return(self$cdf(data = data) - self$cdf(data = data - 1))
+          data <- as.matrix(data)
+          pdf <- self$cdf(data = data) - self$cdf(data = data - 1)
         } else if (testContinuous(self)) {
           message(.distr6$message_numeric)
-          return(pracma::fderiv(self$cdf, data))
+          pdf <- pracma::fderiv(self$cdf, data)
         }
-      } else {
-        stop("PDF imputation currently only implemented for univariate distributions.")
-      }
 
+        if (log) {
+          pdf = log(pdf)
+        }
+
+        pdqr_returner(pdf, simplify, self$short_name)
     },
 
     #' @description
@@ -95,41 +112,31 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' @param .cdf_x `(numeric())` \cr
     #' Parameter used by internal methods, should be ignored.
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL,
-                   n = 10001, .cdf_x = NULL) {
+                   n = 1000, .cdf_x) {
 
       message(.distr6$message_numeric)
 
-      if (testUnivariate(self)) {
-
         data <- pdq_point_assert(..., self = self, data = data)
 
-        if (!is.null(.cdf_x)) {
-          x <- .cdf_x
-        } else {
-          x <- impute_genx(self, n)
-        }
-
-
         if (testDiscrete(self)) {
-          return(
-            NumericCdf_Discrete(q = data,
+          if (missing(.cdf_x)) {
+            x <- impute_genx(self, n)
+          } else {
+            x <- .cdf_x
+          }
+          cdf <- C_NumericCdf_Discrete(q = data,
                                 x = x,
                                 pdf = self$pdf(x),
                                 lower = lower.tail,
                                 logp = log.p)
-          )
         } else {
-          return(
-            NumericCdf_Continuous(q = data,
-                                  x = x,
-                                  pdf = self$pdf(x),
-                                  lower = lower.tail,
-                                  logp = log.p)
-          )
+          cdf <- numeric(length(data))
+          for (i in seq_along(data)) {
+            cdf[i] <- integrate(self$pdf, 0, data[i])$value
+          }
         }
-      } else {
-        stop("CDF imputation currently only implemented for univariate distributions.")
-      }
+
+        pdqr_returner(cdf, simplify, self$short_name)
     },
 
     #' @description
@@ -139,18 +146,32 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' Number of points to use when imputing the quantile from the `cdf`. If an analytical `cdf`
     #' is not available then this is imputed first.
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL,
-                        n = 10001) {
+                        n = 1000) {
 
       message(.distr6$message_numeric)
       data <- pdq_point_assert(..., self = self, data = data)
-      x <- impute_genx(self, n)
+      # x <- impute_genx(self, n)
+      x <- self$workingSupport
+      lower <- x$lower
+      upper <- x$upper
 
-      if (private$.isCdf) {
-        return(NumericQuantile(data, x, self$cdf(x), lower.tail, log.p))
+      # if (isCdf(self)) {
+      #
+      if (testContinuous(self)) {
+        quantile <- numeric(length(data))
+        for (i in seq_along(data)) {
+          quantile[i] <- suppressMessages(GoFKernel::inverse(self$cdf, lower = lower, upper = upper)(data[i]))
+        }
       } else {
-        return(NumericQuantile(data, x, self$cdf(x, n = n, .cdf_x = x), lower.tail, log.p))
+        x <- impute_genx(self, n)
+        if (isCdf(self)) {
+          quantile <- C_NumericQuantile(data, x, self$cdf(x), lower.tail, log.p)
+        } else {
+          quantile <- C_NumericQuantile(data, x, self$cdf(x, .cdf_x = x), lower.tail, log.p)
+        }
       }
 
+      pdqr_returner(quantile, simplify, self$short_name)
     },
     #' @description
     #' Numerical approximation to simulation. If analytical quantile is available uses inverse-transform
@@ -160,12 +181,14 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' @param size_n `(numeric(1))` \cr
     #' Determines size of grid of points to sample from if no analytical quantile is available.
     rand = function(n, simplify = TRUE, size_n = 10001) {
-      if (private$.isQuantile) {
+      message(.distr6$message_numeric)
+      if (isQuantile(self) == 1L) {
         return(self$quantile(runif(n)))
-      } else if (private$.isPdf) {
-        return(sample(x, n, TRUE, self$pdf(impute_genx(self, size_n))))
+      } else if (isPdf(self) == 1L) {
+        x <- impute_genx(self, size_n)
+        return(sample(x, n, TRUE, self$pdf(x)))
       } else {
-        return(self$quantile(runif(n)), n = size_n)
+        return(self$quantile(runif(n), n = size_n))
       }
     }
   ))

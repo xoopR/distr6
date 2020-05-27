@@ -77,16 +77,12 @@ C_Vec_WeightedDiscreteQuantile <- function(x, data, cdf, lower, logp) {
     .Call(`_distr6_C_Vec_WeightedDiscreteQuantile`, x, data, cdf, lower, logp)
 }
 
-NumericCdf_Discrete <- function(q, x, pdf, lower, logp) {
-    .Call(`_distr6_NumericCdf_Discrete`, q, x, pdf, lower, logp)
+C_NumericCdf_Discrete <- function(q, x, pdf, lower, logp) {
+    .Call(`_distr6_C_NumericCdf_Discrete`, q, x, pdf, lower, logp)
 }
 
-NumericCdf_Continuous <- function(q, x, pdf, lower, logp) {
-    .Call(`_distr6_NumericCdf_Continuous`, q, x, pdf, lower, logp)
-}
-
-NumericQuantile <- function(p, x, cdf, lower, logp) {
-    .Call(`_distr6_NumericQuantile`, p, x, cdf, lower, logp)
+C_NumericQuantile <- function(p, x, cdf, lower, logp) {
+    .Call(`_distr6_C_NumericQuantile`, p, x, cdf, lower, logp)
 }
 
 C_CosineKernelPdf <- function(x, logp) {

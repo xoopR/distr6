@@ -10,6 +10,7 @@
 * Adding plotting for bivariate distributions using `{plotly}`
 * Added `EmpiricalMV` for empirical multivariate distributions
 * All documentation now uses roxygen R6
+* Distribution `type` is now required in construction custom `Distribution`s as the previous method of 'guessing' was inefficient.
 
 ### Deprecated Functions/Fields/Methods
 
@@ -19,6 +20,7 @@
 * Removed deprecated functions: `listSpecialSets`
 * `WeighedDiscrete` distribution now stores samples and probabilities as parameters.
 * Removed `verbose` argument from distribution constructor
+* Public `update` method in `ParameterSet` moved to `private`
 
 ## Patches
 
