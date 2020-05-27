@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Distributions")
-
 dbin <- function(x, log) {
   m1 <- choose(self$getParameterValue("size"), x)
   m2 <- self$getParameterValue("prob")^x
@@ -57,10 +55,10 @@ test_that("check r/d/p/q", {
 })
 
 test_that("check is", {
-  expect_true(isPdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
-  expect_false(isCdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
-  expect_false(isQuantile(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
-  expect_false(isRand(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())))
+  expect_equal(isPdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 1L)
+  expect_equal(isCdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 0L)
+  expect_equal(isQuantile(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 0L)
+  expect_equal(isRand(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 0L)
 })
 
 test_that("working_support", {

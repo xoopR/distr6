@@ -10,7 +10,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
                                    mgf = NULL, cf = NULL,
                                    pgf = NULL, pdf = NULL, cdf = NULL, quantile = NULL) {
 
-  context("public fields")
+  # context("public fields")
   checkmate::assertSubset(names(sdist$public_fields), c("name", "short_name", "description", "packages"))
   expect_equal(as.character(sdist$inherit), "SDistribution")
   checkmate::expect_names(c(
@@ -23,7 +23,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     checkmate::expect_names(sdist$public_fields$packages)
   }
 
-  context("public methods")
+  # context("public methods")
   checkmate::expect_subset(
     names(sdist$public_methods),
     c(
@@ -48,7 +48,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   if (!is.null(sdist$public_methods$cf)) expect_equal(names(formals(sdist$public_methods$cf)), "t")
   if (!is.null(sdist$public_methods$pgf)) expect_equal(names(formals(sdist$public_methods$pgf)), "z")
 
-  context("private methods")
+  # context("private methods")
   checkmate::expect_subset(names(sdist$private_methods), c(
     ".pdf", ".cdf", ".quantile", ".rand", ".getRefParams",
     ".log"
@@ -65,12 +65,12 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     do.call(sdist$new, pars)
   })
 
-  context("sdist specific - properties & traits")
+  # context("sdist specific - properties & traits")
   expect_equal(sdist$traits, traits)
   expect_equal(sdist$properties$support, support)
   expect_equal(sdist$properties$symmetry, symmetry)
 
-  context("sdist specific - public methods")
+  # context("sdist specific - public methods")
   if (!is.null(sdist$mean)) expect_rounded_equal(sdist$mean(), mean, 4)
   if (!is.null(sdist$mode)) expect_rounded_equal(sdist$mode(), mode, 4)
   if (!is.null(sdist$median)) {
@@ -99,12 +99,12 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
 
 
 
-  context("sdist specific - representation methods")
+  # context("sdist specific - representation methods")
   expect_output(sdist$print())
   expect_output(sdist$summary())
   expect_output(sdist$summary(F))
 
-  context("d/p/q/r")
+  # context("d/p/q/r")
   if (testUnivariate(sdist)) {
     if (isPdf(sdist)) {
       expect_rounded_equal(sdist$pdf(1:3), pdf)
@@ -131,7 +131,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
 }
 
 autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pdf, cdf) {
-  context("public fields")
+  # context("public fields")
   checkmate::expect_subset(names(kern$public_fields), c("name", "short_name", "description", "packages"))
   expect_equal(as.character(kern$inherit), "Kernel")
   checkmate::expect_names(c(
@@ -144,7 +144,7 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
     checkmate::expect_names(kern$public_fields$packages)
   }
 
-  context("public methods")
+  # context("public methods")
   checkmate::expect_subset(names(kern$public_methods), c("clone", "squared2Norm", "variance", "initialize"))
 
   if (!is.null(kern$public_methods$setParameterValue)) {
@@ -160,7 +160,7 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
   if (!is.null(kern$public_methods$cf)) expect_equal(names(formals(kern$public_methods$cf)), "t")
   if (!is.null(kern$public_methods$pgf)) expect_equal(names(formals(kern$public_methods$pgf)), "z")
 
-  context("private methods")
+  # context("private methods")
   checkmate::expect_subset(names(kern$private_methods), c(".pdf", ".cdf", ".quantile", ".rand"))
 
   checkmate::expect_subset(names(formals(kern$private_methods$.pdf)), c("x", "log"))
@@ -171,7 +171,7 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
     checkmate::expect_subset(names(formals(kern$private_methods$.quantile)), c("p", "lower.tail", "log.p"))
   }
 
-  context("kernel specific")
+  # context("kernel specific")
   kern <- kern$new()
   expect_equal(kern$mean(), 0)
   expect_equal(kern$median(), 0)
@@ -183,7 +183,7 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
   expect_output(kern$summary())
   expect_output(kern$summary(F))
 
-  context("d/p/q/r")
+  # context("d/p/q/r")
   expect_equal(round(kern$pdf(c(-0.1, 0, 0.1)), 4), pdf)
   if (!is.null(kern$private_methods$.cdf)) {
     expect_equal(round(kern$cdf(c(-0.1, 0, 0.1)), 4), cdf)

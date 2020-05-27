@@ -61,6 +61,11 @@ disc_cdf <- Distribution$new("Discrete Test",
 #----------
 
 test_that("basic pdf checks", {
+  expect_equal(isPdf(cont_pdf), 1L)
+  expect_equal(isCdf(cont_pdf), 0L)
+  expect_equal(isQuantile(cont_pdf), 0L)
+  expect_equal(isRand(cont_pdf), 0L)
+
   expect_silent(cont_pdf$pdf(1))
   expect_null(cont_pdf$cdf(1))
   expect_null(cont_pdf$quantile(1))
@@ -71,6 +76,11 @@ test_that("basic pdf checks", {
   expect_message(cont_pdf$cdf(1))
   expect_message(cont_pdf$quantile(0.42))
   expect_message(cont_pdf$rand(1))
+
+  expect_equal(isPdf(cont_pdf), 1L)
+  expect_equal(isCdf(cont_pdf), -1L)
+  expect_equal(isQuantile(cont_pdf), -1L)
+  expect_equal(isRand(cont_pdf), -1L)
 })
 
 #----------
@@ -131,6 +141,11 @@ test_that("discrete pdf2quantile", {
 #----------
 
 test_that("basic cdf checks", {
+  expect_equal(isPdf(cont_cdf), 0L)
+  expect_equal(isCdf(cont_cdf), 1L)
+  expect_equal(isQuantile(cont_cdf), 0L)
+  expect_equal(isRand(cont_cdf), 0L)
+
   expect_null(cont_cdf$pdf(1))
   expect_silent(cont_cdf$cdf(1))
   expect_null(cont_cdf$quantile(0.42))
@@ -141,6 +156,11 @@ test_that("basic cdf checks", {
   expect_silent(cont_cdf$cdf(1))
   expect_message(cont_cdf$quantile(0.42))
   expect_message(cont_cdf$rand(1))
+
+  expect_equal(isPdf(cont_cdf), -1L)
+  expect_equal(isCdf(cont_cdf), 1L)
+  expect_equal(isQuantile(cont_cdf), -1L)
+  expect_equal(isRand(cont_cdf), -1L)
 })
 #----------
 # cdf2pdf

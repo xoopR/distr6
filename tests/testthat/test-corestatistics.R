@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Core Statistics")
-
 dexpo <- function(x) {
   m1 <- self$getParameterValue("rate")
   m2 <- exp(-1 * self$getParameterValue("rate") * x)
@@ -28,7 +26,7 @@ continuousTester <- Distribution$new("Continuous Test", "ContTest",
   symmetric = TRUE, type = PosReals$new(zero = T),
   pdf = dexpo, cdf = cexpo,
   parameters = ps,
-  decorators = CoreStatistics
+  decorators = "CoreStatistics"
 )
 
 dbin <- function(x) {
@@ -40,7 +38,7 @@ dbin <- function(x) {
 
 ps <- ParameterSet$new(
   id = list("prob", "size", "qprob"), value = list(0.5, 10, 0.5),
-  support = list(Interval$new(0, 1), PosNaturals$new(), Interval$new(0, 1)),
+  support = list(Interval$new(0, 1), Naturals$new(), Interval$new(0, 1)),
   settable = list(TRUE, TRUE, FALSE),
   updateFunc = list(
     NULL, NULL,
@@ -54,10 +52,10 @@ ps <- ParameterSet$new(
 
 discreteTester <- Distribution$new("Discrete Test", "TestDistr",
   support = Set$new(0:10),
-  symmetric = TRUE, type = PosNaturals$new(),
+  symmetric = TRUE, type = Naturals$new(),
   pdf = dbin,
   parameters = ps,
-  decorators = CoreStatistics
+  decorators = "CoreStatistics"
 )
 
 test_that("mgf", {
@@ -96,8 +94,6 @@ test_that("variance", {
 })
 
 test_that("kthmoment", {
-  expect_message(expect_equal(continuousTester$kthmoment(3, "d"), continuousTester$kthmoment(3, "c")))
-
   expect_message(expect_equal(continuousTester$kthmoment(3, "s"), Exponential$new()$skewness()))
   expect_message(expect_equal(discreteTester$kthmoment(3, "s"), Binomial$new()$skewness()))
 
@@ -130,25 +126,13 @@ rbin <- function(n) {
 }
 discreteTester <- Distribution$new("Discrete Test", "TestDistr",
   support = Set$new(0:10),
-  symmetric = TRUE, type = PosNaturals$new(),
+  symmetric = TRUE, type = Naturals$new(),
   pdf = dbin, rand = rbin,
   parameters = ps,
-  decorators = CoreStatistics
+  decorators = "CoreStatistics"
 )
 
 test_that("rand2mode", {
   expect_equal(discreteTester$mode(), Binomial$new()$mode())
 })
 
-
-discreteTester <- Distribution$new("Discrete Test", "TestDistr",
-  support = Naturals$new(),
-  symmetric = TRUE, type = PosNaturals$new(),
-  pdf = dbin,
-  parameters = ps,
-  decorators = CoreStatistics, suppressMoments = T
-)
-
-test_that("infinite mean", {
-  expect_equal(discreteTester$mean(), Binomial$new()$mean())
-})

@@ -1,7 +1,7 @@
 #' @title Combine Distributions into a VectorDistribution
 #' @description Helper function for quickly combining distributions into a \code{\link{VectorDistribution}}.
 #' @param ... distributions to be concatenated.
-#' @param name,short_name,description,decorators See \code{\link{VectorDistribution}}
+#' @param name,short_name,decorators See \code{\link{VectorDistribution}}
 #' @return A VectorDistribution
 #' @seealso \code{\link{VectorDistribution}}
 #' @examples
@@ -21,7 +21,7 @@
 #' )
 #' c(v1, v2)
 #' @export
-c.Distribution <- function(..., name = NULL, short_name = NULL, description = NULL, decorators = NULL) {
+c.Distribution <- function(..., name = NULL, short_name = NULL, decorators = NULL) {
   # Get list of inputs and assert all distributions
   distlist <- list(...)
   assertDistributionList(distlist)
@@ -53,6 +53,6 @@ c.Distribution <- function(..., name = NULL, short_name = NULL, description = NU
   # Create VectorDistribution
   return(VectorDistribution$new(distlist,
     name = name, short_name = short_name,
-    description = description, decorators = decorators
+    decorators = decorators
   ))
 }

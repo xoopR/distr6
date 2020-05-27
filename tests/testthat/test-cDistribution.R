@@ -19,23 +19,23 @@ test_that("VectorDistributions", {
   expect_silent(c(v1, v2))
   expect_silent(c(v1, v2, Normal$new(), truncate(Binomial$new(), 2, 6)))
 })
-
-test_that("distribution/param VectorDistributions", {
-  v1 <- VectorDistribution$new(
-    distribution = c("Binomial", "Normal"),
-    params = list(list(size = 2), list(mean = 0, var = 2))
-  )
-  v2 <- VectorDistribution$new(distribution = "Gamma", params = data.table::data.table(shape = 1:2, rate = 1:2))
-  expect_silent(c(v1, v2))
-  v3 <- c(v1, v2)
-  expect_false(v3$distlist)
-  expect_equal(v3$modelTable$distribution, c("Binomial", "Normal", "Gamma", "Gamma"))
-  expect_equal(v3$modelTable$shortname, c("Binom1", "Norm1", "Gamma1", "Gamma2"))
-  expect_equal(v3$modelTable$params, list(
-    list(size = 2), list(mean = 0, var = 2),
-    list(shape = 1, rate = 1), list(shape = 2, rate = 2)
-  ))
-})
+#
+# test_that("distribution/param VectorDistributions", {
+#   v1 <- VectorDistribution$new(
+#     distribution = c("Binomial", "Normal"),
+#     params = list(list(size = 2), list(mean = 0, var = 2))
+#   )
+#   v2 <- VectorDistribution$new(distribution = "Gamma", params = data.table::data.table(shape = 1:2, rate = 1:2))
+#   expect_silent(c(v1, v2))
+#   v3 <- c(v1, v2)
+#   expect_false(v3$distlist)
+#   expect_equal(v3$modelTable$distribution, c("Binomial", "Normal", "Gamma", "Gamma"))
+#   expect_equal(v3$modelTable$shortname, c("Binom1", "Norm1", "Gamma1", "Gamma2"))
+#   expect_equal(v3$modelTable$params, list(
+#     list(size = 2), list(mean = 0, var = 2),
+#     list(shape = 1, rate = 1), list(shape = 2, rate = 2)
+#   ))
+# })
 
 test_that("weighteddiscrete vec", {
   v1 <- VectorDistribution$new(

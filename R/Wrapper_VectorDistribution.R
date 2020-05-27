@@ -194,7 +194,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in 1:ncol(x1)) {
+                for (i in seq(ncol(x1))) {
                   a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)
@@ -217,12 +217,12 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
           private$.quantile <- function(x1, lower.tail, log.p) {}
           body(private$.quantile) <- substitute(
             {
-              fun <- function(x, lower.tail, log.p) {}
+              fun <- function(p, lower.tail, log.p) {}
               body(fun) <- substitute(FUN)
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in 1:ncol(x1)) {
+                for (i in seq(ncol(x1))) {
                   a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)
@@ -276,6 +276,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
             stop("All distributions in VectorDistribution must be of same variateForm.")
           }
         }
+        shortname <- makeUniqueNames(shortname)
         private$.univariate <- vf == "univariate"
 
         private$.wrappedModels <- data.table::data.table(
@@ -286,16 +287,64 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
 
         ndist <- length(distlist)
 
-        private$.pdf <- function(x1, log) {
+        private$.pdf <- function(x, log = FALSE) {
           dpqr <- data.table()
           if (private$.univariate) {
-            for (i in seq(ncol(x1))) {
-              a_dpqr <- self[i]$pdf(x1[, i], log = log)
+            for (i in seq(ncol(x))) {
+              a_dpqr <- self[i]$pdf(x[, i], log = log)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           } else {
-            for (i in seq(dim(x1)[3])) {
-              a_dpqr <- self[i]$pdf(x1[, , i], log = log)
+            for (i in seq(dim(x)[3])) {
+              a_dpqr <- self[i]$pdf(x[, , i], log = log)
+              dpqr <- cbind(dpqr, a_dpqr)
+            }
+          }
+
+          return(dpqr)
+        }
+        private$.cdf <- function(x, lower.tail = TRUE, log.p = FALSE) {
+          dpqr <- data.table()
+          if (private$.univariate) {
+            for (i in seq(ncol(x))) {
+              a_dpqr <- self[i]$cdf(x[, i], lower.tail = lower.tail, log.p = log.p)
+              dpqr <- cbind(dpqr, a_dpqr)
+            }
+          } else {
+            for (i in seq(dim(x)[3])) {
+              a_dpqr <- self[i]$cdf(x[, , i], lower.tail = lower.tail, log.p = log.p)
+              dpqr <- cbind(dpqr, a_dpqr)
+            }
+          }
+
+          return(dpqr)
+        }
+        private$.quantile <- function(x, lower.tail = TRUE, log.p = FALSE) {
+          dpqr <- data.table()
+          if (private$.univariate) {
+            for (i in seq(ncol(x))) {
+              a_dpqr <- self[i]$quantile(x[, i], lower.tail = lower.tail, log.p = log.p)
+              dpqr <- cbind(dpqr, a_dpqr)
+            }
+          } else {
+            for (i in seq(dim(x)[3])) {
+              a_dpqr <- self[i]$quantile(x[, , i], lower.tail = lower.tail, log.p = log.p)
+              dpqr <- cbind(dpqr, a_dpqr)
+            }
+          }
+
+          return(dpqr)
+        }
+        private$.rand <- function(n) {
+          dpqr <- data.table()
+          if (private$.univariate) {
+            for (i in seq(ncol(x))) {
+              a_dpqr <- self[i]$rand(x[, i], log = log)
+              dpqr <- cbind(dpqr, a_dpqr)
+            }
+          } else {
+            for (i in seq(dim(x)[3])) {
+              a_dpqr <- self[i]$rand(x[, , i], log = log)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           }
@@ -577,8 +626,8 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     #'
     #' # and the same across many samples
     #' vd$pdf(data = array(c(1,2,4,3,5,1,3,7), dim = c(2,2,2)))
-    pdf = function(..., log = FALSE, data) {
-      if (missing(data)) data <- as.matrix(data.table(...))
+    pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
+      if (is.null(data)) data <- as.matrix(data.table(...))
 
       if (private$.univariate) {
         if (ncol(data) == 1) {
@@ -614,8 +663,8 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     #' @description
     #' Returns vector of cdfs from each wrapped [Distribution].
     #' Same usage as `$pdf.`
-    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
-      if (missing(data)) data <- as.matrix(data.table(...))
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
+      if (is.null(data)) data <- as.matrix(data.table(...))
 
       if (private$.univariate) {
         if (ncol(data) == 1) {
@@ -641,8 +690,8 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     #' @description
     #' Returns vector of quantiles from each wrapped [Distribution].
     #' Same usage as `$cdf.`
-    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
-      if (missing(data)) data <- as.matrix(data.table(...))
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
+      if (is.null(data)) data <- as.matrix(data.table(...))
 
       if (private$.univariate) {
         if (ncol(data) == 1) {
@@ -667,7 +716,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
 
     #' @description
     #' Returns [data.table::data.table] of draws from each wrapped [Distribution].
-    rand = function(n) {
+    rand = function(n, simplify = TRUE) {
       if (length(n) > 1) {
         n <- length(n)
       }

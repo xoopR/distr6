@@ -51,11 +51,7 @@ decorate <- function(distribution, decorators) {
       decorators = setdiff(decorators, distribution$decorators)
     }
 
-    lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution))
-
-    distribution$.__enclos_env__$private$.updateDecorators(
-      c(distribution$decorators,decorators)
-    )
+    suppressMessages(lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution)))
 
     message(paste(distribution$name, "is now decorated with", paste0(decorators, collapse = ",")))
     return(distribution)

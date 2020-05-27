@@ -152,15 +152,10 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
         formals(trafo) <- alist(x = )
       }
 
-      count <- self$support$properties$countability
+      count <- self$properties$support$properties$countability
       if (count != "uncountable") {
-        if (count == "countably infinite") {
-          lower <- ifelse(self$inf == -Inf, -1e03, self$inf)
-          upper <- ifelse(self$sup == Inf, 1e03, self$sup)
-          rng <- lower:upper
-        } else {
-          rng <- try(self$inf:self$sup, silent = TRUE)
-        }
+        ws  <- self$workingSupport
+        rng <- seq.int(ws$lower, ws$upper)
         pdfs <- self$pdf(rng)
         xs <- trafo(rng)
         xs[pdfs == 0] <- 0

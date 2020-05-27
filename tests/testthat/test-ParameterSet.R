@@ -59,15 +59,6 @@ test_that("no parameters", {
   expect_null(UniformKernel$new()$getParameterValue("d"))
 })
 
-
-test_that("verbose ps", {
-  expect_message(lapply(
-    listDistributions(simplify = T)[listDistributions(simplify = T) != "Empirical" &
-      listDistributions(simplify = T) != "WeightedDiscrete"],
-    function(x) get(x)$new(verbose = T)
-  ))
-})
-
 test_that("out of support", {
   expect_error(ParameterSet$new(
     id = list("a"), value = list(0), support = list(Set$new(1)),

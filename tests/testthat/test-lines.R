@@ -1,7 +1,5 @@
 library(testthat)
 
-context("lines")
-
 test_that("valueSupport/variateForm", {
   plot(Normal$new())
   expect_error(lines(MultivariateNormal$new()))

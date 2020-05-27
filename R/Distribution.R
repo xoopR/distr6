@@ -153,7 +153,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         }
 
         if (!is.null(rand)) {
-          stopifnot(names(formals(rand)), "n")
+          stopifnot(names(formals(rand)) == "n")
           formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
         }
 
@@ -172,19 +172,19 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
 
       if (!is.null(pdf)) {
         private$.pdf <- pdf
-        private$.isPdf <- TRUE
+        private$.isPdf <- 1L
       }
       if (!is.null(cdf)) {
         private$.cdf <- cdf
-        private$.isCdf <- TRUE
+        private$.isCdf <- 1L
       }
       if (!is.null(quantile)) {
         private$.quantile <- quantile
-        private$.isQuantile <- TRUE
+        private$.isQuantile <- 1L
       }
       if (!is.null(rand)) {
         private$.rand <- rand
-        private$.isRand <- TRUE
+        private$.isRand <- 1L
       }
 
       if (!is.null(name)) self$name <- name

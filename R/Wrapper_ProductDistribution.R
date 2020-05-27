@@ -43,7 +43,7 @@
 #'
 #' # Equivalently
 #' prodBin <- ProductDistribution$new(
-#'   distribution = Binomial,
+#'   distribution = "Binomial",
 #'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 #' )
 #' prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
@@ -95,7 +95,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' p$pdf(1:5)
     #' p$pdf(1)
     #' p$pdf(1, 2)
-    pdf = function(..., log = FALSE, data) {
+    pdf = function(..., log = FALSE, data = NULL) {
       product_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
         univariate = private$.univariate
@@ -114,7 +114,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' p$cdf(1:5)
     #' p$cdf(1)
     #' p$cdf(1, 2)
-    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data = NULL) {
       product_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
         univariate = private$.univariate
@@ -123,7 +123,7 @@ ProductDistribution <- R6Class("ProductDistribution",
 
     #' @description
     #' The quantile function is not implemented for product distributions.
-    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data) {
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data = NULL) {
       stop("Quantile is currently unavailable for product distributions.")
     }
   )

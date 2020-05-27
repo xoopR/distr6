@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Convolution")
-
 test_that("continuous add", {
   Exp1 <- Exponential$new(rate = 1)
   Exp2 <- Exponential$new(rate = 1)

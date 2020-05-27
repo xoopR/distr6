@@ -1,12 +1,6 @@
-context("R62S3")
-
 b <- Binomial$new()
 
 test_that("SDistribution", {
-  expect_true(isPdf(b))
-  expect_true(isCdf(b))
-  expect_true(isQuantile(b))
-  expect_true(isRand(b))
   expect_null(decorators(b), NULL)
   expect_equal(sup(b), 10)
   expect_equal(dmax(b), 10)

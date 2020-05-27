@@ -39,20 +39,31 @@ DistributionDecorator <- R6Class("DistributionDecorator",
     decorate = function(distribution) {
 
       assert_pkgload(self$packages)
+      dec_name <- getR6Class(self)
 
-      methods <- setdiff(self$methods, names(distribution))
+      if (dec_name %in% distribution$decorators) {
+        message(paste(distribution$name, "is already decorated with",
+                      paste0(dec_name, collapse = ",")))
+        invisible(self)
 
-      env = as.environment(distribution)
-      for (i in seq_along(methods)) {
-        fun <- function() {}
-        formals(fun) <- c(formals(self[[methods[[i]]]]),
-                                   list(self = distribution),
-                                   list(private = distribution$.__enclos_env__$private))
-        body(fun) <- body(self[[methods[[i]]]])
-        assign(methods[[i]], fun, envir = env)
+      } else {
+
+        methods <- setdiff(self$methods, names(distribution))
+
+        env = as.environment(distribution)
+        for (i in seq_along(methods)) {
+          fun <- function() {}
+          formals(fun) <- c(formals(self[[methods[[i]]]]),
+                            list(self = distribution),
+                            list(private = distribution$.__enclos_env__$private))
+          body(fun) <- body(self[[methods[[i]]]])
+          assign(methods[[i]], fun, envir = env)
+        }
+
+        message(paste(distribution$name, "is now decorated with", dec_name))
+        distribution$.__enclos_env__$private$.updateDecorators(c(distribution$decorators,dec_name))
+        invisible(self)
       }
-
-      invisible(self)
     }
   ),
 
