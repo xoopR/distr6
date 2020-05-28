@@ -88,7 +88,8 @@ Distribution to decorate.}
 \if{latex}{\out{\hypertarget{method-pdf}{}}}
 \subsection{Method \code{pdf()}}{
 Numerical approximation to pdf. Imputed by subtracting or taking the numerical derivative
-of the cdf with \link[pracma:fderiv]{pracma::fderiv}.
+of the cdf with \link[pracma:fderiv]{pracma::fderiv}. For discrete distributions, assumes support
+has no breaks on the integers.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
 }
@@ -167,8 +168,8 @@ of the pdf.
   log.p = FALSE,
   simplify = TRUE,
   data = NULL,
-  n = 10001,
-  .cdf_x = NULL
+  n = 1000,
+  .cdf_x
 )}\if{html}{\out{</div>}}
 }
 
@@ -262,7 +263,7 @@ and finding the inverse-cdf at the closest point on the grid.
   log.p = FALSE,
   simplify = TRUE,
   data = NULL,
-  n = 10001
+  n = 1000
 )}\if{html}{\out{</div>}}
 }
 

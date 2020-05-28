@@ -25,66 +25,59 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
     #' @param add `(logical(1))`\cr
     #' If `TRUE` (default) then adds the distributions together, otherwise substracts.
     initialize = function(dist1, dist2, add = TRUE) {
-      distlist <- list(dist1$clone(), dist2$clone())
-      distlist <- makeUniqueDistributions(distlist)
+      distlist <- list(dist1, dist2)
+      names(distlist) <- makeUniqueNames(rsapply(distlist, "short_name", active = TRUE))
 
-      if (testContinuous(distlist[[1]]) & testContinuous(distlist[[2]])) {
-        fnc <- function(x1) {}
+      private$.outerParameters <- ParameterSet$new(
+        id = "add", value = add, support = Set$new(TRUE, FALSE),
+        settable = TRUE, description = "Type of convolution."
+      )
+
+      super$initialize(
+        distlist = distlist,
+        name = paste0(dist1$name, "-", dist1$name, " Convolution"),
+        short_name = paste0(dist1$short_name, dist2$short_name),
+        description = paste("Convolution of", dist1$short_name, "and", dist2$short_name),
+        support = dist2$traits$type,
+        type = dist2$traits$type,
+        valueSupport = dist2$traits$valueSupport,
+        variateForm = dist2$traits$variateForm,
+        outerID = "conv"
+      )
+    } # IN PROGRESS
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      d1 <- self$wrappedModels()[[1]]
+      d2 <- self$wrappedModels()[[2]]
+      add <- self$getParameterValue("conv_add")
+
+      if (testContinuous(d1) & testContinuous(d2)) {
         if (add) {
-          body(fnc) <- substitute(
-            {
-              message(.distr6$message_numeric)
-              return(sapply(x1, function(z) {
-                integrate(
-                  f = function(y) {
-                    self$wrappedModels(name1)$pdf(z - y) *
-                      self$wrappedModels(name2)$pdf(y)
-                  },
-                  lower = -Inf,
-                  upper = Inf
-                )$value
-              }))
-            },
-            list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name)
-          )
+          return(sapply(x, function(z) {
+            integrate(
+              f = function(y) d1$pdf(z - y) * d2$pdf(y),
+              lower = -Inf,
+              upper = Inf
+            )$value
+          }))
         } else {
-          body(fnc) <- substitute(
-            {
-              message(.distr6$message_numeric)
-              return(sapply(x1, function(z) {
-                integrate(
-                  f = function(y) {
-                    self$wrappedModels(name1)$pdf(y) *
-                      self$wrappedModels(name2)$pdf(y - z)
-                  },
-                  lower = -Inf,
-                  upper = Inf
-                )$value
-              }))
-            },
-            list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name)
-          )
+          return(sapply(x1, function(z) {
+            integrate(
+              f = function(y) d1$pdf(y) * d2$pdf(y - z),
+              lower = -Inf,
+              upper = Inf
+            )$value
+          }))
         }
-      } else if (testDiscrete(distlist[[1]]) & testDiscrete(distlist[[2]])) {
-        fnc <- function(x1) {}
+      } else if (testDiscrete(d1) & testDiscrete(d2)) {
         if (add) {
-          body(fnc) <- substitute(
-            {
-              message(.distr6$message_numeric)
-
-              return(sapply(x1, function(z) {
-                support <- try(self$wrappedModels(name2)$inf:self$wrappedModels(name2)$sup, silent = T)
-                if (inherits(support, "try-error")) {
-                  self$wrappedModels(name2)$.__enclos_env__$private$.setWorkingSupport()
-                  support <- self$wrappedModels(name2)$.__enclos_env__$private$.getWorkingSupport()
-                  support <- support$inf:support$sup
-                }
-                sum(self$wrappedModels(name1)$pdf(z - support) *
-                      self$wrappedModels(name2)$pdf(support))
-              }))
-            },
-            list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name)
-          )
+          return(sapply(x1, function(z) {
+            ws <- d2$workingSupport
+            rng <- seq.int(ws$lower, ws$upper)
+            sum(d1$pdf(z - rng) * d2$pdf(rng))
+          }))
         } else {
           stop("Substracting discrete random variables not currently supported.")
           # body(fnc) <- substitute({
@@ -99,23 +92,14 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
           #               }
           #     sum(self$wrappedModels(name1)$pdf(support-z) * self$wrappedModels(name2)$pdf(support))
           #   }))
-          # },list(name1 = distlist[[1]]$short_name, name2 = distlist[[2]]$short_name))
+          # },list(name1 = d1$short_name, name2 = d2$short_name))
         }
       }
-
-      name <- paste("Convolution of", distlist[[1]]$short_name, "and", distlist[[2]]$short_name)
-      short_name <- paste0(distlist[[1]]$short_name, distlist[[2]]$short_name)
-
-      type <- distlist[[2]]$type
-      valueSupport <- distlist[[2]]$valueSupport
-      variateForm <- distlist[[2]]$variateForm
-
-      super$initialize(
-        distlist = distlist, pdf = fnc, name = name,
-        short_name = short_name, type = type, valueSupport = valueSupport,
-        variateForm = variateForm, support = type
-      )
-    } # IN PROGRESS
+    },
+    .isCdf = 0L,
+    .isQuantile = 0L,
+    .isRand = 0L,
+    .log = FALSE
   )
 )
 .distr6$wrappers <- append(.distr6$wrappers, list(Convolution = Convolution))

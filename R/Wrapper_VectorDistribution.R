@@ -106,18 +106,14 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
       }
 
       if (is.null(distlist)) {
-        if (is.null(distribution) | (is.null(params) & is.null(shared_params))) {
-          stop("Either distlist or distribution and shared_params/params must be provided.")
+        if (is.null(distribution) | (is.null(params))) {
+          stop("Either distlist or distribution and params must be provided.")
         }
 
         distribution <- match.arg(distribution, c(listDistributions(simplify = TRUE), "Distribution"))
 
-        if (is.null(params)) {
-          params <- list()
-        } else {
-          if (!checkmate::testList(params)) {
-            params <- apply(params, 1, as.list)
-          }
+        if (!checkmate::testList(params)) {
+          params <- apply(params, 1, as.list)
         }
 
         if (is.null(shared_params)) {
@@ -127,6 +123,19 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
             shared_params <- as.list(shared_params)
           }
         }
+
+        pdist <- get(distribution)
+        p <- pdist$new()$parameters()
+        paramlst <- vector("list", length(params))
+        for (i in seq_along(params)) {
+          paramlst[[i]] = p$clone(deep = TRUE)
+        }
+        names(paramlst) = makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
+        private$.parameters <- ParameterSetCollection$new(lst = paramlst)
+        names(params) = names(paramlst)
+        params <- unlist(params, recursive = FALSE)
+        names(params) = gsub(".", "_", names(params), fixed = TRUE)
+        self$setParameterValue(lst = params)
 
         if ("short_name" %in% names(shared_params)) {
           shortname <- shared_params$short_name
@@ -146,10 +155,9 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
           params = params,
           shortname = shortname
         )
-        private$.wrappedModels$shortname <- makeUniqueNames(private$.wrappedModels$shortname)
+        private$.wrappedModels$shortname <- names(paramlst)
         private$.sharedparams <- shared_params
 
-        pdist <- get(distribution)
         private$.univariate <- pdist$private_fields$.traits$variateForm == "univariate"
 
         pdist <- pdist[["private_methods"]]
@@ -268,22 +276,30 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
         shortname <- distribution <- c()
 
         vf <- distlist[[1]]$traits$variateForm
-        for (i in 1:length(distlist)) {
+        paramlst <- vector("list", length(params))
+        for (i in seq_along(params)) {
+          paramlst[[i]] = p$clone(deep = TRUE)
+        }
+
+
+
+        for (i in seq_along(distlist)) {
+          stopifnot(distlist[[i]]$traits$variateForm != vf)
           shortname <- c(shortname, distlist[[i]]$short_name)
           distribution <- c(distribution, distlist[[i]]$name)
-          distlist[[i]] <- distlist[[i]]$clone(deep = TRUE)
-          if (distlist[[i]]$traits$variateForm != vf) {
-            stop("All distributions in VectorDistribution must be of same variateForm.")
-          }
+          paramlst <- c(paramlst, distlist[[i]]$parameters())
         }
         shortname <- makeUniqueNames(shortname)
+        names(paramlst) <- shortname
+        private$.parameters <- ParameterSetCollection$new(lst = paramlst)
+
         private$.univariate <- vf == "univariate"
 
-        private$.wrappedModels <- data.table::data.table(
-          distribution = distlist,
-          params = NA,
-          shortname = shortname
-        )
+        # private$.wrappedModels <- data.table::data.table(
+        #   distribution = distlist,
+        #   params = NA,
+        #   shortname = shortname
+        # )
 
         ndist <- length(distlist)
 
@@ -352,64 +368,6 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
           return(dpqr)
         }
 
-
-        # pdf = function(x1, log) {}
-        # body(pdf) = substitute({
-        #   pdfs = NULL
-        #   if(class(try(get("x2"), silent = T)) == "try-error"){
-        #     for(i in 1:n)
-        #       pdfs = c(pdfs, self[i]$pdf(get("x1")))
-        #   } else {
-        #     for(i in 1:n)
-        #       pdfs = c(pdfs, self[i]$pdf(get(paste0("x",i))))
-        #   }
-        #   y = data.table::data.table(matrix(pdfs, ncol = n))
-        #   colnames(y) <- unlist(private$.wrappedModels[,3])
-        #   return(y)
-        # },list(n = ndist))
-
-        # cdf = function() {}
-        # formals(cdf) = lst
-        # body(cdf) = substitute({
-        #   cdfs = NULL
-        #   if(class(try(get("x2"), silent = T)) == "try-error"){
-        #     for(i in 1:n)
-        #       cdfs = c(cdfs, self[i]$cdf(get("x1")))
-        #   } else {
-        #     for(i in 1:n)
-        #       cdfs = c(cdfs, self[i]$cdf(get(paste0("x",i))))
-        #   }
-        #   y = data.table::data.table(matrix(cdfs, ncol = n))
-        #   colnames(y) <- unlist(private$.wrappedModels[,3])
-        #   return(y)
-        # },list(n = ndist))
-        #
-        # quantile = function() {}
-        # formals(quantile) = lst
-        # body(quantile) = substitute({
-        #   quantiles = NULL
-        #   if(class(try(get("x2"), silent = T)) == "try-error"){
-        #     for(i in 1:n)
-        #       quantiles = c(quantiles, self[i]$quantile(get("x1")))
-        #   } else {
-        #     for(i in 1:n)
-        #       quantiles = c(quantiles, self[i]$quantile(get(paste0("x",i))))
-        #   }
-        #   y = data.table::data.table(matrix(quantiles, ncol = n))
-        #   colnames(y) <- unlist(private$.wrappedModels[,3])
-        #   return(y)
-        # },list(n = ndist))
-        #
-        # rand = function(n) {
-        #   rand <- sapply(1:nrow(private$.wrappedModels), function(x) self[x]$rand(n))
-        #   if(n == 1) rand <- t(rand)
-        #   rand <- data.table::as.data.table(rand)
-        #   colnames(rand) <- unlist(private$.wrappedModels[,3])
-        #   return(rand)
-        # }
-        #
-        # ndist = nrow(private$.wrappedModels)
-
         if (length(unique(distribution)) == 1) {
           if (is.null(name)) self$name <- paste0("Vector: ", ndist, " ", distribution[[1]], "s") # FIXME
           if (is.null(short_name)) self$short_name <- paste0("Vec", ndist, private$.wrappedModels[1, 3][[1]]) # FIXME
@@ -475,34 +433,44 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
       return(names)
     },
 
-    #' @description
-    #' Returns the value of the supplied parameter.
-    #' @param id `character()` \cr
-    #' id of parameter value to return.
-    #' @return
-    getParameterValue = function(id) {
-      if (!self$distlist) {
-        if (id %in% names(self$shared_params)) {
-          return(as.list(rep(self$shared_params[[id]], nrow(self$modelTable))))
-        } else {
-          return(lapply(self$modelTable$params, function(x) x[[id]]))
-        }
-      }
-    },
+    #' #' @description
+    #' #' Returns the value of the supplied parameter.
+    #' #' @param id `character()` \cr
+    #' #' id of parameter value to return.
+    #' #' @return
+    #' getParameterValue = function(id, error = "warn") {
+    #'   if (self$distlist) {
+    #'     super$getParameterValue(id = id, error = error)
+    #'   } else {
+    #'     if (id %in% names(self$shared_params)) {
+    #'       return(as.list(rep(self$shared_params[[id]], nrow(self$modelTable))))
+    #'     } else {
+    #'       return(lapply(self$modelTable$params, function(x) x[[id]]))
+    #'     }
+    #'   }
+    #' },
 
-    #' @description
-    #' Not currently implemented for this class.
-    setParameterValue = function(...) {
-      message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
-      return(NULL)
-    },
-
-    #' @description
-    #' Not currently implemented for this class.
-    parameters = function(...){
-      message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
-      return(data.table::data.table())
-    },
+    #' #' @description
+    #' #' Not currently implemented for this class.
+    #' setParameterValue = function(..., lst = NULL, error = "warn") {
+    #'   if (is.null(lst)) lst <- list(...)
+    #'   super$setParameterValue(lst = lst, error = error)
+    #'
+    #'   distribution = distribution,
+    #'   params = params,
+    #'   shortname = shortname
+    #'
+    #'   if (!self$distlist) {
+    #'     self$modelTable
+    #'   }
+    #' },
+    #'
+    #' #' @description
+    #' #' Not currently implemented for this class.
+    #' parameters = function(...){
+    #'   message("Vector Distribution should not be used to get/set parameters. Try to use '[' first.")
+    #'   return(data.table::data.table())
+    #' },
 
     #' @description
     #' Returns vector of means from each wrapped [Distribution].

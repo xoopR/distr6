@@ -1,5 +1,5 @@
 #' @title assert/check/test/Distribution
-#' @description Validation checks to test if a given object is an R6 Distribution.
+#' @description Validation checks to test if a given object is a [Distribution].
 #' @param object object to test
 #' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
@@ -26,7 +26,7 @@ makeChecks(
 )
 
 #' @title assert/check/test/DistributionList
-#' @description Validation checks to test if a given object is a list of R6 Distributions.
+#' @description Validation checks to test if a given object is a list of [Distribution]s.
 #' @param object object to test
 #' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
@@ -49,6 +49,60 @@ makeChecks(
   assertionName = "DistributionList",
   cond = all(unlist(lapply(object, inherits, "Distribution"))),
   defaulterrormsg = "One or more items in the list are not Distributions",
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSet
+#' @description Validation checks to test if a given object is a [ParameterSet].
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSet(5) # FALSE
+#' testParameterSet(Binomial$new()$parameters()) # TRUE
+#' @export
+testParameterSet <- function() {}
+#' @rdname testParameterSet
+#' @export
+checkParameterSet <- function() {}
+#' @rdname testParameterSet
+#' @export
+assertParameterSet <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSet",
+  cond = inherits(object, "ParameterSet"),
+  defaulterrormsg = paste(object, "is not an R6 ParameterSet object"),
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSetList
+#' @description Validation checks to test if a given object is a list of [ParameterSet]s.
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSetList(list(Binomial$new(), 5)) # FALSE
+#' testParameterSetList(list(Binomial$new(), Exponential$new())) # TRUE
+#' @export
+testParameterSetList <- function() {}
+#' @rdname testParameterSetList
+#' @export
+checkParameterSetList <- function() {}
+#' @rdname testParameterSetList
+#' @export
+assertParameterSetList <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSetList",
+  cond = all(unlist(lapply(object, inherits, "ParameterSet"))),
+  defaulterrormsg = "One or more items in the list are not ParameterSets",
   pos = environment()
 )
 

@@ -112,6 +112,8 @@ ParameterSet <- R6Class("ParameterSet",
         if (!checkmate::testList(updateFunc)) updateFunc <- list(updateFunc)
         checkmate::assert(length(id) == length(updateFunc), .var.name = "arguments of same length")
         sapply(updateFunc, checkmate::assertFunction, null.ok = TRUE)
+      } else {
+        updateFunc = rep(list(NULL), length(id))
       }
 
       private$.parameters <- data.table(
@@ -134,7 +136,8 @@ ParameterSet <- R6Class("ParameterSet",
     },
 
     #' @description
-    #' Returns the full parameter details for the supplied parameter.
+    #' Returns the full parameter details for the supplied parameter, or returns `self`
+    #' if `id` is `NULL` or unmatched.
     #' @param id `character()` \cr
     #' id of parameter to return.
     parameters = function(id = NULL) {
@@ -181,8 +184,6 @@ ParameterSet <- R6Class("ParameterSet",
 
     #' @description
     #' Returns the value of the supplied parameter.
-    #' @return
-    #' A [set6::Set] object.
     #'
     #' @examples
     #' ps <- ParameterSet$new(id = "prob",
@@ -336,6 +337,26 @@ ParameterSet <- R6Class("ParameterSet",
   )
 )
 
+#' @export
+c.ParameterSet <- function(..., prefix.names = NULL) {
+  if (!is.null(prefix.names)) {
+    stopifnot(length(prefix.names) == ...length())
+  }
+
+  ps <- data.table(id = NULL, value = NULL, support = NULL, settable = NULL,
+                   description = NULL, updateFunc = NULL)
+
+  for (i in seq(...length())) {
+    dt <- as.data.table(...elt(i))
+    if (!is.null(prefix.names)) {
+      dt$id <- paste(prefix.names[[i]], dt$id, sep = "_")
+    }
+    ps <- rbind(ps, dt)
+  }
+
+  return(as.ParameterSet(ps))
+}
+
 #' @name print.ParameterSet
 #' @title Print a ParameterSet
 #'
@@ -472,4 +493,22 @@ as.ParameterSet.list <- function(x, ...) {
     updateFunc = x$updateFunc,
     description = x$description
   ))
+}
+
+
+#' @export
+Extract.ParameterSet <- function(ps, ids, prefix = NULL) {
+  dt <- as.data.table(ps)
+  dt <- subset(dt, id %in% ids)
+  if (!is.null(prefix)) {
+    dt$id <- gsub(paste0(prefix, "_"), "", dt$id)
+  }
+  return(as.ParameterSet(dt))
+}
+
+#' @rdname Extract.ParameterSet
+#' @usage \method{[}{ParameterSet}(ps, ids)
+#' @export
+"[.ParameterSet" <- function(ps, ids) {
+  Extract.ParameterSet(ps, ids)
 }

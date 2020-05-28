@@ -24,34 +24,49 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param ... `ANY` \cr
     #' Additional arguements passed to `[Distribution]$new`
-    initialize = function(distlist = NULL, ...) {
-      if (getR6Class(self) == "DistributionWrapper") {
-        stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
-      }
+    initialize = function(distlist = NULL,
+                          name, short_name, description,
+                          support, type, valueSupport, variateForm,
+                          outerID = NULL) {
 
+      abstract(self, "DistributionWrapper")
+      self$name <- name
+      self$short_name <- short_name
+      self$description <- description
+
+      private$.properties <- list(
+        kurtosis = NULL,
+        skewness = NULL,
+        support = assertSet(support),
+        symmetry = "asymmetric"
+      )
+
+      private$.traits <- list(
+        valueSupport = valueSupport,
+        variateForm = variateForm,
+        type = assertSet(type)
+      )
+
+      paramlst <- list()
       if (!is.null(distlist)) {
         assertDistributionList(distlist)
-
-        # lapply(distlist, function(x) x$parameters()$update())
         private$.wrappedModels <- distlist
-
-        params <- data.table::rbindlist(lapply(distlist, function(x) {
-          if (!("VectorDistribution" %in% class(x))) {
-            params <- as.data.table(x[["parameters"]]())
-            params[, 1] <- paste(x[["short_name"]], unlist(params[, 1]), sep = "_")
-            return(params)
-          }
-        }))
-        row.names(params) <- NULL
-        if (!is.null(private$.outerParameters)) {
-          params <- rbind(params, as.data.table(private$.outerParameters))
-        }
-        params <- as.ParameterSet(params)
-      } else {
-        params <- NULL
+        params <- rlapply(distlist, "parameters")
+        names(params) <- names(distlist)
+        paramlst <- c(paramlst, params)
       }
 
-      super$initialize(parameters = params, ...)
+      if (!is.null(private$.outerParameters)) {
+        outerlst <- list(private$.outerParameters)
+        names(outerlst) <- outerID
+        paramlst <- c(paramlst, outerlst)
+      }
+
+      if (length(paramlst) != 0) {
+        private$.parameters <- ParameterSetCollection$new(lst = paramlst)
+      }
+
+      invisible(self)
     },
 
     #' @description
@@ -76,45 +91,25 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-
-      for (i in 1:length(lst)) {
-        if (grepl("_", names(lst)[[i]], fixed = T)) {
-          id <- names(lst)[[i]]
-          underscore <- gregexpr("_", id, fixed = T)[[1]][1]
-          model <- substr(id, 1, underscore - 1)
-          parameter <- substr(id, underscore + 1, 1000)
-
-          newlst <- list(lst[[i]])
-          names(newlst) <- parameter
-          self$wrappedModels(model)$setParameterValue(lst = newlst, error = error)
-        } else {
-          newlst <- list(lst[[i]])
-          names(newlst) <- names(lst)[[i]]
-          private$.outerParameters$setParameterValue(lst = newlst)
+      if (length(private$.parameters) == 0) {
+        return(NULL)
+      } else {
+        if (is.null(lst)) {
+          lst <- list(...)
         }
+        self$parameters()$setParameterValue(lst = lst, error = error)
       }
-
-      params <- data.table::rbindlist(lapply(self$wrappedModels(), function(x) {
-        params <- as.data.table(x[["parameters"]]())
-        params[, 1] <- paste(x[["short_name"]], unlist(params[, 1]), sep = "_")
-        return(params)
-      }))
-      if (!is.null(private$.outerParameters)) {
-        params <- rbind(params, as.data.table(private$.outerParameters))
-      }
-      row.names(params) <- NULL
-      private$.parameters <- as.ParameterSet(params)
-
-      invisible(self)
     }
   ),
 
   private = list(
     .wrappedModels = list(),
-    .outerParameters = NULL
+    .outerParameters = NULL,
+    .isPdf = 1L,
+    .isCdf = 1L,
+    .isQuantile = 1L,
+    .isRand = 1L,
+    .log = TRUE
   )
 )
 

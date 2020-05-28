@@ -59,7 +59,7 @@ Normal <- R6Class("Normal", inherit = SDistribution, lock_objects = F,
         decorators = decorators,
         support = Reals$new(),
         symmetry = "sym",
-        type = ExtendedReals$new()
+        type = Reals$new()
       )
     },
 

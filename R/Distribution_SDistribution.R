@@ -22,10 +22,7 @@ SDistribution <- R6Class("SDistribution", inherit = Distribution,
       initialize = function(decorators, support, type,
                             symmetry = c("asymmetric", "symmetric")) {
 
-         if (getR6Class(self) == "SDistribution") {
-            stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listDistributions()
-    to see the probability distributions currently implemented in distr6."))
-         }
+         abstract(self, "SDistribution")
 
          assert_pkgload(self$packages)
 

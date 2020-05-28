@@ -547,7 +547,7 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{pdf()}}{
 Returns vector of pdfs from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$pdf(..., log = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -576,6 +576,22 @@ See examples.}
 
 \item{\code{log}}{\code{logical(1)} \cr
 If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -641,7 +657,13 @@ vd$pdf(data = array(c(1,2,4,3,5,1,3,7), dim = c(2,2,2)))
 Returns vector of cdfs from each wrapped \link{Distribution}.
 Same usage as \verb{$pdf.}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$cdf(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -679,6 +701,22 @@ If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
 
 \item{\code{log.p}}{\code{logical(1)} \cr
 If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -708,7 +746,13 @@ to the distribution in the vector to evaluate.}
 Returns vector of quantiles from each wrapped \link{Distribution}.
 Same usage as \verb{$cdf.}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$quantile(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$quantile(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -747,6 +791,22 @@ If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
 \item{\code{log.p}}{\code{logical(1)} \cr
 If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
 
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
@@ -774,7 +834,7 @@ to the distribution in the vector to evaluate.}
 \subsection{Method \code{rand()}}{
 Returns \link[data.table:data.table]{data.table::data.table} of draws from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$rand(n)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$rand(n, simplify = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -783,6 +843,22 @@ Returns \link[data.table:data.table]{data.table::data.table} of draws from each 
 \item{\code{n}}{\code{(numeric(1))} \cr
 Number of points to simulate from the distribution. If length greater than \eqn{1}, then
 \code{n <- length(n)},}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 }
 \if{html}{\out{</div>}}
 }

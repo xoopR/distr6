@@ -166,3 +166,24 @@ impute_genx = function(dist, n = 10001) {
 
   return(x)
 }
+
+rlapply = function(X, FUN, ..., active = FALSE){
+  FUN = as.character(substitute(FUN))
+  if(active)
+    return(lapply(X, function(x) x[[FUN]]))
+  else
+    return(lapply(X, function(x) x[[FUN]](...)))
+}
+rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FALSE){
+  FUN = as.character(substitute(FUN))
+  if(active)
+    return(sapply(X, function(x) x[[FUN]], simplify = simplify, USE.NAMES = USE.NAMES))
+  else
+    return(sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES))
+}
+
+abstract = function(obj, class) {
+  if (getR6Class(obj) == class) {
+    stop(paste(class, "is an abstract class that can't be initialized."))
+  }
+}

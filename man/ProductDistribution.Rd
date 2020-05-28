@@ -47,7 +47,7 @@ prodBin$rand(10)
 
 # Equivalently
 prodBin <- ProductDistribution$new(
-  distribution = Binomial,
+  distribution = "Binomial",
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )
 prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
@@ -188,7 +188,7 @@ Probability density function of the product distribution. Computed by
 \deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
 where \eqn{f_{Xi}} are the pdfs of the wrapped distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$pdf(..., log = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$pdf(..., log = FALSE, data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -257,7 +257,7 @@ Cumulative distribution function of the product distribution. Computed by
 \deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
 where \eqn{F_{Xi}} are the cdfs of the wrapped distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -333,7 +333,12 @@ p$cdf(1, 2)
 \subsection{Method \code{quantile()}}{
 The quantile function is not implemented for product distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$quantile(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$quantile(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

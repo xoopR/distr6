@@ -7,7 +7,7 @@ test_that("autotest", {
                          pars = list(),
                          traits = list(valueSupport = "continuous",
                                        variateForm = "univariate",
-                                       type = ExtendedReals$new()),
+                                       type = Reals$new()),
                          support = Reals$new(),
                          symmetry = "symmetric",
                          mean = 0,

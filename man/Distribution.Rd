@@ -147,7 +147,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{Distribution$new(
   name = NULL,
   short_name = NULL,
-  type = NULL,
+  type,
   support = NULL,
   symmetric = FALSE,
   pdf = NULL,

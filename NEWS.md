@@ -11,6 +11,7 @@
 * Added `EmpiricalMV` for empirical multivariate distributions
 * All documentation now uses roxygen R6
 * Distribution `type` is now required in construction custom `Distribution`s as the previous method of 'guessing' was inefficient.
+* Added `ParameterSetCollection` for `Wrapper`s. Same functionality as before but much more efficient.
 
 ### Deprecated Functions/Fields/Methods
 
