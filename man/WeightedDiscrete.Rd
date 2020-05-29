@@ -157,16 +157,31 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$new(data, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$new(
+  data = NULL,
+  x = 1,
+  pdf = 1,
+  cdf = NULL,
+  decorators = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{data}}{\verb{([data.frame])}\cr
-Data to define the distribution, should be coercable to a \link{data.frame}. \code{data} must include
-\code{x} as the first column and either one or both of \code{pdf} and \code{cdf}. Where they are the respective
-pdf and cdf of the corresponding \code{x} value.}
+Deprecated. Use \verb{x, pdf, cdf}.}
+
+\item{\code{x}}{\code{numeric()}\cr
+Data samples.}
+
+\item{\code{pdf}}{\code{numeric()}\cr
+Probability mass function for corresponding samples, should be same length \code{x}.
+If \code{cdf} is not given then calculated as \code{cumsum(pdf)}.}
+
+\item{\code{cdf}}{\code{numeric()}\cr
+Cumulative distribution function for corresponding samples, should be same length \code{x}. If
+given then \code{pdf} is ignored and calculated as difference of \code{cdf}s.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

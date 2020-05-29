@@ -58,16 +58,14 @@ test_that("weighteddiscrete vec", {
 test_that("different lengths", {
   v1 <- VectorDistribution$new(
     distribution = "WeightedDiscrete",
-    params = list(list(
-      data = data.frame(x = 1, pdf = 1),
-      data = data.frame(x = 2, pdf = 1)
-    ))
-  )
+    params = list(
+      list(x = 1, pdf = 1))
+    )
   v2 <- VectorDistribution$new(
     distribution = "WeightedDiscrete",
     params = list(
-      data = data.frame(x = 3, pdf = 1),
-      data = data.frame(x = 4, pdf = 1)
+      list(x = 3, pdf = 1),
+      list(x = 4, pdf = 1)
     )
   )
   expect_silent(c(v1, v2))

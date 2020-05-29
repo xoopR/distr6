@@ -97,7 +97,7 @@ HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = Distribution
 
 
       super$setParameterValue(lst = lst, error = error)
-      if (self$support$class == "integer") {
+      if (self$properties$support$class == "integer") {
         private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"), self$getParameterValue("hub_upper"), class = "integer")
       } else {
         private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"), self$getParameterValue("hub_upper"))

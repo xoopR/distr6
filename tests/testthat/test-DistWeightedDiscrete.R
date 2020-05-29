@@ -4,7 +4,7 @@ context("WeightedDiscrete distribution")
 
 test_that("autottest", {
   autotest_sdistribution(WeightedDiscrete,
-                         pars = list(data.frame(x = 1:10, pdf = rep(0.1, 10))),
+                         pars = list(x = 1:10, pdf = rep(0.1, 10)),
                          traits = list(valueSupport = "discrete", variateForm = "univariate",
                                        type = Reals$new()),
                          support = Set$new(1:10, class = "numeric"),

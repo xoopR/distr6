@@ -105,6 +105,13 @@ ps1 <- ParameterSet$new(id = "prob",
  )
  ps1$merge(ps2)$print()
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{values}}{Returns parameter set values as a named list.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -229,7 +236,8 @@ Additional arguments, currently unused.}
 \if{html}{\out{<a id="method-parameters"></a>}}
 \if{latex}{\out{\hypertarget{method-parameters}{}}}
 \subsection{Method \code{parameters()}}{
-Returns the full parameter details for the supplied parameter.
+Returns the full parameter details for the supplied parameter, or returns \code{self}
+if \code{id} is \code{NULL} or unmatched.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ParameterSet$parameters(id = NULL)}\if{html}{\out{</div>}}
 }
@@ -306,9 +314,6 @@ Passed to \link{stopwarn}.}
 Passed to \link{stopwarn}.}
 }
 \if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \link[set6:Set]{set6::Set} object.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}

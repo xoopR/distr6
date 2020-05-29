@@ -49,7 +49,7 @@ Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
     initialize = function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL) {
 
       private$.trials <- checkmate::assertLogical(trials)
-      private$.parameters <- getParameterSet(x = self, prob = prob, qprob = qprob, trials = trials)
+      private$.parameters <- getParameterSet(self, prob = prob, qprob = qprob, trials = trials)
       self$setParameterValue(prob = prob, qprob = qprob)
 
       if (!trials) {

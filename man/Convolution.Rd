@@ -2,7 +2,14 @@
 % Please edit documentation in R/Wrapper_Convolution.R
 \name{Convolution}
 \alias{Convolution}
+\alias{+.Distribution}
+\alias{-.Distribution}
 \title{Distribution Convolution Wrapper}
+\usage{
+\method{+}{Distribution}(x, y)
+
+\method{-}{Distribution}(x, y)
+}
 \value{
 Returns an R6 object of class Convolution.
 }
@@ -18,6 +25,12 @@ with an integration analogue for continuous distributions.
 
 Currently distr6 supports the addition of discrete and continuous probability distributions,
 but only subtraction of continuous distributions.
+}
+\examples{
+binom <- Bernoulli$new() + Bernoulli$new()
+binom$pdf(2)
+norm <- Normal$new(mean = 3) - Normal$new(mean = 2)
+norm$pdf(1)
 }
 \seealso{
 Other wrappers: 

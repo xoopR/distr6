@@ -1,23 +1,16 @@
 library(testthat)
 
-context("plot")
-
-test_that("valueSupport/variateForm", {
-  expect_error(plot(MultivariateNormal$new()))
-  expect_error(plot(MixtureDistribution$new(list(Binomial$new(), Normal$new()))))
-})
-
 test_that("missing d/p/q", {
   expect_error(expect_message(
-    plot(Distribution$new("s", pdf = function(x) x), fun = "cdf"),
+    plot(Distribution$new("s", pdf = function(x) x, type = Reals$new()), fun = "cdf"),
     "does not have a cdf expression"
   ), "No plottable")
   expect_error(expect_message(
-    plot(Distribution$new("s", cdf = function(x) x), fun = "pdf"),
+    plot(Distribution$new("s", cdf = function(x) x, type = Reals$new()), fun = "pdf"),
     "does not have a pdf expression"
   ), "No plottable")
   expect_error(expect_message(
-    plot(Distribution$new("s", pdf = function(x) x), fun = "quantile"),
+    plot(Distribution$new("s", pdf = function(x) x, type = Reals$new()), fun = "quantile"),
     "does not have a quantile expression"
   ), "No plottable")
 })

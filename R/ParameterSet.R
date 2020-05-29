@@ -303,6 +303,17 @@ ParameterSet <- R6Class("ParameterSet",
     }
   ),
 
+  active = list(
+    #' @field values
+    #' Returns parameter set values as a named list.
+    values = function() {
+      pars <- subset(private$.parameters, settable == TRUE)
+      values = pars$value
+      names(values) = pars$id
+      return(values)
+    }
+  ),
+
   private = list(
     .parameters = NULL,
     .setParameterSupport = function(lst) {
@@ -317,6 +328,7 @@ ParameterSet <- R6Class("ParameterSet",
       if (any(!sap)) {
         update_filter <- !sapply(private$.parameters$updateFunc, is.null)
         updates <- private$.parameters[update_filter, ]
+
         newvals <- apply(updates, 1, function(x) {
           return(x[[6]](self))
           # if(length(newval) > 1) {
@@ -496,19 +508,40 @@ as.ParameterSet.list <- function(x, ...) {
 }
 
 
-#' @export
-Extract.ParameterSet <- function(ps, ids, prefix = NULL) {
-  dt <- as.data.table(ps)
-  dt <- subset(dt, id %in% ids)
-  if (!is.null(prefix)) {
-    dt$id <- gsub(paste0(prefix, "_"), "", dt$id)
-  }
-  return(as.ParameterSet(dt))
-}
-
-#' @rdname Extract.ParameterSet
+#' @title Extract one or more parameters from a ParameterSet
+#' @description Used to extract one or more parameters from a constructed [ParameterSet] or
+#' [ParameterSetCollection].
+#' @param ps [ParameterSet] from which to extract parameters.
+#' @param ids ids of parameters to extract, if `id` ends with `_` then all parameters starting
+#' with `ids_` are extracted and the prefix is ignored, `prefix` can be left `NULL`.
+#' See examples.
+#' @param prefix An optional prefix to remove from ids after extraction, assumes `_` follows the
+#' prefix name, i.e. `prefix_ids`.
+#'
 #' @usage \method{[}{ParameterSet}(ps, ids)
+#'
+#' @examples
+#' ps <- VectorDistribution$new(
+#'   distribution = "Binomial",
+#'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+#' )$parameters()
+#'
+#' ps["Binom1_prob"] # extracts just Binom1_prob
+#' ps["Binom1_prob", prefix = "Binom1"] # extracts Binom1_prob and removes prefix
+#' ps["Binom1_"] # extracts all Binom1 parameters and removes prefix
+#'
 #' @export
-"[.ParameterSet" <- function(ps, ids) {
-  Extract.ParameterSet(ps, ids)
+"[.ParameterSet" <- function(ps, ids, prefix = NULL, ...) {
+  dt <- as.data.table(ps)
+  if (grepl("_$", ids)) {
+    dt <- subset(dt, grepl(ids, id))
+    dt$id <- gsub(ids, "", dt$id)
+  } else {
+    dt <- subset(dt, id %in% ids)
+    if (!is.null(prefix)) {
+      dt$id <- gsub(paste0(prefix, "_"), "", dt$id)
+    }
+  }
+
+  return(as.ParameterSet(dt))
 }

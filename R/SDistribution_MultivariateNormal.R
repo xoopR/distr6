@@ -267,6 +267,7 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
                                               ncol = K
         ))))
       }
+
       return(lst)
     },
 

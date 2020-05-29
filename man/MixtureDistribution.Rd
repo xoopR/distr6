@@ -52,6 +52,7 @@ Other wrappers:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{MixtureDistribution$new()}}
+\item \href{#method-strprint}{\code{MixtureDistribution$strprint()}}
 \item \href{#method-pdf}{\code{MixtureDistribution$pdf()}}
 \item \href{#method-cdf}{\code{MixtureDistribution$cdf()}}
 \item \href{#method-quantile}{\code{MixtureDistribution$quantile()}}
@@ -63,26 +64,25 @@ Other wrappers:
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionWrapper" data-id="setParameterValue">}\href{../../distr6/html/DistributionWrapper.html#method-setParameterValue}{\code{distr6::DistributionWrapper$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="cf">}\href{../../distr6/html/VectorDistribution.html#method-cf}{\code{distr6::VectorDistribution$cf()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="entropy">}\href{../../distr6/html/VectorDistribution.html#method-entropy}{\code{distr6::VectorDistribution$entropy()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="getParameterValue">}\href{../../distr6/html/VectorDistribution.html#method-getParameterValue}{\code{distr6::VectorDistribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="kurtosis">}\href{../../distr6/html/VectorDistribution.html#method-kurtosis}{\code{distr6::VectorDistribution$kurtosis()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mean">}\href{../../distr6/html/VectorDistribution.html#method-mean}{\code{distr6::VectorDistribution$mean()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mgf">}\href{../../distr6/html/VectorDistribution.html#method-mgf}{\code{distr6::VectorDistribution$mgf()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mode">}\href{../../distr6/html/VectorDistribution.html#method-mode}{\code{distr6::VectorDistribution$mode()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="parameters">}\href{../../distr6/html/VectorDistribution.html#method-parameters}{\code{distr6::VectorDistribution$parameters()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="pgf">}\href{../../distr6/html/VectorDistribution.html#method-pgf}{\code{distr6::VectorDistribution$pgf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="setParameterValue">}\href{../../distr6/html/VectorDistribution.html#method-setParameterValue}{\code{distr6::VectorDistribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="skewness">}\href{../../distr6/html/VectorDistribution.html#method-skewness}{\code{distr6::VectorDistribution$skewness()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="strprint">}\href{../../distr6/html/VectorDistribution.html#method-strprint}{\code{distr6::VectorDistribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="variance">}\href{../../distr6/html/VectorDistribution.html#method-variance}{\code{distr6::VectorDistribution$variance()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="wrappedModels">}\href{../../distr6/html/VectorDistribution.html#method-wrappedModels}{\code{distr6::VectorDistribution$wrappedModels()}}\out{</span>}
 }
@@ -159,6 +159,24 @@ Optional decorators to decorate the wrapped distribution with.}
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
+\subsection{Method \code{strprint()}}{
+Printable string representation of the \code{MixtureDistribution}. Primarily used internally.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$strprint(n = 10)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(integer(1))}\cr
+Number of distributions to include when printing.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pdf"></a>}}
 \if{latex}{\out{\hypertarget{method-pdf}{}}}
 \subsection{Method \code{pdf()}}{
@@ -171,7 +189,7 @@ Note that as this class inherits from \link{VectorDistribution}, it is possible 
 the distributions at different points, but that this is not the usual use-case for
 mixture distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$pdf(..., log = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$pdf(..., log = FALSE, data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -248,7 +266,7 @@ weights = c(0.2, 0.8)
 )
 m$cdf(1:5)
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -311,7 +329,12 @@ to the distribution in the vector to evaluate.}
 \subsection{Method \code{quantile()}}{
 The quantile function is not implemented for mixture distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$quantile(..., lower.tail = TRUE, log.p = FALSE, data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$quantile(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

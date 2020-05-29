@@ -66,21 +66,25 @@ ProductDistribution <- R6Class("ProductDistribution",
         distribution = distribution,
         params = params,
         shared_params = shared_params,
-        decorators = decorators
+        decorators = decorators,
+        name = name,
+        short_name = short_name
       )
 
-      self$name <- gsub("Vector", "Product", self$name)
-      self$short_name <- gsub("Vec", "Prod", self$short_name)
+      if (!is.null(name)) self$name <- gsub("Vector", "Product", self$name)
+      if (!is.null(short_name)) self$short_name <- gsub("Vec", "X", self$short_name)
+      self$description <- gsub("Vector", "Product", self$description)
 
       invisible(self)
+    },
 
-      # TODO
-      # type = do.call(setproduct, lapply(distlist,function(x) x$type))
-      # support = do.call(setproduct, lapply(distlist,function(x) x$support))
-      # if("discrete" %in% lapply(distlist, valueSupport))
-      #   valueSupport = "discrete"
-      # else
-      #   valueSupport = "continuous"
+    #' @description
+    #' Printable string representation of the `ProductDistribution`. Primarily used internally.
+    #' @param n `(integer(1))`\cr
+    #' Number of distributions to include when printing.
+    strprint = function(n = 10) {
+      str <- super$strprint(n = n)
+      paste0(str, collapse = " X ")
     },
 
     #' @description

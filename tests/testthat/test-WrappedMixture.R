@@ -4,13 +4,13 @@ context("Mixture")
 
 test_that("check weights", {
   expect_equal(
-    MixtureDistribution$new(list(Exponential$new(), Normal$new()))$.__enclos_env__$private$.weights,
+    MixtureDistribution$new(list(Exponential$new(), Normal$new()))$getParameterValue("mix_weights"),
     "uniform"
   )
   expect_equal(
     MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()),
       weights = c(0.1, 0.6, 0.3)
-    )$.__enclos_env__$private$.weights,
+    )$getParameterValue("mix_weights"),
     c(0.1, 0.6, 0.3)
   )
 })
@@ -49,16 +49,4 @@ test_that("check cdf", {
 test_that("check rand", {
   expect_equal(length(M$rand(10)), 10)
   expect_equal(length(M$rand(1)), 1)
-})
-
-test_that("alternate constructor", {
-  expect_equal(
-    MixtureDistribution$new(list(Bernoulli$new(0.2), Bernoulli$new(0.7)))$pdf(1),
-    MixtureDistribution$new(vectordist = VectorDistribution$new(
-      distribution = "Bernoulli",
-      params = data.table::data.table(
-        prob = c(0.2, 0.7)
-      )
-    ))$pdf(1)
-  )
 })

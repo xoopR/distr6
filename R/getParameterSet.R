@@ -1,8 +1,8 @@
-getParameterSet <- function(x, ...) {
-  UseMethod("getParameterSet", x)
+getParameterSet <- function(object, ...) {
+  UseMethod("getParameterSet", object)
 }
 
-getParameterSet.Arcsine <- function(x, lower, upper) {
+getParameterSet.Arcsine <- function(object, lower, upper) {
 
   checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
   checkmate::assert(lower <= upper, .var.name = "lower must be <= upper")
@@ -18,7 +18,7 @@ getParameterSet.Arcsine <- function(x, lower, upper) {
   )
 }
 
-getParameterSet.Bernoulli <- function(x, prob, qprob = NULL) {
+getParameterSet.Bernoulli <- function(object, prob, qprob = NULL) {
 
   prob.bool <- qprob.bool <- FALSE
 
@@ -40,7 +40,7 @@ getParameterSet.Bernoulli <- function(x, prob, qprob = NULL) {
   )
 }
 
-getParameterSet.Beta <- function(x, shape1, shape2) {
+getParameterSet.Beta <- function(object, shape1, shape2) {
 
   ParameterSet$new(
     id = list("shape1", "shape2"), value = list(1, 1),
@@ -51,7 +51,7 @@ getParameterSet.Beta <- function(x, shape1, shape2) {
   )
 }
 
-getParameterSet.BetaNoncentral <- function(x, shape1, shape2, location) {
+getParameterSet.BetaNoncentral <- function(object, shape1, shape2, location) {
   ParameterSet$new(
     id = list("shape1", "shape2", "location"), value = list(1, 1, 0),
     support = list(PosReals$new(), PosReals$new(), PosReals$new(zero = TRUE)),
@@ -61,7 +61,7 @@ getParameterSet.BetaNoncentral <- function(x, shape1, shape2, location) {
   )
 }
 
-getParameterSet.Binomial <- function(x, size, prob, qprob = NULL) {
+getParameterSet.Binomial <- function(object, size, prob, qprob = NULL) {
 
   prob.bool <- qprob.bool <- FALSE
 
@@ -86,7 +86,7 @@ getParameterSet.Binomial <- function(x, size, prob, qprob = NULL) {
   )
 }
 
-getParameterSet.Categorical <- function(x, probs) {
+getParameterSet.Categorical <- function(object, probs) {
 
   categories <- length(probs)
 
@@ -103,7 +103,7 @@ getParameterSet.Categorical <- function(x, probs) {
   )
 }
 
-getParameterSet.Cauchy <- function(x, location, scale) {
+getParameterSet.Cauchy <- function(object, location, scale) {
 
   ParameterSet$new(
     id = list("location", "scale"), value = list(0, 1),
@@ -117,7 +117,7 @@ getParameterSet.Cauchy <- function(x, location, scale) {
   )
 }
 
-getParameterSet.ChiSquared <- function(x, df) {
+getParameterSet.ChiSquared <- function(object, df) {
   ParameterSet$new(
     id = list("df"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
@@ -127,7 +127,7 @@ getParameterSet.ChiSquared <- function(x, df) {
   )
 }
 
-getParameterSet.ChiSquaredNoncentral <- function(x, df, location) {
+getParameterSet.ChiSquaredNoncentral <- function(object, df, location) {
   ParameterSet$new(
     id = list("df", "location"), value = list(1, 0),
     support = list(PosReals$new(zero = TRUE), PosReals$new(zero = TRUE)),
@@ -137,7 +137,7 @@ getParameterSet.ChiSquaredNoncentral <- function(x, df, location) {
   )
 }
 
-getParameterSet.Degenerate <- function(x, mean) {
+getParameterSet.Degenerate <- function(object, mean) {
   ParameterSet$new(
     id = list("mean"), value = list(0),
     support = list(Reals$new()),
@@ -147,7 +147,7 @@ getParameterSet.Degenerate <- function(x, mean) {
   )
 }
 
-getParameterSet.Dirichlet <- function(x, params) {
+getParameterSet.Dirichlet <- function(object, params) {
 
   K <- length(params)
 
@@ -164,7 +164,7 @@ getParameterSet.Dirichlet <- function(x, params) {
   )
 }
 
-getParameterSet.DiscreteUniform <- function(x, lower, upper) {
+getParameterSet.DiscreteUniform <- function(object, lower, upper) {
 
   checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
   checkmate::assert(lower <= upper, .var.name = "lower must be <= upper")
@@ -186,7 +186,7 @@ getParameterSet.DiscreteUniform <- function(x, lower, upper) {
 
 }
 
-getParameterSet.Erlang <- function(x, shape, rate, scale = NULL) {
+getParameterSet.Erlang <- function(object, shape, rate, scale = NULL) {
 
   rate.bool <- scale.bool <- FALSE
 
@@ -212,7 +212,7 @@ getParameterSet.Erlang <- function(x, shape, rate, scale = NULL) {
   )
 }
 
-getParameterSet.Exponential <- function(x, rate, scale = NULL) {
+getParameterSet.Exponential <- function(object, rate, scale = NULL) {
 
   rate.bool <- scale.bool <- FALSE
 
@@ -235,7 +235,7 @@ getParameterSet.Exponential <- function(x, rate, scale = NULL) {
 
 }
 
-getParameterSet.FDistribution <- function(x, df1, df2) {
+getParameterSet.FDistribution <- function(object, df1, df2) {
 
   ParameterSet$new(
     id = list("df1", "df2"), value = list(1, 1),
@@ -249,7 +249,7 @@ getParameterSet.FDistribution <- function(x, df1, df2) {
   )
 }
 
-getParameterSet.FDistributionNoncentral <- function(x, df1, df2, location) {
+getParameterSet.FDistributionNoncentral <- function(object, df1, df2, location) {
 
   ParameterSet$new(
     id = list("df1", "df2", "location"), value = list(1, 1, 0),
@@ -264,7 +264,7 @@ getParameterSet.FDistributionNoncentral <- function(x, df1, df2, location) {
   )
 }
 
-getParameterSet.Frechet <- function(x, shape, scale, minimum) {
+getParameterSet.Frechet <- function(object, shape, scale, minimum) {
 
   ParameterSet$new(
     id = list("shape", "scale", "minimum"), value = list(1, 1, 0),
@@ -279,7 +279,7 @@ getParameterSet.Frechet <- function(x, shape, scale, minimum) {
 
 }
 
-getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL) {
+getParameterSet.Gamma <- function(object, shape, rate, scale = NULL, mean = NULL) {
 
   rate.bool <- mean.bool <- scale.bool <- FALSE
 
@@ -309,7 +309,7 @@ getParameterSet.Gamma <- function(x, shape, rate, scale = NULL, mean = NULL) {
   )
 }
 
-getParameterSet.Geometric <- function(x, prob, qprob = NULL, trials = TRUE) {
+getParameterSet.Geometric <- function(object, prob, qprob = NULL, trials = TRUE) {
 
   prob.bool <- qprob.bool <- FALSE
 
@@ -352,7 +352,7 @@ getParameterSet.Geometric <- function(x, prob, qprob = NULL, trials = TRUE) {
   return(ps)
 }
 
-getParameterSet.Gompertz <- function(x, shape, scale) {
+getParameterSet.Gompertz <- function(object, shape, scale) {
   ParameterSet$new(
     id = list("shape", "scale"), value = list(1, 1),
     support = list(PosReals$new(), PosReals$new()),
@@ -362,7 +362,7 @@ getParameterSet.Gompertz <- function(x, shape, scale) {
   )
 }
 
-getParameterSet.Gumbel <- function(x, location, scale) {
+getParameterSet.Gumbel <- function(object, location, scale) {
   ParameterSet$new(
     id = list("location", "scale"), value = list(0, 1),
     support = list(Reals$new(), PosReals$new()),
@@ -375,7 +375,7 @@ getParameterSet.Gumbel <- function(x, location, scale) {
   )
 }
 
-getParameterSet.Hypergeometric <- function(x, size, successes, failures = NULL, draws) {
+getParameterSet.Hypergeometric <- function(object, size, successes, failures = NULL, draws) {
 
   successes.bool <- failures.bool <- FALSE
 
@@ -405,7 +405,7 @@ getParameterSet.Hypergeometric <- function(x, size, successes, failures = NULL, 
 
 }
 
-getParameterSet.InverseGamma <- function(x, shape, scale) {
+getParameterSet.InverseGamma <- function(object, shape, scale) {
 
   ParameterSet$new(
     id = list("shape", "scale"), value = list(1, 1),
@@ -416,7 +416,7 @@ getParameterSet.InverseGamma <- function(x, shape, scale) {
   )
 }
 
-getParameterSet.Laplace <- function(x, mean, scale, var = NULL) {
+getParameterSet.Laplace <- function(object, mean, scale, var = NULL) {
 
   var.bool <- scale.bool <- FALSE
 
@@ -442,7 +442,7 @@ getParameterSet.Laplace <- function(x, mean, scale, var = NULL) {
   )
 }
 
-getParameterSet.Logarithmic <- function(x, theta) {
+getParameterSet.Logarithmic <- function(object, theta) {
 
   ParameterSet$new(
     id = list("theta"), value = list(0.5),
@@ -453,7 +453,7 @@ getParameterSet.Logarithmic <- function(x, theta) {
   )
 }
 
-getParameterSet.Logistic <- function(x, mean, scale, sd = NULL) {
+getParameterSet.Logistic <- function(object, mean, scale, sd = NULL) {
 
   sd.bool <- scale.bool <- FALSE
 
@@ -479,7 +479,7 @@ getParameterSet.Logistic <- function(x, mean, scale, sd = NULL) {
   )
 }
 
-getParameterSet.Loglogistic <- function(x, scale, shape, rate = NULL) {
+getParameterSet.Loglogistic <- function(object, scale, shape, rate = NULL) {
 
   rate.bool <- scale.bool <- FALSE
 
@@ -506,7 +506,7 @@ getParameterSet.Loglogistic <- function(x, scale, shape, rate = NULL) {
   )
 }
 
-getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog = NULL,
+getParameterSet.Lognormal <- function(object, meanlog, varlog, sdlog = NULL, preclog = NULL,
                                       mean = NULL, var = NULL, sd = NULL, prec = NULL) {
 
   varlog.bool <- sdlog.bool <- preclog.bool <- var.bool <- sd.bool <- prec.bool <- FALSE
@@ -609,7 +609,7 @@ getParameterSet.Lognormal <- function(x, meanlog, varlog, sdlog = NULL, preclog 
   return(ps)
 }
 
-getParameterSet.Multinomial <- function(x, size, probs) {
+getParameterSet.Multinomial <- function(object, size, probs) {
 
   K <- unlist(length(probs))
   ParameterSet$new(
@@ -628,7 +628,7 @@ getParameterSet.Multinomial <- function(x, size, probs) {
   )
 }
 
-getParameterSet.MultivariateNormal <- function(x, mean, cov, prec = NULL) {
+getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
 
   cov.bool <- prec.bool <- FALSE
 
@@ -673,7 +673,7 @@ getParameterSet.MultivariateNormal <- function(x, mean, cov, prec = NULL) {
   )
 }
 
-getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean = NULL, form) {
+getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, mean = NULL, form) {
 
   prob.bool <- qprob.bool <- mean.bool <- FALSE
 
@@ -723,7 +723,7 @@ getParameterSet.NegativeBinomial <- function(x, size, prob, qprob = NULL, mean =
   )
 }
 
-getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL) {
+getParameterSet.Normal <- function(object, mean, var, sd = NULL, prec = NULL) {
 
   var.bool <- sd.bool <- prec.bool <- FALSE
 
@@ -754,7 +754,7 @@ getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL) {
   )
 }
 
-getParameterSet.Pareto <- function(x, shape, scale) {
+getParameterSet.Pareto <- function(object, shape, scale) {
   ParameterSet$new(
     id = list("shape", "scale"), value = list(1, 1),
     support = list(PosReals$new(), PosReals$new()),
@@ -764,7 +764,7 @@ getParameterSet.Pareto <- function(x, shape, scale) {
   )
 }
 
-getParameterSet.Poisson <- function(x, rate) {
+getParameterSet.Poisson <- function(object, rate) {
 
   ParameterSet$new(
     id = list("rate"), value = list(1),
@@ -776,7 +776,7 @@ getParameterSet.Poisson <- function(x, rate) {
 
 }
 
-getParameterSet.Rayleigh <- function(x, mode) {
+getParameterSet.Rayleigh <- function(object, mode) {
 
   ParameterSet$new(
     id = list("mode"), value = list(1),
@@ -788,7 +788,7 @@ getParameterSet.Rayleigh <- function(x, mode) {
 
 }
 
-getParameterSet.ShiftedLoglogistic <- function(x, scale, shape, location, rate = NULL) {
+getParameterSet.ShiftedLoglogistic <- function(object, scale, shape, location, rate = NULL) {
 
   rate.bool <- scale.bool <- FALSE
 
@@ -816,7 +816,7 @@ getParameterSet.ShiftedLoglogistic <- function(x, scale, shape, location, rate =
   )
 }
 
-getParameterSet.StudentT <- function(x, df) {
+getParameterSet.StudentT <- function(object, df) {
 
   ParameterSet$new(
     id = list("df"), value = list(1),
@@ -828,7 +828,7 @@ getParameterSet.StudentT <- function(x, df) {
 
 }
 
-getParameterSet.StudentTNoncentral <- function(x, df, location) {
+getParameterSet.StudentTNoncentral <- function(object, df, location) {
 
   ParameterSet$new(
     id = list("df", "location"), value = list(1, 0),
@@ -840,7 +840,7 @@ getParameterSet.StudentTNoncentral <- function(x, df, location) {
 
 }
 
-getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric) {
+getParameterSet.Triangular <- function(object, lower, upper, mode, symmetric) {
 
   checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
   checkmate::assert(lower < upper, .var.name = "lower must be < upper")
@@ -867,7 +867,7 @@ getParameterSet.Triangular <- function(x, lower, upper, mode, symmetric) {
   )
 }
 
-getParameterSet.Uniform <- function(x, lower, upper) {
+getParameterSet.Uniform <- function(object, lower, upper) {
 
   checkmate::assert(lower > -Inf, upper < Inf, combine = "and", .var.name = "lower and upper must be finite")
   checkmate::assert(lower < upper, .var.name = "lower must be < upper")
@@ -882,7 +882,7 @@ getParameterSet.Uniform <- function(x, lower, upper) {
   )
 }
 
-getParameterSet.Wald <- function(x, mean, shape) {
+getParameterSet.Wald <- function(object, mean, shape) {
 
   ParameterSet$new(
     id = list("mean", "shape"), value = list(1, 1),
@@ -896,7 +896,7 @@ getParameterSet.Wald <- function(x, mean, shape) {
   )
 }
 
-getParameterSet.Weibull <- function(x, shape, scale, altscale) {
+getParameterSet.Weibull <- function(object, shape, scale, altscale) {
 
   scale.bool <- altscale.bool <- FALSE
 
@@ -918,19 +918,26 @@ getParameterSet.Weibull <- function(x, shape, scale, altscale) {
   )
 }
 
-getParameterSet.WeightedDiscrete <- function(x, data, pdf = NULL, cdf = NULL) {
+getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) {
+  pdf.bool <- cdf.bool <- FALSE
 
-  n <- length(data)
+  if (!is.null(cdf)) {
+    cdf.bool <- TRUE
+  } else {
+    pdf.bool <- TRUE
+  }
+
+  n <- length(x)
 
   ParameterSet$new(
-    id = list("data", "pdf", "cdf"),
-    value = list(rep(1, n), rep(1, n), rep(1, n)),
-    support = list(Reals$new()^n, Interval$new(0, 1)^n, Interval$new(0, 1)^n),
-    settable = list(FALSE, FALSE, FALSE),
-    updateFunc = list(NULL, NULL, NULL),
-    description = list(
-      "Data", "Probability Density Function",
-      "Cumulative Distribution Function"
-    )
+    id = list("x", "pdf", "cdf"),
+    value = list(x, rep(1, n), rep(1, n)),
+    support = list(Reals$new()^n, Interval$new(0,1)^n, Interval$new(0,1)^n),
+    settable = list(TRUE, pdf.bool, cdf.bool),
+    updateFunc = list(NULL,
+                      NULL,
+                      function(self) list(cumsum(self$getParameterValue("pdf")))),
+    description = list("Data.", "Probability density function.",
+                       "Cumulative distribution function.")
   )
 }

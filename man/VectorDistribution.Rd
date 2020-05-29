@@ -12,52 +12,39 @@ a list of distributions. To improve speed and reduce memory usage, distributions
 when methods (e.g. d/p/q/r) are called.
 }
 \section{not run to save time}{
-\dontrun{
 
+}
 
-# Same wrapping for statistical functions
+\section{Same wrapping for statistical functions}{
 vecDist$mean()
-c(vecDist[1]$mean(), vecDist[2]$mean())
+c(vecDist\link{1}$mean(), vecDist\link{2}$mean())
 vecDist$entropy()
-c(vecDist[1]$entropy(), vecDist[2]$entropy())
+c(vecDist\link{1}$entropy(), vecDist\link{2}$entropy())
 
 vecDist$cdf(1:5, 12:16)
 vecDist$rand(10)
 
 vecBin <- VectorDistribution$new(
-  distribution = "Binomial",
-  params = list(
-    list(prob = 0.1, size = 2),
-    list(prob = 0.6, size = 4),
-    list(prob = 0.2, size = 6)
-  )
+distribution = "Binomial",
+params = list(
+list(prob = 0.1, size = 2),
+list(prob = 0.6, size = 4),
+list(prob = 0.2, size = 6)
+)
 )
 vecBin$pdf(x1 = 1, x2 = 2, x3 = 3)
 vecBin$cdf(x1 = 1, x2 = 2, x3 = 3)
 vecBin$rand(10)
-
-# Equivalently
-vecBin <- VectorDistribution$new(
-  distribution = "Binomial",
-  params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
-)
-vecBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-vecBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-vecBin$rand(10)
-
-# sharedparams is very useful for vectorized custom distributions
-shared_params <- list(name = "A Distribution", short_name = "Dist", type = Reals$new())
-params <- list(list(pdf = function(x) {
-  return(1)
-}), list(pdf = function(x) {
-  return(2)
-}))
-vecdist <- VectorDistribution$new(
-  distribution = "Distribution", params = params,
-  shared_params = shared_params
-)
-vecdist$pdf(1)
 }
+
+\section{Equivalently}{
+vecBin <- VectorDistribution$new(
+distribution = "Binomial",
+params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+)
+vecBin$pdf(x1 = 1, x2 = 2, x3 = 3)
+vecBin$cdf(x1 = 1, x2 = 2, x3 = 3)
+vecBin$rand(10)'
 }
 
 \examples{
@@ -78,16 +65,6 @@ VectorDistribution$new(
 VectorDistribution$new(
   distribution = "Binomial",
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
-)
-
-shared_params <- list(name = "A Distribution", short_name = "Dist", type = Reals$new())
-params <- list(
-              list(pdf = function(x) return(1)),
-              list(pdf = function(x) return(2))
-              )
-VectorDistribution$new(
-  distribution = "Distribution", params = params,
-  shared_params = shared_params
 )
 
 ## ------------------------------------------------
@@ -140,13 +117,11 @@ Other wrappers:
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{modelTable}}{Returns table of wrapped \link{Distribution}s.}
+\item{\code{modelTable}}{Returns reference table of wrapped \link{Distribution}s.}
 
 \item{\code{distlist}}{Returns list of constructed wrapped \link{Distribution}s.}
 
 \item{\code{shared_params}}{Returns list of shared parameters.}
-
-\item{\code{length}}{Returns number of wrapped \link{Distribution}s.}
 }
 \if{html}{\out{</div>}}
 }
@@ -156,9 +131,6 @@ Other wrappers:
 \item \href{#method-new}{\code{VectorDistribution$new()}}
 \item \href{#method-wrappedModels}{\code{VectorDistribution$wrappedModels()}}
 \item \href{#method-strprint}{\code{VectorDistribution$strprint()}}
-\item \href{#method-getParameterValue}{\code{VectorDistribution$getParameterValue()}}
-\item \href{#method-setParameterValue}{\code{VectorDistribution$setParameterValue()}}
-\item \href{#method-parameters}{\code{VectorDistribution$parameters()}}
 \item \href{#method-mean}{\code{VectorDistribution$mean()}}
 \item \href{#method-mode}{\code{VectorDistribution$mode()}}
 \item \href{#method-variance}{\code{VectorDistribution$variance()}}
@@ -179,14 +151,17 @@ Other wrappers:
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionWrapper" data-id="setParameterValue">}\href{../../distr6/html/DistributionWrapper.html#method-setParameterValue}{\code{distr6::DistributionWrapper$setParameterValue()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -203,7 +178,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   shared_params = NULL,
   name = NULL,
   short_name = NULL,
-  decorators = NULL
+  decorators = NULL,
+  ...
 )}\if{html}{\out{</div>}}
 }
 
@@ -237,6 +213,27 @@ Optional short name/ID of wrapped distribution.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Optional decorators to decorate the wrapped distribution with.}
+
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
 }
 \if{html}{\out{</div>}}
 }
@@ -254,16 +251,6 @@ Optional decorators to decorate the wrapped distribution with.}
 VectorDistribution$new(
   distribution = "Binomial",
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
-)
-
-shared_params <- list(name = "A Distribution", short_name = "Dist", type = Reals$new())
-params <- list(
-              list(pdf = function(x) return(1)),
-              list(pdf = function(x) return(2))
-              )
-VectorDistribution$new(
-  distribution = "Distribution", params = params,
-  shared_params = shared_params
 )
 }
 \if{html}{\out{</div>}}
@@ -305,99 +292,6 @@ Printable string representation of the \code{VectorDistribution}. Primarily used
 \describe{
 \item{\code{n}}{\code{(integer(1))}\cr
 Number of distributions to include when printing.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-getParameterValue}{}}}
-\subsection{Method \code{getParameterValue()}}{
-Returns the value of the supplied parameter.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$getParameterValue(id)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{\code{character()} \cr
-id of parameter value to return.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
-\subsection{Method \code{setParameterValue()}}{
-Not currently implemented for this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$setParameterValue(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\cr
-Named arguments of parameters to set values for. See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-parameters"></a>}}
-\if{latex}{\out{\hypertarget{method-parameters}{}}}
-\subsection{Method \code{parameters()}}{
-Not currently implemented for this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$parameters(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\cr
-Named arguments of parameters to set values for. See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
 }
 \if{html}{\out{</div>}}
 }

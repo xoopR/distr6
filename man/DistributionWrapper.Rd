@@ -70,17 +70,48 @@ Other wrappers:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DistributionWrapper$new(distlist = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DistributionWrapper$new(
+  distlist = NULL,
+  name,
+  short_name,
+  description,
+  support,
+  type,
+  valueSupport,
+  variateForm,
+  outerID = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{distlist}}{\code{(list())} \cr
-List of \link{Distribution}s to wrap.}
+\item{\code{distlist}}{\code{(list())}\cr
+List of \link{Distribution}s.}
 
-\item{\code{...}}{\code{ANY} \cr
-Additional arguements passed to \verb{[Distribution]$new}}
+\item{\code{name}}{\code{(character(1))}\cr
+Wrapped distribution name.}
+
+\item{\code{short_name}}{\code{(character(1))}\cr
+Wrapped distribution ID.}
+
+\item{\code{description}}{\code{(character())} \cr
+Wrapped distribution description.}
+
+\item{\code{support}}{\verb{([set6::Set])}\cr
+Wrapped distribution support.}
+
+\item{\code{type}}{\verb{([set6::Set])}\cr
+Wrapped distribution type.}
+
+\item{\code{valueSupport}}{\code{(character(1))}\cr
+Wrapped distribution value support.}
+
+\item{\code{variateForm}}{\code{(character(1))}\cr
+Wrapped distribution variate form.}
+
+\item{\code{outerID}}{\verb{([ParameterSet])}\cr
+Parameters added by the wrapper.}
 }
 \if{html}{\out{</div>}}
 }

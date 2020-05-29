@@ -113,29 +113,42 @@ TruncatedDistribution <- R6Class("TruncatedDistribution", inherit = Distribution
       if (log) {
         pdf <- dist$pdf(x, log = TRUE) -
           log((dist$cdf(upper) - dist$cdf(lower)))
+        pdf[x < lower | x > upper] <- -Inf
       } else {
         pdf <- dist$pdf(x) /
           (dist$cdf(upper) - dist$cdf(lower))
+        pdf[x < lower | x > upper] <- 0
       }
+
       return(pdf)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       dist = self$wrappedModels()[[1]]
-      lower = dist$cdf(self$getParameterValue("trunc_lower"))
-      upper = dist$cdf(self$getParameterValue("trunc_upper"))
-      cdfx = dist$cdf(x)
+      lower = self$getParameterValue("trunc_lower")
+      upper = self$getParameterValue("trunc_upper")
+      Flower = dist$cdf(lower)
+      Fupper = dist$cdf(upper)
+      Fx = dist$cdf(x)
 
       if (lower.tail) {
         if (log.p) {
-          cdf = log(cdfx - lower) - log(upper - lower)
+          cdf = log(Fx - Flower) - log(Fupper - Flower)
+          cdf[x < lower] <- -Inf
+          cdf[x >= upper] <- 0
         } else {
-          cdf = (cdfx - lower)/(upper - lower)
+          cdf = (Fx - Flower)/(Fupper - Flower)
+          cdf[x < lower] <- 0
+          cdf[x >= upper] <- 1
         }
       } else {
         if (log.p) {
-          cdf = log(upper - cdfx) - log(upper - lower)
+          cdf = log(Fupper - Fx) - log(Fupper - Flower)
+          cdf[x < lower] <- 0
+          cdf[x >= upper] <- -Inf
         } else {
-          cdf = (upper - cdfx)/(upper - lower)
+          cdf = (Fupper - Fx)/(Fupper - Flower)
+          cdf[x < lower] <- 1
+          cdf[x >= upper] <- 0
         }
       }
 

@@ -32,7 +32,7 @@ return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{c
 an error message as string, \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is a list of R6 Distributions.
+Validation checks to test if a given object is a list of \link{Distribution}s.
 }
 \examples{
 testDistributionList(list(Binomial$new(), 5)) # FALSE

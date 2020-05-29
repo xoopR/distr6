@@ -22,14 +22,31 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param ... `ANY` \cr
-    #' Additional arguements passed to `[Distribution]$new`
+    #' @param distlist `(list())`\cr
+    #' List of [Distribution]s.
+    #' @param name `(character(1))`\cr
+    #' Wrapped distribution name.
+    #' @param short_name `(character(1))`\cr
+    #' Wrapped distribution ID.
+    #' @param description `(character())` \cr
+    #' Wrapped distribution description.
+    #' @param support `([set6::Set])`\cr
+    #' Wrapped distribution support.
+    #' @param type `([set6::Set])`\cr
+    #' Wrapped distribution type.
+    #' @param valueSupport `(character(1))`\cr
+    #' Wrapped distribution value support.
+    #' @param variateForm `(character(1))`\cr
+    #' Wrapped distribution variate form.
+    #' @param outerID `([ParameterSet])`\cr
+    #' Parameters added by the wrapper.
     initialize = function(distlist = NULL,
                           name, short_name, description,
                           support, type, valueSupport, variateForm,
                           outerID = NULL) {
 
       abstract(self, "DistributionWrapper")
+
       self$name <- name
       self$short_name <- short_name
       self$description <- description

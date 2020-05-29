@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Empirical distribution")
-
 test_that("autotest", {
   autotest_sdistribution(sdist = Empirical,
                          pars = list(1:10),

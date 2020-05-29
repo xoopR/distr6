@@ -23,7 +23,8 @@
 #' plot(vd, fun = "quantile", ylim = c(-4, 4), col = c("blue", "purple"))
 #' @export
 plot.VectorDistribution <- function(x, fun = "pdf", topn, ind, cols, ...) {
-  checkmate::assertClass(x, "VectorDistribution")
+  stopifnot(getR6Class(x), "VectorDistribution")
+
   if (!missing(ind)) {
     dist <- x[ind]
   } else if (!missing(topn)) {

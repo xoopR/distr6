@@ -4,7 +4,7 @@ test_that("constructor", {
   expect_silent(VectorDistribution$new(list(Binomial$new(), Binomial$new(size = 20, prob = 0.6))))
   expect_silent(VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1))))
   expect_silent(VectorDistribution$new(distribution = "WeightedDiscrete", params = list(
-    data = data.frame(x = 1, pdf = 1)
+    list(x = 1, pdf = 1)
   )))
   expect_error(VectorDistribution$new(), "Either distlist")
   expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "should be one of")
@@ -72,11 +72,14 @@ test_that("wrapped models", {
   ))
   expect_equal(a$wrappedModels("Binom1"), Binomial$new(prob = 0.1, size = 2))
   expect_equal(a$wrappedModels(), list(
-    Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
-    Binomial$new(prob = 0.2, size = 6)
+    Binom1 = Binomial$new(prob = 0.1, size = 2),
+    Binom2 = Binomial$new(prob = 0.6, size = 4),
+    Binom3 = Binomial$new(prob = 0.2, size = 6)
   ))
   a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
-  expect_equal(a$wrappedModels(), list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  expect_equal(a$wrappedModels(),
+               list(Binom = Binomial$new(prob = 0.5, size = 10),
+                    Gomp = Gompertz$new()))
   expect_equal(a$wrappedModels(c("Binom", "Gomp")), list(
     Binom = Binomial$new(prob = 0.5, size = 10),
     Gomp = Gompertz$new()
@@ -97,8 +100,8 @@ test_that("extract", {
   ))
   expect_equal(a[1], Binomial$new(prob = 0.1, size = 2))
   expect_equal(a[1:2]$wrappedModels(), list(
-    Binomial$new(prob = 0.1, size = 2),
-    Binomial$new(prob = 0.6, size = 4)
+    Binom1 = Binomial$new(prob = 0.1, size = 2),
+    Binom2 = Binomial$new(prob = 0.6, size = 4)
   ))
   expect_error(a[4], "Index i too large")
   a <- VectorDistribution$new(list(
@@ -123,24 +126,18 @@ test_that("decorators", {
   )
   expect_equal(a$decorators, c("CoreStatistics", "ExoticStatistics"))
   expect_equal(a[1]$decorators, c("CoreStatistics", "ExoticStatistics"))
-  # a <- VectorDistribution$new(
-  #   distribution = "Binomial", params = list(
-  #     list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
-  #     list(prob = 0.2, size = 6)
-  #   ),
-  #   decorators = c("CoreStatistics", "ExoticStatistics")
-  # )
-  # expect_equal(a$decorators, c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(a[1:2]$decorators, c("CoreStatistics", "ExoticStatistics"))
+
   a <- VectorDistribution$new(list(
     Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
     Binomial$new(prob = 0.2, size = 6)
   ),
   decorators = "ExoticStatistics"
   )
-  # expect_equal(a$decorators, "ExoticStatistics")
-  # expect_equal(a[1]$decorators, "ExoticStatistics")
-  # expect_silent(a[1])
-  # expect_silent(a[1])
+  expect_equal(a$decorators, "ExoticStatistics")
+  expect_equal(a[1]$decorators, "ExoticStatistics")
+  expect_equal(a[1:2]$decorators, "ExoticStatistics")
+
   expect_equal(as.numeric(a$survival(1)), c(
     1 - Binomial$new(prob = 0.1, size = 2)$cdf(1),
     1 - Binomial$new(prob = 0.6, size = 4)$cdf(1),
@@ -149,16 +146,16 @@ test_that("decorators", {
 })
 
 test_that("shared params", {
-  shared_params <- data.table::data.table(prob = 0.2, size = 2)
-  expect_silent(VectorDistribution$new(
+  shared_params <- data.table::data.table(prob = 0.2)
+  params <- data.table::data.table(size = 1:2)
+
+  vd = VectorDistribution$new(
     distribution = "Binomial",
+    params = params,
     shared_params = shared_params
-  ))
-  shared_params <- data.table::data.table(short_name = "test", pdf = dbinom)
-  expect_silent(VectorDistribution$new(
-    distribution = "Distribution",
-    shared_params = shared_params
-  ))
+  )
+  expect_equal(vd$parameters()$getParameterValue("prob"), list(Binom1 = 0.2, Binom2 = 0.2))
+  expect_equal(vd$parameters()$getParameterValue("size"), list(Binom1 = 1, Binom2 = 2))
 })
 
 test_that("shared d/p/q/r", {

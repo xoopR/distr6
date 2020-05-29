@@ -54,43 +54,31 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param data `([data.frame])`\cr
-    #' Data to define the distribution, should be coercable to a [data.frame]. `data` must include
-    #' `x` as the first column and either one or both of `pdf` and `cdf`. Where they are the respective
-    #' pdf and cdf of the corresponding `x` value.
-    initialize = function(data, decorators = NULL) {
+    #' Deprecated. Use `x, pdf, cdf`.
+    #' @param x `numeric()`\cr
+    #' Data samples.
+    #' @param pdf `numeric()`\cr
+    #' Probability mass function for corresponding samples, should be same length `x`.
+    #' If `cdf` is not given then calculated as `cumsum(pdf)`.
+    #' @param cdf `numeric()`\cr
+    #' Cumulative distribution function for corresponding samples, should be same length `x`. If
+    #' given then `pdf` is ignored and calculated as difference of `cdf`s.
+    initialize = function(data = NULL, x = 1, pdf = 1,
+                          cdf = NULL, decorators = NULL) {
 
-      data <- data.table::as.data.table(data)
-      checkmate::assert(all(colnames(data) %in% c("pdf", "cdf", "x")),
-                        .var.name = "data column names should be one of 'pdf', 'cdf', 'x"
-      )
-      checkmate::assert("x" %in% colnames(data),
-                        .var.name = "'x' must be included in data column names"
-      )
-      checkmate::assert(any(c("pdf", "cdf") %in% colnames(data)),
-                        .var.name = "at least one of 'pdf' and 'cdf' must be included in data column names"
-      )
-
-      if ("pdf" %in% colnames(data) & !("cdf" %in% colnames(data))) {
-        data$cdf <- cumsum(data$pdf)
-      } else if ("cdf" %in% colnames(data) & !("pdf" %in% colnames(data))) {
-        data$pdf <- c(data$cdf[1], diff(data$cdf))
+      if (!is.null(data)) {
+        message("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
+        x = data$x
+        pdf = data$pdf
+        cdf = data$cdf
       }
 
-      checkmate::assertNumeric(data$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
-      checkmate::assertNumeric(data$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid")
-
-      private$.parameters <- ParameterSet$new(
-        id = "data",
-        value = list(data),
-        support = UniversalSet$new(),
-        settable = FALSE,
-        updateFunc = NULL,
-        description = "Data"
-      )
+      private$.parameters <- getParameterSet(self, x = x, pdf = pdf, cdf = cdf)
+      self$setParameterValue(pdf = pdf, cdf = cdf)
 
       super$initialize(
         decorators = decorators,
-        support = Set$new(data$x, class = "numeric"),
+        support = Set$new(x, class = "numeric"),
         type = Reals$new()
       )
     },
@@ -102,8 +90,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      data <- self$getParameterValue("data")
-      return(sum(data$x * data$pdf))
+      return(sum(self$getParameterValue("x") * self$getParameterValue("pdf")))
     },
 
     #' @description
@@ -111,12 +98,13 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
       if (which == "all") {
-        return(data$x[data$pdf == max(data$pdf)])
+        return(data[pdf == max(pdf)])
       } else {
-        return(data$x[data$pdf == max(data$pdf)][which])
+        return(data[pdf == max(pdf)][which])
       }
     },
 
@@ -126,8 +114,9 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      data <- self$getParameterValue("data")
-      return(sum((data$x - self$mean())^2 * data$pdf))
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+      return(sum((data - self$mean())^2 * pdf))
     },
 
     #' @description
@@ -136,8 +125,9 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      data <- self$getParameterValue("data")
-      return(sum(((data$x - self$mean()) / self$stdev())^3 * data$pdf))
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+      return(sum(((data - self$mean()) / self$stdev())^3 * pdf))
     },
 
     #' @description
@@ -147,8 +137,9 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      data <- self$getParameterValue("data")
-      kurt <- sum(((data$x - self$mean()) / self$stdev())^4 * data$pdf)
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+      kurt <- sum(((data - self$mean()) / self$stdev())^4 * pdf)
       if (excess) {
         return(kurt - 3)
       } else {
@@ -162,7 +153,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      pdf <- self$getParameterValue("data")$pdf
+      pdf <- self$getParameterValue("pdf")
       return(-sum(pdf * log(pdf, base)))
     },
 
@@ -170,16 +161,17 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
       if (length(t) == 1) {
-        return(sum(exp(data$x * t) * (data$pdf)))
+        return(sum(exp(data * t) * (pdf)))
       } else {
         nr <- length(t)
-        nc <- length(data$x)
+        nc <- length(data)
         return(as.numeric(
-          exp(matrix(data$x, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$pdf, nrow = nc, ncol = 1)
+          exp(matrix(data, nrow = nr, ncol = nc, byrow = T) *
+                matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
     },
@@ -188,16 +180,17 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
       if (length(t) == 1) {
-        return(sum(exp(data$x * t * 1i) * (data$pdf)))
+        return(sum(exp(data * t * 1i) * (pdf)))
       } else {
         nr <- length(t)
-        nc <- length(data$x)
+        nc <- length(data)
         return(as.complex(
-          exp(matrix(data$x * 1i, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$pdf, nrow = nc, ncol = 1)
+          exp(matrix(data * 1i, nrow = nr, ncol = nc, byrow = T) *
+                matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
     },
@@ -206,16 +199,17 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
       if (length(z) == 1) {
-        return(sum((z^data$x) * data$pdf))
+        return(sum((z^data) * pdf))
       } else {
         nr <- length(z)
-        nc <- length(data$x)
+        nc <- length(data)
         return(as.numeric(
-          (matrix(z, nrow = nr, ncol = nc)^matrix(data$x, nrow = nr, ncol = nc, byrow = z)) %*%
-            matrix(data$pdf, nrow = nc, ncol = 1)
+          (matrix(z, nrow = nr, ncol = nc)^matrix(data, nrow = nr, ncol = nc, byrow = z)) %*%
+            matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
     },
@@ -224,63 +218,62 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      message("WeightedDiscrete cannot be modified after construction.")
-      return(NULL)
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$pdf)) stopifnot(length(lst$pdf) == length(self$getParameterValue("x")))
+      if (!is.null(lst$cdf)) stopifnot(length(lst$cdf) == length(self$getParameterValue("x")))
+      super$setParameterValue(lst = lst, error = error)
     }
-
-    # getParameterValue = function(id, error = "warn") {
-    #   if ("data" %in% id) {
-    #     return(super$getParameterValue("data", error))
-    #   }
-    # }
   ),
 
   private = list(
     # dpqr
     .pdf = function(x, log = FALSE) {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
       if (checkmate::testList(data)) {
-        data <- unlist(data)
-        pdf <- matrix(as.numeric(data[names(data) == "pdf"]), ncol = nrow(data))
-        data <- matrix(as.numeric(data[names(data) == "x"]), ncol = ncol(pdf))
-        return(C_Vec_WeightedDiscretePdf(x, data$x, data$pdf, log))
+        pdf <- matrix(unlist(pdf), ncol = length(data[[1]]))
+        data <- matrix(unlist(data), ncol = ncol(pdf))
+        return(C_Vec_WeightedDiscretePdf(x, data, pdf, log))
       } else {
-        return(C_WeightedDiscretePdf(x, data$x, data$pdf, log))
+        return(C_WeightedDiscretePdf(x, data, pdf, log))
       }
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      cdf <- self$getParameterValue("cdf")
 
       if (checkmate::testList(data)) {
-        cdf <- matrix(as.numeric(data[names(data) == "cdf"]), ncol = nrow(data))
-        data <- matrix(as.numeric(data[names(data) == "x"]), ncol = ncol(cdf))
+        cdf <- matrix(unlist(cdf), ncol = length(data[[1]]))
+        data <- matrix(unlist(data), ncol = ncol(cdf))
         return(C_Vec_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p))
       } else {
-        return(C_WeightedDiscreteCdf(x, data$x, data$cdf, lower.tail, log.p))
+        return(C_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p))
       }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      cdf <- self$getParameterValue("cdf")
 
       if (checkmate::testList(data)) {
-        cdf <- matrix(as.numeric(data[names(data) == "cdf"]), ncol = nrow(data))
-        data <- matrix(as.numeric(data[names(data) == "x"]), ncol = ncol(cdf))
+        cdf <- matrix(unlist(cdf), ncol = length(data[[1]]))
+        data <- matrix(unlist(data), ncol = ncol(cdf))
         return(C_Vec_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
       } else {
-        return(C_WeightedDiscreteQuantile(p, data$x, data$cdf, lower.tail, log.p))
+        return(C_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
       }
     },
     .rand = function(n) {
-      data <- self$getParameterValue("data")
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("x")
 
       if (checkmate::testList(data)) {
         rand <- matrix(nrow = n, ncol = nrow(pdf))
         for (i in seq_along(data)) {
-          rand[, i] <- sample(data[[i]]$x, n, TRUE, data[[i]]$pdf)
+          rand[, i] <- sample(data[[i]], n, TRUE, pdf[[i]])
         }
       } else {
-        rand <- sample(data$x, n, TRUE, data$pdf)
+        rand <- sample(data, n, TRUE, pdf)
       }
       return(rand)
     },
@@ -288,7 +281,14 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     # getRefParams
     .getRefParams = function(paramlst) {
       lst <- list()
-      if (!is.null(paramlst$data)) lst <- lst$data = paramlst$data
+      if (!is.null(paramlst$x)) message("'x' cannot be updated after construction.")
+      if (!is.null(paramlst$pdf)) lst$pdf <- paramlst$pdf
+      if (!is.null(paramlst$cdf)) lst$pdf <- c(paramlst$cdf[1], paramlst$cdf)
+
+      if (!is.null(paramlst$pdf)) {
+        checkmate::assertNumeric(paramlst$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
+      }
+
       return(lst)
     },
 

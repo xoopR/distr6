@@ -106,7 +106,6 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
   if (testMultivariate(x)) {
     return(.plot_multivariate(x, fun, npoints))
   } else {
-
     if (testDiscrete(x) & x$properties$support$properties$countability == "countably finite") {
       plotStructure <- data.table::data.table(points = unlist(x$properties$support$elements))
     } else {

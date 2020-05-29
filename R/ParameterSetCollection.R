@@ -9,6 +9,7 @@
 #'
 #' @export
 ParameterSetCollection <- R6Class("ParameterSetCollection",
+  inherit = ParameterSet,
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -80,11 +81,14 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' psc$getParameterValue("Binom1_prob")
     #' psc$getParameterValue("prob")
     getParameterValue = function(id, error = "warn") {
-      param <- strsplit(id, "_", fixed = TRUE)[[1]]
-      if (length(param) == 1) {
-        return(lapply(private$.parametersets, function(x) x$getParameterValue(param)))
+      sep <- gregexpr("_", id)[[1]][[1]]
+
+      if (sep == -1) {
+        return(lapply(private$.parametersets, function(x) x$getParameterValue(id)))
       } else {
-        return(private$.parametersets[[param[1]]]$getParameterValue(param[2], error = error))
+        param <- substr(id, sep + 1, 1000)
+        dist <- substr(id, 1, sep - 1)
+        return(private$.parametersets[[dist]]$getParameterValue(param, error = error))
       }
     },
 
@@ -130,9 +134,10 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' g$getParameterValue("prob")
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
-      ids <- as.data.table(strsplit(names(lst), split = "_", fixed = TRUE))
-      dist <- unlist(ids[1,])
-      param <- ids[2,]
+      sep <- as.numeric(as.data.table(gregexpr("_", names(lst)))[1,])
+      param <- substr(names(lst), sep + 1, 1000)
+      dist <- substr(names(lst), 1, sep - 1)
+
       for (i in unique(dist)) {
         newlst <- lst[dist == i]
         names(newlst) <- unlist(param)[dist == i]
@@ -140,6 +145,14 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       }
 
       invisible(self)
+    }
+  ),
+
+  active = list(
+    #' @field values
+    #' Returns parameter set values as a named list.
+    values = function() {
+      rlapply(private$.parametersets, values, active = TRUE)
     }
   ),
 

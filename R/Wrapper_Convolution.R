@@ -52,30 +52,33 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
       d1 <- self$wrappedModels()[[1]]
       d2 <- self$wrappedModels()[[2]]
       add <- self$getParameterValue("conv_add")
+      min <- max(d1$traits$type$lower, d2$traits$type$lower)
+      max <- min(d1$traits$type$upper, d2$traits$type$upper)
 
       if (testContinuous(d1) & testContinuous(d2)) {
         if (add) {
           return(sapply(x, function(z) {
             integrate(
               f = function(y) d1$pdf(z - y) * d2$pdf(y),
-              lower = -Inf,
-              upper = Inf
+              lower = min,
+              upper = z - min
             )$value
           }))
         } else {
-          return(sapply(x1, function(z) {
+          return(sapply(x, function(z) {
             integrate(
               f = function(y) d1$pdf(y) * d2$pdf(y - z),
-              lower = -Inf,
-              upper = Inf
+              lower = min + z,
+              upper = max
             )$value
           }))
         }
       } else if (testDiscrete(d1) & testDiscrete(d2)) {
         if (add) {
-          return(sapply(x1, function(z) {
+          return(sapply(x, function(z) {
             ws <- d2$workingSupport
             rng <- seq.int(ws$lower, ws$upper)
+            rng <- rng[z - rng >= min & z - rng <= max]
             sum(d1$pdf(z - rng) * d2$pdf(rng))
           }))
         } else {
@@ -94,6 +97,8 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
           #   }))
           # },list(name1 = d1$short_name, name2 = d2$short_name))
         }
+      } else {
+        stop("Convolution not supported for mixed distributions.")
       }
     },
     .isCdf = 0L,
@@ -104,9 +109,19 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
 )
 .distr6$wrappers <- append(.distr6$wrappers, list(Convolution = Convolution))
 
-`+.Distribution` <- function(dist1, dist2) {
-  Convolution$new(dist1, dist2, add = TRUE)
+#' @rdname Convolution
+#' @examples
+#' binom <- Bernoulli$new() + Bernoulli$new()
+#' binom$pdf(2); Binomial$new(size = 2)$pdf(2)
+#' @export
+`+.Distribution` <- function(x, y) {
+  Convolution$new(x, y, add = TRUE)
 }
-`-.Distribution` <- function(dist1, dist2) {
-  Convolution$new(dist1, dist2, add = FALSE)
+#' @rdname Convolution
+#' @examples
+#' norm <- Normal$new(mean = 3) - Normal$new(mean = 2)
+#' norm$pdf(1); Normal$new(mean = 1, var = 2)$pdf(1)
+#' @export
+`-.Distribution` <- function(x, y) {
+  Convolution$new(x, y, add = FALSE)
 }
