@@ -7,12 +7,14 @@
 #' @name Distribution
 #' @template param_decorators
 #' @template method_setParameterValue
-#' @template method_getParameterValue
 #' @template method_liesin
-#' @template method_pdf
-#' @template method_cdf
-#' @template method_quantile
-#' @template method_rand
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_n
+#' @template param_paramid
 #' @template class_distribution
 #'
 #' @return Returns R6 object of class Distribution.
@@ -412,6 +414,12 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' If available a pdf will be returned using an analytic expression. Otherwise,
     #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
     #'
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    #'
     #'@examples
     #'b <- Binomial$new()
     #'b$pdf(1:10)
@@ -458,16 +466,6 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     },
 
     #' @description
-    #'  For discrete distributions the probability mass function (pmf) is returned, defined as
-    #'  \deqn{p_X(x) = P(X = x)}
-    #'  for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
-    #'  \deqn{f_X(x) = P(x < X \le x + dx)}
-    #'  for some infinitesimally small \eqn{dx}.
-    #'
-    #' If available a pdf will be returned using an analytic expression. Otherwise,
-    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
-
-    #' @description
     #' The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
     #'  \deqn{F_X(x) = P(X \le x)}
     #'  If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
@@ -475,6 +473,12 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #'
     #' If available a cdf will be returned using an analytic expression. Otherwise,
     #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #'
     #'@examples
     #'b <- Binomial$new()
@@ -525,6 +529,12 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #'
     #' If available a quantile will be returned using an analytic expression. Otherwise,
     #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #'
     #'@examples
     #'b <- Binomial$new()
@@ -878,74 +888,103 @@ NULL
 summary.Distribution <- function(object, full = TRUE, ...) {}
 
 #' @name pdf
-#' @title Probability Density/Mass Function
-#' @description Returns the probability density/mass function for continuous/discrete (or mixture)
-#' distributions evaluated at a given point.
+#' @title Probability Density Function
+#' @description See [Distribution]`$pdf`
+#' @usage pdf(object, ..., log = FALSE, simplify = TRUE, data = NULL)
+#' @param object ([Distribution])
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the probability density function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#'@param log `logical(1)` \cr
+#'If `TRUE` returns log-pdf. Default is `FALSE`.
+#'@param simplify `logical(1)` \cr
+#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#'[data.table::data.table][data.table].
+#'@param data [array] \cr
+#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#'to the distribution in the vector to evaluate.
 #'
-#' @usage pdf(object, x1, ..., log = FALSE, simplify = TRUE)
-#' @param object Distribution.
-#' @param x1 vector of numerics to evaluate function at.
-#' @param ... additional arguments.
-#' @param log logical; if TRUE, probabilities p are given as log(p).
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
-#'
-#' @return Probability density function evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
+#' @return Pdf evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
 NULL
 
 #' @name cdf
 #' @title Cumulative Distribution Function
-#' @description Returns the cumulative distribution function for a distribution evaluated at a given
-#' point.
+#' @description See [Distribution]`$cdf`
+#' @usage cdf(object, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
+#' @param object ([Distribution])
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param lower.tail `logical(1)` \cr
+#' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
+#'@param log.p `logical(1)` \cr
+#'If `TRUE` returns log-cdf. Default is `FALSE`.
+#'@param simplify `logical(1)` \cr
+#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#'[data.table::data.table][data.table].
+#'@param data [array] \cr
+#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#'to the distribution in the vector to evaluate.
 #'
-#' @usage cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-#' @param object Distribution.
-#' @param x1 vector of numerics to evaluate function at.
-#' @param ... additional arguments.
-#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
-#' @param log.p logical; if TRUE, probabilities p are given as log(p).
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
-#'
-#' @details
-#'
-#'
-#' @return Cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
+#' @return Cdf evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
 NULL
 
 #' @title Inverse Cumulative Distribution Function
-#' @description Returns the inverse cumulative distribution, aka quantile, function for a distribution
-#' evaluated at a given point between 0 and 1.
+#' @description See [Distribution]`$quantile`
+#' @usage quantile(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
+#' @param x ([Distribution])
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the quantile function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param lower.tail `logical(1)` \cr
+#' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
+#'@param log.p `logical(1)` \cr
+#'If `TRUE` returns log-cdf. Default is `FALSE`.
+#'@param simplify `logical(1)` \cr
+#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#'[data.table::data.table][data.table].
+#'@param data [array] \cr
+#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#'to the distribution in the vector to evaluate.
 #'
-#' @importFrom stats quantile
-#' @param x Distribution.
-#' @param p vector of probabilities to evaluate function at.
-#' @param ... additional arguments.
-#' @param lower.tail logical; if TRUE, probabilities p are given as log(p).
-#' @param log.p logical; if TRUE then \eqn{q_X(exp(p))} is returned.
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
-#'
-#' @return Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
+#' @return Quantile evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
 quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {}
 
 #' @name rand
 #' @title Random Simulation Function
-#' @description Returns a given number of points sampled from the distribution.
-#'
+#' @description See [Distribution]`$rand`
 #' @usage rand(object, n, simplify = TRUE)
-#' @param object Distribution.
-#' @param n number of observations. If length(n) > 1, the length is taken to be the number required.
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
+#' @param object ([Distribution])
+#' @param n `(numeric(1))` \cr
+#' Number of points to simulate from the distribution. If length greater than \eqn{1}, then
+#' `n <- length(n)`,
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
 #'
-#' @return Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
+#' @return Simulations as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
 NULL

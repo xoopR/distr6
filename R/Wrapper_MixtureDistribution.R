@@ -2,10 +2,12 @@
 #' @title Mixture Distribution Wrapper
 #' @description Wrapper used to construct a mixture of two or more distributions.
 #'
-#' @template method_pdf
-#' @template method_cdf
-#' @template method_quantile
-#' @template method_rand
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_n
 #' @template param_decorators
 #' @template class_vecdist
 #'
@@ -13,9 +15,6 @@
 #'
 #' @seealso \code{\link{listWrappers}}
 #'
-#' @examples
-#' mixture$pdf(1)
-#' mixture$cdf(1)
 #' @export
 MixtureDistribution <- R6Class("MixtureDistribution",
   inherit = VectorDistribution,
@@ -89,7 +88,11 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' Note that as this class inherits from [VectorDistribution], it is possible to evaluate
     #' the distributions at different points, but that this is not the usual use-case for
     #' mixture distributions.
-    #'
+    #'@param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #' @examples
     #' m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
     #'   weights = c(0.2, 0.8)
@@ -98,7 +101,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' m$pdf(1)
     #' # also possible but unlikely to be used
     #' m$pdf(1, 2)
-    pdf = function(..., log = FALSE, data = NULL) {
+    pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       mixture_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
         weights = private$.outerParameters$getParameterValue("weights"),
@@ -111,13 +114,17 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #'  \deqn{F_M(x) = \sum_i (F_i)(x)*w_i}
     #'  where \eqn{w_i} is the vector of weights and \eqn{F_i} are the cdfs of the wrapped
     #'  distributions.
-    #'
+    #'@param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #'  @examples
     #'  m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
     #'   weights = c(0.2, 0.8)
     #' )
     #' m$cdf(1:5)
-    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data = NULL) {
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       mixture_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
         weights = private$.outerParameters$getParameterValue("weights"),
@@ -127,7 +134,12 @@ MixtureDistribution <- R6Class("MixtureDistribution",
 
     #' @description
     #' The quantile function is not implemented for mixture distributions.
-    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data = NULL) {
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       stop("Quantile is currently unavailable for mixture distributions.")
     },
 
@@ -135,7 +147,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' Simulation function for mixture distributions. Samples are drawn from a mixture by first
     #' sampling Multinomial(probs = weights, size = n), then sampling each distribution according
     #' to the samples from the Multinomial, and finally randomly permuting these draws.
-    rand = function(n) {
+    rand = function(n, simplify = TRUE) {
       weights <- private$.outerParameters$getParameterValue("weights")
 
       lng <- nrow(self$modelTable)

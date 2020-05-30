@@ -1,7 +1,7 @@
 #' @title Parameter Sets for Distributions
 #'
 #' @template method_setParameterValue
-#' @template method_getParameterValue
+#' @template param_paramid
 #'
 #' @description
 #' ParameterSets are passed to the [Distribution] constructor when

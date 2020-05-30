@@ -16,8 +16,8 @@ All methods implemented in decorators try to exploit analytical results where po
 numerical results are used with a message.
 }
 \examples{
-decorate(Exponential$new(), ExoticStatistics)
-Exponential$new(decorators = ExoticStatistics)
+decorate(Exponential$new(), "ExoticStatistics")
+Exponential$new(decorators = "ExoticStatistics")
 ExoticStatistics$new()$decorate(Exponential$new())
 
 }
@@ -123,33 +123,17 @@ and \eqn{f_X} is the pdf.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{log}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+\item{\code{log}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
 \item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
 \link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -175,33 +159,17 @@ where X is the distribution, \eqn{S_X} is the survival function and \eqn{f_X} is
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{log}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+\item{\code{log}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
 \item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
 \link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -227,33 +195,17 @@ where X is the distribution and \eqn{S_X} is the survival function.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{log}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+\item{\code{log}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
 \item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
 \link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number

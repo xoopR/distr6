@@ -267,10 +267,7 @@ Returns the support of the supplied parameter.
 id of parameter support to return.}
 
 \item{\code{error}}{\code{(character(1))} \cr
-Passed to \link{stopwarn}.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-Passed to \link{stopwarn}.}
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -308,10 +305,7 @@ Returns the value of the supplied parameter.
 id of parameter value to return.}
 
 \item{\code{error}}{\code{(character(1))} \cr
-Passed to \link{stopwarn}.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-Passed to \link{stopwarn}.}
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -350,10 +344,7 @@ Alternative argument for passing parameters. List names should be parameter name
 are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
-Passed to \link{stopwarn}.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-Passed to \link{stopwarn}.}
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
 }
 \if{html}{\out{</div>}}
 }

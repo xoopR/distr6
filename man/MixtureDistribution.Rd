@@ -10,8 +10,6 @@ Returns an R6 object of class MixtureDistribution.
 Wrapper used to construct a mixture of two or more distributions.
 }
 \examples{
-mixture$pdf(1)
-mixture$cdf(1)
 
 ## ------------------------------------------------
 ## Method `MixtureDistribution$new`
@@ -141,9 +139,6 @@ Optional short name/ID of wrapped distribution.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
-
-\item{\code{decorators}}{\code{(character())} \cr
-Optional decorators to decorate the wrapped distribution with.}
 }
 \if{html}{\out{</div>}}
 }
@@ -189,44 +184,24 @@ Note that as this class inherits from \link{VectorDistribution}, it is possible 
 the distributions at different points, but that this is not the usual use-case for
 mixture distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$pdf(..., log = FALSE, data = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{log}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{log}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -259,60 +234,39 @@ Cumulative distribution function of the mixture distribution. Computed by
 \deqn{F_M(x) = \sum_i (F_i)(x)*w_i}
 where \eqn{w_i} is the vector of weights and \eqn{F_i} are the cdfs of the wrapped
 distributions.
-
-@examples
-m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-weights = c(0.2, 0.8)
-)
-m$cdf(1:5)
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$cdf(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+See examples.
+@examples
+m <- MixtureDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
+weights = c(0.2, 0.8)
+)
+m$cdf(1:5)}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -333,6 +287,7 @@ The quantile function is not implemented for mixture distributions.
   ...,
   lower.tail = TRUE,
   log.p = FALSE,
+  simplify = TRUE,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -341,46 +296,20 @@ The quantile function is not implemented for mixture distributions.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -399,7 +328,7 @@ Simulation function for mixture distributions. Samples are drawn from a mixture 
 sampling Multinomial(probs = weights, size = n), then sampling each distribution according
 to the samples from the Multinomial, and finally randomly permuting these draws.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$rand(n)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MixtureDistribution$rand(n, simplify = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -408,6 +337,10 @@ to the samples from the Multinomial, and finally randomly permuting these draws.
 \item{\code{n}}{\code{(numeric(1))} \cr
 Number of points to simulate from the distribution. If length greater than \eqn{1}, then
 \code{n <- length(n)},}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 }
 \if{html}{\out{</div>}}
 }

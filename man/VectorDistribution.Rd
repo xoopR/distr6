@@ -11,42 +11,6 @@ A vector distribution is intented to vectorize distributions more efficiently th
 a list of distributions. To improve speed and reduce memory usage, distributions are only constructed
 when methods (e.g. d/p/q/r) are called.
 }
-\section{not run to save time}{
-
-}
-
-\section{Same wrapping for statistical functions}{
-vecDist$mean()
-c(vecDist\link{1}$mean(), vecDist\link{2}$mean())
-vecDist$entropy()
-c(vecDist\link{1}$entropy(), vecDist\link{2}$entropy())
-
-vecDist$cdf(1:5, 12:16)
-vecDist$rand(10)
-
-vecBin <- VectorDistribution$new(
-distribution = "Binomial",
-params = list(
-list(prob = 0.1, size = 2),
-list(prob = 0.6, size = 4),
-list(prob = 0.2, size = 6)
-)
-)
-vecBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-vecBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-vecBin$rand(10)
-}
-
-\section{Equivalently}{
-vecBin <- VectorDistribution$new(
-distribution = "Binomial",
-params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
-)
-vecBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-vecBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-vecBin$rand(10)'
-}
-
 \examples{
 
 ## ------------------------------------------------
@@ -212,28 +176,10 @@ Optional name of wrapped distribution.}
 Optional short name/ID of wrapped distribution.}
 
 \item{\code{decorators}}{\code{(character())} \cr
-Optional decorators to decorate the wrapped distribution with.}
+Decorators to add to the distribution during construction.}
 
 \item{\code{...}}{\cr
 Named arguments of parameters to set values for. See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
 }
 \if{html}{\out{</div>}}
 }
@@ -447,57 +393,18 @@ Returns vector of pdfs from each wrapped \link{Distribution}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
-Named arguments of parameters to set values for. See examples.}
-
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{log}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
+\item{\code{log}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
 \item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
 \link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -563,66 +470,21 @@ Same usage as \verb{$pdf.}
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
-Named arguments of parameters to set values for. See examples.}
-
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
 \item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
 \link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -652,66 +514,21 @@ Same usage as \verb{$cdf.}
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
-Named arguments of parameters to set values for. See examples.}
-
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
 \item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
 \link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -739,19 +556,7 @@ Number of points to simulate from the distribution. If length greater than \eqn{
 \code{n <- length(n)},}
 
 \item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
 \link[=data.table]{data.table::data.table}.}
 }
 \if{html}{\out{</div>}}

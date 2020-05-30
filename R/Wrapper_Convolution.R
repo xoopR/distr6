@@ -110,6 +110,7 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
 .distr6$wrappers <- append(.distr6$wrappers, list(Convolution = Convolution))
 
 #' @rdname Convolution
+#' @param x,y [Distribution]
 #' @examples
 #' binom <- Bernoulli$new() + Bernoulli$new()
 #' binom$pdf(2); Binomial$new(size = 2)$pdf(2)

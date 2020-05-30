@@ -8,7 +8,7 @@
 #' @templateVar params probability of success, \eqn{p},
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0}
-#' @templateVar paramsupport \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}
+#' @templateVar paramsupport \eqn{p \ \in \ [0, 1]}{p \epsilon [0, 1]}
 #' @templateVar distsupport \eqn{\{0,1\}}{{0,1}}
 #'
 #' @template param_prob

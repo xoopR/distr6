@@ -7,12 +7,15 @@
 #' @template class_decorator
 #' @template field_packages
 #' @template param_bounds
-#' @template method_cdf
-#' @template method_pdf
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
 #'
 #' @examples
-#' decorate(Exponential$new(), ExoticStatistics)
-#' Exponential$new(decorators = ExoticStatistics)
+#' decorate(Exponential$new(), "ExoticStatistics")
+#' Exponential$new(decorators = "ExoticStatistics")
 #' ExoticStatistics$new()$decorate(Exponential$new())
 #'
 #' @export
@@ -46,6 +49,11 @@ ExoticStatistics <- R6Class("ExoticStatistics", inherit = DistributionDecorator,
     #' \deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx}
     #' where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf
     #' and \eqn{f_X} is the pdf.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     survival = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       self$cdf(..., lower.tail = FALSE, log.p = log, simplify = simplify, data = data)
     },
@@ -54,6 +62,11 @@ ExoticStatistics <- R6Class("ExoticStatistics", inherit = DistributionDecorator,
     #' The hazard function is defined by
     #' \deqn{h_X(x) = \frac{f_X}{S_X}}{h_X(x) = f_X/S_X}
     #' where X is the distribution, \eqn{S_X} is the survival function and \eqn{f_X} is the pdf.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     hazard = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       if (log) {
         pdf <- self$pdf(..., simplify = simplify, data = data, log = TRUE)
@@ -70,6 +83,11 @@ ExoticStatistics <- R6Class("ExoticStatistics", inherit = DistributionDecorator,
     #' The cumulative hazard function is defined analytically by
     #' \deqn{H_X(x) = -log(S_X)}
     #' where X is the distribution and \eqn{S_X} is the survival function.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     cumHazard = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       if (!log) {
         return(-self$survival(..., log = TRUE, simplify = simplify, data = data))
@@ -184,14 +202,25 @@ NULL
 
 #' @title Survival Function
 #' @name survival
-#' @description The survival function of a probability distribution is the probability of surviving
-#' after a point x.
+#' @description See [ExoticStatistics]`$survival`.
 #'
-#' @usage survival(object, x1, log = FALSE)
+#' @usage survival(object, ..., log = FALSE, simplify = TRUE, data = NULL)
 #'
-#' @param object Distribution.
-#' @param x1 Point to evaluate the survival function at.
-#' @param log logical, if TRUE then the (natural) logarithm of the survival function is returned.
+#' @param object ([Distribution]).
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the probability density function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param log `logical(1)` \cr If `TRUE` returns log-Hazard Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#'[data.table::data.table][data.table].
+#'@param data [array] \cr
+#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#'to the distribution in the vector to evaluate.
 #'
 #' @return Survival function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
@@ -200,14 +229,25 @@ NULL
 
 #' @title Hazard Function
 #' @name hazard
-#' @description The hazard function of a probability distribution is the risk of instantaneous event at
-#' a point x.
+#' @description See [ExoticStatistics]`$hazard`.
 #'
-#' @usage hazard(object, x1, log = FALSE)
+#' @usage hazard(object, ..., log = FALSE, simplify = TRUE, data = NULL)
 #'
-#' @param object Distribution.
-#' @param x1 Point to evaluate the hazard function at.
-#' @param log logical, if TRUE then the (natural) logarithm of the hazard function is returned.
+#' @param object ([Distribution]).
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the probability density function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param log `logical(1)` \cr If `TRUE` returns log-Hazard Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#'[data.table::data.table][data.table].
+#'@param data [array] \cr
+#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#'to the distribution in the vector to evaluate.
 #'
 #' @return Hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
@@ -216,14 +256,25 @@ NULL
 
 #' @title Cumulative Hazard Function
 #' @name cumHazard
-#' @description The cumulative hazard function of a probability distribution is the anti-derivative of
-#' the hazard function.
+#' @description See [ExoticStatistics]`$cumHazard`.
 #'
-#' @usage cumHazard(object, x1, log = FALSE)
+#' @usage cumHazard(object, ..., log = FALSE, simplify = TRUE, data = NULL)
 #'
-#' @param object Distribution.
-#' @param x1 Point to evaluate the cumulative hazard function at.
-#' @param log logical, if TRUE then the (natural) logarithm of the cumulative hazard function is returned.
+#' @param object ([Distribution]).
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the probability density function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param log `logical(1)` \cr If `TRUE` returns log-cumHazard Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#'[data.table::data.table][data.table].
+#'@param data [array] \cr
+#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#'to the distribution in the vector to evaluate.
 #'
 #' @return Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'

@@ -17,7 +17,5 @@
 #' Optional name of wrapped distribution.
 #' @param short_name `(character(1))`\cr
 #' Optional short name/ID of wrapped distribution.
-#' @param decorators `(character())` \cr
-#' Optional decorators to decorate the wrapped distribution with.
 #'
 #' @family wrappers

@@ -2,7 +2,14 @@
 % Please edit documentation in R/Wrapper_ProductDistribution.R
 \name{ProductDistribution}
 \alias{ProductDistribution}
+\alias{*.Distribution}
 \title{Product Distribution}
+\usage{
+\method{*}{Distribution}(x, y)
+}
+\arguments{
+\item{x, y}{\link{Distribution}}
+}
 \value{
 Returns an R6 object of class ProductDistribution.
 }
@@ -75,6 +82,7 @@ p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$
 p$cdf(1:5)
 p$cdf(1)
 p$cdf(1, 2)
+Normal$new() * Binomial$new()
 }
 \seealso{
 Other wrappers: 
@@ -175,7 +183,7 @@ Optional name of wrapped distribution.}
 Optional short name/ID of wrapped distribution.}
 
 \item{\code{decorators}}{\code{(character())} \cr
-Optional decorators to decorate the wrapped distribution with.}
+Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
 }
@@ -206,44 +214,24 @@ Probability density function of the product distribution. Computed by
 \deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
 where \eqn{f_{Xi}} are the pdfs of the wrapped distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$pdf(..., log = FALSE, data = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{log}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{log}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-pdf. Default is \code{FALSE}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -275,53 +263,33 @@ Cumulative distribution function of the product distribution. Computed by
 \deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
 where \eqn{F_{Xi}} are the cdfs of the wrapped distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$cdf(..., lower.tail = TRUE, log.p = FALSE, data = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$cdf(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
@@ -355,6 +323,7 @@ The quantile function is not implemented for product distributions.
   ...,
   lower.tail = TRUE,
   log.p = FALSE,
+  simplify = TRUE,
   data = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -363,46 +332,20 @@ The quantile function is not implemented for product distributions.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the probability density function of the distribution. Arguments do not need
+Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the quantile (inverse-cdf) function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
 
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \link{X ≤ x}, otherwise, P\link{X > x}.}
-
-\item{\code{lower.tail}}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
-
-\item{\code{log.p}}{\code{logical(1)} \cr
-If \code{TRUE} returns quantile evaluated at exp(\code{p}). Default is \code{FALSE}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
 \item{\code{data}}{\link{array} \cr
 Alternative method to specify points to evaluate. If univariate then rows correspond with number

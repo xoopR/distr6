@@ -99,7 +99,7 @@ tn$cdf(1)
 
 By default the quantile method isn't added, but we could impute this using the `FunctionImputation` decorator:
 ```{r}
-decorate(tn, FunctionImputation)
+decorate(tn, "FunctionImputation")
 tn$quantile(0.9121888)
 tn$cdf(1.245) # As expected
 ```
@@ -131,7 +131,7 @@ P$rand(3)
 
 ### MixtureDistribution
 
-A mixture distribution is a distribution with both continuous and discrete parts. It is formed by taking a weighted product of the respective distributions pdfs/cdfs. By default the weights are assumed to follow the uniform distribution, i.e. the probability of each distribution is identical, but this can be edited. Below we take the mixture of Binomial, Normal and Exponential distributions.
+A mixture distribution is a weighted sum of component distributions. By default the weights are assumed to follow the uniform distribution, i.e. the probability of each distribution is identical, but this can be edited. Below we take the mixture of Binomial, Normal and Exponential distributions.
 ```{r}
 N <- Normal$new()
 B <- Binomial$new()
@@ -140,16 +140,8 @@ M <- MixtureDistribution$new(list(N, B, E), weights = c(0.1,0.5,0.4))
 print(M)
 M$description
 class(M)
-```
 
-Whilst mixture distributions are composites, they are still univariate:
-
-```{r}
-M$pdf(1)
-N$pdf(1) * 0.1 + B$pdf(1) * 0.5 + E$pdf(1) * 0.4
-M$cdf(1)
-M$rand(4)
-plot(x = seq.int(-3,10,0.1), y = M$pdf(seq.int(-3,10,0.1)),type="l")
+M$cdf(1:3)
 ```
 
 

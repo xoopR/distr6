@@ -7,16 +7,20 @@
 rand(object, n, simplify = TRUE)
 }
 \arguments{
-\item{object}{Distribution.}
+\item{object}{(\link{Distribution})}
 
-\item{n}{number of observations. If length(n) > 1, the length is taken to be the number required.}
+\item{n}{\code{(numeric(1))} \cr
+Number of points to simulate from the distribution. If length greater than \eqn{1}, then
+\code{n <- length(n)},}
 
-\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
+\item{simplify}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 }
 \value{
-Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
-or as a data.table.
+Simulations as either a numeric if \code{simplify} is TRUE
+or as a \link[data.table:data.table]{data.table::data.table}.
 }
 \description{
-Returns a given number of points sampled from the distribution.
+See \link{Distribution}\verb{$rand}
 }

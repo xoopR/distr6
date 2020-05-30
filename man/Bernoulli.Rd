@@ -11,7 +11,7 @@ Mathematical and statistical functions for the Bernoulli distribution, which
 is commonly used to model a two-outcome scenario.
 }
 \details{
-The Bernoulli distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0} for \eqn{p \ \in \ [0,1]}{p \epsilon [0,1]}.
+The Bernoulli distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0} for \eqn{p \ \in \ [0, 1]}{p \epsilon [0, 1]}.
 
 The distribution is supported on \eqn{\{0,1\}}{{0,1}}.
 }
@@ -352,7 +352,7 @@ Alternative argument for passing parameters. List names should be parameter name
 are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
-Passed to \link{stopwarn}.}
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
 }
 \if{html}{\out{</div>}}
 }

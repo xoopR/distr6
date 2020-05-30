@@ -28,13 +28,20 @@ The pdf of the Uniform distribution is defined by
 $$f(x) = 1/(b - a)$$
 where $b$ and $a$ are upper and lower limits respectively.
 
-Hence our pdf function needs to get the values of these limits,
+Hence our pdf function needs to get the values of these limits, and define the distribution support
 
 ```{r}
-pdf <- function(x1)return(1/(self$getParameterValue("upper")-self$getParameterValue("lower")))
+# non-vectorised
+pdf <- function(x){
+  pdf <- numeric(length(x))
+  lower <- self$getParameterValue("lower")
+  upper <- self$getParameterValue("upper")
+  pdf[x >= lower & x <= upper] = 1/(upper - lower)
+  return(pdf)
+}
 ```
 
-In distr6, all pdf and cdf functions use the first argument of `x1` this is because it generalises well to multivariate distributions which take as arguments `x1, x2,...`. You may also notice that we haven't added a `log` or `log.p` argument, even though these are in implemented distributions, this is because these are added automatically in construction (as well as lower.tail arguments)!
+In distr6, all pdf and cdf functions use the first argument of `x`, for univariates this is assumed to be a vector and for multivariates a matrix.
 
 ### ParameterSet
 
@@ -54,21 +61,23 @@ We have omitted the `updateFunc` and `description` arguments as these are very r
 We now have the basics required to construct our custom uniform distribution, the last thing we require is the distribution support. Often the support can be omitted, in which case, the default set of Reals will be used, but in the case of the uniform distribution the support is very important.
 
 ```{r}
-support = set6::Interval$new(1, 10)
-U <- Distribution$new(name = "Uniform", pdf = pdf, parameters = ps, support = support)
+support <- set6::Interval$new(1, 10)
+type <- set6::Reals$new()
+U <- Distribution$new(name = "Uniform", pdf = pdf, parameters = ps, support = support,
+                      type = type)
 ```
 
-The other intervals are filled in with the defaults,
+Other traits are automatically filled
 ```{r}
-U$type
-U$support
+U$traits
 ```
 
 And now we can use your distribution:
 ```{r}
-U$pdf(1:10)
+U$pdf(5)
 
-# The log argument is automatically added
+# The log argument can be imputed with decorators
+decorate(U, "CoreStatistics")
 U$pdf(4, log = T)
 
 # Automatically returns 0 when outside the support
@@ -78,15 +87,12 @@ U$pdf(11)
 
 But the cdf returns NULL as we never supplied a function, so we could supply one or we could impute it using the `FunctionImputation` decorator:
 ```{r}
-U$cdf(1:10)
-decorate(U, FunctionImputation)
-U$cdf(1:10)
+U$cdf(5)
+decorate(U, "FunctionImputation")
+U$cdf(5)
 
 # The same as expected
-punif(1:10, min=1, max=10)
-
-# And again other arguments are automatically added
-U$cdf(5, lower.tail = FALSE, log.p = TRUE)
+punif(5, min = 1, max = 10)
 ```
 
 ### Extra Arguments
@@ -100,12 +106,19 @@ Finally a whole host of other arguments could be supplied to the Distribution to
 ## Putting Everything Together
 
 ```{r}
-cdf <- function(x1)return((x1 -self$getParameterValue("lower"))/ (self$getParameterValue("upper")-self$getParameterValue("lower")))
+cdf <- function(x){
+  cdf <- numeric(length(x))
+  lower <- self$getParameterValue("lower")
+  upper <- self$getParameterValue("upper")
+  cdf[x >= upper] = 1
+  cdf[x >= lower & x < upper] = (x - lower) / (upper - lower)
+  return(cdf)
+}
 
 U <- Distribution$new(name = "Uniform", short_name = "unif", type = set6::Reals$new(),
                       support = set6::Interval$new(1, 10),  symmetric = TRUE, pdf = pdf, cdf = cdf, parameters = ps, description = "Custom uniform distribution")
 
-decorate(U, list(CoreStatistics, ExoticStatistics, FunctionImputation))
+decorate(U, c("CoreStatistics", "ExoticStatistics", "FunctionImputation"))
 
 U$mean()
 U$variance()

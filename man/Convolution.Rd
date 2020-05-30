@@ -10,6 +10,9 @@
 
 \method{-}{Distribution}(x, y)
 }
+\arguments{
+\item{x, y}{\link{Distribution}}
+}
 \value{
 Returns an R6 object of class Convolution.
 }
@@ -28,9 +31,9 @@ but only subtraction of continuous distributions.
 }
 \examples{
 binom <- Bernoulli$new() + Bernoulli$new()
-binom$pdf(2)
+binom$pdf(2); Binomial$new(size = 2)$pdf(2)
 norm <- Normal$new(mean = 3) - Normal$new(mean = 2)
-norm$pdf(1)
+norm$pdf(1); Normal$new(mean = 1, var = 2)$pdf(1)
 }
 \seealso{
 Other wrappers: 

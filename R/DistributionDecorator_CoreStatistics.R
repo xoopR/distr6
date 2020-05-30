@@ -11,8 +11,8 @@
 #' objects as well as adding generalised expectation and moments functions.
 #'
 #' @examples
-#' decorate(Exponential$new(), CoreStatistics)
-#' Exponential$new(decorators = CoreStatistics)
+#' decorate(Exponential$new(), "CoreStatistics")
+#' Exponential$new(decorators = "CoreStatistics")
 #' CoreStatistics$new()$decorate(Exponential$new())
 #'
 #' @export

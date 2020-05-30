@@ -9,48 +9,18 @@
 #' @template method_entropy
 #' @template method_pgf
 #' @template method_mgfcf
-#' @template method_pdf
-#' @template method_cdf
-#' @template method_quantile
-#' @template method_rand
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_n
+#' @template param_decorators
 #'
 #' @details A vector distribution is intented to vectorize distributions more efficiently than storing
 #' a list of distributions. To improve speed and reduce memory usage, distributions are only constructed
 #' when methods (e.g. d/p/q/r) are called.
 #'
-#' # not run to save time
-#' \dontrun{
-#'
-#'
-#' # Same wrapping for statistical functions
-#' vecDist$mean()
-#' c(vecDist[1]$mean(), vecDist[2]$mean())
-#' vecDist$entropy()
-#' c(vecDist[1]$entropy(), vecDist[2]$entropy())
-#'
-#' vecDist$cdf(1:5, 12:16)
-#' vecDist$rand(10)
-#'
-#' vecBin <- VectorDistribution$new(
-#'   distribution = "Binomial",
-#'   params = list(
-#'     list(prob = 0.1, size = 2),
-#'     list(prob = 0.6, size = 4),
-#'     list(prob = 0.2, size = 6)
-#'   )
-#' )
-#' vecBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-#' vecBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-#' vecBin$rand(10)
-#'
-#' # Equivalently
-#' vecBin <- VectorDistribution$new(
-#'   distribution = "Binomial",
-#'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
-#' )
-#' vecBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-#' vecBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-#' vecBin$rand(10)'
 #' @export
 VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrapper,
   lock_objects = FALSE,
@@ -334,19 +304,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
           return(dpqr)
         }
         private$.rand <- function(n) {
-          dpqr <- data.table()
-          if (private$.univariate) {
-            for (i in seq(ncol(x))) {
-              a_dpqr <- self[i]$rand(x[, i], log = log)
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
-          } else {
-            for (i in seq(dim(x)[3])) {
-              a_dpqr <- self[i]$rand(x[, , i], log = log)
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
-          }
-          return(dpqr)
+          return(sapply(self$wrappedModels(), function(x) x$rand(n)))
         }
       }
 
@@ -535,6 +493,11 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
 
     #' @description
     #' Returns vector of pdfs from each wrapped [Distribution].
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #' @examples
     #' vd <- VectorDistribution$new(
     #'  distribution = "Binomial",
@@ -602,6 +565,11 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     #' @description
     #' Returns vector of cdfs from each wrapped [Distribution].
     #' Same usage as `$pdf.`
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       if (is.null(data)) data <- as.matrix(data.table(...))
 
@@ -629,6 +597,11 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     #' @description
     #' Returns vector of quantiles from each wrapped [Distribution].
     #' Same usage as `$cdf.`
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       if (is.null(data)) data <- as.matrix(data.table(...))
 

@@ -5,10 +5,12 @@
 #'
 #' @template class_decorator
 #' @template field_packages
-#' @template method_pdf
-#' @template method_cdf
-#' @template method_quantile
-#' @template method_rand
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_n
 #' @template method_decorate
 #'
 #' @examples
@@ -18,11 +20,11 @@
 #'
 #' x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
 #' support = set6::Interval$new(1, 4), type = set6::Reals$new(),
-#' decorators = ExoticStatistics)
+#' decorators = "FunctionImputation")
 #'
 #' x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
 #' support = set6::Interval$new(1, 4), type = set6::Reals$new())
-#' ExoticStatistics$new()$decorate(x)
+#' FunctionImputation$new()$decorate(x)
 #'
 #' @export
 FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator,
@@ -84,6 +86,11 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' Numerical approximation to pdf. Imputed by subtracting or taking the numerical derivative
     #' of the cdf with [pracma::fderiv]. For discrete distributions, assumes support
     #' has no breaks on the integers.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
         data <- pdq_point_assert(..., self = self, data = data)
@@ -106,6 +113,11 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' @description
     #' Numerical approximation to cdf. Imputed by adding or taking the numerical integral
     #' of the pdf.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #' @param n `(numeric(1))` \cr
     #' Number of points to use when imputing a continuous cdf from the `pdf`, Simpson's rule
     #' is used for imputation.
@@ -142,6 +154,11 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' @description
     #' Numerical approximation to quantile. Imputed by creating a grid of points over the cdf
     #' and finding the inverse-cdf at the closest point on the grid.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #' @param n `(numeric(1))` \cr
     #' Number of points to use when imputing the quantile from the `cdf`. If an analytical `cdf`
     #' is not available then this is imputed first.
@@ -178,6 +195,11 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
     #' sampling. Otherwise if pdf is available then imputes by creating a fine grid of points in the
     #' distribution support and then sampling these. Otherwise uses inverse-transform sampling after
     #' first imputing the quantile function.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #' @param size_n `(numeric(1))` \cr
     #' Determines size of grid of points to sample from if no analytical quantile is available.
     rand = function(n, simplify = TRUE, size_n = 10001) {

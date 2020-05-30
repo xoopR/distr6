@@ -1,7 +1,7 @@
 #' @title Parameter Set Collections for Wrapped Distributions
 #'
 #' @template method_setParameterValue
-#' @template method_getParameterValue
+#' @template param_paramid
 #'
 #' @description
 #' ParameterSetCollection is used to combine multiple [ParameterSet]s in wrapped

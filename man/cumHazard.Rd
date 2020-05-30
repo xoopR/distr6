@@ -4,19 +4,32 @@
 \alias{cumHazard}
 \title{Cumulative Hazard Function}
 \usage{
-cumHazard(object, x1, log = FALSE)
+cumHazard(object, ..., log = FALSE, simplify = TRUE, data = NULL)
 }
 \arguments{
-\item{object}{Distribution.}
+\item{object}{(\link{Distribution}).}
 
-\item{x1}{Point to evaluate the cumulative hazard function at.}
+\item{...}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
 
-\item{log}{logical, if TRUE then the (natural) logarithm of the cumulative hazard function is returned.}
+\item{log}{\code{logical(1)} \cr If \code{TRUE} returns log-cumHazard Default is \code{FALSE}.}
+
+\item{simplify}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{data}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
 }
 \value{
 Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 }
 \description{
-The cumulative hazard function of a probability distribution is the anti-derivative of
-the hazard function.
+See \link{ExoticStatistics}\verb{$cumHazard}.
 }

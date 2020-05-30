@@ -1,9 +1,12 @@
 #' @title Product Distribution
 #' @description A wrapper for creating the joint distribution of multiple independent probability distributions.
 #' @template class_vecdist
-#' @template method_pdf
-#' @template method_cdf
-#' @template method_quantile
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_decorators
 #'
 #' @details Exploits the following relationships of independent distributions
 #'
@@ -91,7 +94,11 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' Probability density function of the product distribution. Computed by
     #'  \deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
     #'  where \eqn{f_{Xi}} are the pdfs of the wrapped distributions.
-    #'
+    #'@param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #' @examples
     #' p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
     #'   weights = c(0.2, 0.8)
@@ -99,7 +106,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' p$pdf(1:5)
     #' p$pdf(1)
     #' p$pdf(1, 2)
-    pdf = function(..., log = FALSE, data = NULL) {
+    pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       product_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
         univariate = private$.univariate
@@ -110,7 +117,11 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' Cumulative distribution function of the product distribution. Computed by
     #'  \deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
     #'  where \eqn{F_{Xi}} are the cdfs of the wrapped distributions.
-    #'
+    #'@param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
     #' @examples
     #' p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
     #'   weights = c(0.2, 0.8)
@@ -118,7 +129,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' p$cdf(1:5)
     #' p$cdf(1)
     #' p$cdf(1, 2)
-    cdf = function(..., lower.tail = TRUE, log.p = FALSE, data = NULL) {
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       product_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
         univariate = private$.univariate
@@ -127,9 +138,23 @@ ProductDistribution <- R6Class("ProductDistribution",
 
     #' @description
     #' The quantile function is not implemented for product distributions.
-    quantile = function(..., lower.tail = TRUE, log.p = FALSE, data = NULL) {
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       stop("Quantile is currently unavailable for product distributions.")
     }
   )
 )
 .distr6$wrappers <- append(.distr6$wrappers, list(ProductDistribution = ProductDistribution))
+
+#' @rdname ProductDistribution
+#' @param x,y [Distribution]
+#' @examples
+#' Normal$new() * Binomial$new()
+#' @export
+`*.Distribution` <- function(x, y) {
+  ProductDistribution$new(list(x, y))
+}

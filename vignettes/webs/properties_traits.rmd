@@ -33,13 +33,6 @@ N$traits
 Normal$new()$traits
 ```
 
-Or to view a specific trait:
-```{r}
-N$type
-N$valueSupport
-N$variateForm
-```
-
 
 ## Properties
 
@@ -55,17 +48,6 @@ To view properties in distr6, we use the `properties()` method
 ```{r}
 Normal$new()$properties
 ```
-
-And once again these can be viewed individually
-```{r}
-N <- Normal$new()
-N$kurtosisType
-N$skewnessType
-N$symmetry
-N$support
-```
-
-Note that `kurtosisType()` and `skewnessType()` are used as these produce the type of kurtosis and skewness respectively, as opposed to `kurtosis()` and `skewness()` which return the values.
 
 ## Other Distribution Variables
 

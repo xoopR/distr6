@@ -18,3 +18,5 @@ man-roxygen
 ^Meta$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.lintr
+^tic\.R
