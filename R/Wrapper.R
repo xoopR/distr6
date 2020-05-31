@@ -38,12 +38,14 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
     #' Wrapped distribution value support.
     #' @param variateForm `(character(1))`\cr
     #' Wrapped distribution variate form.
+    #' @param parameters `([ParameterSetCollection])`\cr
+    #' Optional parameters to add to the internal collection, ignored if `distlist` is given.
     #' @param outerID `([ParameterSet])`\cr
     #' Parameters added by the wrapper.
     initialize = function(distlist = NULL,
                           name, short_name, description,
                           support, type, valueSupport, variateForm,
-                          outerID = NULL) {
+                          parameters = NULL, outerID = NULL) {
 
       abstract(self, "DistributionWrapper")
 
@@ -81,6 +83,15 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
 
       if (length(paramlst) != 0) {
         private$.parameters <- ParameterSetCollection$new(lst = paramlst)
+      }
+
+      if (!is.null(parameters) & is.null(distlist)) {
+        assertParameterSetCollection(parameters)
+        if (is.null(private$.parameters)) {
+          private$.parameters <- parameters
+        } else {
+          private$.parameters$merge(parameters)
+        }
       }
 
       invisible(self)

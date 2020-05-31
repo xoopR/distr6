@@ -35,6 +35,7 @@
 #' for plottable distributions.
 #'
 #' @examples
+#' \dontrun{
 #' # Plot pdf and cdf of Normal
 #' plot(Normal$new())
 #'
@@ -53,6 +54,7 @@
 #'
 #' # Return plotting structure
 #' x <- plot(Gamma$new(), plot = FALSE)
+#' }
 #' @export
 plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
                               plot = TRUE, ask = FALSE, arrange = TRUE, ...) {

@@ -27,11 +27,13 @@ If \code{topn} and \code{ind} are both missing then all distributions are plotte
 Otherwise the function will error.
 }
 \examples{
+\dontrun{
 # Plot pdf of Normal distribution
 vd <- VectorDistribution$new(list(Normal$new(), Normal$new(mean = 2)))
 plot(vd)
 plot(vd, fun = "surv")
 plot(vd, fun = "quantile", ylim = c(-4, 4), col = c("blue", "purple"))
+}
 }
 \seealso{
 \link{plot.Distribution}

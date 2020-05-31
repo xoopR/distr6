@@ -538,6 +538,7 @@ as.ParameterSet.list <- function(x, ...) {
 #'
 #' @export
 "[.ParameterSet" <- function(ps, ids, prefix = NULL, ...) {
+  id <- NULL # added to remove the NOTE, is overwritten immediately
   dt <- as.data.table(ps)
   if (grepl("_$", ids)) {
     dt <- subset(dt, grepl(ids, id))

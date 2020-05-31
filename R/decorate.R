@@ -7,36 +7,32 @@
 #' use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
 #' to impute missing d/p/q/r functions.
 #'
-#' The \code{decorators} parameter should either be a list of decorator classes or their names
-#' or a single decorator class; see examples.
+#' @param distribution `([Distribution])`\cr
+#' [Distribution] to decorate.
+#' @param decorators `(character())`
+#' Vector of [DistributionDecorator] names to decorate the [Distribution] with.
+#' @param ... `ANY` \cr
+#' Extra arguments passed down to specific decorators.
 #'
-#' @param distribution distribution to decorate
-#' @param decorators vector of decorator names
-#'
-#'
-#' @seealso \code{\link{listDecorators}} for available decorators.
+#' @seealso [listDecorators()] for available decorators and [DistributionDecorator] for the parent
+#' class.
 #'
 #' @examples
 #' B <- Binomial$new()
-#' decorate(B, CoreStatistics)
-#'
-#' E <- Exponential$new()
-#' decorate(E, list(CoreStatistics, ExoticStatistics))
-#'
-#' E <- Exponential$new()
-#' decorate(E, list(CoreStatistics, "ExoticStatistics"))
+#' decorate(B, "CoreStatistics")
 #'
 #' E <- Exponential$new()
 #' decorate(E, c("CoreStatistics", "ExoticStatistics"))
-#' @return Returns a decorated R6 object inheriting from class SDistribution with the methods listed
-#' from one of the available decorators added to the SDistribution methods.
+#'
+#' @return Returns a [Distribution] with additional methods from the chosen
+#' [DistributionDecorator].
 #'
 #' @references
 #' Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
 #' of Reusable Object-Oriented Software.” Addison-Wesley.
 #'
 #' @export
-decorate <- function(distribution, decorators) {
+decorate <- function(distribution, decorators, ...) {
 
   checkmate::assertSubset(decorators, listDecorators())
   assertDistribution(distribution)
@@ -51,7 +47,7 @@ decorate <- function(distribution, decorators) {
       decorators = setdiff(decorators, distribution$decorators)
     }
 
-    suppressMessages(lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution)))
+    suppressMessages(lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution, ...)))
 
     message(paste(distribution$name, "is now decorated with", paste0(decorators, collapse = ",")))
     return(distribution)

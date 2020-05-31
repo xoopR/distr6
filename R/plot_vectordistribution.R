@@ -16,14 +16,16 @@
 #' @seealso [plot.Distribution]
 #'
 #' @examples
+#' \dontrun{
 #' # Plot pdf of Normal distribution
 #' vd <- VectorDistribution$new(list(Normal$new(), Normal$new(mean = 2)))
 #' plot(vd)
 #' plot(vd, fun = "surv")
 #' plot(vd, fun = "quantile", ylim = c(-4, 4), col = c("blue", "purple"))
+#' }
 #' @export
 plot.VectorDistribution <- function(x, fun = "pdf", topn, ind, cols, ...) {
-  stopifnot(getR6Class(x), "VectorDistribution")
+  stopifnot(getR6Class(x) == "VectorDistribution")
 
   if (!missing(ind)) {
     dist <- x[ind]

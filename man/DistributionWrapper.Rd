@@ -79,6 +79,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   type,
   valueSupport,
   variateForm,
+  parameters = NULL,
   outerID = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -109,6 +110,9 @@ Wrapped distribution value support.}
 
 \item{\code{variateForm}}{\code{(character(1))}\cr
 Wrapped distribution variate form.}
+
+\item{\code{parameters}}{\verb{([ParameterSetCollection])}\cr
+Optional parameters to add to the internal collection, ignored if \code{distlist} is given.}
 
 \item{\code{outerID}}{\verb{([ParameterSet])}\cr
 Parameters added by the wrapper.}

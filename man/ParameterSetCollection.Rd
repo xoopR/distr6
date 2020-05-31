@@ -42,7 +42,7 @@ g <- Geometric$new()
 psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
                                   Binom2 = b$parameters(),
                                   Geom = g$parameters())
-ps$getParameterSupport("Binom1_prob")
+psc$getParameterSupport("Binom1_prob")
 
 ## ------------------------------------------------
 ## Method `ParameterSetCollection$setParameterValue`
@@ -64,6 +64,17 @@ g$setParameterValue(prob = 0.1)
 # both updated
 psc$getParameterValue("Geom_prob")
 g$getParameterValue("prob")
+
+## ------------------------------------------------
+## Method `ParameterSetCollection$merge`
+## ------------------------------------------------
+
+b <- Binomial$new()
+g <- Geometric$new()
+psc <- ParameterSetCollection$new(Binom = b$parameters())
+psc2 <- ParameterSetCollection$new(Geom = g$parameters())
+psc$merge(psc2)$parameters()
+
 }
 \section{Super class}{
 \code{\link[distr6:ParameterSet]{distr6::ParameterSet}} -> \code{ParameterSetCollection}
@@ -84,13 +95,13 @@ g$getParameterValue("prob")
 \item \href{#method-getParameterValue}{\code{ParameterSetCollection$getParameterValue()}}
 \item \href{#method-getParameterSupport}{\code{ParameterSetCollection$getParameterSupport()}}
 \item \href{#method-setParameterValue}{\code{ParameterSetCollection$setParameterValue()}}
+\item \href{#method-merge}{\code{ParameterSetCollection$merge()}}
 \item \href{#method-clone}{\code{ParameterSetCollection$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="ParameterSet" data-id="merge">}\href{../../distr6/html/ParameterSet.html#method-merge}{\code{distr6::ParameterSet$merge()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -237,7 +248,7 @@ g <- Geometric$new()
 psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
                                   Binom2 = b$parameters(),
                                   Geom = g$parameters())
-ps$getParameterSupport("Binom1_prob")
+psc$getParameterSupport("Binom1_prob")
 }
 \if{html}{\out{</div>}}
 
@@ -288,6 +299,43 @@ g$setParameterValue(prob = 0.1)
 # both updated
 psc$getParameterValue("Geom_prob")
 g$getParameterValue("prob")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-merge"></a>}}
+\if{latex}{\out{\hypertarget{method-merge}{}}}
+\subsection{Method \code{merge()}}{
+Merges other \link{ParameterSetCollection}s into \code{self}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$merge(..., lst = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\verb{([ParameterSetCollection]s)}}
+
+\item{\code{lst}}{\code{(list(1))} \cr
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.}
+
+\item{\code{`lst`}}{\code{(list())} \cr
+Alternative method of passing a list of \link{ParameterSetCollection}s.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{b <- Binomial$new()
+g <- Geometric$new()
+psc <- ParameterSetCollection$new(Binom = b$parameters())
+psc2 <- ParameterSetCollection$new(Geom = g$parameters())
+psc$merge(psc2)$parameters()
+
 }
 \if{html}{\out{</div>}}
 

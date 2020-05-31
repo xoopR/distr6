@@ -20,38 +20,6 @@
 #' in the ability to use multiple distributions but the latter is useful for quickly combining many
 #' distributions of the same type. See examples.
 #'
-#' @return Returns an R6 object of class ProductDistribution.
-#'
-#' @examples
-#' prodBin <- ProductDistribution$new(list(Binomial$new(
-#'   prob = 0.5,
-#'   size = 10
-#' ), Normal$new(mean = 15)))
-#' prodBin$pdf(x1 = 2, x2 = 3)
-#' prodBin$cdf(1:5, 12:16)
-#' prodBin$quantile(c(0.1, 0.2), c(0.3, 0.4))
-#' prodBin$rand(10)
-#'
-#' prodBin <- ProductDistribution$new(
-#'   distribution = Binomial,
-#'   params = list(
-#'     list(prob = 0.1, size = 2),
-#'     list(prob = 0.6, size = 4),
-#'     list(prob = 0.2, size = 6)
-#'   )
-#' )
-#' prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-#' prodBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-#' prodBin$rand(10)
-#'
-#' # Equivalently
-#' prodBin <- ProductDistribution$new(
-#'   distribution = "Binomial",
-#'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
-#' )
-#' prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-#' prodBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-#' prodBin$rand(10)
 #' @export
 ProductDistribution <- R6Class("ProductDistribution",
   inherit = VectorDistribution,
@@ -59,6 +27,26 @@ ProductDistribution <- R6Class("ProductDistribution",
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @examples
+    #' ProductDistribution$new(list(Binomial$new(
+    #'   prob = 0.5,
+    #'   size = 10
+    #' ), Normal$new(mean = 15)))
+    #'
+    #' ProductDistribution$new(
+    #'   distribution = "Binomial",
+    #'   params = list(
+    #'     list(prob = 0.1, size = 2),
+    #'     list(prob = 0.6, size = 4),
+    #'     list(prob = 0.2, size = 6)
+    #'   )
+    #' )
+    #'
+    #' # Equivalently
+    #' ProductDistribution$new(
+    #'   distribution = "Binomial",
+    #'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+    #' )
     initialize = function(distlist = NULL, distribution = NULL, params = NULL,
                           shared_params = NULL,
                           name = NULL, short_name = NULL,
@@ -100,12 +88,12 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     #' @examples
-    #' p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-    #'   weights = c(0.2, 0.8)
-    #' )
+    #' p <- ProductDistribution$new(list(
+    #' Binomial$new(prob = 0.5, size = 10),
+    #' Binomial$new()))
     #' p$pdf(1:5)
-    #' p$pdf(1)
     #' p$pdf(1, 2)
+    #' p$pdf(1:2)
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       product_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
@@ -123,12 +111,12 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     #' @examples
-    #' p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-    #'   weights = c(0.2, 0.8)
-    #' )
+    #' p <- ProductDistribution$new(list(
+    #' Binomial$new(prob = 0.5, size = 10),
+    #' Binomial$new()))
     #' p$cdf(1:5)
-    #' p$cdf(1)
     #' p$cdf(1, 2)
+    #' p$cdf(1:2)
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       product_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),

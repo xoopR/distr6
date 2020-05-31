@@ -50,6 +50,7 @@ parameter only applies to that function, otherwise it applies to them all. See e
 description.
 }
 \examples{
+\dontrun{
 # Plot pdf and cdf of Normal
 plot(Normal$new())
 
@@ -68,6 +69,7 @@ plot(Geometric$new(),
 
 # Return plotting structure
 x <- plot(Gamma$new(), plot = FALSE)
+}
 }
 \seealso{
 \code{\link{lines.Distribution}} for superimposing a distr6 object and \code{\link{listDistributions}}

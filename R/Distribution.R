@@ -845,10 +845,6 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     .isQuantile =  0L,
     .isRand =  0L,
     .log =  FALSE,
-    .pdf = NULL,
-    .cdf = NULL,
-    .quantile = NULL,
-    .rand = NULL,
     .updateDecorators = function(decs) {
       private$.decorators <- decs
     }
@@ -948,7 +944,7 @@ NULL
 
 #' @title Inverse Cumulative Distribution Function
 #' @description See [Distribution]`$quantile`
-#' @usage \method{quantile}{Distribution}(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
+#' @importFrom stats quantile
 #' @param x ([Distribution])
 #' @param ... `(numeric())` \cr
 #' Points to evaluate the quantile function of the distribution. Arguments do not need

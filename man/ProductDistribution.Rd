@@ -10,9 +10,6 @@
 \arguments{
 \item{x, y}{\link{Distribution}}
 }
-\value{
-Returns an R6 object of class ProductDistribution.
-}
 \description{
 A wrapper for creating the joint distribution of multiple independent probability distributions.
 }
@@ -31,57 +28,52 @@ distributions of the same type. See examples.
 }
 
 \examples{
-prodBin <- ProductDistribution$new(list(Binomial$new(
+
+## ------------------------------------------------
+## Method `ProductDistribution$new`
+## ------------------------------------------------
+
+ProductDistribution$new(list(Binomial$new(
   prob = 0.5,
   size = 10
 ), Normal$new(mean = 15)))
-prodBin$pdf(x1 = 2, x2 = 3)
-prodBin$cdf(1:5, 12:16)
-prodBin$quantile(c(0.1, 0.2), c(0.3, 0.4))
-prodBin$rand(10)
 
-prodBin <- ProductDistribution$new(
-  distribution = Binomial,
+ProductDistribution$new(
+  distribution = "Binomial",
   params = list(
     list(prob = 0.1, size = 2),
     list(prob = 0.6, size = 4),
     list(prob = 0.2, size = 6)
   )
 )
-prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-prodBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-prodBin$rand(10)
 
 # Equivalently
-prodBin <- ProductDistribution$new(
+ProductDistribution$new(
   distribution = "Binomial",
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )
-prodBin$pdf(x1 = 1, x2 = 2, x3 = 3)
-prodBin$cdf(x1 = 1, x2 = 2, x3 = 3)
-prodBin$rand(10)
 
 ## ------------------------------------------------
 ## Method `ProductDistribution$pdf`
 ## ------------------------------------------------
 
-p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-  weights = c(0.2, 0.8)
-)
+p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
 p$pdf(1:5)
-p$pdf(1)
 p$pdf(1, 2)
+p$pdf(1:2)
 
 ## ------------------------------------------------
 ## Method `ProductDistribution$cdf`
 ## ------------------------------------------------
 
-p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-  weights = c(0.2, 0.8)
-)
+p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
 p$cdf(1:5)
-p$cdf(1)
 p$cdf(1, 2)
+p$cdf(1:2)
 Normal$new() * Binomial$new()
 }
 \seealso{
@@ -187,6 +179,32 @@ Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{ProductDistribution$new(list(Binomial$new(
+  prob = 0.5,
+  size = 10
+), Normal$new(mean = 15)))
+
+ProductDistribution$new(
+  distribution = "Binomial",
+  params = list(
+    list(prob = 0.1, size = 2),
+    list(prob = 0.6, size = 4),
+    list(prob = 0.2, size = 6)
+  )
+)
+
+# Equivalently
+ProductDistribution$new(
+  distribution = "Binomial",
+  params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-strprint"></a>}}
@@ -243,12 +261,12 @@ to the distribution in the vector to evaluate.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-  weights = c(0.2, 0.8)
-)
+\preformatted{p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
 p$pdf(1:5)
-p$pdf(1)
 p$pdf(1, 2)
+p$pdf(1:2)
 }
 \if{html}{\out{</div>}}
 
@@ -301,12 +319,12 @@ to the distribution in the vector to evaluate.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{p <- ProductDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Binomial$new()),
-  weights = c(0.2, 0.8)
-)
+\preformatted{p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
 p$cdf(1:5)
-p$cdf(1)
 p$cdf(1, 2)
+p$cdf(1:2)
 }
 \if{html}{\out{</div>}}
 

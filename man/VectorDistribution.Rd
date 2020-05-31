@@ -84,8 +84,6 @@ Other wrappers:
 \item{\code{modelTable}}{Returns reference table of wrapped \link{Distribution}s.}
 
 \item{\code{distlist}}{Returns list of constructed wrapped \link{Distribution}s.}
-
-\item{\code{shared_params}}{Returns list of shared parameters.}
 }
 \if{html}{\out{</div>}}
 }

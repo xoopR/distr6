@@ -70,8 +70,8 @@ test_that("basic pdf checks", {
   expect_null(cont_pdf$cdf(1))
   expect_null(cont_pdf$quantile(1))
   expect_null(cont_pdf$rand(1))
-  expect_message(decorate(cont_pdf, "FunctionImputation"))
-  expect_message(decorate(disc_pdf, "FunctionImputation"))
+  expect_message(decorate(cont_pdf, "FunctionImputation", n = 50000))
+  expect_message(decorate(disc_pdf, "FunctionImputation", n = 50000))
   expect_silent(cont_pdf$pdf(1))
   expect_message(cont_pdf$cdf(1))
   expect_message(cont_pdf$quantile(0.42))
@@ -81,6 +81,9 @@ test_that("basic pdf checks", {
   expect_equal(isCdf(cont_pdf), -1L)
   expect_equal(isQuantile(cont_pdf), -1L)
   expect_equal(isRand(cont_pdf), -1L)
+
+  expect_equal(cont_pdf$.__enclos_env__$private$n_grid, 50000)
+  expect_equal(disc_pdf$.__enclos_env__$private$n_grid, 50000)
 })
 
 #----------
@@ -118,7 +121,7 @@ test_that("discrete pdf2quantile", {
 
 test_that("continuous pdf2quantile", {
   set.seed(2)
-  r <- cont_pdf$rand(1000, size_n = 100001)
+  r <- cont_pdf$rand(1000)
   t <- round(rexp(1000), 1)
   expect_warning(expect_true(ks.test(r, t)$p.value > 0.05))
   expect_equal(length(r), 1000)
@@ -150,8 +153,8 @@ test_that("basic cdf checks", {
   expect_silent(cont_cdf$cdf(1))
   expect_null(cont_cdf$quantile(0.42))
   expect_null(cont_cdf$rand(1))
-  expect_message(decorate(cont_cdf, "FunctionImputation"))
-  expect_message(decorate(disc_cdf, "FunctionImputation"))
+  expect_message(decorate(cont_cdf, "FunctionImputation", n = 10000))
+  expect_message(decorate(disc_cdf, "FunctionImputation", n = 10000))
   expect_message(cont_cdf$pdf(1))
   expect_silent(cont_cdf$cdf(1))
   expect_message(cont_cdf$quantile(0.42))
@@ -161,6 +164,9 @@ test_that("basic cdf checks", {
   expect_equal(isCdf(cont_cdf), 1L)
   expect_equal(isQuantile(cont_cdf), -1L)
   expect_equal(isRand(cont_cdf), -1L)
+
+  expect_equal(cont_cdf$.__enclos_env__$private$n_grid, 10000)
+  expect_equal(disc_cdf$.__enclos_env__$private$n_grid, 10000)
 })
 #----------
 # cdf2pdf
@@ -197,7 +203,7 @@ test_that("discrete cdf2quantile", {
 
 test_that("continuous cdf2rand", {
   set.seed(2)
-  r <- cont_cdf$rand(100, size_n = 10001)
+  r <- cont_cdf$rand(100)
   t <- rexp(100)
   expect_true(ks.test(r, t)$p.value > 0.05)
   expect_equal(length(r), 100)

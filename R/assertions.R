@@ -101,8 +101,63 @@ assertParameterSetList <- function() {}
 
 makeChecks(
   assertionName = "ParameterSetList",
-  cond = all(unlist(lapply(object, inherits, "ParameterSet"))),
+  cond = all(sapply(object, inherits, "ParameterSet")),
   defaulterrormsg = "One or more items in the list are not ParameterSets",
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSetCollection
+#' @description Validation checks to test if a given object is a [ParameterSetCollection].
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSetCollection(5) # FALSE
+#' testParameterSetCollection(ParameterSetCollection$new(Binom = Binomial$new()$parameters())) # TRUE
+#' @export
+testParameterSetCollection <- function() {}
+#' @rdname testParameterSetCollection
+#' @export
+checkParameterSetCollection <- function() {}
+#' @rdname testParameterSetCollection
+#' @export
+assertParameterSetCollection <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSetCollection",
+  cond = inherits(object, "ParameterSetCollection"),
+  defaulterrormsg = paste(object, "is not an R6 ParameterSetCollection object"),
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSetCollectionList
+#' @description Validation checks to test if a given object is a list of [ParameterSetCollection]s.
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSetCollectionList(list(Binomial$new(), 5)) # FALSE
+#' testParameterSetCollectionList(list(ParameterSetCollection$new(
+#'     Binom = Binomial$new()$parameters()))) # TRUE
+#' @export
+testParameterSetCollectionList <- function() {}
+#' @rdname testParameterSetCollectionList
+#' @export
+checkParameterSetCollectionList <- function() {}
+#' @rdname testParameterSetCollectionList
+#' @export
+assertParameterSetCollectionList <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSetCollectionList",
+  cond = all(sapply(object, inherits, "ParameterSetCollection")),
+  defaulterrormsg = "One or more items in the list are not ParameterSetCollections",
   pos = environment()
 )
 
@@ -318,7 +373,7 @@ assertNegativeSkew <- function() {}
 
 makeChecks(
   assertionName = "NegativeSkew",
-  cond = object$properties$skewnessType == "Negative Skew",
+  cond = object$properties$skewness == "Negative Skew",
   defaulterrormsg = paste(object$short_name, "is not negative skew"),
   pos = environment()
 )
@@ -345,7 +400,7 @@ assertPositiveSkew <- function() {}
 
 makeChecks(
   assertionName = "PositiveSkew",
-  cond = object$properties$skewnessType == "Positive Skew",
+  cond = object$properties$skewness == "Positive Skew",
   defaulterrormsg = paste(object$short_name, "is not positive skew"),
   pos = environment()
 )
@@ -373,7 +428,7 @@ assertNoSkew <- function() {}
 
 makeChecks(
   assertionName = "NoSkew",
-  cond = object$properties$skewnessType == "No Skew",
+  cond = object$properties$skewness == "No Skew",
   defaulterrormsg = paste(object$short_name, "is not no skew"),
   pos = environment()
 )
@@ -400,7 +455,7 @@ assertPlatykurtic <- function() {}
 
 makeChecks(
   assertionName = "Platykurtic",
-  cond = object$properties$kurtosisType == "platykurtic",
+  cond = object$properties$kurtosis == "platykurtic",
   defaulterrormsg = paste(object$short_name, "is not platykurtic"),
   pos = environment()
 )
@@ -427,7 +482,7 @@ assertMesokurtic <- function() {}
 
 makeChecks(
   assertionName = "Mesokurtic",
-  cond = object$properties$kurtosisType == "mesokurtic",
+  cond = object$properties$kurtosis == "mesokurtic",
   defaulterrormsg = paste(object$short_name, "is not mesokurtic"),
   pos = environment()
 )
@@ -454,7 +509,7 @@ assertLeptokurtic <- function() {}
 
 makeChecks(
   assertionName = "Leptokurtic",
-  cond = object$properties$kurtosisType == "leptokurtic",
+  cond = object$properties$kurtosis == "leptokurtic",
   defaulterrormsg = paste(object$short_name, "is not leptokurtic"),
   pos = environment()
 )

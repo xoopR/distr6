@@ -147,6 +147,10 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' Simulation function for mixture distributions. Samples are drawn from a mixture by first
     #' sampling Multinomial(probs = weights, size = n), then sampling each distribution according
     #' to the samples from the Multinomial, and finally randomly permuting these draws.
+    #' @examples
+    #' m <- MixtureDistribution$new(distribution = "Normal",
+    #' params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
+    #' m$rand(5)
     rand = function(n, simplify = TRUE) {
       weights <- private$.outerParameters$getParameterValue("weights")
 

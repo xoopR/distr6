@@ -28,8 +28,7 @@
 
   f = matrix(f, nrow = n, ncol = n)
 
-  plotly::plot_ly(x = x, y = x, z = f) %>%
-    plotly::add_surface()
+  plotly::add_surface(plotly::plot_ly(x = x, y = x, z = f))
 
   # return(plotStructure)
 }

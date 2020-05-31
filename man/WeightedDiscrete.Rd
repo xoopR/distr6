@@ -20,8 +20,8 @@ as the x values and the pdf as the probabilities. The cdf and quantile assume th
 elements are supplied in an indexed order (otherwise the results are meaningless).
 }
 \examples{
-x <- WeightedDiscrete$new(data = data.frame(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5)))
-WeightedDiscrete$new(data = data.frame(x = 1:3, cdf = c(1 / 5, 4 / 5, 1))) # equivalently
+x <- WeightedDiscrete$new(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5))
+WeightedDiscrete$new(x = 1:3, cdf = c(1 / 5, 4 / 5, 1)) # equivalently
 
 # d/p/q/r
 x$pdf(1:5)

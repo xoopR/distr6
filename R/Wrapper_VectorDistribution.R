@@ -97,7 +97,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
           names(shared_params) = gsub(".", "_", names(shared_params), fixed = TRUE)
           params <- c(params, shared_params)
         }
-        private$.parameters <- ParameterSetCollection$new(lst = paramlst)$setParameterValue(lst = params)
+        parameters <- ParameterSetCollection$new(lst = paramlst)$setParameterValue(lst = params)
 
         # distribution name by shared_param, param, or default
         if ("short_name" %in% names(shared_params)) {
@@ -111,7 +111,6 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
         private$.modelTable <- as.data.table(
           data.frame(Distribution = distribution, shortname = names(paramlst))
         )
-        private$.sharedparams <- shared_params #FIXME
 
         # set univariate flag for calling d/p/q/r
         private$.univariate <- pdist$private_fields$.traits$variateForm == "univariate"
@@ -244,7 +243,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
         names(distlist) <- shortname
 
         # create parameterset
-        private$.parameters <- ParameterSetCollection$new(lst = paramlst)
+        parameters <- ParameterSetCollection$new(lst = paramlst)
 
         private$.univariate <- vf == "univariate"
 
@@ -346,6 +345,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
         type = type,
         valueSupport = valueSupport,
         variateForm = "multivariate",
+        parameters = parameters,
         ...
       )
     },
@@ -659,11 +659,6 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     #' Returns list of constructed wrapped [Distribution]s.
     distlist = function() {
       return(private$.distlist)
-    },
-    #' @field shared_params
-    #' Returns list of shared parameters.
-    shared_params = function() {
-      return(private$.sharedparams)
     }
   ),
 

@@ -22,7 +22,7 @@
 #' x <- Distribution$new("Test", pdf = pdf,
 #' support = set6::Interval$new(1, 10, class = "integer"),
 #' type = set6::Naturals$new())
-#' decorate(x, "FunctionImputation")
+#' decorate(x, "FunctionImputation", n = 1000)
 #'
 #' x <- Distribution$new("Test", pdf = pdf,
 #' support = set6::Interval$new(1, 10, class = "integer"),
@@ -32,7 +32,7 @@
 #' x <- Distribution$new("Test", pdf = pdf,
 #' support = set6::Interval$new(1, 10, class = "integer"),
 #' type = set6::Naturals$new())
-#' FunctionImputation$new()$decorate(x)
+#' FunctionImputation$new()$decorate(x, n = 1000)
 #'
 #' x$pdf(1:10)
 #' x$cdf(1:10)

@@ -26,8 +26,8 @@
 #' @family univariate distributions
 #'
 #' @examples
-#' x <- WeightedDiscrete$new(data = data.frame(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5)))
-#' WeightedDiscrete$new(data = data.frame(x = 1:3, cdf = c(1 / 5, 4 / 5, 1))) # equivalently
+#' x <- WeightedDiscrete$new(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5))
+#' WeightedDiscrete$new(x = 1:3, cdf = c(1 / 5, 4 / 5, 1)) # equivalently
 #'
 #' # d/p/q/r
 #' x$pdf(1:5)
@@ -219,8 +219,6 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$pdf)) stopifnot(length(lst$pdf) == length(self$getParameterValue("x")))
-      if (!is.null(lst$cdf)) stopifnot(length(lst$cdf) == length(self$getParameterValue("x")))
       super$setParameterValue(lst = lst, error = error)
     }
   ),
@@ -283,10 +281,11 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
       lst <- list()
       if (!is.null(paramlst$x)) message("'x' cannot be updated after construction.")
       if (!is.null(paramlst$pdf)) lst$pdf <- paramlst$pdf
-      if (!is.null(paramlst$cdf)) lst$pdf <- c(paramlst$cdf[1], paramlst$cdf)
+      if (!is.null(paramlst$cdf)) lst$pdf <- c(paramlst$cdf[1], diff(paramlst$cdf))
 
-      if (!is.null(paramlst$pdf)) {
-        checkmate::assertNumeric(paramlst$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
+      if (!is.null(lst$pdf)) {
+        stopifnot(length(lst$pdf) == length(self$getParameterValue("x")))
+        checkmate::assertNumeric(lst$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
       }
 
       return(lst)

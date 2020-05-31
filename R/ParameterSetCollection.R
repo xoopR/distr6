@@ -107,7 +107,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
     #'                                   Binom2 = b$parameters(),
     #'                                   Geom = g$parameters())
-    #' ps$getParameterSupport("Binom1_prob")
+    #' psc$getParameterSupport("Binom1_prob")
     getParameterSupport = function(id, error = "warn") {
       param <- strsplit(id, "_", fixed = TRUE)[[1]]
       private$.parametersets[[param[1]]]$getParameterSupport(param[2], error = error)
@@ -147,6 +147,29 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
         private$.parametersets[[i]]$setParameterValue(lst = newlst)
       }
 
+      invisible(self)
+    },
+
+    #' @description
+    #' Merges other [ParameterSetCollection]s into `self`.
+    #' @param ... `([ParameterSetCollection]s)`
+    #' @param `lst` `(list())` \cr
+    #' Alternative method of passing a list of [ParameterSetCollection]s.
+    #' @examples
+    #' b <- Binomial$new()
+    #' g <- Geometric$new()
+    #' psc <- ParameterSetCollection$new(Binom = b$parameters())
+    #' psc2 <- ParameterSetCollection$new(Geom = g$parameters())
+    #' psc$merge(psc2)$parameters()
+    #'
+    merge = function(..., lst = NULL) {
+      if (is.null(lst)) lst <- list(...)
+      assertParameterSetCollectionList(lst)
+      selflst <- private$.parametersets
+      mlst <- unlist(lapply(lst, function(x) x$.__enclos_env__$private$.parametersets))
+      newlst <- c(selflst, mlst)
+      checkmate::assertNames(names(newlst), "strict")
+      private$.parametersets <- newlst
       invisible(self)
     }
   ),
