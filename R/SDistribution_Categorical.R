@@ -41,7 +41,7 @@ Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
     #' @param ... `(ANY)`\cr
     #' Categories in the distribution, see examples.
     #' @param probs `numeric()`\cr
-    #' Probabilities of respective categories occurring, defined in $[0, 1]$.
+    #' Probabilities of respective categories occurring.
     #'
     #' @examples
     #' # Note probabilities are automatically normalised

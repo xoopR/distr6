@@ -11,7 +11,7 @@ Mathematical and statistical functions for the Binomial distribution, which
 is commonly used to model the number of successes out of a number of independent trials.
 }
 \details{
-The Binomial distribution parameterised with  number of trials, n, and probability of success, p, is defined by the pmf, \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}} for \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+The Binomial distribution parameterised with  number of trials, n, and probability of success, p, is defined by the pmf, \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}} for \eqn{n = 0,1,2,\ldots} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
 The distribution is supported on \eqn{{0, 1,...,n}}.
 }
@@ -149,11 +149,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 Number of trials, defined on the positive Naturals.}
 
 \item{\code{prob}}{\code{(numeric(1))} \cr
-Probability of success, should be defined in $\link{0, 1}$.}
+Probability of success.}
 
 \item{\code{qprob}}{\code{(numeric(1))} \cr
-Probability of failure, should be defined in $\link{0, 1}$. \code{qprob = 1 - prob}.
-If provided then \code{prob} is ignored.}
+Probability of failure. If provided then \code{prob} is ignored. \code{qprob = 1 - prob}.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

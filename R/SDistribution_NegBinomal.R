@@ -7,7 +7,7 @@
 #' @templateVar params number of failures before successes, \eqn{n}, and probability of success, \eqn{p},
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
-#' @templateVar paramsupport \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
+#' @templateVar paramsupport \eqn{n = {0,1,2,\ldots}} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below)
 #' @details
 #' The Negative Binomial distribution can refer to one of four distributions (forms):

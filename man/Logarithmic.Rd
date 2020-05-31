@@ -145,7 +145,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{theta}}{\code{(numeric(1))}\cr
-Theta parameter defined between $\link{0, 1}$.}
+Theta parameter defined as a probability between \code{0} and \code{1}.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

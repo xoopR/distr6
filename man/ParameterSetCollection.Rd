@@ -13,12 +13,14 @@ distributions. Generally only need to be constructed internally.
 ## Method `ParameterSetCollection$new`
 ## ------------------------------------------------
 
-ParameterSetCollection$new(Binom1 = b1$parameters(),
-                           Binom2 = b2$parameters(),
+b = Binomial$new()
+g = Geometric$new()
+ParameterSetCollection$new(Binom1 = b$parameters(),
+                           Binom2 = b$parameters(),
                            Geom = g$parameters())
 
-ParameterSetCollection$new(lst = list(Binom1 = b1$parameters(),
-                                      Binom2 = b2$parameters(),
+ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
+                                      Binom2 = b$parameters(),
                                       Geom = g$parameters()))
 
 ## ------------------------------------------------
@@ -35,8 +37,10 @@ psc$getParameterValue("prob")
 ## Method `ParameterSetCollection$getParameterSupport`
 ## ------------------------------------------------
 
-psc <- ParameterSetCollection$new(Binom1 = b1$parameters(),
-                                  Binom2 = b2$parameters(),
+b <- Binomial$new()
+g <- Geometric$new()
+psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
+                                  Binom2 = b$parameters(),
                                   Geom = g$parameters())
 ps$getParameterSupport("Binom1_prob")
 
@@ -44,18 +48,17 @@ ps$getParameterSupport("Binom1_prob")
 ## Method `ParameterSetCollection$setParameterValue`
 ## ------------------------------------------------
 
-b1 <- Binomial$new()
-b2 <- Binomial$new()
+b <- Binomial$new()
 g <- Geometric$new()
-psc <- ParameterSetCollection$new(Binom1 = b1$parameters(),
-                                  Binom2 = b2$parameters(),
+psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
+                                  Binom2 = b$parameters(),
                                   Geom = g$parameters())
 psc$getParameterValue("Binom1_prob")
-b1$getParameterValue("prob")
+b$getParameterValue("prob")
 psc$setParameterValue(Binom1_prob = 0.4)
 # both updated
 psc$getParameterValue("Binom1_prob")
-b1$getParameterValue("prob")
+b$getParameterValue("prob")
 
 g$setParameterValue(prob = 0.1)
 # both updated
@@ -114,12 +117,14 @@ Alternative constructor by supplying a named list of \link{ParameterSet}s.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{ParameterSetCollection$new(Binom1 = b1$parameters(),
-                           Binom2 = b2$parameters(),
+\preformatted{b = Binomial$new()
+g = Geometric$new()
+ParameterSetCollection$new(Binom1 = b$parameters(),
+                           Binom2 = b$parameters(),
                            Geom = g$parameters())
 
-ParameterSetCollection$new(lst = list(Binom1 = b1$parameters(),
-                                      Binom2 = b2$parameters(),
+ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
+                                      Binom2 = b$parameters(),
                                       Geom = g$parameters()))
 }
 \if{html}{\out{</div>}}
@@ -227,8 +232,10 @@ A \link[set6:Set]{set6::Set} object.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{psc <- ParameterSetCollection$new(Binom1 = b1$parameters(),
-                                  Binom2 = b2$parameters(),
+\preformatted{b <- Binomial$new()
+g <- Geometric$new()
+psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
+                                  Binom2 = b$parameters(),
                                   Geom = g$parameters())
 ps$getParameterSupport("Binom1_prob")
 }
@@ -265,18 +272,17 @@ If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"sto
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{b1 <- Binomial$new()
-b2 <- Binomial$new()
+\preformatted{b <- Binomial$new()
 g <- Geometric$new()
-psc <- ParameterSetCollection$new(Binom1 = b1$parameters(),
-                                  Binom2 = b2$parameters(),
+psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
+                                  Binom2 = b$parameters(),
                                   Geom = g$parameters())
 psc$getParameterValue("Binom1_prob")
-b1$getParameterValue("prob")
+b$getParameterValue("prob")
 psc$setParameterValue(Binom1_prob = 0.4)
 # both updated
 psc$getParameterValue("Binom1_prob")
-b1$getParameterValue("prob")
+b$getParameterValue("prob")
 
 g$setParameterValue(prob = 0.1)
 # both updated

@@ -1,4 +1,4 @@
-#' @title Exotic Statistical Methods for Distributions
+#' @title Exotic Statistical Methods Decorator
 #'
 #' @description This decorator adds methods for more complex statistical methods including p-norms,
 #' survival and hazard functions and anti-derivatives. If possible analytical expressions are

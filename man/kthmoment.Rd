@@ -4,7 +4,7 @@
 \alias{kthmoment}
 \title{Kth Moment}
 \usage{
-kthmoment(object, k, type = "central")
+kthmoment(object, k, type = c("central", "standard", "raw"))
 }
 \arguments{
 \item{object}{Distribution.}

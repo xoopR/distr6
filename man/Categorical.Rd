@@ -174,7 +174,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 Categories in the distribution, see examples.}
 
 \item{\code{probs}}{\code{numeric()}\cr
-Probabilities of respective categories occurring, defined in $\link{0, 1}$.}
+Probabilities of respective categories occurring.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

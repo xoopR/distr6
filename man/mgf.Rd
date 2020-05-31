@@ -17,6 +17,3 @@ Moment generating function evaluated at t as a numeric.
 \description{
 Moment generating function of a distribution
 }
-\details{
-
-}

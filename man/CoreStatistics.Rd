@@ -2,7 +2,7 @@
 % Please edit documentation in R/DistributionDecorator_CoreStatistics.R
 \name{CoreStatistics}
 \alias{CoreStatistics}
-\title{Core Statistical Methods for Distributions}
+\title{Core Statistical Methods Decorator}
 \description{
 This decorator adds numeric methods for missing analytic expression in distr6 Distribution
 objects as well as adding generalised expectation and moments functions.
@@ -235,9 +235,17 @@ which mode to return.}
 \subsection{Method \code{mean()}}{
 Numerically estimates the distribution mean.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$mean()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$mean(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Ignored, added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

@@ -115,7 +115,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 Number of trials, defined on the positive Naturals.}
 
 \item{\code{probs}}{\code{(numeric())}\cr
-Vector of probabilities, each between $\link{0, 1}$. Automatically normalised by
+Vector of probabilities. Automatically normalised by
 \code{probs = probs/sum(probs)}.}
 
 \item{\code{decorators}}{\code{(character())} \cr

@@ -11,7 +11,7 @@ Mathematical and statistical functions for the Geometric distribution, which
 is commonly used to model the number of trials (or number of failures) before the first success.
 }
 \details{
-The Geometric distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = (1 - p)^{k-1}p} for \eqn{p \epsilon [0,1]}.
+The Geometric distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = (1 - p)^{k-1}p} for probability \eqn{p}.
 
 The distribution is supported on the Naturals (zero is included if modelling number of failures before success).
 
@@ -149,11 +149,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{prob}}{\code{(numeric(1))} \cr
-Probability of success, should be defined in $\link{0, 1}$.}
+Probability of success.}
 
 \item{\code{qprob}}{\code{(numeric(1))} \cr
-Probability of failure, should be defined in $\link{0, 1}$. \code{qprob = 1 - prob}.
-If provided then \code{prob} is ignored.}
+Probability of failure. If provided then \code{prob} is ignored. \code{qprob = 1 - prob}.}
 
 \item{\code{trials}}{\code{(logical(1))} \cr
 If \code{TRUE} then the distribution models the number of trials, $x$, before the first success.

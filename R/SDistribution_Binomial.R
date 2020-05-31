@@ -6,7 +6,7 @@
 #' @templateVar params number of trials, n, and probability of success, p,
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
-#' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
+#' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0, 1,...,n}}
 #'
 #' @template param_prob

@@ -1,4 +1,4 @@
-#' @title Core Statistical Methods for Distributions
+#' @title Core Statistical Methods Decorator
 #'
 #' @template class_decorator
 #' @template method_mode
@@ -190,7 +190,9 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
 
     #' @description
     #' Numerically estimates the distribution mean.
-    mean = function() {
+    #' @param ... \cr
+    #' Ignored, added for consistency.
+    mean = function(...) {
       return(self$genExp())
     }
   )
@@ -206,8 +208,6 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
 #'
 #' @param object Distribution.
 #' @param t integer to evaluate moment generating function at.
-#'
-#' @details
 #'
 #' @return Moment generating function evaluated at t as a numeric.
 #'
@@ -302,7 +302,7 @@ NULL
 #' @name kthmoment
 #' @description Kth standardised or central moment of a distribution
 #'
-#' @usage kthmoment(object, k, type = "central")
+#' @usage kthmoment(object, k, type = c("central", "standard", "raw"))
 #'
 #' @param object Distribution.
 #' @param k the kth moment to calculate

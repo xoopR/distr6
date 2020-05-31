@@ -7,7 +7,7 @@
 #' @templateVar params probability of success, \eqn{p},
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = (1 - p)^{k-1}p}
-#' @templateVar paramsupport \eqn{p \epsilon [0,1]}
+#' @templateVar paramsupport probability \eqn{p}
 #' @templateVar distsupport the Naturals (zero is included if modelling number of failures before success)
 #' @details
 #' The Geometric distribution is used to either refer to modelling the number of trials or number

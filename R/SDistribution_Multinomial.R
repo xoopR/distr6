@@ -41,7 +41,7 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
     #' @param size `(integer(1))`\cr
     #' Number of trials, defined on the positive Naturals.
     #' @param probs `(numeric())`\cr
-    #' Vector of probabilities, each between $[0, 1]$. Automatically normalised by
+    #' Vector of probabilities. Automatically normalised by
     #' `probs = probs/sum(probs)`.
     initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL) {
 

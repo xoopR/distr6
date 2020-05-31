@@ -36,7 +36,9 @@ DistributionDecorator <- R6Class("DistributionDecorator",
 
     #' @description
     #' Decorates the given distribution with the methods available in this decorator.
-    decorate = function(distribution) {
+    #' @param ... `ANY` \cr
+    #' Extra arguments passed down to specific decorators.
+    decorate = function(distribution, ...) {
 
       assert_pkgload(self$packages)
       dec_name <- getR6Class(self)

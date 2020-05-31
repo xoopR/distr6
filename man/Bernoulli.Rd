@@ -11,7 +11,7 @@ Mathematical and statistical functions for the Bernoulli distribution, which
 is commonly used to model a two-outcome scenario.
 }
 \details{
-The Bernoulli distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0} for \eqn{p \ \in \ [0, 1]}{p \epsilon [0, 1]}.
+The Bernoulli distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0} for probability \eqn{p}.
 
 The distribution is supported on \eqn{\{0,1\}}{{0,1}}.
 }
@@ -146,11 +146,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{prob}}{\code{(numeric(1))} \cr
-Probability of success, should be defined in $\link{0, 1}$.}
+Probability of success.}
 
 \item{\code{qprob}}{\code{(numeric(1))} \cr
-Probability of failure, should be defined in $\link{0, 1}$. \code{qprob = 1 - prob}.
-If provided then \code{prob} is ignored.}
+Probability of failure. If provided then \code{prob} is ignored. \code{qprob = 1 - prob}.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

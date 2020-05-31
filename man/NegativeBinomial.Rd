@@ -11,7 +11,7 @@ Mathematical and statistical functions for the Negative Binomial distribution, w
 is commonly used to model the number of successes, trials or failures before a given number of failures or successes.
 }
 \details{
-The Negative Binomial distribution parameterised with  number of failures before successes, \eqn{n}, and probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x} for \eqn{n = {0,1,2,\ldots}} and \eqn{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+The Negative Binomial distribution parameterised with  number of failures before successes, \eqn{n}, and probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x} for \eqn{n = {0,1,2,\ldots}} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
 
 The distribution is supported on \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below).
 
@@ -173,11 +173,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 Number of trials/successes.}
 
 \item{\code{prob}}{\code{(numeric(1))} \cr
-Probability of success, should be defined in $\link{0, 1}$.}
+Probability of success.}
 
 \item{\code{qprob}}{\code{(numeric(1))} \cr
-Probability of failure, should be defined in $\link{0, 1}$. \code{qprob = 1 - prob}.
-If provided then \code{prob} is ignored.}
+Probability of failure. If provided then \code{prob} is ignored. \code{qprob = 1 - prob}.}
 
 \item{\code{mean}}{\code{(numeric(1))}\cr
 Mean of distribution, alternative to \code{prob} and \code{qprob}.}

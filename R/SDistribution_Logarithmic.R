@@ -37,7 +37,7 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param theta `(numeric(1))`\cr
-    #' Theta parameter defined between $[0, 1]$.
+    #' Theta parameter defined as a probability between `0` and `1`.
     initialize = function(theta = 0.5, decorators = NULL) {
 
       private$.parameters <- getParameterSet.Logarithmic(self, theta)

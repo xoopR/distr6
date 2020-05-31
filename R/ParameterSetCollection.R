@@ -19,12 +19,14 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' @param lst `(list())`\cr
     #' Alternative constructor by supplying a named list of [ParameterSet]s.
     #' @examples
-    #' ParameterSetCollection$new(Binom1 = b1$parameters(),
-    #'                            Binom2 = b2$parameters(),
+    #' b = Binomial$new()
+    #' g = Geometric$new()
+    #' ParameterSetCollection$new(Binom1 = b$parameters(),
+    #'                            Binom2 = b$parameters(),
     #'                            Geom = g$parameters())
     #'
-    #' ParameterSetCollection$new(lst = list(Binom1 = b1$parameters(),
-    #'                                       Binom2 = b2$parameters(),
+    #' ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
+    #'                                       Binom2 = b$parameters(),
     #'                                       Geom = g$parameters()))
     initialize = function(..., lst = NULL) {
       if (is.null(lst)) {
@@ -100,8 +102,10 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' A [set6::Set] object.
     #'
     #' @examples
-    #' psc <- ParameterSetCollection$new(Binom1 = b1$parameters(),
-    #'                                   Binom2 = b2$parameters(),
+    #' b <- Binomial$new()
+    #' g <- Geometric$new()
+    #' psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
+    #'                                   Binom2 = b$parameters(),
     #'                                   Geom = g$parameters())
     #' ps$getParameterSupport("Binom1_prob")
     getParameterSupport = function(id, error = "warn") {
@@ -115,18 +119,17 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' See examples.
     #'
     #' @examples
-    #' b1 <- Binomial$new()
-    #' b2 <- Binomial$new()
+    #' b <- Binomial$new()
     #' g <- Geometric$new()
-    #' psc <- ParameterSetCollection$new(Binom1 = b1$parameters(),
-    #'                                   Binom2 = b2$parameters(),
+    #' psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
+    #'                                   Binom2 = b$parameters(),
     #'                                   Geom = g$parameters())
     #' psc$getParameterValue("Binom1_prob")
-    #' b1$getParameterValue("prob")
+    #' b$getParameterValue("prob")
     #' psc$setParameterValue(Binom1_prob = 0.4)
     #' # both updated
     #' psc$getParameterValue("Binom1_prob")
-    #' b1$getParameterValue("prob")
+    #' b$getParameterValue("prob")
     #'
     #' g$setParameterValue(prob = 0.1)
     #' # both updated

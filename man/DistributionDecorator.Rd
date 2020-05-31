@@ -7,8 +7,6 @@
 Returns error. Abstract classes cannot be constructed directly.
 
 An \link[R6:R6Class]{R6} object.
-
-\link{Distribution} decorated with the methods in the private methods decorator.
 }
 \description{
 Abstract class that cannot be constructed directly.
@@ -63,7 +61,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Method \code{decorate()}}{
 Decorates the given distribution with the methods available in this decorator.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DistributionDecorator$decorate(distribution)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DistributionDecorator$decorate(distribution, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -71,6 +69,9 @@ Decorates the given distribution with the methods available in this decorator.
 \describe{
 \item{\code{distribution}}{\link{Distribution} \cr
 Distribution to decorate.}
+
+\item{\code{...}}{\code{ANY} \cr
+Extra arguments passed down to specific decorators.}
 }
 \if{html}{\out{</div>}}
 }

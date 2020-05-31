@@ -2,13 +2,13 @@
 % Please edit documentation in R/DistributionDecorator_FunctionImputation.R
 \name{FunctionImputation}
 \alias{FunctionImputation}
-\title{Imputed Pdf/Cdf/Quantile/Rand Functions}
-\value{
-\link{Distribution} decorated with the methods in the private methods decorator.
-}
+\title{Imputed Pdf/Cdf/Quantile/Rand Functions Decorator}
 \description{
 This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
-by using strategies dependent on which methods are already present in the distribution.
+by using strategies dependent on which methods are already present in the distribution. Unlike
+other decorators, private methods are added to the \link{Distribution}, not public methods.
+Therefore the underlying public \verb{[Distribution]$pdf}, \verb{[Distribution]$pdf},
+\verb{[Distribution]$quantile}, and \verb{[Distribution]$rand} functions stay the same.
 }
 \details{
 Decorator objects add functionality to the given \link{Distribution} object by copying methods
@@ -18,18 +18,27 @@ All methods implemented in decorators try to exploit analytical results where po
 numerical results are used with a message.
 }
 \examples{
-x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
-support = set6::Interval$new(1, 4), type = set6::Reals$new())
+pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1/10)
+
+x <- Distribution$new("Test", pdf = pdf,
+support = set6::Interval$new(1, 10, class = "integer"),
+type = set6::Naturals$new())
 decorate(x, "FunctionImputation")
 
-x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
-support = set6::Interval$new(1, 4), type = set6::Reals$new(),
+x <- Distribution$new("Test", pdf = pdf,
+support = set6::Interval$new(1, 10, class = "integer"),
+type = set6::Naturals$new(),
 decorators = "FunctionImputation")
 
-x <- Distribution$new("Test", pdf = function(x) 1 / (4 - 1),
-support = set6::Interval$new(1, 4), type = set6::Reals$new())
+x <- Distribution$new("Test", pdf = pdf,
+support = set6::Interval$new(1, 10, class = "integer"),
+type = set6::Naturals$new())
 FunctionImputation$new()$decorate(x)
 
+x$pdf(1:10)
+x$cdf(1:10)
+x$quantile(0.42)
+x$rand(4)
 }
 \seealso{
 Other decorators: 
@@ -47,14 +56,17 @@ Other decorators:
 }
 \if{html}{\out{</div>}}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{methods}}{Returns the names of the available methods in this decorator.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-decorate}{\code{FunctionImputation$decorate()}}
-\item \href{#method-pdf}{\code{FunctionImputation$pdf()}}
-\item \href{#method-cdf}{\code{FunctionImputation$cdf()}}
-\item \href{#method-quantile}{\code{FunctionImputation$quantile()}}
-\item \href{#method-rand}{\code{FunctionImputation$rand()}}
 \item \href{#method-clone}{\code{FunctionImputation$clone()}}
 }
 }
@@ -71,7 +83,7 @@ Other decorators:
 \subsection{Method \code{decorate()}}{
 Decorates the given distribution with the methods available in this decorator.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$decorate(distribution)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$decorate(distribution, n = 1000)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -79,179 +91,11 @@ Decorates the given distribution with the methods available in this decorator.
 \describe{
 \item{\code{distribution}}{\link{Distribution} \cr
 Distribution to decorate.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pdf"></a>}}
-\if{latex}{\out{\hypertarget{method-pdf}{}}}
-\subsection{Method \code{pdf()}}{
-Numerical approximation to pdf. Imputed by subtracting or taking the numerical derivative
-of the cdf with \link[pracma:fderiv]{pracma::fderiv}. For discrete distributions, assumes support
-has no breaks on the integers.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
-}
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the function at Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{log}}{\code{(logical(1))} \cr
-If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cdf"></a>}}
-\if{latex}{\out{\hypertarget{method-cdf}{}}}
-\subsection{Method \code{cdf()}}{
-Numerical approximation to cdf. Imputed by adding or taking the numerical integral
-of the pdf.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$cdf(
-  ...,
-  lower.tail = TRUE,
-  log.p = FALSE,
-  simplify = TRUE,
-  data = NULL,
-  n = 1000,
-  .cdf_x
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the function at Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{lower.tail}}{\code{(logical(1))} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
-
-\item{\code{log.p}}{\code{(logical(1))} \cr
-If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{n}}{\code{(numeric(1))} \cr
-Number of points to use when imputing a continuous cdf from the \code{pdf}, Simpson's rule
-is used for imputation.}
-
-\item{\code{.cdf_x}}{\code{(numeric())} \cr
-Parameter used by internal methods, should be ignored.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-quantile"></a>}}
-\if{latex}{\out{\hypertarget{method-quantile}{}}}
-\subsection{Method \code{quantile()}}{
-Numerical approximation to quantile. Imputed by creating a grid of points over the cdf
-and finding the inverse-cdf at the closest point on the grid.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$quantile(
-  ...,
-  lower.tail = TRUE,
-  log.p = FALSE,
-  simplify = TRUE,
-  data = NULL,
-  n = 1000
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the function at Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
-
-\item{\code{lower.tail}}{\code{(logical(1))} \cr
-If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
-
-\item{\code{log.p}}{\code{(logical(1))} \cr
-If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{data}}{\link{array} \cr
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.}
-
-\item{\code{n}}{\code{(numeric(1))} \cr
-Number of points to use when imputing the quantile from the \code{cdf}. If an analytical \code{cdf}
-is not available then this is imputed first.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-rand"></a>}}
-\if{latex}{\out{\hypertarget{method-rand}{}}}
-\subsection{Method \code{rand()}}{
-Numerical approximation to simulation. If analytical quantile is available uses inverse-transform
-sampling. Otherwise if pdf is available then imputes by creating a fine grid of points in the
-distribution support and then sampling these. Otherwise uses inverse-transform sampling after
-first imputing the quantile function.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$rand(n, simplify = TRUE, size_n = 10001)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n}}{\code{(numeric(1))} \cr
-Number of points to simulate from the distribution. If length greater than \eqn{1}, then
-\code{n <- length(n)},}
-
-\item{\code{simplify}}{\code{logical(1)} \cr
-If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
-\link[=data.table]{data.table::data.table}.}
-
-\item{\code{size_n}}{\code{(numeric(1))} \cr
-Determines size of grid of points to sample from if no analytical quantile is available.}
-
-\item{\code{...}}{\code{(numeric())} \cr
-Points to evaluate the function at Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.}
+\item{\code{n}}{\code{(integer(1))}\cr
+Grid size for imputing functions, cannot be changed after decorating.
+Generally larger \code{n} means better accuracy but slower computation, and smaller \code{n}
+means worse accuracy and faster computation.}
 }
 \if{html}{\out{</div>}}
 }

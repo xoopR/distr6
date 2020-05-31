@@ -511,14 +511,20 @@ as.ParameterSet.list <- function(x, ...) {
 #' @title Extract one or more parameters from a ParameterSet
 #' @description Used to extract one or more parameters from a constructed [ParameterSet] or
 #' [ParameterSetCollection].
-#' @param ps [ParameterSet] from which to extract parameters.
-#' @param ids ids of parameters to extract, if `id` ends with `_` then all parameters starting
+#'
+#' @param ps [ParameterSet]\cr
+#' [ParameterSet] from which to extract parameters.
+#' @param ids `(character())` \cr
+#' ids of parameters to extract, if `id` ends with `_` then all parameters starting
 #' with `ids_` are extracted and the prefix is ignored, `prefix` can be left `NULL`.
 #' See examples.
-#' @param prefix An optional prefix to remove from ids after extraction, assumes `_` follows the
+#' @param prefix `(character(1))` \cr
+#' An optional prefix to remove from ids after extraction, assumes `_` follows the
 #' prefix name, i.e. `prefix_ids`.
+#' @param ... \cr
+#' Ignored, added for consistency.
 #'
-#' @usage \method{[}{ParameterSet}(ps, ids)
+#' @usage \method{[}{ParameterSet}(ps, ids, prefix = NULL, ...)
 #'
 #' @examples
 #' ps <- VectorDistribution$new(

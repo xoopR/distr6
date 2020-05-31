@@ -4,17 +4,23 @@
 \alias{[.ParameterSet}
 \title{Extract one or more parameters from a ParameterSet}
 \usage{
-\method{[}{ParameterSet}(ps, ids)
+\method{[}{ParameterSet}(ps, ids, prefix = NULL, ...)
 }
 \arguments{
-\item{ps}{\link{ParameterSet} from which to extract parameters.}
+\item{ps}{\link{ParameterSet}\cr
+\link{ParameterSet} from which to extract parameters.}
 
-\item{ids}{ids of parameters to extract, if \code{id} ends with \verb{_} then all parameters starting
+\item{ids}{\code{(character())} \cr
+ids of parameters to extract, if \code{id} ends with \verb{_} then all parameters starting
 with \code{ids_} are extracted and the prefix is ignored, \code{prefix} can be left \code{NULL}.
 See examples.}
 
-\item{prefix}{An optional prefix to remove from ids after extraction, assumes \verb{_} follows the
+\item{prefix}{\code{(character(1))} \cr
+An optional prefix to remove from ids after extraction, assumes \verb{_} follows the
 prefix name, i.e. \code{prefix_ids}.}
+
+\item{...}{\cr
+Ignored, added for consistency.}
 }
 \description{
 Used to extract one or more parameters from a constructed \link{ParameterSet} or
