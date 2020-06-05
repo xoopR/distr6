@@ -10,3 +10,4 @@ script:
   - R CMD build .
   - R CMD INSTALL *.tar.gz
   - Rscript -e 'lintr::lint_package()'
+  
