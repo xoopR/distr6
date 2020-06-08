@@ -1,5 +1,47 @@
 
 
+# distr6 1.3.7.9000
+
+## Minor Updates
+
+### Added/Edited Functionality
+
+* Multivariate functions in `VectorDistribution` now return arrays
+* Analytical `median` now available for `SDistribution`s where closed form expressions are known
+* Kernels now implemented in `Rcpp` with analytical log-pdf expressions. Analytical lower.tail and log.p will come in future versions.
+* Adding plotting for bivariate distributions using `{plotly}`
+* Added `EmpiricalMV` for empirical multivariate distributions
+* All documentation now uses roxygen R6
+* Distribution `type` is now required in construction custom `Distribution`s as the previous method of 'guessing' was inefficient.
+* Added `ParameterSetCollection` for `Wrapper`s. Same functionality as before but much more efficient.
+
+### Deprecated Functions/Fields/Methods
+
+* Individual property and trait accessors deprecated: `$support, $symmetry, $kurtosisType, $skewnessType, $valueSupport, $variateForm, $type`
+* Separated `Loglogistic` and `ShiftedLoglogistic` so only the latter has a `location` parameter. Additionally added an analytical `rand` expression to `ShiftedLoglogistic`, and `Loglogistic` now implemented from package `actuar`
+* Removed deprecated classes: `ArrayDistribution`
+* Removed deprecated functions: `listSpecialSets`
+* `WeighedDiscrete` distribution now stores samples and probabilities as parameters.
+* Removed `verbose` argument from distribution constructor
+* Public `update` method in `ParameterSet` moved to `private`
+
+## Patches
+
+* Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending
+* Vastly improved speed of construction of `SDistribution` and `Kernel`
+* Bugfix in `$rand` for `Geometric` distribution with `trials == TRUE` , previously was randomising between $[1, Inf)$ not $[0, Inf)$
+* Changed default `form` parameter in `NegativeBinomial`, now errors if supplied argument is not in one of the four choices (previously reverted to "fbs")
+* Fixed bug in `MultivariateNormal` `rand()` which was not adding the `mean` correctly
+* Massive bottleneck in `VectorDistribution` for same distribution type removed in d/p/q/r functions
+* `Dirichlet, DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald` now implemented from package `extraDistr`
+* Bug fix in `Frechet` `$cdf`
+* Analytical `log` and `lower.tail` now available for all `SDistributions` and imputation possible for customs with `CoreStatistics`
+* `NegativeBinomial` now uses Rcpp for d/p/q/r
+* Distributions from `stats` are now vectorised across parameters in C
+* `Degenerate`, `ShiftedLoglogistic` now Rcpp
+* Removed redundant `K` parameter from `MultivariateNormal`
+* Bugfix in `Wald`, symmetry was incorrectly flagged as "symmetric"
+
 # distr6 1.3.7
 
 * Minor internal Updates
