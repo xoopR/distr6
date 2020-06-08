@@ -1,26 +1,18 @@
-#' @name ProductDistribution
 #' @title Product Distribution
 #' @description A wrapper for creating the joint distribution of multiple independent probability distributions.
-#' @seealso \code{\link{listWrappers}} and \code{\link{VectorDistribution}}
+#' @template class_vecdist
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_decorators
+#'
 #' @details Exploits the following relationships of independent distributions
-#' \deqn{f_P(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}{f_P(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
+#'
 #' \deqn{F_P(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}{F_P(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
 #' where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eqn{P} and \eqn{X1,...,XN} are independent distributions.
 #'
-#' \code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
-#'
-#' @section Constructor: ProductDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distlist} \tab list \tab List of distributions. \cr
-#' \code{distribution} \tab distribution \tab Distribution to wrap. \cr
-#' \code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
-#' \code{name} \tab list \tab Optional new name for distribution. \cr
-#' \code{short_name} \tab list \tab Optional new short_name for distribution. \cr
-#' \code{description} \tab list \tab Optional new description for distribution. \cr
-#' }
 #'
 #' @section Constructor Details: A product distribution can either be constructed by a list of
 #' distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
@@ -28,110 +20,129 @@
 #' in the ability to use multiple distributions but the latter is useful for quickly combining many
 #' distributions of the same type. See examples.
 #'
-#' @inheritSection DistributionWrapper Public Variables
-#' @inheritSection DistributionWrapper Public Methods
-#'
-#' @return Returns an R6 object of class ProductDistribution.
-#'
-#' @examples
-#' prodBin <- ProductDistribution$new(list(Binomial$new(prob = 0.5,
-#'                            size = 10), Normal$new(mean = 15)))
-#' prodBin$pdf(x1 = 2, x2 =3)
-#' prodBin$cdf(1:5, 12:16)
-#' prodBin$quantile(c(0.1,0.2),c(0.3,0.4))
-#' prodBin$rand(10)
-#'
-#' prodBin = ProductDistribution$new(distribution = Binomial,
-#'        params = list(list(prob = 0.1, size = 2),
-#'                    list(prob = 0.6, size = 4),
-#'                    list(prob = 0.2, size = 6)))
-#' prodBin$pdf(x1=1,x2=2,x3=3)
-#' prodBin$cdf(x1=1,x2=2,x3=3)
-#' prodBin$rand(10)
-#'
-#' #Equivalently
-#' prodBin = ProductDistribution$new(distribution = Binomial,
-#'        params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
-#' prodBin$pdf(x1=1,x2=2,x3=3)
-#' prodBin$cdf(x1=1,x2=2,x3=3)
-#' prodBin$rand(10)
-#'
 #' @export
-NULL
-ProductDistribution <- R6Class("ProductDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+ProductDistribution <- R6Class("ProductDistribution",
+  inherit = VectorDistribution,
+  lock_objects = FALSE,
+  public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @examples
+    #' ProductDistribution$new(list(Binomial$new(
+    #'   prob = 0.5,
+    #'   size = 10
+    #' ), Normal$new(mean = 15)))
+    #'
+    #' ProductDistribution$new(
+    #'   distribution = "Binomial",
+    #'   params = list(
+    #'     list(prob = 0.1, size = 2),
+    #'     list(prob = 0.6, size = 4),
+    #'     list(prob = 0.2, size = 6)
+    #'   )
+    #' )
+    #'
+    #' # Equivalently
+    #' ProductDistribution$new(
+    #'   distribution = "Binomial",
+    #'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+    #' )
+    initialize = function(distlist = NULL, distribution = NULL, params = NULL,
+                          shared_params = NULL,
+                          name = NULL, short_name = NULL,
+                          decorators = NULL) {
+
+      super$initialize(
+        distlist = distlist,
+        distribution = distribution,
+        params = params,
+        shared_params = shared_params,
+        decorators = decorators,
+        name = name,
+        short_name = short_name
+      )
+
+      if (!is.null(name)) self$name <- gsub("Vector", "Product", self$name)
+      if (!is.null(short_name)) self$short_name <- gsub("Vec", "X", self$short_name)
+      self$description <- gsub("Vector", "Product", self$description)
+
+      invisible(self)
+    },
+
+    #' @description
+    #' Printable string representation of the `ProductDistribution`. Primarily used internally.
+    #' @param n `(integer(1))`\cr
+    #' Number of distributions to include when printing.
+    strprint = function(n = 10) {
+      str <- super$strprint(n = n)
+      paste0(str, collapse = " X ")
+    },
+
+    #' @description
+    #' Probability density function of the product distribution. Computed by
+    #'  \deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
+    #'  where \eqn{f_{Xi}} are the pdfs of the wrapped distributions.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    #' @examples
+    #' p <- ProductDistribution$new(list(
+    #' Binomial$new(prob = 0.5, size = 10),
+    #' Binomial$new()))
+    #' p$pdf(1:5)
+    #' p$pdf(1, 2)
+    #' p$pdf(1:2)
+    pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
+      product_dpqr_returner(
+        dpqr = super$pdf(..., log = log, data = data),
+        univariate = private$.univariate
+      )
+    },
+
+    #' @description
+    #' Cumulative distribution function of the product distribution. Computed by
+    #'  \deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
+    #'  where \eqn{F_{Xi}} are the cdfs of the wrapped distributions.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    #' @examples
+    #' p <- ProductDistribution$new(list(
+    #' Binomial$new(prob = 0.5, size = 10),
+    #' Binomial$new()))
+    #' p$cdf(1:5)
+    #' p$cdf(1, 2)
+    #' p$cdf(1:2)
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
+      product_dpqr_returner(
+        dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
+        univariate = private$.univariate
+      )
+    },
+
+    #' @description
+    #' The quantile function is not implemented for product distributions.
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
+      stop("Quantile is currently unavailable for product distributions.")
+    }
+  )
+)
 .distr6$wrappers <- append(.distr6$wrappers, list(ProductDistribution = ProductDistribution))
 
-ProductDistribution$set("public","initialize",function(distlist = NULL, distribution = NULL, params = NULL,
-                                                       name = NULL, short_name = NULL, description = NULL){
-
-  if(is.null(distlist)){
-    if(is.null(distribution) | is.null(params))
-      stop("Either distlist or distribution and params must be provided.")
-
-    distribution = paste0(substitute(distribution))
-    if(!(distribution %in% listDistributions(simplify = T)))
-      stop(paste(distribution, "is not currently implemented in distr6. See listDistributions()."))
-
-    distribution = get(distribution)
-    if(checkmate::testList(params)){
-      x <- params
-      params <- data.table::as.data.table(t(data.table::as.data.table(x)))
-      colnames(params) <- unique(names(unlist(x)))
-    }
-
-    if(inherits(params, "list") | inherits(params, "data.frame") | inherits(params, "matrix")){
-      distlist = apply(params, 1, function(x) do.call(distribution$new, as.list(x)))
-      name = paste0("Vector: ",nrow(params)," ",distribution$classname,"s")
-      short_name = paste0("Vec",nrow(params),distribution$public_fields$short_name)
-      description = paste("Vector of:",nrow(params),distribution$classname,"distributions")
-    } else
-      stop("params must inherit one of: list, data.frame, or matrix.")
-  } else {
-    if(is.null(name)) name = paste("Product:",paste0(lapply(distlist, function(x) x$name),collapse=", "))
-    if(is.null(short_name)) short_name = paste0(lapply(distlist, function(x) x$short_name),collapse="Prod")
-    if(is.null(description)) description = paste0("Product of:",paste0(lapply(distlist, function(x) x$description), collapse=" "))
-  }
-
-  distlist = makeUniqueDistributions(distlist)
-
-  lst <- rep(list(bquote()), length(distlist))
-  names(lst) <- paste("x",1:length(distlist),sep="")
-
-  pdf = function() {}
-  formals(pdf) = lst
-  body(pdf) = substitute({
-    pdfs = NULL
-    for(i in 1:n)
-      pdfs = c(pdfs,self$wrappedModels()[[i]]$pdf(get(paste0("x",i))))
-    y = data.table::data.table(matrix(pdfs, ncol = n))
-    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
-    return(apply(y,1,prod))
-  },list(n = length(distlist)))
-
-  cdf = function() {}
-  formals(cdf) = lst
-  body(cdf) = substitute({
-    cdfs = NULL
-    for(i in 1:n)
-      cdfs = c(cdfs,self$wrappedModels()[[i]]$cdf(get(paste0("x",i))))
-    y = data.table::data.table(matrix(cdfs, ncol = n))
-    colnames(y) <- unlist(lapply(self$wrappedModels(), function(x) x$short_name))
-    return(apply(y,1,prod))
-  },list(n = length(distlist)))
-
-  rand = function(n) {
-    return(data.table::data.table(sapply(self$wrappedModels(), function(x) x$rand(n))))
-  }
-
-
-  type = do.call(setproduct, lapply(distlist,function(x) x$type))
-  support = do.call(setproduct, lapply(distlist,function(x) x$support))
-  if("discrete" %in% lapply(distlist, valueSupport))
-    valueSupport = "discrete"
-  else
-    valueSupport = "continuous"
-
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf, rand = rand, name = name,
-                   short_name = short_name, description = description, support = support, type = type,
-                   variateForm = "multivariate", valueSupport = valueSupport)
-})
+#' @rdname ProductDistribution
+#' @param x,y [Distribution]
+#' @examples
+#' Normal$new() * Binomial$new()
+#' @export
+`*.Distribution` <- function(x, y) {
+  ProductDistribution$new(list(x, y))
+}

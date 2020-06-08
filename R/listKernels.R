@@ -6,12 +6,12 @@
 #' @return Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{Kernel}s and their traits.
 #' @examples
 #' listKernels()
-#'
 #' @export
-listKernels <- function(simplify=FALSE){
-  kerns = .distr6$kernels[order(.distr6$kernels$ClassName), ]
-  if(simplify)
+listKernels <- function(simplify = FALSE) {
+  kerns <- .distr6$kernels[order(.distr6$kernels$ClassName), ]
+  if (simplify) {
     return(unlist(kerns$ClassName))
-  else
+  } else {
     return(kerns)
+  }
 }

@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-#  Distribution Documentation
-#-------------------------------------------------------------
 #' @name Empirical
 #' @template SDist
 #' @templateVar ClassName Empirical
@@ -11,151 +8,252 @@
 #' @templateVar pdfpmfeq \deqn{p(x) = \sum I(x = x_i) / k}
 #' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
-#' @templateVar additionalDetails Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the support set and uniform probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#' @templateVar constructor samples
-#' @templateVar arg1 \code{samples} \tab numeric \tab vector of observed samples. \cr
-#' @templateVar constructorDets a vector of elements for the support set.
-#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function and \code{\link{WeightedDiscrete}} for the closely related WeightedDiscrete distribution.
+#' @details
+#' Sampling from this distribution is performed with the [sample] function with the elements given
+#' as the support set and uniform probabilities. Sampling is performed with replacement, which is
+#' consistent with other distributions but non-standard for Empirical distributions. Use
+#' [simulateEmpiricalDistribution] to sample without replacement.
 #'
-#' @examples
-#' x = Empirical$new(stats::runif(1000)*10)
+#' The cdf and quantile assumes that the
+#' elements are supplied in an indexed order (otherwise the results are meaningless).
 #'
-#' # d/p/q/r
-#' x$pdf(1:5)
-#' x$cdf(1:5) # Assumes ordered in construction
-#' x$quantile(0.42) # Assumes ordered in construction
-#' x$rand(10)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family discrete distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Empirical Distribution Definition
-#-------------------------------------------------------------
-Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F)
-Empirical$set("public","name","Empirical")
-Empirical$set("public","short_name","Emp")
-Empirical$set("public","description","Empirical Probability Distribution.")
+Empirical <- R6Class("Empirical",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Empirical",
+    short_name = "Emp",
+    description = "Empirical Probability Distribution.",
 
-Empirical$set("public","mode",function(which = "all"){
-  if(which == "all")
-    return(modal(unlist(self$support$elements)))
-  else
-    return(modal(unlist(self$support$elements))[which])
-})
-Empirical$set("public","mean",function(){
-  return(mean(unlist(self$support$elements)))
-})
-Empirical$set("public","variance",function(){
-  return(sum((unlist(self$support$elements) - self$mean())^2)/private$.total)
-})
-Empirical$set("public","skewness",function(){
-  return(sum(((unlist(self$support$elements) - self$mean())/self$stdev())^3)/private$.total)
-})
-Empirical$set("public","kurtosis",function(excess = TRUE){
-  kurt = sum(((unlist(self$support$elements) - self$mean())/self$stdev())^4)/private$.total
-  if(excess)
-    return(kurt - 3)
-  else
-    return(kurt)
-})
-Empirical$set("public","entropy",function(base = 2){
-  p = private$.data$N/private$.total
-  return(-sum(p * log(p, base)))
-})
-Empirical$set("public","mgf",function(t){
-  if(length(t) == 1)
-    return(sum(exp(private$.data$samples*t) * (private$.data$N/private$.total)))
-  else{
-    nr = length(t)
-    nc = length(private$.data$samples)
-    return(as.numeric(
-      exp(matrix(private$.data$samples, nrow = nr, ncol = nc, byrow = T) *
-          matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$N/private$.total, nrow = nc, ncol = 1)
-    ))
-  }
-})
-Empirical$set("public","cf",function(t){
-  if(length(t) == 1)
-    return(sum(exp(private$.data$samples*t*1i) * (private$.data$N/private$.total)))
-  else{
-    nr = length(t)
-    nc = length(private$.data$samples)
-    return(as.complex(
-      exp(matrix(private$.data$samples*1i, nrow = nr, ncol = nc, byrow = T) *
-            matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$N/private$.total, nrow = nc, ncol = 1)
-    ))
-  }
-})
-Empirical$set("public","pgf",function(z){
-  if(length(z) == 1)
-    return(sum((z^private$.data$samples) * (private$.data$N/private$.total)))
-  else{
-    nr = length(z)
-    nc = length(private$.data$samples)
-    return(as.numeric(
-      (matrix(z, nrow = nr, ncol = nc) ^ matrix(private$.data$samples, nrow = nr, ncol = nc, byrow = z)) %*%
-        matrix(private$.data$N/private$.total, nrow = nc, ncol = 1)
-    ))
-  }
-})
+    # Public methods
+    # initialize
 
-Empirical$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  message("There are no parameters to set.")
-  return(NULL)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param samples `(numeric())` \cr
+    #' Vector of observed samples, see examples.
+    #'  Cannot be updated after construction.
+    #' @examples
+    #' Empirical$new(runif(1000))
+    initialize = function(samples, decorators = NULL) {
 
-Empirical$set("private",".data",data.table::data.table())
-Empirical$set("private",".total", numeric(1))
+      samples <- sort(as.numeric(samples))
 
+      data <- data.table::as.data.table(table(samples))
+      data$samples <- as.numeric(data$samples)
+      data <- cbind(data, cumN = cumsum(data$N))
 
-Empirical$set("public","initialize",function(samples, decorators = NULL, verbose = FALSE){
+      private$.parameters <- ParameterSet$new(
+        id = "data",
+        value = list(data),
+        support = UniversalSet$new(),
+        settable = FALSE,
+        updateFunc = NULL,
+        description = "Data"
+      )
 
-  samples <- sort(as.numeric(samples))
+      super$initialize(
+        decorators = decorators,
+        support = Tuple$new(samples, universe = Reals$new(), class = "numeric"),
+        type = Reals$new()
+      )
+    },
 
-  private$.data <- data.table::as.data.table(table(samples))
-  private$.data$samples <- as.numeric(private$.data$samples)
-  private$.data <- cbind(private$.data, cumN = cumsum(private$.data$N))
-  private$.total <- length(samples)
+    # stats
 
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(mean(self$getParameterValue("data")$samples))
+    },
 
-  pdf <- function(x1){
-    return(as.numeric(unlist(private$.data[match(round(x1, 10), round(private$.data$samples, 10)), "N"]/private$.total)))
-  }
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      if (which == "all") {
+        return(modal(self$getParameterValue("data")$samples))
+      } else {
+        return(modal(self$getParameterValue("data")$samples)[which])
+      }
+    },
 
-  cdf <- function(x1){
-    find = findInterval(x1, private$.data$samples)
-    find[find == 0] = 1
-    return(as.numeric(unlist(private$.data[find, "cumN"]/private$.total)))
-  }
-  quantile <- function(p){
-    p = p * private$.total
-    mat = p <= matrix(private$.data$cumN, nrow = length(p), ncol = nrow(private$.data), byrow = T)
-    which = apply(mat, 1, function(x) which(x)[1])
-    which[is.na(which)] = ncol(mat)
-    return(as.numeric(unlist(private$.data[which, "samples"])))
-  }
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      data <- self$getParameterValue("data")$samples
+      return(sum((data - self$mean())^2) / length(data))
+    },
 
-  rand <- function(n){
-    return(sample(unlist(self$support$elements), n, TRUE))
-  }
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      data <- self$getParameterValue("data")$samples
+      return(sum(((data - self$mean()) / self$stdev())^3) / length(data))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Tuple$new(universe = Reals$new(), elements = as.list(samples), class = "numeric"),
-                   symmetric = FALSE, type = Reals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      data <- self$getParameterValue("data")$samples
+      kurt <- sum(((data - self$mean()) / self$stdev())^4) / length(data)
+      if (excess) {
+        return(kurt - 3)
+      } else {
+        return(kurt)
+      }
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Emp", ClassName = "Empirical",
-                                                     Type = "\u211D", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      data <- self$getParameterValue("data")
+      p <- data$N / nrow(data)
+      return(-sum(p * log(p, base)))
+    },
 
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      data <- self$getParameterValue("data")
+      if (length(t) == 1) {
+        return(sum(exp(data$samples * t) * (data$N / nrow(data))))
+      } else {
+        nr <- length(t)
+        nc <- length(data$samples)
+        return(as.numeric(
+          exp(matrix(data$samples, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
+        ))
+      }
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      data <- self$getParameterValue("data")
+      if (length(t) == 1) {
+        return(sum(exp(data$samples * t * 1i) * (data$N / nrow(data))))
+      } else {
+        nr <- length(t)
+        nc <- length(data$samples)
+        return(as.complex(
+          exp(matrix(data$samples * 1i, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
+        ))
+      }
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      data <- self$getParameterValue("data")
+      if (length(z) == 1) {
+        return(sum((z^data$samples) * (data$N / nrow(data))))
+      } else {
+        nr <- length(z)
+        nc <- length(data$samples)
+        return(as.numeric(
+          (matrix(z, nrow = nr, ncol = nc)^matrix(data$samples, nrow = nr, ncol = nc, byrow = z)) %*%
+            matrix(data$N / nrow(data), nrow = nc, ncol = 1)
+        ))
+      }
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      message("Data cannot be updated after construction.")
+      return(NULL)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      data <- self$getParameterValue("data")
+      pdf <- as.numeric(unlist(data[match(
+        round(x, 10),
+        round(data$samples, 10)
+      ), "N"] /
+        nrow(data)))
+      if (log) pdf <- log(pdf)
+
+      return(pdf)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      data <- self$getParameterValue("data")
+      find <- findInterval(x, data$samples)
+      find[find == 0] <- 1
+      cdf <- as.numeric(unlist(data[find, "cumN"] / nrow(data)))
+      if (!lower.tail) cdf <- 1 - cdf
+      if (log.p) cdf <- log(cdf)
+
+      return(cdf)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      data <- self$getParameterValue("data")
+      if (log.p) p <- exp(p)
+      if (!lower.tail) p <- 1 - p
+
+      p <- p * nrow(data)
+      mat <- p <= matrix(data$cumN, nrow = length(p), ncol = nrow(data), byrow = T)
+      which <- apply(mat, 1, function(x) which(x)[1])
+      which[is.na(which)] <- ncol(mat)
+
+      return(as.numeric(unlist(data[which, "samples"])))
+    },
+    .rand = function(n) {
+      sample(self$getParameterValue("data")$samples, n, TRUE)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate"),
+
+    .data = data.table::data.table(),
+    .total = numeric(1)
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Emp", ClassName = "Empirical",
+    Type = "\u211D", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "-"
+  )
+)

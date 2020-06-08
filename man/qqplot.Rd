@@ -30,10 +30,11 @@ in \code{\link[stats]{quantile}}.
 }
 \examples{
 qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15))
-qqplot(rt(200, df = 5), rt(300, df = 5), main = "QQ-Plot", xlab = "t-200",
-       ylab = "t-300")
+qqplot(rt(200, df = 5), rt(300, df = 5),
+  main = "QQ-Plot", xlab = "t-200",
+  ylab = "t-300"
+)
 qqplot(Normal$new(mean = 2), rnorm(100, mean = 3))
-
 }
 \seealso{
 \code{\link{plot.Distribution}} for plotting a \code{distr6} object.

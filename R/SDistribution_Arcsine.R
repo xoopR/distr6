@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Arcsine Distribution Documentation
-#-------------------------------------------------------------
 #' @name Arcsine
 #' @template SDist
 #' @templateVar ClassName Arcsine
@@ -12,140 +8,192 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}}
 #' @templateVar paramsupport \eqn{-\infty < a \le b < \infty}
 #' @templateVar distsupport \eqn{[a, b]}
-#' @templateVar omittedVars \code{cf} and \code{mgf}
-#' @templateVar additionalDetails When the Standard Arcsine is constructed (default) then \code{\link[stats]{rbeta}} is used for sampling, otherwise via inverse transform
-#' @templateVar constructor lower = 0, upper = 1
-#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
-#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
-#' @templateVar constructorDets \code{lower} and \code{upper} as numerics.
-#' @templateVar additionalSeeAlso \code{\link{rbeta}} for the Beta distribution sampling function.
 #'
-#' @examples
-#' x = Arcsine$new(lower = 2, upper = 5)
+#' @template param_lower
+#' @template param_upper
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
-#' # Update parameters
-#' x$setParameterValue(upper = 4, lower = 1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Arcsine Distribution Definition
-#-------------------------------------------------------------
-Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F)
-Arcsine$set("public","name","Arcsine")
-Arcsine$set("public","short_name","Arc")
-Arcsine$set("public","description","Arcsine Probability Distribution.")
+Arcsine <- R6Class("Arcsine",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Arcsine",
+    short_name = "Arc",
+    description = "Arcsine Probability Distribution.",
 
-Arcsine$set("public","mean",function(){
-  return((self$getParameterValue("upper") + self$getParameterValue("lower"))/2)
-})
-Arcsine$set("public","variance",function(){
-  return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2)/8)
-})
-Arcsine$set("public","skewness",function(){
-  return(0)
-})
-Arcsine$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(-3/2)
-  else
-    return(1.5)
-})
-Arcsine$set("public","entropy",function(base = 2){
-  return(log(pi/4, base))
-})
-Arcsine$set("public","mode",function(which = "all"){
-  if(which == "all")
-    return(c(self$getParameterValue("lower"),self$getParameterValue("upper")))
-  else
-    return(c(self$getParameterValue("lower"),self$getParameterValue("upper"))[which])
-})
-Arcsine$set("public", "pgf", function(z){
-  return(NaN)
-})
+    # Public methods
+    # initialize
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(lower = 0, upper = 1, decorators = NULL) {
 
-Arcsine$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$lower)) lst = c(lst, list(lower = paramlst$lower))
-  if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
-  return(lst)
-})
+      private$.parameters <- getParameterSet(self, lower, upper)
+      self$setParameterValue(lower = lower, upper = upper)
 
-Arcsine$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
-    lst <- list(...)
-  if("lower" %in% names(lst) & "upper" %in% names(lst))
-    checkmate::assert(lst[["lower"]] <= lst[["upper"]])
-  else if("lower" %in% names(lst))
-    checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"))
-  else if("upper" %in% names(lst))
-    checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"))
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(lower, upper),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-  super$setParameterValue(lst = lst, error = error)
-  private$.properties$support <- Interval$new(self$getParameterValue("lower"),self$getParameterValue("upper"))
-  invisible(self)
-})
+    # stats
 
-Arcsine$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return((self$getParameterValue("upper") + self$getParameterValue("lower")) / 2)
+    },
 
-  private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(lower = lower, upper = upper)
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      if (which == "all") {
+        return(c(self$getParameterValue("lower"), self$getParameterValue("upper")))
+      } else {
+        return(c(self$getParameterValue("lower"), self$getParameterValue("upper"))[which])
+      }
+    },
 
-  pdf <- function(x1){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(dbeta(x1, 0.5, 0.5))
-    else
-      return((pi * sqrt((x1 - self$getParameterValue("lower")) * (self$getParameterValue("upper") - x1)))^-1)
-  }
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2) / 8)
+    },
 
-  cdf <- function(x1){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(pbeta(x1, 0.5, 0.5))
-    else
-      return((2/pi) * (asin(sqrt(
-      (x1 - self$getParameterValue("lower")) /
-      (self$getParameterValue("upper") - self$getParameterValue("lower"))))))
-  }
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(0)
+    },
 
-  quantile <- function(p){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(qbeta(p, 0.5, 0.5))
-    else
-      return(((self$getParameterValue("upper") - self$getParameterValue("lower")) *
-                sin(p * pi * 0.5)^2) +
-               self$getParameterValue("lower"))
-  }
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(-3 / 2)
+      } else {
+        return(1.5)
+      }
+    },
 
-  rand <- function(n){
-    if(self$getParameterValue("lower")==0 & self$getParameterValue("upper") == 1)
-      return(rbeta(n, 0.5, 0.5))
-    else
-      return(self$quantile(runif(n)))
-  }
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      return(log(pi / 4, base))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Interval$new(lower,upper),  symmetric = TRUE,
-                   type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Arc", ClassName = "Arcsine",
-                                               Type = "\u211D", ValueSupport = "continuous", VariateForm = "univariate",
-                                               Package = "-"))
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] <= lst[["upper"]])
+      } else if ("lower" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"))
+      } else if ("upper" %in% names(lst)) {
+        checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"))
+      }
 
+      super$setParameterValue(lst = lst, error = error)
+      private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
+
+      if (checkmate::testList(lower)) {
+        return(C_ArcsinePdf(x, unlist(lower), unlist(upper), log))
+      } else {
+        return(as.numeric(C_ArcsinePdf(x, lower, upper, log)))
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
+
+      if (checkmate::testList(lower)) {
+        return(C_ArcsineCdf(x, unlist(lower), unlist(upper), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_ArcsineCdf(x, lower, upper, lower.tail, log.p)))
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
+
+      if (checkmate::testList(lower)) {
+        return(C_ArcsineQuantile(p, unlist(lower), unlist(upper), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_ArcsineQuantile(p, lower, upper, lower.tail, log.p)))
+      }
+    },
+    .rand = function(n) {
+      self$quantile(runif(n))
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
+      if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Arc", ClassName = "Arcsine",
+    Type = "\u211D", ValueSupport = "continuous", VariateForm = "univariate",
+    Package = "-"
+  )
+)

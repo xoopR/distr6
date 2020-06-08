@@ -48,14 +48,14 @@ Currently distr6 has three decorators:
 When a decorator is constructed, only the functions that do not exist analytically are added. For example, if a distribution has an analytical `variance` function as part of its core interface, then this will not be overloaded by the `CoreStatistics` decorator.
 
 ```{r}
-n <- Normal$new(decorators = CoreStatistics)
+n <- Normal$new(decorators = "CoreStatistics")
 n$mean # The analytical method
 ```
 
 Similarly where possible an analytical method is always preferred. For example, if an analytical `cdf` expression is available, then the `survival` function in `ExoticStatistics` is defined as `1 - cdf` otherwise a numerical integration is calculated.
 
 ```{r}
-n <- Normal$new(decorators = ExoticStatistics)
+n <- Normal$new(decorators = "ExoticStatistics")
 n$survival(2) == n$cdf(2, lower.tail = F) # The analytical method
 ```
 

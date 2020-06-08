@@ -14,5 +14,7 @@ Displays the contents of the NEWS.md file for viewing distr6
 release information.
 }
 \examples{
+\dontrun{
 distr6News()
+}
 }

@@ -19,17 +19,3 @@ The current value of a given parameter as a numeric.
 \description{
 Returns the value of the given parameter.
 }
-\details{
-Returns NULL and warning if the given parameter is not in the Distribution, otherwise returns
-the value of the given parameter.
-
-\code{stopwarn} either breaks the code with an error if "error" is given or returns \code{NULL}
-with warning otherwise.
-}
-\section{R6 Usage}{
- $getParameterValue(id, error = "warn")
-}
-
-\seealso{
-\code{\link{parameters}} and \code{\link{setParameterValue}}
-}

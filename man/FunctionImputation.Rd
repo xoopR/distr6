@@ -2,58 +2,119 @@
 % Please edit documentation in R/DistributionDecorator_FunctionImputation.R
 \name{FunctionImputation}
 \alias{FunctionImputation}
-\title{Imputed Pdf/Cdf/Quantile/Rand Functions}
-\value{
-Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
-imputed if previously missing.
-}
+\title{Imputed Pdf/Cdf/Quantile/Rand Functions Decorator}
 \description{
 This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
-by using strategies dependent on which methods are already present in the distribution.
+by using strategies dependent on which methods are already present in the distribution. Unlike
+other decorators, private methods are added to the \link{Distribution}, not public methods.
+Therefore the underlying public \verb{[Distribution]$pdf}, \verb{[Distribution]$pdf},
+\verb{[Distribution]$quantile}, and \verb{[Distribution]$rand} functions stay the same.
 }
 \details{
-Decorator objects add functionality to the given Distribution object by copying methods
-in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-below to find details of the methods that are added to the Distribution. Methods already
-present in the distribution are not overwritten by the decorator.
+Decorator objects add functionality to the given \link{Distribution} object by copying methods
+in the decorator environment to the chosen \link{Distribution} environment.
 
-Use \code{\link{decorate}} to decorate a Distribution.
-
-All methods in this decorator use numerical approximations and therefore better results may be available
-from analytic computations.
+All methods implemented in decorators try to exploit analytical results where possible, otherwise
+numerical results are used with a message.
 }
-\section{Constructor}{
- FunctionImputation$new(distribution)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{distribution} \tab distribution \tab Distribution to decorate. \cr
-}
-}
-
-\section{Added Methods}{
-
-\tabular{lll}{
-\strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab Density/mass function \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Distribution function \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Quantile function \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab Simulation function \tab \code{\link{rand}} \cr
-}
-}
-
 \examples{
-x = Distribution$new("Test", pdf = function(x) 1/(4-1),
-support = set6::Interval$new(1,4),
-type = set6::Reals$new())
-decorate(x, FunctionImputation)
-x$pdf(0:5)
-x$cdf(0:5)
+pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1/10)
 
+x <- Distribution$new("Test", pdf = pdf,
+support = set6::Interval$new(1, 10, class = "integer"),
+type = set6::Naturals$new())
+decorate(x, "FunctionImputation", n = 1000)
+
+x <- Distribution$new("Test", pdf = pdf,
+support = set6::Interval$new(1, 10, class = "integer"),
+type = set6::Naturals$new(),
+decorators = "FunctionImputation")
+
+x <- Distribution$new("Test", pdf = pdf,
+support = set6::Interval$new(1, 10, class = "integer"),
+type = set6::Naturals$new())
+FunctionImputation$new()$decorate(x, n = 1000)
+
+x$pdf(1:10)
+x$cdf(1:10)
+x$quantile(0.42)
+x$rand(4)
 }
 \seealso{
-\code{\link{decorate}}, \code{\link{listDecorators}}
+Other decorators: 
+\code{\link{CoreStatistics}},
+\code{\link{ExoticStatistics}}
+}
+\concept{decorators}
+\section{Super class}{
+\code{\link[distr6:DistributionDecorator]{distr6::DistributionDecorator}} -> \code{FunctionImputation}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{methods}}{Returns the names of the available methods in this decorator.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-decorate}{\code{FunctionImputation$decorate()}}
+\item \href{#method-clone}{\code{FunctionImputation$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize">}\href{../../distr6/html/DistributionDecorator.html#method-initialize}{\code{distr6::DistributionDecorator$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-decorate"></a>}}
+\if{latex}{\out{\hypertarget{method-decorate}{}}}
+\subsection{Method \code{decorate()}}{
+Decorates the given distribution with the methods available in this decorator.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$decorate(distribution, n = 1000)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{distribution}}{\link{Distribution} \cr
+Distribution to decorate.}
+
+\item{\code{n}}{\code{(integer(1))}\cr
+Grid size for imputing functions, cannot be changed after decorating.
+Generally larger \code{n} means better accuracy but slower computation, and smaller \code{n}
+means worse accuracy and faster computation.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FunctionImputation$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

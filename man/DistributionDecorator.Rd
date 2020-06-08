@@ -5,22 +5,92 @@
 \title{Abstract DistributionDecorator Class}
 \value{
 Returns error. Abstract classes cannot be constructed directly.
+
+An \link[R6:R6Class]{R6} object.
 }
 \description{
-The abstract parent class to decorators.
+Abstract class that cannot be constructed directly.
 }
 \details{
 Decorating is the process of adding methods to classes that are not part of the core
-interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators are currently available. The primary
-use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
-to impute missing d/p/q/r functions.
+interface (Gamma et al. 1994). Use \link{listDecorators} to see which decorators are currently
+available. The primary use-cases are to add numeric results when analytic ones are missing,
+to add complex modelling functions and to impute missing d/p/q/r functions.
 
-Abstract classes cannot be implemented directly. Use the \code{decorate} function to decorate distributions.
+Use \link{decorate} or \verb{$decorate} to decorate distributions.
 }
 \references{
 Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
 of Reusable Object-Oriented Software.” Addison-Wesley.
 }
-\seealso{
-\code{\link{decorate}} and \code{\link{listDecorators}}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{methods}}{Returns the names of the available methods in this decorator.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{DistributionDecorator$new()}}
+\item \href{#method-decorate}{\code{DistributionDecorator$decorate()}}
+\item \href{#method-clone}{\code{DistributionDecorator$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DistributionDecorator$new()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-decorate"></a>}}
+\if{latex}{\out{\hypertarget{method-decorate}{}}}
+\subsection{Method \code{decorate()}}{
+Decorates the given distribution with the methods available in this decorator.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DistributionDecorator$decorate(distribution, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{distribution}}{\link{Distribution} \cr
+Distribution to decorate.}
+
+\item{\code{...}}{\code{ANY} \cr
+Extra arguments passed down to specific decorators.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DistributionDecorator$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

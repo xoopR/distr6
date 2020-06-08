@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Tricube Kernel
-#-------------------------------------------------------------
 #' @title Tricube Kernel
 #'
 #' @description Mathematical and statistical functions for the Tricube kernel defined by the pdf,
@@ -12,44 +8,41 @@
 #' be found, decorate with FunctionImputation for numeric results.
 #'
 #' @name Tricube
-#'
-#' @section Constructor: Tricube$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Tricube Kernel Definition
-#-------------------------------------------------------------
-Tricube <- R6Class("Tricube", inherit = Kernel, lock_objects = F)
-Tricube$set("public","name","Tricube")
-Tricube$set("public","short_name","Tric")
-Tricube$set("public","description","Tricube Kernel")
-Tricube$set("public","squared2Norm",function(){
-  return(175/247)
-})
-Tricube$set("public","variance",function(){
-  return(35/243)
-})
-Tricube$set("public","initialize",function(decorators = NULL){
+Tricube <- R6Class("Tricube",
+  inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Tricube",
+    short_name = "Tric",
+    description = "Tricube Kernel",
 
-  pdf <- function(x1){
-    return(70/81 * (1-abs(x1)^3)^3)
-  }
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    squared2Norm = function() {
+      return(175 / 247)
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
-}) # CDF, QUANTILE & VAR MISSING
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(35 / 243)
+    }
+  ),
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Tric", ClassName = "Tricube", Support = "[-1,1]", Packages = "-"))
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_TricubeKernelPdf(x, log)
+    }
+  )
+)
+
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tric", ClassName = "Tricube", Support = "[-1,1]", Packages = "-"))

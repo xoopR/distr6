@@ -24,10 +24,6 @@ of the mode to return can be given or "all" if all should be returned.
 If an analytic expression isn't available, returns error. To impute a numerical expression, use the
 \code{\link{CoreStatistics}} decorator.
 }
-\section{R6 Usage}{
- $mode(which = "all")
-}
-
 \seealso{
 \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 }

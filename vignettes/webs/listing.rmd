@@ -45,7 +45,7 @@ head(listDistributions(filter = list(VaRiAtEfORm = "multivariate")))
 
 Or for multiple filters:
 ```{r}
-head(listDistributions(filter = list(variateform = "multivariate", package = "distr6")))
+head(listDistributions(filter = list(variateform = "multivariate", package = "extraDistr")))
 ```
 
 ## Summary

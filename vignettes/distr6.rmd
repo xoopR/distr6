@@ -36,9 +36,9 @@ Normal$new(mean = 2, sd = 2)
 Normal$new(mean = 3, prec = 0.5)
 ```
 
-But all parameters are available to us via the parameters method. The verbose option displays a parameterisation message in construction. Note how all available parameters are displayed, but only the ones chosen in construction are shown in the print method.
+But all parameters are available to us via the parameters method. Note how all available parameters are displayed, but only the ones chosen in construction are shown in the print method.
 ```{r}
-N <- Normal$new(verbose = TRUE)
+N <- Normal$new()
 N$print()
 N$parameters()
 ```
@@ -57,7 +57,7 @@ N$parameters()
 
 To view the functions that relate these parameters add the following
 ```{r}
-N$parameters()$print(update = T)
+N$parameters()$print(hide_cols = NULL)
 ```
 
 The line above introduces 'method chaining', this occurs when one method is added to another.
@@ -90,12 +90,6 @@ N$properties
 N$traits
 ```
 
-Finally individual properties and traits are accessible via their own 'getters' for example:
-```{r}
-N$valueSupport
-N$skewnessType
-```
-
 ### d/p/q/r
 distr6 is intended not to replace R stats distributions but to be a different way of interfacing 
 them. All distributions in R stats can be found in distr6 and all their d/p/q/r functions which
@@ -104,23 +98,22 @@ our Normal distribution example:
 ```{r}
 N$pdf(2) # dnorm(2)
 N$cdf(2) # pnorm(2)
-N$quantile(2) # qnorm(2)
+N$quantile(0.42) # qnorm(2)
 N$rand(2) # rnorm(2)
 ```
 
-distr6 makes it easy to query these results by only requiring the distribution to be constructed
-once and then the specific parameterisation can be forgotten. In the case of the Normal
-distribution this may not seem like a big difference to R stats but now look at the difference 
-when we construct a distribution without default parameters
+distr6 makes it easy to query these results by only requiring the distribution to be constructed once and then the specific parameterisation can be forgotten. In the case of the Normal distribution this may not seem like a big difference to R stats but now look at the difference when we construct a distribution without default parameters
+
 ```{r}
 B <- Beta$new(shape1 = 0.582, shape2 = 1.2490)
 B$pdf(2) # dbeta(2, 0.582, 1.2490)
 B$cdf(2) # pbeta(2, 0.582, 1.2490)
-B$quantile(2) # qbeta(2, 0.582, 1.2490)
+B$quantile(0.42) # qbeta(2, 0.582, 1.2490)
 B$rand(2) # rbeta(2, 0.582, 1.2490)
 ```
 
 Finally distr6 includes log/log.p and lower.tail arguments to be consistent with R stats.
+
 ```{r}
 N$cdf(3, lower.tail = FALSE, log.p = TRUE) == pnorm(3, lower.tail = FALSE, log.p = TRUE)
 ```

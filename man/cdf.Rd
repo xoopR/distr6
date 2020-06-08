@@ -4,48 +4,37 @@
 \alias{cdf}
 \title{Cumulative Distribution Function}
 \usage{
-cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
+cdf(object, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
 }
 \arguments{
-\item{object}{Distribution.}
+\item{object}{(\link{Distribution})}
 
-\item{x1}{vector of numerics to evaluate function at.}
+\item{...}{\code{(numeric())} \cr
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
 
-\item{...}{additional arguments.}
+\item{lower.tail}{\code{logical(1)} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
 
-\item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.}
+\item{log.p}{\code{logical(1)} \cr
+If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}
 
-\item{log.p}{logical; if TRUE, probabilities p are given as log(p).}
+\item{simplify}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 
-\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
+\item{data}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
 }
 \value{
-Cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
-or as a data.table.
+Cdf evaluated at given points as either a numeric if \code{simplify} is TRUE
+or as a \link[data.table:data.table]{data.table::data.table}.
 }
 \description{
-Returns the cumulative distribution function for a distribution evaluated at a given
-point.
-}
-\details{
-The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
-\deqn{F_X(x) = P(X \le x)}
-If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
-\code{\link{survival}} function.
-
-If available a cdf will be returned without warning using an analytic expression. Otherwise,
-if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-To impute the cdf, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-calculation for the cdf with warning.
-
-Additional named arguments can be passed, which are required for composite distributions such as
-\code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-}
-\section{R6 Usage}{
- $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-}
-
-\seealso{
-\code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
-\code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
+See \link{Distribution}\verb{$cdf}
 }

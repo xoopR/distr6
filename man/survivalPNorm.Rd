@@ -21,19 +21,3 @@ Given p-norm of survival function evaluated between limits as a numeric.
 \description{
 The p-norm of the survival function evaluated between given limits or over the whole support.
 }
-\details{
-The p-norm of the survival function is defined by
-\deqn{(\int_a^b |S_X|^p d\mu)^{1/p}}
-where X is the distribution, \eqn{S_X} is the survival function and a,b are the limits of integration.
-
-Returns NULL if distribution is not continuous.
-
-Can only be used after decorating with \code{\link{ExoticStatistics}}.
-}
-\section{R6 Usage}{
- $survivalPNorm(object, p = 2, lower = NULL, upper = NULL)
-}
-
-\seealso{
-\code{\link{ExoticStatistics}} and \code{\link{decorate}}
-}

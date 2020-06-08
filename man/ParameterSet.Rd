@@ -2,93 +2,427 @@
 % Please edit documentation in R/ParameterSet.R
 \name{ParameterSet}
 \alias{ParameterSet}
-\title{Make an R6 Parameter Set for Distributions}
-\value{
-An R6 object of class ParameterSet.
-}
+\title{Parameter Sets for Distributions}
 \description{
-ParameterSets are passed to a \code{Distribution$new} constructor when
+ParameterSets are passed to the \link{Distribution} constructor when
 creating a custom probability distribution that takes parameters.
 }
-\section{Constructor}{
- ParameterSet$new(id, value, support, settable, updateFunc = NULL, description = NULL)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{id} \tab character \tab unique one-word identifier. \cr
-\code{value} \tab numeric \tab initial parameter value. \cr
-\code{support} \tab numeric \tab range of values parameter can take. \cr
-\code{settable} \tab logical \tab if TRUE the parameter is printed. See Details. \cr
-\code{updateFunc = NULL} \tab function \tab evaluated to update parameter. See Details. \cr
-\code{description = NULL} \tab character \tab optional description of parameter.
-}
-}
-
-\section{Constructor Details}{
-
-An R6 ParameterSet is required to construct a custom Probability Distribution that takes parameters.
-This constructor ensures that the correct format of parameters is supplied to the distribution.
-
-Every argument can either be given as the type listed above or as a list of that type.
-If arguments are provided as a list, then each argument must be of the same length list, with values
-as NULL where appropriate. See examples for more.
-
-Each parameter requires a unique one-word \code{id} that is used to get and set parameters
-after construction. The parameterisation of the distribution is determined by the parameters
-that have \code{settable = TRUE}, this is a slightly confusing term as it actually refers to a parameter
-being 'machine-settable'. Here it just means that the given parameter is used in construction and therefore
-will be included in a call to \code{$print}. \code{updateFunc} is used to update the parameters not used in
-the parameterisation. These should be given as a function that could be understood in the body of a Distribution
-and should start with \code{function(self)}, see examples.
-
-Internally after calling \code{$setParameterValue}, \code{$update} is called to update all parameters
-with a non-NA \code{updateFunc}.
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Method} \tab \strong{Link} \cr
-\code{print(hide_cols = c("updateFunc","settable"))} \tab \code{\link{print.ParameterSet}} \cr
-\code{update()} \tab \code{\link{update.ParameterSet}} \cr
-\code{parameters(id = NULL)} \tab \code{\link{parameters}} \cr
-\code{getParameterSupport(id, error = "warn")} \tab \code{\link{getParameterSupport}} \cr
-\code{getParameterValue(id, error = "warn")} \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-\code{merge(y, ...)} \tab \code{\link{merge.ParameterSet}} \cr
-\code{as.data.table()} \tab \code{\link{as.data.table}} \cr
-}
-}
-
 \examples{
- id = list("prob", "size")
- value = list(0.2, 5)
- support = list(set6::Interval$new(0,1), set6::PosNaturals$new())
- settable = list(TRUE, TRUE)
- description = list("Probability of success",NULL)
- ps = ParameterSet$new(id, value, support, settable,
-                       description = description)
- ps$parameters()
- ps$getParameterValue("prob")
- ps$getParameterSupport("prob")
 
+## ------------------------------------------------
+## Method `ParameterSet$new`
+## ------------------------------------------------
 
- id = list("rate", "scale")
- value = list(1, 1)
- support = list(set6::PosReals$new(), set6::PosReals$new())
- settable = list(TRUE, FALSE)
- updateFunc = list(NULL, function(self) 1/self$getParameterValue('rate'))
- description = list("Arrival rate","Scale parameter")
- ps = ParameterSet$new(id, value, support, settable,
-                       updateFunc, description)
- ps$parameters(id = "rate")
- ps$setParameterValue(rate = 2) # Automatically calls $update
- ps$getParameterValue("scale") # Auto-updated to 1/2
+id <- list("prob", "size")
+value <- list(0.2, 5)
+support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
+settable <- list(TRUE, TRUE)
+description <- list("Probability of success", NULL)
+updateFunc <- NULL
+ParameterSet$new(id = id,
+                 value = value,
+                 support = support,
+                 settable = settable,
+                 updateFunc = updateFunc,
+                 description = description
+ )
+
+ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+
+id <- list("rate", "scale")
+value <- list(1, 1)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+settable <- list(TRUE, FALSE)
+updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
+description <- list("Arrival rate", "Scale parameter")
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  updateFunc, description
+)
+
+## ------------------------------------------------
+## Method `ParameterSet$getParameterSupport`
+## ------------------------------------------------
+
+ps <- ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+ps$getParameterSupport("prob")
+
+## ------------------------------------------------
+## Method `ParameterSet$getParameterValue`
+## ------------------------------------------------
+
+ps <- ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+ps$getParameterValue("prob")
+
+## ------------------------------------------------
+## Method `ParameterSet$setParameterValue`
+## ------------------------------------------------
+
+id <- list("rate", "scale")
+value <- list(1, 1)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+settable <- list(TRUE, FALSE)
+updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
+description <- list("Arrival rate", "Scale parameter")
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  updateFunc, description
+)
+ps$getParameterValue(id = "rate")
+ps$setParameterValue(rate = 2)
+ps$getParameterValue("scale") # Auto-updated to 1/2
+
+## ------------------------------------------------
+## Method `ParameterSet$merge`
+## ------------------------------------------------
+
+ps1 <- ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+ ps2 <- ParameterSet$new(id = "size",
+                 value = 10,
+                 support = set6::Interval$new(0, 10, class = "integer"),
+                 settable = TRUE,
+                 description = "Number of trials"
+ )
+ ps1$merge(ps2)$print()
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{values}}{Returns parameter set values as a named list.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{ParameterSet$new()}}
+\item \href{#method-print}{\code{ParameterSet$print()}}
+\item \href{#method-parameters}{\code{ParameterSet$parameters()}}
+\item \href{#method-getParameterSupport}{\code{ParameterSet$getParameterSupport()}}
+\item \href{#method-getParameterValue}{\code{ParameterSet$getParameterValue()}}
+\item \href{#method-setParameterValue}{\code{ParameterSet$setParameterValue()}}
+\item \href{#method-merge}{\code{ParameterSet$merge()}}
+\item \href{#method-clone}{\code{ParameterSet$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$new(
+  id,
+  value,
+  support,
+  settable,
+  updateFunc = NULL,
+  description = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{(character(1)|list())}\cr
+id of the parameter(s) to construct, should be unique.}
+
+\item{\code{value}}{\code{(ANY|list())}\cr
+Value of parameter(s) to set.}
+
+\item{\code{support}}{\verb{([set6::Set]|list())}\cr
+Support of parameter(s) to set}
+
+\item{\code{settable}}{\code{(character(1)|list())}\cr
+Logical flag indicating if the parameter(s) can be updated after construction.}
+
+\item{\code{updateFunc}}{\verb{(function(1)|list())}\cr
+Optional function to update the parameter(s) based on other parameter values.
+These should be given as a function that could be understood in the body of a \link{Distribution}
+and should start with \verb{function(self)}, see examples.}
+
+\item{\code{description}}{\code{(character(1)|list())}\cr
+Optional description for the parameter(s).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Every argument can either be given as the type listed or as a list of that type.
+If arguments are provided as a list, then each argument must be of the same length,
+with values as NULL where appropriate. See examples for more.
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{id <- list("prob", "size")
+value <- list(0.2, 5)
+support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
+settable <- list(TRUE, TRUE)
+description <- list("Probability of success", NULL)
+updateFunc <- NULL
+ParameterSet$new(id = id,
+                 value = value,
+                 support = support,
+                 settable = settable,
+                 updateFunc = updateFunc,
+                 description = description
+ )
+
+ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+
+id <- list("rate", "scale")
+value <- list(1, 1)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+settable <- list(TRUE, FALSE)
+updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
+description <- list("Arrival rate", "Scale parameter")
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  updateFunc, description
+)
+}
+\if{html}{\out{</div>}}
 
 }
-\seealso{
-\code{\link{Distribution}}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Prints the \link{ParameterSet}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$print(hide_cols = c("updateFunc", "settable"), ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{hide_cols}}{\code{(character())}\cr
+Names of columns in the \link{ParameterSet} to hide whilst printing.}
+
+\item{\code{...}}{\cr
+Additional arguments, currently unused.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-parameters"></a>}}
+\if{latex}{\out{\hypertarget{method-parameters}{}}}
+\subsection{Method \code{parameters()}}{
+Returns the full parameter details for the supplied parameter, or returns \code{self}
+if \code{id} is \code{NULL} or unmatched.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$parameters(id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character()} \cr
+id of parameter to return.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getParameterSupport"></a>}}
+\if{latex}{\out{\hypertarget{method-getParameterSupport}{}}}
+\subsection{Method \code{getParameterSupport()}}{
+Returns the support of the supplied parameter.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$getParameterSupport(id, error = "warn")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character()} \cr
+id of parameter support to return.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \link[set6:Set]{set6::Set} object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{ps <- ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+ps$getParameterSupport("prob")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-getParameterValue}{}}}
+\subsection{Method \code{getParameterValue()}}{
+Returns the value of the supplied parameter.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$getParameterValue(id, error = "warn")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character()} \cr
+id of parameter value to return.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{ps <- ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+ps$getParameterValue("prob")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
+\subsection{Method \code{setParameterValue()}}{
+Sets the value(s) of the given parameter(s).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{lst}}{\code{(list(1))} \cr
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{id <- list("rate", "scale")
+value <- list(1, 1)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+settable <- list(TRUE, FALSE)
+updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
+description <- list("Arrival rate", "Scale parameter")
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  updateFunc, description
+)
+ps$getParameterValue(id = "rate")
+ps$setParameterValue(rate = 2)
+ps$getParameterValue("scale") # Auto-updated to 1/2
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-merge"></a>}}
+\if{latex}{\out{\hypertarget{method-merge}{}}}
+\subsection{Method \code{merge()}}{
+Merges multiple parameter sets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$merge(y, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{y}}{\link{ParameterSet}}
+
+\item{\code{...}}{\link{ParameterSet}s}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{ps1 <- ParameterSet$new(id = "prob",
+                 value = 0.2,
+                 support = set6::Interval$new(0, 1),
+                 settable = TRUE,
+                 description = "Probability of success"
+ )
+ ps2 <- ParameterSet$new(id = "size",
+                 value = 10,
+                 support = set6::Interval$new(0, 10, class = "integer"),
+                 settable = TRUE,
+                 description = "Number of trials"
+ )
+ ps1$merge(ps2)$print()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

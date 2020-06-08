@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Degenerate Distribution Documentation
-#-------------------------------------------------------------
 #' @name Degenerate
 #' @template SDist
 #' @templateVar ClassName Degenerate
@@ -14,97 +11,178 @@
 #' @templateVar distsupport \eqn{{\mu}}
 #' @templateVar aka Dirac
 #' @aliases Dirac Delta
-#' @templateVar constructor mean = 0
-#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar constructorDets \code{mean} as a numeric.
 #'
-#' @examples
-#' x = Degenerate$new(mean = 4)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
-#' # Update parameters
-#' x$setParameterValue(mean = 2.56)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family discrete distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Degenerate Distribution Definition
-#-------------------------------------------------------------
-Degenerate <- R6Class("Degenerate", inherit = SDistribution, lock_objects = F)
-Degenerate$set("public","name","Degenerate")
-Degenerate$set("public","short_name","Degen")
-Degenerate$set("public","description","Degenerate Probability Distribution.")
+Degenerate <- R6Class("Degenerate",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Degenerate",
+    short_name = "Degen",
+    description = "Degenerate Probability Distribution.",
 
-Degenerate$set("public","mean",function(){
-  return(self$getParameterValue("mean"))
-})
-Degenerate$set("public","variance",function(){
-  return(0)
-})
-Degenerate$set("public","skewness",function(){
-  return(NaN)
-})
-Degenerate$set("public","kurtosis",function(excess = TRUE){
-  return(NaN)
-})
-Degenerate$set("public","entropy",function(base = 2){
-  return(0)
-})
-Degenerate$set("public", "mgf", function(t){
-  return(exp(self$getParameterValue("mean") * t))
-})
-Degenerate$set("public", "cf", function(t){
-  return(exp(self$getParameterValue("mean") * t * 1i))
-})
-Degenerate$set("public","mode",function(which = NULL){
-  return(self$getParameterValue("mean"))
-})
+    # Public methods
+    # initialize
 
-Degenerate$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  super$setParameterValue(..., lst = lst, error = error)
-  private$.properties$support <- Set$new(self$getParameterValue("mean"))
-  invisible(self)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `numeric(1)` \cr
+    #' Mean of the distribution, defined on the Reals.
+    initialize = function(mean = 0, decorators = NULL) {
 
-Degenerate$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  return(lst)
-})
+      private$.parameters <- getParameterSet(self, mean)
+      self$setParameterValue(mean = mean)
 
+      super$initialize(
+        decorators = decorators,
+        support = Set$new(mean, class = "numeric"),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-Degenerate$set("public","initialize",function(mean = 0, decorators = NULL, verbose = FALSE){
+    # stats
 
-  private$.parameters <- getParameterSet(self, mean, verbose)
-  self$setParameterValue(mean = mean)
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("mean"))
+    },
 
-  pdf <- function(x1) if(x1 == self$getParameterValue("mean")) return(1) else return(0)
-  cdf <- function(x1) if(x1 >= self$getParameterValue("mean")) return(1) else return(0)
-  quantile <- function(p) if(p > 0) return(self$getParameterValue("mean")) else return(-Inf)
-  rand <- function(n) return(rep(self$getParameterValue("mean"), n))
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(self$getParameterValue("mean"))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(mean, class = "integer"),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(0)
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Degen", ClassName = "Degenerate",
-                                                     Type = "\u211D", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(0)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      return(NaN)
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      return(0)
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      return(exp(self$getParameterValue("mean") * t))
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      return(exp(self$getParameterValue("mean") * t * 1i))
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      private$.properties$support <- Set$new(self$getParameterValue("mean"), class = "numeric")
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      mean <- self$getParameterValue("mean")
+
+      if (checkmate::testList(mean)) {
+        return(C_DegeneratePdf(x, unlist(mean), log))
+      } else {
+        return(as.numeric(C_DegeneratePdf(x, mean, log)))
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      mean <- self$getParameterValue("mean")
+
+      if (checkmate::testList(mean)) {
+        return(C_DegenerateCdf(x, unlist(mean), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_DegenerateCdf(x, mean, lower.tail, log.p)))
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      mean <- self$getParameterValue("mean")
+
+      if (checkmate::testList(mean)) {
+        return(C_DegenerateQuantile(p, unlist(mean), lower.tail, log.p))
+      } else {
+        return(as.numeric(C_DegenerateQuantile(p, mean, lower.tail, log.p)))
+      }
+    },
+    .rand = function(n) {
+      rep(self$getParameterValue("mean"), n)
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Degen", ClassName = "Degenerate",
+    Type = "\u211D", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "-"
+  )
+)

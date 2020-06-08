@@ -1,5 +1,5 @@
 #' @title assert/check/test/Distribution
-#' @description Validation checks to test if a given object is an R6 Distribution.
+#' @description Validation checks to test if a given object is a [Distribution].
 #' @param object object to test
 #' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
@@ -9,23 +9,24 @@
 #' @examples
 #' testDistribution(5) # FALSE
 #' testDistribution(Binomial$new()) # TRUE
-#'
 #' @export
-testDistribution <- function(){}
+testDistribution <- function() {}
 #' @rdname testDistribution
 #' @export
-checkDistribution <- function(){}
+checkDistribution <- function() {}
 #' @rdname testDistribution
 #' @export
-assertDistribution <- function(){}
+assertDistribution <- function() {}
 
-makeChecks(assertionName = "Distribution",
-           cond = inherits(object, "Distribution"),
-           defaulterrormsg = paste(object, "is not an R6 Distribution object"),
-           pos = environment())
+makeChecks(
+  assertionName = "Distribution",
+  cond = inherits(object, "Distribution"),
+  defaulterrormsg = paste(object, "is not an R6 Distribution object"),
+  pos = environment()
+)
 
 #' @title assert/check/test/DistributionList
-#' @description Validation checks to test if a given object is a list of R6 Distributions.
+#' @description Validation checks to test if a given object is a list of [Distribution]s.
 #' @param object object to test
 #' @param errormsg custom error message to return if assert/check fails
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
@@ -33,22 +34,133 @@ makeChecks(assertionName = "Distribution",
 #'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
-#' testDistributionList(list(Binomial$new(),5)) # FALSE
-#' testDistributionList(list(Binomial$new(),Exponential$new())) # TRUE
-#'
+#' testDistributionList(list(Binomial$new(), 5)) # FALSE
+#' testDistributionList(list(Binomial$new(), Exponential$new())) # TRUE
 #' @export
-testDistributionList <- function(){}
+testDistributionList <- function() {}
 #' @rdname testDistributionList
 #' @export
-checkDistributionList <- function(){}
+checkDistributionList <- function() {}
 #' @rdname testDistributionList
 #' @export
-assertDistributionList <- function(){}
+assertDistributionList <- function() {}
 
-makeChecks(assertionName =  "DistributionList",
-           cond = all(unlist(lapply(object, inherits,"Distribution"))),
-           defaulterrormsg = "One or more items in the list are not Distributions",
-           pos = environment())
+makeChecks(
+  assertionName = "DistributionList",
+  cond = all(unlist(lapply(object, inherits, "Distribution"))),
+  defaulterrormsg = "One or more items in the list are not Distributions",
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSet
+#' @description Validation checks to test if a given object is a [ParameterSet].
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSet(5) # FALSE
+#' testParameterSet(Binomial$new()$parameters()) # TRUE
+#' @export
+testParameterSet <- function() {}
+#' @rdname testParameterSet
+#' @export
+checkParameterSet <- function() {}
+#' @rdname testParameterSet
+#' @export
+assertParameterSet <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSet",
+  cond = inherits(object, "ParameterSet"),
+  defaulterrormsg = paste(object, "is not an R6 ParameterSet object"),
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSetList
+#' @description Validation checks to test if a given object is a list of [ParameterSet]s.
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSetList(list(Binomial$new(), 5)) # FALSE
+#' testParameterSetList(list(Binomial$new(), Exponential$new())) # TRUE
+#' @export
+testParameterSetList <- function() {}
+#' @rdname testParameterSetList
+#' @export
+checkParameterSetList <- function() {}
+#' @rdname testParameterSetList
+#' @export
+assertParameterSetList <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSetList",
+  cond = all(sapply(object, inherits, "ParameterSet")),
+  defaulterrormsg = "One or more items in the list are not ParameterSets",
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSetCollection
+#' @description Validation checks to test if a given object is a [ParameterSetCollection].
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSetCollection(5) # FALSE
+#' testParameterSetCollection(ParameterSetCollection$new(Binom = Binomial$new()$parameters())) # TRUE
+#' @export
+testParameterSetCollection <- function() {}
+#' @rdname testParameterSetCollection
+#' @export
+checkParameterSetCollection <- function() {}
+#' @rdname testParameterSetCollection
+#' @export
+assertParameterSetCollection <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSetCollection",
+  cond = inherits(object, "ParameterSetCollection"),
+  defaulterrormsg = paste(object, "is not an R6 ParameterSetCollection object"),
+  pos = environment()
+)
+
+#' @title assert/check/test/ParameterSetCollectionList
+#' @description Validation checks to test if a given object is a list of [ParameterSetCollection]s.
+#' @param object object to test
+#' @param errormsg custom error message to return if assert/check fails
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testParameterSetCollectionList(list(Binomial$new(), 5)) # FALSE
+#' testParameterSetCollectionList(list(ParameterSetCollection$new(
+#'   Binom = Binomial$new()$parameters()
+#' ))) # TRUE
+#' @export
+testParameterSetCollectionList <- function() {}
+#' @rdname testParameterSetCollectionList
+#' @export
+checkParameterSetCollectionList <- function() {}
+#' @rdname testParameterSetCollectionList
+#' @export
+assertParameterSetCollectionList <- function() {}
+
+makeChecks(
+  assertionName = "ParameterSetCollectionList",
+  cond = all(sapply(object, inherits, "ParameterSetCollection")),
+  defaulterrormsg = "One or more items in the list are not ParameterSetCollections",
+  pos = environment()
+)
 
 #' @title assert/check/test/Univariate
 #' @name testUnivariate
@@ -61,20 +173,21 @@ makeChecks(assertionName =  "DistributionList",
 #'
 #' @examples
 #' testUnivariate(Binomial$new()) # TRUE
-#'
 #' @export
-testUnivariate <- function(){}
+testUnivariate <- function() {}
 #' @rdname testUnivariate
 #' @export
-checkUnivariate <- function(){}
+checkUnivariate <- function() {}
 #' @rdname testUnivariate
 #' @export
-assertUnivariate <- function(){}
+assertUnivariate <- function() {}
 
-makeChecks(assertionName =  "Univariate",
-           cond = object$variateForm == "univariate",
-           defaulterrormsg = paste(object$short_name,"is not univariate"),
-           pos = environment())
+makeChecks(
+  assertionName = "Univariate",
+  cond = object$traits$variateForm == "univariate",
+  defaulterrormsg = paste(object$short_name, "is not univariate"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Multivariate
 #' @name testMultivariate
@@ -87,20 +200,21 @@ makeChecks(assertionName =  "Univariate",
 #'
 #' @examples
 #' testMultivariate(Binomial$new()) # FALSE
-#'
 #' @export
-testMultivariate <- function(){}
+testMultivariate <- function() {}
 #' @rdname testMultivariate
 #' @export
-checkMultivariate <- function(){}
+checkMultivariate <- function() {}
 #' @rdname testMultivariate
 #' @export
-assertMultivariate <- function(){}
+assertMultivariate <- function() {}
 
-makeChecks(assertionName =  "Multivariate",
-           cond = object$variateForm == "multivariate",
-           defaulterrormsg = paste(object$short_name,"is not multivariate"),
-           pos = environment())
+makeChecks(
+  assertionName = "Multivariate",
+  cond = object$traits$variateForm == "multivariate",
+  defaulterrormsg = paste(object$short_name, "is not multivariate"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Matrixvariate
 #' @name testMatrixvariate
@@ -113,20 +227,21 @@ makeChecks(assertionName =  "Multivariate",
 #'
 #' @examples
 #' testMatrixvariate(Binomial$new()) # FALSE
-#'
 #' @export
-testMatrixvariate <- function(){}
+testMatrixvariate <- function() {}
 #' @rdname testMatrixvariate
 #' @export
-checkMatrixvariate <- function(){}
+checkMatrixvariate <- function() {}
 #' @rdname testMatrixvariate
 #' @export
-assertMatrixvariate <- function(){}
+assertMatrixvariate <- function() {}
 
-makeChecks(assertionName =  "Matrixvariate",
-           cond = object$variateForm == "matrixvariate",
-           defaulterrormsg = paste(object$short_name,"is not matrixvariate"),
-           pos = environment())
+makeChecks(
+  assertionName = "Matrixvariate",
+  cond = object$traits$variateForm == "matrixvariate",
+  defaulterrormsg = paste(object$short_name, "is not matrixvariate"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Continuous
 #' @name testContinuous
@@ -139,20 +254,21 @@ makeChecks(assertionName =  "Matrixvariate",
 #'
 #' @examples
 #' testContinuous(Binomial$new()) # FALSE
-#'
 #' @export
-testContinuous <- function(){}
+testContinuous <- function() {}
 #' @rdname testContinuous
 #' @export
-checkContinuous <- function(){}
+checkContinuous <- function() {}
 #' @rdname testContinuous
 #' @export
-assertContinuous <- function(){}
+assertContinuous <- function() {}
 
-makeChecks(assertionName =  "Continuous",
-           cond = object$valueSupport == "continuous",
-           defaulterrormsg = paste(object$short_name,"is not continuous"),
-           pos = environment())
+makeChecks(
+  assertionName = "Continuous",
+  cond = object$traits$valueSupport == "continuous",
+  defaulterrormsg = paste(object$short_name, "is not continuous"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Discrete
 #' @name testDiscrete
@@ -165,20 +281,21 @@ makeChecks(assertionName =  "Continuous",
 #'
 #' @examples
 #' testDiscrete(Binomial$new()) # FALSE
-#'
 #' @export
-testDiscrete <- function(){}
+testDiscrete <- function() {}
 #' @rdname testDiscrete
 #' @export
-checkDiscrete <- function(){}
+checkDiscrete <- function() {}
 #' @rdname testDiscrete
 #' @export
-assertDiscrete <- function(){}
+assertDiscrete <- function() {}
 
-makeChecks(assertionName =  "Discrete",
-           cond = object$valueSupport == "discrete",
-           defaulterrormsg = paste(object$short_name,"is not discrete"),
-           pos = environment())
+makeChecks(
+  assertionName = "Discrete",
+  cond = object$traits$valueSupport == "discrete",
+  defaulterrormsg = paste(object$short_name, "is not discrete"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Mixture
 #' @name testMixture
@@ -191,20 +308,21 @@ makeChecks(assertionName =  "Discrete",
 #'
 #' @examples
 #' testMixture(Binomial$new()) # FALSE
-#'
 #' @export
-testMixture <- function(){}
+testMixture <- function() {}
 #' @rdname testMixture
 #' @export
-checkMixture <- function(){}
+checkMixture <- function() {}
 #' @rdname testMixture
 #' @export
-assertMixture <- function(){}
+assertMixture <- function() {}
 
-makeChecks(assertionName =  "Mixture",
-           cond = object$valueSupport == "mixture",
-           defaulterrormsg = paste(object$short_name,"is not mixture"),
-           pos = environment())
+makeChecks(
+  assertionName = "Mixture",
+  cond = object$traits$valueSupport == "mixture",
+  defaulterrormsg = paste(object$short_name, "is not mixture"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Symmetric
 #' @name testSymmetric
@@ -217,21 +335,22 @@ makeChecks(assertionName =  "Mixture",
 #'
 #' @examples
 #' testSymmetric(Binomial$new()) # FALSE
-#'
 #' @export
-testSymmetric <- function(){}
+testSymmetric <- function() {}
 #' @rdname testSymmetric
 #' @export
-checkSymmetric <- function(){}
+checkSymmetric <- function() {}
 #' @rdname testSymmetric
 #' @export
-assertSymmetric <- function(){}
+assertSymmetric <- function() {}
 
-makeChecks(assertionName =  "Symmetric",
-           cond = object$symmetry == "symmetric",
-           defaulterrormsg = paste(object$short_name,"is not symmetric"),
-           args = alist(object=),
-           pos = environment())
+makeChecks(
+  assertionName = "Symmetric",
+  cond = object$properties$symmetry == "symmetric",
+  defaulterrormsg = paste(object$short_name, "is not symmetric"),
+  args = alist(object = ),
+  pos = environment()
+)
 
 #' @title assert/check/test/NegativeSkew
 #' @name testNegativeSkew
@@ -244,20 +363,21 @@ makeChecks(assertionName =  "Symmetric",
 #'
 #' @examples
 #' testNegativeSkew(Binomial$new())
-#'
 #' @export
-testNegativeSkew <- function(){}
+testNegativeSkew <- function() {}
 #' @rdname testNegativeSkew
 #' @export
-checkNegativeSkew <- function(){}
+checkNegativeSkew <- function() {}
 #' @rdname testNegativeSkew
 #' @export
-assertNegativeSkew <- function(){}
+assertNegativeSkew <- function() {}
 
-makeChecks(assertionName =  "NegativeSkew",
-           cond = object$skewnessType == "Negative Skew",
-           defaulterrormsg = paste(object$short_name,"is not negative skew"),
-           pos = environment())
+makeChecks(
+  assertionName = "NegativeSkew",
+  cond = object$properties$skewness == "Negative Skew",
+  defaulterrormsg = paste(object$short_name, "is not negative skew"),
+  pos = environment()
+)
 
 #' @title assert/check/test/PositiveSkew
 #' @name testPositiveSkew
@@ -270,20 +390,21 @@ makeChecks(assertionName =  "NegativeSkew",
 #'
 #' @examples
 #' testPositiveSkew(Binomial$new())
-#'
 #' @export
-testPositiveSkew <- function(){}
+testPositiveSkew <- function() {}
 #' @rdname testPositiveSkew
 #' @export
-checkPositiveSkew <- function(){}
+checkPositiveSkew <- function() {}
 #' @rdname testPositiveSkew
 #' @export
-assertPositiveSkew <- function(){}
+assertPositiveSkew <- function() {}
 
-makeChecks(assertionName =  "PositiveSkew",
-           cond = object$skewnessType == "Positive Skew",
-           defaulterrormsg = paste(object$short_name,"is not positive skew"),
-           pos = environment())
+makeChecks(
+  assertionName = "PositiveSkew",
+  cond = object$properties$skewness == "Positive Skew",
+  defaulterrormsg = paste(object$short_name, "is not positive skew"),
+  pos = environment()
+)
 
 #' @title assert/check/test/NoSkew
 #' @name testNoSkew
@@ -297,20 +418,21 @@ makeChecks(assertionName =  "PositiveSkew",
 #'
 #' @examples
 #' testNoSkew(Binomial$new())
-#'
 #' @export
-testNoSkew <- function(){}
+testNoSkew <- function() {}
 #' @rdname testNoSkew
 #' @export
-checkNoSkew <- function(){}
+checkNoSkew <- function() {}
 #' @rdname testNoSkew
 #' @export
-assertNoSkew <- function(){}
+assertNoSkew <- function() {}
 
-makeChecks(assertionName =  "NoSkew",
-           cond = object$skewnessType == "No Skew",
-           defaulterrormsg = paste(object$short_name,"is not no skew"),
-           pos = environment())
+makeChecks(
+  assertionName = "NoSkew",
+  cond = object$properties$skewness == "No Skew",
+  defaulterrormsg = paste(object$short_name, "is not no skew"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Platykurtic
 #' @name testPlatykurtic
@@ -323,20 +445,21 @@ makeChecks(assertionName =  "NoSkew",
 #'
 #' @examples
 #' testPlatykurtic(Binomial$new())
-#'
 #' @export
-testPlatykurtic <- function(){}
+testPlatykurtic <- function() {}
 #' @rdname testPlatykurtic
 #' @export
-checkPlatykurtic <- function(){}
+checkPlatykurtic <- function() {}
 #' @rdname testPlatykurtic
 #' @export
-assertPlatykurtic <- function(){}
+assertPlatykurtic <- function() {}
 
-makeChecks(assertionName =  "Platykurtic",
-           cond = object$kurtosisType == "platykurtic",
-           defaulterrormsg = paste(object$short_name,"is not platykurtic"),
-           pos = environment())
+makeChecks(
+  assertionName = "Platykurtic",
+  cond = object$properties$kurtosis == "platykurtic",
+  defaulterrormsg = paste(object$short_name, "is not platykurtic"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Mesokurtic
 #' @name testMesokurtic
@@ -349,20 +472,21 @@ makeChecks(assertionName =  "Platykurtic",
 #'
 #' @examples
 #' testMesokurtic(Binomial$new())
-#'
 #' @export
-testMesokurtic <- function(){}
+testMesokurtic <- function() {}
 #' @rdname testMesokurtic
 #' @export
-checkMesokurtic <- function(){}
+checkMesokurtic <- function() {}
 #' @rdname testMesokurtic
 #' @export
-assertMesokurtic <- function(){}
+assertMesokurtic <- function() {}
 
-makeChecks(assertionName =  "Mesokurtic",
-           cond = object$kurtosisType == "mesokurtic",
-           defaulterrormsg = paste(object$short_name,"is not mesokurtic"),
-           pos = environment())
+makeChecks(
+  assertionName = "Mesokurtic",
+  cond = object$properties$kurtosis == "mesokurtic",
+  defaulterrormsg = paste(object$short_name, "is not mesokurtic"),
+  pos = environment()
+)
 
 #' @title assert/check/test/Leptokurtic
 #' @name testLeptokurtic
@@ -375,17 +499,18 @@ makeChecks(assertionName =  "Mesokurtic",
 #'
 #' @examples
 #' testLeptokurtic(Binomial$new())
-#'
 #' @export
-testLeptokurtic <- function(){}
+testLeptokurtic <- function() {}
 #' @rdname testLeptokurtic
 #' @export
-checkLeptokurtic <- function(){}
+checkLeptokurtic <- function() {}
 #' @rdname testLeptokurtic
 #' @export
-assertLeptokurtic <- function(){}
+assertLeptokurtic <- function() {}
 
-makeChecks(assertionName =  "Leptokurtic",
-           cond = object$kurtosisType == "leptokurtic",
-           defaulterrormsg = paste(object$short_name,"is not leptokurtic"),
-           pos = environment())
+makeChecks(
+  assertionName = "Leptokurtic",
+  cond = object$properties$kurtosis == "leptokurtic",
+  defaulterrormsg = paste(object$short_name, "is not leptokurtic"),
+  pos = environment()
+)

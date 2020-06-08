@@ -36,5 +36,4 @@ Validation checks to test if Distribution is mesokurtic.
 }
 \examples{
 testMesokurtic(Binomial$new())
-
 }

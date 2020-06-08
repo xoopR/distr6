@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Binomial Distribution Documentation
-#-------------------------------------------------------------
 #' @name Binomial
 #' @template SDist
 #' @templateVar ClassName Binomial
@@ -10,125 +6,234 @@
 #' @templateVar params number of trials, n, and probability of success, p,
 #' @templateVar pdfpmf pmf
 #' @templateVar pdfpmfeq \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
-#' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and \eqn{p \ \epsilon \ [0,1]}{p \epsilon [0,1]}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
+#' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0, 1,...,n}}
-#' @templateVar constructor size = 10, prob = 0.5, qprob = NULL
-#' @templateVar arg1 \code{size} \tab numeric \tab number of trials. \cr
-#' @templateVar arg2 \code{prob} \tab numeric \tab probability of success. \cr
-#' @templateVar arg3 \code{qprob} \tab numeric \tab probability of failure. \cr
-#' @templateVar constructorDets \code{size} as a whole number, and either \code{prob} or \code{qprob} as a number between 0 and 1. These are related via, \deqn{qprob = 1 - prob} If \code{qprob} is given then \code{prob} is ignored.
 #'
-#' @examples
-#' # Can be parameterised with probability of success or failure
-#' Binomial$new(prob = 0.2)
-#' Binomial$new(qprob = 0.3)
+#' @template param_prob
+#' @template param_qprob
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' x = Binomial$new() # Default is with prob = 0.5 and size = 10
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(size = 4, qprob = 0.1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family discrete distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Binomial Distribution Definition
-#-------------------------------------------------------------
-Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F)
-Binomial$set("public","name","Binomial")
-Binomial$set("public","short_name","Binom")
-Binomial$set("public","description","Binomial Probability Distribution.")
-Binomial$set("public","packages","stats")
+Binomial <- R6Class("Binomial",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Binomial",
+    short_name = "Binom",
+    description = "Binomial Probability Distribution.",
+    packages = "stats",
 
-Binomial$set("public","mean",function(){
-  self$getParameterValue("size") * self$getParameterValue("prob")
-})
-Binomial$set("public","mode",function(which = NULL){
-  return(floor((self$getParameterValue("size") + 1) * self$getParameterValue("prob")))
-})
-Binomial$set("public","variance",function(){
-  self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob")
-})
-Binomial$set("public","skewness",function(){
-  (1 - (2*self$getParameterValue("prob"))) / self$stdev()
-})
-Binomial$set("public","kurtosis",function(excess = TRUE){
-  exkurtosis = (1 - (6*self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
-  if(excess)
-    return(exkurtosis)
-  else
-    return(exkurtosis + 3)
-})
-Binomial$set("public","entropy",function(base = 2){
-  0.5 * log(2 * pi * exp(1) * self$variance(), base)
-})
-Binomial$set("public", "mgf", function(t){
-  (self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size")
-})
-Binomial$set("public", "cf", function(t){
-  (self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp((0+1i) * t)))^self$getParameterValue("size")
-})
-Binomial$set("public","pgf",function(z){
-  (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
-})
+    # Public methods
+    # initialize
 
-Binomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  super$setParameterValue(..., lst = lst, error = error)
-  private$.properties$support <- Set$new(0:self$getParameterValue("size"))
-  if(self$getParameterValue("prob")==0.5)
-    private$.properties$symmetry <- "asymmetric"
-  else
-    private$.properties$symmetry <- "symmetric"
-  invisible(self)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param size `(integer(1))`\cr
+    #' Number of trials, defined on the positive Naturals.
+    initialize = function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL) {
 
-Binomial$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$size)) lst = c(lst, list(size = paramlst$size))
-  if(!is.null(paramlst$prob)) lst = c(lst, list(prob = paramlst$prob))
-  if(!is.null(paramlst$qprob)) lst = c(lst, list(prob = 1-paramlst$qprob))
-  return(lst)
-})
+      private$.parameters <- getParameterSet(self, size, prob, qprob)
+      self$setParameterValue(size = size, prob = prob, qprob = qprob)
 
+      super$initialize(
+        decorators = decorators,
+        support = Set$new(0:size, class = "integer"),
+        type = Naturals$new(),
+        symmetry = if (prob == 0.5) "symm" else "asym"
+      )
+    },
 
-Binomial$set("public","initialize",function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL, verbose = FALSE){
+    # stats
 
-  private$.parameters <- getParameterSet(self, size, prob, qprob, verbose)
-  self$setParameterValue(size = size, prob = prob, qprob = qprob)
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      self$getParameterValue("size") * self$getParameterValue("prob")
+    },
 
-  if(prob == 0.5)
-    symmetric <- TRUE
-  else
-    symmetric <- FALSE
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(floor((self$getParameterValue("size") + 1) * self$getParameterValue("prob")))
+    },
 
-  pdf = function(x1) dbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-  cdf = function(x1) pbinom(x1, self$getParameterValue("size"), self$getParameterValue("prob"))
-  quantile = function(p) qbinom(p, self$getParameterValue("size"), self$getParameterValue("prob"))
-  rand = function(n) rbinom(n, self$getParameterValue("size"), self$getParameterValue("prob"))
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob")
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Set$new(0:size, class = "integer"),
-                   symmetric = symmetric,type = Naturals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      (1 - (2 * self$getParameterValue("prob"))) / self$stdev()
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Binom", ClassName = "Binomial",
-                                                     Type = "\u21150", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      exkurtosis <- (1 - (6 * self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
+      if (excess) {
+        return(exkurtosis)
+      } else {
+        return(exkurtosis + 3)
+      }
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      0.5 * log(2 * pi * exp(1) * self$variance(), base)
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      (self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size")
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      (self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp((0 + 1i) * t)))^self$getParameterValue("size")
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      private$.properties$support <- Set$new(0:self$getParameterValue("size"))
+      if (self$getParameterValue("prob") == 0.5) {
+        private$.properties$symmetry <- "asymmetric"
+      } else {
+        private$.properties$symmetry <- "symmetric"
+      }
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      size <- self$getParameterValue("size")
+      prob <- self$getParameterValue("prob")
+
+      call_C_base_pdqr(
+        fun = "dbinom",
+        x = x,
+        args = list(
+          size = unlist(size),
+          prob = unlist(prob)
+        ),
+        log = log,
+        vec = test_list(size)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      size <- self$getParameterValue("size")
+      prob <- self$getParameterValue("prob")
+
+      call_C_base_pdqr(
+        fun = "pbinom",
+        x = x,
+        args = list(
+          size = unlist(size),
+          prob = unlist(prob)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(size)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      size <- self$getParameterValue("size")
+      prob <- self$getParameterValue("prob")
+
+      call_C_base_pdqr(
+        fun = "qbinom",
+        x = p,
+        args = list(
+          size = unlist(size),
+          prob = unlist(prob)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(size)
+      )
+    },
+    .rand = function(n) {
+      size <- self$getParameterValue("size")
+      prob <- self$getParameterValue("prob")
+
+      call_C_base_pdqr(
+        fun = "rbinom",
+        x = n,
+        args = list(
+          size = unlist(size),
+          prob = unlist(prob)
+        ),
+        vec = test_list(size)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
+      if (!is.null(paramlst$prob)) lst <- c(lst, list(prob = paramlst$prob))
+      if (!is.null(paramlst$qprob)) lst <- c(lst, list(prob = 1 - paramlst$qprob))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Binom", ClassName = "Binomial",
+    Type = "\u21150", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

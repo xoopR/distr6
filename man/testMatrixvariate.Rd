@@ -36,5 +36,4 @@ Validation checks to test if Distribution is matrixvariate.
 }
 \examples{
 testMatrixvariate(Binomial$new()) # FALSE
-
 }

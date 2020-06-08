@@ -23,15 +23,3 @@ lies in the distribution support or FALSE otherwise.
 Tests if the given data lies in the support of the Distribution, either tests if all
 data lies in the support or any of it.
 }
-\details{
-If \code{all} is TRUE (default) returns TRUE only if every element in \code{x}
-lies in the support. If \code{all} is FALSE then returns a vector of logicals for each corresponding element
-in the vector \code{x}.
-}
-\section{R6 Usage}{
- $liesInSupport(x, all = TRUE, bound = FALSE)
-}
-
-\seealso{
-\code{\link{liesInType}}
-}

@@ -27,5 +27,4 @@ Validation checks to test if Distribution is mixture.
 }
 \examples{
 testMixture(Binomial$new()) # FALSE
-
 }

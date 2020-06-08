@@ -4,33 +4,32 @@
 \alias{survival}
 \title{Survival Function}
 \usage{
-survival(object, x1, log = FALSE)
+survival(object, ..., log = FALSE, simplify = TRUE, data = NULL)
 }
 \arguments{
-\item{object}{Distribution.}
+\item{object}{(\link{Distribution}).}
 
-\item{x1}{Point to evaluate the survival function at.}
+\item{...}{\code{(numeric())} \cr
+Points to evaluate the probability density function of the distribution. Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
 
-\item{log}{logical, if TRUE then the (natural) logarithm of the survival function is returned.}
+\item{log}{\code{logical(1)} \cr If \code{TRUE} returns log-Hazard Default is \code{FALSE}.}
+
+\item{simplify}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{data}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
 }
 \value{
 Survival function as a numeric, natural logarithm returned if \code{log} is TRUE.
 }
 \description{
-The survival function of a probability distribution is the probability of surviving
-after a point x.
-}
-\details{
-The survival function is defined by
-\deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx}
-where X is the distribution, \eqn{S_X} is the survival function, \eqn{F_X} is the cdf and \eqn{f_X} is the pdf.
-
-Can only be used after decorating with \code{\link{ExoticStatistics}}.
-}
-\section{R6 Usage}{
- $survival(x1, log = FALSE)
-}
-
-\seealso{
-\code{\link{ExoticStatistics}} and \code{\link{decorate}}
+See \link{ExoticStatistics}\verb{$survival}.
 }

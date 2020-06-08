@@ -2,44 +2,29 @@ library(testthat)
 
 context("Exponential distribution")
 
-test_that("parameterisation",{
-  expect_silent(Exponential$new())
-  expect_silent(Exponential$new(rate = 2, scale = 3))
-  expect_equal(Exponential$new(rate = 2, scale = 3)$getParameterValue("scale"), 3)
-  expect_equal(Exponential$new(scale = 3)$getParameterValue("scale"), 3)
-  expect_message(Exponential$new(scale = 3, verbose = T))
-  expect_silent(Exponential$new(rate = 2))
-  expect_equal(Exponential$new(rate = 2)$getParameterValue("rate"), 2)
-  expect_equal(Exponential$new(rate = 2)$getParameterValue("scale"), 1/2)
-  expect_equal(Exponential$new(scale = 2)$getParameterValue("rate"), 1/2)
-  expect_equal(Exponential$new(scale = 2)$getParameterValue("scale"), 2)
-})
-
-test_that("properties & traits",{
-  expect_equal(Exponential$new()$valueSupport, "continuous")
-  expect_equal(Exponential$new()$variateForm, "univariate")
-  expect_equal(Exponential$new()$symmetry, "asymmetric")
-  expect_equal(Exponential$new()$sup, Inf)
-  expect_equal(Exponential$new()$inf, 0)
-  expect_equal(Exponential$new()$dmax, .Machine$double.xmax)
-  expect_equal(Exponential$new()$dmin, 0)
-})
-
-e = Exponential$new(rate = 1)
-test_that("statistics",{
-  expect_equal(e$mean(), 1)
-  expect_equal(e$variance(), 1)
-  expect_equal(e$skewness(), 2)
-  expect_equal(e$kurtosis(T), 6)
-  expect_equal(e$kurtosis(F), 9)
-  expect_equal(e$entropy(), 1-log(1,2))
-  expect_equal(e$mgf(0), 1)
-  expect_equal(e$mgf(4), NaN)
-  expect_equal(e$pgf(1), NaN)
-  expect_equal(e$cf(1), 1/(1-1i))
-  expect_equal(e$mode(),0)
-  expect_equal(e$pdf(1), dexp(1))
-  expect_equal(e$cdf(1,log.p = T, lower.tail = T), pexp(1, log.p = T))
-  expect_equal(e$quantile(0.324), qexp(0.324))
-  expect_silent(e$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(
+    sdist = Exponential,
+    pars = list(),
+    traits = list(
+      valueSupport = "continuous",
+      variateForm = "univariate",
+      type = PosReals$new(zero = TRUE)
+    ),
+    support = PosReals$new(zero = TRUE),
+    symmetry = "asymmetric",
+    mean = 1,
+    mode = 0,
+    median = log(2),
+    variance = 1,
+    skewness = 2,
+    exkur = 6,
+    entropy = 1 - log(1, 2),
+    mgf = NaN,
+    cf = 1 / (1 - 1i),
+    pgf = NaN,
+    pdf = dexp(1:3),
+    cdf = pexp(1:3),
+    quantile = qexp(c(0.24, 0.42, 0.5))
+  )
 })

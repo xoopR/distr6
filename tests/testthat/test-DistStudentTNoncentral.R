@@ -2,41 +2,18 @@ library(testthat)
 
 context("Noncentral Student's t distribution")
 
-test_that("parameterisation",{
-  expect_silent(StudentTNoncentral$new())
-  expect_silent(StudentTNoncentral$new(df = 10))
-  expect_silent(StudentTNoncentral$new(df = 10, location = 5))
-  expect_error(StudentTNoncentral$new(df = -1))
-  expect_equal(StudentTNoncentral$new(df = 1.1)$getParameterValue("df"), 1.1)
-  expect_equal(StudentTNoncentral$new(df = 10)$getParameterValue("df"), 10)
-  expect_equal(StudentTNoncentral$new(location = 5)$getParameterValue("location"), 5)
-})
-
-test_that("properties & traits",{
-  expect_equal(StudentTNoncentral$new()$valueSupport, "continuous")
-  expect_equal(StudentTNoncentral$new()$variateForm, "univariate")
-  expect_equal(StudentTNoncentral$new()$symmetry, "symmetric")
-  expect_equal(StudentTNoncentral$new()$sup, Inf)
-  expect_equal(StudentTNoncentral$new()$inf, -Inf)
-  expect_equal(StudentTNoncentral$new()$dmax, .Machine$double.xmax)
-  expect_equal(StudentTNoncentral$new()$dmin, -.Machine$double.xmax)
-})
-
-s = StudentTNoncentral$new(df = 2, location = 3)
-test_that("statistics",{
-  expect_equal(s$mean(), 3*gamma(1/2))
-  expect_equal(StudentTNoncentral$new(df = 1)$mean(), NaN)
-  expect_equal(s$variance(), NaN)
-  expect_equal(StudentTNoncentral$new(df = 3, location = 3)$variance(), 30 - 54/pi)
-  expect_error(s$skewness())
-  expect_error(s$kurtosis())
-  expect_error(s$entropy())
-  expect_error(s$mgf(0))
-  expect_error(s$cf(1))
-  expect_error(s$mode())
-  expect_equal(s$pdf(1), dt(1, 2, 3))
-  expect_equal(s$cdf(1), pt(1, 2, 3))
-  expect_equal(s$quantile(1), qt(1, 2, 3))
-  expect_equal(s$cdf(s$quantile(.5)), .5)
-  expect_silent(s$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(
+    sdist = StudentTNoncentral,
+    pars = list(df = 2, location = 1),
+    traits = list(valueSupport = "continuous", variateForm = "univariate", type = Reals$new()),
+    support = Reals$new(),
+    symmetry = "symmetric",
+    mean = 1.7725,
+    median = 1.7725,
+    variance = NaN,
+    pdf = dt(1:3, 2, 1),
+    cdf = pt(1:3, 2, 1),
+    quantile = qt(c(0.24, 0.42, 0.5), 2, 1)
+  )
 })

@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Hypergeometric Distribution Documentation
-#-------------------------------------------------------------
 #' @name Hypergeometric
 #' @template SDist
 #' @templateVar ClassName Hypergeometric
@@ -12,148 +9,250 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
 #' @templateVar paramsupport \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}
-#' @templateVar omittedVars \code{mgf} and \code{cf}
-#' @templateVar constructor size = 10, successes = 5, failures = NULL, draws = 2
-#' @templateVar arg1 \code{size} \tab numeric \tab  population size. \cr
-#' @templateVar arg2 \code{successes} \tab numeric \tab number of population successes. \cr
-#' @templateVar arg3 \code{failures} \tab numeric \tab number of population failures. \cr
-#' @templateVar arg4 \code{draws} \tab numeric \tab number of draws. \cr
-#' @templateVar constructorDets \code{size} and \code{draws} as positive whole numbers, and either \code{successes} or \code{failures} as positive whole numbers. These are related via, \deqn{failures = size - successes} If \code{failures} is given then \code{successes} is ignored.
 #'
-#' @examples
-#' Hypergeometric$new(size = 10, successes = 7, draws = 5)
-#' Hypergeometric$new(size = 10, failures = 3, draws = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Default is size = 50, successes = 5, draws = 10
-#' x = Hypergeometric$new(verbose = TRUE)
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(failures = 10)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family discrete distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Hypergeometric Distribution Definition
-#-------------------------------------------------------------
-Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_objects = FALSE)
-Hypergeometric$set("public", "name", "Hypergeometric")
-Hypergeometric$set("public", "short_name", "Hyper")
-Hypergeometric$set("public", "description", "Hypergeometric Probability Distribution")
-Hypergeometric$set("public","packages","stats")
+Hypergeometric <- R6Class("Hypergeometric",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Hypergeometric",
+    short_name = "Hyper",
+    description = "Hypergeometric Probability Distribution.",
+    packages = "stats",
 
-Hypergeometric$set("public", "mean", function(){
-    return(self$getParameterValue("draws")*self$getParameterValue("successes")/self$getParameterValue("size"))
-})
-Hypergeometric$set("public","mode",function(which = NULL){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
-    return(floor(((draws + 1)*(successes + 1))/(size+2)))
-})
-Hypergeometric$set("public","variance",function(){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
-    return((draws*successes*(size-successes)*(size-draws))/(size^2*(size-1))
-    )
-})
-Hypergeometric$set("public","skewness",function(){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
-    return(((size-2*successes)*((size-1)^0.5)*(size - 2*draws))/
-        (((draws*successes*(size-successes)*(size-draws))^0.5)*(size-2)))
-})
-Hypergeometric$set("public","kurtosis",function(excess = TRUE){
-    draws <- self$getParameterValue("draws")
-    successes <- self$getParameterValue("successes")
-    size <- self$getParameterValue("size")
+    # Public methods
+    # initialize
 
-    exkurtosis = ((size-1)*(size^2)*((size*(size+1)) - 6*successes*(size-successes) -
-                                           6*draws*(size-draws)) + 6*draws*successes*(size-successes)*
-                      (size-draws)*(5*size-6))/(draws*successes*(size-successes)*(size-draws)*(size-2)*
-                                                    (size-3))
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param size `(integer(1))`\cr
+    #' Population size. Defined on positive Naturals.
+    #' @param successes `(integer(1))`\cr
+    #' Number of population successes. Defined on positive Naturals.
+    #' @param failures `(integer(1))`\cr
+    #' Number of population failures. `failures = size - successes`. If given then `successes`
+    #' is ignored. Defined on positive Naturals.
+    #' @param draws `(integer(1))`\cr
+    #' Number of draws from the distribution, defined on the positive Naturals.
+    initialize = function(size = 50, successes = 5, failures = NULL, draws = 10,
+                          decorators = NULL) {
 
-    if(excess)
+      private$.parameters <- getParameterSet(self, size, successes, failures, draws)
+      self$setParameterValue(size = size, successes = successes, failures = failures, draws = draws)
+
+      support <- Set$new(max(0, draws + successes - size):min(draws, successes), class = "integer")
+
+      super$initialize(
+        decorators = decorators,
+        support = support,
+        type = Naturals$new()
+      )
+    },
+
+    # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("draws") * self$getParameterValue("successes") / self$getParameterValue("size"))
+    },
+
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      draws <- self$getParameterValue("draws")
+      successes <- self$getParameterValue("successes")
+      size <- self$getParameterValue("size")
+      return(floor(((draws + 1) * (successes + 1)) / (size + 2)))
+    },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      draws <- self$getParameterValue("draws")
+      successes <- self$getParameterValue("successes")
+      size <- self$getParameterValue("size")
+      return((draws * successes * (size - successes) * (size - draws)) / (size^2 * (size - 1)))
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      draws <- self$getParameterValue("draws")
+      successes <- self$getParameterValue("successes")
+      size <- self$getParameterValue("size")
+      return(((size - 2 * successes) * ((size - 1)^0.5) * (size - 2 * draws)) /
+        (((draws * successes * (size - successes) * (size - draws))^0.5) * (size - 2)))
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      draws <- self$getParameterValue("draws")
+      successes <- self$getParameterValue("successes")
+      size <- self$getParameterValue("size")
+
+      exkurtosis <- ((size - 1) * (size^2) * ((size * (size + 1)) - 6 * successes * (size - successes) -
+        6 * draws * (size - draws)) + 6 * draws * successes * (size - successes) *
+        (size - draws) * (5 * size - 6)) / (draws * successes * (size - successes) * (size - draws) * (size - 2) *
+        (size - 3))
+
+      if (excess) {
         return(exkurtosis)
-    else
+      } else {
         return(exkurtosis + 3)
-})
+      }
+    },
 
-Hypergeometric$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-    super$setParameterValue(..., lst = lst, error = error)
-    size = self$getParameterValue("size")
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      size <- self$getParameterValue("size")
 
-    private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
-                                                   self$getParameterValue("successes") - size):
-                                               min(self$getParameterValue("draws"),
-                                                   self$getParameterValue("successes")))
+      private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
+        self$getParameterValue("successes") - size):
+      min(
+        self$getParameterValue("draws"),
+        self$getParameterValue("successes")
+      ))
 
-    self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(successes = Set$new(0:size)))
-    self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(draws = Set$new(0:size)))
-    self$parameters()$.__enclos_env__$private$.SetParameterSupport(list(failures = Set$new(0:size)))
-    invisible(self)
-})
-
-Hypergeometric$set("private",".getRefParams", function(paramlst){
-    lst = list()
-    if(!is.null(paramlst$size)) lst = c(lst, list(size = paramlst$size))
-    if(!is.null(paramlst$successes)) lst = c(lst, list(successes = paramlst$successes))
-    if(!is.null(paramlst$failures)){
-        if(!is.null(paramlst$size)) lst = c(lst, list(successes = paramlst$size-paramlst$failures))
-        else lst = c(lst, list(successes = self$getParameterValue("size")-paramlst$failures))
+      self$parameters()$.__enclos_env__$private$.setParameterSupport(list(successes = Set$new(0:size)))
+      self$parameters()$.__enclos_env__$private$.setParameterSupport(list(draws = Set$new(0:size)))
+      self$parameters()$.__enclos_env__$private$.setParameterSupport(list(failures = Set$new(0:size)))
+      invisible(self)
     }
-    if(!is.null(paramlst$draws)) lst = c(lst, list(draws = paramlst$draws))
+  ),
 
-    return(lst)
-})
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      m <- self$getParameterValue("successes")
+      n <- self$getParameterValue("failures")
+      k <- self$getParameterValue("draws")
 
-Hypergeometric$set("public","initialize",function(size = 50, successes = 5, failures = NULL, draws = 10,
-                                                  decorators = NULL, verbose = FALSE){
+      call_C_base_pdqr(
+        fun = "dhyper",
+        x = x,
+        args = list(
+          m = unlist(m),
+          n = unlist(n),
+          k = unlist(k)
+        ),
+        log = log,
+        vec = test_list(m)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      m <- self$getParameterValue("successes")
+      n <- self$getParameterValue("failures")
+      k <- self$getParameterValue("draws")
 
-    private$.parameters <- getParameterSet(self, size, successes, failures, draws, verbose)
-    self$setParameterValue(size = size, successes=successes, failures = failures, draws = draws)
+      call_C_base_pdqr(
+        fun = "phyper",
+        x = x,
+        args = list(
+          m = unlist(m),
+          n = unlist(n),
+          k = unlist(k)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(m)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      m <- self$getParameterValue("successes")
+      n <- self$getParameterValue("failures")
+      k <- self$getParameterValue("draws")
 
-    pdf = function(x1) dhyper(x1, self$getParameterValue("successes"),
-                              self$getParameterValue("failures"),
-                              self$getParameterValue("draws"))
-    cdf = function(x1) phyper(x1, self$getParameterValue("successes"),
-                              self$getParameterValue("failures"),
-                              self$getParameterValue("draws"))
-    quantile = function(p) qhyper(p, self$getParameterValue("successes"),
-                                  self$getParameterValue("failures"),
-                                  self$getParameterValue("draws"))
-    rand = function(n) rhyper(n, self$getParameterValue("successes"),
-                              self$getParameterValue("failures"),
-                              self$getParameterValue("draws"))
+      call_C_base_pdqr(
+        fun = "qhyper",
+        x = p,
+        args = list(
+          m = unlist(m),
+          n = unlist(n),
+          k = unlist(k)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(m)
+      )
+    },
+    .rand = function(n) {
+      nn <- n
+      m <- self$getParameterValue("successes")
+      n <- self$getParameterValue("failures")
+      k <- self$getParameterValue("draws")
 
-    support <- Set$new(max(0, draws + successes - size):min(draws,successes), class = "integer")
+      call_C_base_pdqr(
+        fun = "rhyper",
+        x = nn,
+        args = list(
+          m = unlist(m),
+          n = unlist(n),
+          k = unlist(k)
+        ),
+        vec = test_list(m)
+      )
+    },
 
-    super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                     rand = rand, support = support,
-                     symmetric = FALSE,type = Naturals$new(),
-                     valueSupport = "discrete",
-                     variateForm = "univariate")
-    invisible(self)
-})
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
+      if (!is.null(paramlst$successes)) lst <- c(lst, list(successes = paramlst$successes))
+      if (!is.null(paramlst$failures)) {
+        if (!is.null(paramlst$size)) {
+          lst <- c(lst, list(successes = paramlst$size - paramlst$failures))
+        } else {
+          lst <- c(lst, list(successes = self$getParameterValue("size") - paramlst$failures))
+        }
+      }
+      if (!is.null(paramlst$draws)) lst <- c(lst, list(draws = paramlst$draws))
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Hyper", ClassName = "Hypergeometric",
-                                                     Type = "\u21150", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+      return(lst)
+    },
 
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Hyper", ClassName = "Hypergeometric",
+    Type = "\u21150", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

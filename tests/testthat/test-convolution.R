@@ -1,31 +1,29 @@
 library(testthat)
 
-context("Convolution")
-
 test_that("continuous add", {
-  Exp1 = Exponential$new(rate = 1)
-  Exp2 = Exponential$new(rate = 1)
-  expect_equal(round(Convolution$new(Exp1, Exp2)$pdf(1:5),4), round(dgamma(x = 1:5, shape = 2), 4))
+  Exp1 <- Exponential$new(rate = 1)
+  Exp2 <- Exponential$new(rate = 1)
+  expect_equal(round(Convolution$new(Exp1, Exp2)$pdf(1:5), 4), round(dgamma(x = 1:5, shape = 2), 4))
 })
 
 test_that("continuous subtract", {
-  N1 = Normal$new(mean = 3)
-  N2 = Normal$new(mean = 2)
-  expect_equal(round(Convolution$new(N1, N2, add = FALSE)$pdf(1:5),4), round(dnorm(1:5,1,sqrt(2)),4))
+  N1 <- Normal$new(mean = 3)
+  N2 <- Normal$new(mean = 2)
+  expect_equal(round(Convolution$new(N1, N2, add = FALSE)$pdf(1:5), 4), round(dnorm(1:5, 1, sqrt(2)), 4))
 })
 
-test_that("discrete add",{
-  Bern1 = Bernoulli$new(prob = 0.1)
-  Bern2 = Bernoulli$new(prob = 0.1)
-  ConvB12 = Bern1 + Bern2
-  expect_equal(round(ConvB12$pdf(1:5),4), round(dbinom(1:5, 2, 0.1),4))
-  Geom1 = Geometric$new(prob = 0.2)
-  Geom2 = Geometric$new(prob = 0.2)
-  expect_equal(round(Convolution$new(Geom1, Geom2)$pdf(1:5),4), round(dnbinom(1:5, 2, 0.2), 4))
+test_that("discrete add", {
+  Bern1 <- Bernoulli$new(prob = 0.1)
+  Bern2 <- Bernoulli$new(prob = 0.1)
+  ConvB12 <- Bern1 + Bern2
+  expect_equal(ConvB12$pdf(1:5), dbinom(1:5, 2, 0.1))
+  Geom1 <- Geometric$new(prob = 0.2)
+  Geom2 <- Geometric$new(prob = 0.2)
+  expect_equal(round(Convolution$new(Geom1, Geom2)$pdf(1:5), 4), round(dnbinom(1:5, 2, 0.2), 4))
 })
 
-test_that("discrete subtract",{
-  expect_error(Binomial$new() - Binomial$new())
+test_that("discrete subtract", {
+  expect_error((Binomial$new() - Binomial$new())$pdf(1), "not currently")
 })
 # test_that("discrete subtract", {
 #   Binom1 = Binomial$new(size = 5, prob = 0.1)

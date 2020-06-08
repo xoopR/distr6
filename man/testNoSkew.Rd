@@ -27,5 +27,4 @@ Validation checks to test if Distribution is no skew.
 }
 \examples{
 testNoSkew(Binomial$new())
-
 }

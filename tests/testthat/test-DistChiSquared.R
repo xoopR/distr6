@@ -2,42 +2,29 @@ library(testthat)
 
 context("ChiSquared distribution")
 
-test_that("parameterisation",{
-  expect_silent(ChiSquared$new())
-  expect_silent(ChiSquared$new(df = 10))
-  expect_error(ChiSquared$new(df = -1))
-  expect_equal(ChiSquared$new(df = 10)$getParameterValue("df"), 10)
-})
-
-test_that("properties & traits", {
-  expect_equal(ChiSquared$new()$valueSupport, "continuous")
-  expect_equal(ChiSquared$new()$variateForm, "univariate")
-  expect_equal(ChiSquared$new()$symmetry, "asymmetric")
-  expect_equal(ChiSquared$new()$sup, Inf)
-  expect_equal(ChiSquared$new()$inf, 0)
-  expect_equal(ChiSquared$new()$dmax, .Machine$double.xmax)
-  expect_equal(ChiSquared$new()$dmin, 0)
-  expect_equal(ChiSquared$new(df=2)$dmax, .Machine$double.xmax)
-  expect_equal(ChiSquared$new(df=2)$dmin, .Machine$double.eps)
-})
-
-chi <- ChiSquared$new(df = 8)
-test_that("statistics", {
-  expect_equal(chi$mean(), 8)
-  expect_equal(chi$variance(), 16)
-  expect_equal(chi$skewness(), 1)
-  expect_equal(chi$kurtosis(TRUE), 1.5)
-  expect_equal(chi$kurtosis(FALSE), 4.5)
-  expect_equal(round(chi$entropy(), 5), 3.81661)
-  expect_equal(chi$mgf(0), 1)
-  expect_equal(chi$mgf(3), NaN)
-  expect_equal(chi$cf(1/2), as.complex(-0.25))
-  expect_equal(chi$pgf(1/2), (1 - log(0.5)*2)^(-4))
-  expect_equal(chi$pgf(3), NaN)
-  expect_equal(chi$mode(), 6)
-  expect_equal(chi$pdf(1), dchisq(1, 8))
-  expect_equal(chi$cdf(1), pchisq(1, 8))
-  expect_equal(chi$quantile(0.5), qchisq(.5, 8))
-  expect_equal(chi$cdf(chi$quantile(0.32455)), 0.32455)
-  expect_silent(chi$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(
+    sdist = ChiSquared,
+    pars = list(df = 8),
+    traits = list(
+      valueSupport = "continuous",
+      variateForm = "univariate",
+      type = PosReals$new(zero = TRUE)
+    ),
+    support = PosReals$new(zero = TRUE),
+    symmetry = "asymmetric",
+    mean = 8,
+    mode = 6,
+    median = 7.3441,
+    variance = 16,
+    skewness = 1,
+    exkur = 1.5,
+    entropy = 3.81661,
+    mgf = NaN,
+    cf = -0.0112 - 0.0384i,
+    pgf = 1,
+    pdf = dchisq(1:3, 8),
+    cdf = pchisq(1:3, 8),
+    quantile = qchisq(c(0.24, 0.42, 0.5), 8)
+  )
 })

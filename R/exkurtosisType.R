@@ -16,18 +16,20 @@
 #' exkurtosisType(-1)
 #' exkurtosisType(0)
 #' exkurtosisType(1)
-#'
 #' @return Returns one of 'platykurtic', 'mesokurtic' or 'leptokurtic'.
 #'
 #' @export
-exkurtosisType <- function(kurtosis){
+exkurtosisType <- function(kurtosis) {
 
-  if(is.nan(kurtosis)) return("undefined")
+  if (is.nan(kurtosis)) {
+    return("undefined")
+  }
 
-  if(kurtosis < 0)
+  if (kurtosis < 0) {
     return("platykurtic")
-  else if(kurtosis == 0)
+  } else if (kurtosis == 0) {
     return("mesokurtic")
-  else
+  } else {
     return("leptokurtic")
+  }
 }

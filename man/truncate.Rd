@@ -17,5 +17,5 @@ truncate(x, lower = NULL, upper = NULL)
 S3 functionality to truncate an R6 distribution.
 }
 \seealso{
-\code{\link{TruncatedDistribution}}
+\link{TruncatedDistribution}
 }

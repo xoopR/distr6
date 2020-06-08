@@ -27,7 +27,6 @@ this function assumes that the current plot is of the same value support, see ex
 \examples{
 plot(Normal$new(mean = 2), "pdf")
 lines(Normal$new(mean = 3), "pdf", col = "red", lwd = 2)
-
 \dontrun{
 # The code below gives examples of how not to use this function.
 # Different value supports
@@ -39,7 +38,7 @@ plot(Binomial$new(), "pdf")
 lines(Binomial$new(), "cdf")
 
 # Too many functions
-plot(Binomial$new(), c("pdf","cdf"))
+plot(Binomial$new(), c("pdf", "cdf"))
 lines(Binomial$new(), "cdf")
 }
 

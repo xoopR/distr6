@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Noncentral Chi-Squared Distribution Documentation
-#-------------------------------------------------------------
 #' @name ChiSquaredNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -13,122 +10,222 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{(\nu+2r)/2-1}exp(-x/2))/(2^{(\nu+2r)/2}\Gamma((\nu+2r)/2))}
 #' @templateVar paramsupport \eqn{\nu \ge 0}, \eqn{\lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar constructor df = 1, location = 0
-#' @templateVar arg1 \code{df} \tab numeric \tab  degrees of freedom. \cr
-#' @templateVar arg2 \code{location} \tab numeric \tab location (ncp in rstats). \cr
-#' @templateVar omittedVars \code{entropy} and \code{mode}
-#' @templateVar constructorDets \code{df} and \code{location} as non-negative numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution, \code{\link{ChiSquared}} for the central Chi-Squared distribution.
 #'
-#' @examples
-#' x = ChiSquaredNoncentral$new(df = 2, location = 2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_df
+#' @template param_poslocation
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(location = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# ChiSquaredNoncentral Distribution Definition
-#-------------------------------------------------------------
-ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = FALSE)
-ChiSquaredNoncentral$set("public", "name", "ChiSquaredNoncentral")
-ChiSquaredNoncentral$set("public", "short_name", "ChiSqNC")
-ChiSquaredNoncentral$set("public", "description", "Noncentral ChiSquared Probability Distribution")
-ChiSquaredNoncentral$set("public","packages","stats")
+ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "ChiSquaredNoncentral",
+    short_name = "ChiSqNC",
+    description = "Non-central ChiSquared Probability Distribution.",
+    packages = "stats",
 
-ChiSquaredNoncentral$set("public", "mean", function(){
-  return(self$getParameterValue("df") + self$getParameterValue("location"))
-})
-ChiSquaredNoncentral$set("public", "variance", function(){
-  return(2*(self$getParameterValue("df") + 2*self$getParameterValue("location")))
-})
-ChiSquaredNoncentral$set("public", "skewness", function(){
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  if (df + ncp == 0)
-    return(NaN)
-  else
-    return(((2^(3/2))*(df + 3*ncp))/((df + 2*ncp)^(3/2)))
-})
-ChiSquaredNoncentral$set("public", "kurtosis", function(excess = TRUE){
-  df <- self$getParameterValue("df")
-  ncp <- self$getParameterValue("location")
-  if (df + ncp == 0)
-    return(NaN)
-  else
-    kur = (12*(df + 4*ncp))/((df + 2*ncp)^2)
+    # Public methods
+    # initialize
 
-  if(excess)
-    return(kur)
-  else
-    return(kur + 3)
-})
-ChiSquaredNoncentral$set("public", "mgf", function(t){
-  if(t < 0.5){
-    return(exp(self$getParameterValue("location")*t/(1 - 2*t))/((1 - 2*t)^(self$getParameterValue("df")/2)))
-  } else{
-    return(NaN)
-  }
-})
-ChiSquaredNoncentral$set("public", "cf", function(t){
-  return(exp(self$getParameterValue("location")*1i*t/(1 - 2i*t))/((1 - 2i*t)^(self$getParameterValue("df")/2)))
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(df = 1, location = 0, decorators = NULL) {
 
-ChiSquaredNoncentral$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  super$setParameterValue(..., lst = lst, error = error)
-  if(self$getParameterValue("df") <= 1)
-    private$.properties$support <- PosReals$new(zero = F)
-  else
-    private$.properties$support <- PosReals$new(zero = T)
-  invisible(self)
-})
-ChiSquaredNoncentral$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$df)) lst = c(lst, list(df = paramlst$df))
-  if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
-  return(lst)
-})
+      private$.parameters <- getParameterSet(self, df, location)
+      self$setParameterValue(df = df, location = location)
 
-ChiSquaredNoncentral$set("public","initialize",function(df = 1, location = 0, decorators = NULL, verbose = FALSE){
+      if (df == 1) {
+        support <- PosReals$new(zero = F)
+      } else {
+        support <- PosReals$new(zero = T)
+      }
 
-  private$.parameters <- getParameterSet(self, df, location, verbose)
-  self$setParameterValue(df = df, location = location)
+      super$initialize(
+        decorators = decorators,
+        support = support,
+        type = PosReals$new(zero = TRUE)
+      )
+    },
 
-  pdf <- function(x1) dchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  cdf <- function(x1) pchisq(x1, self$getParameterValue("df"), self$getParameterValue("location"))
-  quantile <- function(p) qchisq(p, self$getParameterValue("df"), self$getParameterValue("location"))
-  rand <- function(n) rchisq(n, self$getParameterValue("df"), self$getParameterValue("location"))
+    # stats
 
-  if(df == 1)
-    support <- PosReals$new(zero = F)
-  else
-    support <- PosReals$new(zero = T)
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("df") + self$getParameterValue("location"))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = support,
-                   symmetric  = FALSE, type = PosReals$new(zero = TRUE),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(2 * (self$getParameterValue("df") + 2 * self$getParameterValue("location")))
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "ChiSqNC", ClassName = "ChiSquaredNoncentral",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      if (df + ncp == 0) {
+        return(NaN)
+      } else {
+        return(((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2)))
+      }
+    },
 
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      if (df + ncp == 0) {
+        return(NaN)
+      } else {
+        kur <- (12 * (df + 4 * ncp)) / ((df + 2 * ncp)^2)
+      }
+
+      if (excess) {
+        return(kur)
+      } else {
+        return(kur + 3)
+      }
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      if (t < 0.5) {
+        return(exp(self$getParameterValue("location") * t / (1 - 2 * t)) / ((1 - 2 * t)^(self$getParameterValue("df") / 2)))
+      } else {
+        return(NaN)
+      }
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      return(exp(self$getParameterValue("location") * 1i * t / (1 - 2i * t)) / ((1 - 2i * t)^(self$getParameterValue("df") / 2)))
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      if (self$getParameterValue("df") <= 1) {
+        private$.properties$support <- PosReals$new(zero = F)
+      } else {
+        private$.properties$support <- PosReals$new(zero = T)
+      }
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "dchisq",
+        x = x,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        log = log,
+        vec = test_list(df)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "pchisq",
+        x = x,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "qchisq",
+        x = p,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(df)
+      )
+    },
+    .rand = function(n) {
+      df <- self$getParameterValue("df")
+      ncp <- self$getParameterValue("location")
+      call_C_base_pdqr(
+        fun = "rchisq",
+        x = n,
+        args = list(
+          df = unlist(df),
+          ncp = unlist(ncp)
+        ),
+        vec = test_list(df)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "ChiSqNC", ClassName = "ChiSquaredNoncentral",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

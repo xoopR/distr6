@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Logistic Distribution Documentation
-#-------------------------------------------------------------
 #' @name Logistic
 #' @template SDist
 #' @templateVar ClassName Logistic
@@ -12,107 +9,221 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)/s) / (s(1+exp(-(x-\mu)/s))^2)}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{s > 0}
 #' @templateVar distsupport the Reals
-#' @templateVar constructor mean = 0, scale = 1, sd = NULL
-#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg3 \code{sd} \tab numeric \tab standard deviation, alternate scale parameter. \cr
-#' @templateVar constructorDets \code{mean} as a numeric and either \code{scale} or \code{sd} as positive numerics. These are related via, \deqn{sd = scale*\pi/\sqrt(3)} If \code{sd} is given then {scale} is ignored.
 #'
-#' @examples
-#' x <- Logistic$new(mean = 2, scale = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_scale
+#' @template field_packages
 #'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(sd = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Logistic Distribution Definition
-#-------------------------------------------------------------
-Logistic <- R6Class("Logistic", inherit = SDistribution, lock_objects = F)
-Logistic$set("public","name","Logistic")
-Logistic$set("public","short_name","Logis")
-Logistic$set("public","description","Logistic Probability Distribution.")
-Logistic$set("public","packages","stats")
+Logistic <- R6Class("Logistic",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Logistic",
+    short_name = "Logis",
+    description = "Logistic Probability Distribution.",
+    packages = "stats",
 
-Logistic$set("public","mean",function(){
-  return(self$getParameterValue("mean"))
-})
-Logistic$set("public","variance",function(){
-  return(self$getParameterValue("sd")^2)
-})
-Logistic$set("public","skewness",function(){
-  return(0)
-})
-Logistic$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(6/5)
-  else
-    return(6/5 + 3)
-})
-Logistic$set("public","entropy",function(base = 2){
-  return(2 + log(self$getParameterValue("scale"), base))
-})
-Logistic$set("public", "mgf", function(t){
-  if (-1/self$getParameterValue("scale") < t & t < 1/self$getParameterValue("scale"))
-    return(exp(self$getParameterValue("mean") * t) * beta(1-self$getParameterValue("scale")*t, 1+self$getParameterValue("scale")*t))
-  else
-    return(NaN)
-})
-Logistic$set("public", "pgf", function(z){
-  return(NaN)
-})
-Logistic$set("public", "cf", function(t){
-  return(exp(1i*self$getParameterValue("mean")*t) *
-           (self$getParameterValue("scale")*pi*t)/(sinh(pi*self$getParameterValue("scale")*t)))
-})
-Logistic$set("public","mode",function(which = NULL){
-  return(self$getParameterValue("mean"))
-})
+    # Public methods
+    # initialize
 
-Logistic$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
-  if(!is.null(paramlst$sd)) lst = c(lst, list(scale = paramlst$sd*sqrt(3)/pi))
-  return(lst)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of the distribution, defined on the Reals.
+    #' @param sd `(numeric(1))`\cr
+    #' Standard deviation of the distribution as an alternate scale parameter, `sd = scale*pi/sqrt(3)`.
+    #' If given then `scale` is ignored.
+    initialize = function(mean = 0, scale = 1, sd = NULL,
+                          decorators = NULL) {
 
-Logistic$set("public","initialize",function(mean = 0, scale = 1, sd = NULL,
-                                          decorators = NULL, verbose = FALSE){
+      private$.parameters <- getParameterSet(self, mean, scale, sd)
+      self$setParameterValue(mean = mean, scale = scale, sd = sd)
 
-  private$.parameters <- getParameterSet(self, mean, scale, sd, verbose)
-  self$setParameterValue(mean = mean, scale = scale, sd = sd)
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-  pdf <- function(x1) dlogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))
-  cdf <- function(x1) plogis(x1, self$getParameterValue("mean"), self$getParameterValue("scale"))
-  quantile <- function(p) qlogis(p, self$getParameterValue("mean"), self$getParameterValue("scale"))
-  rand <- function(n) rlogis(n, self$getParameterValue("mean"), self$getParameterValue("scale"))
+    # stats
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("mean"))
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Logis", ClassName = "Logistic",
-                                                     Type = "\u211D", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(self$getParameterValue("mean"))
+    },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(self$getParameterValue("sd")^2)
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(0)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(6 / 5)
+      } else {
+        return(6 / 5 + 3)
+      }
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      return(2 + log(self$getParameterValue("scale"), base))
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      if (-1 / self$getParameterValue("scale") < t & t < 1 / self$getParameterValue("scale")) {
+        return(exp(self$getParameterValue("mean") * t) * beta(1 - self$getParameterValue("scale") * t, 1 + self$getParameterValue("scale") * t))
+      } else {
+        return(NaN)
+      }
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      return(exp(1i * self$getParameterValue("mean") * t) *
+        (self$getParameterValue("scale") * pi * t) / (sinh(pi * self$getParameterValue("scale") * t)))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "dlogis",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        log = log,
+        vec = test_list(location)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "plogis",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "qlogis",
+        x = p,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .rand = function(n) {
+      location <- self$getParameterValue("mean")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "rlogis",
+        x = n,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        vec = test_list(location)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      if (!is.null(paramlst$sd)) lst <- c(lst, list(scale = paramlst$sd * sqrt(3) / pi))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Logis", ClassName = "Logistic",
+    Type = "\u211D", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

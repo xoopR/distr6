@@ -16,14 +16,3 @@
 \description{
 Prints a ParameterSet as a data.table with strprint variants of R6 classes.
 }
-\details{
-If given the \code{hide_cols} argument can be used to hide specific columns from the
-data.table.
-}
-\section{R6 Usage}{
- $print(hide_cols = c("updateFunc","settable"))
-}
-
-\seealso{
-\code{\link{ParameterSet}}
-}

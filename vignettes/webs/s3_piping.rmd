@@ -71,7 +71,7 @@ library(magrittr)
 Normal$new() %>% setParameterValue(var = 2) %>% getParameterValue("var")
 
 # Don't worry about unfamiliar functions used here, we return to this in the next tutorial
-Normal$new() %>% decorate(ExoticStatistics) %>% hazard(2)
+Normal$new() %>% decorate("ExoticStatistics") %>% hazard(2)
 ```
 
 Notice that usually the S3 methods require the first argument to be the object, in this case `N` or `Normal$new()` but by using the pipe notation, this is filled automatically. For a more in-depth tutorial on magrittr [see here](https://magrittr.tidyverse.org/).

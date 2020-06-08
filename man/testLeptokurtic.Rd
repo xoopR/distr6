@@ -36,5 +36,4 @@ Validation checks to test if Distribution is leptokurtic.
 }
 \examples{
 testLeptokurtic(Binomial$new())
-
 }

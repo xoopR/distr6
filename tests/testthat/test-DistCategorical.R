@@ -2,43 +2,24 @@ library(testthat)
 
 context("Categorical distribution")
 
-test_that("constructor",{
-  expect_equal(Categorical$new()$getParameterValue("probs"),1)
-  expect_equal(Categorical$new()$support,Set$new(1))
-  expect_silent(Categorical$new(probs = c(0.1,0.4)))
-  expect_silent(Categorical$new("Bapple","Banana",probs = c(0.1,0.4)))
-  expect_error(Categorical$new("Bapple","Banana",probs = c(0.1,0.4,0.2)))
-})
-
-cat = Categorical$new("Sandwich",4,"T", probs = c(0.1,0.9,4))
-test_that("parameters", {
-  expect_equal(cat$getParameterValue("categories"), 3)
-  expect_equal(cat$getParameterValue("probs"), c(0.1,0.9,4)/5)
-})
-
-test_that("properties & traits",{
-  expect_equal(cat$valueSupport, "discrete")
-  expect_equal(cat$variateForm, "univariate")
-  expect_equal(cat$symmetry, "asymmetric")
-})
-
-
-test_that("statistics",{
-  expect_equal(cat$mean(), NaN)
-  expect_equal(cat$variance(), NaN)
-  expect_equal(cat$skewness(), NaN)
-  expect_equal(cat$kurtosis(), NaN)
-  expect_equal(cat$entropy(), NaN)
-  expect_equal(cat$mgf(1:3), NaN)
-  expect_equal(cat$pgf(1:3), NaN)
-  expect_equal(cat$cf(1:3), NaN)
-  expect_equal(cat$mode(), "T")
-  expect_equal(cat$mode(which = 1), "T")
-  expect_equal(Categorical$new("A","B",probs = c(0.5,0.5))$mode(which = 2), "B")
-  expect_equal(cat$pdf("T"), 4/5)
-  expect_equal(cat$pdf(c("Sandwich","Fish")), c(0.1/5,0))
-  expect_equal(cat$cdf(x1 = c(4,"Fish")), c(1/5,0))
-  expect_equal(cat$cdf(x1 = c("Sandwich",4)), c(0.1/5,1/5))
-  expect_equal(cat$quantile(c(0, 0.1, 0.42, 1)), list("Sandwich", 4, "T", "T"))
-  expect_equal(length(cat$rand(10)),10)
+test_that("autottest", {
+  autotest_sdistribution(Categorical,
+    pars = list(1, 2, 3, probs = c(0.02, 0.18, 0.80)),
+    traits = list(valueSupport = "discrete", variateForm = "univariate", type = UniversalSet$new()),
+    support = Set$new(1, 2, 3),
+    symmetry = "asymmetric",
+    mean = NaN,
+    mode = 3,
+    median = 3,
+    variance = NaN,
+    skewness = NaN,
+    exkur = NaN,
+    entropy = NaN,
+    mgf = NaN,
+    cf = NaN,
+    pgf = NaN,
+    pdf = c(0.02, 0.18, 0.80),
+    cdf = c(0.02, 0.20, 1),
+    quantile = c(3, 3, 3)
+  )
 })

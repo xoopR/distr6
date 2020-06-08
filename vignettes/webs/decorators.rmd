@@ -43,7 +43,7 @@ In object-oriented programming it is common to discuss 'Design Patterns' as spec
 ```{r, error=TRUE}
 N <- Normal$new()
 N$survival(1)
-decorate(N, ExoticStatistics)
+decorate(N, "ExoticStatistics")
 N$survival(1)
 ```
 
@@ -63,7 +63,7 @@ w <- Weibull$new()
 
 # Error as the characteristic function doesn't exist
 w$cf(1)
-decorate(w, CoreStatistics)
+decorate(w, "CoreStatistics")
 
 # Warning as numerical integration used
 w$cf(5)
@@ -80,7 +80,7 @@ N <- Normal$new()
 
 # Error as the characteristic function doesn't exist
 N$hazard(1)
-decorate(N, ExoticStatistics)
+decorate(N, "ExoticStatistics")
 
 # No warning as an analytic expression using pdf and cdf are used
 N$hazard(1)
@@ -91,7 +91,7 @@ N$pdfPNorm(2,0,4)
 
 ### FunctionImputation
 
-The final implemented decorator is used to impute missing d/p/q/r methods. At the moment the imputation strategy cannot be chosen but in future updates this will be a function argument that can be selected. Again these use numeric strategies and highlight these with messages to alert you to less precise results. We will return to the `FunctionImputation` decorator in a [future tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html) which looks at constructing custom distributions.
+The final implemented decorator is used to impute missing d/p/q/r methods. We will return to the `FunctionImputation` decorator in a [future tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html) which looks at constructing custom distributions.
 
 ## How to Decorate
 
@@ -99,18 +99,18 @@ There are two main ways to decorate distributions in distr6, either in construct
 
 In Construction
 ```{r}
-Normal$new(decorators = CoreStatistics)
-Normal$new(decorators = list(CoreStatistics, ExoticStatistics))
+Normal$new(decorators = "CoreStatistics")
+Normal$new(decorators = c("CoreStatistics", "ExoticStatistics"))
 ```
 
 After Construction
 ```{r}
 N <- Normal$new()
-decorate(N, CoreStatistics)
+decorate(N, "CoreStatistics")
 
 # Or piping as in the last tutorial
 library(magrittr)
-Normal$new() %>% decorate(list(CoreStatistics, ExoticStatistics))
+Normal$new() %>% decorate(c("CoreStatistics", "ExoticStatistics"))
 ```
 
 And that's all there is to it! If you forget which decorators are available, just run `listDecorators()`, or `listDecorators(simplify = FALSE)` if you want to see which methods they include at the same time.

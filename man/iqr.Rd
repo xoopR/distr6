@@ -15,14 +15,3 @@ Interquartile range of distribution as a numeric.
 \description{
 Interquartile range of a distribution
 }
-\details{
-The interquartile range of a distribution is defined by
-\deqn{iqr_X = q(0.75) - q(0.25)}
-where q is the quantile, or inverse distribution function.
-
-Returns error if the quantile function is missing.
-}
-\section{R6 Usage}{
- $iqr()
-}
-

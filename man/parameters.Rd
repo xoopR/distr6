@@ -17,15 +17,3 @@ An R6 object of class ParameterSet or a data.table.
 \description{
 Returns some or all the parameters in a distribution.
 }
-\details{
-If \code{id} is given and matches a parameter in the distribution, the parameter is returned
-with all details. If \code{id} is given but doesn't match a parameter, an empty data.table is returned.
-Finally if \code{id} is not given, returns self.
-}
-\section{R6 Usage}{
- $parameters(id = NULL)
-}
-
-\seealso{
-\code{\link{getParameterValue}} and \code{\link{setParameterValue}}
-}

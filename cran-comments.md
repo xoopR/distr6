@@ -1,7 +1,11 @@
-## Commetns
+## Test Results
 
-Resubmitting immediately as one package had the wrong version number in description.
+There is one new NOTE about package size, I believe this is due to the package now using Rcpp.
 
-## Downstream dependencies
+## Test environments
 
-All reverse dependencies have been checked with no problems.
+* x86_64-apple-darwin17.6 (64-bit), macOS Catalina 10.15.3, R 4.0.0
+* Microsoft Windows Server 2019, R Release
+* Mac OS X, R Release
+* Ubuntu, R Release
+

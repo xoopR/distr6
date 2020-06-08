@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Cosine Kernel
-#-------------------------------------------------------------
 #' @title Cosine Kernel
 #'
 #' @description Mathematical and statistical functions for the Cosine kernel defined by the pdf,
@@ -9,50 +5,47 @@
 #' over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 #'
 #' @name Cosine
-#'
-#' @section Constructor: Cosine$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Cosine Kernel Definition
-#-------------------------------------------------------------
-Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F)
-Cosine$set("public","name","Cosine")
-Cosine$set("public","short_name","Cos")
-Cosine$set("public","description","Cosine Kernel")
-Cosine$set("public","squared2Norm",function(){
-  return(pi^2 / 16)
-})
-Cosine$set("public","variance",function(){
-  return(1 - 8/(pi^2))
-})
-Cosine$set("public","initialize",function(decorators = NULL){
+Cosine <- R6Class("Cosine",
+  inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Cosine",
+    short_name = "Cos",
+    description = "Cosine Kernel",
 
-  pdf <- function(x1){
-    return(pi/4 * cos(pi/2 * x1))
-  }
-  cdf <- function(x1){
-    return(0.5 * (sin((pi*x1)/2)+1))
-  }
-  quantile <- function(p){
-    return((2*asin(2*p - 1))/pi)
-  }
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    squared2Norm = function() {
+      return(pi^2 / 16)
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Interval$new(-1,1),  symmetric = TRUE)
-  invisible(self)
-})
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(1 - 8 / (pi^2))
+    }
+  ),
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Cos", ClassName = "Cosine", Support = "[-1,1]", Packages = "-"))
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_CosineKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_CosineKernelCdf(x, lower.tail, log.p)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      C_CosineKernelQuantile(x, lower.tail, log.p)
+    }
+  )
+)
+
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Cos", ClassName = "Cosine", Support = "[-1,1]", Packages = "-"))

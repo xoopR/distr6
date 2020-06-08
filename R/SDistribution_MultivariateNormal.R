@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-#  Distribution Documentation
-#-------------------------------------------------------------
 #' @name MultivariateNormal
 #' @template SDist
 #' @templateVar ClassName MultivariateNormal
@@ -12,177 +9,285 @@
 #' @templateVar pdfpmfeq \deqn{f(x_1,...,x_k) = (2 * \pi)^{-k/2}det(\Sigma)^{-1/2}exp(-1/2(x-\mu)^T\Sigma^{-1}(x-\mu))}
 #' @templateVar paramsupport \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}
 #' @templateVar distsupport the Reals and only when the covariance matrix is positive-definite
-#' @templateVar omittedVars \code{skewness} and \code{kurtosis}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
-#' @templateVar additionalDetails The parameter \code{K} is automatically updated by counting the length of the mean vector and once constructed this cannot be changed. If a \code{mean} vector of length greater than K is given then this is truncated to the correct length. If a \code{mean} vector of length less than K is given then this replicated and truncated to the correct length. Similarly \code{cov} and \code{prec} are internally coerced with \code{matrix(cov, nrow = K, byrow = FALSE)}. \cr\cr Sampling is performed via the Cholesky decomposition using \code{\link[base]{chol}}.
-#' @templateVar constructor mean = rep(0,2), cov = c(1,0,0,1), prec = NULL
-#' @templateVar arg1 \code{mean} \tab numeric \tab vector of means. \cr
-#' @templateVar arg2 \code{cov} \tab numeric \tab vector or matrix. See details. \cr
-#' @templateVar arg3 \code{prec} \tab numeric \tab vector or matrix. See details. \cr
-#' @templateVar constructorDets \code{mean} as a vector of numerics and either \code{cov} or \code{prec} as positive semi-definite matrices. These are related via, \deqn{prec = cov^{-1}} If \code{prec} is given then \code{cov} is ignored. \cr\cr The covariance matrix can either be supplied as a matrix or as a vector that can be coerced via \code{matrix(cov, nrow = K, byrow = FALSE)}.
-#' @templateVar additionalSeeAlso \code{\link[base]{chol}} for the implementation of the Cholesky decomposition. \code{\link{Normal}} for a special case of the Multivariate Normal distribution.
-#' @templateVar additionalReferences  Gentle, J.E. (2009). Computational Statistics. Statistics and Computing. New York: Springer. pp. 315–316. doi:10.1007/978-0-387-98144-4. ISBN 978-0-387-98143-7.
+#' @details
+#' Sampling is performed via the Cholesky decomposition using [chol].
+#' @references
+#' Gentle, J.E. (2009).
+#' Computational Statistics.
+#' Statistics and Computing. New York: Springer. pp. 315–316.
+#' doi:10.1007/978-0-387-98144-4. ISBN 978-0-387-98143-7.
 #'
-#' @examples
-#' # Different parameterisations
-#' MultivariateNormal$new(mean = c(0,0,0), cov = matrix(c(3,-1,-1,-1,1,0,-1,0,1), byrow=TRUE,nrow=3))
-#' MultivariateNormal$new(mean = c(0,0,0), cov = c(3,-1,-1,-1,1,0,-1,0,1)) # Equivalently
-#' MultivariateNormal$new(mean = c(0,0,0), prec = c(3,-1,-1,-1,1,0,-1,0,1))
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
 #'
-#' # Default is bivariate standard normal
-#' x <- MultivariateNormal$new()
-#'
-#' # Update parameters
-#' x$setParameterValue(mean = c(1, 2))
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(prec = c(1,0,0,1))
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' # Note the difference from R stats
-#' x$pdf(1, 2)
-#' # This allows vectorisation:
-#' x$pdf(1:3, 2:4)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family multivariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# MultivariateNormal Distribution Definition
-#-------------------------------------------------------------
-MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F)
-MultivariateNormal$set("public","name","MultivariateNormal")
-MultivariateNormal$set("public","short_name","MultiNorm")
-MultivariateNormal$set("public","description","Multivariate Normal Probability Distribution.")
+MultivariateNormal <- R6Class("MultivariateNormal",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "MultivariateNormal",
+    short_name = "MultiNorm",
+    description = "Multivariate Normal Probability Distribution.",
 
-MultivariateNormal$set("public","mean",function(){
-  return(self$getParameterValue("mean"))
-})
-MultivariateNormal$set("public","mode",function(which = NULL){
-  return(self$getParameterValue("mean"))
-})
-MultivariateNormal$set("public","variance",function(){
-  return(self$getParameterValue("cov"))
-})
-MultivariateNormal$set("public","entropy",function(base = 2){
-  return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
-})
-MultivariateNormal$set("public", "mgf", function(t){
-  checkmate::assert(length(t) == self$getParameterValue("K"))
-  return(exp((self$getParameterValue("mean") %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
-})
-MultivariateNormal$set("public", "cf", function(t){
-  checkmate::assert(length(t) == self$getParameterValue("K"))
-  return(exp((1i * self$getParameterValue("mean") %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t)))))
-})
-MultivariateNormal$set("public", "pgf", function(z){
-  return(NaN)
-})
+    # Public methods
+    # initialize
 
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `(numeric())`\cr
+    #' Vector of means, defined on the Reals.
+    #' @param cov `(matrix()|vector())` \cr
+    #' Covariance of the distribution, either given as a matrix or vector coerced to a
+    #' matrix via `matrix(cov, nrow = K, byrow = FALSE)`. Must be semi-definite.
+    #' @param prec `(matrix()|vector())` \cr
+    #' Precision of the distribution, inverse of the covariance matrix. If supplied then `cov` is
+    #' ignored. Given as a matrix or vector coerced to a
+    #' matrix via `matrix(cov, nrow = K, byrow = FALSE)`. Must be semi-definite.
+    initialize = function(mean = rep(0, 2), cov = c(1, 0, 0, 1),
+                          prec = NULL, decorators = NULL) {
 
-MultivariateNormal$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
-    lst <- list(...)
-  if(!is.null(lst$cov)){
-    if(any(dim(lst$cov) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
-       length(lst$cov) != self$getParameterValue("K")^2)
-      lst$cov <- suppressWarnings(matrix(lst$cov, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K")))
-    lst$cov <- as.numeric(lst$cov)
-  }
-  if(!is.null(lst$prec)){
-    if(any(dim(lst$prec) != c(self$getParameterValue("K"), self$getParameterValue("K"))) |
-       length(lst$prec) != self$getParameterValue("K")^2)
-      lst$prec <- suppressWarnings(matrix(lst$prec, nrow = self$getParameterValue("K"), ncol = self$getParameterValue("K")))
-    lst$prec <- as.numeric(lst$prec)
-  }
-  if(!is.null(lst$mean)){
-    lst$mean <- as.numeric(lst$mean)
-    if(length(lst$mean) < self$getParameterValue("K"))
-      lst$mean <- rep(lst$mean, self$getParameterValue("K"))
-    if(length(lst$mean) > self$getParameterValue("K"))
-      lst$mean <- lst$mean[1:self$getParameterValue("K")]
-    lst$mean <- as.numeric(lst$mean)
-  }
+      if (length(mean) == 1) stop("Length of mean is '1', use Normal distribution instead.")
 
-  super$setParameterValue(lst = lst, error = error)
-  invisible(self)
-})
-MultivariateNormal$set("public","getParameterValue",function(id, error = "warn"){
-  if("cov" %in% id)
-    return(matrix(super$getParameterValue("cov", error),nrow = super$getParameterValue("K", error)))
-  else if("prec" %in% id)
-    return(matrix(super$getParameterValue("prec", error),nrow = super$getParameterValue("K", error)))
-  else
-    return(super$getParameterValue(id, error))
-})
-MultivariateNormal$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  if(!is.null(paramlst$cov)) lst = c(lst, list(cov = paramlst$cov))
-  if(!is.null(paramlst$prec)) lst = c(lst, list(cov = solve(matrix(paramlst$prec,
-                                                                   nrow = self$getParameterValue("K"),
-                                                                   ncol = self$getParameterValue("K")))))
-  return(lst)
-})
+      private$.parameters <- getParameterSet(self, mean, cov, prec)
+      self$setParameterValue(mean = mean, cov = cov, prec = prec)
 
-MultivariateNormal$set("public","initialize",function(mean = rep(0,2), cov = c(1,0,0,1),
-                                                      prec = NULL, decorators = NULL, verbose = FALSE){
+      private$.variates <- length(mean)
 
-  if (length(mean) == 1)
-    stop("Length of mean is '1', use Normal distribution instead.")
+      super$initialize(
+        decorators = decorators,
+        support = setpower(Reals$new(), length(mean)),
+        type = setpower(Reals$new(), length(mean))
+      )
+    },
 
-  private$.parameters <- getParameterSet(self, mean, cov, prec, verbose)
-  self$setParameterValue(mean = mean, cov = cov, prec = prec)
+    # stats
 
-  lst <- rep(list(bquote()), length(mean))
-  names(lst) <- paste("x",1:length(mean),sep="")
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("mean"))
+    },
 
-  pdf <- function(){
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(self$getParameterValue("mean"))
+    },
 
-    if(isSymmetric.matrix(self$variance()) & all(eigen(self$variance(),only.values = T)$values > 0)){
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(self$getParameterValue("cov"))
+    },
 
-      K <- self$getParameterValue("K")
-      call <- mget(paste0("x",1:K))
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
+    },
 
-      if(!all(unlist(lapply(call, is.numeric))))
-        stop(paste(K,"arguments expected."))
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      mean <- self$getParameterValue("mean")
+      checkmate::assert(length(t) == length(mean))
+      return(as.numeric(exp((mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
+    },
 
-      if(length(unique(unlist(lapply(call,length)))) > 1)
-        stop("The same number of points must be passed to each variable.")
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      mean <- self$getParameterValue("mean")
+      checkmate::assert(length(t) == length(mean))
+      return(as.complex(exp((1i * mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      K <- length(self$getParameterValue("mean"))
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if (!is.null(lst$cov)) {
+        if (any(dim(lst$cov) != c(K, K)) |
+          length(lst$cov) != K^2) {
+          lst$cov <- suppressWarnings(matrix(lst$cov, nrow = K, ncol = K))
+        }
+        lst$cov <- as.numeric(lst$cov)
+      }
+      if (!is.null(lst$prec)) {
+        if (any(dim(lst$prec) != c(K, K)) |
+          length(lst$prec) != K^2) {
+          lst$prec <- suppressWarnings(matrix(lst$prec, nrow = K, ncol = K))
+        }
+        lst$prec <- as.numeric(lst$prec)
+      }
+      if (!is.null(lst$mean)) {
+        lst$mean <- as.numeric(lst$mean)
+        if (length(lst$mean) < K) {
+          lst$mean <- rep(lst$mean, K)
+        }
+        if (length(lst$mean) > K) {
+          lst$mean <- lst$mean[1:K]
+        }
+        lst$mean <- as.numeric(lst$mean)
+      }
+
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
+    },
+
+    #' @description
+    #' Returns the value of the supplied parameter.
+    #' @param id `character()` \cr
+    #' id of parameter support to return.
+    getParameterValue = function(id, error = "warn") {
+      if ("cov" %in% id) {
+        return(matrix(super$getParameterValue("cov", error),
+          nrow = length(super$getParameterValue("mean", error))
+        ))
+      } else if ("prec" %in% id) {
+        return(matrix(super$getParameterValue("prec", error),
+          nrow = length(super$getParameterValue("mean", error))
+        ))
+      } else {
+        return(super$getParameterValue(id, error))
+      }
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
 
       cov <- self$getParameterValue("cov")
-      xs <- matrix(unlist(mget(paste0("x",1:K))), ncol = K)
-      mean <- matrix(self$getParameterValue("mean"), nrow = nrow(xs), ncol = K, byrow = T)
+      mean <- self$getParameterValue("mean")
 
-      return(as.numeric((2*pi)^(-K/2) * det(cov)^-0.5 *
-               exp(-0.5 * rowSums((xs - mean) %*% solve(cov) * (xs - mean)))))
-    } else
-      return(NaN)
-  }
-  formals(pdf) <- lst
+      dmvn <- function(x, cov, mean, log) {
+        K <- length(mean)
 
-  rand <- function(n){
-    ch <- chol(self$variance())
-    xs <- matrix(rnorm(self$getParameterValue("K")*n), ncol = n)
-    return(data.table::data.table(t(self$mean() + t(ch) %*% xs)))
-  }
+        if (checkmate::testNumeric(cov)) {
+          cov <- matrix(cov, nrow = K)
+        }
 
-  super$initialize(decorators = decorators, pdf = pdf, rand = rand,
-                   support = setpower(Reals$new(), length(mean)),
-                   symmetric = FALSE,type = setpower(Reals$new(), length(mean)),
-                   valueSupport = "continuous",
-                   variateForm = "multivariate")
-  invisible(self)
-})
+        if (isSymmetric.matrix(cov) & all(eigen(cov, only.values = TRUE)$values > 0)) {
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "MultiNorm", ClassName = "MultivariateNormal",
-                                                     Type = "\u211D^K", ValueSupport = "continuous",
-                                                     VariateForm = "multivariate",
-                                                     Package = "-"))
+          checkmate::testMatrix(x, ncols = K)
+          mean <- matrix(mean, nrow = nrow(x), ncol = K, byrow = TRUE)
+
+          if (log) {
+            return(as.numeric(-((K / 2) * log(2 * pi)) - (log(det(cov)) / 2) -
+              (diag((x - mean) %*% solve(cov) %*% t(x - mean)) / 2)))
+          } else {
+            return(as.numeric((2 * pi)^(-K / 2) * det(cov)^-0.5 *
+              exp(-0.5 * diag((x - mean) %*% solve(cov) %*% t(x - mean)))))
+          }
+
+        } else {
+          return(NaN)
+        }
+      }
+
+      if (checkmate::testList(cov)) {
+        mapply(dmvn,
+          cov = cov,
+          mean = mean,
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        dmvn(x, cov = cov, mean = mean, log = log)
+      }
+    },
+    .rand = function(n) {
+
+      cov <- self$getParameterValue("cov")
+      mean <- self$getParameterValue("mean")
+
+      rmvn <- function(n, cov, mean) {
+        K <- length(mean)
+
+        if (checkmate::testNumeric(cov)) {
+          cov <- matrix(cov, nrow = K)
+        }
+
+        xs <- matrix(rnorm(K * n), ncol = n)
+
+        return(data.table::data.table(t(mean + t(chol(cov)) %*% xs)))
+      }
+
+      if (checkmate::testList(cov)) {
+        mapply(rmvn,
+          cov = cov,
+          mean = mean,
+          MoreArgs = list(n = n),
+          SIMPLIFY = FALSE
+        )
+      } else {
+        rmvn(n, cov = cov, mean = mean)
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      if (!is.null(paramlst$cov)) lst <- c(lst, list(cov = paramlst$cov))
+      if (!is.null(paramlst$prec)) {
+        K <- length(self$getParameterValue("mean"))
+        lst <- c(lst, list(cov = solve(matrix(paramlst$prec,
+          nrow = K,
+          ncol = K
+        ))))
+      }
+
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "multivariate"),
+
+    .isCdf = FALSE,
+    .isQuantile = FALSE
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "MultiNorm", ClassName = "MultivariateNormal",
+    Type = "\u211D^K", ValueSupport = "continuous",
+    VariateForm = "multivariate",
+    Package = "-"
+  )
+)

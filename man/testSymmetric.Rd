@@ -30,5 +30,4 @@ Validation checks to test if Distribution is symmetric.
 }
 \examples{
 testSymmetric(Binomial$new()) # FALSE
-
 }

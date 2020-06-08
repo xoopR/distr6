@@ -1,5 +1,7 @@
 #' @importFrom R62S3 R62Fun
 #' @importFrom R6 R6Class
+#' @importFrom data.table data.table as.data.table
+#' @importFrom checkmate assert
 #' @import set6
 R62Fun(Distribution, assignEnvir = topenv(), scope = c("public", "active"))
 R62Fun(SDistribution, assignEnvir = topenv(), scope = c("public", "active"))
@@ -12,8 +14,10 @@ R62Fun(DistributionWrapper, assignEnvir = topenv(), dispatchClasses = list(Distr
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("\n-----------------------------")
-  packageStartupMessage("\tdistr6 v 1.3.7",
-"\n\nGet started:\t?distr6
-Changelog:\tdistr6News()")
+  packageStartupMessage(
+    "\tdistr6 v 1.4.0.9000",
+    "\n\nGet started:\t?distr6
+Changelog:\tdistr6News()"
+  )
   packageStartupMessage("-----------------------------\n")
 }

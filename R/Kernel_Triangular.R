@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Triangular Kernel
-#-------------------------------------------------------------
 #' @title Triangular Kernel
 #'
 #' @description Mathematical and statistical functions for the Triangular kernel defined by the pdf,
@@ -9,58 +5,48 @@
 #' over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 #'
 #' @name TriangularKernel
+#' @template class_distribution
+#' @template class_kernel
 #'
-#' @section Constructor: TriangularKernel$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Uniform Kernel Definition
-#-------------------------------------------------------------
-TriangularKernel <- R6Class("TriangularKernel", inherit = Kernel, lock_objects = F)
-TriangularKernel$set("public","name","TriangularKernel")
-TriangularKernel$set("public","short_name","Tri")
-TriangularKernel$set("public","description","Triangular Kernel")
-TriangularKernel$set("public","variance",function(){
-  return(1/6)
-})
-TriangularKernel$set("public","squared2Norm",function(){
-  return(2/3)
-})
-TriangularKernel$set("public","initialize",function(decorators = NULL){
+TriangularKernel <- R6Class("TriangularKernel",
+  inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "TriangularKernel",
+    short_name = "Tri",
+    description = "Triangular Kernel",
 
-  pdf <- function(x1){
-    return(1 - abs(x1))
-  }
-  cdf <- function(x1){
-    cdf = x1
-    cdf[x1 < 0] = x1[x1 < 0] + 0.5*x1[x1 < 0]^2 + 1/2
-    cdf[x1 == 0] = 0.5
-    cdf[x1 > 0] = x1[x1 > 0] - 0.5*x1[x1 > 0]^2 + 1/2
-    return(cdf)
-  }
-  quantile <- function(p){
-    quantile = p
-    quantile[p < 0.5] = -1 + sqrt(2 * p[p < 0.5])
-    quantile[p == 0.5] = 0
-    quantile[p > 0.5] = 1 - sqrt(2 - 2*p[p > 0.5])
-    return(quantile)
-  }
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    squared2Norm = function() {
+      return(2 / 3)
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
-}) # CDF, QUANTILE & VAR MISSING
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(1 / 6)
+    }
+  ),
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]", Packages = "-"))
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_TriangularKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_TriangularKernelCdf(x, lower.tail, log.p)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      C_TriangularKernelQuantile(x, lower.tail, log.p)
+    }
+  )
+)
+
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]", Packages = "-"))

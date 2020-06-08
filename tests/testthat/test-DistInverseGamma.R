@@ -2,47 +2,28 @@ library(testthat)
 
 context("InverseGamma distribution")
 
-test_that("parameterisation",{
-  expect_silent(InverseGamma$new())
-  expect_silent(InverseGamma$new(shape = 2, scale = 3))
-  expect_equal(InverseGamma$new(shape = 2, scale = 3)$getParameterValue("scale"), 3)
-  expect_equal(InverseGamma$new(shape = 4)$getParameterValue("shape"), 4)
-})
-
-test_that("properties & traits",{
-  expect_equal(InverseGamma$new()$valueSupport, "continuous")
-  expect_equal(InverseGamma$new()$variateForm, "univariate")
-  expect_equal(InverseGamma$new()$symmetry, "asymmetric")
-  expect_equal(InverseGamma$new()$sup, Inf)
-  expect_equal(InverseGamma$new()$inf, 0)
-  expect_equal(InverseGamma$new()$dmax, .Machine$double.xmax)
-  expect_equal(InverseGamma$new()$dmin, .Machine$double.eps)
-})
-
-g = InverseGamma$new()
-test_that("statistics",{
-  expect_equal(g$mean(), NaN)
-  expect_equal(InverseGamma$new(shape = 2)$mean(), 1)
-
-  expect_equal(g$variance(), NaN)
-  expect_equal(InverseGamma$new(shape = 3)$variance(), 0.25)
-
-  expect_equal(g$skewness(), NaN)
-  expect_equal(InverseGamma$new(shape = 4)$skewness(), 4*sqrt(2))
-
-  expect_equal(g$kurtosis(), NaN)
-  expect_equal(InverseGamma$new(shape = 5)$kurtosis(), 42)
-  expect_equal(InverseGamma$new(shape = 5)$kurtosis(F), 45)
-
-  expect_equal(g$entropy(), 1 - digamma(1)*2)
-
-  expect_equal(g$mgf(1), NaN)
-  expect_error(g$cf(1))
-  expect_equal(g$pgf(1), NaN)
-  expect_equal(g$mode(), 1/2)
-  expect_equal(g$pdf(1), extraDistr::dinvgamma(1,1,1))
-  expect_equal(g$cdf(1), extraDistr::pinvgamma(1,1,1))
-  expect_equal(g$quantile(0.324), extraDistr::qinvgamma(0.324,1,1))
-  expect_equal(g$cdf(g$quantile(0.324)), 0.324)
-  expect_equal(length(g$rand(10)),10)
+test_that("autotest", {
+  autotest_sdistribution(
+    sdist = InverseGamma,
+    pars = list(),
+    traits = list(
+      valueSupport = "continuous",
+      variateForm = "univariate",
+      type = PosReals$new()
+    ),
+    support = PosReals$new(),
+    symmetry = "asymmetric",
+    mean = NaN,
+    mode = 0.5,
+    median = extraDistr::qinvgamma(0.5, 1, 1),
+    variance = NaN,
+    skewness = NaN,
+    exkur = NaN,
+    entropy = 1 - digamma(1) * 2,
+    mgf = NaN,
+    pgf = NaN,
+    pdf = extraDistr::dinvgamma(1:3, 1, 1),
+    cdf = extraDistr::pinvgamma(1:3, 1, 1),
+    quantile = extraDistr::qinvgamma(c(0.24, 0.42, 0.5), 1, 1)
+  )
 })

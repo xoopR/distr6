@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Exponential Distribution Documentation
-#-------------------------------------------------------------
 #' @name Exponential
 #' @template SDist
 #' @templateVar ClassName Exponential
@@ -12,104 +9,204 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \lambda exp(-x\lambda)}
 #' @templateVar paramsupport \eqn{\lambda > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar constructor rate = NULL, scale = NULL
-#' @templateVar arg1 \code{rate} \tab numeric \tab arrival rate. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets  \code{rate} or \code{scale} as positive numerics. These are related via, \deqn{scale = 1/rate} If \code{scale} is given then \code{rate} is ignored.
 #'
-#' @examples
-#' Exponential$new(rate = 4)
-#' Exponential$new(scale = 3)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_ratescale
+#' @template field_packages
 #'
-#' x = Exponential$new(verbose = TRUE) # Default is rate = 1
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(scale = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Exponential Distribution Definition
-#-------------------------------------------------------------
-Exponential <- R6Class("Exponential", inherit = SDistribution, lock_objects = F)
-Exponential$set("public","name","Exponential")
-Exponential$set("public","short_name","Exp")
-Exponential$set("public","description","Exponential Probability Distribution.")
-Exponential$set("public","packages","stats")
+Exponential <- R6Class("Exponential",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Exponential",
+    short_name = "Exp",
+    description = "Exponential Probability Distribution.",
+    packages = "stats",
 
-Exponential$set("public","mean",function(){
-  self$getParameterValue("scale")
-})
-Exponential$set("public","variance",function(){
-  self$getParameterValue("scale")^2
-})
-Exponential$set("public","skewness",function() return(2))
-Exponential$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(6)
-  else
-    return(9)
-})
-Exponential$set("public","entropy",function(base = 2){
-  1 - log(self$getParameterValue("rate"), base)
-})
-Exponential$set("public", "mgf", function(t){
-  if(t < self$getParameterValue("rate"))
-    return(self$getParameterValue("rate") / (self$getParameterValue("rate") - t))
-  else
-    return(NaN)
-})
-Exponential$set("public", "cf", function(t){
-  return(self$getParameterValue("rate") / (self$getParameterValue("rate") -  ((0+1i) * t)))
-})
-Exponential$set("public","mode",function(which = NULL){
-  return(0)
-})
-Exponential$set("public", "pgf", function(z){
-  return(NaN)
-})
+    # Public methods
+    # initialize
 
-Exponential$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$rate)) lst = c(lst, list(rate = paramlst$rate))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(rate = paramlst$scale^-1))
-  return(lst)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(rate = 1, scale = NULL, decorators = NULL) {
 
-Exponential$set("public","initialize",function(rate = 1, scale = NULL, decorators = NULL, verbose = FALSE){
+      private$.parameters <- getParameterSet(self, rate, scale)
+      self$setParameterValue(rate = rate, scale = scale)
 
-  private$.parameters <- getParameterSet(self, rate, scale, verbose)
-  self$setParameterValue(rate = rate, scale = scale)
+      super$initialize(
+        decorators = decorators,
+        support = PosReals$new(zero = T),
+        type = PosReals$new(zero = T)
+      )
+    },
 
-  pdf <- function(x1) dexp(x1, self$getParameterValue("rate"))
-  cdf <- function(x1) pexp(x1, self$getParameterValue("rate"))
-  quantile <- function(p) qexp(p, self$getParameterValue("rate"))
-  rand <- function(n) rexp(n, self$getParameterValue("rate"))
+    # stats
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosReals$new(zero = T),
-                   symmetric  = FALSE, type = PosReals$new(zero = T),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      self$getParameterValue("scale")
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Exp", ClassName = "Exponential",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(0)
+    },
+
+    #' @description
+    #' Returns the median of the distribution. If an analytical expression is available
+    #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
+    #' returns `self$quantile(0.5)`.
+    median = function() {
+      self$getParameterValue("scale") * log(2)
+    },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      self$getParameterValue("scale")^2
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(2)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(6)
+      } else {
+        return(9)
+      }
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      1 - log(self$getParameterValue("rate"), base)
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      if (t < self$getParameterValue("rate")) {
+        return(self$getParameterValue("rate") / (self$getParameterValue("rate") - t))
+      } else {
+        return(NaN)
+      }
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      return(self$getParameterValue("rate") / (self$getParameterValue("rate") - ((0 + 1i) * t)))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      rate <- self$getParameterValue("rate")
+      call_C_base_pdqr(
+        fun = "dexp",
+        x = x,
+        args = list(rate = unlist(rate)),
+        log = log,
+        vec = test_list(rate)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      rate <- self$getParameterValue("rate")
+      call_C_base_pdqr(
+        fun = "pexp",
+        x = x,
+        args = list(rate = unlist(rate)),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(rate)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      rate <- self$getParameterValue("rate")
+      call_C_base_pdqr(
+        fun = "qexp",
+        x = p,
+        args = list(rate = unlist(rate)),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(rate)
+      )
+    },
+    .rand = function(n) {
+      rate <- self$getParameterValue("rate")
+      call_C_base_pdqr(
+        fun = "rexp",
+        x = n,
+        args = list(rate = unlist(rate)),
+        vec = test_list(rate)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$rate)) lst <- c(lst, list(rate = paramlst$rate))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(rate = paramlst$scale^-1))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Exp", ClassName = "Exponential",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

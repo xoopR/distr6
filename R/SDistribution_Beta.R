@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Beta Distribution Documentation
-#-------------------------------------------------------------
 #' @name Beta
 #' @template SDist
 #' @templateVar ClassName Beta
@@ -12,123 +9,240 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function
 #' @templateVar distsupport \eqn{[0, 1]}
-#' @templateVar omittedVars \code{mgf} and \code{cf}
-#' @templateVar constructor shape1 = 1, shape2 = 1
-#' @templateVar arg1 \code{shape1, shape2} \tab numeric \tab positive shape parameter. \cr
-#' @templateVar constructorDets  \code{shape1} and \code{shape2} as positive numerics.
 #'
-#' @examples
-#' x = Beta$new(shape1 = 2, shape2 = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(shape1 = 1)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Beta Distribution Definition
-#-------------------------------------------------------------
-Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F)
-Beta$set("public","name","Beta")
-Beta$set("public","short_name","Beta")
-Beta$set("public","description","Beta Probability Distribution.")
-Beta$set("public","packages","stats")
+Beta <- R6Class("Beta",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Beta",
+    short_name = "Beta",
+    description = "Beta Probability Distribution.",
+    packages = "stats",
 
+    # Public methods
+    # initialize
 
-Beta$set("public","mean",function(){
-  return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
-})
-Beta$set("public","variance",function(){
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-  return(shape1*shape2*((shape1+shape2)^-2)*(shape1+shape2+1)^-1)
-})
-Beta$set("public","mode",function(which = "all"){
-  if(self$getParameterValue("shape1")<=1 & self$getParameterValue("shape2")>1)
-    return(0)
-  else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")<=1)
-    return(1)
-  else if(self$getParameterValue("shape1")<1 & self$getParameterValue("shape2")<1){
-    if(which == "all")
-      return(c(0,1))
-    else
-      return(c(0,1)[which])
-  } else if(self$getParameterValue("shape1")>1 & self$getParameterValue("shape2")>1)
-    return((self$getParameterValue("shape1")-1)/(self$getParameterValue("shape1")+self$getParameterValue("shape2")-2))
-})
-Beta$set("public","skewness",function(){
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-  return(2*(shape2-shape1)*((shape1+shape2+1)^0.5)*((shape1+shape2+2)^-1)*((shape1*shape2)^-0.5))
-})
-Beta$set("public","kurtosis",function(excess = TRUE){
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param shape1 `(numeric(1))`\cr
+    #' First shape parameter, `shape1 > 0`.
+    #' @param shape2 `(numeric(1))`\cr
+    #' Second shape parameter, `shape2 > 0`.
+    initialize = function(shape1 = 1, shape2 = 1, decorators = NULL) {
 
-  ex_kurtosis = 6*{((shape1-shape2)^2)*(shape1+shape2+1)-(shape1*shape2*(shape1+shape2+2))}/
-    (shape1*shape2*(shape1+shape2+2)*(shape1+shape2+3))
-  if (excess)
-    return(ex_kurtosis)
-  else
-    return(ex_kurtosis+3)
-})
-Beta$set("public", "entropy", function(base = 2){
-  shape1 <- self$getParameterValue("shape1")
-  shape2 <- self$getParameterValue("shape2")
-  return(log(beta(shape1,shape2), base) - ((shape1-1)*digamma(shape1)) -
-           ((shape2-1) * digamma(shape2)) + ((shape1+shape2-2)*digamma(shape1+shape2)))
-})
-Beta$set("public", "pgf", function(z){
-  return(NaN)
-})
+      private$.parameters <- getParameterSet.Beta(self, shape1, shape2)
+      self$setParameterValue(shape1 = shape1, shape2 = shape2)
 
-Beta$set("private", ".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$shape1)) lst = c(lst,list(shape1 = paramlst$shape1))
-  if(!is.null(paramlst$shape2)) lst = c(lst,list(shape2 = paramlst$shape2))
-  return(lst)
-})
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(0, 1),
+        symmetry = if (shape1 == shape2) "sym" else "asym",
+        type = PosReals$new(zero = T)
+      )
+    },
 
-Beta$set("public", "initialize", function(shape1 = 1, shape2 = 1, decorators = NULL,verbose = FALSE){
+    # stats
 
-  private$.parameters <- getParameterSet.Beta(self, shape1, shape2, verbose)
-  self$setParameterValue(shape1=shape1,shape2=shape2)
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
+    },
 
-  pdf <- function(x1) dbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
-  cdf <- function(x1) pbeta(x1, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
-  quantile <- function(p) qbeta(p, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
-  rand <- function(n) rbeta(n, self$getParameterValue("shape1"), self$getParameterValue("shape2"))
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      if (self$getParameterValue("shape1") <= 1 & self$getParameterValue("shape2") > 1) {
+        return(0)
+      } else if (self$getParameterValue("shape1") > 1 & self$getParameterValue("shape2") <= 1) {
+        return(1)
+      } else if (self$getParameterValue("shape1") < 1 & self$getParameterValue("shape2") < 1) {
+        if (which == "all") {
+          return(c(0, 1))
+        } else {
+          return(c(0, 1)[which])
+        }
+      } else if (self$getParameterValue("shape1") > 1 & self$getParameterValue("shape2") > 1) {
+        return((self$getParameterValue("shape1") - 1) / (self$getParameterValue("shape1") + self$getParameterValue("shape2") - 2))
+      } else {
+        return(NaN)
+      }
+    },
 
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      return(shape1 * shape2 * ((shape1 + shape2)^-2) * (shape1 + shape2 + 1)^-1)
+    },
 
-  if (shape1 == shape2)
-    symmetric <- TRUE
-  else
-    symmetric <- FALSE
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      return(2 * (shape2 - shape1) * ((shape1 + shape2 + 1)^0.5) * ((shape1 + shape2 + 2)^-1) * ((shape1 * shape2)^-0.5))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(0,1),
-                   symmetric = symmetric, type = PosReals$new(zero = T),
-                   valueSupport ="continuous",
-                   variateForm = "univariate")
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
 
-  invisible(self)
-})
+      ex_kurtosis <- 6 *
+        {
+          ((shape1 - shape2)^2) * (shape1 + shape2 + 1) - (shape1 * shape2 * (shape1 + shape2 + 2))
+        } /
+        (shape1 * shape2 * (shape1 + shape2 + 2) * (shape1 + shape2 + 3))
+      if (excess) {
+        return(ex_kurtosis)
+      } else {
+        return(ex_kurtosis + 3)
+      }
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Beta", ClassName = "Beta",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      return(log(beta(shape1, shape2), base) - ((shape1 - 1) * digamma(shape1)) -
+        ((shape2 - 1) * digamma(shape2)) + ((shape1 + shape2 - 2) * digamma(shape1 + shape2)))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      super$setParameterValue(..., lst = lst, error = error)
+      if (self$getParameterValue("shape1") == self$getParameterValue("shape2")) {
+        private$.properties$symmetry <- "symmetric"
+      } else {
+        private$.properties$symmetry <- "asymmetric"
+      }
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      call_C_base_pdqr(
+        fun = "dbeta",
+        x = x,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2)
+        ),
+        log = log,
+        vec = test_list(shape1)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      call_C_base_pdqr(
+        fun = "pbeta",
+        x = x,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(shape1)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      call_C_base_pdqr(
+        fun = "qbeta",
+        x = p,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(shape1)
+      )
+    },
+    .rand = function(n) {
+      shape1 <- self$getParameterValue("shape1")
+      shape2 <- self$getParameterValue("shape2")
+      call_C_base_pdqr(
+        fun = "rbeta",
+        x = n,
+        args = list(
+          shape1 = unlist(shape1),
+          shape2 = unlist(shape2)
+        ),
+        vec = test_list(shape1)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$shape1)) lst <- c(lst, list(shape1 = paramlst$shape1))
+      if (!is.null(paramlst$shape2)) lst <- c(lst, list(shape2 = paramlst$shape2))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Beta", ClassName = "Beta",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

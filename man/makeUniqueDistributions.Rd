@@ -22,5 +22,4 @@ number so that the names are no longer duplicated.
 }
 \examples{
 makeUniqueDistributions(list(Binomial$new(), Binomial$new()))
-
 }

@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-#  Distribution Documentation
-#-------------------------------------------------------------
 #' @name Multinomial
 #' @template SDist
 #' @templateVar ClassName Multinomial
@@ -13,157 +10,217 @@
 #' @templateVar paramsupport \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}
 #' @templateVar distsupport \eqn{\sum x_i = N}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
-#' @templateVar constructor size = 10, probs = c(0.5, 0.5)
-#' @templateVar arg1 \code{size} \tab numeric \tab number of trials. See details. \cr
-#' @templateVar arg2 \code{probs} \tab numeric \tab vector of probabilities. See details. \cr
-#' @templateVar constructorDets \code{size} as a positive whole number and \code{probs} as a vector of numerics between 0 and 1. The length of the probability vector, \eqn{K}, tells the constructor how many arguments to expect to be passed to the maths/stats methods. The probability vector is automatically normalised with \deqn{probs = probs/sum(probs)}.
-#' @templateVar additionalSeeAlso \code{\link{Binomial}} for a special case of the Multinomial distribution.
 #'
-#' @examples
-#' x <- Multinomial$new(size = 5, probs = c(0.1, 0.5, 0.9)) # Automatically normalised
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(size = 10)
-#' # Number of categories cannot be changed after construction
-#' x$setParameterValue(probs = c(1,2,3))
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' # Note the difference from R stats
-#' x$pdf(4, 4, 2)
-#' # This allows vectorisation:
-#' x$pdf(c(1,4),c(2,4),c(7,2))
-#'
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family discrete distributions
+#' @family multivariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Multinomial Distribution Definition
-#-------------------------------------------------------------
-Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F)
-Multinomial$set("public","name","Multinomial")
-Multinomial$set("public","short_name","Multinom")
-Multinomial$set("public","description","Multinomial Probability Distribution.")
-Multinomial$set("public","packages","stats")
+Multinomial <- R6Class("Multinomial",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Multinomial",
+    short_name = "Multinom",
+    description = "Multinomial Probability Distribution.",
+    packages = "extraDistr",
 
-Multinomial$set("public","mean",function(){
-  return(self$getParameterValue("size") * self$getParameterValue("probs"))
-}) # TEST
-Multinomial$set("public","variance",function(){
-  cov = self$getParameterValue("probs") %*% t(self$getParameterValue("probs")) * -self$getParameterValue("size")
-  diag(cov) = self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
-  return(cov)
-})
-Multinomial$set("public","skewness",function(){
-  return(NaN)
-})
-Multinomial$set("public","kurtosis",function(excess = TRUE){
-  return(NaN)
-})
-Multinomial$set("public","entropy",function(base = 2){
-  size = self$getParameterValue("size")
-  probs = self$getParameterValue("probs")
-  K = self$getParameterValue("K")
+    # Public methods
+    # initialize
 
-  s1 = -log(factorial(size), base)
-  s2 = -size * sum(probs * log(probs, base))
-  s3 = 0
-  for(i in 1:K){
-    for(j in 0:size){
-      s3 = s3 + (choose(size, j) * (probs[[i]]^j) * ((1-probs[[i]])^(size-j)) * (log(factorial(j), base)))
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param size `(integer(1))`\cr
+    #' Number of trials, defined on the positive Naturals.
+    #' @param probs `(numeric())`\cr
+    #' Vector of probabilities. Automatically normalised by
+    #' `probs = probs/sum(probs)`.
+    initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL) {
+
+      if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")
+
+      private$.parameters <- getParameterSet(self, size, probs)
+      self$setParameterValue(size = size, probs = probs)
+
+      private$.variates <- length(probs)
+
+      super$initialize(
+        decorators = decorators,
+        support = setpower(Set$new(0:size, class = "integer"), length(probs)),
+        type = setpower(Naturals$new(), length(probs))
+      )
+    },
+
+    # stats
+
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("size") * self$getParameterValue("probs"))
+    },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      cov <- self$getParameterValue("probs") %*% t(self$getParameterValue("probs")) * -self$getParameterValue("size")
+      diag(cov) <- self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
+      return(cov)
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(NaN)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      return(NaN)
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      size <- self$getParameterValue("size")
+      probs <- self$getParameterValue("probs")
+      K <- self$getParameterValue("K")
+
+      s1 <- -log(factorial(size), base)
+      s2 <- -size * sum(probs * log(probs, base))
+      s3 <- 0
+      for (i in 1:K) {
+        for (j in 0:size) {
+          s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
+        }
+      }
+
+      return(s1 + s2 + s3)
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      checkmate::assert(length(t) == self$getParameterValue("K"))
+      return(sum(exp(t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      checkmate::assert(length(t) == self$getParameterValue("K"))
+      return(sum(exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      checkmate::assert(length(z) == self$getParameterValue("K"))
+      return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
+    },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if ("probs" %in% names(lst)) {
+        checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
+          .var.name = "Number of categories cannot be changed after construction."
+        )
+        lst$probs <- lst$probs / sum(lst$probs)
+      }
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
     }
-  }
+  ),
 
-  return(s1 + s2 + s3)
-}) # TEST
-Multinomial$set("public", "mgf", function(t){
-  checkmate::assert(length(t) == self$getParameterValue("K"))
-  return(sum(exp(t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
-}) # TEST
-Multinomial$set("public", "cf", function(t){
-  checkmate::assert(length(t) == self$getParameterValue("K"))
-  return(sum(exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
-}) # TEST
-Multinomial$set("public", "pgf", function(z){
-  checkmate::assert(length(z) == self$getParameterValue("K"))
-  return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
-}) # TEST
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
 
-Multinomial$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
-    lst <- list(...)
-  if("probs" %in% names(lst)){
-    checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
-                      .var.name = "Number of categories cannot be changed after construction.")
-    lst$probs <- lst$probs/sum(lst$probs)
-    }
-  super$setParameterValue(lst = lst, error = error)
-  invisible(self)
-})
+      checkmate::assertMatrix(x, ncols = length(self$getParameterValue("probs")))
 
-Multinomial$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$size)) lst = c(lst, list(size = paramlst$size))
-  if(!is.null(paramlst$probs)) lst = c(lst, list(probs = paramlst$probs))
-  return(lst)
-})
+      if (checkmate::testList(self$getParameterValue("probs"))) {
+        mapply(extraDistr::dmnom,
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dmnom(x,
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs"),
+          log = log
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("probs"))) {
+        mapply(extraDistr::rmnom,
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs"),
+          MoreArgs = list(n = n),
+          SIMPLIFY = FALSE
+        )
+      } else {
+        extraDistr::rmnom(n,
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs")
+        )
+      }
+    },
 
-Multinomial$set("public","initialize",function(size = 10, probs = c(0.5, 0.5), decorators = NULL, verbose = FALSE){
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
+      if (!is.null(paramlst$probs)) lst <- c(lst, list(probs = paramlst$probs))
+      return(lst)
+    },
 
-  if (length(probs) == 1)
-    stop("Length of probs is '1', use Binomial distribution instead.")
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "multivariate"),
 
-  private$.parameters <- getParameterSet(self, size, probs, verbose)
-  self$setParameterValue(size = size, probs = probs)
+    .isCdf = FALSE,
+    .isQuantile = FALSE
+  )
+)
 
-  lst <- rep(list(bquote()), length(probs))
-  names(lst) <- paste("x",1:length(probs),sep="")
-
-  pdf <- function(){
-
-    call = mget(paste0("x",1:self$getParameterValue("K")))
-
-    if(!all(unlist(lapply(call, is.numeric))))
-      stop(paste(self$getParameterValue("K"),"arguments expected."))
-
-    if(length(unique(unlist(lapply(call,length)))) > 1)
-      stop("The same number of points must be passed to each variable.")
-
-    x = do.call(cbind,mget(paste0("x",1:self$getParameterValue("K"))))
-    z = apply(x, 1, function(y){
-      if(sum(y) != self$getParameterValue("size"))
-        return(0)
-      else
-        return(dmultinom(y, self$getParameterValue("size"), self$getParameterValue("probs")))
-    })
-
-    return(z)
-
-  }
-  formals(pdf) <- lst
-
-  rand <- function(n){
-    return(data.table::data.table(t(rmultinom(n, self$getParameterValue("size"), self$getParameterValue("probs")))))
-  }
-
-  super$initialize(decorators = decorators, pdf = pdf, rand = rand,
-                   support = setpower(Set$new(0:size, class = "integer"), length(probs)),
-                   symmetric = FALSE, type = setpower(Naturals$new(), length(probs)),
-                   valueSupport = "discrete",
-                   variateForm = "multivariate")
-  invisible(self)
-})
-
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Multinom", ClassName = "Multinomial",
-                                                     Type = "\u21150^K", ValueSupport = "discrete",
-                                                     VariateForm = "multivariate",
-                                                     Package = "stats"))
-
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Multinom", ClassName = "Multinomial",
+    Type = "\u21150^K", ValueSupport = "discrete",
+    VariateForm = "multivariate",
+    Package = "extraDistr"
+  )
+)

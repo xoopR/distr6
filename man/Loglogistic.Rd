@@ -12,135 +12,301 @@ Mathematical and statistical functions for the Log-Logistic distribution, which
 is commonly used in survival analysis for its non-monotonic hazard as well as in economics.
 }
 \details{
-The Log-Logistic distribution parameterised with  shape, \eqn{\beta}, scale, \eqn{\alpha}, and location, \eqn{\gamma}, is defined by the pdf, \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}} for \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}.
+The Log-Logistic distribution parameterised with  shape, \eqn{\beta}, and scale, \eqn{\alpha} is defined by the pdf, \deqn{f(x) = (\beta/\alpha)(x/\alpha)^{\beta-1}(1 + (x/\alpha)^\beta)^{-2}} for \eqn{\alpha, \beta > 0}.
 
 The distribution is supported on the non-negative Reals.
 
-\code{entropy}, \code{mgf} and \code{cf}
-are
-omitted as no closed form analytic expression could be found, decorate with \code{\link{CoreStatistics}} for numerical results.
-
 Also known as the Fisk distribution.
-}
-\section{Constructor}{
- Loglogistic$new(scale = 1, shape = 1, location = 0, decorators = NULL, verbose = FALSE)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{shape} \tab numeric \tab shape parameter. \cr
-\code{scale} \tab numeric \tab scale parameter. \cr
-\code{location} \tab numeric \tab location parameter. \cr
-
-\code{decorators} \tab Decorator \tab decorators to add functionality. See details. \cr
-\code{verbose} \tab logical \tab if TRUE parameterisation messages produced.
-}
-}
-
-\section{Constructor Details}{
- The Log-Logistic distribution is parameterised with \code{shape} and \code{scale} as positive numerics and \code{location} as a numeric.
-}
-
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-\code{package} \tab The package d/p/q/r are implemented in.
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\code{mean()} \tab \code{\link{mean.Distribution}} \cr
-\code{variance()} \tab \code{\link{variance}} \cr
-\code{stdev()} \tab \code{\link{stdev}} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{cor()} \tab \code{\link{cor}} \cr
-\code{skewness()} \tab \code{\link{skewness}} \cr
-\code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-\code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-\code{mgf(t)} \tab \code{\link{mgf}} \cr
-\code{cf(t)} \tab \code{\link{cf}} \cr
-\code{pgf(z)} \tab \code{\link{pgf}} \cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{mode(which = "all")} \tab \code{\link{mode}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-
-\tab \cr \tab \cr \tab \cr
-
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-}
-}
-
-\examples{
-x <- Loglogistic$new(shape = 2, scale = 3)
-
-# Update parameters
-x$setParameterValue(scale = 2)
-x$parameters()
-
-# d/p/q/r
-x$pdf(5:6)
-x$cdf(5)
-x$quantile(0.42)
-x$rand(4)
-
-# Statistics
-x$mean()
-x$variance()
-
-summary(x)
-
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
 }
 \seealso{
-\code{\link{listDistributions}} for all available distributions. \code{\link{Logistic}} for the Logistic distribution. \code{\link{CoreStatistics}} for numerical results.
+Other continuous distributions: 
+\code{\link{Arcsine}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Dirichlet}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Frechet}},
+\code{\link{Gamma}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logistic}},
+\code{\link{Lognormal}},
+\code{\link{MultivariateNormal}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}}
+
+Other univariate distributions: 
+\code{\link{Arcsine}},
+\code{\link{Bernoulli}},
+\code{\link{BetaNoncentral}},
+\code{\link{Beta}},
+\code{\link{Binomial}},
+\code{\link{Categorical}},
+\code{\link{Cauchy}},
+\code{\link{ChiSquaredNoncentral}},
+\code{\link{ChiSquared}},
+\code{\link{Degenerate}},
+\code{\link{DiscreteUniform}},
+\code{\link{Empirical}},
+\code{\link{Erlang}},
+\code{\link{Exponential}},
+\code{\link{FDistributionNoncentral}},
+\code{\link{FDistribution}},
+\code{\link{Frechet}},
+\code{\link{Gamma}},
+\code{\link{Geometric}},
+\code{\link{Gompertz}},
+\code{\link{Gumbel}},
+\code{\link{Hypergeometric}},
+\code{\link{InverseGamma}},
+\code{\link{Laplace}},
+\code{\link{Logarithmic}},
+\code{\link{Logistic}},
+\code{\link{Lognormal}},
+\code{\link{NegativeBinomial}},
+\code{\link{Normal}},
+\code{\link{Pareto}},
+\code{\link{Poisson}},
+\code{\link{Rayleigh}},
+\code{\link{ShiftedLoglogistic}},
+\code{\link{StudentTNoncentral}},
+\code{\link{StudentT}},
+\code{\link{Triangular}},
+\code{\link{Uniform}},
+\code{\link{Wald}},
+\code{\link{Weibull}},
+\code{\link{WeightedDiscrete}}
+}
+\concept{continuous distributions}
+\concept{univariate distributions}
+\section{Super classes}{
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:SDistribution]{distr6::SDistribution}} -> \code{Loglogistic}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{name}}{Full name of distribution.}
+
+\item{\code{short_name}}{Short name of distribution for printing.}
+
+\item{\code{description}}{Brief description of the distribution.}
+
+\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Loglogistic$new()}}
+\item \href{#method-mean}{\code{Loglogistic$mean()}}
+\item \href{#method-mode}{\code{Loglogistic$mode()}}
+\item \href{#method-median}{\code{Loglogistic$median()}}
+\item \href{#method-variance}{\code{Loglogistic$variance()}}
+\item \href{#method-skewness}{\code{Loglogistic$skewness()}}
+\item \href{#method-kurtosis}{\code{Loglogistic$kurtosis()}}
+\item \href{#method-pgf}{\code{Loglogistic$pgf()}}
+\item \href{#method-clone}{\code{Loglogistic$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="SDistribution" data-id="setParameterValue">}\href{../../distr6/html/SDistribution.html#method-setParameterValue}{\code{distr6::SDistribution$setParameterValue()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$new(scale = 1, shape = 1, rate = NULL, decorators = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{scale}}{\code{(numeric(1))}\cr
+Scale parameter, defined on the positive Reals.}
+
+\item{\code{shape}}{\code{(numeric(1))}\cr
+Shape parameter, defined on the positive Reals.}
+
+\item{\code{rate}}{\code{(numeric(1))}\cr
+Alternate scale parameter, \code{rate = 1/scale}. If given then \code{scale} is ignored.}
+
+\item{\code{decorators}}{\code{(character())} \cr
+Decorators to add to the distribution during construction.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-mean"></a>}}
+\if{latex}{\out{\hypertarget{method-mean}{}}}
+\subsection{Method \code{mean()}}{
+The arithmetic mean of a (discrete) probability distribution X is the expectation
+\deqn{E_X(X) = \sum p_X(x)*x}
+with an integration analogue for continuous distributions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$mean()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-mode"></a>}}
+\if{latex}{\out{\hypertarget{method-mode}{}}}
+\subsection{Method \code{mode()}}{
+The mode of a probability distribution is the point at which the pdf is
+a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+maxima).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$mode(which = "all")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{which}}{\verb{(character(1) | numeric(1)}\cr
+Ignored if distribution is unimodal. Otherwise \code{"all"} returns all modes, otherwise specifies
+which mode to return.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-median"></a>}}
+\if{latex}{\out{\hypertarget{method-median}{}}}
+\subsection{Method \code{median()}}{
+Returns the median of the distribution. If an analytical expression is available
+returns distribution median, otherwise if symmetric returns \code{self$mean}, otherwise
+returns \code{self$quantile(0.5)}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$median()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-variance}{}}}
+\subsection{Method \code{variance()}}{
+The variance of a distribution is defined by the formula
+\deqn{var_X = E[X^2] - E[X]^2}
+where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+covariance matrix is returned.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$variance()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-skewness}{}}}
+\subsection{Method \code{skewness()}}{
+The skewness of a distribution is defined by the third standardised moment,
+\deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+\eqn{\sigma} is the standard deviation of the distribution.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$skewness()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-kurtosis"></a>}}
+\if{latex}{\out{\hypertarget{method-kurtosis}{}}}
+\subsection{Method \code{kurtosis()}}{
+The kurtosis of a distribution is defined by the fourth standardised moment,
+\deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
+Excess Kurtosis is Kurtosis - 3.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{excess}}{\code{(logical(1))} \cr
+If \code{TRUE} (default) excess kurtosis returned.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pgf"></a>}}
+\if{latex}{\out{\hypertarget{method-pgf}{}}}
+\subsection{Method \code{pgf()}}{
+The probability generating function is defined by
+\deqn{pgf_X(z) = E_X[exp(z^x)]}
+where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$pgf(z)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{z}}{\code{(integer(1))} \cr
+z integer to evaluate probability generating function at.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Loglogistic$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

@@ -1,118 +1,76 @@
-#-------------------------------------------------------------
-# SDistribution Documentation
-#-------------------------------------------------------------
 #' @title Abstract Special Distribution Class
 #'
-#' @description Abstract class that cannot be constructed directly.
-#'
-#' @name SDistribution
-#'
-#' @section Public Variables:
-#'  \tabular{ll}{
-#'   \strong{Variable} \tab \strong{Return} \cr
-#'   \code{name} \tab Name of distribution. \cr
-#'   \code{short_name} \tab Id of distribution. \cr
-#'   \code{description} \tab Brief description of distribution. \cr
-#'   \code{package} \tab The package d/p/q/r are implemented in.
-#'  }
-#'
-#' @section Public Methods:
-#'  \tabular{ll}{
-#'   \strong{Accessor Methods} \tab \strong{Link} \cr
-#'   \code{decorators} \tab \code{\link{decorators}} \cr
-#'   \code{traits} \tab \code{\link{traits}} \cr
-#'   \code{valueSupport} \tab \code{\link{valueSupport}} \cr
-#'   \code{variateForm} \tab \code{\link{variateForm}} \cr
-#'   \code{type} \tab \code{\link{type}} \cr
-#'   \code{properties} \tab \code{\link{properties}} \cr
-#'   \code{support} \tab \code{\link{support}} \cr
-#'   \code{symmetry} \tab \code{\link{symmetry}} \cr
-#'   \code{sup}  \tab \code{\link{sup}} \cr
-#'   \code{inf} \tab \code{\link{inf}} \cr
-#'   \code{dmax}  \tab \code{\link{dmax}} \cr
-#'   \code{dmin} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-#'
-#'   \tab \cr \tab \cr \tab \cr
-#'
-#'   \strong{Statistical Methods} \tab \strong{Link} \cr
-#'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-#'   \code{mean()} \tab \code{\link{mean.Distribution}} \cr
-#'   \code{variance()} \tab \code{\link{variance}} \cr
-#'   \code{stdev()} \tab \code{\link{stdev}} \cr
-#'   \code{prec()} \tab \code{\link{prec}} \cr
-#'   \code{cor()} \tab \code{\link{cor}} \cr
-#'   \code{skewness()} \tab \code{\link{skewness}} \cr
-#'   \code{kurtosis(excess = TRUE)} \tab \code{\link{kurtosis}} \cr
-#'   \code{entropy(base = 2)} \tab \code{\link{entropy}} \cr
-#'   \code{mgf(t)} \tab \code{\link{mgf}} \cr
-#'   \code{cf(t)} \tab \code{\link{cf}} \cr
-#'   \code{pgf(z)} \tab \code{\link{pgf}} \cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   \code{mode(which = "all")} \tab \code{\link{mode}} \cr
-#'
-#'   \tab \cr \tab \cr \tab \cr
-#'
-#'   \strong{Parameter Methods} \tab \strong{Link} \cr
-#'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
-#'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#'
-#'   \tab \cr \tab \cr \tab \cr
-#'
-#'   \strong{Validation Methods} \tab \strong{Link} \cr
-#'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-#'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-#'
-#'   \tab \cr \tab \cr \tab \cr
-#'
-#'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-#'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-#'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-#'   }
-#'
-#' @section Active Bindings:
-#'  \tabular{ll}{
-#'   \strong{Active Binding} \tab \strong{Link} \cr
-#'   \code{isPdf} \tab \code{\link{isPdf}} \cr
-#'   \code{isCdf} \tab \code{\link{isCdf}} \cr
-#'   \code{isQuantile} \tab \code{\link{isQuantile}} \cr
-#'   \code{isRand} \tab \code{\link{isRand}} \cr
-#'   }
-#'
-#' @return Returns error. Abstract classes cannot be constructed directly.
+#' @template class_abstract
+#' @template field_package
+#' @template field_packages
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_support
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# SDistribution Definition
-#-------------------------------------------------------------
-SDistribution <- R6Class("SDistribution", inherit = Distribution)
-SDistribution$set("public","initialize",function(...){
-  if(getR6Class(self) == "SDistribution")
-    stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listDistributions()
-    to see the probability distributions currently implemented in distr6."))
+SDistribution <- R6Class("SDistribution",
+  inherit = Distribution,
+  public = list(
+    package = "This is now deprecated. Use $packages instead.",
+    packages = NULL,
 
-  assert_pkgload(self$packages)
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param type `[set6::Set]` \cr
+    #' Type of the distribution.
+    #' @param symmetry `character(1)` \cr
+    #' Distribution symmetry type, default "asymmetric".
+    initialize = function(decorators, support, type,
+                          symmetry = c("asymmetric", "symmetric")) {
 
-  super$initialize(...)
-})
+      abstract(self, "SDistribution")
 
-SDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
-    lst <- list(...)
-  lst <- private$.getRefParams(lst)
-  super$setParameterValue(lst = lst, error = error)
-  invisible(self)
-})
-SDistribution$set("public","package","This is now deprecated. Use $packages instead.")
-SDistribution$set("public","packages",NULL)
-# SDistribution$set("public","pgf",function(...){
-#   return(NaN)
-# })
+      assert_pkgload(self$packages)
+
+      if (!is.null(decorators)) suppressMessages(decorate(self, decorators))
+
+      private$.traits$type <- assertSet(type)
+
+      kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
+      skew <- try(self$skewness(), silent = TRUE)
+
+      private$.properties <- list(
+        kurtosis = ifnerror(kur, exkurtosisType(kur), "NULL"),
+        skewness = ifnerror(skew, skewType(skew), "NULL"),
+        support = assertSet(support),
+        symmetry = match.arg(symmetry)
+      )
+
+      sapply(
+        c(names(Binomial$public_fields), names(Binomial$public_methods)),
+        function(x) try(lockBinding(x, self), silent = TRUE)
+      )
+
+      sapply(
+        c(names(Binomial$private_fields), names(Binomial$private_methods)),
+        function(x) try(lockBinding(x, private), silent = TRUE)
+      )
+
+      invisible(self)
+    },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      lst <- private$.getRefParams(lst)
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    .log = TRUE,
+    .isPdf = 1L,
+    .isCdf = 1L,
+    .isQuantile = 1L,
+    .isRand = 1L
+  )
+)

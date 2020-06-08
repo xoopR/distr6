@@ -30,7 +30,6 @@ listDistributions(filter = list(VaLuESupport = "discrete"))
 
 # Multiple filters
 listDistributions(filter = list(VaLuESupport = "discrete", package = "extraDistr"))
-
 }
 \seealso{
 \code{\link{SDistribution}}

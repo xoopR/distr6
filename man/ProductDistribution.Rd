@@ -2,38 +2,23 @@
 % Please edit documentation in R/Wrapper_ProductDistribution.R
 \name{ProductDistribution}
 \alias{ProductDistribution}
+\alias{*.Distribution}
 \title{Product Distribution}
-\value{
-Returns an R6 object of class ProductDistribution.
+\usage{
+\method{*}{Distribution}(x, y)
+}
+\arguments{
+\item{x, y}{\link{Distribution}}
 }
 \description{
 A wrapper for creating the joint distribution of multiple independent probability distributions.
 }
 \details{
 Exploits the following relationships of independent distributions
-\deqn{f_P(X1 = x1,...,XN = xN) = f_{X1}(x1) * ... * f_{XN}(xn)}{f_P(X1 = x1,...,XN = xN) = f_X1(x1) * ... * f_XN(xn)}
+
 \deqn{F_P(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)}{F_P(X1 = x1,...,XN = xN) = F_X1(x1) * ... * F_XN(xn)}
 where \eqn{f_P}/\eqn{F_P} is the pdf/cdf of the joint (product) distribution \eqn{P} and \eqn{X1,...,XN} are independent distributions.
-
-\code{ProductDistribution} inherits all methods from \code{\link{Distribution}} and \code{\link{DistributionWrapper}}.
 }
-\section{Constructor}{
- ProductDistribution$new(distlist = NULL, distribution = NULL, params = NULL, name = NULL, short_name = NULL, description = NULL)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{distlist} \tab list \tab List of distributions. \cr
-\code{distribution} \tab distribution \tab Distribution to wrap. \cr
-\code{params} \tab a R object \tab Either list of parameters or matrix-type frame, see examples. \cr
-\code{name} \tab list \tab Optional new name for distribution. \cr
-\code{short_name} \tab list \tab Optional new short_name for distribution. \cr
-\code{description} \tab list \tab Optional new description for distribution. \cr
-}
-}
-
 \section{Constructor Details}{
  A product distribution can either be constructed by a list of
 distributions passed to \code{distlist} or by passing the name of a distribution implemented in distr6
@@ -42,90 +27,368 @@ in the ability to use multiple distributions but the latter is useful for quickl
 distributions of the same type. See examples.
 }
 
-\section{Public Variables}{
-
-\tabular{ll}{
-\strong{Variable} \tab \strong{Return} \cr
-\code{name} \tab Name of distribution. \cr
-\code{short_name} \tab Id of distribution. \cr
-\code{description} \tab Brief description of distribution. \cr
-\code{package} \tab The package d/p/q/r are implemented in.
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Accessor Methods} \tab \strong{Link} \cr
-\code{wrappedModels(model = NULL)} \tab \code{\link{wrappedModels}} \cr
-\code{decorators} \tab \code{\link{decorators}} \cr
-\code{traits} \tab \code{\link{traits}} \cr
-\code{valueSupport} \tab \code{\link{valueSupport}} \cr
-\code{variateForm} \tab \code{\link{variateForm}} \cr
-\code{type} \tab \code{\link{type}} \cr
-\code{properties} \tab \code{\link{properties}} \cr
-\code{support} \tab \code{\link{support}} \cr
-\code{symmetry} \tab \code{\link{symmetry}} \cr
-\code{sup}  \tab \code{\link{sup}} \cr
-\code{inf} \tab \code{\link{inf}} \cr
-\code{dmax}  \tab \code{\link{dmax}} \cr
-\code{dmin} \tab \code{\link{dmin}} \cr
-\code{skewnessType} \tab \code{\link{skewnessType}} \cr
-\code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{d/p/q/r Methods} \tab \strong{Link} \cr
-\code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-\code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-\code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-\code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Statistical Methods} \tab \strong{Link} \cr
-\code{prec()} \tab \code{\link{prec}} \cr
-\code{stdev()} \tab \code{\link{stdev}}\cr
-\code{median()} \tab \code{\link{median.Distribution}} \cr
-\code{iqr()} \tab \code{\link{iqr}} \cr
-\code{cor()} \tab \code{\link{cor}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Parameter Methods} \tab \strong{Link} \cr
-\code{parameters(id)} \tab \code{\link{parameters}} \cr
-\code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-\code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Validation Methods} \tab \strong{Link} \cr
-\code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-\code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-\code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-\code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-}
-}
-
 \examples{
-prodBin <- ProductDistribution$new(list(Binomial$new(prob = 0.5,
-                           size = 10), Normal$new(mean = 15)))
-prodBin$pdf(x1 = 2, x2 =3)
-prodBin$cdf(1:5, 12:16)
-prodBin$quantile(c(0.1,0.2),c(0.3,0.4))
-prodBin$rand(10)
 
-prodBin = ProductDistribution$new(distribution = Binomial,
-       params = list(list(prob = 0.1, size = 2),
-                   list(prob = 0.6, size = 4),
-                   list(prob = 0.2, size = 6)))
-prodBin$pdf(x1=1,x2=2,x3=3)
-prodBin$cdf(x1=1,x2=2,x3=3)
-prodBin$rand(10)
+## ------------------------------------------------
+## Method `ProductDistribution$new`
+## ------------------------------------------------
 
-#Equivalently
-prodBin = ProductDistribution$new(distribution = Binomial,
-       params = data.table::data.table(prob = c(0.1,0.6,0.2), size = c(2,4,6)))
-prodBin$pdf(x1=1,x2=2,x3=3)
-prodBin$cdf(x1=1,x2=2,x3=3)
-prodBin$rand(10)
+ProductDistribution$new(list(Binomial$new(
+  prob = 0.5,
+  size = 10
+), Normal$new(mean = 15)))
 
+ProductDistribution$new(
+  distribution = "Binomial",
+  params = list(
+    list(prob = 0.1, size = 2),
+    list(prob = 0.6, size = 4),
+    list(prob = 0.2, size = 6)
+  )
+)
+
+# Equivalently
+ProductDistribution$new(
+  distribution = "Binomial",
+  params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+)
+
+## ------------------------------------------------
+## Method `ProductDistribution$pdf`
+## ------------------------------------------------
+
+p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
+p$pdf(1:5)
+p$pdf(1, 2)
+p$pdf(1:2)
+
+## ------------------------------------------------
+## Method `ProductDistribution$cdf`
+## ------------------------------------------------
+
+p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
+p$cdf(1:5)
+p$cdf(1, 2)
+p$cdf(1:2)
+Normal$new() * Binomial$new()
 }
 \seealso{
-\code{\link{listWrappers}} and \code{\link{VectorDistribution}}
+Other wrappers: 
+\code{\link{Convolution}},
+\code{\link{DistributionWrapper}},
+\code{\link{HuberizedDistribution}},
+\code{\link{MixtureDistribution}},
+\code{\link{TruncatedDistribution}},
+\code{\link{VectorDistribution}}
+}
+\concept{wrappers}
+\section{Super classes}{
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:DistributionWrapper]{distr6::DistributionWrapper}} -> \code{\link[distr6:VectorDistribution]{distr6::VectorDistribution}} -> \code{ProductDistribution}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{ProductDistribution$new()}}
+\item \href{#method-strprint}{\code{ProductDistribution$strprint()}}
+\item \href{#method-pdf}{\code{ProductDistribution$pdf()}}
+\item \href{#method-cdf}{\code{ProductDistribution$cdf()}}
+\item \href{#method-quantile}{\code{ProductDistribution$quantile()}}
+\item \href{#method-clone}{\code{ProductDistribution$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionWrapper" data-id="setParameterValue">}\href{../../distr6/html/DistributionWrapper.html#method-setParameterValue}{\code{distr6::DistributionWrapper$setParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="cf">}\href{../../distr6/html/VectorDistribution.html#method-cf}{\code{distr6::VectorDistribution$cf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="entropy">}\href{../../distr6/html/VectorDistribution.html#method-entropy}{\code{distr6::VectorDistribution$entropy()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="kurtosis">}\href{../../distr6/html/VectorDistribution.html#method-kurtosis}{\code{distr6::VectorDistribution$kurtosis()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mean">}\href{../../distr6/html/VectorDistribution.html#method-mean}{\code{distr6::VectorDistribution$mean()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mgf">}\href{../../distr6/html/VectorDistribution.html#method-mgf}{\code{distr6::VectorDistribution$mgf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mode">}\href{../../distr6/html/VectorDistribution.html#method-mode}{\code{distr6::VectorDistribution$mode()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="pgf">}\href{../../distr6/html/VectorDistribution.html#method-pgf}{\code{distr6::VectorDistribution$pgf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="rand">}\href{../../distr6/html/VectorDistribution.html#method-rand}{\code{distr6::VectorDistribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="skewness">}\href{../../distr6/html/VectorDistribution.html#method-skewness}{\code{distr6::VectorDistribution$skewness()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="variance">}\href{../../distr6/html/VectorDistribution.html#method-variance}{\code{distr6::VectorDistribution$variance()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="wrappedModels">}\href{../../distr6/html/VectorDistribution.html#method-wrappedModels}{\code{distr6::VectorDistribution$wrappedModels()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$new(
+  distlist = NULL,
+  distribution = NULL,
+  params = NULL,
+  shared_params = NULL,
+  name = NULL,
+  short_name = NULL,
+  decorators = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{distlist}}{\code{(list())}\cr
+List of \link{Distribution}s.}
+
+\item{\code{distribution}}{\code{(character(1))} \cr
+Should be supplied with \code{params} and optionally \code{shared_params} as an alternative to \code{distlist}.
+Much faster implementation when only one class of distribution is being wrapped. \code{distribution}
+is the full name of one of the distributions in \code{\link[=listDistributions]{listDistributions()}}, or \code{"Distribution"} if
+constructing custom distributions. See examples in \link{VectorDistribution}.}
+
+\item{\code{params}}{\code{(list()|data.frame())} \cr
+Parameters in the individual distributions for use with \code{distribution}. Can be supplied as a list,
+where each element is the list of parameters to set in the distribution, or as an object
+coercable to \code{data.frame}, where each column is a parameter and each row is a distribution.
+See examples in \link{VectorDistribution}.}
+
+\item{\code{shared_params}}{\code{(list())}\cr
+If any parameters are shared when using the \code{distribution} constructor, this provides a much faster
+implementation to list and query them together. See examples in \link{VectorDistribution}.}
+
+\item{\code{name}}{\code{(character(1))}\cr
+Optional name of wrapped distribution.}
+
+\item{\code{short_name}}{\code{(character(1))}\cr
+Optional short name/ID of wrapped distribution.}
+
+\item{\code{decorators}}{\code{(character())} \cr
+Decorators to add to the distribution during construction.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{ProductDistribution$new(list(Binomial$new(
+  prob = 0.5,
+  size = 10
+), Normal$new(mean = 15)))
+
+ProductDistribution$new(
+  distribution = "Binomial",
+  params = list(
+    list(prob = 0.1, size = 2),
+    list(prob = 0.6, size = 4),
+    list(prob = 0.2, size = 6)
+  )
+)
+
+# Equivalently
+ProductDistribution$new(
+  distribution = "Binomial",
+  params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
+\subsection{Method \code{strprint()}}{
+Printable string representation of the \code{ProductDistribution}. Primarily used internally.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$strprint(n = 10)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(integer(1))}\cr
+Number of distributions to include when printing.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pdf"></a>}}
+\if{latex}{\out{\hypertarget{method-pdf}{}}}
+\subsection{Method \code{pdf()}}{
+Probability density function of the product distribution. Computed by
+\deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
+where \eqn{f_{Xi}} are the pdfs of the wrapped distributions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{log}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
+p$pdf(1:5)
+p$pdf(1, 2)
+p$pdf(1:2)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdf"></a>}}
+\if{latex}{\out{\hypertarget{method-cdf}{}}}
+\subsection{Method \code{cdf()}}{
+Cumulative distribution function of the product distribution. Computed by
+\deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
+where \eqn{F_{Xi}} are the cdfs of the wrapped distributions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$cdf(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
+
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{p <- ProductDistribution$new(list(
+Binomial$new(prob = 0.5, size = 10),
+Binomial$new()))
+p$cdf(1:5)
+p$cdf(1, 2)
+p$cdf(1:2)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-quantile}{}}}
+\subsection{Method \code{quantile()}}{
+The quantile function is not implemented for product distributions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$quantile(
+  ...,
+  lower.tail = TRUE,
+  log.p = FALSE,
+  simplify = TRUE,
+  data = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{(numeric())} \cr
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.}
+
+\item{\code{lower.tail}}{\code{(logical(1))} \cr
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
+
+\item{\code{log.p}}{\code{(logical(1))} \cr
+If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
+
+\item{\code{simplify}}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
+
+\item{\code{data}}{\link{array} \cr
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of \link{VectorDistribution}s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProductDistribution$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

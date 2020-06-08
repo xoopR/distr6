@@ -19,6 +19,3 @@ Returns the decorators added to a distribution.
  $decorators
 }
 
-\seealso{
-\code{\link{decorate}}
-}

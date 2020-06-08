@@ -2,30 +2,28 @@ library(testthat)
 
 context("Poisson distribution")
 
-test_that("properties & traits",{
-  expect_equal(Poisson$new()$valueSupport, "discrete")
-  expect_equal(Poisson$new()$variateForm, "univariate")
-  expect_equal(Poisson$new()$symmetry, "asymmetric")
-  expect_equal(Poisson$new()$sup, Inf)
-  expect_equal(Poisson$new()$inf, 0)
-  expect_equal(Poisson$new()$dmax, .Machine$double.xmax)
-  expect_equal(Poisson$new()$dmin, 0)
-})
-
-b = Poisson$new()
-test_that("statistics",{
-  expect_equal(b$mean(), 1)
-  expect_equal(b$variance(), 1)
-  expect_equal(b$skewness(), 1)
-  expect_equal(b$kurtosis(T), 1)
-  expect_equal(b$kurtosis(F), 4)
-  expect_error(b$entropy())
-  expect_equal(b$mgf(1), exp((exp(1)-1)))
-  expect_equal(b$cf(1), exp((exp(1i)-1)))
-  expect_equal(b$pgf(1), 1)
-  expect_equal(b$mode(), 1)
-  expect_equal(b$pdf(1), dpois(1,1))
-  expect_equal(b$cdf(1), ppois(1,1))
-  expect_equal(b$quantile(0.56), qpois(0.56,1))
-  expect_silent(b$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(
+    sdist = Poisson,
+    pars = list(),
+    traits = list(
+      valueSupport = "discrete",
+      variateForm = "univariate",
+      type = Naturals$new()
+    ),
+    support = Naturals$new(),
+    symmetry = "asymmetric",
+    mean = 1,
+    mode = 1,
+    median = 1,
+    variance = 1,
+    skewness = 1,
+    exkur = 1,
+    mgf = exp((exp(1) - 1)),
+    cf = exp((exp(1i) - 1)),
+    pgf = 1,
+    pdf = dpois(1:3, 1),
+    cdf = ppois(1:3, 1),
+    quantile = qpois(c(0.24, 0.42, 0.5), 1)
+  )
 })

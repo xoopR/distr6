@@ -23,15 +23,3 @@ lies in the distribution type or FALSE otherwise.
 Tests if the given data lies in the type of the Distribution, either tests if all
 data lies in the type or any of it.
 }
-\details{
-If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
-lies in the type. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
-in the vector \code{x}.
-}
-\section{R6 Usage}{
- $liesInType(x, all = TRUE, bound = FALSE)
-}
-
-\seealso{
-\code{\link{liesInSupport}}
-}

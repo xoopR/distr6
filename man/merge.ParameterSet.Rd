@@ -17,12 +17,5 @@
 An R6 object of class ParameterSet.
 }
 \description{
-merge dispatch method to combine parameter sets by rows.
-}
-\section{R6 Usage}{
- $merge(y, ...)
-}
-
-\seealso{
-\code{\link{ParameterSet}}
+Combine ParameterSets
 }

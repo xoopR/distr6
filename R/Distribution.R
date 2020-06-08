@@ -1,330 +1,858 @@
 #' @include distr6_globals.R helpers.R
-#-------------------------------------------------------------
-# Distribution Documentation
-#-------------------------------------------------------------
 #' @title Generalised Distribution Object
 #'
 #' @description A generalised distribution object for defining custom probability distributions
 #'   as well as serving as the parent class to specific, familiar distributions.
 #'
 #' @name Distribution
-#'
-#' @section Constructor: Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-#' symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-#' parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL,
-#' suppressMoments = TRUE)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{name} \tab character \tab Full name of distribution. \cr
-#' \code{short_name} \tab character \tab Short name to identify distribution. \cr
-#' \code{type} \tab [set6::Set] \tab Scientific type. \cr
-#' \code{support} \tab [set6::Set] \tab Distribution support. See Details. \cr
-#' \code{symmetric} \tab logical \tab Is distribution symmetric? \cr
-#' \code{pdf} \tab function \tab See Details. \cr
-#' \code{cdf} \tab function \tab See Details. \cr
-#' \code{quantile} \tab function \tab See Details. \cr
-#' \code{rand} \tab function \tab See Details. \cr
-#' \code{parameters} \tab ParameterSet \tab See Details. \cr
-#' \code{decorators} \tab list \tab R6 decorators to add in construction. \cr
-#' \code{valueSupport} \tab character \tab continuous, discrete, mixture. See Details. \cr
-#' \code{variateForm} \tab character \tab univariate, multivariate, matrixvariate. See Details. \cr
-#' \code{description} \tab character \tab Short description of distribution. \cr
-#' \code{suppressMoments} \tab character \tab See Details. \cr
-#' }
-#'
-#' @section Constructor Details:
-#'
-#'   The most basic Distribution object consists of a name and one of pdf/cdf.
-#'
-#'   If supplied, \code{type} and \code{support} should be given as a [set6::Set] object. If neither are supplied
-#'   then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
-#'   If only \code{type} is supplied then this is taken to also be the support.
-#'
-#'   By default, missing \code{pdf}, \code{cdf}, \code{quantile} and \code{rand} are not automatically imputed.
-#'   Use the \code{\link{FunctionImputation}} decorator to generate these.
-#'
-#'   See \code{\link{ParameterSet}} for more details on construction of a ParameterSet.
-#'
-#'   \code{decorators} is an optional list of decorators (R6 environments not strings) to decorate the
-#'   Distribution in construction. Decorators can also be added after construction. See \code{\link{decorate}}
-#'   for more details.
-#'
-#'   \code{valueSupport} should be one of continuous/discrete/mixture if supplied.
-#'   \code{variateForm} should be one of univariate/multivariate/matrixvariate if supplied.
-#'   If not given these are automatically filled from \code{type} and \code{support}.
-#'
-#'   \code{suppressMoments} can be used to prevent the skewness and kurtosis type being automatically
-#'   calculated in construction. This has the benefit of drastically decreasing computational time but
-#'   at the cost of losing these in the distribution properties.
-#'
-#' @section Public Variables:
-#'  \tabular{ll}{
-#'   \strong{Variable} \tab \strong{Return} \cr
-#'   \code{name} \tab Name of distribution. \cr
-#'   \code{short_name} \tab Id of distribution. \cr
-#'   \code{description} \tab Brief description of distribution. \cr
-#'   }
-#'
-#' @section Public Methods:
-#'  \tabular{ll}{
-#'   \strong{Accessor Methods} \tab \strong{Link} \cr
-#'   \code{decorators} \tab \code{\link{decorators}} \cr
-#'   \code{traits} \tab \code{\link{traits}} \cr
-#'   \code{valueSupport} \tab \code{\link{valueSupport}} \cr
-#'   \code{variateForm} \tab \code{\link{variateForm}} \cr
-#'   \code{type} \tab \code{\link{type}} \cr
-#'   \code{properties} \tab \code{\link{properties}} \cr
-#'   \code{support} \tab \code{\link{support}} \cr
-#'   \code{symmetry} \tab \code{\link{symmetry}} \cr
-#'   \code{sup}  \tab \code{\link{sup}} \cr
-#'   \code{inf} \tab \code{\link{inf}} \cr
-#'   \code{dmax}  \tab \code{\link{dmax}} \cr
-#'   \code{dmin} \tab \code{\link{dmin}} \cr
-#'   \code{skewnessType} \tab \code{\link{skewnessType}} \cr
-#'   \code{kurtosisType} \tab \code{\link{kurtosisType}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{d/p/q/r Methods} \tab \strong{Link} \cr
-#'   \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab \code{\link{pdf}} \cr
-#'   \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{cdf}}\cr
-#'   \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab \code{\link{quantile.Distribution}} \cr
-#'   \code{rand(n, simplify = TRUE)} \tab \code{\link{rand}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Statistical Methods} \tab \strong{Link} \cr
-#'   \code{prec()} \tab \code{\link{prec}} \cr
-#'   \code{stdev()} \tab \code{\link{stdev}}\cr
-#'   \code{median()} \tab \code{\link{median.Distribution}} \cr
-#'   \code{iqr()} \tab \code{\link{iqr}} \cr
-#'   \code{correlation()} \tab \code{\link{correlation}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Parameter Methods} \tab \strong{Link} \cr
-#'   \code{parameters(id)} \tab \code{\link{parameters}} \cr
-#'   \code{getParameterValue(id, error = "warn")}  \tab \code{\link{getParameterValue}} \cr
-#'   \code{setParameterValue(..., lst = NULL, error = "warn")} \tab \code{\link{setParameterValue}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Validation Methods} \tab \strong{Link} \cr
-#'   \code{liesInSupport(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInSupport}} \cr
-#'   \code{liesInType(x, all = TRUE, bound = FALSE)} \tab \code{\link{liesInType}} \cr
-#'   \tab \cr \tab \cr \tab \cr
-#'   \strong{Representation Methods} \tab \strong{Link} \cr
-#'   \code{strprint(n = 2)} \tab \code{\link{strprint}} \cr
-#'   \code{print(n = 2)} \tab \code{\link[base]{print}} \cr
-#'   \code{summary(full = T)} \tab \code{\link{summary.Distribution}} \cr
-#'   }
-#'
-#' @section Active Bindings:
-#'  \tabular{ll}{
-#'   \strong{Active Binding} \tab \strong{Link} \cr
-#'   \code{isPdf} \tab \code{\link{isPdf}} \cr
-#'   \code{isCdf} \tab \code{\link{isCdf}} \cr
-#'   \code{isQuantile} \tab \code{\link{isQuantile}} \cr
-#'   \code{isRand} \tab \code{\link{isRand}} \cr
-#'   }
-#'
-#'
-#' @seealso See \CRANpkg{set6} for details on Sets and Intervals. See \code{\link{ParameterSet}} for
-#' parameter details. See \code{\link{decorate}} for Decorator details.
+#' @template param_decorators
+#' @template method_setParameterValue
+#' @template method_liesin
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_n
+#' @template param_paramid
+#' @template class_distribution
 #'
 #' @return Returns R6 object of class Distribution.
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Distribution Definition
-#-------------------------------------------------------------
-Distribution <- R6Class("Distribution", lock_objects = FALSE)
+Distribution <- R6Class("Distribution",
+  lock_objects = FALSE,
+  public = list(
+    name = character(0),
+    short_name = character(0),
+    description = NULL,
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param name `character(1)` \cr
+    #' Full name of distribution.
+    #' @param short_name `character(1)` \cr
+    #' Short name of distribution for printing.
+    #' @param type `([set6::Set])` \cr
+    #' Distribution type.
+    #' @param support `([set6::Set])` \cr
+    #' Distribution support.
+    #' @param symmetric `logical(1)` \cr
+    #' Symmetry type of the distribution.
+    #' @param pdf `function(1)` \cr
+    #' Probability density function of the distribution. At least one of `pdf` and
+    #' `cdf` must be provided.
+    #' @param cdf `function(1)` \cr
+    #' Cumulative distribution function of the distribution. At least one of `pdf` and
+    #' `cdf` must be provided.
+    #' @param quantile `function(1)` \cr
+    #' Quantile (inverse-cdf) function of the distribution.
+    #' @param rand `function(1)` \cr
+    #' Simulation function for drawing random samples from the distribution.
+    #' @param parameters `([ParameterSet])` \cr
+    #' Parameter set for defining the parameters in the distribution, which should be set before
+    #' construction.
+    #' @param valueSupport `(character(1))` \cr
+    #' The support type of the distribution, one of `"discrete", "continuous", "mixture"`.
+    #' If `NULL`, determined automatically.
+    #' @param variateForm `(character(1))` \cr
+    #' The variate type of the distribution, one of `"univariate", "multivariate", "matrixvariate"`.
+    #' If `NULL`, determined automatically.
+    #' @param description `(character(1))` \cr
+    #' Optional short description of the distribution.
+    #' @param suppressMoments `(logical(1))` \cr
+    #' If `TRUE` does not calculte skewness and kurtosis types in construction.
+    #' @param .suppressChecks `(logical(1))` \cr
+    #' Used internally.
+    initialize = function(name = NULL, short_name = NULL,
+                          type, support = NULL,
+                          symmetric = FALSE,
+                          pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
+                          parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
+                          description = NULL, suppressMoments = FALSE, .suppressChecks = FALSE) {
+
+      if (.suppressChecks | inherits(self, "DistributionWrapper")) {
+
+        if (!is.null(parameters)) parameters <- parameters$clone(deep = TRUE)
+        if (!is.null(pdf)) formals(pdf) <- c(formals(pdf), list(self = self))
+        if (!is.null(cdf)) formals(cdf) <- c(formals(cdf), list(self = self))
+        if (!is.null(quantile)) formals(quantile) <- c(formals(quantile), list(self = self))
+        if (!is.null(rand)) formals(rand) <- c(formals(rand), list(self = self))
+
+      } else if (getR6Class(self) == "Distribution") {
+
+        if (is.null(pdf) & is.null(cdf)) {
+          stop("One of pdf or cdf must be provided.")
+        }
+
+        #------------
+        # Name Checks
+        #------------
+        if (is.null(name) & is.null(short_name)) {
+          checkmate::assert("One of 'name' or 'short_name' must be provided.")
+        }
+        if (is.null(short_name)) short_name <- gsub(" ", "", name, fixed = T)
+        if (is.null(name)) name <- short_name
+        checkmate::assertCharacter(c(name, short_name),
+          .var.name = "'name' and 'short_name' must be of class 'character'."
+        )
+        checkmate::assert(length(strsplit(short_name, split = " ")[[1]]) == 1,
+          .var.name = "'short_name' must be one word only."
+        )
+
+        #------------------------
+        # Type and Support Checks
+        #------------------------
+        if (missing(type)) {
+          stop("Distribution type must be provided.")
+        }
+
+        if (is.null(support)) support <- type
+        assertSet(type)
+        assertSet(support)
+
+        #--------------------
+        # valueSupport Checks
+        #--------------------
+        if (!is.null(valueSupport)) {
+          valueSupport <- match.arg(valueSupport, c("continuous", "discrete", "mixture"))
+        } else if (support$properties$countability == "uncountable") {
+          valueSupport <- "continuous"
+        } else {
+          valueSupport <- "discrete"
+        }
+
+        #-------------------
+        # variateForm Checks
+        #-------------------
+        if (!is.null(variateForm)) {
+          variateForm <- match.arg(variateForm, c("univariate", "multivariate", "matrixvariate"))
+        } else if (getR6Class(type) %in% c("ProductSet", "ExponentSet")) {
+          variateForm <- "multivariate"
+        } else {
+          variateForm <- "univariate"
+        }
 
 
-#-------------------------------------------------------------
-# Public Methods - Constructor
-#-------------------------------------------------------------
-Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
-                      type = NULL, support = NULL,
-                      symmetric = FALSE,
-                      pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-                      parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                      description=NULL, suppressMoments = FALSE, .suppressChecks = FALSE
-                      ){
+        #-------------------
+        # pdf and cdf Checks
+        #-------------------
+        if (!is.null(pdf)) {
+          checkmate::assertSubset(names(formals(pdf)), c("x", "log"))
+          formals(pdf) <- c(formals(pdf), list(self = self), alist(... = ))
+        }
 
-  if(.suppressChecks | inherits(self, "DistributionWrapper")){
+        if (!is.null(cdf)) {
+          checkmate::assertSubset(names(formals(cdf)), c("x", "lower.tail", "log.p"))
+          formals(cdf) <- c(formals(cdf), list(self = self), alist(... = ))
+        }
 
-    if(!is.null(parameters)) parameters = parameters$clone(deep = TRUE)
-    if(!is.null(pdf)) formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
-    if(!is.null(cdf)) formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-    if(!is.null(quantile)) formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-    if(!is.null(rand)) formals(rand) = c(formals(rand),list(self=self),alist(...=))
+        #-------------------------
+        # quantile and rand Checks
+        #-------------------------
+        if (!is.null(quantile)) {
+          checkmate::assertSubset(names(formals(quantile)), c("p", "lower.tail", "log.p"))
+          formals(quantile) <- c(formals(quantile), list(self = self), alist(... = ))
+        }
 
-  } else if(getR6Class(self) == "Distribution") {
+        if (!is.null(rand)) {
+          stopifnot(names(formals(rand)) == "n")
+          formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
+        }
 
-    if(is.null(pdf) & is.null(cdf))
-      stop("One of pdf or cdf must be provided.")
-
-    #------------
-    # Name Checks
-    #------------
-    if(is.null(name) & is.null(short_name))
-      checkmate::assert("One of 'name' or 'short_name' must be provided.")
-    if(is.null(short_name)) short_name = gsub(" ","",name,fixed = T)
-    if(is.null(name)) name = short_name
-    checkmate::assertCharacter(c(name, short_name),
-                               .var.name = "'name' and 'short_name' must be of class 'character'.")
-    checkmate::assert(length(strsplit(short_name,split=" ")[[1]])==1,
-                      .var.name = "'short_name' must be one word only.")
-
-    #------------------------
-    # Type and Support Checks
-    #------------------------
-    if(is.null(type)){
-      rm = c("...","self")
-      if(!is.null(pdf)){
-        lng = length(formals(pdf)[!(names(formals(pdf)) %in% rm)])
-        type <- setpower(Reals$new(), lng)
-      } else{
-        lng = length(formals(cdf)[!(names(formals(cdf)) %in% rm)])
-        type <- setpower(Reals$new(), lng)
+        #-------------------------
+        # Parameter Checks
+        #-------------------------
+        if (!is.null(parameters)) {
+          checkmate::assertClass(parameters, "ParameterSet")
+          parameters <- parameters$clone(deep = TRUE)$.__enclos_env__$private$.update()
+        }
       }
+
+      if (!is.null(parameters)) {
+        private$.parameters <- parameters
+      }
+
+      if (!is.null(pdf)) {
+        private$.pdf <- pdf
+        private$.isPdf <- 1L
+      }
+      if (!is.null(cdf)) {
+        private$.cdf <- cdf
+        private$.isCdf <- 1L
+      }
+      if (!is.null(quantile)) {
+        private$.quantile <- quantile
+        private$.isQuantile <- 1L
+      }
+      if (!is.null(rand)) {
+        private$.rand <- rand
+        private$.isRand <- 1L
+      }
+
+      if (!is.null(name)) self$name <- name
+      if (!is.null(short_name)) self$short_name <- short_name
+
+      private$.properties$support <- support
+      private$.traits$type <- type
+      private$.traits$valueSupport <- valueSupport
+      private$.traits$variateForm <- variateForm
+
+      if (!is.null(description)) self$description <- description
+
+      symm <- ifelse(symmetric, "symmetric", "asymmetric")
+      private$.properties$symmetry <- symm
+
+      if (!is.null(decorators)) {
+        suppressMessages(decorate(self, decorators))
+      }
+
+      if (!suppressMoments) {
+        # Update skewness and kurtosis
+        kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
+        skew <- try(self$skewness(), silent = TRUE)
+        private$.properties$kurtosis <- ifnerror(kur, exkurtosisType(kur), "NULL")
+        private$.properties$skewness <- ifnerror(skew, skewType(skew), "NULL")
+      }
+
+      lockBinding("name", self)
+      lockBinding("short_name", self)
+      lockBinding("description", self)
+      lockBinding("traits", self)
+      lockBinding("parameters", self)
+      invisible(self)
+    },
+
+    #' @description
+    #' Printable string representation of the `Distribution`. Primarily used internally.
+    #' @param n `(integer(1))` \cr
+    #' Number of parameters to display when printing.
+    strprint = function(n = 2) {
+      if (length(private$.parameters) != 0) {
+        settable <- as.data.table(self$parameters())$settable
+        id <- as.data.table(self$parameters())[settable, "id"][[1]]
+        value <- as.data.table(self$parameters())[settable, "value"][[1]]
+        lng <- length(id)
+        if (lng > (2 * n)) {
+          string <- paste0(
+            self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
+            ",...,", paste(id[(lng - n + 1):lng], value[(lng - n + 1):lng], sep = " = ", collapse = ", "), ")"
+          )
+        } else {
+          string <- paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+        }
+
+      } else {
+        string <- paste0(self$short_name)
+      }
+      return(string)
+    },
+
+    #' @description
+    #' Prints the `Distribution`.
+    #' @param n `(integer(1))` \cr
+    #' Passed to `$strprint`.
+    #' @param ... \cr
+    #' Unused. Added for consistency.
+    print = function(n = 2, ...) {
+      cat(self$strprint(n = n), "\n")
+      invisible(self)
+    },
+
+    #' @description
+    #' Prints a summary of the `Distribution`.
+    #' @param full `(logical(1))` \cr
+    #' If `TRUE` (default) prints a long summary of the distribution,
+    #' otherwise prints a shorter summary.
+    #' @param ... \cr
+    #' Unused. Added for consistency.
+    summary = function(full = TRUE, ...) {
+
+      if (full) {
+        if (length(private$.parameters) != 0) {
+
+          cat(self$description, "Parameterised with:\n")
+          settable <- as.data.table(self$parameters())$settable
+          cat(" ", paste(as.data.table(self$parameters())[settable, "id"],
+            as.data.table(self$parameters())[settable, "value"],
+            sep = " = ", collapse = ", "
+          ))
+        } else {
+          cat(self$description)
+        }
+
+
+        a_exp <- suppressMessages(try(self$mean(), silent = T))
+        a_var <- suppressMessages(try(self$variance(), silent = T))
+        a_skew <- suppressMessages(try(self$skewness(), silent = T))
+        a_kurt <- suppressMessages(try(self$kurtosis(), silent = T))
+
+        if (!inherits(a_exp, "try-error") | !inherits(a_var, "try-error") |
+          !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
+          cat("\n\n ", "Quick Statistics", "\n")
+        }
+
+        if (!inherits(a_exp, "try-error")) {
+          cat("\tMean:")
+          if (length(a_exp) > 1) {
+            cat("\t\t", paste0(a_exp, collapse = ", "), "\n", sep = "")
+          } else {
+            cat("\t\t", a_exp, "\n", sep = "")
+          }
+        }
+        if (!inherits(a_var, "try-error")) {
+          cat("\tVariance:")
+          if (length(a_var) > 1) {
+            cat("\t", paste0(a_var, collapse = ", "), "\n", sep = "")
+          } else {
+            cat("\t", a_var, "\n", sep = "")
+          }
+        }
+        if (!inherits(a_skew, "try-error")) {
+          cat("\tSkewness:")
+          # if(length(a_skew) > 1)
+          #   cat("\t", paste0(a_skew, collapse = ", "),"\n", sep = "")
+          # else
+          cat("\t", a_skew, "\n", sep = "")
+        }
+        if (!inherits(a_kurt, "try-error")) {
+          cat("\tEx. Kurtosis:")
+          # if(length(a_kurt) > 1)
+          #   cat("\t", paste0(a_kurt, collapse = ", "),"\n", sep = "")
+          # else
+          cat("\t", a_kurt, "\n", sep = "")
+        }
+        cat("\n")
+
+        cat(" Support:", self$properties$support$strprint(), "\tScientific Type:", self$traits$type$strprint(), "\n")
+        cat("\n Traits:\t", self$traits$valueSupport, "; ", self$traits$variateForm, sep = "")
+        cat("\n Properties:\t", self$properties$symmetry, sep = "")
+        if (!inherits(a_kurt, "try-error")) cat(";", self$properties$kurtosis)
+        if (!inherits(a_skew, "try-error")) cat(";", self$properties$skewness)
+
+        if (length(self$decorators) != 0) {
+          cat("\n\n Decorated with: ", paste0(self$decorators, collapse = ", "))
+        }
+
+      } else {
+        if (length(private$.parameters) != 0) {
+          cat(self$strprint())
+        } else {
+          cat(self$name)
+        }
+        cat("\nScientific Type:", self$traits$type$strprint(), "\t See $traits for more")
+        cat("\nSupport:", self$properties$support$strprint(), "\t See $properties for more")
+      }
+      cat("\n")
+      invisible(self)
+    },
+
+    #' @description
+    #' Returns the full parameter details for the supplied parameter.
+    parameters = function(id = NULL) {
+      if (length(private$.parameters) == 0) {
+        return(NULL)
+      } else {
+        return(private$.parameters$parameters(id))
+      }
+    },
+
+    #' @description
+    #' Returns the value of the supplied parameter.
+    getParameterValue = function(id, error = "warn") {
+      if (length(private$.parameters) == 0) {
+        return(NULL)
+      } else {
+        return(private$.parameters$getParameterValue(id, error))
+      }
+    },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    #'
+    #' @examples
+    #' b = Binomial$new()
+    #' b$setParameterValue(size = 4, prob = 0.4)
+    #' b$setParameterValue(lst = list(size = 4, prob = 0.4))
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if (length(private$.parameters) == 0) {
+        return(NULL)
+      } else {
+        if (length(lst) != 0) {
+
+          self$parameters()$setParameterValue(lst = lst, error = error)
+
+          # Update skewness and kurtosis
+          x <- suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
+          if (class(x) == "try-error") {
+            private$.properties$kurtosis <- NULL
+          } else {
+            private$.properties$kurtosis <- exkurtosisType(x)
+          }
+
+          x <- suppressMessages(try(self$skewness(), silent = TRUE))
+          if (class(x) == "try-error") {
+            private$.properties$skewness <- NULL
+          } else {
+            private$.properties$skewness <- skewType(x)
+          }
+
+          invisible(self)
+        }
+      }
+    },
+
+    #' @description
+    #'  For discrete distributions the probability mass function (pmf) is returned, defined as
+    #'  \deqn{p_X(x) = P(X = x)}
+    #'  for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
+    #'  \deqn{f_X(x) = P(x < X \le x + dx)}
+    #'  for some infinitesimally small \eqn{dx}.
+    #'
+    #' If available a pdf will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    #'
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$pdf(1:10)
+    #' b$pdf(1:10, log = TRUE)
+    #' b$pdf(data = matrix(1:10))
+    #'
+    #' mvn <- MultivariateNormal$new()
+    #' mvn$pdf(1, 2)
+    #' mvn$pdf(1:2, 3:4)
+    #' mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
+    pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
+
+      if (is.null(private$.pdf)) {
+        return(NULL)
+      }
+
+      data <- pdq_point_assert(..., self = self, data = data)
+      if (inherits(data, "matrix")) {
+        assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE),
+          .var.name = "Do all points lie in Distribution domain?"
+        )
+      } else {
+        assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
+          .var.name = "Do all points lie in Distribution domain?"
+        )
+      }
+
+
+      if (log) {
+        if (private$.log) {
+          pdqr <- private$.pdf(data, log = log)
+        } else {
+          if (!("CoreStatistics" %in% self$decorators)) {
+            stop("No analytical method for log available. Use CoreStatistics decorator to numerically estimate this.")
+          } else {
+            pdqr <- log(private$.pdf(data))
+          }
+        }
+      } else {
+        pdqr <- private$.pdf(data)
+      }
+
+      pdqr_returner(pdqr, simplify, self$short_name)
+    },
+
+    #' @description
+    #' The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
+    #'  \deqn{F_X(x) = P(X \le x)}
+    #'  If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
+    #'  \code{\link{survival}} function.
+    #'
+    #' If available a cdf will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    #'
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$cdf(1:10)
+    #' b$cdf(1:10, log.p = TRUE, lower.tail = FALSE)
+    #' b$cdf(data = matrix(1:10))
+    cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
+
+      if (is.null(private$.cdf)) {
+        return(NULL)
+      }
+
+      data <- pdq_point_assert(..., self = self, data = data)
+      if (inherits(data, "matrix")) {
+        assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE),
+          .var.name = "Do all points lie in Distribution domain?"
+        )
+      } else {
+        assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
+          .var.name = "Do all points lie in Distribution domain?"
+        )
+      }
+
+      if (log.p | !lower.tail) {
+        if (private$.log) {
+          pdqr <- private$.cdf(data, log.p = log.p, lower.tail = lower.tail)
+        } else {
+          if (!("CoreStatistics" %in% self$decorators)) {
+            stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
+          } else {
+            pdqr <- private$.cdf(data)
+            if (!lower.tail) pdqr <- 1 - pdqr
+            if (log.p) pdqr <- log(pdqr)
+          }
+        }
+      } else {
+        pdqr <- private$.cdf(data)
+      }
+
+      pdqr_returner(pdqr, simplify, self$short_name)
+    },
+
+    #' @description
+    #'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
+    #'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
+    #'
+    #'  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
+    #'
+    #' If available a quantile will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #' @param ... `(numeric())` \cr
+    #' Points to evaluate the function at Arguments do not need
+    #' to be named. The length of each argument corresponds to the number of points to evaluate,
+    #' the number of arguments corresponds to the number of variables in the distribution.
+    #' See examples.
+    #'
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$quantile(0.42)
+    #' b$quantile(log(0.42), log.p = TRUE, lower.tail = TRUE)
+    #' b$quantile(data = matrix(c(0.1,0.2)))
+    quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
+
+      if (is.null(private$.quantile)) {
+        return(NULL)
+      }
+
+      data <- pdq_point_assert(..., self = self, data = data)
+
+      if (!log.p) {
+        assert(Interval$new(0, 1)$contains(as.numeric(data), all = TRUE),
+          .var.name = "Do all quantiles lie in [0,1]?"
+        )
+      } else {
+        assert(Interval$new(0, 1)$contains(as.numeric(exp(data)), all = TRUE),
+          .var.name = "Do all quantiles lie in [0,1]?"
+        )
+      }
+
+
+      if (log.p | !lower.tail) {
+        if (private$.log) {
+          pdqr <- private$.quantile(data, log.p = log.p, lower.tail = lower.tail)
+        } else {
+          if (!("CoreStatistics" %in% self$decorators)) {
+            stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
+          } else {
+            if (log.p) data <- exp(data)
+            if (!lower.tail) data <- 1 - data
+            pdqr <- private$.quantile(data)
+          }
+        }
+      } else {
+        pdqr <- private$.quantile(data)
+      }
+
+      pdqr_returner(pdqr, simplify, self$short_name)
+    },
+
+    #' @description
+    #' The rand function draws `n` simulations from the distribution.
+    #'
+    #' If available simulations will be returned using an analytic expression. Otherwise,
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #'
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$rand(10)
+    #'
+    #' mvn <- MultivariateNormal$new()
+    #' mvn$rand(5)
+    rand = function(n, simplify = TRUE) {
+
+      if (is.null(private$.rand)) {
+        return(NULL)
+      }
+
+      if (length(n) > 1) n <- length(n)
+
+      pdqr <- private$.rand(n)
+
+      pdqr_returner(pdqr, simplify, self$short_name)
+    },
+
+    #' @description
+    #' Returns the precision of the distribution as `1/self$variance()`.
+    prec = function() {
+      return(1 / self$variance())
+    },
+
+    #' @description
+    #' Returns the standard deviation of the distribution as `sqrt(self$variance())`.
+    stdev = function() {
+      return(sqrt(self$variance()))
+    },
+
+    #' @description
+    #' Returns the median of the distribution. If an analytical expression is available
+    #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
+    #' returns `self$quantile(0.5)`.
+    #' @param na.rm \cr
+    #' Ignored, addded for consistency.
+    #' @param ... \cr
+    #' Ignored, addded for consistency.
+    median = function(na.rm = NULL, ...) {
+      if (testSymmetric(self)) {
+        med <- try(self$mean(), silent = TRUE)
+        if (class(med) == "try-error") {
+          return(NaN)
+        } else if (is.null(med)) {
+          return(self$quantile(0.5))
+        } else {
+          return(med)
+        }
+      } else if (!testUnivariate(self)) {
+        return(NaN)
+      } else {
+        return(self$quantile(0.5))
+      }
+    },
+
+    #' @description
+    #' Inter-quartile range of the distribution. Estimated as
+    #' `self$quantile(0.75) - self$quantile(0.25)`.
+    iqr = function() {
+      return(self$quantile(0.75) - self$quantile(0.25))
+    },
+
+    #' @description
+    #' If univariate returns `1`, otherwise returns the distribution correlation.
+    correlation = function() {
+      if (testUnivariate(self)) {
+        return(1)
+      } else {
+        return(self$variance() / (sqrt(diag(self$variance()) %*% t(diag(self$variance())))))
+      }
+    },
+
+    #' @description
+    #' Tests if the given values lie in the support of the distribution.
+    #' Uses `[set6::Set]$contains`.
+    liesInSupport = function(x, all = TRUE, bound = FALSE) {
+      return(self$properties$support$contains(x, all, bound))
+    },
+
+    #' @description
+    #' Tests if the given values lie in the type of the distribution.
+    #' Uses `[set6::Set]$contains`.
+    liesInType = function(x, all = TRUE, bound = FALSE) {
+      return(self$traits$type$contains(x, all, bound))
     }
-    if(is.null(support)) support <- type
-    assertSet(type)
-    assertSet(support)
+  ),
 
-    #--------------------
-    # valueSupport Checks
-    #--------------------
-    if(!is.null(valueSupport)){
-      valueSupport = match.arg(valueSupport, c("continuous", "discrete", "mixture"))
-    } else if(support$properties$countability == "uncountable") {
-      valueSupport = "continuous"
-     } else {
-      valueSupport = "discrete"
-     }
+  active = list(
+    #' @field decorators
+    #' Returns decorators currently used to decorate the distribution.
+    decorators = function() {
+      return(private$.decorators)
+    },
 
-    #-------------------
-    # variateForm Checks
-    #-------------------
-    if(!is.null(variateForm)){
-      variateForm = match.arg(variateForm, c("univariate", "multivariate", "matrixvariate"))
-    } else if(getR6Class(type) %in% c("ProductSet","ExponentSet")) {
-      variateForm = "multivariate"
-    } else {
-      variateForm = "univariate"
+    #' @field traits
+    #' Returns distribution traits.
+    traits = function() {
+      return(private$.traits)
+    },
+
+    #' @field valueSupport
+    #' Deprecated, use `$traits$valueSupport`.
+    valueSupport = function() {
+      message("Deprecated. Use $traits$valueSupport instead.")
+      return(self$traits$valueSupport)
+    },
+
+    #' @field variateForm
+    #' Deprecated, use `$traits$variateForm`.
+    variateForm = function() {
+      message("Deprecated. Use $traits$variateForm instead.")
+      return(self$traits$variateForm)
+    },
+
+    #' @field type
+    #' Deprecated, use `$traits$type`.
+    type = function() {
+      message("Deprecated. Use $traits$type instead.")
+      return(self$traits$type)
+    },
+
+    #' @field properties
+    #' Returns distribution properties, including kurtosis type, skewness type, support, and
+    #' symmetry.
+    properties = function() {
+      private$.properties
+    },
+
+    #' @field support
+    #' Deprecated, use `$properties$type`.
+    support = function() {
+      message("Deprecated. Use $properties$support instead.")
+      return(self$properties$support)
+    },
+
+    #' @field symmetry
+    #' Deprecated, use `$properties$symmetry`.
+    symmetry = function() {
+      message("Deprecated. Use $properties$symmetry instead.")
+      return(self$properties$symmetry)
+    },
+
+    #' @field sup
+    #' Returns supremum (upper bound) of the distribution support.
+    sup = function() {
+      return(self$properties$support$upper)
+    },
+
+    #' @field inf
+    #' Returns infimum (lower bound) of the distribution support.
+    inf = function() {
+      return(self$properties$support$lower)
+    },
+
+    #' @field dmax
+    #' Returns maximum of the distribution support.
+    dmax = function() {
+      return(self$properties$support$max)
+    },
+
+    #' @field dmin
+    #' Returns minimum of the distribution support.
+    dmin = function() {
+      return(self$properties$support$min)
+    },
+
+    #' @field kurtosisType
+    #' Deprecated, use `$properties$kurtosis`.
+    kurtosisType = function() {
+      message("Deprecated. Use $properties$kurtosis instead.")
+      return(self$properties$kurtosis)
+    },
+
+    #' @field skewnessType
+    #' Deprecated, use `$properties$skewness`.
+    skewnessType = function() {
+      message("Deprecated. Use $properties$skewness instead.")
+      return(self$properties$skewness)
+    },
+
+    #' @field workingSupport
+    #' Returns an estimate for the computational support of the distribution.
+    #' If an analytical cdf is available, then this is computed as the smallest interval
+    #' in which the cdf lower bound is `0` and the upper bound is `1`, bounds are incremented in
+    #' 10^i intervals. If no analytical cdf is available, then this is computed as the smallest
+    #' interval in which the lower and upper bounds of the pdf are `0`, this is much less precise and
+    #' is more prone to error. Used primarily by decorators.
+    workingSupport = function() {
+
+      if (testCountablyFinite(self$properties$support)) {
+        return(self$properties$support)
+      }
+
+      lower <- self$inf
+      upper <- self$sup
+
+      if (lower == -Inf) {
+        if (private$.isCdf == 1L) {
+          for (i in -c(0, 10^(1:1000))) {
+            if (i >= lower & i <= upper) {
+              if (self$cdf(i) == 0) {
+                lower <- i
+                break()
+              }
+            }
+          }
+        } else {
+          for (i in -c(0, 10^(1:1000))) {
+            if (i >= lower & i <= upper) {
+              if (self$pdf(i) == 0) {
+                lower <- i
+                break()
+              }
+            }
+          }
+        }
+
+      }
+
+      if (upper == Inf) {
+        if (private$.isCdf == 1L) {
+          for (i in c(0, 10^(1:1000))) {
+            if (i >= lower & i <= upper) {
+              if (self$cdf(i) == 1) {
+                upper <- i
+                break()
+              }
+            }
+          }
+        } else {
+          for (i in c(0, 10^(1:1000))) {
+            if (i >= lower & i <= upper) {
+              if (self$pdf(i) == 0) {
+                upper <- i
+                break()
+              }
+            }
+          }
+        }
+      }
+
+      class <- if (testDiscrete(self)) "integer" else "numeric"
+
+      Interval$new(lower, upper, class = class)
     }
+  ),
 
-
-    #-------------------
-    # pdf and cdf Checks
-    #-------------------
-    if(!is.null(pdf)){
-      if(!is.null(formals(pdf)$self))
-        formals(pdf)$self = self
-      else
-        formals(pdf) = c(formals(pdf),list(self=self),alist(...=))
+  private = list(
+    .parameters = NULL,
+    .workingSupport = NULL,
+    .decorators = NULL,
+    .properties = list(),
+    .traits = NULL,
+    .variates = 1,
+    .isPdf = 0L,
+    .isCdf = 0L,
+    .isQuantile = 0L,
+    .isRand = 0L,
+    .log = FALSE,
+    .updateDecorators = function(decs) {
+      private$.decorators <- decs
     }
+  )
+)
 
-    if(!is.null(cdf)){
-      if(!is.null(formals(cdf)$self))
-        formals(cdf)$self = self
-      else
-        formals(cdf) = c(formals(cdf),list(self=self),alist(...=))
-    }
 
-    if(!is.null(pdf) & !is.null(cdf)){
-      checkmate::assert(length(formals(pdf)) == length(formals(cdf)),
-                        .var.name = "'pdf' and 'cdf' must take the same arguments.")
-      checkmate::assert(all(names(formals(pdf)) == names(formals(cdf))),
-                        .var.name = "'pdf' and 'cdf' must take the same arguments.")
-    }
-
-    #-------------------------
-    # quantile and rand Checks
-    #-------------------------
-    if(!is.null(quantile)){
-      if(!is.null(formals(quantile)$self))
-        formals(quantile)$self = self
-      else
-        formals(quantile) = c(formals(quantile),list(self=self),alist(...=))
-    }
-
-    if(!is.null(rand)){
-      if(!is.null(formals(rand)$self))
-        formals(rand)$self = self
-      else
-        formals(rand) = c(formals(rand),list(self=self),alist(...=))
-    }
-
-    #-------------------------
-    # Parameter Checks
-    #-------------------------
-    if(!is.null(parameters)){
-      checkmate::assertClass(parameters,"ParameterSet")
-      parameters <- parameters$clone(deep = TRUE)$update()
-    }
-  }
-
-  if(!is.null(parameters))
-    private$.parameters <- parameters
-
-  if(!is.null(pdf)){
-      private$.pdf <- pdf
-      private$.isPdf <- TRUE
-    }
-  if(!is.null(cdf)){
-      private$.cdf <- cdf
-      private$.isCdf <- TRUE
-    }
-  if(!is.null(quantile)){
-      private$.quantile <- quantile
-      private$.isQuantile <- TRUE
-    }
-  if(!is.null(rand)){
-      private$.rand <- rand
-      private$.isRand <- TRUE
-  }
-
-  if(!is.null(name)) self$name <- name
-  if(!is.null(short_name)) self$short_name <- short_name
-
-  private$.properties$support <- support
-  private$.traits$type <- type
-  private$.traits$valueSupport <- valueSupport
-  private$.traits$variateForm <- variateForm
-
-  if(!is.null(description)) self$description <- description
-
-  symm = ifelse(symmetric,"symmetric","asymmetric")
-  private$.properties$symmetry <- symm
-
-  if(!is.null(decorators))
-    suppressMessages(decorate(self, decorators))
-
-  if(!suppressMoments){
-    # Update skewness and kurtosis
-    x = try(self$kurtosis(excess = TRUE), silent = TRUE)
-    if(class(x) == "try-error")
-      private$.properties$kurtosis <- NULL
-    else
-      private$.properties$kurtosis <- exkurtosisType(x)
-
-    x = try(self$skewness(), silent = TRUE)
-    if(class(x) == "try-error")
-      private$.properties$skewness <- NULL
-    else
-      private$.properties$skewness <- skewType(x)
-  }
-
-  # private$.setWorkingSupport()
-  lockBinding("name",self)
-  lockBinding("short_name",self)
-  lockBinding("description",self)
-  lockBinding("traits",self)
-  lockBinding("parameters",self)
-  invisible(self)
-})
-
-#-------------------------------------------------------------
-# Public Methods - Representation
-#-------------------------------------------------------------
 #' @title String Representation of Print
 #' @name strprint
 #' @description Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
@@ -341,29 +869,8 @@ Distribution$set("public","initialize",function(name = NULL, short_name = NULL,
 #' @examples
 #' Triangular$new()$strprint()
 #' Triangular$new()$strprint(1)
-#'
 #' @export
-Distribution$set("public","strprint",function(n = 2){
-  if(length(private$.parameters)!=0){
-    settable = as.data.table(self$parameters())$settable
-    id = as.data.table(self$parameters())[settable, "id"][[1]]
-    value = as.data.table(self$parameters())[settable, "value"][[1]]
-    lng <- length(id)
-    if(lng >(2*n))
-      string = paste0(self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
-                      ",...,", paste(id[(lng-n+1):lng], value[(lng-n+1):lng], sep = " = ", collapse = ", "),")")
-    else
-      string = paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
-
-  } else {
-    string = paste0(self$short_name)
-  }
-  return(string)
-})
-Distribution$set("public","print",function(n = 2, ...){
-  cat(self$strprint(n = n),"\n")
-  invisible(self)
-})
+NULL
 
 #' @title Distribution Summary
 #' @description Summary method for distribution objects (and all child classes).
@@ -378,549 +885,180 @@ Distribution$set("public","print",function(n = 2, ...){
 #' @return Printed summary of the distribution.
 #'
 #' @export
-summary.Distribution <- function(object, full = TRUE,...) {}
-Distribution$set("public","summary",function(full = TRUE,...){
+summary.Distribution <- function(object, full = TRUE, ...) {}
 
-  if(full){
-    if(length(private$.parameters)!=0){
-
-      cat(self$description,"Parameterised with:\n")
-      settable = as.data.table(self$parameters())$settable
-      cat(" ", paste(as.data.table(self$parameters())[settable, "id"],
-                     as.data.table(self$parameters())[settable, "value"],
-                      sep = " = ", collapse = ", "))
-    } else
-      cat(self$description)
-
-
-    a_exp = suppressMessages(try(self$mean(), silent = T))
-    a_var = suppressMessages(try(self$variance(), silent = T))
-    a_skew = suppressMessages(try(self$skewness(), silent = T))
-    a_kurt = suppressMessages(try(self$kurtosis(), silent = T))
-
-    if(!inherits(a_exp,"try-error") | !inherits(a_var,"try-error") |
-       !inherits(a_skew,"try-error") | !inherits(a_kurt,"try-error"))
-      cat("\n\n ", "Quick Statistics","\n")
-
-    if(!inherits(a_exp,"try-error")){
-      cat("\tMean:")
-      if(length(a_exp) > 1)
-        cat("\t\t", paste0(a_exp, collapse = ", "),"\n", sep = "")
-      else
-        cat("\t\t", a_exp,"\n", sep = "")
-    }
-    if(!inherits(a_var,"try-error")){
-      cat("\tVariance:")
-      if(length(a_var) > 1)
-        cat("\t", paste0(a_var, collapse = ", "),"\n", sep = "")
-      else
-        cat("\t", a_var,"\n", sep = "")
-    }
-    if(!inherits(a_skew,"try-error")){
-      cat("\tSkewness:")
-      # if(length(a_skew) > 1)
-      #   cat("\t", paste0(a_skew, collapse = ", "),"\n", sep = "")
-      # else
-        cat("\t", a_skew,"\n", sep = "")
-    }
-    if(!inherits(a_kurt,"try-error")){
-      cat("\tEx. Kurtosis:")
-      # if(length(a_kurt) > 1)
-      #   cat("\t", paste0(a_kurt, collapse = ", "),"\n", sep = "")
-      # else
-        cat("\t", a_kurt,"\n", sep = "")
-    }
-    cat("\n")
-
-    cat(" Support:",self$support$strprint(), "\tScientific Type:",self$type$strprint(),"\n")
-    cat("\n Traits:\t",self$valueSupport,"; ",self$variateForm, sep="")
-    cat("\n Properties:\t", self$symmetry,sep="")
-    if(!inherits(a_kurt,"try-error")) cat(";",self$kurtosisType)
-    if(!inherits(a_skew,"try-error")) cat(";",self$skewnessType)
-
-    if(length(self$decorators)!=0)
-      cat("\n\n Decorated with: ", paste0(self$decorators,collapse=", "))
-
-  } else {
-    if(length(private$.parameters)!=0)
-      cat(self$strprint())
-    else
-      cat(self$name)
-    cat("\nScientific Type:",self$type$strprint(),"\t See $traits for more")
-    cat("\nSupport:",self$support$strprint(),"\t See $properties for more")
-  }
-  cat("\n")
-  invisible(self)
-})
-
-#-------------------------------------------------------------
-# Public Methods - Parameters
-#-------------------------------------------------------------
-# Documented in ParameterSet.R
-Distribution$set("public","parameters",function(id = NULL){
-  if(length(private$.parameters)==0)
-    return(NULL)
-  else
-    return(private$.parameters$parameters(id))
-})
-# Documented in ParameterSet.R
-Distribution$set("public","getParameterValue",function(id, error = "warn"){
-  if(length(private$.parameters)==0)
-    return(NULL)
-  else
-    return(private$.parameters$getParameterValue(id, error))
-})
-# Documented in ParameterSet.R
-Distribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
-    lst <- list(...)
-  if(length(private$.parameters)==0)
-    return(NULL)
-  else{
-    if(length(lst)!=0){
-
-      self$parameters()$setParameterValue(lst = lst, error = error)
-
-      # Update skewness and kurtosis
-      x = suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
-      if(class(x) == "try-error")
-        private$.properties$kurtosis <- NULL
-      else
-        private$.properties$kurtosis <- exkurtosisType(x)
-
-      x = suppressMessages(try(self$skewness(), silent = TRUE))
-      if(class(x) == "try-error")
-        private$.properties$skewness <- NULL
-      else
-        private$.properties$skewness <- skewType(x)
-
-      #private$.setWorkingSupport()
-      invisible(self)
-    }
-  }
-})
-
-#-------------------------------------------------------------
-# Public Methods - pdf
-#-------------------------------------------------------------
 #' @name pdf
-#' @title Probability Density/Mass Function
-#' @description Returns the probability density/mass function for continuous/discrete (or mixture)
-#' distributions evaluated at a given point.
+#' @title Probability Density Function
+#' @description See [Distribution]`$pdf`
+#' @usage pdf(object, ..., log = FALSE, simplify = TRUE, data = NULL)
+#' @param object ([Distribution])
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the probability density function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param log `logical(1)` \cr
+#' If `TRUE` returns log-pdf. Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
-#' @usage pdf(object, x1, ..., log = FALSE, simplify = TRUE)
-#' @section R6 Usage: $pdf(x1, ..., log = FALSE, simplify = TRUE)
-#' @param object Distribution.
-#' @param x1 vector of numerics to evaluate function at.
-#' @param ... additional arguments.
-#' @param log logical; if TRUE, probabilities p are given as log(p).
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
-#'
-#' @details
-#'  For discrete distributions the probability mass function (pmf) is returned, defined as
-#'  \deqn{p_X(x) = P(X = x)}
-#'  for continuous distributions the probability density function (pdf), \eqn{f_X}, is returned
-#'  \deqn{f_X(x) = P(x < X \le x + dx)}
-#'  for some infinitesimally small \eqn{dx}.
-#'
-#' If available a pdf will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the pdf, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the pdf with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-#'
-#' @return Probability density function evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
-#'
-#' @seealso \code{\link{cdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
+#' @return Pdf evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
 NULL
-Distribution$set("public","pdf",function(x1, ..., log = FALSE, simplify = TRUE){
 
-  if(!private$.isPdf)
-    return(NULL)
-
-  if(testUnivariate(self)){
-    pdf = numeric(length(x1))
-    if(any(self$liesInSupport(x1, all = F)))
-      pdf[self$liesInSupport(x1, all = F)] = private$.pdf(x1[self$liesInSupport(x1, all = F)])
-  } else {
-    pdf = private$.pdf(x1, ...)
-  }
-
-  if(log) pdf <- log(pdf)
-
-  if(inherits(pdf,"data.table"))
-    return(pdf)
-  else{
-    if(simplify)
-      return(pdf)
-    else{
-      pdf = data.table::data.table(pdf)
-      colnames(pdf) = self$short_name
-      return(pdf)
-    }
-  }
-})
-#-------------------------------------------------------------
-# Public Methods - cdf
-#-------------------------------------------------------------
 #' @name cdf
 #' @title Cumulative Distribution Function
-#' @description Returns the cumulative distribution function for a distribution evaluated at a given
-#' point.
+#' @description See [Distribution]`$cdf`
+#' @usage cdf(object, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
+#' @param object ([Distribution])
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param lower.tail `logical(1)` \cr
+#' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
+#' @param log.p `logical(1)` \cr
+#' If `TRUE` returns log-cdf. Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
-#' @usage cdf(object, x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-#' @section R6 Usage: $cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-#' @param object Distribution.
-#' @param x1 vector of numerics to evaluate function at.
-#' @param ... additional arguments.
-#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
-#' @param log.p logical; if TRUE, probabilities p are given as log(p).
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
-#'
-#' @details
-#'  The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
-#'  \deqn{F_X(x) = P(X \le x)}
-#'  If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as the
-#'  \code{\link{survival}} function.
-#'
-#' If available a cdf will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the cdf, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the cdf with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-#'
-#' @seealso \code{\link{pdf}}, \code{\link{quantile}}, \code{\link{rand}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
-#'
-#' @return Cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
+#' @return Cdf evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
 NULL
-Distribution$set("public","cdf",function(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
 
-  if(!private$.isCdf)
-    return(NULL)
-
-  if(testUnivariate(self)){
-    if(self$type$class == "integer")
-       x1 <- floor(x1)
-    cdf = numeric(length(x1))
-    cdf[x1 >= self$sup] = 1
-
-    if(getR6Class(self) %in% c("Empirical","WeightedDiscrete")){
-      if(any(x1 >= self$inf & x1 <= self$sup))
-        cdf[x1 >= self$inf & x1 <= self$sup] = private$.cdf(x1[x1 >= self$inf & x1 <= self$sup])
-    } else {
-      if(any(self$liesInSupport(x1, all = F)))
-        cdf[self$liesInSupport(x1, all = F)] = private$.cdf(x1[self$liesInSupport(x1, all = F)])
-    }
-  } else {
-      cdf = private$.cdf(x1, ...)
-  }
-
-  if(log.p & lower.tail) cdf = log(cdf)
-  else if(log.p & !lower.tail) cdf = log(1 - cdf)
-  else if(!log.p & lower.tail) cdf = cdf
-  else cdf = 1 - cdf
-
-  if(inherits(cdf,"data.table"))
-    return(cdf)
-  else{
-    if(simplify)
-      return(cdf)
-    else{
-      cdf = data.table::data.table(cdf)
-      colnames(cdf) = self$short_name
-      return(cdf)
-    }
-  }
-
-})
-#-------------------------------------------------------------
-# Public Methods - quantile
-#-------------------------------------------------------------
 #' @title Inverse Cumulative Distribution Function
-#' @description Returns the inverse cumulative distribution, aka quantile, function for a distribution
-#' evaluated at a given point between 0 and 1.
-#'
+#' @description See [Distribution]`$quantile`
 #' @importFrom stats quantile
-#' @section R6 Usage: $quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)
-#' @param x Distribution.
-#' @param p vector of probabilities to evaluate function at.
-#' @param ... additional arguments.
-#' @param lower.tail logical; if TRUE, probabilities p are given as log(p).
-#' @param log.p logical; if TRUE then \eqn{q_X(exp(p))} is returned.
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
+#' @param x ([Distribution])
+#' @param ... `(numeric())` \cr
+#' Points to evaluate the quantile function of the distribution. Arguments do not need
+#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' the number of arguments corresponds to the number of variables in the distribution.
+#' See examples.
+#' @param lower.tail `logical(1)` \cr
+#' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
+#' @param log.p `logical(1)` \cr
+#' If `TRUE` returns log-cdf. Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
-#' @details
-#'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
-#'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
-#'
-#'  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
-#'
-#' If available a quantile will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the quantile, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the quantile with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{VectorDistribution}}.
-#'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{rand}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
-#'
-#' @return Inverse cumulative distribution function evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
+#' @return Quantile evaluated at given points as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
-quantile.Distribution <- function(x, p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE) {}
-Distribution$set("public","quantile",function(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE){
+quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {}
 
-  if(!private$.isQuantile)
-    return(NULL)
-
-  if(testUnivariate(self)){
-    if(log.p)
-      p = exp(p)
-
-    if(!lower.tail)
-      p = 1 - p
-
-    quantile = p
-    quantile[p > 1] = NaN
-    quantile[p < 0] = NaN
-    quantile[p == 0] = self$inf
-    quantile[p == 1] = self$sup
-    if(sum(p > 0 & p < 1)!=0)
-      quantile[p > 0 & p < 1] = private$.quantile(quantile[p > 0 & p < 1])
-  } else{
-    p = c(list(p), list(...))
-    if(log.p)
-      p = lapply(p, exp)
-
-    if(!lower.tail)
-      p = lapply(p, function(x) 1 - x)
-
-    quantile = do.call(private[[".quantile"]], args = p)
-  }
-
-  if(inherits(quantile,"data.table")){
-    return(quantile)
-  }else{
-    if(simplify)
-      return(quantile)
-    else{
-      quantile = data.table::data.table(quantile)
-      colnames(quantile) = self$short_name
-      return(quantile)
-    }
-  }
-})
-#-------------------------------------------------------------
-# Public Methods - rand
-#-------------------------------------------------------------
 #' @name rand
 #' @title Random Simulation Function
-#' @description Returns a given number of points sampled from the distribution.
-#'
+#' @description See [Distribution]`$rand`
 #' @usage rand(object, n, simplify = TRUE)
-#' @section R6 Usage: $rand(n, simplify = TRUE)
-#' @param object Distribution.
-#' @param n number of observations. If length(n) > 1, the length is taken to be the number required.
-#' @param simplify if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.
+#' @param object ([Distribution])
+#' @param n `(numeric(1))` \cr
+#' Number of points to simulate from the distribution. If length greater than \eqn{1}, then
+#' `n <- length(n)`,
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
 #'
-#' @details
-#' If available a rand will be returned without warning using an analytic expression. Otherwise,
-#' if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-#' To impute the rand, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-#' calculation for the rand with warning.
-#'
-#' Additional named arguments can be passed, which are required for composite distributions such as
-#' \code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-#'
-#' @seealso \code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
-#' \code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
-#'
-#' @return Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
-#' or as a data.table.
+#' @return Simulations as either a numeric if \code{simplify} is TRUE
+#' or as a [data.table::data.table].
 #'
 #' @export
 NULL
-Distribution$set("public","rand",function(n, simplify = TRUE){
 
-  if(!private$.isRand)
-    return(NULL)
-
-  if(length(n) > 1)
-    n = length(n)
-
-  rand = private$.rand(n)
-  if(inherits(rand,"data.table"))
-    return(rand)
-  else{
-    if(simplify)
-      return(rand)
-    else{
-      rand = data.table::data.table(rand)
-      colnames(rand) = self$short_name
-      return(rand)
-    }
-  }
-
-})
-
-#-------------------------------------------------------------
-# Public Methods - Analytic Maths/stats
-#-------------------------------------------------------------
 #' @name prec
 #' @title Precision of a Distribution
 #' @description Precision of a distribution assuming variance is provided.
-#'
 #' @usage prec(object)
-#' @section R6 Usage: $prec()
 #' @param object Distribution.
-#' @details The precision is analytically computed as the reciprocal of the variance.
-#' If the variance is not found in the distribution (analytically or numerically), returns error.
 #' @return Reciprocal of variance as a numeric.
-#'
-#' @seealso \code{\link{variance}}
-#'
 #' @export
 NULL
-Distribution$set("public","prec",function(){
-  return(1/self$variance())
-})
 
 #' @name stdev
 #' @title Standard Deviation of a Distribution
 #' @description Standard deviation of a distribution assuming variance is provided.
 #'
 #' @usage stdev(object)
-#' @section R6 Usage: $stdev()
 #' @param object Distribution.
-#' @details The standard deviation is analytically computed as the square root of the variance.
-#' If the variance is not found in the distribution (analytically or numerically), returns error.
 #' @return Square-root of variance as a numeric.
-#'
-#' @seealso \code{\link{variance}}
 #'
 #' @export
 NULL
-Distribution$set("public","stdev",function(){
-  return(sqrt(self$variance()))
-})
 
 #' @title Median of a Distribution
 #' @description Median of a distribution assuming quantile is provided.
 #'
 #' @importFrom stats median
 #' @method median Distribution
-#' @section R6 Usage: $median()
 #' @param x Distribution.
 #' @param na.rm ignored, added for consistency with S3 generic.
 #' @param ... ignored, added for consistency with S3 generic.
-#' @details The median is computed as the quantile function evaluated at 0.5.
-#' If the quantile is not found in the distribution (analytically or numerically), returns error.
 #' @return Quantile function evaluated at 0.5 as a numeric.
-#'
-#' @seealso \code{\link{quantile.Distribution}}
-#'
 #' @export
 median.Distribution <- function(x, na.rm = NULL, ...) {}
-Distribution$set("public","median",function(na.rm = NULL,...){
-  return(self$quantile(0.5))
-})
 
 #' @title Distribution Interquartile Range
 #' @name iqr
 #' @description Interquartile range of a distribution
-#'
 #' @usage iqr(object)
-#' @section R6 Usage: $iqr()
-#'
 #' @param object Distribution.
-#'
-#' @details The interquartile range of a distribution is defined by
-#' \deqn{iqr_X = q(0.75) - q(0.25)}
-#' where q is the quantile, or inverse distribution function.
-#'
-#' Returns error if the quantile function is missing.
-#'
 #' @return Interquartile range of distribution as a numeric.
-#'
 #' @export
 NULL
-Distribution$set("public", "iqr", function() {
-  return(self$quantile(0.75) - self$quantile(0.25))
-})
 
 #' @title Distribution Correlation
 #' @name correlation
 #' @description Correlation of a distribution.
 #'
 #' @usage correlation(object)
-#' @section R6 Usage: $correlation()
 #'
 #' @param object Distribution.
-#'
-#' @details In terms of covariance, the correlation of a distribution is defined by the equation,
-#' \deqn{\rho_{XY} = \sigma_{XY}/\sigma_X\sigma_Y}
-#' where \eqn{\sigma_{XY}} is the covariance of X and Y and \eqn{\sigma_X, \sigma_Y} and the respective
-#' standard deviations of X and Y.
-#'
-#' If the distribution is univariate then returns \eqn{1}.
-#'
-#' Calculates correlation analytically from variance. If an analytic expression for variance isn't available,
-#' returns error. To impute a numeric expression, use the \code{\link{CoreStatistics}} decorator.
 #'
 #' @return Either '1' if distribution is univariate or the correlation as a numeric or matrix.
 #'
 #' @export
 NULL
-Distribution$set("public","correlation",function(){
-  if(testUnivariate(self))
-    return(1)
-  else
-    return(self$variance() / (sqrt(diag(self$variance()) %*% t(diag(self$variance())))))
-})
 
-#-------------------------------------------------------------
-# Public Methods - Validation
-#-------------------------------------------------------------
 #' @name liesInSupport
 #' @title Test if Data Lies in Distribution Support
 #' @description Tests if the given data lies in the support of the Distribution, either tests if all
 #' data lies in the support or any of it.
 #'
 #' @usage liesInSupport(object, x, all = TRUE, bound = FALSE)
-#' @section R6 Usage: $liesInSupport(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
-#' @details If \code{all} is TRUE (default) returns TRUE only if every element in \code{x}
-#' lies in the support. If \code{all} is FALSE then returns a vector of logicals for each corresponding element
-#' in the vector \code{x}.
 #'
 #' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
 #' lies in the distribution support or FALSE otherwise.
 #'
-#' @seealso \code{\link{liesInType}}
-#'
 #' @export
 NULL
-Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE){
-  return(self$support$contains(x, all, bound))
-})
 
 #' @name liesInType
 #' @title Test if Data Lies in Distribution Type
@@ -928,42 +1066,27 @@ Distribution$set("public","liesInSupport",function(x, all = TRUE, bound = FALSE)
 #' data lies in the type or any of it.
 #'
 #' @usage liesInType(object, x, all = TRUE, bound = FALSE)
-#' @section R6 Usage: $liesInType(x, all = TRUE, bound = FALSE)
 #' @param object Distribution.
 #' @param x vector of numerics to test.
 #' @param all logical, see details.
 #' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
-#' @details If \code{all} is \code{TRUE} (default) returns \code{TRUE} only if every element in \code{x}
-#' lies in the type. If \code{all} is \code{FALSE} then returns a vector of logicals for each corresponding element
-#' in the vector \code{x}.
 #'
 #' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
 #' lies in the distribution type or FALSE otherwise.
 #'
-#' @seealso \code{\link{liesInSupport}}
-#'
 #' @export
 NULL
-Distribution$set("public","liesInType",function(x, all = TRUE, bound = FALSE){
-  return(self$type$contains(x, all, bound))
-})
 
-#-------------------------------------------------------------
-# Distribution Active Bindings
-#-------------------------------------------------------------
+
 #' @name decorators
 #' @title Decorators Accessor
 #' @usage decorators(object)
 #' @section R6 Usage: $decorators
 #' @param object Distribution.
 #' @description Returns the decorators added to a distribution.
-#' @seealso \code{\link{decorate}}
 #' @return Character vector of decorators.
 #' @export
 NULL
-Distribution$set("active","decorators", function(){
-  return(private$.decorators)
-})
 
 #' @name traits
 #' @title Traits Accessor
@@ -974,49 +1097,34 @@ Distribution$set("active","decorators", function(){
 #' @return List of traits.
 #' @export
 NULL
-Distribution$set("active","traits",function(){
-  return(private$.traits)
-})
 
 #' @name valueSupport
-#' @title Value Support Accessor
+#' @title Value Support Accessor - Deprecated
 #' @usage valueSupport(object)
-#' @section R6 Usage: $valueSupport
 #' @param object Distribution.
-#' @description Returns the valueSupport of the distribution.
+#' @description Deprecated. Use $traits$valueSupport
 #' @return One of "discrete"/"continuous"/"mixture".
 #' @export
 NULL
-Distribution$set("active","valueSupport",function(){
-  return(self$traits$valueSupport)
-})
 
 #' @name variateForm
-#' @title Variate Form Accessor
+#' @title Variate Form Accessor - Deprecated
 #' @usage variateForm(object)
-#' @section R6 Usage: $variateForm
 #' @param object Distribution.
-#' @description Returns the variateForm of the distribution.
+#' @description Deprecated. Use $traits$variateForm
 #' @return One of "univariate"/"multivariate"/"matrixvariate".
 #' @export
 NULL
-Distribution$set("active","variateForm",function(){
-  return(self$traits$variateForm)
-})
 
 #' @name type
-#' @title Type Accessor
+#' @title Type Accessor - Deprecated
 #' @usage type(object)
 #' @section R6 Usage: $type
 #' @param object Distribution.
-#' @description Returns the scientific type of the distribution.
+#' @description Deprecated. Use $traits$type
 #' @return An R6 object of class [set6::Set].
-#' @seealso [set6::Set]
 #' @export
 NULL
-Distribution$set("active","type",function(){
-  return(self$traits$type)
-})
 
 #' @name properties
 #' @title Properties Accessor
@@ -1027,41 +1135,29 @@ Distribution$set("active","type",function(){
 #' @return List of distribution properties.
 #' @export
 NULL
-Distribution$set("active","properties",function(){
-  return(private$.properties)
-})
 
 #' @name support
-#' @title Support Accessor
+#' @title Support Accessor - Deprecated
 #' @usage support(object)
 #' @section R6 Usage: $support
 #' @param object Distribution.
-#' @description Returns the support of the distribution.
+#' @description Deprecated. Use $properties$support
 #' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
 #' greater than zero,
 #' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
 #' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
 #' @return An R6 object of class [set6::Set].
-#' @seealso [set6::Set] and \code{\link{properties}}
 #' @export
 NULL
-Distribution$set("active","support",function(){
-  return(self$properties$support)
-})
 
 #' @name symmetry
-#' @title Symmetry Accessor
+#' @title Symmetry Accessor - Deprecated
 #' @usage symmetry(object)
-#' @section R6 Usage: $symmetry
 #' @param object Distribution.
-#' @description Returns the distribution symmetry.
+#' @description Deprecated. Use $properties$symmetry.
 #' @return One of "symmetric" or "asymmetric".
-#' @seealso \code{\link{properties}}
 #' @export
 NULL
-Distribution$set("active","symmetry",function(){
-  return(self$properties$symmetry)
-})
 
 #' @name sup
 #' @title Supremum Accessor
@@ -1070,12 +1166,8 @@ Distribution$set("active","symmetry",function(){
 #' @param object Distribution.
 #' @description Returns the distribution supremum as the supremum of the support.
 #' @return Supremum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{inf}}
 #' @export
 NULL
-Distribution$set("active","sup",function(){
-  return(self$support$upper)
-})
 
 #' @name inf
 #' @title Infimum Accessor
@@ -1084,12 +1176,8 @@ Distribution$set("active","sup",function(){
 #' @param object Distribution.
 #' @description Returns the distribution infimum as the infimum of the support.
 #' @return Infimum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{dmin}}, \code{\link{sup}}
 #' @export
 NULL
-Distribution$set("active","inf",function(){
-  return(self$support$lower)
-})
 
 #' @name dmax
 #' @title Distribution Maximum Accessor
@@ -1103,9 +1191,6 @@ Distribution$set("active","inf",function(){
 #' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
-Distribution$set("active","dmax",function(){
-  return(self$support$max)
-})
 
 #' @name dmin
 #' @title Distribution Minimum Accessor
@@ -1116,143 +1201,36 @@ Distribution$set("active","dmax",function(){
 #' bounded below then minimum is given by
 #' \deqn{minimum = infimum + 1.1e-15}
 #' @return Minimum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmax}}, \code{\link{sup}}, \code{\link{inf}}
 #' @export
 NULL
-Distribution$set("active","dmin",function(){
-  return(self$support$min)
-})
 
 #' @name kurtosisType
-#' @title Type of Kurtosis Accessor
+#' @title Type of Kurtosis Accessor - Deprecated
 #' @usage kurtosisType(object)
-#' @section R6 Usage: $kurtosisType
 #' @param object Distribution.
-#' @description Returns the type of kurtosis (in relation to Normal distribution)
+#' @description Deprecated. Use $properties$kurtosis.
 #' @return If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
 #' otherwise returns NULL.
-#' @seealso \code{\link{kurtosis}}, \code{\link{properties}} and \code{\link{skewnessType}}
 #' @export
 NULL
-Distribution$set("active", "kurtosisType", function() {
-  x = self$properties$kurtosis
-  if(is.null(x))
-    return(NA)
-  else
-    return(x)
-})
 
 #' @name skewnessType
-#' @title Type of Skewness Accessor
+#' @title Type of Skewness Accessor - Deprecated
 #' @usage skewnessType(object)
-#' @section R6 Usage: $skewnessType
 #' @param object Distribution.
-#' @description Returns the type of skewness.
+#' @description Deprecated. Use $properties$skewness.
 #' @return If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
 #' "positive skew", otherwise returns NULL.
-#' @seealso \code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
 #' @export
 NULL
-Distribution$set("active", "skewnessType", function() {
-  x = self$properties$skewness
-  if(is.null(x))
-    return(NA)
-  else
-    return(x)
-})
 
-#' @name isPdf
-#' @rdname isPdf
-#' @title Test the Distribution Pdf Exist?
-#' @description Returns whether or not the distribution has a defined expression for the pdf.
-#' @section R6 Usage: $isPdf
-#' @return Returns \code{TRUE} if an expression for the pdf is defined for the distribution, \code{FALSE}
-#' otherwise.
-#' @seealso \code{\link{isCdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
+#' @name workingSupport
+#' @title Approximate Finite Support
+#' @usage workingSupport(object)
+#' @param object Distribution.
+#' @description If the distribution has an infinite support then this function calculates
+#' the approximate finite limits by finding the largest small number for which `cdf == 0` and the
+#' smallest large number for which `cdf == 1`.
+#' @return \CRANpkg{set6} object.
+#' @export
 NULL
-Distribution$set("active","isPdf",function() return(private$.isPdf))
-#' @name isCdf
-#' @rdname isCdf
-#' @title Test the Distribution Cdf Exist?
-#' @description Returns whether or not the distribution has a defined expression for the Cdf.
-#' @section R6 Usage: $isCdf
-#' @return Returns \code{TRUE} if an expression for the Cdf is defined for the distribution, \code{FALSE}
-#' otherwise.
-#' @seealso \code{\link{isPdf}}, \code{\link{isQuantile}}, \code{\link{isRand}}
-NULL
-Distribution$set("active","isCdf",function() return(private$.isCdf))
-#' @name isQuantile
-#' @rdname isQuantile
-#' @title Test the Distribution Quantile Exist?
-#' @description Returns whether or not the distribution has a defined expression for the Quantile.
-#' @section R6 Usage: $isQuantile
-#' @return Returns \code{TRUE} if an expression for the Quantile is defined for the distribution, \code{FALSE}
-#' otherwise.
-#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isRand}}
-NULL
-Distribution$set("active","isQuantile",function() return(private$.isQuantile))
-#' @name isRand
-#' @rdname isRand
-#' @title Test the Distribution Rand Exist?
-#' @description Returns whether or not the distribution has a defined expression for the Rand.
-#' @section R6 Usage: $isRand
-#' @return Returns \code{TRUE} if an expression for the Rand is defined for the distribution, \code{FALSE}
-#' otherwise.
-#' @seealso \code{\link{isPdf}}, \code{\link{isCdf}}, \code{\link{isQuantile}}
-NULL
-Distribution$set("active","isRand",function() return(private$.isRand))
-
-#-------------------------------------------------------------
-# Distribution Public Variables
-#-------------------------------------------------------------
-Distribution$set("public","name",character(0))
-Distribution$set("public","short_name",character(0))
-Distribution$set("public","description",NULL)
-Distribution$set("private",".pdf", NULL)
-Distribution$set("private",".cdf", NULL)
-Distribution$set("private",".quantile", NULL)
-Distribution$set("private",".rand", NULL)
-Distribution$set("private",".parameters",NULL)
-Distribution$set("private",".workingSupport",NULL)
-Distribution$set("private",".decorators", NULL)
-Distribution$set("private",".properties",NULL)
-Distribution$set("private",".traits",NULL)
-Distribution$set("private",".isPdf", FALSE)
-Distribution$set("private",".isCdf", FALSE)
-Distribution$set("private",".isQuantile", FALSE)
-Distribution$set("private",".isRand", FALSE)
-
-#-------------------------------------------------------------
-# Distribution Private Methods
-#-------------------------------------------------------------
-Distribution$set("private",".setWorkingSupport",function(){
-  suppressMessages({
-    rands = self$rand(1000)
-
-    if(self$sup != Inf)
-      newsup = self$sup
-    else{
-      newsup = ceiling(max(rands))
-      while(self$pdf(newsup) > .Machine$double.eps) newsup = newsup + 1
-      newsup = ceiling(newsup - 1)
-    }
-
-    inf = self$inf
-    if(inf != -Inf)
-      newinf = inf
-    else{
-      newinf = floor(min(rands))
-      while(self$pdf(newinf) > .Machine$double.eps) newinf = newinf - 1
-      newinf = floor(newinf + 1)
-    }
-
-    private$.workingSupport <- list(inf = newinf, sup = newsup)
-    invisible(self)
-  })
-})
-Distribution$set("private",".getWorkingSupport",function(){
-  return(private$.workingSupport)
-})
-Distribution$set("private",".updateDecorators", function(decs){
-  private$.decorators <- decs
-})

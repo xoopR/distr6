@@ -36,5 +36,4 @@ Validation checks to test if Distribution is univariate.
 }
 \examples{
 testUnivariate(Binomial$new()) # TRUE
-
 }

@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Logarithmic Distribution Documentation
-#-------------------------------------------------------------
 #' @name Logarithmic
 #' @template SDist
 #' @templateVar ClassName Logarithmic
@@ -12,126 +8,217 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = -\theta^x/xlog(1-\theta)}
 #' @templateVar paramsupport \eqn{0 < \theta < 1}
 #' @templateVar distsupport \eqn{{1,2,3,\ldots}}
-#' @templateVar omittedVars \code{entropy}
-#' @templateVar additionalDetails The distribution is implemented by interfacing the \code{extraDistr} package.
-#' @templateVar constructor theta = 0.5
-#' @templateVar arg1 \code{theta} \tab numeric \tab theta parameter. \cr
-#' @templateVar constructorDets \code{theta} as a number between 0 and 1.
-#' @templateVar additionalSeeAlso \code{\link[extraDistr]{LogSeries}} for the d/p/q/r implementation.
 #'
-#' @examples
-#' x = Logarithmic$new(theta = 0.2)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(theta = 0.3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family discrete distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Logarithmic Distribution Definition
-#-------------------------------------------------------------
-Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F)
-Logarithmic$set("public","name","Logarithmic")
-Logarithmic$set("public","short_name","Log")
-Logarithmic$set("public","description","Logarithmic Probability Distribution.")
-Logarithmic$set("public","packages","extraDistr")
+Logarithmic <- R6Class("Logarithmic",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Logarithmic",
+    short_name = "Log",
+    description = "Logarithmic Probability Distribution.",
+    packages = "extraDistr",
 
-Logarithmic$set("public","mean",function(){
-  theta = self$getParameterValue("theta")
-  return(-theta/(log(1-theta)*(1-theta)))
-})
-Logarithmic$set("public","variance",function(){
-  theta = self$getParameterValue("theta")
-  return((-theta^2 - theta*log(1-theta)) / ((1-theta)^2 * (log(1-theta))^2))
-})
-Logarithmic$set("public","mode",function(which = "all"){
-  return(1)
-})
-Logarithmic$set("public","skewness",function(){
-  theta = self$getParameterValue("theta")
+    # Public methods
+    # initialize
 
-  s1 = (theta*(3*theta + theta*log(1-theta) + log(1-theta))) / ((theta-1)^3 * log(1-theta)^2)
-  s2 = 2 * (-theta/(log(1-theta)*(1-theta)))^3
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param theta `(numeric(1))`\cr
+    #' Theta parameter defined as a probability between `0` and `1`.
+    initialize = function(theta = 0.5, decorators = NULL) {
 
-  return((s1+s2)/(self$stdev()^3))
-})
-Logarithmic$set("public","kurtosis",function(excess = TRUE){
-  theta = self$getParameterValue("theta")
+      private$.parameters <- getParameterSet.Logarithmic(self, theta)
+      self$setParameterValue(theta = theta)
 
-  s1 = (3*theta^4)/((1-theta)^4*log(1-theta)^4)
-  s2 = (6*theta^3)/((theta-1)^4*log(1-theta)^3)
-  s3 = (4*theta^3)/((theta-1)^4*log(1-theta)^2)
-  s4 = (theta^3)/((theta-1)^4*log(1-theta))
-  s5 = (4*theta^2)/((theta-1)^4*log(1-theta)^2)
-  s6 = (4*theta^2)/((theta-1)^4*log(1-theta))
-  s7 = (theta)/((theta-1)^4*log(1-theta))
+      super$initialize(
+        decorators = decorators,
+        support = PosNaturals$new(),
+        type = PosNaturals$new()
+      )
+    },
 
-  sum = - s1 - s2 - s3 - s4 - s5 - s6 - s7
+    # stats
 
-  kurtosis = sum/(self$stdev()^4)
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      theta <- self$getParameterValue("theta")
+      return(-theta / (log(1 - theta) * (1 - theta)))
+    },
 
-  if(excess)
-    return(kurtosis - 3)
-  else
-    return(kurtosis)
-})
-Logarithmic$set("public", "mgf", function(t){
-  if(t < -log(self$getParameterValue("theta")))
-    return(log(1-self$getParameterValue("theta")*exp(t))/log(1-self$getParameterValue("theta")))
-  else
-    return(NaN)
-})
-Logarithmic$set("public", "cf", function(t){
-  return(log(1-self$getParameterValue("theta")*exp(t*1i))/log(1-self$getParameterValue("theta")))
-})
-Logarithmic$set("public", "pgf", function(z){
-  if(abs(z) < 1/self$getParameterValue("theta"))
-    return(log(1-self$getParameterValue("theta")*z)/log(1-self$getParameterValue("theta")))
-  else
-    return(NaN)
-})
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(1)
+    },
 
-Logarithmic$set("private", ".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$theta)) lst = c(lst,list(theta = paramlst$theta))
-  return(lst)
-})
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      theta <- self$getParameterValue("theta")
+      return((-theta^2 - theta * log(1 - theta)) / ((1 - theta)^2 * (log(1 - theta))^2))
+    },
 
-Logarithmic$set("public", "initialize", function(theta = 0.5, decorators = NULL, verbose = FALSE){
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      theta <- self$getParameterValue("theta")
 
-  private$.parameters <- getParameterSet.Logarithmic(self, theta, verbose)
-  self$setParameterValue(theta=theta)
+      s1 <- (theta * (3 * theta + theta * log(1 - theta) + log(1 - theta))) / ((theta - 1)^3 * log(1 - theta)^2)
+      s2 <- 2 * (-theta / (log(1 - theta) * (1 - theta)))^3
 
-  pdf <- function(x1) extraDistr::dlgser(x1, self$getParameterValue("theta"))
-  cdf <- function(x1) extraDistr::plgser(x1, self$getParameterValue("theta"))
-  quantile <- function(p) extraDistr::qlgser(p, self$getParameterValue("theta"))
-  rand <- function(n) extraDistr::rlgser(n, self$getParameterValue("theta"))
+      return((s1 + s2) / (self$stdev()^3))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = PosNaturals$new(),
-                   symmetric = FALSE,type = Naturals$new(),
-                   valueSupport ="discrete",
-                   variateForm = "univariate")
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      theta <- self$getParameterValue("theta")
 
-  invisible(self)
-})
+      s1 <- (3 * theta^4) / ((1 - theta)^4 * log(1 - theta)^4)
+      s2 <- (6 * theta^3) / ((theta - 1)^4 * log(1 - theta)^3)
+      s3 <- (4 * theta^3) / ((theta - 1)^4 * log(1 - theta)^2)
+      s4 <- (theta^3) / ((theta - 1)^4 * log(1 - theta))
+      s5 <- (4 * theta^2) / ((theta - 1)^4 * log(1 - theta)^2)
+      s6 <- (4 * theta^2) / ((theta - 1)^4 * log(1 - theta))
+      s7 <- (theta) / ((theta - 1)^4 * log(1 - theta))
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Log", ClassName = "Logarithmic",
-                                                     Type = "\u21150", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "extraDistr"))
+      sum <- -s1 - s2 - s3 - s4 - s5 - s6 - s7
 
+      kurtosis <- sum / (self$stdev()^4)
+
+      if (excess) {
+        return(kurtosis - 3)
+      } else {
+        return(kurtosis)
+      }
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      if (t < -log(self$getParameterValue("theta"))) {
+        return(log(1 - self$getParameterValue("theta") * exp(t)) / log(1 - self$getParameterValue("theta")))
+      } else {
+        return(NaN)
+      }
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      return(log(1 - self$getParameterValue("theta") * exp(t * 1i)) / log(1 - self$getParameterValue("theta")))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      if (abs(z) < 1 / self$getParameterValue("theta")) {
+        return(log(1 - self$getParameterValue("theta") * z) / log(1 - self$getParameterValue("theta")))
+      } else {
+        return(NaN)
+      }
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("theta"))) {
+        mapply(extraDistr::dlgser,
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dlgser(x, theta = self$getParameterValue("theta"), log = log)
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("theta"))) {
+        mapply(extraDistr::plgser,
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        extraDistr::plgser(x,
+          theta = self$getParameterValue("theta"),
+          lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("theta"))) {
+        mapply(extraDistr::qlgser,
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        extraDistr::qlgser(p,
+          theta = self$getParameterValue("theta"),
+          lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("theta"))) {
+        mapply(extraDistr::rlgser,
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rlgser(n, theta = self$getParameterValue("theta"))
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$theta)) lst <- c(lst, list(theta = paramlst$theta))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Log", ClassName = "Logarithmic",
+    Type = "\u21150", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "extraDistr"
+  )
+)

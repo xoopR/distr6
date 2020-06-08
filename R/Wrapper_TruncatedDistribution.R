@@ -1,121 +1,173 @@
 #' @name TruncatedDistribution
 #' @title Distribution Truncation Wrapper
 #' @description A wrapper for truncating any probability distribution at given limits.
+#' @template class_wrapper
+#' @template class_trunchub
+#' @template method_setParameterValue
 #'
-#' @details Truncates a distribution at lower and upper limits, using the formulae
+#' @details
+#' Truncates a distribution at lower and upper limits, using the formulae
 #' \deqn{f_T(x) = f_X(x) / (F_X(upper) - F_X(lower))}
 #' \deqn{F_T(x) = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
 #' where \eqn{f_T}/\eqn{F_T} is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and
 #' \eqn{f_X}, \eqn{F_X} is the pdf/cdf of the original distribution.
 #'
-#' If lower or upper are NULL they are taken to be \code{self$inf} and \code{self$sup} respectively.
-#' The support of the new distribution is the interval of points between lower and upper.
-#'
-#' The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
-#' \code{FunctionImputation} first.
-#'
-#' @section Constructor: TruncatedDistribution$new(distribution, lower = NULL, upper = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distribution} \tab distribution \tab Distribution to truncate. \cr
-#' \code{lower} \tab numeric \tab Lower limit for truncation. \cr
-#' \code{upper} \tab numeric \tab Upper limit for truncation.
-#' }
-#'
-#' @inheritSection DistributionWrapper Public Variables
-#' @inheritSection DistributionWrapper Public Methods
-#'
-#' @seealso \code{\link{listWrappers}}, \code{\link{FunctionImputation}}, \code{\link{truncate}}
-#'
-#' @return Returns an R6 object of class TruncatedDistribution.
-#'
-#' @examples
-#' truncBin <- TruncatedDistribution$new(
-#'             Binomial$new(prob = 0.5, size = 10),
-#'             lower = 2, upper = 4)
-#' truncBin$getParameterValue("prob")
-#'
 #' @export
-NULL
-TruncatedDistribution <- R6Class("TruncatedDistribution", inherit = DistributionWrapper, lock_objects = FALSE)
+TruncatedDistribution <- R6Class("TruncatedDistribution",
+  inherit = DistributionWrapper,
+  lock_objects = FALSE,
+  public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @examples
+    #' TruncatedDistribution$new(
+    #'   Binomial$new(prob = 0.5, size = 10),
+    #'   lower = 2, upper = 4
+    #' )
+    #'
+    #' # alternate constructor
+    #' truncate(Binomial$new(), lower = 2, upper = 4)
+    initialize = function(distribution, lower = NULL, upper = NULL) {
+
+      assertDistribution(distribution)
+
+      if (!isCdf(distribution) | !isPdf(distribution)) {
+        stop("pdf and cdf is required for truncation. Try decorate(distribution, FunctionImputation) first.")
+      }
+
+      if (is.null(lower)) {
+        lower <- distribution$inf
+      } else if (lower < distribution$inf) {
+        lower <- distribution$inf
+      }
+      if (is.null(upper)) {
+        upper <- distribution$sup
+      } else if (upper > distribution$sup) {
+        upper <- distribution$sup
+      }
+
+      distlist <- list(distribution)
+      names(distlist) <- distribution$short_name
+
+      private$.outerParameters <- ParameterSet$new(
+        id = list("lower", "upper"), value = list(lower, upper),
+        support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
+        settable = list(TRUE, TRUE),
+        description = list(
+          "Lower limit of truncation.",
+          "Upper limit of truncation."
+        )
+      )
+
+      if (testDiscrete(distribution)) {
+        support <- Interval$new(lower, upper, class = "integer")
+      } else {
+        support <- Interval$new(lower, upper)
+      }
+
+      super$initialize(
+        distlist = distlist,
+        name = paste("Truncated", distribution$name),
+        short_name = paste0("Trunc", distribution$short_name),
+        description = paste0(distribution$description, " Truncated between ", lower, " and ", upper, "."),
+        support = support,
+        type = distribution$traits$type,
+        valueSupport = distribution$traits$valueSupport, variateForm = "univariate",
+        outerID = "trunc"
+      )
+    },
+
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+
+      if ("trunc_lower" %in% names(lst) & "trunc_upper" %in% names(lst)) {
+        checkmate::assert(lst[["trunc_lower"]] < lst[["trunc_upper"]], .var.name = "trunc_lower must be < trunc_upper")
+      } else if ("trunc_lower" %in% names(lst)) {
+        checkmate::assert(lst[["trunc_lower"]] < self$getParameterValue("trunc_upper"), .var.name = "trunc_lower must be < trunc_upper")
+      } else if ("trunc_upper" %in% names(lst)) {
+        checkmate::assert(lst[["trunc_upper"]] > self$getParameterValue("trunc_lower"), .var.name = "trunc_upper must be > trunc_lower")
+      }
+
+      super$setParameterValue(lst = lst, error = error)
+
+      if (self$properties$support$class == "integer") {
+        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower"), self$getParameterValue("trunc_upper"), class = "integer")
+      } else {
+        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower"), self$getParameterValue("trunc_upper"))
+      }
+
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      dist <- self$wrappedModels()[[1]]
+      lower <- self$getParameterValue("trunc_lower")
+      upper <- self$getParameterValue("trunc_upper")
+
+      if (log) {
+        pdf <- dist$pdf(x, log = TRUE) -
+          log((dist$cdf(upper) - dist$cdf(lower)))
+        pdf[x < lower | x > upper] <- -Inf
+      } else {
+        pdf <- dist$pdf(x) /
+          (dist$cdf(upper) - dist$cdf(lower))
+        pdf[x < lower | x > upper] <- 0
+      }
+
+      return(pdf)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      dist <- self$wrappedModels()[[1]]
+      lower <- self$getParameterValue("trunc_lower")
+      upper <- self$getParameterValue("trunc_upper")
+      Flower <- dist$cdf(lower)
+      Fupper <- dist$cdf(upper)
+      Fx <- dist$cdf(x)
+
+      if (lower.tail) {
+        if (log.p) {
+          cdf <- log(Fx - Flower) - log(Fupper - Flower)
+          cdf[x < lower] <- -Inf
+          cdf[x >= upper] <- 0
+        } else {
+          cdf <- (Fx - Flower) / (Fupper - Flower)
+          cdf[x < lower] <- 0
+          cdf[x >= upper] <- 1
+        }
+      } else {
+        if (log.p) {
+          cdf <- log(Fupper - Fx) - log(Fupper - Flower)
+          cdf[x < lower] <- 0
+          cdf[x >= upper] <- -Inf
+        } else {
+          cdf <- (Fupper - Fx) / (Fupper - Flower)
+          cdf[x < lower] <- 1
+          cdf[x >= upper] <- 0
+        }
+      }
+
+      return(cdf)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      dist <- self$wrappedModels()[[1]]
+      lower <- dist$cdf(self$getParameterValue("trunc_lower"))
+      upper <- dist$cdf(self$getParameterValue("trunc_upper"))
+
+      dist$quantile(p * (upper - lower) + lower, log.p = log.p, lower.tail = lower.tail)
+    },
+    .rand = function(n) {
+      self$quantile(runif(n))
+    }
+  )
+)
 .distr6$wrappers <- append(.distr6$wrappers, list(TruncatedDistribution = TruncatedDistribution))
-
-TruncatedDistribution$set("public","initialize",function(distribution, lower = NULL, upper = NULL){
-
-  assertDistribution(distribution)
-
-  if(!distribution$.__enclos_env__$private$.isCdf | !distribution$.__enclos_env__$private$.isPdf)
-    stop("pdf and cdf is required for truncation. Try decorate(Distribution, FunctionImputation) first.")
-
-  if(is.null(lower))
-    lower <- distribution$inf
-  else if(lower < distribution$inf)
-    lower <- distribution$inf
-  if(is.null(upper))
-    upper <- distribution$sup
-  else if(upper > distribution$sup)
-    upper <- distribution$sup
-
-  pdf <- function(x1,...) {
-    self$wrappedModels()[[1]]$pdf(x1) / (self$wrappedModels()[[1]]$cdf(self$sup) - self$wrappedModels()[[1]]$cdf(self$inf))
-  }
-  formals(pdf)$self <- self
-
-  cdf <- function(x1,...){
-    num = self$wrappedModels()[[1]]$cdf(x1) - self$wrappedModels()[[1]]$cdf(self$inf)
-    den = self$wrappedModels()[[1]]$cdf(self$sup) - self$wrappedModels()[[1]]$cdf(self$inf)
-    return(num/den)
-  }
-  formals(cdf)$self <- self
-
-  name = paste("Truncated",distribution$name)
-  short_name = paste0("Trunc",distribution$short_name)
-
-  distlist = list(distribution)
-  names(distlist) = distribution$short_name
-
-  description = paste0(distribution$description, " Truncated between ",lower," and ",upper,".")
-
-  private$.outerParameters <- ParameterSet$new(id = list("truncLower", "truncUpper"), value = list(lower, upper),
-                                               support = list(Reals$new() + Set$new(-Inf,Inf), Reals$new() + Set$new(-Inf,Inf)),
-                                               settable = list(FALSE, FALSE),
-                                               description = list("Lower limit of truncation.",
-                                                                  "Upper limit of truncation."))
-
-  if(testDiscrete(distribution))
-    support <- Interval$new(lower,upper,class="integer")
-  else
-    support <- Interval$new(lower,upper)
-
-  super$initialize(distlist = distlist, pdf = pdf, cdf = cdf,
-                   name = name, short_name = short_name, support = support,
-                   type = distribution$type,
-                   description = description,
-                   valueSupport = distribution$valueSupport, variateForm = "univariate")
-})
-TruncatedDistribution$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
-    lst <- list(...)
-
-  if("truncLower" %in% names(lst) & "truncUpper" %in% names(lst))
-    checkmate::assert(lst[["truncLower"]] < lst[["truncUpper"]], .var.name = "truncLower must be < truncUpper")
-  else if("truncLower" %in% names(lst))
-    checkmate::assert(lst[["truncLower"]] < self$getParameterValue("truncUpper"), .var.name = "truncLower must be < truncUpper")
-  else if("truncUpper" %in% names(lst))
-    checkmate::assert(lst[["truncUpper"]] > self$getParameterValue("truncLower"), .var.name = "truncUpper must be > truncLower")
-
-
-  super$setParameterValue(lst = lst, error = error)
-  if(self$support$class == "integer")
-    private$.properties$support <- Interval$new(self$getParameterValue("truncLower"), self$getParameterValue("truncUpper"), class = "integer")
-  else
-    private$.properties$support <- Interval$new(self$getParameterValue("truncLower"), self$getParameterValue("truncUpper"))
-
-  invisible(self)
-})
-
 
 #' @title Truncate a Distribution
 #' @description S3 functionality to truncate an R6 distribution.
@@ -124,13 +176,13 @@ TruncatedDistribution$set("public","setParameterValue",function(..., lst = NULL,
 #' @param lower lower limit for truncation.
 #' @param upper upper limit for truncation.
 #'
-#' @seealso \code{\link{TruncatedDistribution}}
+#' @seealso [TruncatedDistribution]
 #'
 #' @export
-truncate <- function(x,lower = NULL,upper = NULL){
+truncate <- function(x, lower = NULL, upper = NULL) {
   UseMethod("truncate", x)
 }
 #' @export
-truncate.Distribution <- function(x, lower = NULL, upper = NULL){
+truncate.Distribution <- function(x, lower = NULL, upper = NULL) {
   TruncatedDistribution$new(x, lower, upper)
 }

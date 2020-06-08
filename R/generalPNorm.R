@@ -14,12 +14,11 @@
 #' @param upper upper bound for the integral
 #'
 #' @examples
-#' generalPNorm(Exponential$new()$pdf,2,0,10)
-#'
+#' generalPNorm(Exponential$new()$pdf, 2, 0, 10)
 #' @return Returns a numeric value for the p norm of a function evaluated between given limits.
 #'
 #' @export
-generalPNorm <- function(fun, p, lower, upper){
+generalPNorm <- function(fun, p, lower, upper) {
   message(.distr6$message_numeric)
-  return((stats::integrate(f = function(x) abs(fun(x))^p,lower,upper)$value)^(1/p))
+  return((stats::integrate(f = function(x) abs(fun(x))^p, lower, upper)$value)^(1 / p))
 }

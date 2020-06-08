@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-#  Distribution Documentation
-#-------------------------------------------------------------
 #' @name WeightedDiscrete
 #' @template SDist
 #' @templateVar ClassName WeightedDiscrete
@@ -11,15 +8,26 @@
 #' @templateVar pdfpmfeq \deqn{f(x_i) = p_i}
 #' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
-#' @templateVar additionalDetails Sampling from this distribution is performed with the \code{\link[base]{sample}} function with the elements given as the x values and the pdf as the probabilities. The cdf and quantile assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#' @templateVar constructor data
-#' @templateVar arg1 \code{data} \tab data.frame \tab matrix-style object of observations and probabilities. See details. \cr
-#' @templateVar constructorDets an object that can be coerced to a data.frame containing columns 'sample' and at least one of 'pdf' and 'cdf', see examples.
-#' @templateVar additionalSeeAlso \code{\link[base]{sample}} for the sampling function and \code{\link{Empirical}} for the closely related Empirical distribution.
+#' @details
+#' Sampling from this distribution is performed with the [sample] function with the elements given
+#' as the x values and the pdf as the probabilities. The cdf and quantile assume that the
+#' elements are supplied in an indexed order (otherwise the results are meaningless).
+#'
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#'
+#' @family discrete distributions
+#' @family univariate distributions
 #'
 #' @examples
-#' x = WeightedDiscrete$new(data = data.frame(x = 1:3, pdf = c(1/5, 3/5, 1/5)))
-#' WeightedDiscrete$new(data = data.frame(x = 1:3, cdf = c(1/5, 4/5, 1))) # equivalently
+#' x <- WeightedDiscrete$new(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5))
+#' WeightedDiscrete$new(x = 1:3, cdf = c(1 / 5, 4 / 5, 1)) # equivalently
 #'
 #' # d/p/q/r
 #' x$pdf(1:5)
@@ -32,137 +40,271 @@
 #' x$variance()
 #'
 #' summary(x)
-#'
 #' @export
-NULL
-#-------------------------------------------------------------
-# WeightedDiscrete Distribution Definition
-#-------------------------------------------------------------
-WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_objects = F)
-WeightedDiscrete$set("public","name","WeightedDiscrete")
-WeightedDiscrete$set("public","short_name","WeightDisc")
-WeightedDiscrete$set("public","description","WeightedDiscrete Probability Distribution.")
+WeightedDiscrete <- R6Class("WeightedDiscrete",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "WeightedDiscrete",
+    short_name = "WeightDisc",
+    description = "Weighted Discrete Probability Distribution.",
 
-WeightedDiscrete$set("public","mode",function(which = "all"){
-  if(which == "all")
-    return(private$.data$x[private$.data$pdf == max(private$.data$pdf)])
-  else
-    return(private$.data$x[private$.data$pdf == max(private$.data$pdf)][which])
-})
-WeightedDiscrete$set("public","mean",function(){
-  return(sum(private$.data$x * private$.data$pdf))
-})
-WeightedDiscrete$set("public","variance",function(){
-  return(sum((private$.data$x - self$mean())^2 * private$.data$pdf))
-})
-WeightedDiscrete$set("public","skewness",function(){
-  return(sum(((private$.data$x - self$mean())/self$stdev())^3 * private$.data$pdf))
-})
-WeightedDiscrete$set("public","kurtosis",function(excess = TRUE){
-  kurt = sum(((private$.data$x - self$mean())/self$stdev())^4 * private$.data$pdf)
-  if(excess)
-    return(kurt - 3)
-  else
-    return(kurt)
-})
-WeightedDiscrete$set("public","entropy",function(base = 2){
-  return(-sum(private$.data$pdf * log(private$.data$pdf, base)))
-})
-WeightedDiscrete$set("public","mgf",function(t){
-  if(length(t) == 1)
-    return(sum(exp(private$.data$x*t) * (private$.data$pdf)))
-  else{
-    nr = length(t)
-    nc = length(private$.data$x)
-    return(as.numeric(
-      exp(matrix(private$.data$x, nrow = nr, ncol = nc, byrow = T) *
-            matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$pdf, nrow = nc, ncol = 1)
-    ))
-  }
-})
-WeightedDiscrete$set("public","cf",function(t){
-  if(length(t) == 1)
-    return(sum(exp(private$.data$x*t*1i) * (private$.data$pdf)))
-  else{
-    nr = length(t)
-    nc = length(private$.data$x)
-    return(as.complex(
-      exp(matrix(private$.data$x*1i, nrow = nr, ncol = nc, byrow = T) *
-            matrix(t, nrow = nr, ncol = nc)) %*% matrix(private$.data$pdf, nrow = nc, ncol = 1)
-    ))
-  }
-})
-WeightedDiscrete$set("public","pgf",function(z){
-  if(length(z) == 1)
-    return(sum((z^private$.data$x) * private$.data$pdf))
-  else{
-    nr = length(z)
-    nc = length(private$.data$x)
-    return(as.numeric(
-      (matrix(z, nrow = nr, ncol = nc) ^ matrix(private$.data$x, nrow = nr, ncol = nc, byrow = z)) %*%
-        matrix(private$.data$pdf, nrow = nc, ncol = 1)
-    ))
-  }
-})
+    # Public methods
+    # initialize
 
-WeightedDiscrete$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  message("There are no parameters to set.")
-  return(NULL)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param data `([data.frame])`\cr
+    #' Deprecated. Use `x, pdf, cdf`.
+    #' @param x `numeric()`\cr
+    #' Data samples.
+    #' @param pdf `numeric()`\cr
+    #' Probability mass function for corresponding samples, should be same length `x`.
+    #' If `cdf` is not given then calculated as `cumsum(pdf)`.
+    #' @param cdf `numeric()`\cr
+    #' Cumulative distribution function for corresponding samples, should be same length `x`. If
+    #' given then `pdf` is ignored and calculated as difference of `cdf`s.
+    initialize = function(data = NULL, x = 1, pdf = 1,
+                          cdf = NULL, decorators = NULL) {
 
-WeightedDiscrete$set("private",".data",data.table::data.table())
+      if (!is.null(data)) {
+        message("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
+        x <- data$x
+        pdf <- data$pdf
+        cdf <- data$cdf
+      }
 
-WeightedDiscrete$set("public","initialize",function(data, decorators = NULL, verbose = FALSE){
+      private$.parameters <- getParameterSet(self, x = x, pdf = pdf, cdf = cdf)
+      self$setParameterValue(pdf = pdf, cdf = cdf)
 
-  data <- data.table::as.data.table(data)
-  checkmate::assert(all(colnames(data) %in% c("pdf","cdf","x")),
-                    .var.name = "data column names should be one of 'pdf', 'cdf', 'x")
-  checkmate::assert("x" %in% colnames(data),
-                    .var.name = "'x' must be included in data column names")
-  checkmate::assert(any(c("pdf","cdf") %in% colnames(data)),
-                    .var.name = "at least one of 'pdf' and 'cdf' must be included in data column names")
+      super$initialize(
+        decorators = decorators,
+        support = Set$new(x, class = "numeric"),
+        type = Reals$new()
+      )
+    },
 
-  if("pdf" %in% colnames(data) & !("cdf" %in% colnames(data))){
-    data$cdf = cumsum(data$pdf)
-  } else if("cdf" %in% colnames(data) & !("pdf" %in% colnames(data))){
-    data$pdf = c(data$cdf[1], diff(data$cdf))
-  }
+    # stats
 
-  checkmate::assertNumeric(data$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
-  checkmate::assertNumeric(data$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid")
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(sum(self$getParameterValue("x") * self$getParameterValue("pdf")))
+    },
 
-  private$.data <- data
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
-  pdf = cdf = quantile = rand = NULL
+      if (which == "all") {
+        return(data[pdf == max(pdf)])
+      } else {
+        return(data[pdf == max(pdf)][which])
+      }
+    },
 
-  pdf <- function(x1){
-    return(as.numeric(unlist(private$.data[match(x1, private$.data$x), "pdf"])))
-  }
-  cdf <- function(x1){
-    find = findInterval(x1, private$.data$x)
-    find[find == 0] = 1
-    return(as.numeric(unlist(private$.data[find, "cdf"])))
-  }
-  quantile <- function(p){
-    mat = p <= matrix(private$.data$cdf, nrow = length(p), ncol = nrow(private$.data), byrow = T)
-    which = apply(mat, 1, function(x) which(x)[1])
-    which[is.na(which)] = ncol(mat)
-    return(as.numeric(unlist(private$.data[which, "x"])))
-  }
-  rand <- function(n){
-    return(sample(private$.data$x, n, TRUE, private$.data$pdf))
-  }
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+      return(sum((data - self$mean())^2 * pdf))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Set$new(private$.data$x, class = "numeric"),
-                   symmetric = FALSE, type = Reals$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+      return(sum(((data - self$mean()) / self$stdev())^3 * pdf))
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "WeightDisc", ClassName = "WeightedDiscrete",
-                                                     Type = "\u211D", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+      kurt <- sum(((data - self$mean()) / self$stdev())^4 * pdf)
+      if (excess) {
+        return(kurt - 3)
+      } else {
+        return(kurt)
+      }
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      pdf <- self$getParameterValue("pdf")
+      return(-sum(pdf * log(pdf, base)))
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+
+      if (length(t) == 1) {
+        return(sum(exp(data * t) * (pdf)))
+      } else {
+        nr <- length(t)
+        nc <- length(data)
+        return(as.numeric(
+          exp(matrix(data, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
+        ))
+      }
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+
+      if (length(t) == 1) {
+        return(sum(exp(data * t * 1i) * (pdf)))
+      } else {
+        nr <- length(t)
+        nc <- length(data)
+        return(as.complex(
+          exp(matrix(data * 1i, nrow = nr, ncol = nc, byrow = T) *
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
+        ))
+      }
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+
+      if (length(z) == 1) {
+        return(sum((z^data) * pdf))
+      } else {
+        nr <- length(z)
+        nc <- length(data)
+        return(as.numeric(
+          (matrix(z, nrow = nr, ncol = nc)^matrix(data, nrow = nr, ncol = nc, byrow = z)) %*%
+            matrix(pdf, nrow = nc, ncol = 1)
+        ))
+      }
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) lst <- list(...)
+      super$setParameterValue(lst = lst, error = error)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+
+      if (checkmate::testList(data)) {
+        pdf <- matrix(unlist(pdf), ncol = length(data[[1]]))
+        data <- matrix(unlist(data), ncol = ncol(pdf))
+        return(C_Vec_WeightedDiscretePdf(x, data, pdf, log))
+      } else {
+        return(C_WeightedDiscretePdf(x, data, pdf, log))
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      data <- self$getParameterValue("x")
+      cdf <- self$getParameterValue("cdf")
+
+      if (checkmate::testList(data)) {
+        cdf <- matrix(unlist(cdf), ncol = length(data[[1]]))
+        data <- matrix(unlist(data), ncol = ncol(cdf))
+        return(C_Vec_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p))
+      } else {
+        return(C_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p))
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      data <- self$getParameterValue("x")
+      cdf <- self$getParameterValue("cdf")
+
+      if (checkmate::testList(data)) {
+        cdf <- matrix(unlist(cdf), ncol = length(data[[1]]))
+        data <- matrix(unlist(data), ncol = ncol(cdf))
+        return(C_Vec_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
+      } else {
+        return(C_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
+      }
+    },
+    .rand = function(n) {
+      data <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("x")
+
+      if (checkmate::testList(data)) {
+        rand <- matrix(nrow = n, ncol = nrow(pdf))
+        for (i in seq_along(data)) {
+          rand[, i] <- sample(data[[i]], n, TRUE, pdf[[i]])
+        }
+      } else {
+        rand <- sample(data, n, TRUE, pdf)
+      }
+      return(rand)
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$x)) message("'x' cannot be updated after construction.")
+      if (!is.null(paramlst$pdf)) lst$pdf <- paramlst$pdf
+      if (!is.null(paramlst$cdf)) lst$pdf <- c(paramlst$cdf[1], diff(paramlst$cdf))
+
+      if (!is.null(lst$pdf)) {
+        stopifnot(length(lst$pdf) == length(self$getParameterValue("x")))
+        checkmate::assertNumeric(lst$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
+      }
+
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate"),
+
+    .data = "Deprecated - use self$getParameterValue instead."
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "WeightDisc", ClassName = "WeightedDiscrete",
+    Type = "\u211D", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "-"
+  )
+)

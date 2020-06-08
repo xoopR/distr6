@@ -27,5 +27,4 @@ Validation checks to test if Distribution is discrete.
 }
 \examples{
 testDiscrete(Binomial$new()) # FALSE
-
 }

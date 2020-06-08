@@ -2,39 +2,28 @@ library(testthat)
 
 context("Pareto distribution")
 
-test_that("parameterisation",{
-  expect_silent(Pareto$new())
-  expect_silent(Pareto$new(shape = 2, scale = 3))
-})
-
-test_that("properties & traits",{
-  expect_equal(Pareto$new()$symmetry, "asymmetric")
-  expect_equal(Pareto$new(scale = 3)$inf, 3)
-  expect_equal(Pareto$new(scale = 3)$sup, Inf)
-  expect_equal(Pareto$new()$dmax, .Machine$double.xmax)
-  expect_equal(Pareto$new(scale=3)$dmin, 3)
-  expect_equal(Pareto$new(scale = 3)$valueSupport, "continuous")
-  expect_equal(Pareto$new(scale = 3)$variateForm, "univariate")
-})
-
-test_that("statistics",{
-  expect_equal(Pareto$new(shape = 1)$mean(), Inf)
-  expect_equal(Pareto$new(shape = 2)$mean(), 2)
-  expect_equal(Pareto$new(shape = 2)$variance(), Inf)
-  expect_equal(Pareto$new(shape = 3)$variance(), 0.75)
-  expect_equal(Pareto$new(shape = 3)$skewness(), NaN)
-  expect_equal(Pareto$new(shape = 4)$skewness(), 10*sqrt(0.5))
-  expect_equal(Pareto$new(shape = 4)$kurtosis(), NaN)
-  expect_equal(Pareto$new(shape = 5)$kurtosis(T), 70.8)
-  expect_equal(Pareto$new(shape = 5)$kurtosis(F), 73.8)
-  expect_equal(Pareto$new()$entropy(), log(exp(2), base=2))
-  expect_equal(Pareto$new()$mgf(1), NaN)
-  expect_equal(Pareto$new()$pgf(1), NaN)
-  expect_equal(Pareto$new()$mgf(-1), expint::gammainc(-1,1))
-  expect_error(Pareto$new()$cf(1))
-  expect_equal(Pareto$new(scale=5)$mode(), 5)
-  expect_equal(Pareto$new()$pdf(2), 0.25)
-  expect_equal(Pareto$new()$cdf(2), 0.5)
-  expect_equal(round(Pareto$new()$quantile(0.46), 5), round(1.851852, 5))
-  expect_silent(Pareto$new()$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(
+    sdist = Pareto,
+    pars = list(),
+    traits = list(
+      valueSupport = "continuous",
+      variateForm = "univariate",
+      type = PosReals$new(zero = T)
+    ),
+    support = Interval$new(lower = 1, type = "[)"),
+    symmetry = "asymmetric",
+    mean = Inf,
+    mode = 1,
+    median = extraDistr::qpareto(0.5),
+    variance = Inf,
+    skewness = NaN,
+    exkur = NaN,
+    entropy = log(exp(2), base = 2),
+    mgf = NaN,
+    pgf = NaN,
+    pdf = extraDistr::dpareto(1:3),
+    cdf = extraDistr::ppareto(1:3),
+    quantile = extraDistr::qpareto(c(0.24, 0.42, 0.5))
+  )
 })

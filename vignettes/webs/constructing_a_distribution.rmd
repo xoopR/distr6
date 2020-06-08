@@ -62,11 +62,7 @@ Notice how the parameterisation chosen in construction is shown in the print met
 ```{r}
 Normal$new(mean = 2, var = 2, sd = 3, prec = 4)
 ```
-Only the mean and precision arguments are used, if you're unsure which parameters are conflicting see the help page for the distribution, `?Normal`. To have the distribution 'tell' you which parameters are used in construction, add the `verbose = T` argument:
-```{r}
-Normal$new(verbose = TRUE)
-Normal$new(mean = 2, var = 2, sd = 3, prec = 4, verbose = TRUE)
-```
+Only the mean and precision arguments are used, if you're unsure which parameters are conflicting see the help page for the distribution, `?Normal`.
 
 ## Summary
 

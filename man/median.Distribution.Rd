@@ -19,14 +19,3 @@ Quantile function evaluated at 0.5 as a numeric.
 \description{
 Median of a distribution assuming quantile is provided.
 }
-\details{
-The median is computed as the quantile function evaluated at 0.5.
-If the quantile is not found in the distribution (analytically or numerically), returns error.
-}
-\section{R6 Usage}{
- $median()
-}
-
-\seealso{
-\code{\link{quantile.Distribution}}
-}

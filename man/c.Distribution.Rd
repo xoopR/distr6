@@ -4,12 +4,12 @@
 \alias{c.Distribution}
 \title{Combine Distributions into a VectorDistribution}
 \usage{
-\method{c}{Distribution}(..., name = NULL, short_name = NULL, description = NULL, decorators = NULL)
+\method{c}{Distribution}(..., name = NULL, short_name = NULL, decorators = NULL)
 }
 \arguments{
 \item{...}{distributions to be concatenated.}
 
-\item{name, short_name, description, decorators}{See \code{\link{VectorDistribution}}}
+\item{name, short_name, decorators}{See \code{\link{VectorDistribution}}}
 }
 \value{
 A VectorDistribution
@@ -22,16 +22,17 @@ Helper function for quickly combining distributions into a \code{\link{VectorDis
 c(Binomial$new(), Normal$new())
 
 # More complicated distributions
-b = truncate(Binomial$new(), 2, 6)
-n = huberize(Normal$new(), -1, 1)
+b <- truncate(Binomial$new(), 2, 6)
+n <- huberize(Normal$new(), -1, 1)
 c(b, n)
 
 # Concatenate VectorDistributions
-v1 = VectorDistribution$new(list(Binomial$new(), Normal$new()))
-v2 = VectorDistribution$new(distribution = "Gamma",
-             params  = data.table::data.table(shape = 1:2, rate = 1:2))
+v1 <- VectorDistribution$new(list(Binomial$new(), Normal$new()))
+v2 <- VectorDistribution$new(
+  distribution = "Gamma",
+  params = data.table::data.table(shape = 1:2, rate = 1:2)
+)
 c(v1, v2)
-
 }
 \seealso{
 \code{\link{VectorDistribution}}

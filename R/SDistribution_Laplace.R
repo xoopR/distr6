@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Laplace Distribution Documentation
-#-------------------------------------------------------------
 #' @name Laplace
 #' @template SDist
 #' @templateVar ClassName Laplace
@@ -12,128 +9,221 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-|x-\mu|/\beta)/(2\beta)}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
-#' @templateVar constructor mean = 0, scale = 1, var = NULL
-#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar arg3 \code{var} \tab numeric \tab alternate scale parameter. \cr
-#' @templateVar constructorDets \code{mean} as a numeric and either \code{scale} or \code{var} as positive numerics. These are related via, \deqn{var = 2 * scale^2} If \code{var} is given then {scale} is ignored.
 #'
-#' @examples
-#' Laplace$new(scale = 2)
-#' Laplace$new(var = 4)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_scale
+#' @template field_packages
 #'
-#' x = Laplace$new(verbose = TRUE) # Default is mean = 0, scale = 1
-#'
-#' # Update parameters
-#' # When any parameter is updated, all others are too!
-#' x$setParameterValue(var = 2)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Laplace Distribution Definition
-#-------------------------------------------------------------
-Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F)
-Laplace$set("public","name","Laplace")
-Laplace$set("public","short_name","Lap")
-Laplace$set("public","description","Laplace Probability Distribution.")
+Laplace <- R6Class("Laplace",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Laplace",
+    short_name = "Lap",
+    description = "Laplace Probability Distribution.",
+    packages = "extraDistr",
 
-Laplace$set("public","mean",function(){
-  self$getParameterValue("mean")
-})
-Laplace$set("public","variance",function(){
-  self$getParameterValue("var")
-})
-Laplace$set("public","skewness",function(){
-  return(0)
-})
-Laplace$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(3)
-  else
-    return(6)
-})
-Laplace$set("public","entropy",function(base = 2){
-  return(log(2 * exp(1) * self$getParameterValue("scale"), base))
-})
-Laplace$set("public", "mgf", function(t){
-  if(abs(t) < 1/self$getParameterValue("scale"))
-    return(exp(self$getParameterValue("mean") * t) / (1 - self$getParameterValue("scale")^2 * t^2))
-  else
-    return(NaN)
-})
-Laplace$set("public", "pgf", function(z){
-  return(NaN)
-})
-Laplace$set("public", "cf", function(t){
-  return(exp(self$getParameterValue("mean") * t * 1i) / (1 + self$getParameterValue("scale")^2 * t^2))
-})
-Laplace$set("public","mode",function(which = NULL){
-  return(self$getParameterValue("mean"))
-})
+    # Public methods
+    # initialize
 
-Laplace$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
-  if(!is.null(paramlst$var)) lst = c(lst, list(scale = sqrt(paramlst$var/2)))
-  return(lst)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of the distribution, defined on the Reals.
+    #' @param var `(numeric(1))`\cr
+    #' Variance of the distribution, defined on the positive Reals. `var = 2*scale^2`.
+    #' If `var` is provided then `scale` is ignored.
+    initialize = function(mean = 0, scale = 1, var = NULL, decorators = NULL) {
 
-Laplace$set("public","initialize",function(mean = 0, scale = 1, var = NULL,
-                                          decorators = NULL, verbose = FALSE){
+      private$.parameters <- getParameterSet(self, mean, scale, var)
+      self$setParameterValue(mean = mean, scale = scale, var = var)
 
-  private$.parameters <- getParameterSet(self, mean, scale, var, verbose)
-  self$setParameterValue(mean = mean, scale = scale, var = var)
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-  pdf <- function(x1){
-    return((2*self$getParameterValue("scale"))^-1 * exp(-abs(x1-self$getParameterValue("mean"))))
-  }
-  cdf <- function(x1){
-    cdf = x1
-    cdf[x1 <= self$getParameterValue("mean")] = 0.5 * exp((cdf[x1 <= self$getParameterValue("mean")]-
-                                                             self$getParameterValue("mean"))/
-                                                            self$getParameterValue("scale"))
-    cdf[x1 > self$getParameterValue("mean")] = 1 - (0.5 * exp(-(cdf[x1 > self$getParameterValue("mean")]-
-                                                                  self$getParameterValue("mean"))/
-                                                                self$getParameterValue("scale")))
-    return(cdf)
-  }
-  quantile <- function(p){
-    quantile = p
-    quantile[p <= 0.5] = self$getParameterValue("mean") + (self$getParameterValue("scale")*
-                                                             log(2*quantile[p <= 0.5]))
-    quantile[p > 0.5] = self$getParameterValue("mean") - (self$getParameterValue("scale")*
-                                                            log(2 - 2*quantile[p > 0.5]))
-    return(quantile)
-  }
-  rand <- function(n){
-    return(self$quantile(runif(n)))
-  }
+    # stats
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile, rand = rand,
-                   support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      self$getParameterValue("mean")
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Lap", ClassName = "Laplace",
-                                                     Type = "\u211D", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(self$getParameterValue("mean"))
+    },
+
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      self$getParameterValue("var")
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(0)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(3)
+      } else {
+        return(6)
+      }
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      return(log(2 * exp(1) * self$getParameterValue("scale"), base))
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      if (abs(t) < 1 / self$getParameterValue("scale")) {
+        return(exp(self$getParameterValue("mean") * t) / (1 - self$getParameterValue("scale")^2 * t^2))
+      } else {
+        return(NaN)
+      }
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      return(exp(self$getParameterValue("mean") * t * 1i) / (1 + self$getParameterValue("scale")^2 * t^2))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::dlaplace,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dlaplace(x,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::plaplace,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        extraDistr::plaplace(x,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::qlaplace,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        extraDistr::qlaplace(p,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::rlaplace,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rlaplace(n,
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale")
+        )
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      if (!is.null(paramlst$var)) lst <- c(lst, list(scale = sqrt(paramlst$var / 2)))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Lap", ClassName = "Laplace",
+    Type = "\u211D", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "extraDistr"
+  )
+)

@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Cauchy Distribution Documentation
-#-------------------------------------------------------------
 #' @name Cauchy
 #' @author Chijing Zeng
 #' @template SDist
@@ -13,99 +10,206 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))}
 #' @templateVar paramsupport \eqn{\alpha \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
-#' @templateVar additionalDetails The mean and variance are undefined, hence \code{NaN} is returned.
-#' @templateVar constructor location = 0, scale = 1
-#' @templateVar arg1 \code{location} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{scale} \tab numeric \tab scale parameter. \cr
-#' @templateVar constructorDets \code{location} as a numeric and \code{scale} as a positive numeric.
 #'
-#' @examples
-#' x = Cauchy$new(location = 2, scale = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_locationscale
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(scale = 3)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Cauchy Distribution Definition
-#-------------------------------------------------------------
-Cauchy <- R6Class("Cauchy", inherit = SDistribution, lock_objects = F)
-Cauchy$set("public","name","Cauchy")
-Cauchy$set("public","short_name","Cauchy")
-Cauchy$set("public","description","Cauchy Probability Distribution.")
-Cauchy$set("public","packages","stats")
+Cauchy <- R6Class("Cauchy",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Cauchy",
+    short_name = "Cauchy",
+    description = "Cauchy Probability Distribution.",
+    packages = "stats",
 
-Cauchy$set("public","mean",function(){
-  return(NaN)
-})
-Cauchy$set("public","variance",function(){
-  return(NaN)
-})
-Cauchy$set("public","skewness",function(){
-  return(NaN)
-})
-Cauchy$set("public","kurtosis",function(excess = TRUE){
-  return(NaN)
-})
-Cauchy$set("public","entropy",function(base = 2){
-  return(log(4 * pi * self$getParameterValue("scale"), base))
-})
-Cauchy$set("public", "mgf", function(t){
-  return(NaN)
-})
-Cauchy$set("public", "pgf", function(z){
-  return(NaN)
-})
-Cauchy$set("public", "cf", function(t){
-  return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
-})
-Cauchy$set("public","mode",function(which = NULL){
-  return(self$getParameterValue("location"))
-})
+    # Public methods
+    # initialize
 
-Cauchy$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$location)) lst = c(lst, list(location = paramlst$location))
-  if(!is.null(paramlst$scale)) lst = c(lst, list(scale = paramlst$scale))
-  return(lst)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(location = 0, scale = 1,
+                          decorators = NULL) {
 
-Cauchy$set("public","initialize",function(location = 0, scale = 1,
-                                          decorators = NULL, verbose = FALSE){
+      private$.parameters <- getParameterSet(self, location, scale)
+      self$setParameterValue(location = location, scale = scale)
 
-  private$.parameters <- getParameterSet(self, location, scale, verbose)
-  self$setParameterValue(location = location, scale = scale)
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        symmetry = "sym",
+        type = Reals$new()
+      )
+    },
 
-  pdf <- function(x1) dcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
-  cdf <- function(x1) pcauchy(x1, self$getParameterValue("location"), self$getParameterValue("scale"))
-  quantile <- function(p) qcauchy(p, self$getParameterValue("location"), self$getParameterValue("scale"))
-  rand <- function(n) rcauchy(n, self$getParameterValue("location"), self$getParameterValue("scale"))
+    # stats
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Reals$new(),
-                   symmetric = TRUE,type = Reals$new(),
-                   valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(NaN)
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Cauchy", ClassName = "Cauchy",
-                                                     Type = "\u211D", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "stats"))
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      return(self$getParameterValue("location"))
+    },
 
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(NaN)
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(NaN)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      return(NaN)
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      return(log(4 * pi * self$getParameterValue("scale"), base))
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      return(NaN)
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "dcauchy",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        log = log,
+        vec = test_list(location)
+      )
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "pcauchy",
+        x = x,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "qcauchy",
+        x = p,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        lower.tail = lower.tail,
+        log = log.p,
+        vec = test_list(location)
+      )
+    },
+    .rand = function(n) {
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+      call_C_base_pdqr(
+        fun = "rcauchy",
+        x = n,
+        args = list(
+          location = unlist(location),
+          scale = unlist(scale)
+        ),
+        vec = test_list(location)
+      )
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
+      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Cauchy", ClassName = "Cauchy",
+    Type = "\u211D", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "stats"
+  )
+)

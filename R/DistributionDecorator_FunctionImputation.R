@@ -1,124 +1,195 @@
-#' @name FunctionImputation
-#'
-#' @title Imputed Pdf/Cdf/Quantile/Rand Functions
+#' @title Imputed Pdf/Cdf/Quantile/Rand Functions Decorator
 #'
 #' @description This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
-#' by using strategies dependent on which methods are already present in the distribution.
+#' by using strategies dependent on which methods are already present in the distribution. Unlike
+#' other decorators, private methods are added to the [Distribution], not public methods.
+#' Therefore the underlying public `[Distribution]$pdf`, `[Distribution]$pdf`,
+#' `[Distribution]$quantile`, and `[Distribution]$rand` functions stay the same.
 #'
-#' @details Decorator objects add functionality to the given Distribution object by copying methods
-#' in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-#' below to find details of the methods that are added to the Distribution. Methods already
-#' present in the distribution are not overwritten by the decorator.
-#'
-#' Use \code{\link{decorate}} to decorate a Distribution.
-#'
-#' All methods in this decorator use numerical approximations and therefore better results may be available
-#' from analytic computations.
-#'
-#' @section Constructor: FunctionImputation$new(distribution)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{distribution} \tab distribution \tab Distribution to decorate. \cr
-#' }
-#'
-#' @section Added Methods:
-#' \tabular{lll}{
-#' \strong{Method} \tab \strong{Name} \tab \strong{Link} \cr
-#' \code{pdf(x1, ..., log = FALSE, simplify = TRUE)} \tab Density/mass function \tab \code{\link{pdf}} \cr
-#' \code{cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Distribution function \tab \code{\link{cdf}}\cr
-#' \code{quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)} \tab Quantile function \tab \code{\link{quantile.Distribution}} \cr
-#' \code{rand(n, simplify = TRUE)} \tab Simulation function \tab \code{\link{rand}} \cr
-#' }
-#'
-#' @seealso \code{\link{decorate}}, \code{\link{listDecorators}}
-#'
-#' @return Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
-#' imputed if previously missing.
+#' @template class_decorator
+#' @template field_packages
+#' @template param_log
+#' @template param_logp
+#' @template param_simplify
+#' @template param_data
+#' @template param_lowertail
+#' @template param_n
+#' @template method_decorate
 #'
 #' @examples
-#' x = Distribution$new("Test", pdf = function(x) 1/(4-1),
-#' support = set6::Interval$new(1,4),
-#' type = set6::Reals$new())
-#' decorate(x, FunctionImputation)
-#' x$pdf(0:5)
-#' x$cdf(0:5)
+#' pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1 / 10)
 #'
+#' x <- Distribution$new("Test",
+#'   pdf = pdf,
+#'   support = set6::Interval$new(1, 10, class = "integer"),
+#'   type = set6::Naturals$new()
+#' )
+#' decorate(x, "FunctionImputation", n = 1000)
+#'
+#' x <- Distribution$new("Test",
+#'   pdf = pdf,
+#'   support = set6::Interval$new(1, 10, class = "integer"),
+#'   type = set6::Naturals$new(),
+#'   decorators = "FunctionImputation"
+#' )
+#'
+#' x <- Distribution$new("Test",
+#'   pdf = pdf,
+#'   support = set6::Interval$new(1, 10, class = "integer"),
+#'   type = set6::Naturals$new()
+#' )
+#' FunctionImputation$new()$decorate(x, n = 1000)
+#'
+#' x$pdf(1:10)
+#' x$cdf(1:10)
+#' x$quantile(0.42)
+#' x$rand(4)
 #' @export
-NULL
+FunctionImputation <- R6Class("FunctionImputation",
+  inherit = DistributionDecorator,
+  public = list(
+    packages = c("pracma", "GoFKernel"),
 
-FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator)
-.distr6$decorators <- append(.distr6$decorators, list(FunctionImputation = FunctionImputation))
-FunctionImputation$set("public","packages",c("pracma","GoFKernel"))
+    #' @description
+    #' Decorates the given distribution with the methods available in this decorator.
+    #' @param n `(integer(1))`\cr
+    #' Grid size for imputing functions, cannot be changed after decorating.
+    #' Generally larger `n` means better accuracy but slower computation, and smaller `n`
+    #' means worse accuracy and faster computation.
+    decorate = function(distribution, n = 1000) {
 
-FunctionImputation$set("public","pdf",function(x1){
-  # CDF2PDF
-  if(testUnivariate(self)){
-      if(testDiscrete(self)){
-        return(self$cdf(x1) - self$cdf(x1-1))
-      } else if(testContinuous(self)){
-        message(.distr6$message_numeric)
-        return(pracma::fderiv(self$cdf,x1))
+      assert_pkgload(self$packages)
+
+      if (!testUnivariate(distribution)) {
+        stop("FunctionImputation is currently only supported for univariate distributions.")
       }
-  }
-})
-FunctionImputation$set("public","cdf",function(x1){
-  # PDF2CDF
-  if(testUnivariate(self)){
-    if(testDiscrete(self)){
-      if(length(x1)>1)
-        return(sapply(x1,function(x) sum(self$pdf(self$inf:x))))
-      else
-        return(sum(self$pdf(self$inf:x1)))
-    } else if(testContinuous(self)){
+
+      if ("FunctionImputation" %in% distribution$decorators) {
+        message(paste(distribution$name, "is already decorated with FunctionImputation."))
+        invisible(self)
+      } else {
+        pdist <- distribution$.__enclos_env__$private
+        pdist$n_grid <- checkmate::assertIntegerish(n)
+
+        if (!isPdf(distribution)) {
+          pdf <- FunctionImputation$private_methods$.pdf
+          formals(pdf) <- c(formals(pdf), list(self = distribution, private = pdist))
+          pdist$.pdf <- pdf
+          pdist$.isPdf <- -1L
+        }
+
+        if (!isCdf(distribution)) {
+          cdf <- FunctionImputation$private_methods$.cdf
+          formals(cdf) <- c(formals(cdf), list(self = distribution, private = pdist))
+          pdist$.cdf <- cdf
+          pdist$.isCdf <- -1L
+        }
+
+        if (!isQuantile(distribution)) {
+          quantile <- FunctionImputation$private_methods$.quantile
+          formals(quantile) <- c(formals(quantile), list(self = distribution, private = pdist))
+          pdist$.quantile <- quantile
+          pdist$.isQuantile <- -1L
+        }
+
+        if (!isRand(distribution)) {
+          rand <- FunctionImputation$private_methods$.rand
+          formals(rand) <- c(formals(rand), list(self = distribution, private = pdist))
+          pdist$.rand <- rand
+          pdist$.isRand <- -1L
+        }
+
+        message(paste(distribution$name, "is now decorated with FunctionImputation."))
+        pdist$.updateDecorators(c(distribution$decorators, "FunctionImputation"))
+        invisible(self)
+      }
+    }
+  ),
+
+  active = list(
+    #' @field methods
+    #' Returns the names of the available methods in this decorator.
+    methods = function() {
+      names(private)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+
+      if (testDiscrete(self)) {
+        data <- matrix(x, ncol = 1)
+        pdf <- self$cdf(data = data) - self$cdf(data = data - 1)
+      } else if (testContinuous(self)) {
+        message(.distr6$message_numeric)
+        pdf <- pracma::fderiv(self$cdf, x)
+      }
+
+      if (log) {
+        pdf <- log(pdf)
+      }
+
+      return(pdf)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+
       message(.distr6$message_numeric)
-      if(length(x1)>1)
-        return(unlist(sapply(x1, function(x0) integrate(self$pdf, lower = self$inf, upper = x0)$value)))
-      else
-        return(integrate(self$pdf, lower = self$inf, upper = x1)$value)
 
+      if (testDiscrete(self)) {
+        grid_x <- impute_genx(self, private$n_grid)
+        cdf <- C_NumericCdf_Discrete(
+          q = x,
+          x = grid_x,
+          pdf = self$pdf(grid_x),
+          lower = lower.tail,
+          logp = log.p
+        )
+      } else {
+        cdf <- numeric(length(x))
+        for (i in seq_along(x)) {
+          cdf[i] <- integrate(self$pdf, 0, x[i])$value
+        }
+      }
+
+      return(cdf)
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+
+      message(.distr6$message_numeric)
+      data <- p
+
+      if (testContinuous(self)) {
+        x <- self$workingSupport
+        lower <- x$lower
+        upper <- x$upper
+        quantile <- numeric(length(data))
+        for (i in seq_along(data)) {
+          quantile[i] <- suppressMessages(GoFKernel::inverse(self$cdf, lower = lower, upper = upper)(data[i]))
+        }
+      } else {
+        x <- impute_genx(self, private$n_grid)
+        if (isCdf(self)) {
+          quantile <- suppressMessages(C_NumericQuantile(data, x, self$cdf(x), lower.tail, log.p))
+        } else {
+          cdf <- suppressMessages(C_NumericCdf_Discrete(x, x, self$pdf(x), lower = TRUE, logp = FALSE))
+          quantile <- C_NumericQuantile(data, x, cdf, lower.tail, log.p)
+        }
+      }
+
+      return(quantile)
+    },
+    .rand = function(n) {
+      message(.distr6$message_numeric)
+      if (isQuantile(self) == 1L) {
+        return(self$quantile(runif(n)))
+      } else if (isPdf(self) == 1L) {
+        x <- impute_genx(self, private$n_grid)
+        return(sample(x, n, TRUE, self$pdf(x)))
+      } else {
+        return(self$quantile(runif(n)))
+      }
     }
-  }
-})
-FunctionImputation$set("public","quantile",function(p){
-  message(.distr6$message_numeric)
+  )
+)
 
- # if(!testMessage(self$cdf(1))){
-    #CDF2QUANTILE - DISCRETE/CONT
-    if(testDiscrete(self)){
-      to = ifelse(self$sup == Inf, 1e+08, self$sup)
-      from = ifelse(self$inf == -Inf, -1e+08, self$inf)
-      x1 = seq.int(from,to,by = 1)
-      y = self$cdf(x1)
-
-      if(length(p)>1)
-        return(unlist(sapply(p, function(p0) return(x1[min(which(y == min(y[y>p0])))]))))
-      else
-        return(x1[min(which(y == min(y[y>p])))])
-
-    } else if(testContinuous(self)){
- #     if(strategy == "inversion"){
-        upper = ifelse(self$sup == Inf, 1e+08, self$sup)
-        lower = ifelse(self$inf == -Inf, -1e+08, self$inf)
-
-        if(length(p)>1)
-          return(unlist(sapply(p, function(p0)
-            return(suppressMessages(GoFKernel::inverse(self$cdf,lower = self$inf,upper = self$sup)(p0))))))
-        else
-          return(suppressMessages(GoFKernel::inverse(self$cdf, lower = self$inf, upper = self$sup)(p)))
-    }
- #   }
- # }
-})
-FunctionImputation$set("public","rand",function(n){
-  strategy = "q2r"
-  if(strategy == "q2r"){
-    message(.distr6$message_numeric)
-    return(suppressMessages(sapply(1:n, function(x) self$quantile(runif(1)))))
-  } #else if(strategy == "p2r"){
-  #   message(.distr6$message_numeric)
-  #   if(testDiscrete(self))
-  #     return(sample(self$inf:self$sup, n, TRUE, self$pdf(self$inf:self$sup)))
-  # }
-})
+.distr6$decorators <- append(.distr6$decorators, list(FunctionImputation = FunctionImputation))

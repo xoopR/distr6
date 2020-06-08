@@ -7,33 +7,20 @@
 rand(object, n, simplify = TRUE)
 }
 \arguments{
-\item{object}{Distribution.}
+\item{object}{(\link{Distribution})}
 
-\item{n}{number of observations. If length(n) > 1, the length is taken to be the number required.}
+\item{n}{\code{(numeric(1))} \cr
+Number of points to simulate from the distribution. If length greater than \eqn{1}, then
+\code{n <- length(n)},}
 
-\item{simplify}{if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.}
+\item{simplify}{\code{logical(1)} \cr
+If \code{TRUE} (default) simplifies the pdf if possible to a \code{numeric}, otherwise returns a
+\link[=data.table]{data.table::data.table}.}
 }
 \value{
-Simulated draws from the distribution as either a numeric if \code{simplify} is TRUE
-or as a data.table.
+Simulations as either a numeric if \code{simplify} is TRUE
+or as a \link[data.table:data.table]{data.table::data.table}.
 }
 \description{
-Returns a given number of points sampled from the distribution.
-}
-\details{
-If available a rand will be returned without warning using an analytic expression. Otherwise,
-if the distribution has not been decorated with \code{FunctionImputation}, \code{NULL} is returned.
-To impute the rand, use \code{decorate(distribution, FunctionImputation)}, this will provide a numeric
-calculation for the rand with warning.
-
-Additional named arguments can be passed, which are required for composite distributions such as
-\code{\link{ProductDistribution}} and \code{\link{ArrayDistribution}}.
-}
-\section{R6 Usage}{
- $rand(n, simplify = TRUE)
-}
-
-\seealso{
-\code{\link{pdf}}, \code{\link{cdf}}, \code{\link{quantile}} for other statistical functions.
-\code{\link{FunctionImputation}}, \code{\link{decorate}} for imputing missing functions.
+See \link{Distribution}\verb{$rand}
 }

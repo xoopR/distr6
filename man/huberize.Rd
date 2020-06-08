@@ -17,5 +17,5 @@ huberize(x, lower, upper)
 S3 functionality to huberize an R6 distribution.
 }
 \seealso{
-\code{\link{HuberizedDistribution}}
+\link{HuberizedDistribution}
 }

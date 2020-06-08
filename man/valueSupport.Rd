@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution.R
 \name{valueSupport}
 \alias{valueSupport}
-\title{Value Support Accessor}
+\title{Value Support Accessor - Deprecated}
 \usage{
 valueSupport(object)
 }
@@ -13,9 +13,5 @@ valueSupport(object)
 One of "discrete"/"continuous"/"mixture".
 }
 \description{
-Returns the valueSupport of the distribution.
+Deprecated. Use $traits$valueSupport
 }
-\section{R6 Usage}{
- $valueSupport
-}
-

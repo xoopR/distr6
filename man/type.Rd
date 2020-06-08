@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution.R
 \name{type}
 \alias{type}
-\title{Type Accessor}
+\title{Type Accessor - Deprecated}
 \usage{
 type(object)
 }
@@ -13,12 +13,9 @@ type(object)
 An R6 object of class \link[set6:Set]{set6::Set}.
 }
 \description{
-Returns the scientific type of the distribution.
+Deprecated. Use $traits$type
 }
 \section{R6 Usage}{
  $type
 }
 
-\seealso{
-\link[set6:Set]{set6::Set}
-}

@@ -36,5 +36,4 @@ Validation checks to test if Distribution is positive skew.
 }
 \examples{
 testPositiveSkew(Binomial$new())
-
 }

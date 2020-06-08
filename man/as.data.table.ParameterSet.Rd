@@ -17,6 +17,3 @@ A data.table.
 \description{
 Coerces a ParameterSet to a data.table.
 }
-\seealso{
-\code{\link{ParameterSet}}
-}

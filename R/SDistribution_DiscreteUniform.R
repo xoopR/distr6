@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# DiscreteUniform Distribution Documentation
-#-------------------------------------------------------------
 #' @name DiscreteUniform
 #' @template SDist
 #' @templateVar ClassName DiscreteUniform
@@ -12,122 +9,261 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b - a + 1)}
 #' @templateVar paramsupport \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}
 #' @templateVar distsupport \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}
-#' @templateVar constructor lower = 0, upper = 1
-#' @templateVar arg1 \code{lower} \tab integer \tab lower distribution limit. \cr
-#' @templateVar arg2 \code{upper} \tab integer \tab upper distribution limit. \cr
-#' @templateVar constructorDets \code{lower} and \code{upper} as whole numbers.
-#' @templateVar additionalSeeAlso \code{\link{Uniform}} for the (continuous) Uniform distribution.
 #'
-#' @examples
-#' x <- DiscreteUniform$new(lower = -10, upper = 5)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template field_packages
 #'
-#' # Update parameters
-#' x$setParameterValue(lower = 2, upper = 7)
-#' x$parameters()
-#'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$quantile(0.42)
-#' x$rand(4)
-#'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @family discrete distributions
+#' @family univariate distributions
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# DiscreteUniform Distribution Definition
-#-------------------------------------------------------------
-DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F)
-DiscreteUniform$set("public","name","DiscreteUniform")
-DiscreteUniform$set("public","short_name","DUnif")
-DiscreteUniform$set("public","description","DiscreteUniform Probability Distribution.")
+DiscreteUniform <- R6Class("DiscreteUniform",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "DiscreteUniform",
+    short_name = "DUnif",
+    description = "Discrete Uniform Probability Distribution.",
+    packages = "extraDistr",
 
-DiscreteUniform$set("public","mean",function(){
-  return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
-})
-DiscreteUniform$set("public","variance",function(){
-  return(((self$getParameterValue("upper") - self$getParameterValue("lower") + 1)^2 - 1) / 12)
-})
-DiscreteUniform$set("public","skewness",function(){
-  return(0)
-})
-DiscreteUniform$set("public","kurtosis",function(excess = TRUE){
-  exkurtosis = (-6 * (self$getParameterValue("N")^2 + 1)) / (5 * (self$getParameterValue("N")^2 - 1))
-  if(excess)
-    return(exkurtosis)
-  else
-    return(exkurtosis + 3)
-})
-DiscreteUniform$set("public","entropy",function(base = 2){
-  return(log(self$getParameterValue("N"), base))
-})
-DiscreteUniform$set("public", "mgf", function(t){
-  num = exp(t * self$getParameterValue("lower")) - exp((self$getParameterValue("upper")+1)*t)
-  denom = self$getParameterValue("N") * (1 - exp(t))
-  return(num/denom)
-})
-DiscreteUniform$set("public", "cf", function(t){
-  num = exp(1i * t * self$getParameterValue("lower")) - exp((self$getParameterValue("upper")+1) * t * 1i)
-  denom = self$getParameterValue("N") * (1 - exp(1i * t))
-  return(num/denom)
-})
-DiscreteUniform$set("public","pgf",function(z){
-  return(1/self$getParameterValue("N") * sum(z^(1:self$getParameterValue("N"))))
-})
-DiscreteUniform$set("public","mode",function(which="all"){
-  if(which=="all")
-    return(self$inf:self$sup)
-  else
-    return((self$inf:self$sup)[which])
-})
-DiscreteUniform$set("public","setParameterValue",function(..., lst = NULL, error = "warn"){
-  if(is.null(lst))
-    lst <- list(...)
-  if("lower" %in% names(lst) & "upper" %in% names(lst))
-    checkmate::assert(lst[["lower"]] <= lst[["upper"]], .var.name = "lower must be <= upper")
-  else if("lower" %in% names(lst))
-    checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"), .var.name = "lower must be <= upper")
-  else if("upper" %in% names(lst))
-    checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"), .var.name = "upper must be >= lower")
+    # Public methods
+    # initialize
 
-  super$setParameterValue(lst = lst, error = error)
-  private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
-  invisible(self)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param lower `(integer(1))`\cr
+    #' Lower limit of the [Distribution], defined on the Naturals.
+    #' @param upper `(integer(1))`\cr
+    #' Upper limit of the [Distribution], defined on the Naturals.
+    initialize = function(lower = 0, upper = 1, decorators = NULL) {
 
-DiscreteUniform$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$lower)) lst = c(lst, list(lower = paramlst$lower))
-  if(!is.null(paramlst$upper)) lst = c(lst, list(upper = paramlst$upper))
-  return(lst)
-})
+      private$.parameters <- getParameterSet(self, lower, upper)
+      self$setParameterValue(lower = lower, upper = upper)
 
-DiscreteUniform$set("public","initialize",function(lower = 0, upper = 1, decorators = NULL, verbose = FALSE){
+      super$initialize(
+        decorators = decorators,
+        support = Interval$new(lower, upper, class = "integer"),
+        symmetry = "sym",
+        type = Integers$new()
+      )
+    },
 
-  private$.parameters <- getParameterSet(self, lower, upper, verbose)
-  self$setParameterValue(lower = lower, upper = upper)
+    # stats
 
-  pdf = function(x1) return(1 / self$getParameterValue("N"))
-  cdf = function(x1) return((x1 - self$getParameterValue("lower") + 1)/ self$getParameterValue("N"))
-  quantile = function(p) return(self$getParameterValue("lower") + floor(p * self$getParameterValue("N")))
-  rand = function(n) return(self$quantile(runif(n)))
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf, quantile = quantile,
-                   rand = rand, support = Interval$new(lower, upper, class = "integer"),
-                   symmetric = TRUE, type = Integers$new(),
-                   valueSupport = "discrete",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      if (which == "all") {
+        return(self$inf:self$sup)
+      } else {
+        return((self$inf:self$sup)[which])
+      }
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "DUnif", ClassName = "DiscreteUniform",
-                                                     Type = "\u2124", ValueSupport = "discrete",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(((self$getParameterValue("upper") - self$getParameterValue("lower") + 1)^2 - 1) / 12)
+    },
 
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(0)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      exkurtosis <- (-6 * (self$getParameterValue("N")^2 + 1)) / (5 * (self$getParameterValue("N")^2 - 1))
+      if (excess) {
+        return(exkurtosis)
+      } else {
+        return(exkurtosis + 3)
+      }
+    },
+
+    #' @description
+    #' The entropy of a (discrete) distribution is defined by
+    #' \deqn{- \sum (f_X)log(f_X)}
+    #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
+    #' continuous distributions.
+    entropy = function(base = 2) {
+      return(log(self$getParameterValue("N"), base))
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      num <- exp(t * self$getParameterValue("lower")) - exp((self$getParameterValue("upper") + 1) * t)
+      denom <- self$getParameterValue("N") * (1 - exp(t))
+      return(num / denom)
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      num <- exp(1i * t * self$getParameterValue("lower")) - exp((self$getParameterValue("upper") + 1) * t * 1i)
+      denom <- self$getParameterValue("N") * (1 - exp(1i * t))
+      return(num / denom)
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(1 / self$getParameterValue("N") * sum(z^(1:self$getParameterValue("N"))))
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) {
+        lst <- list(...)
+      }
+      if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] <= lst[["upper"]], .var.name = "lower must be <= upper")
+      } else if ("lower" %in% names(lst)) {
+        checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"), .var.name = "lower must be <= upper")
+      } else if ("upper" %in% names(lst)) {
+        checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"), .var.name = "upper must be >= lower")
+      }
+
+      super$setParameterValue(lst = lst, error = error)
+      private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
+      invisible(self)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("lower"))) {
+        mapply(
+          extraDistr::ddunif,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::ddunif(
+          x,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper"),
+          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("lower"))) {
+        mapply(
+          extraDistr::pdunif,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper"),
+          MoreArgs = list(
+            q = x,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::pdunif(
+          x,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("lower"))) {
+        mapply(
+          extraDistr::qdunif,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper"),
+          MoreArgs = list(
+            p = p,
+            lower.tail = lower.tail,
+            log.p = log.p
+          )
+        )
+      } else {
+        extraDistr::qdunif(
+          p,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper"),
+          lower.tail = lower.tail,
+          log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("lower"))) {
+        mapply(
+          extraDistr::rdunif,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rdunif(
+          n,
+          min = self$getParameterValue("lower"),
+          max = self$getParameterValue("upper")
+        )
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
+      if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "DUnif", ClassName = "DiscreteUniform",
+    Type = "\u2124", ValueSupport = "discrete",
+    VariateForm = "univariate",
+    Package = "extraDistr"
+  )
+)

@@ -18,7 +18,6 @@ Lists all implemented kernels in distr6.
 }
 \examples{
 listKernels()
-
 }
 \seealso{
 \code{\link{Kernel}}

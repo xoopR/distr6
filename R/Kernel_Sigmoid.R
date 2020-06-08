@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Sigmoid Kernel
-#-------------------------------------------------------------
 #' @title Sigmoid Kernel
 #'
 #' @description Mathematical and statistical functions for the Sigmoid kernel defined by the pdf,
@@ -11,45 +7,51 @@
 #' @details The cdf and quantile functions are omitted as no closed form analytic expressions could
 #' be found, decorate with FunctionImputation for numeric results.
 #'
-#' @name Sigmoid
-#'
-#' @section Constructor: Sigmoid$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template param_decorators
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Sigmoid Kernel Definition
-#-------------------------------------------------------------
-Sigmoid <- R6Class("Sigmoid", inherit = Kernel, lock_objects = F)
-Sigmoid$set("public","name","Sigmoid")
-Sigmoid$set("public","short_name","Sigm")
-Sigmoid$set("public","description","Sigmoid Kernel")
-Sigmoid$set("public","squared2Norm",function(){
-  return(2 / pi^2)
-})
-Sigmoid$set("public","variance",function(){
-  return(pi^2/4)
-})
-Sigmoid$set("public","initialize",function(decorators = NULL){
+Sigmoid <- R6Class("Sigmoid",
+  inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Sigmoid",
+    short_name = "Sigm",
+    description = "Sigmoid Kernel",
 
-  pdf <- function(x1){
-    return((2/pi) * (exp(x1) + exp(-x1))^-1)
-  }
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(decorators = NULL) {
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, support = Reals$new(),
-                   symmetric = TRUE)
-  invisible(self)
-}) # CDF, QUANTILE & VAR MISSING
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    squared2Norm = function() {
+      return(2 / pi^2)
+    },
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D", Packages = "-"))
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(pi^2 / 4)
+    }
+  ),
+
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_SigmoidKernelPdf(x, log)
+    }
+  )
+)
+
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D", Packages = "-"))

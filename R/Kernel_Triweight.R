@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Triweight Kernel
-#-------------------------------------------------------------
 #' @title Triweight Kernel
 #'
 #' @description Mathematical and statistical functions for the Triweight kernel defined by the pdf,
@@ -12,47 +8,44 @@
 #' be found, decorate with FunctionImputation for numeric results.
 #'
 #' @name Triweight
-#'
-#' @section Constructor: Triweight$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Triweight Kernel Definition
-#-------------------------------------------------------------
-Triweight <- R6Class("Triweight", inherit = Kernel, lock_objects = F)
-Triweight$set("public","name","Triweight")
-Triweight$set("public","short_name","Triw")
-Triweight$set("public","description","Triweight Kernel")
-Triweight$set("public","squared2Norm",function(){
-  return(350/429)
-})
-Triweight$set("public","variance",function(){
-  return(1/9)
-})
-Triweight$set("public","initialize",function(decorators = NULL){
+Triweight <- R6Class("Triweight",
+  inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Triweight",
+    short_name = "Triw",
+    description = "Triweight Kernel",
 
-  pdf <- function(x1){
-    return(35/32 * (1-x1^2)^3)
-  }
-  cdf <- function(x1){
-    return(35/32 * (x1 - x1^3 + 3/5*x1^5 - 1/7*x1^7 + 16/35))
-  }
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    squared2Norm = function() {
+      return(350 / 429)
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
-}) # QUANTILE & VAR MISSING
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(1 / 9)
+    }
+  ),
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]", Packages = "-"))
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_TriweightKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_TriweightKernelCdf(x, lower.tail, log.p)
+    }
+  )
+)
+
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]", Packages = "-"))

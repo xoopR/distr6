@@ -1,7 +1,4 @@
 
-#-------------------------------------------------------------
-# Wald Distribution Documentation
-#-------------------------------------------------------------
 #' @name Wald
 #' @template SDist
 #' @templateVar ClassName Wald
@@ -12,124 +9,208 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\lambda/(2x^3\pi))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))}
 #' @templateVar paramsupport \eqn{\lambda > 0} and \eqn{\mu > 0}
 #' @templateVar distsupport the Positive Reals
-#' @templateVar omittedVars \code{entropy}
 #' @templateVar omittedDPQR \code{quantile}
 #' @templateVar aka Inverse Normal
 #' @aliases InverseNormal InverseGaussian
-#' @templateVar additionalDetails Sampling is performed as per Michael, Schucany, Haas (1976).
-#' @templateVar constructor mean = 1, shape = 1
-#' @templateVar arg1 \code{mean} \tab numeric \tab location parameter. \cr
-#' @templateVar arg2 \code{shape} \tab numeric \tab shape parameter. \cr
-#' @templateVar constructorDets \code{mean} and \code{shape} as positive numerics.
-#' @templateVar additionalSeeAlso \code{\link{Normal}} for the Normal distribution.
-#' @templateVar additionalReferences  Michael, John R.; Schucany, William R.; Haas, Roy W. (May 1976). "Generating Random Variates Using Transformations with Multiple Roots". The American Statistician. 30 (2): 88–90. doi:10.2307/2683801. JSTOR 2683801.
 #'
-#' @examples
-#' x = Wald$new(mean = 2, shape = 5)
+#' @family continuous distributions
+#' @family univariate distributions
 #'
-#' # Update parameters
-#' x$setParameterValue(shape = 3)
-#' x$parameters()
+#' @details
+#' Sampling is performed as per Michael, Schucany, Haas (1976).
 #'
-#' # d/p/q/r
-#' x$pdf(5)
-#' x$cdf(5)
-#' x$rand(4)
+#' @references
+#' Michael, J. R., Schucany, W. R., & Haas, R. W. (1976).
+#' Generating random variates using transformations with multiple roots.
+#' The American Statistician, 30(2), 88-90.
 #'
-#' # Statistics
-#' x$mean()
-#' x$variance()
-#'
-#' summary(x)
+#' @template class_distribution
+#' @template method_mode
+#' @template method_entropy
+#' @template method_kurtosis
+#' @template method_pgf
+#' @template method_mgfcf
+#' @template method_setParameterValue
+#' @template param_decorators
+#' @template param_shape
+#' @template field_packages
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Wald Distribution Definition
-#-------------------------------------------------------------
-Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F)
-Wald$set("public","name","Wald")
-Wald$set("public","short_name","Wald")
-Wald$set("public","description","Wald Probability Distribution.")
+Wald <- R6Class("Wald",
+  inherit = SDistribution, lock_objects = F,
+  public = list(
+    # Public fields
+    name = "Wald",
+    short_name = "Wald",
+    description = "Wald Probability Distribution.",
+    packages = "extraDistr",
 
-Wald$set("public","mean",function(){
-  return(self$getParameterValue("mean"))
-})
-Wald$set("public","variance",function(){
-  return(self$getParameterValue("mean")^3/self$getParameterValue("shape"))
-})
-Wald$set("public","skewness",function(){
-  return(3 * (self$getParameterValue("mean")/self$getParameterValue("shape"))^0.5)
-})
-Wald$set("public","kurtosis",function(excess = TRUE){
-  if(excess)
-    return(15 * self$getParameterValue("mean")/self$getParameterValue("shape"))
-  else
-    return(15 * self$getParameterValue("mean")/self$getParameterValue("shape") + 3)
-})
-Wald$set("public", "mgf", function(t){
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-  return(exp(shape/mean * (1 - sqrt(1 - 2*mean^2*t/shape))))
-})
-Wald$set("public", "pgf", function(z){
-  return(NaN)
-})
-Wald$set("public", "cf", function(t){
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-  return(exp(shape/mean * (1 - sqrt(1 - 2*mean^2*1i*t/shape))))
-})
-Wald$set("public","mode",function(which = NULL){
-  mean <- self$getParameterValue("mean")
-  shape <- self$getParameterValue("shape")
-  return(mean * ((1 + (9*mean^2)/(4*shape^2))^0.5 - (3*mean)/(2*shape)))
-})
+    # Public methods
+    # initialize
 
-Wald$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  if(!is.null(paramlst$shape)) lst = c(lst, list(shape = paramlst$shape))
-  return(lst)
-})
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param mean `(numeric(1))`\cr
+    #' Mean of the distribution, location parameter, defined on the positive Reals.
+    initialize = function(mean = 1, shape = 1, decorators = NULL) {
 
-Wald$set("public","initialize",function(mean = 1, shape = 1,
-                                          decorators = NULL, verbose = FALSE){
+      private$.parameters <- getParameterSet(self, mean, shape)
+      self$setParameterValue(mean = mean, shape = shape)
 
-  private$.parameters <- getParameterSet(self, mean, shape, verbose)
-  self$setParameterValue(mean = mean, shape = shape)
+      super$initialize(
+        decorators = decorators,
+        support = PosReals$new(),
+        type = PosReals$new()
+      )
+    },
 
-  pdf <- function(x1){
-    mean <- self$getParameterValue("mean")
-    shape <- self$getParameterValue("shape")
-    return((shape/(2*pi*x1^3))^0.5 * exp((-shape*(x1-mean)^2)/(2*mean^2*x1)))
-  }
-  cdf <- function(x1){
-    mean <- self$getParameterValue("mean")
-    shape <- self$getParameterValue("shape")
-    return(pnorm(sqrt(shape/x1)*(x1/mean-1)) + exp(2*shape/mean)*pnorm(-sqrt(shape/x1)*(x1/mean + 1)))
-  }
-  rand <- function(n){
-    mean <- self$getParameterValue("mean")
-    shape <- self$getParameterValue("shape")
-    y = rnorm(n)^2
-    x = mean + (mean^2*y)/(2*shape) - (mean/2*shape)*sqrt(4*mean*shape*y + mean^2*y^2)
-    z = runif(n)
+    # stats
 
-    rand = x
-    rand[z > mean/(mean+x)] = mean^2/x[z > mean/(mean+x)]
-    return(rand)
-  }
+    #' @description
+    #' The arithmetic mean of a (discrete) probability distribution X is the expectation
+    #' \deqn{E_X(X) = \sum p_X(x)*x}
+    #' with an integration analogue for continuous distributions.
+    mean = function() {
+      return(self$getParameterValue("mean"))
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   rand = rand, support = PosReals$new(),
-                   symmetric = TRUE, type = PosReals$new(), valueSupport = "continuous",
-                   variateForm = "univariate")
-  invisible(self)
-})
+    #' @description
+    #' The mode of a probability distribution is the point at which the pdf is
+    #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+    #' maxima).
+    mode = function(which = "all") {
+      mean <- self$getParameterValue("mean")
+      shape <- self$getParameterValue("shape")
+      return(mean * ((1 + (9 * mean^2) / (4 * shape^2))^0.5 - (3 * mean) / (2 * shape)))
+    },
 
-.distr6$distributions = rbind(.distr6$distributions,
-                              data.table::data.table(ShortName = "Wald", ClassName = "Wald",
-                                                     Type = "\u211D+", ValueSupport = "continuous",
-                                                     VariateForm = "univariate",
-                                                     Package = "-"))
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(self$getParameterValue("mean")^3 / self$getParameterValue("shape"))
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
+    #' \eqn{\sigma} is the standard deviation of the distribution.
+    skewness = function() {
+      return(3 * (self$getParameterValue("mean") / self$getParameterValue("shape"))^0.5)
+    },
+
+    #' @description
+    #' The kurtosis of a distribution is defined by the fourth standardised moment,
+    #' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' Excess Kurtosis is Kurtosis - 3.
+    kurtosis = function(excess = TRUE) {
+      if (excess) {
+        return(15 * self$getParameterValue("mean") / self$getParameterValue("shape"))
+      } else {
+        return(15 * self$getParameterValue("mean") / self$getParameterValue("shape") + 3)
+      }
+    },
+
+    #' @description The moment generating function is defined by
+    #' \deqn{mgf_X(t) = E_X[exp(xt)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    mgf = function(t) {
+      mean <- self$getParameterValue("mean")
+      shape <- self$getParameterValue("shape")
+      return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * t / shape))))
+    },
+
+    #' @description The characteristic function is defined by
+    #' \deqn{cf_X(t) = E_X[exp(xti)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    cf = function(t) {
+      mean <- self$getParameterValue("mean")
+      shape <- self$getParameterValue("shape")
+      return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * 1i * t / shape))))
+    },
+
+    #' @description The probability generating function is defined by
+    #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
+    #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    pgf = function(z) {
+      return(NaN)
+    }
+  ),
+
+  private = list(
+    # dpqr
+    .pdf = function(x, log = FALSE) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::dwald,
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          MoreArgs = list(x = x, log = log)
+        )
+      } else {
+        extraDistr::dwald(x,
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          log = log
+        )
+      }
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(
+          extraDistr::pwald,
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+        )
+      } else {
+        extraDistr::pwald(x,
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          lower.tail = lower.tail, log.p = log.p
+        )
+      }
+    },
+    .rand = function(n) {
+      if (checkmate::testList(self$getParameterValue("mean"))) {
+        mapply(extraDistr::rwald,
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          MoreArgs = list(n = n)
+        )
+      } else {
+        extraDistr::rwald(n,
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape")
+        )
+      }
+    },
+
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
+      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
+      return(lst)
+    },
+
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate"),
+
+    .isQuantile = FALSE
+  )
+)
+
+.distr6$distributions <- rbind(
+  .distr6$distributions,
+  data.table::data.table(
+    ShortName = "Wald", ClassName = "Wald",
+    Type = "\u211D+", ValueSupport = "continuous",
+    VariateForm = "univariate",
+    Package = "extraDistr"
+  )
+)

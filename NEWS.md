@@ -1,13 +1,16 @@
+
+
 # distr6 1.3.7
 
-* Minor internal updates
+* Minor internal Updates
 * Next release will be 1.4.0, due to nature of R6 this will break dependencies.
+
 
 # distr6 1.3.6
 
 * Bugfix in `decorate` function that was overwriting the `decorators` private field instead of appending
-* Two bug fixes in `MultivariateNormal$rand()` . i) the distribution mean wasn't being added to the transformation correctly; ii) the Choleskey decomposition wasn't transposed causing incorrect simulations
 * Added `plot.VectorDistribution` for more efficient plotting of mutiple distributions at the same time
+* Two bug fixes in `MultivariateNormal$rand()` . i) the distribution mean wasn't being added to the transformation correctly; ii) the Choleskey decomposition wasn't transposed causing incorrect simulations
 
 # distr6 1.3.5
 

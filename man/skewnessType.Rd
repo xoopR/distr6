@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distribution.R
 \name{skewnessType}
 \alias{skewnessType}
-\title{Type of Skewness Accessor}
+\title{Type of Skewness Accessor - Deprecated}
 \usage{
 skewnessType(object)
 }
@@ -14,12 +14,5 @@ If the distribution skewness is present in properties, returns one of "negative 
 "positive skew", otherwise returns NULL.
 }
 \description{
-Returns the type of skewness.
-}
-\section{R6 Usage}{
- $skewnessType
-}
-
-\seealso{
-\code{\link{skewness}}, \code{\link{properties}} and \code{\link{kurtosisType}}
+Deprecated. Use $properties$skewness.
 }

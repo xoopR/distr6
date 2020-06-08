@@ -30,6 +30,5 @@ The p-norm is calculated numerically using the \code{integrate} function and the
 are approximate only.
 }
 \examples{
-generalPNorm(Exponential$new()$pdf,2,0,10)
-
+generalPNorm(Exponential$new()$pdf, 2, 0, 10)
 }

@@ -2,43 +2,25 @@ library(testthat)
 
 context("Student's t distribution")
 
-test_that("parameterisation",{
-  expect_silent(StudentT$new())
-  expect_silent(StudentT$new(df = 10))
-  expect_error(StudentT$new(df = -1))
-  expect_equal(StudentT$new(df = 1.1)$getParameterValue("df"), 1.1)
-  expect_equal(StudentT$new(df = 10)$getParameterValue("df"), 10)
-})
-
-test_that("properties & traits",{
-  expect_equal(StudentT$new()$valueSupport, "continuous")
-  expect_equal(StudentT$new()$variateForm, "univariate")
-  expect_equal(StudentT$new()$symmetry, "symmetric")
-  expect_equal(StudentT$new()$sup, Inf)
-  expect_equal(StudentT$new()$inf, -Inf)
-  expect_equal(StudentT$new()$dmax, .Machine$double.xmax)
-  expect_equal(StudentT$new()$dmin, -.Machine$double.xmax)
-})
-
-s = StudentT$new(df = 1)
-test_that("statistics",{
-  expect_equal(s$mean(), NaN)
-  expect_equal(StudentT$new(df = 2)$mean(), 0)
-  expect_equal(s$variance(), NaN)
-  expect_equal(StudentT$new(df = 3)$variance(), 3)
-  expect_equal(StudentT$new(df = 4)$skewness(), 0)
-  expect_equal(s$skewness(), NaN)
-  expect_equal(StudentT$new(df = 5)$kurtosis(T), 6)
-  expect_equal(StudentT$new(df = 5)$kurtosis(F), 9)
-  expect_equal(StudentT$new(df = 1)$kurtosis(), NaN)
-  expect_equal(s$entropy(), digamma(1) - digamma(1/2) + log(beta(1/2, 1/2), 2))
-  expect_equal(s$mgf(0), NaN)
-  expect_equal(s$cf(1), besselK(1, 1/2) / (gamma(1/2)*2^(-1/2)))
-  expect_equal(s$mode(),0)
-  expect_equal(s$pgf(1), NaN)
-  expect_equal(s$pdf(1), dt(1,1))
-  expect_equal(s$cdf(1), pt(1,1))
-  expect_equal(s$quantile(0.56), qt(0.56,1))
-  expect_equal(s$cdf(s$quantile(0.56)), 0.56)
-  expect_silent(s$rand(10))
+test_that("autotest", {
+  autotest_sdistribution(
+    sdist = StudentT,
+    pars = list(),
+    traits = list(valueSupport = "continuous", variateForm = "univariate", type = Reals$new()),
+    support = Reals$new(),
+    symmetry = "symmetric",
+    mean = NaN,
+    mode = 0,
+    median = NaN,
+    variance = NaN,
+    skewness = NaN,
+    exkur = NaN,
+    entropy = digamma(1) - digamma(1 / 2) + log(beta(1 / 2, 1 / 2), 2),
+    mgf = NaN,
+    cf = besselK(1, 1 / 2) / (gamma(1 / 2) * 2^(-1 / 2)),
+    pgf = NaN,
+    pdf = dt(1:3, 1),
+    cdf = pt(1:3, 1),
+    quantile = qt(c(0.24, 0.42, 0.5), 1)
+  )
 })

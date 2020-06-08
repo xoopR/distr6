@@ -20,18 +20,3 @@ Antiderivative of the survival function evaluated between limits as a numeric.
 The anti-derivative of the survival function between given limits or
 over the full support.
 }
-\details{
-The survival anti-derivative is defined by
-\deqn{as(a, b) = \int_a^b S_X(x) dx}
-where X is the distribution, \eqn{S_X} is the survival function of the distribution \eqn{X} and \eqn{a, b} are the
-limits of integration.
-
-Can only be used after decorating with \code{\link{ExoticStatistics}}.
-}
-\section{R6 Usage}{
- $survivalAntiDeriv(lower = NULL, upper = NULL)
-}
-
-\seealso{
-\code{\link{ExoticStatistics}} and \code{\link{decorate}}
-}

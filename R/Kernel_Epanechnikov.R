@@ -1,7 +1,3 @@
-
-#-------------------------------------------------------------
-# Epanechnikov Kernel
-#-------------------------------------------------------------
 #' @title Epanechnikov Kernel
 #'
 #' @description Mathematical and statistical functions for the Epanechnikov kernel defined by the pdf,
@@ -12,47 +8,44 @@
 #' be found, decorate with FunctionImputation for numeric results.
 #'
 #' @name Epanechnikov
-#'
-#' @section Constructor: Epanechnikov$new(decorators = NULL)
-#'
-#' @section Constructor Arguments:
-#' \tabular{lll}{
-#' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#' \code{decorators} \tab Decorator \tab decorators to add functionality. \cr
-#' }
-#'
-#' @inheritSection Kernel Public Variables
-#' @inheritSection Kernel Public Methods
-#'
-#' @return Returns an R6 object inheriting from class Kernel.
+#' @template class_distribution
+#' @template class_kernel
 #'
 #' @export
-NULL
-#-------------------------------------------------------------
-# Uniform Kernel Definition
-#-------------------------------------------------------------
-Epanechnikov <- R6Class("Epanechnikov", inherit = Kernel, lock_objects = F)
-Epanechnikov$set("public","name","Epanechnikov")
-Epanechnikov$set("public","short_name","Epan")
-Epanechnikov$set("public","description","Epanechnikov Kernel")
-Epanechnikov$set("public","squared2Norm",function(){
-  return(3/5)
-})
-Epanechnikov$set("public","variance",function(){
-  return(1/5)
-})
-Epanechnikov$set("public","initialize",function(decorators = NULL){
+Epanechnikov <- R6Class("Epanechnikov",
+  inherit = Kernel, lock_objects = F,
+  public = list(
+    name = "Epanechnikov",
+    short_name = "Epan",
+    description = "Epanechnikov Kernel",
 
-  pdf <- function(x1){
-    return(0.75 * (1-x1^2))
-  }
-  cdf <- function(x1){
-    return(3/4*x1 - 1/4*x1^3 + 1/2)
-  }
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    squared2Norm = function() {
+      return(3 / 5)
+    },
 
-  super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
-  invisible(self)
-})
+    #' @description
+    #' The variance of a distribution is defined by the formula
+    #' \deqn{var_X = E[X^2] - E[X]^2}
+    #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
+    #' covariance matrix is returned.
+    variance = function() {
+      return(1 / 5)
+    }
+  ),
 
-.distr6$kernels = rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))
+  private = list(
+    .pdf = function(x, log = FALSE) {
+      C_EpanechnikovKernelPdf(x, log)
+    },
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_EpanechnikovKernelCdf(x, lower.tail, log.p)
+    }
+  )
+)
+
+.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))
