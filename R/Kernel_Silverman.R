@@ -12,7 +12,8 @@
 #' be found, decorate with FunctionImputation for numeric results.
 #'
 #' @export
-Silverman <- R6Class("Silverman", inherit = Kernel, lock_objects = F,
+Silverman <- R6Class("Silverman",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "Silverman",
     short_name = "Silv",

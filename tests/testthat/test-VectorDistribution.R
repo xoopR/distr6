@@ -10,23 +10,29 @@ test_that("constructor", {
   expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "should be one of")
 })
 
-vd <- VectorDistribution$new(distribution = "Binomial",
-                              params = data.table(size = c(40, 5), prob = c(0.2, 0.5)))
+vd <- VectorDistribution$new(
+  distribution = "Binomial",
+  params = data.table(size = c(40, 5), prob = c(0.2, 0.5))
+)
 
 test_that("pdf/cdf/quantile", {
-  expect_equal(vd$pdf(1:2,3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2), Binom2 = dbinom(3:4, 5, 0.5)))
-  expect_equal(vd$cdf(1:2,3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2), Binom2 = pbinom(3:4, 5, 0.5)))
-  expect_equal(vd$quantile(c(0.1,0.2), c(0.3, 0.4)),
-               data.table(Binom1 = qbinom(c(0.1,0.2), 40, 0.2), Binom2 = qbinom(c(0.3,0.4), 5, 0.5)))
+  expect_equal(vd$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2), Binom2 = dbinom(3:4, 5, 0.5)))
+  expect_equal(vd$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2), Binom2 = pbinom(3:4, 5, 0.5)))
+  expect_equal(
+    vd$quantile(c(0.1, 0.2), c(0.3, 0.4)),
+    data.table(Binom1 = qbinom(c(0.1, 0.2), 40, 0.2), Binom2 = qbinom(c(0.3, 0.4), 5, 0.5))
+  )
 
   a <- VectorDistribution$new(list(
     Binomial$new(prob = 0.2, size = 40),
     Binomial$new(prob = 0.5, size = 5)
   ))
-  expect_equal(a$pdf(1:2,3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2), Binom2 = dbinom(3:4, 5, 0.5)))
-  expect_equal(a$cdf(1:2,3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2), Binom2 = pbinom(3:4, 5, 0.5)))
-  expect_equal(a$quantile(c(0.1,0.2), c(0.3, 0.4)),
-               data.table(Binom1 = qbinom(c(0.1,0.2), 40, 0.2), Binom2 = qbinom(c(0.3,0.4), 5, 0.5)))
+  expect_equal(a$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2), Binom2 = dbinom(3:4, 5, 0.5)))
+  expect_equal(a$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2), Binom2 = pbinom(3:4, 5, 0.5)))
+  expect_equal(
+    a$quantile(c(0.1, 0.2), c(0.3, 0.4)),
+    data.table(Binom1 = qbinom(c(0.1, 0.2), 40, 0.2), Binom2 = qbinom(c(0.3, 0.4), 5, 0.5))
+  )
 })
 
 test_that("rand", {
@@ -77,9 +83,13 @@ test_that("wrapped models", {
     Binom3 = Binomial$new(prob = 0.2, size = 6)
   ))
   a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
-  expect_equal(a$wrappedModels(),
-               list(Binom = Binomial$new(prob = 0.5, size = 10),
-                    Gomp = Gompertz$new()))
+  expect_equal(
+    a$wrappedModels(),
+    list(
+      Binom = Binomial$new(prob = 0.5, size = 10),
+      Gomp = Gompertz$new()
+    )
+  )
   expect_equal(a$wrappedModels(c("Binom", "Gomp")), list(
     Binom = Binomial$new(prob = 0.5, size = 10),
     Gomp = Gompertz$new()
@@ -149,7 +159,7 @@ test_that("shared params", {
   shared_params <- data.table::data.table(prob = 0.2)
   params <- data.table::data.table(size = 1:2)
 
-  vd = VectorDistribution$new(
+  vd <- VectorDistribution$new(
     distribution = "Binomial",
     params = params,
     shared_params = shared_params
@@ -191,4 +201,3 @@ test_that("print", {
   expect_equal(a$strprint(1), c("Binom1", "...", "Binom3"))
   expect_output(a$print(), "Binom1")
 })
-

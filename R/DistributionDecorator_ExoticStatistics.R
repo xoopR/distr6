@@ -17,9 +17,9 @@
 #' decorate(Exponential$new(), "ExoticStatistics")
 #' Exponential$new(decorators = "ExoticStatistics")
 #' ExoticStatistics$new()$decorate(Exponential$new())
-#'
 #' @export
-ExoticStatistics <- R6Class("ExoticStatistics", inherit = DistributionDecorator,
+ExoticStatistics <- R6Class("ExoticStatistics",
+  inherit = DistributionDecorator,
   public = list(
     packages = "pracma",
 
@@ -214,13 +214,13 @@ NULL
 #' See examples.
 #' @param log `logical(1)` \cr If `TRUE` returns log-Hazard Default is `FALSE`.
 #' @param simplify `logical(1)` \cr
-#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#'[data.table::data.table][data.table].
-#'@param data [array] \cr
-#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#'to the distribution in the vector to evaluate.
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
 #' @return Survival function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
@@ -241,13 +241,13 @@ NULL
 #' See examples.
 #' @param log `logical(1)` \cr If `TRUE` returns log-Hazard Default is `FALSE`.
 #' @param simplify `logical(1)` \cr
-#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#'[data.table::data.table][data.table].
-#'@param data [array] \cr
-#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#'to the distribution in the vector to evaluate.
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
 #' @return Hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'
@@ -268,13 +268,13 @@ NULL
 #' See examples.
 #' @param log `logical(1)` \cr If `TRUE` returns log-cumHazard Default is `FALSE`.
 #' @param simplify `logical(1)` \cr
-#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#'[data.table::data.table][data.table].
-#'@param data [array] \cr
-#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#'to the distribution in the vector to evaluate.
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
 #' @return Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
 #'

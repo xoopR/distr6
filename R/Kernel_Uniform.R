@@ -9,7 +9,8 @@
 #' @template class_kernel
 #'
 #' @export
-UniformKernel <- R6Class("UniformKernel", inherit = Kernel, lock_objects = F,
+UniformKernel <- R6Class("UniformKernel",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "UniformKernel",
     short_name = "Unif",

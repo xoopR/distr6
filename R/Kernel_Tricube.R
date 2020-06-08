@@ -12,7 +12,8 @@
 #' @template class_kernel
 #'
 #' @export
-Tricube <- R6Class("Tricube", inherit = Kernel, lock_objects = F,
+Tricube <- R6Class("Tricube",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "Tricube",
     short_name = "Tric",

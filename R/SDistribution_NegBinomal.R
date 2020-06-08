@@ -35,7 +35,8 @@
 #' @family univariate distributions
 #'
 #' @export
-NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_objects = F,
+NegativeBinomial <- R6Class("NegativeBinomial",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "NegativeBinomial",
@@ -106,7 +107,7 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       if (self$getParameterValue("form") == "sbf") {
         if (self$getParameterValue("size") <= 1) {
           return(0)
@@ -262,7 +263,7 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
       size <- self$getParameterValue("size")
       prob <- self$getParameterValue("prob")
 
-      pnbinom = function(form, size, prob)
+      pnbinom <- function(form, size, prob) {
         if (form == "fbs") {
           return(call_C_base_pdqr(
             fun = "pnbinom",
@@ -283,13 +284,16 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
           pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
 
           return(
-            NumericCdf_Discrete(q = x,
-                                x = pdf_x,
-                                pdf = self$pdf(pdf_x),
-                                lower = lower.tail,
-                                logp = log.p)
+            NumericCdf_Discrete(
+              q = x,
+              x = pdf_x,
+              pdf = self$pdf(pdf_x),
+              lower = lower.tail,
+              logp = log.p
+            )
           )
         }
+      }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       if (self$getParameterValue("form") == "fbs") {
@@ -310,11 +314,13 @@ NegativeBinomial <- R6Class("NegativeBinomial", inherit = SDistribution, lock_ob
         pdf_x <- self$workingSupport
         pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
         return(
-          NumericQuantile(p = p,
-                          x = pdf_x,
-                          cdf = self$cdf(pdf_x),
-                          lower = lower.tail,
-                          logp = log.p)
+          NumericQuantile(
+            p = p,
+            x = pdf_x,
+            cdf = self$cdf(pdf_x),
+            lower = lower.tail,
+            logp = log.p
+          )
         )
       }
     },

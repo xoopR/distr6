@@ -24,7 +24,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
+Beta <- R6Class("Beta",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Beta",
@@ -139,7 +140,7 @@ Beta <- R6Class("Beta", inherit = SDistribution, lock_objects = F,
       shape1 <- self$getParameterValue("shape1")
       shape2 <- self$getParameterValue("shape2")
       return(log(beta(shape1, shape2), base) - ((shape1 - 1) * digamma(shape1)) -
-               ((shape2 - 1) * digamma(shape2)) + ((shape1 + shape2 - 2) * digamma(shape1 + shape2)))
+        ((shape2 - 1) * digamma(shape2)) + ((shape1 + shape2 - 2) * digamma(shape1 + shape2)))
     },
 
     #' @description The probability generating function is defined by

@@ -166,12 +166,12 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
         if (length(fun) == 3 | length(fun) == 5) data <- c(data, 0)
 
         n <- switch(length(fun),
-                    "1" = list(nrow = 1, ncol = 1),
-                    "2" = list(nrow = 1, ncol = 2),
-                    "3" = list(nrow = 2, ncol = 2),
-                    "4" = list(nrow = 2, ncol = 2),
-                    "5" = list(nrow = 2, ncol = 3),
-                    "6" = list(nrow = 2, ncol = 3)
+          "1" = list(nrow = 1, ncol = 1),
+          "2" = list(nrow = 1, ncol = 2),
+          "3" = list(nrow = 2, ncol = 2),
+          "4" = list(nrow = 2, ncol = 2),
+          "5" = list(nrow = 2, ncol = 3),
+          "6" = list(nrow = 2, ncol = 3)
         )
 
         graphics::layout(do.call(matrix, c(list(byrow = TRUE, data = data), n)))

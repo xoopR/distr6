@@ -27,7 +27,8 @@
 #' @family univariate distributions
 #'
 #' @export
-StudentTNoncentral <- R6Class("StudentTNoncentral", inherit = SDistribution, lock_objects = F,
+StudentTNoncentral <- R6Class("StudentTNoncentral",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "StudentTNoncentral",

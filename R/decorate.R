@@ -23,7 +23,6 @@
 #'
 #' E <- Exponential$new()
 #' decorate(E, c("CoreStatistics", "ExoticStatistics"))
-#'
 #' @return Returns a [Distribution] with additional methods from the chosen
 #' [DistributionDecorator].
 #'
@@ -38,13 +37,15 @@ decorate <- function(distribution, decorators, ...) {
   assertDistribution(distribution)
 
   if (length(setdiff(distribution$decorators, decorators)) == 0 &
-      !is.null(distribution$decorators)) {
-    message(paste(distribution$name, "is already decorated with",
-                  paste0(decorators, collapse = ",")))
+    !is.null(distribution$decorators)) {
+    message(paste(
+      distribution$name, "is already decorated with",
+      paste0(decorators, collapse = ",")
+    ))
     return(NULL)
   } else {
     if (!is.null(distribution$decorators)) {
-      decorators = setdiff(decorators, distribution$decorators)
+      decorators <- setdiff(decorators, distribution$decorators)
     }
 
     suppressMessages(lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution, ...)))

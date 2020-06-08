@@ -14,7 +14,8 @@
 #' @template field_packages
 #'
 #' @export
-NormalKernel <- R6Class("NormalKernel", inherit = Kernel, lock_objects = F,
+NormalKernel <- R6Class("NormalKernel",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "NormalKernel",
     short_name = "Norm",
@@ -67,24 +68,27 @@ NormalKernel <- R6Class("NormalKernel", inherit = Kernel, lock_objects = F,
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       quantile <- numeric(p)
       if (log.p) {
-        p = exp(p);
+        p <- exp(p)
       }
 
       if (!lower.tail) {
-        p = 1 - p;
+        p <- 1 - p
       }
 
-      quantile[p < 0 | p > 1] = NaN
-      quantile[p == 0] = -Inf
-      quantile[p == 1] = Inf
-      quantile[p > 0 & p < 1] = sqrt(2) * pracma::erfinv(2 * p[p > 0 & p < 1] - 1)
+      quantile[p < 0 | p > 1] <- NaN
+      quantile[p == 0] <- -Inf
+      quantile[p == 1] <- Inf
+      quantile[p > 0 & p < 1] <- sqrt(2) * pracma::erfinv(2 * p[p > 0 & p < 1] - 1)
 
       return(quantile)
     }
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels,
-                         data.table::data.table(ShortName = "Norm", ClassName = "NormalKernel",
-                                                Support = "\u211D", Packages = "pracma"))
-
+.distr6$kernels <- rbind(
+  .distr6$kernels,
+  data.table::data.table(
+    ShortName = "Norm", ClassName = "NormalKernel",
+    Support = "\u211D", Packages = "pracma"
+  )
+)

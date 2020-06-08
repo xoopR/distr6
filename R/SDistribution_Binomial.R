@@ -25,7 +25,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
+Binomial <- R6Class("Binomial",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Binomial",
@@ -42,15 +43,15 @@ Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
     #' Number of trials, defined on the positive Naturals.
     initialize = function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL) {
 
-    private$.parameters <- getParameterSet(self, size, prob, qprob)
-    self$setParameterValue(size = size, prob = prob, qprob = qprob)
+      private$.parameters <- getParameterSet(self, size, prob, qprob)
+      self$setParameterValue(size = size, prob = prob, qprob = qprob)
 
-    super$initialize(
-      decorators = decorators,
-      support = Set$new(0:size, class = "integer"),
-      type = Naturals$new(),
-      symmetry = if (prob == 0.5) "symm" else "asym"
-    )
+      super$initialize(
+        decorators = decorators,
+        support = Set$new(0:size, class = "integer"),
+        type = Naturals$new(),
+        symmetry = if (prob == 0.5) "symm" else "asym"
+      )
     },
 
     # stats
@@ -67,7 +68,7 @@ Binomial <- R6Class("Binomial", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(floor((self$getParameterValue("size") + 1) * self$getParameterValue("prob")))
     },
 

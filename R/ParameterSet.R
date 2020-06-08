@@ -77,7 +77,7 @@ ParameterSet <- R6Class("ParameterSet",
 
       # check lengths
       checkmate::assert(length(unique(length(id), length(value), length(settable), length(support))) == 1,
-                        .var.name = "arguments of same length"
+        .var.name = "arguments of same length"
       )
 
       # id checks
@@ -113,7 +113,7 @@ ParameterSet <- R6Class("ParameterSet",
         checkmate::assert(length(id) == length(updateFunc), .var.name = "arguments of same length")
         sapply(updateFunc, checkmate::assertFunction, null.ok = TRUE)
       } else {
-        updateFunc = rep(list(NULL), length(id))
+        updateFunc <- rep(list(NULL), length(id))
       }
 
       private$.parameters <- data.table(
@@ -308,8 +308,8 @@ ParameterSet <- R6Class("ParameterSet",
     #' Returns parameter set values as a named list.
     values = function() {
       pars <- subset(private$.parameters, settable == TRUE)
-      values = pars$value
-      names(values) = pars$id
+      values <- pars$value
+      names(values) <- pars$id
       return(values)
     }
   ),
@@ -355,8 +355,10 @@ c.ParameterSet <- function(..., prefix.names = NULL) {
     stopifnot(length(prefix.names) == ...length())
   }
 
-  ps <- data.table(id = NULL, value = NULL, support = NULL, settable = NULL,
-                   description = NULL, updateFunc = NULL)
+  ps <- data.table(
+    id = NULL, value = NULL, support = NULL, settable = NULL,
+    description = NULL, updateFunc = NULL
+  )
 
   for (i in seq(...length())) {
     dt <- as.data.table(...elt(i))
@@ -535,7 +537,6 @@ as.ParameterSet.list <- function(x, ...) {
 #' ps["Binom1_prob"] # extracts just Binom1_prob
 #' ps["Binom1_prob", prefix = "Binom1"] # extracts Binom1_prob and removes prefix
 #' ps["Binom1_"] # extracts all Binom1 parameters and removes prefix
-#'
 #' @export
 "[.ParameterSet" <- function(ps, ids, prefix = NULL, ...) {
   id <- NULL # added to remove the NOTE, is overwritten immediately

@@ -23,7 +23,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
+Logarithmic <- R6Class("Logarithmic",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Logarithmic",
@@ -156,8 +157,8 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
     .pdf = function(x, log = FALSE) {
       if (checkmate::testList(self$getParameterValue("theta"))) {
         mapply(extraDistr::dlgser,
-               theta = self$getParameterValue("theta"),
-               MoreArgs = list(x = x, log = log)
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(x = x, log = log)
         )
       } else {
         extraDistr::dlgser(x, theta = self$getParameterValue("theta"), log = log)
@@ -166,34 +167,34 @@ Logarithmic <- R6Class("Logarithmic", inherit = SDistribution, lock_objects = F,
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       if (checkmate::testList(self$getParameterValue("theta"))) {
         mapply(extraDistr::plgser,
-               theta = self$getParameterValue("theta"),
-               MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
         )
       } else {
         extraDistr::plgser(x,
-                           theta = self$getParameterValue("theta"),
-                           lower.tail = lower.tail, log.p = log.p
+          theta = self$getParameterValue("theta"),
+          lower.tail = lower.tail, log.p = log.p
         )
       }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       if (checkmate::testList(self$getParameterValue("theta"))) {
         mapply(extraDistr::qlgser,
-               theta = self$getParameterValue("theta"),
-               MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
         )
       } else {
         extraDistr::qlgser(p,
-                           theta = self$getParameterValue("theta"),
-                           lower.tail = lower.tail, log.p = log.p
+          theta = self$getParameterValue("theta"),
+          lower.tail = lower.tail, log.p = log.p
         )
       }
     },
     .rand = function(n) {
       if (checkmate::testList(self$getParameterValue("theta"))) {
         mapply(extraDistr::rlgser,
-               theta = self$getParameterValue("theta"),
-               MoreArgs = list(n = n)
+          theta = self$getParameterValue("theta"),
+          MoreArgs = list(n = n)
         )
       } else {
         extraDistr::rlgser(n, theta = self$getParameterValue("theta"))

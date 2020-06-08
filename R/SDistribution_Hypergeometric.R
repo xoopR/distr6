@@ -24,7 +24,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_objects = F,
+Hypergeometric <- R6Class("Hypergeometric",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Hypergeometric",
@@ -75,7 +76,7 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       draws <- self$getParameterValue("draws")
       successes <- self$getParameterValue("successes")
       size <- self$getParameterValue("size")
@@ -104,7 +105,7 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
       successes <- self$getParameterValue("successes")
       size <- self$getParameterValue("size")
       return(((size - 2 * successes) * ((size - 1)^0.5) * (size - 2 * draws)) /
-               (((draws * successes * (size - successes) * (size - draws))^0.5) * (size - 2)))
+        (((draws * successes * (size - successes) * (size - draws))^0.5) * (size - 2)))
     },
 
     #' @description
@@ -119,9 +120,9 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
       size <- self$getParameterValue("size")
 
       exkurtosis <- ((size - 1) * (size^2) * ((size * (size + 1)) - 6 * successes * (size - successes) -
-                                                6 * draws * (size - draws)) + 6 * draws * successes * (size - successes) *
-                       (size - draws) * (5 * size - 6)) / (draws * successes * (size - successes) * (size - draws) * (size - 2) *
-                                                             (size - 3))
+        6 * draws * (size - draws)) + 6 * draws * successes * (size - successes) *
+        (size - draws) * (5 * size - 6)) / (draws * successes * (size - successes) * (size - draws) * (size - 2) *
+        (size - 3))
 
       if (excess) {
         return(exkurtosis)
@@ -138,11 +139,11 @@ Hypergeometric <- R6Class("Hypergeometric", inherit = SDistribution, lock_object
       size <- self$getParameterValue("size")
 
       private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
-                                                   self$getParameterValue("successes") - size):
-                                               min(
-                                                 self$getParameterValue("draws"),
-                                                 self$getParameterValue("successes")
-                                               ))
+        self$getParameterValue("successes") - size):
+      min(
+        self$getParameterValue("draws"),
+        self$getParameterValue("successes")
+      ))
 
       self$parameters()$.__enclos_env__$private$.setParameterSupport(list(successes = Set$new(0:size)))
       self$parameters()$.__enclos_env__$private$.setParameterSupport(list(draws = Set$new(0:size)))

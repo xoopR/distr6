@@ -12,7 +12,8 @@
 #' @template class_kernel
 #'
 #' @export
-Sigmoid <- R6Class("Sigmoid", inherit = Kernel, lock_objects = F,
+Sigmoid <- R6Class("Sigmoid",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "Sigmoid",
     short_name = "Sigm",

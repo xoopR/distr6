@@ -26,7 +26,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F,
+Gompertz <- R6Class("Gompertz",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Gompertz",
@@ -61,7 +62,7 @@ Gompertz <- R6Class("Gompertz", inherit = SDistribution, lock_objects = F,
       scale <- self$getParameterValue("scale")
       shape <- self$getParameterValue("shape")
 
-      return((1/scale) * log((-1/shape) * log(1/2) + 1))
+      return((1 / scale) * log((-1 / shape) * log(1 / 2) + 1))
     },
 
     #' @description The probability generating function is defined by

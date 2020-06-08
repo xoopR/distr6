@@ -25,7 +25,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
+Gamma <- R6Class("Gamma",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Gamma",
@@ -67,7 +68,7 @@ Gamma <- R6Class("Gamma", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       if (self$getParameterValue("shape") >= 1) {
         return((self$getParameterValue("shape") - 1) / self$getParameterValue("rate"))
       } else {

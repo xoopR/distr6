@@ -27,7 +27,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
+Triangular <- R6Class("Triangular",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Triangular",
@@ -99,7 +100,7 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(self$getParameterValue("mode"))
     },
 
@@ -111,10 +112,10 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
       lower <- self$getParameterValue("lower")
       upper <- self$getParameterValue("upper")
       mode <- self$getParameterValue("mode")
-      if (mode >= (lower + upper)/2) {
-        return(lower + sqrt((upper - lower)*(mode - lower))/sqrt(2))
+      if (mode >= (lower + upper) / 2) {
+        return(lower + sqrt((upper - lower) * (mode - lower)) / sqrt(2))
       } else {
-        return(upper - sqrt((upper - lower)*(upper - mode))/sqrt(2))
+        return(upper - sqrt((upper - lower) * (upper - mode)) / sqrt(2))
       }
     },
 
@@ -125,9 +126,9 @@ Triangular <- R6Class("Triangular", inherit = SDistribution, lock_objects = F,
     #' covariance matrix is returned.
     variance = function() {
       return((self$getParameterValue("lower")^2 + self$getParameterValue("upper")^2 +
-                self$getParameterValue("mode")^2 - self$getParameterValue("lower") * self$getParameterValue("upper") -
-                self$getParameterValue("lower") * self$getParameterValue("mode") -
-                self$getParameterValue("upper") * self$getParameterValue("mode")) / 18)
+        self$getParameterValue("mode")^2 - self$getParameterValue("lower") * self$getParameterValue("upper") -
+        self$getParameterValue("lower") * self$getParameterValue("mode") -
+        self$getParameterValue("upper") * self$getParameterValue("mode")) / 18)
     },
 
     #' @description

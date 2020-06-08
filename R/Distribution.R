@@ -20,11 +20,12 @@
 #' @return Returns R6 object of class Distribution.
 #'
 #' @export
-Distribution <- R6Class("Distribution", lock_objects = FALSE,
+Distribution <- R6Class("Distribution",
+  lock_objects = FALSE,
   public = list(
     name = character(0),
-    short_name =  character(0),
-    description =  NULL,
+    short_name = character(0),
+    description = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -93,10 +94,10 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         if (is.null(short_name)) short_name <- gsub(" ", "", name, fixed = T)
         if (is.null(name)) name <- short_name
         checkmate::assertCharacter(c(name, short_name),
-                                   .var.name = "'name' and 'short_name' must be of class 'character'."
+          .var.name = "'name' and 'short_name' must be of class 'character'."
         )
         checkmate::assert(length(strsplit(short_name, split = " ")[[1]]) == 1,
-                          .var.name = "'short_name' must be one word only."
+          .var.name = "'short_name' must be one word only."
         )
 
         #------------------------
@@ -273,8 +274,8 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
           cat(self$description, "Parameterised with:\n")
           settable <- as.data.table(self$parameters())$settable
           cat(" ", paste(as.data.table(self$parameters())[settable, "id"],
-                         as.data.table(self$parameters())[settable, "value"],
-                         sep = " = ", collapse = ", "
+            as.data.table(self$parameters())[settable, "value"],
+            sep = " = ", collapse = ", "
           ))
         } else {
           cat(self$description)
@@ -287,7 +288,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         a_kurt <- suppressMessages(try(self$kurtosis(), silent = T))
 
         if (!inherits(a_exp, "try-error") | !inherits(a_var, "try-error") |
-            !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
+          !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
           cat("\n\n ", "Quick Statistics", "\n")
         }
 
@@ -420,16 +421,16 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     #'
-    #'@examples
-    #'b <- Binomial$new()
-    #'b$pdf(1:10)
-    #'b$pdf(1:10, log = TRUE)
-    #'b$pdf(data = matrix(1:10))
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$pdf(1:10)
+    #' b$pdf(1:10, log = TRUE)
+    #' b$pdf(data = matrix(1:10))
     #'
-    #'mvn <- MultivariateNormal$new()
-    #'mvn$pdf(1, 2)
-    #'mvn$pdf(1:2, 3:4)
-    #'mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
+    #' mvn <- MultivariateNormal$new()
+    #' mvn$pdf(1, 2)
+    #' mvn$pdf(1:2, 3:4)
+    #' mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
       if (is.null(private$.pdf)) {
@@ -439,11 +440,11 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       data <- pdq_point_assert(..., self = self, data = data)
       if (inherits(data, "matrix")) {
         assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE),
-               .var.name = "Do all points lie in Distribution domain?"
+          .var.name = "Do all points lie in Distribution domain?"
         )
       } else {
         assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
-               .var.name = "Do all points lie in Distribution domain?"
+          .var.name = "Do all points lie in Distribution domain?"
         )
       }
 
@@ -480,11 +481,11 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     #'
-    #'@examples
-    #'b <- Binomial$new()
-    #'b$cdf(1:10)
-    #'b$cdf(1:10, log.p = TRUE, lower.tail = FALSE)
-    #'b$cdf(data = matrix(1:10))
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$cdf(1:10)
+    #' b$cdf(1:10, log.p = TRUE, lower.tail = FALSE)
+    #' b$cdf(data = matrix(1:10))
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
       if (is.null(private$.cdf)) {
@@ -494,11 +495,11 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
       data <- pdq_point_assert(..., self = self, data = data)
       if (inherits(data, "matrix")) {
         assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE),
-               .var.name = "Do all points lie in Distribution domain?"
+          .var.name = "Do all points lie in Distribution domain?"
         )
       } else {
         assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
-               .var.name = "Do all points lie in Distribution domain?"
+          .var.name = "Do all points lie in Distribution domain?"
         )
       }
 
@@ -536,11 +537,11 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     #'
-    #'@examples
-    #'b <- Binomial$new()
-    #'b$quantile(0.42)
-    #'b$quantile(log(0.42), log.p = TRUE, lower.tail = TRUE)
-    #'b$quantile(data = matrix(c(0.1,0.2)))
+    #' @examples
+    #' b <- Binomial$new()
+    #' b$quantile(0.42)
+    #' b$quantile(log(0.42), log.p = TRUE, lower.tail = TRUE)
+    #' b$quantile(data = matrix(c(0.1,0.2)))
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
       if (is.null(private$.quantile)) {
@@ -551,11 +552,11 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
 
       if (!log.p) {
         assert(Interval$new(0, 1)$contains(as.numeric(data), all = TRUE),
-               .var.name = "Do all quantiles lie in [0,1]?"
+          .var.name = "Do all quantiles lie in [0,1]?"
         )
       } else {
         assert(Interval$new(0, 1)$contains(as.numeric(exp(data)), all = TRUE),
-               .var.name = "Do all quantiles lie in [0,1]?"
+          .var.name = "Do all quantiles lie in [0,1]?"
         )
       }
 
@@ -626,15 +627,15 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
     #' Ignored, addded for consistency.
     median = function(na.rm = NULL, ...) {
       if (testSymmetric(self)) {
-        med = try(self$mean(), silent = TRUE)
+        med <- try(self$mean(), silent = TRUE)
         if (class(med) == "try-error") {
           return(NaN)
-        } else  if (is.null(med)) {
+        } else if (is.null(med)) {
           return(self$quantile(0.5))
         } else {
           return(med)
         }
-      } else if(!testUnivariate(self)) {
+      } else if (!testUnivariate(self)) {
         return(NaN)
       } else {
         return(self$quantile(0.5))
@@ -787,7 +788,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
           for (i in -c(0, 10^(1:1000))) {
             if (i >= lower & i <= upper) {
               if (self$cdf(i) == 0) {
-                lower = i
+                lower <- i
                 break()
               }
             }
@@ -796,7 +797,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
           for (i in -c(0, 10^(1:1000))) {
             if (i >= lower & i <= upper) {
               if (self$pdf(i) == 0) {
-                lower = i
+                lower <- i
                 break()
               }
             }
@@ -810,7 +811,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
           for (i in c(0, 10^(1:1000))) {
             if (i >= lower & i <= upper) {
               if (self$cdf(i) == 1) {
-                upper = i
+                upper <- i
                 break()
               }
             }
@@ -819,7 +820,7 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
           for (i in c(0, 10^(1:1000))) {
             if (i >= lower & i <= upper) {
               if (self$pdf(i) == 0) {
-                upper = i
+                upper <- i
                 break()
               }
             }
@@ -827,24 +828,24 @@ Distribution <- R6Class("Distribution", lock_objects = FALSE,
         }
       }
 
-      class = if (testDiscrete(self)) "integer" else "numeric"
+      class <- if (testDiscrete(self)) "integer" else "numeric"
 
       Interval$new(lower, upper, class = class)
     }
   ),
 
   private = list(
-    .parameters =  NULL,
-    .workingSupport =  NULL,
-    .decorators =  NULL,
-    .properties =  list(),
-    .traits =  NULL,
+    .parameters = NULL,
+    .workingSupport = NULL,
+    .decorators = NULL,
+    .properties = list(),
+    .traits = NULL,
     .variates = 1,
-    .isPdf =  0L,
-    .isCdf =  0L,
-    .isQuantile =  0L,
-    .isRand =  0L,
-    .log =  FALSE,
+    .isPdf = 0L,
+    .isCdf = 0L,
+    .isQuantile = 0L,
+    .isRand = 0L,
+    .log = FALSE,
     .updateDecorators = function(decs) {
       private$.decorators <- decs
     }
@@ -896,16 +897,16 @@ summary.Distribution <- function(object, full = TRUE, ...) {}
 #' to be named. The length of each argument corresponds to the number of points to evaluate,
 #' the number of arguments corresponds to the number of variables in the distribution.
 #' See examples.
-#'@param log `logical(1)` \cr
-#'If `TRUE` returns log-pdf. Default is `FALSE`.
-#'@param simplify `logical(1)` \cr
-#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#'[data.table::data.table][data.table].
-#'@param data [array] \cr
-#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#'to the distribution in the vector to evaluate.
+#' @param log `logical(1)` \cr
+#' If `TRUE` returns log-pdf. Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
 #' @return Pdf evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a [data.table::data.table].
@@ -925,16 +926,16 @@ NULL
 #' See examples.
 #' @param lower.tail `logical(1)` \cr
 #' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
-#'@param log.p `logical(1)` \cr
-#'If `TRUE` returns log-cdf. Default is `FALSE`.
-#'@param simplify `logical(1)` \cr
-#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#'[data.table::data.table][data.table].
-#'@param data [array] \cr
-#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#'to the distribution in the vector to evaluate.
+#' @param log.p `logical(1)` \cr
+#' If `TRUE` returns log-cdf. Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
 #' @return Cdf evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a [data.table::data.table].
@@ -953,16 +954,16 @@ NULL
 #' See examples.
 #' @param lower.tail `logical(1)` \cr
 #' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
-#'@param log.p `logical(1)` \cr
-#'If `TRUE` returns log-cdf. Default is `FALSE`.
-#'@param simplify `logical(1)` \cr
-#'If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#'[data.table::data.table][data.table].
-#'@param data [array] \cr
-#'Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#'of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#'case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#'to the distribution in the vector to evaluate.
+#' @param log.p `logical(1)` \cr
+#' If `TRUE` returns log-cdf. Default is `FALSE`.
+#' @param simplify `logical(1)` \cr
+#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
+#' [data.table::data.table][data.table].
+#' @param data [array] \cr
+#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
+#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
+#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
+#' to the distribution in the vector to evaluate.
 #'
 #' @return Quantile evaluated at given points as either a numeric if \code{simplify} is TRUE
 #' or as a [data.table::data.table].

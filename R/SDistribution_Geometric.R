@@ -29,7 +29,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
+Geometric <- R6Class("Geometric",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Geometric",
@@ -85,7 +86,7 @@ Geometric <- R6Class("Geometric", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       if (private$.trials) {
         return(1)
       } else {

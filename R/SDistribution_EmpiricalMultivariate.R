@@ -28,7 +28,8 @@
 #' @family multivariate distributions
 #'
 #' @export
-EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
+EmpiricalMV <- R6Class("EmpiricalMV",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "EmpiricalMV",
@@ -49,7 +50,7 @@ EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
 
       support <- do.call(setproduct, as.Tuple(data))
       data <- data.table::as.data.table(data)
-      private$.variates = ncol(data)
+      private$.variates <- ncol(data)
 
       private$.parameters <- ParameterSet$new(
         id = "data",
@@ -85,7 +86,7 @@ EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
     variance = function() {
       data <- self$getParameterValue("data")
       n <- nrow(data)
-      as.numeric(apply(data, 2, function(x) var(x)*((n - 1)/n)))
+      as.numeric(apply(data, 2, function(x) var(x) * ((n - 1) / n)))
     },
 
     # optional setParameterValue
@@ -100,16 +101,20 @@ EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
   private = list(
     # dpqr
     .pdf = function(x, log = FALSE) {
-      pdf <- C_EmpiricalMVPdf(x = x,
-                              data = as.matrix(self$getParameterValue("data")))
+      pdf <- C_EmpiricalMVPdf(
+        x = x,
+        data = as.matrix(self$getParameterValue("data"))
+      )
 
       if (log) pdf <- log(pdf)
 
       return(pdf)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      cdf <- C_EmpiricalMVCdf(x = x,
-                              data = as.matrix(self$getParameterValue("data")))
+      cdf <- C_EmpiricalMVCdf(
+        x = x,
+        data = as.matrix(self$getParameterValue("data"))
+      )
 
       if (!lower.tail) cdf <- 1 - cdf
       if (log.p) cdf <- log(cdf)
@@ -120,7 +125,7 @@ EmpiricalMV <- R6Class("EmpiricalMV", inherit = SDistribution, lock_objects = F,
       data <- as.matrix(self$getParameterValue("data"))
       rand <- matrix(ncol = ncol(data), nrow = n)
       for (i in seq(ncol(data))) {
-        rand[, i] = sample(data[, i], n, TRUE)
+        rand[, i] <- sample(data[, i], n, TRUE)
       }
       return(rand)
     },

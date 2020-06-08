@@ -24,7 +24,8 @@
 #' @family univariate distributions
 #'
 #' @export
-DiscreteUniform <- R6Class("DiscreteUniform", inherit = SDistribution, lock_objects = F,
+DiscreteUniform <- R6Class("DiscreteUniform",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "DiscreteUniform",

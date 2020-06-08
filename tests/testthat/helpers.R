@@ -1,7 +1,8 @@
 expect_rounded_equal <- function(object, expected, dp = 4) {
   expect_equal(round(object, dp), round(expected, dp),
-               label = as.character(substitute(quote(object)))[2],
-               expected.label = as.character(substitute(quote(expected)))[2])
+    label = as.character(substitute(quote(object)))[2],
+    expected.label = as.character(substitute(quote(expected)))[2]
+  )
 }
 
 autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
@@ -38,7 +39,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   }
   expect_true("decorators" %in% names(formals(sdist$public_methods$initialize)))
   if (!is.null(sdist$public_methods$mean)) expect_null(names(formals(sdist$public_methods$mean)))
-  if (!is.null(sdist$public_methods$mode))  expect_equal(formals(sdist$public_methods$mode), pairlist(which = "all"))
+  if (!is.null(sdist$public_methods$mode)) expect_equal(formals(sdist$public_methods$mode), pairlist(which = "all"))
   if (!is.null(sdist$public_methods$median)) expect_null(names(formals(sdist$public_methods$median)))
   if (!is.null(sdist$public_methods$variance)) expect_null(names(formals(sdist$public_methods$variance)))
   if (!is.null(sdist$public_methods$skewness)) expect_null(names(formals(sdist$public_methods$skewness)))

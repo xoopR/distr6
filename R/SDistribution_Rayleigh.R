@@ -24,7 +24,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F,
+Rayleigh <- R6Class("Rayleigh",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Rayleigh",
@@ -65,7 +66,7 @@ Rayleigh <- R6Class("Rayleigh", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(self$getParameterValue("mode"))
     },
 

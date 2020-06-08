@@ -583,7 +583,7 @@ getParameterSet.Lognormal <- function(object, meanlog, varlog, sdlog = NULL, pre
       updateFunc = list(
         function(self) {
           log(self$getParameterValue("mean") / sqrt(1 +
-                                                      self$getParameterValue("var") / self$getParameterValue("mean")^2))
+            self$getParameterValue("var") / self$getParameterValue("mean")^2))
         },
         function(self) log(1 + self$getParameterValue("var") / self$getParameterValue("mean")^2),
         function(self) (log(1 + self$getParameterValue("var") / self$getParameterValue("mean")^2))^0.5,
@@ -661,9 +661,10 @@ getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
       NULL, NULL,
       function(self) {
         list(solve(matrix(self$getParameterValue("cov"),
-                     nrow = length(self$getParameterValue("mean")))
-        ))
-      }),
+          nrow = length(self$getParameterValue("mean"))
+        )))
+      }
+    ),
 
     description = list(
       "Vector of means - Location Parameter.",
@@ -932,12 +933,16 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) {
   ParameterSet$new(
     id = list("x", "pdf", "cdf"),
     value = list(x, rep(1, n), rep(1, n)),
-    support = list(Reals$new()^n, Interval$new(0,1)^n, Interval$new(0,1)^n),
+    support = list(Reals$new()^n, Interval$new(0, 1)^n, Interval$new(0, 1)^n),
     settable = list(TRUE, pdf.bool, cdf.bool),
-    updateFunc = list(NULL,
-                      NULL,
-                      function(self) list(cumsum(self$getParameterValue("pdf")))),
-    description = list("Data.", "Probability density function.",
-                       "Cumulative distribution function.")
+    updateFunc = list(
+      NULL,
+      NULL,
+      function(self) list(cumsum(self$getParameterValue("pdf")))
+    ),
+    description = list(
+      "Data.", "Probability density function.",
+      "Cumulative distribution function."
+    )
   )
 }

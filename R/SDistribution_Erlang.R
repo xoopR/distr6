@@ -25,7 +25,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Erlang <- R6Class("Erlang", inherit = SDistribution, lock_objects = F,
+Erlang <- R6Class("Erlang",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Erlang",
@@ -66,7 +67,7 @@ Erlang <- R6Class("Erlang", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       (self$getParameterValue("shape") - 1) / self$getParameterValue("rate")
     },
 

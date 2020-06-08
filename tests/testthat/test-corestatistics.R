@@ -135,4 +135,3 @@ discreteTester <- Distribution$new("Discrete Test", "TestDistr",
 test_that("rand2mode", {
   expect_equal(discreteTester$mode(), Binomial$new()$mode())
 })
-

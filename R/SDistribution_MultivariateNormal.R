@@ -31,7 +31,8 @@
 #' @family multivariate distributions
 #'
 #' @export
-MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, lock_objects = F,
+MultivariateNormal <- R6Class("MultivariateNormal",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "MultivariateNormal",
@@ -60,7 +61,7 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
       private$.parameters <- getParameterSet(self, mean, cov, prec)
       self$setParameterValue(mean = mean, cov = cov, prec = prec)
 
-      private$.variates = length(mean)
+      private$.variates <- length(mean)
 
       super$initialize(
         decorators = decorators,
@@ -83,7 +84,7 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(self$getParameterValue("mean"))
     },
 
@@ -140,14 +141,14 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
       }
       if (!is.null(lst$cov)) {
         if (any(dim(lst$cov) != c(K, K)) |
-            length(lst$cov) != K^2) {
+          length(lst$cov) != K^2) {
           lst$cov <- suppressWarnings(matrix(lst$cov, nrow = K, ncol = K))
         }
         lst$cov <- as.numeric(lst$cov)
       }
       if (!is.null(lst$prec)) {
         if (any(dim(lst$prec) != c(K, K)) |
-            length(lst$prec) != K^2) {
+          length(lst$prec) != K^2) {
           lst$prec <- suppressWarnings(matrix(lst$prec, nrow = K, ncol = K))
         }
         lst$prec <- as.numeric(lst$prec)
@@ -174,10 +175,12 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
     getParameterValue = function(id, error = "warn") {
       if ("cov" %in% id) {
         return(matrix(super$getParameterValue("cov", error),
-                      nrow = length(super$getParameterValue("mean", error))))
+          nrow = length(super$getParameterValue("mean", error))
+        ))
       } else if ("prec" %in% id) {
         return(matrix(super$getParameterValue("prec", error),
-                      nrow = length(super$getParameterValue("mean", error))))
+          nrow = length(super$getParameterValue("mean", error))
+        ))
       } else {
         return(super$getParameterValue(id, error))
       }
@@ -205,10 +208,10 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
 
           if (log) {
             return(as.numeric(-((K / 2) * log(2 * pi)) - (log(det(cov)) / 2) -
-                                (diag((x - mean) %*% solve(cov) %*% t(x - mean)) / 2)))
+              (diag((x - mean) %*% solve(cov) %*% t(x - mean)) / 2)))
           } else {
             return(as.numeric((2 * pi)^(-K / 2) * det(cov)^-0.5 *
-                                exp(-0.5 * diag((x - mean) %*% solve(cov) %*% t(x - mean)))))
+              exp(-0.5 * diag((x - mean) %*% solve(cov) %*% t(x - mean)))))
           }
 
         } else {
@@ -218,9 +221,9 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
 
       if (checkmate::testList(cov)) {
         mapply(dmvn,
-               cov = cov,
-               mean = mean,
-               MoreArgs = list(x = x, log = log)
+          cov = cov,
+          mean = mean,
+          MoreArgs = list(x = x, log = log)
         )
       } else {
         dmvn(x, cov = cov, mean = mean, log = log)
@@ -245,10 +248,10 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
 
       if (checkmate::testList(cov)) {
         mapply(rmvn,
-               cov = cov,
-               mean = mean,
-               MoreArgs = list(n = n),
-               SIMPLIFY = FALSE
+          cov = cov,
+          mean = mean,
+          MoreArgs = list(n = n),
+          SIMPLIFY = FALSE
         )
       } else {
         rmvn(n, cov = cov, mean = mean)
@@ -263,8 +266,8 @@ MultivariateNormal <- R6Class("MultivariateNormal", inherit = SDistribution, loc
       if (!is.null(paramlst$prec)) {
         K <- length(self$getParameterValue("mean"))
         lst <- c(lst, list(cov = solve(matrix(paramlst$prec,
-                                              nrow = K,
-                                              ncol = K
+          nrow = K,
+          ncol = K
         ))))
       }
 

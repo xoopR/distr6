@@ -30,7 +30,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
+Empirical <- R6Class("Empirical",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Empirical",
@@ -152,7 +153,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
         nc <- length(data$samples)
         return(as.numeric(
           exp(matrix(data$samples, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
         ))
       }
     },
@@ -169,7 +170,7 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
         nc <- length(data$samples)
         return(as.complex(
           exp(matrix(data$samples * 1i, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(data$N / nrow(data), nrow = nc, ncol = 1)
         ))
       }
     },
@@ -204,9 +205,11 @@ Empirical <- R6Class("Empirical", inherit = SDistribution, lock_objects = F,
     # dpqr
     .pdf = function(x, log = FALSE) {
       data <- self$getParameterValue("data")
-      pdf <- as.numeric(unlist(data[match(round(x, 10),
-                                                   round(data$samples, 10)), "N"] /
-                                 nrow(data)))
+      pdf <- as.numeric(unlist(data[match(
+        round(x, 10),
+        round(data$samples, 10)
+      ), "N"] /
+        nrow(data)))
       if (log) pdf <- log(pdf)
 
       return(pdf)

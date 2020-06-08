@@ -24,7 +24,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Arcsine <- R6Class("Arcsine", inherit = SDistribution, lock_objects = F,
+Arcsine <- R6Class("Arcsine",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Arcsine",

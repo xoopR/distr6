@@ -34,12 +34,12 @@
 #' d <- Dirichlet$new(params = c(2, 5, 6))
 #' d$pdf(0.1, 0.4, 0.5)
 #' d$pdf(c(0.3, 0.2), c(0.6, 0.9), c(0.9, 0.1))
-#'
 #' @family continuous distributions
 #' @family multivariate distributions
 #'
 #' @export
-Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
+Dirichlet <- R6Class("Dirichlet",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Dirichlet",
@@ -59,7 +59,7 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
       private$.parameters <- getParameterSet(self, params)
       self$setParameterValue(params = params)
 
-      private$.variates = length(params)
+      private$.variates <- length(params)
 
       super$initialize(
         decorators = decorators,
@@ -82,7 +82,7 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       params <- self$getParameterValue("params")
       K <- self$getParameterValue("K")
       mode <- rep(NaN, K)
@@ -114,7 +114,7 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
     entropy = function(base = 2) {
       params <- self$getParameterValue("params")
       return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params)) * digamma(sum(params)) -
-               sum((params - 1) * digamma(params)))
+        sum((params - 1) * digamma(params)))
     },
 
     #' @description The probability generating function is defined by
@@ -145,25 +145,25 @@ Dirichlet <- R6Class("Dirichlet", inherit = SDistribution, lock_objects = F,
 
       if (checkmate::testList(params)) {
         mapply(extraDistr::ddirichlet,
-               alpha = params,
-               MoreArgs = list(x = x, log = log)
+          alpha = params,
+          MoreArgs = list(x = x, log = log)
         )
       } else {
         extraDistr::ddirichlet(x,
-                               alpha = params,
-                               log = log
+          alpha = params,
+          log = log
         )
       }
     },
     .rand = function(n) {
       if (checkmate::testList(self$getParameterValue("params"))) {
         mapply(extraDistr::rdirichlet,
-               alpha = self$getParameterValue("params"),
-               MoreArgs = list(n = n)
+          alpha = self$getParameterValue("params"),
+          MoreArgs = list(n = n)
         )
       } else {
         extraDistr::rdirichlet(n,
-                               alpha = self$getParameterValue("params")
+          alpha = self$getParameterValue("params")
         )
       }
     },

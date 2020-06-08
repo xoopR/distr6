@@ -24,7 +24,8 @@
 #' @family univariate distributions
 #'
 #' @export
-FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects = F,
+FDistribution <- R6Class("FDistribution",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "FDistribution",
@@ -83,7 +84,7 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
     mode = function(which = "all") {
       if (self$getParameterValue("df1") > 2) {
         return(((self$getParameterValue("df1") - 2) * self$getParameterValue("df2")) /
-                 (self$getParameterValue("df1") * (self$getParameterValue("df2") + 2)))
+          (self$getParameterValue("df1") * (self$getParameterValue("df2") + 2)))
       } else {
         return(NaN)
       }
@@ -152,8 +153,8 @@ FDistribution <- R6Class("FDistribution", inherit = SDistribution, lock_objects 
       df1 <- self$getParameterValue("df1")
       df2 <- self$getParameterValue("df2")
       return(log(gamma(df1 / 2), base) + log(gamma(df2 / 2), base) - log(gamma((df1 + df2) / 2), base) +
-               log(df1 / df2, base) + (1 - df1 / 2) * digamma(1 + df1 / 2) - (1 + df2 / 2) * digamma(1 + df2 / 2) +
-               ((df1 + df2) / 2) * digamma((df1 + df2) / 2))
+        log(df1 / df2, base) + (1 - df1 / 2) * digamma(1 + df1 / 2) - (1 + df2 / 2) * digamma(1 + df2 / 2) +
+        ((df1 + df2) / 2) * digamma((df1 + df2) / 2))
     },
 
     #' @description The moment generating function is defined by

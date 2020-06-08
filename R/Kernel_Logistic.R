@@ -10,7 +10,8 @@
 #' @template param_decorators
 #'
 #' @export
-LogisticKernel <- R6Class("LogisticKernel", inherit = Kernel, lock_objects = F,
+LogisticKernel <- R6Class("LogisticKernel",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "LogisticKernel",
     short_name = "Logis",

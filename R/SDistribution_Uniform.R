@@ -27,7 +27,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F,
+Uniform <- R6Class("Uniform",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Uniform",
@@ -67,7 +68,7 @@ Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(NaN)
     },
 
@@ -120,7 +121,7 @@ Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F,
         return(1)
       } else {
         return((exp(self$getParameterValue("upper") * t) - exp(self$getParameterValue("lower") * t)) /
-                 (t * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
+          (t * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
       }
     },
 
@@ -132,7 +133,7 @@ Uniform <- R6Class("Uniform", inherit = SDistribution, lock_objects = F,
         return(1)
       } else {
         return((exp(self$getParameterValue("upper") * t * 1i) - exp(self$getParameterValue("lower") * t * 1i)) /
-                 (t * 1i * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
+          (t * 1i * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
       }
     },
 

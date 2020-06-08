@@ -27,7 +27,8 @@
 #' @family univariate distributions
 #'
 #' @export
-ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, lock_objects = F,
+ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "ShiftedLoglogistic",
@@ -47,16 +48,18 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
       self$setParameterValue(scale = scale, shape = shape, location = location, rate = rate)
 
       if (self$getParameterValue("shape") == 0) {
-        support = Reals$new()
+        support <- Reals$new()
       } else if (self$getParameterValue("shape") < 0) {
-        support = Interval$new(-Inf, self$getParameterValue("location") -
-                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
-                               type = "(]")
+        support <- Interval$new(-Inf, self$getParameterValue("location") -
+          self$getParameterValue("scale") / self$getParameterValue("shape"),
+        type = "(]"
+        )
       } else {
-        support = Interval$new(self$getParameterValue("location") -
-                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
-                               Inf,
-                               type = "[)")
+        support <- Interval$new(self$getParameterValue("location") -
+          self$getParameterValue("scale") / self$getParameterValue("shape"),
+        Inf,
+        type = "[)"
+        )
       }
 
       super$initialize(
@@ -77,19 +80,19 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
       scale <- self$getParameterValue("scale")
       shape <- self$getParameterValue("shape")
 
-      return(location + ((scale/shape) * (((pi*shape)/(sin(pi*shape))) - 1)))
+      return(location + ((scale / shape) * (((pi * shape) / (sin(pi * shape))) - 1)))
     },
 
     #' @description
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       location <- self$getParameterValue("location")
       scale <- self$getParameterValue("scale")
       shape <- self$getParameterValue("shape")
 
-      return(location + ((scale/shape) * ((((1 - shape)/(1 + shape))^shape) - 1)))
+      return(location + ((scale / shape) * ((((1 - shape) / (1 + shape))^shape) - 1)))
     },
 
     #' @description
@@ -110,7 +113,7 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
       shape <- self$getParameterValue("shape")
       shapi <- pi * self$getParameterValue("shape")
 
-      return((scale^2/shape^2) * ((2 * shapi / sin(2 * shapi)) - ((shapi/sin(shapi))^2)))
+      return((scale^2 / shape^2) * ((2 * shapi / sin(2 * shapi)) - ((shapi / sin(shapi))^2)))
     },
 
     #' @description The probability generating function is defined by
@@ -126,16 +129,18 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic", inherit = SDistribution, loc
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       if (self$getParameterValue("shape") == 0) {
-        support = Reals$new()
+        support <- Reals$new()
       } else if (self$getParameterValue("shape") < 0) {
-        support = Interval$new(-Inf, self$getParameterValue("location") -
-                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
-                               type = "(]")
+        support <- Interval$new(-Inf, self$getParameterValue("location") -
+          self$getParameterValue("scale") / self$getParameterValue("shape"),
+        type = "(]"
+        )
       } else {
-        support = Interval$new(self$getParameterValue("location") -
-                                 self$getParameterValue("scale")/self$getParameterValue("shape"),
-                               Inf,
-                               type = "[)")
+        support <- Interval$new(self$getParameterValue("location") -
+          self$getParameterValue("scale") / self$getParameterValue("shape"),
+        Inf,
+        type = "[)"
+        )
       }
       invisible(self)
     }

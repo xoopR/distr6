@@ -41,7 +41,8 @@
 #'
 #' summary(x)
 #' @export
-WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_objects = F,
+WeightedDiscrete <- R6Class("WeightedDiscrete",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "WeightedDiscrete",
@@ -68,9 +69,9 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
 
       if (!is.null(data)) {
         message("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
-        x = data$x
-        pdf = data$pdf
-        cdf = data$cdf
+        x <- data$x
+        pdf <- data$pdf
+        cdf <- data$cdf
       }
 
       private$.parameters <- getParameterSet(self, x = x, pdf = pdf, cdf = cdf)
@@ -171,7 +172,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
         nc <- length(data)
         return(as.numeric(
           exp(matrix(data, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
     },
@@ -190,7 +191,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete", inherit = SDistribution, lock_ob
         nc <- length(data)
         return(as.complex(
           exp(matrix(data * 1i, nrow = nr, ncol = nc, byrow = T) *
-                matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
+            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
     },

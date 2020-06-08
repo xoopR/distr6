@@ -14,9 +14,9 @@
 #' decorate(Exponential$new(), "CoreStatistics")
 #' Exponential$new(decorators = "CoreStatistics")
 #' CoreStatistics$new()$decorate(Exponential$new())
-#'
 #' @export
-CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
+CoreStatistics <- R6Class("CoreStatistics",
+  inherit = DistributionDecorator,
   public = list(
     #' @description
     #' Numerically estimates the moment-generating function.
@@ -154,7 +154,7 @@ CoreStatistics <- R6Class("CoreStatistics", inherit = DistributionDecorator,
 
       count <- self$properties$support$properties$countability
       if (count != "uncountable") {
-        ws  <- self$workingSupport
+        ws <- self$workingSupport
         rng <- seq.int(ws$lower, ws$upper)
         pdfs <- self$pdf(rng)
         xs <- trafo(rng)

@@ -25,7 +25,8 @@
 #' @family multivariate distributions
 #'
 #' @export
-Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
+Multinomial <- R6Class("Multinomial",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Multinomial",
@@ -50,7 +51,7 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
       private$.parameters <- getParameterSet(self, size, probs)
       self$setParameterValue(size = size, probs = probs)
 
-      private$.variates = length(probs)
+      private$.variates <- length(probs)
 
       super$initialize(
         decorators = decorators,
@@ -153,7 +154,7 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
       }
       if ("probs" %in% names(lst)) {
         checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
-                          .var.name = "Number of categories cannot be changed after construction."
+          .var.name = "Number of categories cannot be changed after construction."
         )
         lst$probs <- lst$probs / sum(lst$probs)
       }
@@ -170,30 +171,30 @@ Multinomial <- R6Class("Multinomial", inherit = SDistribution, lock_objects = F,
 
       if (checkmate::testList(self$getParameterValue("probs"))) {
         mapply(extraDistr::dmnom,
-               size = self$getParameterValue("size"),
-               prob = self$getParameterValue("probs"),
-               MoreArgs = list(x = x, log = log)
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs"),
+          MoreArgs = list(x = x, log = log)
         )
       } else {
         extraDistr::dmnom(x,
-                          size = self$getParameterValue("size"),
-                          prob = self$getParameterValue("probs"),
-                          log = log
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs"),
+          log = log
         )
       }
     },
     .rand = function(n) {
       if (checkmate::testList(self$getParameterValue("probs"))) {
         mapply(extraDistr::rmnom,
-               size = self$getParameterValue("size"),
-               prob = self$getParameterValue("probs"),
-               MoreArgs = list(n = n),
-               SIMPLIFY = FALSE
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs"),
+          MoreArgs = list(n = n),
+          SIMPLIFY = FALSE
         )
       } else {
         extraDistr::rmnom(n,
-                          size = self$getParameterValue("size"),
-                          prob = self$getParameterValue("probs")
+          size = self$getParameterValue("size"),
+          prob = self$getParameterValue("probs")
         )
       }
     },

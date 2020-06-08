@@ -25,7 +25,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
+Gumbel <- R6Class("Gumbel",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Gumbel",
@@ -65,7 +66,7 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(self$getParameterValue("location"))
     },
 
@@ -74,7 +75,7 @@ Gumbel <- R6Class("Gumbel", inherit = SDistribution, lock_objects = F,
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      return(self$getParameterValue("location") - self$getParameterValue("scale")*log(log(2)))
+      return(self$getParameterValue("location") - self$getParameterValue("scale") * log(log(2)))
     },
 
     #' @description

@@ -26,7 +26,8 @@
 #' @family univariate distributions
 #'
 #' @export
-BetaNoncentral <- R6Class("BetaNoncentral", inherit = SDistribution, lock_objects = F,
+BetaNoncentral <- R6Class("BetaNoncentral",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "BetaNoncentral",

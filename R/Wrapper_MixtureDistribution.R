@@ -88,7 +88,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' Note that as this class inherits from [VectorDistribution], it is possible to evaluate
     #' the distributions at different points, but that this is not the usual use-case for
     #' mixture distributions.
-    #'@param ... `(numeric())` \cr
+    #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
     #' to be named. The length of each argument corresponds to the number of points to evaluate,
     #' the number of arguments corresponds to the number of variables in the distribution.
@@ -114,7 +114,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #'  \deqn{F_M(x) = \sum_i (F_i)(x)*w_i}
     #'  where \eqn{w_i} is the vector of weights and \eqn{F_i} are the cdfs of the wrapped
     #'  distributions.
-    #'@param ... `(numeric())` \cr
+    #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
     #' to be named. The length of each argument corresponds to the number of points to evaluate,
     #' the number of arguments corresponds to the number of variables in the distribution.

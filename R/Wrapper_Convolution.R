@@ -14,7 +14,8 @@
 #' @return Returns an R6 object of class Convolution.
 #'
 #' @export
-Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_objects = FALSE,
+Convolution <- R6Class("Convolution",
+  inherit = DistributionWrapper, lock_objects = FALSE,
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -113,7 +114,8 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
 #' @param x,y [Distribution]
 #' @examples
 #' binom <- Bernoulli$new() + Bernoulli$new()
-#' binom$pdf(2); Binomial$new(size = 2)$pdf(2)
+#' binom$pdf(2)
+#' Binomial$new(size = 2)$pdf(2)
 #' @export
 `+.Distribution` <- function(x, y) {
   Convolution$new(x, y, add = TRUE)
@@ -121,7 +123,8 @@ Convolution <- R6Class("Convolution", inherit = DistributionWrapper, lock_object
 #' @rdname Convolution
 #' @examples
 #' norm <- Normal$new(mean = 3) - Normal$new(mean = 2)
-#' norm$pdf(1); Normal$new(mean = 1, var = 2)$pdf(1)
+#' norm$pdf(1)
+#' Normal$new(mean = 1, var = 2)$pdf(1)
 #' @export
 `-.Distribution` <- function(x, y) {
   Convolution$new(x, y, add = FALSE)

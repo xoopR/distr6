@@ -82,7 +82,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' Probability density function of the product distribution. Computed by
     #'  \deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
     #'  where \eqn{f_{Xi}} are the pdfs of the wrapped distributions.
-    #'@param ... `(numeric())` \cr
+    #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
     #' to be named. The length of each argument corresponds to the number of points to evaluate,
     #' the number of arguments corresponds to the number of variables in the distribution.
@@ -105,7 +105,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' Cumulative distribution function of the product distribution. Computed by
     #'  \deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
     #'  where \eqn{F_{Xi}} are the cdfs of the wrapped distributions.
-    #'@param ... `(numeric())` \cr
+    #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
     #' to be named. The length of each argument corresponds to the number of points to evaluate,
     #' the number of arguments corresponds to the number of variables in the distribution.

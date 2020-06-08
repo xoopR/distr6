@@ -27,11 +27,12 @@
 #' @family univariate distributions
 #'
 #' @export
-ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral", inherit = SDistribution, lock_objects = F,
+ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "ChiSquaredNoncentral",
-    short_name = "ChiSqNC" ,
+    short_name = "ChiSqNC",
     description = "Non-central ChiSquared Probability Distribution.",
     packages = "stats",
 

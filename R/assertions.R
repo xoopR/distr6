@@ -144,7 +144,8 @@ makeChecks(
 #' @examples
 #' testParameterSetCollectionList(list(Binomial$new(), 5)) # FALSE
 #' testParameterSetCollectionList(list(ParameterSetCollection$new(
-#'     Binom = Binomial$new()$parameters()))) # TRUE
+#'   Binom = Binomial$new()$parameters()
+#' ))) # TRUE
 #' @export
 testParameterSetCollectionList <- function() {}
 #' @rdname testParameterSetCollectionList

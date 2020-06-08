@@ -25,7 +25,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F,
+Poisson <- R6Class("Poisson",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Poisson",
@@ -64,7 +65,7 @@ Poisson <- R6Class("Poisson", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(floor(self$getParameterValue("rate")))
     },
 

@@ -24,7 +24,8 @@
 #' @family univariate distributions
 #'
 #' @export
-ChiSquared <- R6Class("ChiSquared", inherit = SDistribution, lock_objects = F,
+ChiSquared <- R6Class("ChiSquared",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "ChiSquared",
@@ -112,7 +113,7 @@ ChiSquared <- R6Class("ChiSquared", inherit = SDistribution, lock_objects = F,
     #' continuous distributions.
     entropy = function(base = 2) {
       return(self$getParameterValue("df") / 2 + log(2 * gamma(self$getParameterValue("df") / 2), base) +
-               ((1 - self$getParameterValue("df") / 2) * digamma(self$getParameterValue("df") / 2)))
+        ((1 - self$getParameterValue("df") / 2) * digamma(self$getParameterValue("df") / 2)))
     },
 
     #' @description The moment generating function is defined by
@@ -202,15 +203,15 @@ ChiSquared <- R6Class("ChiSquared", inherit = SDistribution, lock_objects = F,
       )
     },
 
-      # getRefParams
-      .getRefParams = function(paramlst) {
-        lst <- list()
-        if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
-        return(lst)
-      },
+    # getRefParams
+    .getRefParams = function(paramlst) {
+      lst <- list()
+      if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
+      return(lst)
+    },
 
-      # traits
-      .traits = list(valueSupport = "continuous", variateForm = "univariate")
+    # traits
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
 )
 

@@ -137,7 +137,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' g$getParameterValue("prob")
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
-      sep <- as.numeric(as.data.table(gregexpr("_", names(lst)))[1,])
+      sep <- as.numeric(as.data.table(gregexpr("_", names(lst)))[1, ])
       param <- substr(names(lst), sep + 1, 1000)
       dist <- substr(names(lst), 1, sep - 1)
 

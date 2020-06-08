@@ -26,7 +26,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Categorical <- R6Class("Categorical", inherit = SDistribution, lock_objects = F,
+Categorical <- R6Class("Categorical",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Categorical",

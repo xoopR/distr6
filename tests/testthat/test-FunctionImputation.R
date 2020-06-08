@@ -25,16 +25,16 @@ ps <- ParameterSet$new(
   description = list("Arrival rate", "Scale parameter", "testpar")
 )
 cont_pdf <- Distribution$new("Continuous Test", "ContTest",
-                                     support = PosReals$new(),
-                                     symmetric = TRUE, type = PosReals$new(zero = T),
-                                     pdf = dexpo,
-                                     parameters = ps
+  support = PosReals$new(),
+  symmetric = TRUE, type = PosReals$new(zero = T),
+  pdf = dexpo,
+  parameters = ps
 )
 cont_cdf <- Distribution$new("Continuous Test", "ContTest",
-                                         support = PosReals$new(),
-                                         symmetric = TRUE, type = PosReals$new(zero = T),
-                                         cdf = cexpo,
-                                         parameters = ps
+  support = PosReals$new(),
+  symmetric = TRUE, type = PosReals$new(zero = T),
+  cdf = cexpo,
+  parameters = ps
 )
 
 dgeo <- function(x) {
@@ -46,15 +46,21 @@ pgeo <- function(x) {
 }
 
 disc_pdf <- Distribution$new("Discrete Test",
-                                   support = Interval$new(0, Inf, type = "[)",
-                                                          class = "integer"),
-                                   symmetric = FALSE, type = Naturals$new(),
-                                   pdf = dgeo)
+  support = Interval$new(0, Inf,
+    type = "[)",
+    class = "integer"
+  ),
+  symmetric = FALSE, type = Naturals$new(),
+  pdf = dgeo
+)
 disc_cdf <- Distribution$new("Discrete Test",
-                             support = Interval$new(0, Inf, type = "[)",
-                                                    class = "integer"),
-                             symmetric = FALSE, type = Naturals$new(),
-                             cdf = pgeo)
+  support = Interval$new(0, Inf,
+    type = "[)",
+    class = "integer"
+  ),
+  symmetric = FALSE, type = Naturals$new(),
+  cdf = pgeo
+)
 
 #----------
 # pdf checks
@@ -106,13 +112,16 @@ test_that("discrete pdf2cdf", {
 
 test_that("continuous pdf2quantile", {
   expect_message(expect_rounded_equal(cont_pdf$quantile(c(0.2, 0.42, 0.6)),
-                                      qexp(c(0.2, 0.42, 0.6)),
-                                      dp = 4))
+    qexp(c(0.2, 0.42, 0.6)),
+    dp = 4
+  ))
 })
 
 test_that("discrete pdf2quantile", {
-  expect_message(expect_equal(disc_pdf$quantile(c(0.2, 0.42, 0.6)),
-                                      qgeom(c(0.2, 0.42, 0.6), prob = 0.5)))
+  expect_message(expect_equal(
+    disc_pdf$quantile(c(0.2, 0.42, 0.6)),
+    qgeom(c(0.2, 0.42, 0.6), prob = 0.5)
+  ))
 })
 
 #----------
@@ -188,13 +197,16 @@ test_that("discrete cdf2pdf", {
 
 test_that("continuous cdf2quantile", {
   expect_message(expect_rounded_equal(cont_cdf$quantile(c(0.2, 0.42, 0.6)),
-                                      qexp(c(0.2, 0.42, 0.6)),
-                                      dp = 3))
+    qexp(c(0.2, 0.42, 0.6)),
+    dp = 3
+  ))
 })
 
 test_that("discrete cdf2quantile", {
-  expect_message(expect_equal(disc_cdf$quantile(c(0.2, 0.42, 0.6)),
-                              qgeom(c(0.2, 0.42, 0.6), prob = 0.5)))
+  expect_message(expect_equal(
+    disc_cdf$quantile(c(0.2, 0.42, 0.6)),
+    qgeom(c(0.2, 0.42, 0.6), prob = 0.5)
+  ))
 })
 
 #----------

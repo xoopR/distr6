@@ -151,14 +151,14 @@ test_list <- function(x) {
   class(x)[1] == "list"
 }
 
-impute_genx = function(dist, n = 10001) {
+impute_genx <- function(dist, n = 10001) {
 
   x <- dist$workingSupport
   if (testDiscrete(dist)) {
     x <- seq.int(x$lower, x$upper)
   } else {
     if (n %% 2 == 0) {
-      n = n + 1
+      n <- n + 1
     }
 
     x <- seq.int(x$lower, x$upper, length.out = n)
@@ -167,22 +167,24 @@ impute_genx = function(dist, n = 10001) {
   return(x)
 }
 
-rlapply = function(X, FUN, ..., active = FALSE){
-  FUN = as.character(substitute(FUN))
-  if(active)
+rlapply <- function(X, FUN, ..., active = FALSE) {
+  FUN <- as.character(substitute(FUN))
+  if (active) {
     return(lapply(X, function(x) x[[FUN]]))
-  else
+  } else {
     return(lapply(X, function(x) x[[FUN]](...)))
+  }
 }
-rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FALSE){
-  FUN = as.character(substitute(FUN))
-  if(active)
+rsapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FALSE) {
+  FUN <- as.character(substitute(FUN))
+  if (active) {
     return(sapply(X, function(x) x[[FUN]], simplify = simplify, USE.NAMES = USE.NAMES))
-  else
+  } else {
     return(sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES))
+  }
 }
 
-abstract = function(obj, class) {
+abstract <- function(obj, class) {
   if (getR6Class(obj) == class) {
     stop(paste(class, "is an abstract class that can't be initialized."))
   }

@@ -36,7 +36,8 @@
 #' @template field_packages
 #'
 #' @export
-Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
+Wald <- R6Class("Wald",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Wald",
@@ -77,7 +78,7 @@ Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       mean <- self$getParameterValue("mean")
       shape <- self$getParameterValue("shape")
       return(mean * ((1 + (9 * mean^2) / (4 * shape^2))^0.5 - (3 * mean) / (2 * shape)))
@@ -146,15 +147,15 @@ Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
     .pdf = function(x, log = FALSE) {
       if (checkmate::testList(self$getParameterValue("mean"))) {
         mapply(extraDistr::dwald,
-               mu = self$getParameterValue("mean"),
-               lambda = self$getParameterValue("shape"),
-               MoreArgs = list(x = x, log = log)
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          MoreArgs = list(x = x, log = log)
         )
       } else {
         extraDistr::dwald(x,
-                          mu = self$getParameterValue("mean"),
-                          lambda = self$getParameterValue("shape"),
-                          log = log
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          log = log
         )
       }
     },
@@ -168,23 +169,23 @@ Wald <- R6Class("Wald", inherit = SDistribution, lock_objects = F,
         )
       } else {
         extraDistr::pwald(x,
-                          mu = self$getParameterValue("mean"),
-                          lambda = self$getParameterValue("shape"),
-                          lower.tail = lower.tail, log.p = log.p
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          lower.tail = lower.tail, log.p = log.p
         )
       }
     },
     .rand = function(n) {
       if (checkmate::testList(self$getParameterValue("mean"))) {
         mapply(extraDistr::rwald,
-               mu = self$getParameterValue("mean"),
-               lambda = self$getParameterValue("shape"),
-               MoreArgs = list(n = n)
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape"),
+          MoreArgs = list(n = n)
         )
       } else {
         extraDistr::rwald(n,
-                          mu = self$getParameterValue("mean"),
-                          lambda = self$getParameterValue("shape")
+          mu = self$getParameterValue("mean"),
+          lambda = self$getParameterValue("shape")
         )
       }
     },

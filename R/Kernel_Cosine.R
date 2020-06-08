@@ -9,7 +9,8 @@
 #' @template class_kernel
 #'
 #' @export
-Cosine <- R6Class("Cosine", inherit = Kernel, lock_objects = F,
+Cosine <- R6Class("Cosine",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "Cosine",
     short_name = "Cos",

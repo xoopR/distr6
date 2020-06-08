@@ -24,21 +24,21 @@ test_that("wrapped models", {
 
 test_that("wrap a wrapper", {
   expect_silent(
-      ProductDistribution$new(list(
-        MixtureDistribution$new(list(
-          Exponential$new(),
-          huberize(truncate(Normal$new(), lower = -10, upper = 10), -5, 5)
-        )),
-        VectorDistribution$new(distribution = "Gompertz", params = list(
-          list(shape = 2, scale = 4),
-          list(shape = 1, scale = 5)
-        ))
+    ProductDistribution$new(list(
+      MixtureDistribution$new(list(
+        Exponential$new(),
+        huberize(truncate(Normal$new(), lower = -10, upper = 10), -5, 5)
+      )),
+      VectorDistribution$new(distribution = "Gompertz", params = list(
+        list(shape = 2, scale = 4),
+        list(shape = 1, scale = 5)
       ))
+    ))
   )
   x <- MixtureDistribution$new(list(
-      Exponential$new(),
-      huberize(truncate(Normal$new(), lower = -10, upper = 10), -5, 5)
-    ))
+    Exponential$new(),
+    huberize(truncate(Normal$new(), lower = -10, upper = 10), -5, 5)
+  ))
   expect_silent(x$parameters())
   expect_silent(x$cdf(2:3, 3:4))
   expect_silent(x$setParameterValue(Exp_rate = 2))

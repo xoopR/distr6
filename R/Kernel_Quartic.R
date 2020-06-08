@@ -12,7 +12,8 @@
 #' @template class_kernel
 #'
 #' @export
-Quartic <- R6Class("Quartic", inherit = Kernel, lock_objects = F,
+Quartic <- R6Class("Quartic",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "Quartic",
     short_name = "Quart",

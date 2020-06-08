@@ -18,7 +18,8 @@
 #' of Reusable Object-Oriented Software.” Addison-Wesley.
 #'
 #' @export
-DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lock_objects = FALSE,
+DistributionWrapper <- R6Class("DistributionWrapper",
+  inherit = Distribution, lock_objects = FALSE,
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -155,4 +156,3 @@ DistributionWrapper <- R6Class("DistributionWrapper", inherit = Distribution, lo
 #'
 #' @export
 NULL
-

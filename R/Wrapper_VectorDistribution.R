@@ -22,7 +22,8 @@
 #' when methods (e.g. d/p/q/r) are called.
 #'
 #' @export
-VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrapper,
+VectorDistribution <- R6Class("VectorDistribution",
+  inherit = DistributionWrapper,
   lock_objects = FALSE,
   public = list(
     #' @description
@@ -83,18 +84,18 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
         p <- do.call(paste0("getParameterSet.", distribution), params[[1]])
         paramlst <- vector("list", length(params))
         for (i in seq_along(params)) {
-          paramlst[[i]] = p$clone(deep = TRUE)
+          paramlst[[i]] <- p$clone(deep = TRUE)
         }
 
-        names(paramlst) = makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
-        names(params) = names(paramlst)
+        names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
+        names(params) <- names(paramlst)
         params <- unlist(params, recursive = FALSE)
-        names(params) = gsub(".", "_", names(params), fixed = TRUE)
+        names(params) <- gsub(".", "_", names(params), fixed = TRUE)
         if (!is.null(shared_params)) {
           shared_params <- rep(list(shared_params), length(params))
-          names(shared_params) = names(paramlst)
+          names(shared_params) <- names(paramlst)
           shared_params <- unlist(shared_params, recursive = FALSE)
-          names(shared_params) = gsub(".", "_", names(shared_params), fixed = TRUE)
+          names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
           params <- c(params, shared_params)
         }
         parameters <- ParameterSetCollection$new(lst = paramlst)$setParameterValue(lst = params)
@@ -137,7 +138,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
                 for (i in seq(dim(x1)[3])) {
                   mx <- x1[, , i]
                   if (class(mx)[1] == "numeric") {
-                    mx = matrix(mx, nrow = 1)
+                    mx <- matrix(mx, nrow = 1)
                   }
                   a_dpqr <- fun(mx, log = log)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
@@ -237,7 +238,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
           paramlst[[i]] <- distlist[[i]]$parameters()
           vs <- c(vs, distlist[[i]]$traits$valueSupport)
         }
-        valueSupport = if (length(unique(vs)) == 1) vs[[1]] else "mixture"
+        valueSupport <- if (length(unique(vs)) == 1) vs[[1]] else "mixture"
         shortname <- makeUniqueNames(shortname)
         names(paramlst) <- shortname
         names(distlist) <- shortname
@@ -355,11 +356,13 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     wrappedModels = function(model = NULL) {
       if (is.null(model)) {
         if (private$.distlist) {
-          distlist = private$.wrappedModels
+          distlist <- private$.wrappedModels
         } else {
-          distlist <-  lapply(private$.modelTable$shortname, function(x) {
-            do.call(get(private$.modelTable$Distribution[[1]])$new,
-                    self$parameters()[paste0(x, "_")]$values)
+          distlist <- lapply(private$.modelTable$shortname, function(x) {
+            do.call(
+              get(private$.modelTable$Distribution[[1]])$new,
+              self$parameters()[paste0(x, "_")]$values
+            )
           })
         }
       } else {
@@ -373,8 +376,10 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
           distlist <- private$.wrappedModels[models]
         } else {
           distlist <- lapply(models, function(x) {
-            do.call(get(private$.modelTable$Distribution[[1]])$new,
-                    self$parameters()[paste0(x, "_")]$values)
+            do.call(
+              get(private$.modelTable$Distribution[[1]])$new,
+              self$parameters()[paste0(x, "_")]$values
+            )
           })
         }
       }
@@ -382,7 +387,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
       if (length(distlist) == 1) {
         return(distlist[[1]])
       } else {
-        names(distlist) = private$.modelTable$shortname
+        names(distlist) <- private$.modelTable$shortname
         return(distlist)
       }
     },
@@ -541,12 +546,12 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
       } else {
         if (ncol(data) == 1) {
           data <- array(rep(data, nrow(private$.wrappedModels)),
-                        dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
+            dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
           )
         } else if (inherits(data, "array")) {
           if (is.na(dim(data)[3])) {
             data <- array(rep(data, nrow(private$.modelTable)),
-                          dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
+              dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
             )
           }
         }
@@ -583,7 +588,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
         } else if (class(data) == "array") {
           if (dim(data)[3] == 1) {
             data <- array(rep(data, nrow(private$.modelTable)),
-                          dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
+              dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
             )
           }
         }
@@ -615,7 +620,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
         } else if (class(data) == "array") {
           if (dim(data)[3] == 1) {
             data <- array(rep(data, nrow(private$.modelTable)),
-                          dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
+              dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
             )
           }
         }
@@ -667,8 +672,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
     .distlist = FALSE,
     .sharedparams = list(),
     .properties = list(),
-    .traits = list(type = NA, valueSupport = "mixture", variateForm = "multivariate"
-    )
+    .traits = list(type = NA, valueSupport = "mixture", variateForm = "multivariate")
   )
 )
 
@@ -691,7 +695,7 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
   decorators <- vecdist$decorators
 
   if (!vecdist$distlist) {
-    distribution = as.character(unlist(vecdist$modelTable[1, 1]))
+    distribution <- as.character(unlist(vecdist$modelTable[1, 1]))
     if (length(i) == 1) {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
       pars <- vecdist$parameters()[paste0(id, "_")]$values
@@ -704,8 +708,10 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
       pars <- vecdist$parameters()$values
       pars <- pars[names(pars) %in% id]
 
-      return(VectorDistribution$new(distribution = distribution, params = pars,
-                                    decorators = decorators))
+      return(VectorDistribution$new(
+        distribution = distribution, params = pars,
+        decorators = decorators
+      ))
     }
   } else {
     if (length(i) == 1) {
@@ -715,8 +721,10 @@ VectorDistribution <- R6Class("VectorDistribution", inherit = DistributionWrappe
       }
       return(dist)
     } else {
-      return(VectorDistribution$new(distlist = vecdist$wrappedModels()[i],
-                                    decorators = decorators))
+      return(VectorDistribution$new(
+        distlist = vecdist$wrappedModels()[i],
+        decorators = decorators
+      ))
     }
   }
 }

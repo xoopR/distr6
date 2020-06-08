@@ -10,7 +10,8 @@
 #'
 #'
 #' @export
-TriangularKernel <- R6Class("TriangularKernel", inherit = Kernel, lock_objects = F,
+TriangularKernel <- R6Class("TriangularKernel",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "TriangularKernel",
     short_name = "Tri",

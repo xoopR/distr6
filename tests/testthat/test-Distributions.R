@@ -45,10 +45,12 @@ ps <- ParameterSet$new(
 
 test_that("check r/d/p/q", {
   expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())$pdf(1))
-  expect_silent(Distribution$new("Test", pdf = dbin, type = Naturals$new(),
-                                 quantile = function(p) {
-    return(p)
-  })$quantile(0.4))
+  expect_silent(Distribution$new("Test",
+    pdf = dbin, type = Naturals$new(),
+    quantile = function(p) {
+      return(p)
+    }
+  )$quantile(0.4))
   expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$cdf(1))
   expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$quantile(1))
   expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$rand(1))

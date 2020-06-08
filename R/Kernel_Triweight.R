@@ -12,7 +12,8 @@
 #' @template class_kernel
 #'
 #' @export
-Triweight <- R6Class("Triweight", inherit = Kernel, lock_objects = F,
+Triweight <- R6Class("Triweight",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "Triweight",
     short_name = "Triw",

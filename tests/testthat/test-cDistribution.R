@@ -59,8 +59,9 @@ test_that("different lengths", {
   v1 <- VectorDistribution$new(
     distribution = "WeightedDiscrete",
     params = list(
-      list(x = 1, pdf = 1))
+      list(x = 1, pdf = 1)
     )
+  )
   v2 <- VectorDistribution$new(
     distribution = "WeightedDiscrete",
     params = list(

@@ -22,4 +22,3 @@ test_that("autottest", {
     quantile = qweibull(c(0.24, 0.42, 0.5), shape = 1, scale = 1)
   )
 })
-

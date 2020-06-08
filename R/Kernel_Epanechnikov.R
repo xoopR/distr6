@@ -12,7 +12,8 @@
 #' @template class_kernel
 #'
 #' @export
-Epanechnikov <- R6Class("Epanechnikov", inherit = Kernel, lock_objects = F,
+Epanechnikov <- R6Class("Epanechnikov",
+  inherit = Kernel, lock_objects = F,
   public = list(
     name = "Epanechnikov",
     short_name = "Epan",

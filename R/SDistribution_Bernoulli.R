@@ -27,7 +27,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Bernoulli <- R6Class("Bernoulli", inherit = SDistribution, lock_objects = F,
+Bernoulli <- R6Class("Bernoulli",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Bernoulli",

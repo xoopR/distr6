@@ -17,21 +17,27 @@
 #' @template method_decorate
 #'
 #' @examples
-#' pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1/10)
+#' pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1 / 10)
 #'
-#' x <- Distribution$new("Test", pdf = pdf,
-#' support = set6::Interval$new(1, 10, class = "integer"),
-#' type = set6::Naturals$new())
+#' x <- Distribution$new("Test",
+#'   pdf = pdf,
+#'   support = set6::Interval$new(1, 10, class = "integer"),
+#'   type = set6::Naturals$new()
+#' )
 #' decorate(x, "FunctionImputation", n = 1000)
 #'
-#' x <- Distribution$new("Test", pdf = pdf,
-#' support = set6::Interval$new(1, 10, class = "integer"),
-#' type = set6::Naturals$new(),
-#' decorators = "FunctionImputation")
+#' x <- Distribution$new("Test",
+#'   pdf = pdf,
+#'   support = set6::Interval$new(1, 10, class = "integer"),
+#'   type = set6::Naturals$new(),
+#'   decorators = "FunctionImputation"
+#' )
 #'
-#' x <- Distribution$new("Test", pdf = pdf,
-#' support = set6::Interval$new(1, 10, class = "integer"),
-#' type = set6::Naturals$new())
+#' x <- Distribution$new("Test",
+#'   pdf = pdf,
+#'   support = set6::Interval$new(1, 10, class = "integer"),
+#'   type = set6::Naturals$new()
+#' )
 #' FunctionImputation$new()$decorate(x, n = 1000)
 #'
 #' x$pdf(1:10)
@@ -39,7 +45,8 @@
 #' x$quantile(0.42)
 #' x$rand(4)
 #' @export
-FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecorator,
+FunctionImputation <- R6Class("FunctionImputation",
+  inherit = DistributionDecorator,
   public = list(
     packages = c("pracma", "GoFKernel"),
 
@@ -61,8 +68,7 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
         message(paste(distribution$name, "is already decorated with FunctionImputation."))
         invisible(self)
       } else {
-
-        pdist = distribution$.__enclos_env__$private
+        pdist <- distribution$.__enclos_env__$private
         pdist$n_grid <- checkmate::assertIntegerish(n)
 
         if (!isPdf(distribution)) {
@@ -120,7 +126,7 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
       }
 
       if (log) {
-        pdf = log(pdf)
+        pdf <- log(pdf)
       }
 
       return(pdf)
@@ -131,11 +137,13 @@ FunctionImputation <- R6Class("FunctionImputation", inherit = DistributionDecora
 
       if (testDiscrete(self)) {
         grid_x <- impute_genx(self, private$n_grid)
-        cdf <- C_NumericCdf_Discrete(q = x,
-                                     x = grid_x,
-                                     pdf = self$pdf(grid_x),
-                                     lower = lower.tail,
-                                     logp = log.p)
+        cdf <- C_NumericCdf_Discrete(
+          q = x,
+          x = grid_x,
+          pdf = self$pdf(grid_x),
+          lower = lower.tail,
+          logp = log.p
+        )
       } else {
         cdf <- numeric(length(x))
         for (i in seq_along(x)) {

@@ -25,7 +25,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
+Laplace <- R6Class("Laplace",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Laplace",
@@ -70,7 +71,7 @@ Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(self$getParameterValue("mean"))
     },
 
@@ -146,59 +147,59 @@ Laplace <- R6Class("Laplace", inherit = SDistribution, lock_objects = F,
     .pdf = function(x, log = FALSE) {
       if (checkmate::testList(self$getParameterValue("mean"))) {
         mapply(extraDistr::dlaplace,
-               mu = self$getParameterValue("mean"),
-               sigma = self$getParameterValue("scale"),
-               MoreArgs = list(x = x, log = log)
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(x = x, log = log)
         )
       } else {
         extraDistr::dlaplace(x,
-                             mu = self$getParameterValue("mean"),
-                             sigma = self$getParameterValue("scale"),
-                             log = log
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          log = log
         )
       }
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       if (checkmate::testList(self$getParameterValue("mean"))) {
         mapply(extraDistr::plaplace,
-               mu = self$getParameterValue("mean"),
-               sigma = self$getParameterValue("scale"),
-               MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
         )
       } else {
         extraDistr::plaplace(x,
-                             mu = self$getParameterValue("mean"),
-                             sigma = self$getParameterValue("scale"),
-                             lower.tail = lower.tail, log.p = log.p
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail, log.p = log.p
         )
       }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       if (checkmate::testList(self$getParameterValue("mean"))) {
         mapply(extraDistr::qlaplace,
-               mu = self$getParameterValue("mean"),
-               sigma = self$getParameterValue("scale"),
-               MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
         )
       } else {
         extraDistr::qlaplace(p,
-                             mu = self$getParameterValue("mean"),
-                             sigma = self$getParameterValue("scale"),
-                             lower.tail = lower.tail, log.p = log.p
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          lower.tail = lower.tail, log.p = log.p
         )
       }
     },
     .rand = function(n) {
       if (checkmate::testList(self$getParameterValue("mean"))) {
         mapply(extraDistr::rlaplace,
-               mu = self$getParameterValue("mean"),
-               sigma = self$getParameterValue("scale"),
-               MoreArgs = list(n = n)
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale"),
+          MoreArgs = list(n = n)
         )
       } else {
         extraDistr::rlaplace(n,
-                             mu = self$getParameterValue("mean"),
-                             sigma = self$getParameterValue("scale")
+          mu = self$getParameterValue("mean"),
+          sigma = self$getParameterValue("scale")
         )
       }
     },

@@ -26,7 +26,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
+Lognormal <- R6Class("Lognormal",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Lognormal",
@@ -100,7 +101,7 @@ Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(exp(self$getParameterValue("meanlog") - self$getParameterValue("varlog")))
     },
 
@@ -139,10 +140,10 @@ Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
     kurtosis = function(excess = TRUE) {
       if (excess) {
         return((exp(4 * self$getParameterValue("varlog")) + 2 * exp(3 * self$getParameterValue("varlog")) +
-                  3 * exp(2 * self$getParameterValue("varlog")) - 6))
+          3 * exp(2 * self$getParameterValue("varlog")) - 6))
       } else {
         return((exp(4 * self$getParameterValue("varlog")) + 2 * exp(3 * self$getParameterValue("varlog")) +
-                  3 * exp(2 * self$getParameterValue("varlog")) - 3))
+          3 * exp(2 * self$getParameterValue("varlog")) - 3))
       }
     },
 
@@ -153,7 +154,7 @@ Lognormal <- R6Class("Lognormal", inherit = SDistribution, lock_objects = F,
     #' continuous distributions.
     entropy = function(base = 2) {
       return(log(sqrt(2 * pi) * self$getParameterValue("sdlog") *
-                   exp(self$getParameterValue("meanlog") + 0.5), base))
+        exp(self$getParameterValue("meanlog") + 0.5), base))
     },
 
     #' @description The moment generating function is defined by

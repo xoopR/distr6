@@ -14,7 +14,8 @@
 #' pdf/cdf of the original distribution.
 #'
 #' @export
-HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = DistributionWrapper,
+HuberizedDistribution <- R6Class("HuberizedDistribution",
+  inherit = DistributionWrapper,
   lock_objects = FALSE,
   public = list(
     #' @description
@@ -109,25 +110,25 @@ HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = Distribution
 
   private = list(
     .pdf = function(x, log = FALSE) {
-      dist = self$wrappedModels()[[1]]
+      dist <- self$wrappedModels()[[1]]
 
       if (testDiscrete(dist)) {
-        lower = self$getParameterValue("hub_lower")
-        upper = self$getParameterValue("hub_upper")
+        lower <- self$getParameterValue("hub_lower")
+        upper <- self$getParameterValue("hub_upper")
 
         pdf <- x
-        pdf[x < lower | x > upper] = 0
-        pdf[x == lower] = dist$cdf(lower)
-        pdf[x > lower & x < upper] = dist$pdf(x[x > lower & x < upper])
-        pdf[x == upper] = 1 - dist$cdf(upper) + dist$pdf(upper)
+        pdf[x < lower | x > upper] <- 0
+        pdf[x == lower] <- dist$cdf(lower)
+        pdf[x > lower & x < upper] <- dist$pdf(x[x > lower & x < upper])
+        pdf[x == upper] <- 1 - dist$cdf(upper) + dist$pdf(upper)
 
         return(pdf)
       }
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      dist = self$wrappedModels()[[1]]
-      lower = self$getParameterValue("hub_lower")
-      upper = self$getParameterValue("hub_upper")
+      dist <- self$wrappedModels()[[1]]
+      lower <- self$getParameterValue("hub_lower")
+      upper <- self$getParameterValue("hub_upper")
 
       cdf <- x
       cdf[x < lower] <- 0
@@ -137,9 +138,9 @@ HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = Distribution
       return(cdf)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      dist = self$wrappedModels()[[1]]
-      lower = self$getParameterValue("hub_lower")
-      upper = self$getParameterValue("hub_upper")
+      dist <- self$wrappedModels()[[1]]
+      lower <- self$getParameterValue("hub_lower")
+      upper <- self$getParameterValue("hub_upper")
 
       quantile <- dist$quantile(p, lower.tail = lower.tail, log.p = log.p)
 
@@ -147,8 +148,8 @@ HuberizedDistribution <- R6Class("HuberizedDistribution", inherit = Distribution
       if (!lower.tail) p <- 1 - p
       quantile[p == 0] <- lower
       quantile[p == 1] <- upper
-      quantile[quantile > upper] = upper
-      quantile[quantile < lower] = lower
+      quantile[quantile > upper] <- upper
+      quantile[quantile < lower] <- lower
 
       return(quantile)
     },

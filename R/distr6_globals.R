@@ -6,8 +6,10 @@
   return(paste("No analytic result for", self$name, method, "available. Try decorating with CoreStatistics."))
 }
 
-.distr6$distributions <- data.table(ShortName = NULL, ClassName = NULL, Type = NULL,
-                                    ValueSupport = NULL, VariateForm = NULL, Package = NULL)
+.distr6$distributions <- data.table(
+  ShortName = NULL, ClassName = NULL, Type = NULL,
+  ValueSupport = NULL, VariateForm = NULL, Package = NULL
+)
 .distr6$kernels <- data.table(ShortName = NULL, ClassName = NULL, Support = NULL, Packages = NULL)
 
 

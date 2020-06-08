@@ -28,7 +28,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
+Loglogistic <- R6Class("Loglogistic",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Loglogistic",
@@ -64,14 +65,14 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
     #' with an integration analogue for continuous distributions.
     mean = function() {
       return((self$getParameterValue("scale") * pi / self$getParameterValue("shape")) /
-               sin(pi / self$getParameterValue("shape")))
+        sin(pi / self$getParameterValue("shape")))
     },
 
     #' @description
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       shape <- self$getParameterValue("shape")
       return(self$getParameterValue("scale") * ((shape - 1) / (shape + 1))^(1 / shape))
     },
@@ -155,8 +156,8 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
     .pdf = function(x, log = FALSE) {
       if (checkmate::testList(self$getParameterValue("shape"))) {
         mapply(actuar::dllogis,
-               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-               MoreArgs = list(x = x, log = log)
+          shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+          MoreArgs = list(x = x, log = log)
         )
       } else {
         actuar::dllogis(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
@@ -165,34 +166,34 @@ Loglogistic <- R6Class("Loglogistic", inherit = SDistribution, lock_objects = F,
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       if (checkmate::testList(self$getParameterValue("shape"))) {
         mapply(actuar::pllogis,
-               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-               MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
+          shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+          MoreArgs = list(q = x, lower.tail = lower.tail, log.p = log.p)
         )
       } else {
         actuar::pllogis(x,
-                        shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-                        lower.tail = lower.tail, log.p = log.p
+          shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+          lower.tail = lower.tail, log.p = log.p
         )
       }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       if (checkmate::testList(self$getParameterValue("shape"))) {
         mapply(actuar::qllogis,
-               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-               MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
+          shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+          MoreArgs = list(p = p, lower.tail = lower.tail, log.p = log.p)
         )
       } else {
         actuar::qllogis(p,
-                        shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-                        lower.tail = lower.tail, log.p = log.p
+          shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+          lower.tail = lower.tail, log.p = log.p
         )
       }
     },
     .rand = function(n) {
       if (checkmate::testList(self$getParameterValue("shape"))) {
         mapply(actuar::rllogis,
-               shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
-               MoreArgs = list(n = n)
+          shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"),
+          MoreArgs = list(n = n)
         )
       } else {
         actuar::rllogis(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))

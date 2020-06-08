@@ -26,7 +26,8 @@
 #' @family univariate distributions
 #'
 #' @export
-InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = F,
+InverseGamma <- R6Class("InverseGamma",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "InverseGamma",
@@ -69,7 +70,7 @@ InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = 
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(self$getParameterValue("scale") / (self$getParameterValue("shape") + 1))
     },
 
@@ -126,8 +127,8 @@ InverseGamma <- R6Class("InverseGamma", inherit = SDistribution, lock_objects = 
     #' continuous distributions.
     entropy = function(base = 2) {
       return(self$getParameterValue("shape") +
-               log(self$getParameterValue("scale") * gamma(self$getParameterValue("shape")), base) -
-               (1 + self$getParameterValue("shape")) * digamma(self$getParameterValue("shape")))
+        log(self$getParameterValue("scale") * gamma(self$getParameterValue("shape")), base) -
+        (1 + self$getParameterValue("shape")) * digamma(self$getParameterValue("shape")))
     },
 
     #' @description The moment generating function is defined by

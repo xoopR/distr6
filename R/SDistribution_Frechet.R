@@ -28,7 +28,8 @@
 #' @family univariate distributions
 #'
 #' @export
-Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
+Frechet <- R6Class("Frechet",
+  inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
     name = "Frechet",
@@ -74,11 +75,11 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
-    mode = function(which = 'all') {
+    mode = function(which = "all") {
       return(self$getParameterValue("minimum") +
-               self$getParameterValue("scale") *
-               (self$getParameterValue("shape") /
-                  (1 + self$getParameterValue("shape")))^(1 / self$getParameterValue("shape")))
+        self$getParameterValue("scale") *
+          (self$getParameterValue("shape") /
+            (1 + self$getParameterValue("shape")))^(1 / self$getParameterValue("shape")))
     },
 
     #' @description
@@ -86,11 +87,11 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      m = self$getParameterValue("minimum")
-      s = self$getParameterValue("scale")
-      a = self$getParameterValue("shape")
+      m <- self$getParameterValue("minimum")
+      s <- self$getParameterValue("scale")
+      a <- self$getParameterValue("shape")
 
-      return(m + s/(log(2)^(1/a)))
+      return(m + s / (log(2)^(1 / a)))
     },
 
     #' @description
@@ -103,7 +104,7 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
         return(Inf)
       } else {
         return(self$getParameterValue("scale")^2 * (gamma(1 - 2 / self$getParameterValue("shape")) -
-                                                      gamma(1 - 1 / self$getParameterValue("shape"))^2))
+          gamma(1 - 1 / self$getParameterValue("shape"))^2))
       }
     },
 
@@ -151,7 +152,7 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
     #' continuous distributions.
     entropy = function(base = 2) {
       return(1 - digamma(1) / self$getParameterValue("shape") - digamma(1) +
-               log(self$getParameterValue("scale") / self$getParameterValue("shape"), base))
+        log(self$getParameterValue("scale") / self$getParameterValue("shape"), base))
     },
 
     #' @description The probability generating function is defined by
@@ -269,7 +270,7 @@ Frechet <- R6Class("Frechet", inherit = SDistribution, lock_objects = F,
     },
 
     # traits
-    .traits =  list(valueSupport = "continuous", variateForm = "univariate")
+    .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
 )
 
