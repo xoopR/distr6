@@ -7,7 +7,7 @@ using namespace Rcpp;
 NumericVector C_CosineKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
-    if (x[i] >= -1 & x[i] <= 1) {
+    if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
         ret[i] = log(M_PI) - log(4) + log(cos(M_PI / 2.0 * x[i]));
       } else {
@@ -72,7 +72,7 @@ NumericVector C_CosineKernelQuantile(NumericVector x, bool lower, bool logp) {
 NumericVector C_EpanechnikovKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
-    if (x[i] >= -1 & x[i] <= 1) {
+    if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
         ret[i] = log(3) - log(4) + log(1 - pow(x[i], 2));
       } else {
@@ -179,7 +179,7 @@ NumericVector C_NormalKernelPdf(NumericVector x, bool logp) {
 NumericVector C_QuarticKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
-    if (x[i] >= -1 & x[i] <= 1) {
+    if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
         ret[i] = log(15) - log(16) + 2*log(1 - pow(x[i], 2));
       } else {
@@ -242,7 +242,7 @@ NumericVector C_SilvermanKernelPdf(NumericVector x, bool logp) {
 NumericVector C_TriangularKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
-    if (x[i] >= -1 & x[i] <= 1) {
+    if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
         ret[i] = log(1 - abs(x[i]));
       } else {
@@ -315,7 +315,7 @@ NumericVector C_TriangularKernelQuantile(NumericVector x, bool lower, bool logp)
 NumericVector C_TricubeKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
-    if (x[i] >= -1 & x[i] <= 1) {
+    if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
         ret[i] = log(70) - log(81) + 3*log(1 - pow(abs(x[i]), 3));
       } else {
@@ -330,7 +330,7 @@ NumericVector C_TricubeKernelPdf(NumericVector x, bool logp) {
 NumericVector C_TriweightKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
-    if (x[i] >= -1 & x[i] <= 1) {
+    if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
         ret[i] = log(35) - log(32) + 3*log(1 - pow(x[i], 2));
       } else {
@@ -367,7 +367,7 @@ NumericVector C_TriweightKernelCdf(NumericVector x, bool lower, bool logp) {
 NumericVector C_UniformKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
-    if (x[i] >= -1 & x[i] <= 1) {
+    if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
         ret[i] = -log(2);
       } else {

@@ -37,5 +37,6 @@ Validation checks to test if a given object is a list of \link{ParameterSetColle
 \examples{
 testParameterSetCollectionList(list(Binomial$new(), 5)) # FALSE
 testParameterSetCollectionList(list(ParameterSetCollection$new(
-    Binom = Binomial$new()$parameters()))) # TRUE
+  Binom = Binomial$new()$parameters()
+))) # TRUE
 }

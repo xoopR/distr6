@@ -387,7 +387,7 @@ NumericMatrix C_dpq(std::string fun, NumericVector x, std::list<NumericVector> a
   int funcode;
   if (funtype.compare("d") == 0) {
     funcode = 0;
-  } else if (funtype.compare("p") == 0 | funtype.compare("q") == 0) {
+  } else if (funtype.compare("p") == 0 || funtype.compare("q") == 0) {
     funcode = 1;
   } else {
     stop("Function must start with `d`, `p` or `q`");

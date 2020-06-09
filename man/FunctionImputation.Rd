@@ -18,21 +18,27 @@ All methods implemented in decorators try to exploit analytical results where po
 numerical results are used with a message.
 }
 \examples{
-pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1/10)
+pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1 / 10)
 
-x <- Distribution$new("Test", pdf = pdf,
-support = set6::Interval$new(1, 10, class = "integer"),
-type = set6::Naturals$new())
+x <- Distribution$new("Test",
+  pdf = pdf,
+  support = set6::Interval$new(1, 10, class = "integer"),
+  type = set6::Naturals$new()
+)
 decorate(x, "FunctionImputation", n = 1000)
 
-x <- Distribution$new("Test", pdf = pdf,
-support = set6::Interval$new(1, 10, class = "integer"),
-type = set6::Naturals$new(),
-decorators = "FunctionImputation")
+x <- Distribution$new("Test",
+  pdf = pdf,
+  support = set6::Interval$new(1, 10, class = "integer"),
+  type = set6::Naturals$new(),
+  decorators = "FunctionImputation"
+)
 
-x <- Distribution$new("Test", pdf = pdf,
-support = set6::Interval$new(1, 10, class = "integer"),
-type = set6::Naturals$new())
+x <- Distribution$new("Test",
+  pdf = pdf,
+  support = set6::Interval$new(1, 10, class = "integer"),
+  type = set6::Naturals$new()
+)
 FunctionImputation$new()$decorate(x, n = 1000)
 
 x$pdf(1:10)

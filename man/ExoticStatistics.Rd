@@ -19,7 +19,6 @@ numerical results are used with a message.
 decorate(Exponential$new(), "ExoticStatistics")
 Exponential$new(decorators = "ExoticStatistics")
 ExoticStatistics$new()$decorate(Exponential$new())
-
 }
 \seealso{
 Other decorators: 

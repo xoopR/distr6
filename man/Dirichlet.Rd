@@ -26,7 +26,6 @@ Sampling is performed via sampling independent Gamma distributions and normalisi
 d <- Dirichlet$new(params = c(2, 5, 6))
 d$pdf(0.1, 0.4, 0.5)
 d$pdf(c(0.3, 0.2), c(0.6, 0.9), c(0.9, 0.1))
-
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).

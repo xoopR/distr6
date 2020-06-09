@@ -35,7 +35,6 @@ decorate(B, "CoreStatistics")
 
 E <- Exponential$new()
 decorate(E, c("CoreStatistics", "ExoticStatistics"))
-
 }
 \references{
 Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements

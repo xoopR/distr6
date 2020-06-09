@@ -18,7 +18,6 @@ numerical results are used with a message.
 decorate(Exponential$new(), "CoreStatistics")
 Exponential$new(decorators = "CoreStatistics")
 CoreStatistics$new()$decorate(Exponential$new())
-
 }
 \seealso{
 Other decorators: 

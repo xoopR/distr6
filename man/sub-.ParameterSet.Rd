@@ -35,5 +35,4 @@ ps <- VectorDistribution$new(
 ps["Binom1_prob"] # extracts just Binom1_prob
 ps["Binom1_prob", prefix = "Binom1"] # extracts Binom1_prob and removes prefix
 ps["Binom1_"] # extracts all Binom1 parameters and removes prefix
-
 }

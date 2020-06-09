@@ -6,9 +6,9 @@ using namespace Rcpp;
 // It's quicker to redefine our own choose function than to import the Internal one.
 // [[Rcpp::export]]
 long double C_Choose(int x, int y) {
-  if (y == 0 | y == x) {
+  if (y == 0 || y == x) {
     return 1;
-  } else if (y < 0 | y > x) {
+  } else if (y < 0 || y > x) {
     return 0;
   } else {
     long double res = x;
@@ -285,7 +285,7 @@ NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, Numeric
         }
       } else {
         // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] | x[j] < size[i % sl]) {
+        if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
           mat(j, i) = 0;
         } else {
           mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], x[j] - size[i % sl]);
