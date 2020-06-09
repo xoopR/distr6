@@ -102,7 +102,7 @@ Epanechnikov$set("public","initialize",function(decorators = NULL){
   }
 
   super$initialize(decorators = decorators, pdf = pdf, cdf = cdf,
-                   support = Interval$new(-1, 1),  symmetric = TRUE)
+                   support = set6::Interval$new(-1, 1),  symmetric = TRUE)
   invisible(self)
 })
 ```
