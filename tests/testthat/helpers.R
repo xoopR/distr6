@@ -185,12 +185,12 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
   expect_output(kern$summary(F))
 
   # context("d/p/q/r")
-  expect_equal(round(kern$pdf(c(-0.1, 0, 0.1)), 4), pdf)
+  expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1)), pdf)
   if (!is.null(kern$private_methods$.cdf)) {
-    expect_equal(round(kern$cdf(c(-0.1, 0, 0.1)), 4), cdf)
+    expect_rounded_equal(kern$cdf(c(-0.1, 0, 0.1)), cdf)
   }
   if (!is.null(kern$private_methods$.quantile)) {
-    expect_equal(kern$quantile(kern$cdf(c(-0.42, 0.24, 0.42))), c(-0.42, 0.24, 0.42))
+    expect_rounded_equal(kern$quantile(kern$cdf(c(-0.42, 0.24, 0.42))), c(-0.42, 0.24, 0.42), 2)
     expect_equal(length(kern$rand(1:3)), 3)
     checkmate::expect_data_table(kern$rand(1:3, simplify = F), ncols = 3, nrows = 1)
   }
