@@ -230,9 +230,9 @@ NumericVector C_SilvermanKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
     if (logp) {
-      ret[i] = -log(2) - abs(x[i])/sqrt(2) + log(sin(abs(x[i]) / sqrt(2) + M_PI / 4));
+      ret[i] = -log(2) - fabs(x[i])/sqrt(2) + log(sin(fabs(x[i]) / sqrt(2) + M_PI / 4));
     } else {
-      ret[i] = 0.5 * exp(-abs(x[i]) / sqrt(2)) * sin(abs(x[i]) / sqrt(2) + M_PI / 4);
+      ret[i] = 0.5 * exp(-fabs(x[i]) / sqrt(2)) * sin(fabs(x[i]) / sqrt(2) + M_PI / 4);
     }
   }
   return ret;
@@ -244,9 +244,9 @@ NumericVector C_TriangularKernelPdf(NumericVector x, bool logp) {
   for (int i = 0; i < x.size(); i++){
     if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
-        ret[i] = log(1 - abs(x[i]));
+        ret[i] = log(1 - fabs(x[i]));
       } else {
-        ret[i] = 1 - abs(x[i]);
+        ret[i] = 1 - fabs(x[i]);
       }
     }
   }
@@ -317,9 +317,9 @@ NumericVector C_TricubeKernelPdf(NumericVector x, bool logp) {
   for (int i = 0; i < x.size(); i++){
     if (x[i] >= -1 && x[i] <= 1) {
       if (logp) {
-        ret[i] = log(70) - log(81) + 3*log(1 - pow(abs(x[i]), 3));
+        ret[i] = log(70) - log(81) + 3*log(1 - pow(fabs(x[i]), 3));
       } else {
-        ret[i] = 70.0 / 81.0 * pow((1 - pow(abs(x[i]), 3)), 3);
+        ret[i] = 70.0 / 81.0 * pow((1 - pow(fabs(x[i]), 3)), 3);
       }
     }
   }

@@ -185,7 +185,7 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
   expect_output(kern$summary(F))
 
   # context("d/p/q/r")
-  expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1)), pdf, 2)
+  expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1)), pdf, 4)
   if (!is.null(kern$private_methods$.cdf)) {
     expect_rounded_equal(kern$cdf(c(-0.1, 0, 0.1)), cdf)
   }
