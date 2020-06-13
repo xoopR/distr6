@@ -39,7 +39,7 @@ Other kernels:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-squared2Norm}{\code{Cosine$squared2Norm()}}
+\item \href{#method-pdfSquared2Norm}{\code{Cosine$pdfSquared2Norm()}}
 \item \href{#method-variance}{\code{Cosine$variance()}}
 \item \href{#method-clone}{\code{Cosine$clone()}}
 }
@@ -71,17 +71,25 @@ Other kernels:
 \out{</details>}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-squared2Norm"></a>}}
-\if{latex}{\out{\hypertarget{method-squared2Norm}{}}}
-\subsection{Method \code{squared2Norm()}}{
+\if{html}{\out{<a id="method-pdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-pdfSquared2Norm}{}}}
+\subsection{Method \code{pdfSquared2Norm()}}{
 The squared 2-norm of the pdf is defined by
 \deqn{\int_a^b (f_X(u))^2 du}
 where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
 are the distribution support limits.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Cosine$squared2Norm()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Cosine$pdfSquared2Norm(x = 0)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{(numeric(1))} \cr
+Amount to shift the result.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-variance"></a>}}

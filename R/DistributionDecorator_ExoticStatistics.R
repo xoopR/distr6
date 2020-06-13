@@ -151,17 +151,6 @@ ExoticStatistics <- R6Class("ExoticStatistics",
       if (testContinuous(self)) {
         return(generalPNorm(self$survival, p, lower, upper))
       }
-    },
-
-    #' @description
-    #' The squared 2-norm of the pdf is defined by
-    #' \deqn{\int_a^b (f_X(u))^2 du}
-    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
-    #' are the `lower` and `upper` limits of integration.
-    #'
-    #' Returns NULL if distribution is not continuous.
-    squared2Norm = function(lower = NULL, upper = NULL) {
-      return(self$pdfPNorm(p = 2, lower = lower, upper = upper)^2)
     }
   )
 )
@@ -309,22 +298,6 @@ NULL
 #' @param upper upper limit for integration, default is supremum.
 #'
 #' @seealso \code{\link{ExoticStatistics}} and \code{\link{decorate}}
-#'
-#' @export
-NULL
-
-#' @title Squared Probability Density Function 2-Norm
-#' @name squared2Norm
-#' @description The squared 2-norm of the pdf evaluated over the whole support by default or given
-#' limits.
-#'
-#' @usage squared2Norm(object, lower = NULL, upper = NULL)
-#'
-#' @param object Distribution.
-#' @param lower lower limit for integration, default is infimum.
-#' @param upper upper limit for integration, default is supremum.
-#'
-#' @return Squared 2-norm of pdf evaluated between limits as a numeric.
 #'
 #' @export
 NULL

@@ -68,7 +68,4 @@ test_that("p-norms", {
 
   expect_message(expect_equal((continuousTester$pdfPNorm(2))^2, 0.5))
   expect_message(expect_equal(continuousTester$pdfPNorm(p = 2, lower = 2, upper = 5)^2, 0.5 * (exp(-4) - exp(-10))))
-
-  expect_message(expect_equal(continuousTester$squared2Norm(), continuousTester$pdfPNorm(2)^2))
-  expect_message(expect_equal(continuousTester$squared2Norm(lower = 2, upper = 5), continuousTester$pdfPNorm(2, 2, 5)^2))
 })

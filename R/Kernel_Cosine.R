@@ -7,6 +7,7 @@
 #' @name Cosine
 #' @template class_distribution
 #' @template class_kernel
+#' @template method_pdfsquared2Norm
 #'
 #' @export
 Cosine <- R6Class("Cosine",
@@ -21,7 +22,7 @@ Cosine <- R6Class("Cosine",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    squared2Norm = function() {
+    pdfSquared2Norm = function(x = 0) {
       return(pi^2 / 16)
     },
 

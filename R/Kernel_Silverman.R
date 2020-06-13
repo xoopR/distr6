@@ -7,6 +7,7 @@
 #' @template param_decorators
 #' @template class_kernel
 #' @template class_distribution
+#' @template method_pdfsquared2Norm
 #'
 #' @details The cdf and quantile functions are omitted as no closed form analytic expressions could
 #' be found, decorate with FunctionImputation for numeric results.
@@ -33,7 +34,7 @@ Silverman <- R6Class("Silverman",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    squared2Norm = function() {
+    pdfSquared2Norm = function(x = 0) {
       return((3 * sqrt(2)) / 16)
     },
 

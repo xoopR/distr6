@@ -28,6 +28,7 @@ Abstract class that cannot be constructed directly.
 \item \href{#method-mode}{\code{Kernel$mode()}}
 \item \href{#method-mean}{\code{Kernel$mean()}}
 \item \href{#method-median}{\code{Kernel$median()}}
+\item \href{#method-pdfSquared2Norm}{\code{Kernel$pdfSquared2Norm()}}
 \item \href{#method-clone}{\code{Kernel$clone()}}
 }
 }
@@ -112,6 +113,27 @@ Calculates the median of the distribution.
 \if{html}{\out{<div class="r">}}\preformatted{Kernel$median()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-pdfSquared2Norm}{}}}
+\subsection{Method \code{pdfSquared2Norm()}}{
+The squared 2-norm of the pdf is defined by
+\deqn{\int_a^b (f_X(u))^2 du}
+where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+are the distribution support limits.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Kernel$pdfSquared2Norm(x = 0)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{(numeric(1))} \cr
+Amount to shift the result.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

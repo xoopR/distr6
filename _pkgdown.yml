@@ -114,7 +114,7 @@ reference:
       - stdev
       - skewness
       - skewnessType
-      - squared2Norm
+      - pdfSquared2Norm
       - survival
       - survivalAntiDeriv
       - survivalPNorm
