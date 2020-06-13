@@ -16,7 +16,7 @@ test_that("Distribution", {
 })
 
 test_that("kernel", {
-  expect_equal(squared2Norm(Cosine$new()), Cosine$new()$squared2Norm())
+  expect_equal(pdfSquared2Norm(Cosine$new()), Cosine$new()$pdfSquared2Norm())
 })
 
 p <- b$parameters()

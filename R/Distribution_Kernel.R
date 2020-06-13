@@ -6,6 +6,7 @@
 #' @template param_decorators
 #' @template param_support
 #' @template method_mode
+#' @template method_pdfsquared2Norm
 #'
 #' @export
 Kernel <- R6Class("Kernel",
@@ -47,6 +48,15 @@ Kernel <- R6Class("Kernel",
     #' Calculates the median of the distribution.
     median = function() {
       return(0)
+    },
+
+    #' @description
+    #' The squared 2-norm of the pdf is defined by
+    #' \deqn{\int_a^b (f_X(u))^2 du}
+    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    pdfSquared2Norm = function(x = 0) {
+      return(NULL)
     }
   ),
 
@@ -63,3 +73,18 @@ Kernel <- R6Class("Kernel",
     }
   )
 )
+
+#' @title Squared Probability Density Function 2-Norm
+#' @name pdfSquared2Norm
+#' @description The squared 2-norm of the pdf evaluated over the whole support by default or given
+#' limits, possibly shifted.
+#'
+#' @usage pdfSquared2Norm(object, x = 0)
+#'
+#' @param object Distribution.
+#' @param x amount to shift the result.
+#'
+#' @return Squared 2-norm of pdf evaluated between limits as a numeric.
+#'
+#' @export
+NULL

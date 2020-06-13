@@ -24,6 +24,7 @@
 * `WeighedDiscrete` distribution now stores samples and probabilities as parameters.
 * Removed `verbose` argument from distribution constructor
 * Public `update` method in `ParameterSet` moved to `private`
+* Removed `squared2Norm` from the `ExoticStatistics` decorator
 
 ## Patches
 
