@@ -107,7 +107,8 @@ are the distribution support limits.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{x}}{amount to shift the result.}
+\item{\code{x}}{\code{(numeric(1))} \cr
+Amount to shift the result.}
 }
 \if{html}{\out{</div>}}
 }
