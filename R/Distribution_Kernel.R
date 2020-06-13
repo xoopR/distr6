@@ -79,12 +79,10 @@ Kernel <- R6Class("Kernel",
 #' @description The squared 2-norm of the pdf evaluated over the whole support by default or given
 #' limits, possibly shifted.
 #'
-#' @usage pdfSquared2Norm(object, x = 0, lower = NULL, upper = NULL)
+#' @usage pdfSquared2Norm(object, x = 0)
 #'
 #' @param object Distribution.
 #' @param x amount to shift the result.
-#' @param lower lower limit for integration, default is infimum.
-#' @param upper upper limit for integration, default is supremum.
 #'
 #' @return Squared 2-norm of pdf evaluated between limits as a numeric.
 #'

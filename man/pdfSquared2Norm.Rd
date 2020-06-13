@@ -4,16 +4,12 @@
 \alias{pdfSquared2Norm}
 \title{Squared Probability Density Function 2-Norm}
 \usage{
-pdfSquared2Norm(object, x = 0, lower = NULL, upper = NULL)
+pdfSquared2Norm(object, x = 0)
 }
 \arguments{
 \item{object}{Distribution.}
 
 \item{x}{amount to shift the result.}
-
-\item{lower}{lower limit for integration, default is infimum.}
-
-\item{upper}{upper limit for integration, default is supremum.}
 }
 \value{
 Squared 2-norm of pdf evaluated between limits as a numeric.
