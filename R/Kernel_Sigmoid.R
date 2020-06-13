@@ -10,6 +10,7 @@
 #' @template param_decorators
 #' @template class_distribution
 #' @template class_kernel
+#' @template method_pdfsquared2Norm
 #'
 #' @export
 Sigmoid <- R6Class("Sigmoid",
@@ -33,7 +34,7 @@ Sigmoid <- R6Class("Sigmoid",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    squared2Norm = function() {
+    pdfSquared2Norm = function(x = 0) {
       return(2 / pi^2)
     },
 

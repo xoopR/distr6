@@ -47,7 +47,6 @@ Other decorators:
 \item \href{#method-cdfPNorm}{\code{ExoticStatistics$cdfPNorm()}}
 \item \href{#method-pdfPNorm}{\code{ExoticStatistics$pdfPNorm()}}
 \item \href{#method-survivalPNorm}{\code{ExoticStatistics$survivalPNorm()}}
-\item \href{#method-squared2Norm}{\code{ExoticStatistics$squared2Norm()}}
 \item \href{#method-clone}{\code{ExoticStatistics$clone()}}
 }
 }
@@ -293,32 +292,6 @@ Returns NULL if distribution is not continuous.
 \item{\code{p}}{\code{(integer(1))}
 Norm to evaluate.}
 
-\item{\code{lower}}{\verb{(numeric(1)} \cr
-Lower bounds of integral.}
-
-\item{\code{upper}}{\verb{(numeric(1)} \cr
-Upper bounds of integral.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-squared2Norm"></a>}}
-\if{latex}{\out{\hypertarget{method-squared2Norm}{}}}
-\subsection{Method \code{squared2Norm()}}{
-The squared 2-norm of the pdf is defined by
-\deqn{\int_a^b (f_X(u))^2 du}
-where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
-are the \code{lower} and \code{upper} limits of integration.
-
-Returns NULL if distribution is not continuous.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ExoticStatistics$squared2Norm(lower = NULL, upper = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
 \item{\code{lower}}{\verb{(numeric(1)} \cr
 Lower bounds of integral.}
 

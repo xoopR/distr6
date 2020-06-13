@@ -131,7 +131,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
 
 }
 
-autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pdf, cdf) {
+autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm, pdf, cdf) {
   # context("public fields")
   checkmate::expect_subset(names(kern$public_fields), c("name", "short_name", "description", "packages"))
   expect_equal(as.character(kern$inherit), "Kernel")
@@ -146,13 +146,13 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
   }
 
   # context("public methods")
-  checkmate::expect_subset(names(kern$public_methods), c("clone", "squared2Norm", "variance", "initialize"))
+  checkmate::expect_subset(names(kern$public_methods), c("clone", "pdfSquared2Norm", "variance", "initialize"))
 
   if (!is.null(kern$public_methods$setParameterValue)) {
     expect_equal(names(formals(kern$public_methods$setParameterValue)), c("...", "lst", "error"))
   }
   # expect_equal(formals(kern$public_methods$initialize), pairlist(decorators = NULL))
-  if (!is.null(kern$public_methods$squared2Norm)) expect_null(names(formals(kern$public_methods$squared2Norm)))
+  if (!is.null(kern$public_methods$pdfSquared2Norm)) expect_null(names(formals(kern$public_methods$pdfSquared2Norm)))
   if (!is.null(kern$public_methods$variance)) expect_null(names(formals(kern$public_methods$variance)))
   if (!is.null(kern$public_methods$skewness)) expect_null(names(formals(kern$public_methods$skewness)))
   if (!is.null(kern$public_methods$kurtosis)) expect_equal(formals(kern$public_methods$kurtosis), pairlist(excess = TRUE))
@@ -179,7 +179,7 @@ autotest_kernel <- function(kern, shortname, support, variance, squared2Norm, pd
   expect_equal(kern$mode(), 0)
   expect_equal(kern$properties$support$strprint(), support$strprint())
   expect_equal(kern$variance(), variance)
-  expect_equal(kern$squared2Norm(), squared2Norm)
+  expect_equal(kern$pdfSquared2Norm(), pdfSquared2Norm)
   expect_equal(kern$strprint(), shortname)
   expect_output(kern$summary())
   expect_output(kern$summary(F))

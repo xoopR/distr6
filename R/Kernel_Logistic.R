@@ -8,6 +8,7 @@
 #' @template class_distribution
 #' @template class_kernel
 #' @template param_decorators
+#' @template method_pdfsquared2Norm
 #'
 #' @export
 LogisticKernel <- R6Class("LogisticKernel",
@@ -31,7 +32,7 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    squared2Norm = function() {
+    pdfSquared2Norm = function(x = 0) {
       return(1 / 6)
     },
 

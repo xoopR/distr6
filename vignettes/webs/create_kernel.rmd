@@ -29,7 +29,7 @@ class 'kernel', which in turn inherits from `Distribution` (see the [uml diagram
 And for all kernels the sampling method uses inverse transform sampling, so this is also defined in
 the parent class. Hence the only methods required to add are
 
-* squared2Norm: This is new for kernels (i.e. not given for probability distributions)
+* pdfSquared2Norm: This is new for kernels (i.e. not given for probability distributions)
 * variance
 
 And then the d/p/q functions are given in the constructor just like probability distributions.
@@ -66,12 +66,12 @@ As stated above, there are fewer methods that need to be implemented in kernels 
 
 
 * variance
-* squared2Norm: the squared 2-norm of the kernel's pdf over the full support
+* pdfSquared2Norm: the squared 2-norm of the kernel's pdf over the full support
 
 Again the d/p/q methods are implemented in the constructor. So for the Epanechnikov kernel,
 
 ```{r eval=FALSE}
-Epanechnikov$set("public","squared2Norm",function(){
+Epanechnikov$set("public","pdfSquared2Norm",function(){
   return(3/5)
 })
 Epanechnikov$set("public","variance",function(){
@@ -119,7 +119,7 @@ Note:
 Kernels are much simpler to extend than SDistributions. Just remember the following
 
 1. The 4 public variables: name, short_name, description, package
-2. The 2 public methods: variance, squared2Norm
+2. The 2 public methods: variance, pdfSquared2Norm
 3. The constructor: Includes d/p/q, the only argument is `decorators`, and the properties are generally identical
 
 ## Extension Guidelines
