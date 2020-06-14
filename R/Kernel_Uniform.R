@@ -22,8 +22,11 @@ UniformKernel <- R6Class("UniformKernel",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(0.5)
+    pdfSquared2Norm = function(x) {
+      
+       returm(ifelse(sapply(x, is.null), 0.5, 
+                      (1/4)*(2-(abs(x)))))
+  
     },
 
     #' @description
