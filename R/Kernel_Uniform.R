@@ -24,8 +24,8 @@ UniformKernel <- R6Class("UniformKernel",
     #' are the distribution support limits.
     pdfSquared2Norm = function(x) {
       
-       returm(ifelse(sapply(x, is.null), 0.5, 
-                      (1/4)*(2-(abs(x)))))
+        return(ifelse(sapply(x, is.null), 0.5, 
+                 ifelse(abs(x) > 2, 0,(1/4)*(2-(abs(x))))))
   
     },
 
