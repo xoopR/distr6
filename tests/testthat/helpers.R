@@ -179,7 +179,7 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   expect_equal(kern$mode(), 0)
   expect_equal(kern$properties$support$strprint(), support$strprint())
   expect_equal(kern$variance(), variance)
-  expect_equal(kern$pdfSquared2Norm(), pdfSquared2Norm)
+  expect_equal(kern$pdfSquared2Norm(c(0, 1, 3)), pdfSquared2Norm)
   expect_equal(kern$strprint(), shortname)
   expect_output(kern$summary())
   expect_output(kern$summary(F))
