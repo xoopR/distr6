@@ -288,6 +288,6 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     ShortName = "MultiNorm", ClassName = "MultivariateNormal",
     Type = "\u211D^K", ValueSupport = "continuous",
     VariateForm = "multivariate",
-    Package = "-"
+    Package = "-", Tags = "locscale"
   )
 )

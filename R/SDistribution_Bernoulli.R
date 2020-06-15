@@ -256,6 +256,6 @@ Bernoulli <- R6Class("Bernoulli",
     ShortName = "Bern", ClassName = "Bernoulli",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats"
+    Package = "stats", Tags = ""
   )
 )

@@ -1,6 +1,6 @@
 #' @title Lists Implemented Distributions
 #' @description Lists distr6 distributions in a data.table or a character vector, can be filtered by
-#' traits and implemented package.
+#' traits, implemented package, and tags.
 #' @param simplify logical. If FALSE (default) returns distributions with traits as a data.table, otherwise returns
 #' distribution names as characters.
 #' @param filter list to filter distributions by. See examples.
@@ -34,6 +34,9 @@ listDistributions <- function(simplify = FALSE, filter = NULL) {
         }
         if (!is.null(filter$package)) {
           distrs <- subset(distrs, distrs$Package == filter$package)
+        }
+        if (!is.null(filter$tags)) {
+          distrs <- subset(distrs, distrs$Tags == filter$tags)
         }
       }
     }

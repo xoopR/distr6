@@ -165,6 +165,6 @@ BetaNoncentral <- R6Class("BetaNoncentral",
     ShortName = "BetaNC", ClassName = "BetaNoncentral",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats"
+    Package = "stats", Tags = ""
   )
 )

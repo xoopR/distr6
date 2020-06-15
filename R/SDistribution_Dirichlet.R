@@ -189,6 +189,6 @@ Dirichlet <- R6Class("Dirichlet",
     ShortName = "Diri", ClassName = "Dirichlet",
     Type = "[0,1]^K", ValueSupport = "continuous",
     VariateForm = "multivariate",
-    Package = "extraDistr"
+    Package = "extraDistr", Tags = ""
   )
 )

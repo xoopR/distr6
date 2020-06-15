@@ -210,6 +210,6 @@ Cauchy <- R6Class("Cauchy",
     ShortName = "Cauchy", ClassName = "Cauchy",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats"
+    Package = "stats", Tags = "locscale"
   )
 )

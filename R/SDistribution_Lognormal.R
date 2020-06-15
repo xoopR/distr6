@@ -284,6 +284,6 @@ Lognormal <- R6Class("Lognormal",
     ShortName = "Lnorm", ClassName = "Lognormal",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats"
+    Package = "stats", Tags = ""
   )
 )

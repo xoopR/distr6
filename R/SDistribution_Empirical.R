@@ -254,6 +254,6 @@ Empirical <- R6Class("Empirical",
     ShortName = "Emp", ClassName = "Empirical",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-"
+    Package = "-", Tags = ""
   )
 )

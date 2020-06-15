@@ -194,6 +194,6 @@ Arcsine <- R6Class("Arcsine",
   data.table::data.table(
     ShortName = "Arc", ClassName = "Arcsine",
     Type = "\u211D", ValueSupport = "continuous", VariateForm = "univariate",
-    Package = "-"
+    Package = "-", Tags = "limits"
   )
 )

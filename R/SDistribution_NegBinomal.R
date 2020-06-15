@@ -390,6 +390,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     ShortName = "NBinom", ClassName = "NegativeBinomial",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-"
+    Package = "-", Tags = "limits"
   )
 )

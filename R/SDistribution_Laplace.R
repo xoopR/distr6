@@ -224,6 +224,6 @@ Laplace <- R6Class("Laplace",
     ShortName = "Lap", ClassName = "Laplace",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr"
+    Package = "extraDistr", Tags = "locscale"
   )
 )

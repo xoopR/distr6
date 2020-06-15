@@ -183,6 +183,6 @@ Degenerate <- R6Class("Degenerate",
     ShortName = "Degen", ClassName = "Degenerate",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-"
+    Package = "-", Tags = "limits"
   )
 )

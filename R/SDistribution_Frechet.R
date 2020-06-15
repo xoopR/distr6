@@ -280,6 +280,6 @@ Frechet <- R6Class("Frechet",
     ShortName = "Frec", ClassName = "Frechet",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr"
+    Package = "extraDistr", Tags = "locscale"
   )
 )

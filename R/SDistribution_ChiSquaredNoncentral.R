@@ -226,6 +226,6 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     ShortName = "ChiSqNC", ClassName = "ChiSquaredNoncentral",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats"
+    Package = "stats", Tags = ""
   )
 )

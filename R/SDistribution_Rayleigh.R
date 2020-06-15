@@ -217,6 +217,6 @@ Rayleigh <- R6Class("Rayleigh",
     ShortName = "Rayl", ClassName = "Rayleigh",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr"
+    Package = "extraDistr", Tags = "scale"
   )
 )
