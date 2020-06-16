@@ -26,7 +26,8 @@ Quartic <- R6Class("Quartic",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(5 / 7)
+      return(ifelse(abs(x) > 2, 0, 5*(-abs(x)^9 + 24*abs(x)^7 - 336*abs(x)^5 +
+                                        672*abs(x)^4 - 768*abs(x)^2 + 512)/3584))
     },
 
     #' @description
