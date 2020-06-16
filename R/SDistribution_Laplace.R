@@ -204,15 +204,6 @@ Laplace <- R6Class("Laplace",
       }
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-      if (!is.null(paramlst$var)) lst <- c(lst, list(scale = sqrt(paramlst$var / 2)))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

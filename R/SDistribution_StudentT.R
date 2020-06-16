@@ -201,13 +201,6 @@ StudentT <- R6Class("StudentT",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

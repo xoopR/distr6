@@ -204,23 +204,6 @@ Gamma <- R6Class("Gamma",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-      if (!is.null(paramlst$rate)) lst <- c(lst, list(rate = paramlst$rate))
-      if (!is.null(paramlst$scale)) lst <- c(lst, list(rate = paramlst$scale^-1))
-      if (!is.null(paramlst$mean)) {
-        if (is.null(paramlst$shape)) {
-          lst <- c(lst, list(rate = self$getParameterValue("shape") / paramlst$mean))
-        } else {
-          lst <- c(lst, list(rate = paramlst$shape / paramlst$mean))
-        }
-      }
-
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

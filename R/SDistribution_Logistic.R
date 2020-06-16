@@ -204,15 +204,6 @@ Logistic <- R6Class("Logistic",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-      if (!is.null(paramlst$sd)) lst <- c(lst, list(scale = paramlst$sd * sqrt(3) / pi))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

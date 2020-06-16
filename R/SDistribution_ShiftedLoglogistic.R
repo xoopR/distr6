@@ -185,16 +185,6 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
       self$quantile(runif(n))
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-      if (!is.null(paramlst$rate)) lst <- c(lst, list(scale = paramlst$rate^-1))
-      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

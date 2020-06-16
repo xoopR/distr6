@@ -245,14 +245,6 @@ FDistribution <- R6Class("FDistribution",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$df1)) lst <- c(lst, list(df1 = paramlst$df1))
-      if (!is.null(paramlst$df2)) lst <- c(lst, list(df2 = paramlst$df2))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

@@ -145,15 +145,6 @@ BetaNoncentral <- R6Class("BetaNoncentral",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$shape1)) lst <- c(lst, list(shape1 = paramlst$shape1))
-      if (!is.null(paramlst$shape2)) lst <- c(lst, list(shape2 = paramlst$shape2))
-      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

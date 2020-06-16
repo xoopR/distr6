@@ -167,13 +167,6 @@ Poisson <- R6Class("Poisson",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$rate)) lst <- c(lst, list(rate = paramlst$rate))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )

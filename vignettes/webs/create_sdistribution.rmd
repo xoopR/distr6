@@ -139,13 +139,18 @@ getParameterSet.Normal <- function(x, mean, var, sd = NULL, prec = NULL, verbose
                          value = list(0, 1, 1, 1),
                          support = list(Reals$new(), PosReals$new(), PosReals$new(), PosReals$new()),
                          settable = list(TRUE, var.bool, sd.bool, prec.bool),
-                         updateFunc = list(NA, NA,
-                                           function(self) self$getParameterValue('var')^0.5,
-                                           function(self) self$getParameterValue('var')^-1),
                          description = list("Mean - Location Parameter",
                                             "Variance - Squared Scale Parameter",
                                             "Standard Deviation - Scale Parameter",
                                             "Precision - Inverse Squared Scale Parameter"))
+  
+  ps$addDeps("var", "sd", function(self) self$getParameterValue('var')^0.5)
+  ps$addDeps("var", "prec", function(self) self$getParameterValue('var')^-1)
+  ps$addDeps("sd", "var", function(self) self$getParameterValue('sd')^2)
+  ps$addDeps("sd", "prec", function(self) self$getParameterValue('sd')^-2)
+  ps$addDeps("prec", "sd", function(self) self$getParameterValue('prec')^-0.5)
+  ps$addDeps("prec", "var", function(self) self$getParameterValue('prec')^-1)
+  
   return(ps)
 }
 ```
@@ -157,38 +162,7 @@ Note:
 3. The conditionals at the start of the method determine which parameterisation to construct based on given parameters. It additionally sets up a hierarchy, in this case if a user gives all parameterisations then mean and prec are used, if multiple but not prec are given, then sd is used otherwise var.
 4. The default values in the ParameterSet are arbitrary, just make sure they are within the support
 5. The 'settable' values are determined by which parameterisation the user constructs. i.e. The parameters called in construction will be `TRUE` whilst all others are `FALSE`.
-6. There is a default parameterisation that the `updateFunc`s reference, this does not need to be the parameterisation chosen by the user. This will also correspond to the `.getRefParams` method (see below).
-
-### .getRefParams
-
-To ensure that there is no clash of parameterisations or any conflicts between functions that are updated by others, we have an internal method that is called by `setParameterValue` to ensure the same parameter is always updated. For example in the Normal distribution, it doesn't matter if the user passes sd, var or prec to `setParameterValue` internally it is always the variance that is updated, and this is because of the `.getRefParams` private method. All the other parameterisations are updated automatically using the `updateFunc`s that you write in the ParameterSet, hence why it is very important that these reference the default parameterisation. This is less abstract by example, again the Normal distribution
-
-```{r eval=FALSE}
-Normal$set("private",".getRefParams", function(paramlst){
-  lst = list()
-  if(!is.null(paramlst$mean)) lst = c(lst, list(mean = paramlst$mean))
-  if(!is.null(paramlst$var)) lst = c(lst, list(var = paramlst$var))
-  if(!is.null(paramlst$sd)) lst = c(lst, list(var = paramlst$sd^2))
-  if(!is.null(paramlst$prec)) lst = c(lst, list(var = paramlst$prec^-1))
-  return(lst)
-})
-```
-
-Note
-
-1. Again we have set up a hierarchy so that if a user provides multiple parameterisations the preference is given in order of prec -> sd -> var.
-2. The mean is used in every parameterisation hence this is always returned
-3. The variance is the default parameterisation (alongside mean) hence every other option references this
-
-Internally this looks a bit like:
-
-1. `setParameterValue` is called with `lst = list(sd = 2)`
-2. `setParameterValue` calls `.getRefParams(paramlst = list(sd=2))`
-3. `.getRefParams` returns `list(var = 4)` (sd^2)
-4. `list(var = 4)` is then used by `setParameterValue` to update the variance
-5. `update` is called in the ParameterSet which uses all the `updateFunc`s to update sd and prec
-
-This may seem slightly counter-intuitive as we have first given sd, transformed this to variance then later re-calculated sd. However this is incredibly important as it maintains no clashes when multiple functions are updated and allows complex updates (such as in composite distributions) to run smoothly. Even when only one parameterisation is possible, this is still a required private method as it is called directly in `setParmeterValue`.
+6. Dependencies are created to update parameters for any possible update using `addDeps`.
 
 
 ## Summary
@@ -199,7 +173,6 @@ That's everything that is required to create your own SDistribution class. In su
 2. Public methods: 'statistical methods' section in `?SDistribution`
 3. The constructor: Includes d/p/q/r methods, properties, traits and an argument for decorators
 4. `getParameterSet` dispatch method, written in the `getParameterSet.R` script
-5. `.getRefParams` for ensuring efficient updating of parameters
 
 ## Extension Guidelines
 

@@ -131,6 +131,7 @@ Dirichlet <- R6Class("Dirichlet",
       if (is.null(lst)) {
         lst <- list(...)
       }
+      lst$K <- NULL
       super$setParameterValue(lst = lst, error = error)
       invisible(self)
     }
@@ -166,13 +167,6 @@ Dirichlet <- R6Class("Dirichlet",
           alpha = self$getParameterValue("params")
         )
       }
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$params)) lst <- c(lst, list(params = paramlst$params))
-      return(lst)
     },
 
     # traits

@@ -51,7 +51,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
 
   # context("private methods")
   checkmate::expect_subset(names(sdist$private_methods), c(
-    ".pdf", ".cdf", ".quantile", ".rand", ".getRefParams",
+    ".pdf", ".cdf", ".quantile", ".rand",
     ".log"
   ))
   if (!is.null(sdist$private_methods$.log)) checkmate::expect_flag(sdist$private_methods$.log)
@@ -60,7 +60,6 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   if (!is.null(sdist$private_methods$.cdf)) checkmate::expect_subset(names(formals(sdist$private_methods$.cdf)), c("x", "lower.tail", "log.p"))
   if (!is.null(sdist$private_methods$.quantile)) checkmate::expect_subset(names(formals(sdist$private_methods$.quantile)), c("p", "lower.tail", "log.p"))
   if (!is.null(sdist$private_methods$.rand)) expect_equal(formals(sdist$private_methods$.rand), as.pairlist(alist(n = )))
-  if (!is.null(sdist$private_methods$.getRefParams)) expect_equal(formals(sdist$private_methods$.getRefParams), as.pairlist(alist(paramlst = )))
 
   sdist <- expect_silent({
     do.call(sdist$new, pars)

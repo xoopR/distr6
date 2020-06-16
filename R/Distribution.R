@@ -165,7 +165,7 @@ Distribution <- R6Class("Distribution",
         #-------------------------
         if (!is.null(parameters)) {
           checkmate::assertClass(parameters, "ParameterSet")
-          parameters <- parameters$clone(deep = TRUE)$.__enclos_env__$private$.update()
+          # parameters <- parameters$clone(deep = TRUE)$.__enclos_env__$private$.update()
         }
       }
 

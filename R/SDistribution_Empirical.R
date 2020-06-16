@@ -61,7 +61,6 @@ Empirical <- R6Class("Empirical",
         value = list(data),
         support = UniversalSet$new(),
         settable = FALSE,
-        updateFunc = NULL,
         description = "Data"
       )
 

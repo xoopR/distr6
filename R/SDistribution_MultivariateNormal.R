@@ -12,6 +12,8 @@
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
 #' @details
 #' Sampling is performed via the Cholesky decomposition using [chol].
+#'
+#' Number of variables cannot be changed after construction.
 #' @references
 #' Gentle, J.E. (2009).
 #' Computational Statistics.
@@ -133,7 +135,8 @@ MultivariateNormal <- R6Class("MultivariateNormal",
 
     # optional setParameterValue
     #' @description
-    #' Sets the value(s) of the given parameter(s).
+    #' Sets the value(s) of the given parameter(s). Number of variables cannot be changed after
+    #' construction.
     setParameterValue = function(..., lst = NULL, error = "warn") {
       K <- length(self$getParameterValue("mean"))
       if (is.null(lst)) {
@@ -256,22 +259,6 @@ MultivariateNormal <- R6Class("MultivariateNormal",
       } else {
         rmvn(n, cov = cov, mean = mean)
       }
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-      if (!is.null(paramlst$cov)) lst <- c(lst, list(cov = paramlst$cov))
-      if (!is.null(paramlst$prec)) {
-        K <- length(self$getParameterValue("mean"))
-        lst <- c(lst, list(cov = solve(matrix(paramlst$prec,
-          nrow = K,
-          ncol = K
-        ))))
-      }
-
-      return(lst)
     },
 
     # traits

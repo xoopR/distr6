@@ -260,15 +260,6 @@ Frechet <- R6Class("Frechet",
       }
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$minimum)) lst <- c(lst, list(minimum = paramlst$minimum))
-      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

@@ -152,12 +152,10 @@ Multinomial <- R6Class("Multinomial",
       if (is.null(lst)) {
         lst <- list(...)
       }
-      if ("probs" %in% names(lst)) {
-        checkmate::assert(length(lst$probs) == self$getParameterValue("K"),
-          .var.name = "Number of categories cannot be changed after construction."
-        )
-        lst$probs <- lst$probs / sum(lst$probs)
-      }
+
+      lst$probs <- lst$probs / sum(lst$probs)
+      lst$K <- NULL
+
       super$setParameterValue(lst = lst, error = error)
       invisible(self)
     }
@@ -197,14 +195,6 @@ Multinomial <- R6Class("Multinomial",
           prob = self$getParameterValue("probs")
         )
       }
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
-      if (!is.null(paramlst$probs)) lst <- c(lst, list(probs = paramlst$probs))
-      return(lst)
     },
 
     # traits

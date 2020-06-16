@@ -149,14 +149,6 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$df)) lst <- c(lst, list(df = paramlst$df))
-      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
