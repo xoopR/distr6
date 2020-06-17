@@ -446,7 +446,6 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
           ifnerror(self[i]$mode(which), error = NaN)
         })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$mode
         formals(f) = list(self = self, which = which)
@@ -470,7 +469,6 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
           ifnerror(self[i]$median(), error = NaN)
         })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$median
         formals(f) = list(self = self)
@@ -493,7 +491,6 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
           ifnerror(self[i]$variance(), error = NaN)
         })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$variance
         formals(f) = list(self = self)
@@ -517,7 +514,6 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
           ifnerror(self[i]$skewness(), error = NaN)
         })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$skewness
         formals(f) = list(self = self)
@@ -541,7 +537,6 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
           ifnerror(self[i]$kurtosis(excess), error = NaN)
         })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$kurtosis
         formals(f) = list(self = self, excess = excess)
@@ -565,7 +560,6 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
           ifnerror(self[i]$entropy(base), error = NaN)
         })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$entropy
         formals(f) = list(self = self, base = base)
@@ -585,16 +579,20 @@ VectorDistribution <- R6Class("VectorDistribution",
     #' @description
     #' Returns named vector of mgf from each wrapped [Distribution].
     mgf = function(t) {
-      if (self$distlist) {
-        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$mgf(t), error = NaN)
-        })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$mgf
-        formals(f) = list(self = self, t = t)
-        ret <- f()
+      if (!self$distlist) {
+        warning("mgf not currently efficiently vectorised, may be slow.")
       }
+
+      ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+        ifnerror(self[i]$mgf(t), error = NaN)
+      })
+
+      # FIXME - VECTORISE PROPERLY
+      # } else {
+      #   f <- get(self$modelTable$Distribution[[1]])$public_methods$mgf
+      #   formals(f) = list(self = self, t = t)
+      #   ret <- f()
+      # }
 
       if (length(dim(ret)) == 1) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
@@ -609,16 +607,20 @@ VectorDistribution <- R6Class("VectorDistribution",
     #' @description
     #' Returns named vector of cf from each wrapped [Distribution].
     cf = function(t) {
-      if (self$distlist) {
-        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$cf(t), error = NaN)
-        })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$cf
-        formals(f) = list(self = self, t = t)
-        ret <- f()
+      if (!self$distlist) {
+        warning("cf not currently efficiently vectorised, may be slow.")
       }
+
+      ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+        ifnerror(self[i]$cf(t), error = NaN)
+      })
+
+      # FIXME - VECTORISE PROPERLY
+      # } else {
+      #   f <- get(self$modelTable$Distribution[[1]])$public_methods$cf
+      #   formals(f) = list(self = self, t = t)
+      #   ret <- f()
+      # }
 
       if (length(dim(ret)) == 1) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
@@ -633,16 +635,20 @@ VectorDistribution <- R6Class("VectorDistribution",
     #' @description
     #' Returns named vector of pgf from each wrapped [Distribution].
     pgf = function(z) {
-      if (self$distlist) {
-        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$pgf(z), error = NaN)
-        })
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$pgf
-        formals(f) = list(self = self, z = z)
-        ret <- f()
+      if (!self$distlist) {
+        warning("cf not currently efficiently vectorised, may be slow.")
       }
+
+      ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+        ifnerror(self[i]$pgf(z), error = NaN)
+      })
+
+      # FIXME - VECTORISE PROPERLY
+      # } else {
+      #   f <- get(self$modelTable$Distribution[[1]])$public_methods$pgf
+      #   formals(f) = list(self = self, z = z)
+      #   ret <- f()
+      # }
 
       if (length(dim(ret)) == 1) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])

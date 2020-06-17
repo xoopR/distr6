@@ -127,7 +127,7 @@ Arcsine <- R6Class("Arcsine",
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      rep(NaN, length(self$getParameterValue("lower")))
+      NaN
     },
 
     # optional setParameterValue

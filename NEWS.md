@@ -15,6 +15,8 @@
 * Distribution `type` is now required in construction custom `Distribution`s as the previous method of 'guessing' was inefficient.
 * Added `ParameterSetCollection` for `Wrapper`s. Same functionality as before but much more efficient.
 * Added `$addDeps` and `$deps` to `ParameterSet`s to replace `updateFunc`. This allows faster and more precise control over parameter updates.
+* `categories` parameter in `Categorical` now called `nCategories`
+* Constructor of `Categorical` now requires elements to be provided as a `list` to `elements`
 
 ### Deprecated Functions/Fields/Methods
 

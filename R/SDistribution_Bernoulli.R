@@ -162,30 +162,29 @@ Bernoulli <- R6Class("Bernoulli",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      prob <- unlist(self$getParameterValue("prob"))
+      prob <- self$getParameterValue("prob")
       qprob <- 1 - prob
 
-      sapply(t, function(t0) qprob + (prob * exp(t0)))
+      qprob + (prob * exp(t))
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      prob <- unlist(self$getParameterValue("prob"))
+      prob <- self$getParameterValue("prob")
       qprob <- 1 - prob
 
-      v_genfun(t, function(t) qprob + (prob * exp(1i * t)))
+      qprob + (prob * exp(1i * t))
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      prob <- unlist(self$getParameterValue("prob"))
+      prob <- self$getParameterValue("prob")
       qprob <- 1 - prob
-
-      v_genfun(z, function(z) qprob + (prob * z))
+      return(qprob + (prob * z))
     },
 
     # optional setParameterValue

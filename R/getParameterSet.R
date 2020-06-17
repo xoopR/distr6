@@ -86,18 +86,18 @@ getParameterSet.Binomial <- function(object, size, prob, qprob = NULL) {
   return(ps)
 }
 
-getParameterSet.Categorical <- function(object, probs) {
+getParameterSet.Categorical <- function(object, probs, elements) {
 
-  categories <- length(probs)
+  nCategories <- length(probs)
 
   ps <- ParameterSet$new(
-    id = list("probs", "categories"),
-    value = list(rep(0.5, categories), categories),
-    support = list(setpower(Interval$new(0, 1), categories), PosNaturals$new()),
-    settable = list(TRUE, FALSE),
-    description = list("Probability of success i", "Number of categories")
+    id = list("elements", "probs", "nCategories"),
+    value = list(rep(1, nCategories), rep(0.5, nCategories), nCategories),
+    support = list(UniversalSet$new(), setpower(Interval$new(0, 1), nCategories), PosNaturals$new()),
+    settable = list(TRUE, TRUE, FALSE),
+    description = list("Categories", "Probability of success i", "Number of categories")
   )
-  ps$addDeps("probs", "categories", function(self) length(self$getParameterValue("probs")))
+  ps$addDeps("probs", "nCategories", function(self) length(self$getParameterValue("probs")))
   return(ps)
 }
 

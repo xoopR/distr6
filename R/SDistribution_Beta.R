@@ -76,20 +76,33 @@ Beta <- R6Class("Beta",
       s1 <- unlist(self$getParameterValue("shape1"))
       s2 <- unlist(self$getParameterValue("shape2"))
 
-      if (s1 <= 1 & s2 > 1) {
-        return(0)
-      } else if (s1 > 1 & s2 <= 1) {
-        return(1)
-      } else if (s1 < 1 & s2 < 1) {
+      if (length(s1) > 1) {
         if (which == "all") {
-          return(c(0, 1))
+          stop("`which` cannot be `'all'` when vectorising.")
         } else {
-          return(c(0, 1)[which])
+          mode = rep(NaN, length(s1))
+          mode[s1 <= 1 & s2 > 1] = 0
+          mode[s1 > 1 & s2 <= 1] = 1
+          mode[s1 < 1 & s2 < 1] = c(0, 1)[which]
+          mode[s1 > 1 & s2 > 1] = (s1 - 1) / (s1 + s2 - 2)
+          return(mode)
         }
-      } else if (s1 > 1 & s2 > 1) {
-        return((s1 - 1) / (s1 + s2 - 2))
       } else {
-        return(NaN)
+        if (s1 <= 1 & s2 > 1) {
+          return(0)
+        } else if (s1 > 1 & s2 <= 1) {
+          return(1)
+        } else if (s1 < 1 & s2 < 1) {
+          if (which == "all") {
+            return(c(0, 1))
+          } else {
+            return(c(0, 1)[which])
+          }
+        } else if (s1 > 1 & s2 > 1) {
+          return((s1 - 1) / (s1 + s2 - 2))
+        } else {
+          return(NaN)
+        }
       }
     },
 
@@ -99,8 +112,8 @@ Beta <- R6Class("Beta",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      shape1 <- self$getParameterValue("shape1")
-      shape2 <- self$getParameterValue("shape2")
+      shape1 <- unlist(self$getParameterValue("shape1"))
+      shape2 <- unlist(self$getParameterValue("shape2"))
       return(shape1 * shape2 * ((shape1 + shape2)^-2) * (shape1 + shape2 + 1)^-1)
     },
 
@@ -110,8 +123,8 @@ Beta <- R6Class("Beta",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      shape1 <- self$getParameterValue("shape1")
-      shape2 <- self$getParameterValue("shape2")
+      shape1 <- unlist(self$getParameterValue("shape1"))
+      shape2 <- unlist(self$getParameterValue("shape2"))
       return(2 * (shape2 - shape1) * ((shape1 + shape2 + 1)^0.5) * ((shape1 + shape2 + 2)^-1) * ((shape1 * shape2)^-0.5))
     },
 
@@ -122,8 +135,8 @@ Beta <- R6Class("Beta",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      shape1 <- self$getParameterValue("shape1")
-      shape2 <- self$getParameterValue("shape2")
+      shape1 <- unlist(self$getParameterValue("shape1"))
+      shape2 <- unlist(self$getParameterValue("shape2"))
 
       ex_kurtosis <- 6 *
         {
@@ -143,8 +156,8 @@ Beta <- R6Class("Beta",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      shape1 <- self$getParameterValue("shape1")
-      shape2 <- self$getParameterValue("shape2")
+      shape1 <- unlist(self$getParameterValue("shape1"))
+      shape2 <- unlist(self$getParameterValue("shape2"))
       return(log(beta(shape1, shape2), base) - ((shape1 - 1) * digamma(shape1)) -
         ((shape2 - 1) * digamma(shape2)) + ((shape1 + shape2 - 2) * digamma(shape1 + shape2)))
     },
