@@ -158,6 +158,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
       } else if ("upper" %in% names(lst)) {
         checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"), .var.name = "upper must be >= lower")
       }
+      lst$N <- NULL
 
       super$setParameterValue(lst = lst, error = error)
       private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
@@ -243,14 +244,6 @@ DiscreteUniform <- R6Class("DiscreteUniform",
           max = self$getParameterValue("upper")
         )
       }
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
-      if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
-      return(lst)
     },
 
     # traits

@@ -201,3 +201,25 @@ test_that("print", {
   expect_equal(a$strprint(1), c("Binom1", "...", "Binom3"))
   expect_output(a$print(), "Binom1")
 })
+
+test_that("weighted discrete", {
+  expect_silent({
+    VectorDistribution$new(
+    distribution = "WeightedDiscrete",
+    params = list(
+      list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
+      list(x = 11:15, cdf = dgeom(1:5, 0.5))
+    )
+  )
+  })
+
+  expect_silent({
+    VectorDistribution$new(
+    distribution = "WeightedDiscrete",
+    params = list(
+      list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
+      list(x = 11:15, cdf = pgeom(1:5, 0.5))
+    )
+  )
+  })
+})

@@ -20,6 +20,8 @@ are
 omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
 
 Sampling is performed via the Cholesky decomposition using \link{chol}.
+
+Number of variables cannot be changed after construction.
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -288,7 +290,8 @@ z integer to evaluate probability generating function at.}
 \if{html}{\out{<a id="method-setParameterValue"></a>}}
 \if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
 \subsection{Method \code{setParameterValue()}}{
-Sets the value(s) of the given parameter(s).
+Sets the value(s) of the given parameter(s). Number of variables cannot be changed after
+construction.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MultivariateNormal$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
 }

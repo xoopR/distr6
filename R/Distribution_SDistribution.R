@@ -3,7 +3,6 @@
 #' @template class_abstract
 #' @template field_package
 #' @template field_packages
-#' @template method_setParameterValue
 #' @template param_decorators
 #' @template param_support
 #'
@@ -51,17 +50,6 @@ SDistribution <- R6Class("SDistribution",
         function(x) try(lockBinding(x, private), silent = TRUE)
       )
 
-      invisible(self)
-    },
-
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-      lst <- private$.getRefParams(lst)
-      super$setParameterValue(lst = lst, error = error)
       invisible(self)
     }
   ),

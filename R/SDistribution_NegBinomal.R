@@ -232,7 +232,24 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (!is.null(lst)) lst <- list(...)
+      if (!is.null(lst$form)) stop("Distribution form cannot be changed after construction.")
+
+      mean <- if(is.null(lst$mean)) self$getParameterValue("mean") else lst$mean
+      size <- if(is.null(lst$size)) self$getParameterValue("size") else lst$size
+      form <- self$getParameterValue("form")
+      if (form == "tbf") {
+        if (mean <= size) {
+          stop("Mean must be > number of failures")
+        }
+      } else if (form == "tbs") {
+        if (mean <= size) {
+          stop("Mean must be > number of successes")
+        }
+      }
+
       super$setParameterValue(..., lst = lst, error = error)
+
       if (self$getParameterValue("form") == "tbf" | self$getParameterValue("form") == "tbs") {
         private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf, type = "[)", class = "integer")
       }
@@ -342,37 +359,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
         x <- seq.int(x$lower, x$upper)
         return(sample(x, n, TRUE, self$pdf(x)))
       }
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$size)) {
-        lst <- c(lst, list(size = paramlst$size))
-      } else {
-        paramlst$size <- self$getParameterValue("size")
-      }
-      if (!is.null(paramlst$form)) stop("Distribution form cannot be changed after construction.")
-      if (!is.null(paramlst$prob)) lst <- c(lst, list(prob = paramlst$prob))
-      if (!is.null(paramlst$qprob)) lst <- c(lst, list(prob = 1 - paramlst$qprob))
-      if (!is.null(paramlst$mean)) {
-        if (self$getParameterValue("form") == "sbf") {
-          lst <- c(lst, list(prob = paramlst$mean / (paramlst$size + paramlst$mean)))
-        } else if (self$getParameterValue("form") == "tbf") {
-          if (paramlst$mean <= paramlst$size) {
-            stop("Mean must be > number of failures")
-          }
-          lst <- c(lst, list(prob = (paramlst$mean - paramlst$size) / paramlst$mean))
-        } else if (self$getParameterValue("form") == "tbs") {
-          if (paramlst$mean <= paramlst$size) {
-            stop("Mean must be > number of successes")
-          }
-          lst <- c(lst, list(prob = paramlst$size / paramlst$mean))
-        } else if (self$getParameterValue("form") == "fbs") {
-          lst <- c(lst, list(prob = paramlst$size / (paramlst$mean + paramlst$size)))
-        }
-      }
-      return(lst)
     },
 
     # traits

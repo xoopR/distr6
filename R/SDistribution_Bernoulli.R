@@ -236,15 +236,6 @@ Bernoulli <- R6Class("Bernoulli",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$prob)) {
-        lst <- c(lst, list(prob = paramlst$prob))
-      } else if (!is.null(paramlst$qprob)) lst <- c(lst, list(prob = 1 - paramlst$qprob))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )

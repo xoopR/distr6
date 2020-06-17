@@ -165,13 +165,6 @@ Degenerate <- R6Class("Degenerate",
       rep(self$getParameterValue("mean"), n)
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )

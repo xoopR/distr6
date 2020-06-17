@@ -199,13 +199,6 @@ Rayleigh <- R6Class("Rayleigh",
       }
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$mode)) lst <- c(lst, list(mode = paramlst$mode))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

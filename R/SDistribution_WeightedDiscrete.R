@@ -75,6 +75,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       }
 
       private$.parameters <- getParameterSet(self, x = x, pdf = pdf, cdf = cdf)
+      if (!is.null(cdf)) pdf <- rep(1, length(x))
       self$setParameterValue(pdf = pdf, cdf = cdf)
 
       super$initialize(
@@ -220,6 +221,15 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$pdf)) {
+        checkmate::assertNumeric(lst$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid",
+                                 len = length(self$getParameterValue("x")))
+      }
+      if (!is.null(lst$cdf)) {
+        checkmate::assertNumeric(lst$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid",
+                                 len = length(self$getParameterValue("x")))
+      }
+
       super$setParameterValue(lst = lst, error = error)
     }
   ),
@@ -275,21 +285,6 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
         rand <- sample(data, n, TRUE, pdf)
       }
       return(rand)
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$x)) message("'x' cannot be updated after construction.")
-      if (!is.null(paramlst$pdf)) lst$pdf <- paramlst$pdf
-      if (!is.null(paramlst$cdf)) lst$pdf <- c(paramlst$cdf[1], diff(paramlst$cdf))
-
-      if (!is.null(lst$pdf)) {
-        stopifnot(length(lst$pdf) == length(self$getParameterValue("x")))
-        checkmate::assertNumeric(lst$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid")
-      }
-
-      return(lst)
     },
 
     # traits

@@ -171,19 +171,46 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       checkmate::assertNames(names(newlst), "strict")
       private$.parametersets <- newlst
       invisible(self)
-    }
-  ),
+    },
+
+    #' @description
+    #' Dependencies should be added to internal [ParameterSet]s.
+    #' @param ... \cr
+    #' Ignored.
+    addDeps = function(...) {
+      stop("Dependencies should be added to internal ParameterSets with $parameterSets.")
+      }
+    ),
 
   active = list(
     #' @field values
     #' Returns parameter set values as a named list.
     values = function() {
       rlapply(private$.parametersets, values, active = TRUE)
+    },
+
+    #' @field deps
+    #' Returns [ParameterSet] dependencies table.
+    deps = function() {
+      rlapply(private$.parametersets, deps, active = TRUE)
+    },
+
+    #' @field parameterSets
+    #' Returns [ParameterSet]s in collection.
+    parameterSets = function () {
+      private$.parametersets
     }
   ),
 
   private = list(
-    .parametersets = list()
+    .parametersets = list(),
+    deep_clone = function(name, value) {
+      if (name %in% c(".parametersets")) {
+        lapply(value, function(x) x$clone(deep = TRUE))
+      } else {
+        value
+      }
+    }
   )
 )
 

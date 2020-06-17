@@ -214,15 +214,6 @@ Binomial <- R6Class("Binomial",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
-      if (!is.null(paramlst$prob)) lst <- c(lst, list(prob = paramlst$prob))
-      if (!is.null(paramlst$qprob)) lst <- c(lst, list(prob = 1 - paramlst$qprob))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )

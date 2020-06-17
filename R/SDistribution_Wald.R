@@ -190,14 +190,6 @@ Wald <- R6Class("Wald",
       }
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$mean)) lst <- c(lst, list(mean = paramlst$mean))
-      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate"),
 

@@ -224,14 +224,6 @@ Beta <- R6Class("Beta",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$shape1)) lst <- c(lst, list(shape1 = paramlst$shape1))
-      if (!is.null(paramlst$shape2)) lst <- c(lst, list(shape2 = paramlst$shape2))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
