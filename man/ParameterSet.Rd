@@ -153,7 +153,14 @@ ps$deps
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$new(id, value, support, settable, description = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$new(
+  id,
+  value,
+  support,
+  settable,
+  updateFunc = NULL,
+  description = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -170,6 +177,9 @@ Support of parameter(s) to set}
 
 \item{\code{settable}}{\code{(character(1)|list())}\cr
 Logical flag indicating if the parameter(s) can be updated after construction.}
+
+\item{\code{updateFunc}}{\cr
+Deprecated, please use \verb{$addDeps} instead.}
 
 \item{\code{description}}{\code{(character(1)|list())}\cr
 Optional description for the parameter(s).}

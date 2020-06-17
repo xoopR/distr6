@@ -25,6 +25,8 @@ ParameterSet <- R6Class("ParameterSet",
     #' Support of parameter(s) to set
     #' @param settable `(character(1)|list())`\cr
     #' Logical flag indicating if the parameter(s) can be updated after construction.
+    #' @param updateFunc \cr
+    #' Deprecated, please use `$addDeps` instead.
     #' @param description `(character(1)|list())`\cr
     #' Optional description for the parameter(s).
     #'
@@ -48,7 +50,12 @@ ParameterSet <- R6Class("ParameterSet",
     #'                  description = "Probability of success"
     #'  )
     initialize = function(id, value, support, settable,
+                          updateFunc = NULL,
                           description = NULL) {
+
+      if (!is.null(updateFunc)) {
+        warning("updateFunc is now deprecated, please use $addDeps instead.")
+      }
 
       # coerce all to lists except id, and settable (should be same type)
       id <- unlist(id)
