@@ -75,6 +75,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       }
 
       private$.parameters <- getParameterSet(self, x = x, pdf = pdf, cdf = cdf)
+      if (!is.null(cdf)) pdf <- rep(1, length(x))
       self$setParameterValue(pdf = pdf, cdf = cdf)
 
       super$initialize(

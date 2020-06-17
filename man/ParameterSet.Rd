@@ -116,7 +116,7 @@ ps <- ParameterSet$new(
   id, value, support, settable,
   description
 )
-ps$addDeps(dt = data.table(x = c("scale", "rate"),
+ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
                           y = c("rate", "scale"),
                           fun = c(function(self) 1 / self$getParameterValue("scale"),
                                   function(self) 1 / self$getParameterValue("rate"))
@@ -456,7 +456,7 @@ ps <- ParameterSet$new(
   id, value, support, settable,
   description
 )
-ps$addDeps(dt = data.table(x = c("scale", "rate"),
+ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
                           y = c("rate", "scale"),
                           fun = c(function(self) 1 / self$getParameterValue("scale"),
                                   function(self) 1 / self$getParameterValue("rate"))
