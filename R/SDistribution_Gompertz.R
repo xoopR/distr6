@@ -59,8 +59,8 @@ Gompertz <- R6Class("Gompertz",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
 
       return((1 / scale) * log((-1 / shape) * log(1 / 2) + 1))
     },

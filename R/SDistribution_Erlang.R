@@ -60,7 +60,7 @@ Erlang <- R6Class("Erlang",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      self$getParameterValue("shape") / self$getParameterValue("rate")
+      unlist(self$getParameterValue("shape")) / unlist(self$getParameterValue("rate"))
     },
 
     #' @description
@@ -68,7 +68,7 @@ Erlang <- R6Class("Erlang",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      (self$getParameterValue("shape") - 1) / self$getParameterValue("rate")
+      (unlist(self$getParameterValue("shape")) - 1) / unlist(self$getParameterValue("rate"))
     },
 
     #' @description
@@ -77,7 +77,7 @@ Erlang <- R6Class("Erlang",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      self$getParameterValue("shape") / (self$getParameterValue("rate")^2)
+      unlist(self$getParameterValue("shape")) / (unlist(self$getParameterValue("rate"))^2)
     },
 
     #' @description
@@ -86,7 +86,7 @@ Erlang <- R6Class("Erlang",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      2 / sqrt(self$getParameterValue("shape"))
+      2 / sqrt(unlist(self$getParameterValue("shape")))
     },
 
     #' @description
@@ -97,9 +97,9 @@ Erlang <- R6Class("Erlang",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(6 / self$getParameterValue("shape"))
+        return(6 / unlist(self$getParameterValue("shape")))
       } else {
-        return((6 / self$getParameterValue("shape")) + 3)
+        return((6 / unlist(self$getParameterValue("shape"))) + 3)
       }
     },
 
@@ -109,9 +109,10 @@ Erlang <- R6Class("Erlang",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      (1 - self$getParameterValue("shape")) * digamma(self$getParameterValue("shape")) +
-        self$getParameterValue("shape") +
-        log(gamma(self$getParameterValue("shape") / self$getParameterValue("rate")), base)
+      shape <- unlist(self$getParameterValue("shape"))
+      rate <- unlist(self$getParameterValue("rate"))
+
+      (1 - shape) * digamma(shape) + shape + log(gamma(shape / rate), base)
     },
 
     #' @description The moment generating function is defined by

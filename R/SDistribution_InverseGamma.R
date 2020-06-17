@@ -59,11 +59,11 @@ InverseGamma <- R6Class("InverseGamma",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      if (self$getParameterValue("shape") > 1) {
-        return(self$getParameterValue("scale") / (self$getParameterValue("shape") - 1))
-      } else {
-        return(NaN)
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      scale <- unlist(self$getParameterValue("scale"))
+      mean = rep(NaN, length(shape))
+      mean[shape > 1] = scale[shape > 1] / (shape[shape > 1] - 1)
+      return(mean)
     },
 
     #' @description
@@ -71,7 +71,7 @@ InverseGamma <- R6Class("InverseGamma",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("scale") / (self$getParameterValue("shape") + 1))
+      unlist(self$getParameterValue("scale")) / (unlist(self$getParameterValue("shape")) + 1)
     },
 
     #' @description
@@ -80,11 +80,11 @@ InverseGamma <- R6Class("InverseGamma",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      if (self$getParameterValue("shape") > 2) {
-        return(self$getParameterValue("scale")^2 / ((self$getParameterValue("shape") - 1)^2 * (self$getParameterValue("shape") - 2)))
-      } else {
-        return(NaN)
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      scale <- unlist(self$getParameterValue("scale"))
+      var = rep(NaN, length(shape))
+      var[shape > 2] = scale[shape > 2]^2 / ((shape[shape > 2] - 1)^2 * (shape[shape > 2] - 2))
+      return(var)
     },
 
     #' @description
@@ -93,11 +93,10 @@ InverseGamma <- R6Class("InverseGamma",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      if (self$getParameterValue("shape") > 3) {
-        return((4 * sqrt(self$getParameterValue("shape") - 2)) / (self$getParameterValue("shape") - 3))
-      } else {
-        return(NaN)
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      skew = rep(NaN, length(shape))
+      skew[shape > 3] = (4 * sqrt(shape[shape > 3] - 2)) / (shape[shape > 3] - 3)
+      return(skew)
     },
 
     #' @description
@@ -107,16 +106,14 @@ InverseGamma <- R6Class("InverseGamma",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      if (self$getParameterValue("shape") > 4) {
-        kur <- (6 * (5 * self$getParameterValue("shape") - 11)) /
-          ((self$getParameterValue("shape") - 3) * (self$getParameterValue("shape") - 4))
-        if (excess) {
-          return(kur)
-        } else {
-          return(kur + 3)
-        }
+      shape <- unlist(self$getParameterValue("shape"))
+      kur = rep(NaN, length(shape))
+      kur[shape > 4] = (6 * (5 * shape[shape > 4] - 11)) /
+        ((shape[shape > 4] - 3) * (shape[shape > 4] - 4))
+      if (excess) {
+        return(kur)
       } else {
-        return(NaN)
+        return(kur + 3)
       }
     },
 
@@ -126,9 +123,10 @@ InverseGamma <- R6Class("InverseGamma",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(self$getParameterValue("shape") +
-        log(self$getParameterValue("scale") * gamma(self$getParameterValue("shape")), base) -
-        (1 + self$getParameterValue("shape")) * digamma(self$getParameterValue("shape")))
+      shape <- unlist(self$getParameterValue("shape"))
+      scale <- unlist(self$getParameterValue("scale"))
+
+      return(shape + log(scale * gamma(shape), base) - (1 + shape) * digamma(shape))
     },
 
     #' @description The moment generating function is defined by

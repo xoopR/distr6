@@ -69,7 +69,8 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("draws") * self$getParameterValue("successes") / self$getParameterValue("size"))
+      unlist(self$getParameterValue("draws")) * unlist(self$getParameterValue("successes")) /
+        unlist(self$getParameterValue("size"))
     },
 
     #' @description
@@ -77,10 +78,10 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      draws <- self$getParameterValue("draws")
-      successes <- self$getParameterValue("successes")
-      size <- self$getParameterValue("size")
-      return(floor(((draws + 1) * (successes + 1)) / (size + 2)))
+      draws <- unlist(self$getParameterValue("draws"))
+      successes <- unlist(self$getParameterValue("successes"))
+      size <- unlist(self$getParameterValue("size"))
+      return(sapply(((draws + 1) * (successes + 1)) / (size + 2), floor))
     },
 
     #' @description
@@ -89,9 +90,9 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      draws <- self$getParameterValue("draws")
-      successes <- self$getParameterValue("successes")
-      size <- self$getParameterValue("size")
+      draws <- unlist(self$getParameterValue("draws"))
+      successes <- unlist(self$getParameterValue("successes"))
+      size <- unlist(self$getParameterValue("size"))
       return((draws * successes * (size - successes) * (size - draws)) / (size^2 * (size - 1)))
     },
 
@@ -101,9 +102,9 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      draws <- self$getParameterValue("draws")
-      successes <- self$getParameterValue("successes")
-      size <- self$getParameterValue("size")
+      draws <- unlist(self$getParameterValue("draws"))
+      successes <- unlist(self$getParameterValue("successes"))
+      size <- unlist(self$getParameterValue("size"))
       return(((size - 2 * successes) * ((size - 1)^0.5) * (size - 2 * draws)) /
         (((draws * successes * (size - successes) * (size - draws))^0.5) * (size - 2)))
     },
@@ -115,9 +116,9 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      draws <- self$getParameterValue("draws")
-      successes <- self$getParameterValue("successes")
-      size <- self$getParameterValue("size")
+      draws <- unlist(self$getParameterValue("draws"))
+      successes <- unlist(self$getParameterValue("successes"))
+      size <- unlist(self$getParameterValue("size"))
 
       exkurtosis <- ((size - 1) * (size^2) * ((size * (size + 1)) - 6 * successes * (size - successes) -
         6 * draws * (size - draws)) + 6 * draws * successes * (size - successes) *

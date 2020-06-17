@@ -64,11 +64,12 @@ Frechet <- R6Class("Frechet",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      if (self$getParameterValue("shape") <= 1) {
-        return(Inf)
-      } else {
-        return(self$getParameterValue("minimum") + self$getParameterValue("scale") * gamma(1 - 1 / self$getParameterValue("shape")))
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      minimum <- unlist(self$getParameterValue("minimum"))
+      scale <- unlist(self$getParameterValue("scale"))
+      mean <- rep(Inf, length(shape))
+      mean[shape > 1] = minimum[shape > 1] + scale[shape > 1] * gamma(1 - 1 / shape[shape > 1])
+      return(mean)
     },
 
     #' @description
@@ -76,10 +77,11 @@ Frechet <- R6Class("Frechet",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("minimum") +
-        self$getParameterValue("scale") *
-          (self$getParameterValue("shape") /
-            (1 + self$getParameterValue("shape")))^(1 / self$getParameterValue("shape")))
+      shape <- unlist(self$getParameterValue("shape"))
+      minimum <- unlist(self$getParameterValue("minimum"))
+      scale <- unlist(self$getParameterValue("scale"))
+
+      return(minimum + scale * (shape / (1 + shape))^(1 / shape))
     },
 
     #' @description
@@ -87,9 +89,9 @@ Frechet <- R6Class("Frechet",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      m <- self$getParameterValue("minimum")
-      s <- self$getParameterValue("scale")
-      a <- self$getParameterValue("shape")
+      m <- unlist(self$getParameterValue("minimum"))
+      s <- unlist(self$getParameterValue("scale"))
+      a <- unlist(self$getParameterValue("shape"))
 
       return(m + s / (log(2)^(1 / a)))
     },
@@ -100,28 +102,30 @@ Frechet <- R6Class("Frechet",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      if (self$getParameterValue("shape") <= 2) {
-        return(Inf)
-      } else {
-        return(self$getParameterValue("scale")^2 * (gamma(1 - 2 / self$getParameterValue("shape")) -
-          gamma(1 - 1 / self$getParameterValue("shape"))^2))
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      minimum <- unlist(self$getParameterValue("minimum"))
+      scale <- unlist(self$getParameterValue("scale"))
+      var <- rep(Inf, length(shape))
+      var[shape > 2] = scale[shape > 2]^2 * (gamma(1 - 2 / shape[shape > 2]) -
+                                                              gamma(1 - 1 / shape[shape > 2])^2)
+      return(var)
     },
 
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      if (self$getParameterValue("shape") <= 3) {
-        return(Inf)
-      } else {
-        shape <- self$getParameterValue("shape")
-        num <- gamma(1 - 3 / shape) - 3 * gamma(1 - 2 / shape) * gamma(1 - 1 / shape) + 2 * gamma(1 - 1 / shape)^3
-        den <- (gamma(1 - 2 / shape) - gamma(1 - 1 / shape)^2)^(3 / 2)
-        return(num / den)
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      minimum <- unlist(self$getParameterValue("minimum"))
+      scale <- unlist(self$getParameterValue("scale"))
+      skew <- rep(Inf, length(shape))
+      skew[shape > 3] = (gamma(1 - 3 / shape[shape > 3]) - 3 *
+                           gamma(1 - 2 / shape[shape > 3]) * gamma(1 - 1 / shape[shape > 3]) + 2
+                         * gamma(1 - 1 / shape[shape > 3])^3) /
+        ((gamma(1 - 2 / shape[shape > 3]) - gamma(1 - 1 / shape[shape > 3])^2)^(3 / 2))
+      return(skew)
     },
 
     #' @description
@@ -131,18 +135,19 @@ Frechet <- R6Class("Frechet",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      if (self$getParameterValue("shape") <= 4) {
-        return(Inf)
+      shape <- unlist(self$getParameterValue("shape"))
+      minimum <- unlist(self$getParameterValue("minimum"))
+      scale <- unlist(self$getParameterValue("scale"))
+      kur <- rep(Inf, length(shape))
+      kur[shape > 4] = (gamma(1 - 4 / shape[shape > 4]) - 4 * gamma(1 - 3 / shape[shape > 4]) *
+                          gamma(1 - 1 / shape[shape > 4]) + 3 * gamma(1 - 2 / shape[shape > 4])^2) /
+        ((gamma(1 - 2 / shape[shape > 4]) - gamma(1 - 1 / shape[shape > 4])^2)^2)
+      if (excess) {
+        return(kur - 6)
       } else {
-        shape <- self$getParameterValue("shape")
-        num <- gamma(1 - 4 / shape) - 4 * gamma(1 - 3 / shape) * gamma(1 - 1 / shape) + 3 * gamma(1 - 2 / shape)^2
-        den <- (gamma(1 - 2 / shape) - gamma(1 - 1 / shape)^2)^2
-        if (excess) {
-          return(-6 + num / den)
-        } else {
-          return(-3 + num / den)
-        }
+        return(kur - 3)
       }
+      return(kur)
     },
 
     #' @description
@@ -151,8 +156,11 @@ Frechet <- R6Class("Frechet",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(1 - digamma(1) / self$getParameterValue("shape") - digamma(1) +
-        log(self$getParameterValue("scale") / self$getParameterValue("shape"), base))
+      shape <- unlist(self$getParameterValue("shape"))
+      minimum <- unlist(self$getParameterValue("minimum"))
+      scale <- unlist(self$getParameterValue("scale"))
+
+      return(1 - digamma(1) / shape - digamma(1) + log(scale / shape, base))
     },
 
     #' @description The probability generating function is defined by

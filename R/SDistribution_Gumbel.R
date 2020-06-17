@@ -59,7 +59,8 @@ Gumbel <- R6Class("Gumbel",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("location") - digamma(1) * self$getParameterValue("scale"))
+      unlist(self$getParameterValue("location")) -
+        digamma(1) * unlist(self$getParameterValue("scale"))
     },
 
     #' @description
@@ -67,7 +68,7 @@ Gumbel <- R6Class("Gumbel",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("location"))
+      unlist(self$getParameterValue("location"))
     },
 
     #' @description
@@ -75,7 +76,8 @@ Gumbel <- R6Class("Gumbel",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      return(self$getParameterValue("location") - self$getParameterValue("scale") * log(log(2)))
+      unlist(self$getParameterValue("location")) -
+        unlist(self$getParameterValue("scale")) * log(log(2))
     },
 
     #' @description
@@ -84,7 +86,7 @@ Gumbel <- R6Class("Gumbel",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return((pi * self$getParameterValue("scale"))^2 / 6)
+      (pi * unlist(self$getParameterValue("scale")))^2 / 6
     },
 
     #' @description
@@ -95,7 +97,8 @@ Gumbel <- R6Class("Gumbel",
     #'
     #' Apery's Constant to 16 significant figures is used in the calculation.
     skewness = function() {
-      return((12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3)
+      rep((12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3,
+          length(self$getParameterValue("scale")))
     },
 
     #' @description
@@ -106,9 +109,9 @@ Gumbel <- R6Class("Gumbel",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(2.4)
+        return(rep(2.4, length(self$getParameterValue("scale"))))
       } else {
-        return(5.4)
+        return(rep(5.4, length(self$getParameterValue("scale"))))
       }
     },
 
@@ -118,7 +121,7 @@ Gumbel <- R6Class("Gumbel",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(log(self$getParameterValue("scale"), base) - digamma(1) + 1)
+      log(unlist(self$getParameterValue("scale")), base) - digamma(1) + 1
     },
 
     #' @description The moment generating function is defined by

@@ -61,7 +61,7 @@ Cauchy <- R6Class("Cauchy",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("location")))
     },
 
     #' @description
@@ -69,7 +69,7 @@ Cauchy <- R6Class("Cauchy",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("location"))
+      unlist(self$getParameterValue("location"))
     },
 
     #' @description
@@ -78,7 +78,7 @@ Cauchy <- R6Class("Cauchy",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("location")))
     },
 
     #' @description
@@ -87,7 +87,7 @@ Cauchy <- R6Class("Cauchy",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("location")))
     },
 
     #' @description
@@ -97,7 +97,7 @@ Cauchy <- R6Class("Cauchy",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("location")))
     },
 
     #' @description
@@ -106,7 +106,7 @@ Cauchy <- R6Class("Cauchy",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(log(4 * pi * self$getParameterValue("scale"), base))
+      return(log(4 * pi * unlist(self$getParameterValue("scale")), base))
     },
 
     #' @description The moment generating function is defined by

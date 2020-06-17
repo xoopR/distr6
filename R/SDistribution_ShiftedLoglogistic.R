@@ -76,9 +76,9 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      location <- self$getParameterValue("location")
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
+      location <- unlist(self$getParameterValue("location"))
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
 
       return(location + ((scale / shape) * (((pi * shape) / (sin(pi * shape))) - 1)))
     },
@@ -88,9 +88,9 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      location <- self$getParameterValue("location")
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
+      location <- unlist(self$getParameterValue("location"))
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
 
       return(location + ((scale / shape) * ((((1 - shape) / (1 + shape))^shape) - 1)))
     },
@@ -100,7 +100,7 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      return(self$getParameterValue("location"))
+      unlist(self$getParameterValue("location"))
     },
 
     #' @description
@@ -109,9 +109,9 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
-      shapi <- pi * self$getParameterValue("shape")
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
+      shapi <- pi * unlist(self$getParameterValue("shape"))
 
       return((scale^2 / shape^2) * ((2 * shapi / sin(2 * shapi)) - ((shapi / sin(shapi))^2)))
     },

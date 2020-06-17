@@ -93,7 +93,8 @@ Triangular <- R6Class("Triangular",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return((self$getParameterValue("lower") + self$getParameterValue("upper") + self$getParameterValue("mode")) / 3)
+      (unlist(self$getParameterValue("lower")) + unlist(self$getParameterValue("upper")) +
+         unlist(self$getParameterValue("mode"))) / 3
     },
 
     #' @description
@@ -101,7 +102,7 @@ Triangular <- R6Class("Triangular",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("mode"))
+      unlist(self$getParameterValue("mode"))
     },
 
     #' @description
@@ -109,14 +110,15 @@ Triangular <- R6Class("Triangular",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      lower <- self$getParameterValue("lower")
-      upper <- self$getParameterValue("upper")
-      mode <- self$getParameterValue("mode")
-      if (mode >= (lower + upper) / 2) {
-        return(lower + sqrt((upper - lower) * (mode - lower)) / sqrt(2))
-      } else {
-        return(upper - sqrt((upper - lower) * (upper - mode)) / sqrt(2))
-      }
+      lower <- unlist(self$getParameterValue("lower"))
+      upper <- unlist(self$getParameterValue("upper"))
+      mode <- unlist(self$getParameterValue("mode"))
+      median <- numeric(length(lower))
+      ind = mode >= (lower + upper) / 2
+      median[ind] = lower[ind] + sqrt((upper[ind] - lower[ind]) * (mode[ind] - lower[ind])) / sqrt(2)
+      median[!ind] = upper[!ind] - sqrt((upper[!ind] - lower[!ind]) * (upper[!ind] - mode[!ind])) /
+        sqrt(2)
+      return(median)
     },
 
     #' @description
@@ -125,10 +127,11 @@ Triangular <- R6Class("Triangular",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return((self$getParameterValue("lower")^2 + self$getParameterValue("upper")^2 +
-        self$getParameterValue("mode")^2 - self$getParameterValue("lower") * self$getParameterValue("upper") -
-        self$getParameterValue("lower") * self$getParameterValue("mode") -
-        self$getParameterValue("upper") * self$getParameterValue("mode")) / 18)
+      lower <- unlist(self$getParameterValue("lower"))
+      upper <- unlist(self$getParameterValue("upper"))
+      mode <- unlist(self$getParameterValue("mode"))
+
+      return((lower^2 + upper^2 + mode^2 - lower * upper - lower * mode - upper * mode) / 18)
     },
 
     #' @description
@@ -137,11 +140,12 @@ Triangular <- R6Class("Triangular",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      lower <- self$getParameterValue("lower")
-      upper <- self$getParameterValue("upper")
-      mode <- self$getParameterValue("mode")
+      lower <- unlist(self$getParameterValue("lower"))
+      upper <- unlist(self$getParameterValue("upper"))
+      mode <- unlist(self$getParameterValue("mode"))
 
-      num <- sqrt(2) * (lower + upper - 2 * mode) * (2 * lower - upper - mode) * (lower - 2 * upper + mode)
+      num <- sqrt(2) * (lower + upper - 2 * mode) * (2 * lower - upper - mode) *
+        (lower - 2 * upper + mode)
       den <- 5 * (lower^2 + upper^2 + mode^2 - lower * upper - lower * mode - upper * mode)^1.5
       return(num / den)
     },
@@ -154,9 +158,9 @@ Triangular <- R6Class("Triangular",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(-0.6)
+        return(rep(-0.6, length(self$getParameterValue("lower"))))
       } else {
-        return(2.4)
+        return(rep(2.4, length(self$getParameterValue("lower"))))
       }
     },
 
@@ -166,7 +170,8 @@ Triangular <- R6Class("Triangular",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(0.5 * log((self$getParameterValue("upper") - self$getParameterValue("lower")) / 2, base))
+      0.5 * log((unlist(self$getParameterValue("upper")) -
+                   unlist(self$getParameterValue("lower"))) / 2, base)
     },
 
     #' @description The moment generating function is defined by

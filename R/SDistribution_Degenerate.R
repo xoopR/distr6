@@ -60,7 +60,7 @@ Degenerate <- R6Class("Degenerate",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("mean"))
+      unlist(self$getParameterValue("mean"))
     },
 
     #' @description
@@ -68,7 +68,7 @@ Degenerate <- R6Class("Degenerate",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("mean"))
+      unlist(self$getParameterValue("mean"))
     },
 
     #' @description
@@ -77,7 +77,7 @@ Degenerate <- R6Class("Degenerate",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(0)
+      numeric(length(self$getParameterValue("mean")))
     },
 
     #' @description
@@ -86,7 +86,7 @@ Degenerate <- R6Class("Degenerate",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(0)
+      numeric(length(self$getParameterValue("mean")))
     },
 
     #' @description
@@ -96,7 +96,7 @@ Degenerate <- R6Class("Degenerate",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("mean")))
     },
 
     #' @description
@@ -105,7 +105,7 @@ Degenerate <- R6Class("Degenerate",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(0)
+      numeric(length(self$getParameterValue("mean")))
     },
 
     #' @description The moment generating function is defined by

@@ -62,7 +62,7 @@ Weibull <- R6Class("Weibull",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("scale") * gamma(1 + 1 / self$getParameterValue("shape")))
+      unlist(self$getParameterValue("scale")) * gamma(1 + 1 / unlist(self$getParameterValue("shape")))
     },
 
     #' @description
@@ -70,14 +70,12 @@ Weibull <- R6Class("Weibull",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
-
-      if (shape > 1) {
-        return(scale * ((shape - 1) / shape)^(1 / shape))
-      } else {
-        return(0)
-      }
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
+      mode <- numeric(length(scale))
+      mode[shape > 1] = scale[shape > 1] *
+        ((shape[shape > 1] - 1) / shape[shape > 1])^(1 / shape[shape > 1])
+      return(mode)
     },
 
     #' @description
@@ -85,7 +83,8 @@ Weibull <- R6Class("Weibull",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      return(self$getParameterValue("scale") * (log(2)^(1 / self$getParameterValue("shape"))))
+      unlist(self$getParameterValue("scale")) *
+        (log(2)^(1 / unlist(self$getParameterValue("shape"))))
     },
 
     #' @description
@@ -94,8 +93,8 @@ Weibull <- R6Class("Weibull",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
       return(scale^2 * (gamma(1 + 2 / shape) - gamma(1 + 1 / shape)^2))
     },
 
@@ -105,8 +104,8 @@ Weibull <- R6Class("Weibull",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
       mu <- self$mean()
       sigma <- self$stdev()
       return(((gamma(1 + 3 / shape) * (scale^3)) - (3 * mu * sigma^2) - (mu^3)) / (sigma^3))
@@ -120,12 +119,13 @@ Weibull <- R6Class("Weibull",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       skew <- self$skewness()
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
       mu <- self$mean()
       sigma <- self$stdev()
 
-      kur <- (((scale^4) * gamma(1 + 4 / shape)) - (4 * skew * (sigma^3) * mu) - (6 * (sigma^2) * (mu^2)) - (mu^4)) / (sigma^4)
+      kur <- (((scale^4) * gamma(1 + 4 / shape)) - (4 * skew * (sigma^3) * mu) -
+                (6 * (sigma^2) * (mu^2)) - (mu^4)) / (sigma^4)
 
       if (excess) {
         return(kur - 3)
@@ -140,8 +140,8 @@ Weibull <- R6Class("Weibull",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      scale <- self$getParameterValue("scale")
-      shape <- self$getParameterValue("shape")
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
       return(-digamma(1) * (1 - 1 / shape) + log(scale / shape, base) + 1)
     },
 

@@ -63,7 +63,7 @@ ChiSquared <- R6Class("ChiSquared",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("df"))
+      unlist(self$getParameterValue("df"))
     },
 
     #' @description
@@ -71,7 +71,7 @@ ChiSquared <- R6Class("ChiSquared",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(max(self$getParameterValue("df") - 2, 0))
+      sapply(self$getParameterValue("df"), function(x) max(x - 2, 0))
     },
 
     #' @description
@@ -80,7 +80,7 @@ ChiSquared <- R6Class("ChiSquared",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(self$getParameterValue("df") * 2)
+      unlist(self$getParameterValue("df")) * 2
     },
 
     #' @description
@@ -89,7 +89,7 @@ ChiSquared <- R6Class("ChiSquared",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(sqrt(8 / self$getParameterValue("df")))
+      sqrt(8 / unlist(self$getParameterValue("df")))
     },
 
     #' @description
@@ -100,9 +100,9 @@ ChiSquared <- R6Class("ChiSquared",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(12 / self$getParameterValue("df"))
+        return(12 / unlist(self$getParameterValue("df")))
       } else {
-        return(12 / self$getParameterValue("df") + 3)
+        return(12 / unlist(self$getParameterValue("df")) + 3)
       }
     },
 
@@ -112,8 +112,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(self$getParameterValue("df") / 2 + log(2 * gamma(self$getParameterValue("df") / 2), base) +
-        ((1 - self$getParameterValue("df") / 2) * digamma(self$getParameterValue("df") / 2)))
+      df <- unlist(self$getParameterValue("df"))
+      return(df / 2 + log(2 * gamma(df / 2), base) + ((1 - df / 2) * digamma(df / 2)))
     },
 
     #' @description The moment generating function is defined by

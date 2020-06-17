@@ -58,7 +58,7 @@ Logarithmic <- R6Class("Logarithmic",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      theta <- self$getParameterValue("theta")
+      theta <- unlist(self$getParameterValue("theta"))
       return(-theta / (log(1 - theta) * (1 - theta)))
     },
 
@@ -67,7 +67,7 @@ Logarithmic <- R6Class("Logarithmic",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(1)
+      rep(1, length(self$getParameterValue("theta")))
     },
 
     #' @description
@@ -76,7 +76,7 @@ Logarithmic <- R6Class("Logarithmic",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      theta <- self$getParameterValue("theta")
+      theta <- unlist(self$getParameterValue("theta"))
       return((-theta^2 - theta * log(1 - theta)) / ((1 - theta)^2 * (log(1 - theta))^2))
     },
 
@@ -86,9 +86,10 @@ Logarithmic <- R6Class("Logarithmic",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      theta <- self$getParameterValue("theta")
+      theta <- unlist(self$getParameterValue("theta"))
 
-      s1 <- (theta * (3 * theta + theta * log(1 - theta) + log(1 - theta))) / ((theta - 1)^3 * log(1 - theta)^2)
+      s1 <- (theta * (3 * theta + theta * log(1 - theta) + log(1 - theta))) /
+        ((theta - 1)^3 * log(1 - theta)^2)
       s2 <- 2 * (-theta / (log(1 - theta) * (1 - theta)))^3
 
       return((s1 + s2) / (self$stdev()^3))
@@ -101,7 +102,7 @@ Logarithmic <- R6Class("Logarithmic",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      theta <- self$getParameterValue("theta")
+      theta <- unlist(self$getParameterValue("theta"))
 
       s1 <- (3 * theta^4) / ((1 - theta)^4 * log(1 - theta)^4)
       s2 <- (6 * theta^3) / ((theta - 1)^4 * log(1 - theta)^3)

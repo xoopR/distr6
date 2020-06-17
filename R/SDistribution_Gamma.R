@@ -61,7 +61,7 @@ Gamma <- R6Class("Gamma",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("mean"))
+      unlist(self$getParameterValue("mean"))
     },
 
     #' @description
@@ -69,11 +69,12 @@ Gamma <- R6Class("Gamma",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (self$getParameterValue("shape") >= 1) {
-        return((self$getParameterValue("shape") - 1) / self$getParameterValue("rate"))
-      } else {
-        return(NaN)
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      rate <- unlist(self$getParameterValue("rate"))
+
+      mode = rep(NaN, length(shape))
+      mode[shape >= 1] = (shape[shape >= 1] - 1) / rate[shape >= 1]
+      return(mode)
     },
 
     #' @description
@@ -82,7 +83,7 @@ Gamma <- R6Class("Gamma",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(self$getParameterValue("mean") * self$getParameterValue("scale"))
+      unlist(self$getParameterValue("mean")) * unlist(self$getParameterValue("scale"))
     },
 
     #' @description
@@ -91,7 +92,7 @@ Gamma <- R6Class("Gamma",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      2 / sqrt(self$getParameterValue("shape"))
+      2 / sqrt(unlist(self$getParameterValue("shape")))
     },
 
     #' @description
@@ -102,9 +103,9 @@ Gamma <- R6Class("Gamma",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(6 / self$getParameterValue("shape"))
+        return(6 / unlist(self$getParameterValue("shape")))
       } else {
-        return((6 / self$getParameterValue("shape")) + 3)
+        return((6 / unlist(self$getParameterValue("shape"))) + 3)
       }
     },
 
@@ -114,8 +115,10 @@ Gamma <- R6Class("Gamma",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      self$getParameterValue("shape") - log(self$getParameterValue("rate"), base) +
-        log(gamma(self$getParameterValue("shape")), base) + (1 - self$getParameterValue("shape")) * digamma(self$getParameterValue("shape"))
+      shape <- unlist(self$getParameterValue("shape"))
+      rate <- unlist(self$getParameterValue("rate"))
+
+      return(shape - log(rate, base) + log(gamma(shape), base) + (1 - shape) * digamma(shape))
     },
 
     #' @description The moment generating function is defined by
