@@ -925,7 +925,7 @@ NULL
 #' the number of arguments corresponds to the number of variables in the distribution.
 #' See examples.
 #' @param lower.tail `logical(1)` \cr
-#' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
+#' If `TRUE` (default), probabilities are `X <= x`, otherwise, `X > x`.
 #' @param log.p `logical(1)` \cr
 #' If `TRUE` returns log-cdf. Default is `FALSE`.
 #' @param simplify `logical(1)` \cr
@@ -953,7 +953,7 @@ NULL
 #' the number of arguments corresponds to the number of variables in the distribution.
 #' See examples.
 #' @param lower.tail `logical(1)` \cr
-#' If `TRUE` (default), probabilities are `X ≤ x`, otherwise, `X > x`.
+#' If `TRUE` (default), probabilities are `X <= x`, otherwise, `X > x`.
 #' @param log.p `logical(1)` \cr
 #' If `TRUE` returns log-cdf. Default is `FALSE`.
 #' @param simplify `logical(1)` \cr
