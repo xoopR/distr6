@@ -62,7 +62,10 @@ Beta <- R6Class("Beta",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("shape1") / (self$getParameterValue("shape1") + self$getParameterValue("shape2")))
+      s1 <- unlist(self$getParameterValue("shape1"))
+      s2 <- unlist(self$getParameterValue("shape2"))
+
+      return(s1 / (s1 + s2))
     },
 
     #' @description
@@ -70,18 +73,21 @@ Beta <- R6Class("Beta",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (self$getParameterValue("shape1") <= 1 & self$getParameterValue("shape2") > 1) {
+      s1 <- unlist(self$getParameterValue("shape1"))
+      s2 <- unlist(self$getParameterValue("shape2"))
+
+      if (s1 <= 1 & s2 > 1) {
         return(0)
-      } else if (self$getParameterValue("shape1") > 1 & self$getParameterValue("shape2") <= 1) {
+      } else if (s1 > 1 & s2 <= 1) {
         return(1)
-      } else if (self$getParameterValue("shape1") < 1 & self$getParameterValue("shape2") < 1) {
+      } else if (s1 < 1 & s2 < 1) {
         if (which == "all") {
           return(c(0, 1))
         } else {
           return(c(0, 1)[which])
         }
-      } else if (self$getParameterValue("shape1") > 1 & self$getParameterValue("shape2") > 1) {
-        return((self$getParameterValue("shape1") - 1) / (self$getParameterValue("shape1") + self$getParameterValue("shape2") - 2))
+      } else if (s1 > 1 & s2 > 1) {
+        return((s1 - 1) / (s1 + s2 - 2))
       } else {
         return(NaN)
       }

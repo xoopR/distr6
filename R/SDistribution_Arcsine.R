@@ -56,7 +56,7 @@ Arcsine <- R6Class("Arcsine",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return((self$getParameterValue("upper") + self$getParameterValue("lower")) / 2)
+      return((unlist(self$getParameterValue("upper")) + unlist(self$getParameterValue("lower"))) / 2)
     },
 
     #' @description
@@ -64,10 +64,21 @@ Arcsine <- R6Class("Arcsine",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (which == "all") {
-        return(c(self$getParameterValue("lower"), self$getParameterValue("upper")))
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
+      if (checkmate::testList(lower)) {
+        modes <- data.table(lower, upper)
+        if (which == "all") {
+          return(modes)
+        } else {
+          return(modes[, which])
+        }
       } else {
-        return(c(self$getParameterValue("lower"), self$getParameterValue("upper"))[which])
+        if (which == "all") {
+          return(c(lower, upper))
+        } else {
+          return(c(lower, upper)[which])
+        }
       }
     },
 
@@ -77,7 +88,7 @@ Arcsine <- R6Class("Arcsine",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2) / 8)
+      ((unlist(self$getParameterValue("upper")) - unlist(self$getParameterValue("lower")))^2) / 8
     },
 
     #' @description
@@ -86,7 +97,7 @@ Arcsine <- R6Class("Arcsine",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(0)
+      rep(0, length(self$getParameterValue("lower")))
     },
 
     #' @description
@@ -97,9 +108,9 @@ Arcsine <- R6Class("Arcsine",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(-3 / 2)
+        return(rep(-1.5, length(self$getParameterValue("lower"))))
       } else {
-        return(1.5)
+        return(rep(1.5, length(self$getParameterValue("lower"))))
       }
     },
 
@@ -109,14 +120,14 @@ Arcsine <- R6Class("Arcsine",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(log(pi / 4, base))
+      rep(log(pi / 4, base), length(self$getParameterValue("lower")))
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("lower")))
     },
 
     # optional setParameterValue

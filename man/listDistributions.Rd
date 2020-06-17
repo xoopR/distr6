@@ -17,7 +17,7 @@ Either a list of characters (if \code{simplify} is TRUE) or a data.table of \cod
 }
 \description{
 Lists distr6 distributions in a data.table or a character vector, can be filtered by
-traits and implemented package.
+traits, implemented package, and tags.
 }
 \examples{
 listDistributions()

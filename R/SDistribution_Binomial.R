@@ -61,7 +61,7 @@ Binomial <- R6Class("Binomial",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      self$getParameterValue("size") * self$getParameterValue("prob")
+      unlist(self$getParameterValue("size")) * unlist(self$getParameterValue("prob"))
     },
 
     #' @description

@@ -193,3 +193,11 @@ abstract <- function(obj, class) {
 stopf <- function(str, ...) {
   stop(sprintf(str, ...))
 }
+
+v_genfun = function(x, fun) {
+  if (length(x) == 1) {
+    return(fun(x))
+  } else {
+    return(sapply(x, fun))
+  }
+}

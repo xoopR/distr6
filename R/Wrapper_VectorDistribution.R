@@ -25,6 +25,7 @@
 VectorDistribution <- R6Class("VectorDistribution",
   inherit = DistributionWrapper,
   lock_objects = FALSE,
+  lock_class = FALSE,
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -42,6 +43,15 @@ VectorDistribution <- R6Class("VectorDistribution",
     #' VectorDistribution$new(
     #'   distribution = "Binomial",
     #'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
+    #' )
+    #'
+    #' # Alternatively
+    #' VectorDistribution$new(
+    #'   list(
+    #'   Binomial$new(prob = 0.1, size = 2),
+    #'   Binomial$new(prob = 0.6, size = 4),
+    #'   Binomial$new(prob = 0.2, size = 6)
+    #'   )
     #' )
     initialize = function(distlist = NULL, distribution = NULL, params = NULL,
                           shared_params = NULL, name = NULL, short_name = NULL,
@@ -119,8 +129,8 @@ VectorDistribution <- R6Class("VectorDistribution",
         valueSupport <- pdist$private_fields$.traits$valueSupport
 
         # set d/p/q/r if non-NULL
-        pdist <- pdist[["private_methods"]]
-        if (!is.null(pdist[[".pdf"]])) {
+        pdist_pri <- pdist[["private_methods"]]
+        if (!is.null(pdist_pri[[".pdf"]])) {
           private$.pdf <- function(x1, log) {}
           body(private$.pdf) <- substitute(
             {
@@ -148,10 +158,10 @@ VectorDistribution <- R6Class("VectorDistribution",
 
               return(dpqr)
             },
-            list(FUN = body(pdist[[".pdf"]]))
+            list(FUN = body(pdist_pri[[".pdf"]]))
           )
         }
-        if (!is.null(pdist[[".cdf"]])) {
+        if (!is.null(pdist_pri[[".cdf"]])) {
           private$.cdf <- function(x1, lower.tail, log.p) {}
           body(private$.cdf) <- substitute(
             {
@@ -175,10 +185,10 @@ VectorDistribution <- R6Class("VectorDistribution",
 
               return(dpqr)
             },
-            list(FUN = body(pdist[[".cdf"]]))
+            list(FUN = body(pdist_pri[[".cdf"]]))
           )
         }
-        if (!is.null(pdist[[".quantile"]])) {
+        if (!is.null(pdist_pri[[".quantile"]])) {
           private$.quantile <- function(x1, lower.tail, log.p) {}
           body(private$.quantile) <- substitute(
             {
@@ -201,10 +211,10 @@ VectorDistribution <- R6Class("VectorDistribution",
               }
               return(dpqr)
             },
-            list(FUN = body(pdist[[".quantile"]]))
+            list(FUN = body(pdist_pri[[".quantile"]]))
           )
         }
-        if (!is.null(pdist[[".rand"]])) {
+        if (!is.null(pdist_pri[[".rand"]])) {
           private$.rand <- function(x1) {}
           body(private$.rand) <- substitute(
             {
@@ -213,7 +223,7 @@ VectorDistribution <- R6Class("VectorDistribution",
 
               return(fun(x1))
             },
-            list(FUN = body(pdist[[".rand"]]))
+            list(FUN = body(pdist_pri[[".rand"]]))
           )
         }
 
@@ -407,97 +417,245 @@ VectorDistribution <- R6Class("VectorDistribution",
     },
 
     #' @description
-    #' Returns vector of means from each wrapped [Distribution].
+    #' Returns named vector of means from each wrapped [Distribution].
     mean = function() {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$mean(), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$mean(), error = NaN)
+        })
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$mean
+        formals(f) = list(self = self)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of modes from each wrapped [Distribution].
+    #' Returns named vector of modes from each wrapped [Distribution].
     mode = function(which = "all") {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$mode(which), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$mode(which), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$mode
+        formals(f) = list(self = self, which = which)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of variances from each wrapped [Distribution].
+    #' Returns named vector of medians from each wrapped [Distribution].
+    median = function() {
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$median(), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$median
+        formals(f) = list(self = self)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+      return(ret)
+    },
+
+    #' @description
+    #' Returns named vector of variances from each wrapped [Distribution].
     variance = function() {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$variance(), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$variance(), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$variance
+        formals(f) = list(self = self)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of skewness from each wrapped [Distribution].
+    #' Returns named vector of skewness from each wrapped [Distribution].
     skewness = function() {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$skewness(), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$skewness(), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$skewness
+        formals(f) = list(self = self)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of kurtosis from each wrapped [Distribution].
+    #' Returns named vector of kurtosis from each wrapped [Distribution].
     kurtosis = function(excess = TRUE) {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$kurtosis(excess), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$kurtosis(excess), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$kurtosis
+        formals(f) = list(self = self, excess = excess)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of entropy from each wrapped [Distribution].
+    #' Returns named vector of entropy from each wrapped [Distribution].
     entropy = function(base = 2) {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$entropy(base), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$entropy(base), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$entropy
+        formals(f) = list(self = self, base = base)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of mgf from each wrapped [Distribution].
+    #' Returns named vector of mgf from each wrapped [Distribution].
     mgf = function(t) {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$mgf(t), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$mgf(t), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$mgf
+        formals(f) = list(self = self, t = t)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of cf from each wrapped [Distribution].
+    #' Returns named vector of cf from each wrapped [Distribution].
     cf = function(t) {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$cf(t), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$cf(t), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$cf
+        formals(f) = list(self = self, t = t)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of pgf from each wrapped [Distribution].
+    #' Returns named vector of pgf from each wrapped [Distribution].
     pgf = function(z) {
-      ret <- matrix(sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$pgf(z), error = NaN)
-      }), nrow = 1)
-      colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      return(data.table::data.table(ret))
+      if (self$distlist) {
+        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
+          ifnerror(self[i]$pgf(z), error = NaN)
+        })
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        f <- get(self$modelTable$Distribution[[1]])$public_methods$pgf
+        formals(f) = list(self = self, z = z)
+        ret <- f()
+      }
+
+      if (length(dim(ret)) == 1) {
+        names(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        ret <- data.table(t(ret))
+        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      }
+
+      return(ret)
     },
 
     #' @description
-    #' Returns vector of pdfs from each wrapped [Distribution].
+    #' Returns named vector of pdfs from each wrapped [Distribution].
     #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
     #' to be named. The length of each argument corresponds to the number of points to evaluate,
@@ -568,7 +726,7 @@ VectorDistribution <- R6Class("VectorDistribution",
     },
 
     #' @description
-    #' Returns vector of cdfs from each wrapped [Distribution].
+    #' Returns named vector of cdfs from each wrapped [Distribution].
     #' Same usage as `$pdf.`
     #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
@@ -600,7 +758,7 @@ VectorDistribution <- R6Class("VectorDistribution",
     },
 
     #' @description
-    #' Returns vector of quantiles from each wrapped [Distribution].
+    #' Returns named vector of quantiles from each wrapped [Distribution].
     #' Same usage as `$cdf.`
     #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need

@@ -31,6 +31,15 @@ VectorDistribution$new(
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )
 
+# Alternatively
+VectorDistribution$new(
+  list(
+  Binomial$new(prob = 0.1, size = 2),
+  Binomial$new(prob = 0.6, size = 4),
+  Binomial$new(prob = 0.2, size = 6)
+  )
+)
+
 ## ------------------------------------------------
 ## Method `VectorDistribution$pdf`
 ## ------------------------------------------------
@@ -95,6 +104,7 @@ Other wrappers:
 \item \href{#method-strprint}{\code{VectorDistribution$strprint()}}
 \item \href{#method-mean}{\code{VectorDistribution$mean()}}
 \item \href{#method-mode}{\code{VectorDistribution$mode()}}
+\item \href{#method-median}{\code{VectorDistribution$median()}}
 \item \href{#method-variance}{\code{VectorDistribution$variance()}}
 \item \href{#method-skewness}{\code{VectorDistribution$skewness()}}
 \item \href{#method-kurtosis}{\code{VectorDistribution$kurtosis()}}
@@ -117,7 +127,6 @@ Other wrappers:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
@@ -196,6 +205,15 @@ VectorDistribution$new(
   distribution = "Binomial",
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )
+
+# Alternatively
+VectorDistribution$new(
+  list(
+  Binomial$new(prob = 0.1, size = 2),
+  Binomial$new(prob = 0.6, size = 4),
+  Binomial$new(prob = 0.2, size = 6)
+  )
+)
 }
 \if{html}{\out{</div>}}
 
@@ -244,7 +262,7 @@ Number of distributions to include when printing.}
 \if{html}{\out{<a id="method-mean"></a>}}
 \if{latex}{\out{\hypertarget{method-mean}{}}}
 \subsection{Method \code{mean()}}{
-Returns vector of means from each wrapped \link{Distribution}.
+Returns named vector of means from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$mean()}\if{html}{\out{</div>}}
 }
@@ -254,7 +272,7 @@ Returns vector of means from each wrapped \link{Distribution}.
 \if{html}{\out{<a id="method-mode"></a>}}
 \if{latex}{\out{\hypertarget{method-mode}{}}}
 \subsection{Method \code{mode()}}{
-Returns vector of modes from each wrapped \link{Distribution}.
+Returns named vector of modes from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$mode(which = "all")}\if{html}{\out{</div>}}
 }
@@ -270,10 +288,20 @@ which mode to return.}
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-median"></a>}}
+\if{latex}{\out{\hypertarget{method-median}{}}}
+\subsection{Method \code{median()}}{
+Returns named vector of medians from each wrapped \link{Distribution}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$median()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-variance"></a>}}
 \if{latex}{\out{\hypertarget{method-variance}{}}}
 \subsection{Method \code{variance()}}{
-Returns vector of variances from each wrapped \link{Distribution}.
+Returns named vector of variances from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$variance()}\if{html}{\out{</div>}}
 }
@@ -283,7 +311,7 @@ Returns vector of variances from each wrapped \link{Distribution}.
 \if{html}{\out{<a id="method-skewness"></a>}}
 \if{latex}{\out{\hypertarget{method-skewness}{}}}
 \subsection{Method \code{skewness()}}{
-Returns vector of skewness from each wrapped \link{Distribution}.
+Returns named vector of skewness from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$skewness()}\if{html}{\out{</div>}}
 }
@@ -293,7 +321,7 @@ Returns vector of skewness from each wrapped \link{Distribution}.
 \if{html}{\out{<a id="method-kurtosis"></a>}}
 \if{latex}{\out{\hypertarget{method-kurtosis}{}}}
 \subsection{Method \code{kurtosis()}}{
-Returns vector of kurtosis from each wrapped \link{Distribution}.
+Returns named vector of kurtosis from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
 }
@@ -311,7 +339,7 @@ If \code{TRUE} (default) excess kurtosis returned.}
 \if{html}{\out{<a id="method-entropy"></a>}}
 \if{latex}{\out{\hypertarget{method-entropy}{}}}
 \subsection{Method \code{entropy()}}{
-Returns vector of entropy from each wrapped \link{Distribution}.
+Returns named vector of entropy from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$entropy(base = 2)}\if{html}{\out{</div>}}
 }
@@ -329,7 +357,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)}
 \if{html}{\out{<a id="method-mgf"></a>}}
 \if{latex}{\out{\hypertarget{method-mgf}{}}}
 \subsection{Method \code{mgf()}}{
-Returns vector of mgf from each wrapped \link{Distribution}.
+Returns named vector of mgf from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$mgf(t)}\if{html}{\out{</div>}}
 }
@@ -347,7 +375,7 @@ t integer to evaluate function at.}
 \if{html}{\out{<a id="method-cf"></a>}}
 \if{latex}{\out{\hypertarget{method-cf}{}}}
 \subsection{Method \code{cf()}}{
-Returns vector of cf from each wrapped \link{Distribution}.
+Returns named vector of cf from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$cf(t)}\if{html}{\out{</div>}}
 }
@@ -365,7 +393,7 @@ t integer to evaluate function at.}
 \if{html}{\out{<a id="method-pgf"></a>}}
 \if{latex}{\out{\hypertarget{method-pgf}{}}}
 \subsection{Method \code{pgf()}}{
-Returns vector of pgf from each wrapped \link{Distribution}.
+Returns named vector of pgf from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$pgf(z)}\if{html}{\out{</div>}}
 }
@@ -383,7 +411,7 @@ z integer to evaluate probability generating function at.}
 \if{html}{\out{<a id="method-pdf"></a>}}
 \if{latex}{\out{\hypertarget{method-pdf}{}}}
 \subsection{Method \code{pdf()}}{
-Returns vector of pdfs from each wrapped \link{Distribution}.
+Returns named vector of pdfs from each wrapped \link{Distribution}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
 }
@@ -453,7 +481,7 @@ vd$pdf(data = array(c(1,2,4,3,5,1,3,7), dim = c(2,2,2)))
 \if{html}{\out{<a id="method-cdf"></a>}}
 \if{latex}{\out{\hypertarget{method-cdf}{}}}
 \subsection{Method \code{cdf()}}{
-Returns vector of cdfs from each wrapped \link{Distribution}.
+Returns named vector of cdfs from each wrapped \link{Distribution}.
 Same usage as \verb{$pdf.}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$cdf(
@@ -497,7 +525,7 @@ to the distribution in the vector to evaluate.}
 \if{html}{\out{<a id="method-quantile"></a>}}
 \if{latex}{\out{\hypertarget{method-quantile}{}}}
 \subsection{Method \code{quantile()}}{
-Returns vector of quantiles from each wrapped \link{Distribution}.
+Returns named vector of quantiles from each wrapped \link{Distribution}.
 Same usage as \verb{$cdf.}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$quantile(

@@ -62,7 +62,7 @@ Bernoulli <- R6Class("Bernoulli",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      self$getParameterValue("prob")
+      unlist(self$getParameterValue("prob"))
     },
 
     #' @description
@@ -70,17 +70,32 @@ Bernoulli <- R6Class("Bernoulli",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (self$getParameterValue("prob") < 0.5) {
-        return(0)
-      } else if (self$getParameterValue("prob") > 0.5) {
-        return(1)
-      } else {
+      prob <- unlist(self$getParameterValue("prob"))
+
+      if (length(prob) > 1) {
         if (which == "all") {
-          return(c(0, 1))
+          stop("`which` cannot be `'all'` when vectorising.")
         } else {
-          return(c(0, 1)[which])
+          mode <- numeric(length(prob))
+          mode[prob < 0.5] = 0
+          mode[prob > 0.5] = 1
+          mode[prob == 0.5] = c(0, 1)[which]
+        }
+      } else {
+        if (prob < 0.5) {
+          mode = 0
+        } else if (prob > 0.5) {
+          mode = 1
+        } else {
+          if (which == "all") {
+            mode = c(0, 1)
+          } else {
+            mode = c(0, 1)[which]
+          }
         }
       }
+
+      return(mode)
     },
 
     #' @description
@@ -89,13 +104,12 @@ Bernoulli <- R6Class("Bernoulli",
     #' returns `self$quantile(0.5)`.
     median = function() {
       prob <- self$getParameterValue("prob")
-      if (prob < 0.5) {
-        return(0)
-      } else if (prob < 0.5) {
-        return(1)
-      } else {
-        return(NaN)
-      }
+      median <- numeric(length(prob))
+      median[prob < 0.5] = 0
+      median[prob > 0.5] = 1
+      median[prob == 0.5] = NaN
+
+      return(median)
     },
 
     #' @description
@@ -104,7 +118,7 @@ Bernoulli <- R6Class("Bernoulli",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      self$getParameterValue("prob") * self$getParameterValue("qprob")
+      unlist(self$getParameterValue("prob")) * unlist(self$getParameterValue("qprob"))
     },
 
     #' @description
@@ -113,7 +127,7 @@ Bernoulli <- R6Class("Bernoulli",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      (1 - (2 * self$getParameterValue("prob"))) / self$stdev()
+      (1 - (2 * unlist(self$getParameterValue("prob")))) / self$stdev()
     },
 
     #' @description
@@ -123,7 +137,8 @@ Bernoulli <- R6Class("Bernoulli",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      exkurtosis <- (1 - (6 * self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
+      exkurtosis <- (1 - (6 * unlist(self$getParameterValue("prob")) *
+                            unlist(self$getParameterValue("qprob")))) / self$variance()
       if (excess) {
         return(exkurtosis)
       } else {
@@ -137,29 +152,40 @@ Bernoulli <- R6Class("Bernoulli",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      (-self$getParameterValue("qprob") * log(self$getParameterValue("qprob"), base)) +
-        (-self$getParameterValue("prob") * log(self$getParameterValue("prob"), base))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      return((-qprob * log(qprob, base)) + (-prob * log(prob, base)))
     },
 
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      sapply(t, function(t0) qprob + (prob * exp(t0)))
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(1i * t)))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      v_genfun(t, function(t) qprob + (prob * exp(1i * t)))
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      return(self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      v_genfun(z, function(z) qprob + (prob * z))
     },
 
     # optional setParameterValue
