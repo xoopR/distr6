@@ -83,6 +83,10 @@ psc$merge(psc2)$parameters()
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{values}}{Returns parameter set values as a named list.}
+
+\item{\code{deps}}{Returns \link{ParameterSet} dependencies table.}
+
+\item{\code{parameterSets}}{Returns \link{ParameterSet}s in collection.}
 }
 \if{html}{\out{</div>}}
 }
@@ -96,13 +100,13 @@ psc$merge(psc2)$parameters()
 \item \href{#method-getParameterSupport}{\code{ParameterSetCollection$getParameterSupport()}}
 \item \href{#method-setParameterValue}{\code{ParameterSetCollection$setParameterValue()}}
 \item \href{#method-merge}{\code{ParameterSetCollection$merge()}}
+\item \href{#method-addDeps}{\code{ParameterSetCollection$addDeps()}}
 \item \href{#method-clone}{\code{ParameterSetCollection$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="ParameterSet" data-id="addDeps">}\href{../../distr6/html/ParameterSet.html#method-addDeps}{\code{distr6::ParameterSet$addDeps()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -342,6 +346,24 @@ psc$merge(psc2)$parameters()
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addDeps"></a>}}
+\if{latex}{\out{\hypertarget{method-addDeps}{}}}
+\subsection{Method \code{addDeps()}}{
+Dependencies should be added to internal \link{ParameterSet}s.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$addDeps(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\cr
+Ignored.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

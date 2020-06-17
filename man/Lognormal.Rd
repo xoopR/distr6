@@ -174,7 +174,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   varlog = 1,
   sdlog = NULL,
   preclog = NULL,
-  mean = 1,
+  mean = NULL,
   var = NULL,
   sd = NULL,
   prec = NULL,

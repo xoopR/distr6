@@ -194,11 +194,6 @@ ParameterSet <- R6Class("ParameterSet",
       if (is.null(lst)) lst <- list(...)
       checkmate::assertList(lst)
       for (i in seq_along(lst)) {
-#
-#         if (any(is.null(lst[[i]])) | any(is.nan(lst[[i]]))) {
-#           return(stopwarn(error, paste(names(lst)[[i]], "must be a number.")))
-#         }
-
         value <- lst[[i]]
         if (!is.null(value)) {
           aid <- names(lst)[[i]]
@@ -261,7 +256,7 @@ ParameterSet <- R6Class("ParameterSet",
         data.table::rbindlist(lapply(newsets, function(x) as.data.table(x)))
       )
 
-      if (any(table(newpar$id) > 1)) {o
+      if (any(table(newpar$id) > 1)) {
         stop("IDs must be unique. Try using makeUniqueDistributions first.")
       } else {
         private$.parameters <- newpar
@@ -350,7 +345,8 @@ ParameterSet <- R6Class("ParameterSet",
   ),
 
   private = list(
-    .parameters = NULL,
+    .parameters = data.table(id = character(), value = list(), support = list(),
+                             settable = logical(), description = character()),
     .deps = data.table(x = character(), y = character(), fun = list()),
     .setParameterSupport = function(lst) {
       id <- names(lst)
@@ -371,6 +367,13 @@ ParameterSet <- R6Class("ParameterSet",
       }
 
       invisible(self)
+    },
+    deep_clone = function(name, value) {
+      if (name %in% c(".parameters", ".deps")) {
+        data.table::copy(value)
+      } else {
+        value
+      }
     }
   )
 )

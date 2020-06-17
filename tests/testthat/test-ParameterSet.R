@@ -86,3 +86,27 @@ test_that("out of support", {
   expect_error(ps$setParameterValue(a = c(2, 2)), "does not lie")
   # expect_error(ps$setParameterValue(a = c(1,1)), "does not lie")
 })
+
+test_that("clone_shallow", {
+  ps = getParameterSet.Binomial()
+  ps2 = ps$clone()
+  expect_equal(ps$getParameterValue("prob"), ps2$getParameterValue("prob"))
+  ps$setParameterValue(prob = 0.2)
+  expect_equal(ps$getParameterValue("prob"), 0.2)
+  expect_equal(ps2$getParameterValue("prob"), 0.2)
+  ps2$setParameterValue(prob = 0.4)
+  expect_equal(ps$getParameterValue("prob"), 0.4)
+  expect_equal(ps2$getParameterValue("prob"), 0.4)
+})
+
+test_that("clone_deep", {
+  ps = getParameterSet.Binomial()
+  ps2 = ps$clone(deep = TRUE)
+  expect_equal(ps$getParameterValue("prob"), ps2$getParameterValue("prob"))
+  ps$setParameterValue(prob = 0.2)
+  expect_equal(ps$getParameterValue("prob"), 0.2)
+  expect_equal(ps2$getParameterValue("prob"), 0.5)
+  ps2$setParameterValue(prob = 0.4)
+  expect_equal(ps$getParameterValue("prob"), 0.2)
+  expect_equal(ps2$getParameterValue("prob"), 0.4)
+})
