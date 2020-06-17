@@ -59,7 +59,7 @@ Rayleigh <- R6Class("Rayleigh",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("mode") * sqrt(pi / 2))
+      unlist(self$getParameterValue("mode")) * sqrt(pi / 2)
     },
 
     #' @description
@@ -67,7 +67,7 @@ Rayleigh <- R6Class("Rayleigh",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("mode"))
+      unlist(self$getParameterValue("mode"))
     },
 
     #' @description
@@ -75,7 +75,7 @@ Rayleigh <- R6Class("Rayleigh",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      return(self$getParameterValue("mode") * sqrt(2 * log(2)))
+      unlist(self$getParameterValue("mode")) * sqrt(2 * log(2))
     },
 
     #' @description
@@ -84,7 +84,7 @@ Rayleigh <- R6Class("Rayleigh",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return((4 - pi) / 2 * self$getParameterValue("mode")^2)
+      (4 - pi) / 2 * unlist(self$getParameterValue("mode"))^2
     },
 
     #' @description
@@ -93,7 +93,7 @@ Rayleigh <- R6Class("Rayleigh",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return((2 * sqrt(pi) * (pi - 3)) / ((4 - pi)^(3 / 2)))
+      rep((2 * sqrt(pi) * (pi - 3)) / ((4 - pi)^(3 / 2)), length(self$getParameterValue("mode")))
     },
 
     #' @description
@@ -104,9 +104,9 @@ Rayleigh <- R6Class("Rayleigh",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2)
+        return(rep(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2, length(self$getParameterValue("mode"))))
       } else {
-        return(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2 + 3)
+        return(rep(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2 + 3, length(self$getParameterValue("mode"))))
       }
     },
 
@@ -116,7 +116,7 @@ Rayleigh <- R6Class("Rayleigh",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(1 + log(self$getParameterValue("mode") / sqrt(2), base) - digamma(1) / 2)
+      1 + log(unlist(self$getParameterValue("mode")) / sqrt(2), base) - digamma(1) / 2
     },
 
     #' @description The probability generating function is defined by

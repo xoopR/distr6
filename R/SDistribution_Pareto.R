@@ -61,11 +61,12 @@ Pareto <- R6Class("Pareto",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      if (self$getParameterValue("shape") <= 1) {
-        return(Inf)
-      } else {
-        return((self$getParameterValue("shape") * self$getParameterValue("scale")) / (self$getParameterValue("shape") - 1))
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      scale <- unlist(self$getParameterValue("scale"))
+
+      mean = rep(Inf, length(shape))
+      mean[shape > 1] = (shape[shape > 1] * scale[shape > 1]) / (shape[shape > 1] - 1)
+      return(mean)
     },
 
     #' @description
@@ -73,7 +74,7 @@ Pareto <- R6Class("Pareto",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("scale"))
+      unlist(self$getParameterValue("scale"))
     },
 
     #' @description
@@ -81,7 +82,7 @@ Pareto <- R6Class("Pareto",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      return(self$getParameterValue("scale") * 2^(1 / self$getParameterValue("shape")))
+      unlist(self$getParameterValue("scale")) * 2^(1 / unlist(self$getParameterValue("shape")))
     },
 
     #' @description
@@ -90,13 +91,13 @@ Pareto <- R6Class("Pareto",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      shape <- self$getParameterValue("shape")
-      scale <- self$getParameterValue("scale")
-      if (shape <= 2) {
-        return(Inf)
-      } else {
-        return((shape * scale^2) / ((shape - 1)^2 * (shape - 2)))
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+      scale <- unlist(self$getParameterValue("scale"))
+
+      var = rep(Inf, length(shape))
+      var[shape > 2] = (shape[shape > 2] * scale[shape > 2]^2) /
+        ((shape[shape > 2] - 1)^2 * (shape[shape > 2] - 2))
+      return(var)
     },
 
     #' @description
@@ -105,12 +106,12 @@ Pareto <- R6Class("Pareto",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      shape <- self$getParameterValue("shape")
-      if (shape > 3) {
-        return(((2 * (1 + shape)) / (shape - 3)) * sqrt((shape - 2) / shape))
-      } else {
-        return(NaN)
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+
+      skew = rep(NaN, length(shape))
+      skew[shape > 3] = ((2 * (1 + shape[shape > 3])) / (shape[shape > 3] - 3)) *
+        sqrt((shape[shape > 3] - 2) / shape[shape > 3])
+      return(skew)
     },
 
     #' @description
@@ -120,12 +121,12 @@ Pareto <- R6Class("Pareto",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      shape <- self$getParameterValue("shape")
-      if (shape > 4) {
-        kur <- (6 * (shape^3 + shape^2 - 6 * shape - 2)) / (shape * (shape - 3) * (shape - 4))
-      } else {
-        return(NaN)
-      }
+      shape <- unlist(self$getParameterValue("shape"))
+
+      kur = rep(NaN, length(shape))
+      kur[shape > 4] = (6 * (shape[shape > 4]^3 + shape[shape > 4]^2 - 6 * shape[shape > 4] - 2)) /
+        (shape[shape > 4] * (shape[shape > 4] - 3) * (shape[shape > 4] - 4))
+      return(skew)
 
       if (excess) {
         return(kur)
@@ -140,8 +141,8 @@ Pareto <- R6Class("Pareto",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      shape <- self$getParameterValue("shape")
-      scale <- self$getParameterValue("scale")
+      shape <- unlist(self$getParameterValue("shape"))
+      scale <- unlist(self$getParameterValue("scale"))
 
       return(log((scale / shape) * exp(1 + 1 / shape), base))
     },

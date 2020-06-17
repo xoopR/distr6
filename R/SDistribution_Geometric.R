@@ -242,7 +242,7 @@ Geometric <- R6Class("Geometric",
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
 
-    .trails = logical(0)
+    .trials = logical(0)
   )
 )
 

@@ -62,7 +62,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
+      (unlist(self$getParameterValue("lower")) + unlist(self$getParameterValue("upper"))) / 2
     },
 
     #' @description
@@ -70,10 +70,27 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (which == "all") {
-        return(self$inf:self$sup)
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
+
+      if (checkmate::testList(lower)) {
+        if (which == "all") {
+          stop("`which` cannot be `'all'` when vectorising.")
+        }
+
+        return(mapply(function(x, y) {
+          if (which > length(x:y)) {
+            return(y)
+            } else {
+              return((x:y)[which])
+              }
+          }, lower, upper))
       } else {
-        return((self$inf:self$sup)[which])
+        if (which == "all") {
+          return(c(lower, upper))
+        } else {
+          return(c(lower, upper)[which])
+        }
       }
     },
 
@@ -83,7 +100,8 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(((self$getParameterValue("upper") - self$getParameterValue("lower") + 1)^2 - 1) / 12)
+      ((unlist(self$getParameterValue("upper")) -
+          unlist(self$getParameterValue("lower")) + 1)^2 - 1) / 12
     },
 
     #' @description
@@ -92,7 +110,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(0)
+      numeric(length(self$getParameterValue("upper")))
     },
 
     #' @description
@@ -102,7 +120,8 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      exkurtosis <- (-6 * (self$getParameterValue("N")^2 + 1)) / (5 * (self$getParameterValue("N")^2 - 1))
+      N <- unlist(self$getParameterValue("N"))
+      exkurtosis <- (-6 * (N^2 + 1)) / (5 * (N^2 - 1))
       if (excess) {
         return(exkurtosis)
       } else {
@@ -116,7 +135,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(log(self$getParameterValue("N"), base))
+      log(unlist(self$getParameterValue("N")), base)
     },
 
     #' @description The moment generating function is defined by

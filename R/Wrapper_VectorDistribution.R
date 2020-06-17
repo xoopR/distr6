@@ -429,7 +429,7 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- f()
       }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -452,7 +452,7 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- f()
       }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -475,7 +475,7 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- f()
       }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -497,11 +497,14 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- f()
       }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
+      } else if (length(dim(ret)) == 2){
         ret <- data.table(t(ret))
         colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+      } else {
+        # catch for covariance matrices
+        dimnames(ret)[3] <- as.list(private$.modelTable[, "shortname"])
       }
 
       return(ret)
@@ -520,7 +523,7 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- f()
       }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -533,6 +536,7 @@ VectorDistribution <- R6Class("VectorDistribution",
     #' @description
     #' Returns named vector of kurtosis from each wrapped [Distribution].
     kurtosis = function(excess = TRUE) {
+
       if (self$distlist) {
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
           ifnerror(self[i]$kurtosis(excess), error = NaN)
@@ -543,7 +547,7 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- f()
       }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -566,7 +570,7 @@ VectorDistribution <- R6Class("VectorDistribution",
         ret <- f()
       }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -594,7 +598,7 @@ VectorDistribution <- R6Class("VectorDistribution",
       #   ret <- f()
       # }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -622,7 +626,7 @@ VectorDistribution <- R6Class("VectorDistribution",
       #   ret <- f()
       # }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))
@@ -650,7 +654,7 @@ VectorDistribution <- R6Class("VectorDistribution",
       #   ret <- f()
       # }
 
-      if (length(dim(ret)) == 1) {
+      if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         ret <- data.table(t(ret))

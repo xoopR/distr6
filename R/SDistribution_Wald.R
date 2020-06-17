@@ -71,7 +71,7 @@ Wald <- R6Class("Wald",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("mean"))
+      unlist(self$getParameterValue("mean"))
     },
 
     #' @description
@@ -79,8 +79,8 @@ Wald <- R6Class("Wald",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      mean <- self$getParameterValue("mean")
-      shape <- self$getParameterValue("shape")
+      mean <- unlist(self$getParameterValue("mean"))
+      shape <- unlist(self$getParameterValue("shape"))
       return(mean * ((1 + (9 * mean^2) / (4 * shape^2))^0.5 - (3 * mean) / (2 * shape)))
     },
 
@@ -90,7 +90,7 @@ Wald <- R6Class("Wald",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(self$getParameterValue("mean")^3 / self$getParameterValue("shape"))
+      unlist(self$getParameterValue("mean"))^3 / unlist(self$getParameterValue("shape"))
     },
 
     #' @description
@@ -99,7 +99,7 @@ Wald <- R6Class("Wald",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(3 * (self$getParameterValue("mean") / self$getParameterValue("shape"))^0.5)
+      3 * (unlist(self$getParameterValue("mean")) / unlist(self$getParameterValue("shape")))^0.5
     },
 
     #' @description
@@ -110,9 +110,11 @@ Wald <- R6Class("Wald",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(15 * self$getParameterValue("mean") / self$getParameterValue("shape"))
+        return(15 * unlist(self$getParameterValue("mean")) /
+                 unlist(self$getParameterValue("shape")))
       } else {
-        return(15 * self$getParameterValue("mean") / self$getParameterValue("shape") + 3)
+        return(15 * unlist(self$getParameterValue("mean")) /
+                 unlist(self$getParameterValue("shape")) + 3)
       }
     },
 

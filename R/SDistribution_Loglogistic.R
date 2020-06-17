@@ -64,8 +64,10 @@ Loglogistic <- R6Class("Loglogistic",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return((self$getParameterValue("scale") * pi / self$getParameterValue("shape")) /
-        sin(pi / self$getParameterValue("shape")))
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
+
+      return((scale * pi / shape) / sin(pi / shape))
     },
 
     #' @description
@@ -73,8 +75,10 @@ Loglogistic <- R6Class("Loglogistic",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      shape <- self$getParameterValue("shape")
-      return(self$getParameterValue("scale") * ((shape - 1) / (shape + 1))^(1 / shape))
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
+
+      return(scale * ((shape - 1) / (shape + 1))^(1 / shape))
     },
 
     #' @description
@@ -82,7 +86,7 @@ Loglogistic <- R6Class("Loglogistic",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      return(self$getParameterValue("scale"))
+      unlist(self$getParameterValue("scale"))
     },
 
     #' @description
@@ -91,13 +95,15 @@ Loglogistic <- R6Class("Loglogistic",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      if (self$getParameterValue("shape") > 2) {
-        scale <- self$getParameterValue("scale")
-        shapi <- pi / self$getParameterValue("shape")
-        return(scale^2 * ((2 * shapi) / sin(2 * shapi) - (shapi^2) / sin(shapi)^2))
-      } else {
-        return(NaN)
-      }
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
+      shapi <- pi / shape
+
+      var <- rep(NaN, length(scale))
+      var[shape > 2] = scale[shape > 2]^2 *
+        ((2 * shapi[shape > 2]) / sin(2 * shapi[shape > 2]) - (shapi[shape > 2]^2)
+         / sin(shapi[shape > 2])^2)
+      return(var)
     },
 
     #' @description
@@ -106,16 +112,19 @@ Loglogistic <- R6Class("Loglogistic",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      if (self$getParameterValue("shape") > 3) {
-        scale <- self$getParameterValue("scale")
-        shapi <- pi / self$getParameterValue("shape")
-        s1 <- (2 * shapi^3 * scale^3) / sin(shapi)^3
-        s2 <- (6 * shapi^2 * scale^3) * (1 / sin(shapi)) * (1 / sin(2 * shapi))
-        s3 <- (3 * shapi * scale^3) / sin(3 * shapi)
-        return(s1 - s2 + s3)
-      } else {
-        return(NaN)
-      }
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
+      shapi <- pi / shape
+
+      skew <- rep(NaN, length(scale))
+
+      s1 <- (2 * shapi[shape > 3]^3 * scale[shape > 3]^3) / sin(shapi[shape > 3])^3
+      s2 <- (6 * shapi[shape > 3]^2 * scale[shape > 3]^3) * (1 / sin(shapi[shape > 3])) *
+        (1 / sin(2 * shapi[shape > 3]))
+      s3 <- (3 * shapi[shape > 3] * scale[shape > 3]^3) / sin(3 * shapi[shape > 3])
+      skew[shape > 3] = s1 - s2 + s3
+
+      return(skew)
     },
 
     #' @description
@@ -125,22 +134,21 @@ Loglogistic <- R6Class("Loglogistic",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      if (self$getParameterValue("shape") > 4) {
-        scale <- self$getParameterValue("scale")
-        shapi <- pi / self$getParameterValue("shape")
-        s1 <- (3 * shapi^4 * scale^4) / sin(shapi)^4
-        s2 <- (12 * shapi^3 * scale^4) * (1 / sin(shapi)^2) * (1 / sin(2 * shapi))
-        s3 <- (12 * shapi^2 * scale^4) * (1 / sin(shapi)) * (1 / sin(3 * shapi))
-        s4 <- (4 * shapi * scale^4) * (1 / sin(4 * shapi))
-        kurtosis <- -s1 + s2 - s3 + s4
-        if (excess) {
-          return(kurtosis - 3)
-        } else {
-          return(kurtosis)
-        }
-      } else {
-        return(NaN)
-      }
+      scale <- unlist(self$getParameterValue("scale"))
+      shape <- unlist(self$getParameterValue("shape"))
+      shapi <- pi / shape
+
+      kurtosis <- rep(NaN, length(scale))
+
+      s1 <- (3 * shapi[shape > 4]^4 * scale[shape > 4]^4) / sin(shapi[shape > 4])^4
+      s2 <- (12 * shapi[shape > 4]^3 * scale[shape > 4]^4) *
+        (1 / sin(shapi[shape > 4])^2) * (1 / sin(2 * shapi[shape > 4]))
+      s3 <- (12 * shapi[shape > 4]^2 * scale[shape > 4]^4) * (1 / sin(shapi[shape > 4])) *
+        (1 / sin(3 * shapi[shape > 4]))
+      s4 <- (4 * shapi[shape > 4] * scale[shape > 4]^4) * (1 / sin(4 * shapi[shape > 4]))
+      kurtosis[shape > 4] = -s1 + s2 - s3 + s4
+
+      return(kurtosis)
     },
 
     #' @description The probability generating function is defined by

@@ -58,7 +58,7 @@ Poisson <- R6Class("Poisson",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("rate"))
+      unlist(self$getParameterValue("rate"))
     },
 
     #' @description
@@ -66,7 +66,7 @@ Poisson <- R6Class("Poisson",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(floor(self$getParameterValue("rate")))
+      sapply(self$getParameterValue("rate"), floor)
     },
 
     #' @description
@@ -75,7 +75,7 @@ Poisson <- R6Class("Poisson",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(self$getParameterValue("rate"))
+      unlist(self$getParameterValue("rate"))
     },
 
     #' @description
@@ -84,7 +84,7 @@ Poisson <- R6Class("Poisson",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(self$getParameterValue("rate")^(-0.5))
+      unlist(self$getParameterValue("rate"))^(-0.5)
     },
 
     #' @description
@@ -95,9 +95,9 @@ Poisson <- R6Class("Poisson",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(1 / self$getParameterValue("rate"))
+        return(1 / unlist(self$getParameterValue("rate")))
       } else {
-        return(1 / self$getParameterValue("rate") + 3)
+        return(1 / unlist(self$getParameterValue("rate")) + 3)
       }
     },
 
