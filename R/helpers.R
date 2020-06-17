@@ -189,3 +189,7 @@ abstract <- function(obj, class) {
     stop(paste(class, "is an abstract class that can't be initialized."))
   }
 }
+
+stopf <- function(str, ...) {
+  stop(sprintf(str, ...))
+}

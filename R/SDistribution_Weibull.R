@@ -217,21 +217,6 @@ Weibull <- R6Class("Weibull",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-      if (!is.null(paramlst$shape) & !is.null(paramlst$altscale)) {
-        lst <- c(lst, list(scale = exp(log(paramlst$altscale) / (-paramlst$shape))))
-      }
-      if (is.null(paramlst$shape) & !is.null(paramlst$altscale)) {
-        lst <- c(lst, list(scale = exp(log(paramlst$altscale) / (-self$getParameterValue("shape")))))
-      }
-
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

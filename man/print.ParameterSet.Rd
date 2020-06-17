@@ -4,7 +4,7 @@
 \alias{print.ParameterSet}
 \title{Print a ParameterSet}
 \usage{
-\method{print}{ParameterSet}(x, hide_cols = c("updateFunc", "settable"), ...)
+\method{print}{ParameterSet}(x, hide_cols = c("settable"), ...)
 }
 \arguments{
 \item{x}{ParameterSet}

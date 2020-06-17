@@ -174,6 +174,7 @@ Categorical <- R6Class("Categorical",
         lst <- list(...)
       }
       if ("probs" %in% names(lst)) lst$probs <- lst$probs / sum(lst$probs)
+      lst$categories <- NULL
       checkmate::assert(length(lst$probs) == self$getParameterValue("categories"))
       super$setParameterValue(lst = lst, error = error)
 
@@ -211,13 +212,6 @@ Categorical <- R6Class("Categorical",
     },
     .rand = function(n) {
       sample(self$properties$support$elements, n, TRUE, self$getParameterValue("probs"))
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$probs)) lst <- c(lst, list(probs = paramlst$probs))
-      return(lst)
     },
 
     # traits

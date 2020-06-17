@@ -27,13 +27,13 @@ test_that("initialize", {
 test_that("getters", {
   expect_silent(Binomial$new()$getParameterValue("prob"))
   expect_silent(Binomial$new()$parameters("prob"))
-  expect_silent(Binomial$new()$parameters("prodsdsb"))
+  expect_error(Binomial$new()$parameters("prodsdsb"))
   expect_silent(Binomial$new()$parameters())
-  expect_warning(Binomial$new()$getParameterValue("prob2"))
+  expect_error(Binomial$new()$getParameterValue("prob2"))
   expect_silent(Binomial$new()$parameters())
   expect_equal(Binomial$new()$parameters()$getParameterSupport("prob"), Interval$new(0, 1))
   expect_warning(expect_null(Binomial$new()$parameters()$getParameterSupport()))
-  expect_warning(expect_null(Binomial$new()$parameters()$getParameterSupport("sdsa")))
+  expect_error(expect_null(Binomial$new()$parameters()$getParameterSupport("sdsa")))
 })
 
 test_that("setters", {
@@ -71,18 +71,42 @@ test_that("out of support", {
 
   ps <- ParameterSet$new(
     id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
-    updateFunc = list(NULL, function(self) self$getParameterValue("a") + 1),
     settable = list(TRUE, FALSE)
   )
+  ps$addDeps("a", "b", function(self) self$getParameterValue("a") + 1)
   expect_error(ps$setParameterValue(a = 2), "does not lie")
   # expect_error(ps$setParameterValue(a = 1), "does not lie")
 
   ps <- ParameterSet$new(
     id = list("a", "b"), value = list(c(0, 0), c(1, 1)),
     support = list(Set$new(0, 1)^2, Set$new(0, 1)^2),
-    updateFunc = list(NULL, function(self) self$getParameterValue("a") + 1),
     settable = list(TRUE, FALSE)
   )
+  ps$addDeps("a", "b", function(self) self$getParameterValue("a") + 1)
   expect_error(ps$setParameterValue(a = c(2, 2)), "does not lie")
   # expect_error(ps$setParameterValue(a = c(1,1)), "does not lie")
+})
+
+test_that("clone_shallow", {
+  ps = getParameterSet.Binomial()
+  ps2 = ps$clone()
+  expect_equal(ps$getParameterValue("prob"), ps2$getParameterValue("prob"))
+  ps$setParameterValue(prob = 0.2)
+  expect_equal(ps$getParameterValue("prob"), 0.2)
+  expect_equal(ps2$getParameterValue("prob"), 0.2)
+  ps2$setParameterValue(prob = 0.4)
+  expect_equal(ps$getParameterValue("prob"), 0.4)
+  expect_equal(ps2$getParameterValue("prob"), 0.4)
+})
+
+test_that("clone_deep", {
+  ps = getParameterSet.Binomial()
+  ps2 = ps$clone(deep = TRUE)
+  expect_equal(ps$getParameterValue("prob"), ps2$getParameterValue("prob"))
+  ps$setParameterValue(prob = 0.2)
+  expect_equal(ps$getParameterValue("prob"), 0.2)
+  expect_equal(ps2$getParameterValue("prob"), 0.5)
+  ps2$setParameterValue(prob = 0.4)
+  expect_equal(ps$getParameterValue("prob"), 0.2)
+  expect_equal(ps2$getParameterValue("prob"), 0.4)
 })

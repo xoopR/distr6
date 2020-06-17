@@ -201,13 +201,6 @@ Logarithmic <- R6Class("Logarithmic",
       }
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$theta)) lst <- c(lst, list(theta = paramlst$theta))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )

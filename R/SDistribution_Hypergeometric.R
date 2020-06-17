@@ -135,6 +135,14 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (!is.null(lst)) lst <- list(...)
+      size <- if(is.null(lst$size)) self$getParameterValue("size") else lst$size
+      succ <- if(is.null(lst$successes)) self$getParameterValue("successes") else lst$successes
+      fail <- if(is.null(lst$failures)) self$getParameterValue("failures") else lst$failures
+      if(size != succ + fail) {
+        stopf("size (%s) must be equal to sum of successes (%s) and failures (%s).", size, succ, fail)
+      }
+
       super$setParameterValue(..., lst = lst, error = error)
       size <- self$getParameterValue("size")
 
@@ -223,23 +231,6 @@ Hypergeometric <- R6Class("Hypergeometric",
         ),
         vec = test_list(m)
       )
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$size)) lst <- c(lst, list(size = paramlst$size))
-      if (!is.null(paramlst$successes)) lst <- c(lst, list(successes = paramlst$successes))
-      if (!is.null(paramlst$failures)) {
-        if (!is.null(paramlst$size)) {
-          lst <- c(lst, list(successes = paramlst$size - paramlst$failures))
-        } else {
-          lst <- c(lst, list(successes = self$getParameterValue("size") - paramlst$failures))
-        }
-      }
-      if (!is.null(paramlst$draws)) lst <- c(lst, list(draws = paramlst$draws))
-
-      return(lst)
     },
 
     # traits

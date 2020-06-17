@@ -179,15 +179,6 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$df1)) lst <- c(lst, list(df1 = paramlst$df1))
-      if (!is.null(paramlst$df2)) lst <- c(lst, list(df2 = paramlst$df2))
-      if (!is.null(paramlst$location)) lst <- c(lst, list(location = paramlst$location))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

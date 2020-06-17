@@ -256,14 +256,6 @@ Pareto <- R6Class("Pareto",
       }
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$shape)) lst <- c(lst, list(shape = paramlst$shape))
-      if (!is.null(paramlst$scale)) lst <- c(lst, list(scale = paramlst$scale))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )

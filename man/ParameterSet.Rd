@@ -18,12 +18,10 @@ value <- list(0.2, 5)
 support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
 settable <- list(TRUE, TRUE)
 description <- list("Probability of success", NULL)
-updateFunc <- NULL
 ParameterSet$new(id = id,
                  value = value,
                  support = support,
                  settable = settable,
-                 updateFunc = updateFunc,
                  description = description
  )
 
@@ -33,17 +31,6 @@ ParameterSet$new(id = "prob",
                  settable = TRUE,
                  description = "Probability of success"
  )
-
-id <- list("rate", "scale")
-value <- list(1, 1)
-support <- list(set6::PosReals$new(), set6::PosReals$new())
-settable <- list(TRUE, FALSE)
-updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
-description <- list("Arrival rate", "Scale parameter")
-ps <- ParameterSet$new(
-  id, value, support, settable,
-  updateFunc, description
-)
 
 ## ------------------------------------------------
 ## Method `ParameterSet$getParameterSupport`
@@ -77,14 +64,16 @@ id <- list("rate", "scale")
 value <- list(1, 1)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
 settable <- list(TRUE, FALSE)
-updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
 description <- list("Arrival rate", "Scale parameter")
 ps <- ParameterSet$new(
   id, value, support, settable,
-  updateFunc, description
+  description
 )
+ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
+ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
 ps$getParameterValue(id = "rate")
 ps$setParameterValue(rate = 2)
+ps$getParameterValue("rate")
 ps$getParameterValue("scale") # Auto-updated to 1/2
 
 ## ------------------------------------------------
@@ -104,11 +93,43 @@ ps1 <- ParameterSet$new(id = "prob",
                  description = "Number of trials"
  )
  ps1$merge(ps2)$print()
+
+## ------------------------------------------------
+## Method `ParameterSet$addDeps`
+## ------------------------------------------------
+
+id <- list("rate", "scale")
+value <- list(1, 1)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+settable <- list(TRUE, FALSE)
+description <- list("Arrival rate", "Scale parameter")
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  description
+)
+ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
+ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
+ps$deps
+
+# Alternate method
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  description
+)
+ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
+                          y = c("rate", "scale"),
+                          fun = c(function(self) 1 / self$getParameterValue("scale"),
+                                  function(self) 1 / self$getParameterValue("rate"))
+                         )
+           )
+ps$deps
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{values}}{Returns parameter set values as a named list.}
+
+\item{\code{deps}}{Returns ParameterSet dependencies table.}
 }
 \if{html}{\out{</div>}}
 }
@@ -122,6 +143,7 @@ ps1 <- ParameterSet$new(id = "prob",
 \item \href{#method-getParameterValue}{\code{ParameterSet$getParameterValue()}}
 \item \href{#method-setParameterValue}{\code{ParameterSet$setParameterValue()}}
 \item \href{#method-merge}{\code{ParameterSet$merge()}}
+\item \href{#method-addDeps}{\code{ParameterSet$addDeps()}}
 \item \href{#method-clone}{\code{ParameterSet$clone()}}
 }
 }
@@ -156,10 +178,8 @@ Support of parameter(s) to set}
 \item{\code{settable}}{\code{(character(1)|list())}\cr
 Logical flag indicating if the parameter(s) can be updated after construction.}
 
-\item{\code{updateFunc}}{\verb{(function(1)|list())}\cr
-Optional function to update the parameter(s) based on other parameter values.
-These should be given as a function that could be understood in the body of a \link{Distribution}
-and should start with \verb{function(self)}, see examples.}
+\item{\code{updateFunc}}{\cr
+Deprecated, please use \verb{$addDeps} instead.}
 
 \item{\code{description}}{\code{(character(1)|list())}\cr
 Optional description for the parameter(s).}
@@ -179,12 +199,10 @@ value <- list(0.2, 5)
 support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
 settable <- list(TRUE, TRUE)
 description <- list("Probability of success", NULL)
-updateFunc <- NULL
 ParameterSet$new(id = id,
                  value = value,
                  support = support,
                  settable = settable,
-                 updateFunc = updateFunc,
                  description = description
  )
 
@@ -194,17 +212,6 @@ ParameterSet$new(id = "prob",
                  settable = TRUE,
                  description = "Probability of success"
  )
-
-id <- list("rate", "scale")
-value <- list(1, 1)
-support <- list(set6::PosReals$new(), set6::PosReals$new())
-settable <- list(TRUE, FALSE)
-updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
-description <- list("Arrival rate", "Scale parameter")
-ps <- ParameterSet$new(
-  id, value, support, settable,
-  updateFunc, description
-)
 }
 \if{html}{\out{</div>}}
 
@@ -217,7 +224,7 @@ ps <- ParameterSet$new(
 \subsection{Method \code{print()}}{
 Prints the \link{ParameterSet}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$print(hide_cols = c("updateFunc", "settable"), ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$print(hide_cols = c("settable"), ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -237,7 +244,7 @@ Additional arguments, currently unused.}
 \if{latex}{\out{\hypertarget{method-parameters}{}}}
 \subsection{Method \code{parameters()}}{
 Returns the full parameter details for the supplied parameter, or returns \code{self}
-if \code{id} is \code{NULL} or unmatched.
+if \code{id} is \code{NULL}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ParameterSet$parameters(id = NULL)}\if{html}{\out{</div>}}
 }
@@ -354,14 +361,16 @@ If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"sto
 value <- list(1, 1)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
 settable <- list(TRUE, FALSE)
-updateFunc <- list(NULL, function(self) 1 / self$getParameterValue("rate"))
 description <- list("Arrival rate", "Scale parameter")
 ps <- ParameterSet$new(
   id, value, support, settable,
-  updateFunc, description
+  description
 )
+ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
+ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
 ps$getParameterValue(id = "rate")
 ps$setParameterValue(rate = 2)
+ps$getParameterValue("rate")
 ps$getParameterValue("scale") # Auto-updated to 1/2
 }
 \if{html}{\out{</div>}}
@@ -381,9 +390,9 @@ Merges multiple parameter sets.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{y}}{\link{ParameterSet}}
+\item{\code{y}}{\verb{([ParameterSet])}}
 
-\item{\code{...}}{\link{ParameterSet}s}
+\item{\code{...}}{\verb{([ParameterSet]s)}}
 }
 \if{html}{\out{</div>}}
 }
@@ -402,6 +411,68 @@ Merges multiple parameter sets.
                  description = "Number of trials"
  )
  ps1$merge(ps2)$print()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addDeps"></a>}}
+\if{latex}{\out{\hypertarget{method-addDeps}{}}}
+\subsection{Method \code{addDeps()}}{
+Add parameter dependencies for automatic updating.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addDeps(x, y, fun, dt = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{(character(1))}\cr
+id of parameter that updates \code{y}.}
+
+\item{\code{y}}{\code{(character(1))}\cr
+id of parameter that is updated by \code{x}.}
+
+\item{\code{fun}}{\verb{(function(1))}\cr
+Function used to update \code{y}, must include \code{self} in formal arguments and
+\code{self$getParameterValue("<x>")} in body where \code{"<x>"} is the \code{id} supplied to \code{x}.
+See first example.}
+
+\item{\code{dt}}{\verb{([data.table::data.table])}\cr
+Alternate method to directly construct \code{data.table} of dependencies to add.
+See second example.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{id <- list("rate", "scale")
+value <- list(1, 1)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+settable <- list(TRUE, FALSE)
+description <- list("Arrival rate", "Scale parameter")
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  description
+)
+ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
+ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
+ps$deps
+
+# Alternate method
+ps <- ParameterSet$new(
+  id, value, support, settable,
+  description
+)
+ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
+                          y = c("rate", "scale"),
+                          fun = c(function(self) 1 / self$getParameterValue("scale"),
+                                  function(self) 1 / self$getParameterValue("rate"))
+                         )
+           )
+ps$deps
 }
 \if{html}{\out{</div>}}
 

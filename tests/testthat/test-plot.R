@@ -66,17 +66,7 @@ cexpo <- function(x) {
   return(1 - m1)
 }
 
-ps <- ParameterSet$new(
-  id = list("rate", "scale", "test"), value = list(1, 1, 0),
-  support = list(PosReals$new(zero = T), PosReals$new(zero = T), Reals$new()),
-  settable = list(TRUE, FALSE, FALSE),
-  updateFunc = list(
-    NULL,
-    function(self) 1 / self$getParameterValue("rate"),
-    function(self) exp(self$getParameterValue("rate"))
-  ),
-  description = list("Arrival rate", "Scale parameter", "testpar")
-)
+ps <- getParameterSet.Exponential()
 
 continuousTester <- Distribution$new("Continuous Test", "ContTest",
   support = PosReals$new(),

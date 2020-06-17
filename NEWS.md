@@ -14,6 +14,7 @@
 * All documentation now uses roxygen R6
 * Distribution `type` is now required in construction custom `Distribution`s as the previous method of 'guessing' was inefficient.
 * Added `ParameterSetCollection` for `Wrapper`s. Same functionality as before but much more efficient.
+* Added `$addDeps` and `$deps` to `ParameterSet`s to replace `updateFunc`. This allows faster and more precise control over parameter updates.
 
 ### Deprecated Functions/Fields/Methods
 
@@ -25,6 +26,8 @@
 * Removed `verbose` argument from distribution constructor
 * Public `update` method in `ParameterSet` moved to `private`
 * Removed `squared2Norm` from the `ExoticStatistics` decorator
+* Deprecated `updateFunc` from `ParameterSet`
+* Removed `.getRefParams` from `SDistribution`s and added `deps`
 
 ## Patches
 

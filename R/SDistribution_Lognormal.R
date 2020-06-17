@@ -67,7 +67,7 @@ Lognormal <- R6Class("Lognormal",
     #' Lognormal$new(var = 2, mean = 1)
     #' Lognormal$new(meanlog = 2, preclog = 5)
     initialize = function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
-                          mean = 1, var = NULL, sd = NULL, prec = NULL,
+                          mean = NULL, var = NULL, sd = NULL, prec = NULL,
                           decorators = NULL) {
 
       if (!is.null(var) | !is.null(sd) | !is.null(prec)) {
@@ -230,47 +230,6 @@ Lognormal <- R6Class("Lognormal",
         ),
         vec = test_list(meanlog)
       )
-    },
-
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-
-      if (!is.null(paramlst$meanlog)) {
-        meanlog <- paramlst$meanlog
-      } else {
-        meanlog <- self$getParameterValue("meanlog")
-      }
-      if (!is.null(paramlst$varlog)) {
-        varlog <- paramlst$varlog
-      } else {
-        varlog <- self$getParameterValue("varlog")
-      }
-      if (!is.null(paramlst$mean)) {
-        mean <- paramlst$mean
-      } else {
-        mean <- self$getParameterValue("mean")
-      }
-      if (!is.null(paramlst$var)) {
-        var <- paramlst$var
-      } else {
-        var <- self$getParameterValue("var")
-      }
-
-      if (self$parameters("meanlog")$settable) {
-        if (!is.null(paramlst[["meanlog"]])) lst <- c(lst, list(meanlog = paramlst$meanlog))
-        if (!is.null(paramlst[["varlog"]])) lst <- c(lst, list(varlog = paramlst$varlog))
-        if (!is.null(paramlst[["sdlog"]])) lst <- c(lst, list(varlog = paramlst$sdlog^2))
-        if (!is.null(paramlst[["preclog"]])) lst <- c(lst, list(varlog = paramlst$preclog^-1))
-      } else {
-        if (!is.null(paramlst[["mean"]])) lst <- c(lst, list(mean = paramlst$mean))
-        if (!is.null(paramlst[["var"]])) lst <- c(lst, list(var = paramlst$var))
-        if (!is.null(paramlst[["sd"]])) lst <- c(lst, list(var = paramlst$sd^2))
-        if (!is.null(paramlst[["prec"]])) lst <- c(lst, list(var = paramlst$prec^-1))
-      }
-
-      return(lst)
-
     },
 
     # traits

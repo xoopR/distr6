@@ -229,14 +229,6 @@ Uniform <- R6Class("Uniform",
       )
     },
 
-    # getRefParams
-    .getRefParams = function(paramlst) {
-      lst <- list()
-      if (!is.null(paramlst$lower)) lst <- c(lst, list(lower = paramlst$lower))
-      if (!is.null(paramlst$upper)) lst <- c(lst, list(upper = paramlst$upper))
-      return(lst)
-    },
-
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
