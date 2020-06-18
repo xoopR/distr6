@@ -353,7 +353,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' See second example.
     #' @examples
     #' id <- list("lower", "upper")
-    #' value <- list(1, 2)
+    #' value <- list(1, 3)
     #' support <- list(set6::PosReals$new(), set6::PosReals$new())
     #' ps <- ParameterSet$new(
     #'   id, value, support
@@ -361,7 +361,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
     #' ps$checks
     #' \dontrun{
-    #' # errors as check failes
+    #' # errors as check fails
     #' ps$setParameterValue(lower = 4)
     #' }
     #' ps$setParameterValue(lower = 2)
