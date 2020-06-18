@@ -62,6 +62,7 @@ Triangular <- R6Class("Triangular",
 
 
       if (symmetric) {
+        mode <- NULL
         self$description <- "Symmetric Triangular Probability Distribution."
         symmetry <- "symmetric"
       } else {

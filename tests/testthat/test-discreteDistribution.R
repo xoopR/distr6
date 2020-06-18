@@ -13,10 +13,6 @@
 #   id = list("prob", "size", "qprob"), value = list(0.2, 100, 0.8),
 #   support = list(Interval$new(0, 1), PosNaturals$new(), Interval$new(0, 1)),
 #   settable = list(TRUE, TRUE, FALSE),
-#   updateFunc = list(
-#     NULL, NULL,
-#     function(self) 1 - self$getParameterValue("prob")
-#   ),
 #   description = list(
 #     "Probability of Success", "Number of trials",
 #     "Probability of failure"

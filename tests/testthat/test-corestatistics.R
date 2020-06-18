@@ -10,16 +10,7 @@ cexpo <- function(x) {
   return(1 - m1)
 }
 
-ps <- ParameterSet$new(
-  id = list("rate", "scale"), value = list(1, 1),
-  support = list(PosReals$new(zero = T), PosReals$new(zero = T)),
-  settable = list(TRUE, FALSE),
-  updateFunc = list(
-    NULL,
-    function(self) 1 / self$getParameterValue("rate")
-  ),
-  description = list("Arrival rate", "Scale parameter")
-)
+ps <- getParameterSet.Exponential()
 
 continuousTester <- Distribution$new("Continuous Test", "ContTest",
   support = PosReals$new(),
@@ -36,19 +27,7 @@ dbin <- function(x) {
   return(m1 * m2 * m3)
 }
 
-ps <- ParameterSet$new(
-  id = list("prob", "size", "qprob"), value = list(0.5, 10, 0.5),
-  support = list(Interval$new(0, 1), Naturals$new(), Interval$new(0, 1)),
-  settable = list(TRUE, TRUE, FALSE),
-  updateFunc = list(
-    NULL, NULL,
-    function(self) 1 - self$getParameterValue("prob")
-  ),
-  description = list(
-    "Probability of Success", "Number of trials",
-    "Probability of failure"
-  )
-)
+ps <- getParameterSet.Binomial()
 
 discreteTester <- Distribution$new("Discrete Test", "TestDistr",
   support = Set$new(0:10),

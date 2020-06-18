@@ -155,7 +155,7 @@ ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
 \subsection{Method \code{print()}}{
 Prints the \link{ParameterSetCollection}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$print(hide_cols = c("updateFunc", "settable"), ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$print(hide_cols = c("settable"), ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

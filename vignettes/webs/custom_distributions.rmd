@@ -54,7 +54,7 @@ ps <- ParameterSet$new(id = list("lower","upper"), value = c(1,10),
 print(ps)
 ```
 
-We have omitted the `updateFunc` and `description` arguments as these are very rarely used in custom distributions. The arguments passed to the constructor above are respectively: a unique ID for the parameter, the starting (or default) value of the parameter, the parameter support (where it can take values), and whether or not the parameter can be machine updated (i.e. can an automated procedure be used to manipulate its value).
+We have omitted the `description` argument as this is rarely used in custom distributions. The arguments passed to the constructor above are respectively: a unique ID for the parameter, the starting (or default) value of the parameter, the parameter support (where it can take values), and whether or not the parameter can be machine updated (i.e. can an automated procedure be used to manipulate its value).
 
 ### Constructing the Distribution
 
