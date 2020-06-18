@@ -144,9 +144,9 @@ ps <- ParameterSet$new(
   id, value, support
 )
 ps$addChecks(dt = data.table::data.table(
-                          x = "lower"),
+                          x = "lower",
                           fun = function(x, self) x < self$getParameterValue("upper")
-           )
+           ))
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -551,9 +551,9 @@ ps <- ParameterSet$new(
   id, value, support
 )
 ps$addChecks(dt = data.table::data.table(
-                          x = "lower"),
+                          x = "lower",
                           fun = function(x, self) x < self$getParameterValue("upper")
-           )
+           ))
 }
 \if{html}{\out{</div>}}
 

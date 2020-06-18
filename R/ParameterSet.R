@@ -371,9 +371,9 @@ ParameterSet <- R6Class("ParameterSet",
     #'   id, value, support
     #' )
     #' ps$addChecks(dt = data.table::data.table(
-    #'                           x = "lower"),
+    #'                           x = "lower",
     #'                           fun = function(x, self) x < self$getParameterValue("upper")
-    #'            )
+    #'            ))
     addChecks = function(x, fun, dt = NULL) {
       if (is.null(dt)) {
         dt <- data.table(x = x, fun = fun)
