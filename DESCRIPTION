@@ -68,7 +68,7 @@ Imports:
     data.table,
     R6,
     R62S3 (>= 1.4.0),
-    set6 (>= 0.1.4),
+    set6 (>= 0.1.4.9000),
     stats,
     Rcpp
 Suggests:
@@ -84,6 +84,8 @@ Suggests:
   remotes,
   plotly,
   pracma
+Remotes:
+  xoopR/set6
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/

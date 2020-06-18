@@ -61,7 +61,7 @@ Binomial <- R6Class("Binomial",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      self$getParameterValue("size") * self$getParameterValue("prob")
+      unlist(self$getParameterValue("size")) * unlist(self$getParameterValue("prob"))
     },
 
     #' @description
@@ -69,7 +69,8 @@ Binomial <- R6Class("Binomial",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(floor((self$getParameterValue("size") + 1) * self$getParameterValue("prob")))
+      sapply((unlist(self$getParameterValue("size")) + 1) *
+                     unlist(self$getParameterValue("prob")), floor)
     },
 
     #' @description
@@ -78,7 +79,10 @@ Binomial <- R6Class("Binomial",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      self$getParameterValue("size") * self$getParameterValue("prob") * self$getParameterValue("qprob")
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      return(unlist(self$getParameterValue("size")) * prob * qprob)
     },
 
     #' @description
@@ -87,7 +91,7 @@ Binomial <- R6Class("Binomial",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      (1 - (2 * self$getParameterValue("prob"))) / self$stdev()
+      (1 - (2 * unlist(self$getParameterValue("prob")))) / self$stdev()
     },
 
     #' @description
@@ -97,7 +101,8 @@ Binomial <- R6Class("Binomial",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      exkurtosis <- (1 - (6 * self$getParameterValue("prob") * self$getParameterValue("qprob"))) / self$variance()
+      prob <- unlist(self$getParameterValue("prob"))
+      exkurtosis <- (1 - (6 * prob * (1 - prob))) / self$variance()
       if (excess) {
         return(exkurtosis)
       } else {

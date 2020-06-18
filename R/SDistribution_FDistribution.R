@@ -67,14 +67,11 @@ FDistribution <- R6Class("FDistribution",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      if (self$getParameterValue("df2") > 2) {
-        df1 <- self$getParameterValue("df1")
-        df2 <- self$getParameterValue("df2")
-        return(df2 / (df2 - 2))
-      }
-      else {
-        return(NaN)
-      }
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      mean <- rep(NaN, length(df1))
+      mean[df2 > 2] <- df2[df2 > 2] / (df2[df2 > 2] - 2)
+      return(mean)
     },
 
     #' @description
@@ -82,12 +79,11 @@ FDistribution <- R6Class("FDistribution",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (self$getParameterValue("df1") > 2) {
-        return(((self$getParameterValue("df1") - 2) * self$getParameterValue("df2")) /
-          (self$getParameterValue("df1") * (self$getParameterValue("df2") + 2)))
-      } else {
-        return(NaN)
-      }
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      mode <- rep(NaN, length(df1))
+      mode[df1 > 2] = ((df1[df1 > 2] - 2) * df2[df1 > 2]) / (df1[df1 > 2] * (df2[df1 > 2] + 2))
+      return(mode)
     },
 
     #' @description
@@ -96,14 +92,12 @@ FDistribution <- R6Class("FDistribution",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      if (self$getParameterValue("df2") > 4) {
-        df1 <- self$getParameterValue("df1")
-        df2 <- self$getParameterValue("df2")
-        return(2 * (df2)^2 * (df1 + df2 - 2) / (df1 * (df2 - 2)^2 * (df2 - 4)))
-      }
-      else {
-        return(NaN)
-      }
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      var <- rep(NaN, length(df1))
+      var[df2 > 4] = 2 * (df2[df2 > 4])^2 * (df1[df2 > 4] + df2[df2 > 4] - 2) /
+        (df1[df2 > 4] * (df2[df2 > 4] - 2)^2 * (df2[df2 > 4] - 4))
+      return(var)
     },
 
     #' @description
@@ -112,13 +106,12 @@ FDistribution <- R6Class("FDistribution",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      if (self$getParameterValue("df2") > 6) {
-        df1 <- self$getParameterValue("df1")
-        df2 <- self$getParameterValue("df2")
-        return(((2 * df1 + df2 - 2) * sqrt(8 * (df2 - 4))) / (((df2 - 6) * sqrt(df1 * (df1 + df2 - 2)))))
-      } else {
-        return(NaN)
-      }
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      skew <- rep(NaN, length(df1))
+      skew[df2 > 6] = ((2 * df1[df2 > 6] + df2[df2 > 6] - 2) * sqrt(8 * (df2[df2 > 6] - 4))) /
+        (((df2[df2 > 6] - 6) * sqrt(df1[df2 > 6] * (df1[df2 > 6] + df2[df2 > 6] - 2))))
+      return(skew)
     },
 
 
@@ -129,18 +122,18 @@ FDistribution <- R6Class("FDistribution",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      if (self$getParameterValue("df2") > 8) {
-        df1 <- self$getParameterValue("df1")
-        df2 <- self$getParameterValue("df2")
-        exkurtosis <- (12 * (df1 * (5 * df2 - 22) * (df1 + df2 - 2) + (df2 - 4) * (df2 - 2)^2)) /
-          (df1 * (df2 - 6) * (df2 - 8) * (df1 + df2 - 2))
-        if (excess == TRUE) {
-          return(exkurtosis)
-        } else {
-          return(exkurtosis + 3)
-        }
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      exkurtosis <- rep(NaN, length(df1))
+      exkurtosis[df2 > 8] = (12 * (df1[df2 > 8] * (5 * df2[df2 > 8] - 22) *
+                                     (df1[df2 > 8] + df2[df2 > 8] - 2) +
+                                     (df2[df2 > 8] - 4) * (df2[df2 > 8] - 2)^2)) /
+        (df1[df2 > 8] * (df2[df2 > 8] - 6) * (df2[df2 > 8] - 8) * (df1[df2 > 8] + df2[df2 > 8] - 2))
+
+      if (excess == TRUE) {
+        return(exkurtosis)
       } else {
-        return(NaN)
+        return(exkurtosis + 3)
       }
     },
 
@@ -150,10 +143,11 @@ FDistribution <- R6Class("FDistribution",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      df1 <- self$getParameterValue("df1")
-      df2 <- self$getParameterValue("df2")
-      return(log(gamma(df1 / 2), base) + log(gamma(df2 / 2), base) - log(gamma((df1 + df2) / 2), base) +
-        log(df1 / df2, base) + (1 - df1 / 2) * digamma(1 + df1 / 2) - (1 + df2 / 2) * digamma(1 + df2 / 2) +
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      return(log(gamma(df1 / 2), base) + log(gamma(df2 / 2), base) -
+               log(gamma((df1 + df2) / 2), base) + log(df1 / df2, base) + (1 - df1 / 2)
+             * digamma(1 + df1 / 2) - (1 + df2 / 2) * digamma(1 + df2 / 2) +
         ((df1 + df2) / 2) * digamma((df1 + df2) / 2))
     },
 

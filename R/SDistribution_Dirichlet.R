@@ -75,7 +75,12 @@ Dirichlet <- R6Class("Dirichlet",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("params") / sum(self$getParameterValue("params")))
+      pars <- self$getParameterValue("params")
+      if (checkmate::testList(pars)) {
+        return(t(sapply(params, function(x) x/sum(x))))
+      } else {
+        return(pars / sum(pars))
+      }
     },
 
     #' @description
@@ -84,10 +89,19 @@ Dirichlet <- R6Class("Dirichlet",
     #' maxima).
     mode = function(which = "all") {
       params <- self$getParameterValue("params")
-      K <- self$getParameterValue("K")
-      mode <- rep(NaN, K)
-      mode[params > 1] <- (params - 1) / (sum(params) - K)
-      return(mode)
+
+      if (checkmate::testList(params)) {
+        mode <- matrix(NaN, ncol = length(params[[1]]), nrow = length(params))
+        for(i in seq_along(params)) {
+          pari = params[[i]]
+          mode[i, pari > 1] = (pari[pari > 1] - 1) / (sum(pari) - length(pari))
+         }
+        return(mode)
+      } else {
+        mode <- rep(NaN, length(params))
+        mode[params > 1] <- (params[params > 1] - 1) / (sum(params) - length(params))
+        return(mode)
+      }
     },
 
     #' @description
@@ -96,14 +110,25 @@ Dirichlet <- R6Class("Dirichlet",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      K <- self$getParameterValue("K")
+      K <- self$getParameterValue("K")[[1]]
       params <- self$getParameterValue("params")
-      parami <- params / sum(params)
-      var <- (parami * (1 - parami)) / (sum(params) + 1)
 
-      covar <- matrix((-parami %*% t(parami)) / (sum(params) + 1), nrow = K, ncol = K)
-      diag(covar) <- var
-      return(covar)
+      if (checkmate::testList(params)) {
+        covar <- array(dim = c(K, K, length(params)))
+        for (i in seq_along(params)) {
+          parami <- params[[i]] / sum(params[[i]])
+          var <- (parami * (1 - parami)) / (sum(params[[i]]) + 1)
+          covar[,,i] = matrix((-parami %*% t(parami)) / (sum(params[[i]]) + 1), nrow = K, ncol = K)
+          diag(covar[,,i]) <- var
+        }
+        return(covar)
+      } else {
+        parami <- params / sum(params)
+        var <- (parami * (1 - parami)) / (sum(params) + 1)
+        covar <- matrix((-parami %*% t(parami)) / (sum(params) + 1), nrow = K, ncol = K)
+        diag(covar) <- var
+        return(covar)
+      }
     },
 
     #' @description
@@ -113,8 +138,16 @@ Dirichlet <- R6Class("Dirichlet",
     #' continuous distributions.
     entropy = function(base = 2) {
       params <- self$getParameterValue("params")
-      return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params)) * digamma(sum(params)) -
-        sum((params - 1) * digamma(params)))
+
+      if (checkmate::testList(params)) {
+        sapply(params, function(x) {
+          log(prod(gamma(x)) / gamma(sum(x)), 2) + (sum(x) - length(x)) * digamma(sum(x)) -
+            sum((x - 1) * digamma(x))
+        })
+      } else {
+        return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params)) * digamma(sum(params)) -
+                 sum((params - 1) * digamma(params)))
+      }
     },
 
     #' @description The probability generating function is defined by

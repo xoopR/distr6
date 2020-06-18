@@ -61,12 +61,13 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      df <- self$getParameterValue("df")
-      if (df > 1) {
-        return(self$getParameterValue("location") * sqrt(df / 2) * gamma((df - 1) / 2) / gamma(df / 2))
-      } else {
-        return(NaN)
-      }
+      df <- unlist(self$getParameterValue("df"))
+      location <- unlist(self$getParameterValue("location"))
+
+      mean <- rep(NaN, length(location))
+      mean[df > 1] = location[df > 1] * sqrt(df[df > 1] / 2) *
+        gamma((df[df > 1] - 1) / 2) / gamma(df[df > 1] / 2)
+      return(mean)
     },
 
     #' @description
@@ -75,13 +76,12 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      df <- self$getParameterValue("df")
-      mu <- self$getParameterValue("location")
-      if (df > 2) {
-        return(df * (1 + mu^2) / (df - 2) - (mu^2 * df / 2) * (gamma((df - 1) / 2) / gamma(df / 2))^2)
-      } else {
-        return(NaN)
-      }
+      df <- unlist(self$getParameterValue("df"))
+      mu <- unlist(self$getParameterValue("location"))
+      var <- rep(NaN, length(mu))
+      var[df > 2] = df[df > 2] * (1 + mu[df > 2]^2) / (df[df > 2] - 2) -
+        (mu[df > 2]^2 * df[df > 2] / 2) * (gamma((df[df > 2] - 1) / 2) / gamma(df[df > 2] / 2))^2
+      return(var)
     }
   ),
 

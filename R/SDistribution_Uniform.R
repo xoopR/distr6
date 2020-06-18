@@ -61,7 +61,7 @@ Uniform <- R6Class("Uniform",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return((self$getParameterValue("lower") + self$getParameterValue("upper")) / 2)
+      (unlist(self$getParameterValue("lower")) + unlist(self$getParameterValue("upper"))) / 2
     },
 
     #' @description
@@ -69,7 +69,7 @@ Uniform <- R6Class("Uniform",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("lower")))
     },
 
     #' @description
@@ -78,7 +78,7 @@ Uniform <- R6Class("Uniform",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(((self$getParameterValue("upper") - self$getParameterValue("lower"))^2) / 12)
+      ((unlist(self$getParameterValue("upper")) - unlist(self$getParameterValue("lower")))^2) / 12
     },
 
     #' @description
@@ -87,7 +87,7 @@ Uniform <- R6Class("Uniform",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(0)
+      numeric(length(self$getParameterValue("lower")))
     },
 
     #' @description
@@ -98,9 +98,9 @@ Uniform <- R6Class("Uniform",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(-6 / 5)
+        return(rep(-1.2, length(self$getParameterValue("lower"))))
       } else {
-        return(1.8)
+        return(rep(1.8, length(self$getParameterValue("lower"))))
       }
     },
 
@@ -110,7 +110,7 @@ Uniform <- R6Class("Uniform",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(log(self$getParameterValue("upper") - self$getParameterValue("lower"), base))
+      log(unlist(self$getParameterValue("upper")) - unlist(self$getParameterValue("lower")), base)
     },
 
     #' @description The moment generating function is defined by

@@ -69,15 +69,13 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      if (self$getParameterValue("df2") > 2) {
-        df1 <- self$getParameterValue("df1")
-        df2 <- self$getParameterValue("df2")
-        loc <- self$getParameterValue("location")
-        return(df2 * (df1 + loc) / (df1 * (df2 - 2)))
-      }
-      else {
-        return(NaN)
-      }
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      loc <- unlist(self$getParameterValue("location"))
+      mean <- rep(NaN, length(df1))
+      mean[df2 > 2] <- df2[df2 > 2] * (df1[df2 > 2] + loc[df2 > 2]) /
+        (df1[df2 > 2] * (df2[df2 > 2] - 2))
+      return(mean)
     },
 
     #' @description
@@ -86,15 +84,15 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      if (self$getParameterValue("df2") > 4) {
-        df1 <- self$getParameterValue("df1")
-        df2 <- self$getParameterValue("df2")
-        loc <- self$getParameterValue("location")
-        return(2 * (df2 / df1)^2 * ((df1 + loc)^2 + (df1 + 2 * loc) * (df2 - 2)) / ((df2 - 2)^2 * (df2 - 4)))
-      }
-      else {
-        return(NaN)
-      }
+      df1 <- unlist(self$getParameterValue("df1"))
+      df2 <- unlist(self$getParameterValue("df2"))
+      loc <- unlist(self$getParameterValue("location"))
+      var <- rep(NaN, length(df1))
+      var[df2 > 4] <- 2 * (df2[df2 > 4] / df1[df2 > 4])^2 * ((df1[df2 > 4] + loc[df2 > 4])^2 +
+                                                               (df1[df2 > 4] + 2 * loc[df2 > 4]) *
+                                                               (df2[df2 > 4] - 2)) /
+        ((df2[df2 > 4] - 2)^2 * (df2[df2 > 4] - 4))
+      return(var)
     },
 
     # optional setParameterValue

@@ -58,7 +58,7 @@ Exponential <- R6Class("Exponential",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      self$getParameterValue("scale")
+      unlist(self$getParameterValue("scale"))
     },
 
     #' @description
@@ -66,7 +66,7 @@ Exponential <- R6Class("Exponential",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(0)
+      numeric(length(self$getParameterValue("scale")))
     },
 
     #' @description
@@ -74,7 +74,7 @@ Exponential <- R6Class("Exponential",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      self$getParameterValue("scale") * log(2)
+      unlist(self$getParameterValue("scale")) * log(2)
     },
 
     #' @description
@@ -83,7 +83,7 @@ Exponential <- R6Class("Exponential",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      self$getParameterValue("scale")^2
+      unlist(self$getParameterValue("scale"))^2
     },
 
     #' @description
@@ -92,7 +92,7 @@ Exponential <- R6Class("Exponential",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(2)
+      rep(2, length(self$getParameterValue("scale")))
     },
 
     #' @description
@@ -103,9 +103,9 @@ Exponential <- R6Class("Exponential",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(6)
+        rep(6, length(self$getParameterValue("scale")))
       } else {
-        return(9)
+        rep(9, length(self$getParameterValue("scale")))
       }
     },
 
@@ -115,7 +115,7 @@ Exponential <- R6Class("Exponential",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      1 - log(self$getParameterValue("rate"), base)
+      1 - log(unlist(self$getParameterValue("rate")), base)
     },
 
     #' @description The moment generating function is defined by

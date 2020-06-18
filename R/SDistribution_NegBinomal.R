@@ -100,7 +100,7 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("mean"))
+      unlist(self$getParameterValue("mean"))
     },
 
     #' @description
@@ -141,10 +141,15 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
-        return(self$getParameterValue("size") * self$getParameterValue("prob") / (self$getParameterValue("qprob")^2))
-      } else if (self$getParameterValue("form") == "fbs" | self$getParameterValue("form") == "tbs") {
-        return(self$getParameterValue("size") * self$getParameterValue("qprob") / (self$getParameterValue("prob")^2))
+      form <- self$getParameterValue("form")[[1]]
+      size <- unlist(self$getParameterValue("size"))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      if (form %in% c("sbf", "tbf")) {
+        return(size * prob / (qprob^2))
+      } else {
+        return(size * qprob / (prob^2))
       }
     },
 
@@ -154,10 +159,15 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
-        return((1 + self$getParameterValue("prob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("prob")))
+      form <- self$getParameterValue("form")[[1]]
+      size <- unlist(self$getParameterValue("size"))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      if (form %in% c("sbf", "tbf")) {
+        return((1 + prob) / sqrt(size * prob))
       } else {
-        return((1 + self$getParameterValue("qprob")) / sqrt(self$getParameterValue("size") * self$getParameterValue("qprob")))
+        return((1 + qprob) / sqrt(size * qprob))
       }
     },
 
@@ -168,12 +178,15 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
-        exkurtosis <- (self$getParameterValue("qprob")^2 - 6 * self$getParameterValue("qprob") + 6) /
-          (self$getParameterValue("size") * self$getParameterValue("prob"))
+      form <- self$getParameterValue("form")[[1]]
+      size <- unlist(self$getParameterValue("size"))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      if (form %in% c("sbf", "tbf")) {
+        exkurtosis <- (qprob^2 - 6 * qprob + 6) / (size * prob)
       } else {
-        exkurtosis <- (self$getParameterValue("prob")^2 - 6 * self$getParameterValue("prob") + 6) /
-          (self$getParameterValue("size") * self$getParameterValue("qprob"))
+        exkurtosis <- (prob^2 - 6 * prob + 6) / (size * qprob)
       }
 
       if (excess) {
@@ -187,11 +200,16 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      if (t < -log(self$getParameterValue("prob"))) {
-        if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
-          return((self$getParameterValue("qprob") / (1 - self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size"))
+      form <- self$getParameterValue("form")
+      size <- self$getParameterValue("size")
+      prob <- self$getParameterValue("prob")
+      qprob <- 1 - prob
+
+      if (t < -log(prob)) {
+        if (form %in% c("sbf", "tbf")) {
+          return((qprob / (1 - prob * exp(t)))^size)
         } else {
-          return((self$getParameterValue("prob") / (1 - self$getParameterValue("qprob") * exp(t)))^self$getParameterValue("size"))
+          return((prob / (1 - qprob * exp(t)))^size)
         }
       } else {
         return(NaN)
@@ -202,10 +220,15 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      if (self$getParameterValue("form") == "sbf" | self$getParameterValue("form") == "tbf") {
-        return((self$getParameterValue("qprob") / (1 - self$getParameterValue("prob") * exp(t * 1i)))^self$getParameterValue("size"))
+      form <- self$getParameterValue("form")
+      size <- self$getParameterValue("size")
+      prob <- self$getParameterValue("prob")
+      qprob <- 1 - prob
+
+      if (form %in% c("sbf", "tbf")) {
+        return((qprob / (1 - prob * exp(t * 1i)))^size)
       } else {
-        return((self$getParameterValue("prob") / (1 - self$getParameterValue("qprob") * exp(t * 1i)))^self$getParameterValue("size"))
+        return((prob / (1 - qprob * exp(t * 1i)))^size)
       }
     },
 
@@ -213,15 +236,20 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      if (abs(z) < 1 / self$getParameterValue("prob")) {
-        if (self$getParameterValue("form") == "sbf") {
-          return((self$getParameterValue("qprob") / (1 - self$getParameterValue("prob") * z))^self$getParameterValue("size"))
-        } else if (self$getParameterValue("form") == "tbs") {
-          return(((self$getParameterValue("prob") * z) / (1 - self$getParameterValue("qprob") * z))^self$getParameterValue("size"))
-        } else if (self$getParameterValue("form") == "fbs") {
-          return((self$getParameterValue("prob") / (1 - self$getParameterValue("qprob") * z))^self$getParameterValue("size"))
-        } else if (self$getParameterValue("form") == "tbf") {
-          return(((self$getParameterValue("qprob") * z) / (1 - self$getParameterValue("prob") * z))^self$getParameterValue("size"))
+      form <- self$getParameterValue("form")
+      size <- self$getParameterValue("size")
+      prob <- self$getParameterValue("prob")
+      qprob <- 1 - prob
+
+      if (abs(z) < 1 / prob) {
+        if (form == "sbf") {
+          return((qprob / (1 - prob * z))^size)
+        } else if (form == "tbs") {
+          return(((prob * z) / (1 - qprob * z))^size)
+        } else if (form == "fbs") {
+          return((prob / (1 - qprob * z))^size)
+        } else if (form == "tbf") {
+          return(((qprob * z) / (1 - prob * z))^size)
         }
       } else {
         return(NaN)

@@ -67,7 +67,16 @@ Multinomial <- R6Class("Multinomial",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("size") * self$getParameterValue("probs"))
+      size <- self$getParameterValue("size")
+      probs <- self$getParameterValue("probs")
+
+      if (checkmate::testList(probs)) {
+        return(t(mapply(function(s, p) s * p,
+               size,
+               probs)))
+      } else {
+        return(size * probs)
+      }
     },
 
     #' @description
@@ -76,9 +85,21 @@ Multinomial <- R6Class("Multinomial",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      cov <- self$getParameterValue("probs") %*% t(self$getParameterValue("probs")) * -self$getParameterValue("size")
-      diag(cov) <- self$getParameterValue("size") * self$getParameterValue("probs") * (1 - self$getParameterValue("probs"))
-      return(cov)
+      size <- self$getParameterValue("size")
+      probs <- self$getParameterValue("probs")
+
+      if (checkmate::testList(probs)) {
+        covar <- array(dim = c(length(probs[[1]]), length(probs[[1]]), length(probs)))
+        for (i in seq_along(size)) {
+          covar[,,i] = probs[[i]] %*% t(probs[[i]]) * -size[[i]]
+          diag(covar[,,i]) <- size[[i]] * probs[[i]] * (1 - probs[[i]])
+        }
+        return(covar)
+      } else {
+        cov <- probs %*% t(probs) * -size
+        diag(cov) <- size * probs * (1 - probs)
+        return(cov)
+      }
     },
 
     #' @description
@@ -87,7 +108,7 @@ Multinomial <- R6Class("Multinomial",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("size")))
     },
 
     #' @description
@@ -97,7 +118,7 @@ Multinomial <- R6Class("Multinomial",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      return(NaN)
+      rep(NaN, length(self$getParameterValue("size")))
     },
 
     #' @description
@@ -110,16 +131,35 @@ Multinomial <- R6Class("Multinomial",
       probs <- self$getParameterValue("probs")
       K <- self$getParameterValue("K")
 
-      s1 <- -log(factorial(size), base)
-      s2 <- -size * sum(probs * log(probs, base))
-      s3 <- 0
-      for (i in 1:K) {
-        for (j in 0:size) {
-          s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
+
+      if (checkmate::testList(size)) {
+        ent <- c()
+        for (k in seq_along(size)) {
+          s1 <- -log(factorial(size[[k]]), base)
+          s2 <- -size[[k]] * sum(probs[[k]] * log(probs[[k]], base))
+          s3 <- 0
+          for (i in 1:K[[k]]) {
+            for (j in 0:size[[k]]) {
+              s3 <- s3 + (choose(size[[k]], j) * (probs[[k]][[i]]^j) * ((1 - probs[[k]][[i]])^(size[[k]] - j)) * (log(factorial(j), base)))
+            }
+          }
+          ent <- c(ent, s1 + s2 + s3)
         }
+      } else {
+          s1 <- -log(factorial(size), base)
+          s2 <- -size * sum(probs * log(probs, base))
+          s3 <- 0
+          for (i in 1:K) {
+            for (j in 0:size) {
+              s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
+            }
+          }
+          ent <- s1 + s2 + s3
       }
 
-      return(s1 + s2 + s3)
+
+
+      return(ent)
     },
 
     #' @description The moment generating function is defined by

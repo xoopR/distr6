@@ -65,7 +65,7 @@ Logistic <- R6Class("Logistic",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("mean"))
+      unlist(self$getParameterValue("mean"))
     },
 
     #' @description
@@ -73,7 +73,7 @@ Logistic <- R6Class("Logistic",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("mean"))
+      unlist(self$getParameterValue("mean"))
     },
 
     #' @description
@@ -82,7 +82,7 @@ Logistic <- R6Class("Logistic",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(self$getParameterValue("sd")^2)
+      unlist(self$getParameterValue("sd"))^2
     },
 
     #' @description
@@ -91,7 +91,7 @@ Logistic <- R6Class("Logistic",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(0)
+      numeric(length(self$getParameterValue("sd")))
     },
 
     #' @description
@@ -102,9 +102,9 @@ Logistic <- R6Class("Logistic",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(6 / 5)
+        return(rep(1.2, length(self$getParameterValue("sd"))))
       } else {
-        return(6 / 5 + 3)
+        return(rep(4.2, length(self$getParameterValue("sd"))))
       }
     },
 
@@ -114,7 +114,7 @@ Logistic <- R6Class("Logistic",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(2 + log(self$getParameterValue("scale"), base))
+      2 + log(unlist(self$getParameterValue("scale")), base)
     },
 
     #' @description The moment generating function is defined by

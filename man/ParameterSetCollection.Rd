@@ -107,6 +107,7 @@ psc$merge(psc2)$parameters()
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="ParameterSet" data-id="addChecks">}\href{../../distr6/html/ParameterSet.html#method-addChecks}{\code{distr6::ParameterSet$addChecks()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -154,7 +155,7 @@ ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
 \subsection{Method \code{print()}}{
 Prints the \link{ParameterSetCollection}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$print(hide_cols = c("updateFunc", "settable"), ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$print(hide_cols = c("settable"), ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

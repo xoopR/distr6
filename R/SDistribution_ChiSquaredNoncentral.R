@@ -66,7 +66,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("df") + self$getParameterValue("location"))
+      unlist(self$getParameterValue("df")) + unlist(self$getParameterValue("location"))
     },
 
     #' @description
@@ -75,7 +75,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(2 * (self$getParameterValue("df") + 2 * self$getParameterValue("location")))
+      2 * (unlist(self$getParameterValue("df")) + 2 * unlist(self$getParameterValue("location")))
     },
 
     #' @description
@@ -84,13 +84,11 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      df <- self$getParameterValue("df")
-      ncp <- self$getParameterValue("location")
-      if (df + ncp == 0) {
-        return(NaN)
-      } else {
-        return(((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2)))
-      }
+      df <- unlist(self$getParameterValue("df"))
+      ncp <- unlist(self$getParameterValue("location"))
+      skew <- rep(NaN, length(df))
+      skew[df + ncp != 0] = ((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2))
+      return(skew)
     },
 
     #' @description
@@ -100,13 +98,11 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      df <- self$getParameterValue("df")
-      ncp <- self$getParameterValue("location")
-      if (df + ncp == 0) {
-        return(NaN)
-      } else {
-        kur <- (12 * (df + 4 * ncp)) / ((df + 2 * ncp)^2)
-      }
+      df <- unlist(self$getParameterValue("df"))
+      ncp <- unlist(self$getParameterValue("location"))
+
+      kur <- rep(NaN, length(df))
+      kur[df + ncp != 0] <- (12 * (df + 4 * ncp)) / ((df + 2 * ncp)^2)
 
       if (excess) {
         return(kur)

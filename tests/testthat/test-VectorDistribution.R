@@ -60,15 +60,24 @@ test_that("pdf/cdf - !distlist", {
 
 test_that("stats", {
   vecDist <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
-  expect_equal(vecDist$mean(), data.table::data.table(Binom = 5, Gomp = NaN))
-  expect_equal(vecDist$mode(), data.table::data.table(Binom = vecDist[1]$mode(), Gomp = NaN))
-  expect_equal(vecDist$variance(), data.table::data.table(Binom = 2.5, Gomp = NaN))
-  expect_equal(vecDist$skewness(), data.table::data.table(Binom = 0, Gomp = NaN))
-  expect_equal(vecDist$kurtosis(), data.table::data.table(Binom = -0.2, Gomp = NaN))
-  expect_equal(vecDist$entropy(), data.table::data.table(Binom = Binomial$new()$entropy(), Gomp = NaN))
-  expect_equal(vecDist$mgf(2), data.table::data.table(Binom = Binomial$new()$mgf(2), Gomp = NaN))
-  expect_equal(vecDist$cf(2), data.table::data.table(Binom = Binomial$new()$cf(2), Gomp = NaN + 0i))
-  expect_equal(vecDist$pgf(2), data.table::data.table(Binom = Binomial$new()$pgf(2), Gomp = NaN))
+  expect_equal(vecDist$mean(), c(Binom = 5, Gomp = NaN))
+  expect_equal(vecDist$mode(), c(Binom = vecDist[1]$mode(), Gomp = NaN))
+  expect_equal(vecDist$variance(), c(Binom = 2.5, Gomp = NaN))
+  expect_equal(vecDist$skewness(), c(Binom = 0, Gomp = NaN))
+  expect_equal(vecDist$kurtosis(), c(Binom = -0.2, Gomp = NaN))
+  expect_equal(vecDist$entropy(), c(Binom = Binomial$new()$entropy(), Gomp = NaN))
+  expect_equal(vecDist$mgf(2), c(Binom = Binomial$new()$mgf(2), Gomp = NaN))
+  expect_equal(vecDist$cf(2), c(Binom = Binomial$new()$cf(2), Gomp = NaN + 0i))
+  expect_equal(vecDist$pgf(2), c(Binom = Binomial$new()$pgf(2), Gomp = NaN))
+
+  vecDist <- VectorDistribution$new(distribution = "Binomial",
+                                    params = data.table(size = 1:2, prob = c(0.1, 0.2)))
+  expect_equal(vecDist$mean(), c(Binom1 = vecDist[1]$mean(), Binom2 = vecDist[2]$mean()))
+  expect_equal(vecDist$mode(), c(Binom1 = vecDist[1]$mode(), Binom2 = vecDist[2]$mode()))
+  expect_equal(vecDist$variance(), c(Binom1 = vecDist[1]$variance(), Binom2 = vecDist[2]$variance()))
+  expect_equal(vecDist$skewness(), c(Binom1 = vecDist[1]$skewness(), Binom2 = vecDist[2]$skewness()))
+  expect_equal(vecDist$kurtosis(), c(Binom1 = vecDist[1]$kurtosis(), Binom2 = vecDist[2]$kurtosis()))
+  expect_equal(vecDist$entropy(), c(Binom1 = vecDist[1]$entropy(), Binom2 = vecDist[2]$entropy()))
 })
 
 test_that("wrapped models", {

@@ -39,14 +39,14 @@ Categorical <- R6Class("Categorical",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param ... `(ANY)`\cr
+    #' @param elements `list()`\cr
     #' Categories in the distribution, see examples.
     #' @param probs `numeric()`\cr
     #' Probabilities of respective categories occurring.
     #'
     #' @examples
-    #' # Note probabilities are automatically normalised
-    #' x <- Categorical$new("Bapple", "Banana", 2, probs = c(0.2, 0.4, 1))
+    #' # Note probabilities are automatically normalised (if not vectorised)
+    #' x <- Categorical$new(elements = list("Bapple", "Banana", 2), probs = c(0.2, 0.4, 1))
     #'
     #' # Only the probabilities can be changed and must the same length as in construction
     #' x$setParameterValue(probs = c(0.1, 0.2, 0.7))
@@ -61,26 +61,16 @@ Categorical <- R6Class("Categorical",
     #' x$mode()
     #'
     #' summary(x)
-    initialize = function(..., probs, decorators = NULL) {
+    initialize = function(elements = 1, probs = 1, decorators = NULL) {
 
+      checkmate::assert(length(elements) == length(probs))
 
-      if (...length() == 0) {
-        probs <- 1
-        dots <- 1
-        support <- Set$new(1)
-      } else {
-        dots <- list(...)
-        support <- Set$new(...)
-      }
-
-      checkmate::assert(length(dots) == length(probs))
-
-      private$.parameters <- getParameterSet(self, probs)
-      self$setParameterValue(probs = probs)
+      private$.parameters <- getParameterSet(self, probs, elements)
+      self$setParameterValue(probs = probs, elements = elements)
 
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = Set$new(lst = elements),
         type = UniversalSet$new(),
         symmetry = if (length(unique(self$getParameterValue("probs"))) == 1) "sym" else "asym"
       )
@@ -93,7 +83,12 @@ Categorical <- R6Class("Categorical",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(NaN)
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -101,11 +96,33 @@ Categorical <- R6Class("Categorical",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (which == "all") {
-        return(unlist(self$properties$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))])
+      probs <- self$getParameterValue("probs")
+      els <- self$getParameterValue("elements")
+      if (!checkmate::testList(probs)) {
+        modes <- unlist(els[probs == max(probs)])
+        if (which == "all") {
+          return(modes)
+        } else {
+          return(modes[which])
+        }
       } else {
-        return(unlist(self$properties$support$elements)[self$getParameterValue("probs") == max(self$getParameterValue("probs"))][which])
+        if (which == "all") {
+          stop("`which` cannot be `'all'` when vectorising.")
+        } else {
+          modes <- c()
+          for (i in seq_along(probs)) {
+            m <- (els[[i]][probs[[i]] == max(probs[[i]])])
+            if (which > length(m)) {
+              m <- m[length(m)]
+            } else {
+              m <- m[which]
+            }
+            modes <- c(modes, m)
+          }
+          return(modes)
+        }
       }
+
     },
 
     #' @description
@@ -114,7 +131,12 @@ Categorical <- R6Class("Categorical",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(NaN)
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -123,7 +145,12 @@ Categorical <- R6Class("Categorical",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return(NaN)
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -133,7 +160,12 @@ Categorical <- R6Class("Categorical",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      return(NaN)
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -142,7 +174,12 @@ Categorical <- R6Class("Categorical",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(NaN)
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description The moment generating function is defined by
@@ -173,15 +210,25 @@ Categorical <- R6Class("Categorical",
       if (is.null(lst)) {
         lst <- list(...)
       }
-      if ("probs" %in% names(lst)) lst$probs <- lst$probs / sum(lst$probs)
-      lst$categories <- NULL
-      checkmate::assert(length(lst$probs) == self$getParameterValue("categories"))
+      if ("probs" %in% names(lst)) {
+        lst$probs <- lst$probs / sum(lst$probs)
+        checkmate::assert(length(lst$probs) == self$getParameterValue("nCategories"))
+      }
+      if ("elements" %in% names(lst)) {
+        checkmate::assert(length(lst$elements) == self$getParameterValue("nCategories"))
+      }
+      lst$nCategories <- NULL
+
       super$setParameterValue(lst = lst, error = error)
 
       if (length(unique(self$getParameterValue("probs"))) == 1) {
         private$.properties$symmetry <- "asymmetric"
       } else {
         private$.properties$symmetry <- "symmetric"
+      }
+
+      if ("elements" %in% names(lst)) {
+        private$.properties$support <- Set$new(elements = lst$elements)
       }
 
       invisible(self)

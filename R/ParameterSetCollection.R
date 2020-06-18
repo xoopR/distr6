@@ -44,7 +44,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' Names of columns in the [ParameterSet] to hide whilst printing.
     #' @param ... \cr
     #' Additional arguments, currently unused.
-    print = function(hide_cols = c("updateFunc", "settable"), ...) {
+    print = function(hide_cols = c("settable"), ...) {
       psc <- as.data.table(self)
       psc$support <- lapply(psc$support, function(x) x$strprint())
       print(subset(psc, select = !(names(psc) %in% hide_cols)))

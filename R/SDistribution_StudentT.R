@@ -60,12 +60,10 @@ StudentT <- R6Class("StudentT",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      df <- self$getParameterValue("df")
-      if (df > 1) {
-        return(0)
-      } else {
-        return(NaN)
-      }
+      df <- unlist(self$getParameterValue("df"))
+      mean <- rep(NaN, length(df))
+      mean[df > 1] = 0
+      return(mean)
     },
 
     #' @description
@@ -73,7 +71,7 @@ StudentT <- R6Class("StudentT",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(0)
+      numeric(length(self$getParameterValue("df")))
     },
 
     #' @description
@@ -82,12 +80,10 @@ StudentT <- R6Class("StudentT",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      df <- self$getParameterValue("df")
-      if (df > 2) {
-        return(df / (df - 2))
-      } else {
-        return(NaN)
-      }
+      df <- unlist(self$getParameterValue("df"))
+      var <- rep(NaN, length(df))
+      var[df > 2] = df[df > 2] / (df[df > 2] - 2)
+      return(var)
     },
 
     #' @description
@@ -96,11 +92,10 @@ StudentT <- R6Class("StudentT",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      if (self$getParameterValue("df") > 3) {
-        return(0)
-      } else {
-        return(NaN)
-      }
+      df <- unlist(self$getParameterValue("df"))
+      skew <- rep(NaN, length(df))
+      skew[df > 3] = 0
+      return(skew)
     },
 
     #' @description
@@ -110,12 +105,9 @@ StudentT <- R6Class("StudentT",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      df <- self$getParameterValue("df")
-      if (df > 4) {
-        exkurtosis <- 6 / (df - 4)
-      } else {
-        return(NaN)
-      }
+      df <- unlist(self$getParameterValue("df"))
+      exkurtosis <- rep(NaN, length(df))
+      exkurtosis[df > 4] = 6 / (df[df > 4] - 4)
 
       if (excess) {
         return(exkurtosis)
@@ -130,8 +122,9 @@ StudentT <- R6Class("StudentT",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      df <- self$getParameterValue("df")
-      return((((df + 1) / 2) * (digamma((1 + df) / 2) - digamma(df / 2))) + (log(sqrt(df) * beta(df / 2, 1 / 2), base)))
+      df <- unlist(self$getParameterValue("df"))
+      return((((df + 1) / 2) * (digamma((1 + df) / 2) - digamma(df / 2))) +
+               (log(sqrt(df) * beta(df / 2, 1 / 2), base)))
     },
 
     #' @description The moment generating function is defined by

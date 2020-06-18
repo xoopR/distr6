@@ -49,7 +49,6 @@ Geometric <- R6Class("Geometric",
     #' Mathematically these are related by $Y = X - 1$.
     initialize = function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL) {
 
-      private$.trials <- checkmate::assertLogical(trials)
       private$.parameters <- getParameterSet(self, prob = prob, qprob = qprob, trials = trials)
       self$setParameterValue(prob = prob, qprob = qprob)
 
@@ -75,10 +74,11 @@ Geometric <- R6Class("Geometric",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      if (private$.trials) {
-        return(1 / self$getParameterValue("prob"))
+      if (self$getParameterValue("trials")[[1]]) {
+        return(1 / unlist(self$getParameterValue("prob")))
       } else {
-        return((1 - self$getParameterValue("prob")) / self$getParameterValue("prob"))
+        return((1 - unlist(self$getParameterValue("prob"))) /
+                 unlist(self$getParameterValue("prob")))
       }
     },
 
@@ -87,10 +87,10 @@ Geometric <- R6Class("Geometric",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (private$.trials) {
-        return(1)
+      if (self$getParameterValue("trials")[[1]]) {
+        return(numeric(length(self$getParameterValue("prob"))) + 1)
       } else {
-        return(0)
+        return(numeric(length(self$getParameterValue("prob"))))
       }
     },
 
@@ -100,7 +100,8 @@ Geometric <- R6Class("Geometric",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return((1 - self$getParameterValue("prob")) / (self$getParameterValue("prob")^2))
+      prob <- unlist(self$getParameterValue("prob"))
+      return((1 - prob) / (prob^2))
     },
 
     #' @description
@@ -109,7 +110,8 @@ Geometric <- R6Class("Geometric",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      return((2 - self$getParameterValue("prob")) / sqrt(1 - self$getParameterValue("prob")))
+      prob <- unlist(self$getParameterValue("prob"))
+      return((2 - prob) / sqrt(1 - prob))
     },
 
     #' @description
@@ -119,7 +121,8 @@ Geometric <- R6Class("Geometric",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      exkurtosis <- 6 + (self$getParameterValue("prob")^2 / (1 - self$getParameterValue("prob")))
+      prob <- unlist(self$getParameterValue("prob"))
+      exkurtosis <- 6 + (prob^2 / (1 - prob))
       if (excess) {
         return(exkurtosis)
       } else {
@@ -133,7 +136,7 @@ Geometric <- R6Class("Geometric",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      prob <- self$getParameterValue("prob")
+      prob <- unlist(self$getParameterValue("prob"))
       return(((-(1 - prob) * log(1 - prob, base)) - (prob * log(prob, base))) / prob)
     },
 
@@ -141,7 +144,7 @@ Geometric <- R6Class("Geometric",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      if (private$.trials) {
+      if (self$getParameterValue("trials")[[1]]) {
         if (t < -log(1 - self$getParameterValue("prob"))) {
           return((self$getParameterValue("prob") * exp(t)) / (1 - (1 - self$getParameterValue("prob")) * exp(t)))
         } else {
@@ -156,7 +159,7 @@ Geometric <- R6Class("Geometric",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      if (private$.trials) {
+      if (self$getParameterValue("trials")[[1]]) {
         return((self$getParameterValue("prob") * exp(1i * t)) / (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
       } else {
         return((self$getParameterValue("prob")) / (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
@@ -167,7 +170,7 @@ Geometric <- R6Class("Geometric",
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      if (private$.trials) {
+      if (self$getParameterValue("trials")[[1]]) {
         return((self$getParameterValue("prob") * z) / (1 - z * self$getParameterValue("qprob")))
       } else {
         return(self$getParameterValue("prob") / (1 - z * self$getParameterValue("qprob")))
@@ -178,7 +181,7 @@ Geometric <- R6Class("Geometric",
   private = list(
     # dpqr
     .pdf = function(x, log = FALSE) {
-      if (private$.trials) {
+      if (self$getParameterValue("trials")[[1]]) {
         x <- x + 1
       }
 
@@ -192,7 +195,7 @@ Geometric <- R6Class("Geometric",
       )
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      if (private$.trials) {
+      if (self$getParameterValue("trials")[[1]]) {
         x <- x + 1
       }
 
@@ -217,7 +220,7 @@ Geometric <- R6Class("Geometric",
         vec = test_list(prob)
       )
 
-      if (private$.trials) {
+      if (self$getParameterValue("trials")[[1]]) {
         geom <- geom + 1
       }
 
@@ -232,7 +235,7 @@ Geometric <- R6Class("Geometric",
         vec = test_list(prob)
       )
 
-      if (private$.trials) {
+      if (self$getParameterValue("trials")[[1]]) {
         geom <- geom + 1
       }
 
@@ -242,7 +245,7 @@ Geometric <- R6Class("Geometric",
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
 
-    .trails = logical(0)
+    .trials = logical(0)
   )
 )
 

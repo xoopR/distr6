@@ -25,8 +25,8 @@ that the elements are supplied in an indexed order (otherwise the results are me
 ## Method `Categorical$new`
 ## ------------------------------------------------
 
-# Note probabilities are automatically normalised
-x <- Categorical$new("Bapple", "Banana", 2, probs = c(0.2, 0.4, 1))
+# Note probabilities are automatically normalised (if not vectorised)
+x <- Categorical$new(elements = list("Bapple", "Banana", 2), probs = c(0.2, 0.4, 1))
 
 # Only the probabilities can be changed and must the same length as in construction
 x$setParameterValue(probs = c(0.1, 0.2, 0.7))
@@ -164,13 +164,13 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Categorical$new(..., probs, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Categorical$new(elements = 1, probs = 1, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\code{(ANY)}\cr
+\item{\code{elements}}{\code{list()}\cr
 Categories in the distribution, see examples.}
 
 \item{\code{probs}}{\code{numeric()}\cr
@@ -183,8 +183,8 @@ Decorators to add to the distribution during construction.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{# Note probabilities are automatically normalised
-x <- Categorical$new("Bapple", "Banana", 2, probs = c(0.2, 0.4, 1))
+\preformatted{# Note probabilities are automatically normalised (if not vectorised)
+x <- Categorical$new(elements = list("Bapple", "Banana", 2), probs = c(0.2, 0.4, 1))
 
 # Only the probabilities can be changed and must the same length as in construction
 x$setParameterValue(probs = c(0.1, 0.2, 0.7))
