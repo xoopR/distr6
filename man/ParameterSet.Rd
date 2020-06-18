@@ -16,19 +16,16 @@ creating a custom probability distribution that takes parameters.
 id <- list("prob", "size")
 value <- list(0.2, 5)
 support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
-settable <- list(TRUE, TRUE)
 description <- list("Probability of success", NULL)
 ParameterSet$new(id = id,
                  value = value,
                  support = support,
-                 settable = settable,
                  description = description
  )
 
 ParameterSet$new(id = "prob",
                  value = 0.2,
                  support = set6::Interval$new(0, 1),
-                 settable = TRUE,
                  description = "Probability of success"
  )
 
@@ -123,6 +120,33 @@ ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
                          )
            )
 ps$deps
+
+## ------------------------------------------------
+## Method `ParameterSet$addChecks`
+## ------------------------------------------------
+
+id <- list("lower", "upper")
+value <- list(1, 2)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+ps <- ParameterSet$new(
+  id, value, support
+)
+ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
+ps$checks
+\dontrun{
+# errors as check failes
+ps$setParameterValue(lower = 4)
+}
+ps$setParameterValue(lower = 2)
+
+# Alternate method (better with more parameters)
+ps <- ParameterSet$new(
+  id, value, support
+)
+ps$addChecks(dt = data.table::data.table(
+                          x = "lower"),
+                          fun = function(x, self) x < self$getParameterValue("upper")
+           )
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -130,6 +154,8 @@ ps$deps
 \item{\code{values}}{Returns parameter set values as a named list.}
 
 \item{\code{deps}}{Returns ParameterSet dependencies table.}
+
+\item{\code{checks}}{Returns ParameterSet assertions table.}
 }
 \if{html}{\out{</div>}}
 }
@@ -144,6 +170,7 @@ ps$deps
 \item \href{#method-setParameterValue}{\code{ParameterSet$setParameterValue()}}
 \item \href{#method-merge}{\code{ParameterSet$merge()}}
 \item \href{#method-addDeps}{\code{ParameterSet$addDeps()}}
+\item \href{#method-addChecks}{\code{ParameterSet$addChecks()}}
 \item \href{#method-clone}{\code{ParameterSet$clone()}}
 }
 }
@@ -157,7 +184,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id,
   value,
   support,
-  settable,
+  settable = TRUE,
   updateFunc = NULL,
   description = NULL
 )}\if{html}{\out{</div>}}
@@ -197,19 +224,16 @@ with values as NULL where appropriate. See examples for more.
 \preformatted{id <- list("prob", "size")
 value <- list(0.2, 5)
 support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
-settable <- list(TRUE, TRUE)
 description <- list("Probability of success", NULL)
 ParameterSet$new(id = id,
                  value = value,
                  support = support,
-                 settable = settable,
                  description = description
  )
 
 ParameterSet$new(id = "prob",
                  value = 0.2,
                  support = set6::Interval$new(0, 1),
-                 settable = TRUE,
                  description = "Probability of success"
  )
 }
@@ -473,6 +497,63 @@ ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
                          )
            )
 ps$deps
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addChecks"></a>}}
+\if{latex}{\out{\hypertarget{method-addChecks}{}}}
+\subsection{Method \code{addChecks()}}{
+Add parameter checks for automatic assertions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addChecks(x, fun, dt = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{(character(1))}\cr
+id of parameter to be checked.}
+
+\item{\code{fun}}{\verb{(function(1))}\cr
+Function used to update \code{y}, must include \verb{x, self} in formal arguments and
+\code{x} in body where \code{x} is the value of the parameter to check. Result should
+be a logical.
+See first example.}
+
+\item{\code{dt}}{\verb{([data.table::data.table])}\cr
+Alternate method to directly construct \code{data.table} of dependencies to add.
+See second example.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{id <- list("lower", "upper")
+value <- list(1, 2)
+support <- list(set6::PosReals$new(), set6::PosReals$new())
+ps <- ParameterSet$new(
+  id, value, support
+)
+ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
+ps$checks
+\dontrun{
+# errors as check failes
+ps$setParameterValue(lower = 4)
+}
+ps$setParameterValue(lower = 2)
+
+# Alternate method (better with more parameters)
+ps <- ParameterSet$new(
+  id, value, support
+)
+ps$addChecks(dt = data.table::data.table(
+                          x = "lower"),
+                          fun = function(x, self) x < self$getParameterValue("upper")
+           )
 }
 \if{html}{\out{</div>}}
 

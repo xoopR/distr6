@@ -46,7 +46,7 @@ Categorical <- R6Class("Categorical",
     #'
     #' @examples
     #' # Note probabilities are automatically normalised (if not vectorised)
-    #' x <- Categorical$new(list("Bapple", "Banana", 2), probs = c(0.2, 0.4, 1))
+    #' x <- Categorical$new(elements = list("Bapple", "Banana", 2), probs = c(0.2, 0.4, 1))
     #'
     #' # Only the probabilities can be changed and must the same length as in construction
     #' x$setParameterValue(probs = c(0.1, 0.2, 0.7))
@@ -83,7 +83,12 @@ Categorical <- R6Class("Categorical",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      rep(NaN, length(self$getParameterValue("probs")))
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -93,8 +98,8 @@ Categorical <- R6Class("Categorical",
     mode = function(which = "all") {
       probs <- self$getParameterValue("probs")
       els <- self$getParameterValue("elements")
-      if (length(probs) == 1) {
-        modes <- els[probs == max(probs)]
+      if (!checkmate::testList(probs)) {
+        modes <- unlist(els[probs == max(probs)])
         if (which == "all") {
           return(modes)
         } else {
@@ -126,7 +131,12 @@ Categorical <- R6Class("Categorical",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      rep(NaN, length(self$getParameterValue("probs")))
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -135,7 +145,12 @@ Categorical <- R6Class("Categorical",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      rep(NaN, length(self$getParameterValue("probs")))
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -145,7 +160,12 @@ Categorical <- R6Class("Categorical",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      rep(NaN, length(self$getParameterValue("probs")))
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description
@@ -154,28 +174,33 @@ Categorical <- R6Class("Categorical",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      rep(NaN, length(self$getParameterValue("probs")))
+      p <- self$getParameterValue("probs")
+      if (checkmate::testList(p)) {
+        return(rep(NaN, length(p)))
+      } else {
+        return(NaN)
+      }
     },
 
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      rep(NaN, length(self$getParameterValue("probs")))
+      return(NaN)
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      rep(NaN, length(self$getParameterValue("probs")))
+      return(NaN)
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      rep(NaN, length(self$getParameterValue("probs")))
+      return(NaN)
     },
 
     # optional setParameterValue

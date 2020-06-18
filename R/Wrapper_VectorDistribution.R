@@ -74,12 +74,27 @@ VectorDistribution <- R6Class("VectorDistribution",
 
         distribution <- match.arg(distribution, listDistributions(simplify = TRUE))
 
-        # convert to list
+        if (grepl("Empirical", distribution)) {
+          stop("Empirical and EmpiricalMV not currently available for `distribution/params`
+constructor, use `distlist` instead.")
+        }
+
+        # convert params to list
         if (!checkmate::testList(params)) {
           params <- apply(params, 1, as.list)
         }
 
-        # convert to list
+        # catch for Geometric and NegativeBinomial
+        if (distribution == "Geometric" & "trials" %in% names(unlist(params))) {
+          stop("For Geometric distributions either `trials` must be passed to `shared_params`
+               or `distlist` should be used.")
+        }
+        if (distribution == "NegativeBinomial" & "form" %in% names(unlist(params))) {
+          stop("For NegativeBinomial distributions either `form` must be passed to `shared_params`
+               or `distlist` should be used.")
+        }
+
+        # convert shared_params to list
         if (is.null(shared_params)) {
           shared_params <- list()
         } else {
@@ -840,7 +855,8 @@ VectorDistribution <- R6Class("VectorDistribution",
     .distlist = FALSE,
     .sharedparams = list(),
     .properties = list(),
-    .traits = list(type = NA, valueSupport = "mixture", variateForm = "multivariate")
+    .traits = list(type = NA, valueSupport = "mixture", variateForm = "multivariate"),
+    .trials = logical(0)
   )
 )
 

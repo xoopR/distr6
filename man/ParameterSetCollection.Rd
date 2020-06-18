@@ -107,6 +107,7 @@ psc$merge(psc2)$parameters()
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="ParameterSet" data-id="addChecks">}\href{../../distr6/html/ParameterSet.html#method-addChecks}{\code{distr6::ParameterSet$addChecks()}}\out{</span>}
 }
 \out{</details>}
 }

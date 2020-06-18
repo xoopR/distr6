@@ -126,7 +126,6 @@ Pareto <- R6Class("Pareto",
       kur = rep(NaN, length(shape))
       kur[shape > 4] = (6 * (shape[shape > 4]^3 + shape[shape > 4]^2 - 6 * shape[shape > 4] - 2)) /
         (shape[shape > 4] * (shape[shape > 4] - 3) * (shape[shape > 4] - 4))
-      return(skew)
 
       if (excess) {
         return(kur)

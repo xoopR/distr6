@@ -15,8 +15,10 @@
 * Distribution `type` is now required in construction custom `Distribution`s as the previous method of 'guessing' was inefficient.
 * Added `ParameterSetCollection` for `Wrapper`s. Same functionality as before but much more efficient.
 * Added `$addDeps` and `$deps` to `ParameterSet`s to replace `updateFunc`. This allows faster and more precise control over parameter updates.
+* Added `$addChecks` and `$checks` to `ParameterSet`s to replace custom checks in distributions. This allows clearner control parameter setting.
 * `categories` parameter in `Categorical` now called `nCategories`
 * Constructor of `Categorical` now requires elements to be provided as a `list` to `elements`
+* `settable` in `ParameterSet` now refers to the more intuitive flag that describes if a parameter can be set after construction
 
 ### Deprecated Functions/Fields/Methods
 
@@ -38,7 +40,7 @@
 * Bugfix in `$rand` for `Geometric` distribution with `trials == TRUE` , previously was randomising between $[1, Inf)$ not $[0, Inf)$
 * Changed default `form` parameter in `NegativeBinomial`, now errors if supplied argument is not in one of the four choices (previously reverted to "fbs")
 * Fixed bug in `MultivariateNormal` `rand()` which was not adding the `mean` correctly
-* Massive bottleneck in `VectorDistribution` for same distribution type removed in d/p/q/r functions
+* Massive bottleneck in `VectorDistribution` for same distribution type removed in d/p/q/r functions as well as non-generating function methods
 * `Dirichlet, DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald` now implemented from package `extraDistr`
 * Bug fix in `Frechet` `$cdf`
 * Analytical `log` and `lower.tail` now available for all `SDistributions` and imputation possible for customs with `CoreStatistics`

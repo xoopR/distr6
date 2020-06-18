@@ -81,7 +81,7 @@ StudentT <- R6Class("StudentT",
     #' covariance matrix is returned.
     variance = function() {
       df <- unlist(self$getParameterValue("df"))
-      var <- rep(NaN, length(location))
+      var <- rep(NaN, length(df))
       var[df > 2] = df[df > 2] / (df[df > 2] - 2)
       return(var)
     },
@@ -92,7 +92,8 @@ StudentT <- R6Class("StudentT",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      skew <- rep(NaN, length(self$getParameterValue("df")))
+      df <- unlist(self$getParameterValue("df"))
+      skew <- rep(NaN, length(df))
       skew[df > 3] = 0
       return(skew)
     },
@@ -105,7 +106,7 @@ StudentT <- R6Class("StudentT",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       df <- unlist(self$getParameterValue("df"))
-      exkurtosis <- rep(NaN, length(location))
+      exkurtosis <- rep(NaN, length(df))
       exkurtosis[df > 4] = 6 / (df[df > 4] - 4)
 
       if (excess) {

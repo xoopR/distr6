@@ -34,22 +34,19 @@ ParameterSet <- R6Class("ParameterSet",
     #' id <- list("prob", "size")
     #' value <- list(0.2, 5)
     #' support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
-    #' settable <- list(TRUE, TRUE)
     #' description <- list("Probability of success", NULL)
     #' ParameterSet$new(id = id,
     #'                  value = value,
     #'                  support = support,
-    #'                  settable = settable,
     #'                  description = description
     #'  )
     #'
     #' ParameterSet$new(id = "prob",
     #'                  value = 0.2,
     #'                  support = set6::Interval$new(0, 1),
-    #'                  settable = TRUE,
     #'                  description = "Probability of success"
     #'  )
-    initialize = function(id, value, support, settable,
+    initialize = function(id, value, support, settable = TRUE,
                           updateFunc = NULL,
                           description = NULL) {
 
@@ -64,6 +61,7 @@ ParameterSet <- R6Class("ParameterSet",
       }
       if (!checkmate::testList(support)) support <- list(support)
       settable <- unlist(settable)
+      if (length(settable) == 1) settable <- rep(settable, length(id))
 
       # check lengths
       checkmate::assert(length(unique(length(id), length(value), length(settable),
@@ -202,7 +200,9 @@ ParameterSet <- R6Class("ParameterSet",
       checkmate::assertList(lst)
       for (i in seq_along(lst)) {
         value <- lst[[i]]
+
         if (!is.null(value)) {
+
           aid <- names(lst)[[i]]
           if (is.null(aid)) {
             return(stopwarn(error, "Parameter names and new values must be provided."))
@@ -211,16 +211,22 @@ ParameterSet <- R6Class("ParameterSet",
           param <- subset(as.data.table(self), id == aid)
 
           if (nrow(param) == 0) {
-            return(stopwarn(error, sprintf("%s is not in the parameter set.", aid)))
+            return(stopwarn(error, sprintf("'%s' is not in the parameter set.", aid)))
           }
+
+          if (!param$settable) {
+            return(stopwarn(error, sprintf("'%s' is not (manually) settable after construction.", aid)))
+          }
+
+          private$.check(aid, value)
 
           if (length(value) > 1) {
             if (!param$support[[1]]$contains(Tuple$new(value), all = TRUE)) {
-              stop(Tuple$new(value)$strprint(), " does not lie in the support of parameter ", aid)
+              stopf("%s does not lie in the support of '%s'.", Tuple$new(value)$strprint(), aid)
             }
           } else {
             if (!param$support[[1]]$contains(value, all = TRUE)) {
-              stop(value, " does not lie in the support of parameter ", aid)
+              stopf("%s does not lie in the support of '%s'.", value, aid)
             }
           }
 
@@ -331,6 +337,61 @@ ParameterSet <- R6Class("ParameterSet",
       private$.deps <- rbind(self$deps, dt)
 
       invisible(self)
+    },
+
+    #' @description
+    #' Add parameter checks for automatic assertions.
+    #' @param x `(character(1))`\cr
+    #' id of parameter to be checked.
+    #' @param fun `(function(1))`\cr
+    #' Function used to update `y`, must include `x, self` in formal arguments and
+    #' `x` in body where `x` is the value of the parameter to check. Result should
+    #' be a logical.
+    #' See first example.
+    #' @param dt `([data.table::data.table])`\cr
+    #' Alternate method to directly construct `data.table` of dependencies to add.
+    #' See second example.
+    #' @examples
+    #' id <- list("lower", "upper")
+    #' value <- list(1, 2)
+    #' support <- list(set6::PosReals$new(), set6::PosReals$new())
+    #' ps <- ParameterSet$new(
+    #'   id, value, support
+    #' )
+    #' ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
+    #' ps$checks
+    #' \dontrun{
+    #' # errors as check failes
+    #' ps$setParameterValue(lower = 4)
+    #' }
+    #' ps$setParameterValue(lower = 2)
+    #'
+    #' # Alternate method (better with more parameters)
+    #' ps <- ParameterSet$new(
+    #'   id, value, support
+    #' )
+    #' ps$addChecks(dt = data.table::data.table(
+    #'                           x = "lower"),
+    #'                           fun = function(x, self) x < self$getParameterValue("upper")
+    #'            )
+    addChecks = function(x, fun, dt = NULL) {
+      if (is.null(dt)) {
+        dt <- data.table(x = x, fun = fun)
+      }
+
+      checkmate::assertDataTable(dt, types = c("character", "list"))
+      checkmate::assertNames(colnames(dt), identical.to = c("x", "fun"))
+
+      apply(dt, 1, function(z) {
+        if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
+          stopf("%s is not a parameter in this ParameterSet", z[[1]])
+        }
+        checkmate::assertFunction(z[[2]], c("x", "self"))
+      })
+
+      private$.checks <- rbind(self$checks, dt)
+
+      invisible(self)
     }
   ),
 
@@ -348,6 +409,12 @@ ParameterSet <- R6Class("ParameterSet",
     #' Returns ParameterSet dependencies table.
     deps = function() {
       return(private$.deps)
+    },
+
+    #' @field checks
+    #' Returns ParameterSet assertions table.
+    checks = function() {
+      return(private$.checks)
     }
   ),
 
@@ -355,11 +422,21 @@ ParameterSet <- R6Class("ParameterSet",
     .parameters = data.table(id = character(), value = list(), support = list(),
                              settable = logical(), description = character()),
     .deps = data.table(x = character(), y = character(), fun = list()),
+    .checks = data.table(x = character(), fun = list()),
     .setParameterSupport = function(lst) {
       id <- names(lst)
       support <- lst[[1]]
       which <- which(unlist(private$.parameters$id) %in% id)
       private$.parameters[which, 3][[1]] <- list(support)
+      invisible(self)
+    },
+    .check = function(id, value) {
+      checks = subset(self$checks, x == id)
+      if (nrow(checks)) {
+        for (i in seq(nrow(checks))) {
+          assert(checks$fun[[i]](value, self))
+        }
+      }
       invisible(self)
     },
     .update = function(id) {
@@ -376,7 +453,7 @@ ParameterSet <- R6Class("ParameterSet",
       invisible(self)
     },
     deep_clone = function(name, value) {
-      if (name %in% c(".parameters", ".deps")) {
+      if (name %in% c(".parameters", ".deps", ".checks")) {
         data.table::copy(value)
       } else {
         value

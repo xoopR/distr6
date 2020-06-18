@@ -78,7 +78,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     variance = function() {
       df <- unlist(self$getParameterValue("df"))
       mu <- unlist(self$getParameterValue("location"))
-      var <- rep(NaN, length(location))
+      var <- rep(NaN, length(mu))
       var[df > 2] = df[df > 2] * (1 + mu[df > 2]^2) / (df[df > 2] - 2) -
         (mu[df > 2]^2 * df[df > 2] / 2) * (gamma((df[df > 2] - 1) / 2) / gamma(df[df > 2] / 2))^2
       return(var)

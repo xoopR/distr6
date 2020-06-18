@@ -213,37 +213,14 @@ Triangular <- R6Class("Triangular",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-      if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
-        checkmate::assert(lst[["lower"]] < lst[["upper"]], .var.name = "lower must be < upper")
-      } else if ("lower" %in% names(lst)) {
-        checkmate::assert(lst[["lower"]] < self$getParameterValue("upper"), .var.name = "lower must be < upper")
-      } else if ("upper" %in% names(lst)) {
-        checkmate::assert(lst[["upper"]] > self$getParameterValue("lower"), .var.name = "upper must be > lower")
-      }
 
+      super$setParameterValue(..., lst = lst, error = error)
+
+      lower <- self$getParameterValue("lower")
+      upper <- self$getParameterValue("upper")
+      private$.properties$support <- Interval$new(lower, upper)
       if (private$.type != "symmetric") {
-        if ("mode" %in% names(lst)) {
-          if ("lower" %in% names(lst)) {
-            checkmate::assert(lst[["mode"]] >= lst[["lower"]], .var.name = "mode must be >= lower")
-          } else {
-            checkmate::assert(lst[["mode"]] >= self$getParameterValue("lower"), .var.name = "mode must be >= lower")
-          }
-          if ("upper" %in% names(lst)) {
-            checkmate::assert(lst[["mode"]] <= lst[["upper"]], .var.name = "mode must be <= upper")
-          } else {
-            checkmate::assert(lst[["mode"]] <= self$getParameterValue("upper"), .var.name = "mode must be <= upper")
-          }
-        }
-      }
-
-      super$setParameterValue(lst = lst, error = error)
-
-      private$.properties$support <- Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"))
-      if (private$.type != "symmetric") {
-        if (self$getParameterValue("mode") == (self$getParameterValue("lower") + self$getParameterValue("upper")) / 2) {
+        if (self$getParameterValue("mode") == (lower + upper) / 2) {
           private$.properties$symmetry <- "symmetric"
         } else {
           private$.properties$symmetry <- "asymmetric"

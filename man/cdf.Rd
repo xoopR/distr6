@@ -16,7 +16,7 @@ the number of arguments corresponds to the number of variables in the distributi
 See examples.}
 
 \item{lower.tail}{\code{logical(1)} \cr
-If \code{TRUE} (default), probabilities are \code{X ≤ x}, otherwise, \code{X > x}.}
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{X > x}.}
 
 \item{log.p}{\code{logical(1)} \cr
 If \code{TRUE} returns log-cdf. Default is \code{FALSE}.}

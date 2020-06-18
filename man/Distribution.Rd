@@ -446,7 +446,7 @@ the number of arguments corresponds to the number of variables in the distributi
 See examples.}
 
 \item{\code{lower.tail}}{\code{(logical(1))} \cr
-If \code{TRUE} (default), probabilities are \code{X ≤ x}, otherwise, \code{P(X > x)}.}
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
 \item{\code{log.p}}{\code{(logical(1))} \cr
 If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}
@@ -506,7 +506,7 @@ the number of arguments corresponds to the number of variables in the distributi
 See examples.}
 
 \item{\code{lower.tail}}{\code{(logical(1))} \cr
-If \code{TRUE} (default), probabilities are \code{X ≤ x}, otherwise, \code{P(X > x)}.}
+If \code{TRUE} (default), probabilities are \verb{X ≤ x}, otherwise, \code{P(X > x)}.}
 
 \item{\code{log.p}}{\code{(logical(1))} \cr
 If \code{TRUE} returns the logarithm of the probabilities. Default is \code{FALSE}.}

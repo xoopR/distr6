@@ -79,7 +79,12 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(self$getParameterValue("mean"))
+      mean <- self$getParameterValue("mean")
+      if (checkmate::testList(mean)) {
+        return(t(data.table::rbindlist(list(mean))))
+      } else {
+        return(mean)
+      }
     },
 
     #' @description
@@ -87,7 +92,7 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      return(self$getParameterValue("mean"))
+      self$mean()
     },
 
     #' @description
@@ -96,7 +101,13 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      return(self$getParameterValue("cov"))
+      cov <- self$getParameterValue("cov")
+
+      if (checkmate::testList(cov)) {
+        return(array(unlist(cov), dim = c(length(cov[[1]])/2, length(cov[[1]])/2, length(cov))))
+      } else {
+        return(cov)
+      }
     },
 
     #' @description
@@ -105,7 +116,16 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      return(0.5 * log(det(2 * pi * exp(1) * self$getParameterValue("cov")), base))
+      cov <- self$getParameterValue("cov")
+
+      if (checkmate::testList(cov)) {
+        n <- length(self$getParameterValue("mean")[[1]])
+        return(as.numeric(sapply(cov,
+                                 function(x) 0.5 * log(det(2 * pi * exp(1) * matrix(x, nrow = n)),
+                                                       base))))
+      } else {
+        return(0.5 * log(det(2 * pi * exp(1) * cov), base))
+      }
     },
 
     #' @description The moment generating function is defined by

@@ -229,19 +229,21 @@ Distribution <- R6Class("Distribution",
     #' Number of parameters to display when printing.
     strprint = function(n = 2) {
       if (length(private$.parameters) != 0) {
-        settable <- as.data.table(self$parameters())$settable
-        id <- as.data.table(self$parameters())[settable, "id"][[1]]
-        value <- as.data.table(self$parameters())[settable, "value"][[1]]
+        p <- as.data.table(self$parameters())
+        settable <- p$settable
+        id <- p[settable, "id"][[1]]
+        value <- p[settable, "value"][[1]]
         lng <- length(id)
         if (lng > (2 * n)) {
           string <- paste0(
             self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
-            ",...,", paste(id[(lng - n + 1):lng], value[(lng - n + 1):lng], sep = " = ", collapse = ", "), ")"
+            ",...,", paste(id[(lng - n + 1):lng], value[(lng - n + 1):lng], sep = " = ",
+                           collapse = ", "), ")"
           )
         } else {
-          string <- paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "), ")")
+          string <- paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "),
+                           ")")
         }
-
       } else {
         string <- paste0(self$short_name)
       }

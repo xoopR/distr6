@@ -92,7 +92,14 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return(sum(self$getParameterValue("x") * self$getParameterValue("pdf")))
+      x <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
+
+      if (checkmate::testList(x)) {
+        return(mapply(function(x0, pdf0) sum(x0 * pdf0), x, pdf))
+      } else {
+        return(sum(self$getParameterValue("x") * self$getParameterValue("pdf")))
+      }
     },
 
     #' @description
@@ -100,13 +107,28 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      data <- self$getParameterValue("x")
+      x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
 
-      if (which == "all") {
-        return(data[pdf == max(pdf)])
+      if (checkmate::testList(x)) {
+        if (which == "all") {
+          stop("`which` cannot be `'all'` when vectorising.")
+        } else {
+          return(mapply(function(x0, pdf0) {
+            modes <- x0[pdf0 == max(pdf0)]
+            if (which > length(modes)) {
+              return(modes[length(modes)])
+            } else {
+              return(modes[which])
+            }
+          }, x, pdf))
+        }
       } else {
-        return(data[pdf == max(pdf)][which])
+        if (which == "all") {
+          return(x[pdf == max(pdf)])
+        } else {
+          return(x[pdf == max(pdf)][which])
+        }
       }
     },
 
@@ -116,9 +138,15 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      data <- self$getParameterValue("x")
+      x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
-      return(sum((data - self$mean())^2 * pdf))
+      mean <- self$mean()
+
+      if (checkmate::testList(x)) {
+        return(mapply(function(x0, pdf0, mean0) sum((x0 - mean0)^2 * pdf0), x, pdf, mean))
+      } else {
+        return(sum((x - mean)^2 * pdf))
+      }
     },
 
     #' @description
@@ -127,9 +155,17 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      data <- self$getParameterValue("x")
+      x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
-      return(sum(((data - self$mean()) / self$stdev())^3 * pdf))
+      mean <- self$mean()
+      sd <- self$stdev()
+
+      if (checkmate::testList(x)) {
+        return(mapply(function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^3 * pdf0),
+                      x, pdf, mean, sd))
+      } else {
+        return(sum(((x - mean) / sd)^3 * pdf))
+      }
     },
 
     #' @description
@@ -139,9 +175,18 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      data <- self$getParameterValue("x")
+      x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
-      kurt <- sum(((data - self$mean()) / self$stdev())^4 * pdf)
+      mean <- self$mean()
+      sd <- self$stdev()
+
+      if (checkmate::testList(x)) {
+        kurt <- mapply(function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^4 * pdf0),
+                      x, pdf, mean, sd)
+      } else {
+        kurt <- sum(((x - mean) / sd)^4 * pdf)
+      }
+
       if (excess) {
         return(kurt - 3)
       } else {
@@ -156,7 +201,11 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' continuous distributions.
     entropy = function(base = 2) {
       pdf <- self$getParameterValue("pdf")
-      return(-sum(pdf * log(pdf, base)))
+      if (checkmate::testList(pdf)) {
+        return(sapply(pdf, function(x) -sum(x * log(x, base))))
+      } else {
+        return(-sum(pdf * log(pdf, base)))
+      }
     },
 
     #' @description The moment generating function is defined by

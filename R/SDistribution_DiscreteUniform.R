@@ -87,9 +87,9 @@ DiscreteUniform <- R6Class("DiscreteUniform",
           }, lower, upper))
       } else {
         if (which == "all") {
-          return(c(lower, upper))
+          return(lower:upper)
         } else {
-          return(c(lower, upper)[which])
+          return((lower:upper)[which])
         }
       }
     },
