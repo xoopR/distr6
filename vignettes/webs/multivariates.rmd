@@ -30,19 +30,6 @@ Notice how this is almost identical to constructing a univariate Normal distribu
 MultivariateNormal$new(mean = c(0,0), prec = c(1,0,0,1))
 ```
 
-## Getting and Setting Parameters
-
-Every multivariate distribution includes by default an extra parameter that cannot be updated. This is the `K` parameter that refers to the 'number of components or categories'. It ensures that the correct number of inputs are given to the distribution for the d/p/q/r functions and in updating other parameters. It also means that the number of parameters must be identical when updating. Otherwise getting and setting parameters is identical to univariate distributions.
-
-```{r}
-MN <- MultivariateNormal$new()
-MN$getParameterValue("K")
-MN$setParameterValue(mean = c(0)) # Causes an error as 1 not 2 means are given
-MN$setParameterValue(mean = c(0,1))
-MN$setParameterValue(prec = c(2,0,0,2,1,2)) # Truncated to c(2,0,0,2)
-MN$parameters()
-```
-
 ## d/p/q/r
 
 The biggest difference between univariate and multivariate distributions is in how arguments are passed to the d/p/q/r methods. This differs slightly from R stats. For example to evaluate the pdf of the multinomial distribution at (1,2) in R stats we would run
