@@ -217,7 +217,7 @@ test_that("weighted discrete", {
     distribution = "WeightedDiscrete",
     params = list(
       list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
-      list(x = 11:15, cdf = dgeom(1:5, 0.5))
+      list(x = 11:15, cdf = pgeom(1:5, 0.5))
     )
   )
   })
