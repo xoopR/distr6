@@ -33,7 +33,8 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(1 / 6)
+      return(ifelse(x == 0, 1 / 6, ((x - 2)*exp(2*x) + (x + 2)*exp(x))/
+                      (exp(3*x) - 3*exp(2 * x) + 3*exp(x) - 1)))
     },
 
     #' @description
