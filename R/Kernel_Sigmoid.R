@@ -35,7 +35,7 @@ Sigmoid <- R6Class("Sigmoid",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(2 / pi^2)
+      return(ifelse(x ==0, 2/(pi^2), (4 * x * exp(x))/(pi^2 *(exp(2*x) -1))))
     },
 
     #' @description
