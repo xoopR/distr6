@@ -1,7 +1,7 @@
 # installs dependencies, runs R CMD check, runs covr::codecov()
 do_package_checks()
 
-if (ci_on_ghactions() & ci_on_ghactions() == "master") {
+if (ci_on_ghactions() & ci_get_branch() == "master") {
   # creates pkgdown site and pushes to gh-pages branch
   do_pkgdown(deploy = TRUE)
 }
