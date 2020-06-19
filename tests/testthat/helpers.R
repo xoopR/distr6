@@ -152,7 +152,8 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
     expect_equal(names(formals(kern$public_methods$setParameterValue)), c("...", "lst", "error"))
   }
   # expect_equal(formals(kern$public_methods$initialize), pairlist(decorators = NULL))
-  if (!is.null(kern$public_methods$pdfSquared2Norm)) expect_equal(formals(kern$public_methods$pdfSquared2Norm), pairlist(x = 0))
+  if (!is.null(kern$public_methods$pdfSquared2Norm))
+    expect_equal(formals(kern$public_methods$pdfSquared2Norm), pairlist(x = 0))
   if (!is.null(kern$public_methods$variance)) expect_null(names(formals(kern$public_methods$variance)))
   if (!is.null(kern$public_methods$skewness)) expect_null(names(formals(kern$public_methods$skewness)))
   if (!is.null(kern$public_methods$kurtosis)) expect_equal(formals(kern$public_methods$kurtosis), pairlist(excess = TRUE))
@@ -179,7 +180,7 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   expect_equal(kern$mode(), 0)
   expect_equal(kern$properties$support$strprint(), support$strprint())
   expect_equal(kern$variance(), variance)
-  expect_equal(kern$pdfSquared2Norm(c(0, 1, 3)), pdfSquared2Norm)
+  expect_rounded_equal(kern$pdfSquared2Norm(c(0, 1, 3)), pdfSquared2Norm)
   expect_equal(kern$strprint(), shortname)
   expect_output(kern$summary())
   expect_output(kern$summary(F))
