@@ -57,8 +57,6 @@ navbar:
       href: articles/webs/analytic_and_numeric_methods.html
     - text: R6 and Design Patterns
       href: articles/webs/r6_and_design_patterns.html
-    - text: Documentation in R6
-      href: articles/webs/documentation_in_r6.html
 
   right:
   - text: Reference
@@ -159,7 +157,7 @@ reference:
       - c.Distribution
       - huberize
       - truncate
-      - "[.ParameterSet"
+      - "[.VectorDistribution"
   - title: "Univariate Discrete Distributions"
     contents:
       - Bernoulli
