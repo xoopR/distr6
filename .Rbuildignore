@@ -20,3 +20,6 @@ man-roxygen
 ^\.Rproj\.user$
 ^\.lintr
 ^tic\.R
+^\.ccache$
+^\.github$
+^tic\.R$
