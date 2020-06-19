@@ -48,9 +48,12 @@ MixtureDistribution <- R6Class("MixtureDistribution",
         id = "weights",
         value = weights,
         support = Interval$new(0, 1)^lng + Set$new("uniform"),
-        settable = TRUE,
         description = "Mixture weights."
       )
+      private$.outerParameters$addTrafos("weights",
+                                function(x, self) {
+                                  if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform"
+                                  })
 
       super$initialize(
         distlist = distlist,

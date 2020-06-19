@@ -28,7 +28,8 @@ case of \link{VectorDistribution}s of multivariate distributions, then the third
 to the distribution in the vector to evaluate.}
 }
 \value{
-Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
+Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is
+TRUE.
 }
 \description{
 See \link{ExoticStatistics}\verb{$cumHazard}.

@@ -4,8 +4,8 @@
 \alias{CoreStatistics}
 \title{Core Statistical Methods Decorator}
 \description{
-This decorator adds numeric methods for missing analytic expression in distr6 Distribution
-objects as well as adding generalised expectation and moments functions.
+This decorator adds numeric methods for missing analytic expressions in
+\link{Distribution}s as well as adding generalised expectation and moments functions.
 }
 \details{
 Decorator objects add functionality to the given \link{Distribution} object by copying methods
@@ -173,8 +173,8 @@ the kth standardised moment of a distribution is defined by
 \deqn{SM(k)_X = \frac{CM(k)}{\sigma^k}}{SM(k)_X = CM(k)/\sigma^k}
 the kth raw moment of a distribution is defined by
 \deqn{RM(k)_X = E_X[x^k]}
-where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-standard deviation of the distribution.
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$kthmoment(k, type = c("central", "standard", "raw"))}\if{html}{\out{</div>}}
 }

@@ -25,14 +25,6 @@ The Negative Binomial distribution can refer to one of four distributions (forms
 
 For each we refer to the number of K successes/failures as the \code{size} parameter.
 }
-\examples{
-
-## ------------------------------------------------
-## Method `NegativeBinomial$new`
-## ------------------------------------------------
-
-NegativeBinomial$new(form = "tbf")$description
-}
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -197,14 +189,6 @@ Decorators to add to the distribution during construction.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{NegativeBinomial$new(form = "tbf")$description
-}
-\if{html}{\out{</div>}}
-
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-mean"></a>}}

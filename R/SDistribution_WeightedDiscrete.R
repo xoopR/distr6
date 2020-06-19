@@ -152,8 +152,8 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
@@ -263,23 +263,6 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
             matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$pdf)) {
-        checkmate::assertNumeric(lst$pdf, lower = 0, upper = 1, .var.name = "pdf is not valid",
-                                 len = length(self$getParameterValue("x")))
-      }
-      if (!is.null(lst$cdf)) {
-        checkmate::assertNumeric(lst$cdf, lower = 0, upper = 1, .var.name = "cdf is not valid",
-                                 len = length(self$getParameterValue("x")))
-      }
-
-      super$setParameterValue(lst = lst, error = error)
     }
   ),
 

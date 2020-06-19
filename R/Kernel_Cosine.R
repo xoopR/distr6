@@ -49,4 +49,6 @@ Cosine <- R6Class("Cosine",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Cos", ClassName = "Cosine", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Cos", ClassName = "Cosine",
+                                                Support = "[-1,1]", Packages = "-"))

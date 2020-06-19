@@ -23,7 +23,7 @@ The distribution is supported on \eqn{[a, b]}.
 ## ------------------------------------------------
 
 Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
+Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
 Triangular$new(lower = 2, upper = 5, mode = 4)
 
 # You can view the type of Triangular distribution with $description
@@ -207,7 +207,7 @@ Decorators to add to the distribution during construction.}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
+Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
 Triangular$new(lower = 2, upper = 5, mode = 4)
 
 # You can view the type of Triangular distribution with $description
@@ -283,8 +283,8 @@ covariance matrix is returned.
 \subsection{Method \code{skewness()}}{
 The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-\eqn{\sigma} is the standard deviation of the distribution.
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Triangular$skewness()}\if{html}{\out{</div>}}
 }

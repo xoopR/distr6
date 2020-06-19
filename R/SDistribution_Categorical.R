@@ -207,19 +207,8 @@ Categorical <- R6Class("Categorical",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-      if ("probs" %in% names(lst)) {
-        lst$probs <- lst$probs / sum(lst$probs)
-        checkmate::assert(length(lst$probs) == self$getParameterValue("nCategories"))
-      }
-      if ("elements" %in% names(lst)) {
-        checkmate::assert(length(lst$elements) == self$getParameterValue("nCategories"))
-      }
-      lst$nCategories <- NULL
 
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(..., lst = lst, error = error)
 
       if (length(unique(self$getParameterValue("probs"))) == 1) {
         private$.properties$symmetry <- "asymmetric"

@@ -115,8 +115,10 @@ makeChecks(
 #'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
-#' testParameterSetCollection(5) # FALSE
-#' testParameterSetCollection(ParameterSetCollection$new(Binom = Binomial$new()$parameters())) # TRUE
+#' # FALSE
+#' testParameterSetCollection(5)
+#' # TRUE
+#' testParameterSetCollection(ParameterSetCollection$new(Binom = Binomial$new()$parameters()))
 #' @export
 testParameterSetCollection <- function() {}
 #' @rdname testParameterSetCollection

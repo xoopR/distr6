@@ -167,19 +167,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-      if ("lower" %in% names(lst) & "upper" %in% names(lst)) {
-        checkmate::assert(lst[["lower"]] <= lst[["upper"]], .var.name = "lower must be <= upper")
-      } else if ("lower" %in% names(lst)) {
-        checkmate::assert(lst[["lower"]] <= self$getParameterValue("upper"), .var.name = "lower must be <= upper")
-      } else if ("upper" %in% names(lst)) {
-        checkmate::assert(lst[["upper"]] >= self$getParameterValue("lower"), .var.name = "upper must be >= lower")
-      }
-      lst$N <- NULL
-
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(..., lst = lst, error = error)
       private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
       invisible(self)
     }

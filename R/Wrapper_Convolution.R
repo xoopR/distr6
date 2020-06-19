@@ -30,8 +30,8 @@ Convolution <- R6Class("Convolution",
       names(distlist) <- makeUniqueNames(rsapply(distlist, "short_name", active = TRUE))
 
       private$.outerParameters <- ParameterSet$new(
-        id = "add", value = add, support = Set$new(TRUE, FALSE),
-        settable = TRUE, description = "Type of convolution."
+        id = "add", value = add, support = LogicalSet$new(),
+        description = "Type of convolution."
       )
 
       super$initialize(
@@ -91,10 +91,12 @@ Convolution <- R6Class("Convolution",
           #     support <- try(self$wrappedModels(name1)$inf:self$wrappedModels(name1)$sup)
           #               if(inherits(support,"try-error")){
           #                 self$wrappedModels(name2)$.__enclos_env__$private$.setWorkingSupport()
-          #                 support <- self$wrappedModels(name2)$.__enclos_env__$private$.getWorkingSupport()
+          #                 support <- self$wrappedModels(name2)$.__enclos_env__$
+          #                 private$.getWorkingSupport()
           #                 support <- support$inf:support$sup
           #               }
-          #     sum(self$wrappedModels(name1)$pdf(support-z) * self$wrappedModels(name2)$pdf(support))
+          #     sum(self$wrappedModels(name1)$pdf(support-z) * self$wrappedModels(name2)$
+          #     pdf(support))
           #   }))
           # },list(name1 = d1$short_name, name2 = d2$short_name))
         }

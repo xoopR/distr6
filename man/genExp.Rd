@@ -15,6 +15,6 @@ genExp(object, trafo = NULL)
 The given expectation as a numeric, otherwise NULL.
 }
 \description{
-A generalised expectation function for distributions, for arithmetic mean and more complex
-numeric calculations.
+A generalised expectation function for distributions, for arithmetic mean and more
+complex numeric calculations.
 }

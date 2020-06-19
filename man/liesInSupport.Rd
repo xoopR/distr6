@@ -16,8 +16,8 @@ liesInSupport(object, x, all = TRUE, bound = FALSE)
 \item{bound}{logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.}
 }
 \value{
-Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
-lies in the distribution support or FALSE otherwise.
+Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every
+element lies in the distribution support or FALSE otherwise.
 }
 \description{
 Tests if the given data lies in the support of the Distribution, either tests if all

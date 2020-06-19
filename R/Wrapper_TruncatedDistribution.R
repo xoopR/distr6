@@ -9,8 +9,9 @@
 #' Truncates a distribution at lower and upper limits, using the formulae
 #' \deqn{f_T(x) = f_X(x) / (F_X(upper) - F_X(lower))}
 #' \deqn{F_T(x) = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
-#' where \eqn{f_T}/\eqn{F_T} is the pdf/cdf of the truncated distribution T = Truncate(X, lower, upper) and
-#' \eqn{f_X}, \eqn{F_X} is the pdf/cdf of the original distribution.
+#' where \eqn{f_T}/\eqn{F_T} is the pdf/cdf of the truncated distribution
+#' T = Truncate(X, lower, upper) and \eqn{f_X}, \eqn{F_X} is the pdf/cdf of the
+#' original distribution.
 #'
 #' @export
 TruncatedDistribution <- R6Class("TruncatedDistribution",
@@ -32,8 +33,9 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
 
       assertDistribution(distribution)
 
-      if (!isCdf(distribution) | !isPdf(distribution)) {
-        stop("pdf and cdf is required for truncation. Try decorate(distribution, FunctionImputation) first.")
+      if (isCdf(distribution) == 0 | isPdf(distribution) == 0) {
+        stop("pdf and cdf is required for truncation.
+Try decorate(distribution, FunctionImputation) first.")
       }
 
       if (is.null(lower)) {
@@ -53,24 +55,28 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
       private$.outerParameters <- ParameterSet$new(
         id = list("lower", "upper"), value = list(lower, upper),
         support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
-        settable = list(TRUE, TRUE),
         description = list(
           "Lower limit of truncation.",
           "Upper limit of truncation."
         )
       )
+      private$.outerParameters$addChecks("lower",
+                                        function(x, self) x < self$getParameterValue("upper"))
+      private$.outerParameters$addChecks("upper",
+                                        function(x, self) x > self$getParameterValue("lower"))
 
       if (testDiscrete(distribution)) {
-        support <- Interval$new(lower, upper, class = "integer")
+        support <- Interval$new(lower + 1, upper, class = "integer", type = "(]")
       } else {
-        support <- Interval$new(lower, upper)
+        support <- Interval$new(lower, upper, type = "(]")
       }
 
       super$initialize(
         distlist = distlist,
         name = paste("Truncated", distribution$name),
         short_name = paste0("Trunc", distribution$short_name),
-        description = paste0(distribution$description, " Truncated between ", lower, " and ", upper, "."),
+        description = paste0(distribution$description, " Truncated between ", lower, " and ",
+                             upper, "."),
         support = support,
         type = distribution$traits$type,
         valueSupport = distribution$traits$valueSupport, variateForm = "univariate",
@@ -81,24 +87,16 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-
-      if ("trunc_lower" %in% names(lst) & "trunc_upper" %in% names(lst)) {
-        checkmate::assert(lst[["trunc_lower"]] < lst[["trunc_upper"]], .var.name = "trunc_lower must be < trunc_upper")
-      } else if ("trunc_lower" %in% names(lst)) {
-        checkmate::assert(lst[["trunc_lower"]] < self$getParameterValue("trunc_upper"), .var.name = "trunc_lower must be < trunc_upper")
-      } else if ("trunc_upper" %in% names(lst)) {
-        checkmate::assert(lst[["trunc_upper"]] > self$getParameterValue("trunc_lower"), .var.name = "trunc_upper must be > trunc_lower")
-      }
-
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(..., lst = lst, error = error)
 
       if (self$properties$support$class == "integer") {
-        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower"), self$getParameterValue("trunc_upper"), class = "integer")
+        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower") + 1,
+                                                    self$getParameterValue("trunc_upper"),
+                                                    class = "integer")
       } else {
-        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower"), self$getParameterValue("trunc_upper"))
+        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower"),
+                                                    self$getParameterValue("trunc_upper"),
+                                                    type = "(]")
       }
 
       invisible(self)
@@ -114,11 +112,11 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
       if (log) {
         pdf <- dist$pdf(x, log = TRUE) -
           log((dist$cdf(upper) - dist$cdf(lower)))
-        pdf[x < lower | x > upper] <- -Inf
+        pdf[x <= lower | x > upper] <- -Inf
       } else {
         pdf <- dist$pdf(x) /
           (dist$cdf(upper) - dist$cdf(lower))
-        pdf[x < lower | x > upper] <- 0
+        pdf[x <= lower | x > upper] <- 0
       }
 
       return(pdf)
@@ -134,21 +132,21 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
       if (lower.tail) {
         if (log.p) {
           cdf <- log(Fx - Flower) - log(Fupper - Flower)
-          cdf[x < lower] <- -Inf
+          cdf[x <= lower] <- -Inf
           cdf[x >= upper] <- 0
         } else {
           cdf <- (Fx - Flower) / (Fupper - Flower)
-          cdf[x < lower] <- 0
+          cdf[x <= lower] <- 0
           cdf[x >= upper] <- 1
         }
       } else {
         if (log.p) {
           cdf <- log(Fupper - Fx) - log(Fupper - Flower)
-          cdf[x < lower] <- 0
+          cdf[x <= lower] <- 0
           cdf[x >= upper] <- -Inf
         } else {
           cdf <- (Fupper - Fx) / (Fupper - Flower)
-          cdf[x < lower] <- 1
+          cdf[x <= lower] <- 1
           cdf[x >= upper] <- 0
         }
       }
@@ -157,8 +155,8 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       dist <- self$wrappedModels()[[1]]
-      lower <- dist$cdf(self$getParameterValue("trunc_lower"))
-      upper <- dist$cdf(self$getParameterValue("trunc_upper"))
+      lower <- self$getParameterValue("trunc_lower")
+      upper <- self$getParameterValue("trunc_upper")
 
       dist$quantile(p * (upper - lower) + lower, log.p = log.p, lower.tail = lower.tail)
     },

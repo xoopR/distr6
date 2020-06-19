@@ -15,9 +15,9 @@ NULL
 #' The main features of distr6 are:
 #'
 #' \itemize{
-#' \item Currently implements 36 probability distributions (and 11 Kernels) including all distributions in the R
-#' stats package. Each distribution has (where possible) closed form analytic expressions for
-#' basic statistical methods.
+#' \item Currently implements 45 probability distributions (and 11 Kernels) including all
+#' distributions in the R stats package. Each distribution has (where possible) closed form analytic
+#' expressions for basic statistical methods.
 #' \item Decorators that add further functionality to probability distributions including numeric
 #' results for useful modelling functions such as p-norms and k-moments.
 #' \item Wrappers for composite distributions including convolutions, truncation, mixture
@@ -30,6 +30,6 @@ NULL
 #'
 #' And for more advanced usage see the complete tutorials at
 #'
-#' \href{https://alan-turing-institute.github.io/distr6/index.html}{https://alan-turing-institute.github.io/distr6/index.html}
+#' \href{https://alan-turing-institute.github.io/distr6/index.html}{https://alan-turing-institute.github.io/distr6/index.html} #nolint
 #'
 "_PACKAGE"

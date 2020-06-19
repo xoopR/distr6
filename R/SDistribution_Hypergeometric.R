@@ -136,27 +136,18 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (!is.null(lst)) lst <- list(...)
-      size <- if(is.null(lst$size)) self$getParameterValue("size") else lst$size
-      succ <- if(is.null(lst$successes)) self$getParameterValue("successes") else lst$successes
-      fail <- if(is.null(lst$failures)) self$getParameterValue("failures") else lst$failures
-      if(size != succ + fail) {
-        stopf("size (%s) must be equal to sum of successes (%s) and failures (%s).", size, succ, fail)
-      }
-
       super$setParameterValue(..., lst = lst, error = error)
       size <- self$getParameterValue("size")
 
       private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
-        self$getParameterValue("successes") - size):
-      min(
-        self$getParameterValue("draws"),
-        self$getParameterValue("successes")
+        self$getParameterValue("successes") - size):min(self$getParameterValue("draws"),
+                                                        self$getParameterValue("successes")
       ))
 
-      self$parameters()$.__enclos_env__$private$.setParameterSupport(list(successes = Set$new(0:size)))
-      self$parameters()$.__enclos_env__$private$.setParameterSupport(list(draws = Set$new(0:size)))
-      self$parameters()$.__enclos_env__$private$.setParameterSupport(list(failures = Set$new(0:size)))
+      pparams = self$parameters()$.__enclos_env__$private
+      pparams$.setParameterSupport(list(successes = Set$new(0:size)))
+      pparams$.setParameterSupport(list(draws = Set$new(0:size)))
+      pparams$.setParameterSupport(list(failures = Set$new(0:size)))
       invisible(self)
     }
   ),

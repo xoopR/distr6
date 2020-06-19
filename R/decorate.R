@@ -3,9 +3,9 @@
 #' @description Functionality to decorate R6 Distributions (and child classes) with extra methods.
 #'
 #' @details Decorating is the process of adding methods to classes that are not part of the core
-#' interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators are currently available. The primary
-#' use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
-#' to impute missing d/p/q/r functions.
+#' interface (Gamma et al. 1994). Use \code{listDecorators} to see which decorators are currently
+#' available. The primary use-cases are to add numeric results when analytic ones are missing,
+#' to add complex modelling functions and to impute missing d/p/q/r functions.
 #'
 #' @param distribution `([Distribution])`\cr
 #' [Distribution] to decorate.
@@ -48,9 +48,10 @@ decorate <- function(distribution, decorators, ...) {
       decorators <- setdiff(decorators, distribution$decorators)
     }
 
-    suppressMessages(lapply(decorators, function(a_decorator) get(a_decorator)$new()$decorate(distribution, ...)))
+    suppressMessages(lapply(decorators, function(a_decorator)
+      get(a_decorator)$new()$decorate(distribution, ...)))
 
-    message(paste(distribution$name, "is now decorated with", paste0(decorators, collapse = ",")))
+    message(paste(distribution$name, "is now decorated with", paste0(decorators, collapse = ", ")))
     return(distribution)
   }
 }

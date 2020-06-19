@@ -50,4 +50,6 @@ TriangularKernel <- R6Class("TriangularKernel",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel",
+                                                Support = "[-1,1]", Packages = "-"))

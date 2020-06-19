@@ -49,4 +49,6 @@ UniformKernel <- R6Class("UniformKernel",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Unif", ClassName = "UniformKernel", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Unif", ClassName = "UniformKernel",
+                                                Support = "[-1,1]", Packages = "-"))

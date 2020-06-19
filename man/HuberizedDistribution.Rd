@@ -14,8 +14,8 @@ Huberizes a distribution at lower and upper limits, using the formula
 \deqn{f_H(x) = F(x), if x \le lower}
 \deqn{f_H(x) = f(x), if lower < x < upper}
 \deqn{f_H(x) = F(x), if x \ge upper}
-where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and \eqn{f_X}/\eqn{F_X} is the
-pdf/cdf of the original distribution.
+where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and
+\eqn{f_X}/\eqn{F_X} is the pdf/cdf of the original distribution.
 }
 \examples{
 

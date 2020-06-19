@@ -55,4 +55,6 @@ Sigmoid <- R6Class("Sigmoid",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid", Support = "\u211D", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Sigm", ClassName = "Sigmoid",
+                                                Support = "\u211D", Packages = "-"))

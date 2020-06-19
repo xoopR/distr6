@@ -26,12 +26,7 @@ DistributionDecorator <- R6Class("DistributionDecorator",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      if (getR6Class(self) == "DistributionDecorator") {
-        stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Try using
-               decorate([distribution], ", getR6Class(self), ")"))
-      }
-
-      invisible(self)
+      abstract(self, "DistributionDecorator", "listDecorators()")
     },
 
     #' @description
