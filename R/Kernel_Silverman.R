@@ -35,7 +35,13 @@ Silverman <- R6Class("Silverman",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return((3 * sqrt(2)) / 16)
+
+      cond1 <- (exp(-x/sqrt(2))*(3*sin(x/sqrt(2)) + 3*cos(x/sqrt(2))))/2^(7/2) +
+        (x*exp(-x/sqrt(2))*sin(x/sqrt(2)))/8
+      cond2 <- (exp(x/sqrt(2))*(-3*sin(x/sqrt(2)) + 3*cos(x/sqrt(2))))/2^(7/2) +
+        (x*exp(x/sqrt(2)) *sin(x/sqrt(2)))/8
+
+      return(ifelse(x >= 0, cond1, cond2))
     },
 
     #' @description
