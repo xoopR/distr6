@@ -26,7 +26,8 @@ Epanechnikov <- R6Class("Epanechnikov",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(3 / 5)
+      return(ifelse(abs(x) > 2, 0, (9/16)*(-abs(x)^5 + 20*abs(x)^3 -
+                                                    40*abs(x)^2 + 32)/30))
     },
 
     #' @description

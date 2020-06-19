@@ -24,7 +24,10 @@ TriangularKernel <- R6Class("TriangularKernel",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(2 / 3)
+
+      return(ifelse(abs(x) > 2, 0,
+                          ifelse(abs(x) <= 1, (3*x^3 - 6*x^2 + 4)/6,
+                                 (-x^3 + 6*x^2 - 12*x +8)/6)))
     },
 
     #' @description
