@@ -159,7 +159,7 @@ reference:
       - c.Distribution
       - huberize
       - truncate
-      - [.ParameterSet
+      - "[.ParameterSet"
   - title: "Univariate Discrete Distributions"
     contents:
       - Bernoulli
@@ -256,4 +256,4 @@ reference:
       - merge.ParameterSet
       - print.ParameterSet
       - setParameterValue
-      - [.ParameterSet
+      - "[.ParameterSet"
