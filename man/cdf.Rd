@@ -10,8 +10,8 @@ cdf(object, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
 \item{object}{(\link{Distribution})}
 
 \item{...}{\code{(numeric())} \cr
-Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
+Points to evaluate the cumulative distribution function of the distribution. Arguments do not
+need to be named. The length of each argument corresponds to the number of points to evaluate,
 the number of arguments corresponds to the number of variables in the distribution.
 See examples.}
 

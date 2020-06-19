@@ -14,6 +14,7 @@
 #' Sampling is performed via the Cholesky decomposition using [chol].
 #'
 #' Number of variables cannot be changed after construction.
+#'
 #' @references
 #' Gentle, J.E. (2009).
 #' Computational Statistics.
@@ -46,6 +47,7 @@ MultivariateNormal <- R6Class("MultivariateNormal",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' Number of variables cannot be changed after construction.
     #' @param mean `(numeric())`\cr
     #' Vector of means, defined on the Reals.
     #' @param cov `(matrix()|vector())` \cr
@@ -151,44 +153,6 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s). Number of variables cannot be changed after
-    #' construction.
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      K <- length(self$getParameterValue("mean"))
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-      if (!is.null(lst$cov)) {
-        if (any(dim(lst$cov) != c(K, K)) |
-          length(lst$cov) != K^2) {
-          lst$cov <- suppressWarnings(matrix(lst$cov, nrow = K, ncol = K))
-        }
-        lst$cov <- as.numeric(lst$cov)
-      }
-      if (!is.null(lst$prec)) {
-        if (any(dim(lst$prec) != c(K, K)) |
-          length(lst$prec) != K^2) {
-          lst$prec <- suppressWarnings(matrix(lst$prec, nrow = K, ncol = K))
-        }
-        lst$prec <- as.numeric(lst$prec)
-      }
-      if (!is.null(lst$mean)) {
-        lst$mean <- as.numeric(lst$mean)
-        if (length(lst$mean) < K) {
-          lst$mean <- rep(lst$mean, K)
-        }
-        if (length(lst$mean) > K) {
-          lst$mean <- lst$mean[1:K]
-        }
-        lst$mean <- as.numeric(lst$mean)
-      }
-
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     },
 
     #' @description

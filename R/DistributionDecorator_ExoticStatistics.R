@@ -265,7 +265,8 @@ NULL
 #' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
 #' to the distribution in the vector to evaluate.
 #'
-#' @return Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is TRUE.
+#' @return Cumulative hazard function as a numeric, natural logarithm returned if \code{log} is
+#' TRUE.
 #'
 #' @export
 NULL
@@ -304,7 +305,8 @@ NULL
 
 #' @title Survival Function P-Norm
 #' @name survivalPNorm
-#' @description The p-norm of the survival function evaluated between given limits or over the whole support.
+#' @description The p-norm of the survival function evaluated between given limits or over the
+#' whole support.
 #'
 #' @usage survivalPNorm(object, p = 2, lower = NULL, upper = NULL)
 #'

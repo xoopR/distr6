@@ -16,8 +16,8 @@ An R6 object of class \link[set6:Set]{set6::Set}.
 Deprecated. Use $properties$support
 }
 \details{
-The support of a probability distribution is defined as the interval where the pmf/pdf is
-greater than zero,
+The support of a probability distribution is defined as the interval where the pmf/pdf
+is greater than zero,
 \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
 where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
 }

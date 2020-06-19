@@ -61,10 +61,8 @@ id <- list("rate", "scale")
 value <- list(1, 1)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
 settable <- list(TRUE, FALSE)
-description <- list("Arrival rate", "Scale parameter")
 ps <- ParameterSet$new(
   id, value, support, settable,
-  description
 )
 ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
 ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
@@ -77,19 +75,22 @@ ps$getParameterValue("scale") # Auto-updated to 1/2
 ## Method `ParameterSet$merge`
 ## ------------------------------------------------
 
-ps1 <- ParameterSet$new(id = "prob",
-                 value = 0.2,
-                 support = set6::Interval$new(0, 1),
-                 settable = TRUE,
-                 description = "Probability of success"
+ps1 <- ParameterSet$new(id = c("prob", "qprob"),
+                 value = c(0.2, 0.8),
+                 support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
+ ps1$addChecks("prob", function(x, self) x > 0)
+ ps1$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
  ps2 <- ParameterSet$new(id = "size",
                  value = 10,
                  support = set6::Interval$new(0, 10, class = "integer"),
-                 settable = TRUE,
-                 description = "Number of trials"
  )
- ps1$merge(ps2)$print()
+ ps2$addTrafos("size", function(x, self) x + 1)
+ ps1$merge(ps2)
+ ps1$print()
+ ps1$trafos
+ ps1$checks
+ ps1$deps
 
 ## ------------------------------------------------
 ## Method `ParameterSet$addDeps`
@@ -99,10 +100,8 @@ id <- list("rate", "scale")
 value <- list(1, 1)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
 settable <- list(TRUE, FALSE)
-description <- list("Arrival rate", "Scale parameter")
 ps <- ParameterSet$new(
-  id, value, support, settable,
-  description
+  id, value, support, settable
 )
 ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
 ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
@@ -110,8 +109,7 @@ ps$deps
 
 # Alternate method
 ps <- ParameterSet$new(
-  id, value, support, settable,
-  description
+  id, value, support, settable
 )
 ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
                           y = c("rate", "scale"),
@@ -147,6 +145,27 @@ ps$addChecks(dt = data.table::data.table(
                           x = "lower",
                           fun = function(x, self) x < self$getParameterValue("upper")
            ))
+
+## ------------------------------------------------
+## Method `ParameterSet$addTrafos`
+## ------------------------------------------------
+
+ps <- ParameterSet$new(
+  "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
+)
+ps$addTrafos("probs", function(x, self) return(x / sum(x)))
+ps$trafos
+ps$setParameterValue(probs = c(1, 2))
+ps$getParameterValue("probs")
+
+# Alternate method (better with more parameters)
+ps <- ParameterSet$new(
+  "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
+)
+ps$addTrafos(dt = data.table::data.table(
+                          x = "probs",
+                          fun = function(x, self) return(x / sum(x))
+           ))
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -156,6 +175,8 @@ ps$addChecks(dt = data.table::data.table(
 \item{\code{deps}}{Returns ParameterSet dependencies table.}
 
 \item{\code{checks}}{Returns ParameterSet assertions table.}
+
+\item{\code{trafos}}{Returns ParameterSet transformations table.}
 }
 \if{html}{\out{</div>}}
 }
@@ -171,6 +192,7 @@ ps$addChecks(dt = data.table::data.table(
 \item \href{#method-merge}{\code{ParameterSet$merge()}}
 \item \href{#method-addDeps}{\code{ParameterSet$addDeps()}}
 \item \href{#method-addChecks}{\code{ParameterSet$addChecks()}}
+\item \href{#method-addTrafos}{\code{ParameterSet$addTrafos()}}
 \item \href{#method-clone}{\code{ParameterSet$clone()}}
 }
 }
@@ -385,10 +407,8 @@ If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"sto
 value <- list(1, 1)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
 settable <- list(TRUE, FALSE)
-description <- list("Arrival rate", "Scale parameter")
 ps <- ParameterSet$new(
   id, value, support, settable,
-  description
 )
 ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
 ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
@@ -422,19 +442,22 @@ Merges multiple parameter sets.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{ps1 <- ParameterSet$new(id = "prob",
-                 value = 0.2,
-                 support = set6::Interval$new(0, 1),
-                 settable = TRUE,
-                 description = "Probability of success"
+\preformatted{ps1 <- ParameterSet$new(id = c("prob", "qprob"),
+                 value = c(0.2, 0.8),
+                 support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
+ ps1$addChecks("prob", function(x, self) x > 0)
+ ps1$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
  ps2 <- ParameterSet$new(id = "size",
                  value = 10,
                  support = set6::Interval$new(0, 10, class = "integer"),
-                 settable = TRUE,
-                 description = "Number of trials"
  )
- ps1$merge(ps2)$print()
+ ps2$addTrafos("size", function(x, self) x + 1)
+ ps1$merge(ps2)
+ ps1$print()
+ ps1$trafos
+ ps1$checks
+ ps1$deps
 }
 \if{html}{\out{</div>}}
 
@@ -476,10 +499,8 @@ See second example.}
 value <- list(1, 1)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
 settable <- list(TRUE, FALSE)
-description <- list("Arrival rate", "Scale parameter")
 ps <- ParameterSet$new(
-  id, value, support, settable,
-  description
+  id, value, support, settable
 )
 ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
 ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
@@ -487,8 +508,7 @@ ps$deps
 
 # Alternate method
 ps <- ParameterSet$new(
-  id, value, support, settable,
-  description
+  id, value, support, settable
 )
 ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
                           y = c("rate", "scale"),
@@ -507,7 +527,8 @@ ps$deps
 \if{html}{\out{<a id="method-addChecks"></a>}}
 \if{latex}{\out{\hypertarget{method-addChecks}{}}}
 \subsection{Method \code{addChecks()}}{
-Add parameter checks for automatic assertions.
+Add parameter checks for automatic assertions. Note checks are made after
+any transformations.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addChecks(x, fun, dt = NULL)}\if{html}{\out{</div>}}
 }
@@ -519,13 +540,12 @@ Add parameter checks for automatic assertions.
 id of parameter to be checked.}
 
 \item{\code{fun}}{\verb{(function(1))}\cr
-Function used to update \code{y}, must include \verb{x, self} in formal arguments and
+Function used to check \code{x}, must include \verb{x, self} in formal arguments and
 \code{x} in body where \code{x} is the value of the parameter to check. Result should
-be a logical.
-See first example.}
+be a logical. See first example.}
 
 \item{\code{dt}}{\verb{([data.table::data.table])}\cr
-Alternate method to directly construct \code{data.table} of dependencies to add.
+Alternate method to directly construct \code{data.table} of checks to add.
 See second example.}
 }
 \if{html}{\out{</div>}}
@@ -553,6 +573,57 @@ ps <- ParameterSet$new(
 ps$addChecks(dt = data.table::data.table(
                           x = "lower",
                           fun = function(x, self) x < self$getParameterValue("upper")
+           ))
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addTrafos"></a>}}
+\if{latex}{\out{\hypertarget{method-addTrafos}{}}}
+\subsection{Method \code{addTrafos()}}{
+Transformations to apply to parameter before setting. Note transformations are made before
+checks.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addTrafos(x, fun, dt = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{(character(1))}\cr
+id of parameter to be transformed. Only one trafo function per parameter allowed - though
+multiple transformations can be encoded within this.}
+
+\item{\code{fun}}{\verb{(function(1))}\cr
+Function used to transform \code{x}, must include \verb{x, self} in formal arguments and
+\code{x} in body where \code{x} is the value of the parameter to check.  See first example.}
+
+\item{\code{dt}}{\verb{([data.table::data.table])}\cr
+Alternate method to directly construct \code{data.table} of transformations to add.
+See second example.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{ps <- ParameterSet$new(
+  "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
+)
+ps$addTrafos("probs", function(x, self) return(x / sum(x)))
+ps$trafos
+ps$setParameterValue(probs = c(1, 2))
+ps$getParameterValue("probs")
+
+# Alternate method (better with more parameters)
+ps <- ParameterSet$new(
+  "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
+)
+ps$addTrafos(dt = data.table::data.table(
+                          x = "probs",
+                          fun = function(x, self) return(x / sum(x))
            ))
 }
 \if{html}{\out{</div>}}

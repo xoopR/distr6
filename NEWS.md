@@ -15,7 +15,7 @@
 * Distribution `type` is now required in construction custom `Distribution`s as the previous method of 'guessing' was inefficient.
 * Added `ParameterSetCollection` for `Wrapper`s. Same functionality as before but much more efficient.
 * Added `$addDeps` and `$deps` to `ParameterSet`s to replace `updateFunc`. This allows faster and more precise control over parameter updates.
-* Added `$addChecks` and `$checks` to `ParameterSet`s to replace custom checks in distributions. This allows clearner control parameter setting.
+* Added `$addChecks` and `$checks` to `ParameterSet`s to replace custom checks in distributions, and  `$addTrafos` and `$trafos` to replace custom parameter transformations before setting. These allows clearner control over parameter setting.
 * `categories` parameter in `Categorical` now called `nCategories`
 * Constructor of `Categorical` now requires elements to be provided as a `list` to `elements`
 * `settable` in `ParameterSet` now refers to the more intuitive flag that describes if a parameter can be set after construction
@@ -49,6 +49,7 @@
 * `Degenerate`, `ShiftedLoglogistic` now Rcpp
 * Removed redundant `K` parameter from `MultivariateNormal`
 * Bugfix in `Wald`, symmetry was incorrectly flagged as "symmetric"
+* Fixed bug in `TruncatedDistribution` support - previously support interval type was `"[]"` instead of `"(]"`. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open. 
 
 # distr6 1.3.7
 

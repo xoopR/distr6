@@ -49,4 +49,6 @@ Quartic <- R6Class("Quartic",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Quart", ClassName = "Quartic", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Quart", ClassName = "Quartic",
+                                                Support = "[-1,1]", Packages = "-"))

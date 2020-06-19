@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Triangular
 #' @template SDist
 #' @aliases SymmetricTriangular
@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b}
 #' @templateVar paramsupport \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}
 #' @templateVar distsupport \eqn{[a, b]}
+# nolint end
 #'
 #' @template param_lower
 #' @template param_upper
@@ -50,7 +51,7 @@ Triangular <- R6Class("Triangular",
     #'
     #' @examples
     #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-    #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE) # Note mode defaults to a symmetric shape
+    #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
     #' Triangular$new(lower = 2, upper = 5, mode = 4)
     #'
     #' # You can view the type of Triangular distribution with $description
@@ -116,7 +117,8 @@ Triangular <- R6Class("Triangular",
       mode <- unlist(self$getParameterValue("mode"))
       median <- numeric(length(lower))
       ind = mode >= (lower + upper) / 2
-      median[ind] = lower[ind] + sqrt((upper[ind] - lower[ind]) * (mode[ind] - lower[ind])) / sqrt(2)
+      median[ind] = lower[ind] + sqrt((upper[ind] - lower[ind]) * (mode[ind] - lower[ind])) /
+        sqrt(2)
       median[!ind] = upper[!ind] - sqrt((upper[!ind] - lower[!ind]) * (upper[!ind] - mode[!ind])) /
         sqrt(2)
       return(median)
@@ -138,8 +140,8 @@ Triangular <- R6Class("Triangular",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       lower <- unlist(self$getParameterValue("lower"))
       upper <- unlist(self$getParameterValue("upper"))
@@ -183,7 +185,8 @@ Triangular <- R6Class("Triangular",
       upper <- self$getParameterValue("upper")
       mode <- self$getParameterValue("mode")
 
-      num <- 2 * ((upper - mode) * exp(lower * t) - (upper - lower) * exp(mode * t) + (mode - lower) * exp(upper * t))
+      num <- 2 * ((upper - mode) * exp(lower * t) - (upper - lower) * exp(mode * t) + (mode - lower)
+                  * exp(upper * t))
       den <- (upper - lower) * (mode - lower) * (upper - mode) * t^2
 
       return(num / den)
@@ -197,7 +200,8 @@ Triangular <- R6Class("Triangular",
       upper <- self$getParameterValue("upper")
       mode <- self$getParameterValue("mode")
 
-      num <- -2 * ((upper - mode) * exp(1i * lower * t) - (upper - lower) * exp(1i * mode * t) + (mode - lower) * exp(1i * upper * t))
+      num <- -2 * ((upper - mode) * exp(1i * lower * t) - (upper - lower) * exp(1i * mode * t) +
+                     (mode - lower) * exp(1i * upper * t))
       den <- (upper - lower) * (mode - lower) * (upper - mode) * t^2
 
       return(num / den)
@@ -214,9 +218,7 @@ Triangular <- R6Class("Triangular",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-
       super$setParameterValue(..., lst = lst, error = error)
-
       lower <- self$getParameterValue("lower")
       upper <- self$getParameterValue("upper")
       private$.properties$support <- Interval$new(lower, upper)

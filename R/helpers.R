@@ -184,9 +184,13 @@ rsapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FAL
   }
 }
 
-abstract <- function(obj, class) {
+abstract <- function(obj, class, see) {
   if (getR6Class(obj) == class) {
-    stop(paste(class, "is an abstract class that can't be initialized."))
+    if (missing(see)) {
+      stopf("%s is an abstract class that can't be initialized.", class)
+    } else {
+      stopf("%s is an abstract class that can't be initialized. Instead see %s.", class, see)
+    }
   }
 }
 

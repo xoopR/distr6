@@ -61,8 +61,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' * `"tbf"` - Trials before failures.
     #' * `"tbs"` - Trials before successes.
     #' Use `$description` to see the Negative Binomial form.
-    #' @examples
-    #' NegativeBinomial$new(form = "tbf")$description
     initialize = function(size = 10, prob = 0.5, qprob = NULL, mean = NULL,
                           form = c("fbs", "sbf", "tbf", "tbs"),
                           decorators = NULL) {
@@ -260,22 +258,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (!is.null(lst)) lst <- list(...)
-      if (!is.null(lst$form)) stop("Distribution form cannot be changed after construction.")
-
-      mean <- if(is.null(lst$mean)) self$getParameterValue("mean") else lst$mean
-      size <- if(is.null(lst$size)) self$getParameterValue("size") else lst$size
-      form <- self$getParameterValue("form")
-      if (form == "tbf") {
-        if (mean <= size) {
-          stop("Mean must be > number of failures")
-        }
-      } else if (form == "tbs") {
-        if (mean <= size) {
-          stop("Mean must be > number of successes")
-        }
-      }
-
       super$setParameterValue(..., lst = lst, error = error)
 
       if (self$getParameterValue("form") == "tbf" | self$getParameterValue("form") == "tbs") {

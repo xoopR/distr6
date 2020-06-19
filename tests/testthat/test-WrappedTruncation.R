@@ -4,9 +4,9 @@ test_that("check truncation constructor", {
   expect_silent(truncate(Binomial$new(), lower = 1, upper = 5))
   expect_silent(truncate(Binomial$new(), upper = 5))
   expect_silent(truncate(Binomial$new(), lower = 1))
-  expect_equal(truncate(Binomial$new())$inf, 0)
+  expect_equal(truncate(Binomial$new())$inf, 1)
   expect_equal(truncate(Binomial$new())$sup, 10)
-  expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$inf, 0)
+  expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$inf, 1)
   expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$sup, 10)
 })
 
@@ -16,7 +16,8 @@ test_that("truncation results", {
   expect_equal(t$pdf(0), 0)
   expect_equal(
     t$pdf(4),
-    dbinom(4, prob = 0.5, size = 10) / ((pbinom(5, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10)))
+    dbinom(4, prob = 0.5, size = 10) / ((pbinom(5, prob = 0.5, size = 10) -
+                                           pbinom(1, prob = 0.5, size = 10)))
   )
   expect_equal(t$cdf(5), 1)
   expect_equal(t$cdf(6), 1)
@@ -26,8 +27,9 @@ test_that("truncation results", {
     (pbinom(4, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10)) /
       (pbinom(5, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10))
   )
-  expect_equal(t$support$strprint(), Interval$new(1, 5, class = "integer")$strprint())
-  expect_equal(truncate(Exponential$new(), lower = 2, upper = 3)$support$strprint(), Interval$new(2, 3)$strprint())
+  expect_equal(t$support$strprint(), Interval$new(2, 5, class = "integer")$strprint())
+  expect_equal(truncate(Exponential$new(), lower = 2, upper = 3)$support$strprint(),
+               Interval$new(2, 3, type = "(]")$strprint())
 })
 
 
@@ -38,13 +40,13 @@ test_that("check missing", {
 
 test_that("check truncation parameters", {
   x <- truncate(Binomial$new(), lower = 1, upper = 5)
-  expect_equal(x$inf, 1)
+  expect_equal(x$inf, 2)
   expect_equal(x$sup, 5)
   expect_equal(x$getParameterValue("trunc_lower"), 1)
   expect_equal(x$getParameterValue("trunc_upper"), 5)
   expect_silent(x$setParameterValue(trunc_lower = 2))
   expect_silent(x$setParameterValue(trunc_upper = 10))
-  expect_equal(x$inf, 2)
+  expect_equal(x$inf, 3)
   expect_equal(x$sup, 10)
   expect_equal(x$getParameterValue("trunc_lower"), 2)
   expect_equal(x$getParameterValue("trunc_upper"), 10)

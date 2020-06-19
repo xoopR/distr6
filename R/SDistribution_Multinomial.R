@@ -184,20 +184,6 @@ Multinomial <- R6Class("Multinomial",
     pgf = function(z) {
       checkmate::assert(length(z) == self$getParameterValue("K"))
       return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
-    },
-
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-
-      lst$probs <- lst$probs / sum(lst$probs)
-      lst$K <- NULL
-
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 

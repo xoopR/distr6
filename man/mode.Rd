@@ -12,7 +12,8 @@ mode(object, which = "all")
 \item{which}{which mode of the distribution should be returned, default is all.}
 }
 \value{
-The estimated mode as a numeric, either all modes (if multiple) or the ordered mode given in \code{which}.
+The estimated mode as a numeric, either all modes (if multiple) or the ordered mode given
+in \code{which}.
 }
 \description{
 A numeric search for the mode(s) of a distribution.
@@ -21,8 +22,8 @@ A numeric search for the mode(s) of a distribution.
 If the distribution has multiple modes, all are returned by default. Otherwise the index
 of the mode to return can be given or "all" if all should be returned.
 
-If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-\code{\link{CoreStatistics}} decorator.
+If an analytic expression isn't available, returns error. To impute a numerical expression, use
+the \code{\link{CoreStatistics}} decorator.
 }
 \seealso{
 \code{\link{CoreStatistics}} and \code{\link{decorate}}.

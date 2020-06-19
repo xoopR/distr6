@@ -48,7 +48,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
                           support, type, valueSupport, variateForm,
                           parameters = NULL, outerID = NULL) {
 
-      abstract(self, "DistributionWrapper")
+      abstract(self, "DistributionWrapper", "listWrappers()")
 
       self$name <- name
       self$short_name <- short_name

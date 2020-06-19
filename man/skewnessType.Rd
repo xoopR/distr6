@@ -10,8 +10,8 @@ skewnessType(object)
 \item{object}{Distribution.}
 }
 \value{
-If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
-"positive skew", otherwise returns NULL.
+If the distribution skewness is present in properties, returns one of
+"negative skew", "no skew", "positive skew", otherwise returns NULL.
 }
 \description{
 Deprecated. Use $properties$skewness.

@@ -10,8 +10,8 @@ kurtosisType(object)
 \item{object}{Distribution.}
 }
 \value{
-If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
-otherwise returns NULL.
+If the distribution kurtosis is present in properties, returns one of
+"platykurtic"/"mesokurtic"/"leptokurtic", otherwise returns NULL.
 }
 \description{
 Deprecated. Use $properties$kurtosis.

@@ -68,8 +68,9 @@ Distribution <- R6Class("Distribution",
                           type, support = NULL,
                           symmetric = FALSE,
                           pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-                          parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL,
-                          description = NULL, suppressMoments = FALSE, .suppressChecks = FALSE) {
+                          parameters = NULL, decorators = NULL, valueSupport = NULL,
+                          variateForm = NULL, description = NULL,
+                          suppressMoments = FALSE, .suppressChecks = FALSE) {
 
       if (.suppressChecks | inherits(self, "DistributionWrapper")) {
 
@@ -326,7 +327,8 @@ Distribution <- R6Class("Distribution",
         }
         cat("\n")
 
-        cat(" Support:", self$properties$support$strprint(), "\tScientific Type:", self$traits$type$strprint(), "\n")
+        cat(" Support:", self$properties$support$strprint(), "\tScientific Type:",
+            self$traits$type$strprint(), "\n")
         cat("\n Traits:\t", self$traits$valueSupport, "; ", self$traits$variateForm, sep = "")
         cat("\n Properties:\t", self$properties$symmetry, sep = "")
         if (!inherits(a_kurt, "try-error")) cat(";", self$properties$kurtosis)
@@ -415,7 +417,8 @@ Distribution <- R6Class("Distribution",
     #'  for some infinitesimally small \eqn{dx}.
     #'
     #' If available a pdf will be returned using an analytic expression. Otherwise,
-    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is
+    #' returned.
     #'
     #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
@@ -456,7 +459,8 @@ Distribution <- R6Class("Distribution",
           pdqr <- private$.pdf(data, log = log)
         } else {
           if (!("CoreStatistics" %in% self$decorators)) {
-            stop("No analytical method for log available. Use CoreStatistics decorator to numerically estimate this.")
+            stop("No analytical method for log available.
+Use CoreStatistics decorator to numerically estimate this.")
           } else {
             pdqr <- log(private$.pdf(data))
           }
@@ -475,7 +479,8 @@ Distribution <- R6Class("Distribution",
     #'  \code{\link{survival}} function.
     #'
     #' If available a cdf will be returned using an analytic expression. Otherwise,
-    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is
+    #' returned.
     #'
     #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
@@ -510,7 +515,8 @@ Distribution <- R6Class("Distribution",
           pdqr <- private$.cdf(data, log.p = log.p, lower.tail = lower.tail)
         } else {
           if (!("CoreStatistics" %in% self$decorators)) {
-            stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
+            stop("No analytical method for log.p or lower.tail available. Use CoreStatistics
+decorator to numerically estimate this.")
           } else {
             pdqr <- private$.cdf(data)
             if (!lower.tail) pdqr <- 1 - pdqr
@@ -526,12 +532,13 @@ Distribution <- R6Class("Distribution",
 
     #' @description
     #'  The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
-    #'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
+    #'  \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}} #nolint
     #'
     #'  If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
     #'
     #' If available a quantile will be returned using an analytic expression. Otherwise,
-    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is
+    #' returned.
     #'
     #' @param ... `(numeric())` \cr
     #' Points to evaluate the function at Arguments do not need
@@ -568,7 +575,8 @@ Distribution <- R6Class("Distribution",
           pdqr <- private$.quantile(data, log.p = log.p, lower.tail = lower.tail)
         } else {
           if (!("CoreStatistics" %in% self$decorators)) {
-            stop("No analytical method for log.p or lower.tail available. Use CoreStatistics decorator to numerically estimate this.")
+            stop("No analytical method for log.p or lower.tail available. Use CoreStatistics
+decorator to numerically estimate this.")
           } else {
             if (log.p) data <- exp(data)
             if (!lower.tail) data <- 1 - data
@@ -586,7 +594,8 @@ Distribution <- R6Class("Distribution",
     #' The rand function draws `n` simulations from the distribution.
     #'
     #' If available simulations will be returned using an analytic expression. Otherwise,
-    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is returned.
+    #' if the distribution has not been decorated with [FunctionImputation], \code{NULL} is
+    #' returned.
     #'
     #' @examples
     #' b <- Binomial$new()
@@ -774,8 +783,8 @@ Distribution <- R6Class("Distribution",
     #' If an analytical cdf is available, then this is computed as the smallest interval
     #' in which the cdf lower bound is `0` and the upper bound is `1`, bounds are incremented in
     #' 10^i intervals. If no analytical cdf is available, then this is computed as the smallest
-    #' interval in which the lower and upper bounds of the pdf are `0`, this is much less precise and
-    #' is more prone to error. Used primarily by decorators.
+    #' interval in which the lower and upper bounds of the pdf are `0`, this is much less precise
+    #' and is more prone to error. Used primarily by decorators.
     workingSupport = function() {
 
       if (testCountablyFinite(self$properties$support)) {
@@ -922,8 +931,8 @@ NULL
 #' @usage cdf(object, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
 #' @param object ([Distribution])
 #' @param ... `(numeric())` \cr
-#' Points to evaluate the cumulative distribution function of the distribution. Arguments do not need
-#' to be named. The length of each argument corresponds to the number of points to evaluate,
+#' Points to evaluate the cumulative distribution function of the distribution. Arguments do not
+#' need to be named. The length of each argument corresponds to the number of points to evaluate,
 #' the number of arguments corresponds to the number of variables in the distribution.
 #' See examples.
 #' @param lower.tail `logical(1)` \cr
@@ -971,7 +980,8 @@ NULL
 #' or as a [data.table::data.table].
 #'
 #' @export
-quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {}
+quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE,
+                                  data = NULL) {}
 
 #' @name rand
 #' @title Random Simulation Function
@@ -1056,8 +1066,8 @@ NULL
 #' @param all logical, see details.
 #' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
 #'
-#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
-#' lies in the distribution support or FALSE otherwise.
+#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every
+#' element lies in the distribution support or FALSE otherwise.
 #'
 #' @export
 NULL
@@ -1073,8 +1083,8 @@ NULL
 #' @param all logical, see details.
 #' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
 #'
-#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every element
-#' lies in the distribution type or FALSE otherwise.
+#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every
+#' element lies in the distribution type or FALSE otherwise.
 #'
 #' @export
 NULL
@@ -1144,8 +1154,8 @@ NULL
 #' @section R6 Usage: $support
 #' @param object Distribution.
 #' @description Deprecated. Use $properties$support
-#' @details The support of a probability distribution is defined as the interval where the pmf/pdf is
-#' greater than zero,
+#' @details The support of a probability distribution is defined as the interval where the pmf/pdf
+#' is greater than zero,
 #' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
 #' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
 #' @return An R6 object of class [set6::Set].
@@ -1186,8 +1196,8 @@ NULL
 #' @usage dmax(object)
 #' @section R6 Usage: $dmax
 #' @param object Distribution.
-#' @description Returns the distribution maximum as the maximum of the support. If the support is not
-#' bounded above then maximum is given by
+#' @description Returns the distribution maximum as the maximum of the support. If the support is
+#' not bounded above then maximum is given by
 #' \deqn{maximum = supremum - 1.1e-15}
 #' @return Maximum as a numeric.
 #' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
@@ -1199,8 +1209,8 @@ NULL
 #' @usage dmin(object)
 #' @section R6 Usage: $dmin
 #' @param object Distribution.
-#' @description Returns the distribution minimum as the minimum of the support. If the support is not
-#' bounded below then minimum is given by
+#' @description Returns the distribution minimum as the minimum of the support. If the support is
+#' not bounded below then minimum is given by
 #' \deqn{minimum = infimum + 1.1e-15}
 #' @return Minimum as a numeric.
 #' @export
@@ -1211,8 +1221,8 @@ NULL
 #' @usage kurtosisType(object)
 #' @param object Distribution.
 #' @description Deprecated. Use $properties$kurtosis.
-#' @return If the distribution kurtosis is present in properties, returns one of "platykurtic"/"mesokurtic"/"leptokurtic",
-#' otherwise returns NULL.
+#' @return If the distribution kurtosis is present in properties, returns one of
+#' "platykurtic"/"mesokurtic"/"leptokurtic", otherwise returns NULL.
 #' @export
 NULL
 
@@ -1221,8 +1231,8 @@ NULL
 #' @usage skewnessType(object)
 #' @param object Distribution.
 #' @description Deprecated. Use $properties$skewness.
-#' @return If the distribution skewness is present in properties, returns one of "negative skew", "no skew",
-#' "positive skew", otherwise returns NULL.
+#' @return If the distribution skewness is present in properties, returns one of
+#' "negative skew", "no skew", "positive skew", otherwise returns NULL.
 #' @export
 NULL
 

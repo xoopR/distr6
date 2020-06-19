@@ -1,7 +1,7 @@
 #' @title Logistic Kernel
 #'
-#' @description Mathematical and statistical functions for the LogisticKernel kernel defined by the pdf,
-#' \deqn{f(x) = (exp(x) + 2 + exp(-x))^{-1}}
+#' @description Mathematical and statistical functions for the LogisticKernel kernel defined by the
+#'  pdf, \deqn{f(x) = (exp(x) + 2 + exp(-x))^{-1}}
 #' over the support \eqn{x \in R}{x \epsilon R}.
 #'
 #' @name LogisticKernel
@@ -59,4 +59,6 @@ LogisticKernel <- R6Class("LogisticKernel",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel", Support = "\u211D", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel",
+                                                Support = "\u211D", Packages = "-"))

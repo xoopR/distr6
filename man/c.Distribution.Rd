@@ -15,7 +15,7 @@
 A VectorDistribution
 }
 \description{
-Helper function for quickly combining distributions into a \code{\link{VectorDistribution}}.
+Helper function for quickly combining distributions into a \link{VectorDistribution}.
 }
 \examples{
 # Construct and combine

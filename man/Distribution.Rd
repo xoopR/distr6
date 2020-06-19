@@ -109,8 +109,8 @@ symmetry.}
 If an analytical cdf is available, then this is computed as the smallest interval
 in which the cdf lower bound is \code{0} and the upper bound is \code{1}, bounds are incremented in
 10^i intervals. If no analytical cdf is available, then this is computed as the smallest
-interval in which the lower and upper bounds of the pdf are \code{0}, this is much less precise and
-is more prone to error. Used primarily by decorators.}
+interval in which the lower and upper bounds of the pdf are \code{0}, this is much less precise
+and is more prone to error. Used primarily by decorators.}
 }
 \if{html}{\out{</div>}}
 }
@@ -369,7 +369,8 @@ for continuous distributions the probability density function (pdf), \eqn{f_X}, 
 for some infinitesimally small \eqn{dx}.
 
 If available a pdf will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is
+returned.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Distribution$pdf(..., log = FALSE, simplify = TRUE, data = NULL)}\if{html}{\out{</div>}}
 }
@@ -425,7 +426,8 @@ If \code{lower.tail} is FALSE then \eqn{1 - F_X(x)} is returned, also known as t
 \code{\link{survival}} function.
 
 If available a cdf will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is
+returned.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Distribution$cdf(
   ...,
@@ -480,12 +482,13 @@ b$cdf(data = matrix(1:10))
 \if{latex}{\out{\hypertarget{method-quantile}{}}}
 \subsection{Method \code{quantile()}}{
 The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
-\deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}}
+\deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}} #nolint
 
 If \code{lower.tail} is FALSE then \eqn{q_X(1-p)} is returned.
 
 If available a quantile will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is
+returned.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Distribution$quantile(
   ...,
@@ -542,7 +545,8 @@ b$quantile(data = matrix(c(0.1,0.2)))
 The rand function draws \code{n} simulations from the distribution.
 
 If available simulations will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is returned.
+if the distribution has not been decorated with \link{FunctionImputation}, \code{NULL} is
+returned.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Distribution$rand(n, simplify = TRUE)}\if{html}{\out{</div>}}
 }

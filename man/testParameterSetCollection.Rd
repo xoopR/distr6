@@ -35,6 +35,8 @@ an error message as string, \code{test} returns \code{FALSE}.
 Validation checks to test if a given object is a \link{ParameterSetCollection}.
 }
 \examples{
-testParameterSetCollection(5) # FALSE
-testParameterSetCollection(ParameterSetCollection$new(Binom = Binomial$new()$parameters())) # TRUE
+# FALSE
+testParameterSetCollection(5)
+# TRUE
+testParameterSetCollection(ParameterSetCollection$new(Binom = Binomial$new()$parameters()))
 }

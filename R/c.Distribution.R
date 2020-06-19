@@ -1,5 +1,5 @@
 #' @title Combine Distributions into a VectorDistribution
-#' @description Helper function for quickly combining distributions into a \code{\link{VectorDistribution}}.
+#' @description Helper function for quickly combining distributions into a [VectorDistribution].
 #' @param ... distributions to be concatenated.
 #' @param name,short_name,decorators See \code{\link{VectorDistribution}}
 #' @return A VectorDistribution
@@ -26,13 +26,14 @@ c.Distribution <- function(..., name = NULL, short_name = NULL, decorators = NUL
   distlist <- list(...)
   assertDistributionList(distlist)
 
-  # If all distributions in the list are VectorDistributions then try and return a VectorDistribution
-  # with distribution/params constructor.
+  # If all distributions in the list are VectorDistributions then try and return a
+  # VectorDistribution with distribution/params constructor.
   if (all(sapply(distlist, getR6Class) %in% "VectorDistribution")) {
     if (any(sapply(distlist, function(x) x$distlist))) {
       return(VectorDistribution$new(unlist(lapply(distlist, function(x) x$wrappedModels()))))
     } else {
-      distribution <- unlist(lapply(distlist, function(x) as.character(unlist(x$modelTable$distribution))))
+      distribution <- unlist(lapply(distlist, function(x)
+        as.character(unlist(x$modelTable$distribution))))
       if (length(unique(distribution)) == 1) {
         params <- lapply(distlist, function(x) x$modelTable$params)
         if (length(params) != length(distribution)) {

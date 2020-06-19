@@ -7,8 +7,8 @@
 #' @template method_mgfcf
 #' @template method_pgf
 #'
-#' @description This decorator adds numeric methods for missing analytic expression in distr6 Distribution
-#' objects as well as adding generalised expectation and moments functions.
+#' @description This decorator adds numeric methods for missing analytic expressions in
+#' [Distribution]s as well as adding generalised expectation and moments functions.
 #'
 #' @examples
 #' decorate(Exponential$new(), "CoreStatistics")
@@ -99,8 +99,8 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' \deqn{SM(k)_X = \frac{CM(k)}{\sigma^k}}{SM(k)_X = CM(k)/\sigma^k}
     #' the kth raw moment of a distribution is defined by
     #' \deqn{RM(k)_X = E_X[x^k]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and \eqn{\sigma} is the
-    #' standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' @param k `integer(1)` \cr
     #' The `k`-th moment to evaluate the distribution at.
     #' @param type `character(1)` \cr
@@ -321,8 +321,8 @@ NULL
 #' @param object Distribution.
 #' @param trafo transformation for expectation calculation, see details.
 #'
-#' @description A generalised expectation function for distributions, for arithmetic mean and more complex
-#' numeric calculations.
+#' @description A generalised expectation function for distributions, for arithmetic mean and more
+#' complex numeric calculations.
 #'
 #' @return The given expectation as a numeric, otherwise NULL.
 #'
@@ -341,12 +341,13 @@ NULL
 #' @details If the distribution has multiple modes, all are returned by default. Otherwise the index
 #' of the mode to return can be given or "all" if all should be returned.
 #'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use the
-#' \code{\link{CoreStatistics}} decorator.
+#' If an analytic expression isn't available, returns error. To impute a numerical expression, use
+#' the \code{\link{CoreStatistics}} decorator.
 #'
 #' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}.
 #'
-#' @return The estimated mode as a numeric, either all modes (if multiple) or the ordered mode given in \code{which}.
+#' @return The estimated mode as a numeric, either all modes (if multiple) or the ordered mode given
+#' in \code{which}.
 #'
 #' @export
 NULL

@@ -26,8 +26,8 @@ Coerces objects to ParameterSet.
 \details{
 Currently supported coercions are from data tables and lists. Function assumes
 that the data table columns are the correct inputs to a ParameterSet, see the constructor
-for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken to be
-arguments.
+for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken
+to be arguments.
 }
 \seealso{
 \code{\link{ParameterSet}}

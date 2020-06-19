@@ -22,7 +22,7 @@ SDistribution <- R6Class("SDistribution",
     initialize = function(decorators, support, type,
                           symmetry = c("asymmetric", "symmetric")) {
 
-      abstract(self, "SDistribution")
+      abstract(self, "SDistribution", "listDistributions()")
 
       assert_pkgload(self$packages)
 

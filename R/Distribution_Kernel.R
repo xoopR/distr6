@@ -18,9 +18,7 @@ Kernel <- R6Class("Kernel",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(decorators = NULL, support = Interval$new(-1, 1)) {
-      if (getR6Class(self) == "Kernel") {
-        stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Use listKernels() to see the kernels currently implemented in distr6, or Distribution$new() to construct a custom Kernel."))
-      }
+      abstract(self, "Kernel", "listKernels()")
 
       assert_pkgload(self$packages)
 

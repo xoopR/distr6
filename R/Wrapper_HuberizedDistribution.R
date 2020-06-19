@@ -10,8 +10,8 @@
 #' \deqn{f_H(x) = F(x), if x \le lower}
 #' \deqn{f_H(x) = f(x), if lower < x < upper}
 #' \deqn{f_H(x) = F(x), if x \ge upper}
-#' where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and \eqn{f_X}/\eqn{F_X} is the
-#' pdf/cdf of the original distribution.
+#' where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper) and
+#' \eqn{f_X}/\eqn{F_X} is the pdf/cdf of the original distribution.
 #'
 #' @export
 HuberizedDistribution <- R6Class("HuberizedDistribution",
@@ -33,8 +33,9 @@ HuberizedDistribution <- R6Class("HuberizedDistribution",
 
       assertDistribution(distribution)
 
-      if (!distribution$.__enclos_env__$private$.isPdf | !distribution$.__enclos_env__$private$.isCdf) {
-        stop("pdf and cdf are required for huberization. Try decorate(distribution, FunctionImputation) first.")
+      if (isPdf(distribution) == 0 | isCdf(distribution) == 0) {
+        stop("pdf and cdf are required for huberization.
+Try decorate(distribution, FunctionImputation) first.")
       }
 
       if (is.null(lower)) {
@@ -54,12 +55,15 @@ HuberizedDistribution <- R6Class("HuberizedDistribution",
       private$.outerParameters <- ParameterSet$new(
         id = list("lower", "upper"), value = list(lower, upper),
         support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
-        settable = list(TRUE, TRUE),
         description = list(
           "Lower limit of huberization.",
           "Upper limit of huberization."
         )
       )
+      private$.outerParameters$addChecks("lower",
+                                         function(x, self) x < self$getParameterValue("upper"))
+      private$.outerParameters$addChecks("upper",
+                                         function(x, self) x > self$getParameterValue("lower"))
 
       if (testDiscrete(distribution)) {
         support <- Interval$new(lower, upper, class = "integer")
@@ -73,7 +77,8 @@ HuberizedDistribution <- R6Class("HuberizedDistribution",
         distlist = distlist,
         name = paste("Huberized", distribution$name),
         short_name = paste0("Hub", distribution$short_name),
-        description = paste0(distribution$description, " Huberized between ", lower, " and ", upper, "."),
+        description = paste0(distribution$description, " Huberized between ", lower, " and ",
+                             upper, "."),
         support = support,
         type = distribution$traits$type,
         valueSupport = "mixture", variateForm = "univariate",
@@ -84,24 +89,14 @@ HuberizedDistribution <- R6Class("HuberizedDistribution",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) {
-        lst <- list(...)
-      }
-
-      if ("hub_lower" %in% names(lst) & "hub_upper" %in% names(lst)) {
-        checkmate::assert(lst[["hub_lower"]] < lst[["hub_upper"]], .var.name = "hub_lower must be < hub_upper")
-      } else if ("hub_lower" %in% names(lst)) {
-        checkmate::assert(lst[["hub_lower"]] < self$getParameterValue("hub_upper"), .var.name = "hub_lower must be < hub_upper")
-      } else if ("hub_upper" %in% names(lst)) {
-        checkmate::assert(lst[["hub_upper"]] > self$getParameterValue("hub_lower"), .var.name = "hub_upper must be > hub_lower")
-      }
-
-
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(..., lst = lst, error = error)
       if (self$properties$support$class == "integer") {
-        private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"), self$getParameterValue("hub_upper"), class = "integer")
+        private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"),
+                                                    self$getParameterValue("hub_upper"),
+                                                    class = "integer")
       } else {
-        private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"), self$getParameterValue("hub_upper"))
+        private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"),
+                                                    self$getParameterValue("hub_upper"))
       }
 
       invisible(self)

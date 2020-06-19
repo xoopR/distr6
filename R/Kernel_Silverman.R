@@ -54,4 +54,6 @@ Silverman <- R6Class("Silverman",
     }
   )
 )
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Silv", ClassName = "Silverman", Support = "\u211D", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Silv", ClassName = "Silverman",
+                                                Support = "\u211D", Packages = "-"))

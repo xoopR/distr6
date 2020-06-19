@@ -46,4 +46,6 @@ Tricube <- R6Class("Tricube",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Tric", ClassName = "Tricube", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Tric", ClassName = "Tricube",
+                                                Support = "[-1,1]", Packages = "-"))

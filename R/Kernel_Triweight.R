@@ -49,4 +49,6 @@ Triweight <- R6Class("Triweight",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Triw", ClassName = "Triweight", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Triw", ClassName = "Triweight",
+                                                Support = "[-1,1]", Packages = "-"))

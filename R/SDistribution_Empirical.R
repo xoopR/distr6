@@ -195,7 +195,7 @@ Empirical <- R6Class("Empirical",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      message("Data cannot be updated after construction.")
+      warning("Data cannot be updated after construction.")
       return(NULL)
     }
   ),

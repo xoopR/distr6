@@ -1,7 +1,7 @@
 #' @title Epanechnikov Kernel
 #'
-#' @description Mathematical and statistical functions for the Epanechnikov kernel defined by the pdf,
-#' \deqn{f(x) = \frac{3}{4}(1-x^2)}{f(x) = 3/4(1-x^2)}
+#' @description Mathematical and statistical functions for the Epanechnikov kernel defined by the
+#'  pdf, \deqn{f(x) = \frac{3}{4}(1-x^2)}{f(x) = 3/4(1-x^2)}
 #' over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 #'
 #' @details The quantile function is omitted as no closed form analytic expressions could
@@ -49,4 +49,6 @@ Epanechnikov <- R6Class("Epanechnikov",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels, data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov", Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(.distr6$kernels,
+                         data.table::data.table(ShortName = "Epan", ClassName = "Epanechnikov",
+                                                Support = "[-1,1]", Packages = "-"))

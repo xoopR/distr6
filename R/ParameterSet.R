@@ -184,10 +184,8 @@ ParameterSet <- R6Class("ParameterSet",
     #' value <- list(1, 1)
     #' support <- list(set6::PosReals$new(), set6::PosReals$new())
     #' settable <- list(TRUE, FALSE)
-    #' description <- list("Arrival rate", "Scale parameter")
     #' ps <- ParameterSet$new(
     #'   id, value, support, settable,
-    #'   description
     #' )
     #' ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
     #' ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
@@ -198,6 +196,9 @@ ParameterSet <- R6Class("ParameterSet",
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
       checkmate::assertList(lst)
+      orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
+
+      # for-loop is non-signif faster than apply (63 vs 92 ns)
       for (i in seq_along(lst)) {
         value <- lst[[i]]
 
@@ -215,10 +216,12 @@ ParameterSet <- R6Class("ParameterSet",
           }
 
           if (!param$settable) {
-            return(stopwarn(error, sprintf("'%s' is not (manually) settable after construction.", aid)))
+            return(stopwarn(error, sprintf("'%s' is not (manually) settable after construction.",
+                                           aid)))
           }
 
-          private$.check(aid, value)
+          value <- private$.trafo(aid, value)
+          # private$.check(aid, value)
 
           if (length(value) > 1) {
             if (!param$support[[1]]$contains(Tuple$new(value), all = TRUE)) {
@@ -239,6 +242,14 @@ ParameterSet <- R6Class("ParameterSet",
         }
       }
 
+      x = try(mapply(private$.check, private$.parameters$id, private$.parameters$value),
+              silent = TRUE)
+
+      if (class(x) == "try-error") {
+        private$.parameters <- orig
+        stop(x)
+      }
+
       invisible(self)
     },
 
@@ -247,32 +258,45 @@ ParameterSet <- R6Class("ParameterSet",
     #' @param y `([ParameterSet])`
     #' @param ... `([ParameterSet]s)`
     #' @examples
-    #' ps1 <- ParameterSet$new(id = "prob",
-    #'                  value = 0.2,
-    #'                  support = set6::Interval$new(0, 1),
-    #'                  settable = TRUE,
-    #'                  description = "Probability of success"
+    #' ps1 <- ParameterSet$new(id = c("prob", "qprob"),
+    #'                  value = c(0.2, 0.8),
+    #'                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
     #'  )
+    #'  ps1$addChecks("prob", function(x, self) x > 0)
+    #'  ps1$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
     #'  ps2 <- ParameterSet$new(id = "size",
     #'                  value = 10,
     #'                  support = set6::Interval$new(0, 10, class = "integer"),
-    #'                  settable = TRUE,
-    #'                  description = "Number of trials"
     #'  )
-    #'  ps1$merge(ps2)$print()
+    #'  ps2$addTrafos("size", function(x, self) x + 1)
+    #'  ps1$merge(ps2)
+    #'  ps1$print()
+    #'  ps1$trafos
+    #'  ps1$checks
+    #'  ps1$deps
     merge = function(y, ...) {
       newsets <- c(list(y), list(...))
-      lapply(newsets, function(x) checkmate::assert(inherits(x, "ParameterSet"), .var.name = "All objects in merge must be ParameterSets"))
+      lapply(newsets, function(x) {
+        checkmate::assert(inherits(x, "ParameterSet"),
+                          .var.name = "All objects in merge must be ParameterSets")
+      })
 
       newpar <- rbind(
         as.data.table(self),
         data.table::rbindlist(lapply(newsets, function(x) as.data.table(x)))
       )
 
+
       if (any(table(newpar$id) > 1)) {
         stop("IDs must be unique. Try using makeUniqueDistributions first.")
       } else {
         private$.parameters <- newpar
+        private$.trafos <- rbind(private$.trafos,
+                                 data.table::rbindlist(lapply(newsets, function(x) x$trafos)))
+        private$.checks <- rbind(private$.checks,
+                                 data.table::rbindlist(lapply(newsets, function(x) x$checks)))
+        private$.deps <- rbind(private$.deps,
+                                 data.table::rbindlist(lapply(newsets, function(x) x$deps)))
       }
       invisible(self)
     },
@@ -295,10 +319,8 @@ ParameterSet <- R6Class("ParameterSet",
     #' value <- list(1, 1)
     #' support <- list(set6::PosReals$new(), set6::PosReals$new())
     #' settable <- list(TRUE, FALSE)
-    #' description <- list("Arrival rate", "Scale parameter")
     #' ps <- ParameterSet$new(
-    #'   id, value, support, settable,
-    #'   description
+    #'   id, value, support, settable
     #' )
     #' ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
     #' ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
@@ -306,8 +328,7 @@ ParameterSet <- R6Class("ParameterSet",
     #'
     #' # Alternate method
     #' ps <- ParameterSet$new(
-    #'   id, value, support, settable,
-    #'   description
+    #'   id, value, support, settable
     #' )
     #' ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
     #'                           y = c("rate", "scale"),
@@ -340,16 +361,16 @@ ParameterSet <- R6Class("ParameterSet",
     },
 
     #' @description
-    #' Add parameter checks for automatic assertions.
+    #' Add parameter checks for automatic assertions. Note checks are made after
+    #' any transformations.
     #' @param x `(character(1))`\cr
     #' id of parameter to be checked.
     #' @param fun `(function(1))`\cr
-    #' Function used to update `y`, must include `x, self` in formal arguments and
+    #' Function used to check `x`, must include `x, self` in formal arguments and
     #' `x` in body where `x` is the value of the parameter to check. Result should
-    #' be a logical.
-    #' See first example.
+    #' be a logical. See first example.
     #' @param dt `([data.table::data.table])`\cr
-    #' Alternate method to directly construct `data.table` of dependencies to add.
+    #' Alternate method to directly construct `data.table` of checks to add.
     #' See second example.
     #' @examples
     #' id <- list("lower", "upper")
@@ -386,10 +407,68 @@ ParameterSet <- R6Class("ParameterSet",
         if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
           stopf("%s is not a parameter in this ParameterSet", z[[1]])
         }
-        checkmate::assertFunction(z[[2]], c("x", "self"))
+        checkmate::assertFunction(z[[2]], c("x", "self"), TRUE)
       })
 
       private$.checks <- rbind(self$checks, dt)
+
+      invisible(self)
+    },
+
+    #' @description
+    #' Transformations to apply to parameter before setting. Note transformations are made before
+    #' checks.
+    #' @param x `(character(1))`\cr
+    #' id of parameter to be transformed. Only one trafo function per parameter allowed - though
+    #' multiple transformations can be encoded within this.
+    #' @param fun `(function(1))`\cr
+    #' Function used to transform `x`, must include `x, self` in formal arguments and
+    #' `x` in body where `x` is the value of the parameter to check.  See first example.
+    #' @param dt `([data.table::data.table])`\cr
+    #' Alternate method to directly construct `data.table` of transformations to add.
+    #' See second example.
+    #' @examples
+    #' ps <- ParameterSet$new(
+    #'   "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
+    #' )
+    #' ps$addTrafos("probs", function(x, self) return(x / sum(x)))
+    #' ps$trafos
+    #' ps$setParameterValue(probs = c(1, 2))
+    #' ps$getParameterValue("probs")
+    #'
+    #' # Alternate method (better with more parameters)
+    #' ps <- ParameterSet$new(
+    #'   "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
+    #' )
+    #' ps$addTrafos(dt = data.table::data.table(
+    #'                           x = "probs",
+    #'                           fun = function(x, self) return(x / sum(x))
+    #'            ))
+    addTrafos = function(x, fun, dt = NULL) {
+      if (is.null(dt)) {
+        dt <- data.table(x = x, fun = fun)
+      }
+
+      checkmate::assertDataTable(dt, types = c("character", "list"))
+      checkmate::assertNames(colnames(dt), identical.to = c("x", "fun"))
+
+      apply(dt, 1, function(z) {
+        if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
+          stopf("%s is not a parameter in this ParameterSet", z[[1]])
+        }
+        if (nrow(subset(self$trafos, x == z[[1]])) > 0) {
+          warning("%s already has a `trafo` function, this will be overwritten.")
+          ans <- readline("Proceed? Y/N")
+          if(ans == "Y") {
+            private$.trafos <- subset(self$trafos, x != z[[1]])
+          } else {
+            invisible(self)
+          }
+        }
+        checkmate::assertFunction(z[[2]], c("x", "self"), TRUE)
+      })
+
+      private$.trafos <- rbind(self$trafos, dt)
 
       invisible(self)
     }
@@ -415,6 +494,12 @@ ParameterSet <- R6Class("ParameterSet",
     #' Returns ParameterSet assertions table.
     checks = function() {
       return(private$.checks)
+    },
+
+    #' @field trafos
+    #' Returns ParameterSet transformations table.
+    trafos = function() {
+      return(private$.trafos)
     }
   ),
 
@@ -423,6 +508,7 @@ ParameterSet <- R6Class("ParameterSet",
                              settable = logical(), description = character()),
     .deps = data.table(x = character(), y = character(), fun = list()),
     .checks = data.table(x = character(), fun = list()),
+    .trafos = data.table(x = character(), fun = list()),
     .setParameterSupport = function(lst) {
       id <- names(lst)
       support <- lst[[1]]
@@ -438,6 +524,14 @@ ParameterSet <- R6Class("ParameterSet",
         }
       }
       invisible(self)
+    },
+    .trafo = function(id, value) {
+      trafos = subset(self$trafos, x == id)
+      if (nrow(trafos)) {
+        return(trafos$fun[[1]](value, self))
+      } else {
+        return(value)
+      }
     },
     .update = function(id) {
       updates = subset(self$deps, x == id)
@@ -589,8 +683,8 @@ as.data.table.ParameterSet <- function(x, ...) {
 #' @param ... additional arguments
 #' @details Currently supported coercions are from data tables and lists. Function assumes
 #' that the data table columns are the correct inputs to a ParameterSet, see the constructor
-#' for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken to be
-#' arguments.
+#' for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken
+#' to be arguments.
 #' @seealso \code{\link{ParameterSet}}
 #'
 #' @return An R6 object of class ParameterSet.
