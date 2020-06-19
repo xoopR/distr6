@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Imputed Pdf/Cdf/Quantile/Rand Functions — FunctionImputation • distr6</title>
+<title>Imputed Pdf/Cdf/Quantile/Rand Functions Decorator — FunctionImputation • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,12 @@
 
 
 
-<meta property="og:title" content="Imputed Pdf/Cdf/Quantile/Rand Functions — FunctionImputation" />
+<meta property="og:title" content="Imputed Pdf/Cdf/Quantile/Rand Functions Decorator — FunctionImputation" />
 <meta property="og:description" content="This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
-by using strategies dependent on which methods are already present in the distribution." />
+by using strategies dependent on which methods are already present in the distribution. Unlike
+other decorators, private methods are added to the Distribution, not public methods.
+Therefore the underlying public [Distribution]$pdf, [Distribution]$pdf,
+[Distribution]$quantile, and [Distribution]$rand functions stay the same." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -87,7 +90,7 @@ by using strategies dependent on which methods are already present in the distri
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -225,67 +228,114 @@ by using strategies dependent on which methods are already present in the distri
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Imputed Pdf/Cdf/Quantile/Rand Functions</h1>
+    <h1>Imputed Pdf/Cdf/Quantile/Rand Functions Decorator</h1>
     <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_FunctionImputation.R'><code>R/DistributionDecorator_FunctionImputation.R</code></a></small>
     <div class="hidden name"><code>FunctionImputation.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This decorator imputes missing pdf/cdf/quantile/rand methods from R6 Distributions
-by using strategies dependent on which methods are already present in the distribution.</p>
+by using strategies dependent on which methods are already present in the distribution. Unlike
+other decorators, private methods are added to the <a href='Distribution.html'>Distribution</a>, not public methods.
+Therefore the underlying public <code>[Distribution]$pdf</code>, <code>[Distribution]$pdf</code>,
+<code>[Distribution]$quantile</code>, and <code>[Distribution]$rand</code> functions stay the same.</p>
     </div>
 
 
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns a decorated R6 object inheriting from class SDistribution with d/p/q/r numerically
-imputed if previously missing.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Decorator objects add functionality to the given Distribution object by copying methods
-in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-below to find details of the methods that are added to the Distribution. Methods already
-present in the distribution are not overwritten by the decorator.</p>
-<p>Use <code><a href='decorate.html'>decorate</a></code> to decorate a Distribution.</p>
-<p>All methods in this decorator use numerical approximations and therefore better results may be available
-from analytic computations.</p>
-    <h2 class="hasAnchor" id="constructor"><a class="anchor" href="#constructor"></a>Constructor</h2>
-
-    <p>FunctionImputation$new(distribution)</p>
-    <h2 class="hasAnchor" id="constructor-arguments"><a class="anchor" href="#constructor-arguments"></a>Constructor Arguments</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Argument</strong></td><td><strong>Type</strong></td><td><strong>Details</strong></td></tr>
-<tr><td><code>distribution</code></td><td>distribution</td><td>Distribution to decorate.</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="added-methods"><a class="anchor" href="#added-methods"></a>Added Methods</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Method</strong></td><td><strong>Name</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='pdf.html'>pdf(x1, ..., log = FALSE, simplify = TRUE)</a></code></td><td>Density/mass function</td><td><code><a href='pdf.html'>pdf</a></code></td></tr>
-<tr><td><code><a href='cdf.html'>cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td>Distribution function</td><td><code><a href='cdf.html'>cdf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/quantile.html'>quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td>Quantile function</td><td><code><a href='quantile.Distribution.html'>quantile.Distribution</a></code></td></tr>
-<tr><td><code><a href='rand.html'>rand(n, simplify = TRUE)</a></code></td><td>Simulation function</td><td><code><a href='rand.html'>rand</a></code></td></tr>
-</table>
-
-
+    <p>Decorator objects add functionality to the given <a href='Distribution.html'>Distribution</a> object by copying methods
+in the decorator environment to the chosen <a href='Distribution.html'>Distribution</a> environment.</p>
+<p>All methods implemented in decorators try to exploit analytical results where possible, otherwise
+numerical results are used with a message.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='decorate.html'>decorate</a></code>, <code><a href='listDecorators.html'>listDecorators</a></code></p></div>
+    <div class='dont-index'><p>Other decorators: 
+<code><a href='CoreStatistics.html'>CoreStatistics</a></code>,
+<code><a href='ExoticStatistics.html'>ExoticStatistics</a></code></p></div>
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
+
+    <p><code><a href='DistributionDecorator.html'>distr6::DistributionDecorator</a></code> -&gt; <code>FunctionImputation</code></p>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+
+    <p><div class="r6-fields"></p><dl'>
+<dt><code>packages</code></dt><dd><p>Packages required to be installed in order to construct the distribution.</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
+
+    <p><div class="r6-active-bindings"></p><dl'>
+<dt><code>methods</code></dt><dd><p>Returns the names of the available methods in this decorator.</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-decorate'><code>FunctionImputation$decorate()</code></a></p></li>
+<li><p><a href='#method-clone'><code>FunctionImputation$clone()</code></a></p></li>
+</ul>
+<p><details open ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href='../../distr6/html/DistributionDecorator.html#method-initialize'><code>distr6::DistributionDecorator$initialize()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
+<a id="method-decorate"></a></p><h3>Method <code><a href='decorate.html'>decorate()</a></code></h3>
+<p>Decorates the given distribution with the methods available in this decorator.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>FunctionImputation</span>$<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>distribution</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>distribution</code></dt><dd><p><a href='Distribution.html'>Distribution</a> <br />
+Distribution to decorate.</p></dd>
+
+<dt><code>n</code></dt><dd><p><code>(integer(1))</code><br />
+Grid size for imputing functions, cannot be changed after decorating.
+Generally larger <code>n</code> means better accuracy but slower computation, and smaller <code>n</code>
+means worse accuracy and faster computation.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>FunctionImputation</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='no'>Distribution</span>$<span class='fu'>new</span>(<span class='st'>"Test"</span>, <span class='kw'>pdf</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fl'>1</span>/(<span class='fl'>4</span>-<span class='fl'>1</span>),
-<span class='kw'>support</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>4</span>),
-<span class='kw'>type</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span>$<span class='fu'>new</span>())
-<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>x</span>, <span class='no'>FunctionImputation</span>)</div><div class='output co'>#&gt; <span class='message'>x is now decorated with FunctionImputation</span></div><div class='output co'>#&gt; Test </div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>0</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.0000000 0.3333333 0.3333333 0.3333333 0.3333333 0.0000000</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>0</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 0.0000000 0.0000000 0.3333333 0.6666667 1.0000000 1.0000000</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>pdf</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>x</span> <span class='kw'>&lt;</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>x</span> <span class='kw'>&gt;</span> <span class='fl'>10</span>, <span class='fl'>0</span>, <span class='fl'>1</span> / <span class='fl'>10</span>)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>Distribution</span>$<span class='fu'>new</span>(<span class='st'>"Test"</span>,
+  <span class='kw'>pdf</span> <span class='kw'>=</span> <span class='no'>pdf</span>,
+  <span class='kw'>support</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"integer"</span>),
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Naturals.html'>Naturals</a></span>$<span class='fu'>new</span>()
+)
+<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>x</span>, <span class='st'>"FunctionImputation"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Test is now decorated with FunctionImputation</span></div><div class='output co'>#&gt; Test </div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>Distribution</span>$<span class='fu'>new</span>(<span class='st'>"Test"</span>,
+  <span class='kw'>pdf</span> <span class='kw'>=</span> <span class='no'>pdf</span>,
+  <span class='kw'>support</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"integer"</span>),
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Naturals.html'>Naturals</a></span>$<span class='fu'>new</span>(),
+  <span class='kw'>decorators</span> <span class='kw'>=</span> <span class='st'>"FunctionImputation"</span>
+)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>Distribution</span>$<span class='fu'>new</span>(<span class='st'>"Test"</span>,
+  <span class='kw'>pdf</span> <span class='kw'>=</span> <span class='no'>pdf</span>,
+  <span class='kw'>support</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"integer"</span>),
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Naturals.html'>Naturals</a></span>$<span class='fu'>new</span>()
+)
+<span class='no'>FunctionImputation</span>$<span class='fu'>new</span>()$<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='message'>Test is now decorated with FunctionImputation.</span></div><div class='input'>
+<span class='no'>x</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt;  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>)</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 10  8  2  9</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -301,7 +351,7 @@ from analytic computations.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Core Statistical Methods for Distributions — CoreStatistics • distr6</title>
+<title>Core Statistical Methods Decorator — CoreStatistics • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,9 @@
 
 
 
-<meta property="og:title" content="Core Statistical Methods for Distributions — CoreStatistics" />
-<meta property="og:description" content="This decorator adds numeric methods for missing analytic expression in distr6 Distribution
-objects as well as adding generalised expectation and moments functions." />
+<meta property="og:title" content="Core Statistical Methods Decorator — CoreStatistics" />
+<meta property="og:description" content="This decorator adds numeric methods for missing analytic expressions in
+Distributions as well as adding generalised expectation and moments functions." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -87,7 +87,7 @@ objects as well as adding generalised expectation and moments functions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -225,74 +225,193 @@ objects as well as adding generalised expectation and moments functions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Core Statistical Methods for Distributions</h1>
+    <h1>Core Statistical Methods Decorator</h1>
     <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_CoreStatistics.R'><code>R/DistributionDecorator_CoreStatistics.R</code></a></small>
     <div class="hidden name"><code>CoreStatistics.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This decorator adds numeric methods for missing analytic expression in distr6 Distribution
-objects as well as adding generalised expectation and moments functions.</p>
+    <p>This decorator adds numeric methods for missing analytic expressions in
+<a href='Distribution.html'>Distribution</a>s as well as adding generalised expectation and moments functions.</p>
     </div>
 
 
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
-added to the SDistribution methods.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Decorator objects add functionality to the given Distribution object by copying methods
-in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-below to find details of the methods that are added to the Distribution. Methods already
-present in the distribution are not overwritten by the decorator.</p>
-<p>Use <code><a href='decorate.html'>decorate</a></code> to decorate a Distribution.</p>
-<p>All methods in this decorator use numerical approximations and therefore better results may be available
-from analytic computations.</p>
-    <h2 class="hasAnchor" id="constructor"><a class="anchor" href="#constructor"></a>Constructor</h2>
-
-    <p>CoreStatistics$new(distribution)</p>
-    <h2 class="hasAnchor" id="constructor-arguments"><a class="anchor" href="#constructor-arguments"></a>Constructor Arguments</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Argument</strong></td><td><strong>Type</strong></td><td><strong>Details</strong></td></tr>
-<tr><td><code>distribution</code></td><td>distribution</td><td>Distribution to decorate.</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="added-methods"><a class="anchor" href="#added-methods"></a>Added Methods</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Method</strong></td><td><strong>Name</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='mgf.html'>mgf(t)</a></code></td><td>Moment generating function</td><td><code><a href='mgf.html'>mgf</a></code></td></tr>
-<tr><td><code><a href='pgf.html'>pgf(t)</a></code></td><td>Probability generating function</td><td><code><a href='pgf.html'>pgf</a></code></td></tr>
-<tr><td><code><a href='cf.html'>cf(t)</a></code></td><td>Characteristic function</td><td><code><a href='cf.html'>cf</a></code></td></tr>
-<tr><td><code><a href='entropy.html'>entropy(base = 2)</a></code></td><td>(Shannon) Entropy</td><td><code><a href='entropy.html'>entropy</a></code></td></tr>
-<tr><td><code><a href='skewness.html'>skewness()</a></code></td><td>Skewness</td><td><code><a href='skewness.html'>skewness</a></code></td></tr>
-<tr><td><code><a href='kurtosis.html'>kurtosis(excess = TRUE)</a></code></td><td>Kurtosis</td><td><code><a href='kurtosis.html'>kurtosis</a></code></td></tr>
-<tr><td><code><a href='kthmoment.html'>kthmoment(type = "central")</a></code></td><td>Kth Moment</td><td><code><a href='kthmoment.html'>kthmoment</a></code></td></tr>
-<tr><td><code><a href='genExp.html'>genExp(trafo)</a></code></td><td>Generalised Expectation</td><td><code><a href='genExp.html'>genExp</a></code></td></tr>
-<tr><td><code><a href='mode.html'>mode(which = "all")</a></code></td><td>Mode</td><td><code><a href='mode.html'>mode</a></code></td></tr>
-<tr><td><code><a href='variance.html'>variance()</a></code></td><td>Variance</td><td><code><a href='variance.html'>variance</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></td><td>Arithmetic mean</td><td><code><a href='mean.Distribution.html'>mean.Distribution</a></code></td></tr>
-</table>
-
-
+    <p>Decorator objects add functionality to the given <a href='Distribution.html'>Distribution</a> object by copying methods
+in the decorator environment to the chosen <a href='Distribution.html'>Distribution</a> environment.</p>
+<p>All methods implemented in decorators try to exploit analytical results where possible, otherwise
+numerical results are used with a message.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='decorate.html'>decorate</a></code>, <code><a href='listDecorators.html'>listDecorators</a></code></p></div>
+    <div class='dont-index'><p>Other decorators: 
+<code><a href='ExoticStatistics.html'>ExoticStatistics</a></code>,
+<code><a href='FunctionImputation.html'>FunctionImputation</a></code></p></div>
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
+
+    <p><code><a href='DistributionDecorator.html'>distr6::DistributionDecorator</a></code> -&gt; <code>CoreStatistics</code></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-mgf'><code>CoreStatistics$mgf()</code></a></p></li>
+<li><p><a href='#method-cf'><code>CoreStatistics$cf()</code></a></p></li>
+<li><p><a href='#method-pgf'><code>CoreStatistics$pgf()</code></a></p></li>
+<li><p><a href='#method-entropy'><code>CoreStatistics$entropy()</code></a></p></li>
+<li><p><a href='#method-skewness'><code>CoreStatistics$skewness()</code></a></p></li>
+<li><p><a href='#method-kurtosis'><code>CoreStatistics$kurtosis()</code></a></p></li>
+<li><p><a href='#method-variance'><code>CoreStatistics$variance()</code></a></p></li>
+<li><p><a href='#method-kthmoment'><code>CoreStatistics$kthmoment()</code></a></p></li>
+<li><p><a href='#method-genExp'><code>CoreStatistics$genExp()</code></a></p></li>
+<li><p><a href='#method-mode'><code>CoreStatistics$mode()</code></a></p></li>
+<li><p><a href='#method-mean'><code>CoreStatistics$mean()</code></a></p></li>
+<li><p><a href='#method-clone'><code>CoreStatistics$clone()</code></a></p></li>
+</ul>
+<p><details open ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href='../../distr6/html/DistributionDecorator.html#method-decorate'><code>distr6::DistributionDecorator$decorate()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href='../../distr6/html/DistributionDecorator.html#method-initialize'><code>distr6::DistributionDecorator$initialize()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
+<a id="method-mgf"></a></p><h3>Method <code><a href='mgf.html'>mgf()</a></code></h3>
+<p>Numerically estimates the moment-generating function.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
+t integer to evaluate function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-cf"></a></p><h3>Method <code><a href='cf.html'>cf()</a></code></h3>
+<p>Numerically estimates the characteristic function.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='cf.html'>cf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
+t integer to evaluate function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-pgf"></a></p><h3>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<p>Numerically estimates the probability-generating function.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='no'>z</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>z</code></dt><dd><p><code>(integer(1))</code> <br />
+z integer to evaluate probability generating function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-entropy"></a></p><h3>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<p>Numerically estimates the entropy function.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='entropy.html'>entropy</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>base</code></dt><dd><p><code>(integer(1))</code> <br />
+Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<p>Numerically estimates the distribution skewness.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-kurtosis"></a></p><h3>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<p>Numerically estimates the distribution kurtosis.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>excess</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
+<p>Numerically estimates the distribution variance.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-kthmoment"></a></p><h3>Method <code><a href='kthmoment.html'>kthmoment()</a></code></h3>
+<p>The kth central moment of a distribution is defined by
+$$CM(k)_X = E_X[(x - \mu)^k]$$
+the kth standardised moment of a distribution is defined by
+$$SM(k)_X = \frac{CM(k)}{\sigma^k}$$
+the kth raw moment of a distribution is defined by
+$$RM(k)_X = E_X[x^k]$$
+where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
+distribution and \(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='kthmoment.html'>kthmoment</a></span>(<span class='no'>k</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"central"</span>, <span class='st'>"standard"</span>, <span class='st'>"raw"</span>))</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>k</code></dt><dd><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code> <br />
+The <code>k</code>-th moment to evaluate the distribution at.</p></dd>
+
+<dt><code>type</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> <br />
+Type of moment to evaluate.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-genExp"></a></p><h3>Method <code><a href='genExp.html'>genExp()</a></code></h3>
+<p>Numerically estimates \(E[f(X)]\) for some function \(f\).</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='genExp.html'>genExp</a></span>(<span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>trafo</code></dt><dd><p><code>function()</code> <br />
+Transformation function to define the expectation, default is distribution mean.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-mode"></a></p><h3>Method <code><a href='mode.html'>mode()</a></code></h3>
+<p>Numerically estimates the distribution mode.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='mode.html'>mode</a></span>(<span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>which</code></dt><dd><p><code>(character(1) | numeric(1)</code><br />
+Ignored if distribution is unimodal. Otherwise <code>"all"</code> returns all modes, otherwise specifies
+which mode to return.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-mean"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
+<p>Numerically estimates the distribution mean.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>...</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><br />
+Ignored, added for consistency.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>x</span>, <span class='no'>CoreStatistics</span>)</div><div class='output co'>#&gt; <span class='message'>x is now decorated with CoreStatistics</span></div><div class='output co'>#&gt; Binom(prob = 0.5, size = 10) </div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='genExp.html'>genExp</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='no'>CoreStatistics</span>)
-<span class='no'>x</span>$<span class='fu'><a href='kthmoment.html'>kthmoment</a></span>(<span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 17.5</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>(), <span class='st'>"CoreStatistics"</span>)</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>Exponential</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='st'>"CoreStatistics"</span>)</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>CoreStatistics</span>$<span class='fu'>new</span>()$<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>())</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -308,7 +427,7 @@ from analytic computations.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

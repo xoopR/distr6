@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -288,30 +288,6 @@
           <p><code><a href="liesInType.html">liesInType()</a></code> </p>
         </td>
         <td><p>Test if Data Lies in Distribution Type</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="isCdf.html">isCdf</a></code> </p>
-        </td>
-        <td><p>Test the Distribution Cdf Exist?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="isPdf.html">isPdf</a></code> </p>
-        </td>
-        <td><p>Test the Distribution Pdf Exist?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="isQuantile.html">isQuantile</a></code> </p>
-        </td>
-        <td><p>Test the Distribution Quantile Exist?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="isRand.html">isRand</a></code> </p>
-        </td>
-        <td><p>Test the Distribution Rand Exist?</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -426,7 +402,7 @@
         <td>
           <p><code><a href="pdf.html">pdf()</a></code> </p>
         </td>
-        <td><p>Probability Density/Mass Function</p></td>
+        <td><p>Probability Density Function</p></td>
       </tr><tr>
         
         <td>
@@ -480,11 +456,11 @@
         <td>
           <p><code><a href="skewnessType.html">skewnessType()</a></code> </p>
         </td>
-        <td><p>Type of Skewness Accessor</p></td>
+        <td><p>Type of Skewness Accessor - Deprecated</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="squared2Norm.html">squared2Norm()</a></code> </p>
+          <p><code><a href="pdfSquared2Norm.html">pdfSquared2Norm()</a></code> </p>
         </td>
         <td><p>Squared Probability Density Function 2-Norm</p></td>
       </tr><tr>
@@ -559,7 +535,7 @@
         <td>
           <p><code><a href="kurtosisType.html">kurtosisType()</a></code> </p>
         </td>
-        <td><p>Type of Kurtosis Accessor</p></td>
+        <td><p>Type of Kurtosis Accessor - Deprecated</p></td>
       </tr><tr>
         
         <td>
@@ -595,13 +571,13 @@
         <td>
           <p><code><a href="support.html">support()</a></code> </p>
         </td>
-        <td><p>Support Accessor</p></td>
+        <td><p>Support Accessor - Deprecated</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="symmetry.html">symmetry()</a></code> </p>
         </td>
-        <td><p>Symmetry Accessor</p></td>
+        <td><p>Symmetry Accessor - Deprecated</p></td>
       </tr><tr>
         
         <td>
@@ -613,19 +589,25 @@
         <td>
           <p><code><a href="type.html">type()</a></code> </p>
         </td>
-        <td><p>Type Accessor</p></td>
+        <td><p>Type Accessor - Deprecated</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="valueSupport.html">valueSupport()</a></code> </p>
         </td>
-        <td><p>Value Support Accessor</p></td>
+        <td><p>Value Support Accessor - Deprecated</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="variateForm.html">variateForm()</a></code> </p>
         </td>
-        <td><p>Variate Form Accessor</p></td>
+        <td><p>Variate Form Accessor - Deprecated</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="workingSupport.html">workingSupport()</a></code> </p>
+        </td>
+        <td><p>Approximate Finite Support</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -650,19 +632,19 @@
         <td>
           <p><code><a href="CoreStatistics.html">CoreStatistics</a></code> </p>
         </td>
-        <td><p>Core Statistical Methods for Distributions</p></td>
+        <td><p>Core Statistical Methods Decorator</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="ExoticStatistics.html">ExoticStatistics</a></code> </p>
         </td>
-        <td><p>Exotic Statistical Methods for Distributions</p></td>
+        <td><p>Exotic Statistical Methods Decorator</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="FunctionImputation.html">FunctionImputation</a></code> </p>
         </td>
-        <td><p>Imputed Pdf/Cdf/Quantile/Rand Functions</p></td>
+        <td><p>Imputed Pdf/Cdf/Quantile/Rand Functions Decorator</p></td>
       </tr><tr>
         
         <td>
@@ -697,33 +679,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="wrappedModels.html">wrappedModels()</a></code> </p>
+          <p><code><a href="Convolution.html">`+`(<i>&lt;Distribution&gt;</i>)</a></code> <code><a href="Convolution.html">`-`(<i>&lt;Distribution&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Gets Internally Wrapped Models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ProductDistribution.html">ProductDistribution</a></code> </p>
-        </td>
-        <td><p>Product Distribution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="VectorDistribution.html">VectorDistribution</a></code> </p>
-        </td>
-        <td><p>Vectorise Distributions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Extract.VectorDistribution.html">Extract.VectorDistribution()</a></code> <code><a href="Extract.VectorDistribution.html">`[`(<i>&lt;VectorDistribution&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract one or more Distributions from a VectorDistribution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="c.Distribution.html">c(<i>&lt;Distribution&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Combine Distributions into a VectorDistribution</p></td>
+        <td><p>Distribution Convolution Wrapper</p></td>
       </tr><tr>
         
         <td>
@@ -733,9 +691,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="huberize.html">huberize()</a></code> </p>
+          <p><code><a href="MixtureDistribution.html">MixtureDistribution</a></code> </p>
         </td>
-        <td><p>Huberize a Distribution</p></td>
+        <td><p>Mixture Distribution Wrapper</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ProductDistribution.html">`*`(<i>&lt;Distribution&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Product Distribution</p></td>
       </tr><tr>
         
         <td>
@@ -745,21 +709,39 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="VectorDistribution.html">VectorDistribution</a></code> </p>
+        </td>
+        <td><p>Vectorise Distributions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="wrappedModels.html">wrappedModels()</a></code> </p>
+        </td>
+        <td><p>Gets Internally Wrapped Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="c.Distribution.html">c(<i>&lt;Distribution&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Combine Distributions into a VectorDistribution</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="huberize.html">huberize()</a></code> </p>
+        </td>
+        <td><p>Huberize a Distribution</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="truncate.html">truncate()</a></code> </p>
         </td>
         <td><p>Truncate a Distribution</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="MixtureDistribution.html">MixtureDistribution</a></code> </p>
+          <p><code><a href="sub-.ParameterSet.html">`[`(<i>&lt;ParameterSet&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Mixture Distribution Wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Convolution.html">Convolution</a></code> </p>
-        </td>
-        <td><p>Distribution Convolution Wrapper</p></td>
+        <td><p>Extract one or more parameters from a ParameterSet</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -897,6 +879,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="Erlang.html">Erlang</a></code> </p>
+        </td>
+        <td><p>Erlang Distribution Class</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="Exponential.html">Exponential</a></code> </p>
         </td>
         <td><p>Exponential Distribution Class</p></td>
@@ -987,6 +975,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="ShiftedLoglogistic.html">ShiftedLoglogistic</a></code> </p>
+        </td>
+        <td><p>Shifted Log-Logistic Distribution Class</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="StudentT.html">StudentT</a></code> </p>
         </td>
         <td><p>Student's T Distribution Class</p></td>
@@ -1039,6 +1033,12 @@
           <p><code><a href="Dirichlet.html">Dirichlet</a></code> </p>
         </td>
         <td><p>Dirichlet Distribution Class</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="EmpiricalMV.html">EmpiricalMV</a></code> </p>
+        </td>
+        <td><p>EmpiricalMV Distribution Class</p></td>
       </tr><tr>
         
         <td>
@@ -1146,15 +1146,21 @@
       <tr>
         
         <td>
+          <p><code><a href="lines.Distribution.html">lines(<i>&lt;Distribution&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Superimpose Distribution Functions Plots for a distr6 Object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="plot.Distribution.html">plot(<i>&lt;Distribution&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Distribution Functions for a distr6 Object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="lines.Distribution.html">lines(<i>&lt;Distribution&gt;</i>)</a></code> </p>
+          <p><code><a href="plot.VectorDistribution.html">plot(<i>&lt;VectorDistribution&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Superimpose Distribution Functions Plots for a distr6 Object</p></td>
+        <td><p>Plotting Distribution Functions for a VectorDistribution</p></td>
       </tr><tr>
         
         <td>
@@ -1240,6 +1246,30 @@
           <p><code><a href="testNoSkew.html">testNoSkew()</a></code> <code><a href="testNoSkew.html">checkNoSkew()</a></code> <code><a href="testNoSkew.html">assertNoSkew()</a></code> </p>
         </td>
         <td><p>assert/check/test/NoSkew</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="testParameterSet.html">testParameterSet()</a></code> <code><a href="testParameterSet.html">checkParameterSet()</a></code> <code><a href="testParameterSet.html">assertParameterSet()</a></code> </p>
+        </td>
+        <td><p>assert/check/test/ParameterSet</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="testParameterSetCollection.html">testParameterSetCollection()</a></code> <code><a href="testParameterSetCollection.html">checkParameterSetCollection()</a></code> <code><a href="testParameterSetCollection.html">assertParameterSetCollection()</a></code> </p>
+        </td>
+        <td><p>assert/check/test/ParameterSetCollection</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="testParameterSetCollectionList.html">testParameterSetCollectionList()</a></code> <code><a href="testParameterSetCollectionList.html">checkParameterSetCollectionList()</a></code> <code><a href="testParameterSetCollectionList.html">assertParameterSetCollectionList()</a></code> </p>
+        </td>
+        <td><p>assert/check/test/ParameterSetCollectionList</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="testParameterSetList.html">testParameterSetList()</a></code> <code><a href="testParameterSetList.html">checkParameterSetList()</a></code> <code><a href="testParameterSetList.html">assertParameterSetList()</a></code> </p>
+        </td>
+        <td><p>assert/check/test/ParameterSetList</p></td>
       </tr><tr>
         
         <td>
@@ -1337,7 +1367,19 @@
         <td>
           <p><code><a href="ParameterSet.html">ParameterSet</a></code> </p>
         </td>
-        <td><p>Make an R6 Parameter Set for Distributions</p></td>
+        <td><p>Parameter Sets for Distributions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ParameterSetCollection.html">ParameterSetCollection</a></code> </p>
+        </td>
+        <td><p>Parameter Set Collections for Wrapped Distributions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.data.table.ParameterSet.html">as.data.table(<i>&lt;ParameterSet&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Coerce ParameterSet to data.table</p></td>
       </tr><tr>
         
         <td>
@@ -1359,15 +1401,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="setParameterValue.html">setParameterValue()</a></code> </p>
+          <p><code><a href="merge.ParameterSet.html">merge(<i>&lt;ParameterSet&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Parameter Value Setter</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.data.table.ParameterSet.html">as.data.table(<i>&lt;ParameterSet&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Coerce ParameterSet to data.table</p></td>
+        <td><p>Combine ParameterSets</p></td>
       </tr><tr>
         
         <td>
@@ -1377,15 +1413,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="merge.ParameterSet.html">merge(<i>&lt;ParameterSet&gt;</i>)</a></code> </p>
+          <p><code><a href="setParameterValue.html">setParameterValue()</a></code> </p>
         </td>
-        <td><p>Combine ParameterSets</p></td>
+        <td><p>Parameter Value Setter</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="update.ParameterSet.html">update(<i>&lt;ParameterSet&gt;</i>)</a></code> </p>
+          <p><code><a href="sub-.ParameterSet.html">`[`(<i>&lt;ParameterSet&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Updates a ParameterSet</p></td>
+        <td><p>Extract one or more parameters from a ParameterSet</p></td>
       </tr>
     </tbody>
     </table>
@@ -1405,7 +1441,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

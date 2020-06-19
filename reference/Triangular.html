@@ -87,7 +87,7 @@ is commonly used to model population data where only the minimum, mode and maxim
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -244,143 +244,332 @@ is commonly used to model population data where only the minimum, mode and maxim
 
     <p>The Triangular distribution parameterised with  lower limit, \(a\), upper limit, \(b\), and mode, \(c\), is defined by the pdf, <br /><br /> \(f(x) = 0, x &lt; a\) <br /> \(f(x) = 2(x-a)/((b-a)(c-a)), a \le x &lt; c\) <br /> \(f(x) = 2/(b-a), x = c\) <br /> \(f(x) = 2(b-x)/((b-a)(b-c)), c &lt; x \le b\) <br /> \(f(x) = 0, x &gt; b\) for \(a,b,c \ \in \ R\), \(a \le c \le b\).</p>
 <p>The distribution is supported on \([a, b]\).</p>
-    <h2 class="hasAnchor" id="constructor"><a class="anchor" href="#constructor"></a>Constructor</h2>
-
-    <p>Triangular$new(lower = 0, upper = 1, mode = 0.5, symmetric = FALSE, decorators = NULL, verbose = FALSE)</p>
-    <h2 class="hasAnchor" id="constructor-arguments"><a class="anchor" href="#constructor-arguments"></a>Constructor Arguments</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Argument</strong></td><td><strong>Type</strong></td><td><strong>Details</strong></td></tr>
-<tr><td><code>lower</code></td><td>numeric</td><td>lower limit.</td></tr>
-<tr><td><code>upper</code></td><td>numeric</td><td>upper limit.</td></tr>
-<tr><td><code>mode</code></td><td>numeric</td><td>mode.</td></tr>
-<tr><td><code>symmetric</code></td><td>logical</td><td>see details.</td></tr>
-<tr><td><code>decorators</code></td><td>Decorator</td><td>decorators to add functionality. See details.</td></tr>
-<tr><td><code>verbose</code></td><td>logical</td><td>if TRUE parameterisation messages produced.</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="constructor-details"><a class="anchor" href="#constructor-details"></a>Constructor Details</h2>
-
-    <p>The Triangular distribution is parameterised with <code>lower</code>, <code>upper</code> and <code>mode</code> as numerics. If <code>symmetric = TRUE</code> then the <code>mode</code> parameter is determined automatically and is defined by $$mode = (lower + upper) /2$$ this cannot be changed after construction. If <code>symmetric = FALSE</code> (default) then <code>mode</code> can be updated after construction.</p>
-    <h2 class="hasAnchor" id="public-variables"><a class="anchor" href="#public-variables"></a>Public Variables</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Variable</strong></td><td><strong>Return</strong></td></tr>
-<tr><td><code>name</code></td><td>Name of distribution.</td></tr>
-<tr><td><code>short_name</code></td><td>Id of distribution.</td></tr>
-<tr><td><code>description</code></td><td>Brief description of distribution.</td></tr>
-<tr><td><code>package</code></td><td>The package d/p/q/r are implemented in.</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="public-methods"><a class="anchor" href="#public-methods"></a>Public Methods</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Accessor Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code>decorators</code></td><td><code><a href='decorators.html'>decorators</a></code></td></tr>
-<tr><td><code>traits</code></td><td><code><a href='traits.html'>traits</a></code></td></tr>
-<tr><td><code>valueSupport</code></td><td><code><a href='valueSupport.html'>valueSupport</a></code></td></tr>
-<tr><td><code>variateForm</code></td><td><code><a href='variateForm.html'>variateForm</a></code></td></tr>
-<tr><td><code>type</code></td><td><code><a href='type.html'>type</a></code></td></tr>
-<tr><td><code>properties</code></td><td><code><a href='properties.html'>properties</a></code></td></tr>
-<tr><td><code>support</code></td><td><code><a href='support.html'>support</a></code></td></tr>
-<tr><td><code>symmetry</code></td><td><code><a href='symmetry.html'>symmetry</a></code></td></tr>
-<tr><td><code>sup</code></td><td><code><a href='sup.html'>sup</a></code></td></tr>
-<tr><td><code>inf</code></td><td><code><a href='inf.html'>inf</a></code></td></tr>
-<tr><td><code>dmax</code></td><td><code><a href='dmax.html'>dmax</a></code></td></tr>
-<tr><td><code>dmin</code></td><td><code><a href='dmin.html'>dmin</a></code></td></tr>
-<tr><td><code>skewnessType</code></td><td><code><a href='skewnessType.html'>skewnessType</a></code></td></tr>
-<tr><td><code>kurtosisType</code></td><td><code><a href='kurtosisType.html'>kurtosisType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Statistical Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='pdf.html'>pdf(x1, ..., log = FALSE, simplify = TRUE)</a></code></td><td><code><a href='pdf.html'>pdf</a></code></td></tr>
-<tr><td><code><a href='cdf.html'>cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='cdf.html'>cdf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/quantile.html'>quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='quantile.Distribution.html'>quantile.Distribution</a></code></td></tr>
-<tr><td><code><a href='rand.html'>rand(n, simplify = TRUE)</a></code></td><td><code><a href='rand.html'>rand</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></td><td><code><a href='mean.Distribution.html'>mean.Distribution</a></code></td></tr>
-<tr><td><code><a href='variance.html'>variance()</a></code></td><td><code><a href='variance.html'>variance</a></code></td></tr>
-<tr><td><code><a href='stdev.html'>stdev()</a></code></td><td><code><a href='stdev.html'>stdev</a></code></td></tr>
-<tr><td><code><a href='prec.html'>prec()</a></code></td><td><code><a href='prec.html'>prec</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/cor.html'>cor()</a></code></td><td><code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code></td></tr>
-<tr><td><code><a href='skewness.html'>skewness()</a></code></td><td><code><a href='skewness.html'>skewness</a></code></td></tr>
-<tr><td><code><a href='kurtosis.html'>kurtosis(excess = TRUE)</a></code></td><td><code><a href='kurtosis.html'>kurtosis</a></code></td></tr>
-<tr><td><code><a href='entropy.html'>entropy(base = 2)</a></code></td><td><code><a href='entropy.html'>entropy</a></code></td></tr>
-<tr><td><code><a href='mgf.html'>mgf(t)</a></code></td><td><code><a href='mgf.html'>mgf</a></code></td></tr>
-<tr><td><code><a href='cf.html'>cf(t)</a></code></td><td><code><a href='cf.html'>cf</a></code></td></tr>
-<tr><td><code><a href='pgf.html'>pgf(z)</a></code></td><td><code><a href='pgf.html'>pgf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></td><td><code><a href='median.Distribution.html'>median.Distribution</a></code></td></tr>
-<tr><td><code><a href='iqr.html'>iqr()</a></code></td><td><code><a href='iqr.html'>iqr</a></code></td></tr>
-<tr><td><code><a href='mode.html'>mode(which = "all")</a></code></td><td><code><a href='mode.html'>mode</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Parameter Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='parameters.html'>parameters(id)</a></code></td><td><code><a href='parameters.html'>parameters</a></code></td></tr>
-<tr><td><code><a href='getParameterValue.html'>getParameterValue(id, error = "warn")</a></code></td><td><code><a href='getParameterValue.html'>getParameterValue</a></code></td></tr>
-<tr><td><code><a href='setParameterValue.html'>setParameterValue(..., lst = NULL, error = "warn")</a></code></td><td><code><a href='setParameterValue.html'>setParameterValue</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Validation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='liesInSupport.html'>liesInSupport(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInSupport.html'>liesInSupport</a></code></td></tr>
-<tr><td><code><a href='liesInType.html'>liesInType(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInType.html'>liesInType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Representation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='strprint.html'>strprint(n = 2)</a></code></td><td><code><a href='strprint.html'>strprint</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/print.html'>print(n = 2)</a></code></td><td><code><a href='https://rdrr.io/r/base/print.html'>print</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/summary.html'>summary(full = T)</a></code></td><td><code><a href='summary.Distribution.html'>summary.Distribution</a></code></td></tr>
-</table>
-
-
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='listDistributions.html'>listDistributions</a></code> for all available distributions. <code><a href='Uniform.html'>Uniform</a></code> for the Uniform distribution.</p></div>
+    <div class='dont-index'><p>Other continuous distributions: 
+<code><a href='Arcsine.html'>Arcsine</a></code>,
+<code><a href='BetaNoncentral.html'>BetaNoncentral</a></code>,
+<code><a href='Beta.html'>Beta</a></code>,
+<code><a href='Cauchy.html'>Cauchy</a></code>,
+<code><a href='ChiSquaredNoncentral.html'>ChiSquaredNoncentral</a></code>,
+<code><a href='ChiSquared.html'>ChiSquared</a></code>,
+<code><a href='Dirichlet.html'>Dirichlet</a></code>,
+<code><a href='Erlang.html'>Erlang</a></code>,
+<code><a href='Exponential.html'>Exponential</a></code>,
+<code><a href='FDistributionNoncentral.html'>FDistributionNoncentral</a></code>,
+<code><a href='FDistribution.html'>FDistribution</a></code>,
+<code><a href='Frechet.html'>Frechet</a></code>,
+<code><a href='Gamma.html'>Gamma</a></code>,
+<code><a href='Gompertz.html'>Gompertz</a></code>,
+<code><a href='Gumbel.html'>Gumbel</a></code>,
+<code><a href='InverseGamma.html'>InverseGamma</a></code>,
+<code><a href='Laplace.html'>Laplace</a></code>,
+<code><a href='Logistic.html'>Logistic</a></code>,
+<code><a href='Loglogistic.html'>Loglogistic</a></code>,
+<code><a href='Lognormal.html'>Lognormal</a></code>,
+<code><a href='MultivariateNormal.html'>MultivariateNormal</a></code>,
+<code><a href='Normal.html'>Normal</a></code>,
+<code><a href='Pareto.html'>Pareto</a></code>,
+<code><a href='Poisson.html'>Poisson</a></code>,
+<code><a href='Rayleigh.html'>Rayleigh</a></code>,
+<code><a href='ShiftedLoglogistic.html'>ShiftedLoglogistic</a></code>,
+<code><a href='StudentTNoncentral.html'>StudentTNoncentral</a></code>,
+<code><a href='StudentT.html'>StudentT</a></code>,
+<code><a href='Uniform.html'>Uniform</a></code>,
+<code><a href='Wald.html'>Wald</a></code>,
+<code><a href='Weibull.html'>Weibull</a></code></p>
+<p>Other univariate distributions: 
+<code><a href='Arcsine.html'>Arcsine</a></code>,
+<code><a href='Bernoulli.html'>Bernoulli</a></code>,
+<code><a href='BetaNoncentral.html'>BetaNoncentral</a></code>,
+<code><a href='Beta.html'>Beta</a></code>,
+<code><a href='Binomial.html'>Binomial</a></code>,
+<code><a href='Categorical.html'>Categorical</a></code>,
+<code><a href='Cauchy.html'>Cauchy</a></code>,
+<code><a href='ChiSquaredNoncentral.html'>ChiSquaredNoncentral</a></code>,
+<code><a href='ChiSquared.html'>ChiSquared</a></code>,
+<code><a href='Degenerate.html'>Degenerate</a></code>,
+<code><a href='DiscreteUniform.html'>DiscreteUniform</a></code>,
+<code><a href='Empirical.html'>Empirical</a></code>,
+<code><a href='Erlang.html'>Erlang</a></code>,
+<code><a href='Exponential.html'>Exponential</a></code>,
+<code><a href='FDistributionNoncentral.html'>FDistributionNoncentral</a></code>,
+<code><a href='FDistribution.html'>FDistribution</a></code>,
+<code><a href='Frechet.html'>Frechet</a></code>,
+<code><a href='Gamma.html'>Gamma</a></code>,
+<code><a href='Geometric.html'>Geometric</a></code>,
+<code><a href='Gompertz.html'>Gompertz</a></code>,
+<code><a href='Gumbel.html'>Gumbel</a></code>,
+<code><a href='Hypergeometric.html'>Hypergeometric</a></code>,
+<code><a href='InverseGamma.html'>InverseGamma</a></code>,
+<code><a href='Laplace.html'>Laplace</a></code>,
+<code><a href='Logarithmic.html'>Logarithmic</a></code>,
+<code><a href='Logistic.html'>Logistic</a></code>,
+<code><a href='Loglogistic.html'>Loglogistic</a></code>,
+<code><a href='Lognormal.html'>Lognormal</a></code>,
+<code><a href='NegativeBinomial.html'>NegativeBinomial</a></code>,
+<code><a href='Normal.html'>Normal</a></code>,
+<code><a href='Pareto.html'>Pareto</a></code>,
+<code><a href='Poisson.html'>Poisson</a></code>,
+<code><a href='Rayleigh.html'>Rayleigh</a></code>,
+<code><a href='ShiftedLoglogistic.html'>ShiftedLoglogistic</a></code>,
+<code><a href='StudentTNoncentral.html'>StudentTNoncentral</a></code>,
+<code><a href='StudentT.html'>StudentT</a></code>,
+<code><a href='Uniform.html'>Uniform</a></code>,
+<code><a href='Wald.html'>Wald</a></code>,
+<code><a href='Weibull.html'>Weibull</a></code>,
+<code><a href='WeightedDiscrete.html'>WeightedDiscrete</a></code></p></div>
+    <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
+
+    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='SDistribution.html'>distr6::SDistribution</a></code> -&gt; <code>Triangular</code></p>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+
+    <p><div class="r6-fields"></p><dl'>
+<dt><code>name</code></dt><dd><p>Full name of distribution.</p></dd>
+
+<dt><code>short_name</code></dt><dd><p>Short name of distribution for printing.</p></dd>
+
+<dt><code>description</code></dt><dd><p>Brief description of the distribution.</p></dd>
+
+<dt><code>packages</code></dt><dd><p>Packages required to be installed in order to construct the distribution.</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-new'><code>Triangular$new()</code></a></p></li>
+<li><p><a href='#method-mean'><code>Triangular$mean()</code></a></p></li>
+<li><p><a href='#method-mode'><code>Triangular$mode()</code></a></p></li>
+<li><p><a href='#method-median'><code>Triangular$median()</code></a></p></li>
+<li><p><a href='#method-variance'><code>Triangular$variance()</code></a></p></li>
+<li><p><a href='#method-skewness'><code>Triangular$skewness()</code></a></p></li>
+<li><p><a href='#method-kurtosis'><code>Triangular$kurtosis()</code></a></p></li>
+<li><p><a href='#method-entropy'><code>Triangular$entropy()</code></a></p></li>
+<li><p><a href='#method-mgf'><code>Triangular$mgf()</code></a></p></li>
+<li><p><a href='#method-cf'><code>Triangular$cf()</code></a></p></li>
+<li><p><a href='#method-pgf'><code>Triangular$pgf()</code></a></p></li>
+<li><p><a href='#method-setParameterValue'><code>Triangular$setParameterValue()</code></a></p></li>
+<li><p><a href='#method-clone'><code>Triangular$clone()</code></a></p></li>
+</ul>
+<p><details ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-cdf'><code>distr6::Distribution$cdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-correlation'><code>distr6::Distribution$correlation()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-iqr'><code>distr6::Distribution$iqr()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-parameters'><code>distr6::Distribution$parameters()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-pdf'><code>distr6::Distribution$pdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-prec'><code>distr6::Distribution$prec()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
+<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'>new</span>(
+  <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>mode</span> <span class='kw'>=</span> (<span class='no'>lower</span> + <span class='no'>upper</span>)/<span class='fl'>2</span>,
+  <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>decorators</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>lower</code></dt><dd><p><code>(numeric(1))</code><br />
+Lower limit of the <a href='Distribution.html'>Distribution</a>, defined on the Reals.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1))</code><br />
+Upper limit of the <a href='Distribution.html'>Distribution</a>, defined on the Reals.</p></dd>
+
+<dt><code>mode</code></dt><dd><p><code>(numeric(1))</code><br />
+Mode of the distribution, if <code>symmetric = TRUE</code> then determined automatically.</p></dd>
+
+<dt><code>symmetric</code></dt><dd><p><code>(logical(1))</code><br />
+If <code>TRUE</code> then the symmetric Triangular distribution is constructed, where the <code>mode</code> is
+automatically calculated. Otherwise <code>mode</code> can be set manually. Cannot be changed after
+construction.</p></dd>
+
+<dt><code>decorators</code></dt><dd><p><code>(character())</code> <br />
+Decorators to add to the distribution during construction.</p></dd>
+
+</dl><p></div></p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+
+<span class='co'># You can view the type of Triangular distribution with $description</span>
+<span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)$<span class='no'>description</span>
+<span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)$<span class='no'>description</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-mean"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
+<p>The arithmetic mean of a (discrete) probability distribution X is the expectation
+$$E_X(X) = \sum p_X(x)*x$$
+with an integration analogue for continuous distributions.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-mode"></a></p><h3>Method <code><a href='mode.html'>mode()</a></code></h3>
+<p>The mode of a probability distribution is the point at which the pdf is
+a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+maxima).</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='mode.html'>mode</a></span>(<span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>which</code></dt><dd><p><code>(character(1) | numeric(1)</code><br />
+Ignored if distribution is unimodal. Otherwise <code>"all"</code> returns all modes, otherwise specifies
+which mode to return.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-median"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></h3>
+<p>Returns the median of the distribution. If an analytical expression is available
+returns distribution median, otherwise if symmetric returns <code>self$mean</code>, otherwise
+returns <code>self$quantile(0.5)</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
+<p>The variance of a distribution is defined by the formula
+$$var_X = E[X^2] - E[X]^2$$
+where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
+covariance matrix is returned.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<p>The skewness of a distribution is defined by the third standardised moment,
+$$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
+where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
+distribution and \(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-kurtosis"></a></p><h3>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<p>The kurtosis of a distribution is defined by the fourth standardised moment,
+$$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
+where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
+distribution and \(\sigma\) is the standard deviation of the distribution.
+Excess Kurtosis is Kurtosis - 3.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>excess</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-entropy"></a></p><h3>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<p>The entropy of a (discrete) distribution is defined by
+$$- \sum (f_X)log(f_X)$$
+where \(f_X\) is the pdf of distribution X, with an integration analogue for
+continuous distributions.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='entropy.html'>entropy</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>base</code></dt><dd><p><code>(integer(1))</code> <br />
+Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-mgf"></a></p><h3>Method <code><a href='mgf.html'>mgf()</a></code></h3>
+<p>The moment generating function is defined by
+$$mgf_X(t) = E_X[exp(xt)]$$
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
+t integer to evaluate function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-cf"></a></p><h3>Method <code><a href='cf.html'>cf()</a></code></h3>
+<p>The characteristic function is defined by
+$$cf_X(t) = E_X[exp(xti)]$$
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='cf.html'>cf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
+t integer to evaluate function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-pgf"></a></p><h3>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<p>The probability generating function is defined by
+$$pgf_X(z) = E_X[exp(z^x)]$$
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='no'>z</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>z</code></dt><dd><p><code>(integer(1))</code> <br />
+z integer to evaluate probability generating function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><br />
+Named arguments of parameters to set values for. See examples.</p></dd>
+
+<dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.</p></dd>
+
+<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
+If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triangular</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5) </div><div class='input'><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='co'># Note mode defaults to a symmetric shape</span></div><div class='output co'>#&gt; Tri(lower = 2, upper = 5, mode = 3.5) </div><div class='input'><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5, mode = 4) </div><div class='input'>
-<span class='co'># You can view the type of Triangular distribution with $description</span>
-<span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)$<span class='no'>description</span></div><div class='output co'>#&gt; [1] "Symmetric Triangular Probability Distribution."</div><div class='input'><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)$<span class='no'>description</span></div><div class='output co'>#&gt; [1] "Triangular Probability Distribution."</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>=</span> <span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+    <pre class="examples"><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Triangular$new`</span>
+<span class='co'>## ------------------------------------------------</span>
 
-<span class='co'># Update parameters</span>
-<span class='no'>x</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>7</span>)
-<span class='no'>x</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>()</div><div class='output co'>#&gt;       id value support               description
-#&gt; 1: lower     2       ℝ Lower distribution limit.
-#&gt; 2: upper     7       ℝ Upper distribution limit.
-#&gt; 3:  mode     0       ℝ        Distribution mode.</div><div class='input'>
-<span class='co'># d/p/q/r</span>
-<span class='no'>x</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.1142857</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.8857143</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>)</div><div class='output co'>#&gt; [1] 2.494448</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 3.011109 3.898136 2.924695 3.347984</div><div class='input'>
-<span class='co'># Statistics</span>
-<span class='no'>x</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</div><div class='output co'>#&gt; [1] 3</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</div><div class='output co'>#&gt; [1] 2.166667</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Triangular Probability Distribution. Parameterised with:
-#&gt;   c("lower", "upper", "mode") = c(2, 7, 0)
-#&gt; 
-#&gt;   Quick Statistics 
-#&gt; 	Mean:		3
-#&gt; 	Variance:	2.166667
-#&gt; 	Skewness:	0.3762644
-#&gt; 	Ex. Kurtosis:	-0.6
-#&gt; 
-#&gt;  Support: [2,7] 	Scientific Type: ℝ 
-#&gt; 
-#&gt;  Traits:	continuous; univariate
-#&gt;  Properties:	asymmetric; platykurtic; positive skew</div><div class='input'>
-</div></pre>
+<span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5) </div><div class='input'><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5, mode = 3.5) </div><div class='input'><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5, mode = 4) </div><div class='input'>
+<span class='co'># You can view the type of Triangular distribution with $description</span>
+<span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)$<span class='no'>description</span></div><div class='output co'>#&gt; [1] "Symmetric Triangular Probability Distribution."</div><div class='input'><span class='no'>Triangular</span>$<span class='fu'>new</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)$<span class='no'>description</span></div><div class='output co'>#&gt; [1] "Triangular Probability Distribution."</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -396,7 +585,7 @@ Michael P. McLaughlin.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

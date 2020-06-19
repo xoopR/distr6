@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -256,7 +256,6 @@
 #&gt; &lt;CoreStatistics&gt; object generator
 #&gt;   Inherits from: &lt;DistributionDecorator&gt;
 #&gt;   Public:
-#&gt;     clone: function (deep = FALSE) 
 #&gt;     mgf: function (t) 
 #&gt;     cf: function (t) 
 #&gt;     pgf: function (z) 
@@ -264,10 +263,11 @@
 #&gt;     skewness: function () 
 #&gt;     kurtosis: function (excess = TRUE) 
 #&gt;     variance: function () 
-#&gt;     kthmoment: function (k, type = "central") 
+#&gt;     kthmoment: function (k, type = c("central", "standard", "raw")) 
 #&gt;     genExp: function (trafo = NULL) 
 #&gt;     mode: function (which = "all") 
 #&gt;     mean: function (...) 
+#&gt;     clone: function (deep = FALSE) 
 #&gt;   Parent env: &lt;environment: namespace:distr6&gt;
 #&gt;   Locked objects: TRUE
 #&gt;   Locked class: FALSE
@@ -278,16 +278,15 @@
 #&gt;   Inherits from: &lt;DistributionDecorator&gt;
 #&gt;   Public:
 #&gt;     packages: pracma
-#&gt;     clone: function (deep = FALSE) 
 #&gt;     cdfAntiDeriv: function (lower = NULL, upper = NULL) 
 #&gt;     survivalAntiDeriv: function (lower = NULL, upper = NULL) 
-#&gt;     survival: function (x1, log = FALSE) 
-#&gt;     hazard: function (x1, log = FALSE) 
-#&gt;     cumHazard: function (x1, log = FALSE) 
+#&gt;     survival: function (..., log = FALSE, simplify = TRUE, data = NULL) 
+#&gt;     hazard: function (..., log = FALSE, simplify = TRUE, data = NULL) 
+#&gt;     cumHazard: function (..., log = FALSE, simplify = TRUE, data = NULL) 
 #&gt;     cdfPNorm: function (p = 2, lower = NULL, upper = NULL) 
 #&gt;     pdfPNorm: function (p = 2, lower = NULL, upper = NULL) 
-#&gt;     squared2Norm: function (lower = NULL, upper = NULL) 
 #&gt;     survivalPNorm: function (p = 2, lower = NULL, upper = NULL) 
+#&gt;     clone: function (deep = FALSE) 
 #&gt;   Parent env: &lt;environment: namespace:distr6&gt;
 #&gt;   Locked objects: TRUE
 #&gt;   Locked class: FALSE
@@ -298,11 +297,15 @@
 #&gt;   Inherits from: &lt;DistributionDecorator&gt;
 #&gt;   Public:
 #&gt;     packages: pracma GoFKernel
+#&gt;     decorate: function (distribution, n = 1000) 
 #&gt;     clone: function (deep = FALSE) 
-#&gt;     pdf: function (x1) 
-#&gt;     cdf: function (x1) 
-#&gt;     quantile: function (p) 
-#&gt;     rand: function (n) 
+#&gt;   Active bindings:
+#&gt;     methods: function () 
+#&gt;   Private:
+#&gt;     .pdf: function (x, log = FALSE) 
+#&gt;     .cdf: function (x, lower.tail = TRUE, log.p = FALSE) 
+#&gt;     .quantile: function (p, lower.tail = TRUE, log.p = FALSE) 
+#&gt;     .rand: function (n) 
 #&gt;   Parent env: &lt;environment: namespace:distr6&gt;
 #&gt;   Locked objects: TRUE
 #&gt;   Locked class: FALSE
@@ -323,7 +326,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

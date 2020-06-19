@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Exotic Statistical Methods for Distributions — ExoticStatistics • distr6</title>
+<title>Exotic Statistical Methods Decorator — ExoticStatistics • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,10 @@
 
 
 
-<meta property="og:title" content="Exotic Statistical Methods for Distributions — ExoticStatistics" />
+<meta property="og:title" content="Exotic Statistical Methods Decorator — ExoticStatistics" />
 <meta property="og:description" content="This decorator adds methods for more complex statistical methods including p-norms,
-survival and hazard functions and anti-derivatives." />
+survival and hazard functions and anti-derivatives. If possible analytical expressions are
+exploited, otherwise numerical ones are used with a message." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -87,7 +88,7 @@ survival and hazard functions and anti-derivatives." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -225,71 +226,261 @@ survival and hazard functions and anti-derivatives." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Exotic Statistical Methods for Distributions</h1>
+    <h1>Exotic Statistical Methods Decorator</h1>
     <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_ExoticStatistics.R'><code>R/DistributionDecorator_ExoticStatistics.R</code></a></small>
     <div class="hidden name"><code>ExoticStatistics.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This decorator adds methods for more complex statistical methods including p-norms,
-survival and hazard functions and anti-derivatives.</p>
+survival and hazard functions and anti-derivatives. If possible analytical expressions are
+exploited, otherwise numerical ones are used with a message.</p>
     </div>
 
 
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns a decorated R6 object inheriting from class SDistribution with the methods listed below
-added to the SDistribution methods.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Decorator objects add functionality to the given Distribution object by copying methods
-in the decorator environment to the chosen Distribution environment. See the 'Added Methods' section
-below to find details of the methods that are added to the Distribution. Methods already
-present in the distribution are not overwritten by the decorator.</p>
-<p>Use <code><a href='decorate.html'>decorate</a></code> to decorate a Distribution.</p>
-<p>Methods in this decorator may use numerical approximations and therefore better results may be available
-from analytic computations.</p>
-    <h2 class="hasAnchor" id="constructor"><a class="anchor" href="#constructor"></a>Constructor</h2>
-
-    <p>ExoticStatistics$new(distribution)</p>
-    <h2 class="hasAnchor" id="constructor-arguments"><a class="anchor" href="#constructor-arguments"></a>Constructor Arguments</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Argument</strong></td><td><strong>Type</strong></td><td><strong>Details</strong></td></tr>
-<tr><td><code>distribution</code></td><td>distribution</td><td>Distribution to decorate.</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="added-methods"><a class="anchor" href="#added-methods"></a>Added Methods</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Method</strong></td><td><strong>Name</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='survival.html'>survival(x1, log = FALSE)</a></code></td><td>Survival function</td><td><code><a href='survival.html'>survival</a></code></td></tr>
-<tr><td><code><a href='hazard.html'>hazard(x1, log = FALSE)</a></code></td><td>Hazard function</td><td><code><a href='hazard.html'>hazard</a></code></td></tr>
-<tr><td><code><a href='cumHazard.html'>cumHazard(x1, log = FALSE)</a></code></td><td>Cumulative hazard function</td><td><code><a href='cumHazard.html'>cumHazard</a></code></td></tr>
-<tr><td><code>cdfAntiDeriv(lower = NULL, upper = NULL))</code></td><td>Anti-derivative of cdf</td><td><code><a href='cdfAntiDeriv.html'>cdfAntiDeriv</a></code></td></tr>
-<tr><td><code><a href='survivalAntiDeriv.html'>survivalAntiDeriv(lower = NULL, upper = NULL)</a></code></td><td>Anti-derivative of survival function</td><td><code><a href='survivalAntiDeriv.html'>survivalAntiDeriv</a></code></td></tr>
-<tr><td><code><a href='cdfPNorm.html'>cdfPNorm(p = 2, lower = NULL, upper = NULL)</a></code></td><td>P-norm of cdf</td><td><code><a href='cdfPNorm.html'>cdfPNorm</a></code></td></tr>
-<tr><td><code><a href='pdfPNorm.html'>pdfPNorm(p = 2, lower = NULL, upper = NULL)</a></code></td><td>P-norm of pdf</td><td><code><a href='pdfPNorm.html'>pdfPNorm</a></code></td></tr>
-<tr><td><code><a href='survivalPNorm.html'>survivalPNorm(p = 2, lower = NULL, upper = NULL)</a></code></td><td>P-norm of survival function</td><td><code><a href='survivalPNorm.html'>survivalPNorm</a></code></td></tr>
-</table>
-
-
+    <p>Decorator objects add functionality to the given <a href='Distribution.html'>Distribution</a> object by copying methods
+in the decorator environment to the chosen <a href='Distribution.html'>Distribution</a> environment.</p>
+<p>All methods implemented in decorators try to exploit analytical results where possible, otherwise
+numerical results are used with a message.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='decorate.html'>decorate</a></code>, <code><a href='listDecorators.html'>listDecorators</a></code></p></div>
+    <div class='dont-index'><p>Other decorators: 
+<code><a href='CoreStatistics.html'>CoreStatistics</a></code>,
+<code><a href='FunctionImputation.html'>FunctionImputation</a></code></p></div>
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
+
+    <p><code><a href='DistributionDecorator.html'>distr6::DistributionDecorator</a></code> -&gt; <code>ExoticStatistics</code></p>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+
+    <p><div class="r6-fields"></p><dl'>
+<dt><code>packages</code></dt><dd><p>Packages required to be installed in order to construct the distribution.</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-cdfAntiDeriv'><code>ExoticStatistics$cdfAntiDeriv()</code></a></p></li>
+<li><p><a href='#method-survivalAntiDeriv'><code>ExoticStatistics$survivalAntiDeriv()</code></a></p></li>
+<li><p><a href='#method-survival'><code>ExoticStatistics$survival()</code></a></p></li>
+<li><p><a href='#method-hazard'><code>ExoticStatistics$hazard()</code></a></p></li>
+<li><p><a href='#method-cumHazard'><code>ExoticStatistics$cumHazard()</code></a></p></li>
+<li><p><a href='#method-cdfPNorm'><code>ExoticStatistics$cdfPNorm()</code></a></p></li>
+<li><p><a href='#method-pdfPNorm'><code>ExoticStatistics$pdfPNorm()</code></a></p></li>
+<li><p><a href='#method-survivalPNorm'><code>ExoticStatistics$survivalPNorm()</code></a></p></li>
+<li><p><a href='#method-clone'><code>ExoticStatistics$clone()</code></a></p></li>
+</ul>
+<p><details open ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href='../../distr6/html/DistributionDecorator.html#method-decorate'><code>distr6::DistributionDecorator$decorate()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href='../../distr6/html/DistributionDecorator.html#method-initialize'><code>distr6::DistributionDecorator$initialize()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
+<a id="method-cdfAntiDeriv"></a></p><h3>Method <code><a href='cdfAntiDeriv.html'>cdfAntiDeriv()</a></code></h3>
+<p>The cdf anti-derivative is defined by $$acdf(a, b) = \int_a^b F_X(x) dx$$
+where X is the distribution, \(F_X\) is the cdf of the distribution \(X\) and
+\(a, b\) are the <code>lower</code> and <code>upper</code> limits of integration.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='cdfAntiDeriv.html'>cdfAntiDeriv</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>lower</code></dt><dd><p><code>(numeric(1)</code> <br />
+Lower bounds of integral.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1)</code> <br />
+Upper bounds of integral.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-survivalAntiDeriv"></a></p><h3>Method <code><a href='survivalAntiDeriv.html'>survivalAntiDeriv()</a></code></h3>
+<p>The survival anti-derivative is defined by
+$$as(a, b) = \int_a^b S_X(x) dx$$
+where X is the distribution, \(S_X\) is the survival function of the distribution
+\(X\) and \(a, b\) are the <code>lower</code> and <code>upper</code> limits of integration.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='survivalAntiDeriv.html'>survivalAntiDeriv</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>lower</code></dt><dd><p><code>(numeric(1)</code> <br />
+Lower bounds of integral.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1)</code> <br />
+Upper bounds of integral.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-survival"></a></p><h3>Method <code><a href='survival.html'>survival()</a></code></h3>
+<p>The survival function is defined by
+$$S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx$$
+where X is the distribution, \(S_X\) is the survival function, \(F_X\) is the cdf
+and \(f_X\) is the pdf.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='survival.html'>survival</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.</p></dd>
+
+<dt><code>log</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> returns the logarithm of the probabilities. Default is <code>FALSE</code>.</p></dd>
+
+<dt><code>simplify</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the return if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></dd>
+
+<dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-hazard"></a></p><h3>Method <code><a href='hazard.html'>hazard()</a></code></h3>
+<p>The hazard function is defined by
+$$h_X(x) = \frac{f_X}{S_X}$$
+where X is the distribution, \(S_X\) is the survival function and \(f_X\) is the pdf.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='hazard.html'>hazard</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.</p></dd>
+
+<dt><code>log</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> returns the logarithm of the probabilities. Default is <code>FALSE</code>.</p></dd>
+
+<dt><code>simplify</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the return if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></dd>
+
+<dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-cumHazard"></a></p><h3>Method <code><a href='cumHazard.html'>cumHazard()</a></code></h3>
+<p>The cumulative hazard function is defined analytically by
+$$H_X(x) = -log(S_X)$$
+where X is the distribution and \(S_X\) is the survival function.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='cumHazard.html'>cumHazard</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.</p></dd>
+
+<dt><code>log</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> returns the logarithm of the probabilities. Default is <code>FALSE</code>.</p></dd>
+
+<dt><code>simplify</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the return if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></dd>
+
+<dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-cdfPNorm"></a></p><h3>Method <code><a href='cdfPNorm.html'>cdfPNorm()</a></code></h3>
+<p>The p-norm of the cdf is defined by
+$$(\int_a^b |F_X|^p d\mu)^{1/p}$$
+where X is the distribution, \(F_X\) is the cdf and \(a, b\)
+are the <code>lower</code> and <code>upper</code> limits of integration.</p>
+<p>Returns NULL if distribution is not continuous.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='cdfPNorm.html'>cdfPNorm</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>p</code></dt><dd><p><code>(integer(1))</code>
+Norm to evaluate.</p></dd>
+
+<dt><code>lower</code></dt><dd><p><code>(numeric(1)</code> <br />
+Lower bounds of integral.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1)</code> <br />
+Upper bounds of integral.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-pdfPNorm"></a></p><h3>Method <code><a href='pdfPNorm.html'>pdfPNorm()</a></code></h3>
+<p>The p-norm of the pdf is defined by
+$$(\int_a^b |f_X|^p d\mu)^{1/p}$$
+where X is the distribution, \(f_X\) is the pdf and \(a, b\)
+are the <code>lower</code> and <code>upper</code> limits of integration.</p>
+<p>Returns NULL if distribution is not continuous.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='pdfPNorm.html'>pdfPNorm</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>p</code></dt><dd><p><code>(integer(1))</code>
+Norm to evaluate.</p></dd>
+
+<dt><code>lower</code></dt><dd><p><code>(numeric(1)</code> <br />
+Lower bounds of integral.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1)</code> <br />
+Upper bounds of integral.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-survivalPNorm"></a></p><h3>Method <code><a href='survivalPNorm.html'>survivalPNorm()</a></code></h3>
+<p>The p-norm of the survival function is defined by
+$$(\int_a^b |S_X|^p d\mu)^{1/p}$$
+where X is the distribution, \(S_X\) is the survival function and \(a, b\)
+are the <code>lower</code> and <code>upper</code> limits of integration.</p>
+<p>Returns NULL if distribution is not continuous.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='survivalPNorm.html'>survivalPNorm</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>p</code></dt><dd><p><code>(integer(1))</code>
+Norm to evaluate.</p></dd>
+
+<dt><code>lower</code></dt><dd><p><code>(numeric(1)</code> <br />
+Lower bounds of integral.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1)</code> <br />
+Upper bounds of integral.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='no'>Exponential</span>$<span class='fu'>new</span>()
-<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>x</span>, <span class='no'>ExoticStatistics</span>)</div><div class='output co'>#&gt; <span class='message'>x is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1) </div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='survival.html'>survival</a></span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 0.3678794</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>=</span> <span class='no'>Exponential</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='no'>ExoticStatistics</span>)
-<span class='no'>x</span>$<span class='fu'><a href='survival.html'>survival</a></span>(<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 0.01831564</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>(), <span class='st'>"ExoticStatistics"</span>)</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>Exponential</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='st'>"ExoticStatistics"</span>)</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>ExoticStatistics</span>$<span class='fu'>new</span>()$<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>())</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -305,7 +496,7 @@ from analytic computations.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

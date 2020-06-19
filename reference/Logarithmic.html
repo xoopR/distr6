@@ -87,7 +87,7 @@ is commonly used to model consumer purchase habits in economics and is derived f
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -244,139 +244,238 @@ is commonly used to model consumer purchase habits in economics and is derived f
 
     <p>The Logarithmic distribution parameterised with  a parameter, \(\theta\), is defined by the pmf, $$f(x) = -\theta^x/xlog(1-\theta)$$ for \(0 &lt; \theta &lt; 1\).</p>
 <p>The distribution is supported on \({1,2,3,\ldots}\).</p>
-<p><code>entropy</code>
-is
-omitted as no closed form analytic expression could be found, decorate with <code><a href='CoreStatistics.html'>CoreStatistics</a></code> for numerical results.</p>
-<p>The distribution is implemented by interfacing the <code>extraDistr</code> package.</p>
-    <h2 class="hasAnchor" id="constructor"><a class="anchor" href="#constructor"></a>Constructor</h2>
-
-    <p>Logarithmic$new(theta = 0.5, decorators = NULL, verbose = FALSE)</p>
-    <h2 class="hasAnchor" id="constructor-arguments"><a class="anchor" href="#constructor-arguments"></a>Constructor Arguments</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Argument</strong></td><td><strong>Type</strong></td><td><strong>Details</strong></td></tr>
-<tr><td><code>theta</code></td><td>numeric</td><td>theta parameter.</td></tr>
-<tr><td><code>decorators</code></td><td>Decorator</td><td>decorators to add functionality. See details.</td></tr>
-<tr><td><code>verbose</code></td><td>logical</td><td>if TRUE parameterisation messages produced.</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="constructor-details"><a class="anchor" href="#constructor-details"></a>Constructor Details</h2>
-
-    <p>The Logarithmic distribution is parameterised with <code>theta</code> as a number between 0 and 1.</p>
-    <h2 class="hasAnchor" id="public-variables"><a class="anchor" href="#public-variables"></a>Public Variables</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Variable</strong></td><td><strong>Return</strong></td></tr>
-<tr><td><code>name</code></td><td>Name of distribution.</td></tr>
-<tr><td><code>short_name</code></td><td>Id of distribution.</td></tr>
-<tr><td><code>description</code></td><td>Brief description of distribution.</td></tr>
-<tr><td><code>package</code></td><td>The package d/p/q/r are implemented in.</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="public-methods"><a class="anchor" href="#public-methods"></a>Public Methods</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Accessor Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code>decorators</code></td><td><code><a href='decorators.html'>decorators</a></code></td></tr>
-<tr><td><code>traits</code></td><td><code><a href='traits.html'>traits</a></code></td></tr>
-<tr><td><code>valueSupport</code></td><td><code><a href='valueSupport.html'>valueSupport</a></code></td></tr>
-<tr><td><code>variateForm</code></td><td><code><a href='variateForm.html'>variateForm</a></code></td></tr>
-<tr><td><code>type</code></td><td><code><a href='type.html'>type</a></code></td></tr>
-<tr><td><code>properties</code></td><td><code><a href='properties.html'>properties</a></code></td></tr>
-<tr><td><code>support</code></td><td><code><a href='support.html'>support</a></code></td></tr>
-<tr><td><code>symmetry</code></td><td><code><a href='symmetry.html'>symmetry</a></code></td></tr>
-<tr><td><code>sup</code></td><td><code><a href='sup.html'>sup</a></code></td></tr>
-<tr><td><code>inf</code></td><td><code><a href='inf.html'>inf</a></code></td></tr>
-<tr><td><code>dmax</code></td><td><code><a href='dmax.html'>dmax</a></code></td></tr>
-<tr><td><code>dmin</code></td><td><code><a href='dmin.html'>dmin</a></code></td></tr>
-<tr><td><code>skewnessType</code></td><td><code><a href='skewnessType.html'>skewnessType</a></code></td></tr>
-<tr><td><code>kurtosisType</code></td><td><code><a href='kurtosisType.html'>kurtosisType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Statistical Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='pdf.html'>pdf(x1, ..., log = FALSE, simplify = TRUE)</a></code></td><td><code><a href='pdf.html'>pdf</a></code></td></tr>
-<tr><td><code><a href='cdf.html'>cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='cdf.html'>cdf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/quantile.html'>quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='quantile.Distribution.html'>quantile.Distribution</a></code></td></tr>
-<tr><td><code><a href='rand.html'>rand(n, simplify = TRUE)</a></code></td><td><code><a href='rand.html'>rand</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></td><td><code><a href='mean.Distribution.html'>mean.Distribution</a></code></td></tr>
-<tr><td><code><a href='variance.html'>variance()</a></code></td><td><code><a href='variance.html'>variance</a></code></td></tr>
-<tr><td><code><a href='stdev.html'>stdev()</a></code></td><td><code><a href='stdev.html'>stdev</a></code></td></tr>
-<tr><td><code><a href='prec.html'>prec()</a></code></td><td><code><a href='prec.html'>prec</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/cor.html'>cor()</a></code></td><td><code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code></td></tr>
-<tr><td><code><a href='skewness.html'>skewness()</a></code></td><td><code><a href='skewness.html'>skewness</a></code></td></tr>
-<tr><td><code><a href='kurtosis.html'>kurtosis(excess = TRUE)</a></code></td><td><code><a href='kurtosis.html'>kurtosis</a></code></td></tr>
-<tr><td><code><a href='entropy.html'>entropy(base = 2)</a></code></td><td><code><a href='entropy.html'>entropy</a></code></td></tr>
-<tr><td><code><a href='mgf.html'>mgf(t)</a></code></td><td><code><a href='mgf.html'>mgf</a></code></td></tr>
-<tr><td><code><a href='cf.html'>cf(t)</a></code></td><td><code><a href='cf.html'>cf</a></code></td></tr>
-<tr><td><code><a href='pgf.html'>pgf(z)</a></code></td><td><code><a href='pgf.html'>pgf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></td><td><code><a href='median.Distribution.html'>median.Distribution</a></code></td></tr>
-<tr><td><code><a href='iqr.html'>iqr()</a></code></td><td><code><a href='iqr.html'>iqr</a></code></td></tr>
-<tr><td><code><a href='mode.html'>mode(which = "all")</a></code></td><td><code><a href='mode.html'>mode</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Parameter Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='parameters.html'>parameters(id)</a></code></td><td><code><a href='parameters.html'>parameters</a></code></td></tr>
-<tr><td><code><a href='getParameterValue.html'>getParameterValue(id, error = "warn")</a></code></td><td><code><a href='getParameterValue.html'>getParameterValue</a></code></td></tr>
-<tr><td><code><a href='setParameterValue.html'>setParameterValue(..., lst = NULL, error = "warn")</a></code></td><td><code><a href='setParameterValue.html'>setParameterValue</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Validation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='liesInSupport.html'>liesInSupport(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInSupport.html'>liesInSupport</a></code></td></tr>
-<tr><td><code><a href='liesInType.html'>liesInType(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInType.html'>liesInType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Representation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='strprint.html'>strprint(n = 2)</a></code></td><td><code><a href='strprint.html'>strprint</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/print.html'>print(n = 2)</a></code></td><td><code><a href='https://rdrr.io/r/base/print.html'>print</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/summary.html'>summary(full = T)</a></code></td><td><code><a href='summary.Distribution.html'>summary.Distribution</a></code></td></tr>
-</table>
-
-
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='listDistributions.html'>listDistributions</a></code> for all available distributions. <code><a href='https://rdrr.io/pkg/extraDistr/man/LogSeries.html'>LogSeries</a></code> for the d/p/q/r implementation. <code><a href='CoreStatistics.html'>CoreStatistics</a></code> for numerical results.</p></div>
+    <div class='dont-index'><p>Other discrete distributions: 
+<code><a href='Bernoulli.html'>Bernoulli</a></code>,
+<code><a href='Binomial.html'>Binomial</a></code>,
+<code><a href='Categorical.html'>Categorical</a></code>,
+<code><a href='Degenerate.html'>Degenerate</a></code>,
+<code><a href='DiscreteUniform.html'>DiscreteUniform</a></code>,
+<code><a href='EmpiricalMV.html'>EmpiricalMV</a></code>,
+<code><a href='Empirical.html'>Empirical</a></code>,
+<code><a href='Geometric.html'>Geometric</a></code>,
+<code><a href='Hypergeometric.html'>Hypergeometric</a></code>,
+<code><a href='Multinomial.html'>Multinomial</a></code>,
+<code><a href='NegativeBinomial.html'>NegativeBinomial</a></code>,
+<code><a href='WeightedDiscrete.html'>WeightedDiscrete</a></code></p>
+<p>Other univariate distributions: 
+<code><a href='Arcsine.html'>Arcsine</a></code>,
+<code><a href='Bernoulli.html'>Bernoulli</a></code>,
+<code><a href='BetaNoncentral.html'>BetaNoncentral</a></code>,
+<code><a href='Beta.html'>Beta</a></code>,
+<code><a href='Binomial.html'>Binomial</a></code>,
+<code><a href='Categorical.html'>Categorical</a></code>,
+<code><a href='Cauchy.html'>Cauchy</a></code>,
+<code><a href='ChiSquaredNoncentral.html'>ChiSquaredNoncentral</a></code>,
+<code><a href='ChiSquared.html'>ChiSquared</a></code>,
+<code><a href='Degenerate.html'>Degenerate</a></code>,
+<code><a href='DiscreteUniform.html'>DiscreteUniform</a></code>,
+<code><a href='Empirical.html'>Empirical</a></code>,
+<code><a href='Erlang.html'>Erlang</a></code>,
+<code><a href='Exponential.html'>Exponential</a></code>,
+<code><a href='FDistributionNoncentral.html'>FDistributionNoncentral</a></code>,
+<code><a href='FDistribution.html'>FDistribution</a></code>,
+<code><a href='Frechet.html'>Frechet</a></code>,
+<code><a href='Gamma.html'>Gamma</a></code>,
+<code><a href='Geometric.html'>Geometric</a></code>,
+<code><a href='Gompertz.html'>Gompertz</a></code>,
+<code><a href='Gumbel.html'>Gumbel</a></code>,
+<code><a href='Hypergeometric.html'>Hypergeometric</a></code>,
+<code><a href='InverseGamma.html'>InverseGamma</a></code>,
+<code><a href='Laplace.html'>Laplace</a></code>,
+<code><a href='Logistic.html'>Logistic</a></code>,
+<code><a href='Loglogistic.html'>Loglogistic</a></code>,
+<code><a href='Lognormal.html'>Lognormal</a></code>,
+<code><a href='NegativeBinomial.html'>NegativeBinomial</a></code>,
+<code><a href='Normal.html'>Normal</a></code>,
+<code><a href='Pareto.html'>Pareto</a></code>,
+<code><a href='Poisson.html'>Poisson</a></code>,
+<code><a href='Rayleigh.html'>Rayleigh</a></code>,
+<code><a href='ShiftedLoglogistic.html'>ShiftedLoglogistic</a></code>,
+<code><a href='StudentTNoncentral.html'>StudentTNoncentral</a></code>,
+<code><a href='StudentT.html'>StudentT</a></code>,
+<code><a href='Triangular.html'>Triangular</a></code>,
+<code><a href='Uniform.html'>Uniform</a></code>,
+<code><a href='Wald.html'>Wald</a></code>,
+<code><a href='Weibull.html'>Weibull</a></code>,
+<code><a href='WeightedDiscrete.html'>WeightedDiscrete</a></code></p></div>
+    <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='no'>Logarithmic</span>$<span class='fu'>new</span>(<span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
+    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='SDistribution.html'>distr6::SDistribution</a></code> -&gt; <code>Logarithmic</code></p>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
-<span class='co'># Update parameters</span>
-<span class='no'>x</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='no'>x</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>()</div><div class='output co'>#&gt;       id value support      description
-#&gt; 1: theta   0.3   (0,1) Theta parameter.</div><div class='input'>
-<span class='co'># d/p/q/r</span>
-<span class='no'>x</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.001362585</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.9995404</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 1 1 1 1</div><div class='input'>
-<span class='co'># Statistics</span>
-<span class='no'>x</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</div><div class='output co'>#&gt; [1] 1.201574</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</div><div class='output co'>#&gt; [1] 0.272754</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Logarithmic Probability Distribution. Parameterised with:
-#&gt;   theta = 0.3
-#&gt; 
-#&gt;   Quick Statistics 
-#&gt; 	Mean:		1.201574
-#&gt; 	Variance:	0.272754
-#&gt; 	Skewness:	3.29831
-#&gt; 	Ex. Kurtosis:	14.69893
-#&gt; 
-#&gt;  Support: ℕ+ 	Scientific Type: ℕ0 
-#&gt; 
-#&gt;  Traits:	discrete; univariate
-#&gt;  Properties:	asymmetric; leptokurtic; positive skew</div><div class='input'>
-</div></pre>
+    <p><div class="r6-fields"></p><dl'>
+<dt><code>name</code></dt><dd><p>Full name of distribution.</p></dd>
+
+<dt><code>short_name</code></dt><dd><p>Short name of distribution for printing.</p></dd>
+
+<dt><code>description</code></dt><dd><p>Brief description of the distribution.</p></dd>
+
+<dt><code>packages</code></dt><dd><p>Packages required to be installed in order to construct the distribution.</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-new'><code>Logarithmic$new()</code></a></p></li>
+<li><p><a href='#method-mean'><code>Logarithmic$mean()</code></a></p></li>
+<li><p><a href='#method-mode'><code>Logarithmic$mode()</code></a></p></li>
+<li><p><a href='#method-variance'><code>Logarithmic$variance()</code></a></p></li>
+<li><p><a href='#method-skewness'><code>Logarithmic$skewness()</code></a></p></li>
+<li><p><a href='#method-kurtosis'><code>Logarithmic$kurtosis()</code></a></p></li>
+<li><p><a href='#method-mgf'><code>Logarithmic$mgf()</code></a></p></li>
+<li><p><a href='#method-cf'><code>Logarithmic$cf()</code></a></p></li>
+<li><p><a href='#method-pgf'><code>Logarithmic$pgf()</code></a></p></li>
+<li><p><a href='#method-clone'><code>Logarithmic$clone()</code></a></p></li>
+</ul>
+<p><details ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-cdf'><code>distr6::Distribution$cdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-correlation'><code>distr6::Distribution$correlation()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-iqr'><code>distr6::Distribution$iqr()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href='../../distr6/html/Distribution.html#method-median'><code>distr6::Distribution$median()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-parameters'><code>distr6::Distribution$parameters()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-pdf'><code>distr6::Distribution$pdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-prec'><code>distr6::Distribution$prec()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
+<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'>new</span>(<span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>decorators</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>theta</code></dt><dd><p><code>(numeric(1))</code><br />
+Theta parameter defined as a probability between <code>0</code> and <code>1</code>.</p></dd>
+
+<dt><code>decorators</code></dt><dd><p><code>(character())</code> <br />
+Decorators to add to the distribution during construction.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-mean"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
+<p>The arithmetic mean of a (discrete) probability distribution X is the expectation
+$$E_X(X) = \sum p_X(x)*x$$
+with an integration analogue for continuous distributions.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-mode"></a></p><h3>Method <code><a href='mode.html'>mode()</a></code></h3>
+<p>The mode of a probability distribution is the point at which the pdf is
+a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
+maxima).</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='mode.html'>mode</a></span>(<span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>which</code></dt><dd><p><code>(character(1) | numeric(1)</code><br />
+Ignored if distribution is unimodal. Otherwise <code>"all"</code> returns all modes, otherwise specifies
+which mode to return.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
+<p>The variance of a distribution is defined by the formula
+$$var_X = E[X^2] - E[X]^2$$
+where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
+covariance matrix is returned.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<p>The skewness of a distribution is defined by the third standardised moment,
+$$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
+where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the distribution and
+\(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-kurtosis"></a></p><h3>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<p>The kurtosis of a distribution is defined by the fourth standardised moment,
+$$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
+where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
+distribution and \(\sigma\) is the standard deviation of the distribution.
+Excess Kurtosis is Kurtosis - 3.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>excess</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-mgf"></a></p><h3>Method <code><a href='mgf.html'>mgf()</a></code></h3>
+<p>The moment generating function is defined by
+$$mgf_X(t) = E_X[exp(xt)]$$
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
+t integer to evaluate function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-cf"></a></p><h3>Method <code><a href='cf.html'>cf()</a></code></h3>
+<p>The characteristic function is defined by
+$$cf_X(t) = E_X[exp(xti)]$$
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='cf.html'>cf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
+t integer to evaluate function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-pgf"></a></p><h3>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<p>The probability generating function is defined by
+$$pgf_X(z) = E_X[exp(z^x)]$$
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='no'>z</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>z</code></dt><dd><p><code>(integer(1))</code> <br />
+z integer to evaluate probability generating function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logarithmic</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -392,7 +491,7 @@ Michael P. McLaughlin.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

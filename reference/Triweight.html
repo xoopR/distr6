@@ -88,7 +88,7 @@ over the support \(x \in (-1,1)\)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -239,100 +239,103 @@ over the support \(x \in (-1,1)\).</p>
 
 
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns an R6 object inheriting from class Kernel.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The quantile function is omitted as no closed form analytic expression could
 be found, decorate with FunctionImputation for numeric results.</p>
-    <h2 class="hasAnchor" id="constructor"><a class="anchor" href="#constructor"></a>Constructor</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Triweight$new(decorators = NULL)</p>
-    <h2 class="hasAnchor" id="constructor-arguments"><a class="anchor" href="#constructor-arguments"></a>Constructor Arguments</h2>
+    <div class='dont-index'><p>Other kernels: 
+<code><a href='Cosine.html'>Cosine</a></code>,
+<code><a href='Epanechnikov.html'>Epanechnikov</a></code>,
+<code><a href='LogisticKernel.html'>LogisticKernel</a></code>,
+<code><a href='NormalKernel.html'>NormalKernel</a></code>,
+<code><a href='Quartic.html'>Quartic</a></code>,
+<code><a href='Sigmoid.html'>Sigmoid</a></code>,
+<code><a href='Silverman.html'>Silverman</a></code>,
+<code><a href='TriangularKernel.html'>TriangularKernel</a></code>,
+<code><a href='Tricube.html'>Tricube</a></code>,
+<code><a href='UniformKernel.html'>UniformKernel</a></code></p></div>
+    <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
+
+    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='Kernel.html'>distr6::Kernel</a></code> -&gt; <code>Triweight</code></p>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+
+    <p><div class="r6-fields"></p><dl'>
+<dt><code>name</code></dt><dd><p>Full name of distribution.</p></dd>
+
+<dt><code>short_name</code></dt><dd><p>Short name of distribution for printing.</p></dd>
+
+<dt><code>description</code></dt><dd><p>Brief description of the distribution.</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
+<h3>Public methods</h3>
 
-<table class='table'>
-<tr><td><strong>Argument</strong></td><td><strong>Type</strong></td><td><strong>Details</strong></td></tr>
-<tr><td><code>decorators</code></td><td>Decorator</td><td>decorators to add functionality.</td></tr>
-</table>
+<ul>
+<li><p><a href='#method-pdfSquared2Norm'><code>Triweight$pdfSquared2Norm()</code></a></p></li>
+<li><p><a href='#method-variance'><code>Triweight$variance()</code></a></p></li>
+<li><p><a href='#method-clone'><code>Triweight$clone()</code></a></p></li>
+</ul>
+<p><details ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-cdf'><code>distr6::Distribution$cdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-correlation'><code>distr6::Distribution$correlation()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-iqr'><code>distr6::Distribution$iqr()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-parameters'><code>distr6::Distribution$parameters()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-pdf'><code>distr6::Distribution$pdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-prec'><code>distr6::Distribution$prec()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="initialize"><a href='../../distr6/html/Kernel.html#method-initialize'><code>distr6::Kernel$initialize()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean"><a href='../../distr6/html/Kernel.html#method-mean'><code>distr6::Kernel$mean()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median"><a href='../../distr6/html/Kernel.html#method-median'><code>distr6::Kernel$median()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode"><a href='../../distr6/html/Kernel.html#method-mode'><code>distr6::Kernel$mode()</code></a></span></p></li>
+</ul>
+</details>
 
+<hr>
+<a id="method-pdfSquared2Norm"></a></p><h3>Method <code><a href='pdfSquared2Norm.html'>pdfSquared2Norm()</a></code></h3>
+<p>The squared 2-norm of the pdf is defined by
+$$\int_a^b (f_X(u))^2 du$$
+where X is the Distribution, \(f_X\) is its pdf and \(a, b\)
+are the distribution support limits.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triweight</span>$<span class='fu'><a href='pdfSquared2Norm.html'>pdfSquared2Norm</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre><p></div></p>
 
-    <h2 class="hasAnchor" id="public-variables"><a class="anchor" href="#public-variables"></a>Public Variables</h2>
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>x</code></dt><dd><p><code>(numeric(1))</code> <br />
+Amount to shift the result.</p></dd>
 
-    
+</dl><p></div></p>
+<p><hr>
+<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
+<p>The variance of a distribution is defined by the formula
+$$var_X = E[X^2] - E[X]^2$$
+where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
+covariance matrix is returned.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triweight</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
 
-<table class='table'>
-<tr><td><strong>Variable</strong></td><td><strong>Return</strong></td></tr>
-<tr><td><code>name</code></td><td>Name of distribution.</td></tr>
-<tr><td><code>short_name</code></td><td>Id of distribution.</td></tr>
-<tr><td><code>description</code></td><td>Brief description of distribution.</td></tr>
-<tr><td><code>package</code></td><td>The package d/p/q/r are implemented in.</td></tr>
-</table>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Triweight</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
-    <h2 class="hasAnchor" id="public-methods"><a class="anchor" href="#public-methods"></a>Public Methods</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Accessor Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code>decorators</code></td><td><code><a href='decorators.html'>decorators</a></code></td></tr>
-<tr><td><code>traits</code></td><td><code><a href='traits.html'>traits</a></code></td></tr>
-<tr><td><code>valueSupport</code></td><td><code><a href='valueSupport.html'>valueSupport</a></code></td></tr>
-<tr><td><code>variateForm</code></td><td><code><a href='variateForm.html'>variateForm</a></code></td></tr>
-<tr><td><code>type</code></td><td><code><a href='type.html'>type</a></code></td></tr>
-<tr><td><code>properties</code></td><td><code><a href='properties.html'>properties</a></code></td></tr>
-<tr><td><code>support</code></td><td><code><a href='support.html'>support</a></code></td></tr>
-<tr><td><code>symmetry</code></td><td><code><a href='symmetry.html'>symmetry</a></code></td></tr>
-<tr><td><code>sup</code></td><td><code><a href='sup.html'>sup</a></code></td></tr>
-<tr><td><code>inf</code></td><td><code><a href='inf.html'>inf</a></code></td></tr>
-<tr><td><code>dmax</code></td><td><code><a href='dmax.html'>dmax</a></code></td></tr>
-<tr><td><code>dmin</code></td><td><code><a href='dmin.html'>dmin</a></code></td></tr>
-<tr><td><code>skewnessType</code></td><td><code><a href='skewnessType.html'>skewnessType</a></code></td></tr>
-<tr><td><code>kurtosisType</code></td><td><code><a href='kurtosisType.html'>kurtosisType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>d/p/q/r Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='pdf.html'>pdf(x1, ..., log = FALSE, simplify = TRUE)</a></code></td><td><code><a href='pdf.html'>pdf</a></code></td></tr>
-<tr><td><code><a href='cdf.html'>cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='cdf.html'>cdf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/quantile.html'>quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='quantile.Distribution.html'>quantile.Distribution</a></code></td></tr>
-<tr><td><code><a href='rand.html'>rand(n, simplify = TRUE)</a></code></td><td><code><a href='rand.html'>rand</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Statistical Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='squared2Norm.html'>squared2Norm()</a></code></td><td><code><a href='squared2Norm.html'>squared2Norm</a></code></td></tr>
-<tr><td><code><a href='prec.html'>prec()</a></code></td><td><code><a href='prec.html'>prec</a></code></td></tr>
-<tr><td><code><a href='stdev.html'>stdev()</a></code></td><td><code><a href='stdev.html'>stdev</a></code></td></tr>
-<tr><td><code><a href='mode.html'>mode(which = "all")</a></code></td><td><code><a href='mode.html'>mode</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></td><td><code><a href='mean.Distribution.html'>mean.Distribution</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></td><td><code><a href='median.Distribution.html'>median.Distribution</a></code></td></tr>
-<tr><td><code><a href='iqr.html'>iqr()</a></code></td><td><code><a href='iqr.html'>iqr</a></code></td></tr>
-<tr><td><code><a href='correlation.html'>correlation()</a></code></td><td><code><a href='correlation.html'>correlation</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Parameter Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='parameters.html'>parameters(id)</a></code></td><td><code><a href='parameters.html'>parameters</a></code></td></tr>
-<tr><td><code><a href='getParameterValue.html'>getParameterValue(id, error = "warn")</a></code></td><td><code><a href='getParameterValue.html'>getParameterValue</a></code></td></tr>
-<tr><td><code><a href='setParameterValue.html'>setParameterValue(..., lst = NULL, error = "warn")</a></code></td><td><code><a href='setParameterValue.html'>setParameterValue</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Validation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='liesInSupport.html'>liesInSupport(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInSupport.html'>liesInSupport</a></code></td></tr>
-<tr><td><code><a href='liesInType.html'>liesInType(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInType.html'>liesInType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Representation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='strprint.html'>strprint(n = 2)</a></code></td><td><code><a href='strprint.html'>strprint</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/print.html'>print(n = 2)</a></code></td><td><code><a href='https://rdrr.io/r/base/print.html'>print</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/summary.html'>summary(full = T)</a></code></td><td><code><a href='summary.Distribution.html'>summary.Distribution</a></code></td></tr>
-</table>
+</dl><p></div></p>
 
 
 
@@ -351,7 +354,7 @@ be found, decorate with FunctionImputation for numeric results.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

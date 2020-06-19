@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -175,12 +175,12 @@
 
       
 
-      </header><div class="row">
+      </header><script src="create_sdistribution_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating an SDistribution</h1>
             
-            <h4 class="date">2020-04-03</h4>
+            <h4 class="date">2020-06-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/create_sdistribution.rmd"><code>vignettes/webs/create_sdistribution.rmd</code></a></small>
       <div class="hidden name"><code>create_sdistribution.rmd</code></div>
@@ -307,13 +307,18 @@
                          <span class="kw">value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>),
                          <span class="kw">support</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">Reals</span>$<span class="fu">new</span>(), <span class="no">PosReals</span>$<span class="fu">new</span>(), <span class="no">PosReals</span>$<span class="fu">new</span>(), <span class="no">PosReals</span>$<span class="fu">new</span>()),
                          <span class="kw">settable</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">TRUE</span>, <span class="no">var.bool</span>, <span class="no">sd.bool</span>, <span class="no">prec.bool</span>),
-                         <span class="kw">updateFunc</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">NA</span>, <span class="fl">NA</span>,
-                                           <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'var'</span>)^<span class="fl">0.5</span>,
-                                           <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'var'</span>)^-<span class="fl">1</span>),
                          <span class="kw">description</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"Mean - Location Parameter"</span>,
                                             <span class="st">"Variance - Squared Scale Parameter"</span>,
                                             <span class="st">"Standard Deviation - Scale Parameter"</span>,
                                             <span class="st">"Precision - Inverse Squared Scale Parameter"</span>))
+
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"var"</span>, <span class="st">"sd"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'var'</span>)^<span class="fl">0.5</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"var"</span>, <span class="st">"prec"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'var'</span>)^-<span class="fl">1</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"sd"</span>, <span class="st">"var"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'sd'</span>)^<span class="fl">2</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"sd"</span>, <span class="st">"prec"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'sd'</span>)^-<span class="fl">2</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"prec"</span>, <span class="st">"sd"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'prec'</span>)^-<span class="fl">0.5</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"prec"</span>, <span class="st">"var"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'prec'</span>)^-<span class="fl">1</span>)
+
   <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">ps</span>)
 }</pre></body></html></div>
 <p>Note:</p>
@@ -324,43 +329,8 @@
 <li>The conditionals at the start of the method determine which parameterisation to construct based on given parameters. It additionally sets up a hierarchy, in this case if a user gives all parameterisations then mean and prec are used, if multiple but not prec are given, then sd is used otherwise var.</li>
 <li>The default values in the ParameterSet are arbitrary, just make sure they are within the support</li>
 <li>The ‘settable’ values are determined by which parameterisation the user constructs. i.e. The parameters called in construction will be <code>TRUE</code> whilst all others are <code>FALSE</code>.</li>
-<li>There is a default parameterisation that the <code>updateFunc</code>s reference, this does not need to be the parameterisation chosen by the user. This will also correspond to the <code>.getRefParams</code> method (see below).</li>
+<li>Dependencies are created to update parameters for any possible update using <code>addDeps</code>.</li>
 </ol>
-</div>
-<div id="getrefparams" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getrefparams" class="anchor"></a>.getRefParams</h3>
-<p>To ensure that there is no clash of parameterisations or any conflicts between functions that are updated by others, we have an internal method that is called by <code>setParameterValue</code> to ensure the same parameter is always updated. For example in the Normal distribution, it doesn’t matter if the user passes sd, var or prec to <code>setParameterValue</code> internally it is always the variance that is updated, and this is because of the <code>.getRefParams</code> private method. All the other parameterisations are updated automatically using the <code>updateFunc</code>s that you write in the ParameterSet, hence why it is very important that these reference the default parameterisation. This is less abstract by example, again the Normal distribution</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">set</span>(<span class="st">"private"</span>,<span class="st">".getRefParams"</span>, <span class="kw">function</span>(<span class="no">paramlst</span>){
-  <span class="no">lst</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>()
-  <span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">paramlst</span>$<span class="no">mean</span>)) <span class="no">lst</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">lst</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="no">paramlst</span>$<span class="no">mean</span>))
-  <span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">paramlst</span>$<span class="no">var</span>)) <span class="no">lst</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">lst</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="no">paramlst</span>$<span class="no">var</span>))
-  <span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">paramlst</span>$<span class="no">sd</span>)) <span class="no">lst</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">lst</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="no">paramlst</span>$<span class="no">sd</span>^<span class="fl">2</span>))
-  <span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">paramlst</span>$<span class="no">prec</span>)) <span class="no">lst</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">lst</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="no">paramlst</span>$<span class="no">prec</span>^-<span class="fl">1</span>))
-  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">lst</span>)
-})</pre></body></html></div>
-<p>Note</p>
-<ol style="list-style-type: decimal">
-<li>Again we have set up a hierarchy so that if a user provides multiple parameterisations the preference is given in order of prec -&gt; sd -&gt; var.</li>
-<li>The mean is used in every parameterisation hence this is always returned</li>
-<li>The variance is the default parameterisation (alongside mean) hence every other option references this</li>
-</ol>
-<p>Internally this looks a bit like:</p>
-<ol style="list-style-type: decimal">
-<li>
-<code>setParameterValue</code> is called with <code>lst = list(sd = 2)</code>
-</li>
-<li>
-<code>setParameterValue</code> calls <code>.getRefParams(paramlst = list(sd=2))</code>
-</li>
-<li>
-<code>.getRefParams</code> returns <code><a href="https://rdrr.io/r/base/list.html">list(var = 4)</a></code> (sd^2)</li>
-<li>
-<code><a href="https://rdrr.io/r/base/list.html">list(var = 4)</a></code> is then used by <code>setParameterValue</code> to update the variance</li>
-<li>
-<code>update</code> is called in the ParameterSet which uses all the <code>updateFunc</code>s to update sd and prec</li>
-</ol>
-<p>This may seem slightly counter-intuitive as we have first given sd, transformed this to variance then later re-calculated sd. However this is incredibly important as it maintains no clashes when multiple functions are updated and allows complex updates (such as in composite distributions) to run smoothly. Even when only one parameterisation is possible, this is still a required private method as it is called directly in <code>setParmeterValue</code>.</p>
 </div>
 </div>
 <div id="summary" class="section level2">
@@ -374,8 +344,6 @@
 <li>The constructor: Includes d/p/q/r methods, properties, traits and an argument for decorators</li>
 <li>
 <code>getParameterSet</code> dispatch method, written in the <code>getParameterSet.R</code> script</li>
-<li>
-<code>.getRefParams</code> for ensuring efficient updating of parameters</li>
 </ol>
 </div>
 <div id="extension-guidelines" class="section level2">
@@ -404,7 +372,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

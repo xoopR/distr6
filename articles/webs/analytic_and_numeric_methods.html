@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -175,12 +175,12 @@
 
       
 
-      </header><div class="row">
+      </header><script src="analytic_and_numeric_methods_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Decorators, Analytical and Numerical Methods</h1>
             
-            <h4 class="date">2020-04-03</h4>
+            <h4 class="date">2020-06-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/analytic_and_numeric_methods.rmd"><code>vignettes/webs/analytic_and_numeric_methods.rmd</code></a></small>
       <div class="hidden name"><code>analytic_and_numeric_methods.rmd</code></div>
@@ -215,15 +215,15 @@
 </li>
 </ul>
 <p>When a decorator is constructed, only the functions that do not exist analytically are added. For example, if a distribution has an analytical <code>variance</code> function as part of its core interface, then this will not be overloaded by the <code>CoreStatistics</code> decorator.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">n</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">decorators</span> <span class="kw">=</span> <span class="no">CoreStatistics</span>)
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">n</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">decorators</span> <span class="kw">=</span> <span class="st">"CoreStatistics"</span>)
 <span class="no">n</span>$<span class="no">mean</span> <span class="co"># The analytical method</span>
 <span class="co">#&gt; function () </span>
 <span class="co">#&gt; {</span>
-<span class="co">#&gt;     return(self$getParameterValue("mean"))</span>
+<span class="co">#&gt;     unlist(self$getParameterValue("mean"))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;environment: 0x88e2430&gt;</span></pre></body></html></div>
+<span class="co">#&gt; &lt;environment: 0x7f8dc2201510&gt;</span></pre></body></html></div>
 <p>Similarly where possible an analytical method is always preferred. For example, if an analytical <code>cdf</code> expression is available, then the <code>survival</code> function in <code>ExoticStatistics</code> is defined as <code>1 - cdf</code> otherwise a numerical integration is calculated.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">n</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">decorators</span> <span class="kw">=</span> <span class="no">ExoticStatistics</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">n</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">decorators</span> <span class="kw">=</span> <span class="st">"ExoticStatistics"</span>)
 <span class="no">n</span>$<span class="fu"><a href="../../reference/survival.html">survival</a></span>(<span class="fl">2</span>) <span class="kw">==</span> <span class="no">n</span>$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">2</span>, <span class="kw">lower.tail</span> <span class="kw">=</span> <span class="no">F</span>) <span class="co"># The analytical method</span>
 <span class="co">#&gt; [1] TRUE</span></pre></body></html></div>
 <p>Finally, even if an analytical expression for <code>expectation</code> exists, the <code>CoreStatistics</code> decorator always adds a <code>genExp</code> method for a generalised numerical expectation formula, this is required for numerical results for variance, moments, etc.</p>
@@ -243,7 +243,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

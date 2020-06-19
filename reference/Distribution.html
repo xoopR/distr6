@@ -87,7 +87,7 @@ as well as serving as the parent class to specific, familiar distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -240,147 +240,557 @@ as well as serving as the parent class to specific, familiar distributions.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns R6 object of class Distribution.</p>
-    <h2 class="hasAnchor" id="constructor"><a class="anchor" href="#constructor"></a>Constructor</h2>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
-    <p>Distribution$new(name = NULL, short_name = NULL, type = NULL, support = NULL,
-symmetric = FALSE, pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
-parameters = NULL, decorators = NULL, valueSupport = NULL, variateForm = NULL, description = NULL,
-suppressMoments = TRUE)</p>
-    <h2 class="hasAnchor" id="constructor-arguments"><a class="anchor" href="#constructor-arguments"></a>Constructor Arguments</h2>
+    <p><div class="r6-fields"></p><dl'>
+<dt><code>name</code></dt><dd><p>Full name of distribution.</p></dd>
 
-    
+<dt><code>short_name</code></dt><dd><p>Short name of distribution for printing.</p></dd>
 
-<table class='table'>
-<tr><td><strong>Argument</strong></td><td><strong>Type</strong></td><td><strong>Details</strong></td></tr>
-<tr><td><code>name</code></td><td>character</td><td>Full name of distribution.</td></tr>
-<tr><td><code>short_name</code></td><td>character</td><td>Short name to identify distribution.</td></tr>
-<tr><td><code>type</code></td><td><a href='https://rdrr.io/pkg/set6/man/Set.html'>set6::Set</a></td><td>Scientific type.</td></tr>
-<tr><td><code>support</code></td><td><a href='https://rdrr.io/pkg/set6/man/Set.html'>set6::Set</a></td><td>Distribution support. See Details.</td></tr>
-<tr><td><code>symmetric</code></td><td>logical</td><td>Is distribution symmetric?</td></tr>
-<tr><td><code>pdf</code></td><td>function</td><td>See Details.</td></tr>
-<tr><td><code>cdf</code></td><td>function</td><td>See Details.</td></tr>
-<tr><td><code>quantile</code></td><td>function</td><td>See Details.</td></tr>
-<tr><td><code>rand</code></td><td>function</td><td>See Details.</td></tr>
-<tr><td><code>parameters</code></td><td>ParameterSet</td><td>See Details.</td></tr>
-<tr><td><code>decorators</code></td><td>list</td><td>R6 decorators to add in construction.</td></tr>
-<tr><td><code>valueSupport</code></td><td>character</td><td>continuous, discrete, mixture. See Details.</td></tr>
-<tr><td><code>variateForm</code></td><td>character</td><td>univariate, multivariate, matrixvariate. See Details.</td></tr>
-<tr><td><code>description</code></td><td>character</td><td>Short description of distribution.</td></tr>
-<tr><td><code>suppressMoments</code></td><td>character</td><td>See Details.</td></tr>
-</table>
+<dt><code>description</code></dt><dd><p>Brief description of the distribution.</p></dd>
 
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <h2 class="hasAnchor" id="constructor-details"><a class="anchor" href="#constructor-details"></a>Constructor Details</h2>
+    <p><div class="r6-active-bindings"></p><dl'>
+<dt><code>decorators</code></dt><dd><p>Returns decorators currently used to decorate the distribution.</p></dd>
 
-    
+<dt><code>traits</code></dt><dd><p>Returns distribution traits.</p></dd>
 
+<dt><code>valueSupport</code></dt><dd><p>Deprecated, use <code>$traits$valueSupport</code>.</p></dd>
 
-<p>The most basic Distribution object consists of a name and one of pdf/cdf.</p>
-<p>If supplied, <code>type</code> and <code>support</code> should be given as a <a href='https://rdrr.io/pkg/set6/man/Set.html'>set6::Set</a> object. If neither are supplied
-then the set of Reals is taken to be the type and the dimension is the number of formal arguments in the pdf/cdf.
-If only <code>type</code> is supplied then this is taken to also be the support.</p>
-<p>By default, missing <code>pdf</code>, <code>cdf</code>, <code>quantile</code> and <code>rand</code> are not automatically imputed.
-Use the <code><a href='FunctionImputation.html'>FunctionImputation</a></code> decorator to generate these.</p>
-<p>See <code><a href='ParameterSet.html'>ParameterSet</a></code> for more details on construction of a ParameterSet.</p>
-<p><code>decorators</code> is an optional list of decorators (R6 environments not strings) to decorate the
-Distribution in construction. Decorators can also be added after construction. See <code><a href='decorate.html'>decorate</a></code>
-for more details.</p>
-<p><code>valueSupport</code> should be one of continuous/discrete/mixture if supplied.
-<code>variateForm</code> should be one of univariate/multivariate/matrixvariate if supplied.
-If not given these are automatically filled from <code>type</code> and <code>support</code>.</p>
-<p><code>suppressMoments</code> can be used to prevent the skewness and kurtosis type being automatically
-calculated in construction. This has the benefit of drastically decreasing computational time but
-at the cost of losing these in the distribution properties.</p>
-    <h2 class="hasAnchor" id="public-variables"><a class="anchor" href="#public-variables"></a>Public Variables</h2>
+<dt><code>variateForm</code></dt><dd><p>Deprecated, use <code>$traits$variateForm</code>.</p></dd>
 
-    
+<dt><code>type</code></dt><dd><p>Deprecated, use <code>$traits$type</code>.</p></dd>
 
-<table class='table'>
-<tr><td><strong>Variable</strong></td><td><strong>Return</strong></td></tr>
-<tr><td><code>name</code></td><td>Name of distribution.</td></tr>
-<tr><td><code>short_name</code></td><td>Id of distribution.</td></tr>
-<tr><td><code>description</code></td><td>Brief description of distribution.</td></tr>
-</table>
+<dt><code>properties</code></dt><dd><p>Returns distribution properties, including kurtosis type, skewness type, support, and
+symmetry.</p></dd>
 
+<dt><code>support</code></dt><dd><p>Deprecated, use <code>$properties$type</code>.</p></dd>
 
-    <h2 class="hasAnchor" id="public-methods"><a class="anchor" href="#public-methods"></a>Public Methods</h2>
+<dt><code>symmetry</code></dt><dd><p>Deprecated, use <code>$properties$symmetry</code>.</p></dd>
+
+<dt><code>sup</code></dt><dd><p>Returns supremum (upper bound) of the distribution support.</p></dd>
+
+<dt><code>inf</code></dt><dd><p>Returns infimum (lower bound) of the distribution support.</p></dd>
+
+<dt><code>dmax</code></dt><dd><p>Returns maximum of the distribution support.</p></dd>
+
+<dt><code>dmin</code></dt><dd><p>Returns minimum of the distribution support.</p></dd>
+
+<dt><code>kurtosisType</code></dt><dd><p>Deprecated, use <code>$properties$kurtosis</code>.</p></dd>
+
+<dt><code>skewnessType</code></dt><dd><p>Deprecated, use <code>$properties$skewness</code>.</p></dd>
+
+<dt><code>workingSupport</code></dt><dd><p>Returns an estimate for the computational support of the distribution.
+If an analytical cdf is available, then this is computed as the smallest interval
+in which the cdf lower bound is <code>0</code> and the upper bound is <code>1</code>, bounds are incremented in
+10^i intervals. If no analytical cdf is available, then this is computed as the smallest
+interval in which the lower and upper bounds of the pdf are <code>0</code>, this is much less precise
+and is more prone to error. Used primarily by decorators.</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
+<h3>Public methods</h3>
 
-<table class='table'>
-<tr><td><strong>Accessor Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code>decorators</code></td><td><code><a href='decorators.html'>decorators</a></code></td></tr>
-<tr><td><code>traits</code></td><td><code><a href='traits.html'>traits</a></code></td></tr>
-<tr><td><code>valueSupport</code></td><td><code><a href='valueSupport.html'>valueSupport</a></code></td></tr>
-<tr><td><code>variateForm</code></td><td><code><a href='variateForm.html'>variateForm</a></code></td></tr>
-<tr><td><code>type</code></td><td><code><a href='type.html'>type</a></code></td></tr>
-<tr><td><code>properties</code></td><td><code><a href='properties.html'>properties</a></code></td></tr>
-<tr><td><code>support</code></td><td><code><a href='support.html'>support</a></code></td></tr>
-<tr><td><code>symmetry</code></td><td><code><a href='symmetry.html'>symmetry</a></code></td></tr>
-<tr><td><code>sup</code></td><td><code><a href='sup.html'>sup</a></code></td></tr>
-<tr><td><code>inf</code></td><td><code><a href='inf.html'>inf</a></code></td></tr>
-<tr><td><code>dmax</code></td><td><code><a href='dmax.html'>dmax</a></code></td></tr>
-<tr><td><code>dmin</code></td><td><code><a href='dmin.html'>dmin</a></code></td></tr>
-<tr><td><code>skewnessType</code></td><td><code><a href='skewnessType.html'>skewnessType</a></code></td></tr>
-<tr><td><code>kurtosisType</code></td><td><code><a href='kurtosisType.html'>kurtosisType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>d/p/q/r Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='pdf.html'>pdf(x1, ..., log = FALSE, simplify = TRUE)</a></code></td><td><code><a href='pdf.html'>pdf</a></code></td></tr>
-<tr><td><code><a href='cdf.html'>cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='cdf.html'>cdf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/quantile.html'>quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='quantile.Distribution.html'>quantile.Distribution</a></code></td></tr>
-<tr><td><code><a href='rand.html'>rand(n, simplify = TRUE)</a></code></td><td><code><a href='rand.html'>rand</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Statistical Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='prec.html'>prec()</a></code></td><td><code><a href='prec.html'>prec</a></code></td></tr>
-<tr><td><code><a href='stdev.html'>stdev()</a></code></td><td><code><a href='stdev.html'>stdev</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></td><td><code><a href='median.Distribution.html'>median.Distribution</a></code></td></tr>
-<tr><td><code><a href='iqr.html'>iqr()</a></code></td><td><code><a href='iqr.html'>iqr</a></code></td></tr>
-<tr><td><code><a href='correlation.html'>correlation()</a></code></td><td><code><a href='correlation.html'>correlation</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Parameter Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='parameters.html'>parameters(id)</a></code></td><td><code><a href='parameters.html'>parameters</a></code></td></tr>
-<tr><td><code><a href='getParameterValue.html'>getParameterValue(id, error = "warn")</a></code></td><td><code><a href='getParameterValue.html'>getParameterValue</a></code></td></tr>
-<tr><td><code><a href='setParameterValue.html'>setParameterValue(..., lst = NULL, error = "warn")</a></code></td><td><code><a href='setParameterValue.html'>setParameterValue</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Validation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='liesInSupport.html'>liesInSupport(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInSupport.html'>liesInSupport</a></code></td></tr>
-<tr><td><code><a href='liesInType.html'>liesInType(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInType.html'>liesInType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Representation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='strprint.html'>strprint(n = 2)</a></code></td><td><code><a href='strprint.html'>strprint</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/print.html'>print(n = 2)</a></code></td><td><code><a href='https://rdrr.io/r/base/print.html'>print</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/summary.html'>summary(full = T)</a></code></td><td><code><a href='summary.Distribution.html'>summary.Distribution</a></code></td></tr>
-</table>
+<ul>
+<li><p><a href='#method-new'><code>Distribution$new()</code></a></p></li>
+<li><p><a href='#method-strprint'><code>Distribution$strprint()</code></a></p></li>
+<li><p><a href='#method-print'><code>Distribution$print()</code></a></p></li>
+<li><p><a href='#method-summary'><code>Distribution$summary()</code></a></p></li>
+<li><p><a href='#method-parameters'><code>Distribution$parameters()</code></a></p></li>
+<li><p><a href='#method-getParameterValue'><code>Distribution$getParameterValue()</code></a></p></li>
+<li><p><a href='#method-setParameterValue'><code>Distribution$setParameterValue()</code></a></p></li>
+<li><p><a href='#method-pdf'><code>Distribution$pdf()</code></a></p></li>
+<li><p><a href='#method-cdf'><code>Distribution$cdf()</code></a></p></li>
+<li><p><a href='#method-quantile'><code>Distribution$quantile()</code></a></p></li>
+<li><p><a href='#method-rand'><code>Distribution$rand()</code></a></p></li>
+<li><p><a href='#method-prec'><code>Distribution$prec()</code></a></p></li>
+<li><p><a href='#method-stdev'><code>Distribution$stdev()</code></a></p></li>
+<li><p><a href='#method-median'><code>Distribution$median()</code></a></p></li>
+<li><p><a href='#method-iqr'><code>Distribution$iqr()</code></a></p></li>
+<li><p><a href='#method-correlation'><code>Distribution$correlation()</code></a></p></li>
+<li><p><a href='#method-liesInSupport'><code>Distribution$liesInSupport()</code></a></p></li>
+<li><p><a href='#method-liesInType'><code>Distribution$liesInType()</code></a></p></li>
+<li><p><a href='#method-clone'><code>Distribution$clone()</code></a></p></li>
+</ul>
+<p><hr>
+<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>new</span>(
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>short_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>type</span>,
+  <span class='kw'>support</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>symmetric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pdf</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cdf</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>quantile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>rand</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>decorators</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>valueSupport</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>variateForm</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>suppressMoments</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>.suppressChecks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>name</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> <br />
+Full name of distribution.</p></dd>
+
+<dt><code>short_name</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> <br />
+Short name of distribution for printing.</p></dd>
+
+<dt><code>type</code></dt><dd><p><code>([set6::Set])</code> <br />
+Distribution type.</p></dd>
+
+<dt><code>support</code></dt><dd><p><code>([set6::Set])</code> <br />
+Distribution support.</p></dd>
+
+<dt><code>symmetric</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+Symmetry type of the distribution.</p></dd>
+
+<dt><code>pdf</code></dt><dd><p><code>function(1)</code> <br />
+Probability density function of the distribution. At least one of <code>pdf</code> and
+<code>cdf</code> must be provided.</p></dd>
+
+<dt><code>cdf</code></dt><dd><p><code>function(1)</code> <br />
+Cumulative distribution function of the distribution. At least one of <code>pdf</code> and
+<code>cdf</code> must be provided.</p></dd>
+
+<dt><code>quantile</code></dt><dd><p><code>function(1)</code> <br />
+Quantile (inverse-cdf) function of the distribution.</p></dd>
+
+<dt><code>rand</code></dt><dd><p><code>function(1)</code> <br />
+Simulation function for drawing random samples from the distribution.</p></dd>
+
+<dt><code>parameters</code></dt><dd><p><code>([ParameterSet])</code> <br />
+Parameter set for defining the parameters in the distribution, which should be set before
+construction.</p></dd>
+
+<dt><code>decorators</code></dt><dd><p><code>(character())</code> <br />
+Decorators to add to the distribution during construction.</p></dd>
+
+<dt><code>valueSupport</code></dt><dd><p><code>(character(1))</code> <br />
+The support type of the distribution, one of <code>"discrete", "continuous", "mixture"</code>.
+If <code>NULL</code>, determined automatically.</p></dd>
+
+<dt><code>variateForm</code></dt><dd><p><code>(character(1))</code> <br />
+The variate type of the distribution, one of <code>"univariate", "multivariate", "matrixvariate"</code>.
+If <code>NULL</code>, determined automatically.</p></dd>
+
+<dt><code>description</code></dt><dd><p><code>(character(1))</code> <br />
+Optional short description of the distribution.</p></dd>
+
+<dt><code>suppressMoments</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> does not calculte skewness and kurtosis types in construction.</p></dd>
+
+<dt><code>.suppressChecks</code></dt><dd><p><code>(logical(1))</code> <br />
+Used internally.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-strprint"></a></p><h3>Method <code><a href='strprint.html'>strprint()</a></code></h3>
+<p>Printable string representation of the <code>Distribution</code>. Primarily used internally.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='strprint.html'>strprint</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>n</code></dt><dd><p><code>(integer(1))</code> <br />
+Number of parameters to display when printing.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Prints the <code>Distribution</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>n</code></dt><dd><p><code>(integer(1))</code> <br />
+Passed to <code>$strprint</code>.</p></dd>
+
+<dt><code>...</code></dt><dd><p><br />
+Unused. Added for consistency.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-summary"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code></h3>
+<p>Prints a summary of the <code>Distribution</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>full</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> (default) prints a long summary of the distribution,
+otherwise prints a shorter summary.</p></dd>
+
+<dt><code>...</code></dt><dd><p><br />
+Unused. Added for consistency.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-parameters"></a></p><h3>Method <code><a href='parameters.html'>parameters()</a></code></h3>
+<p>Returns the full parameter details for the supplied parameter.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>id</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> <br />
+id of parameter value to return.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-getParameterValue"></a></p><h3>Method <code><a href='getParameterValue.html'>getParameterValue()</a></code></h3>
+<p>Returns the value of the supplied parameter.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='no'>id</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>id</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> <br />
+id of parameter value to return.</p></dd>
+
+<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
+If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><br />
+Named arguments of parameters to set values for. See examples.</p></dd>
+
+<dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.</p></dd>
+
+<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
+If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
+
+</dl><p></div></p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>))</pre><p></div></p>
+
+<p><hr>
+<a id="method-pdf"></a></p><h3>Method <code><a href='pdf.html'>pdf()</a></code></h3>
+<p>For discrete distributions the probability mass function (pmf) is returned, defined as
+$$p_X(x) = P(X = x)$$
+for continuous distributions the probability density function (pdf), \(f_X\), is returned
+$$f_X(x) = P(x &lt; X \le x + dx)$$
+for some infinitesimally small \(dx\).</p>
+<p>If available a pdf will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
+returned.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.</p></dd>
+
+<dt><code>log</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> returns the logarithm of the probabilities. Default is <code>FALSE</code>.</p></dd>
+
+<dt><code>simplify</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the return if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></dd>
+
+<dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.</p></dd>
+
+</dl><p></div></p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
+
+<span class='no'>mvn</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<p><hr>
+<a id="method-cdf"></a></p><h3>Method <code><a href='cdf.html'>cdf()</a></code></h3>
+<p>The (lower tail) cumulative distribution function, \(F_X\), is defined as
+$$F_X(x) = P(X \le x)$$
+If <code>lower.tail</code> is FALSE then \(1 - F_X(x)\) is returned, also known as the
+<code><a href='survival.html'>survival</a></code> function.</p>
+<p>If available a cdf will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
+returned.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(
+  <span class='no'>...</span>,
+  <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.</p></dd>
+
+<dt><code>lower.tail</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> (default), probabilities are <code>X &lt;= x</code>, otherwise, <code>P(X &gt; x)</code>.</p></dd>
+
+<dt><code>log.p</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> returns the logarithm of the probabilities. Default is <code>FALSE</code>.</p></dd>
+
+<dt><code>simplify</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the return if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></dd>
+
+<dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.</p></dd>
+
+</dl><p></div></p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</pre><p></div></p>
+
+<p><hr>
+<a id="method-quantile"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
+<p>The quantile function, \(q_X\), is the inverse cdf, i.e.
+$$q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}$$ #nolint</p>
+<p>If <code>lower.tail</code> is FALSE then \(q_X(1-p)\) is returned.</p>
+<p>If available a quantile will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
+returned.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(
+  <span class='no'>...</span>,
+  <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
+Points to evaluate the function at Arguments do not need
+to be named. The length of each argument corresponds to the number of points to evaluate,
+the number of arguments corresponds to the number of variables in the distribution.
+See examples.</p></dd>
+
+<dt><code>lower.tail</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> (default), probabilities are <code>X &lt;= x</code>, otherwise, <code>P(X &gt; x)</code>.</p></dd>
+
+<dt><code>log.p</code></dt><dd><p><code>(logical(1))</code> <br />
+If <code>TRUE</code> returns the logarithm of the probabilities. Default is <code>FALSE</code>.</p></dd>
+
+<dt><code>simplify</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the return if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></dd>
+
+<dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
+Alternative method to specify points to evaluate. If univariate then rows correspond with number
+of points to evaluate and columns correspond with number of variables to evaluate. In the special
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+to the distribution in the vector to evaluate.</p></dd>
+
+</dl><p></div></p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>)
+<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fl'>0.42</span>), <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>,<span class='fl'>0.2</span>)))</pre><p></div></p>
+
+<p><hr>
+<a id="method-rand"></a></p><h3>Method <code><a href='rand.html'>rand()</a></code></h3>
+<p>The rand function draws <code>n</code> simulations from the distribution.</p>
+<p>If available simulations will be returned using an analytic expression. Otherwise,
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
+returned.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='no'>n</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>n</code></dt><dd><p><code>(numeric(1))</code> <br />
+Number of points to simulate from the distribution. If length greater than \(1\), then
+<code>n &lt;- length(n)</code>,</p></dd>
+
+<dt><code>simplify</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the return if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></dd>
+
+</dl><p></div></p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>10</span>)
+
+<span class='no'>mvn</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
+<span class='no'>mvn</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)</pre><p></div></p>
+
+<p><hr>
+<a id="method-prec"></a></p><h3>Method <code><a href='prec.html'>prec()</a></code></h3>
+<p>Returns the precision of the distribution as <code>1/self$variance()</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='prec.html'>prec</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-stdev"></a></p><h3>Method <code><a href='stdev.html'>stdev()</a></code></h3>
+<p>Returns the standard deviation of the distribution as <code><a href='https://rdrr.io/r/base/MathFun.html'>sqrt(self$variance())</a></code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='stdev.html'>stdev</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-median"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></h3>
+<p>Returns the median of the distribution. If an analytical expression is available
+returns distribution median, otherwise if symmetric returns <code>self$mean</code>, otherwise
+returns <code>self$quantile(0.5)</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>na.rm</code></dt><dd><p><br />
+Ignored, addded for consistency.</p></dd>
+
+<dt><code>...</code></dt><dd><p><br />
+Ignored, addded for consistency.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-iqr"></a></p><h3>Method <code><a href='iqr.html'>iqr()</a></code></h3>
+<p>Inter-quartile range of the distribution. Estimated as
+<code>self$quantile(0.75) - self$quantile(0.25)</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='iqr.html'>iqr</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-correlation"></a></p><h3>Method <code><a href='correlation.html'>correlation()</a></code></h3>
+<p>If univariate returns <code>1</code>, otherwise returns the distribution correlation.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='correlation.html'>correlation</a></span>()</pre><p></div></p>
+
+<p><hr>
+<a id="method-liesInSupport"></a></p><h3>Method <code><a href='liesInSupport.html'>liesInSupport()</a></code></h3>
+<p>Tests if the given values lie in the support of the distribution.
+Uses <code>[set6::Set]$contains</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='liesInSupport.html'>liesInSupport</a></span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bound</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>x</code></dt><dd><p><code>ANY</code> <br />
+Values to test.</p></dd>
+
+<dt><code>all</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) returns <code>TRUE</code> if all <code>x</code> are in the distribution,
+otherwise returns a vector of logicals corresponding to each element in
+<code>x</code>.</p></dd>
+
+<dt><code>bound</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> then tests if <code>x</code> lie between the upper and lower bounds of the distribution,
+otherwise tests if <code>x</code> lie between the maximum and minimum of the distribution.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-liesInType"></a></p><h3>Method <code><a href='liesInType.html'>liesInType()</a></code></h3>
+<p>Tests if the given values lie in the type of the distribution.
+Uses <code>[set6::Set]$contains</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='liesInType.html'>liesInType</a></span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bound</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>x</code></dt><dd><p><code>ANY</code> <br />
+Values to test.</p></dd>
+
+<dt><code>all</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) returns <code>TRUE</code> if all <code>x</code> are in the distribution,
+otherwise returns a vector of logicals corresponding to each element in
+<code>x</code>.</p></dd>
+
+<dt><code>bound</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> then tests if <code>x</code> lie between the upper and lower bounds of the distribution,
+otherwise tests if <code>x</code> lie between the maximum and minimum of the distribution.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
 
 
-    <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active Bindings</h2>
 
-    
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Distribution$setParameterValue`</span>
+<span class='co'>## ------------------------------------------------</span>
 
-<table class='table'>
-<tr><td><strong>Active Binding</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code>isPdf</code></td><td><code><a href='isPdf.html'>isPdf</a></code></td></tr>
-<tr><td><code>isCdf</code></td><td><code><a href='isCdf.html'>isCdf</a></code></td></tr>
-<tr><td><code>isQuantile</code></td><td><code><a href='isQuantile.html'>isQuantile</a></code></td></tr>
-<tr><td><code>isRand</code></td><td><code><a href='isRand.html'>isRand</a></code></td></tr>
-</table>
+<span class='no'>b</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>))
 
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Distribution$pdf`</span>
+<span class='co'>## ------------------------------------------------</span>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500
+#&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] -4.628887 -3.124809 -2.143980 -1.584364 -1.402043 -1.584364 -2.143980
+#&gt;  [8] -3.124809 -4.628887 -6.931472</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500
+#&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</div><div class='input'>
+<span class='no'>mvn</span> <span class='kw'>&lt;-</span> <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.01306423</div><div class='input'><span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 1.072378e-03 7.225623e-06</div><div class='input'><span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;       MultiNorm
+#&gt; 1: 1.072378e-03
+#&gt; 2: 7.225623e-06</div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Distribution$cdf`</span>
+<span class='co'>## ------------------------------------------------</span>
 
-    <div class='dont-index'><p>See <a href='https://CRAN.R-project.org/package=set6'><span class="pkg">set6</span></a> for details on Sets and Intervals. See <code><a href='ParameterSet.html'>ParameterSet</a></code> for
-parameter details. See <code><a href='decorate.html'>decorate</a></code> for Decorator details.</p></div>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.01074219 0.05468750 0.17187500 0.37695313 0.62304687 0.82812500
+#&gt;  [7] 0.94531250 0.98925781 0.99902344 1.00000000</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;  [1] -0.01080030 -0.05623972 -0.18859117 -0.47313352 -0.97563444 -1.76098781
+#&gt;  [7] -2.90612011 -4.53357653 -6.93147181        -Inf</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.01074219 0.05468750 0.17187500 0.37695313 0.62304687 0.82812500
+#&gt;  [7] 0.94531250 0.98925781 0.99902344 1.00000000</div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Distribution$quantile`</span>
+<span class='co'>## ------------------------------------------------</span>
 
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fl'>0.42</span>), <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>,<span class='fl'>0.2</span>)))</div><div class='output co'>#&gt; [1] 3 4</div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Distribution$rand`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
+<span class='no'>b</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 7 4 2 4 5 4 5 3 5 8</div><div class='input'>
+<span class='no'>mvn</span> <span class='kw'>&lt;-</span> <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
+<span class='no'>mvn</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt;            V1          V2
+#&gt; 1: -0.5536994  0.62898204
+#&gt; 2:  2.0650249 -1.63098940
+#&gt; 3:  0.5124269 -1.86301149
+#&gt; 4: -0.5220125 -0.05260191
+#&gt; 5:  0.5429963 -0.91407483</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -396,7 +806,7 @@ parameter details. See <code><a href='decorate.html'>decorate</a></code> for Dec
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

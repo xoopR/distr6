@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -233,51 +233,52 @@
     <p>Functionality to decorate R6 Distributions (and child classes) with extra methods.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>decorate</span>(<span class='no'>distribution</span>, <span class='no'>decorators</span>)</pre>
+    <pre class="usage"><span class='fu'>decorate</span>(<span class='no'>distribution</span>, <span class='no'>decorators</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>distribution</th>
-      <td><p>distribution to decorate</p></td>
+      <td><p><code>([Distribution])</code><br />
+<a href='Distribution.html'>Distribution</a> to decorate.</p></td>
     </tr>
     <tr>
       <th>decorators</th>
-      <td><p>list or vector of decorators. See Details.</p></td>
+      <td><p><code>(character())</code>
+Vector of <a href='DistributionDecorator.html'>DistributionDecorator</a> names to decorate the <a href='Distribution.html'>Distribution</a> with.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p><code>ANY</code> <br />
+Extra arguments passed down to specific decorators.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a decorated R6 object inheriting from class SDistribution with the methods listed
-from one of the available decorators added to the SDistribution methods.</p>
+    <p>Returns a <a href='Distribution.html'>Distribution</a> with additional methods from the chosen
+<a href='DistributionDecorator.html'>DistributionDecorator</a>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Decorating is the process of adding methods to classes that are not part of the core
-interface (Gamma et al. 1994). Use <code>listDecorators</code> to see which decorators are currently available. The primary
-use-cases are to add numeric results when analytic ones are missing, to add complex modelling functions and
-to impute missing d/p/q/r functions.</p>
-<p>The <code>decorators</code> parameter should either be a list of decorator classes or their names
-or a single decorator class; see examples.</p>
+interface (Gamma et al. 1994). Use <code>listDecorators</code> to see which decorators are currently
+available. The primary use-cases are to add numeric results when analytic ones are missing,
+to add complex modelling functions and to impute missing d/p/q/r functions.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
 of Reusable Object-Oriented Software.” Addison-Wesley.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='listDecorators.html'>listDecorators</a></code> for available decorators.</p></div>
+    <div class='dont-index'><p><code><a href='listDecorators.html'>listDecorators()</a></code> for available decorators and <a href='DistributionDecorator.html'>DistributionDecorator</a> for the parent
+class.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='fu'>decorate</span>(<span class='no'>B</span>, <span class='no'>CoreStatistics</span>)</div><div class='output co'>#&gt; <span class='message'>B is now decorated with CoreStatistics</span></div><div class='output co'>#&gt; Binom(prob = 0.5, size = 10) </div><div class='input'>
+<span class='fu'>decorate</span>(<span class='no'>B</span>, <span class='st'>"CoreStatistics"</span>)</div><div class='output co'>#&gt; <span class='message'>Binomial is now decorated with CoreStatistics</span></div><div class='output co'>#&gt; Binom(prob = 0.5, qprob = 0.5, size = 10) </div><div class='input'>
 <span class='no'>E</span> <span class='kw'>&lt;-</span> <span class='no'>Exponential</span>$<span class='fu'>new</span>()
-<span class='fu'>decorate</span>(<span class='no'>E</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>CoreStatistics</span>, <span class='no'>ExoticStatistics</span>))</div><div class='output co'>#&gt; <span class='message'>E is now decorated with CoreStatistics,ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1) </div><div class='input'>
-<span class='no'>E</span> <span class='kw'>&lt;-</span> <span class='no'>Exponential</span>$<span class='fu'>new</span>()
-<span class='fu'>decorate</span>(<span class='no'>E</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>CoreStatistics</span>, <span class='st'>"ExoticStatistics"</span>))</div><div class='output co'>#&gt; <span class='message'>E is now decorated with CoreStatistics,ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1) </div><div class='input'>
-<span class='no'>E</span> <span class='kw'>&lt;-</span> <span class='no'>Exponential</span>$<span class='fu'>new</span>()
-<span class='fu'>decorate</span>(<span class='no'>E</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CoreStatistics"</span>, <span class='st'>"ExoticStatistics"</span>))</div><div class='output co'>#&gt; <span class='message'>E is now decorated with CoreStatistics,ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1) </div><div class='input'>
-</div></pre>
+<span class='fu'>decorate</span>(<span class='no'>E</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CoreStatistics"</span>, <span class='st'>"ExoticStatistics"</span>))</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics, ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -293,7 +294,7 @@ of Reusable Object-Oriented Software.” Addison-Wesley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

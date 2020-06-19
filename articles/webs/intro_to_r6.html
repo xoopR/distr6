@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -175,12 +175,12 @@
 
       
 
-      </header><div class="row">
+      </header><script src="intro_to_r6_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to R6</h1>
             
-            <h4 class="date">2020-04-03</h4>
+            <h4 class="date">2020-06-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/intro_to_r6.rmd"><code>vignettes/webs/intro_to_r6.rmd</code></a></small>
       <div class="hidden name"><code>intro_to_r6.rmd</code></div>
@@ -208,16 +208,16 @@
 <span class="co">#&gt; [1] "R6ClassGenerator"</span></pre></body></html></div>
 <p>Constructing a class in R6 is always done using the same syntax <code>$new(...)</code> but the arguments passed to this function depend on the class. Just like functions in R these arguments can be named or un-named and a default may or may not be provided. In this case there is a default so the following does not produce an error</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>()
-<span class="co">#&gt; Norm(mean = 0, var = 1)</span></pre></body></html></div>
+<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></pre></body></html></div>
 <p>But we can also pass arguments in the usual way</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">var</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="co">#&gt; Norm(mean = 0, var = 2)</span></pre></body></html></div>
+<span class="co">#&gt; Norm(mean = 0, var = 2, sd = 1.4142135623731, prec = 0.5)</span></pre></body></html></div>
 <p>See the help documentation for the specific arguments to pass to the constructor.</p>
 </div>
 <div id="methods" class="section level2">
 <h2 class="hasAnchor">
 <a href="#methods" class="anchor"></a>Methods</h2>
-<p>Methods work in the exact same way as functions except that again the dollar sign notation is used, e.g. <code>object$method(...)</code>. Notice that the constructor <code>$new()</code> is used for <em>classes</em> whereas methods are called on <em>objects</em>. For example let’s construct a Normal distribution object and save this</p>
+<p>Methods work in the exact same way as functions except that again the dollar sign notation is used, e.g. <code>object$method(...)</code>. Notice that the constructor <code>$new()</code> is used for <em>classes</em> whereas methods are called on <em>objects</em>. For example let’s construct a Normal distribution object and save this</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">N</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>()
 
 <span class="co"># Notice the R class is now 'Normal'</span>
@@ -257,6 +257,7 @@
 
 <span class="co"># active bindings</span>
 <span class="no">b</span>$<span class="no">kurtosisType</span>
+<span class="co">#&gt; Deprecated. Use $properties$kurtosis instead.</span>
 <span class="co">#&gt; [1] "platykurtic"</span>
 <span class="no">b</span>$<span class="no">inf</span>
 <span class="co">#&gt; [1] 0</span>
@@ -326,7 +327,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

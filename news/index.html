@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -227,31 +227,127 @@
       <small>Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="distr6-1-3-5-9000" class="section level1">
-<h1 class="page-header" data-toc-text="1.3.5.9000">
-<a href="#distr6-1-3-5-9000" class="anchor"></a>distr6 1.3.5.9000<small> Unreleased </small>
+    <div id="distr6-1379000" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.7.9000">
+<a href="#distr6-1379000" class="anchor"></a>distr6 1.3.7.9000<small> Unreleased </small>
+</h1>
+<div id="minor-updates" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-updates" class="anchor"></a>Minor Updates</h2>
+<div id="addededited-functionality" class="section level3">
+<h3 class="hasAnchor">
+<a href="#addededited-functionality" class="anchor"></a>Added/Edited Functionality</h3>
+<ul>
+<li>Multivariate functions in <code>VectorDistribution</code> now return arrays</li>
+<li>Analytical <code>median</code> now available for <code>SDistribution</code>s where closed form expressions are known</li>
+<li>Kernels now implemented in <code>Rcpp</code> with analytical log-pdf expressions. Analytical lower.tail and log.p will come in future versions.</li>
+<li>Adding plotting for bivariate distributions using <code>{plotly}</code>
+</li>
+<li>Added <code>EmpiricalMV</code> for empirical multivariate distributions</li>
+<li>All documentation now uses roxygen R6</li>
+<li>Distribution <code>type</code> is now required in construction custom <code>Distribution</code>s as the previous method of ‘guessing’ was inefficient.</li>
+<li>Added <code>ParameterSetCollection</code> for <code>Wrapper</code>s. Same functionality as before but much more efficient.</li>
+<li>Added <code>$addDeps</code> and <code>$deps</code> to <code>ParameterSet</code>s to replace <code>updateFunc</code>. This allows faster and more precise control over parameter updates.</li>
+<li>Added <code>$addChecks</code> and <code>$checks</code> to <code>ParameterSet</code>s to replace custom checks in distributions, and <code>$addTrafos</code> and <code>$trafos</code> to replace custom parameter transformations before setting. These allows clearner control over parameter setting.</li>
+<li>
+<code>categories</code> parameter in <code>Categorical</code> now called <code>nCategories</code>
+</li>
+<li>Constructor of <code>Categorical</code> now requires elements to be provided as a <code>list</code> to <code>elements</code>
+</li>
+<li>
+<code>settable</code> in <code>ParameterSet</code> now refers to the more intuitive flag that describes if a parameter can be set after construction</li>
+</ul>
+</div>
+<div id="deprecated-functionsfieldsmethods" class="section level3">
+<h3 class="hasAnchor">
+<a href="#deprecated-functionsfieldsmethods" class="anchor"></a>Deprecated Functions/Fields/Methods</h3>
+<ul>
+<li>Individual property and trait accessors deprecated: <code>$support, $symmetry, $kurtosisType, $skewnessType, $valueSupport, $variateForm, $type</code>
+</li>
+<li>Separated <code>Loglogistic</code> and <code>ShiftedLoglogistic</code> so only the latter has a <code>location</code> parameter. Additionally added an analytical <code>rand</code> expression to <code>ShiftedLoglogistic</code>, and <code>Loglogistic</code> now implemented from package <code>actuar</code>
+</li>
+<li>Removed deprecated classes: <code>ArrayDistribution</code>
+</li>
+<li>Removed deprecated functions: <code>listSpecialSets</code>
+</li>
+<li>
+<code>WeighedDiscrete</code> distribution now stores samples and probabilities as parameters.</li>
+<li>Removed <code>verbose</code> argument from distribution constructor</li>
+<li>Public <code>update</code> method in <code>ParameterSet</code> moved to <code>private</code>
+</li>
+<li>Removed <code>squared2Norm</code> from the <code>ExoticStatistics</code> decorator</li>
+<li>Deprecated <code>updateFunc</code> from <code>ParameterSet</code>
+</li>
+<li>Removed <code>.getRefParams</code> from <code>SDistribution</code>s and added <code>deps</code>
+</li>
+</ul>
+</div>
+</div>
+<div id="patches" class="section level2">
+<h2 class="hasAnchor">
+<a href="#patches" class="anchor"></a>Patches</h2>
+<ul>
+<li>Bugfix in <code>decorate</code> function that was overwriting the <code>decorators</code> private field instead of appending</li>
+<li>Vastly improved speed of construction of <code>SDistribution</code> and <code>Kernel</code>
+</li>
+<li>Bugfix in <code>$rand</code> for <code>Geometric</code> distribution with <code>trials == TRUE</code> , previously was randomising between <span class="math inline">[1, <em>I</em><em>n</em><em>f</em>)</span> not <span class="math inline">[0, <em>I</em><em>n</em><em>f</em>)</span>
+</li>
+<li>Changed default <code>form</code> parameter in <code>NegativeBinomial</code>, now errors if supplied argument is not in one of the four choices (previously reverted to “fbs”)</li>
+<li>Fixed bug in <code>MultivariateNormal</code> <code><a href="../reference/rand.html">rand()</a></code> which was not adding the <code>mean</code> correctly</li>
+<li>Massive bottleneck in <code>VectorDistribution</code> for same distribution type removed in d/p/q/r functions as well as non-generating function methods</li>
+<li>
+<code>Dirichlet, DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald</code> now implemented from package <code>extraDistr</code>
+</li>
+<li>Bug fix in <code>Frechet</code> <code>$cdf</code>
+</li>
+<li>Analytical <code>log</code> and <code>lower.tail</code> now available for all <code>SDistributions</code> and imputation possible for customs with <code>CoreStatistics</code>
+</li>
+<li>
+<code>NegativeBinomial</code> now uses Rcpp for d/p/q/r</li>
+<li>Distributions from <code>stats</code> are now vectorised across parameters in C</li>
+<li>
+<code>Degenerate</code>, <code>ShiftedLoglogistic</code> now Rcpp</li>
+<li>Removed redundant <code>K</code> parameter from <code>MultivariateNormal</code>
+</li>
+<li>Bugfix in <code>Wald</code>, symmetry was incorrectly flagged as “symmetric”</li>
+<li>Fixed bug in <code>TruncatedDistribution</code> support - previously support interval type was <code>"[]"</code> instead of <code>"(]"</code>. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open.</li>
+</ul>
+</div>
+</div>
+    <div id="distr6-137" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.7">
+<a href="#distr6-137" class="anchor"></a>distr6 1.3.7<small> 2020-05-20 </small>
+</h1>
+<ul>
+<li>Minor internal Updates</li>
+<li>Next release will be 1.4.0, due to nature of R6 this will break dependencies.</li>
+</ul>
+</div>
+    <div id="distr6-136" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.6">
+<a href="#distr6-136" class="anchor"></a>distr6 1.3.6<small> 2020-04-16 </small>
 </h1>
 <ul>
 <li>Bugfix in <code>decorate</code> function that was overwriting the <code>decorators</code> private field instead of appending</li>
-<li>Two bug fixes in <code>MultivariateNormal$rand()</code> . i) the distribution mean wasnât being added to the transformation correctly; ii) the Choleskey decomposition wasnât transposed causing incorrect simulations</li>
 <li>Added <code>plot.VectorDistribution</code> for more efficient plotting of mutiple distributions at the same time</li>
+<li>Two bug fixes in <code>MultivariateNormal$rand()</code> . i) the distribution mean wasn’t being added to the transformation correctly; ii) the Choleskey decomposition wasn’t transposed causing incorrect simulations</li>
 </ul>
 </div>
-    <div id="distr6-1-3-5" class="section level1">
+    <div id="distr6-135" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.5">
-<a href="#distr6-1-3-5" class="anchor"></a>distr6 1.3.5<small> 2020-03-19 </small>
+<a href="#distr6-135" class="anchor"></a>distr6 1.3.5<small> 2020-03-19 </small>
 </h1>
 <ul>
 <li>Added Erlang distribution</li>
 <li>Fixed mistake in documentation for <code>Weibull</code>, thanks to Paul Northrop (<a href='https://github.com/paulnorthrop'>@paulnorthrop</a>) for pointing this out.</li>
 <li>Fixed bug in <code>plot</code> preventing only <code>quantile</code> being plotted on its own</li>
-<li>Converted descriptive public methods to active bindings. Unfortunately this will break reverse dependencies as thereâs no way to soft deprecate these. Affected methods are: <code>decorators, traits, valueSupport, variateForm, type, properties, support, symmetry, sup, inf, dmax, dmin, kurtosisType, skewnessType</code>
+<li>Converted descriptive public methods to active bindings. Unfortunately this will break reverse dependencies as there’s no way to soft deprecate these. Affected methods are: <code>decorators, traits, valueSupport, variateForm, type, properties, support, symmetry, sup, inf, dmax, dmin, kurtosisType, skewnessType</code>
 </li>
 </ul>
 </div>
-    <div id="distr6-1-3-4" class="section level1">
+    <div id="distr6-134" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.4">
-<a href="#distr6-1-3-4" class="anchor"></a>distr6 1.3.4<small> 2020-02-19 </small>
+<a href="#distr6-134" class="anchor"></a>distr6 1.3.4<small> 2020-02-19 </small>
 </h1>
 <ul>
 <li>Bug fix in <code>VectorDistribution</code> that was causing decorators not to be added properly</li>
@@ -267,9 +363,9 @@
 <li>Removed secondary checks on <code>update</code> of <code>ParameterSet</code> , any properly defined distributions will have this covered in primary parameter, thus increasing speed.</li>
 </ul>
 </div>
-    <div id="distr6-1-3-3" class="section level1">
+    <div id="distr6-133" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.3">
-<a href="#distr6-1-3-3" class="anchor"></a>distr6 1.3.3<small> 2020-01-29 </small>
+<a href="#distr6-133" class="anchor"></a>distr6 1.3.3<small> 2020-01-29 </small>
 </h1>
 <ul>
 <li>
@@ -278,9 +374,9 @@
 <li>Updated <code>plot</code> to be able to handle distributions without <code>quantile</code> or <code>rand</code>. Optimised runtime by preventing automatic computation of <code>pdf</code> and <code>cdf</code>.</li>
 </ul>
 </div>
-    <div id="distr6-1-3-2" class="section level1">
+    <div id="distr6-132" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.2">
-<a href="#distr6-1-3-2" class="anchor"></a>distr6 1.3.2<small> 2020-01-12 </small>
+<a href="#distr6-132" class="anchor"></a>distr6 1.3.2<small> 2020-01-12 </small>
 </h1>
 <ul>
 <li>Bug fix in <code>VectorDistribution</code> - missing <code>which</code> argument</li>
@@ -290,9 +386,9 @@
 <li>Added <code>mode</code> to documentation</li>
 </ul>
 </div>
-    <div id="distr6-1-3-1" class="section level1">
+    <div id="distr6-131" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.1">
-<a href="#distr6-1-3-1" class="anchor"></a>distr6 1.3.1<small> 2019-11-25 </small>
+<a href="#distr6-131" class="anchor"></a>distr6 1.3.1<small> 2019-11-25 </small>
 </h1>
 <ul>
 <li>Added wrapper for VectorDistribution for quick concatenation of constructed distributions, <code>c.Distribution</code>
@@ -301,13 +397,13 @@
 <code>VectorDistribution</code> <code>print</code> method more in line with base R vectors</li>
 </ul>
 </div>
-    <div id="distr6-1-3-0" class="section level1">
+    <div id="distr6-130" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.0">
-<a href="#distr6-1-3-0" class="anchor"></a>distr6 1.3.0<small> 2019-10-31 </small>
+<a href="#distr6-130" class="anchor"></a>distr6 1.3.0<small> 2019-10-31 </small>
 </h1>
-<div id="minor-updates" class="section level2">
+<div id="minor-updates-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-updates" class="anchor"></a>Minor Updates</h2>
+<a href="#minor-updates-1" class="anchor"></a>Minor Updates</h2>
 <div id="added-functions-and-classes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#added-functions-and-classes" class="anchor"></a>Added Functions and Classes</h3>
@@ -328,7 +424,7 @@
 <li>
 <code>decorate</code> now allows users to specify the Decorator as a character as well as supplying the object, this makes it simpler when using distr6 whilst unattached</li>
 <li>
-<strong>Big changes</strong> (and hopefully final) to the <code>VectorDistribution</code>. Now the <code>VectorDistribution</code> only constructs the internal wrapped distributions when they are extracted or when a function, such as d/p/q/r, are called. This massively reduces a bottleneck in constructing the distribution. Additionally added functions for extracting distributions from inside the <code>VectorDistribution</code>. The only difference that should affect backwards compatibility is that the <code>distribution</code> argument must now be a character and not an object. Custom (i.e.Â non-<code>SDistribution</code>) distributions should be used in conjunction with the <code>distlist</code> initializer.</li>
+<strong>Big changes</strong> (and hopefully final) to the <code>VectorDistribution</code>. Now the <code>VectorDistribution</code> only constructs the internal wrapped distributions when they are extracted or when a function, such as d/p/q/r, are called. This massively reduces a bottleneck in constructing the distribution. Additionally added functions for extracting distributions from inside the <code>VectorDistribution</code>. The only difference that should affect backwards compatibility is that the <code>distribution</code> argument must now be a character and not an object. Custom (i.e. non-<code>SDistribution</code>) distributions should be used in conjunction with the <code>distlist</code> initializer.</li>
 <li>Changed the lower bound of positive Sets to .Machine$double.xmin as the previous value of 1.1e-15 was too restrictive</li>
 <li>Added <code>skewness</code>, <code>kurtosis</code>, <code>entropy</code>, <code>mgf</code>, <code>cf</code>, and <code>pgf</code> to <code>WeightedDiscrete</code> and <code>Empirical</code>
 </li>
@@ -336,9 +432,9 @@
 </ul>
 </div>
 </div>
-<div id="patches" class="section level2">
+<div id="patches-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#patches" class="anchor"></a>Patches</h2>
+<a href="#patches-1" class="anchor"></a>Patches</h2>
 <ul>
 <li>Bug fix in <code>WeightedDiscrete</code> distribution <code>variance</code> calculation</li>
 <li>Fixed bug in <code>Empirical</code> that was stopping the cdf of the first point in the distribution being evaluated</li>
@@ -348,19 +444,19 @@
 </ul>
 </div>
 </div>
-    <div id="distr6-1-2-0" class="section level1">
+    <div id="distr6-120" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.0">
-<a href="#distr6-1-2-0" class="anchor"></a>distr6 1.2.0<small> 2019-10-02 </small>
+<a href="#distr6-120" class="anchor"></a>distr6 1.2.0<small> 2019-10-02 </small>
 </h1>
-<div id="minor-updates-1" class="section level2">
+<div id="minor-updates-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-updates-1" class="anchor"></a>Minor Updates</h2>
+<a href="#minor-updates-2" class="anchor"></a>Minor Updates</h2>
 <div id="added-functions-and-classes-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#added-functions-and-classes-1" class="anchor"></a>Added Functions and Classes</h3>
 <ul>
 <li>Added non-central F, T, Chi-Squared, and Beta distributions</li>
-<li>Added WeightedDiscrete distribution. This allows users to supply a data.frame of samples and pdf/cdfs for more efficient usage with empirical discrete estimators (e.g.Â Kaplan-Meier)</li>
+<li>Added WeightedDiscrete distribution. This allows users to supply a data.frame of samples and pdf/cdfs for more efficient usage with empirical discrete estimators (e.g. Kaplan-Meier)</li>
 </ul>
 </div>
 <div id="updated-functions-1" class="section level3">
@@ -373,9 +469,9 @@
 </ul>
 </div>
 </div>
-<div id="patches-1" class="section level2">
+<div id="patches-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#patches-1" class="anchor"></a>Patches</h2>
+<a href="#patches-2" class="anchor"></a>Patches</h2>
 <ul>
 <li>Added <code>errormsg</code> argument to assertions so a custom error message can be provided</li>
 <li>Fixed error in quantile function in <code>Empirical</code> that was causing results to be dropped</li>
@@ -385,19 +481,19 @@
 </ul>
 </div>
 </div>
-    <div id="distr6-1-1-0" class="section level1">
+    <div id="distr6-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
-<a href="#distr6-1-1-0" class="anchor"></a>distr6 1.1.0<small> 2019-08-27 </small>
+<a href="#distr6-110" class="anchor"></a>distr6 1.1.0<small> 2019-08-27 </small>
 </h1>
-<div id="minor-updates-2" class="section level2">
+<div id="minor-updates-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-updates-2" class="anchor"></a>Minor Updates</h2>
+<a href="#minor-updates-3" class="anchor"></a>Minor Updates</h2>
 <div id="added-functions-and-classes-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#added-functions-and-classes-2" class="anchor"></a>Added Functions and Classes</h3>
 <ul>
 <li>
-<code>Empirical</code> distribution for distributions arising from observed samples (e.g.Â from MC sampling methods)</li>
+<code>Empirical</code> distribution for distributions arising from observed samples (e.g. from MC sampling methods)</li>
 <li>
 <code>simulateEmpiricalDistribution</code>: function for sampling <em>without</em> replacement from an <code>Empirical</code> distribution</li>
 </ul>
@@ -416,7 +512,7 @@
 <ul>
 <li>Added quantile to Categorical distribution and updated its cdf efficiency</li>
 <li>
-<code>cdf</code> of discrete distributions evaluated between integers are now evaluated after rounding down and do not return 0, e.g. <code>Binomial$new()$cdf(1.8) == Binomial$new()$cdf(1)</code>
+<code>cdf</code> of discrete distributions evaluated between integers are now evaluated after rounding down and do not return 0, e.g. <code>Binomial$new()$cdf(1.8) == Binomial$new()$cdf(1)</code>
 </li>
 <li>Added two additional parameters to <code>ProductDistribution</code>: <code>params</code> and <code>distribution</code>, so that it can either function as before or as the <code>ArrayDistribution</code> wrapper which is now deprecated.</li>
 <li>Added two additional parameters to <code>VectorDistribution</code>: <code>params</code> and <code>distribution</code>, so that it can either function as before or as a generalisation to the <code>ArrayDistribution</code> wrapper which is now deprecated.</li>
@@ -434,9 +530,9 @@
 </ul>
 </div>
 </div>
-<div id="patches-2" class="section level2">
+<div id="patches-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#patches-2" class="anchor"></a>Patches</h2>
+<a href="#patches-3" class="anchor"></a>Patches</h2>
 <ul>
 <li>Bug fix in quantile function of huberization wrapper</li>
 <li>Fixed the <code>rand</code> return of a Vector Distribution (transposed data.table and added column names)</li>
@@ -450,9 +546,9 @@
 </ul>
 </div>
 </div>
-    <div id="distr6-1-0-1" class="section level1">
+    <div id="distr6-101" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.1">
-<a href="#distr6-1-0-1" class="anchor"></a>distr6 1.0.1<small> 2019-07-25 </small>
+<a href="#distr6-101" class="anchor"></a>distr6 1.0.1<small> 2019-07-25 </small>
 </h1>
 <ul>
 <li>Updated vignettes to remove redundant distr6 installation via GitHub that was causing a warning on Debian</li>
@@ -461,9 +557,9 @@
 <li>Fixed broken if/else statement in liesInSetInterval method of SetInterval class</li>
 </ul>
 </div>
-    <div id="distr6-1-0-0" class="section level1">
+    <div id="distr6-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
-<a href="#distr6-1-0-0" class="anchor"></a>distr6 1.0.0<small> 2019-07-19 </small>
+<a href="#distr6-100" class="anchor"></a>distr6 1.0.0<small> 2019-07-19 </small>
 </h1>
 <ul>
 <li>v1 API is ready to be shipped to CRAN!</li>
@@ -473,9 +569,9 @@
 <li>distr6 is a complete, unified, object-oriented interface to probability distributions in R. Complete with 36 probability distributions and another 11 kernels, distr6 also allows functionality for numerical imputation of methods and statistical functions.</li>
 </ul>
 </div>
-    <div id="distr6-0-1-0-9000" class="section level1">
+    <div id="distr6-0109000" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0.9000">
-<a href="#distr6-0-1-0-9000" class="anchor"></a>distr6 0.1.0.9000<small> Unreleased </small>
+<a href="#distr6-0109000" class="anchor"></a>distr6 0.1.0.9000<small> Unreleased </small>
 </h1>
 <ul>
 <li>Now public!</li>
@@ -501,7 +597,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

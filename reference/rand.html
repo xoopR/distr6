@@ -53,7 +53,7 @@
 
 
 <meta property="og:title" content="Random Simulation Function — rand" />
-<meta property="og:description" content="Returns a given number of points sampled from the distribution." />
+<meta property="og:description" content="See Distribution$rand" />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -230,7 +230,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Returns a given number of points sampled from the distribution.</p>
+    <p>See <a href='Distribution.html'>Distribution</a><code>$rand</code></p>
     </div>
 
     <pre class="usage"><span class='fu'>rand</span>(<span class='no'>object</span>, <span class='no'>n</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -240,37 +240,26 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Distribution.</p></td>
+      <td><p>(<a href='Distribution.html'>Distribution</a>)</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>number of observations. If length(n) &gt; 1, the length is taken to be the number required.</p></td>
+      <td><p><code>(numeric(1))</code> <br />
+Number of points to simulate from the distribution. If length greater than \(1\), then
+<code>n &lt;- length(n)</code>,</p></td>
     </tr>
     <tr>
       <th>simplify</th>
-      <td><p>if TRUE (default) returns results in simplest form (vector or data.table) otherwise as data.table.</p></td>
+      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
+If <code>TRUE</code> (default) simplifies the pdf if possible to a <code>numeric</code>, otherwise returns a
+data.table::data.table.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Simulated draws from the distribution as either a numeric if <code>simplify</code> is TRUE
-or as a data.table.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>If available a rand will be returned without warning using an analytic expression. Otherwise,
-if the distribution has not been decorated with <code>FunctionImputation</code>, <code>NULL</code> is returned.
-To impute the rand, use <code><a href='decorate.html'>decorate(distribution, FunctionImputation)</a></code>, this will provide a numeric
-calculation for the rand with warning.</p>
-<p>Additional named arguments can be passed, which are required for composite distributions such as
-<code><a href='ProductDistribution.html'>ProductDistribution</a></code> and <code><a href='distr6-deprecated.html'>ArrayDistribution</a></code>.</p>
-    <h2 class="hasAnchor" id="r-usage"><a class="anchor" href="#r-usage"></a>R6 Usage</h2>
-
-    <p>$rand(n, simplify = TRUE)</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='pdf.html'>pdf</a></code>, <code><a href='cdf.html'>cdf</a></code>, <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></code> for other statistical functions.
-<code><a href='FunctionImputation.html'>FunctionImputation</a></code>, <code><a href='decorate.html'>decorate</a></code> for imputing missing functions.</p></div>
+    <p>Simulations as either a numeric if <code>simplify</code> is TRUE
+or as a <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -287,7 +276,7 @@ calculation for the rand with warning.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -53,7 +53,7 @@
 
 
 <meta property="og:title" content="Sample Empirical Distribution Without Replacement — simulateEmpiricalDistribution" />
-<meta property="og:description" content="Function to sample Distributions of class Empirical without replacement, as
+<meta property="og:description" content="Function to sample Empirical Distributions without replacement, as
 opposed to the rand method which samples with replacement." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
@@ -87,7 +87,7 @@ opposed to the rand method which samples with replacement." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -231,8 +231,8 @@ opposed to the rand method which samples with replacement." />
     </div>
 
     <div class="ref-description">
-    <p>Function to sample Distributions of class <code>Empirical</code> without replacement, as
-opposed to the <code>rand</code> method which samples with replacement.</p>
+    <p>Function to sample <a href='Empirical.html'>Empirical</a> Distributions without replacement, as
+opposed to the <a href='rand.html'>rand</a> method which samples with replacement.</p>
     </div>
 
     <pre class="usage"><span class='fu'>simulateEmpiricalDistribution</span>(<span class='no'>EmpiricalDist</span>, <span class='no'>n</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -262,14 +262,11 @@ opposed to the <code>rand</code> method which samples with replacement.</p>
     <p>This function can only be used to sample from the <code>Empirical</code> distribution without replacement,
 and will return an error for other distributions.</p>
 <p>The <code>seed</code> param ensures that the same samples can be reproduced and is more convenient than using the
-<code>set.seed</code> function each time before use. If <code>set.seed</code> is <code>NULL</code> then the seed is left
+<code><a href='https://rdrr.io/r/base/Random.html'>set.seed()</a></code> function each time before use. If <code>set.seed</code> is <code>NULL</code> then the seed is left
 unchanged (NULL is not passed to the <code>set.seed</code> function).</p>
 <p>If <code>n</code> is of length greater than one, then <code>n</code> is taken to be the length of <code>n</code>. If <code>n</code>
 is greater than the number of observations in the Empirical distribution, then <code>n</code> is taken to be
 the number of observations in the distribution.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></code>, <code><a href='rand.html'>rand</a></code>, and <code><a href='Empirical.html'>Empirical</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -286,7 +283,7 @@ the number of observations in the distribution.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

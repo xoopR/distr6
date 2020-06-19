@@ -53,7 +53,7 @@
 
 
 <meta property="og:title" content="Abstract DistributionWrapper Class — DistributionWrapper" />
-<meta property="og:description" content="The abstract parent class to wrappers." />
+<meta property="og:description" content="Abstract class that cannot be constructed directly." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.7.9000</span>
       </span>
     </div>
 
@@ -230,7 +230,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The abstract parent class to wrappers.</p>
+    <p>Abstract class that cannot be constructed directly.</p>
     </div>
 
 
@@ -243,97 +243,147 @@
     <p>Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped distribution
 has the same methods and fields as an unwrapped one. After wrapping, the parameters of a distribution
 are prefixed with the distribution name to ensure uniqueness of parameter IDs.</p>
-<p>Abstract classes cannot be implemented directly. Use the <code>listWrappers</code> function to see constructable wrappers.</p>
-    <h2 class="hasAnchor" id="public-methods"><a class="anchor" href="#public-methods"></a>Public Methods</h2>
+<p>Use <a href='listWrappers.html'>listWrappers</a> function to see constructable wrappers.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    
-
-<table class='table'>
-<tr><td><strong>Accessor Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='wrappedModels.html'>wrappedModels(model = NULL)</a></code></td><td><code><a href='wrappedModels.html'>wrappedModels</a></code></td></tr>
-<tr><td><code>decorators</code></td><td><code><a href='decorators.html'>decorators</a></code></td></tr>
-<tr><td><code>traits</code></td><td><code><a href='traits.html'>traits</a></code></td></tr>
-<tr><td><code>valueSupport</code></td><td><code><a href='valueSupport.html'>valueSupport</a></code></td></tr>
-<tr><td><code>variateForm</code></td><td><code><a href='variateForm.html'>variateForm</a></code></td></tr>
-<tr><td><code>type</code></td><td><code><a href='type.html'>type</a></code></td></tr>
-<tr><td><code>properties</code></td><td><code><a href='properties.html'>properties</a></code></td></tr>
-<tr><td><code>support</code></td><td><code><a href='support.html'>support</a></code></td></tr>
-<tr><td><code>symmetry</code></td><td><code><a href='symmetry.html'>symmetry</a></code></td></tr>
-<tr><td><code>sup</code></td><td><code><a href='sup.html'>sup</a></code></td></tr>
-<tr><td><code>inf</code></td><td><code><a href='inf.html'>inf</a></code></td></tr>
-<tr><td><code>dmax</code></td><td><code><a href='dmax.html'>dmax</a></code></td></tr>
-<tr><td><code>dmin</code></td><td><code><a href='dmin.html'>dmin</a></code></td></tr>
-<tr><td><code>skewnessType</code></td><td><code><a href='skewnessType.html'>skewnessType</a></code></td></tr>
-<tr><td><code>kurtosisType</code></td><td><code><a href='kurtosisType.html'>kurtosisType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>d/p/q/r Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='pdf.html'>pdf(x1, ..., log = FALSE, simplify = TRUE)</a></code></td><td><code><a href='pdf.html'>pdf</a></code></td></tr>
-<tr><td><code><a href='cdf.html'>cdf(x1, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='cdf.html'>cdf</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/quantile.html'>quantile(p, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE)</a></code></td><td><code><a href='quantile.Distribution.html'>quantile.Distribution</a></code></td></tr>
-<tr><td><code><a href='rand.html'>rand(n, simplify = TRUE)</a></code></td><td><code><a href='rand.html'>rand</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Statistical Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='prec.html'>prec()</a></code></td><td><code><a href='prec.html'>prec</a></code></td></tr>
-<tr><td><code><a href='stdev.html'>stdev()</a></code></td><td><code><a href='stdev.html'>stdev</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></td><td><code><a href='median.Distribution.html'>median.Distribution</a></code></td></tr>
-<tr><td><code><a href='iqr.html'>iqr()</a></code></td><td><code><a href='iqr.html'>iqr</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/stats/cor.html'>cor()</a></code></td><td><code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Parameter Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='parameters.html'>parameters(id)</a></code></td><td><code><a href='parameters.html'>parameters</a></code></td></tr>
-<tr><td><code><a href='getParameterValue.html'>getParameterValue(id, error = "warn")</a></code></td><td><code><a href='getParameterValue.html'>getParameterValue</a></code></td></tr>
-<tr><td><code><a href='setParameterValue.html'>setParameterValue(..., lst = NULL, error = "warn")</a></code></td><td><code><a href='setParameterValue.html'>setParameterValue</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Validation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='liesInSupport.html'>liesInSupport(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInSupport.html'>liesInSupport</a></code></td></tr>
-<tr><td><code><a href='liesInType.html'>liesInType(x, all = TRUE, bound = FALSE)</a></code></td><td><code><a href='liesInType.html'>liesInType</a></code></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td><strong>Representation Methods</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code><a href='strprint.html'>strprint(n = 2)</a></code></td><td><code><a href='strprint.html'>strprint</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/print.html'>print(n = 2)</a></code></td><td><code><a href='https://rdrr.io/r/base/print.html'>print</a></code></td></tr>
-<tr><td><code><a href='https://rdrr.io/r/base/summary.html'>summary(full = T)</a></code></td><td><code><a href='summary.Distribution.html'>summary.Distribution</a></code></td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active Bindings</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Active Binding</strong></td><td><strong>Link</strong></td></tr>
-<tr><td><code>isPdf</code></td><td><code><a href='isPdf.html'>isPdf</a></code></td></tr>
-<tr><td><code>isCdf</code></td><td><code><a href='isCdf.html'>isCdf</a></code></td></tr>
-<tr><td><code>isQuantile</code></td><td><code><a href='isQuantile.html'>isQuantile</a></code></td></tr>
-<tr><td><code>isRand</code></td><td><code><a href='isRand.html'>isRand</a></code></td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="public-variables"><a class="anchor" href="#public-variables"></a>Public Variables</h2>
-
-    
-
-<table class='table'>
-<tr><td><strong>Variable</strong></td><td><strong>Return</strong></td></tr>
-<tr><td><code>name</code></td><td>Name of distribution.</td></tr>
-<tr><td><code>short_name</code></td><td>Id of distribution.</td></tr>
-<tr><td><code>description</code></td><td>Brief description of distribution.</td></tr>
-<tr><td><code>package</code></td><td>The package d/p/q/r are implemented in.</td></tr>
-</table>
-
-
+    <p>Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
+of Reusable Object-Oriented Software.” Addison-Wesley.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='listWrappers.html'>listWrappers</a></code></p></div>
+    <div class='dont-index'><p>Other wrappers: 
+<code><a href='Convolution.html'>Convolution</a></code>,
+<code><a href='HuberizedDistribution.html'>HuberizedDistribution</a></code>,
+<code><a href='MixtureDistribution.html'>MixtureDistribution</a></code>,
+<code><a href='ProductDistribution.html'>ProductDistribution</a></code>,
+<code><a href='TruncatedDistribution.html'>TruncatedDistribution</a></code>,
+<code><a href='VectorDistribution.html'>VectorDistribution</a></code></p></div>
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
+
+    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code>DistributionWrapper</code></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-new'><code>DistributionWrapper$new()</code></a></p></li>
+<li><p><a href='#method-wrappedModels'><code>DistributionWrapper$wrappedModels()</code></a></p></li>
+<li><p><a href='#method-setParameterValue'><code>DistributionWrapper$setParameterValue()</code></a></p></li>
+<li><p><a href='#method-clone'><code>DistributionWrapper$clone()</code></a></p></li>
+</ul>
+<p><details ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-cdf'><code>distr6::Distribution$cdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-correlation'><code>distr6::Distribution$correlation()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-iqr'><code>distr6::Distribution$iqr()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href='../../distr6/html/Distribution.html#method-median'><code>distr6::Distribution$median()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-parameters'><code>distr6::Distribution$parameters()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-pdf'><code>distr6::Distribution$pdf()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-prec'><code>distr6::Distribution$prec()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
+<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'>new</span>(
+  <span class='kw'>distlist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>name</span>,
+  <span class='no'>short_name</span>,
+  <span class='no'>description</span>,
+  <span class='no'>support</span>,
+  <span class='no'>type</span>,
+  <span class='no'>valueSupport</span>,
+  <span class='no'>variateForm</span>,
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>outerID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>distlist</code></dt><dd><p><code>(list())</code><br />
+List of <a href='Distribution.html'>Distribution</a>s.</p></dd>
+
+<dt><code>name</code></dt><dd><p><code>(character(1))</code><br />
+Wrapped distribution name.</p></dd>
+
+<dt><code>short_name</code></dt><dd><p><code>(character(1))</code><br />
+Wrapped distribution ID.</p></dd>
+
+<dt><code>description</code></dt><dd><p><code>(character())</code> <br />
+Wrapped distribution description.</p></dd>
+
+<dt><code>support</code></dt><dd><p><code>([set6::Set])</code><br />
+Wrapped distribution support.</p></dd>
+
+<dt><code>type</code></dt><dd><p><code>([set6::Set])</code><br />
+Wrapped distribution type.</p></dd>
+
+<dt><code>valueSupport</code></dt><dd><p><code>(character(1))</code><br />
+Wrapped distribution value support.</p></dd>
+
+<dt><code>variateForm</code></dt><dd><p><code>(character(1))</code><br />
+Wrapped distribution variate form.</p></dd>
+
+<dt><code>parameters</code></dt><dd><p><code>([ParameterSetCollection])</code><br />
+Optional parameters to add to the internal collection, ignored if <code>distlist</code> is given.</p></dd>
+
+<dt><code>outerID</code></dt><dd><p><code>([ParameterSet])</code><br />
+Parameters added by the wrapper.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-wrappedModels"></a></p><h3>Method <code><a href='wrappedModels.html'>wrappedModels()</a></code></h3>
+<p>Returns model(s) wrapped by this wrapper.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'><a href='wrappedModels.html'>wrappedModels</a></span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>model</code></dt><dd><p><code>(character(1))</code> <br />
+id of wrapped <a href='s'>Distribution</a> to return. If <code>NULL</code> (default), a list of all wrapped <a href='Distribution.html'>Distribution</a>s
+is returned; if only one <a href='Distribution.html'>Distribution</a> is matched then this is returned, otherwise a list of
+<a href='Distribution.html'>Distribution</a>s.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><br />
+Named arguments of parameters to set values for. See examples.</p></dd>
+
+<dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.</p></dd>
+
+<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
+If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -350,7 +400,7 @@ are prefixed with the distribution name to ensure uniqueness of parameter IDs.</
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
