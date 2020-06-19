@@ -81,10 +81,6 @@ reference:
       - skewType
       - liesInSupport
       - liesInType
-      - isCdf
-      - isPdf
-      - isQuantile
-      - isRand
   - title: "Mathematical and Statistical"
     desc: "Mathematical and statistical functions acting on Distribution objects."
     contents: 
@@ -139,6 +135,7 @@ reference:
       - type
       - valueSupport
       - variateForm
+      - workingSupport
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
     contents: 
@@ -152,17 +149,17 @@ reference:
     desc: "Functionality for composite modelling including joint and conditional distributions."
     contents:
       - DistributionWrapper
-      - wrappedModels
-      - ProductDistribution
-      - VectorDistribution
-      - Extract.VectorDistribution
-      - c.Distribution
-      - HuberizedDistribution
-      - huberize
-      - TruncatedDistribution
-      - truncate
-      - MixtureDistribution
       - Convolution
+      - HuberizedDistribution
+      - MixtureDistribution
+      - ProductDistribution
+      - TruncatedDistribution
+      - VectorDistribution
+      - wrappedModels
+      - c.Distribution
+      - huberize
+      - truncate
+      - [.ParameterSet
   - title: "Univariate Discrete Distributions"
     contents:
       - Bernoulli
@@ -185,6 +182,7 @@ reference:
       - Cauchy
       - ChiSquared
       - ChiSquaredNoncentral
+      - Erlang
       - Exponential
       - FDistribution
       - FDistributionNoncentral
@@ -200,6 +198,7 @@ reference:
       - Normal
       - Pareto
       - Rayleigh
+      - ShiftedLoglogistic
       - StudentT
       - StudentTNoncentral
       - Triangular
@@ -209,6 +208,7 @@ reference:
   - title: "Multivariate Distributions"
     contents:
       - Dirichlet
+      - EmpiricalMV
       - Multinomial
       - MultivariateNormal
   - title: "Kernels"
@@ -226,8 +226,9 @@ reference:
       - Triweight
   - title: "Visualisation"
     contents:
-      - plot.Distribution
       - lines.Distribution
+      - plot.Distribution
+      - plot.VectorDistribution
       - qqplot
   - title: "Assertions"
     desc: "Validation checks for Distributions."
@@ -247,11 +248,12 @@ reference:
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
     contents: 
       - ParameterSet
+      - ParameterSetCollection
+      - as.data.table.ParameterSet
       - as.ParameterSet
       - getParameterSupport
       - getParameterValue
-      - setParameterValue
-      - as.data.table.ParameterSet
-      - print.ParameterSet
       - merge.ParameterSet
-      - update.ParameterSet
+      - print.ParameterSet
+      - setParameterValue
+      - [.ParameterSet

@@ -1,5 +1,5 @@
 ---
-title: "Introduction to distr6"
+title: "distr6"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >

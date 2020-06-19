@@ -97,13 +97,6 @@ tn$cdf(-3)
 tn$cdf(1)
 ```
 
-By default the quantile method isn't added, but we could impute this using the `FunctionImputation` decorator:
-```{r}
-decorate(tn, "FunctionImputation")
-tn$quantile(0.9121888)
-tn$cdf(1.245) # As expected
-```
-
 ### ProductDistribution
 
 A product distribution is a composite distribution in which two or more independent distributions are combined into a single joint distribution. Details about the maths behind this can be found in `?ProductDistribution`. For now we use this as an example of the composite distributions in distr6. Say we want the product distribution of the binomial and normal distributions,
