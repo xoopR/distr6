@@ -19,6 +19,7 @@
 * `categories` parameter in `Categorical` now called `nCategories`
 * Constructor of `Categorical` now requires elements to be provided as a `list` to `elements`
 * `settable` in `ParameterSet` now refers to the more intuitive flag that describes if a parameter can be set after construction
+* Renamed `squared2Norm` in `Kernel`s to `pdfSquared2Norm` and added `x` to arguments to allow for shifted norms.
 
 ### Deprecated Functions/Fields/Methods
 
