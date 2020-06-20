@@ -61,8 +61,8 @@ InverseGamma <- R6Class("InverseGamma",
     mean = function() {
       shape <- unlist(self$getParameterValue("shape"))
       scale <- unlist(self$getParameterValue("scale"))
-      mean = rep(NaN, length(shape))
-      mean[shape > 1] = scale[shape > 1] / (shape[shape > 1] - 1)
+      mean <- rep(NaN, length(shape))
+      mean[shape > 1] <- scale[shape > 1] / (shape[shape > 1] - 1)
       return(mean)
     },
 
@@ -82,8 +82,8 @@ InverseGamma <- R6Class("InverseGamma",
     variance = function() {
       shape <- unlist(self$getParameterValue("shape"))
       scale <- unlist(self$getParameterValue("scale"))
-      var = rep(NaN, length(shape))
-      var[shape > 2] = scale[shape > 2]^2 / ((shape[shape > 2] - 1)^2 * (shape[shape > 2] - 2))
+      var <- rep(NaN, length(shape))
+      var[shape > 2] <- scale[shape > 2]^2 / ((shape[shape > 2] - 1)^2 * (shape[shape > 2] - 2))
       return(var)
     },
 
@@ -94,8 +94,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       shape <- unlist(self$getParameterValue("shape"))
-      skew = rep(NaN, length(shape))
-      skew[shape > 3] = (4 * sqrt(shape[shape > 3] - 2)) / (shape[shape > 3] - 3)
+      skew <- rep(NaN, length(shape))
+      skew[shape > 3] <- (4 * sqrt(shape[shape > 3] - 2)) / (shape[shape > 3] - 3)
       return(skew)
     },
 
@@ -107,8 +107,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       shape <- unlist(self$getParameterValue("shape"))
-      kur = rep(NaN, length(shape))
-      kur[shape > 4] = (6 * (5 * shape[shape > 4] - 11)) /
+      kur <- rep(NaN, length(shape))
+      kur[shape > 4] <- (6 * (5 * shape[shape > 4] - 11)) /
         ((shape[shape > 4] - 3) * (shape[shape > 4] - 4))
       if (excess) {
         return(kur)

@@ -87,7 +87,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
       df <- unlist(self$getParameterValue("df"))
       ncp <- unlist(self$getParameterValue("location"))
       skew <- rep(NaN, length(df))
-      skew[df + ncp != 0] = ((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2))
+      skew[df + ncp != 0] <- ((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2))
       return(skew)
     },
 

@@ -81,10 +81,10 @@ DiscreteUniform <- R6Class("DiscreteUniform",
         return(mapply(function(x, y) {
           if (which > length(x:y)) {
             return(y)
-            } else {
-              return((x:y)[which])
-              }
-          }, lower, upper))
+          } else {
+            return((x:y)[which])
+          }
+        }, lower, upper))
       } else {
         if (which == "all") {
           return(lower:upper)
@@ -101,7 +101,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' covariance matrix is returned.
     variance = function() {
       ((unlist(self$getParameterValue("upper")) -
-          unlist(self$getParameterValue("lower")) + 1)^2 - 1) / 12
+        unlist(self$getParameterValue("lower")) + 1)^2 - 1) / 12
     },
 
     #' @description

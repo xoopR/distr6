@@ -64,9 +64,11 @@ ParameterSet <- R6Class("ParameterSet",
       if (length(settable) == 1) settable <- rep(settable, length(id))
 
       # check lengths
-      checkmate::assert(length(unique(length(id), length(value), length(settable),
-                                      length(support))) == 1,
-        .var.name = "arguments of same length"
+      checkmate::assert(length(unique(
+        length(id), length(value), length(settable),
+        length(support)
+      )) == 1,
+      .var.name = "arguments of same length"
       )
 
       # id checks
@@ -82,8 +84,10 @@ ParameterSet <- R6Class("ParameterSet",
       # value checks
       mapply(function(x, y) {
         if (length(x) > 1) {
-          assertContains(y, Tuple$new(x), paste(strCollapse(x, "()"), "does not lie in the set",
-                                                y$strprint()))
+          assertContains(y, Tuple$new(x), paste(
+            strCollapse(x, "()"), "does not lie in the set",
+            y$strprint()
+          ))
         } else {
           assertContains(y, x, paste(x, "does not lie in the set", y$strprint()))
         }
@@ -216,8 +220,10 @@ ParameterSet <- R6Class("ParameterSet",
           }
 
           if (!param$settable) {
-            return(stopwarn(error, sprintf("'%s' is not (manually) settable after construction.",
-                                           aid)))
+            return(stopwarn(error, sprintf(
+              "'%s' is not (manually) settable after construction.",
+              aid
+            )))
           }
 
           value <- private$.trafo(aid, value)
@@ -233,17 +239,20 @@ ParameterSet <- R6Class("ParameterSet",
             }
           }
 
-          data.table::set(private$.parameters,
-                          which(private$.parameters$id == aid),
-                          "value",
-                          list(value))
+          data.table::set(
+            private$.parameters,
+            which(private$.parameters$id == aid),
+            "value",
+            list(value)
+          )
 
           private$.update(aid)
         }
       }
 
-      x = try(mapply(private$.check, private$.parameters$id, private$.parameters$value),
-              silent = TRUE)
+      x <- try(mapply(private$.check, private$.parameters$id, private$.parameters$value),
+        silent = TRUE
+      )
 
       if (class(x) == "try-error") {
         private$.parameters <- orig
@@ -278,7 +287,8 @@ ParameterSet <- R6Class("ParameterSet",
       newsets <- c(list(y), list(...))
       lapply(newsets, function(x) {
         checkmate::assert(inherits(x, "ParameterSet"),
-                          .var.name = "All objects in merge must be ParameterSets")
+          .var.name = "All objects in merge must be ParameterSets"
+        )
       })
 
       newpar <- rbind(
@@ -291,12 +301,18 @@ ParameterSet <- R6Class("ParameterSet",
         stop("IDs must be unique. Try using makeUniqueDistributions first.")
       } else {
         private$.parameters <- newpar
-        private$.trafos <- rbind(private$.trafos,
-                                 data.table::rbindlist(lapply(newsets, function(x) x$trafos)))
-        private$.checks <- rbind(private$.checks,
-                                 data.table::rbindlist(lapply(newsets, function(x) x$checks)))
-        private$.deps <- rbind(private$.deps,
-                                 data.table::rbindlist(lapply(newsets, function(x) x$deps)))
+        private$.trafos <- rbind(
+          private$.trafos,
+          data.table::rbindlist(lapply(newsets, function(x) x$trafos))
+        )
+        private$.checks <- rbind(
+          private$.checks,
+          data.table::rbindlist(lapply(newsets, function(x) x$checks))
+        )
+        private$.deps <- rbind(
+          private$.deps,
+          data.table::rbindlist(lapply(newsets, function(x) x$deps))
+        )
       }
       invisible(self)
     },
@@ -346,10 +362,10 @@ ParameterSet <- R6Class("ParameterSet",
       checkmate::assertNames(colnames(dt), identical.to = c("x", "y", "fun"))
 
       apply(dt, 1, function(z) {
-        if(nrow(subset(private$.parameters, id == z[[1]])) == 0) {
+        if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
           stopf("%s is not a parameter in this ParameterSet", z[[1]])
         }
-        if(nrow(subset(private$.parameters, id == z[[2]])) == 0) {
+        if (nrow(subset(private$.parameters, id == z[[2]])) == 0) {
           stopf("%s is not a parameter in this ParameterSet", z[[2]])
         }
         checkmate::assertFunction(z[[3]], "self")
@@ -459,7 +475,7 @@ ParameterSet <- R6Class("ParameterSet",
         if (nrow(subset(self$trafos, x == z[[1]])) > 0) {
           warning("%s already has a `trafo` function, this will be overwritten.")
           ans <- readline("Proceed? Y/N")
-          if(ans == "Y") {
+          if (ans == "Y") {
             private$.trafos <- subset(self$trafos, x != z[[1]])
           } else {
             invisible(self)
@@ -504,8 +520,10 @@ ParameterSet <- R6Class("ParameterSet",
   ),
 
   private = list(
-    .parameters = data.table(id = character(), value = list(), support = list(),
-                             settable = logical(), description = character()),
+    .parameters = data.table(
+      id = character(), value = list(), support = list(),
+      settable = logical(), description = character()
+    ),
     .deps = data.table(x = character(), y = character(), fun = list()),
     .checks = data.table(x = character(), fun = list()),
     .trafos = data.table(x = character(), fun = list()),
@@ -517,7 +535,7 @@ ParameterSet <- R6Class("ParameterSet",
       invisible(self)
     },
     .check = function(id, value) {
-      checks = subset(self$checks, x == id)
+      checks <- subset(self$checks, x == id)
       if (nrow(checks)) {
         for (i in seq(nrow(checks))) {
           assert(checks$fun[[i]](value, self))
@@ -526,7 +544,7 @@ ParameterSet <- R6Class("ParameterSet",
       invisible(self)
     },
     .trafo = function(id, value) {
-      trafos = subset(self$trafos, x == id)
+      trafos <- subset(self$trafos, x == id)
       if (nrow(trafos)) {
         return(trafos$fun[[1]](value, self))
       } else {
@@ -534,13 +552,15 @@ ParameterSet <- R6Class("ParameterSet",
       }
     },
     .update = function(id) {
-      updates = subset(self$deps, x == id)
+      updates <- subset(self$deps, x == id)
       if (nrow(updates)) {
-        for(i in seq(nrow(updates))) {
-          data.table::set(private$.parameters,
-                          which(private$.parameters$id == updates$y[[i]]),
-                          "value",
-                          list(updates$fun[[i]](self)))
+        for (i in seq(nrow(updates))) {
+          data.table::set(
+            private$.parameters,
+            which(private$.parameters$id == updates$y[[i]]),
+            "value",
+            list(updates$fun[[i]](self))
+          )
         }
       }
 

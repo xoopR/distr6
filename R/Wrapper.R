@@ -7,9 +7,9 @@
 #' @template method_setParameterValue
 #' @template method_wrappedModels
 #'
-#' @details Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped distribution
-#' has the same methods and fields as an unwrapped one. After wrapping, the parameters of a distribution
-#' are prefixed with the distribution name to ensure uniqueness of parameter IDs.
+#' @details Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped
+#' distribution has the same methods and fields as an unwrapped one. After wrapping, the parameters
+#' of a distribution are prefixed with the distribution name to ensure uniqueness of parameter IDs.
 #'
 #' Use [listWrappers] function to see constructable wrappers.
 #'
@@ -151,8 +151,8 @@ DistributionWrapper <- R6Class("DistributionWrapper",
 #' @param object Distribution.
 #' @param model character, see details.
 #'
-#' @return If \code{model} is NULL then returns list of models that are wrapped by the wrapper. Otherwise
-#' returns model given in \code{model}.
+#' @return If \code{model} is NULL then returns list of models that are wrapped by the wrapper.
+#' Otherwise returns model given in \code{model}.
 #'
 #' @export
 NULL

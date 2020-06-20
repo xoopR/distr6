@@ -77,7 +77,7 @@ Dirichlet <- R6Class("Dirichlet",
     mean = function() {
       pars <- self$getParameterValue("params")
       if (checkmate::testList(pars)) {
-        return(t(sapply(params, function(x) x/sum(x))))
+        return(t(sapply(params, function(x) x / sum(x))))
       } else {
         return(pars / sum(pars))
       }
@@ -92,10 +92,10 @@ Dirichlet <- R6Class("Dirichlet",
 
       if (checkmate::testList(params)) {
         mode <- matrix(NaN, ncol = length(params[[1]]), nrow = length(params))
-        for(i in seq_along(params)) {
-          pari = params[[i]]
-          mode[i, pari > 1] = (pari[pari > 1] - 1) / (sum(pari) - length(pari))
-         }
+        for (i in seq_along(params)) {
+          pari <- params[[i]]
+          mode[i, pari > 1] <- (pari[pari > 1] - 1) / (sum(pari) - length(pari))
+        }
         return(mode)
       } else {
         mode <- rep(NaN, length(params))
@@ -118,8 +118,8 @@ Dirichlet <- R6Class("Dirichlet",
         for (i in seq_along(params)) {
           parami <- params[[i]] / sum(params[[i]])
           var <- (parami * (1 - parami)) / (sum(params[[i]]) + 1)
-          covar[,,i] = matrix((-parami %*% t(parami)) / (sum(params[[i]]) + 1), nrow = K, ncol = K)
-          diag(covar[,,i]) <- var
+          covar[, , i] <- matrix((-parami %*% t(parami)) / (sum(params[[i]]) + 1), nrow = K, ncol = K)
+          diag(covar[, , i]) <- var
         }
         return(covar)
       } else {
@@ -146,7 +146,7 @@ Dirichlet <- R6Class("Dirichlet",
         })
       } else {
         return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params)) * digamma(sum(params)) -
-                 sum((params - 1) * digamma(params)))
+          sum((params - 1) * digamma(params)))
       }
     },
 

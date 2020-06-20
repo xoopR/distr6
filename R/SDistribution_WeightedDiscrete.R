@@ -161,8 +161,10 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       sd <- self$stdev()
 
       if (checkmate::testList(x)) {
-        return(mapply(function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^3 * pdf0),
-                      x, pdf, mean, sd))
+        return(mapply(
+          function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^3 * pdf0),
+          x, pdf, mean, sd
+        ))
       } else {
         return(sum(((x - mean) / sd)^3 * pdf))
       }
@@ -181,8 +183,10 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       sd <- self$stdev()
 
       if (checkmate::testList(x)) {
-        kurt <- mapply(function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^4 * pdf0),
-                      x, pdf, mean, sd)
+        kurt <- mapply(
+          function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^4 * pdf0),
+          x, pdf, mean, sd
+        )
       } else {
         kurt <- sum(((x - mean) / sd)^4 * pdf)
       }

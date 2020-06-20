@@ -1,11 +1,12 @@
 #' @title Lists Implemented Distributions
 #' @description Lists distr6 distributions in a data.table or a character vector, can be filtered by
 #' traits, implemented package, and tags.
-#' @param simplify logical. If FALSE (default) returns distributions with traits as a data.table, otherwise returns
-#' distribution names as characters.
+#' @param simplify logical. If FALSE (default) returns distributions with traits as a data.table,
+#' otherwise returns distribution names as characters.
 #' @param filter list to filter distributions by. See examples.
 #' @seealso \code{\link{SDistribution}}
-#' @return Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SDistribution}s and their traits.
+#' @return Either a list of characters (if \code{simplify} is TRUE) or a data.table of
+#' \code{SDistribution}s and their traits.
 #' @examples
 #' listDistributions()
 #'

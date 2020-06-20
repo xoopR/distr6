@@ -106,7 +106,7 @@ MultivariateNormal <- R6Class("MultivariateNormal",
       cov <- self$getParameterValue("cov")
 
       if (checkmate::testList(cov)) {
-        return(array(unlist(cov), dim = c(length(cov[[1]])/2, length(cov[[1]])/2, length(cov))))
+        return(array(unlist(cov), dim = c(length(cov[[1]]) / 2, length(cov[[1]]) / 2, length(cov))))
       } else {
         return(cov)
       }
@@ -122,9 +122,15 @@ MultivariateNormal <- R6Class("MultivariateNormal",
 
       if (checkmate::testList(cov)) {
         n <- length(self$getParameterValue("mean")[[1]])
-        return(as.numeric(sapply(cov,
-                                 function(x) 0.5 * log(det(2 * pi * exp(1) * matrix(x, nrow = n)),
-                                                       base))))
+        return(as.numeric(sapply(
+          cov,
+          function(x) {
+            0.5 * log(
+              det(2 * pi * exp(1) * matrix(x, nrow = n)),
+              base
+            )
+          }
+        )))
       } else {
         return(0.5 * log(det(2 * pi * exp(1) * cov), base))
       }

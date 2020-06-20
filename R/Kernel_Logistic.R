@@ -33,8 +33,8 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(ifelse(x == 0, 1 / 6, ((x - 2)*exp(2*x) + (x + 2)*exp(x))/
-                      (exp(3*x) - 3*exp(2 * x) + 3*exp(x) - 1)))
+      return(ifelse(x == 0, 1 / 6, ((x - 2) * exp(2 * x) + (x + 2) * exp(x)) /
+        (exp(3 * x) - 3 * exp(2 * x) + 3 * exp(x) - 1)))
     },
 
     #' @description
@@ -60,6 +60,10 @@ LogisticKernel <- R6Class("LogisticKernel",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels,
-                         data.table::data.table(ShortName = "Logis", ClassName = "LogisticKernel",
-                                                Support = "\u211D", Packages = "-"))
+.distr6$kernels <- rbind(
+  .distr6$kernels,
+  data.table::data.table(
+    ShortName = "Logis", ClassName = "LogisticKernel",
+    Support = "\u211D", Packages = "-"
+  )
+)

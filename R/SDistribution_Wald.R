@@ -111,10 +111,10 @@ Wald <- R6Class("Wald",
     kurtosis = function(excess = TRUE) {
       if (excess) {
         return(15 * unlist(self$getParameterValue("mean")) /
-                 unlist(self$getParameterValue("shape")))
+          unlist(self$getParameterValue("shape")))
       } else {
         return(15 * unlist(self$getParameterValue("mean")) /
-                 unlist(self$getParameterValue("shape")) + 3)
+          unlist(self$getParameterValue("shape")) + 3)
       }
     },
 

@@ -38,10 +38,14 @@ ps <- ParameterSet$new(
     "Probability of failure"
   )
 )
-ps$addDeps(dt = data.table(x = c("prob", "qprob"),
-                           y = c("qprob", "prob"),
-                           fun = c(function(self) 1 - self$getParameterValue("prob"),
-                                   function(self) 1 - self$getParameterValue("qprob"))))
+ps$addDeps(dt = data.table(
+  x = c("prob", "qprob"),
+  y = c("qprob", "prob"),
+  fun = c(
+    function(self) 1 - self$getParameterValue("prob"),
+    function(self) 1 - self$getParameterValue("qprob")
+  )
+))
 
 test_that("check r/d/p/q", {
   expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())$pdf(1))

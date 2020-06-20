@@ -7,13 +7,14 @@
 #' including: pdf, cdf, quantile, survival, hazard and cumulative hazard.
 #'
 #' @param x \code{distr6} object.
-#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", and "cumhazard"; partial matching available.
+#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival",
+#' "hazard", and "cumhazard"; partial matching available.
 #' @param npoints number of evaluation points.
 #' @param ... graphical parameters.
 #'
 #' @details Unlike the \code{\link{plot.Distribution}} function, no internal checks are performed
-#' to ensure that the added plot makes sense in the context of the current plotting window. Therefore
-#' this function assumes that the current plot is of the same value support, see examples.
+#' to ensure that the added plot makes sense in the context of the current plotting window.
+#' Therefore this function assumes that the current plot is of the same value support, see examples.
 #'
 #' @seealso \code{\link{plot.Distribution}} for plotting a \code{distr6} object.
 #'

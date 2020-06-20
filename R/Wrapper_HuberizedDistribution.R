@@ -60,10 +60,14 @@ Try decorate(distribution, FunctionImputation) first.")
           "Upper limit of huberization."
         )
       )
-      private$.outerParameters$addChecks("lower",
-                                         function(x, self) x < self$getParameterValue("upper"))
-      private$.outerParameters$addChecks("upper",
-                                         function(x, self) x > self$getParameterValue("lower"))
+      private$.outerParameters$addChecks(
+        "lower",
+        function(x, self) x < self$getParameterValue("upper")
+      )
+      private$.outerParameters$addChecks(
+        "upper",
+        function(x, self) x > self$getParameterValue("lower")
+      )
 
       if (testDiscrete(distribution)) {
         support <- Interval$new(lower, upper, class = "integer")
@@ -77,8 +81,10 @@ Try decorate(distribution, FunctionImputation) first.")
         distlist = distlist,
         name = paste("Huberized", distribution$name),
         short_name = paste0("Hub", distribution$short_name),
-        description = paste0(distribution$description, " Huberized between ", lower, " and ",
-                             upper, "."),
+        description = paste0(
+          distribution$description, " Huberized between ", lower, " and ",
+          upper, "."
+        ),
         support = support,
         type = distribution$traits$type,
         valueSupport = "mixture", variateForm = "univariate",
@@ -92,11 +98,14 @@ Try decorate(distribution, FunctionImputation) first.")
       super$setParameterValue(..., lst = lst, error = error)
       if (self$properties$support$class == "integer") {
         private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"),
-                                                    self$getParameterValue("hub_upper"),
-                                                    class = "integer")
+          self$getParameterValue("hub_upper"),
+          class = "integer"
+        )
       } else {
-        private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"),
-                                                    self$getParameterValue("hub_upper"))
+        private$.properties$support <- Interval$new(
+          self$getParameterValue("hub_lower"),
+          self$getParameterValue("hub_upper")
+        )
       }
 
       invisible(self)

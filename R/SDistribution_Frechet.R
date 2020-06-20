@@ -68,7 +68,7 @@ Frechet <- R6Class("Frechet",
       minimum <- unlist(self$getParameterValue("minimum"))
       scale <- unlist(self$getParameterValue("scale"))
       mean <- rep(Inf, length(shape))
-      mean[shape > 1] = minimum[shape > 1] + scale[shape > 1] * gamma(1 - 1 / shape[shape > 1])
+      mean[shape > 1] <- minimum[shape > 1] + scale[shape > 1] * gamma(1 - 1 / shape[shape > 1])
       return(mean)
     },
 
@@ -106,8 +106,8 @@ Frechet <- R6Class("Frechet",
       minimum <- unlist(self$getParameterValue("minimum"))
       scale <- unlist(self$getParameterValue("scale"))
       var <- rep(Inf, length(shape))
-      var[shape > 2] = scale[shape > 2]^2 * (gamma(1 - 2 / shape[shape > 2]) -
-                                                              gamma(1 - 1 / shape[shape > 2])^2)
+      var[shape > 2] <- scale[shape > 2]^2 * (gamma(1 - 2 / shape[shape > 2]) -
+        gamma(1 - 1 / shape[shape > 2])^2)
       return(var)
     },
 
@@ -121,9 +121,9 @@ Frechet <- R6Class("Frechet",
       minimum <- unlist(self$getParameterValue("minimum"))
       scale <- unlist(self$getParameterValue("scale"))
       skew <- rep(Inf, length(shape))
-      skew[shape > 3] = (gamma(1 - 3 / shape[shape > 3]) - 3 *
-                           gamma(1 - 2 / shape[shape > 3]) * gamma(1 - 1 / shape[shape > 3]) + 2
-                         * gamma(1 - 1 / shape[shape > 3])^3) /
+      skew[shape > 3] <- (gamma(1 - 3 / shape[shape > 3]) - 3 *
+        gamma(1 - 2 / shape[shape > 3]) * gamma(1 - 1 / shape[shape > 3]) + 2
+      * gamma(1 - 1 / shape[shape > 3])^3) /
         ((gamma(1 - 2 / shape[shape > 3]) - gamma(1 - 1 / shape[shape > 3])^2)^(3 / 2))
       return(skew)
     },
@@ -139,8 +139,8 @@ Frechet <- R6Class("Frechet",
       minimum <- unlist(self$getParameterValue("minimum"))
       scale <- unlist(self$getParameterValue("scale"))
       kur <- rep(Inf, length(shape))
-      kur[shape > 4] = (gamma(1 - 4 / shape[shape > 4]) - 4 * gamma(1 - 3 / shape[shape > 4]) *
-                          gamma(1 - 1 / shape[shape > 4]) + 3 * gamma(1 - 2 / shape[shape > 4])^2) /
+      kur[shape > 4] <- (gamma(1 - 4 / shape[shape > 4]) - 4 * gamma(1 - 3 / shape[shape > 4]) *
+        gamma(1 - 1 / shape[shape > 4]) + 3 * gamma(1 - 2 / shape[shape > 4])^2) /
         ((gamma(1 - 2 / shape[shape > 4]) - gamma(1 - 1 / shape[shape > 4])^2)^2)
       if (excess) {
         return(kur - 6)

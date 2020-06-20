@@ -238,12 +238,16 @@ Distribution <- R6Class("Distribution",
         if (lng > (2 * n)) {
           string <- paste0(
             self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
-            ",...,", paste(id[(lng - n + 1):lng], value[(lng - n + 1):lng], sep = " = ",
-                           collapse = ", "), ")"
+            ",...,", paste(id[(lng - n + 1):lng], value[(lng - n + 1):lng],
+              sep = " = ",
+              collapse = ", "
+            ), ")"
           )
         } else {
-          string <- paste0(self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "),
-                           ")")
+          string <- paste0(
+            self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "),
+            ")"
+          )
         }
       } else {
         string <- paste0(self$short_name)
@@ -327,8 +331,10 @@ Distribution <- R6Class("Distribution",
         }
         cat("\n")
 
-        cat(" Support:", self$properties$support$strprint(), "\tScientific Type:",
-            self$traits$type$strprint(), "\n")
+        cat(
+          " Support:", self$properties$support$strprint(), "\tScientific Type:",
+          self$traits$type$strprint(), "\n"
+        )
         cat("\n Traits:\t", self$traits$valueSupport, "; ", self$traits$variateForm, sep = "")
         cat("\n Properties:\t", self$properties$symmetry, sep = "")
         if (!inherits(a_kurt, "try-error")) cat(";", self$properties$kurtosis)

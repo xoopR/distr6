@@ -1,5 +1,6 @@
 #' @title De-Duplicate Distribution Names
-#' @description Helper function to lapply over the given distribution list, and make the \code{short_name}s unique.
+#' @description Helper function to lapply over the given distribution list, and make the
+#' `short_name`s unique.
 #'
 #' @details
 #' The \code{short_name}s are made unique by suffixing each with a consecutive
@@ -9,8 +10,8 @@
 #'
 #' @examples
 #' makeUniqueDistributions(list(Binomial$new(), Binomial$new()))
-#' @return The list of inputted distributions except with the \code{short_name}s manipulated as necessary to
-#' make them unique.
+#' @return The list of inputted distributions except with the \code{short_name}s manipulated as
+#' necessary to make them unique.
 #'
 #' @export
 makeUniqueDistributions <- function(distlist) {

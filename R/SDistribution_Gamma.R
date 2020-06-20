@@ -72,8 +72,8 @@ Gamma <- R6Class("Gamma",
       shape <- unlist(self$getParameterValue("shape"))
       rate <- unlist(self$getParameterValue("rate"))
 
-      mode = rep(NaN, length(shape))
-      mode[shape >= 1] = (shape[shape >= 1] - 1) / rate[shape >= 1]
+      mode <- rep(NaN, length(shape))
+      mode[shape >= 1] <- (shape[shape >= 1] - 1) / rate[shape >= 1]
       return(mode)
     },
 

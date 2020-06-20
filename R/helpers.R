@@ -198,7 +198,7 @@ stopf <- function(str, ...) {
   stop(sprintf(str, ...))
 }
 
-v_genfun = function(x, fun) {
+v_genfun <- function(x, fun) {
   if (length(x) == 1) {
     return(fun(x))
   } else {

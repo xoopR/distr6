@@ -100,9 +100,9 @@ Loglogistic <- R6Class("Loglogistic",
       shapi <- pi / shape
 
       var <- rep(NaN, length(scale))
-      var[shape > 2] = scale[shape > 2]^2 *
+      var[shape > 2] <- scale[shape > 2]^2 *
         ((2 * shapi[shape > 2]) / sin(2 * shapi[shape > 2]) - (shapi[shape > 2]^2)
-         / sin(shapi[shape > 2])^2)
+        / sin(shapi[shape > 2])^2)
       return(var)
     },
 
@@ -122,7 +122,7 @@ Loglogistic <- R6Class("Loglogistic",
       s2 <- (6 * shapi[shape > 3]^2 * scale[shape > 3]^3) * (1 / sin(shapi[shape > 3])) *
         (1 / sin(2 * shapi[shape > 3]))
       s3 <- (3 * shapi[shape > 3] * scale[shape > 3]^3) / sin(3 * shapi[shape > 3])
-      skew[shape > 3] = s1 - s2 + s3
+      skew[shape > 3] <- s1 - s2 + s3
 
       return(skew)
     },
@@ -146,7 +146,7 @@ Loglogistic <- R6Class("Loglogistic",
       s3 <- (12 * shapi[shape > 4]^2 * scale[shape > 4]^4) * (1 / sin(shapi[shape > 4])) *
         (1 / sin(3 * shapi[shape > 4]))
       s4 <- (4 * shapi[shape > 4] * scale[shape > 4]^4) * (1 / sin(4 * shapi[shape > 4]))
-      kurtosis[shape > 4] = -s1 + s2 - s3 + s4
+      kurtosis[shape > 4] <- -s1 + s2 - s3 + s4
 
       return(kurtosis)
     },

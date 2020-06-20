@@ -71,9 +71,11 @@ Multinomial <- R6Class("Multinomial",
       probs <- self$getParameterValue("probs")
 
       if (checkmate::testList(probs)) {
-        return(t(mapply(function(s, p) s * p,
-               size,
-               probs)))
+        return(t(mapply(
+          function(s, p) s * p,
+          size,
+          probs
+        )))
       } else {
         return(size * probs)
       }
@@ -91,8 +93,8 @@ Multinomial <- R6Class("Multinomial",
       if (checkmate::testList(probs)) {
         covar <- array(dim = c(length(probs[[1]]), length(probs[[1]]), length(probs)))
         for (i in seq_along(size)) {
-          covar[,,i] = probs[[i]] %*% t(probs[[i]]) * -size[[i]]
-          diag(covar[,,i]) <- size[[i]] * probs[[i]] * (1 - probs[[i]])
+          covar[, , i] <- probs[[i]] %*% t(probs[[i]]) * -size[[i]]
+          diag(covar[, , i]) <- size[[i]] * probs[[i]] * (1 - probs[[i]])
         }
         return(covar)
       } else {
@@ -146,15 +148,15 @@ Multinomial <- R6Class("Multinomial",
           ent <- c(ent, s1 + s2 + s3)
         }
       } else {
-          s1 <- -log(factorial(size), base)
-          s2 <- -size * sum(probs * log(probs, base))
-          s3 <- 0
-          for (i in 1:K) {
-            for (j in 0:size) {
-              s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
-            }
+        s1 <- -log(factorial(size), base)
+        s2 <- -size * sum(probs * log(probs, base))
+        s3 <- 0
+        for (i in 1:K) {
+          for (j in 0:size) {
+            s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
           }
-          ent <- s1 + s2 + s3
+        }
+        ent <- s1 + s2 + s3
       }
 
 

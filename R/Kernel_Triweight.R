@@ -26,9 +26,9 @@ Triweight <- R6Class("Triweight",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(ifelse(abs(x) > 2, 0, 35*(-5*abs(x)^(13) + 156*abs(x)^11 - 2288*abs(x)^9 +
-                                         27456 * abs(x)^7  - 54912*abs(x)^6 + 73216*abs(x)^4 -
-                                         79872*abs(x)^2 + 40960)/1757184))
+      return(ifelse(abs(x) > 2, 0, 35 * (-5 * abs(x)^(13) + 156 * abs(x)^11 - 2288 * abs(x)^9 +
+        27456 * abs(x)^7 - 54912 * abs(x)^6 + 73216 * abs(x)^4 -
+        79872 * abs(x)^2 + 40960) / 1757184))
     },
 
     #' @description
@@ -51,6 +51,10 @@ Triweight <- R6Class("Triweight",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels,
-                         data.table::data.table(ShortName = "Triw", ClassName = "Triweight",
-                                                Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(
+  .distr6$kernels,
+  data.table::data.table(
+    ShortName = "Triw", ClassName = "Triweight",
+    Support = "[-1,1]", Packages = "-"
+  )
+)

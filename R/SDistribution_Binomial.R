@@ -70,7 +70,7 @@ Binomial <- R6Class("Binomial",
     #' maxima).
     mode = function(which = "all") {
       sapply((unlist(self$getParameterValue("size")) + 1) *
-                     unlist(self$getParameterValue("prob")), floor)
+        unlist(self$getParameterValue("prob")), floor)
     },
 
     #' @description

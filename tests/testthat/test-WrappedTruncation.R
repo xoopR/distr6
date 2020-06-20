@@ -17,7 +17,7 @@ test_that("truncation results", {
   expect_equal(
     t$pdf(4),
     dbinom(4, prob = 0.5, size = 10) / ((pbinom(5, prob = 0.5, size = 10) -
-                                           pbinom(1, prob = 0.5, size = 10)))
+      pbinom(1, prob = 0.5, size = 10)))
   )
   expect_equal(t$cdf(5), 1)
   expect_equal(t$cdf(6), 1)
@@ -28,8 +28,10 @@ test_that("truncation results", {
       (pbinom(5, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10))
   )
   expect_equal(t$support$strprint(), Interval$new(2, 5, class = "integer")$strprint())
-  expect_equal(truncate(Exponential$new(), lower = 2, upper = 3)$support$strprint(),
-               Interval$new(2, 3, type = "(]")$strprint())
+  expect_equal(
+    truncate(Exponential$new(), lower = 2, upper = 3)$support$strprint(),
+    Interval$new(2, 3, type = "(]")$strprint()
+  )
 })
 
 

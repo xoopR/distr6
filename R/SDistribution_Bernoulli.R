@@ -77,20 +77,20 @@ Bernoulli <- R6Class("Bernoulli",
           stop("`which` cannot be `'all'` when vectorising.")
         } else {
           mode <- numeric(length(prob))
-          mode[prob < 0.5] = 0
-          mode[prob > 0.5] = 1
-          mode[prob == 0.5] = c(0, 1)[which]
+          mode[prob < 0.5] <- 0
+          mode[prob > 0.5] <- 1
+          mode[prob == 0.5] <- c(0, 1)[which]
         }
       } else {
         if (prob < 0.5) {
-          mode = 0
+          mode <- 0
         } else if (prob > 0.5) {
-          mode = 1
+          mode <- 1
         } else {
           if (which == "all") {
-            mode = c(0, 1)
+            mode <- c(0, 1)
           } else {
-            mode = c(0, 1)[which]
+            mode <- c(0, 1)[which]
           }
         }
       }
@@ -105,9 +105,9 @@ Bernoulli <- R6Class("Bernoulli",
     median = function() {
       prob <- self$getParameterValue("prob")
       median <- numeric(length(prob))
-      median[prob < 0.5] = 0
-      median[prob > 0.5] = 1
-      median[prob == 0.5] = NaN
+      median[prob < 0.5] <- 0
+      median[prob > 0.5] <- 1
+      median[prob == 0.5] <- NaN
 
       return(median)
     },
@@ -138,7 +138,7 @@ Bernoulli <- R6Class("Bernoulli",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       exkurtosis <- (1 - (6 * unlist(self$getParameterValue("prob")) *
-                            unlist(self$getParameterValue("qprob")))) / self$variance()
+        unlist(self$getParameterValue("qprob")))) / self$variance()
       if (excess) {
         return(exkurtosis)
       } else {

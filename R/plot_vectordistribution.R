@@ -5,13 +5,14 @@
 #' @param x [VectorDistribution].
 #' @param fun function to plot, one of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard".
 #' @param topn `integer`. First n distributions in the [VectorDistribution] to plot.
-#' @param ind `integer`. Indices of the distributions in the [VectorDistribution] to plot. If given then `topn` is ignored.
+#' @param ind `integer`. Indices of the distributions in the [VectorDistribution] to plot. If given
+#' then `topn` is ignored.
 #' @param cols `character`. Vector of colours for plotting the curves. If missing `1:9` are used.
 #' @param ... Other parameters passed to [plot.Distribution].
 #'
 #' @details
-#' If `topn` and `ind` are both missing then all distributions are plotted if there are 10 or less in the vector.
-#' Otherwise the function will error.
+#' If `topn` and `ind` are both missing then all distributions are plotted if there are 10 or less
+#' in the vector, otherwise the function will error.
 #'
 #' @seealso [plot.Distribution]
 #'

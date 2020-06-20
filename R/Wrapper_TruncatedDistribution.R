@@ -60,10 +60,14 @@ Try decorate(distribution, FunctionImputation) first.")
           "Upper limit of truncation."
         )
       )
-      private$.outerParameters$addChecks("lower",
-                                        function(x, self) x < self$getParameterValue("upper"))
-      private$.outerParameters$addChecks("upper",
-                                        function(x, self) x > self$getParameterValue("lower"))
+      private$.outerParameters$addChecks(
+        "lower",
+        function(x, self) x < self$getParameterValue("upper")
+      )
+      private$.outerParameters$addChecks(
+        "upper",
+        function(x, self) x > self$getParameterValue("lower")
+      )
 
       if (testDiscrete(distribution)) {
         support <- Interval$new(lower + 1, upper, class = "integer", type = "(]")
@@ -75,8 +79,10 @@ Try decorate(distribution, FunctionImputation) first.")
         distlist = distlist,
         name = paste("Truncated", distribution$name),
         short_name = paste0("Trunc", distribution$short_name),
-        description = paste0(distribution$description, " Truncated between ", lower, " and ",
-                             upper, "."),
+        description = paste0(
+          distribution$description, " Truncated between ", lower, " and ",
+          upper, "."
+        ),
         support = support,
         type = distribution$traits$type,
         valueSupport = distribution$traits$valueSupport, variateForm = "univariate",
@@ -91,12 +97,14 @@ Try decorate(distribution, FunctionImputation) first.")
 
       if (self$properties$support$class == "integer") {
         private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower") + 1,
-                                                    self$getParameterValue("trunc_upper"),
-                                                    class = "integer")
+          self$getParameterValue("trunc_upper"),
+          class = "integer"
+        )
       } else {
         private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower"),
-                                                    self$getParameterValue("trunc_upper"),
-                                                    type = "(]")
+          self$getParameterValue("trunc_upper"),
+          type = "(]"
+        )
       }
 
       invisible(self)

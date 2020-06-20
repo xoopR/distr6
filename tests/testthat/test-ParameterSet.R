@@ -88,8 +88,8 @@ test_that("out of support", {
 })
 
 test_that("clone_shallow", {
-  ps = getParameterSet.Binomial()
-  ps2 = ps$clone()
+  ps <- getParameterSet.Binomial()
+  ps2 <- ps$clone()
   expect_equal(ps$getParameterValue("prob"), ps2$getParameterValue("prob"))
   ps$setParameterValue(prob = 0.2)
   expect_equal(ps$getParameterValue("prob"), 0.2)
@@ -100,8 +100,8 @@ test_that("clone_shallow", {
 })
 
 test_that("clone_deep", {
-  ps = getParameterSet.Binomial()
-  ps2 = ps$clone(deep = TRUE)
+  ps <- getParameterSet.Binomial()
+  ps2 <- ps$clone(deep = TRUE)
   expect_equal(ps$getParameterValue("prob"), ps2$getParameterValue("prob"))
   ps$setParameterValue(prob = 0.2)
   expect_equal(ps$getParameterValue("prob"), 0.2)

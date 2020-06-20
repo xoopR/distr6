@@ -48,8 +48,9 @@ decorate <- function(distribution, decorators, ...) {
       decorators <- setdiff(decorators, distribution$decorators)
     }
 
-    suppressMessages(lapply(decorators, function(a_decorator)
-      get(a_decorator)$new()$decorate(distribution, ...)))
+    suppressMessages(lapply(decorators, function(a_decorator) {
+      get(a_decorator)$new()$decorate(distribution, ...)
+    }))
 
     message(paste(distribution$name, "is now decorated with", paste0(decorators, collapse = ", ")))
     return(distribution)

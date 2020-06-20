@@ -165,15 +165,18 @@ FunctionImputation <- R6Class("FunctionImputation",
         quantile <- numeric(length(data))
         for (i in seq_along(data)) {
           quantile[i] <- suppressMessages(GoFKernel::inverse(self$cdf,
-                                                             lower = lower, upper = upper)(data[i]))
+            lower = lower, upper = upper
+          )(data[i]))
         }
       } else {
         x <- impute_genx(self, private$n_grid)
         if (isCdf(self)) {
           quantile <- suppressMessages(C_NumericQuantile(data, x, self$cdf(x), lower.tail, log.p))
         } else {
-          cdf <- suppressMessages(C_NumericCdf_Discrete(x, x, self$pdf(x), lower = TRUE,
-                                                        logp = FALSE))
+          cdf <- suppressMessages(C_NumericCdf_Discrete(x, x, self$pdf(x),
+            lower = TRUE,
+            logp = FALSE
+          ))
           quantile <- C_NumericQuantile(data, x, cdf, lower.tail, log.p)
         }
       }

@@ -39,7 +39,7 @@ NormalKernel <- R6Class("NormalKernel",
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
       # return((2 * sqrt(pi))^-1)
-      return((1/(2*sqrt(pi))) * exp(-(x/2)^2))
+      return((1 / (2 * sqrt(pi))) * exp(-(x / 2)^2))
     },
 
     #' @description

@@ -82,7 +82,7 @@ FDistribution <- R6Class("FDistribution",
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))
       mode <- rep(NaN, length(df1))
-      mode[df1 > 2] = ((df1[df1 > 2] - 2) * df2[df1 > 2]) / (df1[df1 > 2] * (df2[df1 > 2] + 2))
+      mode[df1 > 2] <- ((df1[df1 > 2] - 2) * df2[df1 > 2]) / (df1[df1 > 2] * (df2[df1 > 2] + 2))
       return(mode)
     },
 
@@ -95,7 +95,7 @@ FDistribution <- R6Class("FDistribution",
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))
       var <- rep(NaN, length(df1))
-      var[df2 > 4] = 2 * (df2[df2 > 4])^2 * (df1[df2 > 4] + df2[df2 > 4] - 2) /
+      var[df2 > 4] <- 2 * (df2[df2 > 4])^2 * (df1[df2 > 4] + df2[df2 > 4] - 2) /
         (df1[df2 > 4] * (df2[df2 > 4] - 2)^2 * (df2[df2 > 4] - 4))
       return(var)
     },
@@ -109,7 +109,7 @@ FDistribution <- R6Class("FDistribution",
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))
       skew <- rep(NaN, length(df1))
-      skew[df2 > 6] = ((2 * df1[df2 > 6] + df2[df2 > 6] - 2) * sqrt(8 * (df2[df2 > 6] - 4))) /
+      skew[df2 > 6] <- ((2 * df1[df2 > 6] + df2[df2 > 6] - 2) * sqrt(8 * (df2[df2 > 6] - 4))) /
         (((df2[df2 > 6] - 6) * sqrt(df1[df2 > 6] * (df1[df2 > 6] + df2[df2 > 6] - 2))))
       return(skew)
     },
@@ -125,9 +125,9 @@ FDistribution <- R6Class("FDistribution",
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))
       exkurtosis <- rep(NaN, length(df1))
-      exkurtosis[df2 > 8] = (12 * (df1[df2 > 8] * (5 * df2[df2 > 8] - 22) *
-                                     (df1[df2 > 8] + df2[df2 > 8] - 2) +
-                                     (df2[df2 > 8] - 4) * (df2[df2 > 8] - 2)^2)) /
+      exkurtosis[df2 > 8] <- (12 * (df1[df2 > 8] * (5 * df2[df2 > 8] - 22) *
+        (df1[df2 > 8] + df2[df2 > 8] - 2) +
+        (df2[df2 > 8] - 4) * (df2[df2 > 8] - 2)^2)) /
         (df1[df2 > 8] * (df2[df2 > 8] - 6) * (df2[df2 > 8] - 8) * (df1[df2 > 8] + df2[df2 > 8] - 2))
 
       if (excess == TRUE) {
@@ -146,8 +146,8 @@ FDistribution <- R6Class("FDistribution",
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))
       return(log(gamma(df1 / 2), base) + log(gamma(df2 / 2), base) -
-               log(gamma((df1 + df2) / 2), base) + log(df1 / df2, base) + (1 - df1 / 2)
-             * digamma(1 + df1 / 2) - (1 + df2 / 2) * digamma(1 + df2 / 2) +
+        log(gamma((df1 + df2) / 2), base) + log(df1 / df2, base) + (1 - df1 / 2)
+        * digamma(1 + df1 / 2) - (1 + df2 / 2) * digamma(1 + df2 / 2) +
         ((df1 + df2) / 2) * digamma((df1 + df2) / 2))
     },
 

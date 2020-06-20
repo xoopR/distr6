@@ -1,8 +1,9 @@
 #' @title Lists Implemented Distribution Decorators
 #' @description Lists decorators that can decorate an R6 Distribution.
-#' @param simplify logical. If TRUE (default) returns results as characters, otherwise as R6 classes.
+#' @param simplify logical. If `TRUE` (default) returns results as characters,
+#' otherwise as R6 classes.
 #' @seealso \code{\link{DistributionDecorator}}
-#' @return Either a list of characters (if \code{simplify} is TRUE) or a list of \code{Decorator} classes.
+#' @return Either a list of characters (if `simplify` is `TRUE`) or a list of [Decorator] classes.
 #' @examples
 #' listDecorators()
 #' listDecorators(FALSE)

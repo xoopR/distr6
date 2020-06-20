@@ -96,7 +96,7 @@ Triangular <- R6Class("Triangular",
     #' with an integration analogue for continuous distributions.
     mean = function() {
       (unlist(self$getParameterValue("lower")) + unlist(self$getParameterValue("upper")) +
-         unlist(self$getParameterValue("mode"))) / 3
+        unlist(self$getParameterValue("mode"))) / 3
     },
 
     #' @description
@@ -116,10 +116,10 @@ Triangular <- R6Class("Triangular",
       upper <- unlist(self$getParameterValue("upper"))
       mode <- unlist(self$getParameterValue("mode"))
       median <- numeric(length(lower))
-      ind = mode >= (lower + upper) / 2
-      median[ind] = lower[ind] + sqrt((upper[ind] - lower[ind]) * (mode[ind] - lower[ind])) /
+      ind <- mode >= (lower + upper) / 2
+      median[ind] <- lower[ind] + sqrt((upper[ind] - lower[ind]) * (mode[ind] - lower[ind])) /
         sqrt(2)
-      median[!ind] = upper[!ind] - sqrt((upper[!ind] - lower[!ind]) * (upper[!ind] - mode[!ind])) /
+      median[!ind] <- upper[!ind] - sqrt((upper[!ind] - lower[!ind]) * (upper[!ind] - mode[!ind])) /
         sqrt(2)
       return(median)
     },
@@ -174,7 +174,7 @@ Triangular <- R6Class("Triangular",
     #' continuous distributions.
     entropy = function(base = 2) {
       0.5 * log((unlist(self$getParameterValue("upper")) -
-                   unlist(self$getParameterValue("lower"))) / 2, base)
+        unlist(self$getParameterValue("lower"))) / 2, base)
     },
 
     #' @description The moment generating function is defined by
@@ -186,7 +186,7 @@ Triangular <- R6Class("Triangular",
       mode <- self$getParameterValue("mode")
 
       num <- 2 * ((upper - mode) * exp(lower * t) - (upper - lower) * exp(mode * t) + (mode - lower)
-                  * exp(upper * t))
+      * exp(upper * t))
       den <- (upper - lower) * (mode - lower) * (upper - mode) * t^2
 
       return(num / den)
@@ -201,7 +201,7 @@ Triangular <- R6Class("Triangular",
       mode <- self$getParameterValue("mode")
 
       num <- -2 * ((upper - mode) * exp(1i * lower * t) - (upper - lower) * exp(1i * mode * t) +
-                     (mode - lower) * exp(1i * upper * t))
+        (mode - lower) * exp(1i * upper * t))
       den <- (upper - lower) * (mode - lower) * (upper - mode) * t^2
 
       return(num / den)

@@ -149,8 +149,10 @@ Uniform <- R6Class("Uniform",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(lst = lst, error = error)
-      private$.properties$support <- Interval$new(self$getParameterValue("lower"),
-                                                  self$getParameterValue("upper"))
+      private$.properties$support <- Interval$new(
+        self$getParameterValue("lower"),
+        self$getParameterValue("upper")
+      )
       invisible(self)
     }
   ),

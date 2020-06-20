@@ -64,8 +64,8 @@ Pareto <- R6Class("Pareto",
       shape <- unlist(self$getParameterValue("shape"))
       scale <- unlist(self$getParameterValue("scale"))
 
-      mean = rep(Inf, length(shape))
-      mean[shape > 1] = (shape[shape > 1] * scale[shape > 1]) / (shape[shape > 1] - 1)
+      mean <- rep(Inf, length(shape))
+      mean[shape > 1] <- (shape[shape > 1] * scale[shape > 1]) / (shape[shape > 1] - 1)
       return(mean)
     },
 
@@ -94,8 +94,8 @@ Pareto <- R6Class("Pareto",
       shape <- unlist(self$getParameterValue("shape"))
       scale <- unlist(self$getParameterValue("scale"))
 
-      var = rep(Inf, length(shape))
-      var[shape > 2] = (shape[shape > 2] * scale[shape > 2]^2) /
+      var <- rep(Inf, length(shape))
+      var[shape > 2] <- (shape[shape > 2] * scale[shape > 2]^2) /
         ((shape[shape > 2] - 1)^2 * (shape[shape > 2] - 2))
       return(var)
     },
@@ -108,8 +108,8 @@ Pareto <- R6Class("Pareto",
     skewness = function() {
       shape <- unlist(self$getParameterValue("shape"))
 
-      skew = rep(NaN, length(shape))
-      skew[shape > 3] = ((2 * (1 + shape[shape > 3])) / (shape[shape > 3] - 3)) *
+      skew <- rep(NaN, length(shape))
+      skew[shape > 3] <- ((2 * (1 + shape[shape > 3])) / (shape[shape > 3] - 3)) *
         sqrt((shape[shape > 3] - 2) / shape[shape > 3])
       return(skew)
     },
@@ -123,8 +123,8 @@ Pareto <- R6Class("Pareto",
     kurtosis = function(excess = TRUE) {
       shape <- unlist(self$getParameterValue("shape"))
 
-      kur = rep(NaN, length(shape))
-      kur[shape > 4] = (6 * (shape[shape > 4]^3 + shape[shape > 4]^2 - 6 * shape[shape > 4] - 2)) /
+      kur <- rep(NaN, length(shape))
+      kur[shape > 4] <- (6 * (shape[shape > 4]^3 + shape[shape > 4]^2 - 6 * shape[shape > 4] - 2)) /
         (shape[shape > 4] * (shape[shape > 4] - 3) * (shape[shape > 4] - 4))
 
       if (excess) {

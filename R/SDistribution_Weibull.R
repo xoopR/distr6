@@ -73,7 +73,7 @@ Weibull <- R6Class("Weibull",
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))
       mode <- numeric(length(scale))
-      mode[shape > 1] = scale[shape > 1] *
+      mode[shape > 1] <- scale[shape > 1] *
         ((shape[shape > 1] - 1) / shape[shape > 1])^(1 / shape[shape > 1])
       return(mode)
     },
@@ -125,7 +125,7 @@ Weibull <- R6Class("Weibull",
       sigma <- self$stdev()
 
       kur <- (((scale^4) * gamma(1 + 4 / shape)) - (4 * skew * (sigma^3) * mu) -
-                (6 * (sigma^2) * (mu^2)) - (mu^4)) / (sigma^4)
+        (6 * (sigma^2) * (mu^2)) - (mu^4)) / (sigma^4)
 
       if (excess) {
         return(kur - 3)

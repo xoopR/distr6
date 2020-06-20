@@ -65,7 +65,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
       location <- unlist(self$getParameterValue("location"))
 
       mean <- rep(NaN, length(location))
-      mean[df > 1] = location[df > 1] * sqrt(df[df > 1] / 2) *
+      mean[df > 1] <- location[df > 1] * sqrt(df[df > 1] / 2) *
         gamma((df[df > 1] - 1) / 2) / gamma(df[df > 1] / 2)
       return(mean)
     },
@@ -79,7 +79,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
       df <- unlist(self$getParameterValue("df"))
       mu <- unlist(self$getParameterValue("location"))
       var <- rep(NaN, length(mu))
-      var[df > 2] = df[df > 2] * (1 + mu[df > 2]^2) / (df[df > 2] - 2) -
+      var[df > 2] <- df[df > 2] * (1 + mu[df > 2]^2) / (df[df > 2] - 2) -
         (mu[df > 2]^2 * df[df > 2] / 2) * (gamma((df[df > 2] - 1) / 2) / gamma(df[df > 2] / 2))^2
       return(var)
     }

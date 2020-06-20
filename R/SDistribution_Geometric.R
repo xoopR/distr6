@@ -78,7 +78,7 @@ Geometric <- R6Class("Geometric",
         return(1 / unlist(self$getParameterValue("prob")))
       } else {
         return((1 - unlist(self$getParameterValue("prob"))) /
-                 unlist(self$getParameterValue("prob")))
+          unlist(self$getParameterValue("prob")))
       }
     },
 

@@ -50,10 +50,12 @@ MixtureDistribution <- R6Class("MixtureDistribution",
         support = Interval$new(0, 1)^lng + Set$new("uniform"),
         description = "Mixture weights."
       )
-      private$.outerParameters$addTrafos("weights",
-                                function(x, self) {
-                                  if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform"
-                                  })
+      private$.outerParameters$addTrafos(
+        "weights",
+        function(x, self) {
+          if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform"
+        }
+      )
 
       super$initialize(
         distlist = distlist,

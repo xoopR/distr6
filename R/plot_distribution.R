@@ -8,31 +8,33 @@
 #' hazard. By default, the first two are plotted side by side.
 #'
 #' @param x \code{distr6} object.
-#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival", "hazard", "cumhazard", and "all"; partial matching available.
+#' @param fun vector of functions to plot, one or more of: "pdf","cdf","quantile", "survival",
+#'  "hazard", "cumhazard", and "all"; partial matching available.
 #' @param npoints number of evaluation points.
-#' @param plot logical; if TRUE (default), figures are displayed in the plot window; otherwise a \code{data.table} of points and calculated values is returned.
-#' @param ask logical; if TRUE, the user is asked before each plot, see \code{\link[graphics]{par}}.
-#' @param arrange logical; if TRUE (default), margins are automatically adjusted with \code{\link[graphics]{layout}} to accommodate all plotted functions.
+#' @param plot logical; if TRUE (default), figures are displayed in the plot window; otherwise a
+#' [data.table::data.table()] of points and calculated values is returned.
+#' @param ask logical; if TRUE, the user is asked before each plot, see [graphics::par()].
+#' @param arrange logical; if TRUE (default), margins are automatically adjusted with
+#' [graphics::layout()] to accommodate all plotted functions.
 #' @param ... graphical parameters, see details.
 #'
 #'
 #' @details
-#' The evaluation points are calculated using inverse transform on a uniform grid between 0 and 1 with
-#' length given by \code{npoints}. Therefore any distribution without an analytical \code{quantile} method
-#' will first need to be imputed with the \code{\link{FunctionImputation}} decorator.
+#' The evaluation points are calculated using inverse transform on a uniform grid between 0 and 1
+#' with length given by \code{npoints}. Therefore any distribution without an analytical `quantile`
+#' method will first need to be imputed with the [FunctionImputation] decorator.
 #'
 #' The order that the functions are supplied to \code{fun} determines the order in which they are
 #' plotted, however this is ignored if \code{ask} is \code{TRUE}. If \code{ask} is \code{TRUE} then
 #' \code{arrange} is ignored. For maximum flexibility in plotting layouts, set \code{arrange} and
 #' \code{ask} to \code{FALSE}.
 #'
-#' The graphical parameters passed to \code{...} can either apply to all plots or selected plots. If
-#' parameters in \code{\link[graphics]{par}} are prefixed with the plotted function name, then the
-#' parameter only applies to that function, otherwise it applies to them all. See examples for a clearer
-#' description.
+#' The graphical parameters passed to \code{...} can either apply to all plots or selected plots.
+#' If parameters in \code{\link[graphics]{par}} are prefixed with the plotted function name, then
+#' the parameter only applies to that function, otherwise it applies to them all. See examples for
+#' a clearer description.
 #'
-#' @seealso \code{\link{lines.Distribution}} for superimposing a distr6 object and \code{\link{listDistributions}}
-#' for plottable distributions.
+#' @seealso [lines.Distribution]
 #'
 #' @examples
 #' \dontrun{
@@ -83,17 +85,20 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
   }
 
   if (any(c("cdf", "survival", "hazard", "cumhazard") %in% fun) & !isCdf(x)) {
-    message("This distribution does not have a cdf expression. Use the FunctionImputation decorator to impute a numerical cdf.")
+    message("This distribution does not have a cdf expression.
+Use the FunctionImputation decorator to impute a numerical cdf.")
     fun <- fun[!(fun %in% c("cdf", "survival", "hazard", "cumhazard"))]
   }
 
   if (any(c("pdf", "hazard") %in% fun) & !isPdf(x)) {
-    message("This distribution does not have a pdf expression. Use the FunctionImputation decorator to impute a numerical pdf.")
+    message("This distribution does not have a pdf expression.
+Use the FunctionImputation decorator to impute a numerical pdf.")
     fun <- fun[!(fun %in% c("pdf", "hazard"))]
   }
 
   if (("quantile" %in% fun) & !isQuantile(x)) {
-    message("This distribution does not have a quantile expression. Use the FunctionImputation decorator to impute a numerical quantile.")
+    message("This distribution does not have a quantile expression.
+Use the FunctionImputation decorator to impute a numerical quantile.")
     fun <- fun[!(fun %in% c("quantile"))]
   }
 
@@ -118,7 +123,8 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
       } else if (isRand(x)) {
         plotStructure <- data.table::data.table(points = sort(x$rand(npoints)))
       } else {
-        message("No quantile or rand available, representation may not be accurate. Use the FunctionImputation decorator for better accuracy.")
+        message("No quantile or rand available, representation may not be accurate.
+Use the FunctionImputation decorator for better accuracy.")
         max <- ifelse(x$dmax == Inf, 100, x$dmax)
         min <- ifelse(x$dmin == -Inf, -100, x$dmin)
         plotStructure <- data.table::data.table(points = seq.int(min, max, length.out = npoints))
@@ -129,7 +135,8 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
       }
     }
 
-    if (any(c("cdf", "survival", "hazard", "cumhazard", "quantile") %in% fun) & !("cdf" %in% colnames(plotStructure))) {
+    if (any(c("cdf", "survival", "hazard", "cumhazard", "quantile") %in% fun) &
+      !("cdf" %in% colnames(plotStructure))) {
       plotStructure$cdf <- x$cdf(plotStructure$points)
     }
     if (any(c("pdf", "hazard") %in% fun)) {

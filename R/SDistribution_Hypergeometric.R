@@ -140,11 +140,12 @@ Hypergeometric <- R6Class("Hypergeometric",
       size <- self$getParameterValue("size")
 
       private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
-        self$getParameterValue("successes") - size):min(self$getParameterValue("draws"),
-                                                        self$getParameterValue("successes")
+        self$getParameterValue("successes") - size):min(
+        self$getParameterValue("draws"),
+        self$getParameterValue("successes")
       ))
 
-      pparams = self$parameters()$.__enclos_env__$private
+      pparams <- self$parameters()$.__enclos_env__$private
       pparams$.setParameterSupport(list(successes = Set$new(0:size)))
       pparams$.setParameterSupport(list(draws = Set$new(0:size)))
       pparams$.setParameterSupport(list(failures = Set$new(0:size)))

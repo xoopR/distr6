@@ -26,8 +26,10 @@ TriangularKernel <- R6Class("TriangularKernel",
     pdfSquared2Norm = function(x = 0) {
 
       return(ifelse(abs(x) > 2, 0,
-                          ifelse(abs(x) <= 1, (3*x^3 - 6*x^2 + 4)/6,
-                                 (-x^3 + 6*x^2 - 12*x +8)/6)))
+        ifelse(abs(x) <= 1, (3 * x^3 - 6 * x^2 + 4) / 6,
+          (-x^3 + 6 * x^2 - 12 * x + 8) / 6
+        )
+      ))
     },
 
     #' @description
@@ -53,6 +55,10 @@ TriangularKernel <- R6Class("TriangularKernel",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels,
-                         data.table::data.table(ShortName = "Tri", ClassName = "TriangularKernel",
-                                                Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(
+  .distr6$kernels,
+  data.table::data.table(
+    ShortName = "Tri", ClassName = "TriangularKernel",
+    Support = "[-1,1]", Packages = "-"
+  )
+)

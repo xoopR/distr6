@@ -89,8 +89,8 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
       loc <- unlist(self$getParameterValue("location"))
       var <- rep(NaN, length(df1))
       var[df2 > 4] <- 2 * (df2[df2 > 4] / df1[df2 > 4])^2 * ((df1[df2 > 4] + loc[df2 > 4])^2 +
-                                                               (df1[df2 > 4] + 2 * loc[df2 > 4]) *
-                                                               (df2[df2 > 4] - 2)) /
+        (df1[df2 > 4] + 2 * loc[df2 > 4]) *
+          (df2[df2 > 4] - 2)) /
         ((df2[df2 > 4] - 2)^2 * (df2[df2 > 4] - 4))
       return(var)
     },

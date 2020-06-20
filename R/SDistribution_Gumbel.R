@@ -97,8 +97,10 @@ Gumbel <- R6Class("Gumbel",
     #'
     #' Apery's Constant to 16 significant figures is used in the calculation.
     skewness = function() {
-      rep((12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3,
-          length(self$getParameterValue("scale")))
+      rep(
+        (12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3,
+        length(self$getParameterValue("scale"))
+      )
     },
 
     #' @description

@@ -179,8 +179,8 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' Ignored.
     addDeps = function(...) {
       stop("Dependencies should be added to internal ParameterSets with $parameterSets.")
-      }
-    ),
+    }
+  ),
 
   active = list(
     #' @field values
@@ -197,7 +197,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 
     #' @field parameterSets
     #' Returns [ParameterSet]s in collection.
-    parameterSets = function () {
+    parameterSets = function() {
       private$.parametersets
     }
   ),

@@ -70,8 +70,10 @@ test_that("stats", {
   expect_equal(vecDist$cf(2), c(Binom = Binomial$new()$cf(2), Gomp = NaN + 0i))
   expect_equal(vecDist$pgf(2), c(Binom = Binomial$new()$pgf(2), Gomp = NaN))
 
-  vecDist <- VectorDistribution$new(distribution = "Binomial",
-                                    params = data.table(size = 1:2, prob = c(0.1, 0.2)))
+  vecDist <- VectorDistribution$new(
+    distribution = "Binomial",
+    params = data.table(size = 1:2, prob = c(0.1, 0.2))
+  )
   expect_equal(vecDist$mean(), c(Binom1 = vecDist[1]$mean(), Binom2 = vecDist[2]$mean()))
   expect_equal(vecDist$mode(), c(Binom1 = vecDist[1]$mode(), Binom2 = vecDist[2]$mode()))
   expect_equal(vecDist$variance(), c(Binom1 = vecDist[1]$variance(), Binom2 = vecDist[2]$variance()))
@@ -214,21 +216,21 @@ test_that("print", {
 test_that("weighted discrete", {
   expect_silent({
     VectorDistribution$new(
-    distribution = "WeightedDiscrete",
-    params = list(
-      list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
-      list(x = 11:15, cdf = pgeom(1:5, 0.5))
+      distribution = "WeightedDiscrete",
+      params = list(
+        list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
+        list(x = 11:15, cdf = pgeom(1:5, 0.5))
+      )
     )
-  )
   })
 
   expect_silent({
     VectorDistribution$new(
-    distribution = "WeightedDiscrete",
-    params = list(
-      list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
-      list(x = 11:15, cdf = pgeom(1:5, 0.5))
+      distribution = "WeightedDiscrete",
+      params = list(
+        list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
+        list(x = 11:15, cdf = pgeom(1:5, 0.5))
+      )
     )
-  )
   })
 })

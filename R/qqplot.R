@@ -1,19 +1,21 @@
 #' @title Quantile-Quantile Plots for distr6 Objects
 #' @author Chijing Zeng
 #'
-#' @description Quantile-quantile plots are used to compare a "theoretical" or empirical distribution
-#' to a reference distribution. They can also compare the quantiles of two reference distributions.
+#' @description Quantile-quantile plots are used to compare a "theoretical" or
+#' empirical distribution to a reference distribution. They can also compare the quantiles of two
+#' reference distributions.
 #'
 #' @param x \code{distr6} object or numeric vector.
 #' @param y \code{distr6} object or numeric vector.
 #' @param npoints number of evaluation points.
-#' @param plot logical; if TRUE (default), figures are displayed in the plot window; otherwise a \code{data.table} of points and calculated values is returned.
+#' @param plot logical; if TRUE (default), figures are displayed in the plot window; otherwise a
+#' [data.table::data.table] of points and calculated values is returned.
 #' @param idline logical; if TRUE (default), the line \eqn{y = x} is plotted
 #' @param ... graphical parameters.
 #'
-#' @details If \code{x} or \code{y} are given as numeric vectors then they are first passed to the \code{\link{Empirical}} distribution.
-#' The \code{Empirical} distribution is a discrete distribution so quantiles are equivalent to the the Type 1 method
-#' in \code{\link[stats]{quantile}}.
+#' @details If \code{x} or \code{y} are given as numeric vectors then they are first passed to the
+#' [Empirical] distribution. The [Empirical] distribution is a discrete distribution so quantiles
+#' are equivalent to the the Type 1 method in \code{\link[stats]{quantile}}.
 #'
 #'
 #' @seealso \code{\link{plot.Distribution}} for plotting a \code{distr6} object.
@@ -90,7 +92,8 @@ qqplot <- function(x, y, npoints = 3000, idline = TRUE, plot = TRUE, ...) {
   #     conf <- if (conf == FALSE) 0.95 else conf
   #     xx <- Normal$new()$quantile(1 - (1 - conf)/2)
   #
-  #     SE <- (b / Normal$new()$pdf(Normal$new()$quantile(ppoints(npoints)))) * sqrt(ppoints(npoints)*(1 - ppoints(npoints))/npoints)
+  #     SE <- (b / Normal$new()$pdf(Normal$new()$quantile(ppoints(npoints)))) *
+  #      sqrt(ppoints(npoints)*(1 - ppoints(npoints))/npoints)
   #
   #     fit.value <- a + b*x0
   #     upper <- fit.value + (xx*SE)

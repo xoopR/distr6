@@ -4,8 +4,10 @@
 .distr6$message_missing <- "One of cdf or pdf must be provided."
 .distr6$huberize_discrete <- "Only discrete and continuous distributions can be Huberized."
 .distr6$missing_analytic <- function(self, method) {
-  stopf("No analytic result for %s %s available. Try decorating with CoreStatistics.",
-        self$name, method)
+  stopf(
+    "No analytic result for %s %s available. Try decorating with CoreStatistics.",
+    self$name, method
+  )
 }
 
 .distr6$distributions <- data.table(

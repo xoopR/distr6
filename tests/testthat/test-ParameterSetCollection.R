@@ -1,9 +1,9 @@
 library(testthat)
 
 test_that("initialize", {
-  p = Binomial$new()$parameters()
+  p <- Binomial$new()$parameters()
   expect_silent(ParameterSetCollection$new(lst = list(Binom1 = p, Binom2 = p)))
-  pc = ParameterSetCollection$new(Binom1 = p, Binom2 = p)
+  pc <- ParameterSetCollection$new(Binom1 = p, Binom2 = p)
   expect_equal(getR6Class(pc), "ParameterSetCollection")
   expect_equal(class(pc$.__enclos_env__$private$.parametersets), "list")
   expect_equal(length(pc$.__enclos_env__$private$.parametersets), 2)
@@ -11,21 +11,25 @@ test_that("initialize", {
 })
 
 test_that("getters", {
-  pc = ParameterSetCollection$new(
+  pc <- ParameterSetCollection$new(
     Geom = getParameterSet.Geometric(),
     Binom = getParameterSet.Binomial()
   )
   expect_equal(pc$getParameterValue("Binom_prob"), 0.5)
   expect_equal(pc$getParameterValue("Geom_prob"), 0.5)
-  expect_equal(pc$getParameterSupport("Binom_prob"),
-               Binomial$new()$parameters()$getParameterSupport("prob"))
+  expect_equal(
+    pc$getParameterSupport("Binom_prob"),
+    Binomial$new()$parameters()$getParameterSupport("prob")
+  )
 
-  expect_equal(pc$parameterSets, list(Geom = getParameterSet.Geometric(),
-                                      Binom = getParameterSet.Binomial()))
+  expect_equal(pc$parameterSets, list(
+    Geom = getParameterSet.Geometric(),
+    Binom = getParameterSet.Binomial()
+  ))
 })
 
 test_that("setters", {
-  pc = ParameterSetCollection$new(
+  pc <- ParameterSetCollection$new(
     Geom = Geometric$new()$parameters(),
     Binom = Binomial$new()$parameters()
   )
@@ -36,11 +40,11 @@ test_that("setters", {
 })
 
 test_that("clone_shallow", {
-  pc = ParameterSetCollection$new(
+  pc <- ParameterSetCollection$new(
     Geom = Geometric$new()$parameters(),
     Binom = Binomial$new()$parameters()
   )
-  pc2 = pc$clone()
+  pc2 <- pc$clone()
   expect_equal(pc$getParameterValue("Binom_prob"), pc2$getParameterValue("Binom_prob"))
   pc$setParameterValue(Binom_prob = 0.2)
   expect_equal(pc$getParameterValue("Binom_prob"), 0.2)
@@ -51,11 +55,11 @@ test_that("clone_shallow", {
 })
 
 test_that("clone_deep", {
-  pc = ParameterSetCollection$new(
+  pc <- ParameterSetCollection$new(
     Geom = Geometric$new()$parameters(),
     Binom = Binomial$new()$parameters()
   )
-  pc2 = pc$clone(deep = TRUE)
+  pc2 <- pc$clone(deep = TRUE)
   expect_equal(pc$getParameterValue("Binom_prob"), pc2$getParameterValue("Binom_prob"))
   pc$setParameterValue(Binom_prob = 0.2)
   expect_equal(pc$getParameterValue("Binom_prob"), 0.2)
@@ -66,11 +70,13 @@ test_that("clone_deep", {
 })
 
 test_that("deps", {
-  pc = ParameterSetCollection$new(
+  pc <- ParameterSetCollection$new(
     Geom = getParameterSet.Geometric(),
     Binom = getParameterSet.Binomial()
   )
-  expect_equal(pc$deps, list(Geom = getParameterSet.Geometric()$deps,
-                             Binom = getParameterSet.Binomial()$deps))
+  expect_equal(pc$deps, list(
+    Geom = getParameterSet.Geometric()$deps,
+    Binom = getParameterSet.Binomial()$deps
+  ))
   expect_error(pc$addDeps())
 })

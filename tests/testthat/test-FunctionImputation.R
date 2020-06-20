@@ -22,8 +22,10 @@ ps <- ParameterSet$new(
 ps$addDeps(dt = data.table(
   x = c("rate", "scale"),
   y = c("scale", "rate"),
-  fun = c(function(self) self$getParameterValue("rate")^-1,
-          function(self) self$getParameterValue("scale")^-1)
+  fun = c(
+    function(self) self$getParameterValue("rate")^-1,
+    function(self) self$getParameterValue("scale")^-1
+  )
 ))
 cont_pdf <- Distribution$new("Continuous Test", "ContTest",
   support = PosReals$new(),

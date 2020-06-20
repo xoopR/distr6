@@ -17,9 +17,9 @@
 #' @template param_n
 #' @template param_decorators
 #'
-#' @details A vector distribution is intented to vectorize distributions more efficiently than storing
-#' a list of distributions. To improve speed and reduce memory usage, distributions are only constructed
-#' when methods (e.g. d/p/q/r) are called.
+#' @details A vector distribution is intented to vectorize distributions more efficiently than
+#' storing a list of distributions. To improve speed and reduce memory usage, distributions are
+#' only constructed when methods (e.g. d/p/q/r) are called.
 #'
 #' @export
 VectorDistribution <- R6Class("VectorDistribution",
@@ -154,13 +154,13 @@ constructor, use `distlist` instead.")
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in 1:ncol(x1)) {
+                for (i in seq_len(ncol(x1)) {
                   a_dpqr <- fun(unlist(x1[, i]), log = log)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)
                 }
               } else {
-                for (i in seq(dim(x1)[3])) {
+                for (i in seq_len(dim(x1)[3])) {
                   mx <- x1[, , i]
                   if (class(mx)[1] == "numeric") {
                     mx <- matrix(mx, nrow = 1)
@@ -212,13 +212,13 @@ constructor, use `distlist` instead.")
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in seq(ncol(x1))) {
+                for (i in seq_along(x1)) {
                   a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)
                 }
               } else {
-                for (i in 1:dim(x1)[3]) {
+                for (i in seq_len(dim(x1)[3])) {
                   a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)
@@ -339,8 +339,18 @@ constructor, use `distlist` instead.")
       # create name, short_name, description, type, support
       if (length(unique(self$modelTable$Distribution)) == 1) {
         distribution <- get(as.character(unlist(self$modelTable[1, 1])))
-        if (is.null(name)) name <- paste0("Vector: ", ndist, " ", distribution$public_fields$name, "s")
-        if (is.null(short_name)) short_name <- paste0("Vec", ndist, distribution$public_fields$short_name)
+        if (is.null(name)) {
+          name <- paste0(
+            "Vector: ", ndist, " ",
+            distribution$public_fields$name, "s"
+          )
+        }
+        if (is.null(short_name)) {
+          short_name <- paste0(
+            "Vec", ndist,
+            distribution$public_fields$short_name
+          )
+        }
         description <- paste0("Vector of ", ndist, " ", distribution$public_fields$name, "s")
         type <- distribution$new()$traits$type^ndist
         # FIXME - support defined as same as type
@@ -440,7 +450,7 @@ constructor, use `distlist` instead.")
         })
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$mean
-        formals(f) = list(self = self)
+        formals(f) <- list(self = self)
         ret <- f()
       }
 
@@ -463,7 +473,7 @@ constructor, use `distlist` instead.")
         })
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$mode
-        formals(f) = list(self = self, which = which)
+        formals(f) <- list(self = self, which = which)
         ret <- f()
       }
 
@@ -486,7 +496,7 @@ constructor, use `distlist` instead.")
         })
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$median
-        formals(f) = list(self = self)
+        formals(f) <- list(self = self)
         ret <- f()
       }
 
@@ -508,13 +518,13 @@ constructor, use `distlist` instead.")
         })
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$variance
-        formals(f) = list(self = self)
+        formals(f) <- list(self = self)
         ret <- f()
       }
 
       if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else if (length(dim(ret)) == 2){
+      } else if (length(dim(ret)) == 2) {
         ret <- data.table(t(ret))
         colnames(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
@@ -534,7 +544,7 @@ constructor, use `distlist` instead.")
         })
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$skewness
-        formals(f) = list(self = self)
+        formals(f) <- list(self = self)
         ret <- f()
       }
 
@@ -558,7 +568,7 @@ constructor, use `distlist` instead.")
         })
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$kurtosis
-        formals(f) = list(self = self, excess = excess)
+        formals(f) <- list(self = self, excess = excess)
         ret <- f()
       }
 
@@ -581,7 +591,7 @@ constructor, use `distlist` instead.")
         })
       } else {
         f <- get(self$modelTable$Distribution[[1]])$public_methods$entropy
-        formals(f) = list(self = self, base = base)
+        formals(f) <- list(self = self, base = base)
         ret <- f()
       }
 

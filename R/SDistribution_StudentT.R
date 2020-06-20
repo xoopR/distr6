@@ -62,7 +62,7 @@ StudentT <- R6Class("StudentT",
     mean = function() {
       df <- unlist(self$getParameterValue("df"))
       mean <- rep(NaN, length(df))
-      mean[df > 1] = 0
+      mean[df > 1] <- 0
       return(mean)
     },
 
@@ -82,7 +82,7 @@ StudentT <- R6Class("StudentT",
     variance = function() {
       df <- unlist(self$getParameterValue("df"))
       var <- rep(NaN, length(df))
-      var[df > 2] = df[df > 2] / (df[df > 2] - 2)
+      var[df > 2] <- df[df > 2] / (df[df > 2] - 2)
       return(var)
     },
 
@@ -94,7 +94,7 @@ StudentT <- R6Class("StudentT",
     skewness = function() {
       df <- unlist(self$getParameterValue("df"))
       skew <- rep(NaN, length(df))
-      skew[df > 3] = 0
+      skew[df > 3] <- 0
       return(skew)
     },
 
@@ -107,7 +107,7 @@ StudentT <- R6Class("StudentT",
     kurtosis = function(excess = TRUE) {
       df <- unlist(self$getParameterValue("df"))
       exkurtosis <- rep(NaN, length(df))
-      exkurtosis[df > 4] = 6 / (df[df > 4] - 4)
+      exkurtosis[df > 4] <- 6 / (df[df > 4] - 4)
 
       if (excess) {
         return(exkurtosis)
@@ -124,7 +124,7 @@ StudentT <- R6Class("StudentT",
     entropy = function(base = 2) {
       df <- unlist(self$getParameterValue("df"))
       return((((df + 1) / 2) * (digamma((1 + df) / 2) - digamma(df / 2))) +
-               (log(sqrt(df) * beta(df / 2, 1 / 2), base)))
+        (log(sqrt(df) * beta(df / 2, 1 / 2), base)))
     },
 
     #' @description The moment generating function is defined by

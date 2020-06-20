@@ -36,10 +36,10 @@ Silverman <- R6Class("Silverman",
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
 
-      cond1 <- (exp(-x/sqrt(2))*(3*sin(x/sqrt(2)) + 3*cos(x/sqrt(2))))/2^(7/2) +
-        (x*exp(-x/sqrt(2))*sin(x/sqrt(2)))/8
-      cond2 <- (exp(x/sqrt(2))*(-3*sin(x/sqrt(2)) + 3*cos(x/sqrt(2))))/2^(7/2) +
-        (x*exp(x/sqrt(2)) *sin(x/sqrt(2)))/8
+      cond1 <- (exp(-x / sqrt(2)) * (3 * sin(x / sqrt(2)) + 3 * cos(x / sqrt(2)))) / 2^(7 / 2) +
+        (x * exp(-x / sqrt(2)) * sin(x / sqrt(2))) / 8
+      cond2 <- (exp(x / sqrt(2)) * (-3 * sin(x / sqrt(2)) + 3 * cos(x / sqrt(2)))) / 2^(7 / 2) +
+        (x * exp(x / sqrt(2)) * sin(x / sqrt(2))) / 8
 
       return(ifelse(x > 0, cond1, cond2))
     },
@@ -60,6 +60,10 @@ Silverman <- R6Class("Silverman",
     }
   )
 )
-.distr6$kernels <- rbind(.distr6$kernels,
-                         data.table::data.table(ShortName = "Silv", ClassName = "Silverman",
-                                                Support = "\u211D", Packages = "-"))
+.distr6$kernels <- rbind(
+  .distr6$kernels,
+  data.table::data.table(
+    ShortName = "Silv", ClassName = "Silverman",
+    Support = "\u211D", Packages = "-"
+  )
+)

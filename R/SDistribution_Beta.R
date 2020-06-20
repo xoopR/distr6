@@ -80,11 +80,11 @@ Beta <- R6Class("Beta",
         if (which == "all") {
           stop("`which` cannot be `'all'` when vectorising.")
         } else {
-          mode = rep(NaN, length(s1))
-          mode[s1 <= 1 & s2 > 1] = 0
-          mode[s1 > 1 & s2 <= 1] = 1
-          mode[s1 < 1 & s2 < 1] = c(0, 1)[which]
-          mode[s1 > 1 & s2 > 1] = (s1 - 1) / (s1 + s2 - 2)
+          mode <- rep(NaN, length(s1))
+          mode[s1 <= 1 & s2 > 1] <- 0
+          mode[s1 > 1 & s2 <= 1] <- 1
+          mode[s1 < 1 & s2 < 1] <- c(0, 1)[which]
+          mode[s1 > 1 & s2 > 1] <- (s1 - 1) / (s1 + s2 - 2)
           return(mode)
         }
       } else {

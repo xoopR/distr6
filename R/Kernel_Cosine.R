@@ -24,8 +24,8 @@ Cosine <- R6Class("Cosine",
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
 
-      cond1 <- -pi/32 * (sin((pi*x - 2*pi)/2) - sin(pi*x/2) + (pi*x - 2*pi)*cos(pi*x/2))
-      cond2 <-  pi/32 * (sin((pi*x + 2*pi)/2) - sin(pi*x/2) + (pi*x + 2*pi)*cos(pi*x/2))
+      cond1 <- -pi / 32 * (sin((pi * x - 2 * pi) / 2) - sin(pi * x / 2) + (pi * x - 2 * pi) * cos(pi * x / 2))
+      cond2 <- pi / 32 * (sin((pi * x + 2 * pi) / 2) - sin(pi * x / 2) + (pi * x + 2 * pi) * cos(pi * x / 2))
 
       kern2Norm <- ifelse(abs(x) > 2, 0, ifelse(x >= 0, cond1, cond2))
 
@@ -55,6 +55,10 @@ Cosine <- R6Class("Cosine",
   )
 )
 
-.distr6$kernels <- rbind(.distr6$kernels,
-                         data.table::data.table(ShortName = "Cos", ClassName = "Cosine",
-                                                Support = "[-1,1]", Packages = "-"))
+.distr6$kernels <- rbind(
+  .distr6$kernels,
+  data.table::data.table(
+    ShortName = "Cos", ClassName = "Cosine",
+    Support = "[-1,1]", Packages = "-"
+  )
+)
