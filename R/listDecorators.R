@@ -3,7 +3,8 @@
 #' @param simplify logical. If `TRUE` (default) returns results as characters,
 #' otherwise as R6 classes.
 #' @seealso \code{\link{DistributionDecorator}}
-#' @return Either a list of characters (if `simplify` is `TRUE`) or a list of [Decorator] classes.
+#' @return Either a list of characters (if `simplify` is `TRUE`) or a list of
+#' [DistributionDecorator] classes.
 #' @examples
 #' listDecorators()
 #' listDecorators(FALSE)

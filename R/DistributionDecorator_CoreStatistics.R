@@ -149,7 +149,7 @@ CoreStatistics <- R6Class("CoreStatistics",
         trafo <- function() {
           return(x)
         }
-        formals(trafo) <- alist(x = )
+        formals(trafo) <- alist(x = ) # nolint
       }
 
       count <- self$properties$support$properties$countability

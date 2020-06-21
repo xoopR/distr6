@@ -140,12 +140,12 @@ Distribution <- R6Class("Distribution",
         #-------------------
         if (!is.null(pdf)) {
           checkmate::assertSubset(names(formals(pdf)), c("x", "log"))
-          formals(pdf) <- c(formals(pdf), list(self = self), alist(... = ))
+          formals(pdf) <- c(formals(pdf), list(self = self), alist(... = )) # nolint
         }
 
         if (!is.null(cdf)) {
           checkmate::assertSubset(names(formals(cdf)), c("x", "lower.tail", "log.p"))
-          formals(cdf) <- c(formals(cdf), list(self = self), alist(... = ))
+          formals(cdf) <- c(formals(cdf), list(self = self), alist(... = )) # nolint
         }
 
         #-------------------------
@@ -153,12 +153,12 @@ Distribution <- R6Class("Distribution",
         #-------------------------
         if (!is.null(quantile)) {
           checkmate::assertSubset(names(formals(quantile)), c("p", "lower.tail", "log.p"))
-          formals(quantile) <- c(formals(quantile), list(self = self), alist(... = ))
+          formals(quantile) <- c(formals(quantile), list(self = self), alist(... = )) # nolint
         }
 
         if (!is.null(rand)) {
           stopifnot(names(formals(rand)) == "n")
-          formals(rand) <- c(formals(rand), list(self = self), alist(... = ))
+          formals(rand) <- c(formals(rand), list(self = self), alist(... = )) # nolint
         }
 
         #-------------------------
@@ -802,20 +802,20 @@ decorator to numerically estimate this.")
 
       if (lower == -Inf) {
         if (private$.isCdf == 1L) {
-          for (i in -c(0, 10^(1:1000))) {
+          for (i in -c(0, 10^(1:1000))) { # nolint
             if (i >= lower & i <= upper) {
               if (self$cdf(i) == 0) {
                 lower <- i
-                break()
+                break() # nolint
               }
             }
           }
         } else {
-          for (i in -c(0, 10^(1:1000))) {
+          for (i in -c(0, 10^(1:1000))) { # nolint
             if (i >= lower & i <= upper) {
               if (self$pdf(i) == 0) {
                 lower <- i
-                break()
+                break() # nolint
               }
             }
           }
@@ -825,20 +825,20 @@ decorator to numerically estimate this.")
 
       if (upper == Inf) {
         if (private$.isCdf == 1L) {
-          for (i in c(0, 10^(1:1000))) {
+          for (i in c(0, 10^(1:1000))) { # nolint
             if (i >= lower & i <= upper) {
               if (self$cdf(i) == 1) {
                 upper <- i
-                break()
+                break() # nolint
               }
             }
           }
         } else {
-          for (i in c(0, 10^(1:1000))) {
+          for (i in c(0, 10^(1:1000))) { # nolint
             if (i >= lower & i <= upper) {
               if (self$pdf(i) == 0) {
                 upper <- i
-                break()
+                break() # nolint
               }
             }
           }

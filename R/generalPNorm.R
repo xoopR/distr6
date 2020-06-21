@@ -20,5 +20,5 @@
 #' @export
 generalPNorm <- function(fun, p, lower, upper) {
   message(.distr6$message_numeric)
-  return((stats::integrate(f = function(x) abs(fun(x))^p, lower, upper)$value)^(1 / p))
+  return((stats::integrate(f = function(x) abs(fun(x))^p, lower, upper)$value)^(1 / p)) # nolint
 }

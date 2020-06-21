@@ -1,4 +1,4 @@
-# decomposeMixture <- function(mix){
+# decomposeMixture <- function(mix) {
 #   disc = unlist(lapply(mix$wrappedModels(),testDiscrete))
 #   cont = unlist(lapply(mix$wrappedModels(),testContinuous))
 #

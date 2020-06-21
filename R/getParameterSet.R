@@ -132,7 +132,7 @@ getParameterSet.ChiSquared <- function(object, df) {
   )
 }
 
-getParameterSet.ChiSquaredNoncentral <- function(object, df, location) {
+getParameterSet.ChiSquaredNoncentral <- function(object, df, location) { # nolint
   ParameterSet$new(
     id = list("df", "location"), value = list(1, 0),
     support = list(PosReals$new(zero = TRUE), PosReals$new(zero = TRUE)),
@@ -166,7 +166,7 @@ getParameterSet.Dirichlet <- function(object, params) {
   return(ps)
 }
 
-getParameterSet.DiscreteUniform <- function(object, lower, upper) {
+getParameterSet.DiscreteUniform <- function(object, lower, upper) { # nolint
 
   ps <- ParameterSet$new(
     id = list("lower", "upper", "N"),
@@ -264,7 +264,7 @@ getParameterSet.FDistribution <- function(object, df1, df2) {
   )
 }
 
-getParameterSet.FDistributionNoncentral <- function(object, df1, df2, location) {
+getParameterSet.FDistributionNoncentral <- function(object, df1, df2, location) { # nolint
 
   ParameterSet$new(
     id = list("df1", "df2", "location"), value = list(1, 1, 0),
@@ -605,11 +605,11 @@ getParameterSet.Lognormal <- function(object, meanlog, varlog, sdlog = NULL, pre
     })
     ps$addDeps("varlog", "prec", function(self) {
       ((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))^(-1)
+        self$getParameterValue("varlog")))^(-1) # nolint
     })
 
-    ps$addDeps("sdlog", "varlog", function(self) self$getParameterValue("sdlog")^2)
-    ps$addDeps("sdlog", "preclog", function(self) self$getParameterValue("varlog")^-1)
+    ps$addDeps("sdlog", "varlog", function(self) self$getParameterValue("sdlog")^2) # nolint
+    ps$addDeps("sdlog", "preclog", function(self) self$getParameterValue("varlog")^-1) # nolint
     ps$addDeps("sdlog", "mean", function(self) {
       exp(self$getParameterValue("meanlog") + self$getParameterValue("varlog") / 2)
     })
@@ -623,11 +623,11 @@ getParameterSet.Lognormal <- function(object, meanlog, varlog, sdlog = NULL, pre
     })
     ps$addDeps("sdlog", "prec", function(self) {
       ((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))^(-1)
+        self$getParameterValue("varlog")))^(-1) # nolint
     })
 
-    ps$addDeps("preclog", "varlog", function(self) self$getParameterValue("preclog")^-1)
-    ps$addDeps("preclog", "sdlog", function(self) self$getParameterValue("varlog")^0.5)
+    ps$addDeps("preclog", "varlog", function(self) self$getParameterValue("preclog")^-1) # nolint
+    ps$addDeps("preclog", "sdlog", function(self) self$getParameterValue("varlog")^0.5) # nolint
     ps$addDeps("preclog", "mean", function(self) {
       exp(self$getParameterValue("meanlog") + self$getParameterValue("varlog") / 2)
     })
@@ -641,7 +641,7 @@ getParameterSet.Lognormal <- function(object, meanlog, varlog, sdlog = NULL, pre
     })
     ps$addDeps("preclog", "prec", function(self) {
       ((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))^(-1)
+        self$getParameterValue("varlog")))^(-1) # nolint
     })
 
   } else {
@@ -761,7 +761,7 @@ getParameterSet.Multinomial <- function(object, size, probs) {
   return(ps)
 }
 
-getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
+getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) { # nolint
 
   # cov.bool <- prec.bool <- FALSE
   #
@@ -806,7 +806,7 @@ getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
   return(ps)
 }
 
-getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, mean = NULL, form) {
+getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, mean = NULL, form) { # nolint
 
   # prob.bool <- qprob.bool <- mean.bool <- FALSE
   #
@@ -991,7 +991,7 @@ getParameterSet.Rayleigh <- function(object, mode) {
 
 }
 
-getParameterSet.ShiftedLoglogistic <- function(object, scale, shape, location, rate = NULL) {
+getParameterSet.ShiftedLoglogistic <- function(object, scale, shape, location, rate = NULL) { # nolint
 
   # rate.bool <- scale.bool <- FALSE
   #
@@ -1034,7 +1034,7 @@ getParameterSet.StudentT <- function(object, df) {
 
 }
 
-getParameterSet.StudentTNoncentral <- function(object, df, location) {
+getParameterSet.StudentTNoncentral <- function(object, df, location) { # nolint
 
   ParameterSet$new(
     id = list("df", "location"), value = list(1, 0),
@@ -1127,7 +1127,7 @@ getParameterSet.Weibull <- function(object, shape, scale, altscale = NULL) {
   return(ps)
 }
 
-getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) {
+getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nolint
   # pdf.bool <- cdf.bool <- FALSE
   #
   # if (!is.null(cdf)) {

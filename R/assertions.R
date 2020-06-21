@@ -149,13 +149,13 @@ makeChecks(
 #'   Binom = Binomial$new()$parameters()
 #' ))) # TRUE
 #' @export
-testParameterSetCollectionList <- function() {}
+testParameterSetCollectionList <- function() {} #nolint
 #' @rdname testParameterSetCollectionList
 #' @export
-checkParameterSetCollectionList <- function() {}
+checkParameterSetCollectionList <- function() {} #nolint
 #' @rdname testParameterSetCollectionList
 #' @export
-assertParameterSetCollectionList <- function() {}
+assertParameterSetCollectionList <- function() {} #nolint
 
 makeChecks(
   assertionName = "ParameterSetCollectionList",
@@ -350,7 +350,6 @@ makeChecks(
   assertionName = "Symmetric",
   cond = object$properties$symmetry == "symmetric",
   defaulterrormsg = paste(object$short_name, "is not symmetric"),
-  args = alist(object = ),
   pos = environment()
 )
 
