@@ -372,9 +372,9 @@ Probability of success.</p></dd>
 Probability of failure. If provided then <code>prob</code> is ignored. <code>qprob = 1 - prob</code>.</p></dd>
 
 <dt><code>trials</code></dt><dd><p><code>(logical(1))</code> <br />
-If <code>TRUE</code> then the distribution models the number of trials, $x$, before the first success.
-Otherwise the distribution calculates the probability of $y$ failures before the first success.
-Mathematically these are related by $Y = X - 1$.</p></dd>
+If <code>TRUE</code> then the distribution models the number of trials, \(x\), before the first
+success. Otherwise the distribution calculates the probability of \(y\) failures before the
+first success. Mathematically these are related by \(Y = X - 1\).</p></dd>
 
 <dt><code>decorators</code></dt><dd><p><code>(character())</code> <br />
 Decorators to add to the distribution during construction.</p></dd>
@@ -413,8 +413,8 @@ covariance matrix is returned.</p><h3>Usage</h3>
 <a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
 <p>The skewness of a distribution is defined by the third standardised moment,
 $$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
-where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the distribution and
-\(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
+where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
+distribution and \(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>Geometric</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
 
 <p><hr>
