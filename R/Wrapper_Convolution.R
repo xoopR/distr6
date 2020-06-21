@@ -87,9 +87,9 @@ Convolution <- R6Class("Convolution",
           # body(fnc) <- substitute({
           #   message(.distr6$message_numeric)
           #
-          #   return(sapply(x1,function(z){
+          #   return(sapply(x1,function(z) {
           #     support <- try(self$wrappedModels(name1)$inf:self$wrappedModels(name1)$sup)
-          #               if(inherits(support,"try-error")){
+          #               if (inherits(support,"try-error")) {
           #                 self$wrappedModels(name2)$.__enclos_env__$private$.setWorkingSupport()
           #                 support <- self$wrappedModels(name2)$.__enclos_env__$
           #                 private$.getWorkingSupport()

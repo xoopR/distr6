@@ -11,7 +11,8 @@ test_that("lists", {
   expect_silent(listDistributions(filter = list(VariateForm = "discrete")))
   expect_silent(listDistributions(filter = list(VariateForm = "mixture")))
   expect_silent(listDistributions(filter = list(package = "distr6")))
-  expect_silent(listDistributions(filter = list(VariateForm = "univariate", valuesupport = "continuous")))
+  expect_silent(listDistributions(filter = list(VariateForm = "univariate",
+                                                valuesupport = "continuous")))
   expect_silent(listDistributions(filter = list(efsf = "fsdf")))
   expect_silent(listDecorators(F))
   expect_silent(listDecorators(T))

@@ -45,7 +45,7 @@ dgeo <- function(x) {
 }
 
 pgeo <- function(x) {
-  1 - (0.5^(x + 1))
+  1 - (0.5^(x + 1)) # nolint
 }
 
 disc_pdf <- Distribution$new("Discrete Test",

@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Multinomial
 #' @template SDist
 #' @templateVar ClassName Multinomial
@@ -10,7 +10,7 @@
 #' @templateVar paramsupport \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}
 #' @templateVar distsupport \eqn{\sum x_i = N}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -107,8 +107,8 @@ Multinomial <- R6Class("Multinomial",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       rep(NaN, length(self$getParameterValue("size")))
     },
@@ -142,7 +142,8 @@ Multinomial <- R6Class("Multinomial",
           s3 <- 0
           for (i in 1:K[[k]]) {
             for (j in 0:size[[k]]) {
-              s3 <- s3 + (choose(size[[k]], j) * (probs[[k]][[i]]^j) * ((1 - probs[[k]][[i]])^(size[[k]] - j)) * (log(factorial(j), base)))
+              s3 <- s3 + (choose(size[[k]], j) * (probs[[k]][[i]]^j) * # nolint
+                            ((1 - probs[[k]][[i]])^(size[[k]] - j)) * (log(factorial(j), base))) # nolint
             }
           }
           ent <- c(ent, s1 + s2 + s3)
@@ -153,7 +154,8 @@ Multinomial <- R6Class("Multinomial",
         s3 <- 0
         for (i in 1:K) {
           for (j in 0:size) {
-            s3 <- s3 + (choose(size, j) * (probs[[i]]^j) * ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base)))
+            s3 <- s3 + (choose(size, j) * (probs[[i]]^j) *
+                          ((1 - probs[[i]])^(size - j)) * (log(factorial(j), base))) # nolint
           }
         }
         ent <- s1 + s2 + s3

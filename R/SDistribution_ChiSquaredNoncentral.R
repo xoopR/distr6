@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name ChiSquaredNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -10,7 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{(\nu+2r)/2-1}exp(-x/2))/(2^{(\nu+2r)/2}\Gamma((\nu+2r)/2))}
 #' @templateVar paramsupport \eqn{\nu \ge 0}, \eqn{\lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -81,13 +81,13 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       df <- unlist(self$getParameterValue("df"))
       ncp <- unlist(self$getParameterValue("location"))
       skew <- rep(NaN, length(df))
-      skew[df + ncp != 0] <- ((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2))
+      skew[df + ncp != 0] <- ((2^(3 / 2)) * (df + 3 * ncp)) / ((df + 2 * ncp)^(3 / 2)) # nolint
       return(skew)
     },
 
@@ -116,7 +116,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (t < 0.5) {
-        return(exp(self$getParameterValue("location") * t / (1 - 2 * t)) / ((1 - 2 * t)^(self$getParameterValue("df") / 2)))
+        return(exp(self$getParameterValue("location") * t / (1 - 2 * t)) / ((1 - 2 * t)^(self$getParameterValue("df") / 2))) # nolint
       } else {
         return(NaN)
       }
@@ -126,7 +126,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      return(exp(self$getParameterValue("location") * 1i * t / (1 - 2i * t)) / ((1 - 2i * t)^(self$getParameterValue("df") / 2)))
+      return(exp(self$getParameterValue("location") * 1i * t / (1 - 2i * t)) / ((1 - 2i * t)^(self$getParameterValue("df") / 2))) # nolint
     },
 
     # optional setParameterValue

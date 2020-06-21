@@ -23,7 +23,7 @@ continuousTester <- Distribution$new("Continuous Test", "ContTest",
 dbin <- function(x) {
   m1 <- choose(self$getParameterValue(id = "size"), x)
   m2 <- self$getParameterValue(id = "prob")^x
-  m3 <- (1 - self$getParameterValue(id = "prob"))^(self$getParameterValue(id = "size") - x)
+  m3 <- (1 - self$getParameterValue(id = "prob"))^(self$getParameterValue(id = "size") - x) # nolint
   return(m1 * m2 * m3)
 }
 
@@ -53,8 +53,10 @@ test_that("pgf", {
 })
 
 test_that("entropy", {
-  expect_message(expect_equal(round(continuousTester$entropy(), 1), round(Exponential$new()$entropy()), 1))
-  expect_message(expect_equal(round(discreteTester$entropy(3), 2), round(Binomial$new()$entropy(3), 2)))
+  expect_message(expect_equal(round(continuousTester$entropy(), 1),
+                              round(Exponential$new()$entropy()), 1))
+  expect_message(expect_equal(round(discreteTester$entropy(3), 2),
+                              round(Binomial$new()$entropy(3), 2)))
 })
 
 test_that("skewness", {
@@ -98,7 +100,7 @@ rbin <- function(n) {
   pdf <- function(x) {
     m1 <- choose(self$getParameterValue(id = "size"), x)
     m2 <- self$getParameterValue(id = "prob")^x
-    m3 <- (1 - self$getParameterValue(id = "prob"))^(self$getParameterValue(id = "size") - x)
+    m3 <- (1 - self$getParameterValue(id = "prob"))^(self$getParameterValue(id = "size") - x) # nolint
     return(m1 * m2 * m3)
   }
   return(sample(1:10, size = n, replace = T, prob = pdf(1:10)))

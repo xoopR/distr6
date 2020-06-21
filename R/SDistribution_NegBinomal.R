@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name NegativeBinomial
 #' @template SDist
 #' @templateVar ClassName NegativeBinomial
@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
 #' @templateVar paramsupport \eqn{n = {0,1,2,\ldots}} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below)
+# nolint end
 #' @details
 #' The Negative Binomial distribution can refer to one of four distributions (forms):
 #'
@@ -110,25 +111,29 @@ NegativeBinomial <- R6Class("NegativeBinomial",
         if (self$getParameterValue("size") <= 1) {
           return(0)
         } else {
-          return(floor(((self$getParameterValue("size") - 1) * self$getParameterValue("prob")) / (self$getParameterValue("qprob"))))
+          return(floor(((self$getParameterValue("size") - 1) *
+                          self$getParameterValue("prob")) / (self$getParameterValue("qprob"))))
         }
       } else if (self$getParameterValue("form") == "tbf") {
         if (self$getParameterValue("size") <= 1) {
           return(1)
         } else {
-          return(floor(((self$getParameterValue("size") - 1) * self$getParameterValue("prob")) / (self$getParameterValue("qprob"))) + 10)
+          return(floor(((self$getParameterValue("size") - 1) *
+                          self$getParameterValue("prob")) / (self$getParameterValue("qprob"))) + 10)
         }
       } else if (self$getParameterValue("form") == "fbs") {
         if (self$getParameterValue("size") <= 1) {
           return(0)
         } else {
-          return(floor(((self$getParameterValue("size") - 1) * self$getParameterValue("qprob")) / (self$getParameterValue("prob"))))
+          return(floor(((self$getParameterValue("size") - 1) *
+                          self$getParameterValue("qprob")) / (self$getParameterValue("prob"))))
         }
       } else {
         if (self$getParameterValue("size") <= 1) {
           return(1)
         } else {
-          return(floor(((self$getParameterValue("size") - 1) * self$getParameterValue("qprob")) / (self$getParameterValue("prob"))) + 10)
+          return(floor(((self$getParameterValue("size") - 1) *
+                          self$getParameterValue("qprob")) / (self$getParameterValue("prob"))) + 10)
         }
       }
     },
@@ -154,8 +159,8 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       form <- self$getParameterValue("form")[[1]]
       size <- unlist(self$getParameterValue("size"))
@@ -261,7 +266,8 @@ NegativeBinomial <- R6Class("NegativeBinomial",
       super$setParameterValue(..., lst = lst, error = error)
 
       if (self$getParameterValue("form") == "tbf" | self$getParameterValue("form") == "tbs") {
-        private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf, type = "[)", class = "integer")
+        private$.properties$support <- Interval$new(self$getParameterValue("size"),
+                                                    Inf, type = "[)", class = "integer")
       }
       invisible(self)
     }

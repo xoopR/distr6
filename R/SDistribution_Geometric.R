@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Geometric
 #' @template SDist
 #' @templateVar ClassName Geometric
@@ -12,6 +12,7 @@
 #' @details
 #' The Geometric distribution is used to either refer to modelling the number of trials or number
 #' of failures before the first success.
+# nolint end
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -44,9 +45,9 @@ Geometric <- R6Class("Geometric",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param trials `(logical(1))` \cr
-    #' If `TRUE` then the distribution models the number of trials, $x$, before the first success.
-    #' Otherwise the distribution calculates the probability of $y$ failures before the first success.
-    #' Mathematically these are related by $Y = X - 1$.
+    #' If `TRUE` then the distribution models the number of trials, \eqn{x}, before the first
+    #' success. Otherwise the distribution calculates the probability of \eqn{y} failures before the
+    #' first success. Mathematically these are related by \eqn{Y = X - 1}.
     initialize = function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, prob = prob, qprob = qprob, trials = trials)
@@ -107,8 +108,8 @@ Geometric <- R6Class("Geometric",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       prob <- unlist(self$getParameterValue("prob"))
       return((2 - prob) / sqrt(1 - prob))
@@ -137,7 +138,7 @@ Geometric <- R6Class("Geometric",
     #' continuous distributions.
     entropy = function(base = 2) {
       prob <- unlist(self$getParameterValue("prob"))
-      return(((-(1 - prob) * log(1 - prob, base)) - (prob * log(prob, base))) / prob)
+      return(((-(1 - prob) * log(1 - prob, base)) - (prob * log(prob, base))) / prob) # nolint
     },
 
     #' @description The moment generating function is defined by
@@ -146,12 +147,14 @@ Geometric <- R6Class("Geometric",
     mgf = function(t) {
       if (self$getParameterValue("trials")[[1]]) {
         if (t < -log(1 - self$getParameterValue("prob"))) {
-          return((self$getParameterValue("prob") * exp(t)) / (1 - (1 - self$getParameterValue("prob")) * exp(t)))
+          return((self$getParameterValue("prob") * exp(t)) /
+                   (1 - (1 - self$getParameterValue("prob")) * exp(t)))
         } else {
           return(NaN)
         }
       } else {
-        return((self$getParameterValue("prob")) / (1 - (1 - self$getParameterValue("prob")) * exp(t)))
+        return((self$getParameterValue("prob")) /
+                 (1 - (1 - self$getParameterValue("prob")) * exp(t)))
       }
     },
 
@@ -160,9 +163,11 @@ Geometric <- R6Class("Geometric",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       if (self$getParameterValue("trials")[[1]]) {
-        return((self$getParameterValue("prob") * exp(1i * t)) / (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
+        return((self$getParameterValue("prob") * exp(1i * t)) /
+                 (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
       } else {
-        return((self$getParameterValue("prob")) / (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
+        return((self$getParameterValue("prob")) /
+                 (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
       }
     },
 

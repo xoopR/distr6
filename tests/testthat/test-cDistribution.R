@@ -15,7 +15,8 @@ test_that("SDistributions", {
 
 test_that("VectorDistributions", {
   v1 <- VectorDistribution$new(list(Binomial$new(), Normal$new()))
-  v2 <- VectorDistribution$new(distribution = "Gamma", params = data.table::data.table(shape = 1:2, rate = 1:2))
+  v2 <- VectorDistribution$new(distribution = "Gamma",
+                               params = data.table::data.table(shape = 1:2, rate = 1:2))
   expect_silent(c(v1, v2))
   expect_silent(c(v1, v2, Normal$new(), truncate(Binomial$new(), 2, 6)))
 })
@@ -25,7 +26,8 @@ test_that("VectorDistributions", {
 #     distribution = c("Binomial", "Normal"),
 #     params = list(list(size = 2), list(mean = 0, var = 2))
 #   )
-#   v2 <- VectorDistribution$new(distribution = "Gamma", params = data.table::data.table(shape = 1:2, rate = 1:2))
+#   v2 <- VectorDistribution$new(distribution = "Gamma",
+#   params = data.table::data.table(shape = 1:2, rate = 1:2))
 #   expect_silent(c(v1, v2))
 #   v3 <- c(v1, v2)
 #   expect_false(v3$distlist)

@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Degenerate
 #' @template SDist
 #' @templateVar ClassName Degenerate
@@ -11,7 +11,7 @@
 #' @templateVar distsupport \eqn{{\mu}}
 #' @templateVar aka Dirac
 #' @aliases Dirac Delta
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -83,8 +83,8 @@ Degenerate <- R6Class("Degenerate",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       numeric(length(self$getParameterValue("mean")))
     },

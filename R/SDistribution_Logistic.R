@@ -42,8 +42,8 @@ Logistic <- R6Class("Logistic",
     #' @param mean `(numeric(1))`\cr
     #' Mean of the distribution, defined on the Reals.
     #' @param sd `(numeric(1))`\cr
-    #' Standard deviation of the distribution as an alternate scale parameter, `sd = scale*pi/sqrt(3)`.
-    #' If given then `scale` is ignored.
+    #' Standard deviation of the distribution as an alternate scale parameter,
+    #'  `sd = scale*pi/sqrt(3)`. If given then `scale` is ignored.
     initialize = function(mean = 0, scale = 1, sd = NULL,
                           decorators = NULL) {
 
@@ -88,8 +88,8 @@ Logistic <- R6Class("Logistic",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       numeric(length(self$getParameterValue("sd")))
     },
@@ -122,7 +122,9 @@ Logistic <- R6Class("Logistic",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (-1 / self$getParameterValue("scale") < t & t < 1 / self$getParameterValue("scale")) {
-        return(exp(self$getParameterValue("mean") * t) * beta(1 - self$getParameterValue("scale") * t, 1 + self$getParameterValue("scale") * t))
+        return(exp(self$getParameterValue("mean") * t) *
+                 beta(1 - self$getParameterValue("scale") * t,
+                      1 + self$getParameterValue("scale") * t))
       } else {
         return(NaN)
       }
@@ -133,7 +135,8 @@ Logistic <- R6Class("Logistic",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       return(exp(1i * self$getParameterValue("mean") * t) *
-        (self$getParameterValue("scale") * pi * t) / (sinh(pi * self$getParameterValue("scale") * t)))
+        (self$getParameterValue("scale") * pi * t) /
+          (sinh(pi * self$getParameterValue("scale") * t)))
     },
 
     #' @description The probability generating function is defined by

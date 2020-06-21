@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Gumbel
 #' @template SDist
 #' @templateVar ClassName Gumbel
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-(z + exp(-z)))/\beta}
 #' @templateVar paramsupport \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -92,8 +92,8 @@ Gumbel <- R6Class("Gumbel",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #'
     #' Apery's Constant to 16 significant figures is used in the calculation.
     skewness = function() {
@@ -130,7 +130,8 @@ Gumbel <- R6Class("Gumbel",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      return(gamma(1 - self$getParameterValue("scale") * t) * exp(self$getParameterValue("location") * t))
+      return(gamma(1 - self$getParameterValue("scale") * t) *
+               exp(self$getParameterValue("location") * t))
     },
 
     #' @description The characteristic function is defined by
@@ -139,7 +140,8 @@ Gumbel <- R6Class("Gumbel",
     #'
     #' [pracma::gammaz()] is used in to allow complex inputs.
     cf = function(t) {
-      return(pracma::gammaz(1 - self$getParameterValue("scale") * t * 1i) * exp(1i * self$getParameterValue("location") * t))
+      return(pracma::gammaz(1 - self$getParameterValue("scale") * t * 1i) *
+               exp(1i * self$getParameterValue("location") * t))
     },
 
     #' @description The probability generating function is defined by

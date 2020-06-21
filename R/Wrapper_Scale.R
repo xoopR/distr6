@@ -35,11 +35,11 @@
 #' #' Scale$new(Binomial$new())
 #' #' }
 #' #'
-#' #' @seealso See \code{\link{DistributionWrapper}} for inherited wrapper methods and see \code{\link{Distribution}}
-#' #' for a full list of inherited distribution methods.
+#' #' @seealso See \code{\link{DistributionWrapper}} for inherited wrapper methods and see
+#' #' \code{\link{Distribution}} for a full list of inherited distribution methods.
 #'
 #' Scale <- R6Class("Scale", inherit = DistributionWrapper, lock_objects = FALSE)
-#' Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...){
+#' Scale$set("public","initialize",function(dist, mean = 0, sd = 1,...) {
 #'   assertDistribution(dist)
 #'   dist = dist$clone()
 #'
@@ -52,7 +52,7 @@
 #'   self$setScaleMean(mean)
 #'   self$setScaleSd(sd)
 #'
-#'   # if(!is.null(dist$pdf(1))){
+#'   # if(!is.null(dist$pdf(1))) {
 #'   #   pdf <- function(x1) {}
 #'   #   body(pdf) <- substitute({
 #'   #     locationTrafo <- self$wrappedModels(name)$mean() - self$getScaleMean()
@@ -61,7 +61,7 @@
 #'   #   }, list(name = short_name))
 #'   # } else
 #'     pdf <- NULL
-#'   if(!is.null(dist$cdf(1))){
+#'   if(!is.null(dist$cdf(1))) {
 #'     cdf <- function(x1) {}
 #'     body(cdf) <- substitute({
 #'       locationTrafo <- self$wrappedModels(name)$mean() - self$getScaleMean()
@@ -80,17 +80,17 @@
 #'                    short_name = short_name, type = type, ...)
 #' }) # IN PROGRESS
 #'
-#' Scale$set("public","getScaleMean",function(){
+#' Scale$set("public","getScaleMean",function() {
 #'   return(private$.scaleMean)
 #' })
-#' Scale$set("public","getScaleSd",function(){
+#' Scale$set("public","getScaleSd",function() {
 #'   return(private$.scaleSd)
 #' })
-#' Scale$set("public","setScaleMean",function(mean){
+#' Scale$set("public","setScaleMean",function(mean) {
 #'   private$.scaleMean <- mean
 #'   invisible(self)
 #' })
-#' Scale$set("public","setScaleSd",function(sd){
+#' Scale$set("public","setScaleSd",function(sd) {
 #'   private$.scaleSd <- sd
 #'   invisible(self)
 #' })

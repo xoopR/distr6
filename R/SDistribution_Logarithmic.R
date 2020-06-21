@@ -1,3 +1,4 @@
+# nolint start
 #' @name Logarithmic
 #' @template SDist
 #' @templateVar ClassName Logarithmic
@@ -8,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = -\theta^x/xlog(1-\theta)}
 #' @templateVar paramsupport \eqn{0 < \theta < 1}
 #' @templateVar distsupport \eqn{{1,2,3,\ldots}}
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -83,8 +84,8 @@ Logarithmic <- R6Class("Logarithmic",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       theta <- unlist(self$getParameterValue("theta"))
 
@@ -128,7 +129,8 @@ Logarithmic <- R6Class("Logarithmic",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (t < -log(self$getParameterValue("theta"))) {
-        return(log(1 - self$getParameterValue("theta") * exp(t)) / log(1 - self$getParameterValue("theta")))
+        return(log(1 - self$getParameterValue("theta") * exp(t)) /
+                 log(1 - self$getParameterValue("theta")))
       } else {
         return(NaN)
       }
@@ -138,7 +140,8 @@ Logarithmic <- R6Class("Logarithmic",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      return(log(1 - self$getParameterValue("theta") * exp(t * 1i)) / log(1 - self$getParameterValue("theta")))
+      return(log(1 - self$getParameterValue("theta") * exp(t * 1i)) /
+               log(1 - self$getParameterValue("theta")))
     },
 
     #' @description The probability generating function is defined by
@@ -146,7 +149,8 @@ Logarithmic <- R6Class("Logarithmic",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       if (abs(z) < 1 / self$getParameterValue("theta")) {
-        return(log(1 - self$getParameterValue("theta") * z) / log(1 - self$getParameterValue("theta")))
+        return(log(1 - self$getParameterValue("theta") * z) /
+                 log(1 - self$getParameterValue("theta")))
       } else {
         return(NaN)
       }

@@ -56,7 +56,8 @@ Arcsine <- R6Class("Arcsine",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      return((unlist(self$getParameterValue("upper")) + unlist(self$getParameterValue("lower"))) / 2)
+      return((unlist(self$getParameterValue("upper")) + unlist(self$getParameterValue("lower"))) /
+               2)
     },
 
     #' @description
@@ -94,8 +95,8 @@ Arcsine <- R6Class("Arcsine",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       rep(0, length(self$getParameterValue("lower")))
     },

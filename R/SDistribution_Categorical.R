@@ -1,3 +1,4 @@
+# nolint start
 #' @name Categorical
 #' @template SDist
 #' @templateVar ClassName Categorical
@@ -12,7 +13,7 @@
 #' Sampling from this distribution is performed with the [sample] function with the elements given
 #' as the support set and the probabilities from the `probs` parameter. The cdf and quantile assumes
 #' that the elements are supplied in an indexed order (otherwise the results are meaningless).
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -142,8 +143,8 @@ Categorical <- R6Class("Categorical",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       p <- self$getParameterValue("probs")
       if (checkmate::testList(p)) {
@@ -233,7 +234,8 @@ Categorical <- R6Class("Categorical",
       return(pdf)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      cdf <- cumsum(self$pdf(self$properties$support$elements))[self$properties$support$elements %in% x]
+      cdf <- cumsum(
+        self$pdf(self$properties$support$elements))[self$properties$support$elements %in% x]
       if (!lower.tail) cdf <- 1 - cdf
       if (log.p) cdf <- log(cdf)
 
@@ -243,8 +245,11 @@ Categorical <- R6Class("Categorical",
       if (log.p) p <- exp(p)
       if (!lower.tail) p <- 1 - p
 
-      cdf <- matrix(self$cdf(self$properties$support$elements), ncol = self$properties$support$length, nrow = length(p), byrow = T)
-      return(unlist(self$properties$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))]))
+      cdf <- matrix(self$cdf(self$properties$support$elements),
+                    ncol = self$properties$support$length, nrow = length(p), byrow = T)
+      return(
+        unlist(self$properties$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
+      )
     },
     .rand = function(n) {
       sample(self$properties$support$elements, n, TRUE, self$getParameterValue("probs"))

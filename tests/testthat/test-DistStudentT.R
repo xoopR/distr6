@@ -17,7 +17,7 @@ test_that("autotest", {
     exkur = NaN,
     entropy = digamma(1) - digamma(1 / 2) + log(beta(1 / 2, 1 / 2), 2),
     mgf = NaN,
-    cf = besselK(1, 1 / 2) / (gamma(1 / 2) * 2^(-1 / 2)),
+    cf = besselK(1, 1 / 2) / (gamma(1 / 2) * 2^(-1 / 2)), # nolint
     pgf = NaN,
     pdf = dt(1:3, 1),
     cdf = pt(1:3, 1),

@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name ShiftedLoglogistic
 #' @template SDist
 #' @templateVar ClassName ShiftedLoglogistic
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}
 #' @templateVar distsupport the non-negative Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -165,7 +165,8 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
       scale <- self$getParameterValue("scale")
 
       if (checkmate::testList(location)) {
-        return(C_ShiftedLoglogisticCdf(x, unlist(location), unlist(shape), unlist(scale), lower.tail, log.p))
+        return(C_ShiftedLoglogisticCdf(x, unlist(location), unlist(shape), unlist(scale),
+                                       lower.tail, log.p))
       } else {
         return(as.numeric(C_ShiftedLoglogisticCdf(x, location, shape, scale, lower.tail, log.p)))
       }
@@ -176,9 +177,11 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
       scale <- self$getParameterValue("scale")
 
       if (checkmate::testList(location)) {
-        return(C_ShiftedLoglogisticQuantile(p, unlist(location), unlist(shape), unlist(scale), lower.tail, log.p))
+        return(C_ShiftedLoglogisticQuantile(p, unlist(location), unlist(shape), unlist(scale),
+                                            lower.tail, log.p))
       } else {
-        return(as.numeric(C_ShiftedLoglogisticQuantile(p, location, shape, scale, lower.tail, log.p)))
+        return(as.numeric(C_ShiftedLoglogisticQuantile(p, location, shape, scale, lower.tail,
+                                                       log.p)))
       }
     },
     .rand = function(n) {

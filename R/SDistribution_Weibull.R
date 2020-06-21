@@ -62,7 +62,8 @@ Weibull <- R6Class("Weibull",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      unlist(self$getParameterValue("scale")) * gamma(1 + 1 / unlist(self$getParameterValue("shape")))
+      unlist(self$getParameterValue("scale")) *
+        gamma(1 + 1 / unlist(self$getParameterValue("shape")))
     },
 
     #' @description
@@ -74,7 +75,7 @@ Weibull <- R6Class("Weibull",
       shape <- unlist(self$getParameterValue("shape"))
       mode <- numeric(length(scale))
       mode[shape > 1] <- scale[shape > 1] *
-        ((shape[shape > 1] - 1) / shape[shape > 1])^(1 / shape[shape > 1])
+        ((shape[shape > 1] - 1) / shape[shape > 1])^(1 / shape[shape > 1]) # nolint
       return(mode)
     },
 
@@ -84,7 +85,7 @@ Weibull <- R6Class("Weibull",
     #' returns `self$quantile(0.5)`.
     median = function() {
       unlist(self$getParameterValue("scale")) *
-        (log(2)^(1 / unlist(self$getParameterValue("shape"))))
+        (log(2)^(1 / unlist(self$getParameterValue("shape")))) # nolint
     },
 
     #' @description
@@ -101,8 +102,8 @@ Weibull <- R6Class("Weibull",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))

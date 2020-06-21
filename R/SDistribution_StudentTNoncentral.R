@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name StudentTNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -10,7 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\nu^{\nu/2}exp(-(\nu\lambda^2)/(2(x^2+\nu)))/(\sqrt{\pi} \Gamma(\nu/2) 2^{(\nu-1)/2} (x^2+\nu)^{(\nu+1)/2}))\int_{0}^{\infty} y^\nu exp(-1/2(y-x\lambda/\sqrt{x^2+\nu})^2)}
 #' @templateVar paramsupport \eqn{\nu > 0}, \eqn{\lambda \epsilon R}
 #' @templateVar distsupport the Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy

@@ -10,7 +10,9 @@ test_that("constructor", {
       list(prob = 0.75, size = 3)
     )
   ))
-  expect_error(ProductDistribution$new(distribution = Dist, params = list(list(prob = 0.1, size = 2), list(prob = 0.75, size = 3))))
+  expect_error(ProductDistribution$new(distribution = Dist,
+                                       params = list(list(prob = 0.1, size = 2),
+                                                     list(prob = 0.75, size = 3))))
 })
 
 pd <- ProductDistribution$new(

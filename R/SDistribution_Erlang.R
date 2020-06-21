@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Erlang
 #' @template SDist
 #' @templateVar ClassName Erlang
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)(x^{\alpha-1})(exp(-x\beta)) /(\alpha-1)!}
 #' @templateVar paramsupport \eqn{\alpha = 1,2,3,\ldots} and \eqn{\beta > 0}
 #' @templateVar distsupport the Positive Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -83,8 +83,8 @@ Erlang <- R6Class("Erlang",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       2 / sqrt(unlist(self$getParameterValue("shape")))
     },
@@ -120,7 +120,7 @@ Erlang <- R6Class("Erlang",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (t < self$getParameterValue("rate")) {
-        return((1 - self$getParameterValue("scale") * t)^(-self$getParameterValue("shape")))
+        return((1 - self$getParameterValue("scale") * t)^(-self$getParameterValue("shape"))) # nolint
       } else {
         return(NaN)
       }
@@ -130,7 +130,7 @@ Erlang <- R6Class("Erlang",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      (1 - self$getParameterValue("scale") * 1i * t)^(-self$getParameterValue("shape"))
+      (1 - self$getParameterValue("scale") * 1i * t)^(-self$getParameterValue("shape")) # nolint
     },
 
     #' @description The probability generating function is defined by

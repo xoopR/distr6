@@ -87,8 +87,8 @@ Laplace <- R6Class("Laplace",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       numeric(length(self$getParameterValue("var")))
     },
@@ -121,7 +121,8 @@ Laplace <- R6Class("Laplace",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (abs(t) < 1 / self$getParameterValue("scale")) {
-        return(exp(self$getParameterValue("mean") * t) / (1 - self$getParameterValue("scale")^2 * t^2))
+        return(exp(self$getParameterValue("mean") * t) /
+                 (1 - self$getParameterValue("scale")^2 * t^2))
       } else {
         return(NaN)
       }
@@ -131,7 +132,8 @@ Laplace <- R6Class("Laplace",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      return(exp(self$getParameterValue("mean") * t * 1i) / (1 + self$getParameterValue("scale")^2 * t^2))
+      return(exp(self$getParameterValue("mean") * t * 1i) /
+               (1 + self$getParameterValue("scale")^2 * t^2))
     },
 
     #' @description The probability generating function is defined by

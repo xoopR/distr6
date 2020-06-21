@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name BetaNoncentral
 #' @author Jordan Deenichin
 #' @template SDist
@@ -10,7 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{\alpha+r-1}(1-x)^{\beta-1})/B(\alpha+r, \beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0, \lambda \ge 0}, where \eqn{B} is the Beta function
 #' @templateVar distsupport \eqn{[0, 1]}
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy

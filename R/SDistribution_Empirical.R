@@ -106,8 +106,8 @@ Empirical <- R6Class("Empirical",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       data <- self$getParameterValue("data")$samples
       return(sum(((data - self$mean()) / self$stdev())^3) / length(data))
@@ -185,7 +185,8 @@ Empirical <- R6Class("Empirical",
         nr <- length(z)
         nc <- length(data$samples)
         return(as.numeric(
-          (matrix(z, nrow = nr, ncol = nc)^matrix(data$samples, nrow = nr, ncol = nc, byrow = z)) %*%
+          (matrix(z, nrow = nr, ncol = nc)^matrix(data$samples, nrow = nr, ncol = nc,
+                                                  byrow = z)) %*%
             matrix(data$N / nrow(data), nrow = nc, ncol = 1)
         ))
       }

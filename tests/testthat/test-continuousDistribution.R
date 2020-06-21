@@ -48,16 +48,20 @@
 #   expect_equal(continuousTester$kthmoment(3, type = "standard"), continuousTester$skewness())
 #   expect_equal(continuousTester$kthmoment(4, type = "standard"), continuousTester$kurtosis(FALSE))
 #   expect_silent(continuousTester$setParameterValue(lst = list(rate = 10)))
-#   expect_equal(continuousTester$mgf(6), continuousTester$getParameterValue("rate") / (continuousTester$getParameterValue("rate") - 6))
+#   expect_equal(continuousTester$mgf(6), continuousTester$getParameterValue("rate") /
+#    (continuousTester$getParameterValue("rate") - 6))
 #   expect_silent(continuousTester$setParameterValue(lst = list(rate = 5)))
-#   expect_equal(continuousTester$entropy(base = exp(1)), 1 - log(continuousTester$getParameterValue("rate")))
+#   expect_equal(continuousTester$entropy(base = exp(1)),
+#   1 - log(continuousTester$getParameterValue("rate")))
 # })
 #
 # test_that("check exotic statistics", {
 #   expect_message(decorate(continuousTester, ExoticStatistics))
 #   expect_equal(continuousTester$survival(1), 1 - continuousTester$cdf(1))
-#   expect_equal(round(continuousTester$survivalAntiDeriv(), 5), round(continuousTester$survivalPNorm(p = 1), 5))
-#   expect_equal(round(continuousTester$genExp(), 5), round(continuousTester$survivalPNorm(p = 1), 5))
+#   expect_equal(round(continuousTester$survivalAntiDeriv(), 5),
+#    round(continuousTester$survivalPNorm(p = 1), 5))
+#   expect_equal(round(continuousTester$genExp(), 5),
+#    round(continuousTester$survivalPNorm(p = 1), 5))
 #   expect_equal(continuousTester$hazard(3), continuousTester$pdf(3) / continuousTester$survival(3))
 #   expect_equal(-log(continuousTester$survival(3)), continuousTester$cumHazard(3))
 # })

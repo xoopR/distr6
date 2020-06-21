@@ -9,7 +9,8 @@ test_that("continuous add", {
 test_that("continuous subtract", {
   N1 <- Normal$new(mean = 3)
   N2 <- Normal$new(mean = 2)
-  expect_equal(round(Convolution$new(N1, N2, add = FALSE)$pdf(1:5), 4), round(dnorm(1:5, 1, sqrt(2)), 4))
+  expect_equal(round(Convolution$new(N1, N2, add = FALSE)$pdf(1:5), 4),
+               round(dnorm(1:5, 1, sqrt(2)), 4))
 })
 
 test_that("discrete add", {

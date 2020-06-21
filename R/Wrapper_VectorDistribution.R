@@ -881,7 +881,7 @@ constructor, use `distlist` instead.")
 #' @usage \method{[}{VectorDistribution}(vecdist, i)
 #' @export
 "[.VectorDistribution" <- function(vecdist, i) {
-  i <- i[i %in% (1:nrow(vecdist$modelTable))]
+  i <- i[i %in% (seq_len(nrow(vecdist$modelTable)))]
   if (length(i) == 0) {
     stop("Index i too large, should be less than or equal to ", nrow(vecdist$modelTable))
   }

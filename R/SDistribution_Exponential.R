@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Exponential
 #' @template SDist
 #' @templateVar ClassName Exponential
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \lambda exp(-x\lambda)}
 #' @templateVar paramsupport \eqn{\lambda > 0}
 #' @templateVar distsupport the Positive Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -89,8 +89,8 @@ Exponential <- R6Class("Exponential",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       rep(2, length(self$getParameterValue("scale")))
     },
