@@ -7,10 +7,11 @@
 listWrappers(simplify = TRUE)
 }
 \arguments{
-\item{simplify}{logical. If TRUE (default) returns results as characters, otherwise as R6 classes.}
+\item{simplify}{logical. If TRUE (default) returns results as characters, otherwise as R6
+classes.}
 }
 \value{
-Either a list of characters (if \code{simplify} is TRUE) or a list of \code{Wrapper} classes.
+Either a list of characters (if \code{simplify} is \code{TRUE}) or a list of \code{Wrapper} classes.
 }
 \description{
 Lists wrappers that can wrap an R6 Distribution.

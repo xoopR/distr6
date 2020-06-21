@@ -7,11 +7,12 @@
 listKernels(simplify = FALSE)
 }
 \arguments{
-\item{simplify}{logical. If FALSE (default) returns kernels with support as a data.table, otherwise returns
-kernel names as characters.}
+\item{simplify}{logical. If FALSE (default) returns kernels with support as a data.table,
+otherwise returns kernel names as characters.}
 }
 \value{
-Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{Kernel}s and their traits.
+Either a list of characters (if \code{simplify} is TRUE) or a data.table of
+\code{Kernel}s and their traits.
 }
 \description{
 Lists all implemented kernels in distr6.

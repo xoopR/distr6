@@ -15,18 +15,20 @@ qqplot(x, y, npoints = 3000, idline = TRUE, plot = TRUE, ...)
 
 \item{idline}{logical; if TRUE (default), the line \eqn{y = x} is plotted}
 
-\item{plot}{logical; if TRUE (default), figures are displayed in the plot window; otherwise a \code{data.table} of points and calculated values is returned.}
+\item{plot}{logical; if TRUE (default), figures are displayed in the plot window; otherwise a
+\link[data.table:data.table]{data.table::data.table} of points and calculated values is returned.}
 
 \item{...}{graphical parameters.}
 }
 \description{
-Quantile-quantile plots are used to compare a "theoretical" or empirical distribution
-to a reference distribution. They can also compare the quantiles of two reference distributions.
+Quantile-quantile plots are used to compare a "theoretical" or
+empirical distribution to a reference distribution. They can also compare the quantiles of two
+reference distributions.
 }
 \details{
-If \code{x} or \code{y} are given as numeric vectors then they are first passed to the \code{\link{Empirical}} distribution.
-The \code{Empirical} distribution is a discrete distribution so quantiles are equivalent to the the Type 1 method
-in \code{\link[stats]{quantile}}.
+If \code{x} or \code{y} are given as numeric vectors then they are first passed to the
+\link{Empirical} distribution. The \link{Empirical} distribution is a discrete distribution so quantiles
+are equivalent to the the Type 1 method in \code{\link[stats]{quantile}}.
 }
 \examples{
 qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15))

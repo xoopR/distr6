@@ -154,7 +154,7 @@ constructor, use `distlist` instead.")
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in seq_len(ncol(x1)) {
+                for (i in seq_len(ncol(x1))) {
                   a_dpqr <- fun(unlist(x1[, i]), log = log)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)
@@ -212,7 +212,7 @@ constructor, use `distlist` instead.")
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in seq_along(x1)) {
+                for (i in seq_len(ncol(x1))) {
                   a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)

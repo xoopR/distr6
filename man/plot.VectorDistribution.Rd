@@ -13,7 +13,8 @@
 
 \item{topn}{\code{integer}. First n distributions in the \link{VectorDistribution} to plot.}
 
-\item{ind}{\code{integer}. Indices of the distributions in the \link{VectorDistribution} to plot. If given then \code{topn} is ignored.}
+\item{ind}{\code{integer}. Indices of the distributions in the \link{VectorDistribution} to plot. If given
+then \code{topn} is ignored.}
 
 \item{cols}{\code{character}. Vector of colours for plotting the curves. If missing \code{1:9} are used.}
 
@@ -23,8 +24,8 @@
 Helper function to more easily plot distributions inside a \link{VectorDistribution}.
 }
 \details{
-If \code{topn} and \code{ind} are both missing then all distributions are plotted if there are 10 or less in the vector.
-Otherwise the function will error.
+If \code{topn} and \code{ind} are both missing then all distributions are plotted if there are 10 or less
+in the vector, otherwise the function will error.
 }
 \examples{
 \dontrun{

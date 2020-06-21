@@ -12,8 +12,8 @@ wrappedModels(object, model = NULL)
 \item{model}{character, see details.}
 }
 \value{
-If \code{model} is NULL then returns list of models that are wrapped by the wrapper. Otherwise
-returns model given in \code{model}.
+If \code{model} is NULL then returns list of models that are wrapped by the wrapper.
+Otherwise returns model given in \code{model}.
 }
 \description{
 Returns either a list of all the wrapped models or the models named by parameters.

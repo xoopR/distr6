@@ -10,9 +10,9 @@ Returns error. Abstract classes cannot be constructed directly.
 Abstract class that cannot be constructed directly.
 }
 \details{
-Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped distribution
-has the same methods and fields as an unwrapped one. After wrapping, the parameters of a distribution
-are prefixed with the distribution name to ensure uniqueness of parameter IDs.
+Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped
+distribution has the same methods and fields as an unwrapped one. After wrapping, the parameters
+of a distribution are prefixed with the distribution name to ensure uniqueness of parameter IDs.
 
 Use \link{listWrappers} function to see constructable wrappers.
 }

@@ -7,9 +7,9 @@
 A wrapper for creating a vector of distributions.
 }
 \details{
-A vector distribution is intented to vectorize distributions more efficiently than storing
-a list of distributions. To improve speed and reduce memory usage, distributions are only constructed
-when methods (e.g. d/p/q/r) are called.
+A vector distribution is intented to vectorize distributions more efficiently than
+storing a list of distributions. To improve speed and reduce memory usage, distributions are
+only constructed when methods (e.g. d/p/q/r) are called.
 }
 \examples{
 
