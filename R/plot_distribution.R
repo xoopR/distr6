@@ -169,7 +169,7 @@ Use the FunctionImputation decorator for better accuracy.")
       }
 
       if (arrange & !ask) {
-        data <- 1:length(fun)
+        data <- seq_len(length(fun))
         if (length(fun) == 3 | length(fun) == 5) data <- c(data, 0)
 
         n <- switch(length(fun),

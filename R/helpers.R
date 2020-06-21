@@ -23,7 +23,7 @@ isThat <- function(cond) {
   return(testThat(cond))
 }
 
-makeChecks <- function(assertionName, cond, defaulterrormsg, args = alist(object = , errormsg = ),
+makeChecks <- function(assertionName, cond, defaulterrormsg, args = alist(object = , errormsg = ), # nolint
                        pos = -1) {
   cond <- substitute(cond)
   value <- function() {}

@@ -22,7 +22,7 @@ makeUniqueDistributions <- function(distlist) {
   if (any(duplicated(sort(unlist(lapply(distlist, function(x) x$short_name)))))) {
     count <- table(unlist(lapply(distlist, function(x) x$short_name)))
     x <- 1
-    for (i in 1:length(distlist)) {
+    for (i in seq_along(distlist)) {
       if (x == as.numeric(count[names(count) %in% distlist[[i]]$short_name])) {
         distlist[[i]]$short_name <- paste0(distlist[[i]]$short_name, x)
         x <- 1
