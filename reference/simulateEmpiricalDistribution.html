@@ -253,17 +253,18 @@ opposed to the <a href='rand.html'>rand</a> method which samples with replacemen
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of length <code>n</code> with elements drawn without replacement from the given Empirical distribution.</p>
+    <p>A vector of length <code>n</code> with elements drawn without replacement from the given
+Empirical distribution.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function can only be used to sample from the <code>Empirical</code> distribution without replacement,
-and will return an error for other distributions.</p>
-<p>The <code>seed</code> param ensures that the same samples can be reproduced and is more convenient than using the
-<code><a href='https://rdrr.io/r/base/Random.html'>set.seed()</a></code> function each time before use. If <code>set.seed</code> is <code>NULL</code> then the seed is left
-unchanged (NULL is not passed to the <code>set.seed</code> function).</p>
-<p>If <code>n</code> is of length greater than one, then <code>n</code> is taken to be the length of <code>n</code>. If <code>n</code>
-is greater than the number of observations in the Empirical distribution, then <code>n</code> is taken to be
-the number of observations in the distribution.</p>
+    <p>This function can only be used to sample from the <code>Empirical</code> distribution without
+replacement, and will return an error for other distributions.</p>
+<p>The <code>seed</code> param ensures that the same samples can be reproduced and is more convenient than
+using the <code><a href='https://rdrr.io/r/base/Random.html'>set.seed()</a></code> function each time before use. If <code>set.seed</code> is <code>NULL</code> then the
+seed is left unchanged (NULL is not passed to the <code>set.seed</code> function).</p>
+<p>If <code>n</code> is of length greater than one, then <code>n</code> is taken to be the length of <code>n</code>.
+If <code>n</code> is greater than the number of observations in the Empirical distribution, then
+<code>n</code> is taken to be the number of observations in the distribution.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

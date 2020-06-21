@@ -53,7 +53,8 @@
 
 
 <meta property="og:title" content="Product Distribution — ProductDistribution" />
-<meta property="og:description" content="A wrapper for creating the joint distribution of multiple independent probability distributions." />
+<meta property="og:description" content="A wrapper for creating the joint distribution of multiple independent probability
+distributions." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -227,7 +228,8 @@
     </div>
 
     <div class="ref-description">
-    <p>A wrapper for creating the joint distribution of multiple independent probability distributions.</p>
+    <p>A wrapper for creating the joint distribution of multiple independent probability
+distributions.</p>
     </div>
 
     <pre class="usage"># S3 method for Distribution
@@ -245,15 +247,16 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Exploits the following relationships of independent distributions</p>
-<p>$$F_P(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)$$
-where \(f_P\)/\(F_P\) is the pdf/cdf of the joint (product) distribution \(P\) and \(X1,...,XN\) are independent distributions.</p>
+<p>$$F_P(X1 = x1,...,XN = xN) = F_{X1}(x1) * ... * F_{XN}(xn)$$ #nolint
+where \(f_P\)/\(F_P\) is the pdf/cdf of the joint (product) distribution
+\(P\) and \(X1,...,XN\) are independent distributions.</p>
     <h2 class="hasAnchor" id="constructor-details"><a class="anchor" href="#constructor-details"></a>Constructor Details</h2>
 
     <p>A product distribution can either be constructed by a list of
-distributions passed to <code>distlist</code> or by passing the name of a distribution implemented in distr6
-to <code>distribution</code>, as well as a list or table of parameters to <code>params</code>. The former case provides more flexibility
-in the ability to use multiple distributions but the latter is useful for quickly combining many
-distributions of the same type. See examples.</p>
+distributions passed to <code>distlist</code> or by passing the name of a distribution
+to <code>distribution</code>, as well as a list or table of parameters to <code>params</code>. The former
+case provides more flexibility in the ability to use multiple distributions but the latter is
+useful for quickly combining many distributions of the same type. See examples.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other wrappers: 
