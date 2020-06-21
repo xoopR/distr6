@@ -13,7 +13,8 @@
 #' consistent with other distributions but non-standard for Empirical distributions. Use
 #' [simulateEmpiricalDistribution] to sample without replacement.
 #'
-#'  The cdf assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
+#' The cdf assumes that the elements are supplied in an indexed order
+#' (otherwise the results are meaningless).
 #'
 #' @template class_distribution
 #' @template method_mode

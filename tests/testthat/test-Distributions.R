@@ -3,7 +3,7 @@ library(testthat)
 dbin <- function(x, log) {
   m1 <- choose(self$getParameterValue("size"), x)
   m2 <- self$getParameterValue("prob")^x
-  m3 <- (1 - self$getParameterValue("prob"))^(self$getParameterValue("size") - x)
+  m3 <- (1 - self$getParameterValue("prob"))^(self$getParameterValue("size") - x) # nolint
   return(m1 * m2 * m3)
 }
 
@@ -13,20 +13,27 @@ test_that("check constructor", {
   expect_error(Distribution$new("Discrete Test", "TestDistr", pdf = dbin), "type must be")
   expect_silent(Distribution$new("Discrete Test", "TestDistr", pdf = dbin, type = Naturals$new()))
   expect_error(Distribution$new(short_name = "Test Distr", pdf = dbin, type = Naturals$new()))
-  expect_error(Distribution$new(short_name = "TestDistr", pdf = dbinom, type = Naturals$new()), "subset of")
+  expect_error(Distribution$new(short_name = "TestDistr", pdf = dbinom, type = Naturals$new()),
+               "subset of")
   expect_silent(Distribution$new(short_name = "TestDistr", pdf = dbin, type = Naturals$new()))
   expect_silent(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new()))
-  expect_equal(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$strprint(), "TestDistr")
+  expect_equal(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$strprint(),
+               "TestDistr")
   expect_null(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$parameters())
 })
 
 
 test_that("check support", {
-  expect_equal(Distribution$new("Discrete Test", valueSupport = "c", pdf = dbin, type = Naturals$new())$valueSupport, "continuous")
-  expect_equal(Distribution$new("Discrete Test", valueSupport = "d", pdf = dbin, type = Naturals$new())$valueSupport, "discrete")
-  expect_equal(Distribution$new("Discrete Test", valueSupport = "m", pdf = dbin, type = Naturals$new())$valueSupport, "mixture")
-  expect_error(Distribution$new("Discrete Test", valueSupport = "r", pdf = dbin, type = Naturals$new()))
-  expect_equal(Distribution$new("Discrete Test", pdf = dbin, type = Naturals$new())$valueSupport, "discrete")
+  expect_equal(Distribution$new("Discrete Test", valueSupport = "c", pdf = dbin,
+                                type = Naturals$new())$valueSupport, "continuous")
+  expect_equal(Distribution$new("Discrete Test", valueSupport = "d", pdf = dbin,
+                                type = Naturals$new())$valueSupport, "discrete")
+  expect_equal(Distribution$new("Discrete Test", valueSupport = "m", pdf = dbin,
+                                type = Naturals$new())$valueSupport, "mixture")
+  expect_error(Distribution$new("Discrete Test", valueSupport = "r", pdf = dbin,
+                                type = Naturals$new()))
+  expect_equal(Distribution$new("Discrete Test", pdf = dbin, type = Naturals$new())$valueSupport,
+               "discrete")
 })
 
 ps <- ParameterSet$new(
@@ -61,10 +68,14 @@ test_that("check r/d/p/q", {
 })
 
 test_that("check is", {
-  expect_equal(isPdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 1L)
-  expect_equal(isCdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 0L)
-  expect_equal(isQuantile(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 0L)
-  expect_equal(isRand(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())), 0L)
+  expect_equal(isPdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())),
+               1L)
+  expect_equal(isCdf(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())),
+               0L)
+  expect_equal(isQuantile(Distribution$new("Test", pdf = dbin, parameters = ps,
+                                           type = Naturals$new())), 0L)
+  expect_equal(isRand(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())),
+               0L)
 })
 
 test_that("working_support", {

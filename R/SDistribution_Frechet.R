@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Frechet
 #' @template SDist
 #' @templateVar ClassName Frechet
@@ -11,7 +11,7 @@
 #' @templateVar distsupport \eqn{x > \gamma}
 #' @templateVar aka Inverse Weibull
 #' @aliases InverseWeibull
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -81,7 +81,7 @@ Frechet <- R6Class("Frechet",
       minimum <- unlist(self$getParameterValue("minimum"))
       scale <- unlist(self$getParameterValue("scale"))
 
-      return(minimum + scale * (shape / (1 + shape))^(1 / shape))
+      return(minimum + scale * (shape / (1 + shape))^(1 / shape)) # nolint
     },
 
     #' @description
@@ -93,7 +93,7 @@ Frechet <- R6Class("Frechet",
       s <- unlist(self$getParameterValue("scale"))
       a <- unlist(self$getParameterValue("shape"))
 
-      return(m + s / (log(2)^(1 / a)))
+      return(m + s / (log(2)^(1 / a))) # nolint
     },
 
     #' @description
@@ -124,7 +124,7 @@ Frechet <- R6Class("Frechet",
       skew[shape > 3] <- (gamma(1 - 3 / shape[shape > 3]) - 3 *
         gamma(1 - 2 / shape[shape > 3]) * gamma(1 - 1 / shape[shape > 3]) + 2
       * gamma(1 - 1 / shape[shape > 3])^3) /
-        ((gamma(1 - 2 / shape[shape > 3]) - gamma(1 - 1 / shape[shape > 3])^2)^(3 / 2))
+        ((gamma(1 - 2 / shape[shape > 3]) - gamma(1 - 1 / shape[shape > 3])^2)^(3 / 2)) # nolint
       return(skew)
     },
 
@@ -175,7 +175,8 @@ Frechet <- R6Class("Frechet",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
-      private$.properties$support <- Interval$new(self$getParameterValue("minimum"), Inf, type = "()")
+      private$.properties$support <- Interval$new(self$getParameterValue("minimum"),
+                                                  Inf, type = "()")
       invisible(self)
     }
   ),

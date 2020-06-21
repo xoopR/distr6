@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Uniform
 #' @author Yumi Zhou
 #' @template SDist
@@ -10,7 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b-a)}
 #' @templateVar paramsupport \eqn{-\infty < a < b < \infty}
 #' @templateVar distsupport \eqn{[a, b]}
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -84,8 +84,8 @@ Uniform <- R6Class("Uniform",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       numeric(length(self$getParameterValue("lower")))
     },
@@ -120,7 +120,8 @@ Uniform <- R6Class("Uniform",
       if (t == 0) {
         return(1)
       } else {
-        return((exp(self$getParameterValue("upper") * t) - exp(self$getParameterValue("lower") * t)) /
+        return((exp(self$getParameterValue("upper") * t) -
+                  exp(self$getParameterValue("lower") * t)) /
           (t * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
       }
     },
@@ -132,7 +133,8 @@ Uniform <- R6Class("Uniform",
       if (t == 0) {
         return(1)
       } else {
-        return((exp(self$getParameterValue("upper") * t * 1i) - exp(self$getParameterValue("lower") * t * 1i)) /
+        return((exp(self$getParameterValue("upper") * t * 1i) -
+                  exp(self$getParameterValue("lower") * t * 1i)) /
           (t * 1i * (self$getParameterValue("upper") - self$getParameterValue("lower"))))
       }
     },

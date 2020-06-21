@@ -82,7 +82,7 @@ Pareto <- R6Class("Pareto",
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
     median = function() {
-      unlist(self$getParameterValue("scale")) * 2^(1 / unlist(self$getParameterValue("shape")))
+      unlist(self$getParameterValue("scale")) * 2^(1 / unlist(self$getParameterValue("shape"))) # nolint
     },
 
     #' @description
@@ -103,8 +103,8 @@ Pareto <- R6Class("Pareto",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       shape <- unlist(self$getParameterValue("shape"))
 

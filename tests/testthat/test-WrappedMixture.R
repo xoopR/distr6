@@ -15,7 +15,8 @@ test_that("check weights", {
   )
 })
 
-M <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()), weights = c(0.1, 0.6, 0.3))
+M <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()),
+                             weights = c(0.1, 0.6, 0.3))
 test_that("check pdf", {
   expect_equal(
     MixtureDistribution$new(list(Binomial$new(), Exponential$new()))$pdf(1:2),
@@ -24,7 +25,8 @@ test_that("check pdf", {
       mean(c(Binomial$new()$pdf(2), Exponential$new()$pdf(2)))
     )
   )
-  expect_equal(M$pdf(1), Binomial$new()$pdf(1) * 0.1 + Exponential$new()$pdf(1) * 0.6 + Normal$new()$pdf(1) * 0.3)
+  expect_equal(M$pdf(1), Binomial$new()$pdf(1) * 0.1 + Exponential$new()$pdf(1) * 0.6 +
+                 Normal$new()$pdf(1) * 0.3)
   expect_equal(M$pdf(1:2), c(
     Binomial$new()$pdf(1) * 0.1 + Exponential$new()$pdf(1) * 0.6 + Normal$new()$pdf(1) * 0.3,
     Binomial$new()$pdf(2) * 0.1 + Exponential$new()$pdf(2) * 0.6 + Normal$new()$pdf(2) * 0.3
@@ -39,7 +41,8 @@ test_that("check cdf", {
       mean(c(Binomial$new()$cdf(2), Exponential$new()$cdf(2)))
     )
   )
-  expect_equal(M$cdf(1), Binomial$new()$cdf(1) * 0.1 + Exponential$new()$cdf(1) * 0.6 + Normal$new()$cdf(1) * 0.3)
+  expect_equal(M$cdf(1), Binomial$new()$cdf(1) * 0.1 + Exponential$new()$cdf(1) * 0.6 +
+                 Normal$new()$cdf(1) * 0.3)
   expect_equal(M$cdf(1:2), c(
     Binomial$new()$cdf(1) * 0.1 + Exponential$new()$cdf(1) * 0.6 + Normal$new()$cdf(1) * 0.3,
     Binomial$new()$cdf(2) * 0.1 + Exponential$new()$cdf(2) * 0.6 + Normal$new()$cdf(2) * 0.3

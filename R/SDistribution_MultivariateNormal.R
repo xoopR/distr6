@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name MultivariateNormal
 #' @template SDist
 #' @templateVar ClassName MultivariateNormal
@@ -10,6 +10,7 @@
 #' @templateVar paramsupport \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}
 #' @templateVar distsupport the Reals and only when the covariance matrix is positive-definite
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
+# nolint end
 #' @details
 #' Sampling is performed via the Cholesky decomposition using [chol].
 #'
@@ -142,7 +143,8 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     mgf = function(t) {
       mean <- self$getParameterValue("mean")
       checkmate::assert(length(t) == length(mean))
-      return(as.numeric(exp((mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
+      return(as.numeric(exp((mean %*% t(t(t))) +
+                              (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
     },
 
     #' @description The characteristic function is defined by
@@ -151,7 +153,8 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     cf = function(t) {
       mean <- self$getParameterValue("mean")
       checkmate::assert(length(t) == length(mean))
-      return(as.complex(exp((1i * mean %*% t(t(t))) + (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
+      return(as.complex(exp((1i * mean %*% t(t(t))) +
+                              (0.5 * t %*% self$getParameterValue("cov") %*% t(t(t))))))
     },
 
     #' @description The probability generating function is defined by
@@ -200,10 +203,10 @@ MultivariateNormal <- R6Class("MultivariateNormal",
           mean <- matrix(mean, nrow = nrow(x), ncol = K, byrow = TRUE)
 
           if (log) {
-            return(as.numeric(-((K / 2) * log(2 * pi)) - (log(det(cov)) / 2) -
+            return(as.numeric(-((K / 2) * log(2 * pi)) - (log(det(cov)) / 2) - # nolint
               (diag((x - mean) %*% solve(cov) %*% t(x - mean)) / 2)))
           } else {
-            return(as.numeric((2 * pi)^(-K / 2) * det(cov)^-0.5 *
+            return(as.numeric((2 * pi)^(-K / 2) * det(cov)^-0.5 * # nolint
               exp(-0.5 * diag((x - mean) %*% solve(cov) %*% t(x - mean)))))
           }
 

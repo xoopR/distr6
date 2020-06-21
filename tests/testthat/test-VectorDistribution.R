@@ -16,8 +16,10 @@ vd <- VectorDistribution$new(
 )
 
  test_that("pdf/cdf/quantile", {
-  expect_equal(vd$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2), Binom2 = dbinom(3:4, 5, 0.5)))
-  expect_equal(vd$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2), Binom2 = pbinom(3:4, 5, 0.5)))
+  expect_equal(vd$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2),
+                                            Binom2 = dbinom(3:4, 5, 0.5)))
+  expect_equal(vd$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2),
+                                            Binom2 = pbinom(3:4, 5, 0.5)))
   expect_equal(
     vd$quantile(c(0.1, 0.2), c(0.3, 0.4)),
     data.table(Binom1 = qbinom(c(0.1, 0.2), 40, 0.2), Binom2 = qbinom(c(0.3, 0.4), 5, 0.5))
@@ -27,8 +29,10 @@ vd <- VectorDistribution$new(
     Binomial$new(prob = 0.2, size = 40),
     Binomial$new(prob = 0.5, size = 5)
   ))
-  expect_equal(a$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2), Binom2 = dbinom(3:4, 5, 0.5)))
-  expect_equal(a$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2), Binom2 = pbinom(3:4, 5, 0.5)))
+  expect_equal(a$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2),
+                                           Binom2 = dbinom(3:4, 5, 0.5)))
+  expect_equal(a$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2),
+                                           Binom2 = pbinom(3:4, 5, 0.5)))
   expect_equal(
     a$quantile(c(0.1, 0.2), c(0.3, 0.4)),
     data.table(Binom1 = qbinom(c(0.1, 0.2), 40, 0.2), Binom2 = qbinom(c(0.3, 0.4), 5, 0.5))
@@ -45,8 +49,14 @@ test_that("pdf/cdf - !distlist", {
     list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
     list(prob = 0.2, size = 6)
   ))
-  expect_equal(a$pdf(1, x2 = 2, x3 = 3), data.table::data.table(Binom1 = Binomial$new(2, 0.1)$pdf(1), Binom2 = Binomial$new(4, 0.6)$pdf(2), Binom3 = Binomial$new(6, 0.2)$pdf(3)))
-  expect_equal(a$cdf(1, x2 = 2, x3 = 3), data.table::data.table(Binom1 = Binomial$new(2, 0.1)$cdf(1), Binom2 = Binomial$new(4, 0.6)$cdf(2), Binom3 = Binomial$new(6, 0.2)$cdf(3)))
+  expect_equal(a$pdf(1, x2 = 2, x3 = 3),
+               data.table::data.table(Binom1 = Binomial$new(2, 0.1)$pdf(1),
+                                      Binom2 = Binomial$new(4, 0.6)$pdf(2),
+                                      Binom3 = Binomial$new(6, 0.2)$pdf(3)))
+  expect_equal(a$cdf(1, x2 = 2, x3 = 3),
+               data.table::data.table(Binom1 = Binomial$new(2, 0.1)$cdf(1),
+                                      Binom2 = Binomial$new(4, 0.6)$cdf(2),
+                                      Binom3 = Binomial$new(6, 0.2)$cdf(3)))
 })
 #
 # test_that("type/support", {
@@ -76,9 +86,12 @@ test_that("stats", {
   )
   expect_equal(vecDist$mean(), c(Binom1 = vecDist[1]$mean(), Binom2 = vecDist[2]$mean()))
   expect_equal(vecDist$mode(), c(Binom1 = vecDist[1]$mode(), Binom2 = vecDist[2]$mode()))
-  expect_equal(vecDist$variance(), c(Binom1 = vecDist[1]$variance(), Binom2 = vecDist[2]$variance()))
-  expect_equal(vecDist$skewness(), c(Binom1 = vecDist[1]$skewness(), Binom2 = vecDist[2]$skewness()))
-  expect_equal(vecDist$kurtosis(), c(Binom1 = vecDist[1]$kurtosis(), Binom2 = vecDist[2]$kurtosis()))
+  expect_equal(vecDist$variance(), c(Binom1 = vecDist[1]$variance(),
+                                     Binom2 = vecDist[2]$variance()))
+  expect_equal(vecDist$skewness(), c(Binom1 = vecDist[1]$skewness(),
+                                     Binom2 = vecDist[2]$skewness()))
+  expect_equal(vecDist$kurtosis(), c(Binom1 = vecDist[1]$kurtosis(),
+                                     Binom2 = vecDist[2]$kurtosis()))
   expect_equal(vecDist$entropy(), c(Binom1 = vecDist[1]$entropy(), Binom2 = vecDist[2]$entropy()))
 })
 
@@ -111,7 +124,8 @@ test_that("wrapped models", {
 #   a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
 #   expect_null(expect_message(a$getParameterValue("prob"), "Vector Distribution should not"))
 #   expect_null(expect_message(a$setParameterValue(f), "Vector Distribution should not"))
-#   expect_equal(expect_message(a$parameters(s), "Vector Distribution should not"), data.table::data.table())
+#   expect_equal(expect_message(a$parameters(s), "Vector Distribution should not"),
+#   data.table::data.table())
 # })
 
 test_that("extract", {

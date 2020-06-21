@@ -78,7 +78,7 @@ Loglogistic <- R6Class("Loglogistic",
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))
 
-      return(scale * ((shape - 1) / (shape + 1))^(1 / shape))
+      return(scale * ((shape - 1) / (shape + 1))^(1 / shape)) # nolint
     },
 
     #' @description
@@ -109,8 +109,8 @@ Loglogistic <- R6Class("Loglogistic",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))
@@ -168,7 +168,8 @@ Loglogistic <- R6Class("Loglogistic",
           MoreArgs = list(x = x, log = log)
         )
       } else {
-        actuar::dllogis(x, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"), log = log)
+        actuar::dllogis(x, shape = self$getParameterValue("shape"),
+                        rate = self$getParameterValue("rate"), log = log)
       }
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
@@ -204,7 +205,8 @@ Loglogistic <- R6Class("Loglogistic",
           MoreArgs = list(n = n)
         )
       } else {
-        actuar::rllogis(n, shape = self$getParameterValue("shape"), rate = self$getParameterValue("rate"))
+        actuar::rllogis(n, shape = self$getParameterValue("shape"),
+                        rate = self$getParameterValue("rate"))
       }
     },
 

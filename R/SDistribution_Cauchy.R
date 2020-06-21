@@ -84,8 +84,8 @@ Cauchy <- R6Class("Cauchy",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       rep(NaN, length(self$getParameterValue("location")))
     },
@@ -120,7 +120,8 @@ Cauchy <- R6Class("Cauchy",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      return(exp((self$getParameterValue("location") * 1i * t) - (self$getParameterValue("scale") * abs(t))))
+      return(exp((self$getParameterValue("location") * 1i * t) -
+                   (self$getParameterValue("scale") * abs(t))))
     },
 
     #' @description The probability generating function is defined by

@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Hypergeometric
 #' @template SDist
 #' @templateVar ClassName Hypergeometric
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
 #' @templateVar paramsupport \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -99,8 +99,8 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       draws <- unlist(self$getParameterValue("draws"))
       successes <- unlist(self$getParameterValue("successes"))
@@ -120,10 +120,11 @@ Hypergeometric <- R6Class("Hypergeometric",
       successes <- unlist(self$getParameterValue("successes"))
       size <- unlist(self$getParameterValue("size"))
 
-      exkurtosis <- ((size - 1) * (size^2) * ((size * (size + 1)) - 6 * successes * (size - successes) -
+      exkurtosis <- ((size - 1) * (size^2) * ((size * (size + 1)) - 6 * successes *
+                                                (size - successes) -
         6 * draws * (size - draws)) + 6 * draws * successes * (size - successes) *
-        (size - draws) * (5 * size - 6)) / (draws * successes * (size - successes) * (size - draws) * (size - 2) *
-        (size - 3))
+        (size - draws) * (5 * size - 6)) / (draws * successes * (size - successes) *
+                                              (size - draws) * (size - 2) * (size - 3))
 
       if (excess) {
         return(exkurtosis)

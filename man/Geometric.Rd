@@ -155,9 +155,9 @@ Probability of success.}
 Probability of failure. If provided then \code{prob} is ignored. \code{qprob = 1 - prob}.}
 
 \item{\code{trials}}{\code{(logical(1))} \cr
-If \code{TRUE} then the distribution models the number of trials, $x$, before the first success.
-Otherwise the distribution calculates the probability of $y$ failures before the first success.
-Mathematically these are related by $Y = X - 1$.}
+If \code{TRUE} then the distribution models the number of trials, \eqn{x}, before the first
+success. Otherwise the distribution calculates the probability of \eqn{y} failures before the
+first success. Mathematically these are related by \eqn{Y = X - 1}.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
@@ -217,8 +217,8 @@ covariance matrix is returned.
 \subsection{Method \code{skewness()}}{
 The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-\eqn{\sigma} is the standard deviation of the distribution.
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Geometric$skewness()}\if{html}{\out{</div>}}
 }

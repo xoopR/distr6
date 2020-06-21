@@ -120,12 +120,13 @@ Beta <- R6Class("Beta",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       shape1 <- unlist(self$getParameterValue("shape1"))
       shape2 <- unlist(self$getParameterValue("shape2"))
-      return(2 * (shape2 - shape1) * ((shape1 + shape2 + 1)^0.5) * ((shape1 + shape2 + 2)^-1) * ((shape1 * shape2)^-0.5))
+      return(2 * (shape2 - shape1) * ((shape1 + shape2 + 1)^0.5) * ((shape1 + shape2 + 2)^-1) *
+               ((shape1 * shape2)^-0.5))
     },
 
     #' @description

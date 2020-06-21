@@ -193,8 +193,8 @@ Variance of the distribution on the log scale, defined on the positive Reals.}
 
 \item{\code{sdlog}}{\code{(numeric(1))}\cr
 Standard deviation of the distribution on the log scale, defined on the positive Reals.
-\deqn{sdlog = varlog^2}. If \code{preclog} missing and \code{sdlog} given then all other parameters except
-\code{meanlog} are ignored.}
+\deqn{sdlog = varlog^2}. If \code{preclog} missing and \code{sdlog} given then all other parameters
+except \code{meanlog} are ignored.}
 
 \item{\code{preclog}}{\code{(numeric(1))}\cr
 Precision of the distribution on the log scale, defined on the positive Reals.
@@ -295,8 +295,8 @@ covariance matrix is returned.
 \subsection{Method \code{skewness()}}{
 The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-\eqn{\sigma} is the standard deviation of the distribution.
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Lognormal$skewness()}\if{html}{\out{</div>}}
 }

@@ -1,11 +1,10 @@
 #' @title Normal Kernel
 #'
-#' @description Mathematical and statistical functions for the NormalKernel kernel defined by the pdf,
-#' \deqn{f(x) = exp(-x^2/2)/\sqrt{2\pi}}
-#' over the support \eqn{x \in \R}{x \epsilon R}.
+#' @description Mathematical and statistical functions for the NormalKernel kernel defined by
+#' the pdf, \deqn{f(x) = exp(-x^2/2)/\sqrt{2\pi}} over the support \eqn{x \in \R}{x \epsilon R}.
 #'
-#' @details We use the \code{erf} and \code{erfinv} error and inverse error functions from the Pracma
-#' package.
+#' @details We use the \code{erf} and \code{erfinv} error and inverse error functions from
+#' \CRANpkg{Pracma}.
 #'
 #' @name NormalKernel
 #' @template param_decorators
@@ -39,7 +38,7 @@ NormalKernel <- R6Class("NormalKernel",
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
       # return((2 * sqrt(pi))^-1)
-      return((1 / (2 * sqrt(pi))) * exp(-(x / 2)^2))
+      return((1 / (2 * sqrt(pi))) * exp(-(x / 2)^2)) # nolint
     },
 
     #' @description

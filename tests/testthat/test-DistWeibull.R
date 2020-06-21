@@ -6,7 +6,8 @@ test_that("autottest", {
   autotest_sdistribution(
     Weibull,
     pars = list(shape = 1, scale = 1),
-    traits = list(valueSupport = "continuous", variateForm = "univariate", type = PosReals$new(zero = TRUE)),
+    traits = list(valueSupport = "continuous", variateForm = "univariate",
+                  type = PosReals$new(zero = TRUE)),
     support = PosReals$new(zero = TRUE),
     symmetry = "asymmetric",
     mean = 1,

@@ -20,7 +20,8 @@ as the support set and uniform probabilities. Sampling is performed with replace
 consistent with other distributions but non-standard for Empirical distributions. Use
 \link{simulateEmpiricalDistribution} to sample without replacement.
 
-The cdf assumes that the elements are supplied in an indexed order (otherwise the results are meaningless).
+The cdf assumes that the elements are supplied in an indexed order
+(otherwise the results are meaningless).
 }
 \examples{
 

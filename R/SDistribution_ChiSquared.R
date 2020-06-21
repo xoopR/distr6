@@ -1,3 +1,4 @@
+# nolint start
 #' @name ChiSquared
 #' @template SDist
 #' @templateVar ClassName ChiSquared
@@ -8,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (x^{\nu/2-1} exp(-x/2))/(2^{\nu/2}\Gamma(\nu/2))}
 #' @templateVar paramsupport \eqn{\nu > 0}
 #' @templateVar distsupport the Positive Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -86,8 +87,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       sqrt(8 / unlist(self$getParameterValue("df")))
     },
@@ -121,7 +122,7 @@ ChiSquared <- R6Class("ChiSquared",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       if (t < 0.5) {
-        return((1 - 2 * t)^(-self$getParameterValue("df") / 2))
+        return((1 - 2 * t)^(-self$getParameterValue("df") / 2)) # nolint
       } else {
         return(NaN)
       }
@@ -131,7 +132,7 @@ ChiSquared <- R6Class("ChiSquared",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      return((1 - 2i * t)^(-self$getParameterValue("df") / 2))
+      return((1 - 2i * t)^(-self$getParameterValue("df") / 2)) # nolint
     },
 
     #' @description The probability generating function is defined by
@@ -139,7 +140,7 @@ ChiSquared <- R6Class("ChiSquared",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       if (z > 0 & z < sqrt(exp(1))) {
-        return((1 - 2 * log(z))^(-self$getParameterValue("df") / 2))
+        return((1 - 2 * log(z))^(-self$getParameterValue("df") / 2)) # nolint
       } else {
         return(NaN)
       }

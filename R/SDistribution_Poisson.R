@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Poisson
 #' @template SDist
 #' @templateVar ClassName Poisson
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
 #' @templateVar paramsupport \eqn{\lambda} > 0
 #' @templateVar distsupport the Naturals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -81,10 +81,10 @@ Poisson <- R6Class("Poisson",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      unlist(self$getParameterValue("rate"))^(-0.5)
+      unlist(self$getParameterValue("rate"))^(-0.5) # nolint
     },
 
     #' @description

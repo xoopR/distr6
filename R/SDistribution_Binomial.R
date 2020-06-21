@@ -1,3 +1,4 @@
+# nolint start
 #' @name Binomial
 #' @template SDist
 #' @templateVar ClassName Binomial
@@ -8,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
 #' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0, 1,...,n}}
-#'
+# nolint end
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution
@@ -88,8 +89,8 @@ Binomial <- R6Class("Binomial",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       (1 - (2 * unlist(self$getParameterValue("prob")))) / self$stdev()
     },
@@ -123,21 +124,24 @@ Binomial <- R6Class("Binomial",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      (self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size")
+      (self$getParameterValue("qprob") +
+         (self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size")
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      (self$getParameterValue("qprob") + (self$getParameterValue("prob") * exp((0 + 1i) * t)))^self$getParameterValue("size")
+      (self$getParameterValue("qprob") +
+         (self$getParameterValue("prob") * exp((0 + 1i) * t)))^self$getParameterValue("size")
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      (self$getParameterValue("qprob") + (self$getParameterValue("prob") * z))^self$getParameterValue("size")
+      (self$getParameterValue("qprob") +
+         (self$getParameterValue("prob") * z))^self$getParameterValue("size")
     },
 
     # optional setParameterValue

@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name InverseGamma
 #' @template SDist
 #' @templateVar ClassName InverseGamma
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{-\alpha-1}exp(-\beta/x)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function
 #' @templateVar distsupport the Positive Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -90,8 +90,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       shape <- unlist(self$getParameterValue("shape"))
       skew <- rep(NaN, length(shape))

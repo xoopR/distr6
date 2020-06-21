@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Bernoulli
 #' @template SDist
 #'
@@ -10,7 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0}
 #' @templateVar paramsupport probability \eqn{p}
 #' @templateVar distsupport \eqn{\{0,1\}}{{0,1}}
-#'
+# nolint end
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution
@@ -124,8 +124,8 @@ Bernoulli <- R6Class("Bernoulli",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       (1 - (2 * unlist(self$getParameterValue("prob")))) / self$stdev()
     },

@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name DiscreteUniform
 #' @template SDist
 #' @templateVar ClassName DiscreteUniform
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b - a + 1)}
 #' @templateVar paramsupport \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}
 #' @templateVar distsupport \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -107,8 +107,8 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       numeric(length(self$getParameterValue("upper")))
     },
@@ -142,7 +142,8 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      num <- exp(t * self$getParameterValue("lower")) - exp((self$getParameterValue("upper") + 1) * t)
+      num <- exp(t * self$getParameterValue("lower")) -
+        exp((self$getParameterValue("upper") + 1) * t)
       denom <- self$getParameterValue("N") * (1 - exp(t))
       return(num / denom)
     },
@@ -151,7 +152,8 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      num <- exp(1i * t * self$getParameterValue("lower")) - exp((self$getParameterValue("upper") + 1) * t * 1i)
+      num <- exp(1i * t * self$getParameterValue("lower")) -
+        exp((self$getParameterValue("upper") + 1) * t * 1i)
       denom <- self$getParameterValue("N") * (1 - exp(1i * t))
       return(num / denom)
     },
@@ -160,7 +162,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      return(1 / self$getParameterValue("N") * sum(z^(1:self$getParameterValue("N"))))
+      return(1 / self$getParameterValue("N") * sum(z^(1:self$getParameterValue("N")))) # nolint
     },
 
     # optional setParameterValue
@@ -168,7 +170,8 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
-      private$.properties$support <- Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
+      private$.properties$support <-
+        Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
       invisible(self)
     }
   ),

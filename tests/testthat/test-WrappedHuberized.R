@@ -31,7 +31,8 @@ test_that("check huberization constructor", {
   expect_silent(huberize(Binomial$new()))
   expect_error(huberize(Distribution$new("Test", pdf = dbinom), 1, 2))
   expect_message(huberize(MixtureDistribution$new(list(Binomial$new(), Normal$new())), 1, 2))
-  expect_error(HuberizedDistribution$new(MixtureDistribution$new(list(Binomial$new(), Normal$new())), 1, 2))
+  expect_error(HuberizedDistribution$new(MixtureDistribution$new(list(Binomial$new(),
+                                                                      Normal$new())), 1, 2))
 })
 
 test_that("check huberization parameters", {

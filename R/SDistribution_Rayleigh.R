@@ -90,10 +90,10 @@ Rayleigh <- R6Class("Rayleigh",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
-      rep((2 * sqrt(pi) * (pi - 3)) / ((4 - pi)^(3 / 2)), length(self$getParameterValue("mode")))
+      rep((2 * sqrt(pi) * (pi - 3)) / ((4 - pi)^(3 / 2)), length(self$getParameterValue("mode"))) # nolint
     },
 
     #' @description
@@ -104,9 +104,10 @@ Rayleigh <- R6Class("Rayleigh",
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
       if (excess) {
-        return(rep(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2, length(self$getParameterValue("mode"))))
+        return(rep(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2, length(self$getParameterValue("mode")))) # nolint
       } else {
-        return(rep(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2 + 3, length(self$getParameterValue("mode"))))
+        return(rep(-(6 * pi^2 - 24 * pi + 16) / (4 - pi)^2 + 3, # nolint
+                   length(self$getParameterValue("mode"))))
       }
     },
 

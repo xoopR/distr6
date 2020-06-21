@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name StudentT
 #' @author Chijing Zeng
 #' @template SDist
@@ -10,7 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
 #' @templateVar paramsupport \eqn{\nu > 0}
 #' @templateVar distsupport the Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -89,8 +89,8 @@ StudentT <- R6Class("StudentT",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       df <- unlist(self$getParameterValue("df"))
       skew <- rep(NaN, length(df))
@@ -139,7 +139,8 @@ StudentT <- R6Class("StudentT",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       df <- self$getParameterValue("df")
-      return((besselK(sqrt(df) * abs(t), df / 2) * ((sqrt(df) * abs(t))^(df / 2))) / (gamma(df / 2) * 2^(df / 2 - 1)))
+      return((besselK(sqrt(df) * abs(t), df / 2) * ((sqrt(df) * abs(t))^(df / 2))) / # nolint
+               (gamma(df / 2) * 2^(df / 2 - 1))) # nolint
     },
 
     #' @description The probability generating function is defined by

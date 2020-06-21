@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Lognormal
 #' @template SDist
 #' @templateVar ClassName Lognormal
@@ -11,7 +11,7 @@
 #' @templateVar distsupport the Positive Reals
 #' @templateVar aka Log-Gaussian
 #' @aliases Loggaussian
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -46,8 +46,8 @@ Lognormal <- R6Class("Lognormal",
     #' Variance of the distribution on the log scale, defined on the positive Reals.
     #' @param sdlog `(numeric(1))`\cr
     #' Standard deviation of the distribution on the log scale, defined on the positive Reals.
-    #' \deqn{sdlog = varlog^2}. If `preclog` missing and `sdlog` given then all other parameters except
-    #' `meanlog` are ignored.
+    #' \deqn{sdlog = varlog^2}. If `preclog` missing and `sdlog` given then all other parameters
+    #' except `meanlog` are ignored.
     #' @param preclog `(numeric(1))`\cr
     #' Precision of the distribution on the log scale, defined on the positive Reals.
     #' \deqn{preclog = 1/varlog}. If given then all other parameters except `meanlog` are ignored.
@@ -74,7 +74,8 @@ Lognormal <- R6Class("Lognormal",
         meanlog <- varlog <- sdlog <- preclog <- NULL
       }
 
-      private$.parameters <- getParameterSet(self, meanlog, varlog, sdlog, preclog, mean, var, sd, prec)
+      private$.parameters <- getParameterSet(self, meanlog, varlog, sdlog, preclog,
+                                             mean, var, sd, prec)
       self$setParameterValue(
         meanlog = meanlog, varlog = varlog, sdlog = sdlog, preclog = preclog,
         mean = mean, var = var, sd = sd, prec = prec
@@ -125,8 +126,8 @@ Lognormal <- R6Class("Lognormal",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       varlog <- unlist(self$getParameterValue("varlog"))
       return(sqrt(exp(varlog) - 1) * (exp(varlog) + 2))

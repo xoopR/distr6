@@ -19,7 +19,8 @@ test_that("wrapped models", {
   expect_equal(mix$wrappedModels("Binom"), Binomial$new())
   expect_equal(mix$wrappedModels(), list(Binom = Binomial$new(), Norm = Normal$new()))
   expect_error(mix$wrappedModels("sdsd"), "No distribution called")
-  expect_equal(mix$wrappedModels(c("Binom", "Norm")), list(Binom = Binomial$new(), Norm = Normal$new()))
+  expect_equal(mix$wrappedModels(c("Binom", "Norm")), list(Binom = Binomial$new(),
+                                                           Norm = Normal$new()))
 })
 
 test_that("wrap a wrapper", {

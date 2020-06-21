@@ -171,8 +171,8 @@ Mean of the distribution, defined on the Reals.}
 Scale parameter, defined on the positive Reals.}
 
 \item{\code{sd}}{\code{(numeric(1))}\cr
-Standard deviation of the distribution as an alternate scale parameter, \code{sd = scale*pi/sqrt(3)}.
-If given then \code{scale} is ignored.}
+Standard deviation of the distribution as an alternate scale parameter,
+\code{sd = scale*pi/sqrt(3)}. If given then \code{scale} is ignored.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
@@ -232,8 +232,8 @@ covariance matrix is returned.
 \subsection{Method \code{skewness()}}{
 The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-\eqn{\sigma} is the standard deviation of the distribution.
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Logistic$skewness()}\if{html}{\out{</div>}}
 }

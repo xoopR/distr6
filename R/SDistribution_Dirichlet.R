@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Dirichlet
 #' @template SDist
 #' @templateVar ClassName Dirichlet
@@ -10,7 +10,7 @@
 #' @templateVar paramsupport \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function
 #' @templateVar distsupport \eqn{x_i \ \epsilon \ (0,1), \sum x_i = 1}{x_i \epsilon (0,1), \sum x_i = 1}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
-#'
+# nolint end
 #' @details
 #' Sampling is performed via sampling independent Gamma distributions and normalising the samples
 #' (Devroye, 1986).
@@ -118,7 +118,8 @@ Dirichlet <- R6Class("Dirichlet",
         for (i in seq_along(params)) {
           parami <- params[[i]] / sum(params[[i]])
           var <- (parami * (1 - parami)) / (sum(params[[i]]) + 1)
-          covar[, , i] <- matrix((-parami %*% t(parami)) / (sum(params[[i]]) + 1), nrow = K, ncol = K)
+          covar[, , i] <- matrix((-parami %*% t(parami)) /
+                                   (sum(params[[i]]) + 1), nrow = K, ncol = K)
           diag(covar[, , i]) <- var
         }
         return(covar)
@@ -145,8 +146,8 @@ Dirichlet <- R6Class("Dirichlet",
             sum((x - 1) * digamma(x))
         })
       } else {
-        return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params)) * digamma(sum(params)) -
-          sum((params - 1) * digamma(params)))
+        return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params))
+               * digamma(sum(params)) - sum((params - 1) * digamma(params)))
       }
     },
 

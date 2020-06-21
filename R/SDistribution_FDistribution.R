@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name FDistribution
 #' @template SDist
 #' @templateVar ClassName FDistribution
@@ -9,7 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^{\mu/2} x^{\mu/2 - 1} (1 + (\mu/\nu) x)^{-(\mu + \nu)/2}}
 #' @templateVar paramsupport \eqn{\mu, \nu > 0}
 #' @templateVar distsupport the Positive Reals
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -103,8 +103,8 @@ FDistribution <- R6Class("FDistribution",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))

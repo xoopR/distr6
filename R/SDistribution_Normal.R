@@ -1,4 +1,4 @@
-
+# nolint start
 #' @name Normal
 #' @template SDist
 #' @templateVar ClassName Normal
@@ -11,7 +11,7 @@
 #' @templateVar distsupport the Reals
 #' @templateVar aka Gaussian
 #' @aliases Gaussian
-#'
+# nolint end
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
@@ -94,8 +94,8 @@ Normal <- R6Class("Normal",
     #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the distribution and
-    #' \eqn{\sigma} is the standard deviation of the distribution.
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     skewness = function() {
       numeric(length(self$getParameterValue("var")))
     },
@@ -127,14 +127,16 @@ Normal <- R6Class("Normal",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      return(exp((self$getParameterValue("mean") * t) + (self$getParameterValue("var") * t^2 * 0.5)))
+      return(exp((self$getParameterValue("mean") * t) +
+                   (self$getParameterValue("var") * t^2 * 0.5)))
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      return(exp((1i * self$getParameterValue("mean") * t) - (self$getParameterValue("var") * t^2 * 0.5)))
+      return(exp((1i * self$getParameterValue("mean") * t) -
+                   (self$getParameterValue("var") * t^2 * 0.5)))
     },
 
     #' @description The probability generating function is defined by
