@@ -277,7 +277,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       pdf <- self$getParameterValue("pdf")
 
       if (checkmate::testList(data)) {
-        pdf <- matrix(unlist(pdf), ncol = length(data[[1]]))
+        pdf <- matrix(unlist(pdf), nrow = length(data[[1]]), ncol = length(data))
         data <- matrix(unlist(data), ncol = ncol(pdf))
         return(C_Vec_WeightedDiscretePdf(x, data, pdf, log))
       } else {
@@ -289,7 +289,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       cdf <- self$getParameterValue("cdf")
 
       if (checkmate::testList(data)) {
-        cdf <- matrix(unlist(cdf), ncol = length(data[[1]]))
+        cdf <- matrix(unlist(cdf), nrow = length(data[[1]]), ncol = length(data))
         data <- matrix(unlist(data), ncol = ncol(cdf))
         return(C_Vec_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p))
       } else {
@@ -301,7 +301,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       cdf <- self$getParameterValue("cdf")
 
       if (checkmate::testList(data)) {
-        cdf <- matrix(unlist(cdf), ncol = length(data[[1]]))
+        cdf <- matrix(unlist(cdf), nrow = length(data[[1]]), ncol = length(data))
         data <- matrix(unlist(data), ncol = ncol(cdf))
         return(C_Vec_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
       } else {
@@ -313,7 +313,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       pdf <- self$getParameterValue("x")
 
       if (checkmate::testList(data)) {
-        rand <- matrix(nrow = n, ncol = nrow(pdf))
+        rand <- matrix(nrow = n, ncol = length(pdf))
         for (i in seq_along(data)) {
           rand[, i] <- sample(data[[i]], n, TRUE, pdf[[i]])
         }
