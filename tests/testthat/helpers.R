@@ -306,12 +306,12 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
 
   # context("d/p/q/r")
   expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1)), pdf, 4)
-  if (!is.null(kern$private_methods$.cdf)) {
+  if (isCdf(kern)) {
     expect_rounded_equal(kern$cdf(c(-0.1, 0, 0.1)), cdf)
   }
-  if (!is.null(kern$private_methods$.quantile)) {
+  if (isQuantile(kern)) {
     expect_rounded_equal(kern$quantile(kern$cdf(c(-0.42, 0.24, 0.42))), c(-0.42, 0.24, 0.42), 2)
     expect_equal(length(kern$rand(1:3)), 3)
-    checkmate::expect_data_table(kern$rand(1:3, simplify = F), ncols = 3, nrows = 1)
+    checkmate::expect_data_table(kern$rand(1:3, simplify = F), nrows = 3, ncols = 1)
   }
 }

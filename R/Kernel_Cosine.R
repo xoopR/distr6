@@ -52,7 +52,7 @@ Cosine <- R6Class("Cosine",
       C_CosineKernelCdf(x, lower.tail, log.p)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      C_CosineKernelQuantile(x, lower.tail, log.p)
+      C_CosineKernelQuantile(p, lower.tail, log.p)
     }
   )
 )

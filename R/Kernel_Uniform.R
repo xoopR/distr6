@@ -44,7 +44,7 @@ UniformKernel <- R6Class("UniformKernel",
       C_UniformKernelCdf(x, lower.tail, log.p)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      C_UniformKernelQuantile(x, lower.tail, log.p)
+      C_UniformKernelQuantile(p, lower.tail, log.p)
     }
   )
 )

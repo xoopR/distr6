@@ -68,7 +68,11 @@ Kernel <- R6Class("Kernel",
       } else {
         return(NULL)
       }
-    }
+    },
+    .isPdf = 1L,
+    .isCdf = 1L,
+    .isQuantile = 1L,
+    .isRand = 1L
   )
 )
 

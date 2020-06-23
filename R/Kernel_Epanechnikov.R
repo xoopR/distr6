@@ -46,7 +46,8 @@ Epanechnikov <- R6Class("Epanechnikov",
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       C_EpanechnikovKernelCdf(x, lower.tail, log.p)
-    }
+    },
+    .isQuantile = 0L
   )
 )
 

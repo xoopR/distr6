@@ -57,7 +57,9 @@ Silverman <- R6Class("Silverman",
   private = list(
     .pdf = function(x, log = FALSE) {
       C_SilvermanKernelPdf(x, log)
-    }
+    },
+    .isCdf = 0L,
+    .isQuantile = 0L
   )
 )
 .distr6$kernels <- rbind(

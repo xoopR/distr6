@@ -50,7 +50,7 @@ TriangularKernel <- R6Class("TriangularKernel",
       C_TriangularKernelCdf(x, lower.tail, log.p)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      C_TriangularKernelQuantile(x, lower.tail, log.p)
+      C_TriangularKernelQuantile(p, lower.tail, log.p)
     }
   )
 )

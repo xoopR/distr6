@@ -67,7 +67,7 @@ NormalKernel <- R6Class("NormalKernel",
       return(cdf)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      quantile <- numeric(p)
+      quantile <- numeric(length(p))
       if (log.p) {
         p <- exp(p)
       }
