@@ -454,9 +454,9 @@ Distribution <- R6Class("Distribution",
           .var.name = "Do all points lie in Distribution domain?"
         )
       } else {
-        assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
+        suppressWarnings(assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
           .var.name = "Do all points lie in Distribution domain?"
-        )
+        ))
       }
 
 
@@ -511,9 +511,9 @@ Use CoreStatistics decorator to numerically estimate this.")
           .var.name = "Do all points lie in Distribution domain?"
         )
       } else {
-        assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
+        suppressWarnings(assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
           .var.name = "Do all points lie in Distribution domain?"
-        )
+        ))
       }
 
       if (log.p | !lower.tail) {

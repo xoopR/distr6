@@ -1,7 +1,5 @@
 library(testthat)
 
-context("DiscreteUniform distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = DiscreteUniform,

@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Geometric distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Geometric,
-    pars = list(),
+    pars = list(prob = 0.5),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",

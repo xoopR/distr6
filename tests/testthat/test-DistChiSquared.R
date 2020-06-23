@@ -1,7 +1,5 @@
 library(testthat)
 
-context("ChiSquared distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = ChiSquared,

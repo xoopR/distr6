@@ -72,7 +72,7 @@ Arcsine <- R6Class("Arcsine",
         if (which == "all") {
           return(modes)
         } else {
-          return(modes[, which])
+          return(unlist(modes[, ..which]))
         }
       } else {
         if (which == "all") {

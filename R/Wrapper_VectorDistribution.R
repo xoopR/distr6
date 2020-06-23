@@ -329,7 +329,11 @@ constructor, use `distlist` instead.")
           return(dpqr)
         }
         private$.rand <- function(n) {
-          return(sapply(self$wrappedModels(), function(x) x$rand(n)))
+          if (n == 1) {
+            return(matrix(sapply(self$wrappedModels(), function(x) x$rand(n)), nrow = 1))
+          } else {
+            return(sapply(self$wrappedModels(), function(x) x$rand(n)))
+          }
         }
       }
 
@@ -665,7 +669,7 @@ constructor, use `distlist` instead.")
     #' Returns named vector of pgf from each wrapped [Distribution].
     pgf = function(z) {
       if (!self$distlist) {
-        warning("cf not currently efficiently vectorised, may be slow.")
+        warning("pgf not currently efficiently vectorised, may be slow.")
       }
 
       ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
@@ -835,7 +839,6 @@ constructor, use `distlist` instead.")
 
       if (private$.univariate) {
         dpqr <- as.data.table(private$.rand(data))
-        if (ncol(dpqr) == 1) dpqr <- transpose(dpqr)
         colnames(dpqr) <- unlist(private$.modelTable[, 2])
         return(dpqr)
       } else {

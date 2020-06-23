@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Hypergeometric distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Hypergeometric,

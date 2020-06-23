@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Dirichlet distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Dirichlet,
-    pars = list(c(2, 3)),
+    pars = list(params = c(2, 3)),
     traits = list(
       valueSupport = "continuous",
       variateForm = "multivariate",

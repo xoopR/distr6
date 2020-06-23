@@ -14,6 +14,7 @@ test_that("autotest", {
     mean = c(mean(1:10), mean(11:20)),
     median = NaN,
     variance = c(var(1:10), var(11:20)) * 9 / 10,
+    vectorise = FALSE
   )
 })
 

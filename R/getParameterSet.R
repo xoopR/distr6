@@ -806,7 +806,7 @@ getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
   return(ps)
 }
 
-getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, mean = NULL, form) { # nolint
+getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, mean = NULL, form = "fbs") { # nolint
 
   # prob.bool <- qprob.bool <- mean.bool <- FALSE
   #

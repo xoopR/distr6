@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Triangular distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Triangular,
-    pars = list(),
+    pars = list(lower = 0, upper = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

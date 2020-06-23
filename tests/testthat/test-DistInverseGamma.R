@@ -5,7 +5,7 @@ context("InverseGamma distribution")
 test_that("autotest", {
   autotest_sdistribution(
     sdist = InverseGamma,
-    pars = list(),
+    pars = list(shape = 1, scale = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

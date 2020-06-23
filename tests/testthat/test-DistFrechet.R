@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Frechet distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Frechet,
-    pars = list(),
+    pars = list(shape = 1, scale = 1, minimum = 0),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

@@ -1,7 +1,5 @@
 library(testthat)
 
-context("WeightedDiscrete distribution")
-
 test_that("autottest", {
   autotest_sdistribution(WeightedDiscrete,
     pars = list(x = 1:10, pdf = rep(0.1, 10)),

@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Weibull distribution")
-
 test_that("autottest", {
   autotest_sdistribution(
     Weibull,

@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Logarithmic distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Logarithmic,
-    pars = list(),
+    pars = list(theta = 0.5),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",

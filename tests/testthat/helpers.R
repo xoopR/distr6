@@ -9,7 +9,8 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
                                    mean = NULL, mode = NULL, median = NULL,
                                    variance = NULL, skewness = NULL, exkur = NULL, entropy = NULL,
                                    mgf = NULL, cf = NULL,
-                                   pgf = NULL, pdf = NULL, cdf = NULL, quantile = NULL) {
+                                   pgf = NULL, pdf = NULL, cdf = NULL, quantile = NULL,
+                                   vectorise = TRUE) {
 
   # context("public fields")
   checkmate::assertSubset(names(sdist$public_fields), c("name", "short_name", "description",
@@ -80,14 +81,23 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     do.call(sdist$new, pars)
   })
 
+
+  if (vectorise) {
+    autotest_vec_sdistribution(sdist, pars)
+  }
+
   # context("sdist specific - properties & traits")
   expect_equal(sdist$traits, traits)
   expect_equal(sdist$properties$support, support)
   expect_equal(sdist$properties$symmetry, symmetry)
 
   # context("sdist specific - public methods")
-  if (!is.null(sdist$mean)) expect_rounded_equal(sdist$mean(), mean, 4)
-  if (!is.null(sdist$mode)) expect_rounded_equal(sdist$mode(), mode, 4)
+  if (!is.null(sdist$mean)) {
+    expect_rounded_equal(sdist$mean(), mean, 4)
+  }
+  if (!is.null(sdist$mode)) {
+    expect_rounded_equal(sdist$mode(), mode, 4)
+  }
   if (!is.null(sdist$median)) {
     if (is.null(median)) {
       expect_equal(sdist$median(), median)
@@ -95,17 +105,29 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
       expect_rounded_equal(sdist$median(), median, 4)
     }
   }
-  if (!is.null(sdist$variance)) expect_rounded_equal(sdist$variance(), variance, 4)
-  if (!is.null(sdist$skewness)) expect_rounded_equal(sdist$skewness(), skewness, 4)
+  if (!is.null(sdist$variance)) {
+    expect_rounded_equal(sdist$variance(), variance, 4)
+  }
+  if (!is.null(sdist$skewness)) {
+    expect_rounded_equal(sdist$skewness(), skewness, 4)
+  }
   if (!is.null(sdist$kurtosis)) {
     expect_rounded_equal(sdist$kurtosis(T), exkur, 4)
     expect_rounded_equal(sdist$kurtosis(F), exkur + 3, 4)
   }
-  if (!is.null(sdist$entropy)) expect_rounded_equal(sdist$entropy(), entropy, 4)
+  if (!is.null(sdist$entropy)) {
+    expect_rounded_equal(sdist$entropy(), entropy, 4)
+  }
   if (testUnivariate(sdist)) {
-    if (!is.null(sdist$mgf)) expect_rounded_equal(sdist$mgf(1), mgf, 4)
-    if (!is.null(sdist$cf)) expect_rounded_equal(sdist$cf(1), cf, 4)
-    if (!is.null(sdist$pgf)) expect_rounded_equal(sdist$pgf(1), pgf, 4)
+    if (!is.null(sdist$mgf)) {
+      expect_rounded_equal(sdist$mgf(1), mgf, 4)
+    }
+    if (!is.null(sdist$cf)) {
+      expect_rounded_equal(sdist$cf(1), cf, 4)
+    }
+    if (!is.null(sdist$pgf)) {
+      expect_rounded_equal(sdist$pgf(1), pgf, 4)
+    }
   } else {
     if (!is.null(sdist$mgf)) expect_rounded_equal(sdist$mgf(1:2), mgf, 4)
     if (!is.null(sdist$cf)) expect_rounded_equal(sdist$cf(1:2), cf, 4)
@@ -143,6 +165,78 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     }
   }
 
+}
+
+create_named_vector <- function(v, n) {
+  names(v) <- n
+  return(v)
+}
+
+test_vectorised_method <- function(vdist, method, args = NULL) {
+  if (is.null(args)) {
+    expect_equal(vdist[[method]](),
+                 create_named_vector(c(vdist[1][[method]](), vdist[2][[method]](),
+                                       vdist[3][[method]]()),
+                                     vdist$modelTable$shortname))
+  } else {
+    expect_equal(vdist[[method]](args),
+                 create_named_vector(c(vdist[1][[method]](args), vdist[2][[method]](args),
+                                       vdist[3][[method]](args)),
+                                     vdist$modelTable$shortname))
+  }
+}
+
+test_vectorised_dpqr <- function(vdist, method, args = NULL) {
+  expected = data.table::data.table(vdist[1][[method]](args), vdist[2][[method]](args),
+                                    vdist[3][[method]](args))
+  colnames(expected) = vdist$modelTable$shortname
+  object = vdist[[method]](args)
+  expect_equal(object, expected)
+}
+
+autotest_vec_sdistribution <- function(sdist, pars) {
+  vdist <- VectorDistribution$new(distribution = sdist$name,
+                                 params = rep(list(pars), 3))
+
+  if (!is.null(sdist$mean)) test_vectorised_method(vdist, "mean")
+  if (!is.null(sdist$mode)) {
+    # hacky catch
+    if(sdist$name == "Categorical") {
+      expect_equal(vdist$mode(1),
+                   list(Cat1 = vdist[1]$mode(1),
+                        Cat2 = vdist[1]$mode(1),
+                        Cat3 = vdist[1]$mode(1))
+      )
+    } else {
+      test_vectorised_method(vdist, "mode", 1)
+    }
+  }
+  # if (!is.null(sdist$median)) test_vectorised_method(vdist, "median")
+  if (!is.null(sdist$variance)) test_vectorised_method(vdist, "variance")
+  if (!is.null(sdist$skewness)) test_vectorised_method(vdist, "skewness")
+  if (!is.null(sdist$kurtosis)) test_vectorised_method(vdist, "kurtosis")
+  if (!is.null(sdist$entropy))test_vectorised_method(vdist, "entropy")
+  # if (testUnivariate(sdist)) {
+  #   if (!is.null(sdist$mgf)) suppressWarnings(test_vectorised_method(vdist, "mgf", 1)
+  #   if (!is.null(sdist$cf)) test_vectorised_method(vdist, "cf", 1)
+  #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1)
+  # } else {
+  #   if (!is.null(sdist$mgf)) test_vectorised_method(vdist, "mgf", 1:2)
+  #   if (!is.null(sdist$cf)) test_vectorised_method(vdist, "cf", 1:2)
+  #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1:2)
+  # }
+
+  # context("d/p/q/r")
+  if (testUnivariate(sdist)) {
+    if (isPdf(sdist)) test_vectorised_dpqr(vdist, "pdf", 1:3)
+    if (isCdf(sdist)) test_vectorised_dpqr(vdist, "cdf", 1:3)
+    if (isQuantile(sdist)) test_vectorised_dpqr(vdist, "quantile", c(0.24, 0.42, 0.5))
+    if (isRand(sdist)) {
+      r <- vdist$rand(1:4)
+      expect_equal(dim(r), c(4, 3))
+      expect_true(all(as.numeric(unlist(r)) >= sdist$inf & as.numeric(unlist(r)) <= sdist$sup))
+    }
+  }
 }
 
 autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm, pdf, cdf) {

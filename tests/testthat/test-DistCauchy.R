@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Cauchy distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Cauchy,

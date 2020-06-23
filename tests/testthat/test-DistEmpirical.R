@@ -23,6 +23,7 @@ test_that("autotest", {
     pgf = 1,
     pdf = rep(1 / 10, 3),
     cdf = (1:3) / 10,
-    quantile = c(3, 5, 5)
+    quantile = c(3, 5, 5),
+    vectorise = FALSE
   )
 })

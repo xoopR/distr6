@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Lognormal distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Lognormal,
-    pars = list(),
+    pars = list(meanlog = 0, varlog = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

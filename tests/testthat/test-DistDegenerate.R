@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Degenerate distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Degenerate,
-    pars = list(1),
+    pars = list(mean = 1),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",

@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Gamma distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Gamma,
-    pars = list(),
+    pars = list(shape = 1, rate = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Multivariate Normal distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = MultivariateNormal,

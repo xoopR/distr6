@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Noncentral ChiSquared distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = ChiSquaredNoncentral,

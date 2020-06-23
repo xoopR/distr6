@@ -170,7 +170,7 @@ InverseGamma <- R6Class("InverseGamma",
           alpha = self$getParameterValue("shape"),
           beta = self$getParameterValue("scale"),
           MoreArgs = list(
-            x = x,
+            q = x,
             lower.tail = lower.tail,
             log.p = log.p
           )

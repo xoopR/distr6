@@ -1,11 +1,9 @@
 library(testthat)
 
-context("NegativeBinomial distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
-    pars = list(form = "fbs", prob = 0.2),
+    pars = list(prob = 0.2),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",

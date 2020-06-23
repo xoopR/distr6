@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Shifted loglogistic distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = ShiftedLoglogistic,

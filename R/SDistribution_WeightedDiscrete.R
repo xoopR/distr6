@@ -310,7 +310,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     },
     .rand = function(n) {
       data <- self$getParameterValue("x")
-      pdf <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
       if (checkmate::testList(data)) {
         rand <- matrix(nrow = n, ncol = length(pdf))

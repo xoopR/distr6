@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Laplace distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Laplace,
-    pars = list(),
+    pars = list(mean = 0, scale = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

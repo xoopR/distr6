@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Bernoulli distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Bernoulli,

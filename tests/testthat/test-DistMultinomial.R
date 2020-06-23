@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Multinomial distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Multinomial,

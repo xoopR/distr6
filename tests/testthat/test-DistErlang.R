@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Erlang distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Erlang,
-    pars = list(),
+    pars = list(shape = 1, rate = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Noncentral Beta distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = BetaNoncentral,

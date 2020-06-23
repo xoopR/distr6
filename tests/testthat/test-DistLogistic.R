@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Logistic distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Logistic,
-    pars = list(),
+    pars = list(mean = 0, scale = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",
