@@ -37,11 +37,11 @@ test_that("setting", {
 })
 
 test_that("vectorised", {
-  x = list(list(x = 1:10, cdf = pnorm(1:10)),
-           list(x = 1:10, pdf = dbinom(1:10,10,0.5)),
-           list(x = 1:10, cdf = pgeom(1:10,0.5)),
+  x <- list(list(x = 1:10, cdf = pnorm(1:10)),
+           list(x = 1:10, pdf = dbinom(1:10, 10, 0.5)),
+           list(x = 1:10, cdf = pgeom(1:10, 0.5)),
            list(x = 1:10, cdf = pexp(1:10)))
-  v = VectorDistribution$new(distribution = "Weight", params = x)
+  v <- VectorDistribution$new(distribution = "Weight", params = x)
   expect_equal(v$cdf(1:10),
                data.table(WeightDisc1 = v[1]$cdf(1:10),
                           WeightDisc2 = v[2]$cdf(1:10),
