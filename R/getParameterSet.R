@@ -1044,7 +1044,7 @@ getParameterSet.StudentTNoncentral <- function(object, df, location) { # nolint
 
 }
 
-getParameterSet.Triangular <- function(object, lower, upper, mode, symmetric) {
+getParameterSet.Triangular <- function(object, lower, upper, mode, symmetric = FALSE) {
 
   ps <- ParameterSet$new(
     id = list("lower", "upper", "mode", "symmetric"),

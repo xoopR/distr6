@@ -149,13 +149,13 @@ makeChecks(
 #'   Binom = Binomial$new()$parameters()
 #' ))) # TRUE
 #' @export
-testParameterSetCollectionList <- function() {} #nolint
+testParameterSetCollectionList <- function() {} # nolint
 #' @rdname testParameterSetCollectionList
 #' @export
-checkParameterSetCollectionList <- function() {} #nolint
+checkParameterSetCollectionList <- function() {} # nolint
 #' @rdname testParameterSetCollectionList
 #' @export
-assertParameterSetCollectionList <- function() {} #nolint
+assertParameterSetCollectionList <- function() {} # nolint
 
 makeChecks(
   assertionName = "ParameterSetCollectionList",

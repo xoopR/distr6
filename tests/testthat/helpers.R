@@ -187,10 +187,10 @@ test_vectorised_method <- function(vdist, method, args = NULL) {
 }
 
 test_vectorised_dpqr <- function(vdist, method, args = NULL) {
-  expected = data.table::data.table(vdist[1][[method]](args), vdist[2][[method]](args),
+  expected <- data.table::data.table(vdist[1][[method]](args), vdist[2][[method]](args),
                                     vdist[3][[method]](args))
-  colnames(expected) = vdist$modelTable$shortname
-  object = vdist[[method]](args)
+  colnames(expected) <- vdist$modelTable$shortname
+  object <- vdist[[method]](args)
   expect_equal(object, expected)
 }
 
@@ -201,7 +201,7 @@ autotest_vec_sdistribution <- function(sdist, pars) {
   if (!is.null(sdist$mean)) test_vectorised_method(vdist, "mean")
   if (!is.null(sdist$mode)) {
     # hacky catch
-    if(sdist$name == "Categorical") {
+    if (sdist$name == "Categorical") {
       expect_equal(vdist$mode(1),
                    list(Cat1 = vdist[1]$mode(1),
                         Cat2 = vdist[1]$mode(1),
@@ -215,7 +215,7 @@ autotest_vec_sdistribution <- function(sdist, pars) {
   if (!is.null(sdist$variance)) test_vectorised_method(vdist, "variance")
   if (!is.null(sdist$skewness)) test_vectorised_method(vdist, "skewness")
   if (!is.null(sdist$kurtosis)) test_vectorised_method(vdist, "kurtosis")
-  if (!is.null(sdist$entropy))test_vectorised_method(vdist, "entropy")
+  if (!is.null(sdist$entropy)) test_vectorised_method(vdist, "entropy")
   # if (testUnivariate(sdist)) {
   #   if (!is.null(sdist$mgf)) suppressWarnings(test_vectorised_method(vdist, "mgf", 1)
   #   if (!is.null(sdist$cf)) test_vectorised_method(vdist, "cf", 1)
@@ -238,6 +238,8 @@ autotest_vec_sdistribution <- function(sdist, pars) {
     }
   }
 }
+
+
 
 autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm, pdf, cdf) {
   # context("public fields")

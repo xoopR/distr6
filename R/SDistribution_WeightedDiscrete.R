@@ -115,6 +115,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
           stop("`which` cannot be `'all'` when vectorising.")
         } else {
           return(mapply(function(x0, pdf0) {
+            pdf0 <- round(pdf0, 10)
             modes <- x0[pdf0 == max(pdf0)]
             if (which > length(modes)) {
               return(modes[length(modes)])
@@ -124,6 +125,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
           }, x, pdf))
         }
       } else {
+        pdf <- round(pdf, 10)
         if (which == "all") {
           return(x[pdf == max(pdf)])
         } else {

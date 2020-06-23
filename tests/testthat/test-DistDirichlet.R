@@ -16,7 +16,8 @@ test_that("autotest", {
     median = NaN,
     variance = matrix(c(0.04, -0.04, -0.04, 0.04), nrow = 2),
     entropy = round(log(1 / 12, base = 2) + 3 * digamma(5) - 2.268353, 5),
-    pgf = NaN
+    pgf = NaN,
+    vectorise = FALSE
   )
 })
 

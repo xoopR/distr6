@@ -107,35 +107,26 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (self$getParameterValue("form") == "sbf") {
-        if (self$getParameterValue("size") <= 1) {
-          return(0)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("prob")) / (self$getParameterValue("qprob"))))
-        }
-      } else if (self$getParameterValue("form") == "tbf") {
-        if (self$getParameterValue("size") <= 1) {
-          return(1)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("prob")) / (self$getParameterValue("qprob"))) + 10)
-        }
-      } else if (self$getParameterValue("form") == "fbs") {
-        if (self$getParameterValue("size") <= 1) {
-          return(0)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("qprob")) / (self$getParameterValue("prob"))))
-        }
+      form <- self$getParameterValue("form")[[1]]
+      size <- unlist(self$getParameterValue("size"))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      if (form == "sbf") {
+        mode <- numeric(length(size))
+        mode[size > 1] <- floor(((size - 1) * prob) / (qprob))
+      } else if (form == "tbf") {
+        mode <- numeric(length(size)) + 1
+        mode[size > 1] <- floor(((size - 1) * prob) / (qprob)) + 10
+      } else if (form == "fbs") {
+        mode <- numeric(length(size))
+        mode[size > 1] <- floor(((size - 1) * qprob) / (prob))
       } else {
-        if (self$getParameterValue("size") <= 1) {
-          return(1)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("qprob")) / (self$getParameterValue("prob"))) + 10)
-        }
+        mode <- numeric(length(size)) + 1
+        mode[size > 1] <- floor(((size - 1) * qprob) / (prob)) + 10
       }
+
+      return(mode)
     },
 
     #' @description

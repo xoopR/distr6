@@ -19,7 +19,8 @@ test_that("autotest", {
     entropy = 0.7579912,
     mgf = 47.91379,
     cf = -0.7118115 - 0.5785154i,
-    pgf = 3.61
+    pgf = 3.61,
+    vectorise = FALSE
   )
 })
 
