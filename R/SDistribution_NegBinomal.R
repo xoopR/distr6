@@ -272,7 +272,8 @@ NegativeBinomial <- R6Class("NegativeBinomial",
         x = x,
         size = as.numeric(self$getParameterValue("size")),
         prob = as.numeric(self$getParameterValue("prob")),
-        form = as.character(self$getParameterValue("form"))
+        form = as.character(self$getParameterValue("form")),
+        logp = log
       )
 
       if (ncol(pdf) == 1) {
@@ -287,7 +288,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
       size <- self$getParameterValue("size")
       prob <- self$getParameterValue("prob")
 
-      pnbinom <- function(form, size, prob) {
         if (form == "fbs") {
           return(call_C_base_pdqr(
             fun = "pnbinom",
@@ -301,7 +301,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
             vec = test_list(size)
           ))
         } else if (form == "sbf") {
-
           return(1 - pbeta(self$getParameterValue("prob"), x + 1, self$getParameterValue("size")))
         } else {
           pdf_x <- self$workingSupport
@@ -317,7 +316,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
             )
           )
         }
-      }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       if (self$getParameterValue("form") == "fbs") {
@@ -371,9 +369,9 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
 
-    .isCdf = FALSE,
-    .isQuantile = FALSE,
-    .isRand = FALSE
+    .isCdf = -1L,
+    .isQuantile = -1L,
+    .isRand = -1L
   )
 )
 

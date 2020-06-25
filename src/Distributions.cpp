@@ -95,26 +95,31 @@ NumericMatrix C_ArcsineQuantile(NumericVector x, NumericVector min, NumericVecto
 
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
+  NumericVector nx(XLength);
+
+  for (int j = 0; j < XLength; j++) {
+    nx[j] = x[j];
+
+    if (logp) {
+      nx[j] = exp(nx[j]);
+    }
+
+    if (!lower) {
+      nx[j] = 1 - nx[j];
+    }
+  }
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
 
-      if (logp) {
-        x[j] = exp(x[j]);
-      }
-
-      if (!lower) {
-        x[j] = 1 - x[j];
-      }
-
-      if (x[j] < 0 || x[j] > 1) {
+      if (nx[j] < 0 || nx[j] > 1) {
         mat(j, i) = R_NaN;
-      } else if (x[j] == 0) {
+      } else if (nx[j] == 0) {
         mat(j, i) = min[i % ll];
-      } else if (x[j] == 1) {
+      } else if (nx[j] == 1) {
         mat(j, i) = max[i % ul];
       } else {
-        mat(j, i) = ((max[i % ul] - min[i % ll]) * pow(sin(x[j] * M_PI * 0.5), 2)) + min[i % ll];
+        mat(j, i) = ((max[i % ul] - min[i % ll]) * pow(sin(nx[j] * M_PI * 0.5), 2)) + min[i % ll];
       }
     }
   }
@@ -173,21 +178,25 @@ NumericMatrix C_DegenerateQuantile(NumericVector x, NumericVector mean, bool low
 
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
+  NumericVector nx(XLength);
+
+  for (int j = 0; j < XLength; j++) {
+    nx[j] = x[j];
+
+    if (logp) {
+      nx[j] = exp(nx[j]);
+    }
+
+    if (!lower) {
+      nx[j] = 1 - nx[j];
+    }
+  }
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-
-      if (logp) {
-        x[j] = exp(x[j]);
-      }
-
-      if (!lower) {
-        x[j] = 1 - x[j];
-      }
-
-      if (x[j] < 0 || x[j] > 1) {
+      if (nx[j] < 0 || nx[j] > 1) {
         mat(j, i) = R_NaN;
-      } else if (x[j] == 0) {
+      } else if (nx[j] == 0) {
         mat(j, i) = R_NegInf;
       } else {
         mat(j, i) = mean[i];
@@ -252,49 +261,85 @@ NumericVector C_EmpiricalMVCdf(NumericMatrix x, NumericMatrix data) {
 
 // [[Rcpp::export]]
 NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob,
-                                    StringVector form) {
+                                    std::string form, bool logp) {
   int sl = size.length();
   int pl = prob.length();
-  int fl = form.length();
 
-  int ParamLength = std::max({sl, pl, fl});
+  int ParamLength = std::max({sl, pl});
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
+
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-      if (strcmp (form[i % fl], "fbs") == 0) {
+      if (form == "fbs") {
+        Rcout << prob[i % pl] << "\n" << typeid(prob[i % pl]).name() << "\n";
+
         // Return 0 if x not in PosNaturals
         if (floor (x[j]) != x[j] || x[j] < 0) {
           mat(j, i) = 0;
         } else {
-          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], x[j]);
+          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, size[i % sl] - 1) *
+            pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], x[j]);
         }
-      } else if (strcmp (form[i % fl], "sbf") == 0) {
+      } else if (form == "sbf") {
         // Return 0 if x not in PosNaturals
         if (floor (x[j]) != x[j] || x[j] < 0) {
           mat(j, i) = 0;
         } else {
-          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, x[j]) * pow(prob[i % pl], x[j]) * pow(1-prob[i % pl], size[i % sl]);
+          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, x[j]) *
+            pow(prob[i % pl], x[j]) * pow(1-prob[i % pl], size[i % sl]);
         }
-      } else if (strcmp (form[i % fl], "tbf") == 0) {
+      } else if (form == "tbf") {
         // Return 0 if x not in Naturals or < size
         if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
           mat(j, i) = 0;
         } else {
-          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], x[j] - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
+          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) *
+            pow(prob[i % pl], x[j] - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
         }
       } else {
         // Return 0 if x not in Naturals or < size
         if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
           mat(j, i) = 0;
         } else {
-          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], x[j] - size[i % sl]);
+          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) *
+            pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], x[j] - size[i % sl]);
         }
       }
+
+     if (logp) {
+       mat(j, i) = log(mat(j, i));
+     }
     }
   }
   return mat;
 }
+
+// [[Rcpp::export]]
+NumericMatrix C_NegativeBinomialCdf(NumericVector x, NumericVector size, NumericVector prob,
+                                    std::string form, NumericVector min, bool logp) {
+
+
+  int sl = size.length();
+  int pl = prob.length();
+  int ml = min.length();
+  int ParamLength = std::max({sl, pl, ml});
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+      for (int k = min[i % ml]; k <= x[j]; k++) {
+        Rcout << prob[i % pl] << "\n" << typeid(prob[i % pl]).name() << "\n";
+        mat(j, i)  = mat(j, i) +
+          C_NegativeBinomialPdf(k, size[i % sl], prob[i % pl], form, logp)(1, 1);
+      }
+    }
+  }
+
+  return mat;
+}
+
 
 // [[Rcpp::export]]
 NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location,
@@ -399,23 +444,27 @@ NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector locati
 
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
+  NumericVector nx(XLength);
+
+  for (int j = 0; j < XLength; j++) {
+    nx[j] = x[j];
+
+    if (logp) {
+      nx[j] = exp(nx[j]);
+    }
+
+    if (!lower) {
+      nx[j] = 1 - nx[j];
+    }
+  }
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-
-      if (logp) {
-        x[j] = exp(x[j]);
-      }
-
-      if (!lower) {
-        x[j] = 1 - x[j];
-      }
-
-      if (x[j] < 0 || x[j] > 1) {
+      if (nx[j] < 0 || nx[j] > 1) {
         mat(j, i) = R_NaN;
       } else {
-        mat(j, i) = ((pow(x[j]/(1-x[j]), shape[i % shan]) - 1) * scale[i & scan]/shape[i % shan]) +
-          location[i & locn];
+        mat(j, i) = ((pow(nx[j]/(1 - nx[j]), shape[i % shan]) - 1) *
+          scale[i & scan]/shape[i % shan]) + location[i & locn];
       }
     }
   }
@@ -526,10 +575,10 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, Num
         if (data(j, i) >= x[k]) {
           mat(k, i) = cdf(j, i);
           if (!lower) {
-            mat(k, i) = 1 - mat[k];
+            mat(k, i) = 1 - mat(k, i);
           }
           if (logp) {
-            mat(k, i) = log(mat[k]);
+            mat(k, i) = log(mat(k, i));
           }
           break;
         }
@@ -548,19 +597,23 @@ NumericVector C_WeightedDiscreteQuantile(NumericVector x, NumericVector data, Nu
   int n = x.length();
 
   NumericVector mat(n);
+  NumericVector nx(n);
+
+  for (int j = 0; j < n; j++) {
+    nx[j] = x[j];
+
+    if (logp) {
+      nx[j] = exp(nx[j]);
+    }
+
+    if (!lower) {
+      nx[j] = 1 - nx[j];
+    }
+  }
 
   for (int k = 0; k < n; k++) {
     for (int j = 0; j < nr; j++) {
-
-      if (logp) {
-        x[k] = exp(x[k]);
-      }
-
-      if (!lower) {
-        x[k] = 1 - x[k];
-      }
-
-      if (cdf[j] >= x[k]) {
+      if (cdf[j] >= nx[k]) {
         mat[k] = data[j];
         break;
       }
@@ -579,18 +632,24 @@ NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data
   int n = x.length();
 
   NumericMatrix mat(n, nc);
+  NumericVector nx(n);
+
+  for (int j = 0; j < n; j++) {
+    nx[j] = x[j];
+
+    if (logp) {
+      nx[j] = exp(nx[j]);
+    }
+
+    if (!lower) {
+      nx[j] = 1 - nx[j];
+    }
+  }
 
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (logp) {
-          x[k] = exp(x[k]);
-        }
-        if (!lower) {
-          x[k] = 1 - x[k];
-        }
-
-        if (x[k] <= cdf(j, i)) {
+        if (nx[k] <= cdf(j, i)) {
           mat(k, i) = data(j, i);
           break;
         }

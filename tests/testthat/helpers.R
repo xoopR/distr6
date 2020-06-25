@@ -145,12 +145,21 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   if (testUnivariate(sdist)) {
     if (isPdf(sdist)) {
       expect_rounded_equal(sdist$pdf(1:3), pdf)
+      if (sdist$.__enclos_env__$private$.log) {
+        expect_rounded_equal(sdist$pdf(1:3, log = TRUE), log(pdf))
+      }
     }
     if (isCdf(sdist)) {
       expect_rounded_equal(sdist$cdf(1:3), cdf)
+      if (sdist$.__enclos_env__$private$.log) {
+        expect_rounded_equal(sdist$cdf(1:3, lower.tail = FALSE, log.p = TRUE), log(1 - cdf), 3)
+      }
     }
     if (isQuantile(sdist)) {
       expect_rounded_equal(sdist$quantile(c(0.24, 0.42, 0.5)), quantile)
+      if (sdist$.__enclos_env__$private$.log) {
+        expect_rounded_equal(sdist$quantile(log(1 - c(0.24, 0.42, 0.5)), lower.tail = FALSE, log.p = TRUE), quantile)
+      }
     }
     if (isRand(sdist)) {
       r <- sdist$rand(1:3)
@@ -187,10 +196,11 @@ test_vectorised_method <- function(vdist, method, args = NULL) {
 }
 
 test_vectorised_dpqr <- function(vdist, method, args = NULL) {
-  expected <- data.table::data.table(vdist[1][[method]](args), vdist[2][[method]](args),
-                                    vdist[3][[method]](args))
+  expected <- data.table::data.table(do.call(vdist[1][[method]], args),
+                                     do.call(vdist[2][[method]], args),
+                                     do.call(vdist[3][[method]], args))
   colnames(expected) <- vdist$modelTable$shortname
-  object <- vdist[[method]](args)
+  object <- do.call(vdist[[method]],args)
   expect_equal(object, expected)
 }
 
@@ -228,9 +238,25 @@ autotest_vec_sdistribution <- function(sdist, pars) {
 
   # context("d/p/q/r")
   if (testUnivariate(sdist)) {
-    if (isPdf(sdist)) test_vectorised_dpqr(vdist, "pdf", 1:3)
-    if (isCdf(sdist)) test_vectorised_dpqr(vdist, "cdf", 1:3)
-    if (isQuantile(sdist)) test_vectorised_dpqr(vdist, "quantile", c(0.24, 0.42, 0.5))
+    if (isPdf(sdist)) {
+      test_vectorised_dpqr(vdist, "pdf", list(1:3))
+      if (sdist$.__enclos_env__$private$.log) {
+        test_vectorised_dpqr(vdist, "pdf", list(1:3, log = TRUE))
+      }
+    }
+    if (isCdf(sdist)) {
+      test_vectorised_dpqr(vdist, "cdf", list(1:3))
+      if (sdist$.__enclos_env__$private$.log) {
+        test_vectorised_dpqr(vdist, "cdf", list(1:3, log.p = TRUE, lower.tail = FALSE))
+      }
+    }
+    if (isQuantile(sdist)) {
+      test_vectorised_dpqr(vdist, "quantile", list(c(0.24, 0.42, 0.5)))
+      if (sdist$.__enclos_env__$private$.log) {
+        test_vectorised_dpqr(vdist, "quantile", list(log(1 - c(0.24, 0.42, 0.5)),
+                                                     log.p = TRUE, lower.tail = FALSE))
+      }
+    }
     if (isRand(sdist)) {
       r <- vdist$rand(1:4)
       expect_equal(dim(r), c(4, 3))

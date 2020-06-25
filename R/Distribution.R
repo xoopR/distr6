@@ -444,7 +444,7 @@ Distribution <- R6Class("Distribution",
     #' mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
-      if (is.null(private$.pdf)) {
+      if (private$.isPdf == 0L) {
         return(NULL)
       }
 
@@ -501,7 +501,7 @@ Use CoreStatistics decorator to numerically estimate this.")
     #' b$cdf(data = matrix(1:10))
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if (is.null(private$.cdf)) {
+      if (private$.isCdf == 0L) {
         return(NULL)
       }
 
@@ -559,7 +559,7 @@ decorator to numerically estimate this.")
     #' b$quantile(data = matrix(c(0.1,0.2)))
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if (is.null(private$.quantile)) {
+      if (private$.isQuantile == 0L) {
         return(NULL)
       }
 
@@ -574,7 +574,6 @@ decorator to numerically estimate this.")
           .var.name = "Do all quantiles lie in [0,1]?"
         )
       }
-
 
       if (log.p | !lower.tail) {
         if (private$.log) {
@@ -611,7 +610,7 @@ decorator to numerically estimate this.")
     #' mvn$rand(5)
     rand = function(n, simplify = TRUE) {
 
-      if (is.null(private$.rand)) {
+      if (private$.isRand == 0L) {
         return(NULL)
       }
 
