@@ -21,7 +21,7 @@ test_that("autotest", {
     cf = (0.2 / (1 - (0.8 * exp(1i))))^10,
     pgf = 1,
     pdf = dnbinom(1:3, 10, 0.2),
-    cdf = pnbinom(1, 10, 0.2),
+    cdf = pnbinom(1:3, 10, 0.2),
     quantile = qnbinom(c(0.24, 0.42, 0.5), 10, 0.2)
   )
 })

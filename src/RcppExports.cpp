@@ -142,8 +142,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_NegativeBinomialCdf
-NumericMatrix C_NegativeBinomialCdf(NumericVector x, NumericVector size, NumericVector prob, std::string form, NumericVector min, bool logp);
-RcppExport SEXP _distr6_C_NegativeBinomialCdf(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP formSEXP, SEXP minSEXP, SEXP logpSEXP) {
+NumericMatrix C_NegativeBinomialCdf(NumericVector x, NumericVector size, NumericVector prob, std::string form, NumericVector min, bool lower, bool logp);
+RcppExport SEXP _distr6_C_NegativeBinomialCdf(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP formSEXP, SEXP minSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -152,8 +152,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type prob(probSEXP);
     Rcpp::traits::input_parameter< std::string >::type form(formSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_NegativeBinomialCdf(x, size, prob, form, min, logp));
+    rcpp_result_gen = Rcpp::wrap(C_NegativeBinomialCdf(x, size, prob, form, min, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -637,7 +638,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_EmpiricalMVPdf", (DL_FUNC) &_distr6_C_EmpiricalMVPdf, 2},
     {"_distr6_C_EmpiricalMVCdf", (DL_FUNC) &_distr6_C_EmpiricalMVCdf, 2},
     {"_distr6_C_NegativeBinomialPdf", (DL_FUNC) &_distr6_C_NegativeBinomialPdf, 5},
-    {"_distr6_C_NegativeBinomialCdf", (DL_FUNC) &_distr6_C_NegativeBinomialCdf, 6},
+    {"_distr6_C_NegativeBinomialCdf", (DL_FUNC) &_distr6_C_NegativeBinomialCdf, 7},
     {"_distr6_C_ShiftedLoglogisticPdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticPdf, 5},
     {"_distr6_C_ShiftedLoglogisticCdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticCdf, 6},
     {"_distr6_C_ShiftedLoglogisticQuantile", (DL_FUNC) &_distr6_C_ShiftedLoglogisticQuantile, 6},

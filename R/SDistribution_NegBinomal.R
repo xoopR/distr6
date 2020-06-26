@@ -272,7 +272,7 @@ NegativeBinomial <- R6Class("NegativeBinomial",
         x = x,
         size = as.numeric(self$getParameterValue("size")),
         prob = as.numeric(self$getParameterValue("prob")),
-        form = as.character(self$getParameterValue("form")),
+        form = as.character(self$getParameterValue("form")[[1]]),
         logp = log
       )
 
@@ -284,41 +284,34 @@ NegativeBinomial <- R6Class("NegativeBinomial",
 
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      form <- self$getParameterValue("form")
-      size <- self$getParameterValue("size")
-      prob <- self$getParameterValue("prob")
 
-        if (form == "fbs") {
-          return(call_C_base_pdqr(
-            fun = "pnbinom",
-            x = x,
-            args = list(
-              size = unlist(size),
-              prob = unlist(prob)
-            ),
-            lower.tail = lower.tail,
-            log = log.p,
-            vec = test_list(size)
-          ))
-        } else if (form == "sbf") {
-          return(1 - pbeta(self$getParameterValue("prob"), x + 1, self$getParameterValue("size")))
-        } else {
-          pdf_x <- self$workingSupport
-          pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
+      form = self$getParameterValue("form")[[1]]
 
-          return(
-            NumericCdf_Discrete(
-              q = x,
-              x = pdf_x,
-              pdf = self$pdf(pdf_x),
-              lower = lower.tail,
-              logp = log.p
-            )
-          )
-        }
+      if (form %in% c("tbf", "tbs")) {
+        min = as.numeric(self$getParameterValue("size"))
+      } else {
+        min = rep(0, length(self$getParameterValue("size")))
+      }
+
+
+      cdf <- C_NegativeBinomialCdf(
+        x = x,
+        size = as.numeric(self$getParameterValue("size")),
+        prob = as.numeric(self$getParameterValue("prob")),
+        form = form,
+        min = min,
+        lower = lower.tail,
+        logp = log.p
+      )
+
+      if (ncol(cdf) == 1) {
+        return(as.numeric(cdf))
+      } else {
+        return(cdf)
+      }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      if (self$getParameterValue("form") == "fbs") {
+      if (self$getParameterValue("form")[[1]] == "fbs") {
         size <- self$getParameterValue("size")
         prob <- self$getParameterValue("prob")
         return(call_C_base_pdqr(
@@ -336,7 +329,7 @@ NegativeBinomial <- R6Class("NegativeBinomial",
         pdf_x <- self$workingSupport
         pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
         return(
-          NumericQuantile(
+          C_NumericQuantile(
             p = p,
             x = pdf_x,
             cdf = self$cdf(pdf_x),
@@ -347,7 +340,7 @@ NegativeBinomial <- R6Class("NegativeBinomial",
       }
     },
     .rand = function(n) {
-      if (self$getParameterValue("form") == "fbs") {
+      if (self$getParameterValue("form")[[1]] == "fbs") {
         size <- self$getParameterValue("size")
         prob <- self$getParameterValue("prob")
         return(call_C_base_pdqr(

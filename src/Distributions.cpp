@@ -271,36 +271,26 @@ NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, Numeric
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
       if (form == "fbs") {
-        Rcout << prob[i % pl] << "\n" << typeid(prob[i % pl]).name() << "\n";
-
         // Return 0 if x not in PosNaturals
-        if (floor (x[j]) != x[j] || x[j] < 0) {
-          mat(j, i) = 0;
-        } else {
+        if (floor (x[j]) == x[j] && x[j] >= 0) {
           mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, size[i % sl] - 1) *
             pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], x[j]);
         }
       } else if (form == "sbf") {
         // Return 0 if x not in PosNaturals
-        if (floor (x[j]) != x[j] || x[j] < 0) {
-          mat(j, i) = 0;
-        } else {
+        if (floor (x[j]) == x[j] && x[j] >= 0) {
           mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, x[j]) *
             pow(prob[i % pl], x[j]) * pow(1-prob[i % pl], size[i % sl]);
         }
       } else if (form == "tbf") {
         // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
-          mat(j, i) = 0;
-        } else {
+        if (floor (x[j]) == x[j] && x[j] >= size[i % sl]) {
           mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) *
             pow(prob[i % pl], x[j] - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
         }
       } else {
         // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
-          mat(j, i) = 0;
-        } else {
+        if (floor (x[j]) == x[j] && x[j] >= size[i % sl]) {
           mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) *
             pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], x[j] - size[i % sl]);
         }
@@ -316,12 +306,11 @@ NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, Numeric
 
 // [[Rcpp::export]]
 NumericMatrix C_NegativeBinomialCdf(NumericVector x, NumericVector size, NumericVector prob,
-                                    std::string form, NumericVector min, bool logp) {
-
-
+                                    std::string form, NumericVector min, bool lower, bool logp) {
   int sl = size.length();
   int pl = prob.length();
   int ml = min.length();
+
   int ParamLength = std::max({sl, pl, ml});
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
@@ -329,13 +318,42 @@ NumericMatrix C_NegativeBinomialCdf(NumericVector x, NumericVector size, Numeric
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
       for (int k = min[i % ml]; k <= x[j]; k++) {
-        Rcout << prob[i % pl] << "\n" << typeid(prob[i % pl]).name() << "\n";
-        mat(j, i)  = mat(j, i) +
-          C_NegativeBinomialPdf(k, size[i % sl], prob[i % pl], form, logp)(1, 1);
+        if (form == "fbs") {
+          // Return 0 if x not in PosNaturals
+          if (floor (k) == k && k >= 0) {
+            mat(j, i) = mat(j, i) + C_Choose(k + size[i % sl] - 1, size[i % sl] - 1) *
+              pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], k);
+          }
+        } else if (form == "sbf") {
+          // Return 0 if x not in PosNaturals
+          if (floor (k) == k && k >= 0) {
+            mat(j, i) = mat(j, i) + C_Choose(k + size[i % sl] - 1, k) *
+              pow(prob[i % pl], k) * pow(1-prob[i % pl], size[i % sl]);
+          }
+        } else if (form == "tbf") {
+          // Return 0 if x not in Naturals or < size
+          if (floor (k) == k && k >= size[i % sl]) {
+            mat(j, i) = mat(j, i) + C_Choose(k - 1, size[i % sl] - 1) *
+              pow(prob[i % pl], k - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
+          }
+        } else {
+          // Return 0 if x not in Naturals or < size
+          if (floor (k) == k && k >= size[i % sl]) {
+            mat(j, i) = mat(j, i) + C_Choose(k - 1, size[i % sl] - 1) *
+              pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], k - size[i % sl]);
+          }
+        }
+      }
+
+      if (!lower) {
+        mat(j, i) = 1 - mat(j, i);
+      }
+
+      if (logp) {
+        mat(j, i) = log(mat(j, i));
       }
     }
   }
-
   return mat;
 }
 
