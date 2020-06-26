@@ -349,7 +349,9 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
     expect_equal(length(kern$rand(1:3)), 3)
     checkmate::expect_data_table(kern$rand(1:3, simplify = F), nrows = 3, ncols = 1)
     if (kern$.__enclos_env__$private$.log) {
-      expect_rounded_equal(kern$cdf(c(-0.1, 0, 0.1), lower.tail = FALSE, log.p = TRUE), log(1 - cdf), 3)
+      expect_rounded_equal(kern$quantile(kern$cdf(c(-0.42, 0.24, 0.42), lower.tail = FALSE,
+                                                  log.p = TRUE), lower.tail = FALSE, log.p = TRUE),
+                           c(-0.42, 0.24, 0.42), 3)
     }
   }
 }
