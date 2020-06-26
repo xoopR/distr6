@@ -373,13 +373,11 @@ NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location,
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-      if ((shape[i % shan] > 0 && (x[j] < location[i & locn] - scale[i & scan]/shape[i % shan])) ||
-          (shape[i % shan] < 0 && (x[j] > location[i & locn] - scale[i & scan]/shape[i % shan]))) {
+      if ((shape[i % shan] > 0 && (x[j] < (location[i & locn] - scale[i & scan]/shape[i % shan]))) ||
+          (shape[i % shan] < 0 && (x[j] > (location[i & locn] - scale[i & scan]/shape[i % shan])))) {
 
         if (logp) {
           mat(j, i) = R_NegInf;
-        } else {
-          mat(j, i) = 0;
         }
 
       } else {
@@ -420,15 +418,15 @@ NumericMatrix C_ShiftedLoglogisticCdf(NumericVector x, NumericVector location,
 
         if (logp) {
           if (!lower) {
-            mat(j, i) = R_PosInf;
+            mat(j, i) = 0;
           } else {
             mat(j, i) = R_NegInf;
           }
         } else {
           if (!lower) {
-            mat(j, i) = 0;
-          } else {
             mat(j, i) = 1;
+          } else {
+            mat(j, i) = 0;
           }
         }
 

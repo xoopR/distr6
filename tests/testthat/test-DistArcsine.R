@@ -24,3 +24,17 @@ test_that("autotest", {
     quantile = qbeta(c(0.24, 0.42, 0.5), 0.5, 0.5)
   )
 })
+
+test_that("manual", {
+  dist = Arcsine$new(lower = 0, upper = 1)
+  expect_equal(dist$pdf(0.5), 1/(pi*sqrt(0.25)))
+  expect_equal(dist$pdf(0.5, log = TRUE), -log(pi*sqrt(0.25)))
+  expect_equal(dist$cdf(0.5), 2/pi * asin(sqrt(0.5)))
+  expect_equal(dist$quantile(c(0, 1)), c(0, 1))
+})
+
+test_that("cpp", {
+  expect_equal(as.numeric(C_ArcsineQuantile(-2, 0, 1, TRUE, FALSE)), NaN)
+  expect_equal(as.numeric(C_ArcsineQuantile(0, 0, 1, TRUE, FALSE)), 0)
+  expect_equal(as.numeric(C_ArcsineQuantile(1, 0, 1, TRUE, FALSE)), 1)
+})

@@ -34,6 +34,10 @@ test_that("setting", {
   expect_equal(x$getParameterValue("cdf"), pbinom(0:5, 10, 0.5))
 })
 
+test_that("cpp", {
+  expect_equal(as.numeric(C_WeightedDiscretePdf(NaN, 1, 1, FALSE)), 0)
+})
+
 # test_that("vectorised", {
 #   x <- list(list(x = 1:10, cdf = pnorm(1:10)),
 #            list(x = 1:10, pdf = dbinom(1:10, 10, 0.5)),
