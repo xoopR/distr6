@@ -11,7 +11,7 @@ test_that("check truncation constructor", {
 })
 
 t <- truncate(Binomial$new(), lower = 1, upper = 5)
-test_that("truncation results", {
+test_that("pdf", {
   expect_equal(t$pdf(6), 0)
   expect_equal(t$pdf(0), 0)
   expect_equal(
@@ -19,14 +19,35 @@ test_that("truncation results", {
     dbinom(4, prob = 0.5, size = 10) / ((pbinom(5, prob = 0.5, size = 10) -
       pbinom(1, prob = 0.5, size = 10)))
   )
+  expect_equal(
+    t$pdf(4, log = TRUE),
+    log(dbinom(4, prob = 0.5, size = 10) / ((pbinom(5, prob = 0.5, size = 10) -
+                                           pbinom(1, prob = 0.5, size = 10))))
+  )
+})
+
+test_that("cdf", {
   expect_equal(t$cdf(5), 1)
   expect_equal(t$cdf(6), 1)
   expect_equal(t$cdf(0), 0)
-  expect_equal(
-    t$cdf(4),
-    (pbinom(4, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10)) /
-      (pbinom(5, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10))
-  )
+  expec <- (pbinom(4, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10)) /
+    (pbinom(5, prob = 0.5, size = 10) - pbinom(1, prob = 0.5, size = 10))
+  expect_equal(t$cdf(4, log.p = FALSE, lower.tail = TRUE), expec)
+  expect_equal(t$cdf(4, log.p = TRUE, lower.tail = TRUE), log(expec))
+  expect_equal(t$cdf(4, log.p = FALSE, lower.tail = FALSE), 1 - expec)
+  expect_equal(t$cdf(4, log.p = TRUE, lower.tail = FALSE), log(1 - expec))
+})
+
+test_that("quantile", {
+  expect_equal(t$.__enclos_env__$private$.quantile(-20), 1)
+  expect_equal(t$.__enclos_env__$private$.quantile(20), 5)
+  expect_equal(t$quantile(0.1), 3)
+  r <- expect_silent({t$rand(5)})
+  expect_length(r, 5)
+  expect_true(all(r >= 1) & all(r <= 5))
+})
+
+test_that("strprint", {
   expect_equal(t$support$strprint(), Interval$new(2, 5, class = "integer")$strprint())
   expect_equal(
     truncate(Exponential$new(), lower = 2, upper = 3)$support$strprint(),
@@ -60,4 +81,8 @@ test_that("check truncation parameters", {
   expect_equal(x$inf, 2)
   expect_equal(x$sup, 10)
   expect_true(testInterval(x$support))
+})
+
+test_that("missing pdf/cdf", {
+  expect_error(TruncatedDistribution$new(MultivariateNormal$new()), "pdf and cdf")
 })

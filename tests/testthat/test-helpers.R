@@ -62,3 +62,20 @@ test_that("assert_pkgload", {
   expect_error(assert_pkgload("dsad"), "The following")
   expect_silent(assert_pkgload("stats"))
 })
+
+test_that("pdq_helpers", {
+  expect_error(pdq_point_assert(data = NULL), "Points to")
+  expect_warning(pdq_point_assert(1, 2, self = Binomial$new(), data = NULL),
+                 "Distribution is univariate")
+  expect_warning(pdq_point_assert(self = Binomial$new(), data = data.frame(1,2)),
+                 "Distribution is univariate")
+  expect_error(pdq_point_assert(1, self = Multinomial$new(), data = NULL),
+                 "Distribution is multivariate")
+  expect_error(pdq_point_assert(self = Multinomial$new(), data = data.frame(1)),
+                 "Distribution is multivariate")
+  checkmate::expect_data_table(pdqr_returner(matrix(1,nrow = 2,ncol = 2), FALSE, "A"),
+                               nrows = 2, ncols = 2)
+  expect_equal(colnames(pdqr_returner(matrix(1,nrow = 2,ncol = 2), FALSE, "A")), c("A.V1", "A.V2"))
+  expect_error(call_C_base_pdqr("l", 1, vec = FALSE), "Function must")
+  expect_error(call_C_base_pdqr("l", 1, vec = TRUE), "Function must")
+})

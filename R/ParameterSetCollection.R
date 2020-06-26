@@ -60,7 +60,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       if (!is.null(id)) {
         id0 <- id
         if (nrow(subset(dt, id %in% id0)) == 0) {
-          return(self)
+          stopf("%s is not a parameter in this ParameterSet.", id)
         } else {
           return(subset(dt, id %in% id0))
         }
