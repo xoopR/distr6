@@ -43,25 +43,28 @@ NumericVector C_CosineKernelCdf(NumericVector x, bool lower, bool logp) {
 // [[Rcpp::export]]
 NumericVector C_CosineKernelQuantile(NumericVector x, bool lower, bool logp) {
   NumericVector ret(x.size());
+  double y;
 
   for (int i = 0; i < x.size(); i++) {
 
+      y = x[i];
+
       if (logp) {
-        x[i] = exp(x[i]);
+        y = exp(y);
       }
 
       if (!lower) {
-        x[i] = 1 - x[i];
+        y = 1 - y;
       }
 
-      if (x[i] < 0 || x[i] > 1) {
+      if (y < 0 || y > 1) {
         ret[i] = R_NaN;
-      } else if (x[i] == 0) {
+      } else if (y == 0) {
         ret[i] = -1;
-      } else if (x[i] == 1) {
+      } else if (y == 1) {
         ret[i] = 1;
       } else {
-        ret[i] = (2 * asin(2 * x[i] - 1)) / M_PI;
+        ret[i] = (2 * asin(2 * y - 1)) / M_PI;
       }
   }
 
@@ -137,25 +140,28 @@ NumericVector C_LogisticKernelCdf(NumericVector x, bool lower, bool logp) {
 // [[Rcpp::export]]
 NumericVector C_LogisticKernelQuantile(NumericVector x, bool lower, bool logp) {
   NumericVector ret(x.size());
+  double y;
 
   for (int i = 0; i < x.size(); i++) {
 
+    y = x[i];
+
     if (logp) {
-      x[i] = exp(x[i]);
+      y = exp(y);
     }
 
     if (!lower) {
-      x[i] = 1 - x[i];
+      y = 1 - y;
     }
 
-    if (x[i] < 0 || x[i] > 1) {
+    if (y < 0 || y > 1) {
       ret[i] = R_NaN;
-    } else if (x[i] == 0) {
+    } else if (y == 0) {
       ret[i] = R_NegInf;
-    } else if (x[i] == 1) {
+    } else if (y == 1) {
       ret[i] = R_PosInf;
     } else {
-      ret[i] = log(x[i] / (1 - x[i]));
+      ret[i] = log(y / (1 - y));
     }
   }
 
@@ -282,29 +288,32 @@ NumericVector C_TriangularKernelCdf(NumericVector x, bool lower, bool logp) {
 // [[Rcpp::export]]
 NumericVector C_TriangularKernelQuantile(NumericVector x, bool lower, bool logp) {
   NumericVector ret(x.size());
+  double y;
 
   for (int i = 0; i < x.size(); i++) {
 
+    y = x[i];
+
     if (logp) {
-      x[i] = exp(x[i]);
+      y = exp(y);
     }
 
     if (!lower) {
-      x[i] = 1 - x[i];
+      y = 1 - y;
     }
 
-    if (x[i] < 0 || x[i] > 1) {
+    if (y < 0 || y > 1) {
       ret[i] = R_NaN;
-    } else if (x[i] == 0) {
+    } else if (y == 0) {
       ret[i] = R_NegInf;
-    } else if (x[i] == 1) {
+    } else if (y == 1) {
       ret[i] = R_PosInf;
-    } else if (x[i] < 0.5) {
-      ret[i] = -1 + sqrt(2 * x[i]);
-    } else if (x[i] == 0.5) {
+    } else if (y < 0.5) {
+      ret[i] = -1 + sqrt(2 * y);
+    } else if (y == 0.5) {
       ret[i] = 0;
     } else {
-      ret[i] = 1 - sqrt(2 - 2 * x[i]);
+      ret[i] = 1 - sqrt(2 - 2 * y);
     }
   }
 
@@ -403,25 +412,28 @@ NumericVector C_UniformKernelCdf(NumericVector x, bool lower, bool logp) {
 // [[Rcpp::export]]
 NumericVector C_UniformKernelQuantile(NumericVector x, bool lower, bool logp) {
   NumericVector ret(x.size());
+  double y;
 
   for (int i = 0; i < x.size(); i++) {
 
+    y = x[i];
+
     if (logp) {
-      x[i] = exp(x[i]);
+      y = exp(y);
     }
 
     if (!lower) {
-      x[i] = 1 - x[i];
+      y = 1 - y;
     }
 
-    if (x[i] < 0 || x[i] > 1) {
+    if (y < 0 || y > 1) {
       ret[i] = R_NaN;
-    } else if (x[i] == 0) {
+    } else if (y == 0) {
       ret[i] = R_NegInf;
-    } else if (x[i] == 1) {
+    } else if (y == 1) {
       ret[i] = R_PosInf;
     } else {
-      ret[i] = 2 * (x[i] - 0.5);
+      ret[i] = 2 * (y - 0.5);
     }
   }
 

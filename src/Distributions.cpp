@@ -95,31 +95,30 @@ NumericMatrix C_ArcsineQuantile(NumericVector x, NumericVector min, NumericVecto
 
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
-  NumericVector nx(XLength);
 
-  for (int j = 0; j < XLength; j++) {
-    nx[j] = x[j];
-
-    if (logp) {
-      nx[j] = exp(nx[j]);
-    }
-
-    if (!lower) {
-      nx[j] = 1 - nx[j];
-    }
-  }
+  double y;
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
 
-      if (nx[j] < 0 || nx[j] > 1) {
+      y = x[j];
+
+      if (logp) {
+        y = exp(y);
+      }
+
+      if (!lower) {
+        y = 1 - y;
+      }
+
+      if (y < 0 || y > 1) {
         mat(j, i) = R_NaN;
-      } else if (nx[j] == 0) {
+      } else if (y == 0) {
         mat(j, i) = min[i % ll];
-      } else if (nx[j] == 1) {
+      } else if (y == 1) {
         mat(j, i) = max[i % ul];
       } else {
-        mat(j, i) = ((max[i % ul] - min[i % ll]) * pow(sin(nx[j] * M_PI * 0.5), 2)) + min[i % ll];
+        mat(j, i) = ((max[i % ul] - min[i % ll]) * pow(sin(y * M_PI * 0.5), 2)) + min[i % ll];
       }
     }
   }
@@ -178,25 +177,25 @@ NumericMatrix C_DegenerateQuantile(NumericVector x, NumericVector mean, bool low
 
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
-  NumericVector nx(XLength);
 
-  for (int j = 0; j < XLength; j++) {
-    nx[j] = x[j];
-
-    if (logp) {
-      nx[j] = exp(nx[j]);
-    }
-
-    if (!lower) {
-      nx[j] = 1 - nx[j];
-    }
-  }
+  double y;
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-      if (nx[j] < 0 || nx[j] > 1) {
+
+      y = x[j];
+
+      if (logp) {
+        y = exp(y);
+      }
+
+      if (!lower) {
+        y = 1 - y;
+      }
+
+      if (y < 0 || y > 1) {
         mat(j, i) = R_NaN;
-      } else if (nx[j] == 0) {
+      } else if (y == 0) {
         mat(j, i) = R_NegInf;
       } else {
         mat(j, i) = mean[i];
@@ -444,26 +443,25 @@ NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector locati
 
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
-  NumericVector nx(XLength);
 
-  for (int j = 0; j < XLength; j++) {
-    nx[j] = x[j];
-
-    if (logp) {
-      nx[j] = exp(nx[j]);
-    }
-
-    if (!lower) {
-      nx[j] = 1 - nx[j];
-    }
-  }
+  double y;
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-      if (nx[j] < 0 || nx[j] > 1) {
+      y = x[j];
+
+      if (logp) {
+        y = exp(y);
+      }
+
+      if (!lower) {
+        y = 1 - y;
+      }
+
+      if (y < 0 || y > 1) {
         mat(j, i) = R_NaN;
       } else {
-        mat(j, i) = ((pow(nx[j]/(1 - nx[j]), shape[i % shan]) - 1) *
+        mat(j, i) = ((pow(y/(1 - y), shape[i % shan]) - 1) *
           scale[i & scan]/shape[i % shan]) + location[i & locn];
       }
     }
@@ -595,25 +593,23 @@ NumericVector C_WeightedDiscreteQuantile(NumericVector x, NumericVector data, Nu
 
   int nr = data.length();
   int n = x.length();
+  double y;
 
   NumericVector mat(n);
-  NumericVector nx(n);
-
-  for (int j = 0; j < n; j++) {
-    nx[j] = x[j];
-
-    if (logp) {
-      nx[j] = exp(nx[j]);
-    }
-
-    if (!lower) {
-      nx[j] = 1 - nx[j];
-    }
-  }
 
   for (int k = 0; k < n; k++) {
     for (int j = 0; j < nr; j++) {
-      if (cdf[j] >= nx[k]) {
+      y = x[k];
+
+      if (logp) {
+        y = exp(y);
+      }
+
+      if (!lower) {
+        y = 1 - y;
+      }
+
+      if (cdf[j] >= y) {
         mat[k] = data[j];
         break;
       }
@@ -632,24 +628,24 @@ NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data
   int n = x.length();
 
   NumericMatrix mat(n, nc);
-  NumericVector nx(n);
 
-  for (int j = 0; j < n; j++) {
-    nx[j] = x[j];
-
-    if (logp) {
-      nx[j] = exp(nx[j]);
-    }
-
-    if (!lower) {
-      nx[j] = 1 - nx[j];
-    }
-  }
+  double y;
 
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (nx[k] <= cdf(j, i)) {
+
+        y = x[k];
+
+        if (logp) {
+          y = exp(y);
+        }
+
+        if (!lower) {
+          y = 1 - y;
+        }
+
+        if (y <= cdf(j, i)) {
           mat(k, i) = data(j, i);
           break;
         }
