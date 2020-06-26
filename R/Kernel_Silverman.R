@@ -34,14 +34,32 @@ Silverman <- R6Class("Silverman",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
 
-      cond1 <- (exp(-x / sqrt(2)) * (3 * sin(x / sqrt(2)) + 3 * cos(x / sqrt(2)))) / 2^(7 / 2) + # nolint
-        (x * exp(-x / sqrt(2)) * sin(x / sqrt(2))) / 8
-      cond2 <- (exp(x / sqrt(2)) * (-3 * sin(x / sqrt(2)) + 3 * cos(x / sqrt(2)))) / 2^(7 / 2) + # nolint
-        (x * exp(x / sqrt(2)) * sin(x / sqrt(2))) / 8
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          if (x[i] > 0) {
+            ret[i] = (exp(-x[i] / sqrt(2)) * (3 * sin(x[i] / sqrt(2)) + 3 *
+                                             cos(x[i] / sqrt(2)))) / 2^(7 / 2) +
+              (x[i] * exp(-x[i] / sqrt(2)) * sin(x[i] / sqrt(2))) / 8
+          } else {
+            ret[i] = (exp(x[i] / sqrt(2)) * (-3 * sin(x[i] / sqrt(2)) + 3 *
+                                            cos(x[i] / sqrt(2)))) / 2^(7 / 2) +
+              (x[i] * exp(x[i] / sqrt(2)) * sin(x[i] / sqrt(2))) / 8
+          }
+        }
+      }
+      return(ret)
+    },
 
-      return(ifelse(x > 0, cond1, cond2))
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+
     },
 
     #' @description

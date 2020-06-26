@@ -22,8 +22,27 @@ UniformKernel <- R6Class("UniformKernel",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(ifelse(abs(x) > 2, 0, (1 / 4) * (2 - (abs(x)))))
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          if (abs(x[i]) > 2) {
+            ret[i] = 0
+          } else {
+            ret[i] = (1 / 4) * (2 - (abs(x[i])))
+          }
+        }
+      }
+      return(ret)
+    },
+
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+
     },
 
     #' @description

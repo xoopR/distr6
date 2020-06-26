@@ -161,7 +161,8 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   }
 
   # context("public methods")
-  checkmate::expect_subset(names(kern$public_methods), c("clone", "pdfSquared2Norm", "variance",
+  checkmate::expect_subset(names(kern$public_methods), c("clone", "pdfSquared2Norm",
+                                                         "cdfSquared2Norm", "variance",
                                                          "initialize"))
 
   if (!is.null(kern$public_methods$setParameterValue)) {
@@ -169,7 +170,10 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   }
   # expect_equal(formals(kern$public_methods$initialize), pairlist(decorators = NULL))
   if (!is.null(kern$public_methods$pdfSquared2Norm)) {
-    expect_equal(formals(kern$public_methods$pdfSquared2Norm), pairlist(x = 0))
+    expect_equal(formals(kern$public_methods$pdfSquared2Norm), pairlist(x = 0, upper = Inf))
+  }
+  if (!is.null(kern$public_methods$cdfSquared2Norm)) {
+    expect_equal(formals(kern$public_methods$cdfSquared2Norm), pairlist(x = 0, upper = Inf))
   }
   if (!is.null(kern$public_methods$variance))
     expect_null(names(formals(kern$public_methods$variance)))
@@ -203,7 +207,8 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   expect_equal(kern$mode(), 0)
   expect_equal(kern$properties$support$strprint(), support$strprint())
   expect_equal(kern$variance(), variance)
-  expect_rounded_equal(kern$pdfSquared2Norm(c(0, 1, 3)), pdfSquared2Norm)
+  expect_rounded_equal(kern$pdfSquared2Norm(c(0, 1, 3), rep(Inf, 3)), pdfSquared2Norm)
+  expect_rounded_equal(kern$cdfSquared2Norm(c(0, 1, 3), rep(Inf, 3)), cdfSquared2Norm)
   expect_equal(kern$strprint(), shortname)
   expect_output(kern$summary())
   expect_output(kern$summary(F))

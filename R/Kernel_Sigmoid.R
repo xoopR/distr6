@@ -34,10 +34,28 @@ Sigmoid <- R6Class("Sigmoid",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(ifelse(x == 0, 2 / (pi^2), (4 * x * exp(x)) / (pi^2 * (exp(2 * x) - 1))))
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          if (x[i] == 0) {
+            ret[i] = 2 / (pi^2)
+          } else {
+            ret[i] = (4 * x[i] * exp(x[i])) / (pi^2 * (exp(2 * x[i]) - 1))
+          }
+        }
+      }
+      return(ret)
     },
 
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+
+    },
     #' @description
     #' The variance of a distribution is defined by the formula
     #' \deqn{var_X = E[X^2] - E[X]^2}

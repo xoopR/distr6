@@ -4,17 +4,18 @@
 \alias{pdfSquared2Norm}
 \title{Squared Probability Density Function 2-Norm}
 \usage{
-pdfSquared2Norm(object, x = 0)
+pdfSquared2Norm(object, x = 0, upper = Inf)
 }
 \arguments{
 \item{object}{Distribution.}
 
 \item{x}{amount to shift the result.}
+
+\item{upper}{upper limit of the integral.}
 }
 \value{
 Squared 2-norm of pdf evaluated between limits as a numeric.
 }
 \description{
-The squared 2-norm of the pdf evaluated over the whole support by default or given
-limits, possibly shifted.
+The squared 2-norm of the pdf evaluated up to a given limit, possibly shifted.
 }

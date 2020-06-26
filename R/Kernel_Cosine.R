@@ -22,16 +22,34 @@ Cosine <- R6Class("Cosine",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
 
-      cond1 <- -pi / 32 * (sin((pi * x - 2 * pi) / 2) - sin(pi * x / 2) + (pi * x - 2 * pi) *
-                             cos(pi * x / 2))
-      cond2 <- pi / 32 * (sin((pi * x + 2 * pi) / 2) - sin(pi * x / 2) + (pi * x + 2 * pi) *
-                            cos(pi * x / 2))
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          if (abs(x[i]) > 2) {
+            ret[i] = 0
+          } else if (x[i][i] >= 0) {
+            ret[i] = -pi / 32 * (sin((pi * x[i] - 2 * pi) / 2) - sin(pi * x[i] / 2) +
+                                   (pi * x[i] - 2 * pi) *
+                                   cos(pi * x[i] / 2))
+          } else {
+            ret[i] = pi / 32 * (sin((pi * x[i] + 2 * pi) / 2) - sin(pi * x[i] / 2) +
+                                  (pi * x[i] + 2 * pi) *
+                                  cos(pi * x[i] / 2))
+          }
+        }
+      }
+      return(ret)
+    },
 
-      kern2Norm <- ifelse(abs(x) > 2, 0, ifelse(x >= 0, cond1, cond2))
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
 
-      return(kern2Norm)
     },
 
     #' @description

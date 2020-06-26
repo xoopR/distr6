@@ -25,9 +25,28 @@ Epanechnikov <- R6Class("Epanechnikov",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(ifelse(abs(x) > 2, 0, (9 / 16) * (-abs(x)^5 + 20 * abs(x)^3 -
-        40 * abs(x)^2 + 32) / 30))
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          if (abs(x[i]) > 2) {
+            ret[i] = 0
+          } else {
+            ret[i] = (9 / 16) * (-abs(x[i])^5 + 20 * abs(x[i])^3 -
+                                   40 * abs(x[i])^2 + 32) / 30
+          }
+        }
+      }
+      return(ret)
+    },
+
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+
     },
 
     #' @description

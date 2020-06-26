@@ -25,10 +25,29 @@ Triweight <- R6Class("Triweight",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(ifelse(abs(x) > 2, 0, 35 * (-5 * abs(x)^13 + 156 * abs(x)^11 - 2288 * abs(x)^9 +
-        27456 * abs(x)^7 - 54912 * abs(x)^6 + 73216 * abs(x)^4 -
-        79872 * abs(x)^2 + 40960) / 1757184))
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          if (abs(x[i]) > 2) {
+            ret[i] = 0
+          } else {
+            ret[i] = 35 * (-5 * abs(x[i])^13 + 156 * abs(x[i])^11 - 2288 * abs(x[i])^9 +
+                             27456 * abs(x[i])^7 - 54912 * abs(x[i])^6 + 73216 * abs(x[i])^4 -
+                             79872 * abs(x[i])^2 + 40960) / 1757184
+          }
+        }
+      }
+      return(ret)
+    },
+
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+
     },
 
     #' @description

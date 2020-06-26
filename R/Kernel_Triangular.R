@@ -23,13 +23,29 @@ TriangularKernel <- R6Class("TriangularKernel",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          if (abs(x[i]) > 2) {
+            ret[i] = 0
+          } else if (abs(x[i]) <= 1) {
+            ret[i] = (3 * x[i]^3 - 6 * x[i]^2 + 4) / 6
+          } else {
+            ret[i] = (-x[i]^3 + 6 * x[i]^2 - 12 * x[i] + 8) / 6
+          }
+        }
+      }
+      return(ret)
+    },
 
-      return(ifelse(abs(x) > 2, 0,
-        ifelse(abs(x) <= 1, (3 * x^3 - 6 * x^2 + 4) / 6,
-          (-x^3 + 6 * x^2 - 12 * x + 8) / 6
-        )
-      ))
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+
     },
 
     #' @description

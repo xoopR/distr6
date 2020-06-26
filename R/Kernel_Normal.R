@@ -36,9 +36,23 @@ NormalKernel <- R6Class("NormalKernel",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      # return((2 * sqrt(pi))^-1)
-      return((1 / (2 * sqrt(pi))) * exp(-(x / 2)^2)) # nolint
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      ret <- numeric(length(x))
+      for (i in seq_along(x)) {
+        if (upper[i] == Inf) {
+          ret[i] = (1 / (2 * sqrt(pi))) * exp(-(x[i] / 2)^2)
+        }
+      }
+      return(ret)
+    },
+
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+
     },
 
     #' @description
