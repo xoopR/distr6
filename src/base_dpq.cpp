@@ -124,8 +124,6 @@ NumericVector C_std_d2(std::string fun, NumericVector x, double a1, double a2, i
     ret = dlogis(x, a1, a2, log);
   } else if (fun == "dlnorm") {
     ret = dlnorm(x, a1, a2, log);
-  } else if (fun == "dnbinom") {
-    ret = dnbinom(x, a1, a2, log);
   } else if (fun == "dnorm") {
     ret = dnorm(x, a1, a2, log);
   } else if (fun == "dt") {
@@ -157,8 +155,6 @@ NumericVector C_std_p2(std::string fun, NumericVector x, double a1, double a2, i
     ret = plogis(x, a1, a2, lower, log);
   } else if (fun == "plnorm") {
     ret = plnorm(x, a1, a2, lower, log);
-  } else if (fun == "pnbinom") {
-    ret = pnbinom(x, a1, a2, lower, log);
   } else if (fun == "pnorm") {
     ret = pnorm(x, a1, a2, lower, log);
   } else if (fun == "pt") {
@@ -425,7 +421,7 @@ NumericMatrix C_dpq(std::string fun, NumericVector x, std::list<NumericVector> a
     }
   }
 
-  return NumericMatrix(0,0); // never reached
+  return NumericMatrix(0,0); // never reached # nocov
 }
 // [[Rcpp::export]]
 NumericMatrix C_r(std::string fun, int x, std::list<NumericVector> args) {
