@@ -229,25 +229,25 @@ Distributions as well as adding generalised expectation and moments functions." 
 
     <div class="ref-description">
     <p>This decorator adds numeric methods for missing analytic expressions in
-<a href='Distribution.html'>Distribution</a>s as well as adding generalised expectation and moments functions.</p>
+Distributions as well as adding generalised expectation and moments functions.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Decorator objects add functionality to the given <a href='Distribution.html'>Distribution</a> object by copying methods
-in the decorator environment to the chosen <a href='Distribution.html'>Distribution</a> environment.</p>
+    <p>Decorator objects add functionality to the given Distribution object by copying methods
+in the decorator environment to the chosen Distribution environment.</p>
 <p>All methods implemented in decorators try to exploit analytical results where possible, otherwise
 numerical results are used with a message.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other decorators: 
-<code><a href='ExoticStatistics.html'>ExoticStatistics</a></code>,
-<code><a href='FunctionImputation.html'>FunctionImputation</a></code></p></div>
+<code>ExoticStatistics</code>,
+<code>FunctionImputation</code></p></div>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='DistributionDecorator.html'>distr6::DistributionDecorator</a></code> -&gt; <code>CoreStatistics</code></p>
+    <p><code>distr6::DistributionDecorator</code> -&gt; <code>CoreStatistics</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
@@ -275,9 +275,9 @@ numerical results are used with a message.</p>
 </details>
 
 <hr>
-<a id="method-mgf"></a></p><h3>Method <code><a href='mgf.html'>mgf()</a></code></h3>
+<a id="method-mgf"></a></p><h3>Method <code>mgf()</code></h3>
 <p>Numerically estimates the moment-generating function.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>mgf</span>(<span class='no'>t</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -286,9 +286,9 @@ t integer to evaluate function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-cf"></a></p><h3>Method <code><a href='cf.html'>cf()</a></code></h3>
+<a id="method-cf"></a></p><h3>Method <code>cf()</code></h3>
 <p>Numerically estimates the characteristic function.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='cf.html'>cf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>cf</span>(<span class='no'>t</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -297,9 +297,9 @@ t integer to evaluate function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pgf"></a></p><h3>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<a id="method-pgf"></a></p><h3>Method <code>pgf()</code></h3>
 <p>Numerically estimates the probability-generating function.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='no'>z</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>pgf</span>(<span class='no'>z</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -308,9 +308,9 @@ z integer to evaluate probability generating function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-entropy"></a></p><h3>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<a id="method-entropy"></a></p><h3>Method <code>entropy()</code></h3>
 <p>Numerically estimates the entropy function.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='entropy.html'>entropy</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>entropy</span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -319,14 +319,14 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<a id="method-skewness"></a></p><h3>Method <code>skewness()</code></h3>
 <p>Numerically estimates the distribution skewness.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>skewness</span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-kurtosis"></a></p><h3>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<a id="method-kurtosis"></a></p><h3>Method <code>kurtosis()</code></h3>
 <p>Numerically estimates the distribution kurtosis.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>kurtosis</span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -335,12 +335,12 @@ If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
+<a id="method-variance"></a></p><h3>Method <code>variance()</code></h3>
 <p>Numerically estimates the distribution variance.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>variance</span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-kthmoment"></a></p><h3>Method <code><a href='kthmoment.html'>kthmoment()</a></code></h3>
+<a id="method-kthmoment"></a></p><h3>Method <code>kthmoment()</code></h3>
 <p>The kth central moment of a distribution is defined by
 $$CM(k)_X = E_X[(x - \mu)^k]$$
 the kth standardised moment of a distribution is defined by
@@ -349,7 +349,7 @@ the kth raw moment of a distribution is defined by
 $$RM(k)_X = E_X[x^k]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='kthmoment.html'>kthmoment</a></span>(<span class='no'>k</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"central"</span>, <span class='st'>"standard"</span>, <span class='st'>"raw"</span>))</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>kthmoment</span>(<span class='no'>k</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"central"</span>, <span class='st'>"standard"</span>, <span class='st'>"raw"</span>))</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -361,9 +361,9 @@ Type of moment to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-genExp"></a></p><h3>Method <code><a href='genExp.html'>genExp()</a></code></h3>
+<a id="method-genExp"></a></p><h3>Method <code>genExp()</code></h3>
 <p>Numerically estimates \(E[f(X)]\) for some function \(f\).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='genExp.html'>genExp</a></span>(<span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'>genExp</span>(<span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -372,9 +372,9 @@ Transformation function to define the expectation, default is distribution mean.
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mode"></a></p><h3>Method <code><a href='mode.html'>mode()</a></code></h3>
+<a id="method-mode"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/mode.html'>mode()</a></code></h3>
 <p>Numerically estimates the distribution mode.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='mode.html'>mode</a></span>(<span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>CoreStatistics</span>$<span class='fu'><a href='https://rdrr.io/r/base/mode.html'>mode</a></span>(<span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -408,7 +408,7 @@ Ignored, added for consistency.</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>(), <span class='st'>"CoreStatistics"</span>)</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>Exponential</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='st'>"CoreStatistics"</span>)</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>CoreStatistics</span>$<span class='fu'>new</span>()$<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>())</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>decorate</span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>(), <span class='st'>"CoreStatistics"</span>)</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>Exponential</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='st'>"CoreStatistics"</span>)</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>CoreStatistics</span>$<span class='fu'>new</span>()$<span class='fu'>decorate</span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>())</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -228,8 +228,8 @@ ParameterSetCollection." />
     </div>
 
     <div class="ref-description">
-    <p>Used to extract one or more parameters from a constructed <a href='ParameterSet.html'>ParameterSet</a> or
-<a href='ParameterSetCollection.html'>ParameterSetCollection</a>.</p>
+    <p>Used to extract one or more parameters from a constructed ParameterSet or
+ParameterSetCollection.</p>
     </div>
 
     <pre class="usage"># S3 method for ParameterSet
@@ -240,8 +240,8 @@ ParameterSetCollection." />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ps</th>
-      <td><p><a href='ParameterSet.html'>ParameterSet</a><br />
-<a href='ParameterSet.html'>ParameterSet</a> from which to extract parameters.</p></td>
+      <td><p>ParameterSet<br />
+ParameterSet from which to extract parameters.</p></td>
     </tr>
     <tr>
       <th>ids</th>
@@ -268,7 +268,7 @@ Ignored, added for consistency.</p></td>
     <pre class="examples"><div class='input'><span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
   <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>))
-)$<span class='fu'><a href='parameters.html'>parameters</a></span>()
+)$<span class='fu'>parameters</span>()
 
 <span class='no'>ps</span>[<span class='st'>"Binom1_prob"</span>] <span class='co'># extracts just Binom1_prob</span></div><div class='output co'>#&gt;             id value support            description
 #&gt; 1: Binom1_prob   0.1   [0,1] Probability of Success</div><div class='input'><span class='no'>ps</span>[<span class='st'>"Binom1_prob"</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"Binom1"</span>] <span class='co'># extracts Binom1_prob and removes prefix</span></div><div class='output co'>#&gt;      id value support            description

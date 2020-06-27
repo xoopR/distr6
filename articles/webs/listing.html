@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Listing</h1>
             
-            <h4 class="date">2020-06-26</h4>
+            <h4 class="date">2020-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/listing.rmd"><code>vignettes/webs/listing.rmd</code></a></small>
       <div class="hidden name"><code>listing.rmd</code></div>
@@ -190,13 +190,13 @@
 <div id="listing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#listing" class="anchor"></a>Listing</h2>
-<p>Currently distr6 includes 5 listing functions: <code>listDistributions(), listDecorators(), listWrappers(), listKernels(), listSpecialSets()</code>. These are essentially ways of listing the R6 classes implemented in the R6 API. We will only discuss the <code><a href="../../reference/listDistributions.html">listDistributions()</a></code> function here as the others cover classes that we haven’t discussed yet, but hopefully are intuitive to you and have a similar interface to <code><a href="../../reference/listDistributions.html">listDistributions()</a></code>.</p>
+<p>Currently distr6 includes 5 listing functions: <code>listDistributions(), listDecorators(), listWrappers(), listKernels(), listSpecialSets()</code>. These are essentially ways of listing the R6 classes implemented in the R6 API. We will only discuss the <code>listDistributions()</code> function here as the others cover classes that we haven’t discussed yet, but hopefully are intuitive to you and have a similar interface to <code>listDistributions()</code>.</p>
 </div>
 <div id="listdistributions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#listdistributions" class="anchor"></a>listDistributions</h2>
-<p><code><a href="../../reference/listDistributions.html">listDistributions()</a></code> is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their d/p/q/r methods are implemented in. For example a distribution with package <code>stats</code> means that the d/p/q/r methods interface the R stats functions whereas a distribution with package <code>distr6</code> means the methods are written in distr6. We’ve added the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> method just to save space.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>())
+<p><code>listDistributions()</code> is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their d/p/q/r methods are implemented in. For example a distribution with package <code>stats</code> means that the d/p/q/r methods interface the R stats functions whereas a distribution with package <code>distr6</code> means the methods are written in distr6. We’ve added the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> method just to save space.</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">listDistributions</span>())
 <span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span>
 <span class="co">#&gt; 1:       Arc        Arcsine    ℝ   continuous  univariate       - limits</span>
 <span class="co">#&gt; 2:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span>
@@ -205,11 +205,11 @@
 <span class="co">#&gt; 5:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span>
 <span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -</span></pre></body></html></div>
 <p>To see a simplified version of the list, add the <code>simplify = TRUE</code> argument</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">listDistributions</span>(<span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
 <span class="co">#&gt; [1] "Arcsine"        "Bernoulli"      "Beta"           "BetaNoncentral"</span>
 <span class="co">#&gt; [5] "Binomial"       "Categorical"</span></pre></body></html></div>
 <p>Finally this list can be filtered to help you find a distribution with specific traits, for example for a multivariate distribution</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">variateform</span> <span class="kw">=</span> <span class="st">"multivariate"</span>)))
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">listDistributions</span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">variateform</span> <span class="kw">=</span> <span class="st">"multivariate"</span>)))
 <span class="co">#&gt;    ShortName          ClassName    Type ValueSupport  VariateForm    Package</span>
 <span class="co">#&gt; 1:      Diri          Dirichlet [0,1]^K   continuous multivariate extraDistr</span>
 <span class="co">#&gt; 2:     EmpMV        EmpiricalMV       ℝ     discrete multivariate          -</span>
@@ -222,7 +222,7 @@
 <span class="co">#&gt; 4: locscale</span>
 
 <span class="co"># The trait name is case-insensitive</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">VaRiAtEfORm</span> <span class="kw">=</span> <span class="st">"multivariate"</span>)))
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">listDistributions</span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">VaRiAtEfORm</span> <span class="kw">=</span> <span class="st">"multivariate"</span>)))
 <span class="co">#&gt;    ShortName          ClassName    Type ValueSupport  VariateForm    Package</span>
 <span class="co">#&gt; 1:      Diri          Dirichlet [0,1]^K   continuous multivariate extraDistr</span>
 <span class="co">#&gt; 2:     EmpMV        EmpiricalMV       ℝ     discrete multivariate          -</span>
@@ -234,7 +234,7 @@
 <span class="co">#&gt; 3:   limits</span>
 <span class="co">#&gt; 4: locscale</span></pre></body></html></div>
 <p>Or for multiple filters:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">variateform</span> <span class="kw">=</span> <span class="st">"multivariate"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"extraDistr"</span>)))
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">listDistributions</span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">variateform</span> <span class="kw">=</span> <span class="st">"multivariate"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"extraDistr"</span>)))
 <span class="co">#&gt;    ShortName   ClassName    Type ValueSupport  VariateForm    Package   Tags</span>
 <span class="co">#&gt; 1:      Diri   Dirichlet [0,1]^K   continuous multivariate extraDistr       </span>
 <span class="co">#&gt; 2:  Multinom Multinomial    ℕ0^K     discrete multivariate extraDistr limits</span></pre></body></html></div>
@@ -242,7 +242,7 @@
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#summary" class="anchor"></a>Summary</h2>
-<p>In this tutorial we looked at the <code><a href="../../reference/listDistributions.html">listDistributions()</a></code> function so that you don’t have to remember which are implemented in distr6. In this set of tutorials we covered the basics of constructing a (univariate) distribution, getting and setting parameters, evaluating statistical results and extending all this to multivariate distributions. The next set of tutorials cover more advanced functionality including decorators for numeric results, wrappers for composite distributions, custom distributions, S3 functionality, and symbolic sets.</p>
+<p>In this tutorial we looked at the <code>listDistributions()</code> function so that you don’t have to remember which are implemented in distr6. In this set of tutorials we covered the basics of constructing a (univariate) distribution, getting and setting parameters, evaluating statistical results and extending all this to multivariate distributions. The next set of tutorials cover more advanced functionality including decorators for numeric results, wrappers for composite distributions, custom distributions, S3 functionality, and symbolic sets.</p>
 </div>
   </div>
 

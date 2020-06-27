@@ -240,7 +240,7 @@ distributions.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x, y</th>
-      <td><p><a href='Distribution.html'>Distribution</a></p></td>
+      <td><p>Distribution</p></td>
     </tr>
     </table>
 
@@ -260,15 +260,15 @@ useful for quickly combining many distributions of the same type. See examples.<
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other wrappers: 
-<code><a href='Convolution.html'>Convolution</a></code>,
-<code><a href='DistributionWrapper.html'>DistributionWrapper</a></code>,
-<code><a href='HuberizedDistribution.html'>HuberizedDistribution</a></code>,
-<code><a href='MixtureDistribution.html'>MixtureDistribution</a></code>,
-<code><a href='TruncatedDistribution.html'>TruncatedDistribution</a></code>,
-<code><a href='VectorDistribution.html'>VectorDistribution</a></code></p></div>
+<code>Convolution</code>,
+<code>DistributionWrapper</code>,
+<code>HuberizedDistribution</code>,
+<code>MixtureDistribution</code>,
+<code>TruncatedDistribution</code>,
+<code>VectorDistribution</code></p></div>
     <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
 
-    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='DistributionWrapper.html'>distr6::DistributionWrapper</a></code> -&gt; <code><a href='VectorDistribution.html'>distr6::VectorDistribution</a></code> -&gt; <code>ProductDistribution</code></p>
+    <p><code>distr6::Distribution</code> -&gt; <code>distr6::DistributionWrapper</code> -&gt; <code>distr6::VectorDistribution</code> -&gt; <code>ProductDistribution</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
@@ -326,23 +326,23 @@ useful for quickly combining many distributions of the same type. See examples.<
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>distlist</code></dt><dd><p><code>(list())</code><br />
-List of <a href='Distribution.html'>Distribution</a>s.</p></dd>
+List of Distributions.</p></dd>
 
 <dt><code>distribution</code></dt><dd><p><code>(character(1))</code> <br />
 Should be supplied with <code>params</code> and optionally <code>shared_params</code> as an alternative to <code>distlist</code>.
 Much faster implementation when only one class of distribution is being wrapped. <code>distribution</code>
-is the full name of one of the distributions in <code><a href='listDistributions.html'>listDistributions()</a></code>, or <code>"Distribution"</code> if
-constructing custom distributions. See examples in <a href='VectorDistribution.html'>VectorDistribution</a>.</p></dd>
+is the full name of one of the distributions in <code>listDistributions()</code>, or <code>"Distribution"</code> if
+constructing custom distributions. See examples in VectorDistribution.</p></dd>
 
 <dt><code>params</code></dt><dd><p><code>(list()|data.frame())</code> <br />
 Parameters in the individual distributions for use with <code>distribution</code>. Can be supplied as a list,
 where each element is the list of parameters to set in the distribution, or as an object
 coercable to <code>data.frame</code>, where each column is a parameter and each row is a distribution.
-See examples in <a href='VectorDistribution.html'>VectorDistribution</a>.</p></dd>
+See examples in VectorDistribution.</p></dd>
 
 <dt><code>shared_params</code></dt><dd><p><code>(list())</code><br />
 If any parameters are shared when using the <code>distribution</code> constructor, this provides a much faster
-implementation to list and query them together. See examples in <a href='VectorDistribution.html'>VectorDistribution</a>.</p></dd>
+implementation to list and query them together. See examples in VectorDistribution.</p></dd>
 
 <dt><code>name</code></dt><dd><p><code>(character(1))</code><br />
 Optional name of wrapped distribution.</p></dd>
@@ -376,9 +376,9 @@ Decorators to add to the distribution during construction.</p></dd>
 )</pre><p></div></p>
 
 <p><hr>
-<a id="method-strprint"></a></p><h3>Method <code><a href='strprint.html'>strprint()</a></code></h3>
+<a id="method-strprint"></a></p><h3>Method <code>strprint()</code></h3>
 <p>Printable string representation of the <code>ProductDistribution</code>. Primarily used internally.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ProductDistribution</span>$<span class='fu'><a href='strprint.html'>strprint</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ProductDistribution</span>$<span class='fu'>strprint</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -387,11 +387,11 @@ Number of distributions to include when printing.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pdf"></a></p><h3>Method <code><a href='pdf.html'>pdf()</a></code></h3>
+<a id="method-pdf"></a></p><h3>Method <code><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf()</a></code></h3>
 <p>Probability density function of the product distribution. Computed by
 $$f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)$$
 where \(f_{Xi}\) are the pdfs of the wrapped distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ProductDistribution</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ProductDistribution</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -411,7 +411,7 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+case of VectorDistributions of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
@@ -419,16 +419,16 @@ to the distribution in the vector to evaluate.</p></dd>
 <p><div class="r example copy"></p><pre><span class='no'>p</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ProductDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
 <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>),
 <span class='no'>Binomial</span>$<span class='fu'>new</span>()))
-<span class='no'>p</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
-<span class='no'>p</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-<span class='no'>p</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</pre><p></div></p>
+<span class='no'>p</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
+<span class='no'>p</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
+<span class='no'>p</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</pre><p></div></p>
 
 <p><hr>
-<a id="method-cdf"></a></p><h3>Method <code><a href='cdf.html'>cdf()</a></code></h3>
+<a id="method-cdf"></a></p><h3>Method <code>cdf()</code></h3>
 <p>Cumulative distribution function of the product distribution. Computed by
 $$F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)$$
 where \(F_{Xi}\) are the cdfs of the wrapped distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ProductDistribution</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(
+<p><div class="r"></p><pre><span class='no'>ProductDistribution</span>$<span class='fu'>cdf</span>(
   <span class='no'>...</span>,
   <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -457,7 +457,7 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+case of VectorDistributions of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
@@ -465,9 +465,9 @@ to the distribution in the vector to evaluate.</p></dd>
 <p><div class="r example copy"></p><pre><span class='no'>p</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ProductDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
 <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>),
 <span class='no'>Binomial</span>$<span class='fu'>new</span>()))
-<span class='no'>p</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
-<span class='no'>p</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-<span class='no'>p</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</pre><p></div></p>
+<span class='no'>p</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
+<span class='no'>p</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
+<span class='no'>p</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</pre><p></div></p>
 
 <p><hr>
 <a id="method-quantile"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
@@ -501,7 +501,7 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
+case of VectorDistributions of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
@@ -548,7 +548,7 @@ to the distribution in the vector to evaluate.</p></dd>
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>ProductDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
 <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>),
 <span class='no'>Binomial</span>$<span class='fu'>new</span>()))
-<span class='no'>p</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 9.536743e-05 1.931190e-03 1.373291e-02 4.205704e-02 6.056213e-02</div><div class='input'><span class='no'>p</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.0004291534</div><div class='input'><span class='no'>p</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 9.536743e-05 1.931190e-03</div><div class='input'>
+<span class='no'>p</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 9.536743e-05 1.931190e-03 1.373291e-02 4.205704e-02 6.056213e-02</div><div class='input'><span class='no'>p</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.0004291534</div><div class='input'><span class='no'>p</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 9.536743e-05 1.931190e-03</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ProductDistribution$cdf`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -556,7 +556,7 @@ to the distribution in the vector to evaluate.</p></dd>
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>ProductDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
 <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>),
 <span class='no'>Binomial</span>$<span class='fu'>new</span>()))
-<span class='no'>p</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227 0.0295410156 0.1420936584 0.3881874084</div><div class='input'><span class='no'>p</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.0005874634</div><div class='input'><span class='no'>p</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227</div><div class='input'><span class='no'>Normal</span>$<span class='fu'>new</span>() * <span class='no'>Binomial</span>$<span class='fu'>new</span>()</div><div class='output co'>#&gt; Norm X Binom </div></pre>
+<span class='no'>p</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227 0.0295410156 0.1420936584 0.3881874084</div><div class='input'><span class='no'>p</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.0005874634</div><div class='input'><span class='no'>p</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227</div><div class='input'><span class='no'>Normal</span>$<span class='fu'>new</span>() * <span class='no'>Binomial</span>$<span class='fu'>new</span>()</div><div class='output co'>#&gt; Norm X Binom </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

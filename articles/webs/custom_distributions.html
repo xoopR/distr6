@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Custom Distributions</h1>
             
-            <h4 class="date">2020-06-26</h4>
+            <h4 class="date">2020-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/custom_distributions.rmd"><code>vignettes/webs/custom_distributions.rmd</code></a></small>
       <div class="hidden name"><code>custom_distributions.rmd</code></div>
@@ -194,14 +194,14 @@
 <div id="self" class="section level3">
 <h3 class="hasAnchor">
 <a href="#self" class="anchor"></a>self</h3>
-<p>The <code>self</code> keyword is used to tell an object that it should call a method on itself. For example we have used the method <code><a href="../../reference/getParameterValue.html">getParameterValue()</a></code> on objects before but often we need the object to use this method on itself, so we use <code>self$getParameterValue()</code> this is especially important when defining d/p/q/r functions.</p>
+<p>The <code>self</code> keyword is used to tell an object that it should call a method on itself. For example we have used the method <code>getParameterValue()</code> on objects before but often we need the object to use this method on itself, so we use <code>self$getParameterValue()</code> this is especially important when defining d/p/q/r functions.</p>
 <p>The pdf of the Uniform distribution is defined by <span class="math display">\[f(x) = 1/(b - a)\]</span> where <span class="math inline">\(b\)</span> and <span class="math inline">\(a\)</span> are upper and lower limits respectively.</p>
 <p>Hence our pdf function needs to get the values of these limits, and define the distribution support</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># non-vectorised</span>
 <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>){
   <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">x</span>))
-  <span class="no">lower</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"lower"</span>)
-  <span class="no">upper</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"upper"</span>)
+  <span class="no">lower</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"lower"</span>)
+  <span class="no">upper</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"upper"</span>)
   <span class="no">pdf</span>[<span class="no">x</span> <span class="kw">&gt;=</span> <span class="no">lower</span> <span class="kw">&amp;</span> <span class="no">x</span> <span class="kw">&lt;=</span> <span class="no">upper</span>] <span class="kw">=</span> <span class="fl">1</span>/(<span class="no">upper</span> - <span class="no">lower</span>)
   <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">pdf</span>)
 }</pre></body></html></div>
@@ -210,7 +210,7 @@
 <div id="parameterset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameterset" class="anchor"></a>ParameterSet</h3>
-<p>We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we have to first construct a <code>ParameterSet</code> objects. In fact we have seen these objects multiple times throughout these tutorials, they are what we see when we call <code><a href="../../reference/parameters.html">parameters()</a></code> on a distribution. Every time you use the <code>set/getParameterSet()</code> methods these are actually called on the <code>ParameterSet</code>. Constructing a ParameterSet is simple, you just have to remember which arguments are required, and luckily these are all given in <code><a href="../../reference/ParameterSet.html">?ParameterSet</a></code></p>
+<p>We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we have to first construct a <code>ParameterSet</code> objects. In fact we have seen these objects multiple times throughout these tutorials, they are what we see when we call <code>parameters()</code> on a distribution. Every time you use the <code>set/getParameterSet()</code> methods these are actually called on the <code>ParameterSet</code>. Constructing a ParameterSet is simple, you just have to remember which arguments are required, and luckily these are all given in <code>?ParameterSet</code></p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">ps</span> <span class="kw">&lt;-</span> <span class="no">ParameterSet</span>$<span class="fu">new</span>(<span class="kw">id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"lower"</span>,<span class="st">"upper"</span>), <span class="kw">value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">10</span>),
                        <span class="kw">support</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw pkg">set6</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/set6/man/Reals.html">Reals</a></span>$<span class="fu">new</span>(),<span class="kw pkg">set6</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/set6/man/Reals.html">Reals</a></span>$<span class="fu">new</span>()),
                        <span class="kw">settable</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fl">TRUE</span>, <span class="fl">TRUE</span>))
@@ -239,28 +239,28 @@
 <span class="co">#&gt; $variateForm</span>
 <span class="co">#&gt; [1] "univariate"</span></pre></body></html></div>
 <p>And now we can use your distribution:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">U</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">5</span>)
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">U</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fl">5</span>)
 <span class="co">#&gt; [1] 0.1111111</span>
 
 <span class="co"># The log argument can be imputed with decorators</span>
-<span class="fu"><a href="../../reference/decorate.html">decorate</a></span>(<span class="no">U</span>, <span class="st">"CoreStatistics"</span>)
+<span class="fu">decorate</span>(<span class="no">U</span>, <span class="st">"CoreStatistics"</span>)
 <span class="co">#&gt; Uniform is now decorated with CoreStatistics</span>
 <span class="co">#&gt; Uniform(lower = 1, upper = 10)</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">4</span>, <span class="kw">log</span> <span class="kw">=</span> <span class="no">T</span>)
+<span class="no">U</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fl">4</span>, <span class="kw">log</span> <span class="kw">=</span> <span class="no">T</span>)
 <span class="co">#&gt; [1] -2.197225</span>
 
 <span class="co"># Automatically returns 0 when outside the support</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(-<span class="fl">2</span>)
+<span class="no">U</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(-<span class="fl">2</span>)
 <span class="co">#&gt; [1] 0</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">11</span>)
+<span class="no">U</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fl">11</span>)
 <span class="co">#&gt; [1] 0</span></pre></body></html></div>
 <p>But the cdf returns NULL as we never supplied a function, so we could supply one or we could impute it using the <code>FunctionImputation</code> decorator:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">U</span>$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">5</span>)
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">U</span>$<span class="fu">cdf</span>(<span class="fl">5</span>)
 <span class="co">#&gt; NULL</span>
-<span class="fu"><a href="../../reference/decorate.html">decorate</a></span>(<span class="no">U</span>, <span class="st">"FunctionImputation"</span>)
+<span class="fu">decorate</span>(<span class="no">U</span>, <span class="st">"FunctionImputation"</span>)
 <span class="co">#&gt; Uniform is now decorated with FunctionImputation</span>
 <span class="co">#&gt; Uniform(lower = 1, upper = 10)</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">5</span>)
+<span class="no">U</span>$<span class="fu">cdf</span>(<span class="fl">5</span>)
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 0.4444444</span>
 
@@ -271,7 +271,7 @@
 <div id="extra-arguments" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extra-arguments" class="anchor"></a>Extra Arguments</h3>
-<p>Finally a whole host of other arguments could be supplied to the Distribution to make the results more precise, the full list can be seen in <code><a href="../../reference/Distribution.html">?Distribution</a></code>. A couple of things to take care about are:</p>
+<p>Finally a whole host of other arguments could be supplied to the Distribution to make the results more precise, the full list can be seen in <code>?Distribution</code>. A couple of things to take care about are:</p>
 <ol style="list-style-type: decimal">
 <li>pdfs and cdfs should have the same number of arguments. For example if the distribution is univariate both should have one argument only (and with the same name).</li>
 <li>By default the type and support are taken to be the Reals, if this is not the case then the true ones should be supplied as <a href="https://CRAN.R-project.org/package=set6">set6</a> objects.</li>
@@ -284,8 +284,8 @@
 <a href="#putting-everything-together" class="anchor"></a>Putting Everything Together</h2>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">cdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>){
   <span class="no">cdf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">x</span>))
-  <span class="no">lower</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"lower"</span>)
-  <span class="no">upper</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"upper"</span>)
+  <span class="no">lower</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"lower"</span>)
+  <span class="no">upper</span> <span class="kw">&lt;-</span> <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"upper"</span>)
   <span class="no">cdf</span>[<span class="no">x</span> <span class="kw">&gt;=</span> <span class="no">upper</span>] <span class="kw">=</span> <span class="fl">1</span>
   <span class="no">cdf</span>[<span class="no">x</span> <span class="kw">&gt;=</span> <span class="no">lower</span> <span class="kw">&amp;</span> <span class="no">x</span> <span class="kw">&lt;</span> <span class="no">upper</span>] <span class="kw">=</span> (<span class="no">x</span> - <span class="no">lower</span>) / (<span class="no">upper</span> - <span class="no">lower</span>)
   <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">cdf</span>)
@@ -294,32 +294,32 @@
 <span class="no">U</span> <span class="kw">&lt;-</span> <span class="no">Distribution</span>$<span class="fu">new</span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Uniform"</span>, <span class="kw">short_name</span> <span class="kw">=</span> <span class="st">"unif"</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="kw pkg">set6</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/set6/man/Reals.html">Reals</a></span>$<span class="fu">new</span>(),
                       <span class="kw">support</span> <span class="kw">=</span> <span class="kw pkg">set6</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/set6/man/Interval.html">Interval</a></span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>),  <span class="kw">symmetric</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">pdf</span> <span class="kw">=</span> <span class="no">pdf</span>, <span class="kw">cdf</span> <span class="kw">=</span> <span class="no">cdf</span>, <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">ps</span>, <span class="kw">description</span> <span class="kw">=</span> <span class="st">"Custom uniform distribution"</span>)
 
-<span class="fu"><a href="../../reference/decorate.html">decorate</a></span>(<span class="no">U</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span>, <span class="st">"FunctionImputation"</span>))
+<span class="fu">decorate</span>(<span class="no">U</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span>, <span class="st">"FunctionImputation"</span>))
 <span class="co">#&gt; Uniform is now decorated with CoreStatistics, ExoticStatistics, FunctionImputation</span>
 <span class="co">#&gt; unif(lower = 1, upper = 10)</span>
 
 <span class="no">U</span>$<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>()
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 5.5</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/variance.html">variance</a></span>()
+<span class="no">U</span>$<span class="fu">variance</span>()
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 6.75</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/hazard.html">hazard</a></span>(<span class="fl">5</span>)
+<span class="no">U</span>$<span class="fu">hazard</span>(<span class="fl">5</span>)
 <span class="co">#&gt; [1] 0.2</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/rand.html">rand</a></span>(<span class="fl">5</span>)
+<span class="no">U</span>$<span class="fu">rand</span>(<span class="fl">5</span>)
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 6.040 3.880 1.657 2.305 1.432</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/kurtosis.html">kurtosis</a></span>()
+<span class="no">U</span>$<span class="fu">kurtosis</span>()
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] -1.2</span>
-<span class="no">U</span>$<span class="fu"><a href="../../reference/survivalPNorm.html">survivalPNorm</a></span>(<span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">6</span>)
+<span class="no">U</span>$<span class="fu">survivalPNorm</span>(<span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">6</span>)
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 1.096094</span></pre></body></html></div>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#summary" class="anchor"></a>Summary</h2>
-<p>These tutorials have covered everything from the basics of constructing an implemented <code>SDistribution</code> right the way through, accessing and setting parameters, analysis distributions, manipulating them with decorators and wrappers, and finally adding your own custom distribution and using decorators to analyse it. Everything we have covered also applies to the Kernels in distr6, although these have less functionality, to see which are implemented run <code><a href="../../reference/listKernels.html">listKernels()</a></code>.</p>
+<p>These tutorials have covered everything from the basics of constructing an implemented <code>SDistribution</code> right the way through, accessing and setting parameters, analysis distributions, manipulating them with decorators and wrappers, and finally adding your own custom distribution and using decorators to analyse it. Everything we have covered also applies to the Kernels in distr6, although these have less functionality, to see which are implemented run <code>listKernels()</code>.</p>
 <p>The <a href="https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html">Extension Guidelines</a> explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The <a href="https://github.com/alan-turing-institute/distr6/wiki">project wiki</a> includes design documentation and contributor guidelines, please read these before making a pull request.</p>
 <p>We hope you find distr6 intuitive to use but if you have any questions or want to report a bug, please don’t hesitate to <a href="https://github.com/alan-turing-institute/distr6/issues">raise an issue</a>.</p>
 <p>Good luck and happy coding!</p>

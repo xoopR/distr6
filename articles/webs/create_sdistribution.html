@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating an SDistribution</h1>
             
-            <h4 class="date">2020-06-26</h4>
+            <h4 class="date">2020-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/create_sdistribution.rmd"><code>vignettes/webs/create_sdistribution.rmd</code></a></small>
       <div class="hidden name"><code>create_sdistribution.rmd</code></div>
@@ -220,7 +220,7 @@
 <div id="sdistribution-methods" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sdistribution-methods" class="anchor"></a>SDistribution Methods</h3>
-<p>For the full list of methods to (optimally) include see the ‘Statistical Methods’ section in the help pages of SDistribution: <code><a href="../../reference/SDistribution.html">?SDistribution</a></code>. This <strong>does not</strong> include pdf/cdf/quantile/rand, these are defined in the constructor and not in the class. Once again, if there is no closed form analytical expression possible, omit the method completely.</p>
+<p>For the full list of methods to (optimally) include see the ‘Statistical Methods’ section in the help pages of SDistribution: <code>?SDistribution</code>. This <strong>does not</strong> include pdf/cdf/quantile/rand, these are defined in the constructor and not in the class. Once again, if there is no closed form analytical expression possible, omit the method completely.</p>
 <p>The following methods are included by default and can therefore by omitted from the class definition:</p>
 <ol style="list-style-type: decimal">
 <li>prec</li>
@@ -231,22 +231,22 @@
 </ol>
 <p>Additionally the <code>pgf</code> method returns NaN if omitted but this can be overloaded by including the method in the class definition. Below is an example of adding four methods to the Normal distribution</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"mean"</span>,<span class="kw">function</span>(){
-  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"mean"</span>))
+  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"mean"</span>))
 })
 <span class="no">Normal</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"variance"</span>,<span class="kw">function</span>(){
-  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>))
+  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"var"</span>))
 })
 <span class="no">Normal</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"skewness"</span>,<span class="kw">function</span>(){
   <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fl">0</span>)
 })
 <span class="no">Normal</span>$<span class="fu">set</span>(<span class="st">"public"</span>, <span class="st">"mgf"</span>, <span class="kw">function</span>(<span class="no">t</span>){
-  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>((<span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"mean"</span>) * <span class="no">t</span>) + (<span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>) * <span class="no">t</span>^<span class="fl">2</span> * <span class="fl">0.5</span>)))
+  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>((<span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"mean"</span>) * <span class="no">t</span>) + (<span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"var"</span>) * <span class="no">t</span>^<span class="fl">2</span> * <span class="fl">0.5</span>)))
 })</pre></body></html></div>
 <p>Note:</p>
 <ol style="list-style-type: decimal">
 <li>Methods that require parameters use the <code>self</code> keyword and the <code>getParameterValue</code> method, we looked at this in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html">custom distribution tutorial</a>
 </li>
-<li>The arguments to the methods are not optional, they must have the names given in the <code><a href="../../reference/SDistribution.html">?SDistribution</a></code> help page, this ensures that the automated S3 dispatch methods run correctly</li>
+<li>The arguments to the methods are not optional, they must have the names given in the <code>?SDistribution</code> help page, this ensures that the automated S3 dispatch methods run correctly</li>
 </ol>
 </div>
 <div id="the-constructor" class="section level3">
@@ -257,12 +257,12 @@
                                           <span class="no">decorators</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="no">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>){
 
   <span class="no">private</span>$<span class="no">.parameters</span> <span class="kw">&lt;-</span> <span class="fu">getParameterSet</span>(<span class="no">self</span>, <span class="no">mean</span>, <span class="no">var</span>, <span class="no">sd</span>, <span class="no">prec</span>, <span class="no">verbose</span>)
-  <span class="no">self</span>$<span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="no">mean</span>, <span class="kw">var</span> <span class="kw">=</span> <span class="no">var</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="no">sd</span>, <span class="kw">prec</span> <span class="kw">=</span> <span class="no">prec</span>)
+  <span class="no">self</span>$<span class="fu">setParameterValue</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="no">mean</span>, <span class="kw">var</span> <span class="kw">=</span> <span class="no">var</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="no">sd</span>, <span class="kw">prec</span> <span class="kw">=</span> <span class="no">prec</span>)
 
-  <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="no">x1</span>, <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"sd"</span>))
-  <span class="no">cdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span>(<span class="no">x1</span>, <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"sd"</span>))
-  <span class="no">quantile</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">p</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span>(<span class="no">p</span>, <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"sd"</span>))
-  <span class="no">rand</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">n</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="no">n</span>, <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"sd"</span>))
+  <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="no">x1</span>, <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"sd"</span>))
+  <span class="no">cdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span>(<span class="no">x1</span>, <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"sd"</span>))
+  <span class="no">quantile</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">p</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span>(<span class="no">p</span>, <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"sd"</span>))
+  <span class="no">rand</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">n</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="no">n</span>, <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"mean"</span>), <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">"sd"</span>))
 
   <span class="no">super</span>$<span class="fu">initialize</span>(<span class="kw">decorators</span> <span class="kw">=</span> <span class="no">decorators</span>, <span class="kw">pdf</span> <span class="kw">=</span> <span class="no">pdf</span>, <span class="kw">cdf</span> <span class="kw">=</span> <span class="no">cdf</span>, <span class="kw">quantile</span> <span class="kw">=</span> <span class="no">quantile</span>,
                    <span class="kw">rand</span> <span class="kw">=</span> <span class="no">rand</span>, <span class="kw">support</span> <span class="kw">=</span> <span class="no">Reals</span>$<span class="fu">new</span>(<span class="kw">zero</span> <span class="kw">=</span> <span class="no">T</span>),
@@ -309,12 +309,12 @@
                                             <span class="st">"Standard Deviation - Scale Parameter"</span>,
                                             <span class="st">"Precision - Inverse Squared Scale Parameter"</span>))
 
-  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"var"</span>, <span class="st">"sd"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'var'</span>)^<span class="fl">0.5</span>)
-  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"var"</span>, <span class="st">"prec"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'var'</span>)^-<span class="fl">1</span>)
-  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"sd"</span>, <span class="st">"var"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'sd'</span>)^<span class="fl">2</span>)
-  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"sd"</span>, <span class="st">"prec"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'sd'</span>)^-<span class="fl">2</span>)
-  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"prec"</span>, <span class="st">"sd"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'prec'</span>)^-<span class="fl">0.5</span>)
-  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"prec"</span>, <span class="st">"var"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">'prec'</span>)^-<span class="fl">1</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"var"</span>, <span class="st">"sd"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">'var'</span>)^<span class="fl">0.5</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"var"</span>, <span class="st">"prec"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">'var'</span>)^-<span class="fl">1</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"sd"</span>, <span class="st">"var"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">'sd'</span>)^<span class="fl">2</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"sd"</span>, <span class="st">"prec"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">'sd'</span>)^-<span class="fl">2</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"prec"</span>, <span class="st">"sd"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">'prec'</span>)^-<span class="fl">0.5</span>)
+  <span class="no">ps</span>$<span class="fu">addDeps</span>(<span class="st">"prec"</span>, <span class="st">"var"</span>, <span class="kw">function</span>(<span class="no">self</span>) <span class="no">self</span>$<span class="fu">getParameterValue</span>(<span class="st">'prec'</span>)^-<span class="fl">1</span>)
 
   <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">ps</span>)
 }</pre></body></html></div>
@@ -336,7 +336,7 @@
 <p>That’s everything that is required to create your own SDistribution class. In summary the different components include</p>
 <ol style="list-style-type: decimal">
 <li>The 5 public variables</li>
-<li>Public methods: ‘statistical methods’ section in <code><a href="../../reference/SDistribution.html">?SDistribution</a></code>
+<li>Public methods: ‘statistical methods’ section in <code>?SDistribution</code>
 </li>
 <li>The constructor: Includes d/p/q/r methods, properties, traits and an argument for decorators</li>
 <li>

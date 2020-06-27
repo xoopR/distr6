@@ -243,7 +243,7 @@ is commonly used to extend the binomial distribution to multiple variables, for 
 <p>The distribution is supported on \(\sum x_i = N\).</p>
 <p><code>cdf</code> and <code>quantile</code>
 are
-omitted as no closed form analytic expression could be found, decorate with <code><a href='FunctionImputation.html'>FunctionImputation</a></code> for a numerical imputation.</p>
+omitted as no closed form analytic expression could be found, decorate with <code>FunctionImputation</code> for a numerical imputation.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -251,25 +251,25 @@ Michael P. McLaughlin.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other discrete distributions: 
-<code><a href='Bernoulli.html'>Bernoulli</a></code>,
-<code><a href='Binomial.html'>Binomial</a></code>,
-<code><a href='Categorical.html'>Categorical</a></code>,
-<code><a href='Degenerate.html'>Degenerate</a></code>,
-<code><a href='DiscreteUniform.html'>DiscreteUniform</a></code>,
-<code><a href='EmpiricalMV.html'>EmpiricalMV</a></code>,
-<code><a href='Empirical.html'>Empirical</a></code>,
-<code><a href='Geometric.html'>Geometric</a></code>,
-<code><a href='Hypergeometric.html'>Hypergeometric</a></code>,
-<code><a href='Logarithmic.html'>Logarithmic</a></code>,
-<code><a href='NegativeBinomial.html'>NegativeBinomial</a></code>,
-<code><a href='WeightedDiscrete.html'>WeightedDiscrete</a></code></p>
+<code>Bernoulli</code>,
+<code><a href='https://rdrr.io/r/stats/Binomial.html'>Binomial</a></code>,
+<code>Categorical</code>,
+<code>Degenerate</code>,
+<code>DiscreteUniform</code>,
+<code>EmpiricalMV</code>,
+<code>Empirical</code>,
+<code><a href='https://rdrr.io/r/stats/Geometric.html'>Geometric</a></code>,
+<code><a href='https://rdrr.io/r/stats/Hypergeometric.html'>Hypergeometric</a></code>,
+<code>Logarithmic</code>,
+<code>NegativeBinomial</code>,
+<code>WeightedDiscrete</code></p>
 <p>Other multivariate distributions: 
-<code><a href='Dirichlet.html'>Dirichlet</a></code>,
-<code><a href='EmpiricalMV.html'>EmpiricalMV</a></code>,
-<code><a href='MultivariateNormal.html'>MultivariateNormal</a></code></p></div>
+<code>Dirichlet</code>,
+<code>EmpiricalMV</code>,
+<code>MultivariateNormal</code></p></div>
     <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
 
-    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='SDistribution.html'>distr6::SDistribution</a></code> -&gt; <code>Multinomial</code></p>
+    <p><code>distr6::Distribution</code> -&gt; <code>distr6::SDistribution</code> -&gt; <code>Multinomial</code></p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl'>
@@ -347,29 +347,29 @@ with an integration analogue for continuous distributions.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
+<a id="method-variance"></a></p><h3>Method <code>variance()</code></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'>variance</span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<a id="method-skewness"></a></p><h3>Method <code>skewness()</code></h3>
 <p>The skewness of a distribution is defined by the third standardised moment,
 $$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'>skewness</span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-kurtosis"></a></p><h3>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<a id="method-kurtosis"></a></p><h3>Method <code>kurtosis()</code></h3>
 <p>The kurtosis of a distribution is defined by the fourth standardised moment,
 $$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.
 Excess Kurtosis is Kurtosis - 3.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'>kurtosis</span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -378,12 +378,12 @@ If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-entropy"></a></p><h3>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<a id="method-entropy"></a></p><h3>Method <code>entropy()</code></h3>
 <p>The entropy of a (discrete) distribution is defined by
 $$- \sum (f_X)log(f_X)$$
 where \(f_X\) is the pdf of distribution X, with an integration analogue for
 continuous distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='entropy.html'>entropy</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'>entropy</span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -392,11 +392,11 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mgf"></a></p><h3>Method <code><a href='mgf.html'>mgf()</a></code></h3>
+<a id="method-mgf"></a></p><h3>Method <code>mgf()</code></h3>
 <p>The moment generating function is defined by
 $$mgf_X(t) = E_X[exp(xt)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'>mgf</span>(<span class='no'>t</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -405,11 +405,11 @@ t integer to evaluate function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-cf"></a></p><h3>Method <code><a href='cf.html'>cf()</a></code></h3>
+<a id="method-cf"></a></p><h3>Method <code>cf()</code></h3>
 <p>The characteristic function is defined by
 $$cf_X(t) = E_X[exp(xti)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='cf.html'>cf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'>cf</span>(<span class='no'>t</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -418,11 +418,11 @@ t integer to evaluate function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pgf"></a></p><h3>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<a id="method-pgf"></a></p><h3>Method <code>pgf()</code></h3>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='no'>z</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Multinomial</span>$<span class='fu'>pgf</span>(<span class='no'>z</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>

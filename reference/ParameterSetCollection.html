@@ -228,7 +228,7 @@ distributions. Generally only need to be constructed internally." />
     </div>
 
     <div class="ref-description">
-    <p>ParameterSetCollection is used to combine multiple <a href='ParameterSet.html'>ParameterSet</a>s in wrapped
+    <p>ParameterSetCollection is used to combine multiple ParameterSets in wrapped
 distributions. Generally only need to be constructed internally.</p>
     </div>
 
@@ -236,15 +236,15 @@ distributions. Generally only need to be constructed internally.</p>
 
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='ParameterSet.html'>distr6::ParameterSet</a></code> -&gt; <code>ParameterSetCollection</code></p>
+    <p><code>distr6::ParameterSet</code> -&gt; <code>ParameterSetCollection</code></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl'>
 <dt><code>values</code></dt><dd><p>Returns parameter set values as a named list.</p></dd>
 
-<dt><code>deps</code></dt><dd><p>Returns <a href='ParameterSet.html'>ParameterSet</a> dependencies table.</p></dd>
+<dt><code>deps</code></dt><dd><p>Returns ParameterSet dependencies table.</p></dd>
 
-<dt><code>parameterSets</code></dt><dd><p>Returns <a href='ParameterSet.html'>ParameterSet</a>s in collection.</p></dd>
+<dt><code>parameterSets</code></dt><dd><p>Returns ParameterSets in collection.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -278,23 +278,23 @@ distributions. Generally only need to be constructed internally.</p>
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>...</code></dt><dd><p><code>([ParameterSet])</code><br />
-<a href='ParameterSet.html'>ParameterSet</a>s to combine into a collection. Should be supplied as named arguments
+ParameterSets to combine into a collection. Should be supplied as named arguments
 where the names are unique and correspond to references for the distributions.</p></dd>
 
 <dt><code>lst</code></dt><dd><p><code>(list())</code><br />
-Alternative constructor by supplying a named list of <a href='ParameterSet.html'>ParameterSet</a>s.</p></dd>
+Alternative constructor by supplying a named list of ParameterSets.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>=</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                           <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                           <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
+<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                           <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                           <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())
 
-<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                      <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                      <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>()))</pre><p></div></p>
+<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                      <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                      <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>()))</pre><p></div></p>
 
 <p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
@@ -304,17 +304,17 @@ Alternative constructor by supplying a named list of <a href='ParameterSet.html'
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>hide_cols</code></dt><dd><p><code>(character())</code><br />
-Names of columns in the <a href='ParameterSet.html'>ParameterSet</a> to hide whilst printing.</p></dd>
+Names of columns in the ParameterSet to hide whilst printing.</p></dd>
 
 <dt><code>...</code></dt><dd><p><br />
 Additional arguments, currently unused.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-parameters"></a></p><h3>Method <code><a href='parameters.html'>parameters()</a></code></h3>
+<a id="method-parameters"></a></p><h3>Method <code>parameters()</code></h3>
 <p>Returns the full parameter details for the supplied parameter, or returns <code>self</code>
 if <code>id</code> is <code>NULL</code> or unmatched.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'>parameters</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -323,9 +323,9 @@ id of parameter to return.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-getParameterValue"></a></p><h3>Method <code><a href='getParameterValue.html'>getParameterValue()</a></code></h3>
+<a id="method-getParameterValue"></a></p><h3>Method <code>getParameterValue()</code></h3>
 <p>Returns the value of the supplied parameter.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='no'>id</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'>getParameterValue</span>(<span class='no'>id</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -339,16 +339,16 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 </dl><p></div></p>
 <h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Binom1_prob"</span>)
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)</pre><p></div></p>
+<p><div class="r example copy"></p><pre><span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Binom1_prob"</span>)
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)</pre><p></div></p>
 
 <p><hr>
-<a id="method-getParameterSupport"></a></p><h3>Method <code><a href='getParameterSupport.html'>getParameterSupport()</a></code></h3>
+<a id="method-getParameterSupport"></a></p><h3>Method <code>getParameterSupport()</code></h3>
 <p>Returns the support of the supplied parameter.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'><a href='getParameterSupport.html'>getParameterSupport</a></span>(<span class='no'>id</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'>getParameterSupport</span>(<span class='no'>id</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -364,17 +364,17 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterSupport.html'>getParameterSupport</a></span>(<span class='st'>"Binom1_prob"</span>)</pre><p></div></p>
+<span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'>getParameterSupport</span>(<span class='st'>"Binom1_prob"</span>)</pre><p></div></p>
 
 <p><hr>
-<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<a id="method-setParameterValue"></a></p><h3>Method <code>setParameterValue()</code></h3>
 <p>Sets the value(s) of the given parameter(s). Because of R6 reference semantics
-this also updates the <a href='ParameterSet.html'>ParameterSet</a> of the wrapped distibution, and vice versa.
+this also updates the ParameterSet of the wrapped distibution, and vice versa.
 See examples.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'>setParameterValue</span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -392,20 +392,20 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Binom1_prob"</span>)
-<span class='no'>b</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)
-<span class='no'>psc</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>Binom1_prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
+<span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Binom1_prob"</span>)
+<span class='no'>b</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)
+<span class='no'>psc</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>Binom1_prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
 <span class='co'># both updated</span>
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Binom1_prob"</span>)
-<span class='no'>b</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Binom1_prob"</span>)
+<span class='no'>b</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)
 
-<span class='no'>g</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
+<span class='no'>g</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
 <span class='co'># both updated</span>
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Geom_prob"</span>)
-<span class='no'>g</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)</pre><p></div></p>
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Geom_prob"</span>)
+<span class='no'>g</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)</pre><p></div></p>
 
 <p><hr>
 <a id="method-merge"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/merge.html'>merge()</a></code></h3>
@@ -427,13 +427,13 @@ Alternative method of passing a list of ParameterSetCollections.</p></dd>
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc2</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>psc2</span>)$<span class='fu'><a href='parameters.html'>parameters</a></span>()</pre><p></div></p>
+<span class='no'>psc</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc2</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>psc2</span>)$<span class='fu'>parameters</span>()</pre><p></div></p>
 
 <p><hr>
 <a id="method-addDeps"></a></p><h3>Method <code>addDeps()</code></h3>
-<p>Dependencies should be added to internal <a href='ParameterSet.html'>ParameterSet</a>s.</p><h3>Usage</h3>
+<p>Dependencies should be added to internal ParameterSets.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'>addDeps</span>(<span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -463,9 +463,9 @@ Ignored.</p></dd>
 
 <span class='no'>b</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>=</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                           <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                           <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())</div><div class='output co'>#&gt;              id value       support
+<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                           <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                           <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())</div><div class='output co'>#&gt;              id value       support
 #&gt; 1:  Binom1_prob   0.5         [0,1]
 #&gt; 2: Binom1_qprob   0.5         [0,1]
 #&gt; 3:  Binom1_size    10            ℕ+
@@ -485,9 +485,9 @@ Ignored.</p></dd>
 #&gt; 7:                        Probability of success
 #&gt; 8:                        Probability of failure
 #&gt; 9: Form: number of failures before first success</div><div class='input'>
-<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                      <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                      <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>()))</div><div class='output co'>#&gt;              id value       support
+<span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                      <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                      <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>()))</div><div class='output co'>#&gt;              id value       support
 #&gt; 1:  Binom1_prob   0.5         [0,1]
 #&gt; 2: Binom1_qprob   0.5         [0,1]
 #&gt; 3:  Binom1_size    10            ℕ+
@@ -511,10 +511,10 @@ Ignored.</p></dd>
 <span class='co'>## Method `ParameterSetCollection$getParameterValue`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; $Binom1
+<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; $Binom1
 #&gt; [1] 0.5
 #&gt; 
 #&gt; $Binom2
@@ -529,34 +529,34 @@ Ignored.</p></dd>
 
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterSupport.html'>getParameterSupport</a></span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [0,1] </div><div class='input'>
+<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'>getParameterSupport</span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [0,1] </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSetCollection$setParameterValue`</span>
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(),
-                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='no'>psc</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>Binom1_prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
+<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom1</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Binom2</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>(),
+                                  <span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='no'>b</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='no'>psc</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>Binom1_prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
 <span class='co'># both updated</span>
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [1] 0.4</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; [1] 0.4</div><div class='input'>
-<span class='no'>g</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Binom1_prob"</span>)</div><div class='output co'>#&gt; [1] 0.4</div><div class='input'><span class='no'>b</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; [1] 0.4</div><div class='input'>
+<span class='no'>g</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
 <span class='co'># both updated</span>
-<span class='no'>psc</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"Geom_prob"</span>)</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'><span class='no'>g</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'>
+<span class='no'>psc</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"Geom_prob"</span>)</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'><span class='no'>g</span>$<span class='fu'>getParameterValue</span>(<span class='st'>"prob"</span>)</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSetCollection$merge`</span>
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='no'>Geometric</span>$<span class='fu'>new</span>()
-<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc2</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>())
-<span class='no'>psc</span>$<span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>psc2</span>)$<span class='fu'><a href='parameters.html'>parameters</a></span>()</div><div class='output co'>#&gt;             id value       support
+<span class='no'>psc</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Binom</span> <span class='kw'>=</span> <span class='no'>b</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc2</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='kw'>Geom</span> <span class='kw'>=</span> <span class='no'>g</span>$<span class='fu'>parameters</span>())
+<span class='no'>psc</span>$<span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>psc2</span>)$<span class='fu'>parameters</span>()</div><div class='output co'>#&gt;             id value       support
 #&gt; 1:  Binom_prob   0.5         [0,1]
 #&gt; 2: Binom_qprob   0.5         [0,1]
 #&gt; 3:  Binom_size    10            ℕ+

@@ -191,12 +191,12 @@
 <p>distr6 is not intended to replace the base R distributions function but instead to give an alternative that focuses on distributions as objects that can be manipulated and accessed as required. The main features therefore centre on OOP practices, design patterns and API design. Of particular note:</p>
 <p>All distributions in base R introduced as objects with methods for common statistical functions including pdf, cdf, inverse cdf, simulation, mean, variance, skewness and kurtosis</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="no">B</span> <span class="kw">&lt;-</span> <span class="no">Binomial</span>$<span class="fu">new</span>(<span class="kw">prob</span> <span class="kw">=</span> <span class="fl">0.5</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">10</span>)
-<span class="no">B</span>$<span class="fu"><a href="reference/pdf.html">pdf</a></span>(<span class="fl">1</span>:<span class="fl">10</span>)
+<span class="no">B</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fl">1</span>:<span class="fl">10</span>)
 <span class="co">#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500</span>
 <span class="co">#&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</span>
-<span class="no">B</span>$<span class="fu"><a href="reference/kurtosis.html">kurtosis</a></span>()
+<span class="no">B</span>$<span class="fu">kurtosis</span>()
 <span class="co">#&gt; [1] -0.2</span>
-<span class="no">B</span>$<span class="fu"><a href="reference/rand.html">rand</a></span>(<span class="fl">5</span>)
+<span class="no">B</span>$<span class="fu">rand</span>(<span class="fl">5</span>)
 <span class="co">#&gt; [1] 7 7 4 7 6</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">B</span>)
 <span class="co">#&gt; Binomial Probability Distribution. Parameterised with:</span>
@@ -219,7 +219,7 @@
 <span class="co">#&gt; Exp(scale = 2)</span>
 <span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">prec</span> <span class="kw">=</span> <span class="fl">2</span>)
 <span class="co">#&gt; Norm(mean = 0, prec = 2)</span>
-<span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="fl">3</span>)$<span class="fu"><a href="reference/parameters.html">parameters</a></span>()
+<span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="fl">3</span>)$<span class="fu">parameters</span>()
 <span class="co">#&gt;      id     value support                                 description</span>
 <span class="co">#&gt; 1: mean 0.0000000       ℝ                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var 9.0000000      ℝ+          Variance - Squared Scale Parameter</span>
@@ -227,24 +227,24 @@
 <span class="co">#&gt; 4: prec 0.1111111      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
 <p>Decorators for extending functionality of distributions to more complex modelling methods</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">B</span> <span class="kw">&lt;-</span> <span class="no">Binomial</span>$<span class="fu">new</span>()
-<span class="fu"><a href="reference/decorate.html">decorate</a></span>(<span class="no">B</span>, <span class="no">ExoticStatistics</span>)
+<span class="fu">decorate</span>(<span class="no">B</span>, <span class="no">ExoticStatistics</span>)
 <span class="co">#&gt; B is now decorated with ExoticStatistics</span>
 <span class="co">#&gt; Binom(prob = 0.5, size = 10)</span>
-<span class="no">B</span>$<span class="fu"><a href="reference/survival.html">survival</a></span>(<span class="fl">2</span>)
+<span class="no">B</span>$<span class="fu">survival</span>(<span class="fl">2</span>)
 <span class="co">#&gt; [1] 0.9453125</span>
-<span class="fu"><a href="reference/decorate.html">decorate</a></span>(<span class="no">B</span>, <span class="no">CoreStatistics</span>)
+<span class="fu">decorate</span>(<span class="no">B</span>, <span class="no">CoreStatistics</span>)
 <span class="co">#&gt; B is now decorated with CoreStatistics</span>
 <span class="co">#&gt; Binom(prob = 0.5, size = 10)</span>
-<span class="no">B</span>$<span class="fu"><a href="reference/kthmoment.html">kthmoment</a></span>(<span class="fl">6</span>)
+<span class="no">B</span>$<span class="fu">kthmoment</span>(<span class="fl">6</span>)
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 190</span></pre></div>
 <p>S3 compatibility to make the interface more flexible for users who are less familiar with OOP</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="no">B</span> <span class="kw">&lt;-</span> <span class="no">Binomial</span>$<span class="fu">new</span>()
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">B</span>) <span class="co"># B$mean()</span>
 <span class="co">#&gt; [1] 5</span>
-<span class="fu"><a href="reference/variance.html">variance</a></span>(<span class="no">B</span>) <span class="co"># B$variance()</span>
+<span class="fu">variance</span>(<span class="no">B</span>) <span class="co"># B$variance()</span>
 <span class="co">#&gt; [1] 2.5</span>
-<span class="fu"><a href="reference/cdf.html">cdf</a></span>(<span class="no">B</span>, <span class="fl">2</span>:<span class="fl">5</span>) <span class="co"># B$cdf(2:5)</span>
+<span class="fu">cdf</span>(<span class="no">B</span>, <span class="fl">2</span>:<span class="fl">5</span>) <span class="co"># B$cdf(2:5)</span>
 <span class="co">#&gt; [1] 0.0546875 0.1718750 0.3769531 0.6230469</span></pre></div>
 <p>Wrappers including truncation, huberization and product distributions for manipulation and composition of distributions.</p>
 <div class="sourceCode" id="cb5"><pre class="r"><span class="no">B</span> <span class="kw">&lt;-</span> <span class="no">Binomial</span>$<span class="fu">new</span>()

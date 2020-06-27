@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Statistical Methods</h1>
             
-            <h4 class="date">2020-06-26</h4>
+            <h4 class="date">2020-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/statistical_methods.rmd"><code>vignettes/webs/statistical_methods.rmd</code></a></small>
       <div class="hidden name"><code>statistical_methods.rmd</code></div>
@@ -194,13 +194,13 @@
 <p>Once again we start with constructing the Standard Normal distribution</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">N</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>()</pre></body></html></div>
 <p>For simplicity, we refer to both the probability density functions of continuous distributions and probability mass functions of discrete distributions, as the “pdf” function. This is in line with R stats using “d” for “density”. The other statistical methods from R stats are referred to as “cdf”, “quantile” and “rand”, the same as in R stats:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">1</span>:<span class="fl">2</span>) <span class="co"># Density evaluated at points '1' and '2'</span>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fl">1</span>:<span class="fl">2</span>) <span class="co"># Density evaluated at points '1' and '2'</span>
 <span class="co">#&gt; [1] 0.24197072 0.05399097</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">1</span>:<span class="fl">2</span>) <span class="co"># Distribution function evaluated at points '1' and '2'</span>
+<span class="no">N</span>$<span class="fu">cdf</span>(<span class="fl">1</span>:<span class="fl">2</span>) <span class="co"># Distribution function evaluated at points '1' and '2'</span>
 <span class="co">#&gt; [1] 0.8413447 0.9772499</span>
 <span class="no">N</span>$<span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span>(<span class="fl">0.975</span>) <span class="co"># Quantile function evaluated at 0.975</span>
 <span class="co">#&gt; [1] 1.959964</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/rand.html">rand</a></span>(<span class="fl">5</span>) <span class="co"># 5 samples from the Normal distribution</span>
+<span class="no">N</span>$<span class="fu">rand</span>(<span class="fl">5</span>) <span class="co"># 5 samples from the Normal distribution</span>
 <span class="co">#&gt; [1]  1.3709584 -0.5646982  0.3631284  0.6328626  0.4042683</span></pre></body></html></div>
 </div>
 <div id="other-mathematical-and-statistical-methods" class="section level2">
@@ -221,18 +221,18 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Traits: continuous; univariate</span>
 <span class="co">#&gt;  Properties: symmetric; mesokurtic; no skew</span></pre></body></html></div>
-<p>But all these statistics can be accessed individually as well. To see the full list of available methods view the ‘Statistical Methods’ section of the distribution help page, <code><a href="../../reference/Normal.html">?Normal</a></code>. All probability distributions have the same methods available if possible, i.e. If there is an analytic expression for a statistical result, then we provide it! Below are just a few examples</p>
+<p>But all these statistics can be accessed individually as well. To see the full list of available methods view the ‘Statistical Methods’ section of the distribution help page, <code><a href="https://rdrr.io/r/stats/Normal.html">?Normal</a></code>. All probability distributions have the same methods available if possible, i.e. If there is an analytic expression for a statistical result, then we provide it! Below are just a few examples</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>()
 <span class="co">#&gt; [1] 0</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/variance.html">variance</a></span>()
+<span class="no">N</span>$<span class="fu">variance</span>()
 <span class="co">#&gt; [1] 1</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/skewness.html">skewness</a></span>()
+<span class="no">N</span>$<span class="fu">skewness</span>()
 <span class="co">#&gt; [1] 0</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/kurtosis.html">kurtosis</a></span>(<span class="kw">excess</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="no">N</span>$<span class="fu">kurtosis</span>(<span class="kw">excess</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="co">#&gt; [1] 3</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/cf.html">cf</a></span>(<span class="fl">2</span>)
+<span class="no">N</span>$<span class="fu">cf</span>(<span class="fl">2</span>)
 <span class="co">#&gt; [1] 0.1353353+0i</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/mgf.html">mgf</a></span>(<span class="fl">2</span>)
+<span class="no">N</span>$<span class="fu">mgf</span>(<span class="fl">2</span>)
 <span class="co">#&gt; [1] 7.389056</span></pre></body></html></div>
 </div>
 <div id="summary" class="section level2">

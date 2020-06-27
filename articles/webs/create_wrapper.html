@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating a Wrapper</h1>
             
-            <h4 class="date">2020-06-26</h4>
+            <h4 class="date">2020-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/create_wrapper.rmd"><code>vignettes/webs/create_wrapper.rmd</code></a></small>
       <div class="hidden name"><code>create_wrapper.rmd</code></div>
@@ -196,7 +196,7 @@
 <p>The <code>DistributionWrapper</code> constructor takes one named argument and has <code>...</code> for named arguments to passed to the <code>Distribution</code> constructor. The named argument is <code>distlist</code>, a list of distributions to wrap. Internally the constructor combines all <code>ParameterSet</code> from every distribution into one <code>ParameterSet</code> that the user can see and query.</p>
 <p>For example, say we use the <code>MixtureDistribution</code> wrapper on two Binomial distributions, see how the parameter names are automatically updated</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">M</span> <span class="kw">&lt;-</span> <span class="no">MixtureDistribution</span>$<span class="fu">new</span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">Binomial</span>$<span class="fu">new</span>(),<span class="no">Binomial</span>$<span class="fu">new</span>()))
-<span class="no">M</span>$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+<span class="no">M</span>$<span class="fu">parameters</span>()
 <span class="co">#&gt;              id   value           support            description</span>
 <span class="co">#&gt; 1:  Binom1_prob     0.5             [0,1] Probability of Success</span>
 <span class="co">#&gt; 2: Binom1_qprob     0.5             [0,1] Probability of failure</span>
@@ -210,9 +210,9 @@
 <h3 class="hasAnchor">
 <a href="#setparametervalue" class="anchor"></a>setParameterValue</h3>
 <p>As the constructor may change the names of parameters, the <code>setParameterValue</code> is overloaded to ensure the correct <code>ParameterSet</code> from the corresponding distribution is updated. So given the example above, if a user wants to update the first Binomial distribution</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">M</span>$<span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(<span class="kw">Binom1_prob</span> <span class="kw">=</span> <span class="fl">0.2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">M</span>$<span class="fu">setParameterValue</span>(<span class="kw">Binom1_prob</span> <span class="kw">=</span> <span class="fl">0.2</span>)</pre></body></html></div>
 <p>And internally the parameter name is split at the underscore and updates the parameter of the first Binomial distribution, notice now that both the external representation of the combined <code>ParameterSet</code> is updated as well as the one in the internal model</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">M</span>$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">M</span>$<span class="fu">parameters</span>()
 <span class="co">#&gt;              id   value           support            description</span>
 <span class="co">#&gt; 1:  Binom1_prob     0.2             [0,1] Probability of Success</span>
 <span class="co">#&gt; 2: Binom1_qprob     0.8             [0,1] Probability of failure</span>
@@ -221,7 +221,7 @@
 <span class="co">#&gt; 5: Binom2_qprob     0.5             [0,1] Probability of failure</span>
 <span class="co">#&gt; 6:  Binom2_size      10                ℕ+       Number of trials</span>
 <span class="co">#&gt; 7:  mix_weights uniform {uniform} ∪ [0,1]       Mixture weights.</span>
-<span class="no">M</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>(<span class="st">"Binom1"</span>)$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+<span class="no">M</span>$<span class="fu">wrappedModels</span>(<span class="st">"Binom1"</span>)$<span class="fu">parameters</span>()
 <span class="co">#&gt;       id value support            description</span>
 <span class="co">#&gt; 1:  prob   0.2   [0,1] Probability of Success</span>
 <span class="co">#&gt; 2: qprob   0.8   [0,1] Probability of failure</span>
@@ -247,12 +247,12 @@
                                                          <span class="no">upper</span> <span class="kw">=</span> <span class="kw">NULL</span>){
 
   <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>,<span class="no">...</span>) {
-    <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="no">x1</span>) / (<span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>()))
+    <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="no">x1</span>) / (<span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>()))
   }
 
   <span class="no">cdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>,<span class="no">...</span>){
-    <span class="no">num</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">x1</span>) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>())
-    <span class="no">den</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>())
+    <span class="no">num</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">x1</span>) - <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>())
+    <span class="no">den</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>())
     <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">num</span>/<span class="no">den</span>)
   }
 
@@ -266,7 +266,7 @@
 
   <span class="no">super</span>$<span class="fu">initialize</span>(<span class="kw">distlist</span> <span class="kw">=</span> <span class="no">distlist</span>, <span class="kw">pdf</span> <span class="kw">=</span> <span class="no">pdf</span>, <span class="kw">cdf</span> <span class="kw">=</span> <span class="no">cdf</span>,
                    <span class="kw">name</span> <span class="kw">=</span> <span class="no">name</span>, <span class="kw">short_name</span> <span class="kw">=</span> <span class="no">short_name</span>, <span class="kw">support</span> <span class="kw">=</span> <span class="no">support</span>,
-                   <span class="kw">type</span> <span class="kw">=</span> <span class="no">distribution</span>$<span class="fu"><a href="../../reference/type.html">type</a></span>(),
+                   <span class="kw">type</span> <span class="kw">=</span> <span class="no">distribution</span>$<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">type</a></span>(),
                    <span class="kw">description</span> <span class="kw">=</span> <span class="no">description</span>)
 })</pre></body></html></div>
 <p>All wrappers should pass the following to the parent-class constructor:</p>
@@ -286,16 +286,16 @@
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">MixtureDistribution</span> <span class="kw">&lt;-</span> <span class="kw pkg">R6</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/R6/man/R6Class.html">R6Class</a></span>(<span class="st">"MixtureDistribution"</span>, <span class="kw">inherit</span> <span class="kw">=</span> <span class="no">DistributionWrapper</span>, <span class="kw">lock_objects</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="no">MixtureDistribution</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="kw">function</span>(<span class="no">distlist</span>, <span class="no">weights</span> <span class="kw">=</span> <span class="kw">NULL</span>){
 
-  <span class="no">distlist</span> <span class="kw">=</span> <span class="fu"><a href="../../reference/makeUniqueDistributions.html">makeUniqueDistributions</a></span>(<span class="no">distlist</span>)
+  <span class="no">distlist</span> <span class="kw">=</span> <span class="fu">makeUniqueDistributions</span>(<span class="no">distlist</span>)
   <span class="no">distnames</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">distlist</span>)
 
   <span class="no">private</span>$<span class="no">.weights</span> <span class="kw">&lt;-</span> <span class="no">weights</span>
 
   <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>,<span class="no">...</span>) {
     <span class="kw">if</span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">x1</span>)<span class="kw">==</span><span class="fl">1</span>)
-      <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>(), <span class="kw">function</span>(<span class="no">y</span>) <span class="no">y</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="no">x1</span>)) * <span class="no">private</span>$<span class="no">.weights</span>)))
+      <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">self</span>$<span class="fu">wrappedModels</span>(), <span class="kw">function</span>(<span class="no">y</span>) <span class="no">y</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="no">x1</span>)) * <span class="no">private</span>$<span class="no">.weights</span>)))
     <span class="kw">else</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>(), <span class="kw">function</span>(<span class="no">y</span>) <span class="no">y</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="no">x1</span>)) <span class="kw">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="no">private</span>$<span class="no">.weights</span>))))
+      <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">self</span>$<span class="fu">wrappedModels</span>(), <span class="kw">function</span>(<span class="no">y</span>) <span class="no">y</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="no">x1</span>)) <span class="kw">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="no">private</span>$<span class="no">.weights</span>))))
   }
 
   <span class="no">name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"Mixture of"</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="no">distnames</span>, <span class="kw">collapse</span> <span class="kw">=</span> <span class="st">"_"</span>))

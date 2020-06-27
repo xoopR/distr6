@@ -240,7 +240,7 @@
     <p>Wrappers in distr6 use the composite pattern (Gamma et al. 1994), so that a wrapped
 distribution has the same methods and fields as an unwrapped one. After wrapping, the parameters
 of a distribution are prefixed with the distribution name to ensure uniqueness of parameter IDs.</p>
-<p>Use <a href='listWrappers.html'>listWrappers</a> function to see constructable wrappers.</p>
+<p>Use listWrappers function to see constructable wrappers.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements
@@ -248,15 +248,15 @@ of Reusable Object-Oriented Software.” Addison-Wesley.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other wrappers: 
-<code><a href='Convolution.html'>Convolution</a></code>,
-<code><a href='HuberizedDistribution.html'>HuberizedDistribution</a></code>,
-<code><a href='MixtureDistribution.html'>MixtureDistribution</a></code>,
-<code><a href='ProductDistribution.html'>ProductDistribution</a></code>,
-<code><a href='TruncatedDistribution.html'>TruncatedDistribution</a></code>,
-<code><a href='VectorDistribution.html'>VectorDistribution</a></code></p></div>
+<code>Convolution</code>,
+<code>HuberizedDistribution</code>,
+<code>MixtureDistribution</code>,
+<code>ProductDistribution</code>,
+<code>TruncatedDistribution</code>,
+<code>VectorDistribution</code></p></div>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code>DistributionWrapper</code></p>
+    <p><code>distr6::Distribution</code> -&gt; <code>DistributionWrapper</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
@@ -308,7 +308,7 @@ of Reusable Object-Oriented Software.” Addison-Wesley.</p>
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>distlist</code></dt><dd><p><code>(list())</code><br />
-List of <a href='Distribution.html'>Distribution</a>s.</p></dd>
+List of Distributions.</p></dd>
 
 <dt><code>name</code></dt><dd><p><code>(character(1))</code><br />
 Wrapped distribution name.</p></dd>
@@ -339,22 +339,22 @@ Parameters added by the wrapper.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-wrappedModels"></a></p><h3>Method <code><a href='wrappedModels.html'>wrappedModels()</a></code></h3>
+<a id="method-wrappedModels"></a></p><h3>Method <code>wrappedModels()</code></h3>
 <p>Returns model(s) wrapped by this wrapper.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'><a href='wrappedModels.html'>wrappedModels</a></span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'>wrappedModels</span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>model</code></dt><dd><p><code>(character(1))</code> <br />
-id of wrapped <a href='s'>Distribution</a> to return. If <code>NULL</code> (default), a list of all wrapped <a href='Distribution.html'>Distribution</a>s
-is returned; if only one <a href='Distribution.html'>Distribution</a> is matched then this is returned, otherwise a list of
-<a href='Distribution.html'>Distribution</a>s.</p></dd>
+id of wrapped <a href='s'>Distribution</a> to return. If <code>NULL</code> (default), a list of all wrapped Distributions
+is returned; if only one Distribution is matched then this is returned, otherwise a list of
+Distributions.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<a id="method-setParameterValue"></a></p><h3>Method <code>setParameterValue()</code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>DistributionWrapper</span>$<span class='fu'>setParameterValue</span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
