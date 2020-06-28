@@ -26,3 +26,10 @@ test_that("autotest", {
     quantile = extraDistr::qdunif(c(0.24, 0.42, 0.5), 0, 10)
   )
 })
+
+test_that("manual", {
+  d <- VectorDistribution$new(distribution = "DiscreteUnif",
+                              params = data.frame(lower = 1:2, upper = 3:4))
+  expect_error(d$mode(), "cannot be")
+  expect_equal(d$mode(100), c(DUnif1 = 3, DUnif2 = 4))
+})

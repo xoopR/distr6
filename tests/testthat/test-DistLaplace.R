@@ -26,3 +26,7 @@ test_that("autotest", {
     quantile = extraDistr::qlaplace(c(0.24, 0.42, 0.5))
   )
 })
+
+test_that("manual", {
+  expect_equal(Laplace$new()$mgf(0.5), 4 / 3)
+})

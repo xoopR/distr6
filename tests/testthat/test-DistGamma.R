@@ -26,3 +26,7 @@ test_that("autotest", {
     quantile = qgamma(c(0.24, 0.42, 0.5), shape = 1)
   )
 })
+
+test_that("manual", {
+  expect_equal(Gamma$new(shape = 1, rate = 2)$mgf(1), 2)
+})

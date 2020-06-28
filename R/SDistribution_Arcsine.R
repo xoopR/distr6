@@ -57,7 +57,7 @@ Arcsine <- R6Class("Arcsine",
     #' with an integration analogue for continuous distributions.
     mean = function() {
       return((unlist(self$getParameterValue("upper")) + unlist(self$getParameterValue("lower"))) /
-               2)
+        2)
     },
 
     #' @description

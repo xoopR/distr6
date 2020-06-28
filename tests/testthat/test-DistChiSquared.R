@@ -26,3 +26,9 @@ test_that("autotest", {
     quantile = qchisq(c(0.24, 0.42, 0.5), 8)
   )
 })
+
+test_that("manual", {
+  dist <- ChiSquared$new(df = 1)
+  expect_equal(dist$mgf(0.1), (0.8)^-0.5)
+  expect_equal(dist$pgf(3), NaN)
+})

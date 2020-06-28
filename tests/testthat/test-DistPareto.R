@@ -25,3 +25,7 @@ test_that("autotest", {
     quantile = extraDistr::qpareto(c(0.24, 0.42, 0.5))
   )
 })
+
+test_that("manual", {
+  expect_equal(Pareto$new()$mgf(-1), pracma::incgam(1, -1))
+})

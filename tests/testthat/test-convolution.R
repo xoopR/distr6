@@ -26,6 +26,10 @@ test_that("discrete add", {
 test_that("discrete subtract", {
   expect_error((Binomial$new() - Binomial$new())$pdf(1), "not currently")
 })
+
+test_that("mixed", {
+  expect_error(Convolution$new(Binomial$new(), Normal$new()), "mixed distributions")
+})
 # test_that("discrete subtract", {
 #   Binom1 = Binomial$new(size = 5, prob = 0.1)
 #   Binom2 = Binomial$new(size = 4, prob = 0.1)

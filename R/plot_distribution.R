@@ -66,10 +66,6 @@ plot.Distribution <- function(x, fun = c("pdf", "cdf"), npoints = 3000,
   #######                         validations                     #######
   #######################################################################
 
-  if (testMixture(x)) {
-    stop("Mixture distributions not currently supported.")
-  }
-
   if (x$.__enclos_env__$private$.variates > 2) {
     stop("Distributions with over two variables not currently supported.")
   }

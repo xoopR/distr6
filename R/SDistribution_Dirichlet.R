@@ -119,7 +119,7 @@ Dirichlet <- R6Class("Dirichlet",
           parami <- params[[i]] / sum(params[[i]])
           var <- (parami * (1 - parami)) / (sum(params[[i]]) + 1)
           covar[, , i] <- matrix((-parami %*% t(parami)) /
-                                   (sum(params[[i]]) + 1), nrow = K, ncol = K)
+            (sum(params[[i]]) + 1), nrow = K, ncol = K)
           diag(covar[, , i]) <- var
         }
         return(covar)
@@ -147,7 +147,7 @@ Dirichlet <- R6Class("Dirichlet",
         })
       } else {
         return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params))
-               * digamma(sum(params)) - sum((params - 1) * digamma(params)))
+        * digamma(sum(params)) - sum((params - 1) * digamma(params)))
       }
     },
 

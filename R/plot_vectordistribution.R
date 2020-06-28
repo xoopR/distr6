@@ -26,7 +26,9 @@
 #' }
 #' @export
 plot.VectorDistribution <- function(x, fun = "pdf", topn, ind, cols, ...) {
-  stopifnot(getR6Class(x) == "VectorDistribution")
+  if (getR6Class(x) == "MixtureDistribution" | getR6Class(x) == "ProductDistribution") {
+    stopf("Plotting of `%s`s not currently supported.", getR6Class(x))
+  }
 
   if (!missing(ind)) {
     dist <- x[ind]

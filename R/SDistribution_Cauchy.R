@@ -121,7 +121,7 @@ Cauchy <- R6Class("Cauchy",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       return(exp((self$getParameterValue("location") * 1i * t) -
-                   (self$getParameterValue("scale") * abs(t))))
+        (self$getParameterValue("scale") * abs(t))))
     },
 
     #' @description The probability generating function is defined by

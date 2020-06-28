@@ -26,11 +26,17 @@ test_that("autotest", {
 })
 
 test_that("manual", {
-  dist = Arcsine$new(lower = 0, upper = 1)
-  expect_equal(dist$pdf(0.5), 1/(pi*sqrt(0.25)))
-  expect_equal(dist$pdf(0.5, log = TRUE), -log(pi*sqrt(0.25)))
-  expect_equal(dist$cdf(0.5), 2/pi * asin(sqrt(0.5)))
+  dist <- Arcsine$new(lower = 0, upper = 1)
+  expect_equal(dist$pdf(0.5), 1 / (pi * sqrt(0.25)))
+  expect_equal(dist$pdf(0.5, log = TRUE), -log(pi * sqrt(0.25)))
+  expect_equal(dist$cdf(0.5), 2 / pi * asin(sqrt(0.5)))
   expect_equal(dist$quantile(c(0, 1)), c(0, 1))
+})
+
+test_that("vector", {
+  d <- VectorDistribution$new(distribution = "Arcsine",
+                              params = data.frame(lower = 1:2, upper = 3:4))
+  expect_equal(d$mode(), data.table(Arc1 = list(1, 3), Arc2 = list(2, 4)))
 })
 
 test_that("cpp", {

@@ -21,3 +21,11 @@ test_that("autottest", {
     quantile = c(3, 3, 3)
   )
 })
+
+test_that("vector", {
+  d <- VectorDistribution$new(distribution = "Categorical",
+                              params = list(list(elements = 1, probs = 1),
+                                            list(elements = 2, probs = 1)))
+  expect_error(d$mode(), "cannot be")
+  expect_equal(d$mode(100), c(Cat1 = 1, Cat2 = 2))
+})

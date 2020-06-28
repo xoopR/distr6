@@ -125,7 +125,7 @@ Binomial <- R6Class("Binomial",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
       (self$getParameterValue("qprob") +
-         (self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size")
+        (self$getParameterValue("prob") * exp(t)))^self$getParameterValue("size")
     },
 
     #' @description The characteristic function is defined by
@@ -133,7 +133,7 @@ Binomial <- R6Class("Binomial",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
       (self$getParameterValue("qprob") +
-         (self$getParameterValue("prob") * exp((0 + 1i) * t)))^self$getParameterValue("size")
+        (self$getParameterValue("prob") * exp((0 + 1i) * t)))^self$getParameterValue("size")
     },
 
     #' @description The probability generating function is defined by
@@ -141,7 +141,7 @@ Binomial <- R6Class("Binomial",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       (self$getParameterValue("qprob") +
-         (self$getParameterValue("prob") * z))^self$getParameterValue("size")
+        (self$getParameterValue("prob") * z))^self$getParameterValue("size")
     },
 
     # optional setParameterValue

@@ -17,3 +17,7 @@ test_that("autotest", {
     quantile = qbeta(c(0.24, 0.42, 0.5), 1, 1)
   )
 })
+
+test_that("manual", {
+  expect_equal(BetaNoncentral$new(shape1 = 1, shape2 = 2)$properties$symmetry, "asymmetric")
+})

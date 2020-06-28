@@ -9,7 +9,7 @@ test_that("non-distlist", {
 test_that("SDistributions", {
   expect_equal(Binomial$new(), Binomial$new(),
                VectorDistribution$new(distribution = "Binomial",
-                                      params = data.table(prob = 0.5, size = c(10,10))))
+                                      params = data.table(prob = 0.5, size = c(10, 10))))
   expect_silent(c(Binomial$new(), Normal$new()))
   expect_equal(getR6Class(c(Binomial$new(), Normal$new())), "VectorDistribution")
   expect_equal(c(Binomial$new(), Normal$new())$short_name, "BinomVecNorm")
@@ -74,8 +74,4 @@ test_that("different lengths", {
     )
   )
   expect_silent(c(v1, v2))
-})
-
-test_that("unique", {
-
 })

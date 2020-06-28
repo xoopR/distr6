@@ -29,6 +29,12 @@ Convolution <- R6Class("Convolution",
       distlist <- list(dist1, dist2)
       names(distlist) <- makeUniqueNames(rsapply(distlist, "short_name", active = TRUE))
 
+      if ((testDiscrete(dist1) & testContinuous(dist2)) |
+          (testContinuous(dist1) & testDiscrete(dist2)) |
+          testMixture(dist1) | testMixture(dist2)) {
+        stop("Convolution not supported for mixed distributions.")
+      }
+
       private$.outerParameters <- ParameterSet$new(
         id = "add", value = add, support = LogicalSet$new(),
         description = "Type of convolution."
@@ -56,7 +62,7 @@ Convolution <- R6Class("Convolution",
       min <- max(d1$traits$type$lower, d2$traits$type$lower)
       max <- min(d1$traits$type$upper, d2$traits$type$upper)
 
-      if (testContinuous(d1) & testContinuous(d2)) {
+      if (testContinuous(d1)) {
         if (add) {
           return(sapply(x, function(z) {
             integrate(
@@ -74,7 +80,7 @@ Convolution <- R6Class("Convolution",
             )$value
           }))
         }
-      } else if (testDiscrete(d1) & testDiscrete(d2)) {
+      } else {
         if (add) {
           return(sapply(x, function(z) {
             ws <- d2$workingSupport
@@ -100,8 +106,6 @@ Convolution <- R6Class("Convolution",
           #   }))
           # },list(name1 = d1$short_name, name2 = d2$short_name))
         }
-      } else {
-        stop("Convolution not supported for mixed distributions.")
       }
     },
     .isCdf = 0L,

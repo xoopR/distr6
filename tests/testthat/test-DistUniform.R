@@ -22,3 +22,8 @@ test_that("autotest", {
     quantile = qunif(c(0.24, 0.42, 0.5))
   )
 })
+
+test_that("manual", {
+  expect_equal(Uniform$new()$mgf(0), 1)
+  expect_equal(Uniform$new()$cf(0), 1)
+})

@@ -285,12 +285,12 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
 
-      form = self$getParameterValue("form")[[1]]
+      form <- self$getParameterValue("form")[[1]]
 
       if (form %in% c("tbf", "tbs")) {
-        min = as.numeric(self$getParameterValue("size"))
+        min <- as.numeric(self$getParameterValue("size"))
       } else {
-        min = rep(0, length(self$getParameterValue("size")))
+        min <- rep(0, length(self$getParameterValue("size")))
       }
 
 

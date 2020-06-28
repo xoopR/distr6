@@ -158,7 +158,8 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     if (isQuantile(sdist)) {
       expect_rounded_equal(sdist$quantile(c(0.24, 0.42, 0.5)), quantile)
       if (sdist$.__enclos_env__$private$.log) {
-        expect_rounded_equal(sdist$quantile(log(1 - c(0.24, 0.42, 0.5)), lower.tail = FALSE, log.p = TRUE), quantile)
+        expect_rounded_equal(sdist$quantile(log(1 - c(0.24, 0.42, 0.5)),
+                                            lower.tail = FALSE, log.p = TRUE), quantile)
       }
     }
     if (isRand(sdist)) {
@@ -200,7 +201,7 @@ test_vectorised_dpqr <- function(vdist, method, args = NULL) {
                                      do.call(vdist[2][[method]], args),
                                      do.call(vdist[3][[method]], args))
   colnames(expected) <- vdist$modelTable$shortname
-  object <- do.call(vdist[[method]],args)
+  object <- do.call(vdist[[method]], args)
   expect_equal(object, expected)
 }
 
@@ -340,7 +341,8 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   if (isCdf(kern)) {
     expect_rounded_equal(kern$cdf(c(-0.1, 0, 0.1)), cdf)
     if (kern$.__enclos_env__$private$.log) {
-      expect_rounded_equal(kern$cdf(c(-0.1, 0, 0.1), lower.tail = FALSE, log.p = TRUE), log(1 - cdf), 3)
+      expect_rounded_equal(kern$cdf(c(-0.1, 0, 0.1), lower.tail = FALSE, log.p = TRUE),
+                           log(1 - cdf), 3)
     }
   }
 
