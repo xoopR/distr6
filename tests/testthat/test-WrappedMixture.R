@@ -62,7 +62,7 @@ test_that("check cdf", {
 })
 
 test_that("quantile", {
-  expect_error(pd$quantile(0), "unavailable")
+  expect_error(M$quantile(0), "unavailable")
 })
 
 test_that("check rand", {
