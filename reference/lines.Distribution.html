@@ -259,12 +259,12 @@ including: pdf, cdf, quantile, survival, hazard and cumulative hazard.</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Unlike the <code>plot.Distribution</code> function, no internal checks are performed
+    <p>Unlike the <code><a href='plot.Distribution.html'>plot.Distribution</a></code> function, no internal checks are performed
 to ensure that the added plot makes sense in the context of the current plotting window.
 Therefore this function assumes that the current plot is of the same value support, see examples.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>plot.Distribution</code> for plotting a <code>distr6</code> object.</p></div>
+    <div class='dont-index'><p><code><a href='plot.Distribution.html'>plot.Distribution</a></code> for plotting a <code>distr6</code> object.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='st'>"pdf"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>3</span>), <span class='st'>"pdf"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='lines.Distribution-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

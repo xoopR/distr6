@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating a Decorator</h1>
             
-            <h4 class="date">2020-06-27</h4>
+            <h4 class="date">2020-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/create_decorator.rmd"><code>vignettes/webs/create_decorator.rmd</code></a></small>
       <div class="hidden name"><code>create_decorator.rmd</code></div>
@@ -204,7 +204,7 @@
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">CoreStatistics</span> <span class="kw">&lt;-</span> <span class="kw pkg">R6</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/R6/man/R6Class.html">R6Class</a></span>(<span class="st">"CoreStatistics"</span>, <span class="kw">inherit</span> <span class="kw">=</span> <span class="no">DistributionDecorator</span>)</pre></body></html></div>
 <p>and methods (below are just two, again shortened)</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">CoreStatistics</span>$<span class="fu">set</span>(<span class="st">"public"</span>, <span class="st">"mgf"</span>, <span class="kw">function</span>(<span class="no">t</span>) {
-  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">self</span>$<span class="fu">genExp</span>(<span class="kw">trafo</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">x</span>) {<span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="no">x</span>*<span class="no">t</span>))}))
+  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/genExp.html">genExp</a></span>(<span class="kw">trafo</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">x</span>) {<span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="no">x</span>*<span class="no">t</span>))}))
 })
 
 <span class="no">CoreStatistics</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"genExp"</span>,<span class="kw">function</span>(<span class="no">trafo</span> <span class="kw">=</span> <span class="kw">NULL</span>){
@@ -214,20 +214,20 @@
   }
     <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span>(<span class="no">.distr6</span>$<span class="no">message_numeric</span>)
     <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span>(<span class="kw">function</span>(<span class="no">x</span>) {
-      <span class="no">pdfs</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="no">x</span>)
+      <span class="no">pdfs</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="no">x</span>)
       <span class="no">xs</span> <span class="kw">=</span> <span class="fu">trafo</span>(<span class="no">x</span>)
       <span class="no">xs</span>[<span class="no">pdfs</span><span class="kw">==</span><span class="fl">0</span>] <span class="kw">=</span> <span class="fl">0</span>
       <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">xs</span> * <span class="no">pdfs</span>)
-    }, <span class="kw">lower</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>(), <span class="kw">upper</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">sup</a></span>())$<span class="no">value</span>))
+    }, <span class="kw">lower</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>(), <span class="kw">upper</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>())$<span class="no">value</span>))
 })</pre></body></html></div>
 <p>We don’t have too many requirements in defining decorators apart from insisting on using the global ‘.distr6$message_numeric’ string as a message to tell users that numeric results may not be exact. We use messages instead of warnings as warnings stack, which quickly becomes annoying.</p>
 <p>Finally, we just want to point you in the direction of useful <code>Distribution</code> private variables that are rarely used outside of decorators, as an example take the <code>survival</code> method from the <code>ExoticStatistics</code> class</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">ExoticStatistics</span>$<span class="fu">set</span>(<span class="st">"public"</span>, <span class="st">"survival"</span>, <span class="kw">function</span>(<span class="no">x1</span>, <span class="no">log.p</span> <span class="kw">=</span> <span class="fl">FALSE</span>) {
   <span class="kw">if</span>(<span class="no">private</span>$<span class="no">.isCdf</span>)
-    <span class="no">self</span>$<span class="fu">cdf</span>(<span class="kw">x1</span> <span class="kw">=</span> <span class="no">x1</span>, <span class="kw">lower.tail</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">log.p</span> <span class="kw">=</span> <span class="no">log.p</span>)
+    <span class="no">self</span>$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="kw">x1</span> <span class="kw">=</span> <span class="no">x1</span>, <span class="kw">lower.tail</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">log.p</span> <span class="kw">=</span> <span class="no">log.p</span>)
   <span class="kw">else</span> {
     <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span>(<span class="no">.distr6</span>$<span class="no">message_numeric</span>)
-    <span class="no">surv</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span>(<span class="no">self</span>$<span class="no">pdf</span>, <span class="no">x1</span>, <span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">sup</a></span>())$<span class="no">value</span>
+    <span class="no">surv</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span>(<span class="no">self</span>$<span class="no">pdf</span>, <span class="no">x1</span>, <span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>())$<span class="no">value</span>
     <span class="kw">if</span>(<span class="no">log.p</span>)
       <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">surv</span>))
     <span class="kw">else</span>

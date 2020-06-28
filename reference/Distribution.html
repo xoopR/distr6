@@ -392,9 +392,9 @@ Used internally.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-strprint"></a></p><h3>Method <code>strprint()</code></h3>
+<a id="method-strprint"></a></p><h3>Method <code><a href='strprint.html'>strprint()</a></code></h3>
 <p>Printable string representation of the <code>Distribution</code>. Primarily used internally.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>strprint</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='strprint.html'>strprint</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -432,9 +432,9 @@ Unused. Added for consistency.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-parameters"></a></p><h3>Method <code>parameters()</code></h3>
+<a id="method-parameters"></a></p><h3>Method <code><a href='parameters.html'>parameters()</a></code></h3>
 <p>Returns the full parameter details for the supplied parameter.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>parameters</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='parameters.html'>parameters</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -443,9 +443,9 @@ id of parameter value to return.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-getParameterValue"></a></p><h3>Method <code>getParameterValue()</code></h3>
+<a id="method-getParameterValue"></a></p><h3>Method <code><a href='getParameterValue.html'>getParameterValue()</a></code></h3>
 <p>Returns the value of the supplied parameter.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>getParameterValue</span>(<span class='no'>id</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='no'>id</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -457,9 +457,9 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-setParameterValue"></a></p><h3>Method <code>setParameterValue()</code></h3>
+<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>setParameterValue</span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -476,20 +476,20 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 </dl><p></div></p>
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
-<span class='no'>b</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>))</pre><p></div></p>
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>))</pre><p></div></p>
 
 <p><hr>
-<a id="method-pdf"></a></p><h3>Method <code><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf()</a></code></h3>
+<a id="method-pdf"></a></p><h3>Method <code><a href='pdf.html'>pdf()</a></code></h3>
 <p>For discrete distributions the probability mass function (pmf) is returned, defined as
 $$p_X(x) = P(X = x)$$
 for continuous distributions the probability density function (pdf), \(f_X\), is returned
 $$f_X(x) = P(x &lt; X \le x + dx)$$
 for some infinitesimally small \(dx\).</p>
 <p>If available a pdf will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with FunctionImputation, <code>NULL</code> is
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
 returned.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -509,31 +509,31 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of VectorDistributions of multivariate distributions, then the third dimension corresponds
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 
 <span class='no'>mvn</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
-<span class='no'>mvn</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-<span class='no'>mvn</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)
-<span class='no'>mvn</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <p><hr>
-<a id="method-cdf"></a></p><h3>Method <code>cdf()</code></h3>
+<a id="method-cdf"></a></p><h3>Method <code><a href='cdf.html'>cdf()</a></code></h3>
 <p>The (lower tail) cumulative distribution function, \(F_X\), is defined as
 $$F_X(x) = P(X \le x)$$
 If <code>lower.tail</code> is FALSE then \(1 - F_X(x)\) is returned, also known as the
-<code>survival</code> function.</p>
+<code><a href='survival.html'>survival</a></code> function.</p>
 <p>If available a cdf will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with FunctionImputation, <code>NULL</code> is
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
 returned.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>cdf</span>(
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(
   <span class='no'>...</span>,
   <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -562,15 +562,15 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of VectorDistributions of multivariate distributions, then the third dimension corresponds
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='no'>b</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>b</span>$<span class='fu'>cdf</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</pre><p></div></p>
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</pre><p></div></p>
 
 <p><hr>
 <a id="method-quantile"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
@@ -578,7 +578,7 @@ to the distribution in the vector to evaluate.</p></dd>
 $$q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}$$ #nolint</p>
 <p>If <code>lower.tail</code> is FALSE then \(q_X(1-p)\) is returned.</p>
 <p>If available a quantile will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with FunctionImputation, <code>NULL</code> is
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
 returned.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(
   <span class='no'>...</span>,
@@ -609,7 +609,7 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of VectorDistributions of multivariate distributions, then the third dimension corresponds
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
@@ -620,12 +620,12 @@ to the distribution in the vector to evaluate.</p></dd>
 <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>,<span class='fl'>0.2</span>)))</pre><p></div></p>
 
 <p><hr>
-<a id="method-rand"></a></p><h3>Method <code>rand()</code></h3>
+<a id="method-rand"></a></p><h3>Method <code><a href='rand.html'>rand()</a></code></h3>
 <p>The rand function draws <code>n</code> simulations from the distribution.</p>
 <p>If available simulations will be returned using an analytic expression. Otherwise,
-if the distribution has not been decorated with FunctionImputation, <code>NULL</code> is
+if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
 returned.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>rand</span>(<span class='no'>n</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='no'>n</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -640,20 +640,20 @@ data.table::data.table.</p></dd>
 </dl><p></div></p>
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>b</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'>rand</span>(<span class='fl'>10</span>)
+<span class='no'>b</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>10</span>)
 
 <span class='no'>mvn</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
-<span class='no'>mvn</span>$<span class='fu'>rand</span>(<span class='fl'>5</span>)</pre><p></div></p>
+<span class='no'>mvn</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)</pre><p></div></p>
 
 <p><hr>
-<a id="method-prec"></a></p><h3>Method <code>prec()</code></h3>
+<a id="method-prec"></a></p><h3>Method <code><a href='prec.html'>prec()</a></code></h3>
 <p>Returns the precision of the distribution as <code>1/self$variance()</code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>prec</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='prec.html'>prec</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-stdev"></a></p><h3>Method <code>stdev()</code></h3>
+<a id="method-stdev"></a></p><h3>Method <code><a href='stdev.html'>stdev()</a></code></h3>
 <p>Returns the standard deviation of the distribution as <code><a href='https://rdrr.io/r/base/MathFun.html'>sqrt(self$variance())</a></code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>stdev</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='stdev.html'>stdev</a></span>()</pre><p></div></p>
 
 <p><hr>
 <a id="method-median"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></h3>
@@ -672,21 +672,21 @@ Ignored, addded for consistency.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-iqr"></a></p><h3>Method <code>iqr()</code></h3>
+<a id="method-iqr"></a></p><h3>Method <code><a href='iqr.html'>iqr()</a></code></h3>
 <p>Inter-quartile range of the distribution. Estimated as
 <code>self$quantile(0.75) - self$quantile(0.25)</code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>iqr</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='iqr.html'>iqr</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-correlation"></a></p><h3>Method <code>correlation()</code></h3>
+<a id="method-correlation"></a></p><h3>Method <code><a href='correlation.html'>correlation()</a></code></h3>
 <p>If univariate returns <code>1</code>, otherwise returns the distribution correlation.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>correlation</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='correlation.html'>correlation</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-liesInSupport"></a></p><h3>Method <code>liesInSupport()</code></h3>
+<a id="method-liesInSupport"></a></p><h3>Method <code><a href='liesInSupport.html'>liesInSupport()</a></code></h3>
 <p>Tests if the given values lie in the support of the distribution.
 Uses <code>[set6::Set]$contains</code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>liesInSupport</span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bound</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='liesInSupport.html'>liesInSupport</a></span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bound</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -704,10 +704,10 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-liesInType"></a></p><h3>Method <code>liesInType()</code></h3>
+<a id="method-liesInType"></a></p><h3>Method <code><a href='liesInType.html'>liesInType()</a></code></h3>
 <p>Tests if the given values lie in the type of the distribution.
 Uses <code>[set6::Set]$contains</code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'>liesInType</span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bound</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='liesInType.html'>liesInType</a></span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bound</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -744,20 +744,20 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='no'>b</span> <span class='kw'>=</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
-<span class='no'>b</span>$<span class='fu'>setParameterValue</span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>))
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)
+<span class='no'>b</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lst</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.4</span>))
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Distribution$pdf`</span>
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500
-#&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] -4.628887 -3.124809 -2.143980 -1.584364 -1.402043 -1.584364 -2.143980
-#&gt;  [8] -3.124809 -4.628887 -6.931472</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500
+<span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500
+#&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] -4.628887 -3.124809 -2.143980 -1.584364 -1.402043 -1.584364 -2.143980
+#&gt;  [8] -3.124809 -4.628887 -6.931472</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500
 #&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</div><div class='input'>
 <span class='no'>mvn</span> <span class='kw'>&lt;-</span> <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
-<span class='no'>mvn</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.01306423</div><div class='input'><span class='no'>mvn</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 1.072378e-03 7.225623e-06</div><div class='input'><span class='no'>mvn</span>$<span class='fu'><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;       MultiNorm
+<span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.01306423</div><div class='input'><span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 1.072378e-03 7.225623e-06</div><div class='input'><span class='no'>mvn</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;       MultiNorm
 #&gt; 1: 1.072378e-03
 #&gt; 2: 7.225623e-06</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
@@ -765,9 +765,9 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.01074219 0.05468750 0.17187500 0.37695313 0.62304687 0.82812500
-#&gt;  [7] 0.94531250 0.98925781 0.99902344 1.00000000</div><div class='input'><span class='no'>b</span>$<span class='fu'>cdf</span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;  [1] -0.01080030 -0.05623972 -0.18859117 -0.47313352 -0.97563444 -1.76098781
-#&gt;  [7] -2.90612011 -4.53357653 -6.93147181        -Inf</div><div class='input'><span class='no'>b</span>$<span class='fu'>cdf</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.01074219 0.05468750 0.17187500 0.37695313 0.62304687 0.82812500
+<span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.01074219 0.05468750 0.17187500 0.37695313 0.62304687 0.82812500
+#&gt;  [7] 0.94531250 0.98925781 0.99902344 1.00000000</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;  [1] -0.01080030 -0.05623972 -0.18859117 -0.47313352 -0.97563444 -1.76098781
+#&gt;  [7] -2.90612011 -4.53357653 -6.93147181        -Inf</div><div class='input'><span class='no'>b</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.01074219 0.05468750 0.17187500 0.37695313 0.62304687 0.82812500
 #&gt;  [7] 0.94531250 0.98925781 0.99902344 1.00000000</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Distribution$quantile`</span>
@@ -780,9 +780,9 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='no'>Binomial</span>$<span class='fu'>new</span>()
-<span class='no'>b</span>$<span class='fu'>rand</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 7 4 2 4 5 4 5 3 5 8</div><div class='input'>
+<span class='no'>b</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 7 4 2 4 5 4 5 3 5 8</div><div class='input'>
 <span class='no'>mvn</span> <span class='kw'>&lt;-</span> <span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()
-<span class='no'>mvn</span>$<span class='fu'>rand</span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt;            V1          V2
+<span class='no'>mvn</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt;            V1          V2
 #&gt; 1: -0.5536994  0.62898204
 #&gt; 2:  2.0650249 -1.63098940
 #&gt; 3:  0.5124269 -1.86301149

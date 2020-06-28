@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>R6 and Design Patterns</h1>
             
-            <h4 class="date">2020-06-27</h4>
+            <h4 class="date">2020-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/r6_and_design_patterns.rmd"><code>vignettes/webs/r6_and_design_patterns.rmd</code></a></small>
       <div class="hidden name"><code>r6_and_design_patterns.rmd</code></div>
@@ -284,9 +284,9 @@
   <span class="kw">if</span>(<span class="fu">getR6Class</span>(<span class="no">self</span>) <span class="kw">==</span> <span class="st">"DistributionWrapper"</span>)
     <span class="fu"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="fu">getR6Class</span>(<span class="no">self</span>), <span class="st">"is an abstract class that can't be initialized."</span>))
 
-  <span class="fu">assertDistributionList</span>(<span class="no">distlist</span>)
+  <span class="fu"><a href="../../reference/testDistributionList.html">assertDistributionList</a></span>(<span class="no">distlist</span>)
 
-  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">distlist</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span>$<span class="fu">parameters</span>()$<span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>())
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">distlist</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span>$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()$<span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>())
   <span class="no">private</span>$<span class="no">.wrappedModels</span> <span class="kw">&lt;-</span> <span class="no">distlist</span>
 
   <span class="kw">if</span>(<span class="no">prefixParams</span>){
@@ -296,12 +296,12 @@
       <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">params</span>)
     }))
     <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="no">params</span>) <span class="kw">&lt;-</span> <span class="kw">NULL</span>
-    <span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu">as.ParameterSet</span>(<span class="no">params</span>)
+    <span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/as.ParameterSet.html">as.ParameterSet</a></span>(<span class="no">params</span>)
   } <span class="kw">else</span>{
     <span class="kw">if</span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">distlist</span>) <span class="kw">==</span> <span class="fl">1</span>)
-      <span class="no">params</span> <span class="kw">&lt;-</span> <span class="no">distlist</span><span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">parameters</span>()
+      <span class="no">params</span> <span class="kw">&lt;-</span> <span class="no">distlist</span><span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
     <span class="kw">else</span>
-      <span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">rbind</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">distlist</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span>$<span class="fu">parameters</span>()))
+      <span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">rbind</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">distlist</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span>$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()))
   }
 
   <span class="no">super</span>$<span class="fu">initialize</span>(<span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>, <span class="no">...</span>)
@@ -310,15 +310,15 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">TruncatedDistribution</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="kw">function</span>(<span class="no">distribution</span>, <span class="no">lower</span> <span class="kw">=</span> <span class="kw">NULL</span>,
                                                          <span class="no">upper</span> <span class="kw">=</span> <span class="kw">NULL</span>){
   <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>,<span class="no">...</span>) {
-    <span class="kw">if</span>(<span class="no">x1</span> <span class="kw">&lt;=</span> <span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>() <span class="kw">|</span> <span class="no">x1</span> <span class="kw">&gt;</span> <span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">sup</a></span>())
+    <span class="kw">if</span>(<span class="no">x1</span> <span class="kw">&lt;=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>() <span class="kw">|</span> <span class="no">x1</span> <span class="kw">&gt;</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>())
       <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fl">0</span>)
     <span class="kw">else</span>
-      <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="no">x1</span>) / (<span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>()))
+      <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="no">x1</span>) / (<span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>()))
   }
   <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="no">pdf</span>)$<span class="no">self</span> <span class="kw">&lt;-</span> <span class="no">self</span>
   <span class="no">cdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>,<span class="no">...</span>){
-    <span class="no">num</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">x1</span>) - <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>())
-    <span class="no">den</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu">wrappedModels</span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu">cdf</span>(<span class="no">self</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">inf</a></span>())
+    <span class="no">num</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">x1</span>) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>())
+    <span class="no">den</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>())
     <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">num</span>/<span class="no">den</span>)
   }
   <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="no">cdf</span>)$<span class="no">self</span> <span class="kw">&lt;-</span> <span class="no">self</span>
@@ -331,7 +331,7 @@
 
   <span class="no">super</span>$<span class="fu">initialize</span>(<span class="kw">distlist</span> <span class="kw">=</span> <span class="no">distlist</span>, <span class="kw">pdf</span> <span class="kw">=</span> <span class="no">pdf</span>, <span class="kw">cdf</span> <span class="kw">=</span> <span class="no">cdf</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="no">name</span>,
                    <span class="kw">short_name</span> <span class="kw">=</span> <span class="no">short_name</span>, <span class="kw">support</span> <span class="kw">=</span> <span class="no">support</span>,
-                   <span class="kw">type</span> <span class="kw">=</span> <span class="no">distribution</span>$<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">type</a></span>(), <span class="kw">prefixParams</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
+                   <span class="kw">type</span> <span class="kw">=</span> <span class="no">distribution</span>$<span class="fu"><a href="../../reference/type.html">type</a></span>(), <span class="kw">prefixParams</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
                    <span class="kw">description</span> <span class="kw">=</span> <span class="no">description</span>)
 })</pre></body></html></div>
 </div>

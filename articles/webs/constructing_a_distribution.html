@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Constructing a Distribution</h1>
             
-            <h4 class="date">2020-06-27</h4>
+            <h4 class="date">2020-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/constructing_a_distribution.rmd"><code>vignettes/webs/constructing_a_distribution.rmd</code></a></small>
       <div class="hidden name"><code>constructing_a_distribution.rmd</code></div>
@@ -230,7 +230,7 @@
 <p>Notice how the parameterisation chosen in construction is shown in the print method. Finally be careful not to construct a distribution using conflicting parameterisations. For example:</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">var</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">prec</span> <span class="kw">=</span> <span class="fl">4</span>)
 <span class="co">#&gt; Norm(mean = 2, var = 0.25, sd = 0.5, prec = 4)</span></pre></body></html></div>
-<p>Only the mean and precision arguments are used, if you’re unsure which parameters are conflicting see the help page for the distribution, <code><a href="https://rdrr.io/r/stats/Normal.html">?Normal</a></code>.</p>
+<p>Only the mean and precision arguments are used, if you’re unsure which parameters are conflicting see the help page for the distribution, <code><a href="../../reference/Normal.html">?Normal</a></code>.</p>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">

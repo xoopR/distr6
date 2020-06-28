@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multivariate Distributions</h1>
             
-            <h4 class="date">2020-06-27</h4>
+            <h4 class="date">2020-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/multivariates.rmd"><code>vignettes/webs/multivariates.rmd</code></a></small>
       <div class="hidden name"><code>multivariates.rmd</code></div>
@@ -205,19 +205,19 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/Multinom.html">dmultinom</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">prob</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.2</span>,<span class="fl">0.8</span>))
 <span class="co">#&gt; [1] 0.384</span></pre></body></html></div>
 <p>Whereas in distr6, each point is its own argument</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">Multinomial</span>$<span class="fu">new</span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">probs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.2</span>,<span class="fl">0.8</span>))$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fl">1</span>,<span class="fl">2</span>)
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">Multinomial</span>$<span class="fu">new</span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">probs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.2</span>,<span class="fl">0.8</span>))$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">1</span>,<span class="fl">2</span>)
 <span class="co">#&gt; [1] 0.384</span></pre></body></html></div>
 <p>There is a very important reason for this: vectorisation. In R stats there is no way to generate multiple points from a multivariate distribution, whereas in distr6…</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">MN</span>$<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">3</span>))
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">MN</span>$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">3</span>))
 <span class="co">#&gt; [1] 0.0130642333 0.0002392798</span>
-<span class="no">MN</span>$<span class="fu">rand</span>(<span class="fl">5</span>)
+<span class="no">MN</span>$<span class="fu"><a href="../../reference/rand.html">rand</a></span>(<span class="fl">5</span>)
 <span class="co">#&gt;           V1          V2</span>
 <span class="co">#&gt; 1: 1.3709584 -0.56469817</span>
 <span class="co">#&gt; 2: 0.3631284  0.63286260</span>
 <span class="co">#&gt; 3: 0.4042683 -0.10612452</span>
 <span class="co">#&gt; 4: 1.5115220 -0.09465904</span>
 <span class="co">#&gt; 5: 2.0184237 -0.06271410</span></pre></body></html></div>
-<p>Note: <code>cdf()</code> and <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> are often omitted from multivariate distributions n distr6 as no closed form analytic expression exists.</p>
+<p>Note: <code><a href="../../reference/cdf.html">cdf()</a></code> and <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> are often omitted from multivariate distributions n distr6 as no closed form analytic expression exists.</p>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">

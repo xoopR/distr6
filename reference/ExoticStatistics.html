@@ -238,18 +238,18 @@ exploited, otherwise numerical ones are used with a message.</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Decorator objects add functionality to the given Distribution object by copying methods
-in the decorator environment to the chosen Distribution environment.</p>
+    <p>Decorator objects add functionality to the given <a href='Distribution.html'>Distribution</a> object by copying methods
+in the decorator environment to the chosen <a href='Distribution.html'>Distribution</a> environment.</p>
 <p>All methods implemented in decorators try to exploit analytical results where possible, otherwise
 numerical results are used with a message.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other decorators: 
-<code>CoreStatistics</code>,
-<code>FunctionImputation</code></p></div>
+<code><a href='CoreStatistics.html'>CoreStatistics</a></code>,
+<code><a href='FunctionImputation.html'>FunctionImputation</a></code></p></div>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code>distr6::DistributionDecorator</code> -&gt; <code>ExoticStatistics</code></p>
+    <p><code><a href='DistributionDecorator.html'>distr6::DistributionDecorator</a></code> -&gt; <code>ExoticStatistics</code></p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl'>
@@ -280,11 +280,11 @@ numerical results are used with a message.</p>
 </details>
 
 <hr>
-<a id="method-cdfAntiDeriv"></a></p><h3>Method <code>cdfAntiDeriv()</code></h3>
+<a id="method-cdfAntiDeriv"></a></p><h3>Method <code><a href='cdfAntiDeriv.html'>cdfAntiDeriv()</a></code></h3>
 <p>The cdf anti-derivative is defined by $$acdf(a, b) = \int_a^b F_X(x) dx$$
 where X is the distribution, \(F_X\) is the cdf of the distribution \(X\) and
 \(a, b\) are the <code>lower</code> and <code>upper</code> limits of integration.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>cdfAntiDeriv</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='cdfAntiDeriv.html'>cdfAntiDeriv</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -296,12 +296,12 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-survivalAntiDeriv"></a></p><h3>Method <code>survivalAntiDeriv()</code></h3>
+<a id="method-survivalAntiDeriv"></a></p><h3>Method <code><a href='survivalAntiDeriv.html'>survivalAntiDeriv()</a></code></h3>
 <p>The survival anti-derivative is defined by
 $$as(a, b) = \int_a^b S_X(x) dx$$
 where X is the distribution, \(S_X\) is the survival function of the distribution
 \(X\) and \(a, b\) are the <code>lower</code> and <code>upper</code> limits of integration.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>survivalAntiDeriv</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='survivalAntiDeriv.html'>survivalAntiDeriv</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -313,12 +313,12 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-survival"></a></p><h3>Method <code>survival()</code></h3>
+<a id="method-survival"></a></p><h3>Method <code><a href='survival.html'>survival()</a></code></h3>
 <p>The survival function is defined by
 $$S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx$$
 where X is the distribution, \(S_X\) is the survival function, \(F_X\) is the cdf
 and \(f_X\) is the pdf.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>survival</span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='survival.html'>survival</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -338,16 +338,16 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of VectorDistributions of multivariate distributions, then the third dimension corresponds
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-hazard"></a></p><h3>Method <code>hazard()</code></h3>
+<a id="method-hazard"></a></p><h3>Method <code><a href='hazard.html'>hazard()</a></code></h3>
 <p>The hazard function is defined by
 $$h_X(x) = \frac{f_X}{S_X}$$
 where X is the distribution, \(S_X\) is the survival function and \(f_X\) is the pdf.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>hazard</span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='hazard.html'>hazard</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -367,16 +367,16 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of VectorDistributions of multivariate distributions, then the third dimension corresponds
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-cumHazard"></a></p><h3>Method <code>cumHazard()</code></h3>
+<a id="method-cumHazard"></a></p><h3>Method <code><a href='cumHazard.html'>cumHazard()</a></code></h3>
 <p>The cumulative hazard function is defined analytically by
 $$H_X(x) = -log(S_X)$$
 where X is the distribution and \(S_X\) is the survival function.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>cumHazard</span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='cumHazard.html'>cumHazard</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -396,18 +396,18 @@ data.table::data.table.</p></dd>
 <dt><code>data</code></dt><dd><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
 Alternative method to specify points to evaluate. If univariate then rows correspond with number
 of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of VectorDistributions of multivariate distributions, then the third dimension corresponds
+case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-cdfPNorm"></a></p><h3>Method <code>cdfPNorm()</code></h3>
+<a id="method-cdfPNorm"></a></p><h3>Method <code><a href='cdfPNorm.html'>cdfPNorm()</a></code></h3>
 <p>The p-norm of the cdf is defined by
 $$(\int_a^b |F_X|^p d\mu)^{1/p}$$
 where X is the distribution, \(F_X\) is the cdf and \(a, b\)
 are the <code>lower</code> and <code>upper</code> limits of integration.</p>
 <p>Returns NULL if distribution is not continuous.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>cdfPNorm</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='cdfPNorm.html'>cdfPNorm</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -422,13 +422,13 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pdfPNorm"></a></p><h3>Method <code>pdfPNorm()</code></h3>
+<a id="method-pdfPNorm"></a></p><h3>Method <code><a href='pdfPNorm.html'>pdfPNorm()</a></code></h3>
 <p>The p-norm of the pdf is defined by
 $$(\int_a^b |f_X|^p d\mu)^{1/p}$$
 where X is the distribution, \(f_X\) is the pdf and \(a, b\)
 are the <code>lower</code> and <code>upper</code> limits of integration.</p>
 <p>Returns NULL if distribution is not continuous.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>pdfPNorm</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='pdfPNorm.html'>pdfPNorm</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -443,13 +443,13 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-survivalPNorm"></a></p><h3>Method <code>survivalPNorm()</code></h3>
+<a id="method-survivalPNorm"></a></p><h3>Method <code><a href='survivalPNorm.html'>survivalPNorm()</a></code></h3>
 <p>The p-norm of the survival function is defined by
 $$(\int_a^b |S_X|^p d\mu)^{1/p}$$
 where X is the distribution, \(S_X\) is the survival function and \(a, b\)
 are the <code>lower</code> and <code>upper</code> limits of integration.</p>
 <p>Returns NULL if distribution is not continuous.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'>survivalPNorm</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ExoticStatistics</span>$<span class='fu'><a href='survivalPNorm.html'>survivalPNorm</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -477,7 +477,7 @@ Upper bounds of integral.</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>decorate</span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>(), <span class='st'>"ExoticStatistics"</span>)</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>Exponential</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='st'>"ExoticStatistics"</span>)</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>ExoticStatistics</span>$<span class='fu'>new</span>()$<span class='fu'>decorate</span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>())</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>(), <span class='st'>"ExoticStatistics"</span>)</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>Exponential</span>$<span class='fu'>new</span>(<span class='kw'>decorators</span> <span class='kw'>=</span> <span class='st'>"ExoticStatistics"</span>)</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='no'>ExoticStatistics</span>$<span class='fu'>new</span>()$<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>())</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

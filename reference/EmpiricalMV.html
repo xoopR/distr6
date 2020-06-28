@@ -244,7 +244,7 @@ is commonly used in sampling such as MCMC.</p>
 <p>Sampling from this distribution is performed with the <a href='https://rdrr.io/r/base/sample.html'>sample</a> function with the elements given
 as the support set and uniform probabilities. Sampling is performed with replacement, which is
 consistent with other distributions but non-standard for Empirical distributions. Use
-simulateEmpiricalDistribution to sample without replacement.</p>
+<a href='simulateEmpiricalDistribution.html'>simulateEmpiricalDistribution</a> to sample without replacement.</p>
 <p>The cdf assumes that the elements are supplied in an indexed order
 (otherwise the results are meaningless).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -254,25 +254,25 @@ Michael P. McLaughlin.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other discrete distributions: 
-<code>Bernoulli</code>,
-<code><a href='https://rdrr.io/r/stats/Binomial.html'>Binomial</a></code>,
-<code>Categorical</code>,
-<code>Degenerate</code>,
-<code>DiscreteUniform</code>,
-<code>Empirical</code>,
-<code><a href='https://rdrr.io/r/stats/Geometric.html'>Geometric</a></code>,
-<code><a href='https://rdrr.io/r/stats/Hypergeometric.html'>Hypergeometric</a></code>,
-<code>Logarithmic</code>,
-<code><a href='https://rdrr.io/r/stats/Multinom.html'>Multinomial</a></code>,
-<code>NegativeBinomial</code>,
-<code>WeightedDiscrete</code></p>
+<code><a href='Bernoulli.html'>Bernoulli</a></code>,
+<code><a href='Binomial.html'>Binomial</a></code>,
+<code><a href='Categorical.html'>Categorical</a></code>,
+<code><a href='Degenerate.html'>Degenerate</a></code>,
+<code><a href='DiscreteUniform.html'>DiscreteUniform</a></code>,
+<code><a href='Empirical.html'>Empirical</a></code>,
+<code><a href='Geometric.html'>Geometric</a></code>,
+<code><a href='Hypergeometric.html'>Hypergeometric</a></code>,
+<code><a href='Logarithmic.html'>Logarithmic</a></code>,
+<code><a href='Multinomial.html'>Multinomial</a></code>,
+<code><a href='NegativeBinomial.html'>NegativeBinomial</a></code>,
+<code><a href='WeightedDiscrete.html'>WeightedDiscrete</a></code></p>
 <p>Other multivariate distributions: 
-<code>Dirichlet</code>,
-<code><a href='https://rdrr.io/r/stats/Multinom.html'>Multinomial</a></code>,
-<code>MultivariateNormal</code></p></div>
+<code><a href='Dirichlet.html'>Dirichlet</a></code>,
+<code><a href='Multinomial.html'>Multinomial</a></code>,
+<code><a href='MultivariateNormal.html'>MultivariateNormal</a></code></p></div>
     <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
 
-    <p><code>distr6::Distribution</code> -&gt; <code>distr6::SDistribution</code> -&gt; <code>EmpiricalMV</code></p>
+    <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='SDistribution.html'>distr6::SDistribution</a></code> -&gt; <code>EmpiricalMV</code></p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl'>
@@ -332,7 +332,7 @@ Decorators to add to the distribution during construction.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>EmpiricalMV</span>$<span class='fu'>new</span>(<span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()$<span class='fu'>rand</span>(<span class='fl'>100</span>))</pre><p></div></p>
+<p><div class="r example copy"></p><pre><span class='no'>EmpiricalMV</span>$<span class='fu'>new</span>(<span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>100</span>))</pre><p></div></p>
 
 <p><hr>
 <a id="method-mean"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
@@ -342,17 +342,17 @@ with an integration analogue for continuous distributions.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>EmpiricalMV</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-variance"></a></p><h3>Method <code>variance()</code></h3>
+<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>EmpiricalMV</span>$<span class='fu'>variance</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>EmpiricalMV</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-setParameterValue"></a></p><h3>Method <code>setParameterValue()</code></h3>
+<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>EmpiricalMV</span>$<span class='fu'>setParameterValue</span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>EmpiricalMV</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -386,7 +386,7 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <span class='co'>## Method `EmpiricalMV$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>EmpiricalMV</span>$<span class='fu'>new</span>(<span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()$<span class='fu'>rand</span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; EmpMV() </div></pre>
+<span class='no'>EmpiricalMV</span>$<span class='fu'>new</span>(<span class='no'>MultivariateNormal</span>$<span class='fu'>new</span>()$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; EmpMV() </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
