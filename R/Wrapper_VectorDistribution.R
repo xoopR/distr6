@@ -739,7 +739,7 @@ constructor, use `distlist` instead.")
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       if (is.null(data)) {
         data <- as.matrix(data.table(...))
-      } else if (is.null(dim(data)[3])) {
+      } else if (length(dim(data)) == 2) {
         data <- as.matrix(data)
       }
 
