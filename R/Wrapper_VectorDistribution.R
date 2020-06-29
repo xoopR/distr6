@@ -106,7 +106,7 @@ constructor, use `distlist` instead.")
         # create wrapper parameters by cloning distribution parameters and setting by given params
         pdist <- get(distribution)
 
-        p <- do.call(paste0("getParameterSet.", distribution), params[[1]])
+        p <- do.call(paste0("getParameterSet.", distribution), c(params[[1]], shared_params))
         paramlst <- vector("list", length(params))
         for (i in seq_along(params)) {
           paramlst[[i]] <- p$clone(deep = TRUE)
@@ -123,7 +123,8 @@ constructor, use `distlist` instead.")
           names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
           params <- c(params, shared_params)
         }
-        parameters <- ParameterSetCollection$new(lst = paramlst)$setParameterValue(lst = params)
+        parameters <- suppressWarnings(ParameterSetCollection$new(lst = paramlst)$
+                                         setParameterValue(lst = params))
 
         # distribution name by shared_param, param, or default
         if ("short_name" %in% names(shared_params)) {
@@ -400,7 +401,7 @@ constructor, use `distlist` instead.")
           distlist <- lapply(private$.modelTable$shortname, function(x) {
             do.call(
               get(private$.modelTable$Distribution[[1]])$new,
-              self$parameters()[paste0(x, "_")]$values
+              self$parameters()[paste0(x, "_")]$values()
             )
           })
         }
@@ -417,7 +418,7 @@ constructor, use `distlist` instead.")
           distlist <- lapply(models, function(x) {
             do.call(
               get(private$.modelTable$Distribution[[1]])$new,
-              self$parameters()[paste0(x, "_")]$values
+              self$parameters()[paste0(x, "_")]$values()
             )
           })
         }
@@ -484,7 +485,12 @@ constructor, use `distlist` instead.")
       if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
-        ret <- data.table(t(ret))
+        # hacky catch for MVN
+        if (self$modelTable$Distribution[[1]] != "MultivariateNormal") {
+          ret <- t(ret)
+        }
+
+        ret <- data.table(ret)
         colnames(ret) <- unlist(private$.modelTable[, "shortname"])
       }
 
@@ -731,7 +737,11 @@ constructor, use `distlist` instead.")
     #' # and the same across many samples
     #' vd$pdf(data = array(c(1,2,4,3,5,1,3,7), dim = c(2,2,2)))
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
-      if (is.null(data)) data <- as.matrix(data.table(...))
+      if (is.null(data)) {
+        data <- as.matrix(data.table(...))
+      } else {
+        data <- as.matrix(data)
+      }
 
       if (private$.univariate) {
         if (ncol(data) == 1) {
@@ -844,7 +854,7 @@ constructor, use `distlist` instead.")
       } else {
         dpqr <- private$.rand(data)
         dpqr <- array(unlist(dpqr), c(nrow(dpqr[[1]]), ncol(dpqr[[1]]), length(dpqr)))
-        colnames(dpqr) <- paste0("V", seq(ncol(dpqr)))
+        dimnames(dpqr) <- list(NULL, paste0("V", seq(ncol(dpqr))), private$.modelTable$shortname)
         return(dpqr)
       }
     }
@@ -895,14 +905,14 @@ constructor, use `distlist` instead.")
     distribution <- as.character(unlist(vecdist$modelTable[1, 1]))
     if (length(i) == 1) {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()[paste0(id, "_")]$values
+      pars <- vecdist$parameters()[paste0(id, "_")]$values(FALSE)
       if (!is.null(decorators)) {
         pars <- c(pars, list(decorators = decorators))
       }
       return(do.call(get(distribution)$new, pars))
     } else {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()$values
+      pars <- vecdist$parameters()$values()
       pars <- pars[names(pars) %in% id]
 
       return(VectorDistribution$new(

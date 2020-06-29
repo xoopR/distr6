@@ -26,3 +26,15 @@ test_that("autotest", {
     quantile = qbinom(c(0.24, 0.42, 0.5), 1, 0.2)
   )
 })
+
+test_that("manual", {
+  expect_equal(Bernoulli$new(1)$mode(), 1)
+  expect_equal(Bernoulli$new(0.5)$mode(), c(0, 1))
+  expect_equal(Bernoulli$new(0.5)$mode(1), 0)
+})
+
+test_that("vector", {
+  d <- VectorDistribution$new(distribution = "Bernoulli",
+                              params = data.frame(prob = (1:2) / 3))
+  expect_error(d$mode(), "cannot be")
+})

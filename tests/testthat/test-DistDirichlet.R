@@ -16,17 +16,16 @@ test_that("autotest", {
     median = NaN,
     variance = matrix(c(0.04, -0.04, -0.04, 0.04), nrow = 2),
     entropy = round(log(1 / 12, base = 2) + 3 * digamma(5) - 2.268353, 5),
-    pgf = NaN,
-    vectorise = FALSE
+    pgf = NaN
   )
 })
 
-test_that("multivariate pdf", {
-  expect_equal(
-    Dirichlet$new(c(2, 3))$pdf(c(0.1, 0.2), c(0.3, 0.4)),
-    c(
-      extraDistr::ddirichlet(c(0.1, 0.3), alpha = c(2, 3)),
-      extraDistr::ddirichlet(c(0.2, 0.4), alpha = c(2, 3))
-    )
-  )
-})
+# test_that("multivariate pdf", {
+#   expect_equal(
+#     Dirichlet$new(c(2, 3))$pdf(c(0.1, 0.2), c(0.3, 0.4)),
+#     c(
+#       extraDistr::ddirichlet(c(0.1, 0.3), alpha = c(2, 3)),
+#       extraDistr::ddirichlet(c(0.2, 0.4), alpha = c(2, 3))
+#     )
+#   )
+# })

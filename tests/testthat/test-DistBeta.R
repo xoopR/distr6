@@ -24,3 +24,18 @@ test_that("autotest", {
     quantile = qbeta(c(0.24, 0.42, 0.5), 1, 1)
   )
 })
+
+test_that("manual", {
+  expect_equal(Beta$new(1, 2)$mode(), 0)
+  expect_equal(Beta$new(2, 1)$mode(), 1)
+  expect_equal(Beta$new(0.5, 0.5)$mode(), c(0, 1))
+  expect_equal(Beta$new(0.5, 0.5)$mode(1), 0)
+  expect_equal(Beta$new(2, 2)$mode(1), 0.5)
+  expect_false(testSymmetric(Beta$new()$setParameterValue(shape1 = 1, shape2 = 2)))
+})
+
+test_that("vector", {
+  d <- VectorDistribution$new(distribution = "Beta",
+                              params = data.frame(shape1 = 1:2))
+  expect_error(d$mode(), "cannot be")
+})

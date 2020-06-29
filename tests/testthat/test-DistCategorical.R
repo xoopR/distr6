@@ -29,3 +29,8 @@ test_that("vector", {
   expect_error(d$mode(), "cannot be")
   expect_equal(d$mode(100), c(Cat1 = 1, Cat2 = 2))
 })
+
+test_that("manual", {
+  expect_equal(Categorical$new()$setParameterValue(elements = list(1, "a"), probs = c(0.5, 0.5))$
+                 getParameterValue("elements"), list(1, "a"))
+})

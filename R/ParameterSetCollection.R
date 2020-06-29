@@ -179,16 +179,18 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' Ignored.
     addDeps = function(...) {
       stop("Dependencies should be added to internal ParameterSets with $parameterSets.")
+    },
+
+    #' @description
+    #' Returns parameter set values as a named list.
+    #' @param settable `(logical(1))`\cr
+    #' If `TRUE` (default) only returns values of settable parameters, otherwise returns all.
+    values = function(settable = TRUE) {
+      rlapply(private$.parametersets, values, settable = settable)
     }
   ),
 
   active = list(
-    #' @field values
-    #' Returns parameter set values as a named list.
-    values = function() {
-      rlapply(private$.parametersets, values, active = TRUE)
-    },
-
     #' @field deps
     #' Returns [ParameterSet] dependencies table.
     deps = function() {

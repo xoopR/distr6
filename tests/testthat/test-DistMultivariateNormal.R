@@ -18,17 +18,16 @@ test_that("autotest", {
     entropy = 4.094191,
     mgf = 39824784,
     cf = -9.254893 + 7.922128i,
-    pgf = NaN,
-    vectorise = FALSE
+    pgf = NaN
   )
 })
 
-
-
-test_that("multivariate pdf", {
-  expect_equal(
-    signif(MultivariateNormal$new(mean = c(1, 7, 3), cov = c(1, 0, 0, 0, 1, 0, 0, 0, 1))$
-      pdf(1:2, 2:3, 3:4), 3),
-    c(2.366e-07, 7.835e-06)
-  )
-})
+#
+#
+# test_that("multivariate pdf", {
+#   expect_equal(
+#     signif(MultivariateNormal$new(mean = c(1, 7, 3), cov = c(1, 0, 0, 0, 1, 0, 0, 0, 1))$
+#       pdf(1:2, 2:3, 3:4), 3),
+#     c(2.366e-07, 7.835e-06)
+#   )
+# })

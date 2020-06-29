@@ -30,6 +30,17 @@ test_that("manual", {
   expect_equal(dist$cdf(-2, log.p = F, lower.tail = F), 1)
   expect_equal(dist$cdf(-2, log.p = T, lower.tail = T), -Inf)
   expect_equal(dist$cdf(-2, log.p = T, lower.tail = F), 0)
+  expect_equal(ShiftedLoglogistic$new(shape = 0)$properties$support, Reals$new())
+  expect_equal(ShiftedLoglogistic$new(shape = 1)$properties$support,
+               Interval$new(-1, Inf, type = "[)"))
+  expect_equal(ShiftedLoglogistic$new(shape = -1)$properties$support,
+               Interval$new(-Inf, 1, type = "(]"))
+  expect_equal(dist$setParameterValue(shape = 0)$properties$support,
+               Reals$new())
+  expect_equal(dist$setParameterValue(shape = 1)$properties$support,
+               Interval$new(-1, Inf, type = "[)"))
+  expect_equal(dist$setParameterValue(shape = -1)$properties$support,
+               Interval$new(-Inf, 1, type = "(]"))
 })
 
 test_that("cpp", {

@@ -196,6 +196,48 @@ test_vectorised_method <- function(vdist, method, args = NULL) {
   }
 }
 
+test_vectorised_mv_method <- function(vdist, method, args = NULL) {
+  if (method == "variance") {
+    dt <- array(c(vdist[1]$variance(), vdist[2]$variance(), vdist[3]$variance()),
+                dim = c(2, 2, 3), dimnames = list(NULL, NULL, vdist$modelTable$shortname))
+    expect_equal(vdist$variance(), dt)
+  } else if (method %in% c("entropy", "skewness", "kurtosis")) {
+    if (is.null(args)) {
+      dt <- c(vdist[1][[method]](), vdist[2][[method]](),
+                       vdist[3][[method]]())
+      names(dt) <- vdist$modelTable$shortname
+      expect_equal(vdist[[method]](), dt)
+    } else {
+      dt <- c(vdist[1][[method]](args), vdist[2][[method]](args),
+                       vdist[3][[method]](args))
+      names(dt) <- vdist$modelTable$shortname
+      expect_equal(vdist[[method]](args), dt)
+    }
+  } else {
+    if (is.null(args)) {
+      dt <- data.table(vdist[1][[method]](), vdist[2][[method]](),
+              vdist[3][[method]]())
+      colnames(dt) <- vdist$modelTable$shortname
+      expect_equal(vdist[[method]](), dt)
+    } else {
+      dt <- data.table(vdist[1][[method]](args), vdist[2][[method]](args),
+              vdist[3][[method]](args))
+      colnames(dt) <- vdist$modelTable$shortname
+      expect_equal(vdist[[method]](args), dt)
+    }
+  }
+}
+
+test_vectorised_mv_dpqr <- function(vdist, method, args = NULL) {
+  expected <- data.table::data.table(do.call(vdist[1][[method]], args),
+                                     do.call(vdist[2][[method]], args),
+                                     do.call(vdist[3][[method]], args))
+  colnames(expected) <- vdist$modelTable$shortname
+  object <- do.call(vdist[[method]], args)
+  expect_equal(object, expected)
+}
+
+
 test_vectorised_dpqr <- function(vdist, method, args = NULL) {
   expected <- data.table::data.table(do.call(vdist[1][[method]], args),
                                      do.call(vdist[2][[method]], args),
@@ -206,67 +248,114 @@ test_vectorised_dpqr <- function(vdist, method, args = NULL) {
 }
 
 autotest_vec_sdistribution <- function(sdist, pars) {
-  vdist <- VectorDistribution$new(distribution = sdist$name,
-                                 params = rep(list(pars), 3))
-
-  if (!is.null(sdist$mean)) test_vectorised_method(vdist, "mean")
-  if (!is.null(sdist$mode)) {
-    # hacky catch
-    if (sdist$name == "Categorical") {
-      expect_equal(vdist$mode(1),
-                   list(Cat1 = vdist[1]$mode(1),
-                        Cat2 = vdist[1]$mode(1),
-                        Cat3 = vdist[1]$mode(1))
-      )
+  if (testMultivariate(sdist)) {
+    autotest_vec_mv_sdistribution(sdist, pars)
+  } else {
+    if (sdist$name == "Geometric" & !is.null(pars$trials)) {
+      vdist <- VectorDistribution$new(distribution = sdist$name,
+                                      params = rep(list(pars[!(names(pars) %in% "trials")]), 3),
+                                      shared_params = list(trials = pars$trials))
     } else {
-      test_vectorised_method(vdist, "mode", 1)
+      vdist <- VectorDistribution$new(distribution = sdist$name,
+                                      params = rep(list(pars), 3))
     }
-  }
-  # if (!is.null(sdist$median)) test_vectorised_method(vdist, "median")
-  if (!is.null(sdist$variance)) test_vectorised_method(vdist, "variance")
-  if (!is.null(sdist$skewness)) test_vectorised_method(vdist, "skewness")
-  if (!is.null(sdist$kurtosis)) test_vectorised_method(vdist, "kurtosis")
-  if (!is.null(sdist$entropy)) test_vectorised_method(vdist, "entropy")
-  # if (testUnivariate(sdist)) {
-  #   if (!is.null(sdist$mgf)) suppressWarnings(test_vectorised_method(vdist, "mgf", 1)
-  #   if (!is.null(sdist$cf)) test_vectorised_method(vdist, "cf", 1)
-  #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1)
-  # } else {
-  #   if (!is.null(sdist$mgf)) test_vectorised_method(vdist, "mgf", 1:2)
-  #   if (!is.null(sdist$cf)) test_vectorised_method(vdist, "cf", 1:2)
-  #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1:2)
-  # }
 
-  # context("d/p/q/r")
-  if (testUnivariate(sdist)) {
+
+    if (!is.null(sdist$mean)) test_vectorised_method(vdist, "mean")
+    if (!is.null(sdist$mode)) {
+      # hacky catch
+      if (sdist$name == "Categorical") {
+        expect_equal(vdist$mode(1),
+                     list(Cat1 = vdist[1]$mode(1),
+                          Cat2 = vdist[1]$mode(1),
+                          Cat3 = vdist[1]$mode(1))
+        )
+      } else {
+        test_vectorised_method(vdist, "mode", 1)
+      }
+    }
+    # if (!is.null(sdist$median)) test_vectorised_method(vdist, "median")
+    if (!is.null(sdist$variance)) test_vectorised_method(vdist, "variance")
+    if (!is.null(sdist$skewness)) test_vectorised_method(vdist, "skewness")
+    if (!is.null(sdist$kurtosis)) test_vectorised_method(vdist, "kurtosis")
+    if (!is.null(sdist$entropy)) test_vectorised_method(vdist, "entropy")
+    # if (testUnivariate(sdist)) {
+    #   if (!is.null(sdist$mgf)) suppressWarnings(test_vectorised_method(vdist, "mgf", 1)
+    #   if (!is.null(sdist$cf)) test_vectorised_method(vdist, "cf", 1)
+    #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1)
+    # } else {
+    #   if (!is.null(sdist$mgf)) test_vectorised_method(vdist, "mgf", 1:2)
+    #   if (!is.null(sdist$cf)) test_vectorised_method(vdist, "cf", 1:2)
+    #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1:2)
+    # }
+
+    # context("d/p/q/r")
+      if (isPdf(sdist)) {
+        test_vectorised_dpqr(vdist, "pdf", list(1:3))
+        if (sdist$.__enclos_env__$private$.log) {
+          test_vectorised_dpqr(vdist, "pdf", list(1:3, log = TRUE))
+        }
+      }
+      if (isCdf(sdist)) {
+        test_vectorised_dpqr(vdist, "cdf", list(1:3))
+        if (sdist$.__enclos_env__$private$.log) {
+          test_vectorised_dpqr(vdist, "cdf", list(1:3, log.p = TRUE, lower.tail = FALSE))
+        }
+      }
+      if (isQuantile(sdist)) {
+        test_vectorised_dpqr(vdist, "quantile", list(c(0.24, 0.42, 0.5)))
+        if (sdist$.__enclos_env__$private$.log) {
+          test_vectorised_dpqr(vdist, "quantile", list(log(1 - c(0.24, 0.42, 0.5)),
+                                                       log.p = TRUE, lower.tail = FALSE))
+        }
+      }
+      if (isRand(sdist)) {
+        r <- vdist$rand(1:4)
+        expect_equal(dim(r), c(4, 3))
+        expect_true(all(as.numeric(unlist(r)) >= sdist$inf & as.numeric(unlist(r)) <= sdist$sup))
+      }
+    }
+}
+
+autotest_vec_mv_sdistribution <- function(sdist, pars) {
+  vdist <- VectorDistribution$new(distribution = sdist$name,
+                                  params = rep(list(pars), 3))
+
+
+  if (!is.null(sdist$mean)) test_vectorised_mv_method(vdist, "mean")
+  if (!is.null(sdist$mode)) test_vectorised_mv_method(vdist, "mode", 1)
+
+  # if (!is.null(sdist$median)) test_vectorised_method(vdist, "median")
+  if (!is.null(sdist$variance)) test_vectorised_mv_method(vdist, "variance")
+  if (!is.null(sdist$skewness)) test_vectorised_mv_method(vdist, "skewness")
+  if (!is.null(sdist$kurtosis)) test_vectorised_mv_method(vdist, "kurtosis")
+  if (!is.null(sdist$entropy)) test_vectorised_mv_method(vdist, "entropy")
+
     if (isPdf(sdist)) {
-      test_vectorised_dpqr(vdist, "pdf", list(1:3))
+      if (sdist$name == "Dirichlet") {
+        data <- data.frame(c(0.1, 0.2, 0.3), c(0.9, 0.8, 0.7))
+      } else {
+        data <- data.frame(1:3, 1:3)
+      }
+      test_vectorised_mv_dpqr(vdist, "pdf", list(data = data))
       if (sdist$.__enclos_env__$private$.log) {
-        test_vectorised_dpqr(vdist, "pdf", list(1:3, log = TRUE))
+        test_vectorised_mv_dpqr(vdist, "pdf", list(data = data, log = TRUE))
       }
     }
     if (isCdf(sdist)) {
-      test_vectorised_dpqr(vdist, "cdf", list(1:3))
+      test_vectorised_mv_dpqr(vdist, "cdf", list(data = data))
       if (sdist$.__enclos_env__$private$.log) {
-        test_vectorised_dpqr(vdist, "cdf", list(1:3, log.p = TRUE, lower.tail = FALSE))
-      }
-    }
-    if (isQuantile(sdist)) {
-      test_vectorised_dpqr(vdist, "quantile", list(c(0.24, 0.42, 0.5)))
-      if (sdist$.__enclos_env__$private$.log) {
-        test_vectorised_dpqr(vdist, "quantile", list(log(1 - c(0.24, 0.42, 0.5)),
-                                                     log.p = TRUE, lower.tail = FALSE))
+        test_vectorised_mv_dpqr(vdist, "cdf", list(data = data,
+                                                   log.p = TRUE, lower.tail = FALSE))
       }
     }
     if (isRand(sdist)) {
       r <- vdist$rand(1:4)
-      expect_equal(dim(r), c(4, 3))
-      expect_true(all(as.numeric(unlist(r)) >= sdist$inf & as.numeric(unlist(r)) <= sdist$sup))
+      expect_equal(dimnames(r), list(NULL, c("V1", "V2"), vdist$modelTable$shortname))
+      expect_true(all(as.numeric(r) >= sdist$inf$elements[[1]] &
+                        as.numeric(r) <= sdist$sup$elements[[2]]))
     }
-  }
 }
-
-
 
 autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm, pdf, cdf) {
   # context("public fields")

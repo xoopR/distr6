@@ -25,3 +25,8 @@ test_that("autotest", {
     quantile = extraDistr::qlgser(c(0.24, 0.42, 0.5), 0.5)
   )
 })
+
+test_that("manual", {
+  expect_equal(Logarithmic$new()$mgf(0.5), log(1 - 0.5 * exp(0.5)) / log(1 - 0.5))
+  expect_equal(Logarithmic$new()$pgf(2), NaN)
+})

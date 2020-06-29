@@ -26,3 +26,7 @@ test_that("autotest", {
     quantile = qlogis(c(0.24, 0.42, 0.5))
   )
 })
+
+test_that("manual", {
+  expect_equal(Logistic$new()$mgf(0.5), beta(0.5, 1.5))
+})

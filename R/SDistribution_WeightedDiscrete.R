@@ -68,7 +68,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
                           cdf = NULL, decorators = NULL) {
 
       if (!is.null(data)) {
-        message("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
+        warning("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
         x <- data$x
         pdf <- data$pdf
         cdf <- data$cdf

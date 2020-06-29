@@ -96,18 +96,17 @@ getParameterSet.Categorical <- function(object, probs, elements) {
   nCategories <- length(probs)
 
   ps <- ParameterSet$new(
-    id = list("elements", "probs", "nCategories"),
-    value = list(rep(1, nCategories), rep(0.5, nCategories), nCategories),
+    id = list("elements", "probs"),
+    value = list(rep(1, nCategories), rep(0.5, nCategories)),
     support = list(
-      UniversalSet$new(), setpower(Interval$new(0, 1), nCategories),
-      PosNaturals$new()
+      UniversalSet$new(), setpower(Interval$new(0, 1), nCategories)
     ),
-    settable = list(TRUE, TRUE, FALSE),
-    description = list("Categories", "Probability of success i", "Number of categories")
+    settable = list(TRUE, TRUE),
+    description = list("Categories", "Probability of success i")
   )
-  ps$addDeps("probs", "nCategories", function(self) length(self$getParameterValue("probs")))
-  ps$addChecks("probs", function(x, self) length(x) == self$getParameterValue("nCategories"))
-  ps$addChecks("elements", function(x, self) length(x) == self$getParameterValue("nCategories"))
+
+  ps$addChecks("probs", function(x, self) length(x) == length(self$getParameterValue("elements")))
+  ps$addChecks("elements", function(x, self) length(x) == length(self$getParameterValue("probs")))
   ps$addTrafos("probs", function(x, self) x / sum(x))
 
   return(ps)
@@ -153,42 +152,30 @@ getParameterSet.Dirichlet <- function(object, params) {
   K <- length(params)
 
   ps <- ParameterSet$new(
-    id = list("params", "K"),
-    value = list(rep(1, K), K),
+    id = list("params"),
+    value = list(rep(1, K)),
     support = list(
-      setpower(PosReals$new(), K),
-      Interval$new(2, Inf, type = "[)", class = "integer")
+      setpower(PosReals$new(), K)
     ),
-    settable = list(TRUE, FALSE),
-    description = list("Concentration parameters", "Number of categories")
+    settable = list(TRUE),
+    description = list("Concentration parameters")
   )
-  ps$addDeps("params", "K", function(self) length(self$getParameterValue("params")))
+
   return(ps)
 }
 
 getParameterSet.DiscreteUniform <- function(object, lower, upper) { # nolint
 
   ps <- ParameterSet$new(
-    id = list("lower", "upper", "N"),
-    value = list(0, 1, (upper - lower + 1)),
-    support = list(Integers$new(), Integers$new(), Integers$new()),
-    settable = list(TRUE, TRUE, FALSE),
+    id = list("lower", "upper"),
+    value = list(0, 1),
+    support = list(Integers$new(), Integers$new()),
+    settable = list(TRUE, TRUE),
     description = list(
-      "Lower distribution limit.", "Upper distribution limit.",
-      "Distribution width."
+      "Lower distribution limit.", "Upper distribution limit."
     )
   )
-  ps$addDeps(
-    dt =
-      data.table(
-        x = c("lower", "upper"),
-        y = "N",
-        fun = function(self) {
-          self$getParameterValue("upper") -
-            self$getParameterValue("lower") + 1
-        }
-      )
-  )
+
   ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
   ps$addChecks("upper", function(x, self) x > self$getParameterValue("lower"))
 
@@ -746,16 +733,15 @@ getParameterSet.Multinomial <- function(object, size, probs) {
 
   K <- unlist(length(probs))
   ps <- ParameterSet$new(
-    id = list("size", "K", "probs"),
-    value = list(1, K, rep(0.5, K)),
-    support = list(PosNaturals$new(), PosNaturals$new(), setpower(Interval$new(0, 1), K)),
-    settable = list(TRUE, FALSE, TRUE),
+    id = list("size", "probs"),
+    value = list(1, rep(0.5, K)),
+    support = list(PosNaturals$new(), setpower(Interval$new(0, 1), K)),
+    settable = list(TRUE, TRUE),
     description = list(
-      "Number of trials", "Number of categories",
-      "Probability of success i"
+      "Number of trials", "Probability of success i"
     )
   )
-  ps$addDeps("probs", "K", function(self) length(self$getParameterValue("probs")))
+
   ps$addTrafos("probs", function(x, self) x / sum(x))
 
   return(ps)

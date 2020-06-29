@@ -487,19 +487,25 @@ ParameterSet <- R6Class("ParameterSet",
       private$.trafos <- rbind(self$trafos, dt)
 
       invisible(self)
+    },
+
+    #' @description
+    #' Returns parameter set values as a named list.
+    #' @param settable `(logical(1))`\cr
+    #' If `TRUE` (default) only returns values of settable parameters, otherwise returns all.
+    values = function(settable = TRUE) {
+      if (settable) {
+        pars <- subset(private$.parameters, settable == TRUE)
+      } else {
+        pars <- private$.parameters
+      }
+      values <- pars$value
+      names(values) <- pars$id
+      return(values)
     }
   ),
 
   active = list(
-    #' @field values
-    #' Returns parameter set values as a named list.
-    values = function() {
-      pars <- subset(private$.parameters, settable == TRUE)
-      values <- pars$value
-      names(values) <- pars$id
-      return(values)
-    },
-
     #' @field deps
     #' Returns ParameterSet dependencies table.
     deps = function() {

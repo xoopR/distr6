@@ -217,9 +217,7 @@ Categorical <- R6Class("Categorical",
         private$.properties$symmetry <- "symmetric"
       }
 
-      if ("elements" %in% names(lst)) {
-        private$.properties$support <- Set$new(elements = lst$elements)
-      }
+      private$.properties$support <- Set$new(elements = self$getParameterValue("elements"))
 
       invisible(self)
     }

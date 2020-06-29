@@ -19,18 +19,17 @@ test_that("autotest", {
     entropy = 0.7579912,
     mgf = 47.91379,
     cf = -0.7118115 - 0.5785154i,
-    pgf = 3.61,
-    vectorise = FALSE
+    pgf = 3.61
   )
 })
 
-test_that("multivariate pdf", {
-  expect_equal(
-    Multinomial$new(probs = c(1, 4), size = 5)$pdf(c(1, 2, 0), c(4, 3, 5)),
-    c(
-      dmultinom(x = c(1, 4), prob = c(1, 4)),
-      dmultinom(x = c(2, 3), prob = c(1, 4)),
-      dmultinom(x = c(0, 5), prob = c(1, 4))
-    )
-  )
-})
+# test_that("multivariate pdf", {
+#   expect_equal(
+#     Multinomial$new(probs = c(1, 4), size = 5)$pdf(c(1, 2, 0), c(4, 3, 5)),
+#     c(
+#       dmultinom(x = c(1, 4), prob = c(1, 4)),
+#       dmultinom(x = c(2, 3), prob = c(1, 4)),
+#       dmultinom(x = c(0, 5), prob = c(1, 4))
+#     )
+#   )
+# })
