@@ -72,6 +72,10 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       if (!is.null(short_name)) self$short_name <- gsub("Vec", "Mix", self$short_name)
       self$description <- gsub("Vector", "Mixture", self$description)
 
+      if (private$.univariate) {
+        private$.traits$variateForm <- "univariate"
+      }
+
       invisible(self)
     },
 

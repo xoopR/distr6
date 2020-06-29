@@ -33,6 +33,14 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
 
       assertDistribution(distribution)
 
+      if (testMultivariate(distribution)) {
+        stop("Truncation not currently available for multivariate distributions.")
+      }
+
+      if (testMixture(distribution)) {
+        stop("Truncation not currently available for mixed distributions.")
+      }
+
       if (isCdf(distribution) == 0 | isPdf(distribution) == 0) {
         stop("pdf and cdf is required for truncation.
 Try decorate(distribution, FunctionImputation) first.")

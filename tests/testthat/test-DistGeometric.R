@@ -53,3 +53,7 @@ test_that("autotest_trials", {
     quantile = qgeom(c(0.24, 0.42, 0.5), 0.5) + 1
   )
 })
+
+test_that("manual",{
+  expect_equal(Geometric$new(trials = TRUE)$mgf(0.5), 0.5 * exp(0.5) / (1 - 0.5 * exp(0.5)))
+})

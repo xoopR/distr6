@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Exotic Statistics")
-
 dexpo <- function(x) {
   m1 <- self$getParameterValue("rate")
   m2 <- exp(-1 * self$getParameterValue("rate") * x)
@@ -28,6 +26,7 @@ test_that("numeric survival functions", {
   expect_equal(continuousTester$hazard(1), dexp(1) / pexp(1, lower.tail = F))
   expect_equal(continuousTester$hazard(1, log = T), log(dexp(1) / pexp(1, lower.tail = F)))
   expect_equal(continuousTester$cumHazard(2), -pexp(2, log.p = T, lower.tail = F))
+  expect_equal(continuousTester$cumHazard(2, log = T), log(-pexp(2, log.p = T, lower.tail = F)))
 })
 #
 # continuousTester <- Distribution$new("Continuous Test", "ContTest",
@@ -69,4 +68,7 @@ test_that("p-norms", {
   expect_message(expect_equal((continuousTester$pdfPNorm(2))^2, 0.5))
   expect_message(expect_equal(continuousTester$pdfPNorm(p = 2, lower = 2, upper = 5)^2, 0.5 *
                                 (exp(-4) - exp(-10))))
+
+  expect_message(expect_rounded_equal(continuousTester$survivalPNorm(2), 0.71, 2))
+  expect_message(expect_rounded_equal(continuousTester$survivalPNorm(2, 2, 5), 0.1, 2))
 })

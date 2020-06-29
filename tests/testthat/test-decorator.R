@@ -19,4 +19,6 @@ test_that("decorate", {
   expect_equal(E$decorators, "CoreStatistics")
   expect_message(decorate(E, "ExoticStatistics"))
   expect_equal(E$decorators, c("CoreStatistics", "ExoticStatistics"))
+  expect_message(CoreStatistics$new()$decorate(E),
+                 "Exponential is already decorated with CoreStatistics")
 })

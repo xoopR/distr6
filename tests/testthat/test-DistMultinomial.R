@@ -23,6 +23,10 @@ test_that("autotest", {
   )
 })
 
+test_that("manual", {
+  expect_error(Multinomial$new(probs = 1), "Binomial")
+})
+
 # test_that("multivariate pdf", {
 #   expect_equal(
 #     Multinomial$new(probs = c(1, 4), size = 5)$pdf(c(1, 2, 0), c(4, 3, 5)),

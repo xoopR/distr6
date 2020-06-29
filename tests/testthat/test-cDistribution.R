@@ -21,6 +21,11 @@ test_that("VectorDistributions", {
                                params = data.table::data.table(shape = 1:2, rate = 1:2))
   expect_silent(c(v1, v2))
   expect_silent(c(v1, v2, Normal$new(), truncate(Binomial$new(), 2, 6)))
+
+  v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2))
+  v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4))
+  expect_equal(c(v1, v2),
+               VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:4)))
 })
 #
 # test_that("distribution/param VectorDistributions", {
