@@ -34,11 +34,6 @@ test_that("setting", {
   expect_equal(x$getParameterValue("cdf"), pbinom(0:5, 10, 0.5))
 })
 
-test_that("cpp", {
-  expect_equal(as.numeric(C_WeightedDiscretePdf(NaN, 1, 1, FALSE)), 0)
-  expect_equal(as.numeric(C_WeightedDiscretePdf(NA_integer_, 1, 1, FALSE)), 0)
-})
-
 test_that("manual", {
   expect_warning(WeightedDiscrete$new(data = data.frame(x = 1, pdf = 1)), "deprecated")
   w <- WeightedDiscrete$new(x = 1:5, pdf = dnorm(1:5))

@@ -396,9 +396,6 @@ NumericVector C_WeightedDiscretePdf(NumericVector x, NumericVector data, Numeric
   NumericVector mat(n);
 
   for (int k = 0; k < n; k++) {
-    if (x[k] == NA_INTEGER) {
-      continue;
-    }
     for (int j = 0; j < nr; j++) {
       if (data[j] == x[k]) {
         if (logp) {

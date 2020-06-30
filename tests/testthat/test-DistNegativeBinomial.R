@@ -123,4 +123,7 @@ test_that("manual", {
   expect_equal(dist$cdf(11:13), pnbinom(1:3, 10, 0.8))
   expect_error(VectorDistribution$new(distribution = "Negative", params = data.frame(size = 1:2)),
                "should be used")
+  expect_equal(dist$mgf(10), NaN)
+  expect_equal(dist$pgf(10), NaN)
+  expect_warning(dist$setParameterValue(form = "tbf"), "settable after")
 })

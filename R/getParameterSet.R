@@ -528,17 +528,13 @@ getParameterSet.Loglogistic <- function(object, scale, shape, rate = NULL) {
   return(ps)
 }
 
-getParameterSet.Lognormal <- function(object, meanlog, varlog, sdlog = NULL, preclog = NULL,
+getParameterSet.Lognormal <- function(object, meanlog = NULL, varlog = NULL,
+                                      sdlog = NULL, preclog = NULL,
                                       mean = NULL, var = NULL, sd = NULL, prec = NULL) {
 
   # varlog.bool <- sdlog.bool <- preclog.bool <- var.bool <- sd.bool <- prec.bool <- FALSE
   if (is.null(meanlog) & is.null(mean)) {
-    if (!is.null(var) | !is.null(sd) | !is.null(prec)) {
-      mean <- 0
-    } else {
-      meanlog <- 0
-    }
-
+    stop("One of 'meanlog' and 'mean' should be provided.")
   }
 
   if (!is.null(meanlog)) {

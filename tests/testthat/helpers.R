@@ -112,8 +112,8 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     expect_rounded_equal(sdist$skewness(), skewness, 4)
   }
   if (!is.null(sdist$kurtosis)) {
-    expect_rounded_equal(sdist$kurtosis(T), exkur, 4)
-    expect_rounded_equal(sdist$kurtosis(F), exkur + 3, 4)
+    expect_rounded_equal(sdist$kurtosis(T), exkur, 3)
+    expect_rounded_equal(sdist$kurtosis(F), exkur + 3, 3)
   }
   if (!is.null(sdist$entropy)) {
     expect_rounded_equal(sdist$entropy(), entropy, 4)
