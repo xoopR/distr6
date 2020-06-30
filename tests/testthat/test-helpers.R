@@ -80,3 +80,25 @@ test_that("pdq_helpers", {
   expect_error(call_C_base_pdqr("l", 1, vec = FALSE), "Function must")
   expect_error(call_C_base_pdqr("l", 1, vec = TRUE), "Function must")
 })
+
+test_that("oneword", {
+  expect_silent(assertOneWord(c("a", "sfas")))
+  expect_error(assertOneWord(c("a", "sf as")))
+})
+
+test_that("v_genfun", {
+  expect_equal(v_genfun(1, function(x) x + 1), 2)
+  expect_equal(v_genfun(c(1, 2), function(x) x + 1), 2:3)
+})
+
+test_that("abstract", {
+  expect_error(abstract(1, "numeric"), "abstract class")
+  expect_error(abstract(1, "numeric", "purple"), "purple")
+})
+
+test_that("rsapply", {
+  expect_equal(rsapply(list(Binomial$new(), Normal$new()), pdf, 1),
+               c(Binomial$new()$pdf(1), Normal$new()$pdf(1)))
+  expect_equal(rsapply(list(Binomial$new(), Normal$new()), short_name, active = TRUE),
+               c("Binom", "Norm"))
+})

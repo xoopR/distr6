@@ -43,3 +43,21 @@ test_that("rand", {
 test_that("strprint", {
   expect_equal(pd$strprint(), "Binom1 X Binom2")
 })
+
+test_that("multivariate", {
+  pd <- ProductDistribution$new(
+    distribution = "Multinomial",
+    params = list(
+      list(size = 8, probs = c(0.1, 0.9)),
+      list(size = 8, probs = c(0.3, 0.7))
+    ))
+
+  expect_equal(pd$pdf(2, 6),
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(2, 6) *
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6))
+
+  expect_equal(pd$pdf(c(1, 2), c(7, 6)),
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6)) *
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6)))
+})
+

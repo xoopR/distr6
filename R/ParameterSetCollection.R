@@ -86,7 +86,15 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       sep <- gregexpr("_", id)[[1]][[1]]
 
       if (sep == -1) {
-        return(lapply(private$.parametersets, function(x) x$getParameterValue(id)))
+        dt <- as.data.table(self)$id
+        spl <- unlist(strsplit(dt[grepl(paste0("_", id, "$"), dt)], "_"))
+        spl <- spl[!grepl(id, spl)]
+        spl <- spl[spl %in% names(private$.parametersets)]
+        if (length(spl) == 0) {
+          stopf("%s not in this ParameterSetCollection.", id)
+        } else {
+          return(lapply(private$.parametersets[spl], function(x) x$getParameterValue(id)))
+        }
       } else {
         param <- substr(id, sep + 1, 1000)
         dist <- substr(id, 1, sep - 1)

@@ -78,3 +78,36 @@ test_that("check rand", {
 test_that("strprint", {
   expect_equal(M$strprint(), "Binom wX Exp wX Norm")
 })
+
+test_that("multivariate", {
+  md <- MixtureDistribution$new(
+    distribution = "Multinomial",
+    params = list(
+      list(size = 8, probs = c(0.1, 0.9)),
+      list(size = 8, probs = c(0.3, 0.7))
+    ))
+
+  expect_equal(md$pdf(2, 6),
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(2, 6)/2 +
+               Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)/2)
+
+  expect_equal(md$pdf(c(1, 2), c(7, 6)),
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6))/2 +
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6))/2)
+
+  md <- MixtureDistribution$new(
+    distribution = "Multinomial",
+    params = list(
+      list(size = 8, probs = c(0.1, 0.9)),
+      list(size = 8, probs = c(0.3, 0.7))
+    ),
+    weights = c(0.1, 0.9))
+
+  expect_equal(md$pdf(2, 6),
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(2, 6)*0.1 +
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)*0.9)
+
+  expect_equal(md$pdf(c(1, 2), c(7, 6)),
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6))*0.1 +
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6))*0.9)
+})

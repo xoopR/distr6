@@ -23,11 +23,20 @@ test_that("multivariate pdf", {
     EmpiricalMV$new(matrix(1:20, ncol = 2))$pdf(c(1, 2), c(11, 12)),
     c(1 / 10, 1 / 10)
   )
+  expect_equal(
+    EmpiricalMV$new(matrix(1:20, ncol = 2))$pdf(c(1, 2), c(11, 12), log = TRUE),
+    log(c(1 / 10, 1 / 10))
+  )
 })
 
 test_that("multivariate cdf", {
   expect_equal(
     EmpiricalMV$new(matrix(1:20, ncol = 2))$cdf(c(3, 7), c(12, 14)),
     c(2 / 10, 4 / 10)
+  )
+  expect_equal(
+    EmpiricalMV$new(matrix(1:20, ncol = 2))$cdf(c(3, 7), c(12, 14),
+                                                lower.tail = FALSE, log.p = TRUE),
+    log(1 - c(2 / 10, 4 / 10))
   )
 })

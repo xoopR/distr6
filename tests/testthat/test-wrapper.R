@@ -15,12 +15,12 @@ test_that("parameters", {
 })
 
 test_that("wrapped models", {
-  mix <- MixtureDistribution$new(list(Binomial$new(), Normal$new()))
-  expect_equal(mix$wrappedModels("Binom"), Binomial$new())
-  expect_equal(mix$wrappedModels(), list(Binom = Binomial$new(), Norm = Normal$new()))
-  expect_error(mix$wrappedModels("sdsd"), "No distribution called")
-  expect_equal(mix$wrappedModels(c("Binom", "Norm")), list(Binom = Binomial$new(),
-                                                           Norm = Normal$new()))
+  conv <- Convolution$new(Binomial$new(), Geometric$new())
+  expect_equal(conv$wrappedModels(), list(Binom = Binomial$new(), Geom = Geometric$new()))
+  expect_equal(conv$wrappedModels("dfdsf"), list(Binom = Binomial$new(), Geom = Geometric$new()))
+  expect_equal(conv$wrappedModels(c("Binom", "Geom")),
+               list(Binom = Binomial$new(), Geom = Geometric$new()))
+  expect_equal(conv$wrappedModels("Binom"), Binomial$new())
 })
 
 test_that("wrap a wrapper", {
@@ -28,12 +28,9 @@ test_that("wrap a wrapper", {
     ProductDistribution$new(list(
       MixtureDistribution$new(list(
         Exponential$new(),
-        huberize(truncate(Normal$new(), lower = -10, upper = 10), -5, 5)
+        truncate(Normal$new(), lower = -10, upper = 10)
       )),
-      VectorDistribution$new(distribution = "Gompertz", params = list(
-        list(shape = 2, scale = 4),
-        list(shape = 1, scale = 5)
-      ))
+      Binomial$new()
     ))
   )
   x <- MixtureDistribution$new(list(

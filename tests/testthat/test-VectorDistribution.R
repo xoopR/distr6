@@ -118,6 +118,13 @@ test_that("wrapped models", {
     Binom = Binomial$new(prob = 0.5, size = 10),
     Gomp = Gompertz$new()
   ))
+
+  mix <- MixtureDistribution$new(list(Binomial$new(), Normal$new()))
+  expect_equal(mix$wrappedModels("Binom"), Binomial$new())
+  expect_equal(mix$wrappedModels(), list(Binom = Binomial$new(), Norm = Normal$new()))
+  expect_error(mix$wrappedModels("sdsd"), "No distribution called")
+  expect_equal(mix$wrappedModels(c("Binom", "Norm")), list(Binom = Binomial$new(),
+                                                           Norm = Normal$new()))
 })
 
 # test_that("parameters", {
@@ -247,4 +254,17 @@ test_that("weighted discrete", {
       )
     )
   })
+})
+
+test_that("multivariate", {
+  vd <- VectorDistribution$new(
+   distribution = "Multinomial",
+   params = list(
+   list(size = 5, probs = c(0.1, 0.9)),
+   list(size = 8, probs = c(0.3, 0.7))
+   ))
+
+  expect_equal(vd$pdf(data = array(c(1,4,2,6), dim = c(1, 2, 2))),
+               data.table(Multinom1 = Multinomial$new(size = 5, probs = c(0.1, 0.9))$pdf(1, 4),
+                          Multinom2 = Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)))
 })
