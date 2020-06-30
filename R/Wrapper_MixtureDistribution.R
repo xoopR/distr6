@@ -53,7 +53,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       private$.outerParameters$addTrafos(
         "weights",
         function(x, self) {
-          if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform"
+          if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform" # nocov
         }
       )
 

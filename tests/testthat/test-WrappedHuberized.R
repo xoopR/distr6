@@ -53,12 +53,12 @@ test_that("check huberization parameters", {
   expect_error(x$setParameterValue(hub_upper = 1))
   expect_error(x$setParameterValue(hub_lower = 12))
   expect_error(x$setParameterValue(hub_lower = 4, hub_upper = 3))
-  expect_true(testInterval(x$support))
+  expect_true(testInterval(x$properties$support))
   x <- huberize(Exponential$new(), lower = 1, upper = 5)
   expect_silent(x$setParameterValue(hub_lower = 2, hub_upper = 10))
   expect_equal(x$inf, 2)
   expect_equal(x$sup, 10)
-  expect_true(testInterval(x$support))
+  expect_true(testInterval(x$properties$support))
 })
 
 test_that("missing pdf/cdf", {

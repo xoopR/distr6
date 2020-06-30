@@ -47,7 +47,11 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     #' to each variable. Cannot be updated after construction.
     #' @examples
     #' EmpiricalMV$new(MultivariateNormal$new()$rand(100))
-    initialize = function(data, decorators = NULL) {
+    initialize = function(data = data.frame(1, 1), decorators = NULL) {
+
+      if (ncol(data) == 1) {
+        stop("Number of columns in `data` is '1', use Empirical distribution instead.")
+      }
 
       support <- do.call(setproduct, as.Tuple(data))
       data <- data.table::as.data.table(data)

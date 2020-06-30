@@ -25,12 +25,16 @@ pd <- ProductDistribution$new(
 
 test_that("pdf/cdf/quantile", {
   expect_equal(
-    pd$pdf(1:2, 8:9),
-    c(dbinom(1, 40, 0.2) * dbinom(8, 5, 0.9), dbinom(2, 40, 0.2) * dbinom(9, 5, 0.9))
+    pd$pdf(1:2, 3:4),
+    c(dbinom(1, 40, 0.2) * dbinom(3, 5, 0.5), dbinom(2, 40, 0.2) * dbinom(4, 5, 0.5))
   )
   expect_equal(
-    pd$cdf(1:2, 8:9),
-    c(pbinom(1, 40, 0.2) * pbinom(8, 5, 0.9), pbinom(2, 40, 0.2) * pbinom(9, 5, 0.9))
+    pd$pdf(2),
+    dbinom(2, 40, 0.2) * dbinom(2, 5, 0.5)
+  )
+  expect_equal(
+    pd$cdf(1:2, 3:4),
+    c(pbinom(1, 40, 0.2) * pbinom(3, 5, 0.5), pbinom(2, 40, 0.2) * pbinom(4, 5, 0.5))
   )
 
   expect_error(pd$quantile(0), "unavailable")
@@ -60,4 +64,3 @@ test_that("multivariate", {
                Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6)) *
                  Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6)))
 })
-

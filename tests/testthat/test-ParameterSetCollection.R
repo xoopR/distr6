@@ -27,6 +27,7 @@ test_that("getters", {
     Binom = getParameterSet.Binomial()
   ))
 
+  expect_error(pc$getParameterValue("Norm"), "not in this")
   expect_error(pc$parameters("Norm"), "is not a")
   expect_equal(pc$parameters("Geom_prob"),
                data.table::data.table(id = "Geom_prob", value = list(0.5),

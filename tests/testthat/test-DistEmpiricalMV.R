@@ -18,6 +18,12 @@ test_that("autotest", {
   )
 })
 
+test_that("manual", {
+  dist <- EmpiricalMV$new(data.frame(1:10, 1:10))
+  expect_null(expect_warning(dist$setParameterValue(sd = 2), "Data cannot"))
+  expect_error(EmpiricalMV$new(data.frame(1:10)), "use Empirical")
+})
+
 test_that("multivariate pdf", {
   expect_equal(
     EmpiricalMV$new(matrix(1:20, ncol = 2))$pdf(c(1, 2), c(11, 12)),

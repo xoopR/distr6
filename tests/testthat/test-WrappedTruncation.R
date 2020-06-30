@@ -9,6 +9,8 @@ test_that("check truncation constructor", {
   expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$inf, 1)
   expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$sup, 10)
   expect_error(TruncatedDistribution$new(MultivariateNormal$new()), "multivariate")
+  expect_error(truncate(MixtureDistribution$new(list(Binomial$new(), Normal$new())), 1, 2),
+               "mixed")
 })
 
 t <- truncate(Binomial$new(), lower = 1, upper = 5)
@@ -49,9 +51,9 @@ test_that("quantile", {
 })
 
 test_that("strprint", {
-  expect_equal(t$support$strprint(), Interval$new(2, 5, class = "integer")$strprint())
+  expect_equal(t$properties$support$strprint(), Interval$new(2, 5, class = "integer")$strprint())
   expect_equal(
-    truncate(Exponential$new(), lower = 2, upper = 3)$support$strprint(),
+    truncate(Exponential$new(), lower = 2, upper = 3)$properties$support$strprint(),
     Interval$new(2, 3, type = "(]")$strprint()
   )
 })
@@ -81,7 +83,7 @@ test_that("check truncation parameters", {
   expect_silent(x$setParameterValue(trunc_lower = 2, trunc_upper = 10))
   expect_equal(x$inf, 2)
   expect_equal(x$sup, 10)
-  expect_true(testInterval(x$support))
+  expect_true(testInterval(x$properties$support))
 })
 
 test_that("missing pdf/cdf", {

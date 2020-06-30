@@ -109,7 +109,7 @@ Other multivariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$new(data, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EmpiricalMV$new(data = data.frame(1, 1), decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

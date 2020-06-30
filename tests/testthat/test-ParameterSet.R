@@ -1,7 +1,5 @@
 library(testthat)
 
-context("ParameterSet")
-
 test_that("initialize", {
   expect_error(as.ParameterSet(list()))
   expect_silent(as.ParameterSet(list(id = "Test", value = 2,
@@ -35,6 +33,7 @@ test_that("getters", {
   expect_equal(Binomial$new()$parameters()$getParameterSupport("prob"), Interval$new(0, 1))
   expect_warning(expect_null(Binomial$new()$parameters()$getParameterSupport()))
   expect_error(expect_null(Binomial$new()$parameters()$getParameterSupport("sdsa")))
+  expect_null(expect_warning(Binomial$new()$getParameterValue(), "missing"))
 })
 
 test_that("setters", {
@@ -47,6 +46,7 @@ test_that("setters", {
   expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa = 2))))
   expect_error(Exponential$new() %>% setParameterValue(rate = 0))
   expect_error(Exponential$new() %>% setParameterValue(rate = Inf))
+  expect_warning(Binomial$new()$setParameterValue(lst = list(2)), "provided")
 })
 
 test_that("merge", {
@@ -58,6 +58,33 @@ test_that("no parameters", {
   expect_null(UniformKernel$new()$parameters())
   expect_null(UniformKernel$new()$setParameterValue(lst = list(d = 2)))
   expect_null(UniformKernel$new()$getParameterValue("d"))
+})
+
+test_that("addDeps", {
+  ps <- ParameterSet$new(
+    id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
+    settable = list(TRUE, FALSE)
+  )
+  expect_error(ps$addDeps("a", "c", function(x) x), "'c' is not")
+  expect_error(ps$addDeps("c", "a", function(x) x), "'c' is not")
+})
+
+test_that("addChecks", {
+  ps <- ParameterSet$new(
+    id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
+    settable = list(TRUE, FALSE)
+  )
+  expect_error(ps$addChecks("c", function(x) x), "'c' is not")
+})
+
+test_that("addTrafos", {
+  ps <- ParameterSet$new(
+    id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
+    settable = list(TRUE, FALSE)
+  )
+  expect_error(ps$addTrafos("c", function(x) x), "'c' is not")
+  expect_silent(ps$addTrafos("a", function(x, self) x + 1))
+  expect_warning(ps$addTrafos("a", function(x, self) x + 2), "overwritten")
 })
 
 test_that("out of support", {
@@ -110,4 +137,38 @@ test_that("clone_deep", {
   ps2$setParameterValue(prob = 0.4)
   expect_equal(ps$getParameterValue("prob"), 0.2)
   expect_equal(ps2$getParameterValue("prob"), 0.4)
+})
+
+test_that("deprecated", {
+  expect_warning(ParameterSet$new(updateFunc = function(x) x, id = "a", value = 2,
+                                  support = Reals$new()), "deprecated")
+})
+
+test_that("c", {
+  ps1 <- getParameterSet.Degenerate()
+  ps2 <- getParameterSet.Poisson()
+  expect_equal(c(ps1, ps2), ParameterSet$new(id = c("mean", "rate"), value = c(0, 1),
+                                             support = list(Reals$new(), PosReals$new()),
+                                             description = c("Location Parameter",
+                                                             "Arrival Rate")))
+  ps3 <- getParameterSet.Binomial()
+  expect_error(c(ps3, ps3))
+  expect_error(c(ps3, ps3, prefix.names = "Binom"), "length")
+  expect_silent(c(ps3, ps3, prefix.names = c("Binom1", "Binom2")))
+})
+
+test_that("extract", {
+  ps <- getParameterSet.Binomial()
+  expect_equal(ps["prob"], ParameterSet$new(id = "prob", value = 0.5, support = Interval$new(0, 1),
+                                            description = "Probability of Success"))
+  ps2 <- expect_silent(c(ps, ps, prefix.names = c("Binom1", "Binom2")))
+  expect_equal(ps2["Binom1_prob"], ParameterSet$new(id = "Binom1_prob", value = 0.5,
+                                                    support = Interval$new(0, 1),
+                                            description = "Probability of Success"))
+  expect_equal(ps2["Binom1_prob", prefix = "Binom1"], ParameterSet$new(id = "prob", value = 0.5,
+                                                    support = Interval$new(0, 1),
+                                                    description = "Probability of Success"))
+  exp = getParameterSet.Binomial()
+  exp$.__enclos_env__$private$.deps <- data.table(x = character(), y = character(), fun = list())
+  expect_equal(ps2["Binom1_"], exp)
 })

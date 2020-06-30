@@ -22,6 +22,7 @@ test_that("check weights", {
 
 M <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()),
                              weights = c(0.1, 0.6, 0.3), name = "A", short_name = "a")
+M2 <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()))
 
 test_that("update weights", {
   expect_equal(M$setParameterValue(mix_weights = c(1, 2, 3))$getParameterValue("mix_weights"),
@@ -43,6 +44,9 @@ test_that("check pdf", {
     Binomial$new()$pdf(1) * 0.1 + Exponential$new()$pdf(1) * 0.6 + Normal$new()$pdf(1) * 0.3,
     Binomial$new()$pdf(2) * 0.1 + Exponential$new()$pdf(2) * 0.6 + Normal$new()$pdf(2) * 0.3
   ))
+
+  expect_equal(M2$pdf(1), Binomial$new()$pdf(1) / 3 + Exponential$new()$pdf(1) / 3 +
+                 Normal$new()$pdf(1) / 3)
 })
 
 test_that("check cdf", {
@@ -59,6 +63,9 @@ test_that("check cdf", {
     Binomial$new()$cdf(1) * 0.1 + Exponential$new()$cdf(1) * 0.6 + Normal$new()$cdf(1) * 0.3,
     Binomial$new()$cdf(2) * 0.1 + Exponential$new()$cdf(2) * 0.6 + Normal$new()$cdf(2) * 0.3
   ))
+
+  expect_equal(M2$cdf(1), Binomial$new()$cdf(1) / 3 + Exponential$new()$cdf(1) / 3 +
+                 Normal$new()$cdf(1) / 3)
 })
 
 test_that("quantile", {
@@ -88,12 +95,12 @@ test_that("multivariate", {
     ))
 
   expect_equal(md$pdf(2, 6),
-               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(2, 6)/2 +
-               Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)/2)
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(2, 6) / 2 +
+               Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6) / 2)
 
   expect_equal(md$pdf(c(1, 2), c(7, 6)),
-               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6))/2 +
-                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6))/2)
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6)) / 2 +
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6)) / 2)
 
   md <- MixtureDistribution$new(
     distribution = "Multinomial",
@@ -104,10 +111,10 @@ test_that("multivariate", {
     weights = c(0.1, 0.9))
 
   expect_equal(md$pdf(2, 6),
-               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(2, 6)*0.1 +
-                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)*0.9)
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(2, 6) * 0.1 +
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6) * 0.9)
 
   expect_equal(md$pdf(c(1, 2), c(7, 6)),
-               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6))*0.1 +
-                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6))*0.9)
+               Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6)) * 0.1 +
+                 Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6)) * 0.9)
 })

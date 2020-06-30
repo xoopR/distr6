@@ -129,7 +129,7 @@ ParameterSet <- R6Class("ParameterSet",
       if (!is.null(id)) {
         id0 <- id
         if (nrow(subset(private$.parameters, id %in% id0)) == 0) {
-          stopf("%s is not a parameter in this ParameterSet.", id)
+          stopf("'%s' is not a parameter in this ParameterSet.", id)
         } else {
           return(subset(private$.parameters, id %in% id0))
         }
@@ -363,10 +363,10 @@ ParameterSet <- R6Class("ParameterSet",
 
       apply(dt, 1, function(z) {
         if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
-          stopf("%s is not a parameter in this ParameterSet", z[[1]])
+          stopf("'%s' is not a parameter in this ParameterSet", z[[1]])
         }
         if (nrow(subset(private$.parameters, id == z[[2]])) == 0) {
-          stopf("%s is not a parameter in this ParameterSet", z[[2]])
+          stopf("'%s' is not a parameter in this ParameterSet", z[[2]])
         }
         checkmate::assertFunction(z[[3]], "self")
       })
@@ -421,7 +421,7 @@ ParameterSet <- R6Class("ParameterSet",
 
       apply(dt, 1, function(z) {
         if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
-          stopf("%s is not a parameter in this ParameterSet", z[[1]])
+          stopf("'%s' is not a parameter in this ParameterSet", z[[1]])
         }
         checkmate::assertFunction(z[[2]], c("x", "self"), TRUE)
       })
@@ -434,6 +434,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' @description
     #' Transformations to apply to parameter before setting. Note transformations are made before
     #' checks.
+    #' NOTE: If a transformation for a parameter already exists then this will be overwritten.
     #' @param x `(character(1))`\cr
     #' id of parameter to be transformed. Only one trafo function per parameter allowed - though
     #' multiple transformations can be encoded within this.
@@ -470,16 +471,11 @@ ParameterSet <- R6Class("ParameterSet",
 
       apply(dt, 1, function(z) {
         if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
-          stopf("%s is not a parameter in this ParameterSet", z[[1]])
+          stopf("'%s' is not a parameter in this ParameterSet", z[[1]])
         }
         if (nrow(subset(self$trafos, x == z[[1]])) > 0) {
-          warning("%s already has a `trafo` function, this will be overwritten.")
-          ans <- readline("Proceed? Y/N")
-          if (ans == "Y") {
-            private$.trafos <- subset(self$trafos, x != z[[1]])
-          } else {
-            invisible(self)
-          }
+          warning(sprintf("'%s' already has a `trafo` function, this will be overwritten.", z[[1]]))
+          private$.trafos <- subset(self$trafos, x != z[[1]])
         }
         checkmate::assertFunction(z[[2]], c("x", "self"), TRUE)
       })

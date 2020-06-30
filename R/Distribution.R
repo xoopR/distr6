@@ -210,8 +210,8 @@ Distribution <- R6Class("Distribution",
 
       if (!suppressMoments) {
         # Update skewness and kurtosis
-        kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
-        skew <- try(self$skewness(), silent = TRUE)
+        kur <- suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
+        skew <- suppressMessages(try(self$skewness(), silent = TRUE))
         private$.properties$kurtosis <- ifnerror(kur, exkurtosisType(kur), "NULL")
         private$.properties$skewness <- ifnerror(skew, skewType(skew), "NULL")
       }
@@ -645,7 +645,7 @@ decorator to numerically estimate this.")
       if (testSymmetric(self)) {
         med <- try(self$mean(), silent = TRUE)
         if (class(med) == "try-error") {
-          return(NaN)
+          return(self$quantile(0.5))
         } else if (is.null(med)) {
           return(self$quantile(0.5))
         } else {
@@ -706,21 +706,21 @@ decorator to numerically estimate this.")
     #' @field valueSupport
     #' Deprecated, use `$traits$valueSupport`.
     valueSupport = function() {
-      message("Deprecated. Use $traits$valueSupport instead.")
+      warning("Deprecated. Use $traits$valueSupport instead.")
       return(self$traits$valueSupport)
     },
 
     #' @field variateForm
     #' Deprecated, use `$traits$variateForm`.
     variateForm = function() {
-      message("Deprecated. Use $traits$variateForm instead.")
+      warning("Deprecated. Use $traits$variateForm instead.")
       return(self$traits$variateForm)
     },
 
     #' @field type
     #' Deprecated, use `$traits$type`.
     type = function() {
-      message("Deprecated. Use $traits$type instead.")
+      warning("Deprecated. Use $traits$type instead.")
       return(self$traits$type)
     },
 
@@ -734,14 +734,14 @@ decorator to numerically estimate this.")
     #' @field support
     #' Deprecated, use `$properties$type`.
     support = function() {
-      message("Deprecated. Use $properties$support instead.")
+      warning("Deprecated. Use $properties$support instead.")
       return(self$properties$support)
     },
 
     #' @field symmetry
     #' Deprecated, use `$properties$symmetry`.
     symmetry = function() {
-      message("Deprecated. Use $properties$symmetry instead.")
+      warning("Deprecated. Use $properties$symmetry instead.")
       return(self$properties$symmetry)
     },
 
@@ -772,14 +772,14 @@ decorator to numerically estimate this.")
     #' @field kurtosisType
     #' Deprecated, use `$properties$kurtosis`.
     kurtosisType = function() {
-      message("Deprecated. Use $properties$kurtosis instead.")
+      warning("Deprecated. Use $properties$kurtosis instead.")
       return(self$properties$kurtosis)
     },
 
     #' @field skewnessType
     #' Deprecated, use `$properties$skewness`.
     skewnessType = function() {
-      message("Deprecated. Use $properties$skewness instead.")
+      warning("Deprecated. Use $properties$skewness instead.")
       return(self$properties$skewness)
     },
 

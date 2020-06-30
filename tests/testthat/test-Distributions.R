@@ -20,19 +20,23 @@ test_that("check constructor", {
   expect_equal(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$strprint(),
                "TestDistr")
   expect_null(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$parameters())
+  expect_equal(Distribution$new(short_name = "TestDistr", pdf = dbin, type = Naturals$new(),
+                                variateForm = "multi")$traits$variateForm, "multivariate")
+  expect_equal(Distribution$new(short_name = "TestDistr", pdf = dbin,
+                                type = Naturals$new()^2)$traits$variateForm, "multivariate")
 })
 
 
 test_that("check support", {
   expect_equal(Distribution$new("Discrete Test", valueSupport = "c", pdf = dbin,
-                                type = Naturals$new())$valueSupport, "continuous")
+                                type = Naturals$new())$traits$valueSupport, "continuous")
   expect_equal(Distribution$new("Discrete Test", valueSupport = "d", pdf = dbin,
-                                type = Naturals$new())$valueSupport, "discrete")
+                                type = Naturals$new())$traits$valueSupport, "discrete")
   expect_equal(Distribution$new("Discrete Test", valueSupport = "m", pdf = dbin,
-                                type = Naturals$new())$valueSupport, "mixture")
+                                type = Naturals$new())$traits$valueSupport, "mixture")
   expect_error(Distribution$new("Discrete Test", valueSupport = "r", pdf = dbin,
                                 type = Naturals$new()))
-  expect_equal(Distribution$new("Discrete Test", pdf = dbin, type = Naturals$new())$valueSupport,
+  expect_equal(Distribution$new("Discrete Test", pdf = dbin, type = Naturals$new())$traits$valueSupport,
                "discrete")
 })
 
@@ -57,10 +61,10 @@ ps$addDeps(dt = data.table(
 test_that("check r/d/p/q", {
   expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())$pdf(1))
   expect_silent(Distribution$new("Test",
-    pdf = dbin, type = Naturals$new(),
-    quantile = function(p) {
-      return(p)
-    }
+                                 pdf = dbin, type = Naturals$new(),
+                                 quantile = function(p) {
+                                   return(p)
+                                 }
   )$quantile(0.4))
   expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$cdf(1))
   expect_null(Distribution$new("Test", pdf = dbin, type = Naturals$new())$quantile(1))
@@ -78,15 +82,38 @@ test_that("check is", {
                0L)
 })
 
+test_that("log", {
+  expect_error(Distribution$new(name = "Test Distr", pdf = function(x) x, type = Naturals$new())$
+                 pdf(1, log = TRUE),
+               "No analytical")
+  expect_error(Distribution$new(name = "Test Distr", cdf = function(x) x, type = Naturals$new())$
+                 cdf(1, log.p = TRUE),
+               "No analytical")
+  expect_error(Distribution$new(name = "Test Distr", cdf = function(x) x,
+                                quantile = function(p) p, type = Naturals$new())$
+                 quantile(log(1), log.p = TRUE),
+               "No analytical")
+  expect_equal(Distribution$new(name = "Test Distr", cdf = function(x) x,
+                                quantile = function(p) p, type = Naturals$new(),
+                                decorators = "CoreStatistics")$
+                 quantile(log(1), log.p = TRUE, lower.tail = FALSE),
+               0)
+})
+
 test_that("working_support", {
   expect_equal(Exponential$new()$workingSupport, Interval$new(0, 100))
   expect_equal(Binomial$new()$workingSupport, Set$new(elements = 0:10, class = "integer"))
   expect_equal(Normal$new()$workingSupport, Interval$new(-100, 10))
+  expect_equal(Distribution$new("Test", pdf = dbin, parameters = ps,
+                                type = Naturals$new())$workingSupport,
+               Interval$new(0, 1000, class = "integer"))
 })
 
-test_that("print", {
+test_that("print/summary", {
   expect_output(Binomial$new()$print(1))
   expect_output(Binomial$new()$print(5))
+  expect_output(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new(),
+                                 decorators = "CoreStatistics")$summary(), "Decorated with")
 })
 
 test_that("suppress", {
@@ -114,4 +141,36 @@ test_that("suppress", {
     variateForm = "univariate", description = "test",
     suppressMoments = TRUE, .suppressChecks = TRUE
   ))
+})
+
+test_that("median", {
+  d <- Distribution$new(name = "a", pdf = function(x) x, type = Reals$new(),
+                        quantile = function(p) p, symmetric = TRUE)
+  expect_equal(d$median(), 0.5)
+  d$mean = function() NULL
+  expect_equal(d$median(), 0.5)
+  d$mean = function() 1
+  expect_equal(d$median(), 1)
+})
+
+test_that("iqr", {
+  expect_equal(Binomial$new()$iqr(), Binomial$new()$quantile(0.75) - Binomial$new()$quantile(0.25))
+})
+
+test_that("correlation", {
+  expect_equal(Binomial$new()$correlation(), 1)
+  mn = Multinomial$new()
+  expect_equal(mn$correlation(),
+               mn$variance() / (sqrt(diag(mn$variance()) %*% t(diag(mn$variance())))))
+})
+
+test_that("deprecated", {
+  b <- Binomial$new()
+  expect_warning(b$type, "Deprecated")
+  expect_warning(b$variateForm, "Deprecated")
+  expect_warning(b$valueSupport, "Deprecated")
+  expect_warning(b$kurtosisType, "Deprecated")
+  expect_warning(b$skewnessType, "Deprecated")
+  expect_warning(b$support, "Deprecated")
+  expect_warning(b$symmetry, "Deprecated")
 })

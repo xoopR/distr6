@@ -1,7 +1,5 @@
 library(testthat)
 
-context("InverseGamma distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = InverseGamma,

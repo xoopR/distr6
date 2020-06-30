@@ -48,7 +48,7 @@ Empirical <- R6Class("Empirical",
     #'  Cannot be updated after construction.
     #' @examples
     #' Empirical$new(runif(1000))
-    initialize = function(samples, decorators = NULL) {
+    initialize = function(samples = 1, decorators = NULL) {
 
       samples <- sort(as.numeric(samples))
 

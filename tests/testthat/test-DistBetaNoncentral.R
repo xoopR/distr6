@@ -11,7 +11,7 @@ test_that("autotest", {
     ),
     support = Interval$new(0, 1),
     symmetry = "symmetric",
-    median = NaN,
+    median = 0.5,
     pdf = dbeta(1:3, 1, 1),
     cdf = pbeta(1:3, 1, 1),
     quantile = qbeta(c(0.24, 0.42, 0.5), 1, 1)

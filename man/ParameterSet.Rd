@@ -585,6 +585,7 @@ ps$addChecks(dt = data.table::data.table(
 \subsection{Method \code{addTrafos()}}{
 Transformations to apply to parameter before setting. Note transformations are made before
 checks.
+NOTE: If a transformation for a parameter already exists then this will be overwritten.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addTrafos(x, fun, dt = NULL)}\if{html}{\out{</div>}}
 }

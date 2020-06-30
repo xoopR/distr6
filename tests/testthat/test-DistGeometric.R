@@ -54,6 +54,6 @@ test_that("autotest_trials", {
   )
 })
 
-test_that("manual",{
+test_that("manual", {
   expect_equal(Geometric$new(trials = TRUE)$mgf(0.5), 0.5 * exp(0.5) / (1 - 0.5 * exp(0.5)))
 })
