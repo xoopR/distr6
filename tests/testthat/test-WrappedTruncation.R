@@ -8,6 +8,7 @@ test_that("check truncation constructor", {
   expect_equal(truncate(Binomial$new())$sup, 10)
   expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$inf, 1)
   expect_equal(truncate(Binomial$new(), lower = -Inf, upper = Inf)$sup, 10)
+  expect_error(TruncatedDistribution$new(MultivariateNormal$new()), "multivariate")
 })
 
 t <- truncate(Binomial$new(), lower = 1, upper = 5)
@@ -84,5 +85,6 @@ test_that("check truncation parameters", {
 })
 
 test_that("missing pdf/cdf", {
-  expect_error(TruncatedDistribution$new(MultivariateNormal$new()), "pdf and cdf")
+  expect_error(truncate(Distribution$new("a", pdf = function(x) x, type = Reals$new())),
+               "pdf and cdf")
 })
