@@ -255,6 +255,10 @@ autotest_vec_sdistribution <- function(sdist, pars) {
       vdist <- VectorDistribution$new(distribution = sdist$name,
                                       params = rep(list(pars[!(names(pars) %in% "trials")]), 3),
                                       shared_params = list(trials = pars$trials))
+    } else if (sdist$name == "NegativeBinomial" & !is.null(pars$form)) {
+      vdist <- VectorDistribution$new(distribution = sdist$name,
+                                      params = rep(list(pars[!(names(pars) %in% "form")]), 3),
+                                      shared_params = list(form = pars$form))
     } else {
       vdist <- VectorDistribution$new(distribution = sdist$name,
                                       params = rep(list(pars), 3))

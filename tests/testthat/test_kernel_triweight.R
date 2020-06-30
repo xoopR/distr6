@@ -10,3 +10,7 @@ test_that("autotest", {
     cdf = c(0.3917, 0.5, 0.6083)
   )
 })
+
+test_that("cpp", {
+  expect_equal(C_TriweightKernelCdf(c(2, -2), TRUE, FALSE), c(1, 0))
+})

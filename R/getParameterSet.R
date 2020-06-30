@@ -816,7 +816,7 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
 
   ps <- ParameterSet$new(
     id = list("prob", "qprob", "mean", "size", "form"),
-    value = list(0.5, 0.5, 10, 20, form),
+    value = list(0.5, 0.5, 1, 20, form),
     support = list(
       Interval$new(0, 1, type = "()"),
       Interval$new(0, 1, type = "()"),
@@ -835,6 +835,10 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
   ps$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
   ps$addDeps("qprob", "prob", function(self) 1 - self$getParameterValue("qprob"))
   if (form == "sbf") {
+    ps$addDeps("size", "mean", function(self) {
+      self$getParameterValue("size") *
+        self$getParameterValue("prob") / (1 - self$getParameterValue("prob"))
+    })
     ps$addDeps("prob", "mean", function(self) {
       self$getParameterValue("size") *
         self$getParameterValue("prob") / (1 - self$getParameterValue("prob"))
@@ -853,6 +857,10 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
           self$getParameterValue("mean")))
     })
   } else if (form == "tbf") {
+    ps$addDeps("size", "mean", function(self) {
+      self$getParameterValue("size") /
+        (1 - self$getParameterValue("prob"))
+    })
     ps$addDeps("prob", "mean", function(self) {
       self$getParameterValue("size") /
         (1 - self$getParameterValue("prob"))
@@ -871,9 +879,13 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
         self$getParameterValue("size")) /
         self$getParameterValue("mean"))
     })
-    ps$addChecks("mean", function(x, self) x <= self$getParameterValue("size"))
-    ps$addChecks("size", function(x, self) x >= self$getParameterValue("mean"))
+    ps$addChecks("mean", function(x, self) x >= self$getParameterValue("size"))
+    ps$addChecks("size", function(x, self) x <= self$getParameterValue("mean"))
   } else if (form == "tbs") {
+    ps$addDeps("size", "mean", function(self) {
+      self$getParameterValue("size") /
+        self$getParameterValue("prob")
+    })
     ps$addDeps("prob", "mean", function(self) {
       self$getParameterValue("size") /
         self$getParameterValue("prob")
@@ -890,9 +902,13 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
       1 - (self$getParameterValue("size") /
         self$getParameterValue("mean"))
     })
-    ps$addChecks("mean", function(x, self) x <= self$getParameterValue("size"))
-    ps$addChecks("size", function(x, self) x >= self$getParameterValue("mean"))
+    ps$addChecks("mean", function(x, self) x >= self$getParameterValue("size"))
+    ps$addChecks("size", function(x, self) x <= self$getParameterValue("mean"))
   } else {
+    ps$addDeps("size", "mean", function(self) {
+      self$getParameterValue("size") *
+        (1 - self$getParameterValue("prob")) / self$getParameterValue("prob")
+    })
     ps$addDeps("prob", "mean", function(self) {
       self$getParameterValue("size") *
         (1 - self$getParameterValue("prob")) / self$getParameterValue("prob")

@@ -168,7 +168,7 @@ test_that("extract", {
   expect_equal(ps2["Binom1_prob", prefix = "Binom1"], ParameterSet$new(id = "prob", value = 0.5,
                                                     support = Interval$new(0, 1),
                                                     description = "Probability of Success"))
-  exp = getParameterSet.Binomial()
+  exp <- getParameterSet.Binomial()
   exp$.__enclos_env__$private$.deps <- data.table(x = character(), y = character(), fun = list())
   expect_equal(ps2["Binom1_"], exp)
 })

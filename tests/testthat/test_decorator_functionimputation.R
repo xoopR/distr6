@@ -199,6 +199,7 @@ test_that("basic cdf checks", {
 test_that("continuous cdf2pdf", {
   expect_message(expect_equal(cont_cdf$pdf(1), dexp(1)))
   expect_message(expect_equal(cont_cdf$pdf(1:3), dexp(1:3)))
+  expect_message(expect_equal(cont_cdf$pdf(1:3, log = TRUE), dexp(1:3, log = TRUE)))
 })
 
 test_that("discrete cdf2pdf", {

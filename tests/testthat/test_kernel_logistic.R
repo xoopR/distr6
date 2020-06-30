@@ -10,3 +10,7 @@ test_that("autotest", {
     cdf = c(0.4750, 0.5, 0.5250)
   )
 })
+
+test_that("cpp", {
+  expect_equal(C_LogisticKernelQuantile(c(2, 0, 1), TRUE, FALSE), c(NaN, -Inf, Inf))
+})

@@ -37,14 +37,6 @@ C_EmpiricalMVCdf <- function(x, data) {
     .Call(`_distr6_C_EmpiricalMVCdf`, x, data)
 }
 
-C_NegativeBinomialPdf <- function(x, size, prob, form, logp) {
-    .Call(`_distr6_C_NegativeBinomialPdf`, x, size, prob, form, logp)
-}
-
-C_NegativeBinomialCdf <- function(x, size, prob, form, min, lower, logp) {
-    .Call(`_distr6_C_NegativeBinomialCdf`, x, size, prob, form, min, lower, logp)
-}
-
 C_ShiftedLoglogisticPdf <- function(x, location, shape, scale, logp) {
     .Call(`_distr6_C_ShiftedLoglogisticPdf`, x, location, shape, scale, logp)
 }

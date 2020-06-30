@@ -36,6 +36,7 @@ test_that("setting", {
 
 test_that("cpp", {
   expect_equal(as.numeric(C_WeightedDiscretePdf(NaN, 1, 1, FALSE)), 0)
+  expect_equal(as.numeric(C_WeightedDiscretePdf(NA_integer_, 1, 1, FALSE)), 0)
 })
 
 test_that("manual", {

@@ -89,9 +89,11 @@ constructor, use `distlist` instead.")
           stop("For Geometric distributions either `trials` must be passed to `shared_params`
 or `distlist` should be used.")
         }
-        if (distribution == "NegativeBinomial" & "form" %in% names(unlist(params))) {
-          stop("For NegativeBinomial distributions either `form` must be passed to `shared_params`
-or `distlist` should be used.")
+
+        if (distribution == "NegativeBinomial" &
+            any(c("form", "size") %in% names(unlist(params)))) {
+          stop("For NegativeBinomial distributions either `form`/`size` must be passed to
+`shared_params` or `distlist` should be used.")
         }
 
         # convert shared_params to list
@@ -117,14 +119,20 @@ or `distlist` should be used.")
         params <- unlist(params, recursive = FALSE)
         names(params) <- gsub(".", "_", names(params), fixed = TRUE)
         if (!is.null(shared_params)) {
+          if (distribution == "Geometric") {
+            shared_params <- shared_params[!(names(shared_params) %in% "trials")]
+          }
+          if (distribution == "NegativeBinomial") {
+            shared_params <- shared_params[!(names(shared_params) %in% "form")]
+          }
           shared_params <- rep(list(shared_params), length(params))
           names(shared_params) <- names(paramlst)
           shared_params <- unlist(shared_params, recursive = FALSE)
           names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
           params <- c(params, shared_params)
         }
-        parameters <- suppressWarnings(ParameterSetCollection$new(lst = paramlst)$
-                                         setParameterValue(lst = params))
+        parameters <- ParameterSetCollection$new(lst = paramlst)$
+                                         setParameterValue(lst = params)
 
         shortname <- get(distribution)$public_fields$short_name
 

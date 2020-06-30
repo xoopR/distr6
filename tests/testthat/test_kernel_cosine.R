@@ -10,3 +10,8 @@ test_that("autotest", {
     cdf = c(0.4218, 0.5, 0.5782)
   )
 })
+
+test_that("cpp", {
+  expect_equal(C_CosineKernelCdf(c(2, -2), TRUE, FALSE), c(1, 0))
+  expect_equal(C_CosineKernelQuantile(c(2, 0, 1), TRUE, FALSE), c(NaN, -1, 1))
+})

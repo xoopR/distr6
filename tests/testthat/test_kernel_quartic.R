@@ -10,3 +10,7 @@ test_that("autotest", {
     cdf = c(0.4069, 0.5, 0.5931)
   )
 })
+
+test_that("cpp", {
+  expect_equal(C_QuarticKernelCdf(c(2, -2), TRUE, FALSE), c(1, 0))
+})

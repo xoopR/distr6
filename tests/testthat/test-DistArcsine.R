@@ -40,6 +40,7 @@ test_that("vector", {
 })
 
 test_that("cpp", {
+  expect_equal(as.numeric(C_ArcsineCdf(-2, 0, 1, TRUE, FALSE)), 0)
   expect_equal(as.numeric(C_ArcsineQuantile(-2, 0, 1, TRUE, FALSE)), NaN)
   expect_equal(as.numeric(C_ArcsineQuantile(0, 0, 1, TRUE, FALSE)), 0)
   expect_equal(as.numeric(C_ArcsineQuantile(1, 0, 1, TRUE, FALSE)), 1)

@@ -36,7 +36,8 @@ test_that("check support", {
                                 type = Naturals$new())$traits$valueSupport, "mixture")
   expect_error(Distribution$new("Discrete Test", valueSupport = "r", pdf = dbin,
                                 type = Naturals$new()))
-  expect_equal(Distribution$new("Discrete Test", pdf = dbin, type = Naturals$new())$traits$valueSupport,
+  expect_equal(Distribution$new("Discrete Test", pdf = dbin,
+                                type = Naturals$new())$traits$valueSupport,
                "discrete")
 })
 
@@ -105,8 +106,8 @@ test_that("working_support", {
   expect_equal(Binomial$new()$workingSupport, Set$new(elements = 0:10, class = "integer"))
   expect_equal(Normal$new()$workingSupport, Interval$new(-100, 10))
   expect_equal(Distribution$new("Test", pdf = dbin, parameters = ps,
-                                type = Naturals$new())$workingSupport,
-               Interval$new(0, 1000, class = "integer"))
+                                type = Integers$new())$workingSupport,
+               Interval$new(-10, 1000, class = "integer"))
 })
 
 test_that("print/summary", {
@@ -147,9 +148,9 @@ test_that("median", {
   d <- Distribution$new(name = "a", pdf = function(x) x, type = Reals$new(),
                         quantile = function(p) p, symmetric = TRUE)
   expect_equal(d$median(), 0.5)
-  d$mean = function() NULL
+  d$mean <- function() NULL
   expect_equal(d$median(), 0.5)
-  d$mean = function() 1
+  d$mean <- function() 1
   expect_equal(d$median(), 1)
 })
 
@@ -159,7 +160,7 @@ test_that("iqr", {
 
 test_that("correlation", {
   expect_equal(Binomial$new()$correlation(), 1)
-  mn = Multinomial$new()
+  mn <- Multinomial$new()
   expect_equal(mn$correlation(),
                mn$variance() / (sqrt(diag(mn$variance()) %*% t(diag(mn$variance())))))
 })

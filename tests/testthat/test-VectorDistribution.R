@@ -302,6 +302,8 @@ test_that("multivariate", {
 
   expect_error(vd$pdf(data = matrix(1), "multivariate"))
   expect_error(vd$pdf(1, "multivariate"))
+  expect_error(vd$cdf(data = matrix(1), "multivariate"))
+  expect_error(vd$cdf(1, "multivariate"))
   expect_error(vd$quantile(1, "not possible"))
 
   expect_equal(vd$pdf(data = array(c(1, 4, 2, 6), dim = c(1, 2, 2))),
@@ -323,6 +325,10 @@ test_that("multivariate", {
   expect_equal(vd$pdf(data = array(c(1, 4, 12, 16), dim = c(1, 2, 2))),
                data.table(EmpMV1 = e1$pdf(3, 4),
                           EmpMV2 = e2$pdf(12, 16)))
+
+  expect_equal(vd$cdf(data = matrix(c(1, 4), nrow = 1, ncol = 2)),
+               data.table(EmpMV1 = e1$cdf(1, 4),
+                          EmpMV2 = e2$cdf(1, 4)))
 
   expect_equal(vd$cdf(data = array(c(1, 4, 12, 16), dim = c(1, 2, 2))),
                data.table(EmpMV1 = e1$cdf(1, 4),

@@ -69,6 +69,7 @@ FunctionImputation <- R6Class("FunctionImputation",
         invisible(self)
       } else {
         pdist <- distribution$.__enclos_env__$private
+        pdist$.log <- TRUE
         pdist$n_grid <- checkmate::assertIntegerish(n)
 
         if (!isPdf(distribution)) {
