@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Noncentral ChiSquared distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = ChiSquaredNoncentral,
@@ -24,4 +22,8 @@ test_that("autotest", {
     cdf = pchisq(1:3, 8, 2),
     quantile = qchisq(c(0.24, 0.42, 0.5), 8, 2)
   )
+})
+
+test_that("manual", {
+  expect_equal(ChiSquaredNoncentral$new(df = 1, location = 1)$mgf(0.1), exp(0.1 / 0.8) / (0.8^0.5))
 })

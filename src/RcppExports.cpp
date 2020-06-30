@@ -126,20 +126,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// C_NegativeBinomialPdf
-NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob, StringVector form);
-RcppExport SEXP _distr6_C_NegativeBinomialPdf(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP formSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type size(sizeSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type prob(probSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type form(formSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_NegativeBinomialPdf(x, size, prob, form));
-    return rcpp_result_gen;
-END_RCPP
-}
 // C_ShiftedLoglogisticPdf
 NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location, NumericVector shape, NumericVector scale, bool logp);
 RcppExport SEXP _distr6_C_ShiftedLoglogisticPdf(SEXP xSEXP, SEXP locationSEXP, SEXP shapeSEXP, SEXP scaleSEXP, SEXP logpSEXP) {
@@ -619,7 +605,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_DegenerateQuantile", (DL_FUNC) &_distr6_C_DegenerateQuantile, 4},
     {"_distr6_C_EmpiricalMVPdf", (DL_FUNC) &_distr6_C_EmpiricalMVPdf, 2},
     {"_distr6_C_EmpiricalMVCdf", (DL_FUNC) &_distr6_C_EmpiricalMVCdf, 2},
-    {"_distr6_C_NegativeBinomialPdf", (DL_FUNC) &_distr6_C_NegativeBinomialPdf, 4},
     {"_distr6_C_ShiftedLoglogisticPdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticPdf, 5},
     {"_distr6_C_ShiftedLoglogisticCdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticCdf, 6},
     {"_distr6_C_ShiftedLoglogisticQuantile", (DL_FUNC) &_distr6_C_ShiftedLoglogisticQuantile, 6},

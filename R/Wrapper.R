@@ -120,14 +120,15 @@ DistributionWrapper <- R6Class("DistributionWrapper",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (length(private$.parameters) == 0) {
-        return(NULL)
-      } else {
+      # This case is highly unlikely to ever be seen.
+      # if (length(private$.parameters) == 0) {
+      #   return(NULL)
+      # } else {
         if (is.null(lst)) {
           lst <- list(...)
         }
         self$parameters()$setParameterValue(lst = lst, error = error)
-      }
+      # }
     }
   ),
 

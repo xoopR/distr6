@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Multivariate Normal distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = MultivariateNormal,
@@ -24,12 +22,18 @@ test_that("autotest", {
   )
 })
 
-
-
-test_that("multivariate pdf", {
-  expect_equal(
-    signif(MultivariateNormal$new(mean = c(1, 7, 3), cov = c(1, 0, 0, 0, 1, 0, 0, 0, 1))$
-      pdf(1:2, 2:3, 3:4), 3),
-    c(2.366e-07, 7.835e-06)
-  )
+test_that("manual", {
+  expect_error(MultivariateNormal$new(mean = 1), "Normal")
+  expect_equal(MultivariateNormal$new()$getParameterValue("prec"), matrix(c(1, 0, 0, 1), 2, 2))
+  expect_equal(MultivariateNormal$new(cov = c(1, 2, 2, 2))$pdf(2, 2), NaN)
 })
+
+#
+#
+# test_that("multivariate pdf", {
+#   expect_equal(
+#     signif(MultivariateNormal$new(mean = c(1, 7, 3), cov = c(1, 0, 0, 0, 1, 0, 0, 0, 1))$
+#       pdf(1:2, 2:3, 3:4), 3),
+#     c(2.366e-07, 7.835e-06)
+#   )
+# })

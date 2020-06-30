@@ -14,9 +14,11 @@ pdq_point_assert <- function(..., self, data) {
         } else {
           data <- as.matrix(data.table(...))
         }
-      } else {
-        stop("Points to evaluate must be passed to `data` for matrixvariate distributions.")
       }
+      # TODO - Once matrixvariates implemented
+      # } else {
+      #   stop("Points to evaluate must be passed to `data` for matrixvariate distributions.")
+      # }
     }
   } else {
     if (testUnivariate(self)) {
@@ -30,11 +32,13 @@ pdq_point_assert <- function(..., self, data) {
       } else {
         data <- as.matrix(data)
       }
-    } else {
-      if (class(data) != "array") {
-        stop("For multivariate distributions `data` must be an array.")
-      }
     }
+    # TODO - Once matrixvariates implemented
+    # else {
+    #   if (class(data) != "array") {
+    #     stop("For matrixvariate distributions `data` must be an array.")
+    #   }
+    # }
   }
 
   return(data)
@@ -51,7 +55,7 @@ pdqr_returner <- function(pdqr, simplify, name) {
         colnames(pdqr) <- name
         return(pdqr)
       } else {
-        colnames(pdqr) <- paste0(name, ".V", seq(ncol(pdqr)))
+        colnames(pdqr) <- paste0(name, ".V", seq_along(pdqr))
         return(pdqr)
       }
     }

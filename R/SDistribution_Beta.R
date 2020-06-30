@@ -126,7 +126,7 @@ Beta <- R6Class("Beta",
       shape1 <- unlist(self$getParameterValue("shape1"))
       shape2 <- unlist(self$getParameterValue("shape2"))
       return(2 * (shape2 - shape1) * ((shape1 + shape2 + 1)^0.5) * ((shape1 + shape2 + 2)^-1) *
-               ((shape1 * shape2)^-0.5))
+        ((shape1 * shape2)^-0.5))
     },
 
     #' @description

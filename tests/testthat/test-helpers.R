@@ -62,3 +62,43 @@ test_that("assert_pkgload", {
   expect_error(assert_pkgload("dsad"), "The following")
   expect_silent(assert_pkgload("stats"))
 })
+
+test_that("pdq_helpers", {
+  expect_error(pdq_point_assert(data = NULL), "Points to")
+  expect_warning(pdq_point_assert(1, 2, self = Binomial$new(), data = NULL),
+                 "Distribution is univariate")
+  expect_warning(pdq_point_assert(self = Binomial$new(), data = data.frame(1, 2)),
+                 "Distribution is univariate")
+  expect_error(pdq_point_assert(1, self = Multinomial$new(), data = NULL),
+                 "Distribution is multivariate")
+  expect_error(pdq_point_assert(self = Multinomial$new(), data = data.frame(1)),
+                 "Distribution is multivariate")
+  checkmate::expect_data_table(pdqr_returner(matrix(1, nrow = 2, ncol = 2), FALSE, "A"),
+                               nrows = 2, ncols = 2)
+  expect_equal(colnames(pdqr_returner(matrix(1, nrow = 2, ncol = 2), FALSE, "A")),
+               c("A.V1", "A.V2"))
+  expect_error(call_C_base_pdqr("l", 1, vec = FALSE), "Function must")
+  expect_error(call_C_base_pdqr("l", 1, vec = TRUE), "Function must")
+})
+
+test_that("oneword", {
+  expect_silent(assertOneWord(c("a", "sfas")))
+  expect_error(assertOneWord(c("a", "sf as")))
+})
+
+test_that("v_genfun", {
+  expect_equal(v_genfun(1, function(x) x + 1), 2)
+  expect_equal(v_genfun(c(1, 2), function(x) x + 1), 2:3)
+})
+
+test_that("abstract", {
+  expect_error(abstract(1, "numeric"), "abstract class")
+  expect_error(abstract(1, "numeric", "purple"), "purple")
+})
+
+test_that("rsapply", {
+  expect_equal(rsapply(list(Binomial$new(), Normal$new()), pdf, 1),
+               c(Binomial$new()$pdf(1), Normal$new()$pdf(1)))
+  expect_equal(rsapply(list(Binomial$new(), Normal$new()), short_name, active = TRUE),
+               c("Binom", "Norm"))
+})

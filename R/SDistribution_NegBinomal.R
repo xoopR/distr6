@@ -20,6 +20,8 @@
 #'
 #' For each we refer to the number of K successes/failures as the \code{size} parameter.
 #'
+#' Note that the `size` parameter is not currently vectorised in [VectorDistribution]s.
+#'
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution
@@ -107,35 +109,26 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
     mode = function(which = "all") {
-      if (self$getParameterValue("form") == "sbf") {
-        if (self$getParameterValue("size") <= 1) {
-          return(0)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("prob")) / (self$getParameterValue("qprob"))))
-        }
-      } else if (self$getParameterValue("form") == "tbf") {
-        if (self$getParameterValue("size") <= 1) {
-          return(1)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("prob")) / (self$getParameterValue("qprob"))) + 10)
-        }
-      } else if (self$getParameterValue("form") == "fbs") {
-        if (self$getParameterValue("size") <= 1) {
-          return(0)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("qprob")) / (self$getParameterValue("prob"))))
-        }
+      form <- self$getParameterValue("form")[[1]]
+      size <- unlist(self$getParameterValue("size"))
+      prob <- unlist(self$getParameterValue("prob"))
+      qprob <- 1 - prob
+
+      if (form %in% c("sbf", "tbf")) {
+        p <- prob
+        q <- qprob
       } else {
-        if (self$getParameterValue("size") <= 1) {
-          return(1)
-        } else {
-          return(floor(((self$getParameterValue("size") - 1) *
-                          self$getParameterValue("qprob")) / (self$getParameterValue("prob"))) + 10)
-        }
+        p <- qprob
+        q <- prob
       }
+      mode <- numeric(length(size))
+      mode[size > 1] <- floor(((size - 1) * p) / q)
+
+      if (form %in% c("tbf", "tbs")) {
+        mode[size > 1] <- mode[size > 1] + size[size > 1]
+      }
+
+      return(mode)
     },
 
     #' @description
@@ -265,7 +258,8 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
 
-      if (self$getParameterValue("form") == "tbf" | self$getParameterValue("form") == "tbs") {
+      form <- self$getParameterValue("form")[[1]]
+      if (form == "tbf" | form == "tbs") {
         private$.properties$support <- Interval$new(self$getParameterValue("size"),
                                                     Inf, type = "[)", class = "integer")
       }
@@ -277,112 +271,115 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     # dpqr
     .pdf = function(x, log = FALSE) {
 
-      pdf <- C_NegativeBinomialPdf(
-        x = x,
-        size = as.numeric(self$getParameterValue("size")),
-        prob = as.numeric(self$getParameterValue("prob")),
-        form = as.character(self$getParameterValue("form"))
-      )
+      size <- unlist(self$getParameterValue("size"))[[1]]
+      prob <- unlist(self$getParameterValue("prob"))
+      form <- self$getParameterValue("form")[[1]]
 
-      if (ncol(pdf) == 1) {
-        return(as.numeric(pdf))
-      } else {
-        return(pdf)
+      if (form %in% c("sbf", "tbf")) {
+        prob <- 1 - prob
+      }
+      if (form %in% c("tbs", "tbf")) {
+        x <- x - size
       }
 
+      return(
+        call_C_base_pdqr(
+          fun = "dnbinom",
+          x = x,
+          args = list(
+            size = size,
+            prob = prob
+          ),
+          log = log,
+          vec = test_list(self$getParameterValue("size"))
+        )
+      )
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      form <- self$getParameterValue("form")
-      size <- self$getParameterValue("size")
-      prob <- self$getParameterValue("prob")
 
-      pnbinom <- function(form, size, prob) {
-        if (form == "fbs") {
-          return(call_C_base_pdqr(
-            fun = "pnbinom",
-            x = x,
-            args = list(
-              size = unlist(size),
-              prob = unlist(prob)
-            ),
-            lower.tail = lower.tail,
-            log = log.p,
-            vec = test_list(size)
-          ))
-        } else if (form == "sbf") {
+      size <- unlist(self$getParameterValue("size"))[[1]]
+      prob <- unlist(self$getParameterValue("prob"))
+      form <- self$getParameterValue("form")[[1]]
 
-          return(1 - pbeta(self$getParameterValue("prob"), x + 1, self$getParameterValue("size")))
-        } else {
-          pdf_x <- self$workingSupport
-          pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
-
-          return(
-            NumericCdf_Discrete(
-              q = x,
-              x = pdf_x,
-              pdf = self$pdf(pdf_x),
-              lower = lower.tail,
-              logp = log.p
-            )
-          )
-        }
+      if (form %in% c("sbf", "tbf")) {
+        prob <- 1 - prob
       }
+      if (form %in% c("tbs", "tbf")) {
+        x <- x - size
+      }
+
+      return(
+        call_C_base_pdqr(
+        fun = "pnbinom",
+        x = x,
+        args = list(
+          size = size,
+          prob = prob
+        ),
+        log = log.p,
+        lower.tail = lower.tail,
+        vec = test_list(self$getParameterValue("size"))
+        )
+      )
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      if (self$getParameterValue("form") == "fbs") {
-        size <- self$getParameterValue("size")
-        prob <- self$getParameterValue("prob")
-        return(call_C_base_pdqr(
+
+      size <- unlist(self$getParameterValue("size"))[[1]]
+      prob <- unlist(self$getParameterValue("prob"))
+      form <- self$getParameterValue("form")[[1]]
+
+      if (form %in% c("sbf", "tbf")) {
+        prob <- 1 - prob
+      }
+
+      quantile <- call_C_base_pdqr(
           fun = "qnbinom",
           x = p,
           args = list(
-            size = unlist(size),
-            prob = unlist(prob)
+            size = size,
+            prob = prob
           ),
-          lower.tail = lower.tail,
           log = log.p,
-          vec = test_list(size)
-        ))
-      } else {
-        pdf_x <- self$workingSupport
-        pdf_x <- seq.int(pdf_x$lower, pdf_x$upper)
-        return(
-          NumericQuantile(
-            p = p,
-            x = pdf_x,
-            cdf = self$cdf(pdf_x),
-            lower = lower.tail,
-            logp = log.p
-          )
+          lower.tail = lower.tail,
+          vec = test_list(self$getParameterValue("size"))
         )
+
+      if (form %in% c("tbs", "tbf")) {
+        quantile <- quantile + size
       }
+
+      return(quantile)
     },
     .rand = function(n) {
-      if (self$getParameterValue("form") == "fbs") {
-        size <- self$getParameterValue("size")
-        prob <- self$getParameterValue("prob")
-        return(call_C_base_pdqr(
-          fun = "rnbinom",
-          x = n,
-          args = list(
-            size = unlist(size),
-            prob = unlist(prob)
-          ),
-          vec = test_list(size)
-        ))
-      } else {
-        x <- self$workingSupport
-        x <- seq.int(x$lower, x$upper)
-        return(sample(x, n, TRUE, self$pdf(x)))
+      size <- unlist(self$getParameterValue("size"))[[1]]
+      prob <- unlist(self$getParameterValue("prob"))
+      form <- self$getParameterValue("form")[[1]]
+
+      if (form %in% c("sbf", "tbf")) {
+        prob <- 1 - prob
       }
+
+      rand <- call_C_base_pdqr(
+        fun = "rnbinom",
+        x = n,
+        args = list(
+          size = size,
+          prob = prob
+        ),
+        log = log.p,
+        lower.tail = lower.tail,
+        vec = test_list(self$getParameterValue("size"))
+      )
+
+      if (form %in% c("tbs", "tbf")) {
+        rand <- rand + size
+      }
+
+      return(rand)
     },
 
     # traits
-    .traits = list(valueSupport = "discrete", variateForm = "univariate"),
-
-    .isCdf = FALSE,
-    .isQuantile = FALSE,
-    .isRand = FALSE
+    .traits = list(valueSupport = "discrete", variateForm = "univariate")
   )
 )
 

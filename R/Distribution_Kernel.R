@@ -54,7 +54,7 @@ Kernel <- R6Class("Kernel",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0) {
-      return(NULL)
+      return(NULL) # nocov
     }
   ),
 
@@ -68,7 +68,11 @@ Kernel <- R6Class("Kernel",
       } else {
         return(NULL)
       }
-    }
+    },
+    .isPdf = 1L,
+    .isCdf = 1L,
+    .isQuantile = 1L,
+    .isRand = 1L
   )
 )
 

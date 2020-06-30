@@ -25,9 +25,9 @@ Cosine <- R6Class("Cosine",
     pdfSquared2Norm = function(x = 0) {
 
       cond1 <- -pi / 32 * (sin((pi * x - 2 * pi) / 2) - sin(pi * x / 2) + (pi * x - 2 * pi) *
-                             cos(pi * x / 2))
+        cos(pi * x / 2))
       cond2 <- pi / 32 * (sin((pi * x + 2 * pi) / 2) - sin(pi * x / 2) + (pi * x + 2 * pi) *
-                            cos(pi * x / 2))
+        cos(pi * x / 2))
 
       kern2Norm <- ifelse(abs(x) > 2, 0, ifelse(x >= 0, cond1, cond2))
 
@@ -52,7 +52,7 @@ Cosine <- R6Class("Cosine",
       C_CosineKernelCdf(x, lower.tail, log.p)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      C_CosineKernelQuantile(x, lower.tail, log.p)
+      C_CosineKernelQuantile(p, lower.tail, log.p)
     }
   )
 )

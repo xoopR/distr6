@@ -10,7 +10,8 @@
 #' @templateVar distsupport \eqn{[\beta, \infty)}
 #' @details
 #' Currently this is implemented as the Type I Pareto distribution, other types
-#' will be added in the future.
+#' will be added in the future. Characteristic function is omitted as no suitable incomplete
+#' gamma function with complex inputs implementation could be found.
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -35,7 +36,7 @@ Pareto <- R6Class("Pareto",
     name = "Pareto",
     short_name = "Pare",
     description = "Pareto (Type I) Probability Distribution.",
-    packages = c("extraDistr", "expint"),
+    packages = c("extraDistr", "pracma"),
 
     # Public methods
     # initialize
@@ -153,7 +154,7 @@ Pareto <- R6Class("Pareto",
       if (t < 0) {
         shape <- self$getParameterValue("shape")
         scale <- self$getParameterValue("scale")
-        return(shape * (-scale * t)^shape * expint::gammainc(-shape, -scale * t))
+        return(shape * (-scale * t)^shape * pracma::incgam(-scale * t, -shape))
       } else {
         return(NaN)
       }

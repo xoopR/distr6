@@ -69,6 +69,7 @@ FunctionImputation <- R6Class("FunctionImputation",
         invisible(self)
       } else {
         pdist <- distribution$.__enclos_env__$private
+        pdist$.log <- TRUE
         pdist$n_grid <- checkmate::assertIntegerish(n)
 
         if (!isPdf(distribution)) {
@@ -170,7 +171,7 @@ FunctionImputation <- R6Class("FunctionImputation",
         }
       } else {
         x <- impute_genx(self, private$n_grid)
-        if (isCdf(self)) {
+        if (isCdf(self) == 1L) {
           quantile <- suppressMessages(C_NumericQuantile(data, x, self$cdf(x), lower.tail, log.p))
         } else {
           cdf <- suppressMessages(C_NumericCdf_Discrete(x, x, self$pdf(x),

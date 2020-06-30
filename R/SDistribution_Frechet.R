@@ -147,7 +147,6 @@ Frechet <- R6Class("Frechet",
       } else {
         return(kur - 3)
       }
-      return(kur)
     },
 
     #' @description

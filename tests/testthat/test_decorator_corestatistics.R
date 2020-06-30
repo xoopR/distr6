@@ -67,6 +67,7 @@ test_that("skewness", {
 test_that("kurtosis", {
   expect_message(expect_equal(continuousTester$kurtosis(), Exponential$new()$kurtosis()))
   expect_equal(discreteTester$kurtosis(), Binomial$new()$kurtosis())
+  expect_equal(discreteTester$kurtosis(FALSE), Binomial$new()$kurtosis(FALSE))
 })
 
 test_that("variance", {
@@ -80,6 +81,8 @@ test_that("kthmoment", {
 
   expect_message(expect_equal(continuousTester$kthmoment(3, "c"), 2))
   expect_message(expect_equal(discreteTester$kthmoment(3, "c"), 0))
+  expect_equal(discreteTester$kthmoment(0, "c"), 1)
+  expect_equal(discreteTester$kthmoment(1, "c"), 0)
 
   expect_message(expect_equal(continuousTester$kthmoment(3, "r"), 6))
   expect_message(expect_equal(discreteTester$kthmoment(3, "r"), 162.5))

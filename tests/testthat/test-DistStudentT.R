@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Student's t distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = StudentT,
-    pars = list(),
+    pars = list(df = 1),
     traits = list(valueSupport = "continuous", variateForm = "univariate", type = Reals$new()),
     support = Reals$new(),
     symmetry = "symmetric",

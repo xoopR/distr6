@@ -26,6 +26,13 @@ test_that("getters", {
     Geom = getParameterSet.Geometric(),
     Binom = getParameterSet.Binomial()
   ))
+
+  expect_error(pc$getParameterValue("Norm"), "not in this")
+  expect_error(pc$parameters("Norm"), "is not a")
+  expect_equal(pc$parameters("Geom_prob"),
+               data.table::data.table(id = "Geom_prob", value = list(0.5),
+                                      support = list(Interval$new(0, 1, type = "(]")),
+                                      settable = TRUE, description = "Probability of success"))
 })
 
 test_that("setters", {
@@ -79,4 +86,21 @@ test_that("deps", {
     Binom = getParameterSet.Binomial()$deps
   ))
   expect_error(pc$addDeps())
+})
+
+test_that("print", {
+  pc <- ParameterSetCollection$new(
+    Geom = getParameterSet.Geometric(),
+    Binom = getParameterSet.Binomial()
+  )
+  expect_output(pc$print())
+})
+
+test_that("merge", {
+  b <- Binomial$new()
+  g <- Geometric$new()
+  psc <- ParameterSetCollection$new(Binom = b$parameters())
+  psc2 <- ParameterSetCollection$new(Geom = g$parameters())
+  expect_equal(psc$merge(psc2)$parameters(),
+               ParameterSetCollection$new(Binom = b$parameters(), Geom = g$parameters()))
 })

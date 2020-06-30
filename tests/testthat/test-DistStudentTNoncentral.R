@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Noncentral Student's t distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = StudentTNoncentral,

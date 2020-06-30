@@ -96,25 +96,29 @@ NumericMatrix C_ArcsineQuantile(NumericVector x, NumericVector min, NumericVecto
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
 
+  double y;
+
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
 
+      y = x[j];
+
       if (logp) {
-        x[j] = exp(x[j]);
+        y = exp(y);
       }
 
       if (!lower) {
-        x[j] = 1 - x[j];
+        y = 1 - y;
       }
 
-      if (x[j] < 0 || x[j] > 1) {
+      if (y < 0 || y > 1) {
         mat(j, i) = R_NaN;
-      } else if (x[j] == 0) {
+      } else if (y == 0) {
         mat(j, i) = min[i % ll];
-      } else if (x[j] == 1) {
+      } else if (y == 1) {
         mat(j, i) = max[i % ul];
       } else {
-        mat(j, i) = ((max[i % ul] - min[i % ll]) * pow(sin(x[j] * M_PI * 0.5), 2)) + min[i % ll];
+        mat(j, i) = ((max[i % ul] - min[i % ll]) * pow(sin(y * M_PI * 0.5), 2)) + min[i % ll];
       }
     }
   }
@@ -174,20 +178,24 @@ NumericMatrix C_DegenerateQuantile(NumericVector x, NumericVector mean, bool low
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
 
+  double y;
+
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
 
+      y = x[j];
+
       if (logp) {
-        x[j] = exp(x[j]);
+        y = exp(y);
       }
 
       if (!lower) {
-        x[j] = 1 - x[j];
+        y = 1 - y;
       }
 
-      if (x[j] < 0 || x[j] > 1) {
+      if (y < 0 || y > 1) {
         mat(j, i) = R_NaN;
-      } else if (x[j] == 0) {
+      } else if (y == 0) {
         mat(j, i) = R_NegInf;
       } else {
         mat(j, i) = mean[i];
@@ -251,52 +259,6 @@ NumericVector C_EmpiricalMVCdf(NumericMatrix x, NumericMatrix data) {
 }
 
 // [[Rcpp::export]]
-NumericMatrix C_NegativeBinomialPdf(NumericVector x, NumericVector size, NumericVector prob,
-                                    StringVector form) {
-  int sl = size.length();
-  int pl = prob.length();
-  int fl = form.length();
-
-  int ParamLength = std::max({sl, pl, fl});
-  int XLength = x.size();
-  NumericMatrix mat(XLength, ParamLength);
-  for (int i = 0; i < ParamLength; i++) {
-    for (int j = 0; j < XLength; j++) {
-      if (strcmp (form[i % fl], "fbs") == 0) {
-        // Return 0 if x not in PosNaturals
-        if (floor (x[j]) != x[j] || x[j] < 0) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1-prob[i % pl], x[j]);
-        }
-      } else if (strcmp (form[i % fl], "sbf") == 0) {
-        // Return 0 if x not in PosNaturals
-        if (floor (x[j]) != x[j] || x[j] < 0) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] + size[i % sl] - 1, x[j]) * pow(prob[i % pl], x[j]) * pow(1-prob[i % pl], size[i % sl]);
-        }
-      } else if (strcmp (form[i % fl], "tbf") == 0) {
-        // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], x[j] - size[i % sl]) * pow(1-prob[i % pl], size[i % sl]);
-        }
-      } else {
-        // Return 0 if x not in Naturals or < size
-        if (floor (x[j]) != x[j] || x[j] < size[i % sl]) {
-          mat(j, i) = 0;
-        } else {
-          mat(j, i) = C_Choose(x[j] - 1, size[i % sl] - 1) * pow(prob[i % pl], size[i % sl]) * pow(1 - prob[i % pl], x[j] - size[i % sl]);
-        }
-      }
-    }
-  }
-  return mat;
-}
-
-// [[Rcpp::export]]
 NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location,
                                       NumericVector shape, NumericVector scale, bool logp) {
   int locn = location.length();
@@ -311,13 +273,11 @@ NumericMatrix C_ShiftedLoglogisticPdf(NumericVector x, NumericVector location,
 
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-      if ((shape[i % shan] > 0 && (x[j] < location[i & locn] - scale[i & scan]/shape[i % shan])) ||
-          (shape[i % shan] < 0 && (x[j] > location[i & locn] - scale[i & scan]/shape[i % shan]))) {
+      if ((shape[i % shan] > 0 && (x[j] < (location[i & locn] - scale[i & scan]/shape[i % shan]))) ||
+          (shape[i % shan] < 0 && (x[j] > (location[i & locn] - scale[i & scan]/shape[i % shan])))) {
 
         if (logp) {
           mat(j, i) = R_NegInf;
-        } else {
-          mat(j, i) = 0;
         }
 
       } else {
@@ -358,15 +318,15 @@ NumericMatrix C_ShiftedLoglogisticCdf(NumericVector x, NumericVector location,
 
         if (logp) {
           if (!lower) {
-            mat(j, i) = R_PosInf;
+            mat(j, i) = 0;
           } else {
             mat(j, i) = R_NegInf;
           }
         } else {
           if (!lower) {
-            mat(j, i) = 0;
-          } else {
             mat(j, i) = 1;
+          } else {
+            mat(j, i) = 0;
           }
         }
 
@@ -400,22 +360,25 @@ NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector locati
   int XLength = x.size();
   NumericMatrix mat(XLength, ParamLength);
 
+  double y;
+
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
+      y = x[j];
 
       if (logp) {
-        x[j] = exp(x[j]);
+        y = exp(y);
       }
 
       if (!lower) {
-        x[j] = 1 - x[j];
+        y = 1 - y;
       }
 
-      if (x[j] < 0 || x[j] > 1) {
+      if (y < 0 || y > 1) {
         mat(j, i) = R_NaN;
       } else {
-        mat(j, i) = ((pow(x[j]/(1-x[j]), shape[i % shan]) - 1) * scale[i & scan]/shape[i % shan]) +
-          location[i & locn];
+        mat(j, i) = ((pow(y/(1 - y), shape[i % shan]) - 1) *
+          scale[i & scan]/shape[i % shan]) + location[i & locn];
       }
     }
   }
@@ -523,10 +486,10 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, Num
         if (data(j, i) >= x[k]) {
           mat(k, i) = cdf(j, i);
           if (!lower) {
-            mat(k, i) = 1 - mat[k];
+            mat(k, i) = 1 - mat(k, i);
           }
           if (logp) {
-            mat(k, i) = log(mat[k]);
+            mat(k, i) = log(mat(k, i));
           }
           break;
         }
@@ -543,21 +506,23 @@ NumericVector C_WeightedDiscreteQuantile(NumericVector x, NumericVector data, Nu
 
   int nr = data.length();
   int n = x.length();
+  double y;
 
   NumericVector mat(n);
 
   for (int k = 0; k < n; k++) {
     for (int j = 0; j < nr; j++) {
+      y = x[k];
 
       if (logp) {
-        x[k] = exp(x[k]);
+        y = exp(y);
       }
 
       if (!lower) {
-        x[k] = 1 - x[k];
+        y = 1 - y;
       }
 
-      if (cdf[j] >= x[k]) {
+      if (cdf[j] >= y) {
         mat[k] = data[j];
         break;
       }
@@ -577,17 +542,23 @@ NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data
 
   NumericMatrix mat(n, nc);
 
+  double y;
+
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
+
+        y = x[k];
+
         if (logp) {
-          x[k] = exp(x[k]);
-        }
-        if (!lower) {
-          x[k] = 1 - x[k];
+          y = exp(y);
         }
 
-        if (x[k] <= cdf(j, i)) {
+        if (!lower) {
+          y = 1 - y;
+        }
+
+        if (y <= cdf(j, i)) {
           mat(k, i) = data(j, i);
           break;
         }

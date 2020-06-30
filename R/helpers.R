@@ -49,10 +49,14 @@ makeChecks <- function(assertionName, cond, defaulterrormsg, args = alist(object
 }
 
 getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1) {
-  if (classname) {
-    return(get(class(object)[[n.par + 1]], pos = pos)$classname)
+  if (R6::is.R6(object)) {
+    if (classname) {
+      return(get(class(object)[[n.par + 1]], pos = pos)$classname)
+    } else {
+      return(get(class(object)[[n.par + 1]], pos = pos))
+    }
   } else {
-    return(get(class(object)[[n.par + 1]], pos = pos))
+    return(class(object))
   }
 }
 ifnerror <- function(expr, noerror, error = NULL, silent = T) {

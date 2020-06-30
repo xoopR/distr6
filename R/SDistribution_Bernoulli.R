@@ -51,7 +51,7 @@ Bernoulli <- R6Class("Bernoulli",
         decorators = decorators,
         support = Set$new(0, 1, class = "integer"),
         type = Naturals$new(),
-        symmetry = if (prob == 0.5) "symmetric" else "asymmetric"
+        symmetry = if (self$getParameterValue("prob") == 0.5) "symmetric" else "asymmetric"
       )
     },
 

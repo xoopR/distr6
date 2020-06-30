@@ -87,11 +87,13 @@ constructor, use `distlist` instead.")
         # catch for Geometric and NegativeBinomial
         if (distribution == "Geometric" & "trials" %in% names(unlist(params))) {
           stop("For Geometric distributions either `trials` must be passed to `shared_params`
-               or `distlist` should be used.")
+or `distlist` should be used.")
         }
-        if (distribution == "NegativeBinomial" & "form" %in% names(unlist(params))) {
-          stop("For NegativeBinomial distributions either `form` must be passed to `shared_params`
-               or `distlist` should be used.")
+
+        if (distribution == "NegativeBinomial" &
+            any(c("form", "size") %in% names(unlist(params)))) {
+          stop("For NegativeBinomial distributions either `form`/`size` must be passed to
+`shared_params` or `distlist` should be used.")
         }
 
         # convert shared_params to list
@@ -106,7 +108,7 @@ constructor, use `distlist` instead.")
         # create wrapper parameters by cloning distribution parameters and setting by given params
         pdist <- get(distribution)
 
-        p <- do.call(paste0("getParameterSet.", distribution), params[[1]])
+        p <- do.call(paste0("getParameterSet.", distribution), c(params[[1]], shared_params))
         paramlst <- vector("list", length(params))
         for (i in seq_along(params)) {
           paramlst[[i]] <- p$clone(deep = TRUE)
@@ -117,20 +119,22 @@ constructor, use `distlist` instead.")
         params <- unlist(params, recursive = FALSE)
         names(params) <- gsub(".", "_", names(params), fixed = TRUE)
         if (!is.null(shared_params)) {
+          if (distribution == "Geometric") {
+            shared_params <- shared_params[!(names(shared_params) %in% "trials")]
+          }
+          if (distribution == "NegativeBinomial") {
+            shared_params <- shared_params[!(names(shared_params) %in% "form")]
+          }
           shared_params <- rep(list(shared_params), length(params))
           names(shared_params) <- names(paramlst)
           shared_params <- unlist(shared_params, recursive = FALSE)
           names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
           params <- c(params, shared_params)
         }
-        parameters <- ParameterSetCollection$new(lst = paramlst)$setParameterValue(lst = params)
+        parameters <- ParameterSetCollection$new(lst = paramlst)$
+                                         setParameterValue(lst = params)
 
-        # distribution name by shared_param, param, or default
-        if ("short_name" %in% names(shared_params)) {
-          shortname <- shared_params$short_name
-        } else {
-          shortname <- get(distribution)$public_fields$short_name
-        }
+        shortname <- get(distribution)$public_fields$short_name
 
         # modelTable is for reference and later
         # construction; coercion to table from frame due to recycling
@@ -190,13 +194,15 @@ constructor, use `distlist` instead.")
                   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
                   dpqr <- cbind(dpqr, a_dpqr)
                 }
-              } else {
-                for (i in seq(dim(x1)[3])) {
-                  a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
-                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-                  dpqr <- cbind(dpqr, a_dpqr)
-                }
               }
+              # TODO - This will be uncommented once EmpiricalMV can be used here
+              # else {
+                # for (i in seq(dim(x1)[3])) {
+                #   a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
+                #   a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                #   dpqr <- cbind(dpqr, a_dpqr)
+                # }
+              #}
 
               return(dpqr)
             },
@@ -211,18 +217,10 @@ constructor, use `distlist` instead.")
               body(fun) <- substitute(FUN)
 
               dpqr <- data.table()
-              if (private$.univariate) {
-                for (i in seq_len(ncol(x1))) {
-                  a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-                  dpqr <- cbind(dpqr, a_dpqr)
-                }
-              } else {
-                for (i in seq_len(dim(x1)[3])) {
-                  a_dpqr <- fun(unlist(x1[, , i]), lower.tail = lower.tail, log.p = log.p)
-                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-                  dpqr <- cbind(dpqr, a_dpqr)
-                }
+              for (i in seq_len(ncol(x1))) {
+                a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
+                a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                dpqr <- cbind(dpqr, a_dpqr)
               }
               return(dpqr)
             },
@@ -288,8 +286,9 @@ constructor, use `distlist` instead.")
               dpqr <- cbind(dpqr, a_dpqr)
             }
           } else {
-            for (i in seq(dim(x)[3])) {
-              a_dpqr <- self[i]$pdf(x[, , i], log = log)
+            for (i in seq_len(dim(x)[3])) {
+              a_dpqr <- self[i]$pdf(data = matrix(x[, , i], nrow = nrow(x), ncol = ncol(x)),
+                                    log = log)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           }
@@ -305,7 +304,8 @@ constructor, use `distlist` instead.")
             }
           } else {
             for (i in seq(dim(x)[3])) {
-              a_dpqr <- self[i]$cdf(x[, , i], lower.tail = lower.tail, log.p = log.p)
+              a_dpqr <- self[i]$cdf(data = matrix(x[, , i], nrow = nrow(x), ncol = ncol(x)),
+                                    lower.tail = lower.tail, log.p = log.p)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           }
@@ -314,22 +314,24 @@ constructor, use `distlist` instead.")
         }
         private$.quantile <- function(x, lower.tail = TRUE, log.p = FALSE) {
           dpqr <- data.table()
-          if (private$.univariate) {
-            for (i in seq(ncol(x))) {
-              a_dpqr <- self[i]$quantile(x[, i], lower.tail = lower.tail, log.p = log.p)
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
-          } else {
-            for (i in seq(dim(x)[3])) {
-              a_dpqr <- self[i]$quantile(x[, , i], lower.tail = lower.tail, log.p = log.p)
-              dpqr <- cbind(dpqr, a_dpqr)
-            }
+          for (i in seq(ncol(x))) {
+            a_dpqr <- self[i]$quantile(x[, i], lower.tail = lower.tail, log.p = log.p)
+            dpqr <- cbind(dpqr, a_dpqr)
           }
 
           return(dpqr)
         }
         private$.rand <- function(n) {
-          return(sapply(self$wrappedModels(), function(x) x$rand(n)))
+          if (private$.univariate) {
+            if (n == 1) {
+              return(matrix(sapply(self$wrappedModels(), function(x) x$rand(n)), nrow = 1))
+            } else {
+              return(sapply(self$wrappedModels(), function(x) x$rand(n)))
+            }
+          } else {
+            return(lapply(self$wrappedModels(), function(x) x$rand(n)))
+          }
+
         }
       }
 
@@ -396,7 +398,7 @@ constructor, use `distlist` instead.")
           distlist <- lapply(private$.modelTable$shortname, function(x) {
             do.call(
               get(private$.modelTable$Distribution[[1]])$new,
-              self$parameters()[paste0(x, "_")]$values
+              self$parameters()[paste0(x, "_")]$values()
             )
           })
         }
@@ -413,7 +415,7 @@ constructor, use `distlist` instead.")
           distlist <- lapply(models, function(x) {
             do.call(
               get(private$.modelTable$Distribution[[1]])$new,
-              self$parameters()[paste0(x, "_")]$values
+              self$parameters()[paste0(x, "_")]$values()
             )
           })
         }
@@ -480,7 +482,12 @@ constructor, use `distlist` instead.")
       if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
-        ret <- data.table(t(ret))
+        # hacky catch for MVN
+        if (self$modelTable$Distribution[[1]] != "MultivariateNormal") {
+          ret <- t(ret)
+        }
+
+        ret <- data.table(ret)
         colnames(ret) <- unlist(private$.modelTable[, "shortname"])
       }
 
@@ -490,23 +497,7 @@ constructor, use `distlist` instead.")
     #' @description
     #' Returns named vector of medians from each wrapped [Distribution].
     median = function() {
-      if (self$distlist) {
-        ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$median(), error = NaN)
-        })
-      } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$median
-        formals(f) <- list(self = self)
-        ret <- f()
-      }
-
-      if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
-        ret <- data.table(t(ret))
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      }
-      return(ret)
+      self$quantile(0.5)
     },
 
     #' @description
@@ -524,9 +515,6 @@ constructor, use `distlist` instead.")
 
       if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else if (length(dim(ret)) == 2) {
-        ret <- data.table(t(ret))
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
         # catch for covariance matrices
         dimnames(ret)[3] <- as.list(private$.modelTable[, "shortname"])
@@ -548,12 +536,7 @@ constructor, use `distlist` instead.")
         ret <- f()
       }
 
-      if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
-        ret <- data.table(t(ret))
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      }
+      names(ret) <- unlist(private$.modelTable[, "shortname"])
 
       return(ret)
     },
@@ -572,12 +555,7 @@ constructor, use `distlist` instead.")
         ret <- f()
       }
 
-      if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
-        ret <- data.table(t(ret))
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      }
+      names(ret) <- unlist(private$.modelTable[, "shortname"])
 
       return(ret)
     },
@@ -595,12 +573,7 @@ constructor, use `distlist` instead.")
         ret <- f()
       }
 
-      if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
-      } else {
-        ret <- data.table(t(ret))
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
-      }
+      names(ret) <- unlist(private$.modelTable[, "shortname"])
 
       return(ret)
     },
@@ -626,7 +599,7 @@ constructor, use `distlist` instead.")
       if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
-        ret <- data.table(t(ret))
+        ret <- data.table(ret)
         colnames(ret) <- unlist(private$.modelTable[, "shortname"])
       }
 
@@ -654,7 +627,7 @@ constructor, use `distlist` instead.")
       if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
-        ret <- data.table(t(ret))
+        ret <- data.table(ret)
         colnames(ret) <- unlist(private$.modelTable[, "shortname"])
       }
 
@@ -665,7 +638,7 @@ constructor, use `distlist` instead.")
     #' Returns named vector of pgf from each wrapped [Distribution].
     pgf = function(z) {
       if (!self$distlist) {
-        warning("cf not currently efficiently vectorised, may be slow.")
+        warning("pgf not currently efficiently vectorised, may be slow.")
       }
 
       ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
@@ -682,7 +655,7 @@ constructor, use `distlist` instead.")
       if (is.null(dim(ret))) {
         names(ret) <- unlist(private$.modelTable[, "shortname"])
       } else {
-        ret <- data.table(t(ret))
+        ret <- data.table(ret)
         colnames(ret) <- unlist(private$.modelTable[, "shortname"])
       }
 
@@ -727,7 +700,11 @@ constructor, use `distlist` instead.")
     #' # and the same across many samples
     #' vd$pdf(data = array(c(1,2,4,3,5,1,3,7), dim = c(2,2,2)))
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
-      if (is.null(data)) data <- as.matrix(data.table(...))
+      if (is.null(data)) {
+        data <- as.matrix(data.table(...))
+      } else if (length(dim(data)) == 2) {
+        data <- as.matrix(data)
+      }
 
       if (private$.univariate) {
         if (ncol(data) == 1) {
@@ -738,9 +715,7 @@ constructor, use `distlist` instead.")
         return(dpqr)
       } else {
         if (ncol(data) == 1) {
-          data <- array(rep(data, nrow(private$.wrappedModels)),
-            dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
-          )
+          stop("Distribution is multivariate but values have only been passed to one argument.")
         } else if (inherits(data, "array")) {
           if (is.na(dim(data)[3])) {
             data <- array(rep(data, nrow(private$.modelTable)),
@@ -777,11 +752,11 @@ constructor, use `distlist` instead.")
         }
       } else {
         if (ncol(data) == 1) {
-          stop("Only one column of data but distribution is not univariate.")
-        } else if (class(data) == "array") {
-          if (dim(data)[3] == 1) {
+          stop("Distribution is multivariate but values have only been passed to one argument.")
+        } else if (inherits(data, "array")) {
+          if (is.na(dim(data)[3])) {
             data <- array(rep(data, nrow(private$.modelTable)),
-              dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
+                          dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
             )
           }
         }
@@ -808,15 +783,7 @@ constructor, use `distlist` instead.")
           data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
         }
       } else {
-        if (ncol(data) == 1) {
-          stop("Only one column of data but distribution is not univariate.")
-        } else if (class(data) == "array") {
-          if (dim(data)[3] == 1) {
-            data <- array(rep(data, nrow(private$.modelTable)),
-              dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
-            )
-          }
-        }
+        stop("Quantile not possible for non-univariate distributions.")
       }
 
       dpqr <- as.data.table(private$.quantile(data, lower.tail = lower.tail, log.p = log.p))
@@ -835,13 +802,12 @@ constructor, use `distlist` instead.")
 
       if (private$.univariate) {
         dpqr <- as.data.table(private$.rand(data))
-        if (ncol(dpqr) == 1) dpqr <- transpose(dpqr)
         colnames(dpqr) <- unlist(private$.modelTable[, 2])
         return(dpqr)
       } else {
         dpqr <- private$.rand(data)
         dpqr <- array(unlist(dpqr), c(nrow(dpqr[[1]]), ncol(dpqr[[1]]), length(dpqr)))
-        colnames(dpqr) <- paste0("V", seq(ncol(dpqr)))
+        dimnames(dpqr) <- list(NULL, paste0("V", seq(ncol(dpqr))), private$.modelTable$shortname)
         return(dpqr)
       }
     }
@@ -892,14 +858,14 @@ constructor, use `distlist` instead.")
     distribution <- as.character(unlist(vecdist$modelTable[1, 1]))
     if (length(i) == 1) {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()[paste0(id, "_")]$values
+      pars <- vecdist$parameters()[paste0(id, "_")]$values(FALSE)
       if (!is.null(decorators)) {
         pars <- c(pars, list(decorators = decorators))
       }
       return(do.call(get(distribution)$new, pars))
     } else {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()$values
+      pars <- vecdist$parameters()$values()
       pars <- pars[names(pars) %in% id]
 
       return(VectorDistribution$new(

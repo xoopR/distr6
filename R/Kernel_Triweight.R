@@ -47,7 +47,8 @@ Triweight <- R6Class("Triweight",
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       C_TriweightKernelCdf(x, lower.tail, log.p)
-    }
+    },
+    .isQuantile = 0L
   )
 )
 

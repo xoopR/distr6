@@ -210,8 +210,8 @@ Distribution <- R6Class("Distribution",
 
       if (!suppressMoments) {
         # Update skewness and kurtosis
-        kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
-        skew <- try(self$skewness(), silent = TRUE)
+        kur <- suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
+        skew <- suppressMessages(try(self$skewness(), silent = TRUE))
         private$.properties$kurtosis <- ifnerror(kur, exkurtosisType(kur), "NULL")
         private$.properties$skewness <- ifnerror(skew, skewType(skew), "NULL")
       }
@@ -444,7 +444,7 @@ Distribution <- R6Class("Distribution",
     #' mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
-      if (is.null(private$.pdf)) {
+      if (private$.isPdf == 0L) {
         return(NULL)
       }
 
@@ -454,9 +454,9 @@ Distribution <- R6Class("Distribution",
           .var.name = "Do all points lie in Distribution domain?"
         )
       } else {
-        assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
+        suppressWarnings(assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
           .var.name = "Do all points lie in Distribution domain?"
-        )
+        ))
       }
 
 
@@ -501,7 +501,7 @@ Use CoreStatistics decorator to numerically estimate this.")
     #' b$cdf(data = matrix(1:10))
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if (is.null(private$.cdf)) {
+      if (private$.isCdf == 0L) {
         return(NULL)
       }
 
@@ -511,9 +511,9 @@ Use CoreStatistics decorator to numerically estimate this.")
           .var.name = "Do all points lie in Distribution domain?"
         )
       } else {
-        assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
+        suppressWarnings(assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
           .var.name = "Do all points lie in Distribution domain?"
-        )
+        ))
       }
 
       if (log.p | !lower.tail) {
@@ -559,7 +559,7 @@ decorator to numerically estimate this.")
     #' b$quantile(data = matrix(c(0.1,0.2)))
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if (is.null(private$.quantile)) {
+      if (private$.isQuantile == 0L) {
         return(NULL)
       }
 
@@ -574,7 +574,6 @@ decorator to numerically estimate this.")
           .var.name = "Do all quantiles lie in [0,1]?"
         )
       }
-
 
       if (log.p | !lower.tail) {
         if (private$.log) {
@@ -611,7 +610,7 @@ decorator to numerically estimate this.")
     #' mvn$rand(5)
     rand = function(n, simplify = TRUE) {
 
-      if (is.null(private$.rand)) {
+      if (private$.isRand == 0L) {
         return(NULL)
       }
 
@@ -646,7 +645,7 @@ decorator to numerically estimate this.")
       if (testSymmetric(self)) {
         med <- try(self$mean(), silent = TRUE)
         if (class(med) == "try-error") {
-          return(NaN)
+          return(self$quantile(0.5))
         } else if (is.null(med)) {
           return(self$quantile(0.5))
         } else {
@@ -707,21 +706,21 @@ decorator to numerically estimate this.")
     #' @field valueSupport
     #' Deprecated, use `$traits$valueSupport`.
     valueSupport = function() {
-      message("Deprecated. Use $traits$valueSupport instead.")
+      warning("Deprecated. Use $traits$valueSupport instead.")
       return(self$traits$valueSupport)
     },
 
     #' @field variateForm
     #' Deprecated, use `$traits$variateForm`.
     variateForm = function() {
-      message("Deprecated. Use $traits$variateForm instead.")
+      warning("Deprecated. Use $traits$variateForm instead.")
       return(self$traits$variateForm)
     },
 
     #' @field type
     #' Deprecated, use `$traits$type`.
     type = function() {
-      message("Deprecated. Use $traits$type instead.")
+      warning("Deprecated. Use $traits$type instead.")
       return(self$traits$type)
     },
 
@@ -735,14 +734,14 @@ decorator to numerically estimate this.")
     #' @field support
     #' Deprecated, use `$properties$type`.
     support = function() {
-      message("Deprecated. Use $properties$support instead.")
+      warning("Deprecated. Use $properties$support instead.")
       return(self$properties$support)
     },
 
     #' @field symmetry
     #' Deprecated, use `$properties$symmetry`.
     symmetry = function() {
-      message("Deprecated. Use $properties$symmetry instead.")
+      warning("Deprecated. Use $properties$symmetry instead.")
       return(self$properties$symmetry)
     },
 
@@ -773,14 +772,14 @@ decorator to numerically estimate this.")
     #' @field kurtosisType
     #' Deprecated, use `$properties$kurtosis`.
     kurtosisType = function() {
-      message("Deprecated. Use $properties$kurtosis instead.")
+      warning("Deprecated. Use $properties$kurtosis instead.")
       return(self$properties$kurtosis)
     },
 
     #' @field skewnessType
     #' Deprecated, use `$properties$skewness`.
     skewnessType = function() {
-      message("Deprecated. Use $properties$skewness instead.")
+      warning("Deprecated. Use $properties$skewness instead.")
       return(self$properties$skewness)
     },
 

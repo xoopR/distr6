@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Dirichlet distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Dirichlet,
-    pars = list(c(2, 3)),
+    pars = list(params = c(2, 3)),
     traits = list(
       valueSupport = "continuous",
       variateForm = "multivariate",
@@ -22,12 +20,12 @@ test_that("autotest", {
   )
 })
 
-test_that("multivariate pdf", {
-  expect_equal(
-    Dirichlet$new(c(2, 3))$pdf(c(0.1, 0.2), c(0.3, 0.4)),
-    c(
-      extraDistr::ddirichlet(c(0.1, 0.3), alpha = c(2, 3)),
-      extraDistr::ddirichlet(c(0.2, 0.4), alpha = c(2, 3))
-    )
-  )
-})
+# test_that("multivariate pdf", {
+#   expect_equal(
+#     Dirichlet$new(c(2, 3))$pdf(c(0.1, 0.2), c(0.3, 0.4)),
+#     c(
+#       extraDistr::ddirichlet(c(0.1, 0.3), alpha = c(2, 3)),
+#       extraDistr::ddirichlet(c(0.2, 0.4), alpha = c(2, 3))
+#     )
+#   )
+# })

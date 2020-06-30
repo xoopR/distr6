@@ -68,7 +68,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
                           cdf = NULL, decorators = NULL) {
 
       if (!is.null(data)) {
-        message("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
+        warning("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
         x <- data$x
         pdf <- data$pdf
         cdf <- data$cdf
@@ -115,6 +115,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
           stop("`which` cannot be `'all'` when vectorising.")
         } else {
           return(mapply(function(x0, pdf0) {
+            pdf0 <- round(pdf0, 10)
             modes <- x0[pdf0 == max(pdf0)]
             if (which > length(modes)) {
               return(modes[length(modes)])
@@ -124,6 +125,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
           }, x, pdf))
         }
       } else {
+        pdf <- round(pdf, 10)
         if (which == "all") {
           return(x[pdf == max(pdf)])
         } else {
@@ -310,7 +312,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     },
     .rand = function(n) {
       data <- self$getParameterValue("x")
-      pdf <- self$getParameterValue("x")
+      pdf <- self$getParameterValue("pdf")
 
       if (checkmate::testList(data)) {
         rand <- matrix(nrow = n, ncol = length(pdf))

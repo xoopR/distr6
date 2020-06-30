@@ -42,7 +42,9 @@ simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL) {
     if (n > nrow(data)) {
       n <- nrow(data)
     }
-    return(apply(data, 2, function(x) sample(x, n)))
+    dt <- data.table(apply(data, 2, function(x) sample(x, n)))
+    colnames(dt) <- paste0("V", seq_along(dt))
+    return(dt)
   }
 
 

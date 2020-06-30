@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Triangular distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Triangular,
-    pars = list(),
+    pars = list(lower = 0, upper = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",
@@ -27,4 +25,11 @@ test_that("autotest", {
     cdf = extraDistr::ptriang(1:3, 0, 1, 0.5),
     quantile = extraDistr::qtriang(c(0.24, 0.42, 0.5), 0, 1, 0.5)
   )
+})
+
+test_that("manual", {
+  expect_true(testSymmetric(Triangular$new(lower = 1, upper = 2, mode = 1.8, symmetric = TRUE)))
+  expect_true(testSymmetric(Triangular$new(lower = 0, upper = 2, mode = 1, symmetric = FALSE)))
+  expect_false(testSymmetric(Triangular$new(lower = 1, upper = 2, mode = 1.8, symmetric = FALSE)))
+  expect_false(testSymmetric(Triangular$new(lower = 1, upper = 2)$setParameterValue(mode = 1.8)))
 })

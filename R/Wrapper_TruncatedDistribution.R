@@ -33,6 +33,14 @@ TruncatedDistribution <- R6Class("TruncatedDistribution",
 
       assertDistribution(distribution)
 
+      if (testMultivariate(distribution)) {
+        stop("Truncation not currently available for multivariate distributions.")
+      }
+
+      if (testMixture(distribution)) {
+        stop("Truncation not currently available for mixed distributions.")
+      }
+
       if (isCdf(distribution) == 0 | isPdf(distribution) == 0) {
         stop("pdf and cdf is required for truncation.
 Try decorate(distribution, FunctionImputation) first.")
@@ -166,14 +174,16 @@ Try decorate(distribution, FunctionImputation) first.")
       lower <- self$getParameterValue("trunc_lower")
       upper <- self$getParameterValue("trunc_upper")
 
-      p <- p * (upper - lower) + lower
-      if (p > 1) {
-        return(upper)
-      } else if (p < 0) {
-        return(lower)
-      } else {
-        return(dist$quantile(p * (upper - lower) + lower, log.p = log.p, lower.tail = lower.tail))
-      }
+      Fupper <- dist$cdf(upper)
+      Flower <- dist$cdf(lower)
+
+      quant <- numeric(length(p))
+      p <- p * (Fupper - Flower) + Flower
+      quant[p >= 1] <- upper
+      quant[p <= 0] <- lower
+      quant[p > 0 & p < 1] <- dist$quantile(p[p > 0 & p < 1], log.p = log.p,
+                                          lower.tail = lower.tail)
+      return(quant)
     },
     .rand = function(n) {
       self$quantile(runif(n))

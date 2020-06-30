@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Categorical distribution")
-
 test_that("autottest", {
   autotest_sdistribution(Categorical,
     pars = list(elements = list(1, 2, 3), probs = c(0.02, 0.18, 0.80)),
@@ -22,4 +20,17 @@ test_that("autottest", {
     cdf = c(0.02, 0.20, 1),
     quantile = c(3, 3, 3)
   )
+})
+
+test_that("vector", {
+  d <- VectorDistribution$new(distribution = "Categorical",
+                              params = list(list(elements = 1, probs = 1),
+                                            list(elements = 2, probs = 1)))
+  expect_error(d$mode(), "cannot be")
+  expect_equal(d$mode(100), c(Cat1 = 1, Cat2 = 2))
+})
+
+test_that("manual", {
+  expect_equal(Categorical$new()$setParameterValue(elements = list(1, "a"), probs = c(0.5, 0.5))$
+                 getParameterValue("elements"), list(1, "a"))
 })

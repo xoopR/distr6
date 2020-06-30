@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Exponential distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Exponential,
-    pars = list(),
+    pars = list(rate = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Laplace distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Laplace,
-    pars = list(),
+    pars = list(mean = 0, scale = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",
@@ -27,4 +25,8 @@ test_that("autotest", {
     cdf = extraDistr::plaplace(1:3),
     quantile = extraDistr::qlaplace(c(0.24, 0.42, 0.5))
   )
+})
+
+test_that("manual", {
+  expect_equal(Laplace$new()$mgf(0.5), 4 / 3)
 })

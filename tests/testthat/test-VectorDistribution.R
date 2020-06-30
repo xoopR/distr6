@@ -10,12 +10,21 @@ test_that("constructor", {
   expect_error(VectorDistribution$new(distribution = "Gerald", params = list()), "should be one of")
 })
 
+test_that("special cases", {
+  expect_error(VectorDistribution$new(distribution = "Empirical", params = list()),
+               "use `distlist`")
+  expect_error(VectorDistribution$new(distribution = "Geom", params = list(trials = FALSE)),
+               "shared_params")
+  expect_error(VectorDistribution$new(distribution = "Negative", params = list(form = "tbf")),
+               "shared_params")
+})
+
 vd <- VectorDistribution$new(
   distribution = "Binomial",
   params = data.table(size = c(40, 5), prob = c(0.2, 0.5))
 )
 
- test_that("pdf/cdf/quantile", {
+ test_that("pdf/cdf/quantile/rand", {
   expect_equal(vd$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2),
                                             Binom2 = dbinom(3:4, 5, 0.5)))
   expect_equal(vd$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2),
@@ -37,11 +46,38 @@ vd <- VectorDistribution$new(
     a$quantile(c(0.1, 0.2), c(0.3, 0.4)),
     data.table(Binom1 = qbinom(c(0.1, 0.2), 40, 0.2), Binom2 = qbinom(c(0.3, 0.4), 5, 0.5))
   )
-})
 
-test_that("rand", {
   expect_equal(dim(vd$rand(10)), c(10, 2))
 })
+
+test_that("distlist rand", {
+  vd <- VectorDistribution$new(list(Binomial$new(), Geometric$new()))
+  checkmate::expect_data_table(vd$rand(1), nrows = 1, ncols = 2)
+  expect_equal(colnames(vd$rand(1)), c("Binom", "Geom"))
+  checkmate::expect_data_table(vd$rand(3), nrows = 3, ncols = 2)
+  expect_equal(colnames(vd$rand(3)), c("Binom", "Geom"))
+})
+
+
+vd <- VectorDistribution$new(
+  distribution = "Binomial",
+  params = data.table(size = c(40, 5), prob = c(0.2, 0.5))
+)
+
+test_that("generators", {
+  b1 <- Binomial$new(size = 40, prob = 0.2)
+  b2 <- Binomial$new(size = 5, prob = 0.5)
+
+  expect_warning(expect_equal(vd$mgf(1), c(Binom1 = b1$mgf(1), Binom2 = b2$mgf(1))), "vectorised")
+  expect_warning(expect_equal(vd$mgf(1:2), data.table(Binom1 = b1$mgf(1:2), Binom2 = b2$mgf(1:2))))
+
+  expect_warning(expect_equal(vd$pgf(1), c(Binom1 = b1$pgf(1), Binom2 = b2$pgf(1))), "vectorised")
+  expect_warning(expect_equal(vd$pgf(1:2), data.table(Binom1 = b1$pgf(1:2), Binom2 = b2$pgf(1:2))))
+
+  expect_warning(expect_equal(vd$cf(1), c(Binom1 = b1$cf(1), Binom2 = b2$cf(1))), "vectorised")
+  expect_warning(expect_equal(vd$cf(1:2), data.table(Binom1 = b1$cf(1:2), Binom2 = b2$cf(1:2))))
+})
+
 
 
 test_that("pdf/cdf - !distlist", {
@@ -118,6 +154,13 @@ test_that("wrapped models", {
     Binom = Binomial$new(prob = 0.5, size = 10),
     Gomp = Gompertz$new()
   ))
+
+  mix <- MixtureDistribution$new(list(Binomial$new(), Normal$new()))
+  expect_equal(mix$wrappedModels("Binom"), Binomial$new())
+  expect_equal(mix$wrappedModels(), list(Binom = Binomial$new(), Norm = Normal$new()))
+  expect_error(mix$wrappedModels("sdsd"), "No distribution called")
+  expect_equal(mix$wrappedModels(c("Binom", "Norm")), list(Binom = Binomial$new(),
+                                                           Norm = Normal$new()))
 })
 
 # test_that("parameters", {
@@ -247,4 +290,60 @@ test_that("weighted discrete", {
       )
     )
   })
+})
+
+test_that("multivariate", {
+  vd <- VectorDistribution$new(
+   distribution = "Multinomial",
+   params = list(
+   list(size = 5, probs = c(0.1, 0.9)),
+   list(size = 8, probs = c(0.3, 0.7))
+   ))
+
+  expect_error(vd$pdf(data = matrix(1), "multivariate"))
+  expect_error(vd$pdf(1, "multivariate"))
+  expect_error(vd$cdf(data = matrix(1), "multivariate"))
+  expect_error(vd$cdf(1, "multivariate"))
+  expect_error(vd$quantile(1, "not possible"))
+
+  expect_equal(vd$pdf(data = array(c(1, 4, 2, 6), dim = c(1, 2, 2))),
+               data.table(Multinom1 = Multinomial$new(size = 5, probs = c(0.1, 0.9))$pdf(1, 4),
+                          Multinom2 = Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)))
+
+  vd <- VectorDistribution$new(list(Multinomial$new(size = 5, probs = c(0.1, 0.9)),
+                                    Multinomial$new(size = 8, probs = c(0.3, 0.7))))
+
+
+  expect_equal(vd$pdf(data = array(c(1, 4, 2, 6), dim = c(1, 2, 2))),
+               data.table(Multinom1 = Multinomial$new(size = 5, probs = c(0.1, 0.9))$pdf(1, 4),
+                          Multinom2 = Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)))
+
+  e1 <- EmpiricalMV$new(data.frame(1:5, 1:5))
+  e2 <- EmpiricalMV$new(data.frame(11:15, 11:15))
+  vd <- VectorDistribution$new(list(e1, e2))
+
+  expect_equal(vd$pdf(data = array(c(1, 4, 12, 16), dim = c(1, 2, 2))),
+               data.table(EmpMV1 = e1$pdf(3, 4),
+                          EmpMV2 = e2$pdf(12, 16)))
+
+  expect_equal(vd$cdf(data = matrix(c(1, 4), nrow = 1, ncol = 2)),
+               data.table(EmpMV1 = e1$cdf(1, 4),
+                          EmpMV2 = e2$cdf(1, 4)))
+
+  expect_equal(vd$cdf(data = array(c(1, 4, 12, 16), dim = c(1, 2, 2))),
+               data.table(EmpMV1 = e1$cdf(1, 4),
+                          EmpMV2 = e2$cdf(12, 16)))
+
+  rand <- expect_silent(vd$rand(1))
+  expect_is(rand, "array")
+  expect_equal(dim(rand), c(1, 2, 2))
+  rand <- expect_silent(vd$rand(3))
+  expect_is(rand, "array")
+  expect_equal(dim(rand), c(3, 2, 2))
+})
+
+test_that("median", {
+  vd <- VectorDistribution$new(distribution = "Geometric", params = data.table(prob = c(0.1, 0.2)))
+  expect_equal(vd$median(), data.table(Geom1 = Geometric$new(0.1)$median(),
+                                       Geom2 = Geometric$new(0.2)$median()))
 })

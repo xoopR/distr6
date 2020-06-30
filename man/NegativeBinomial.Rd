@@ -24,6 +24,8 @@ The Negative Binomial distribution can refer to one of four distributions (forms
 }
 
 For each we refer to the number of K successes/failures as the \code{size} parameter.
+
+Note that the \code{size} parameter is not currently vectorised in \link{VectorDistribution}s.
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).

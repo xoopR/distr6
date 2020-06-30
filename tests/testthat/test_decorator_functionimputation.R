@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Function Imputation")
-
 #----------
 # Setup
 #----------
@@ -64,6 +62,20 @@ disc_cdf <- Distribution$new("Discrete Test",
   symmetric = FALSE, type = Naturals$new(),
   cdf = pgeo
 )
+
+#----------
+# basics
+#----------
+test_that("constructor", {
+  expect_error(FunctionImputation$new()$decorate(MultivariateNormal$new()), "univariate")
+  expect_equal(expect_message(
+    FunctionImputation$new()$decorate(Binomial$new(decorators = "FunctionImputation")),
+    "already decorated"), FunctionImputation$new())
+})
+
+test_that("method", {
+  expect_equal(FunctionImputation$new()$methods, c(".rand", ".quantile", ".cdf", ".pdf"))
+})
 
 #----------
 # pdf checks
@@ -185,8 +197,9 @@ test_that("basic cdf checks", {
 #----------
 
 test_that("continuous cdf2pdf", {
-  expect_equal(cont_cdf$pdf(1), dexp(1))
+  expect_message(expect_equal(cont_cdf$pdf(1), dexp(1)))
   expect_message(expect_equal(cont_cdf$pdf(1:3), dexp(1:3)))
+  expect_message(expect_equal(cont_cdf$pdf(1:3, log = TRUE), dexp(1:3, log = TRUE)))
 })
 
 test_that("discrete cdf2pdf", {
@@ -234,4 +247,21 @@ test_that("discrete cdf2rand", {
   expect_equal(length(r), 100)
   expect_true(all(r >= disc_cdf$inf))
   expect_true(all(r <= disc_cdf$sup))
+})
+
+#----------
+# cdf2rand
+#----------
+
+test_that("continuous quantile2rand", {
+  set.seed(2)
+  cont_cdf <- Distribution$new("Continuous Test", "ContTest",
+                               support = PosReals$new(),
+                               symmetric = TRUE, type = PosReals$new(zero = T),
+                               cdf = cexpo, quantile = function(p) rep(0.421, length(p)),
+                               parameters = ps
+  )
+  expect_null(cont_cdf$rand(10), 10)
+  expect_message(decorate(cont_cdf, "FunctionImputation"))
+  expect_equal(cont_cdf$rand(10), rep(0.421, 10))
 })

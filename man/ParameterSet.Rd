@@ -170,8 +170,6 @@ ps$addTrafos(dt = data.table::data.table(
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{values}}{Returns parameter set values as a named list.}
-
 \item{\code{deps}}{Returns ParameterSet dependencies table.}
 
 \item{\code{checks}}{Returns ParameterSet assertions table.}
@@ -193,6 +191,7 @@ ps$addTrafos(dt = data.table::data.table(
 \item \href{#method-addDeps}{\code{ParameterSet$addDeps()}}
 \item \href{#method-addChecks}{\code{ParameterSet$addChecks()}}
 \item \href{#method-addTrafos}{\code{ParameterSet$addTrafos()}}
+\item \href{#method-values}{\code{ParameterSet$values()}}
 \item \href{#method-clone}{\code{ParameterSet$clone()}}
 }
 }
@@ -586,6 +585,7 @@ ps$addChecks(dt = data.table::data.table(
 \subsection{Method \code{addTrafos()}}{
 Transformations to apply to parameter before setting. Note transformations are made before
 checks.
+NOTE: If a transformation for a parameter already exists then this will be overwritten.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addTrafos(x, fun, dt = NULL)}\if{html}{\out{</div>}}
 }
@@ -630,6 +630,24 @@ ps$addTrafos(dt = data.table::data.table(
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-values"></a>}}
+\if{latex}{\out{\hypertarget{method-values}{}}}
+\subsection{Method \code{values()}}{
+Returns parameter set values as a named list.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$values(settable = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{settable}}{\code{(logical(1))}\cr
+If \code{TRUE} (default) only returns values of settable parameters, otherwise returns all.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

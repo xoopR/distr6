@@ -55,7 +55,7 @@ LogisticKernel <- R6Class("LogisticKernel",
       C_LogisticKernelCdf(x, lower.tail, log.p)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      C_LogisticKernelQuantile(x, lower.tail, log.p)
+      C_LogisticKernelQuantile(p, lower.tail, log.p)
     }
   )
 )

@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Poisson distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Poisson,
-    pars = list(),
+    pars = list(rate = 1),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",

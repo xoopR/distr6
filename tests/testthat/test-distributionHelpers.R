@@ -14,6 +14,7 @@ test_that("lists", {
   expect_silent(listDistributions(filter = list(VariateForm = "univariate",
                                                 valuesupport = "continuous")))
   expect_silent(listDistributions(filter = list(efsf = "fsdf")))
+  expect_silent(listDistributions(filter = list(Tags = "scale")))
   expect_silent(listDecorators(F))
   expect_silent(listDecorators(T))
   expect_silent(listWrappers(T))

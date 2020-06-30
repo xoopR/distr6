@@ -82,8 +82,6 @@ psc$merge(psc2)$parameters()
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{values}}{Returns parameter set values as a named list.}
-
 \item{\code{deps}}{Returns \link{ParameterSet} dependencies table.}
 
 \item{\code{parameterSets}}{Returns \link{ParameterSet}s in collection.}
@@ -101,6 +99,7 @@ psc$merge(psc2)$parameters()
 \item \href{#method-setParameterValue}{\code{ParameterSetCollection$setParameterValue()}}
 \item \href{#method-merge}{\code{ParameterSetCollection$merge()}}
 \item \href{#method-addDeps}{\code{ParameterSetCollection$addDeps()}}
+\item \href{#method-values}{\code{ParameterSetCollection$values()}}
 \item \href{#method-clone}{\code{ParameterSetCollection$clone()}}
 }
 }
@@ -363,6 +362,24 @@ Dependencies should be added to internal \link{ParameterSet}s.
 \describe{
 \item{\code{...}}{\cr
 Ignored.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-values"></a>}}
+\if{latex}{\out{\hypertarget{method-values}{}}}
+\subsection{Method \code{values()}}{
+Returns parameter set values as a named list.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$values(settable = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{settable}}{\code{(logical(1))}\cr
+If \code{TRUE} (default) only returns values of settable parameters, otherwise returns all.}
 }
 \if{html}{\out{</div>}}
 }

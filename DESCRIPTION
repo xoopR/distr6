@@ -72,7 +72,6 @@ Imports:
     stats,
     Rcpp
 Suggests:
-  expint,
   GoFKernel,
   knitr,
   testthat,

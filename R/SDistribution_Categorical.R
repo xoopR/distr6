@@ -217,9 +217,7 @@ Categorical <- R6Class("Categorical",
         private$.properties$symmetry <- "symmetric"
       }
 
-      if ("elements" %in% names(lst)) {
-        private$.properties$support <- Set$new(elements = lst$elements)
-      }
+      private$.properties$support <- Set$new(elements = self$getParameterValue("elements"))
 
       invisible(self)
     }
@@ -228,31 +226,86 @@ Categorical <- R6Class("Categorical",
   private = list(
     # dpqr
     .pdf = function(x, log = FALSE) {
-      pdf <- self$getParameterValue("probs")[self$properties$support$elements %in% x]
-      if (log) pdf <- log(pdf)
+      probs <- self$getParameterValue("probs")
+      els <- self$getParameterValue("elements")
 
-      return(pdf)
+      if (checkmate::testList(probs)) {
+        probs <- matrix(unlist(probs), nrow = length(probs[[1]]), ncol = length(probs))
+        els <- matrix(unlist(els), ncol = ncol(probs))
+        pdf <- matrix(nrow = length(x), ncol = ncol(probs))
+        for (i in seq(ncol(probs))) {
+          els_ind <- seq_along(els[, i])
+          new_x <- match(x, els[, i])
+          pdf[, i] <- C_WeightedDiscretePdf(new_x, els_ind, probs[, i], log)
+        }
+        return(pdf)
+      } else {
+        els_ind <- seq_along(els)
+        new_x <- match(x, els)
+        return(C_WeightedDiscretePdf(new_x, els_ind, probs, log))
+      }
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      cdf <- cumsum(
-        self$pdf(self$properties$support$elements))[self$properties$support$elements %in% x]
-      if (!lower.tail) cdf <- 1 - cdf
-      if (log.p) cdf <- log(cdf)
 
-      return(cdf)
+      probs <- self$getParameterValue("probs")
+      els <- self$getParameterValue("elements")
+
+      if (checkmate::testList(probs)) {
+        probs <- matrix(unlist(probs), nrow = length(probs[[1]]), ncol = length(probs))
+        els <- matrix(unlist(els), ncol = ncol(probs))
+        cdf <- matrix(nrow = length(x), ncol = ncol(probs))
+        for (i in seq(ncol(probs))) {
+          els_ind <- seq_along(els[, i])
+          new_x <- match(x, els[, i])
+          new_cdf <- cumsum(probs[, i])
+          cdf[, i] <- C_WeightedDiscreteCdf(new_x, els_ind, new_cdf, lower.tail, log.p)
+        }
+        return(cdf)
+      } else {
+        els_ind <- seq_along(els)
+        new_x <- match(x, els)
+        cdf <- cumsum(probs)
+        return(C_WeightedDiscreteCdf(new_x, els_ind, cdf, lower.tail, log.p))
+      }
+
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      if (log.p) p <- exp(p)
-      if (!lower.tail) p <- 1 - p
 
-      cdf <- matrix(self$cdf(self$properties$support$elements),
-                    ncol = self$properties$support$length, nrow = length(p), byrow = T)
-      return(
-        unlist(self$properties$support$elements[apply(cdf >= p, 1, function(x) min(which(x)))])
-      )
+      probs <- self$getParameterValue("probs")
+      els <- self$getParameterValue("elements")
+
+      if (checkmate::testList(probs)) {
+        probs <- matrix(unlist(probs), nrow = length(probs[[1]]), ncol = length(probs))
+        new_els <- matrix(unlist(els), ncol = ncol(probs))
+        quantile <- matrix(nrow = length(p), ncol = ncol(probs))
+        for (i in seq(ncol(probs))) {
+          els_ind <- seq_along(new_els[, i])
+          # new_x <- match(x, els[, i])
+          new_cdf <- cumsum(probs[, i])
+          quantile[, i] <- C_WeightedDiscreteQuantile(p, els_ind, new_cdf, lower.tail, log.p)
+          quantile[, i] <- unlist(els[[i]][quantile[, i]])
+        }
+        return(quantile)
+      } else {
+        els_ind <- seq_along(els)
+        cdf <- cumsum(probs)
+        quantile <- C_WeightedDiscreteQuantile(p, els_ind, cdf, lower.tail, log.p)
+        return(unlist(els[quantile]))
+      }
     },
     .rand = function(n) {
-      sample(self$properties$support$elements, n, TRUE, self$getParameterValue("probs"))
+      els <- self$getParameterValue("elements")
+      probs <- self$getParameterValue("probs")
+
+      if (checkmate::testList(probs)) {
+        rand <- matrix(nrow = n, ncol = length(probs))
+        for (i in seq_along(probs)) {
+          rand[, i] <- unlist(sample(els[[i]], n, TRUE, probs[[i]]))
+        }
+      } else {
+        rand <- sample(els, n, TRUE, probs)
+      }
+      return(rand)
     },
 
     # traits

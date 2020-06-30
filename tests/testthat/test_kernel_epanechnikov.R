@@ -10,3 +10,7 @@ test_that("autotest", {
     cdf = c(0.4252, 0.5, 0.5748)
   )
 })
+
+test_that("cpp", {
+  expect_equal(C_EpanechnikovKernelCdf(c(2, -2), TRUE, FALSE), c(1, 0))
+})

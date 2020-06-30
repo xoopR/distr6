@@ -33,6 +33,14 @@ HuberizedDistribution <- R6Class("HuberizedDistribution",
 
       assertDistribution(distribution)
 
+      if (testMultivariate(distribution)) {
+        stop("Huberization not currently available for multivariate distributions.")
+      }
+
+      if (testMixture(distribution)) {
+        stop("Huberization not currently available for mixed distributions.")
+      }
+
       if (isPdf(distribution) == 0 | isCdf(distribution) == 0) {
         stop("pdf and cdf are required for huberization.
 Try decorate(distribution, FunctionImputation) first.")
@@ -52,6 +60,12 @@ Try decorate(distribution, FunctionImputation) first.")
       distlist <- list(distribution)
       names(distlist) <- distribution$short_name
 
+      if (testDiscrete(distribution)) {
+        support <- Interval$new(lower, upper, class = "integer")
+      } else if (testContinuous(distribution)) {
+        support <- Interval$new(lower, upper)
+      }
+
       private$.outerParameters <- ParameterSet$new(
         id = list("lower", "upper"), value = list(lower, upper),
         support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
@@ -68,14 +82,6 @@ Try decorate(distribution, FunctionImputation) first.")
         "upper",
         function(x, self) x > self$getParameterValue("lower")
       )
-
-      if (testDiscrete(distribution)) {
-        support <- Interval$new(lower, upper, class = "integer")
-      } else if (testContinuous(distribution)) {
-        support <- Interval$new(lower, upper)
-      } else {
-        stop(.distr6$huberize_discrete)
-      }
 
       super$initialize(
         distlist = distlist,
@@ -179,9 +185,5 @@ huberize <- function(x, lower, upper) {
 }
 #' @export
 huberize.Distribution <- function(x, lower = NULL, upper = NULL) {
-  if (testDiscrete(x) | testContinuous(x)) {
-    HuberizedDistribution$new(x, lower, upper)
-  } else {
-    message(.distr6$huberize_discrete)
-  }
+  HuberizedDistribution$new(x, lower, upper)
 }

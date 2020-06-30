@@ -75,11 +75,11 @@ Dirichlet <- R6Class("Dirichlet",
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
     mean = function() {
-      pars <- self$getParameterValue("params")
-      if (checkmate::testList(pars)) {
+      params <- self$getParameterValue("params")
+      if (checkmate::testList(params)) {
         return(t(sapply(params, function(x) x / sum(x))))
       } else {
-        return(pars / sum(pars))
+        return(params / sum(params))
       }
     },
 
@@ -110,20 +110,21 @@ Dirichlet <- R6Class("Dirichlet",
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
     variance = function() {
-      K <- self$getParameterValue("K")[[1]]
       params <- self$getParameterValue("params")
 
       if (checkmate::testList(params)) {
+        K <- length(params[[1]])
         covar <- array(dim = c(K, K, length(params)))
         for (i in seq_along(params)) {
           parami <- params[[i]] / sum(params[[i]])
           var <- (parami * (1 - parami)) / (sum(params[[i]]) + 1)
           covar[, , i] <- matrix((-parami %*% t(parami)) /
-                                   (sum(params[[i]]) + 1), nrow = K, ncol = K)
+            (sum(params[[i]]) + 1), nrow = K, ncol = K)
           diag(covar[, , i]) <- var
         }
         return(covar)
       } else {
+        K <- length(params)
         parami <- params / sum(params)
         var <- (parami * (1 - parami)) / (sum(params) + 1)
         covar <- matrix((-parami %*% t(parami)) / (sum(params) + 1), nrow = K, ncol = K)
@@ -147,7 +148,7 @@ Dirichlet <- R6Class("Dirichlet",
         })
       } else {
         return(log(prod(gamma(params)) / gamma(sum(params)), 2) + (sum(params) - length(params))
-               * digamma(sum(params)) - sum((params - 1) * digamma(params)))
+        * digamma(sum(params)) - sum((params - 1) * digamma(params)))
       }
     },
 
@@ -164,14 +165,14 @@ Dirichlet <- R6Class("Dirichlet",
     .pdf = function(x, log = FALSE) {
       params <- self$getParameterValue("params")
 
-      checkmate::assertMatrix(x, ncols = length(params))
-
       if (checkmate::testList(params)) {
+        checkmate::assertMatrix(x, ncols = length(params[[1]]))
         mapply(extraDistr::ddirichlet,
           alpha = params,
           MoreArgs = list(x = x, log = log)
         )
       } else {
+        checkmate::assertMatrix(x, ncols = length(params))
         extraDistr::ddirichlet(x,
           alpha = params,
           log = log
@@ -182,7 +183,8 @@ Dirichlet <- R6Class("Dirichlet",
       if (checkmate::testList(self$getParameterValue("params"))) {
         mapply(extraDistr::rdirichlet,
           alpha = self$getParameterValue("params"),
-          MoreArgs = list(n = n)
+          MoreArgs = list(n = n),
+          SIMPLIFY = FALSE
         )
       } else {
         extraDistr::rdirichlet(n,

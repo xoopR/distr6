@@ -60,7 +60,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       if (!is.null(id)) {
         id0 <- id
         if (nrow(subset(dt, id %in% id0)) == 0) {
-          return(self)
+          stopf("%s is not a parameter in this ParameterSet.", id)
         } else {
           return(subset(dt, id %in% id0))
         }
@@ -86,7 +86,15 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       sep <- gregexpr("_", id)[[1]][[1]]
 
       if (sep == -1) {
-        return(lapply(private$.parametersets, function(x) x$getParameterValue(id)))
+        dt <- as.data.table(self)$id
+        spl <- unlist(strsplit(dt[grepl(paste0("_", id, "$"), dt)], "_"))
+        spl <- spl[!grepl(id, spl)]
+        spl <- spl[spl %in% names(private$.parametersets)]
+        if (length(spl) == 0) {
+          stopf("%s not in this ParameterSetCollection.", id)
+        } else {
+          return(lapply(private$.parametersets[spl], function(x) x$getParameterValue(id)))
+        }
       } else {
         param <- substr(id, sep + 1, 1000)
         dist <- substr(id, 1, sep - 1)
@@ -179,16 +187,18 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' Ignored.
     addDeps = function(...) {
       stop("Dependencies should be added to internal ParameterSets with $parameterSets.")
+    },
+
+    #' @description
+    #' Returns parameter set values as a named list.
+    #' @param settable `(logical(1))`\cr
+    #' If `TRUE` (default) only returns values of settable parameters, otherwise returns all.
+    values = function(settable = TRUE) {
+      rlapply(private$.parametersets, values, settable = settable)
     }
   ),
 
   active = list(
-    #' @field values
-    #' Returns parameter set values as a named list.
-    values = function() {
-      rlapply(private$.parametersets, values, active = TRUE)
-    },
-
     #' @field deps
     #' Returns [ParameterSet] dependencies table.
     deps = function() {

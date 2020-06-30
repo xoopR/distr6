@@ -46,7 +46,8 @@ Quartic <- R6Class("Quartic",
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       C_QuarticKernelCdf(x, lower.tail, log.p)
-    }
+    },
+    .isQuantile = 0L
   )
 )
 

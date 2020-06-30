@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Pareto distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Pareto,
-    pars = list(),
+    pars = list(shape = 1, scale = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",
@@ -26,4 +24,8 @@ test_that("autotest", {
     cdf = extraDistr::ppareto(1:3),
     quantile = extraDistr::qpareto(c(0.24, 0.42, 0.5))
   )
+})
+
+test_that("manual", {
+  expect_equal(Pareto$new()$mgf(-1), pracma::incgam(1, -1))
 })

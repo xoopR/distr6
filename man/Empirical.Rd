@@ -153,7 +153,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Empirical$new(samples, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Empirical$new(samples = 1, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

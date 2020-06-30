@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Binomial distribution")
-
 test_that("autottest", {
   autotest_sdistribution(
     Binomial,

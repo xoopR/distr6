@@ -6,7 +6,7 @@ test_that("autotest", {
   expect_warning({
     autotest_sdistribution(
       sdist = Gumbel,
-      pars = list(),
+      pars = list(location = 0, scale = 1),
       traits = list(
         valueSupport = "continuous",
         variateForm = "univariate",

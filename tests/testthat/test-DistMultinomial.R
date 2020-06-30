@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Multinomial distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Multinomial,
@@ -25,13 +23,17 @@ test_that("autotest", {
   )
 })
 
-test_that("multivariate pdf", {
-  expect_equal(
-    Multinomial$new(probs = c(1, 4), size = 5)$pdf(c(1, 2, 0), c(4, 3, 5)),
-    c(
-      dmultinom(x = c(1, 4), prob = c(1, 4)),
-      dmultinom(x = c(2, 3), prob = c(1, 4)),
-      dmultinom(x = c(0, 5), prob = c(1, 4))
-    )
-  )
+test_that("manual", {
+  expect_error(Multinomial$new(probs = 1), "Binomial")
 })
+
+# test_that("multivariate pdf", {
+#   expect_equal(
+#     Multinomial$new(probs = c(1, 4), size = 5)$pdf(c(1, 2, 0), c(4, 3, 5)),
+#     c(
+#       dmultinom(x = c(1, 4), prob = c(1, 4)),
+#       dmultinom(x = c(2, 3), prob = c(1, 4)),
+#       dmultinom(x = c(0, 5), prob = c(1, 4))
+#     )
+#   )
+# })

@@ -28,12 +28,12 @@ Tricube <- R6Class("Tricube",
     pdfSquared2Norm = function(x = 0) {
 
       cond1 <- (70 / 81)^2 * (6561 / 6916 - (19683 * x^2) / 13090 + (9 * x^4) / 5 -
-                                (729 * x^6) / 182 +
+        (729 * x^6) / 182 +
         (747 * abs(x)^7) / 140 - (729 * x^8) / 220 + (81 * abs(x)^9) / 70 - (31 * x^10) / 140 +
         (111 * abs(x)^13) / 20020 - (3 * x^16) / 40040 + abs(x)^19 / 461890)
 
       cond2 <- (70 / 81)^2 * (2592 / 1729 - (16 * abs(x)) / 5 + (5832 * abs(x)^2) / 935 -
-                                (972 * abs(x)^3) / 91 +
+        (972 * abs(x)^3) / 91 +
         (66 * abs(x)^4) / 5 - (729 * abs(x)^5) / 55 + (9963 * abs(x)^6) / 910 - (969 * abs(x)^7) /
           140 +
         (729 * abs(x)^8) / 220 - (81 * abs(x)^9) / 70 + (31 * abs(x)^10) / 140 - (57 * abs(x)^13) /
@@ -56,7 +56,9 @@ Tricube <- R6Class("Tricube",
   private = list(
     .pdf = function(x, log = FALSE) {
       C_TricubeKernelPdf(x, log)
-    }
+    },
+    .isCdf = 0L,
+    .isQuantile = 0L
   )
 )
 

@@ -425,7 +425,7 @@ NumericMatrix C_dpq(std::string fun, NumericVector x, std::list<NumericVector> a
     }
   }
 
-  return NumericMatrix(0,0); // never reached
+  return NumericMatrix(0,0); // never reached # nocov
 }
 // [[Rcpp::export]]
 NumericMatrix C_r(std::string fun, int x, std::list<NumericVector> args) {

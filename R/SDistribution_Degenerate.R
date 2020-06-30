@@ -162,7 +162,13 @@ Degenerate <- R6Class("Degenerate",
       }
     },
     .rand = function(n) {
-      rep(self$getParameterValue("mean"), n)
+      mean <- self$getParameterValue("mean")
+
+      if (checkmate::testList(mean)) {
+        return(data.table(matrix(rep(mean, n), nrow = n)))
+      } else {
+        return(rep(mean, n))
+      }
     },
 
     # traits

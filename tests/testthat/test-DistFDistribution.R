@@ -1,7 +1,5 @@
 library(testthat)
 
-context("FDistribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = FDistribution,

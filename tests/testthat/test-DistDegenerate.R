@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Degenerate distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Degenerate,
-    pars = list(1),
+    pars = list(mean = 1),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",
@@ -27,4 +25,14 @@ test_that("autotest", {
     cdf = c(1, 1, 1),
     quantile = c(1, 1, 1)
   )
+})
+
+test_that("manual", {
+  dist <- Degenerate$new()
+  expect_equal(dist$quantile(0), -Inf)
+})
+
+test_that("cpp", {
+  expect_equal(as.numeric(C_DegenerateQuantile(-2, 0, TRUE, FALSE)), NaN)
+  expect_equal(as.numeric(C_DegenerateQuantile(0, 0, TRUE, FALSE)), -Inf)
 })

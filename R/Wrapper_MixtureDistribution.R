@@ -53,7 +53,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       private$.outerParameters$addTrafos(
         "weights",
         function(x, self) {
-          if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform"
+          if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform" # nocov
         }
       )
 
@@ -71,6 +71,10 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       if (!is.null(name)) self$name <- gsub("Vector", "Mixture", self$name)
       if (!is.null(short_name)) self$short_name <- gsub("Vec", "Mix", self$short_name)
       self$description <- gsub("Vector", "Mixture", self$description)
+
+      if (private$.univariate) {
+        private$.traits$variateForm <- "univariate"
+      }
 
       invisible(self)
     },

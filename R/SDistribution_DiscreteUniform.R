@@ -120,7 +120,9 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
     kurtosis = function(excess = TRUE) {
-      N <- unlist(self$getParameterValue("N"))
+      upper <- unlist(self$getParameterValue("upper"))
+      lower <- unlist(self$getParameterValue("lower"))
+      N <- upper - lower + 1
       exkurtosis <- (-6 * (N^2 + 1)) / (5 * (N^2 - 1))
       if (excess) {
         return(exkurtosis)
@@ -135,16 +137,22 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
     entropy = function(base = 2) {
-      log(unlist(self$getParameterValue("N")), base)
+      upper <- unlist(self$getParameterValue("upper"))
+      lower <- unlist(self$getParameterValue("lower"))
+      N <- upper - lower + 1
+      return(log(N, base))
     },
 
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      num <- exp(t * self$getParameterValue("lower")) -
-        exp((self$getParameterValue("upper") + 1) * t)
-      denom <- self$getParameterValue("N") * (1 - exp(t))
+      upper <- unlist(self$getParameterValue("upper"))
+      lower <- unlist(self$getParameterValue("lower"))
+      N <- upper - lower + 1
+
+      num <- exp(t * lower) - exp((upper + 1) * t)
+      denom <- N * (1 - exp(t))
       return(num / denom)
     },
 
@@ -152,9 +160,12 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      num <- exp(1i * t * self$getParameterValue("lower")) -
-        exp((self$getParameterValue("upper") + 1) * t * 1i)
-      denom <- self$getParameterValue("N") * (1 - exp(1i * t))
+      upper <- unlist(self$getParameterValue("upper"))
+      lower <- unlist(self$getParameterValue("lower"))
+      N <- upper - lower + 1
+
+      num <- exp(1i * t * lower) - exp((upper + 1) * t * 1i)
+      denom <- N * (1 - exp(1i * t))
       return(num / denom)
     },
 
@@ -162,7 +173,12 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      return(1 / self$getParameterValue("N") * sum(z^(1:self$getParameterValue("N")))) # nolint
+      upper <- unlist(self$getParameterValue("upper"))
+      lower <- unlist(self$getParameterValue("lower"))
+      N <- upper - lower + 1
+
+
+      return(1 / N * sum(z^(1:N))) # nolint
     },
 
     # optional setParameterValue

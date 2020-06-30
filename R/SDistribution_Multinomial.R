@@ -131,16 +131,15 @@ Multinomial <- R6Class("Multinomial",
     entropy = function(base = 2) {
       size <- self$getParameterValue("size")
       probs <- self$getParameterValue("probs")
-      K <- self$getParameterValue("K")
-
 
       if (checkmate::testList(size)) {
+        K <- length(probs[[1]])
         ent <- c()
         for (k in seq_along(size)) {
           s1 <- -log(factorial(size[[k]]), base)
           s2 <- -size[[k]] * sum(probs[[k]] * log(probs[[k]], base))
           s3 <- 0
-          for (i in 1:K[[k]]) {
+          for (i in 1:K) {
             for (j in 0:size[[k]]) {
               s3 <- s3 + (choose(size[[k]], j) * (probs[[k]][[i]]^j) * # nolint
                             ((1 - probs[[k]][[i]])^(size[[k]] - j)) * (log(factorial(j), base))) # nolint
@@ -149,6 +148,7 @@ Multinomial <- R6Class("Multinomial",
           ent <- c(ent, s1 + s2 + s3)
         }
       } else {
+        K <- length(probs)
         s1 <- -log(factorial(size), base)
         s2 <- -size * sum(probs * log(probs, base))
         s3 <- 0
@@ -170,24 +170,27 @@ Multinomial <- R6Class("Multinomial",
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     mgf = function(t) {
-      checkmate::assert(length(t) == self$getParameterValue("K"))
-      return(sum(exp(t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+      probs <- self$getParameterValue("probs")
+      checkmate::assert(length(t) == length(probs))
+      return(sum(exp(t) * probs)^self$getParameterValue("size"))
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     cf = function(t) {
-      checkmate::assert(length(t) == self$getParameterValue("K"))
-      return(sum(exp(1i * t) * self$getParameterValue("probs"))^self$getParameterValue("size"))
+      probs <- self$getParameterValue("probs")
+      checkmate::assert(length(t) == length(probs))
+      return(sum(exp(1i * t) * probs)^self$getParameterValue("size"))
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
-      checkmate::assert(length(z) == self$getParameterValue("K"))
-      return(sum(self$getParameterValue("probs") * z)^self$getParameterValue("size"))
+      probs <- self$getParameterValue("probs")
+      checkmate::assert(length(z) == length(probs))
+      return(sum(probs * z)^self$getParameterValue("size"))
     }
   ),
 
@@ -195,18 +198,20 @@ Multinomial <- R6Class("Multinomial",
     # dpqr
     .pdf = function(x, log = FALSE) {
 
-      checkmate::assertMatrix(x, ncols = length(self$getParameterValue("probs")))
+      probs <- self$getParameterValue("probs")
 
-      if (checkmate::testList(self$getParameterValue("probs"))) {
+      if (checkmate::testList(probs)) {
+        checkmate::assertMatrix(x, ncols = length(probs[[1]]))
         mapply(extraDistr::dmnom,
           size = self$getParameterValue("size"),
-          prob = self$getParameterValue("probs"),
+          prob = probs,
           MoreArgs = list(x = x, log = log)
         )
       } else {
+        checkmate::assertMatrix(x, ncols = length(probs))
         extraDistr::dmnom(x,
           size = self$getParameterValue("size"),
-          prob = self$getParameterValue("probs"),
+          prob = probs,
           log = log
         )
       }

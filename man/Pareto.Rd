@@ -16,7 +16,8 @@ The Pareto distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn
 The distribution is supported on \eqn{[\beta, \infty)}.
 
 Currently this is implemented as the Type I Pareto distribution, other types
-will be added in the future.
+will be added in the future. Characteristic function is omitted as no suitable incomplete
+gamma function with complex inputs implementation could be found.
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).

@@ -129,14 +129,14 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     setParameterValue = function(..., lst = NULL, error = "warn") {
       super$setParameterValue(..., lst = lst, error = error)
       if (self$getParameterValue("shape") == 0) {
-        support <- Reals$new()
+        private$.properties$support <- Reals$new()
       } else if (self$getParameterValue("shape") < 0) {
-        support <- Interval$new(-Inf, self$getParameterValue("location") -
+        private$.properties$support <- Interval$new(-Inf, self$getParameterValue("location") -
           self$getParameterValue("scale") / self$getParameterValue("shape"),
         type = "(]"
         )
       } else {
-        support <- Interval$new(self$getParameterValue("location") -
+        private$.properties$support <- Interval$new(self$getParameterValue("location") -
           self$getParameterValue("scale") / self$getParameterValue("shape"),
         Inf,
         type = "[)"

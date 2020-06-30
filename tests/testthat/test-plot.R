@@ -79,11 +79,15 @@ test_that("use_support", {
   expect_message(plot(continuousTester, xlim = c(0, 10)), "No quantile or")
 })
 
-test_that("VectorDistribution", {
-  vd <- VectorDistribution$new(list(Normal$new(), Normal$new(mean = 2)))
-  expect_silent(plot(vd))
-  expect_silent(plot(vd, col = c("blue", "orange")))
-  expect_error(plot(vd, fun = "pfdskjfndsf"))
-  vd <- VectorDistribution$new(rep(list(Normal$new()), 12))
-  expect_error(plot(vd, fun = "pfdskjfndsf"))
+test_that("multivariate", {
+  dist <- MultivariateNormal$new()
+  expect_silent(plot(dist, fun = "pdf", npoints = 10))
+  expect_error(expect_message(plot(dist, fun = "cdf", npoints = 10)), "No plottable")
+  dist <- Multinomial$new()
+  expect_silent(plot(dist, fun = "pdf", npoints = 10))
+  expect_error(expect_message(plot(dist, fun = "cdf", npoints = 10)), "No plottable")
+  dist <- EmpiricalMV$new(data.frame(1:10, 1:10))
+  expect_silent(plot(dist, fun = "pdf", npoints = 10))
+  expect_silent(plot(dist, fun = "cdf", npoints = 10))
+  expect_error(plot(EmpiricalMV$new(matrix(1, ncol = 3))), "over two variables")
 })

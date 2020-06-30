@@ -1,7 +1,5 @@
 library(testthat)
 
-context("WeightedDiscrete distribution")
-
 test_that("autottest", {
   autotest_sdistribution(WeightedDiscrete,
     pars = list(x = 1:10, pdf = rep(0.1, 10)),
@@ -36,16 +34,27 @@ test_that("setting", {
   expect_equal(x$getParameterValue("cdf"), pbinom(0:5, 10, 0.5))
 })
 
-test_that("vectorised", {
-  x <- list(list(x = 1:10, cdf = pnorm(1:10)),
-           list(x = 1:10, pdf = dbinom(1:10, 10, 0.5)),
-           list(x = 1:10, cdf = pgeom(1:10, 0.5)),
-           list(x = 1:10, cdf = pexp(1:10)))
-  v <- VectorDistribution$new(distribution = "Weight", params = x)
-  expect_equal(v$cdf(1:10),
-               data.table(WeightDisc1 = v[1]$cdf(1:10),
-                          WeightDisc2 = v[2]$cdf(1:10),
-                          WeightDisc3 = v[3]$cdf(1:10),
-                          WeightDisc4 = v[4]$cdf(1:10)))
-
+test_that("manual", {
+  expect_warning(WeightedDiscrete$new(data = data.frame(x = 1, pdf = 1)), "deprecated")
+  w <- WeightedDiscrete$new(x = 1:5, pdf = dnorm(1:5))
+  expect_equal(w$mgf(1:3), c(w$mgf(1), w$mgf(2), w$mgf(3)))
+  expect_equal(w$cf(1:3), c(w$cf(1), w$cf(2), w$cf(3)))
+  expect_equal(w$pgf(1:3), c(w$pgf(1), w$pgf(2), w$pgf(3)))
+  v <- VectorDistribution$new(distribution = "Weigh", params = data.frame(x = 1:2, pdf = 1))
+  expect_error(v$mode(), "cannot be")
+  expect_equal(v$mode(100), c(WeightDisc1 = 1, WeightDisc2 = 2))
 })
+
+# test_that("vectorised", {
+#   x <- list(list(x = 1:10, cdf = pnorm(1:10)),
+#            list(x = 1:10, pdf = dbinom(1:10, 10, 0.5)),
+#            list(x = 1:10, cdf = pgeom(1:10, 0.5)),
+#            list(x = 1:10, cdf = pexp(1:10)))
+#   v <- VectorDistribution$new(distribution = "Weight", params = x)
+#   expect_equal(v$cdf(1:10),
+#                data.table(WeightDisc1 = v[1]$cdf(1:10),
+#                           WeightDisc2 = v[2]$cdf(1:10),
+#                           WeightDisc3 = v[3]$cdf(1:10),
+#                           WeightDisc4 = v[4]$cdf(1:10)))
+#
+# })

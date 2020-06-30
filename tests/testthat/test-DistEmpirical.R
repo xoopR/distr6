@@ -23,6 +23,16 @@ test_that("autotest", {
     pgf = 1,
     pdf = rep(1 / 10, 3),
     cdf = (1:3) / 10,
-    quantile = c(3, 5, 5)
+    quantile = c(3, 5, 5),
+    vectorise = FALSE
   )
+})
+
+test_that("manual", {
+  dist <- Empirical$new(1:10)
+  expect_equal(dist$mode(which = 2), 2)
+  expect_equal(dist$mgf(1:3), c(dist$mgf(1), dist$mgf(2), dist$mgf(3)))
+  expect_equal(dist$pgf(1:3), c(dist$pgf(1), dist$pgf(2), dist$pgf(3)))
+  expect_equal(dist$cf(1:3), c(dist$cf(1), dist$cf(2), dist$cf(3)))
+  expect_null(expect_warning(dist$setParameterValue(sd = 2), "Data cannot"))
 })

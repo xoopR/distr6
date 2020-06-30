@@ -1,11 +1,9 @@
 library(testthat)
 
-context("Logistic distribution")
-
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Logistic,
-    pars = list(),
+    pars = list(mean = 0, scale = 1),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",
@@ -27,4 +25,8 @@ test_that("autotest", {
     cdf = plogis(1:3),
     quantile = qlogis(c(0.24, 0.42, 0.5))
   )
+})
+
+test_that("manual", {
+  expect_equal(Logistic$new()$mgf(0.5), beta(0.5, 1.5))
 })

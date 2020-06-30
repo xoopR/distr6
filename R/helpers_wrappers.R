@@ -11,16 +11,9 @@ mixture_dpqr_returner <- function(dpqr, weights, univariate) {
     }
   } else {
     if (checkmate::testNumeric(weights)) {
-      ret <- apply(dpqr, 2, function(x) weights %*% t(as.matrix(x)))
+      return(apply(dpqr, 1, function(x) weights %*% as.matrix(x)))
     } else {
-      ret <- apply(dpqr, 2, rowMeans)
-    }
-    if (inherits(ret, "matrix")) {
-      return(data.table(ret))
-    } else {
-      ret <- data.table::transpose(data.table(ret))
-      colnames(ret) <- colnames(dpqr)
-      return(ret)
+      return(rowMeans(dpqr))
     }
   }
 }
@@ -33,10 +26,6 @@ product_dpqr_returner <- function(dpqr, univariate) {
       return(as.numeric(apply(dpqr, 1, prod)))
     }
   } else {
-    if (dim(dpqr)[1] == 1) {
-      return(apply(dpqr, 2, prod))
-    } else {
-      return(apply(dpqr, 2, function(x) apply(x, 1, prod)))
-    }
+    return(apply(dpqr, 1, prod))
   }
 }
