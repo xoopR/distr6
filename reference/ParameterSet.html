@@ -237,8 +237,6 @@ creating a custom probability distribution that takes parameters.</p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl'>
-<dt><code>values</code></dt><dd><p>Returns parameter set values as a named list.</p></dd>
-
 <dt><code>deps</code></dt><dd><p>Returns ParameterSet dependencies table.</p></dd>
 
 <dt><code>checks</code></dt><dd><p>Returns ParameterSet assertions table.</p></dd>
@@ -262,6 +260,7 @@ creating a custom probability distribution that takes parameters.</p>
 <li><p><a href='#method-addDeps'><code>ParameterSet$addDeps()</code></a></p></li>
 <li><p><a href='#method-addChecks'><code>ParameterSet$addChecks()</code></a></p></li>
 <li><p><a href='#method-addTrafos'><code>ParameterSet$addTrafos()</code></a></p></li>
+<li><p><a href='#method-values'><code>ParameterSet$values()</code></a></p></li>
 <li><p><a href='#method-clone'><code>ParameterSet$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -553,7 +552,8 @@ ps$addChecks(dt = data.table::data.table(
 <p><hr>
 <a id="method-addTrafos"></a></p><h3>Method <code>addTrafos()</code></h3>
 <p>Transformations to apply to parameter before setting. Note transformations are made before
-checks.</p><h3>Usage</h3>
+checks.
+NOTE: If a transformation for a parameter already exists then this will be overwritten.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'>addTrafos</span>(<span class='no'>x</span>, <span class='no'>fun</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -589,6 +589,17 @@ See second example.</p></dd>
                           <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='no'>x</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>x</span>))
            ))</pre><p></div></p>
 
+<p><hr>
+<a id="method-values"></a></p><h3>Method <code>values()</code></h3>
+<p>Returns parameter set values as a named list.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'>values</span>(<span class='kw'>settable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>settable</code></dt><dd><p><code>(logical(1))</code><br />
+If <code>TRUE</code> (default) only returns values of settable parameters, otherwise returns all.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
