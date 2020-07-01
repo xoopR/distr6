@@ -463,6 +463,14 @@ NumericVector C_WeightedDiscreteCdf(NumericVector x, NumericVector data, Numeric
           mat[k] = log(mat[k]);
         }
         break;
+      } else if (j == nr - 1) {
+        mat[k] = 1;
+        if (!lower) {
+          mat[k] = 1 - mat[k];
+        }
+        if (logp) {
+          mat[k] = log(mat[k]);
+        }
       }
     }
   }
@@ -485,6 +493,15 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, Num
       for (int j = 0; j < nr; j++) {
         if (data(j, i) >= x[k]) {
           mat(k, i) = cdf(j, i);
+          if (!lower) {
+            mat(k, i) = 1 - mat(k, i);
+          }
+          if (logp) {
+            mat(k, i) = log(mat(k, i));
+          }
+          break;
+        } else if (j == nr - 1) {
+          mat(k, i) = 1;
           if (!lower) {
             mat(k, i) = 1 - mat(k, i);
           }
