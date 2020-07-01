@@ -9,7 +9,7 @@ test_that("autotest", {
       variateForm = "multivariate",
       type = Reals$new()^2
     ),
-    support = do.call(setproduct, as.Tuple(matrix(1:20, ncol = 2))),
+    support = Reals$new()^2,
     symmetry = "asymmetric",
     mean = c(mean(1:10), mean(11:20)),
     median = NaN,
