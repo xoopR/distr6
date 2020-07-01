@@ -25,6 +25,9 @@ vd <- VectorDistribution$new(
 )
 
  test_that("pdf/cdf/quantile/rand", {
+  expect_equal(vd$pdf(1:10), vd$pdf(1:10, 1:10))
+  expect_equal(vd$cdf(1:10), vd$cdf(1:10, 1:10))
+  expect_equal(vd$quantile(c(0.2, 0.4)), vd$quantile(c(0.2, 0.4)))
   expect_equal(vd$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2),
                                             Binom2 = dbinom(3:4, 5, 0.5)))
   expect_equal(vd$cdf(1:2, 3:4), data.table(Binom1 = pbinom(1:2, 40, 0.2),
@@ -299,6 +302,8 @@ test_that("multivariate", {
    list(size = 5, probs = c(0.1, 0.9)),
    list(size = 8, probs = c(0.3, 0.7))
    ))
+
+  expect_equal(vd$pdf(1, 4), vd$pdf(data = array(c(1, 4), dim = c(1, 2, 2))))
 
   expect_error(vd$pdf(data = matrix(1), "multivariate"))
   expect_error(vd$pdf(1, "multivariate"))

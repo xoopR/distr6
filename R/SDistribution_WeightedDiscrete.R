@@ -85,6 +85,14 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       )
     },
 
+    #' @description
+    #' Printable string representation of the `Distribution`. Primarily used internally.
+    #' @param n `(integer(1))` \cr
+    #' Ignored.
+    strprint = function(n = 2) {
+      "WeightDisc()"
+    }
+
     # stats
 
     #' @description

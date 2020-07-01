@@ -158,20 +158,28 @@ or `distlist` should be used.")
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in seq_len(ncol(x1))) {
-                  a_dpqr <- fun(unlist(x1[, i]), log = log)
-                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-                  dpqr <- cbind(dpqr, a_dpqr)
+                if (ncol(x1) == 1) {
+                  dpqr <- fun(unlist(x1), log = log)
+                } else {
+                  for (i in seq_len(ncol(x1))) {
+                    a_dpqr <- fun(unlist(x1[, i]), log = log)
+                    a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                    dpqr <- cbind(dpqr, a_dpqr)
+                  }
                 }
               } else {
-                for (i in seq_len(dim(x1)[3])) {
-                  mx <- x1[, , i]
-                  if (class(mx)[1] == "numeric") {
-                    mx <- matrix(mx, nrow = 1)
+                if (length(dim(x1)) == 2) {
+                  dpqr <- data.table(matrix(fun(x1, log = log), nrow = nrow(x1)))
+                } else {
+                  for (i in seq_len(dim(x1)[3])) {
+                    mx <- x1[, , i]
+                    if (class(mx)[1] == "numeric") {
+                      mx <- matrix(mx, nrow = 1)
+                    }
+                    a_dpqr <- fun(mx, log = log)
+                    a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                    dpqr <- cbind(dpqr, a_dpqr)
                   }
-                  a_dpqr <- fun(mx, log = log)
-                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-                  dpqr <- cbind(dpqr, a_dpqr)
                 }
               }
 
@@ -189,10 +197,14 @@ or `distlist` should be used.")
 
               dpqr <- data.table()
               if (private$.univariate) {
-                for (i in seq(ncol(x1))) {
-                  a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-                  dpqr <- cbind(dpqr, a_dpqr)
+                if (ncol(x1) == 1) {
+                  dpqr <- fun(unlist(x1), lower.tail = lower.tail, log.p = log.p)
+                } else {
+                  for (i in seq(ncol(x1))) {
+                    a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
+                    a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                    dpqr <- cbind(dpqr, a_dpqr)
+                  }
                 }
               }
               # TODO - This will be uncommented once EmpiricalMV can be used here
@@ -217,11 +229,16 @@ or `distlist` should be used.")
               body(fun) <- substitute(FUN)
 
               dpqr <- data.table()
-              for (i in seq_len(ncol(x1))) {
-                a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-                a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
-                dpqr <- cbind(dpqr, a_dpqr)
+              if (ncol(x1) == 1) {
+                dpqr <- fun(unlist(x1), lower.tail = lower.tail, log.p = log.p)
+              } else {
+                for (i in seq_len(ncol(x1))) {
+                  a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
+                  a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                  dpqr <- cbind(dpqr, a_dpqr)
+                }
               }
+
               return(dpqr)
             },
             list(FUN = body(pdist_pri[[".quantile"]]))
@@ -707,22 +724,23 @@ or `distlist` should be used.")
       }
 
       if (private$.univariate) {
-        if (ncol(data) == 1) {
-          data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
-        }
+        # if (ncol(data) == 1) {
+        #   data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
+        # }
         dpqr <- as.data.table(private$.pdf(data, log = log))
         colnames(dpqr) <- unlist(private$.modelTable[, 2])
         return(dpqr)
       } else {
         if (ncol(data) == 1) {
           stop("Distribution is multivariate but values have only been passed to one argument.")
-        } else if (inherits(data, "array")) {
-          if (is.na(dim(data)[3])) {
-            data <- array(rep(data, nrow(private$.modelTable)),
-              dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
-            )
-          }
         }
+        # else if (inherits(data, "array")) {
+        #   if (is.na(dim(data)[3])) {
+        #     data <- array(rep(data, nrow(private$.modelTable)),
+        #       dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
+        #     )
+        #   }
+        # }
         dpqr <- private$.pdf(data, log = log)
         colnames(dpqr) <- unlist(private$.modelTable[, 2])
         return(dpqr)

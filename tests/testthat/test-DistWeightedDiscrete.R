@@ -43,6 +43,7 @@ test_that("manual", {
   v <- VectorDistribution$new(distribution = "Weigh", params = data.frame(x = 1:2, pdf = 1))
   expect_error(v$mode(), "cannot be")
   expect_equal(v$mode(100), c(WeightDisc1 = 1, WeightDisc2 = 2))
+  expect_output(w$print(), "WeightDisc()")
 })
 
 # test_that("vectorised", {
