@@ -53,6 +53,10 @@ vd <- VectorDistribution$new(
   )
 
   expect_equal(dim(vd$rand(10)), c(10, 2))
+
+  expect_equal(a$pdf(1:10), a$pdf(1:10, 1:10))
+  expect_equal(a$cdf(1:10), a$cdf(1:10, 1:10))
+  expect_equal(a$quantile(c(0.1,0.2)), a$quantile(c(0.1,0.2), c(0.1,0.2)))
 })
 
 test_that("distlist rand", {
@@ -324,6 +328,8 @@ test_that("multivariate", {
   expect_equal(vd$pdf(data = array(c(1, 4, 2, 6), dim = c(1, 2, 2))),
                data.table(Multinom1 = Multinomial$new(size = 5, probs = c(0.1, 0.9))$pdf(1, 4),
                           Multinom2 = Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(2, 6)))
+
+  expect_equal(vd$pdf(1, 4), vd$pdf(data = array(c(1, 4), dim = c(1, 2, 2))))
 
   e1 <- EmpiricalMV$new(data.frame(1:5, 1:5))
   e2 <- EmpiricalMV$new(data.frame(11:15, 11:15))
