@@ -1139,7 +1139,7 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nol
   ps <- ParameterSet$new(
     id = list("x", "pdf", "cdf"),
     value = list(x, rep(1, n), rep(1, n)),
-    support = list(Reals$new()^n, Interval$new(0, 1)^n, Interval$new(0, 1)^n),
+    support = list(Reals$new(), Interval$new(0, 1), Interval$new(0, 1)),
     description = list(
       "Data.", "Probability density function.",
       "Cumulative distribution function."
