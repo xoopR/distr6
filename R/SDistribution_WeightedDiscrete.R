@@ -91,7 +91,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' Ignored.
     strprint = function(n = 2) {
       "WeightDisc()"
-    }
+    },
 
     # stats
 

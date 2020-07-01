@@ -116,6 +116,7 @@ Other univariate distributions:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{WeightedDiscrete$new()}}
+\item \href{#method-strprint}{\code{WeightedDiscrete$strprint()}}
 \item \href{#method-mean}{\code{WeightedDiscrete$mean()}}
 \item \href{#method-mode}{\code{WeightedDiscrete$mode()}}
 \item \href{#method-variance}{\code{WeightedDiscrete$variance()}}
@@ -146,7 +147,6 @@ Other univariate distributions:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
 }
 \out{</details>}
@@ -185,6 +185,24 @@ given then \code{pdf} is ignored and calculated as difference of \code{cdf}s.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
+\subsection{Method \code{strprint()}}{
+Printable string representation of the \code{Distribution}. Primarily used internally.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$strprint(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{\code{(integer(1))} \cr
+Ignored.}
 }
 \if{html}{\out{</div>}}
 }
