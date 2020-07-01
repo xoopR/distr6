@@ -324,6 +324,7 @@ Michael P. McLaughlin.</p>
 
 <ul>
 <li><p><a href='#method-new'><code>WeightedDiscrete$new()</code></a></p></li>
+<li><p><a href='#method-strprint'><code>WeightedDiscrete$strprint()</code></a></p></li>
 <li><p><a href='#method-mean'><code>WeightedDiscrete$mean()</code></a></p></li>
 <li><p><a href='#method-mode'><code>WeightedDiscrete$mode()</code></a></p></li>
 <li><p><a href='#method-variance'><code>WeightedDiscrete$variance()</code></a></p></li>
@@ -352,7 +353,6 @@ Michael P. McLaughlin.</p>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
 </ul>
 </details>
@@ -386,6 +386,17 @@ given then <code>pdf</code> is ignored and calculated as difference of <code>cdf
 
 <dt><code>decorators</code></dt><dd><p><code>(character())</code> <br />
 Decorators to add to the distribution during construction.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-strprint"></a></p><h3>Method <code><a href='strprint.html'>strprint()</a></code></h3>
+<p>Printable string representation of the <code>Distribution</code>. Primarily used internally.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>WeightedDiscrete</span>$<span class='fu'><a href='strprint.html'>strprint</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>n</code></dt><dd><p><code>(integer(1))</code> <br />
+Ignored.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -508,7 +519,7 @@ z integer to evaluate probability generating function at.</p></dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>WeightedDiscrete</span>$<span class='fu'>new</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>pdf</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span> / <span class='fl'>5</span>, <span class='fl'>3</span> / <span class='fl'>5</span>, <span class='fl'>1</span> / <span class='fl'>5</span>))
-<span class='no'>WeightedDiscrete</span>$<span class='fu'>new</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>cdf</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span> / <span class='fl'>5</span>, <span class='fl'>4</span> / <span class='fl'>5</span>, <span class='fl'>1</span>)) <span class='co'># equivalently</span></div><div class='output co'>#&gt; WeightDisc(x = 1:3, pdf = c(0.2, 0.6, 0.2), cdf = c(0.2, 0.8, 1)) </div><div class='input'>
+<span class='no'>WeightedDiscrete</span>$<span class='fu'>new</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>cdf</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span> / <span class='fl'>5</span>, <span class='fl'>4</span> / <span class='fl'>5</span>, <span class='fl'>1</span>)) <span class='co'># equivalently</span></div><div class='output co'>#&gt; WeightDisc() </div><div class='input'>
 <span class='co'># d/p/q/r</span>
 <span class='no'>x</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.2 0.6 0.2 0.0 0.0</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='co'># Assumes ordered in construction</span></div><div class='output co'>#&gt; [1] 0.2 0.8 1.0 0.0 0.0</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>) <span class='co'># Assumes ordered in construction</span></div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='no'>x</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 2 2 2 2 2 3 2 1 2 3</div><div class='input'>
 <span class='co'># Statistics</span>
