@@ -724,9 +724,9 @@ or `distlist` should be used.")
       }
 
       if (private$.univariate) {
-        # if (ncol(data) == 1) {
-        #   data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
-        # }
+        if (private$.distlist & ncol(data) == 1) {
+          data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
+        }
         dpqr <- as.data.table(private$.pdf(data, log = log))
         colnames(dpqr) <- unlist(private$.modelTable[, 2])
         return(dpqr)
@@ -734,22 +734,16 @@ or `distlist` should be used.")
         if (ncol(data) == 1) {
           stop("Distribution is multivariate but values have only been passed to one argument.")
         }
-        # else if (inherits(data, "array")) {
-        #   if (is.na(dim(data)[3])) {
-        #     data <- array(rep(data, nrow(private$.modelTable)),
-        #       dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
-        #     )
-        #   }
-        # }
+        if (inherits(data, "array") & private$.distlist) {
+          if (is.na(dim(data)[3])) {
+            data <- array(rep(data, nrow(private$.modelTable)),
+              dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
+            )
+          }
+        }
         dpqr <- private$.pdf(data, log = log)
         colnames(dpqr) <- unlist(private$.modelTable[, 2])
         return(dpqr)
-        #
-        # nc <- prod(dim(dpqr)) / (nrow(dpqr) * dim(data)[3])
-        # return(array(as.matrix(dpqr),
-        #   dim = c(nrow(dpqr), nc, dim(data)[3]),
-        #   dimnames = list(NULL, colnames(dpqr)[1:nc], NULL)
-        # ))
       }
     },
 
@@ -765,14 +759,15 @@ or `distlist` should be used.")
       if (is.null(data)) data <- as.matrix(data.table(...))
 
       if (private$.univariate) {
-        if (ncol(data) == 1) {
+        if (ncol(data) == 1 & private$.distlist) {
           data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
         }
-      } else {
+      }
+      else {
         if (ncol(data) == 1) {
           stop("Distribution is multivariate but values have only been passed to one argument.")
         } else if (inherits(data, "array")) {
-          if (is.na(dim(data)[3])) {
+          if (is.na(dim(data)[3]) & private$.distlist) {
             data <- array(rep(data, nrow(private$.modelTable)),
                           dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
             )
@@ -797,7 +792,7 @@ or `distlist` should be used.")
       if (is.null(data)) data <- as.matrix(data.table(...))
 
       if (private$.univariate) {
-        if (ncol(data) == 1) {
+        if (ncol(data) == 1 & private$.distlist) {
           data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
         }
       } else {

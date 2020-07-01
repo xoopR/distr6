@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Mixture")
-
 test_that("check weights", {
   expect_equal(
     MixtureDistribution$new(list(Exponential$new(), Normal$new()))$getParameterValue("mix_weights"),

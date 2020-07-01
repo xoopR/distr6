@@ -32,7 +32,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     c(
       "clone", "mean", "mode", "variance", "skewness", "kurtosis",
       "entropy", "mgf", "cf", "pgf", "setParameterValue", "initialize",
-      "median", "getParameterValue"
+      "median", "getParameterValue", "strprint"
     )
   )
 

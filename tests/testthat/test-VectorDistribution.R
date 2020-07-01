@@ -27,6 +27,8 @@ vd <- VectorDistribution$new(
  test_that("pdf/cdf/quantile/rand", {
   expect_equal(vd$pdf(1:10), vd$pdf(1:10, 1:10))
   expect_equal(vd$cdf(1:10), vd$cdf(1:10, 1:10))
+  expect_equal(vd$quantile(1:10), vd$quantile(1:10, 1:10))
+
   expect_equal(vd$quantile(c(0.2, 0.4)), vd$quantile(c(0.2, 0.4)))
   expect_equal(vd$pdf(1:2, 3:4), data.table(Binom1 = dbinom(1:2, 40, 0.2),
                                             Binom2 = dbinom(3:4, 5, 0.5)))
