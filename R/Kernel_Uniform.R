@@ -26,15 +26,26 @@ UniformKernel <- R6Class("UniformKernel",
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
         if (upper[i] == Inf) {
-          if (abs(x[i]) > 2) {
+          if (abs(x[i]) >= 2) {
             ret[i] = 0
           } else {
             ret[i] = (1 / 4) * (2 - (abs(x[i])))
           }
+        } else{
+          if(x[i] >= 0 & x[i]<= 2){
+            if(upper >= 1){ret[i] = 1/4 * (2 - x[i])}
+            else if(upper >= (x[i] - 1 )& upper <= 1){ret[i] = 1/4 * (upper - x[i] +1)}
+            else if(upper <= x[i] -1){ret[i] = 0}
+          } else if(x[i] >= -2 & x[i] <= 0){
+            if(upper >= (x[i] + 1)){ret[i] = 1/4 * (2 + x[i])}
+            else if(upper >= -1 & upper <= (x[i] +1)){ret[i] = 1/4 *(upper + 1)}
+            else if(upper <= -1){ret[i] = 0}
+          }
         }
       }
       return(ret)
-    },
+    }
+    ,
 
     #' @description
     #' The squared 2-norm of the cdf is defined by
