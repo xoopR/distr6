@@ -25,7 +25,7 @@ UniformKernel <- R6Class("UniformKernel",
     pdfSquared2Norm = function(x = 0, upper = Inf) {
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
-        if (upper[i] == Inf) {
+        if (upper == Inf) {
           if (abs(x[i]) >= 2) {
             ret[i] = 0
           } else {
