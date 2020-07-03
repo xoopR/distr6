@@ -25,21 +25,21 @@ UniformKernel <- R6Class("UniformKernel",
     pdfSquared2Norm = function(x = 0, upper = Inf) {
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
-        if (upper == Inf) {
+        if (upper[i] == Inf) {
           if (abs(x[i]) >= 2) {
             ret[i] = 0
           } else {
             ret[i] = (1 / 4) * (2 - (abs(x[i])))
           }
         } else{
-          if(x[i] >= 0 & x[i] <= 2) {
-            if(upper >= 1) {ret[i] = 1/4 * (2 - x[i])}
-            else if(upper >= (x[i] - 1) & upper <= 1) {ret[i] = 1/4 * (upper - x[i] +1)}
-            else if(upper <= x[i] -1) {ret[i] = 0}
-          } else if(x[i] >= -2 & x[i] <= 0){
-            if(upper >= (x[i] + 1)) {ret[i] = 1/4 * (2 + x[i])}
-            else if(upper >= -1 & upper <= (x[i] + 1)) {ret[i] = 1/4 * (upper + 1)}
-            else if(upper <= -1) {ret[i] = 0}
+          if (x[i] >= 0 & x[i] <= 2) {
+            if (upper[i] >= 1) {ret[i] = 1/4 * (2 - x[i])}
+            else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {ret[i] = 1/4 * (upper[i] - x[i] +1)}
+            else if (upper[i] <= x[i] -1) {ret[i] = 0}
+          } else if (x[i] >= -2 & x[i] <= 0){
+            if(upper[i] >= (x[i] + 1)) {ret[i] = 1/4 * (2 + x[i])}
+            else if (upper[i] >= -1 & upper[i] <= (x[i] + 1)) {ret[i] = 1/4 * (upper[i] + 1)}
+            else if (upper[i] <= -1) {ret[i] = 0}
           }
         }
       }
