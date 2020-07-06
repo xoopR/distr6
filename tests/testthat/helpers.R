@@ -217,12 +217,12 @@ test_vectorised_mv_method <- function(vdist, method, args = NULL) {
     if (is.null(args)) {
       dt <- data.table(vdist[1][[method]](), vdist[2][[method]](),
               vdist[3][[method]]())
-      colnames(dt) <- vdist$modelTable$shortname
+      colnames(dt) <- as.character(unlist(vdist$modelTable$shortname))
       expect_equal(vdist[[method]](), dt)
     } else {
       dt <- data.table(vdist[1][[method]](args), vdist[2][[method]](args),
               vdist[3][[method]](args))
-      colnames(dt) <- vdist$modelTable$shortname
+      colnames(dt) <- as.character(unlist(vdist$modelTable$shortname))
       expect_equal(vdist[[method]](args), dt)
     }
   }
@@ -232,7 +232,7 @@ test_vectorised_mv_dpqr <- function(vdist, method, args = NULL) {
   expected <- data.table::data.table(do.call(vdist[1][[method]], args),
                                      do.call(vdist[2][[method]], args),
                                      do.call(vdist[3][[method]], args))
-  colnames(expected) <- vdist$modelTable$shortname
+  colnames(expected) <- as.character(unlist(vdist$modelTable$shortname))
   object <- do.call(vdist[[method]], args)
   expect_equal(object, expected)
 }
@@ -242,7 +242,7 @@ test_vectorised_dpqr <- function(vdist, method, args = NULL) {
   expected <- data.table::data.table(do.call(vdist[1][[method]], args),
                                      do.call(vdist[2][[method]], args),
                                      do.call(vdist[3][[method]], args))
-  colnames(expected) <- vdist$modelTable$shortname
+  colnames(expected) <- as.character(unlist(vdist$modelTable$shortname))
   object <- do.call(vdist[[method]], args)
   expect_equal(object, expected)
 }
