@@ -214,11 +214,14 @@ NumericVector C_EmpiricalMVPdf(NumericMatrix x, NumericMatrix data) {
   int vk;
   NumericVector ret(x.nrow());
 
+  // loop over evaluates
   for (int i = 0; i < x.nrow(); i++) {
+    // loop over all observations
     for (int k = 0; k < n; k++) {
       vbj = 0;
       vk = 1;
 
+      // loop over variates
       for (int j = 0; j < x.ncol(); j++) {
         vk = vk && (data(k, j) ==  x(i, j));
       }
