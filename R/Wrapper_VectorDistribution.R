@@ -298,12 +298,12 @@ or `distlist` should be used.")
         private$.pdf <- function(x, log = FALSE) {
           dpqr <- data.table()
           if (private$.univariate) {
-            for (i in seq(ncol(x))) {
+            for (i in seq_len(ncol(x))) {
               a_dpqr <- self[i]$pdf(x[, i], log = log)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           } else {
-            for (i in seq_len(dim(x)[3])) {
+            for (i in seq_len(dim(x)[[3]])) {
               a_dpqr <- self[i]$pdf(data = matrix(x[, , i], nrow = nrow(x), ncol = ncol(x)),
                                     log = log)
               dpqr <- cbind(dpqr, a_dpqr)
@@ -725,7 +725,8 @@ or `distlist` should be used.")
 
       if (private$.univariate) {
         if (private$.distlist & ncol(data) == 1) {
-          data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
+          data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data),
+                         ncol = nrow(private$.modelTable))
         }
         dpqr <- as.data.table(private$.pdf(data, log = log))
         colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
