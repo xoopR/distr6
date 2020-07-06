@@ -534,7 +534,7 @@ or `distlist` should be used.")
         names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       } else {
         # catch for covariance matrices
-        dimnames(ret)[3] <- as.character(as.list(private$.modelTable[, "shortname"]))
+        dimnames(ret)[3] <- as.list(private$.modelTable[, "shortname"])
       }
 
       return(ret)
