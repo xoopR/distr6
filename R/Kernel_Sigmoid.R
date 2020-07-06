@@ -43,6 +43,7 @@ Sigmoid <- R6Class("Sigmoid",
           } else {
             ret[i] = (4 * x[i] * exp(x[i])) / (pi^2 * (exp(2 * x[i]) - 1))
           }
+        } else {ret[i] = -(2*exp(x[i])*(log(exp(2*x[i])+exp(2*upper[i]))-2*x[i]-log(exp(2*upper[i])+1)))/((pi^2)*(exp(x[i])-1)*(exp(x[i])+1))
         }
       }
       return(ret)
