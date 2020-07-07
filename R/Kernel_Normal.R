@@ -41,7 +41,7 @@ NormalKernel <- R6Class("NormalKernel",
       for (i in seq_along(x)) {
         if (upper[i] == Inf) {
           ret[i] = (1 / (2 * sqrt(pi))) * exp(-(x[i] / 2)^2)
-        }
+        } else {ret[i] = exp(-(x[i]^2)/4)/(4 * sqrt(pi)) * (2 * pnorm((upper[i] - x[i]/2) * sqrt(2)) - 1 + 1)}
       }
       return(ret)
     },

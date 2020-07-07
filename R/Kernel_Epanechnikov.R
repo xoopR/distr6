@@ -35,6 +35,18 @@ Epanechnikov <- R6Class("Epanechnikov",
             ret[i] = (9 / 16) * (-abs(x[i])^5 + 20 * abs(x[i])^3 -
                                    40 * abs(x[i])^2 + 32) / 30
           }
+        } else{
+          if (x[i] >= 0 & x[i] <= 2) {
+            if (upper[i] >= 1) {ret[i] = 3*(-x[i]^5 + 20*x[i]^3 - 40*x[i]^2 + 32)/160}
+            else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {ret[i] = (3/160)*(-x[i]^(5)+20*x[i]^(3)+10*(x[i]^(2))*(upper[i]^(3)-3*upper[i]-2)-15*x[i]*(upper[i]^(2)-1)^(2)+6*upper[i]^(5)-
+                                                                                    20*upper[i]^(3)+30*upper[i]+16)}
+            else if (upper[i] <= x[i] -1) {ret[i] = 0}
+          } else if (x[i] >= -2 & x[i] <= 0){
+            if(upper[i] >= (x[i] + 1)) {ret[i] = 3*(x[i]^5 - 20*x[i]^3 - 40*x[i]^2 + 32)/160}
+            else if (upper[i] >= -1 & upper[i] <= (x[i] + 1)) {ret[i] = (3/160)*(10*x[i]^(2)*(upper[i]^(3)-3*upper[i]-2)-15*x[i]*(upper[i]^(2)-1)^(2)+6*upper[i]^(5)-
+                                                                                     20*upper[i]^(3)+30*upper[i]+16)}
+            else if (upper[i] <= -1) {ret[i] = 0}
+          }
         }
       }
       return(ret)

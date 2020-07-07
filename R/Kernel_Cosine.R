@@ -26,17 +26,25 @@ Cosine <- R6Class("Cosine",
 
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
-        if (upper[i] == Inf) {
-          if (abs(x[i]) > 2) {
-            ret[i] = 0
-          } else if (x[i][i] >= 0) {
+        if(abs(x[i] >= 2)) {
+          ret[i] = 0
+        } else if (x[i] >= 0 & x[i] <= 2) {
+          if (upper[i] == Inf | upper[i] >= 1) {
             ret[i] = -pi / 32 * (sin((pi * x[i] - 2 * pi) / 2) - sin(pi * x[i] / 2) +
                                    (pi * x[i] - 2 * pi) *
                                    cos(pi * x[i] / 2))
-          } else {
-            ret[i] = pi / 32 * (sin((pi * x[i] + 2 * pi) / 2) - sin(pi * x[i] / 2) +
-                                  (pi * x[i] + 2 * pi) *
-                                  cos(pi * x[i] / 2))
+          } else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {
+            ret[i] = (pi)/(32)*(-sin((pi*x[i]-2*pi*upper[i])/(2))+sin((pi*x[i])/(2))-(pi*x[i] - pi*upper[i]-pi)*cos((pi*x[i])/(2)))
+          } else if (upper[i] <= x[i] - 1){
+            ret[i] = 0
+          }
+        } else if (x[i] <= 0 & x[i] >= -2) {
+          if (upper[i] == Inf | upper[i] >= x[i] + 1) {
+            ret[i] = (pi)/(32)*(-2*sin((pi*x[i])/(2))+(x[i]+2)*pi*cos((pi*x[i])/(2)))
+          } else if (upper[i] <= x[i] + 1 & upper[i] >= -1) {
+            ret[i] = (pi)/(32)*(-sin((pi*x[i]-2*pi*upper[i])/(2))+sin((pi*x[i])/(2))+(pi*upper[i]+pi)*cos((pi*x[i])/(2)))
+          } else if (upper[i] <= -1){
+            ret[i] = 0
           }
         }
       }
