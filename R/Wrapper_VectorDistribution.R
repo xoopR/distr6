@@ -298,12 +298,12 @@ or `distlist` should be used.")
         private$.pdf <- function(x, log = FALSE) {
           dpqr <- data.table()
           if (private$.univariate) {
-            for (i in seq(ncol(x))) {
+            for (i in seq_len(ncol(x))) {
               a_dpqr <- self[i]$pdf(x[, i], log = log)
               dpqr <- cbind(dpqr, a_dpqr)
             }
           } else {
-            for (i in seq_len(dim(x)[3])) {
+            for (i in seq_len(dim(x)[[3]])) {
               a_dpqr <- self[i]$pdf(data = matrix(x[, , i], nrow = nrow(x), ncol = ncol(x)),
                                     log = log)
               dpqr <- cbind(dpqr, a_dpqr)
@@ -414,7 +414,7 @@ or `distlist` should be used.")
         } else {
           distlist <- lapply(private$.modelTable$shortname, function(x) {
             do.call(
-              get(private$.modelTable$Distribution[[1]])$new,
+              get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
               self$parameters()[paste0(x, "_")]$values()
             )
           })
@@ -431,7 +431,7 @@ or `distlist` should be used.")
         } else {
           distlist <- lapply(models, function(x) {
             do.call(
-              get(private$.modelTable$Distribution[[1]])$new,
+              get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
               self$parameters()[paste0(x, "_")]$values()
             )
           })
@@ -441,7 +441,7 @@ or `distlist` should be used.")
       if (length(distlist) == 1) {
         return(distlist[[1]])
       } else {
-        names(distlist) <- private$.modelTable$shortname
+        names(distlist) <- as.character(unlist(private$.modelTable$shortname))
         return(distlist)
       }
     },
@@ -451,7 +451,7 @@ or `distlist` should be used.")
     #' @param n `(integer(1))`\cr
     #' Number of distributions to include when printing.
     strprint = function(n = 10) {
-      names <- as.character(self$modelTable$shortname)
+      names <- as.character(unlist(self$modelTable$shortname))
       lng <- length(names)
       if (lng > (2 * n)) {
         names <- c(names[1:n], "...", names[(lng - n + 1):lng])
@@ -468,16 +468,16 @@ or `distlist` should be used.")
           ifnerror(self[i]$mean(), error = NaN)
         })
       } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$mean
+        f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$mean
         formals(f) <- list(self = self)
         ret <- f()
       }
 
       if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
+        names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       } else {
         ret <- data.table(t(ret))
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+        colnames(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       }
 
       return(ret)
@@ -491,21 +491,21 @@ or `distlist` should be used.")
           ifnerror(self[i]$mode(which), error = NaN)
         })
       } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$mode
+        f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$mode
         formals(f) <- list(self = self, which = which)
         ret <- f()
       }
 
       if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
+        names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       } else {
         # hacky catch for MVN
-        if (self$modelTable$Distribution[[1]] != "MultivariateNormal") {
+        if (as.character(unlist(self$modelTable$Distribution[[1]])) != "MultivariateNormal") {
           ret <- t(ret)
         }
 
         ret <- data.table(ret)
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+        colnames(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       }
 
       return(ret)
@@ -525,13 +525,13 @@ or `distlist` should be used.")
           ifnerror(self[i]$variance(), error = NaN)
         })
       } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$variance
+        f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$variance
         formals(f) <- list(self = self)
         ret <- f()
       }
 
       if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
+        names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       } else {
         # catch for covariance matrices
         dimnames(ret)[3] <- as.list(private$.modelTable[, "shortname"])
@@ -548,12 +548,12 @@ or `distlist` should be used.")
           ifnerror(self[i]$skewness(), error = NaN)
         })
       } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$skewness
+        f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$skewness
         formals(f) <- list(self = self)
         ret <- f()
       }
 
-      names(ret) <- unlist(private$.modelTable[, "shortname"])
+      names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
 
       return(ret)
     },
@@ -567,12 +567,12 @@ or `distlist` should be used.")
           ifnerror(self[i]$kurtosis(excess), error = NaN)
         })
       } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$kurtosis
+        f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$kurtosis
         formals(f) <- list(self = self, excess = excess)
         ret <- f()
       }
 
-      names(ret) <- unlist(private$.modelTable[, "shortname"])
+      names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
 
       return(ret)
     },
@@ -585,12 +585,12 @@ or `distlist` should be used.")
           ifnerror(self[i]$entropy(base), error = NaN)
         })
       } else {
-        f <- get(self$modelTable$Distribution[[1]])$public_methods$entropy
+        f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$entropy
         formals(f) <- list(self = self, base = base)
         ret <- f()
       }
 
-      names(ret) <- unlist(private$.modelTable[, "shortname"])
+      names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
 
       return(ret)
     },
@@ -608,16 +608,16 @@ or `distlist` should be used.")
 
       # FIXME - VECTORISE PROPERLY
       # } else {
-      #   f <- get(self$modelTable$Distribution[[1]])$public_methods$mgf
+      #   f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$mgf
       #   formals(f) = list(self = self, t = t)
       #   ret <- f()
       # }
 
       if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
+        names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       } else {
         ret <- data.table(ret)
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+        colnames(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       }
 
       return(ret)
@@ -636,16 +636,16 @@ or `distlist` should be used.")
 
       # FIXME - VECTORISE PROPERLY
       # } else {
-      #   f <- get(self$modelTable$Distribution[[1]])$public_methods$cf
+      #   f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$cf
       #   formals(f) = list(self = self, t = t)
       #   ret <- f()
       # }
 
       if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
+        names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       } else {
         ret <- data.table(ret)
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+        colnames(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       }
 
       return(ret)
@@ -664,16 +664,16 @@ or `distlist` should be used.")
 
       # FIXME - VECTORISE PROPERLY
       # } else {
-      #   f <- get(self$modelTable$Distribution[[1]])$public_methods$pgf
+      #   f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$pgf
       #   formals(f) = list(self = self, z = z)
       #   ret <- f()
       # }
 
       if (is.null(dim(ret))) {
-        names(ret) <- unlist(private$.modelTable[, "shortname"])
+        names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       } else {
         ret <- data.table(ret)
-        colnames(ret) <- unlist(private$.modelTable[, "shortname"])
+        colnames(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
       }
 
       return(ret)
@@ -725,16 +725,17 @@ or `distlist` should be used.")
 
       if (private$.univariate) {
         if (private$.distlist & ncol(data) == 1) {
-          data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
+          data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data),
+                         ncol = nrow(private$.modelTable))
         }
         dpqr <- as.data.table(private$.pdf(data, log = log))
-        colnames(dpqr) <- unlist(private$.modelTable[, 2])
+        colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
         return(dpqr)
       } else {
         if (ncol(data) == 1) {
           stop("Distribution is multivariate but values have only been passed to one argument.")
         }
-        if (inherits(data, "array") & private$.distlist) {
+        if ((inherits(data, "array") | inherits(data, "matrix")) & private$.distlist) {
           if (is.na(dim(data)[3])) {
             data <- array(rep(data, nrow(private$.modelTable)),
               dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
@@ -742,7 +743,7 @@ or `distlist` should be used.")
           }
         }
         dpqr <- private$.pdf(data, log = log)
-        colnames(dpqr) <- unlist(private$.modelTable[, 2])
+        colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
         return(dpqr)
       }
     },
@@ -766,7 +767,7 @@ or `distlist` should be used.")
       else {
         if (ncol(data) == 1) {
           stop("Distribution is multivariate but values have only been passed to one argument.")
-        } else if (inherits(data, "array")) {
+        } else if (inherits(data, "array") | inherits(data, "matrix")) {
           if (is.na(dim(data)[3]) & private$.distlist) {
             data <- array(rep(data, nrow(private$.modelTable)),
                           dim = c(nrow(data), ncol(data), nrow(private$.modelTable))
@@ -776,7 +777,7 @@ or `distlist` should be used.")
       }
 
       dpqr <- as.data.table(private$.cdf(data, lower.tail = lower.tail, log.p = log.p))
-      colnames(dpqr) <- unlist(private$.modelTable[, 2])
+      colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
       return(dpqr)
     },
 
@@ -800,7 +801,7 @@ or `distlist` should be used.")
       }
 
       dpqr <- as.data.table(private$.quantile(data, lower.tail = lower.tail, log.p = log.p))
-      colnames(dpqr) <- unlist(private$.modelTable[, 2])
+      colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
       return(dpqr)
     },
 
@@ -815,12 +816,13 @@ or `distlist` should be used.")
 
       if (private$.univariate) {
         dpqr <- as.data.table(private$.rand(data))
-        colnames(dpqr) <- unlist(private$.modelTable[, 2])
+        colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
         return(dpqr)
       } else {
         dpqr <- private$.rand(data)
         dpqr <- array(unlist(dpqr), c(nrow(dpqr[[1]]), ncol(dpqr[[1]]), length(dpqr)))
-        dimnames(dpqr) <- list(NULL, paste0("V", seq(ncol(dpqr))), private$.modelTable$shortname)
+        dimnames(dpqr) <- list(NULL, paste0("V", seq(ncol(dpqr))),
+                               as.character(unlist(private$.modelTable$shortname)))
         return(dpqr)
       }
     }

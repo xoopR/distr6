@@ -187,42 +187,43 @@ test_vectorised_method <- function(vdist, method, args = NULL) {
     expect_equal(vdist[[method]](),
                  create_named_vector(c(vdist[1][[method]](), vdist[2][[method]](),
                                        vdist[3][[method]]()),
-                                     vdist$modelTable$shortname))
+                                     as.character(unlist(vdist$modelTable$shortname))))
   } else {
     expect_equal(vdist[[method]](args),
                  create_named_vector(c(vdist[1][[method]](args), vdist[2][[method]](args),
                                        vdist[3][[method]](args)),
-                                     vdist$modelTable$shortname))
+                                     as.character(unlist(vdist$modelTable$shortname))))
   }
 }
 
 test_vectorised_mv_method <- function(vdist, method, args = NULL) {
   if (method == "variance") {
     dt <- array(c(vdist[1]$variance(), vdist[2]$variance(), vdist[3]$variance()),
-                dim = c(2, 2, 3), dimnames = list(NULL, NULL, vdist$modelTable$shortname))
+                dim = c(2, 2, 3), dimnames = list(NULL, NULL,
+                                                  as.character(unlist(vdist$modelTable$shortname))))
     expect_equal(vdist$variance(), dt)
   } else if (method %in% c("entropy", "skewness", "kurtosis")) {
     if (is.null(args)) {
       dt <- c(vdist[1][[method]](), vdist[2][[method]](),
                        vdist[3][[method]]())
-      names(dt) <- vdist$modelTable$shortname
+      names(dt) <- as.character(unlist(vdist$modelTable$shortname))
       expect_equal(vdist[[method]](), dt)
     } else {
       dt <- c(vdist[1][[method]](args), vdist[2][[method]](args),
                        vdist[3][[method]](args))
-      names(dt) <- vdist$modelTable$shortname
+      names(dt) <- as.character(unlist(vdist$modelTable$shortname))
       expect_equal(vdist[[method]](args), dt)
     }
   } else {
     if (is.null(args)) {
       dt <- data.table(vdist[1][[method]](), vdist[2][[method]](),
               vdist[3][[method]]())
-      colnames(dt) <- vdist$modelTable$shortname
+      colnames(dt) <- as.character(unlist(vdist$modelTable$shortname))
       expect_equal(vdist[[method]](), dt)
     } else {
       dt <- data.table(vdist[1][[method]](args), vdist[2][[method]](args),
               vdist[3][[method]](args))
-      colnames(dt) <- vdist$modelTable$shortname
+      colnames(dt) <- as.character(unlist(vdist$modelTable$shortname))
       expect_equal(vdist[[method]](args), dt)
     }
   }
@@ -232,7 +233,7 @@ test_vectorised_mv_dpqr <- function(vdist, method, args = NULL) {
   expected <- data.table::data.table(do.call(vdist[1][[method]], args),
                                      do.call(vdist[2][[method]], args),
                                      do.call(vdist[3][[method]], args))
-  colnames(expected) <- vdist$modelTable$shortname
+  colnames(expected) <- as.character(unlist(vdist$modelTable$shortname))
   object <- do.call(vdist[[method]], args)
   expect_equal(object, expected)
 }
@@ -242,7 +243,7 @@ test_vectorised_dpqr <- function(vdist, method, args = NULL) {
   expected <- data.table::data.table(do.call(vdist[1][[method]], args),
                                      do.call(vdist[2][[method]], args),
                                      do.call(vdist[3][[method]], args))
-  colnames(expected) <- vdist$modelTable$shortname
+  colnames(expected) <- as.character(unlist(vdist$modelTable$shortname))
   object <- do.call(vdist[[method]], args)
   expect_equal(object, expected)
 }
@@ -355,7 +356,8 @@ autotest_vec_mv_sdistribution <- function(sdist, pars) {
     }
     if (isRand(sdist)) {
       r <- vdist$rand(1:4)
-      expect_equal(dimnames(r), list(NULL, c("V1", "V2"), vdist$modelTable$shortname))
+      expect_equal(dimnames(r), list(NULL, c("V1", "V2"),
+                                     as.character(unlist(vdist$modelTable$shortname))))
       expect_true(all(as.numeric(r) >= sdist$inf$elements[[1]] &
                         as.numeric(r) <= sdist$sup$elements[[2]]))
     }

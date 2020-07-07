@@ -56,7 +56,7 @@ vd <- VectorDistribution$new(
 
   expect_equal(a$pdf(1:10), a$pdf(1:10, 1:10))
   expect_equal(a$cdf(1:10), a$cdf(1:10, 1:10))
-  expect_equal(a$quantile(c(0.1,0.2)), a$quantile(c(0.1,0.2), c(0.1,0.2)))
+  expect_equal(a$quantile(c(0.1, 0.2)), a$quantile(c(0.1, 0.2), c(0.1, 0.2)))
 })
 
 test_that("distlist rand", {
