@@ -19,6 +19,7 @@
 * `categories` parameter in `Categorical` now called `nCategories`
 * Constructor of `Categorical` now requires elements to be provided as a `list` to `elements`
 * `settable` in `ParameterSet` now refers to the more intuitive flag that describes if a parameter can be set after construction
+* Added `length` active binding to `ParameterSet` to return number of parameters in the set.
 * Renamed `squared2Norm` in `Kernel`s to `pdfSquared2Norm` and added `x` to arguments to allow for shifted norms.
 
 ### Deprecated Functions/Fields/Methods
@@ -51,6 +52,7 @@
 * Removed redundant `K` parameter from `MultivariateNormal`
 * Bugfix in `Wald`, symmetry was incorrectly flagged as "symmetric"
 * Fixed bug in `TruncatedDistribution` support - previously support interval type was `"[]"` instead of `"(]"`. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open. 
+* Improved speed of assertions by using package `{checkmate}`
 
 # distr6 1.3.7
 

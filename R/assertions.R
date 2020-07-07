@@ -47,7 +47,7 @@ assertDistributionList <- function() {}
 
 makeChecks(
   assertionName = "DistributionList",
-  cond = all(unlist(lapply(object, inherits, "Distribution"))),
+  cond = checkmate::testList(object, "Distribution"),
   defaulterrormsg = "One or more items in the list are not Distributions",
   pos = environment()
 )
@@ -101,7 +101,7 @@ assertParameterSetList <- function() {}
 
 makeChecks(
   assertionName = "ParameterSetList",
-  cond = all(sapply(object, inherits, "ParameterSet")),
+  cond = checkmate::testList(object, "ParameterSet"),
   defaulterrormsg = "One or more items in the list are not ParameterSets",
   pos = environment()
 )
@@ -159,7 +159,7 @@ assertParameterSetCollectionList <- function() {} # nolint
 
 makeChecks(
   assertionName = "ParameterSetCollectionList",
-  cond = all(sapply(object, inherits, "ParameterSetCollection")),
+  cond = checkmate::testList(object, "ParameterSetCollection"),
   defaulterrormsg = "One or more items in the list are not ParameterSetCollections",
   pos = environment()
 )

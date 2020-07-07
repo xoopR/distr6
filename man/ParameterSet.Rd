@@ -175,6 +175,8 @@ ps$addTrafos(dt = data.table::data.table(
 \item{\code{checks}}{Returns ParameterSet assertions table.}
 
 \item{\code{trafos}}{Returns ParameterSet transformations table.}
+
+\item{\code{length}}{Number of parameters in ParameterSet.}
 }
 \if{html}{\out{</div>}}
 }

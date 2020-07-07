@@ -518,6 +518,12 @@ ParameterSet <- R6Class("ParameterSet",
     #' Returns ParameterSet transformations table.
     trafos = function() {
       return(private$.trafos)
+    },
+
+    #' @field length
+    #' Number of parameters in ParameterSet.
+    length = function() {
+      nrow(private$.parameters)
     }
   ),
 

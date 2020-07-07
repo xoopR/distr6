@@ -6,7 +6,7 @@
 R62Fun(Distribution, assignEnvir = topenv(), scope = c("public", "active"))
 R62Fun(SDistribution, assignEnvir = topenv(), scope = c("public", "active"))
 R62Fun(Kernel, assignEnvir = topenv(), scope = c("public", "active"))
-R62Fun(ParameterSet, assignEnvir = topenv(), scope = c("public", "active"))
+R62Fun(ParameterSet, assignEnvir = topenv(), scope = c("public"))
 R62Fun(ExoticStatistics,
   assignEnvir = topenv(), dispatchClasses = list(Distribution),
   scope = c("public", "active")

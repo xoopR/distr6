@@ -149,11 +149,11 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       param <- substr(names(lst), sep + 1, 1000)
       dist <- substr(names(lst), 1, sep - 1)
 
-      for (i in unique(dist)) {
+      sapply(unique(dist), function(i) {
         newlst <- lst[dist == i]
         names(newlst) <- unlist(param)[dist == i]
         private$.parametersets[[i]]$setParameterValue(lst = newlst)
-      }
+      })
 
       invisible(self)
     },
@@ -227,13 +227,12 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 #' @method as.data.table ParameterSetCollection
 #' @export
 as.data.table.ParameterSetCollection <- function(x, ...) {
-  dt <- data.table(id = NULL, value = NULL, support = NULL)
   paramsets <- x$.__enclos_env__$private$.parametersets
-  for (i in seq_along(paramsets)) {
-    ps <- as.data.table(paramsets[[i]])
-    ps$id <- paste(names(paramsets)[[i]], ps$id, sep = "_")
-    dt <- rbind(dt, ps)
-  }
+
+  dt <- data.table::rbindlist(lapply(paramsets, as.data.table))
+  dt$id <- paste(rep(names(paramsets),
+                     times = rsapply(paramsets, "length", active = TRUE)),
+                 dt$id, sep = "_")
 
   return(dt)
 }
