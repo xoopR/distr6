@@ -253,6 +253,7 @@
 </li>
 <li>
 <code>settable</code> in <code>ParameterSet</code> now refers to the more intuitive flag that describes if a parameter can be set after construction</li>
+<li>Added <code>length</code> active binding to <code>ParameterSet</code> to return number of parameters in the set.</li>
 <li>Renamed <code>squared2Norm</code> in <code>Kernel</code>s to <code>pdfSquared2Norm</code> and added <code>x</code> to arguments to allow for shifted norms.</li>
 </ul>
 </div>
@@ -309,6 +310,8 @@
 </li>
 <li>Bugfix in <code>Wald</code>, symmetry was incorrectly flagged as “symmetric”</li>
 <li>Fixed bug in <code>TruncatedDistribution</code> support - previously support interval type was <code>"[]"</code> instead of <code>"(]"</code>. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open.</li>
+<li>Improved speed of assertions by using package <code>{checkmate}</code>
+</li>
 </ul>
 </div>
 </div>
