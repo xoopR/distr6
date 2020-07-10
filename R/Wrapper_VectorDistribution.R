@@ -160,6 +160,8 @@ or `distlist` should be used.")
               if (private$.univariate) {
                 if (ncol(x1) == 1) {
                   dpqr <- fun(unlist(x1), log = log)
+                } else if (nrow(x1) == 1) {
+                  dpqr <- fun(x1, log = log)
                 } else {
                   for (i in seq_len(ncol(x1))) {
                     a_dpqr <- fun(unlist(x1[, i]), log = log)
@@ -199,6 +201,8 @@ or `distlist` should be used.")
               if (private$.univariate) {
                 if (ncol(x1) == 1) {
                   dpqr <- fun(unlist(x1), lower.tail = lower.tail, log.p = log.p)
+                } else if (nrow(x1) == 1) {
+                  dpqr <- fun(x1, lower.tail = lower.tail, log.p = log.p)
                 } else {
                   for (i in seq(ncol(x1))) {
                     a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
@@ -231,6 +235,8 @@ or `distlist` should be used.")
               dpqr <- data.table()
               if (ncol(x1) == 1) {
                 dpqr <- fun(unlist(x1), lower.tail = lower.tail, log.p = log.p)
+              } else if (nrow(x1) == 1) {
+                dpqr <- fun(x1, lower.tail = lower.tail, log.p = log.p)
               } else {
                 for (i in seq_len(ncol(x1))) {
                   a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
@@ -723,6 +729,10 @@ or `distlist` should be used.")
         data <- as.matrix(data)
       }
 
+      if (ncol(data) != nrow(self$modelTable) & ncol(data) > 1 & private$.univariate) {
+        stopf("Expected data with %s or 1 columns, received %s.", nrow(self$modelTable), ncol(data))
+      }
+
       if (private$.univariate) {
         if (private$.distlist & ncol(data) == 1) {
           data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data),
@@ -757,7 +767,13 @@ or `distlist` should be used.")
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
-      if (is.null(data)) data <- as.matrix(data.table(...))
+      if (is.null(data)) {
+        data <- as.matrix(data.table(...))
+      }
+
+      if (ncol(data) != nrow(self$modelTable) & ncol(data) > 1 & private$.univariate) {
+        stopf("Expected data with %s or 1 columns, received %s.", nrow(self$modelTable), ncol(data))
+      }
 
       if (private$.univariate) {
         if (ncol(data) == 1 & private$.distlist) {
@@ -790,7 +806,13 @@ or `distlist` should be used.")
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
-      if (is.null(data)) data <- as.matrix(data.table(...))
+      if (is.null(data)) {
+        data <- as.matrix(data.table(...))
+      }
+
+      if (ncol(data) != nrow(self$modelTable) & ncol(data) > 1 & private$.univariate) {
+        stopf("Expected data with %s or 1 columns, received %s.", nrow(self$modelTable), ncol(data))
+      }
 
       if (private$.univariate) {
         if (ncol(data) == 1 & private$.distlist) {
