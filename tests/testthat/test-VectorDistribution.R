@@ -24,6 +24,36 @@ vd <- VectorDistribution$new(
   params = data.table(size = c(40, 5), prob = c(0.2, 0.5))
 )
 
+test_that("errors", {
+  expect_error(vd$pdf(data = matrix(1, ncol = 3)), "Expected data with")
+  expect_error(vd$cdf(data = matrix(1, ncol = 3)), "Expected data with")
+  expect_error(vd$quantile(data = matrix(1, ncol = 3)), "Expected data with")
+  expect_error(vd$pdf(1, 2, 3, 4), "Expected data with")
+  expect_error(vd$cdf(1, 2, 3, 4), "Expected data with")
+  expect_error(vd$quantile(1, 2, 3, 4), "Expected data with")
+})
+
+test_that("one col", {
+  expect_equal(vd$pdf(data = matrix(1:3, ncol = 1)),
+               data.table(Binom1 = dbinom(1:3, 40, 0.2),
+                          Binom2 = dbinom(1:3, 5, 0.5)))
+  expect_equal(vd$cdf(data = matrix(1:3, ncol = 1)),
+               data.table(Binom1 = pbinom(1:3, 40, 0.2),
+                          Binom2 = pbinom(1:3, 5, 0.5)))
+  expect_equal(vd$quantile(data = matrix(c(0.1, 0.2), ncol = 1)),
+               data.table(Binom1 = qbinom(c(0.1, 0.2), 40, 0.2),
+                          Binom2 = qbinom(c(0.1, 0.2), 5, 0.5)))
+})
+
+test_that("one row", {
+  expect_equal(as.numeric(unlist(vd$pdf(data = matrix(1:2, nrow = 1)))),
+               dbinom(1:2, size = c(40, 5), prob = c(0.2, 0.5)))
+  expect_equal(as.numeric(unlist(vd$cdf(data = matrix(1:2, nrow = 1)))),
+               pbinom(1:2, size = c(40, 5), prob = c(0.2, 0.5)))
+  expect_equal(as.numeric(unlist(vd$quantile(data = matrix(c(0.1, 0.2), nrow = 1)))),
+               qbinom(c(0.1, 0.2), size = c(40, 5), prob = c(0.2, 0.5)))
+})
+
  test_that("pdf/cdf/quantile/rand", {
   expect_equal(vd$pdf(1:10), vd$pdf(1:10, 1:10))
   expect_equal(vd$cdf(1:10), vd$cdf(1:10, 1:10))

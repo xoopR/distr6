@@ -43,6 +43,7 @@
 * Changed default `form` parameter in `NegativeBinomial`, now errors if supplied argument is not in one of the four choices (previously reverted to "fbs")
 * Fixed bug in `MultivariateNormal` `rand()` which was not adding the `mean` correctly
 * Massive bottleneck in `VectorDistribution` for same distribution type removed in d/p/q/r functions as well as non-generating function methods
+* Improved speed in `VectorDistribution` when only one row or column of data passed to d/p/q
 * `Dirichlet, DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald` now implemented from package `extraDistr`
 * Bug fix in `Frechet` `$cdf`
 * Analytical `log` and `lower.tail` now available for all `SDistributions` and imputation possible for customs with `CoreStatistics`
