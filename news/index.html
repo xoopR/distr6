@@ -294,6 +294,7 @@
 <li>Changed default <code>form</code> parameter in <code>NegativeBinomial</code>, now errors if supplied argument is not in one of the four choices (previously reverted to “fbs”)</li>
 <li>Fixed bug in <code>MultivariateNormal</code> <code><a href="../reference/rand.html">rand()</a></code> which was not adding the <code>mean</code> correctly</li>
 <li>Massive bottleneck in <code>VectorDistribution</code> for same distribution type removed in d/p/q/r functions as well as non-generating function methods</li>
+<li>Improved speed in <code>VectorDistribution</code> when only one row or column of data passed to d/p/q</li>
 <li>
 <code>Dirichlet, DiscreteUniform, Frechet Gumbel, Pareto, Rayleigh, Triangular, Wald</code> now implemented from package <code>extraDistr</code>
 </li>
