@@ -28,13 +28,38 @@ Triweight <- R6Class("Triweight",
     pdfSquared2Norm = function(x = 0, upper = Inf) {
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
-        if (upper[i] == Inf) {
-          if (abs(x[i]) > 2) {
+        if (abs(x[i]) > 2) {
+          ret[i] = 0
+        } else if (x[i] >= 0) {
+          if (upper[i] <= x[i] - 1) {
             ret[i] = 0
-          } else {
-            ret[i] = 35 * (-5 * abs(x[i])^13 + 156 * abs(x[i])^11 - 2288 * abs(x[i])^9 +
-                             27456 * abs(x[i])^7 - 54912 * abs(x[i])^6 + 73216 * abs(x[i])^4 -
-                             79872 * abs(x[i])^2 + 40960) / 1757184
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
+            ret[i] = (35 / 1757184) * (20 * (1 + upper[i])^7 *
+                     (1024 + 7 * upper[i] * (-595 + upper[i] * (1093 + 3 * upper[i] * (-378 + upper[i] * (230 + 11 * (-7 + upper[i]) * upper[i]))))) -
+                     30030 * (-1 + upper[i]^2)^6 * x[i] +
+                     156 * (-256 - 1155 * upper[i] + 3465 * upper[i]^3 - 6006 * upper[i]^5 + 5610 * upper[i]^7 - 2695 * upper[i]^9 + 525 * upper[i]^11) * x[i]^2 -
+                     60060 * (-1 + upper[i]^2)^4 * (-1 + 2 * (upper[i]^2)) * (x[i]^3) +
+                     572 * (64 + 315 * upper[i] - 840 * upper[i]^3 + 1134 * upper[i]^5 - 720 * upper[i]^7 + 175 * upper[i]^9) * (x[i]^4) -
+                     45045 * (-1 + upper[i]^2)^4 * (x[i]^5) + 1716 * (1 + upper[i])^4 * (-16 + upper[i] *(29 + 5 * (-4 + upper[i]) * upper[i])) * (x[i]^6) +
+                     27456 * (x[i]^7) - 2288 * (x[i]^9) + 156 * (x[i]^11) - 5 * (x[i]^13))
+          } else if (upper[i] >= 1 | upper[i] == Inf){
+            ret[i] = 350 / 429 - (35 * x[i]^2) / 22 + (35*  x[i]^4) / 24 - (35 *  x[i]^6) / 32 + (35 * x[i]^7) / 64 -
+                      (35 * x[i]^9) / 768 + (35 * x[i]^11) / 11264 - (175 * x[i]^13) / 1757184
+          }
+        } else if (x[i] <= 0) {
+          if (upper[i] <= -1) {
+            ret[i] = 0
+          } else if (upper[i] <= x[i] + 1 & upper[i] >= -1) {
+            ret[i] = (35 / 1757184) * (20 * (1 + upper[i])^7 *
+                     (1024 + 7 * upper[i] * (-595 + upper[i] * (1093 + 3 * upper[i] * (-378 + upper[i] * (230 + 11 * (-7 + upper[i]) * upper[i]))))) -
+                      30030 * (-1 + upper[i]^2)^6 * x[i] + 156 * (-256 - 1155 * upper[i] + 3465 * upper[i]^3  -
+                      6006 * upper[i]^5 + 5610 *upper[i]^7 - 2695 * upper[i]^9 + 525 * upper[i]^11) * x[i]^2   -
+                      60060 * (-1 + upper[i]^2)^4 * (-1 + 2 * upper[i]^2) * x[i]^3 +
+                      572 * (64 + 315 * upper[i] - 840 * upper[i]^3 + 1134 * upper[i]^5 - 720 * upper[i]^7 + 175 * upper[i]^9) * x[i]^4 -
+                      45045 * (-1 + upper[i]^2)^4 * x[i]^5 + 1716 * (1 + upper[i])^4 * (-16 + upper[i] * (29 + 5 * (-4 + upper[i]) * upper[i])) * x[i]^6)
+          } else if (upper[i] == Inf | upper[i] >= x[i] + 1) {
+            ret[i] = 350 / 429 - (35 * x[i]^2) / 22 + (35 * x[i]^4) / 24 - (35 * x[i]^6) / 32 - (35 * x[i]^7) / 64 +
+                      (35 * x[i]^9) / 768 - (35 * x[i]^11) / 11264 + (175 * x[i]^13) / 1757184
           }
         }
       }

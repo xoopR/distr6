@@ -31,7 +31,7 @@ Quartic <- R6Class("Quartic",
         if (abs(x[i]) > 2) {
           ret[i] = 0
         } else if (x[i] >= 0) {
-          if (upper[i] <= 0) {
+          if (upper[i] <= x[i] - 1) {
             ret[i] = 0
           } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
             ret[i] = (15 / 16)^2 * (1 / 630) * (256 + 630 * upper[i] - 840 * (upper[i])^3 + 756 * (upper[i])^5 - 360 * (upper[i])^7 +
