@@ -53,7 +53,7 @@ EmpiricalMV <- R6Class("EmpiricalMV",
         stop("Number of columns in `data` is '1', use Empirical distribution instead.")
       }
 
-      support <- setpower(Reals$new(), ncol(data))
+      support <- do.call(setproduct, as.Tuple(data))
       data <- data.table::as.data.table(data)
       private$.variates <- ncol(data)
 

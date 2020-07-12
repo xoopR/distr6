@@ -9,7 +9,7 @@ test_that("autotest", {
       variateForm = "multivariate",
       type = Reals$new()^2
     ),
-    support = Reals$new()^2,
+    support = Tuple$new(1:10) * Tuple$new(11:20),
     symmetry = "asymmetric",
     mean = c(mean(1:10), mean(11:20)),
     median = NaN,
