@@ -70,8 +70,8 @@ Try decorate(distribution, FunctionImputation) first.")
         id = list("lower", "upper"), value = list(lower, upper),
         support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
         description = list(
-          "Lower limit of huberization.",
-          "Upper limit of huberization."
+          "Lower limit of huberization",
+          "Upper limit of huberization"
         )
       )
       private$.outerParameters$addChecks(

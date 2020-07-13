@@ -738,7 +738,11 @@ or `distlist` should be used.")
           data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data),
                          ncol = nrow(private$.modelTable))
         }
-        dpqr <- as.data.table(private$.pdf(data, log = log))
+        dpqr <- private$.pdf(data, log = log)
+        if (class(dpqr)[1] == "numeric") {
+          dpqr <- matrix(dpqr, ncol = nrow(private$.modelTable))
+        }
+        dpqr <- as.data.table(dpqr)
         colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
         return(dpqr)
       } else {
@@ -792,7 +796,11 @@ or `distlist` should be used.")
         }
       }
 
-      dpqr <- as.data.table(private$.cdf(data, lower.tail = lower.tail, log.p = log.p))
+      dpqr <- private$.cdf(data, lower.tail = lower.tail, log.p = log.p)
+      if (class(dpqr)[1] == "numeric") {
+        dpqr <- matrix(dpqr, ncol = nrow(private$.modelTable))
+      }
+      dpqr <- as.data.table(dpqr)
       colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
       return(dpqr)
     },
@@ -822,7 +830,11 @@ or `distlist` should be used.")
         stop("Quantile not possible for non-univariate distributions.")
       }
 
-      dpqr <- as.data.table(private$.quantile(data, lower.tail = lower.tail, log.p = log.p))
+      dpqr <- private$.quantile(data, lower.tail = lower.tail, log.p = log.p)
+      if (class(dpqr)[1] == "numeric") {
+        dpqr <- matrix(dpqr, ncol = nrow(private$.modelTable))
+      }
+      dpqr <- as.data.table(dpqr)
       colnames(dpqr) <- as.character(unlist(private$.modelTable[, 2]))
       return(dpqr)
     },

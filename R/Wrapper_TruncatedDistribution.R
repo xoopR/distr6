@@ -64,8 +64,8 @@ Try decorate(distribution, FunctionImputation) first.")
         id = list("lower", "upper"), value = list(lower, upper),
         support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
         description = list(
-          "Lower limit of truncation.",
-          "Upper limit of truncation."
+          "Lower limit of truncation",
+          "Upper limit of truncation"
         )
       )
       private$.outerParameters$addChecks(
@@ -126,13 +126,13 @@ Try decorate(distribution, FunctionImputation) first.")
       upper <- self$getParameterValue("trunc_upper")
 
       if (log) {
-        pdf <- dist$pdf(x, log = TRUE) -
+        pdf <- rep(-Inf, length(x))
+        pdf[x > lower & x <= upper] <- dist$pdf(x[x > lower & x <= upper], log = TRUE) -
           log((dist$cdf(upper) - dist$cdf(lower)))
-        pdf[x <= lower | x > upper] <- -Inf
       } else {
-        pdf <- dist$pdf(x) /
+        pdf <- numeric(length(x))
+        pdf[x > lower & x <= upper] <- dist$pdf(x[x > lower & x <= upper]) /
           (dist$cdf(upper) - dist$cdf(lower))
-        pdf[x <= lower | x > upper] <- 0
       }
 
       return(pdf)

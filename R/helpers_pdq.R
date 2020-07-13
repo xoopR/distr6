@@ -63,18 +63,15 @@ pdqr_returner <- function(pdqr, simplify, name) {
 }
 call_C_base_pdqr <- function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) {
   type <- substr(fun, 1, 1)
+  if (!(type %in% c("d", "p", "q", "r"))) {
+    stop("Function must start with one of: {d, p, q, r}.")
+  }
+
   if (vec) {
-
-    if (is.null(nrow(x))) {
-      bool <- TRUE
+    if (type == "r") {
+      return(C_r(fun, x, args))
     } else {
-      bool <- nrow(x) > 1 | ncol(x) == 1
-    }
-
-    if (bool) {
-      if (type == "r") {
-        return(C_r(fun, x, args))
-      } else if (type %in% c("d", "p", "q")) {
+      if (nrow(x) > 1) {
         return(C_dpq(
           fun = fun,
           x = x,
@@ -82,8 +79,6 @@ call_C_base_pdqr <- function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) 
           lower = lower.tail,
           log = log
         ))
-      } else {
-        stop("Function must start with one of: {d, p, q, r}.")
       }
     }
   }

@@ -48,7 +48,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
         id = "weights",
         value = weights,
         support = Interval$new(0, 1)^lng + Set$new("uniform"),
-        description = "Mixture weights."
+        description = "Mixture weights"
       )
       private$.outerParameters$addTrafos(
         "weights",

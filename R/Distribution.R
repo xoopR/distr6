@@ -276,18 +276,19 @@ Distribution <- R6Class("Distribution",
     summary = function(full = TRUE, ...) {
 
       if (full) {
-        if (length(private$.parameters) != 0) {
 
-          cat(self$description, "Parameterised with:\n")
-          settable <- as.data.table(self$parameters())$settable
-          cat(" ", paste(as.data.table(self$parameters())[settable, "id"],
-            as.data.table(self$parameters())[settable, "value"],
-            sep = " = ", collapse = ", "
-          ))
+        settable <- as.data.table(self$parameters())$settable
+        name <- ifelse(is.null(self$description), self$name, self$description)
+        if (!any(settable)) {
+          cat(name)
         } else {
-          cat(self$description)
-        }
+          cat(name, "Parameterised with:\n")
 
+          cat(" ", paste(unlist(as.data.table(self$parameters())[settable, "id"]),
+                         unlist(as.data.table(self$parameters())[settable, "value"]),
+                         sep = " = ", collapse = ", "
+          ))
+        }
 
         a_exp <- suppressMessages(try(self$mean(), silent = T))
         a_var <- suppressMessages(try(self$variance(), silent = T))
@@ -450,13 +451,20 @@ Distribution <- R6Class("Distribution",
 
       data <- pdq_point_assert(..., self = self, data = data)
       if (inherits(data, "matrix")) {
-        assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE),
-          .var.name = "Do all points lie in Distribution domain?"
-        )
+        if (!self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE)) {
+          stop(
+            sprintf("Not all points in %s lie in the distribution domain (%s).",
+                strCollapse(apply(data, 1, function(x) as.Tuple(x)$strprint())),
+                self$traits$type$strprint())
+          )
+        }
       } else {
-        suppressWarnings(assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
-          .var.name = "Do all points lie in Distribution domain?"
-        ))
+        if (!suppressWarnings(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE))) {
+          stop(
+            sprintf("Not all points in %s lie in the distribution domain (%s).",
+                  strCollapse(as.numeric(data)), self$traits$type$strprint())
+          )
+        }
       }
 
 
@@ -507,13 +515,20 @@ Use CoreStatistics decorator to numerically estimate this.")
 
       data <- pdq_point_assert(..., self = self, data = data)
       if (inherits(data, "matrix")) {
-        assert(self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE),
-          .var.name = "Do all points lie in Distribution domain?"
-        )
+        if (!self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE)) {
+          stop(
+            sprintf("Not all points in %s lie in the distribution domain (%s).",
+                    strCollapse(apply(data, 1, function(x) as.Tuple(x)$strprint())),
+                    self$traits$type$strprint())
+          )
+        }
       } else {
-        suppressWarnings(assert(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE),
-          .var.name = "Do all points lie in Distribution domain?"
-        ))
+        if (!suppressWarnings(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE))) {
+          stop(
+            sprintf("Not all points in %s lie in the distribution domain (%s).",
+                    strCollapse(as.numeric(data)), self$traits$type$strprint())
+          )
+        }
       }
 
       if (log.p | !lower.tail) {
@@ -566,13 +581,13 @@ decorator to numerically estimate this.")
       data <- pdq_point_assert(..., self = self, data = data)
 
       if (!log.p) {
-        assert(Interval$new(0, 1)$contains(as.numeric(data), all = TRUE),
-          .var.name = "Do all quantiles lie in [0,1]?"
-        )
+        if (!Interval$new(0, 1)$contains(as.numeric(data), all = TRUE)) {
+          stop(sprintf("Not all points in %s lie in [0, 1].", strCollapse(as.numeric(data))))
+        }
       } else {
-        assert(Interval$new(0, 1)$contains(as.numeric(exp(data)), all = TRUE),
-          .var.name = "Do all quantiles lie in [0,1]?"
-        )
+        if (!Interval$new(0, 1)$contains(as.numeric(exp(data)), all = TRUE)) {
+          stop(sprintf("Not all points in %s lie in [0, 1].", strCollapse(as.numeric(exp(data)))))
+        }
       }
 
       if (log.p | !lower.tail) {
