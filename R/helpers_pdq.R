@@ -71,7 +71,13 @@ call_C_base_pdqr <- function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) 
     if (type == "r") {
       return(C_r(fun, x, args))
     } else {
-      if (nrow(x) > 1) {
+      nr = nrow(x)
+      if (is.null(nr)) {
+        bool = TRUE
+      } else {
+        bool = nrow(x) > 1
+      }
+      if (bool) {
         return(C_dpq(
           fun = fun,
           x = x,
