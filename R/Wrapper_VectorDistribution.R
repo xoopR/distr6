@@ -162,6 +162,9 @@ or `distlist` should be used.")
                   dpqr <- fun(unlist(x1), log = log)
                 } else if (nrow(x1) == 1) {
                   dpqr <- fun(x1, log = log)
+                  if (nrow(dpqr) > 1) {
+                    dpqr <- diag(as.matrix(dpqr))
+                  }
                 } else {
                   for (i in seq_len(ncol(x1))) {
                     a_dpqr <- fun(unlist(x1[, i]), log = log)
@@ -203,6 +206,9 @@ or `distlist` should be used.")
                   dpqr <- fun(unlist(x1), lower.tail = lower.tail, log.p = log.p)
                 } else if (nrow(x1) == 1) {
                   dpqr <- fun(x1, lower.tail = lower.tail, log.p = log.p)
+                  if (nrow(dpqr) > 1) {
+                    dpqr <- diag(as.matrix(dpqr))
+                  }
                 } else {
                   for (i in seq(ncol(x1))) {
                     a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
@@ -237,6 +243,9 @@ or `distlist` should be used.")
                 dpqr <- fun(unlist(x1), lower.tail = lower.tail, log.p = log.p)
               } else if (nrow(x1) == 1) {
                 dpqr <- fun(x1, lower.tail = lower.tail, log.p = log.p)
+                if (nrow(dpqr) > 1) {
+                  dpqr <- diag(as.matrix(dpqr))
+                }
               } else {
                 for (i in seq_len(ncol(x1))) {
                   a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)

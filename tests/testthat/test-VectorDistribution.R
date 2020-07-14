@@ -390,3 +390,10 @@ test_that("median", {
   expect_equal(vd$median(), data.table(Geom1 = Geometric$new(0.1)$median(),
                                        Geom2 = Geometric$new(0.2)$median()))
 })
+
+test_that("custom single row", {
+  v <- VectorDistribution$new(distribution = "Arcsine", params = data.frame(upper = (1:10)+10))
+  p1 <- v$pdf(data = matrix(1:10, nrow = 1))
+  p2 <- sapply((1:10)+10, function(x) Arcsine$new(upper = x)$pdf(x-10))
+  expect_equal(as.numeric(unlist(p1)), p2)
+})
