@@ -517,7 +517,7 @@ Use CoreStatistics decorator to numerically estimate this.")
     #' b$cdf(data = matrix(1:10))
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if(!private$.isCdf) {
+      if (!private$.isCdf) {
         return(NULL)
       }
 

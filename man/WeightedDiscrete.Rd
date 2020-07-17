@@ -18,6 +18,8 @@ The distribution is supported on \eqn{x_1,...,x_k}.
 Sampling from this distribution is performed with the \link{sample} function with the elements given
 as the x values and the pdf as the probabilities. The cdf and quantile assume that the
 elements are supplied in an indexed order (otherwise the results are meaningless).
+
+The number of points in the distribution cannot be changed after construction.
 }
 \examples{
 x <- WeightedDiscrete$new(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5))

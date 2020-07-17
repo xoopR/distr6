@@ -160,8 +160,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{samples}}{\code{(numeric())} \cr
-Vector of observed samples, see examples.
-Cannot be updated after construction.}
+Vector of observed samples, see examples.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

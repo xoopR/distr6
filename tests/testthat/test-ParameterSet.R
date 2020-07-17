@@ -20,6 +20,8 @@ test_that("initialize", {
     description = list("A", NULL)
   )
   expect_output(ps$print())
+
+  expect_error(ParameterSet$new(id = "a", value = 1, support = Reals$new()^2), "does not lie")
 })
 
 
@@ -47,6 +49,8 @@ test_that("setters", {
   expect_error(Exponential$new() %>% setParameterValue(rate = 0))
   expect_error(Exponential$new() %>% setParameterValue(rate = Inf))
   expect_warning(Binomial$new()$setParameterValue(lst = list(2)), "provided")
+  expect_error(ParameterSet$new(id = "a", value = list(c(1, 2)), support = Reals$new()^2)$ # nolint
+                 setParameterValue(a = 1), "does not lie")
 })
 
 test_that("merge", {

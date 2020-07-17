@@ -63,6 +63,7 @@ pdqr_returner <- function(pdqr, simplify, name) {
 }
 call_C_base_pdqr <- function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) {
   type <- substr(fun, 1, 1)
+
   if (!(type %in% c("d", "p", "q", "r"))) {
     stop("Function must start with one of: {d, p, q, r}.")
   }
@@ -97,7 +98,5 @@ call_C_base_pdqr <- function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) 
     return(do.call(get(fun), c(list(x, lower.tail = lower.tail, log.p = log), args)))
   } else if (type == "r") {
     return(do.call(get(fun), c(list(x), args)))
-  } else {
-    stop("Function must start with one of: {d, p, q, r}.")
   }
 }

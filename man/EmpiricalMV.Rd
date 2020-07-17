@@ -117,7 +117,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{data}}{\verb{[matrix]} \cr
 Matrix-like object where each column is a vector of observed samples corresponding
-to each variable. Cannot be updated after construction.}
+to each variable.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

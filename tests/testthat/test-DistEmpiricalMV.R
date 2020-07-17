@@ -7,7 +7,7 @@ test_that("autotest", {
     traits = list(
       valueSupport = "discrete",
       variateForm = "multivariate",
-      type = Reals$new()^2
+      type = Reals$new()^"n"
     ),
     support = Tuple$new(1:10) * Tuple$new(11:20),
     symmetry = "asymmetric",

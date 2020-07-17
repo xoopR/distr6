@@ -18,6 +18,8 @@ The distribution is supported on \eqn{x_1,...,x_k}.
 Sampling from this distribution is performed with the \link{sample} function with the elements given
 as the support set and the probabilities from the \code{probs} parameter. The cdf and quantile assumes
 that the elements are supplied in an indexed order (otherwise the results are meaningless).
+
+The number of points in the distribution cannot be changed after construction.
 }
 \examples{
 
@@ -28,7 +30,7 @@ that the elements are supplied in an indexed order (otherwise the results are me
 # Note probabilities are automatically normalised (if not vectorised)
 x <- Categorical$new(elements = list("Bapple", "Banana", 2), probs = c(0.2, 0.4, 1))
 
-# Only the probabilities can be changed and must the same length as in construction
+# Length of elements and probabilities cannot be changed after construction
 x$setParameterValue(probs = c(0.1, 0.2, 0.7))
 
 # d/p/q/r
@@ -186,7 +188,7 @@ Decorators to add to the distribution during construction.}
 \preformatted{# Note probabilities are automatically normalised (if not vectorised)
 x <- Categorical$new(elements = list("Bapple", "Banana", 2), probs = c(0.2, 0.4, 1))
 
-# Only the probabilities can be changed and must the same length as in construction
+# Length of elements and probabilities cannot be changed after construction
 x$setParameterValue(probs = c(0.1, 0.2, 0.7))
 
 # d/p/q/r

@@ -87,7 +87,7 @@ ParameterSet <- R6Class("ParameterSet",
           assertContains(y, Tuple$new(x),
                          paste(strCollapse(x, "()"), "does not lie in the set", y$strprint()))
         } else {
-          if (!is.null(y$power)) {
+          if (inherits(y, "ExponentSet")) {
             if (y$power == "n") {
               assertContains(y, Tuple$new(x),
                              paste(strCollapse(x, "()"), "does not lie in the set", y$strprint()))
@@ -242,7 +242,7 @@ ParameterSet <- R6Class("ParameterSet",
                            sprintf("%s does not lie in the support of %s.",
                                    strCollapse(value, "()"), aid))
           } else {
-            if (!is.null(support$power)) {
+            if (inherits(support, "ExponentSet")) {
               if (support$power == "n") {
                 assertContains(support, Tuple$new(value),
                                sprintf("%s does not lie in the support of %s.",

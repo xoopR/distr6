@@ -68,7 +68,7 @@ EmpiricalMV <- R6Class("EmpiricalMV",
       super$initialize(
         decorators = decorators,
         support = support,
-        type = Reals$new()^ncol(data)
+        type = Reals$new()^"n"
       )
     },
 
