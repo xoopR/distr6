@@ -44,7 +44,7 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param data `[matrix]` \cr
     #' Matrix-like object where each column is a vector of observed samples corresponding
-    #' to each variable. Cannot be updated after construction.
+    #' to each variable.
     #' @examples
     #' EmpiricalMV$new(MultivariateNormal$new()$rand(100))
     initialize = function(data = data.frame(1, 1), decorators = NULL) {

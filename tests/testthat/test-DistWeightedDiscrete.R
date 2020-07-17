@@ -50,17 +50,3 @@ test_that("manual", {
                data.table(WeightDisc1 = -Inf, WeightDisc2 = -Inf))
   expect_output(w$print(), "WeightDisc()")
 })
-
-# test_that("vectorised", {
-#   x <- list(list(x = 1:10, cdf = pnorm(1:10)),
-#            list(x = 1:10, pdf = dbinom(1:10, 10, 0.5)),
-#            list(x = 1:10, cdf = pgeom(1:10, 0.5)),
-#            list(x = 1:10, cdf = pexp(1:10)))
-#   v <- VectorDistribution$new(distribution = "Weight", params = x)
-#   expect_equal(v$cdf(1:10),
-#                data.table(WeightDisc1 = v[1]$cdf(1:10),
-#                           WeightDisc2 = v[2]$cdf(1:10),
-#                           WeightDisc3 = v[3]$cdf(1:10),
-#                           WeightDisc4 = v[4]$cdf(1:10)))
-#
-# })

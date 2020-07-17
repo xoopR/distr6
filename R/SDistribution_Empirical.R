@@ -45,7 +45,6 @@ Empirical <- R6Class("Empirical",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param samples `(numeric())` \cr
     #' Vector of observed samples, see examples.
-    #'  Cannot be updated after construction.
     #' @examples
     #' Empirical$new(runif(1000))
     initialize = function(samples = 1, decorators = NULL) {
