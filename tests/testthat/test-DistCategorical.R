@@ -31,6 +31,8 @@ test_that("vector", {
 })
 
 test_that("manual", {
-  expect_equal(Categorical$new()$setParameterValue(elements = list(1, "a"), probs = c(0.5, 0.5))$
+  expect_equal(Categorical$new(elements = 1:2,
+                               probs = 1:2)$ # nolint
+                 setParameterValue(elements = list(1, "a"), probs = c(0.5, 0.5))$ # nolint
                  getParameterValue("elements"), list(1, "a"))
 })

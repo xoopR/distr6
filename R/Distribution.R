@@ -445,8 +445,16 @@ Distribution <- R6Class("Distribution",
     #' mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
-      if (private$.isPdf == 0L) {
+      if(!private$.isPdf) {
         return(NULL)
+      }
+
+      if (is.null(data)) {
+        if (!...length()) {
+          return(NULL)
+        } else if (!length(...elt(1))) {
+          return(NULL)
+        }
       }
 
       data <- pdq_point_assert(..., self = self, data = data)
@@ -509,8 +517,16 @@ Use CoreStatistics decorator to numerically estimate this.")
     #' b$cdf(data = matrix(1:10))
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if (private$.isCdf == 0L) {
+      if(!private$.isCdf) {
         return(NULL)
+      }
+
+      if (is.null(data)) {
+        if (!...length()) {
+          return(NULL)
+        } else if (!length(...elt(1))) {
+          return(NULL)
+        }
       }
 
       data <- pdq_point_assert(..., self = self, data = data)
@@ -574,8 +590,16 @@ decorator to numerically estimate this.")
     #' b$quantile(data = matrix(c(0.1,0.2)))
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if (private$.isQuantile == 0L) {
+      if(!private$.isQuantile) {
         return(NULL)
+      }
+
+      if (is.null(data)) {
+        if (!...length()) {
+          return(NULL)
+        } else if (!length(...elt(1))) {
+            return(NULL)
+        }
       }
 
       data <- pdq_point_assert(..., self = self, data = data)
@@ -625,11 +649,13 @@ decorator to numerically estimate this.")
     #' mvn$rand(5)
     rand = function(n, simplify = TRUE) {
 
-      if (private$.isRand == 0L) {
+      if (missing(n) | private$.isRand == 0L) {
         return(NULL)
       }
 
-      if (length(n) > 1) n <- length(n)
+      if (length(n) > 1) {
+        n <- length(n)
+      }
 
       pdqr <- private$.rand(n)
 

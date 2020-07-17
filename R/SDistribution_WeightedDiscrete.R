@@ -13,6 +13,8 @@
 #' as the x values and the pdf as the probabilities. The cdf and quantile assume that the
 #' elements are supplied in an indexed order (otherwise the results are meaningless).
 #'
+#' The number of points in the distribution cannot be changed after construction.
+#'
 #' @template class_distribution
 #' @template method_mode
 #' @template method_entropy
