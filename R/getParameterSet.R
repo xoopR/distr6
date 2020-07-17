@@ -99,7 +99,7 @@ getParameterSet.Categorical <- function(object, probs, elements) {
     id = list("elements", "probs"),
     value = list(rep(1, nCategories), rep(0.5, nCategories)),
     support = list(
-      UniversalSet$new(), setpower(Interval$new(0, 1), nCategories)
+      UniversalSet$new(), setpower(Interval$new(0, 1), "n")
     ),
     settable = list(TRUE, TRUE),
     description = list("Categories", "Probability of success i")
@@ -155,7 +155,7 @@ getParameterSet.Dirichlet <- function(object, params) {
     id = list("params"),
     value = list(rep(1, K)),
     support = list(
-      setpower(PosReals$new(), K)
+      setpower(PosReals$new(), "n")
     ),
     settable = list(TRUE),
     description = list("Concentration parameters")
@@ -731,7 +731,7 @@ getParameterSet.Multinomial <- function(object, size, probs) {
   ps <- ParameterSet$new(
     id = list("size", "probs"),
     value = list(1, rep(0.5, K)),
-    support = list(PosNaturals$new(), setpower(Interval$new(0, 1), K)),
+    support = list(PosNaturals$new(), setpower(Interval$new(0, 1), "n")),
     settable = list(TRUE, TRUE),
     description = list(
       "Number of trials", "Probability of success i"
@@ -763,9 +763,9 @@ getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
       matrix(rep(0, K^2), nrow = K)
     ),
     support = list(
-      setpower(Reals$new(), K),
-      setpower(Reals$new(), K^2),
-      setpower(Reals$new(), K^2)
+      setpower(Reals$new(), "n"),
+      setpower(Reals$new(), "n"),
+      setpower(Reals$new(), "n")
     ),
     description = list(
       "Vector of means - Location Parameter.",
@@ -784,6 +784,9 @@ getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
       nrow = length(self$getParameterValue("mean"))
     )))
   })
+  ps$addChecks("mean", function(x, self)
+    length(unlist(x)) == sqrt(length(unlist(self$getParameterValue("cov"))))
+    )
 
   return(ps)
 }
@@ -1136,10 +1139,11 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nol
 
   n <- length(x)
 
+
   ps <- ParameterSet$new(
     id = list("x", "pdf", "cdf"),
     value = list(x, rep(1, n), rep(1, n)),
-    support = list(Reals$new()^n, Interval$new(0, 1)^n, Interval$new(0, 1)^n),
+    support = list(Reals$new()^"n", Interval$new(0, 1)^"n", Interval$new(0, 1)^"n"),
     description = list(
       "Data.", "Probability density function.",
       "Cumulative distribution function."

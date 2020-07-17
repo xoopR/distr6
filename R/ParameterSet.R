@@ -84,12 +84,19 @@ ParameterSet <- R6Class("ParameterSet",
       # value checks
       mapply(function(x, y) {
         if (length(x) > 1) {
-          assertContains(y, Tuple$new(x), paste(
-            strCollapse(x, "()"), "does not lie in the set",
-            y$strprint()
-          ))
+          assertContains(y, Tuple$new(x),
+                         paste(strCollapse(x, "()"), "does not lie in the set", y$strprint()))
         } else {
-          assertContains(y, x, paste(x, "does not lie in the set", y$strprint()))
+          if (!is.null(y$power)) {
+            if (y$power == "n") {
+              assertContains(y, Tuple$new(x),
+                             paste(strCollapse(x, "()"), "does not lie in the set", y$strprint()))
+            } else {
+              assertContains(y, x, paste(x, "does not lie in the set", y$strprint()))
+            }
+          } else {
+            assertContains(y, x, paste(x, "does not lie in the set", y$strprint()))
+          }
         }
       }, value, support)
 
@@ -227,15 +234,26 @@ ParameterSet <- R6Class("ParameterSet",
           }
 
           value <- private$.trafo(aid, value)
-          # private$.check(aid, value)
+
+          support <- param$support[[1]]
 
           if (length(value) > 1) {
-            if (!param$support[[1]]$contains(Tuple$new(value), all = TRUE)) {
-              stopf("%s does not lie in the support of '%s'.", Tuple$new(value)$strprint(), aid)
-            }
+            assertContains(support, Tuple$new(value),
+                           sprintf("%s does not lie in the support of %s.",
+                                   strCollapse(value, "()"), aid))
           } else {
-            if (!param$support[[1]]$contains(value, all = TRUE)) {
-              stopf("%s does not lie in the support of '%s'.", value, aid)
+            if (!is.null(support$power)) {
+              if (support$power == "n") {
+                assertContains(support, Tuple$new(value),
+                               sprintf("%s does not lie in the support of %s.",
+                                       strCollapse(value, "()"), aid))
+              } else {
+                assertContains(support, value,
+                               sprintf("%s does not lie in the support of %s.", value, aid))
+              }
+            } else {
+              assertContains(support, value,
+                             sprintf("%s does not lie in the support of %s.", value, aid))
             }
           }
 
