@@ -244,6 +244,7 @@ is commonly used in classification supervised learning.</p>
 <p>Sampling from this distribution is performed with the <a href='https://rdrr.io/r/base/sample.html'>sample</a> function with the elements given
 as the support set and the probabilities from the <code>probs</code> parameter. The cdf and quantile assumes
 that the elements are supplied in an indexed order (otherwise the results are meaningless).</p>
+<p>The number of points in the distribution cannot be changed after construction.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -378,7 +379,7 @@ Decorators to add to the distribution during construction.</p></dd>
 <p><div class="r example copy"></p><pre><span class='co'># Note probabilities are automatically normalised (if not vectorised)</span>
 <span class='no'>x</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>Categorical</span>$<span class='fu'>new</span>(<span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Bapple"</span>, <span class='st'>"Banana"</span>, <span class='fl'>2</span>), <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.4</span>, <span class='fl'>1</span>))
 
-<span class='co'># Only the probabilities can be changed and must the same length as in construction</span>
+<span class='co'># Length of elements and probabilities cannot be changed after construction</span>
 <span class='no'>x</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.7</span>))
 
 <span class='co'># d/p/q/r</span>
@@ -537,7 +538,7 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <span class='co'># Note probabilities are automatically normalised (if not vectorised)</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>Categorical</span>$<span class='fu'>new</span>(<span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Bapple"</span>, <span class='st'>"Banana"</span>, <span class='fl'>2</span>), <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.4</span>, <span class='fl'>1</span>))
 
-<span class='co'># Only the probabilities can be changed and must the same length as in construction</span>
+<span class='co'># Length of elements and probabilities cannot be changed after construction</span>
 <span class='no'>x</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.7</span>))
 
 <span class='co'># d/p/q/r</span>
