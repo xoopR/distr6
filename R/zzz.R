@@ -24,7 +24,7 @@ R62Fun(DistributionWrapper,
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("\n-----------------------------")
   packageStartupMessage(
-    "\tdistr6 v 1.3.7.9000",
+    "\tdistr6 v 1.4.0",
     "\n\nGet started:\t?distr6
 Changelog:\tdistr6News()"
   )
