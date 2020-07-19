@@ -9,3 +9,6 @@ There is one new NOTE about package size, I believe this is due to the package n
 * Mac OS X, R Release
 * Ubuntu, R Release
 
+## Reverse Dependencies
+
+Expected breakages in `mlr3proba`, a patch will be submitted once on CRAN.
