@@ -291,7 +291,7 @@ Support of parameter(s) to set</p></dd>
 <dt><code>settable</code></dt><dd><p><code>(character(1)|list())</code><br />
 Logical flag indicating if the parameter(s) can be updated after construction.</p></dd>
 
-<dt><code>updateFunc</code></dt><dd><p><br />
+<dt><code>updateFunc</code></dt><dd><p><code>(list())</code> <br />
 Deprecated, please use <code>$addDeps</code> instead.</p></dd>
 
 <dt><code>description</code></dt><dd><p><code>(character(1)|list())</code><br />
@@ -330,7 +330,7 @@ with values as NULL where appropriate. See examples for more.</p>
 <dt><code>hide_cols</code></dt><dd><p><code>(character())</code><br />
 Names of columns in the ParameterSet to hide whilst printing.</p></dd>
 
-<dt><code>...</code></dt><dd><p><br />
+<dt><code>...</code></dt><dd><p><code>ANY</code> <br />
 Additional arguments, currently unused.</p></dd>
 
 </dl><p></div></p>
@@ -401,7 +401,7 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
-<dt><code>...</code></dt><dd><p><br />
+<dt><code>...</code></dt><dd><p><code>ANY</code> <br />
 Named arguments of parameters to set values for. See examples.</p></dd>
 
 <dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
