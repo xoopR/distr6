@@ -178,7 +178,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#distr6" class="anchor"></a>distr6</h1></div>
 <p><img src="reference/figures/logo.png" align="right" alt="" width="120"></p>
-<p><img src="https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg" alt="R CMD Check via {tic}"><a href="https://codecov.io/gh/alan-turing-institute/distr6"><img src="https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://www.repostatus.org/badges/latest/active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repo Status"></a> <a href="https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle"></a> <a href="https://cran.r-project.org/package=distr6"><img src="https://www.r-pkg.org/badges/version-ago/distr6" alt="CRAN Status Badge"></a> <a href="https://cran.r-project.org/web/checks/check_results_distr6.html"><img src="https://cranchecks.info/badges/summary/distr6" alt="CRAN Checks"></a> <a href="https://zenodo.org/badge/latestdoi/177962537"><img src="https://zenodo.org/badge/177962537.svg" alt="DOI"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a> <a href="https://cran.r-project.org/package=distr6"><img src="https://cranlogs.r-pkg.org/badges/grand-total/distr6" alt="CRAN Downloads"></a> <a href="https://CRAN.R-project.org/package=distr6"><img src="https://tinyverse.netlify.com/badge/distr6" alt="dependencies"></a> <a href="https://gitter.im/xoopR/distr6"><img src="https://badges.gitter.im/xoopR/distr6.png" alt="Gitter chat"></a></p>
+<p><a href="https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle"></a> <a href="https://github.com/alan-turing-institute/distr6/actions"><img src="https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg" alt="R CMD Check via {tic}"></a> <a href="https://codecov.io/gh/alan-turing-institute/distr6"><img src="https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://www.repostatus.org/badges/latest/active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repo Status"></a> <a href="https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle"></a> <a href="https://cran.r-project.org/package=distr6"><img src="https://www.r-pkg.org/badges/version-ago/distr6" alt="CRAN Status Badge"></a> <a href="https://cran.r-project.org/web/checks/check_results_distr6.html"><img src="https://cranchecks.info/badges/summary/distr6" alt="CRAN Checks"></a> <a href="https://zenodo.org/badge/latestdoi/177962537"><img src="https://zenodo.org/badge/177962537.svg" alt="DOI"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a> <a href="https://cran.r-project.org/package=distr6"><img src="https://cranlogs.r-pkg.org/badges/grand-total/distr6" alt="CRAN Downloads"></a> <a href="https://CRAN.R-project.org/package=distr6"><img src="https://tinyverse.netlify.com/badge/distr6" alt="dependencies"></a> <a href="https://gitter.im/xoopR/distr6"><img src="https://badges.gitter.im/xoopR/distr6.png" alt="Gitter chat"></a></p>
 <div id="what-is-distr6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-is-distr6" class="anchor"></a>What is distr6?</h2>
@@ -200,7 +200,7 @@
 <span class="co">#&gt; [1] 7 7 4 7 6</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">B</span>)
 <span class="co">#&gt; Binomial Probability Distribution. Parameterised with:</span>
-<span class="co">#&gt;   c("prob", "size") = c(0.5, 10)</span>
+<span class="co">#&gt;   prob = 0.5, qprob = 0.5, size = 10</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   Quick Statistics </span>
 <span class="co">#&gt;  Mean:       5</span>
@@ -214,27 +214,27 @@
 <span class="co">#&gt;  Properties: symmetric; platykurtic; no skew</span></pre></div>
 <p>Flexible construction of distributions for common parameterisations</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="no">Exponential</span>$<span class="fu">new</span>(<span class="kw">rate</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="co">#&gt; Exp(rate = 2)</span>
+<span class="co">#&gt; Exp(rate = 2, scale = 0.5)</span>
 <span class="no">Exponential</span>$<span class="fu">new</span>(<span class="kw">scale</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="co">#&gt; Exp(scale = 2)</span>
+<span class="co">#&gt; Exp(rate = 0.5, scale = 2)</span>
 <span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">prec</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="co">#&gt; Norm(mean = 0, prec = 2)</span>
+<span class="co">#&gt; Norm(mean = 0, var = 0.5, sd = 0.707106781186548, prec = 2)</span>
 <span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="fl">3</span>)$<span class="fu"><a href="reference/parameters.html">parameters</a></span>()
 <span class="co">#&gt;      id     value support                                 description</span>
-<span class="co">#&gt; 1: mean 0.0000000       ℝ                   Mean - Location Parameter</span>
-<span class="co">#&gt; 2:  var 9.0000000      ℝ+          Variance - Squared Scale Parameter</span>
-<span class="co">#&gt; 3:   sd 3.0000000      ℝ+        Standard Deviation - Scale Parameter</span>
+<span class="co">#&gt; 1: mean         0       ℝ                   Mean - Location Parameter</span>
+<span class="co">#&gt; 2:  var         9      ℝ+          Variance - Squared Scale Parameter</span>
+<span class="co">#&gt; 3:   sd         3      ℝ+        Standard Deviation - Scale Parameter</span>
 <span class="co">#&gt; 4: prec 0.1111111      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
 <p>Decorators for extending functionality of distributions to more complex modelling methods</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">B</span> <span class="kw">&lt;-</span> <span class="no">Binomial</span>$<span class="fu">new</span>()
-<span class="fu"><a href="reference/decorate.html">decorate</a></span>(<span class="no">B</span>, <span class="no">ExoticStatistics</span>)
-<span class="co">#&gt; B is now decorated with ExoticStatistics</span>
-<span class="co">#&gt; Binom(prob = 0.5, size = 10)</span>
+<span class="fu"><a href="reference/decorate.html">decorate</a></span>(<span class="no">B</span>, <span class="st">"ExoticStatistics"</span>)
+<span class="co">#&gt; Binomial is now decorated with ExoticStatistics</span>
+<span class="co">#&gt; Binom(prob = 0.5, qprob = 0.5, size = 10)</span>
 <span class="no">B</span>$<span class="fu"><a href="reference/survival.html">survival</a></span>(<span class="fl">2</span>)
 <span class="co">#&gt; [1] 0.9453125</span>
-<span class="fu"><a href="reference/decorate.html">decorate</a></span>(<span class="no">B</span>, <span class="no">CoreStatistics</span>)
-<span class="co">#&gt; B is now decorated with CoreStatistics</span>
-<span class="co">#&gt; Binom(prob = 0.5, size = 10)</span>
+<span class="fu"><a href="reference/decorate.html">decorate</a></span>(<span class="no">B</span>, <span class="st">"CoreStatistics"</span>)
+<span class="co">#&gt; Binomial is now decorated with CoreStatistics</span>
+<span class="co">#&gt; Binom(prob = 0.5, qprob = 0.5, size = 10)</span>
 <span class="no">B</span>$<span class="fu"><a href="reference/kthmoment.html">kthmoment</a></span>(<span class="fl">6</span>)
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 190</span></pre></div>
@@ -249,16 +249,18 @@
 <p>Wrappers including truncation, huberization and product distributions for manipulation and composition of distributions.</p>
 <div class="sourceCode" id="cb5"><pre class="r"><span class="no">B</span> <span class="kw">&lt;-</span> <span class="no">Binomial</span>$<span class="fu">new</span>()
 <span class="no">TruncatedDistribution</span>$<span class="fu">new</span>(<span class="no">B</span>, <span class="kw">lower</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">upper</span> <span class="kw">=</span> <span class="fl">5</span>) <span class="co">#Or: truncate(B,2,5)</span>
-<span class="co">#&gt; TruncBinom(Binom_prob = 0.5, Binom_size = 10)</span>
+<span class="co">#&gt; TruncBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,trunc_lower = 2, trunc_upper = 5)</span>
 <span class="no">N</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>()
 <span class="no">MixtureDistribution</span>$<span class="fu">new</span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">B</span>,<span class="no">N</span>), <span class="kw">weights</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>))
-<span class="co">#&gt; BinomMixNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)</span>
+<span class="co">#&gt; Binom wX Norm</span>
 <span class="no">ProductDistribution</span>$<span class="fu">new</span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">B</span>,<span class="no">N</span>))
-<span class="co">#&gt; BinomProdNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)</span></pre></div>
+<span class="co">#&gt; Binom X Norm</span></pre></div>
 <p>Additionally <a href="https://CRAN.R-project.org/package=set6">set6</a> is used for symbolic representation of sets for Distribution typing</p>
 <div class="sourceCode" id="cb6"><pre class="r"><span class="no">Binomial</span>$<span class="fu">new</span>()$<span class="no">type</span>
+<span class="co">#&gt; Warning in (function () : Deprecated. Use $traits$type instead.</span>
 <span class="co">#&gt; ℕ0</span>
 <span class="no">Binomial</span>$<span class="fu">new</span>()$<span class="no">support</span>
+<span class="co">#&gt; Warning in (function () : Deprecated. Use $properties$support instead.</span>
 <span class="co">#&gt; {0, 1,...,9, 10}</span></pre></div>
 </div>
 <div id="usage" class="section level2">
