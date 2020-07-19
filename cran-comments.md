@@ -1,6 +1,6 @@
 ## Test Results
 
-There is one new NOTE about package size, I believe this is due to the package now using Rcpp.
+There is one new NOTE about package size, I believe this is due to the package now using Rcpp. One NOTE about URLs, all manually checked and valid. 
 
 ## Test environments
 
