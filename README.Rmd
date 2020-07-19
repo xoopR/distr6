@@ -11,7 +11,8 @@ set.seed(42)
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-![R CMD Check via {tic}](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
+[![R CMD Check via {tic}](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)](https://github.com/alan-turing-institute/distr6/actions)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
 [![Repo Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
@@ -58,9 +59,9 @@ Decorators for extending functionality of distributions to more complex modellin
 
 ```{r decorators}
 B <- Binomial$new()
-decorate(B, ExoticStatistics)
+decorate(B, "ExoticStatistics")
 B$survival(2)
-decorate(B, CoreStatistics)
+decorate(B, "CoreStatistics")
 B$kthmoment(6)
 ```
 

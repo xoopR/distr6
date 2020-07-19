@@ -3,8 +3,9 @@ distr6
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-![R CMD Check via
-{tic}](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
+[![R CMD Check via
+{tic}](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)](https://github.com/alan-turing-institute/distr6/actions)
 [![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
@@ -64,7 +65,7 @@ B$rand(5)
 #> [1] 7 7 4 7 6
 summary(B)
 #> Binomial Probability Distribution. Parameterised with:
-#>   c("prob", "size") = c(0.5, 10)
+#>   prob = 0.5, qprob = 0.5, size = 10
 #> 
 #>   Quick Statistics 
 #>  Mean:       5
@@ -82,16 +83,16 @@ Flexible construction of distributions for common parameterisations
 
 ``` r
 Exponential$new(rate = 2)
-#> Exp(rate = 2)
+#> Exp(rate = 2, scale = 0.5)
 Exponential$new(scale = 2)
-#> Exp(scale = 2)
+#> Exp(rate = 0.5, scale = 2)
 Normal$new(mean = 0, prec = 2)
-#> Norm(mean = 0, prec = 2)
+#> Norm(mean = 0, var = 0.5, sd = 0.707106781186548, prec = 2)
 Normal$new(mean = 0, sd = 3)$parameters()
 #>      id     value support                                 description
-#> 1: mean 0.0000000       ℝ                   Mean - Location Parameter
-#> 2:  var 9.0000000      ℝ+          Variance - Squared Scale Parameter
-#> 3:   sd 3.0000000      ℝ+        Standard Deviation - Scale Parameter
+#> 1: mean         0       ℝ                   Mean - Location Parameter
+#> 2:  var         9      ℝ+          Variance - Squared Scale Parameter
+#> 3:   sd         3      ℝ+        Standard Deviation - Scale Parameter
 #> 4: prec 0.1111111      ℝ+ Precision - Inverse Squared Scale Parameter
 ```
 
@@ -100,14 +101,14 @@ modelling methods
 
 ``` r
 B <- Binomial$new()
-decorate(B, ExoticStatistics)
-#> B is now decorated with ExoticStatistics
-#> Binom(prob = 0.5, size = 10)
+decorate(B, "ExoticStatistics")
+#> Binomial is now decorated with ExoticStatistics
+#> Binom(prob = 0.5, qprob = 0.5, size = 10)
 B$survival(2)
 #> [1] 0.9453125
-decorate(B, CoreStatistics)
-#> B is now decorated with CoreStatistics
-#> Binom(prob = 0.5, size = 10)
+decorate(B, "CoreStatistics")
+#> Binomial is now decorated with CoreStatistics
+#> Binom(prob = 0.5, qprob = 0.5, size = 10)
 B$kthmoment(6)
 #> Results from numeric calculations are approximate only. Better results may be available.
 #> [1] 190
@@ -132,12 +133,12 @@ for manipulation and composition of distributions.
 ``` r
 B <- Binomial$new()
 TruncatedDistribution$new(B, lower = 2, upper = 5) #Or: truncate(B,2,5)
-#> TruncBinom(Binom_prob = 0.5, Binom_size = 10)
+#> TruncBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,trunc_lower = 2, trunc_upper = 5)
 N <- Normal$new()
 MixtureDistribution$new(list(B,N), weights = c(0.1, 0.9))
-#> BinomMixNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
+#> Binom wX Norm
 ProductDistribution$new(list(B,N))
-#> BinomProdNorm(Binom_prob = 0.5, Binom_size = 10, Norm_mean = 0, Norm_var = 1)
+#> Binom X Norm
 ```
 
 Additionally [set6](https://CRAN.R-project.org/package=set6) is used for
@@ -145,8 +146,10 @@ symbolic representation of sets for Distribution typing
 
 ``` r
 Binomial$new()$type
+#> Warning in (function () : Deprecated. Use $traits$type instead.
 #> ℕ0
 Binomial$new()$support
+#> Warning in (function () : Deprecated. Use $properties$support instead.
 #> {0, 1,...,9, 10}
 ```
 
