@@ -9,7 +9,7 @@ the pdf, \deqn{f(x) = exp(-x^2/2)/\sqrt{2\pi}} over the support \eqn{x \in \R}{x
 }
 \details{
 We use the \code{erf} and \code{erfinv} error and inverse error functions from
-\CRANpkg{Pracma}.
+\CRANpkg{pracma}.
 }
 \seealso{
 Other kernels: 

@@ -19,7 +19,7 @@ See examples.}
 An optional prefix to remove from ids after extraction, assumes \verb{_} follows the
 prefix name, i.e. \code{prefix_ids}.}
 
-\item{...}{\cr
+\item{...}{\code{ANY} \cr
 Ignored, added for consistency.}
 }
 \description{

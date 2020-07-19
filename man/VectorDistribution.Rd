@@ -185,7 +185,7 @@ Optional short name/ID of wrapped distribution.}
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
 
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Named arguments of parameters to set values for. See examples.}
 }
 \if{html}{\out{</div>}}

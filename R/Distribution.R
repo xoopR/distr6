@@ -259,7 +259,7 @@ Distribution <- R6Class("Distribution",
     #' Prints the `Distribution`.
     #' @param n `(integer(1))` \cr
     #' Passed to `$strprint`.
-    #' @param ... \cr
+    #' @param ... `ANY` \cr
     #' Unused. Added for consistency.
     print = function(n = 2, ...) {
       cat(self$strprint(n = n), "\n")
@@ -271,7 +271,7 @@ Distribution <- R6Class("Distribution",
     #' @param full `(logical(1))` \cr
     #' If `TRUE` (default) prints a long summary of the distribution,
     #' otherwise prints a shorter summary.
-    #' @param ... \cr
+    #' @param ... `ANY` \cr
     #' Unused. Added for consistency.
     summary = function(full = TRUE, ...) {
 
@@ -445,7 +445,7 @@ Distribution <- R6Class("Distribution",
     #' mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
 
-      if(!private$.isPdf) {
+      if (!private$.isPdf) {
         return(NULL)
       }
 
@@ -678,9 +678,9 @@ decorator to numerically estimate this.")
     #' Returns the median of the distribution. If an analytical expression is available
     #' returns distribution median, otherwise if symmetric returns `self$mean`, otherwise
     #' returns `self$quantile(0.5)`.
-    #' @param na.rm \cr
+    #' @param na.rm `(logical(1))`\cr
     #' Ignored, addded for consistency.
-    #' @param ... \cr
+    #' @param ... `ANY` \cr
     #' Ignored, addded for consistency.
     median = function(na.rm = NULL, ...) {
       if (testSymmetric(self)) {

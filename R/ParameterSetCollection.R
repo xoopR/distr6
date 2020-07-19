@@ -42,7 +42,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' Prints the [ParameterSetCollection].
     #' @param hide_cols `(character())`\cr
     #' Names of columns in the [ParameterSet] to hide whilst printing.
-    #' @param ... \cr
+    #' @param ... `ANY` \cr
     #' Additional arguments, currently unused.
     print = function(hide_cols = c("settable"), ...) {
       psc <- as.data.table(self)
@@ -183,8 +183,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 
     #' @description
     #' Dependencies should be added to internal [ParameterSet]s.
-    #' @param ... \cr
-    #' Ignored.
+    #' @param ... `ANY` \cr Ignored.
     addDeps = function(...) {
       stop("Dependencies should be added to internal ParameterSets with $parameterSets.")
     },

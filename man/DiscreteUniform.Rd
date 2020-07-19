@@ -331,7 +331,7 @@ Sets the value(s) of the given parameter(s).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Named arguments of parameters to set values for. See examples.}
 
 \item{\code{lst}}{\code{(list(1))} \cr

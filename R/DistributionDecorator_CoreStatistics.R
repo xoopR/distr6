@@ -190,7 +190,7 @@ CoreStatistics <- R6Class("CoreStatistics",
 
     #' @description
     #' Numerically estimates the distribution mean.
-    #' @param ... \cr
+    #' @param ... `ANY` \cr
     #' Ignored, added for consistency.
     mean = function(...) {
       return(self$genExp())

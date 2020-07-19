@@ -11,9 +11,7 @@ available at \code{help("-deprecated")}.
 }
 \section{Deprecated Functions}{
 
-\tabular{ll}{
-\strong{Deprecated} \tab \strong{Replacement} \cr
-}
+Currently none.
 }
 
 \keyword{internal}

@@ -164,7 +164,7 @@ Prints the \link{ParameterSetCollection}.
 \item{\code{hide_cols}}{\code{(character())}\cr
 Names of columns in the \link{ParameterSet} to hide whilst printing.}
 
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Additional arguments, currently unused.}
 }
 \if{html}{\out{</div>}}
@@ -275,7 +275,7 @@ See examples.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Named arguments of parameters to set values for. See examples.}
 
 \item{\code{lst}}{\code{(list(1))} \cr
@@ -360,8 +360,7 @@ Dependencies should be added to internal \link{ParameterSet}s.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
-Ignored.}
+\item{\code{...}}{\code{ANY} \cr Ignored.}
 }
 \if{html}{\out{</div>}}
 }

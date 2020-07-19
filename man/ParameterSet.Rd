@@ -228,7 +228,7 @@ Support of parameter(s) to set}
 \item{\code{settable}}{\code{(character(1)|list())}\cr
 Logical flag indicating if the parameter(s) can be updated after construction.}
 
-\item{\code{updateFunc}}{\cr
+\item{\code{updateFunc}}{\code{(list())} \cr
 Deprecated, please use \verb{$addDeps} instead.}
 
 \item{\code{description}}{\code{(character(1)|list())}\cr
@@ -280,7 +280,7 @@ Prints the \link{ParameterSet}.
 \item{\code{hide_cols}}{\code{(character())}\cr
 Names of columns in the \link{ParameterSet} to hide whilst printing.}
 
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Additional arguments, currently unused.}
 }
 \if{html}{\out{</div>}}
@@ -390,7 +390,7 @@ Sets the value(s) of the given parameter(s).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Named arguments of parameters to set values for. See examples.}
 
 \item{\code{lst}}{\code{(list(1))} \cr

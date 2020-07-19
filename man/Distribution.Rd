@@ -256,7 +256,7 @@ Prints the \code{Distribution}.
 \item{\code{n}}{\code{(integer(1))} \cr
 Passed to \verb{$strprint}.}
 
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Unused. Added for consistency.}
 }
 \if{html}{\out{</div>}}
@@ -278,7 +278,7 @@ Prints a summary of the \code{Distribution}.
 If \code{TRUE} (default) prints a long summary of the distribution,
 otherwise prints a shorter summary.}
 
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Unused. Added for consistency.}
 }
 \if{html}{\out{</div>}}
@@ -335,7 +335,7 @@ Sets the value(s) of the given parameter(s).
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Named arguments of parameters to set values for. See examples.}
 
 \item{\code{lst}}{\code{(list(1))} \cr
@@ -611,10 +611,10 @@ returns \code{self$quantile(0.5)}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{na.rm}}{\cr
+\item{\code{na.rm}}{\code{(logical(1))}\cr
 Ignored, addded for consistency.}
 
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Ignored, addded for consistency.}
 }
 \if{html}{\out{</div>}}

@@ -1,14 +1,14 @@
-#' #' @title Distribution Scale Wrapper
+#' #' title Distribution Scale Wrapper
 #' #'
-#' #' @description Scales a distribution to a given mean and standard deviation. By default the
+#' #' description Scales a distribution to a given mean and standard deviation. By default the
 #'    distribution is centered (\code{mean} = 0) with unit variance (\code{sd} = 1)
-#' #' @template class_wrapper
+#' #' template class_wrapper
 #' #'
-#' #' @details STILL IN DEVELOPMENT. Results are likely sub-optimal.
+#' #' details STILL IN DEVELOPMENT. Results are likely sub-optimal.
 #' #
-#' #' @name Scale
+#' #' name Scale
 #' #'
-#' #' @section Constructor Arguments:
+#' #' section Constructor Arguments:
 #' #' \tabular{lll}{
 #' #' \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 #' #' \code{dist} \tab distribution \tab Distribution to scale. \cr
@@ -16,26 +16,26 @@
 #' #' \code{sd} \tab numeric \tab Desired standard deviation after distribution scale.
 #' #' }
 #' #'
-#' #' @section Getters:
+#' #' section Getters:
 #' #' \tabular{lll}{
 #' #' \strong{Method} \tab \strong{Return Type} \tab \strong{Details} \cr
 #' #' \code{getScaleMean()} \tab numeric \tab Return mean of scaled distribution. \cr
 #' #' \code{getScaleSd()} \tab numeric \tab Return standard deviation of scaled distribution. \cr
 #' #' }
 #' #'
-#' #'@section Setters:
+#' #'section Setters:
 #' #' \tabular{lll}{
 #' #' \strong{Method} \tab \strong{Input Type} \tab \strong{Details} \cr
 #' #' \code{setScaleMean(mean)} \tab numeric \tab Set mean to scale distribution to. \cr
 #' #' \code{setScaleSd(sd)} \tab numeric \tab Set standard deviation to scale distribution to. \cr
 #' #' }
 #' #'
-#' #' @examples
+#' #' examples
 #' #' \dontrun{
 #' #' Scale$new(Binomial$new())
 #' #' }
 #' #'
-#' #' @seealso See \code{\link{DistributionWrapper}} for inherited wrapper methods and see
+#' #' seealso See \code{\link{DistributionWrapper}} for inherited wrapper methods and see
 #' #' \code{\link{Distribution}} for a full list of inherited distribution methods.
 #'
 #' Scale <- R6Class("Scale", inherit = DistributionWrapper, lock_objects = FALSE)

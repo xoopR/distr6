@@ -25,7 +25,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' Support of parameter(s) to set
     #' @param settable `(character(1)|list())`\cr
     #' Logical flag indicating if the parameter(s) can be updated after construction.
-    #' @param updateFunc \cr
+    #' @param updateFunc `(list())` \cr
     #' Deprecated, please use `$addDeps` instead.
     #' @param description `(character(1)|list())`\cr
     #' Optional description for the parameter(s).
@@ -119,7 +119,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' Prints the [ParameterSet].
     #' @param hide_cols `(character())`\cr
     #' Names of columns in the [ParameterSet] to hide whilst printing.
-    #' @param ... \cr
+    #' @param ... `ANY` \cr
     #' Additional arguments, currently unused.
     print = function(hide_cols = c("settable"), ...) {
       ps <- private$.parameters
@@ -774,7 +774,7 @@ as.ParameterSet.list <- function(x, ...) {
 #' @param prefix `(character(1))` \cr
 #' An optional prefix to remove from ids after extraction, assumes `_` follows the
 #' prefix name, i.e. `prefix_ids`.
-#' @param ... \cr
+#' @param ... `ANY` \cr
 #' Ignored, added for consistency.
 #'
 #' @usage \method{[}{ParameterSet}(ps, ids, prefix = NULL, ...)

@@ -240,7 +240,7 @@ Numerically estimates the distribution mean.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{\cr
+\item{\code{...}}{\code{ANY} \cr
 Ignored, added for consistency.}
 }
 \if{html}{\out{</div>}}
