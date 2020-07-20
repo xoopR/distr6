@@ -1,4 +1,6 @@
+# distr6 1.4.0.9000
 
+* Added `mixturiseVector` for mixing vector distributions
 
 # distr6 1.4.0
 

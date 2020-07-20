@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.4.0
+Version: 1.4.0.9000
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -192,6 +192,7 @@ Collate:
     'listWrappers.R'
     'makeUniqueDistributions.R'
     'measures.R'
+    'mixturiseVector.R'
     'plot_continuous.R'
     'plot_discrete.R'
     'plot_distribution.R'
