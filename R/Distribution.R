@@ -590,7 +590,7 @@ decorator to numerically estimate this.")
     #' b$quantile(data = matrix(c(0.1,0.2)))
     quantile = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
 
-      if(!private$.isQuantile) {
+      if (!private$.isQuantile) {
         return(NULL)
       }
 

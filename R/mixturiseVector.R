@@ -30,24 +30,25 @@
 mixturiseVector <- function(vecdists, weights = "uniform") {
 
   nr <- nrow(vecdists[[1]]$modelTable)
-  dist <- vecdists[[1]]$modelTable$Distribution[[1]]
+  dist <- unlist(vecdists[[1]]$modelTable$Distribution[[1]])
 
   sapply(vecdists, function(.x) {
     if (nrow(.x$modelTable) != nr) {
       stop("All vector distributions must be of same length.")
     }
-    if (length(unique(.x$modelTable$Distribution)) > 1) {
+    if (length(unique(unlist(.x$modelTable$Distribution))) > 1) {
       stop("Only one class of distribution can be combined at a time.")
     }
-    if (.x$modelTable$Distribution[[1]] != dist) {
+    if (unlist(.x$modelTable$Distribution[[1]]) != dist) {
       stop("Distributions in vector must be of same type.")
     }
   })
 
-  mlst = vector("list", nr)
+  mlst <- vector("list", nr)
   for (i in seq_along(mlst)) {
     dlst <- lapply(vecdists, function(.y) {
-      .y$parameters()[paste0(as.character(.y$modelTable[i, 2]), "_")]$values(settable = FALSE)
+      .y$parameters()[paste0(
+        as.character(unlist(.y$modelTable[i, 2])), "_")]$values(settable = FALSE)
     })
 
     mlst[[i]] <- MixtureDistribution$new(distribution = dist,
@@ -56,4 +57,3 @@ mixturiseVector <- function(vecdists, weights = "uniform") {
 
   VectorDistribution$new(mlst)
 }
-

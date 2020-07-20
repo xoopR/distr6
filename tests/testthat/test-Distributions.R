@@ -185,8 +185,8 @@ test_that("no dpqr given", {
 })
 
 test_that("points outside domain", {
-  expect_error(Multinomial$new()$pdf(data = matrix(c(-1,12,2,8), ncol = 2)), "Not all points")
-  expect_error(EmpiricalMV$new()$cdf(data = matrix(c(-1i,12,2,8), ncol = 2)), "Not all points")
+  expect_error(Multinomial$new()$pdf(data = matrix(c(-1, 12 , 2,8), ncol = 2)), "Not all points")
+  expect_error(EmpiricalMV$new()$cdf(data = matrix(c(-1i, 12 , 2,8), ncol = 2)), "Not all points")
 
   expect_error(Binomial$new()$pdf(-1), "Not all points")
   expect_error(Binomial$new()$cdf(-1), "Not all points")
