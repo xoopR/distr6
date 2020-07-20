@@ -133,9 +133,9 @@ Returns model(s) wrapped by this wrapper.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{model}}{\code{(character(1))} \cr
-id of wrapped \href{s}{Distribution} to return. If \code{NULL} (default), a list of all wrapped \link{Distribution}s
-is returned; if only one \link{Distribution} is matched then this is returned, otherwise a list of
-\link{Distribution}s.}
+id of wrapped \link{Distribution}s to return. If \code{NULL} (default), a list of all wrapped
+\link{Distribution}s is returned; if only one \link{Distribution} is matched then this is returned,
+otherwise a list of \link{Distribution}s.}
 }
 \if{html}{\out{</div>}}
 }
