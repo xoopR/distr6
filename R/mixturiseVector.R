@@ -30,13 +30,13 @@
 mixturiseVector <- function(vecdists, weights = "uniform") {
 
   nr <- nrow(vecdists[[1]]$modelTable)
-  dist <- unlist(vecdists[[1]]$modelTable$Distribution[[1]])
+  dist <- as.character(unlist(vecdists[[1]]$modelTable$Distribution[[1]]))
 
   sapply(vecdists, function(.x) {
     if (nrow(.x$modelTable) != nr) {
       stop("All vector distributions must be of same length.")
     }
-    if (length(unique(unlist(.x$modelTable$Distribution))) > 1) {
+    if (length(unique(as.character(unlist(.x$modelTable$Distribution)))) > 1) {
       stop("Only one class of distribution can be combined at a time.")
     }
     if (unlist(.x$modelTable$Distribution[[1]]) != dist) {
