@@ -83,7 +83,7 @@ Convolution <- R6Class("Convolution",
       } else {
         if (add) {
           return(sapply(x, function(z) {
-            ws <- d2$workingSupport
+            ws <- d2$workingSupport()
             rng <- seq.int(ws$lower, ws$upper)
             rng <- rng[z - rng >= min & z - rng <= max]
             sum(d1$pdf(z - rng) * d2$pdf(rng))

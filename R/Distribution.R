@@ -728,103 +728,9 @@ decorator to numerically estimate this.")
     #' Uses `[set6::Set]$contains`.
     liesInType = function(x, all = TRUE, bound = FALSE) {
       return(self$traits$type$contains(x, all, bound))
-    }
-  ),
-
-  active = list(
-    #' @field decorators
-    #' Returns decorators currently used to decorate the distribution.
-    decorators = function() {
-      return(private$.decorators)
     },
 
-    #' @field traits
-    #' Returns distribution traits.
-    traits = function() {
-      return(private$.traits)
-    },
-
-    #' @field valueSupport
-    #' Deprecated, use `$traits$valueSupport`.
-    valueSupport = function() {
-      warning("Deprecated. Use $traits$valueSupport instead.")
-      return(self$traits$valueSupport)
-    },
-
-    #' @field variateForm
-    #' Deprecated, use `$traits$variateForm`.
-    variateForm = function() {
-      warning("Deprecated. Use $traits$variateForm instead.")
-      return(self$traits$variateForm)
-    },
-
-    #' @field type
-    #' Deprecated, use `$traits$type`.
-    type = function() {
-      warning("Deprecated. Use $traits$type instead.")
-      return(self$traits$type)
-    },
-
-    #' @field properties
-    #' Returns distribution properties, including kurtosis type, skewness type, support, and
-    #' symmetry.
-    properties = function() {
-      private$.properties
-    },
-
-    #' @field support
-    #' Deprecated, use `$properties$type`.
-    support = function() {
-      warning("Deprecated. Use $properties$support instead.")
-      return(self$properties$support)
-    },
-
-    #' @field symmetry
-    #' Deprecated, use `$properties$symmetry`.
-    symmetry = function() {
-      warning("Deprecated. Use $properties$symmetry instead.")
-      return(self$properties$symmetry)
-    },
-
-    #' @field sup
-    #' Returns supremum (upper bound) of the distribution support.
-    sup = function() {
-      return(self$properties$support$upper)
-    },
-
-    #' @field inf
-    #' Returns infimum (lower bound) of the distribution support.
-    inf = function() {
-      return(self$properties$support$lower)
-    },
-
-    #' @field dmax
-    #' Returns maximum of the distribution support.
-    dmax = function() {
-      return(self$properties$support$max)
-    },
-
-    #' @field dmin
-    #' Returns minimum of the distribution support.
-    dmin = function() {
-      return(self$properties$support$min)
-    },
-
-    #' @field kurtosisType
-    #' Deprecated, use `$properties$kurtosis`.
-    kurtosisType = function() {
-      warning("Deprecated. Use $properties$kurtosis instead.")
-      return(self$properties$kurtosis)
-    },
-
-    #' @field skewnessType
-    #' Deprecated, use `$properties$skewness`.
-    skewnessType = function() {
-      warning("Deprecated. Use $properties$skewness instead.")
-      return(self$properties$skewness)
-    },
-
-    #' @field workingSupport
+    #' @description
     #' Returns an estimate for the computational support of the distribution.
     #' If an analytical cdf is available, then this is computed as the smallest interval
     #' in which the cdf lower bound is `0` and the upper bound is `1`, bounds are incremented in
@@ -891,9 +797,102 @@ decorator to numerically estimate this.")
     }
   ),
 
+  active = list(
+    #' @field decorators
+    #' Returns decorators currently used to decorate the distribution.
+    decorators = function() {
+      return(private$.decorators)
+    },
+
+    #' @field traits
+    #' Returns distribution traits.
+    traits = function() {
+      return(private$.traits)
+    },
+
+    #' @field valueSupport
+    #' Deprecated, use `$traits$valueSupport`.
+    valueSupport = function() {
+      message("Deprecated. Use $traits$valueSupport instead.")
+      return(self$traits$valueSupport)
+    },
+
+    #' @field variateForm
+    #' Deprecated, use `$traits$variateForm`.
+    variateForm = function() {
+      message("Deprecated. Use $traits$variateForm instead.")
+      return(self$traits$variateForm)
+    },
+
+    #' @field type
+    #' Deprecated, use `$traits$type`.
+    type = function() {
+      message("Deprecated. Use $traits$type instead.")
+      return(self$traits$type)
+    },
+
+    #' @field properties
+    #' Returns distribution properties, including kurtosis type, skewness type, support, and
+    #' symmetry.
+    properties = function() {
+      private$.properties
+    },
+
+    #' @field support
+    #' Deprecated, use `$properties$type`.
+    support = function() {
+      message("Deprecated. Use $properties$support instead.")
+      return(self$properties$support)
+    },
+
+    #' @field symmetry
+    #' Deprecated, use `$properties$symmetry`.
+    symmetry = function() {
+      message("Deprecated. Use $properties$symmetry instead.")
+      return(self$properties$symmetry)
+    },
+
+    #' @field sup
+    #' Returns supremum (upper bound) of the distribution support.
+    sup = function() {
+      return(self$properties$support$upper)
+    },
+
+    #' @field inf
+    #' Returns infimum (lower bound) of the distribution support.
+    inf = function() {
+      return(self$properties$support$lower)
+    },
+
+    #' @field dmax
+    #' Returns maximum of the distribution support.
+    dmax = function() {
+      return(self$properties$support$max)
+    },
+
+    #' @field dmin
+    #' Returns minimum of the distribution support.
+    dmin = function() {
+      return(self$properties$support$min)
+    },
+
+    #' @field kurtosisType
+    #' Deprecated, use `$properties$kurtosis`.
+    kurtosisType = function() {
+      message("Deprecated. Use $properties$kurtosis instead.")
+      return(self$properties$kurtosis)
+    },
+
+    #' @field skewnessType
+    #' Deprecated, use `$properties$skewness`.
+    skewnessType = function() {
+      message("Deprecated. Use $properties$skewness instead.")
+      return(self$properties$skewness)
+    }
+  ),
+
   private = list(
     .parameters = NULL,
-    .workingSupport = NULL,
     .decorators = NULL,
     .properties = list(),
     .traits = NULL,

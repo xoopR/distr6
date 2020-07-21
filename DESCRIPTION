@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.4.0.9000
+Version: 1.4.1
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -91,7 +91,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, r6 = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate: 
     'helpers.R'
     'distr6_globals.R'

@@ -157,7 +157,7 @@ test_list <- function(x) {
 
 impute_genx <- function(dist, n = 10001) {
 
-  x <- dist$workingSupport
+  x <- dist$workingSupport()
   if (testDiscrete(dist)) {
     x <- seq.int(x$lower, x$upper)
   } else {

@@ -1,6 +1,6 @@
-# distr6 1.4.0.9000
+# distr6 1.4.1
 
-* Added `mixturiseVector` for mixing vector distributions
+* Critical patches for R devel: `workingSupport` is now a public method and not an active binding
 
 # distr6 1.4.0
 
@@ -23,6 +23,7 @@
 * `settable` in `ParameterSet` now refers to the more intuitive flag that describes if a parameter can be set after construction
 * Added `length` active binding to `ParameterSet` to return number of parameters in the set.
 * Renamed `squared2Norm` in `Kernel`s to `pdfSquared2Norm` and added `x` to arguments to allow for shifted norms.
+* Added `mixturiseVector` for mixing vector distributions
 
 ### Deprecated Functions/Fields/Methods
 
