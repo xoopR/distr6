@@ -136,9 +136,17 @@ NumericMatrix C_DegeneratePdf(NumericVector x, NumericVector mean, bool logp) {
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
       if (logp) {
-        mat(j, i) = log(x[j] == mean[i]);
+        if (x[j] == mean[i]) {
+          mat(j, i) = 0;
+        } else {
+          mat(j, i) = R_NegInf;
+        }
       } else {
-        mat(j, i) = x[j] == mean[i];
+        if (x[j] == mean[i]) {
+          mat(j, i) = 1;
+        } else {
+          mat(j, i) = 0;
+        }
       }
     }
   }
