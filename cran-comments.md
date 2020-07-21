@@ -1,13 +1,20 @@
+## Reason for early submission
+
+Re-submitting due to errors in R devel and patched solaris. Now fixed and tested on rhub and github actions.
+
 ## Test Results
 
-There is one new NOTE about package size, I believe this is due to the package now using Rcpp. One NOTE about URLs, all manually checked and valid. 
+One NOTE about package size due to Rcpp.
 
 ## Test environments
 
-* x86_64-apple-darwin17.6 (64-bit), macOS Catalina 10.15.3, R 4.0.0
 * Microsoft Windows Server 2019, R Release
+* Microsoft Windows Server 2019, R Devel
+* Microsoft Windows Server 2019, R 3.6
 * Mac OS X, R Release
+* Mac OS X, R 3.6
 * Ubuntu, R Release
+* Ubuntu, R 3.6
 
 ## Reverse Dependencies
 
