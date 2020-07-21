@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Distribution Kurtosis — kurtosis • distr6</title>
+<title>Create Mixture Distribution From Multiple Vectors — mixturiseVector • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,9 @@
 
 
 
-<meta property="og:title" content="Distribution Kurtosis — kurtosis" />
-<meta property="og:description" content="Kurtosis of a distribution" />
+<meta property="og:title" content="Create Mixture Distribution From Multiple Vectors — mixturiseVector" />
+<meta property="og:description" content="Given m vector distributions of length N, creates a single vector
+distribution consisting of n mixture distributions mixing the m vectors." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -221,34 +222,63 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Distribution Kurtosis</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_CoreStatistics.R'><code>R/DistributionDecorator_CoreStatistics.R</code></a></small>
-    <div class="hidden name"><code>kurtosis.Rd</code></div>
+    <h1>Create Mixture Distribution From Multiple Vectors</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/mixturiseVector.R'><code>R/mixturiseVector.R</code></a></small>
+    <div class="hidden name"><code>mixturiseVector.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Kurtosis of a distribution</p>
+    <p>Given <code>m</code> vector distributions of length <code>N</code>, creates a single vector
+distribution consisting of <code>n</code> mixture distributions mixing the <code>m</code> vectors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kurtosis</span>(<span class='no'>object</span>, <span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>mixturiseVector</span>(<span class='no'>vecdists</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"uniform"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Distribution.</p></td>
+      <th>vecdists</th>
+      <td><p><code>(list())</code><br />
+List of <a href='VectorDistribution.html'>VectorDistribution</a>s, should be of same length and with the non-`distlist'
+constructor with the same distribution.</p></td>
     </tr>
     <tr>
-      <th>excess</th>
-      <td><p>logical, if TRUE (default) excess Kurtosis returned</p></td>
+      <th>weights</th>
+      <td><p><code>(character(1)|numeric())</code><br />
+Weights passed to <a href='MixtureDistribution.html'>MixtureDistribution</a>. Default uniform weighting.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Kurtosis as a numeric.</p>
+    <p>Let \(v1 = (D11, D12,...,D1N)\) and \(v2 = (D21, D22,...,D2N)\) then the
+<code>mixturiseVector</code> function creates the vector distribution \(v3 = (D31, D32, ..., D3N)\)
+where <code>D3N = m(D1N, D2N, wN)</code> where <code>m</code> is a mixture distribution with weights <code>wN</code>.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>v1</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>))
+<span class='no'>v2</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>4</span>))
+<span class='no'>mv1</span> <span class='kw'>&lt;-</span> <span class='fu'>mixturiseVector</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>v1</span>, <span class='no'>v2</span>))
+
+<span class='co'># equivalently</span>
+<span class='no'>mv2</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+  <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))),
+  <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>)))
+))
+
+<span class='no'>mv1</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt;    Vec2Binom1 Vec2Binom2
+#&gt; 1:     0.4375    0.37500
+#&gt; 2:     0.1875    0.31250
+#&gt; 3:     0.0625    0.12500
+#&gt; 4:     0.0000    0.03125
+#&gt; 5:     0.0000    0.00000</div><div class='input'><span class='no'>mv2</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt;    Vec2Binom1 Vec2Binom2
+#&gt; 1:     0.4375    0.37500
+#&gt; 2:     0.1875    0.31250
+#&gt; 3:     0.0625    0.12500
+#&gt; 4:     0.0000    0.03125
+#&gt; 5:     0.0000    0.00000</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

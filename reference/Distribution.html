@@ -87,7 +87,7 @@ as well as serving as the parent class to specific, familiar distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
       </span>
     </div>
 
@@ -279,13 +279,6 @@ symmetry.</p></dd>
 
 <dt><code>skewnessType</code></dt><dd><p>Deprecated, use <code>$properties$skewness</code>.</p></dd>
 
-<dt><code>workingSupport</code></dt><dd><p>Returns an estimate for the computational support of the distribution.
-If an analytical cdf is available, then this is computed as the smallest interval
-in which the cdf lower bound is <code>0</code> and the upper bound is <code>1</code>, bounds are incremented in
-10^i intervals. If no analytical cdf is available, then this is computed as the smallest
-interval in which the lower and upper bounds of the pdf are <code>0</code>, this is much less precise
-and is more prone to error. Used primarily by decorators.</p></dd>
-
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
@@ -311,6 +304,7 @@ and is more prone to error. Used primarily by decorators.</p></dd>
 <li><p><a href='#method-correlation'><code>Distribution$correlation()</code></a></p></li>
 <li><p><a href='#method-liesInSupport'><code>Distribution$liesInSupport()</code></a></p></li>
 <li><p><a href='#method-liesInType'><code>Distribution$liesInType()</code></a></p></li>
+<li><p><a href='#method-workingSupport'><code>Distribution$workingSupport()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Distribution$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -724,6 +718,16 @@ If <code>TRUE</code> then tests if <code>x</code> lie between the upper and lowe
 otherwise tests if <code>x</code> lie between the maximum and minimum of the distribution.</p></dd>
 
 </dl><p></div></p>
+<p><hr>
+<a id="method-workingSupport"></a></p><h3>Method <code><a href='workingSupport.html'>workingSupport()</a></code></h3>
+<p>Returns an estimate for the computational support of the distribution.
+If an analytical cdf is available, then this is computed as the smallest interval
+in which the cdf lower bound is <code>0</code> and the upper bound is <code>1</code>, bounds are incremented in
+10^i intervals. If no analytical cdf is available, then this is computed as the smallest
+interval in which the lower and upper bounds of the pdf are <code>0</code>, this is much less precise
+and is more prone to error. Used primarily by decorators.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Distribution</span>$<span class='fu'><a href='workingSupport.html'>workingSupport</a></span>()</pre><p></div></p>
+
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
