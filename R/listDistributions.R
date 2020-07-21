@@ -21,27 +21,28 @@
 #' @export
 listDistributions <- function(simplify = FALSE, filter = NULL) {
   distrs <- .distr6$distributions[order(.distr6$distributions$ClassName), ]
+
+  if (!is.null(filter)) {
+    names(filter) <- tolower(names(filter))
+    if (checkmate::testList(filter)) {
+      if (!is.null(filter$variateform)) {
+        distrs <- subset(distrs, distrs$VariateForm == filter$variateform)
+      }
+      if (!is.null(filter$valuesupport)) {
+        distrs <- subset(distrs, distrs$ValueSupport == filter$valuesupport)
+      }
+      if (!is.null(filter$package)) {
+        distrs <- subset(distrs, distrs$Package == filter$package)
+      }
+      if (!is.null(filter$tags)) {
+        distrs <- subset(distrs, distrs$Tags == filter$tags)
+      }
+    }
+  }
+
   if (simplify) {
     return(unlist(distrs$ClassName))
   } else {
-    if (!is.null(filter)) {
-      names(filter) <- tolower(names(filter))
-      if (checkmate::testList(filter)) {
-        if (!is.null(filter$variateform)) {
-          distrs <- subset(distrs, distrs$VariateForm == filter$variateform)
-        }
-        if (!is.null(filter$valuesupport)) {
-          distrs <- subset(distrs, distrs$ValueSupport == filter$valuesupport)
-        }
-        if (!is.null(filter$package)) {
-          distrs <- subset(distrs, distrs$Package == filter$package)
-        }
-        if (!is.null(filter$tags)) {
-          distrs <- subset(distrs, distrs$Tags == filter$tags)
-        }
-      }
-    }
-
     return(data.table::data.table(distrs))
   }
 }

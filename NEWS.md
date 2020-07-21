@@ -1,4 +1,6 @@
+# distr6 1.4.1
 
+Critical patches for R devel and patched Solaris.
 
 # distr6 1.4.0
 
@@ -54,6 +56,7 @@
 * Bugfix in `Wald`, symmetry was incorrectly flagged as "symmetric"
 * Fixed bug in `TruncatedDistribution` support - previously support interval type was `"[]"` instead of `"(]"`. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open. 
 * Improved speed of assertions by using package `{checkmate}`
+* Bugfix in `listDistributions` which was overriding filtering with `simplify`
 
 # distr6 1.3.7
 
