@@ -102,11 +102,11 @@ test_that("log", {
 })
 
 test_that("working_support", {
-  expect_equal(Exponential$new()$workingSupport, Interval$new(0, 100))
-  expect_equal(Binomial$new()$workingSupport, Set$new(elements = 0:10, class = "integer"))
-  expect_equal(Normal$new()$workingSupport, Interval$new(-100, 10))
+  expect_equal(Exponential$new()$workingSupport(), Interval$new(0, 100))
+  expect_equal(Binomial$new()$workingSupport(), Set$new(elements = 0:10, class = "integer"))
+  expect_equal(Normal$new()$workingSupport(), Interval$new(-100, 10))
   expect_equal(Distribution$new("Test", pdf = dbin, parameters = ps,
-                                type = Integers$new())$workingSupport,
+                                type = Integers$new())$workingSupport(),
                Interval$new(-10, 1000, class = "integer"))
 })
 
@@ -167,13 +167,13 @@ test_that("correlation", {
 
 test_that("deprecated", {
   b <- Binomial$new()
-  expect_warning(b$type, "Deprecated")
-  expect_warning(b$variateForm, "Deprecated")
-  expect_warning(b$valueSupport, "Deprecated")
-  expect_warning(b$kurtosisType, "Deprecated")
-  expect_warning(b$skewnessType, "Deprecated")
-  expect_warning(b$support, "Deprecated")
-  expect_warning(b$symmetry, "Deprecated")
+  expect_message(b$type, "Deprecated")
+  expect_message(b$variateForm, "Deprecated")
+  expect_message(b$valueSupport, "Deprecated")
+  expect_message(b$kurtosisType, "Deprecated")
+  expect_message(b$skewnessType, "Deprecated")
+  expect_message(b$support, "Deprecated")
+  expect_message(b$symmetry, "Deprecated")
 })
 
 test_that("no dpqr given", {
