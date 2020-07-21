@@ -102,11 +102,11 @@ test_that("log", {
 })
 
 test_that("working_support", {
-  expect_equal(Exponential$new()$workingSupport, Interval$new(0, 100))
-  expect_equal(Binomial$new()$workingSupport, Set$new(elements = 0:10, class = "integer"))
-  expect_equal(Normal$new()$workingSupport, Interval$new(-100, 10))
+  expect_equal(Exponential$new()$workingSupport(), Interval$new(0, 100))
+  expect_equal(Binomial$new()$workingSupport(), Set$new(elements = 0:10, class = "integer"))
+  expect_equal(Normal$new()$workingSupport(), Interval$new(-100, 10))
   expect_equal(Distribution$new("Test", pdf = dbin, parameters = ps,
-                                type = Integers$new())$workingSupport,
+                                type = Integers$new())$workingSupport(),
                Interval$new(-10, 1000, class = "integer"))
 })
 
@@ -167,13 +167,13 @@ test_that("correlation", {
 
 test_that("deprecated", {
   b <- Binomial$new()
-  expect_warning(b$type, "Deprecated")
-  expect_warning(b$variateForm, "Deprecated")
-  expect_warning(b$valueSupport, "Deprecated")
-  expect_warning(b$kurtosisType, "Deprecated")
-  expect_warning(b$skewnessType, "Deprecated")
-  expect_warning(b$support, "Deprecated")
-  expect_warning(b$symmetry, "Deprecated")
+  expect_message(b$type, "Deprecated")
+  expect_message(b$variateForm, "Deprecated")
+  expect_message(b$valueSupport, "Deprecated")
+  expect_message(b$kurtosisType, "Deprecated")
+  expect_message(b$skewnessType, "Deprecated")
+  expect_message(b$support, "Deprecated")
+  expect_message(b$symmetry, "Deprecated")
 })
 
 test_that("no dpqr given", {
@@ -185,8 +185,8 @@ test_that("no dpqr given", {
 })
 
 test_that("points outside domain", {
-  expect_error(Multinomial$new()$pdf(data = matrix(c(-1,12,2,8), ncol = 2)), "Not all points")
-  expect_error(EmpiricalMV$new()$cdf(data = matrix(c(-1i,12,2,8), ncol = 2)), "Not all points")
+  expect_error(Multinomial$new()$pdf(data = matrix(c(-1, 12, 2, 8), ncol = 2)), "Not all points")
+  expect_error(EmpiricalMV$new()$cdf(data = matrix(c(-1i, 12, 2, 8), ncol = 2)), "Not all points")
 
   expect_error(Binomial$new()$pdf(-1), "Not all points")
   expect_error(Binomial$new()$cdf(-1), "Not all points")

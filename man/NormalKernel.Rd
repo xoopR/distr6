@@ -69,6 +69,7 @@ Other kernels:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean">}\href{../../distr6/html/Kernel.html#method-mean}{\code{distr6::Kernel$mean()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median">}\href{../../distr6/html/Kernel.html#method-median}{\code{distr6::Kernel$median()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode">}\href{../../distr6/html/Kernel.html#method-mode}{\code{distr6::Kernel$mode()}}\out{</span>}

@@ -154,7 +154,7 @@ CoreStatistics <- R6Class("CoreStatistics",
 
       count <- self$properties$support$properties$countability
       if (count != "uncountable") {
-        ws <- self$workingSupport
+        ws <- self$workingSupport()
         rng <- seq.int(ws$lower, ws$upper)
         pdfs <- self$pdf(rng)
         xs <- trafo(rng)

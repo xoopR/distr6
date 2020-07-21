@@ -371,7 +371,9 @@ or `distlist` should be used.")
       ndist <- nrow(private$.modelTable)
 
       # create name, short_name, description, type, support
-      if (length(unique(self$modelTable$Distribution)) == 1) {
+      dst <- unique(self$modelTable$Distribution)
+      if (length(dst) == 1 &
+          dst[[1]] %in% listDistributions(simplify = TRUE)) {
         distribution <- get(as.character(unlist(self$modelTable[1, 1])))
         if (is.null(name)) {
           name <- paste0(

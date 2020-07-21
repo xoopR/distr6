@@ -160,7 +160,7 @@ FunctionImputation <- R6Class("FunctionImputation",
       data <- p
 
       if (testContinuous(self)) {
-        x <- self$workingSupport
+        x <- self$workingSupport()
         lower <- x$lower
         upper <- x$upper
         quantile <- numeric(length(data))

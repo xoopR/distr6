@@ -104,13 +104,6 @@ symmetry.}
 \item{\code{kurtosisType}}{Deprecated, use \verb{$properties$kurtosis}.}
 
 \item{\code{skewnessType}}{Deprecated, use \verb{$properties$skewness}.}
-
-\item{\code{workingSupport}}{Returns an estimate for the computational support of the distribution.
-If an analytical cdf is available, then this is computed as the smallest interval
-in which the cdf lower bound is \code{0} and the upper bound is \code{1}, bounds are incremented in
-10^i intervals. If no analytical cdf is available, then this is computed as the smallest
-interval in which the lower and upper bounds of the pdf are \code{0}, this is much less precise
-and is more prone to error. Used primarily by decorators.}
 }
 \if{html}{\out{</div>}}
 }
@@ -135,6 +128,7 @@ and is more prone to error. Used primarily by decorators.}
 \item \href{#method-correlation}{\code{Distribution$correlation()}}
 \item \href{#method-liesInSupport}{\code{Distribution$liesInSupport()}}
 \item \href{#method-liesInType}{\code{Distribution$liesInType()}}
+\item \href{#method-workingSupport}{\code{Distribution$workingSupport()}}
 \item \href{#method-clone}{\code{Distribution$clone()}}
 }
 }
@@ -696,6 +690,21 @@ otherwise tests if \code{x} lie between the maximum and minimum of the distribut
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-workingSupport"></a>}}
+\if{latex}{\out{\hypertarget{method-workingSupport}{}}}
+\subsection{Method \code{workingSupport()}}{
+Returns an estimate for the computational support of the distribution.
+If an analytical cdf is available, then this is computed as the smallest interval
+in which the cdf lower bound is \code{0} and the upper bound is \code{1}, bounds are incremented in
+10^i intervals. If no analytical cdf is available, then this is computed as the smallest
+interval in which the lower and upper bounds of the pdf are \code{0}, this is much less precise
+and is more prone to error. Used primarily by decorators.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$workingSupport()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
