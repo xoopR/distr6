@@ -1,6 +1,6 @@
 ## Reason for early submission
 
-Re-submitting due to errors in R devel and patched solaris. Now fixed and tested on rhub and github actions.
+Due to a merging error previous Solaris fix wasn't submitted. This submission is guaranteed to fix Solaris error: https://builder.r-hub.io/status/distr6_1.4.1.tar.gz-e391f6f4293748e8954623a3b57e5a9f.
 
 ## Test Results
 

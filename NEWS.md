@@ -1,7 +1,10 @@
+# distr6 1.4.2
+
+* Critical patch for patched Solaris: Updated precision in C++ `log`
+
 # distr6 1.4.1
 
 * Critical patches for R devel: `workingSupport` is now a public method and not an active binding
-* Critical patch for patched Solaris: Updated precision in C++ `log`
 
 # distr6 1.4.0
 

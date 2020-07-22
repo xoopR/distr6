@@ -428,7 +428,7 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
 
   # context("d/p/q/r")
   if (isPdf(kern)) {
-    expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1)), pdf, 3)
+    expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1)), pdf, 2)
     if (kern$.__enclos_env__$private$.log) {
       expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1), log = TRUE), log(pdf), 2)
     }

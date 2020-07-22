@@ -6,7 +6,7 @@ test_that("autotest", {
     variance = 1 / 5,
     pdfSquared2Norm = c(3 / 5, 0.20625, 0),
     support = Interval$new(-1, 1),
-    pdf = c(0.742, 0.75, 0.742),
+    pdf = c(0.74, 0.75, 0.74),
     cdf = c(0.4252, 0.5, 0.5748)
   )
 })
