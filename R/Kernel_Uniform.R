@@ -34,7 +34,7 @@ UniformKernel <- R6Class("UniformKernel",
         } else{
           if (x[i] >= 0 & x[i] <= 2) {
             if (upper[i] >= 1) {ret[i] = 1/4 * (2 - x[i])}
-            else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {ret[i] = 1/4 * (upper[i] - x[i] +1)}
+            else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {ret[i] = 1/4 * (upper[i] - x[i] + 1)}
             else if (upper[i] <= x[i] -1) {ret[i] = 0}
           } else if (x[i] >= -2 & x[i] <= 0){
             if(upper[i] >= (x[i] + 1)) {ret[i] = 1/4 * (2 + x[i])}
