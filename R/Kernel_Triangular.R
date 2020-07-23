@@ -36,30 +36,31 @@ TriangularKernel <- R6Class("TriangularKernel",
                         3 * x[i]^3 - 6 * x[i]^2 - 3 * x[i] + 2) / 6
           } else if (upper[i] == Inf | upper[i] > 1) {
             ret[i] = (3 * x[i]^3 - 6 * x[i]^2 + 4) / 6
-          } else {ret[i] = 0}
+          }
         } else if (x[i] >=  1 & x[i] <= 2) {
-          if (upper[i] == Inf | upper[i] > 1) {
+          if (upper[i] == Inf | upper[i] >= 1) {
             ret[i] = (-x[i]^3 + 6 * x[i]^2 - 12 * x[i] + 8) / 6
-          } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
+          } else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {
             ret[i] = (- x[i]^3 + 6 * x[i]^2 - (- 3 * upper[i]^2 + 6 * upper[i] + 9) * x[i] - 2 * upper[i]^3 + 6 * upper[i] + 4) / 6
-          } else {ret[i] = 0}
+          }
         } else if (x[i] >= -1 & x[i] <= 0) {
-          if (upper[i] == Inf | upper[i] > x[i] + 1) {
+          if (upper[i] == Inf | upper[i] >= x[i] + 1) {
             ret[i] = (-x[i]^3 + 6 * x[i]^2 + 4) / 6
           } else if (upper[i] >= -1 & upper[i] <= x[i]) {
-            ret[i] = (- (3 * upper[i] ^2 + 6 * upper[i]  + 3) * x[i] - 2 * upper[i] ^3 - 6 *upper[i] ^2 - 6 * upper[i] + 2) / 6
+            ret[i] = (- (3 * upper[i] ^2 + 6 * upper[i]  + 3) * x[i] + 2 * upper[i]^3 + 6 *upper[i] ^2 + 6 * upper[i] + 2) / 6
           } else if (upper[i] >= x[i] & upper[i] <= 0) {
-            ret[i] = (-2 * upper[i]^3 + 3 * upper[i]^2 + 12 * upper[i] - 2 * x[i]^3 - 6 * x[i]^2 + 3 *x[i] - 4) / 6
+            ret[i] = -(x[i] * (2 * x[i]^2 + 6 * x[i] - 3 * upper[i] * (upper[i] + 2) + 3) +
+                         2 * (upper[i]^3 - 3*upper[i] - 1))/6
           } else if (upper[i] >=0 & upper[i] <= x[i] + 1) {
             ret[i] = (2 * upper[i]^3 - 3 * upper[i]^2 * x[i] - 6 * upper[i]^2 + 6 * upper[i] * x[i] + 6 * upper[i] - 2 * x[i]^3 -
                         6 * x[i]^2 - 3 * x[i] + 2) / 6
-          } else {ret[i] = 0}
+          }
         } else if (x[i] >= -2 & x[i] <= -1 ) {
           if (upper[i] == Inf | upper[i] >= x[i] + 1) {
-            ret[i] = (x[i]^3 + 6 * x[i] + 12 * x[i] + 8) / 6
+            ret[i] = (x[i]^3 + 6 * x[i]^2 + 12 * x[i] + 8) / 6
           } else if (upper[i] >= -1 & upper[i] <= x[i] + 1) {
             ret[i] = ((3 * upper[i]^2 + 6 * upper[i]) * x[i] - 2 * upper[i]^3 + 6 * upper[i] + 3 * x[i] + 4) / 6
-          } else {ret[i] = 0}
+          }
         } else {ret[i] = 0}
       }
 
