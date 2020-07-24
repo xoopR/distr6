@@ -28,9 +28,7 @@ ExoticStatistics <- R6Class("ExoticStatistics",
     #' where X is the distribution, \eqn{F_X} is the cdf of the distribution \eqn{X} and
     #' \eqn{a, b} are the `lower` and `upper` limits of integration.
     cdfAntiDeriv = function(lower = NULL, upper = NULL) {
-      if (is.null(lower)) lower <- self$inf
-      if (is.null(upper)) upper <- self$sup
-      return(self$cdfPNorm(p = 1, lower, upper))
+      self$cdfPNorm(1, lower, upper)
     },
 
     #' @description
@@ -39,10 +37,8 @@ ExoticStatistics <- R6Class("ExoticStatistics",
     #' where X is the distribution, \eqn{S_X} is the survival function of the distribution
     #' \eqn{X} and \eqn{a, b} are the `lower` and `upper` limits of integration.
     survivalAntiDeriv = function(lower = NULL, upper = NULL) {
-      if (is.null(lower)) lower <- self$inf
-      if (is.null(upper)) upper <- self$sup
-      return(self$survivalPNorm(p = 1, lower, upper))
-    }, # NEEDS TESTING (p-norm)
+      self$survivalPNorm(1, lower, upper)
+    },
 
     #' @description
     #' The survival function is defined by
@@ -107,10 +103,14 @@ ExoticStatistics <- R6Class("ExoticStatistics",
     #' @param p `(integer(1))`
     #' Norm to evaluate.
     cdfPNorm = function(p = 2, lower = NULL, upper = NULL) {
-      if (is.null(lower)) lower <- self$inf
-      if (is.null(upper)) upper <- self$sup
-
-      if (testContinuous(self)) {
+      if (testDiscrete(self)) {
+        range <- as.numeric(self$workingSupport())
+        if (!is.null(lower)) range <- range[range >= lower]
+        if (!is.null(upper)) range <- range[range <= upper]
+        return(generalPNorm(self$cdf, p, range = range))
+      } else {
+        if (is.null(lower)) lower <- self$inf
+        if (is.null(upper)) upper <- self$sup
         return(generalPNorm(self$cdf, p, lower, upper))
       }
     },
@@ -126,10 +126,14 @@ ExoticStatistics <- R6Class("ExoticStatistics",
     #' @param p `(integer(1))`
     #' Norm to evaluate.
     pdfPNorm = function(p = 2, lower = NULL, upper = NULL) {
-      if (is.null(lower)) lower <- self$inf
-      if (is.null(upper)) upper <- self$sup
-
-      if (testContinuous(self)) {
+      if (testDiscrete(self)) {
+        range <- as.numeric(self$workingSupport())
+        if (!is.null(lower)) range <- range[range >= lower]
+        if (!is.null(upper)) range <- range[range <= upper]
+        return(generalPNorm(self$pdf, p, range = range))
+      } else {
+        if (is.null(lower)) lower <- self$inf
+        if (is.null(upper)) upper <- self$sup
         return(generalPNorm(self$pdf, p, lower, upper))
       }
     }, # NEEDS TESTING
@@ -145,10 +149,14 @@ ExoticStatistics <- R6Class("ExoticStatistics",
     #' @param p `(integer(1))`
     #' Norm to evaluate.
     survivalPNorm = function(p = 2, lower = NULL, upper = NULL) {
-      if (is.null(lower)) lower <- self$inf
-      if (is.null(upper)) upper <- self$sup
-
-      if (testContinuous(self)) {
+      if (testDiscrete(self)) {
+        range <- as.numeric(self$workingSupport())
+        if (!is.null(lower)) range <- range[range >= lower]
+        if (!is.null(upper)) range <- range[range <= upper]
+        return(generalPNorm(self$survival, p, range = range))
+      } else {
+        if (is.null(lower)) lower <- self$inf
+        if (is.null(upper)) upper <- self$sup
         return(generalPNorm(self$survival, p, lower, upper))
       }
     }
