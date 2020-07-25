@@ -73,14 +73,6 @@ test_that("addDeps", {
   expect_error(ps$addDeps("c", "a", function(x) x), "'c' is not")
 })
 
-test_that("addChecks", {
-  ps <- ParameterSet$new(
-    id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
-    settable = list(TRUE, FALSE)
-  )
-  expect_error(ps$addChecks("c", function(x) x), "'c' is not")
-})
-
 test_that("addTrafos", {
   ps <- ParameterSet$new(
     id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),

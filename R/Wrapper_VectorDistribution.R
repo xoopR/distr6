@@ -131,7 +131,7 @@ or `distlist` should be used.")
           names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
           params <- c(params, shared_params)
         }
-        parameters <- ParameterSetCollection$new(lst = paramlst)$
+        parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks)$
                                          setParameterValue(lst = params)
 
         shortname <- get(distribution)$public_fields$short_name

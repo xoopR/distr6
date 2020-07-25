@@ -28,13 +28,16 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
     #'                                       Binom2 = b$parameters(),
     #'                                       Geom = g$parameters()))
-    initialize = function(..., lst = NULL) {
+    initialize = function(..., lst = NULL, .checks = NULL) {
       if (is.null(lst)) {
         lst <- list(...)
       }
       checkmate::assertNames(names(lst), type = "strict")
       assertParameterSetList(lst)
       private$.parametersets <- lst
+      if (!is.null(.checks)) {
+        private$.checks <- .checks
+      }
       invisible(self)
     },
 
@@ -158,8 +161,16 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
         bool = dist == i
         newlst <- lst[bool]
         names(newlst) <- param[bool]
-        private$.parametersets[[i]]$setParameterValue(lst = newlst)
+        if (is.null(self$checks)) {
+          private$.parametersets[[i]]$setParameterValue(lst = newlst)
+        } else {
+          private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = TRUE)
+        }
       })
+
+      if (!is.null(self$checks)) {
+        private$.check()
+      }
 
       invisible(self)
     },
