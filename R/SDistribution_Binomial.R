@@ -148,7 +148,9 @@ Binomial <- R6Class("Binomial",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$qprob)) lst$prob <- NULL
+      super$setParameterValue(lst = lst, error = error)
       private$.properties$support <- Set$new(0:self$getParameterValue("size"))
       if (self$getParameterValue("prob") == 0.5) {
         private$.properties$symmetry <- "asymmetric"

@@ -279,6 +279,16 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
             matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$cdf)) lst$pdf <- NULL
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
     }
   ),
 

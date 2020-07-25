@@ -205,72 +205,46 @@ ParameterSet <- R6Class("ParameterSet",
     #' ps$getParameterValue("rate")
     #' ps$getParameterValue("scale") # Auto-updated to 1/2
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      checkmate::assertList(lst)
+      if (is.null(lst)) {
+        lst <- list(...)
+      } else {
+        checkmate::assertList(lst)
+      }
+      lst <- lst[!sapply(lst, is.null)]
+
       orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
 
-      # for-loop is non-signif faster than apply (63 vs 92 ns)
-      for (i in seq_along(lst)) {
-        value <- lst[[i]]
+      checkmate::assertSubset(names(lst), as.character(unlist(orig$id)))
+      dt <- subset(private$.parameters, id %in% names(lst))
 
-        if (!is.null(value)) {
-
-          aid <- names(lst)[[i]]
-          if (is.null(aid)) {
-            return(stopwarn(error, "Parameter names and new values must be provided."))
-          }
-
-          param <- subset(as.data.table(self), id == aid)
-
-          if (nrow(param) == 0) {
-            return(stopwarn(error, sprintf("'%s' is not in the parameter set.", aid)))
-          }
-
-          if (!param$settable) {
-            return(stopwarn(error, sprintf(
-              "'%s' is not (manually) settable after construction.",
-              aid
-            )))
-          }
-
-          value <- private$.trafo(aid, value)
-
-          support <- param$support[[1]]
-
-          if (length(value) > 1) {
-            assertContains(support, Tuple$new(value),
-                           sprintf("%s does not lie in the support of %s.",
-                                   strCollapse(value, "()"), aid))
-          } else {
-            if (inherits(support, "ExponentSet")) {
-              if (support$power == "n") {
-                assertContains(support, Tuple$new(value),
-                               sprintf("%s does not lie in the support of %s.",
-                                       strCollapse(value, "()"), aid))
-              } else {
-                assertContains(support, value,
-                               sprintf("%s does not lie in the support of %s.", value, aid))
-              }
-            } else {
-              assertContains(support, value,
-                             sprintf("%s does not lie in the support of %s.", value, aid))
-            }
-          }
-
-          data.table::set(
-            private$.parameters,
-            which(private$.parameters$id == aid),
-            "value",
-            list(value)
-          )
-
-          private$.update(aid)
-        }
+      if (!all(dt$settable)) {
+        stop(sprintf("%s is not settable after construction.",
+                     strCollapse(unlist(subset(dt, !settable)$id))))
       }
+      lst <- lst[match(dt$id, names(lst))]
+      dt$value <- lst
+      dt[,value := Map(private$.trafo, id = id, value = value)]
 
-      x <- try(mapply(private$.check, private$.parameters$id, private$.parameters$value),
-        silent = TRUE
+      apply(dt, 1, function(.x) {
+        value = .x[[2]]
+        support = .x[[3]]
+        msg = sprintf("%s does not lie in the support of %s.", strCollapse(value, "()"), .x[[1]])
+        if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
+          value = Tuple$new(value)
+        }
+        assertContains(support, value, msg)
+      })
+
+      data.table::set(
+        private$.parameters,
+        which(private$.parameters$id %in% dt$id),
+        "value",
+        dt$value
       )
+
+      sapply(unlist(dt$id), private$.update)
+      x <- try(Map(private$.check, private$.parameters$id, private$.parameters$value),
+               silent = TRUE)
 
       if (class(x) == "try-error") {
         private$.parameters <- orig
@@ -558,7 +532,6 @@ ParameterSet <- R6Class("ParameterSet",
       support <- lst[[1]]
       which <- which(unlist(private$.parameters$id) %in% id)
       private$.parameters[which, 3][[1]] <- list(support)
-      invisible(self)
     },
     .check = function(id, value) {
       checks <- subset(self$checks, x == id)
@@ -567,7 +540,6 @@ ParameterSet <- R6Class("ParameterSet",
           assert(checks$fun[[i]](value, self))
         }
       }
-      invisible(self)
     },
     .trafo = function(id, value) {
       trafos <- subset(self$trafos, x == id)

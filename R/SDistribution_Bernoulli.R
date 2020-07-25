@@ -44,7 +44,6 @@ Bernoulli <- R6Class("Bernoulli",
     initialize = function(prob = 0.5, qprob = NULL, decorators = NULL) {
 
       private$.parameters <- getParameterSet(self, prob, qprob)
-      if (!is.null(qprob)) prob <- NULL
       self$setParameterValue(prob = prob, qprob = qprob)
 
       super$initialize(
@@ -191,7 +190,9 @@ Bernoulli <- R6Class("Bernoulli",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$qprob)) lst$prob <- NULL
+      super$setParameterValue(lst = lst, error = error)
       if (self$getParameterValue("prob") == 0.5) {
         private$.properties$symmetry <- "asymmetric"
       } else {

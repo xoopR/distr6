@@ -145,6 +145,21 @@ Gamma <- R6Class("Gamma",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$mean)) {
+        lst$rate <- NULL
+        lst$scale <- NULL
+      } else if (!is.null(lst$scale)) {
+        lst$rate <- NULL
+      }
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
     }
   ),
 
