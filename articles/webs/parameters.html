@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting and Setting Parameters</h1>
             
-            <h4 class="date">2020-07-24</h4>
+            <h4 class="date">2020-07-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/parameters.rmd"><code>vignettes/webs/parameters.rmd</code></a></small>
       <div class="hidden name"><code>parameters.rmd</code></div>
@@ -201,8 +201,8 @@
 <span class="co">#&gt; 4: prec     1      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></body></html></div>
 <p>Notice how not only the parameters in the given parameterisation are displayed, but all the ones possible. To filter this table for a specific parameter, add the parameter name as an argument</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>(<span class="st">"var"</span>)
-<span class="co">#&gt;     id value    support settable                        description</span>
-<span class="co">#&gt; 1: var     1 &lt;PosReals&gt;     TRUE Variance - Squared Scale Parameter</span></pre></body></html></div>
+<span class="co">#&gt;     id value        support settable                        description</span>
+<span class="co">#&gt; 1: var     1 &lt;PosReals[24]&gt;     TRUE Variance - Squared Scale Parameter</span></pre></body></html></div>
 <p>Or to only see the value of the parameter</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"prec"</span>)
 <span class="co">#&gt; [1] 1</span></pre></body></html></div>

@@ -694,10 +694,10 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
  <span class='no'>ps1</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</div><div class='output co'>#&gt;       id value    support
 #&gt; 1:  prob   0.2      [0,1]
 #&gt; 2: qprob   0.8      [0,1]
-#&gt; 3:  size    10 {0,...,10}</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>trafos</span></div><div class='output co'>#&gt;       x        fun
-#&gt; 1: size &lt;function&gt;</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>checks</span></div><div class='output co'>#&gt;       x        fun
-#&gt; 1: prob &lt;function&gt;</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;       x     y        fun
-#&gt; 1: prob qprob &lt;function&gt;</div><div class='input'>
+#&gt; 3:  size    10 {0,...,10}</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>trafos</span></div><div class='output co'>#&gt;       x           fun
+#&gt; 1: size &lt;function[1]&gt;</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>checks</span></div><div class='output co'>#&gt;       x           fun
+#&gt; 1: prob &lt;function[1]&gt;</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;       x     y           fun
+#&gt; 1: prob qprob &lt;function[1]&gt;</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addDeps`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -711,9 +711,9 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
 )
 <span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>))
 <span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
-<span class='no'>ps</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;        x     y        fun
-#&gt; 1: scale  rate &lt;function&gt;
-#&gt; 2:  rate scale &lt;function&gt;</div><div class='input'>
+<span class='no'>ps</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;        x     y           fun
+#&gt; 1: scale  rate &lt;function[1]&gt;
+#&gt; 2:  rate scale &lt;function[1]&gt;</div><div class='input'>
 <span class='co'># Alternate method</span>
 <span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
   <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>, <span class='no'>settable</span>
@@ -724,9 +724,9 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
                                   <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
                          )
            )
-<span class='no'>ps</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;        x     y        fun
-#&gt; 1: scale  rate &lt;function&gt;
-#&gt; 2:  rate scale &lt;function&gt;</div><div class='input'>
+<span class='no'>ps</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;        x     y           fun
+#&gt; 1: scale  rate &lt;function[1]&gt;
+#&gt; 2:  rate scale &lt;function[1]&gt;</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addChecks`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -738,8 +738,8 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
   <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>
 )
 <span class='no'>ps</span>$<span class='fu'>addChecks</span>(<span class='st'>"lower"</span>, <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>self</span>) <span class='no'>x</span> <span class='kw'>&lt;</span> <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"upper"</span>))
-<span class='no'>ps</span>$<span class='no'>checks</span></div><div class='output co'>#&gt;        x        fun
-#&gt; 1: lower &lt;function&gt;</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ps</span>$<span class='no'>checks</span></div><div class='output co'>#&gt;        x           fun
+#&gt; 1: lower &lt;function[1]&gt;</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># errors as check fails</span>
 <span class='no'>ps</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 }
@@ -762,8 +762,8 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
   <span class='st'>"probs"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>)), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>0</span>,<span class='fl'>1</span>)^<span class='fl'>2</span>
 )
 <span class='no'>ps</span>$<span class='fu'>addTrafos</span>(<span class='st'>"probs"</span>, <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='no'>x</span> / <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>x</span>)))
-<span class='no'>ps</span>$<span class='no'>trafos</span></div><div class='output co'>#&gt;        x        fun
-#&gt; 1: probs &lt;function&gt;</div><div class='input'><span class='no'>ps</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
+<span class='no'>ps</span>$<span class='no'>trafos</span></div><div class='output co'>#&gt;        x           fun
+#&gt; 1: probs &lt;function[1]&gt;</div><div class='input'><span class='no'>ps</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
 <span class='no'>ps</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"probs"</span>)</div><div class='output co'>#&gt; [1] 0.3333333 0.6666667</div><div class='input'>
 <span class='co'># Alternate method (better with more parameters)</span>
 <span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
