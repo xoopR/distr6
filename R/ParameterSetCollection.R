@@ -28,7 +28,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
     #'                                       Binom2 = b$parameters(),
     #'                                       Geom = g$parameters()))
-    initialize = function(..., lst = NULL, .checks = NULL) {
+    initialize = function(..., lst = NULL, .checks = NULL, .supports = NULL) {
       if (is.null(lst)) {
         lst <- list(...)
       }
@@ -37,6 +37,9 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       private$.parametersets <- lst
       if (!is.null(.checks)) {
         private$.checks <- .checks
+      }
+      if (!is.null(.supports)) {
+        private$.supports <- .supports
       }
       invisible(self)
     },
@@ -157,18 +160,16 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       param <- unlist(substr(names(lst), sep + 1, 1000))
       dist <- unlist(substr(names(lst), 1, sep - 1))
 
+      .suppressCheck <- !is.null(self$checks)
       sapply(unique(dist), function(i) {
         bool = dist == i
         newlst <- lst[bool]
         names(newlst) <- param[bool]
-        if (is.null(self$checks)) {
-          private$.parametersets[[i]]$setParameterValue(lst = newlst)
-        } else {
-          private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = TRUE)
-        }
+        private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = .suppressCheck)
       })
 
       if (!is.null(self$checks)) {
+        private$.contains()
         private$.check()
       }
 
@@ -230,6 +231,12 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 
   private = list(
     .parametersets = list(),
+    .supports = list(),
+    .contains = function() {
+      apply(private$.supports, 1, function(x) {
+        assertContains(x[[2]], as.Tuple(unlist(self$getParameterValue(x[[1]]))))
+      })
+    },
     deep_clone = function(name, value) {
       if (name %in% c(".parametersets")) {
         lapply(value, function(x) x$clone(deep = TRUE))

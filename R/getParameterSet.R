@@ -1155,9 +1155,7 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nol
     )
   })
   ps$addChecks(function(self) {
-    x = unlist(self$getParameterValue("cdf"))
-    all(length(x) == length(unlist(self$getParameterValue("x")))) &&
-      all(x >= 0 & x <= 1)
+    all(length(unlist(self$getParameterValue("cdf"))) == length(unlist(self$getParameterValue("x"))))
   })
 
   return(ps)

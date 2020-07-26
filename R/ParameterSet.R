@@ -210,6 +210,7 @@ ParameterSet <- R6Class("ParameterSet",
       } else {
         checkmate::assertList(lst)
       }
+
       lst <- lst[!sapply(lst, is.null)]
 
       orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
@@ -225,16 +226,18 @@ ParameterSet <- R6Class("ParameterSet",
       dt$value <- lst[match(dt$id, names(lst))]
       dt[,value := Map(private$.trafo, id = id, value = value)]
 
-      apply(dt, 1, function(.x) {
-        value = .x[[2]]
-        support = .x[[3]]
-        if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
-          value = Tuple$new(value)
-        }
-        assertContains(support, value,
-                       sprintf("%s does not lie in the support of %s.",
-                               strCollapse(value, "()"), .x[[1]]))
-      })
+      if (!.suppressCheck) {
+        apply(dt, 1, function(.x) {
+          value = .x[[2]]
+          support = .x[[3]]
+          if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
+            value = Tuple$new(value)
+          }
+          assertContains(support, value,
+                         sprintf("%s does not lie in the support of %s.",
+                                 strCollapse(value, "()"), .x[[1]]))
+        })
+      }
 
       data.table::set(
         private$.parameters,

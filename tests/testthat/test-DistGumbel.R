@@ -1,7 +1,3 @@
-library(testthat)
-
-context("Gumbel distribution")
-
 test_that("autotest", {
   expect_warning({
     autotest_sdistribution(
