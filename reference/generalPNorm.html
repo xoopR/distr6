@@ -230,7 +230,7 @@
     <p>Calculate the p-norm of any function between given limits.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generalPNorm</span>(<span class='no'>fun</span>, <span class='no'>p</span>, <span class='no'>lower</span>, <span class='no'>upper</span>)</pre>
+    <pre class="usage"><span class='fu'>generalPNorm</span>(<span class='no'>fun</span>, <span class='no'>p</span>, <span class='no'>lower</span>, <span class='no'>upper</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -251,6 +251,10 @@
       <th>upper</th>
       <td><p>upper bound for the integral</p></td>
     </tr>
+    <tr>
+      <th>range</th>
+      <td><p>if discrete then range of the function to sum over</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -258,9 +262,11 @@
     <p>Returns a numeric value for the p norm of a function evaluated between given limits.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The p-norm of a function \(f\) is given by,
+    <p>The p-norm of a continuous function \(f\) is given by,
 $$(\int_S |f|^p d\mu)^{1/p}$$
-where \(S\) is the function support.</p>
+where \(S\) is the function support. And for a discrete function by
+$$\sum_i (x_{i + 1} - x_i) * |f(x_i)|^p$$
+where \(i\) is over a given range.</p>
 <p>The p-norm is calculated numerically using the <code>integrate</code> function and therefore results
 are approximate only.</p>
 
