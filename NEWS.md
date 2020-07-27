@@ -1,3 +1,5 @@
+# distr6 1.4.2.9000
+
 # distr6 1.4.2
 
 * Critical patch for patched Solaris: Updated precision in C++ `log`
