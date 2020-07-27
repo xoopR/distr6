@@ -9,7 +9,6 @@
 #' The p-norm is calculated numerically using the \code{integrate} function and therefore results
 #' are approximate only.
 #'
-#' @usage generalPNorm(fun, p, lower, upper)
 #' @param fun function to calculate the p-norm of.
 #' @param p the pth norm to calculate
 #' @param lower lower bound for the integral

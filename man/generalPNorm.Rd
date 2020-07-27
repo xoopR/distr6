@@ -4,7 +4,7 @@
 \alias{generalPNorm}
 \title{Generalised P-Norm}
 \usage{
-generalPNorm(fun, p, lower, upper)
+generalPNorm(fun, p, lower, upper, range = NULL)
 }
 \arguments{
 \item{fun}{function to calculate the p-norm of.}
