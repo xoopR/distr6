@@ -1,5 +1,8 @@
 # distr6 1.4.2.9000
 
+* Bugfix in `WeightedDiscrete`, `cdf` was previously positive when below distribution support, now zero.
+* Added discrete p-norms in `ExoticStatistics` decorator
+
 # distr6 1.4.2
 
 * Critical patch for patched Solaris: Updated precision in C++ `log`
