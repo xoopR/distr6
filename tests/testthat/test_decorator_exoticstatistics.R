@@ -50,7 +50,7 @@ test_that("numeric survival functions", {
 #   og(-pexp(2, log.p = T, lower.tail = F))))
 # })
 
-dist = Binomial$new(decorators = "ExoticStatistics")
+dist <- Binomial$new(decorators = "ExoticStatistics")
 
 test_that("anti-derivatives", {
   expect_error(continuousTester$cdfAntiDeriv())

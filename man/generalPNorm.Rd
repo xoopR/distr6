@@ -14,6 +14,8 @@ generalPNorm(fun, p, lower, upper)
 \item{lower}{lower bound for the integral}
 
 \item{upper}{upper bound for the integral}
+
+\item{range}{if discrete then range of the function to sum over}
 }
 \value{
 Returns a numeric value for the p norm of a function evaluated between given limits.
@@ -22,9 +24,11 @@ Returns a numeric value for the p norm of a function evaluated between given lim
 Calculate the p-norm of any function between given limits.
 }
 \details{
-The p-norm of a function \eqn{f} is given by,
+The p-norm of a continuous function \eqn{f} is given by,
 \deqn{(\int_S |f|^p d\mu)^{1/p}}
-where \eqn{S} is the function support.
+where \eqn{S} is the function support. And for a discrete function by
+\deqn{\sum_i (x_{i + 1} - x_i) * |f(x_i)|^p}
+where \eqn{i} is over a given range.
 
 The p-norm is calculated numerically using the \code{integrate} function and therefore results
 are approximate only.
