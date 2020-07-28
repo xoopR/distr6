@@ -50,6 +50,8 @@ test_that("numeric survival functions", {
 #   og(-pexp(2, log.p = T, lower.tail = F))))
 # })
 
+dist <- Binomial$new(decorators = "ExoticStatistics")
+
 test_that("anti-derivatives", {
   expect_error(continuousTester$cdfAntiDeriv())
   expect_message(expect_equal(continuousTester$cdfAntiDeriv(lower = 2, upper = 5),
@@ -57,6 +59,11 @@ test_that("anti-derivatives", {
   expect_message(expect_equal(continuousTester$survivalAntiDeriv(), 1))
   expect_message(expect_equal(continuousTester$survivalAntiDeriv(lower = 2, upper = 5),
                               exp(-2) - exp(-5)))
+
+  expect_equal(dist$survivalAntiDeriv(), dist$mean())
+  expect_rounded_equal(dist$survivalAntiDeriv(2, 5), 2.40, 2)
+  expect_rounded_equal(dist$cdfAntiDeriv(lower = 2, upper = 5), 0.604, 3)
+  expect_rounded_equal(dist$cdfAntiDeriv(), 5)
 })
 
 test_that("p-norms", {
@@ -71,4 +78,11 @@ test_that("p-norms", {
 
   expect_message(expect_rounded_equal(continuousTester$survivalPNorm(2), 0.71, 2))
   expect_message(expect_rounded_equal(continuousTester$survivalPNorm(2, 2, 5), 0.1, 2))
+
+  expect_rounded_equal(dist$survivalPNorm(2, lower = 2, upper = 4), 1.58, 2)
+  expect_rounded_equal(dist$cdfPNorm(2, lower = 2, upper = 4), 0.03, 2)
+  expect_rounded_equal(dist$pdfPNorm(2, lower = 2, upper = 4), 0.02, 2)
+  expect_rounded_equal(dist$survivalPNorm(2), 4.12, 2)
+  expect_rounded_equal(dist$cdfPNorm(2), 4.12, 2)
+  expect_rounded_equal(dist$pdfPNorm(2), 0.18, 2)
 })

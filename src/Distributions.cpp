@@ -466,7 +466,12 @@ NumericVector C_WeightedDiscreteCdf(NumericVector x, NumericVector data, Numeric
   for (int k = 0; k < n; k++) {
     for (int j = 0; j < nr; j++) {
       if (data[j] >= x[k]) {
-        mat[k] = cdf[j];
+        if (data[j] > x[k] && j == 0) {
+          mat[k] = 0;
+        } else {
+          mat[k] = cdf[j];
+        }
+
         if (!lower) {
           mat[k] = 1 - mat[k];
         }
