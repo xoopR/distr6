@@ -372,26 +372,10 @@ ParameterSet <- R6Class("ParameterSet",
     #'                          )
     #'            )
     #' ps$deps
-    addDeps = function(x, y, fun, dt = NULL) {
-      if (is.null(dt)) {
-        dt <- data.table(x = x, y = y, fun = fun)
-      }
-
-      checkmate::assertDataTable(dt, types = c("character", "character", "list"))
-      checkmate::assertNames(colnames(dt), identical.to = c("x", "y", "fun"))
-
-      apply(dt, 1, function(z) {
-        if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
-          stopf("'%s' is not a parameter in this ParameterSet", z[[1]])
-        }
-        if (nrow(subset(private$.parameters, id == z[[2]])) == 0) {
-          stopf("'%s' is not a parameter in this ParameterSet", z[[2]])
-        }
-        checkmate::assertFunction(z[[3]], "self")
-      })
-
-      private$.deps <- rbind(self$deps, dt)
-
+    addDeps = function(x, y, fun) {
+      checkmate::assertFunction(fun, "self")
+      checkmate::assertSubset(c(x, y), unlist(private$.parameters$id))
+      private$.deps <- rbind(self$deps, data.table(x = x, y = y, fun = fun))
       invisible(self)
     },
 

@@ -69,8 +69,7 @@ test_that("addDeps", {
     id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
     settable = list(TRUE, FALSE)
   )
-  expect_error(ps$addDeps("a", "c", function(x) x), "'c' is not")
-  expect_error(ps$addDeps("c", "a", function(x) x), "'c' is not")
+  expect_error(ps$addDeps("a", "c", function(self) x), "subset of")
 })
 
 test_that("addChecks", {

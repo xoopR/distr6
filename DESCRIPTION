@@ -199,6 +199,7 @@ Collate:
     'plot_multivariate.R'
     'plot_vectordistribution.R'
     'qqplot.R'
+    'sets.R'
     'simulateEmpiricalDistribution.R'
     'skewType.R'
     'zzz.R'

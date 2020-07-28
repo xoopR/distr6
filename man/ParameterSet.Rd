@@ -471,7 +471,7 @@ Merges multiple parameter sets.
 \subsection{Method \code{addDeps()}}{
 Add parameter dependencies for automatic updating.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addDeps(x, y, fun, dt = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addDeps(x, y, fun)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
