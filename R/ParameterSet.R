@@ -205,77 +205,56 @@ ParameterSet <- R6Class("ParameterSet",
     #' ps$setParameterValue(rate = 2)
     #' ps$getParameterValue("rate")
     #' ps$getParameterValue("scale") # Auto-updated to 1/2
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      checkmate::assertList(lst)
-      orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
-
-      # for-loop is non-signif faster than apply (63 vs 92 ns)
-      for (i in seq_along(lst)) {
-        value <- lst[[i]]
-
-        if (!is.null(value)) {
-
-          aid <- names(lst)[[i]]
-          if (is.null(aid)) {
-            return(stopwarn(error, "Parameter names and new values must be provided."))
-          }
-
-          param <- subset(as.data.table(self), id == aid)
-
-          if (nrow(param) == 0) {
-            return(stopwarn(error, sprintf("'%s' is not in the parameter set.", aid)))
-          }
-
-          if (!param$settable) {
-            return(stopwarn(error, sprintf(
-              "'%s' is not (manually) settable after construction.",
-              aid
-            )))
-          }
-
-          value <- private$.trafo(aid, value)
-
-          support <- param$support[[1]]
-
-          if (length(value) > 1) {
-            assertContains(support, Tuple$new(value),
-                           sprintf("%s does not lie in the support of %s.",
-                                   strCollapse(value, "()"), aid))
-          } else {
-            if (inherits(support, "ExponentSet")) {
-              if (support$power == "n") {
-                assertContains(support, Tuple$new(value),
-                               sprintf("%s does not lie in the support of %s.",
-                                       strCollapse(value, "()"), aid))
-              } else {
-                assertContains(support, value,
-                               sprintf("%s does not lie in the support of %s.", value, aid))
-              }
-            } else {
-              assertContains(support, value,
-                             sprintf("%s does not lie in the support of %s.", value, aid))
-            }
-          }
-
-          data.table::set(
-            private$.parameters,
-            which(private$.parameters$id == aid),
-            "value",
-            list(value)
-          )
-
-          private$.update(aid)
-        }
+    setParameterValue = function(..., lst = NULL, error = "warn", .suppressCheck = FALSE) {
+      if (is.null(lst)) {
+        lst <- list(...)
+      } else {
+        checkmate::assertList(lst)
       }
 
-      x <- try(mapply(private$.check, private$.parameters$id, private$.parameters$value),
-        silent = TRUE
+      lst <- lst[!sapply(lst, is.null)]
+
+      orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
+
+      checkmate::assertSubset(names(lst), as.character(unlist(orig$id)))
+      dt <- subset(private$.parameters, id %in% names(lst))
+
+      if (!all(dt$settable)) {
+        stop(sprintf("%s is not settable after construction.",
+                     strCollapse(unlist(subset(dt, !settable)$id))))
+      }
+
+      dt$value <- lst[match(dt$id, names(lst))]
+      dt[,value := Map(private$.trafo, id = id, value = value)]
+
+      if (!.suppressCheck) {
+        apply(dt, 1, function(.x) {
+          value = .x[[2]]
+          support = .x[[3]]
+          if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
+            value = Tuple$new(value)
+          }
+          assertContains(support, value,
+                         sprintf("%s does not lie in the support of %s.",
+                                 strCollapse(value, "()"), .x[[1]]))
+        })
+      }
+
+      data.table::set(
+        private$.parameters,
+        which(private$.parameters$id %in% dt$id),
+        "value",
+        dt$value
       )
 
-      if (class(x) == "try-error") {
-        private$.parameters <- orig
-        stop(x)
+      sapply(unlist(dt$id), private$.update)
+
+      if (!is.null(self$checks) && !.suppressCheck) {
+        x <- try(private$.check(), silent = TRUE)
+        if (class(x) == "try-error") {
+          private$.parameters <- orig
+          stop(x)
+        }
       }
 
       invisible(self)
@@ -324,9 +303,9 @@ ParameterSet <- R6Class("ParameterSet",
           private$.trafos,
           data.table::rbindlist(lapply(newsets, function(x) x$trafos))
         )
-        private$.checks <- rbind(
+        private$.checks <- c(
           private$.checks,
-          data.table::rbindlist(lapply(newsets, function(x) x$checks))
+          lapply(newsets, function(x) x$checks)
         )
         private$.deps <- rbind(
           private$.deps,
@@ -414,22 +393,15 @@ ParameterSet <- R6Class("ParameterSet",
     #'                           x = "lower",
     #'                           fun = function(x, self) x < self$getParameterValue("upper")
     #'            ))
-    addChecks = function(x, fun, dt = NULL) {
-      if (is.null(dt)) {
-        dt <- data.table(x = x, fun = fun)
+    addChecks = function(fun) {
+      if (is.null(self$checks)) {
+        private$.checks <- checkmate::assertFunction(fun, "self")
+      } else {
+        f1 <- self$checks
+        f2 <- checkmate::assertFunction(fun)
+        body(f1) <- substitute(b1 && b2, list(b1 = body(f1), b2 = body(f2)))
+        private$.checks <- f1
       }
-
-      checkmate::assertDataTable(dt, types = c("character", "list"))
-      checkmate::assertNames(colnames(dt), identical.to = c("x", "fun"))
-
-      apply(dt, 1, function(z) {
-        if (nrow(subset(private$.parameters, id == z[[1]])) == 0) {
-          stopf("'%s' is not a parameter in this ParameterSet", z[[1]])
-        }
-        checkmate::assertFunction(z[[2]], c("x", "self"), TRUE)
-      })
-
-      private$.checks <- rbind(self$checks, dt)
 
       invisible(self)
     },
@@ -536,23 +508,16 @@ ParameterSet <- R6Class("ParameterSet",
       settable = logical(), description = character()
     ),
     .deps = data.table(x = character(), y = character(), fun = list()),
-    .checks = data.table(x = character(), fun = list()),
+    .checks = NULL,
     .trafos = data.table(x = character(), fun = list()),
     .setParameterSupport = function(lst) {
       id <- names(lst)
       support <- lst[[1]]
       which <- which(unlist(private$.parameters$id) %in% id)
       private$.parameters[which, 3][[1]] <- list(support)
-      invisible(self)
     },
-    .check = function(id, value) {
-      checks <- subset(self$checks, x == id)
-      if (nrow(checks)) {
-        for (i in seq(nrow(checks))) {
-          assert(checks$fun[[i]](value, self))
-        }
-      }
-      invisible(self)
+    .check = function() {
+      assert(self$checks(self))
     },
     .trafo = function(id, value) {
       trafos <- subset(self$trafos, x == id)

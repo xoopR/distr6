@@ -28,13 +28,19 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
     #'                                       Binom2 = b$parameters(),
     #'                                       Geom = g$parameters()))
-    initialize = function(..., lst = NULL) {
+    initialize = function(..., lst = NULL, .checks = NULL, .supports = NULL) {
       if (is.null(lst)) {
         lst <- list(...)
       }
       checkmate::assertNames(names(lst), type = "strict")
       assertParameterSetList(lst)
       private$.parametersets <- lst
+      if (!is.null(.checks)) {
+        private$.checks <- .checks
+      }
+      if (!is.null(.supports)) {
+        private$.supports <- .supports
+      }
       invisible(self)
     },
 
@@ -144,16 +150,28 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' psc$getParameterValue("Geom_prob")
     #' g$getParameterValue("prob")
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      sep <- as.numeric(as.data.table(gregexpr("_", names(lst)))[1, ])
-      param <- substr(names(lst), sep + 1, 1000)
-      dist <- substr(names(lst), 1, sep - 1)
+      if (is.null(lst)) {
+        lst <- list(...)
+      } else {
+        checkmate::assertList(lst)
+      }
 
+      sep <- as.numeric(as.data.table(gregexpr("_", names(lst)))[1, ])
+      param <- unlist(substr(names(lst), sep + 1, 1000))
+      dist <- unlist(substr(names(lst), 1, sep - 1))
+
+      .suppressCheck <- !is.null(self$checks)
       sapply(unique(dist), function(i) {
-        newlst <- lst[dist == i]
-        names(newlst) <- unlist(param)[dist == i]
-        private$.parametersets[[i]]$setParameterValue(lst = newlst)
+        bool = dist == i
+        newlst <- lst[bool]
+        names(newlst) <- param[bool]
+        private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = .suppressCheck)
       })
+
+      if (!is.null(self$checks)) {
+        private$.contains()
+        private$.check()
+      }
 
       invisible(self)
     },
@@ -213,6 +231,12 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 
   private = list(
     .parametersets = list(),
+    .supports = list(),
+    .contains = function() {
+      apply(private$.supports, 1, function(x) {
+        assertContains(x[[2]], as.Tuple(unlist(self$getParameterValue(x[[1]]))))
+      })
+    },
     deep_clone = function(name, value) {
       if (name %in% c(".parametersets")) {
         lapply(value, function(x) x$clone(deep = TRUE))

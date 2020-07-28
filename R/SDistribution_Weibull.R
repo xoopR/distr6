@@ -151,6 +151,16 @@ Weibull <- R6Class("Weibull",
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     pgf = function(z) {
       return(NaN)
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$altscale)) lst$scale <- NULL
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
     }
   ),
 

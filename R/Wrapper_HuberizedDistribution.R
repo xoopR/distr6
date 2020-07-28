@@ -74,14 +74,8 @@ Try decorate(distribution, FunctionImputation) first.")
           "Upper limit of huberization"
         )
       )
-      private$.outerParameters$addChecks(
-        "lower",
-        function(x, self) x < self$getParameterValue("upper")
-      )
-      private$.outerParameters$addChecks(
-        "upper",
-        function(x, self) x > self$getParameterValue("lower")
-      )
+      private$.outerParameters$addChecks(function(self) self$getParameterValue("lower") <
+                                           self$getParameterValue("upper"))
 
       super$initialize(
         distlist = distlist,

@@ -11,8 +11,8 @@ getParameterSet.Arcsine <- function(object, lower, upper) {
       "Upper distribution limit."
     )
   )
-  ps$addChecks("lower", function(x, self) x <= self$getParameterValue("upper"))
-  ps$addChecks("upper", function(x, self) x >= self$getParameterValue("lower"))
+  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <=
+                                    unlist(self$getParameterValue("upper"))))
   return(ps)
 }
 
@@ -95,8 +95,8 @@ getParameterSet.Categorical <- function(object, probs, elements) {
     description = list("Categories", "Probability of success i")
   )
 
-  ps$addChecks("probs", function(x, self) length(x) == length(self$getParameterValue("elements")))
-  ps$addChecks("elements", function(x, self) length(x) == length(self$getParameterValue("probs")))
+  ps$addChecks(function(self) all(length(unlist(self$getParameterValue("probs"))) ==
+                 length(unlist(self$getParameterValue("elements")))))
   ps$addTrafos("probs", function(x, self) x / sum(x))
 
   return(ps)
@@ -166,8 +166,8 @@ getParameterSet.DiscreteUniform <- function(object, lower, upper) { # nolint
     )
   )
 
-  ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
-  ps$addChecks("upper", function(x, self) x > self$getParameterValue("lower"))
+  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <
+                 unlist(self$getParameterValue("upper"))))
 
   return(ps)
 }
@@ -744,9 +744,15 @@ getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
       nrow = length(self$getParameterValue("mean"))
     )))
   })
-  ps$addChecks("mean", function(x, self)
-    length(unlist(x)) == sqrt(length(unlist(self$getParameterValue("cov"))))
-    )
+  ps$addChecks(function(self) {
+    mean = self$getParameterValue("mean")
+    if (checkmate::testList(mean)) {
+      n = length(mean[[1]])^2 * length(mean)
+    } else {
+      n = length(mean)^2
+    }
+    n == length(unlist(self$getParameterValue("cov")))
+    })
 
   return(ps)
 }
@@ -838,8 +844,8 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
         self$getParameterValue("size")) /
         self$getParameterValue("mean"))
     })
-    ps$addChecks("mean", function(x, self) x >= self$getParameterValue("size"))
-    ps$addChecks("size", function(x, self) x <= self$getParameterValue("mean"))
+    ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
+                   unlist(self$getParameterValue("size"))))
   } else if (form == "tbs") {
     ps$addDeps("size", "mean", function(self) {
       self$getParameterValue("size") /
@@ -861,8 +867,8 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
       1 - (self$getParameterValue("size") /
         self$getParameterValue("mean"))
     })
-    ps$addChecks("mean", function(x, self) x >= self$getParameterValue("size"))
-    ps$addChecks("size", function(x, self) x <= self$getParameterValue("mean"))
+    ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
+                                      unlist(self$getParameterValue("size"))))
   } else {
     ps$addDeps("size", "mean", function(self) {
       self$getParameterValue("size") *
@@ -1011,8 +1017,8 @@ getParameterSet.Triangular <- function(object, lower, upper, mode, symmetric = F
     })
   }
 
-  ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
-  ps$addChecks("upper", function(x, self) x > self$getParameterValue("lower"))
+  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <
+                 unlist(self$getParameterValue("upper"))))
 
   return(ps)
 }
@@ -1025,8 +1031,8 @@ getParameterSet.Uniform <- function(object, lower, upper) {
     description = list("Lower distribution limit.", "Upper distribution limit.")
   )
 
-  ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
-  ps$addChecks("upper", function(x, self) x > self$getParameterValue("lower"))
+  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <
+                                    unlist(self$getParameterValue("upper"))))
 
   return(ps)
 }
@@ -1071,16 +1077,8 @@ getParameterSet.Weibull <- function(object, shape, scale, altscale = NULL) {
 }
 
 getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nolint
-  # pdf.bool <- cdf.bool <- FALSE
-  #
-  # if (!is.null(cdf)) {
-  #   cdf.bool <- TRUE
-  # } else {
-  #   pdf.bool <- TRUE
-  # }
 
   n <- length(x)
-
 
   ps <- ParameterSet$new(
     id = list("x", "pdf", "cdf"),
@@ -1098,13 +1096,8 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nol
       diff(self$getParameterValue("cdf"))
     )
   })
-  ps$addChecks("pdf", function(x, self) {
-    length(x) == length(self$getParameterValue("x")) &
-      all(x >= 0) & all(x <= 1) & sum(x) <= 1
-  })
-  ps$addChecks("cdf", function(x, self) {
-    length(x) == length(self$getParameterValue("x")) &
-      all(x >= 0) & all(x <= 1)
+  ps$addChecks(function(self) {
+    all(length(unlist(self$getParameterValue("cdf"))) == length(unlist(self$getParameterValue("x"))))
   })
 
   return(ps)

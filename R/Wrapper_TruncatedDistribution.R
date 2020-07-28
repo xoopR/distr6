@@ -68,14 +68,8 @@ Try decorate(distribution, FunctionImputation) first.")
           "Upper limit of truncation"
         )
       )
-      private$.outerParameters$addChecks(
-        "lower",
-        function(x, self) x < self$getParameterValue("upper")
-      )
-      private$.outerParameters$addChecks(
-        "upper",
-        function(x, self) x > self$getParameterValue("lower")
-      )
+      private$.outerParameters$addChecks(function(self) self$getParameterValue("lower") <
+                                           self$getParameterValue("upper"))
 
       if (testDiscrete(distribution)) {
         support <- Interval$new(lower + 1, upper, class = "integer", type = "(]")

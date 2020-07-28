@@ -127,7 +127,9 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$rate)) lst$scale <- NULL
+      super$setParameterValue(lst = lst, error = error)
       if (self$getParameterValue("shape") == 0) {
         private$.properties$support <- Reals$new()
       } else if (self$getParameterValue("shape") < 0) {

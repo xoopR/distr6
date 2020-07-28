@@ -45,12 +45,12 @@ test_that("setters", {
   expect_error(Binomial$new()$setParameterValue(lst = list(prob = 2)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
-  expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa = 2))))
+  expect_error(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa = 2)))
   expect_error(Exponential$new() %>% setParameterValue(rate = 0))
   expect_error(Exponential$new() %>% setParameterValue(rate = Inf))
-  expect_warning(Binomial$new()$setParameterValue(lst = list(2)), "provided")
-  expect_error(ParameterSet$new(id = "a", value = list(c(1, 2)), support = Reals$new()^2)$ # nolint
-                 setParameterValue(a = 1), "does not lie")
+  expect_error(ParameterSet$new(id = "a",
+                                value = list(c(1, 2)),
+                                support = Reals$new()^2)$setParameterValue(a = 1), "does not lie")
 })
 
 test_that("merge", {
@@ -70,14 +70,6 @@ test_that("addDeps", {
     settable = list(TRUE, FALSE)
   )
   expect_error(ps$addDeps("a", "c", function(self) x), "subset of")
-})
-
-test_that("addChecks", {
-  ps <- ParameterSet$new(
-    id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
-    settable = list(TRUE, FALSE)
-  )
-  expect_error(ps$addChecks("c", function(x) x), "'c' is not")
 })
 
 test_that("addTrafos", {

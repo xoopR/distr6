@@ -107,8 +107,8 @@ or `distlist` should be used.")
 
         # create wrapper parameters by cloning distribution parameters and setting by given params
         pdist <- get(distribution)
-
         p <- do.call(paste0("getParameterSet.", distribution), c(params[[1]], shared_params))
+
         paramlst <- vector("list", length(params))
         for (i in seq_along(params)) {
           paramlst[[i]] <- p$clone(deep = TRUE)
@@ -131,9 +131,11 @@ or `distlist` should be used.")
           names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
           params <- c(params, shared_params)
         }
-        parameters <- ParameterSetCollection$new(lst = paramlst)$
-                                         setParameterValue(lst = params)
 
+        support = subset(as.data.table(p), select = c(id, support))
+        support[,support := sapply(support, set6::setpower, power = length(paramlst))]
+        parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
+                                                .supports = support)$setParameterValue(lst = params)
         shortname <- get(distribution)$public_fields$short_name
 
         # modelTable is for reference and later
@@ -372,8 +374,7 @@ or `distlist` should be used.")
 
       # create name, short_name, description, type, support
       dst <- unique(self$modelTable$Distribution)
-      if (length(dst) == 1 &
-          dst[[1]] %in% listDistributions(simplify = TRUE)) {
+      if (length(dst) == 1 & dst[[1]] %in% listDistributions(simplify = TRUE)) {
         distribution <- get(as.character(unlist(self$modelTable[1, 1])))
         if (is.null(name)) {
           name <- paste0(
