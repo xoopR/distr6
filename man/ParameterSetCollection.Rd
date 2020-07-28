@@ -117,7 +117,7 @@ psc$merge(psc2)$parameters()
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$new(..., lst = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$new(..., lst = NULL, .checks = NULL, .supports = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -129,6 +129,10 @@ where the names are unique and correspond to references for the distributions.}
 
 \item{\code{lst}}{\code{(list())}\cr
 Alternative constructor by supplying a named list of \link{ParameterSet}s.}
+
+\item{\code{.checks}}{Used internally.}
+
+\item{\code{.supports}}{Used internally.}
 }
 \if{html}{\out{</div>}}
 }

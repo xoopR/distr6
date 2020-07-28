@@ -53,7 +53,6 @@ test_that("autotest", {
 })
 
 test_that("manual", {
-  expect_error(getParameterSet.Lognormal(1, mean = NULL, meanlog = NULL), "One of")
   l <- Lognormal$new(meanlog = 1)$setParameterValue(sdlog = 2)
   expect_equal(l$getParameterValue("mean"), exp(3))
   expect_equal(l$getParameterValue("var"), (exp(4) - 1) * exp(6))

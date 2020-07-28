@@ -31,8 +31,8 @@ getParameterSet.Bernoulli <- function(object, prob, qprob = NULL) {
     support = list(Interval$new(0, 1), Interval$new(0, 1)),
     description = list("Probability of Success", "Probability of failure")
   )
-  ps$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
-  ps$addDeps("qprob", "prob", function(self) 1 - self$getParameterValue("qprob"))
+  ps$addDeps("prob", "qprob", function(self) list(qprob = 1 - self$getParameterValue("prob")))
+  ps$addDeps("qprob", "prob", function(self) list(prob = 1 - self$getParameterValue("qprob")))
 
   return(ps)
 }
@@ -75,8 +75,8 @@ getParameterSet.Binomial <- function(object, size, prob, qprob = NULL) {
       "Probability of failure", "Number of trials"
     )
   )
-  ps$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
-  ps$addDeps("qprob", "prob", function(self) 1 - self$getParameterValue("qprob"))
+  ps$addDeps("prob", "qprob", function(self) list(qprob = 1 - self$getParameterValue("prob")))
+  ps$addDeps("qprob", "prob", function(self) list(prob = 1 - self$getParameterValue("qprob")))
 
   return(ps)
 }
@@ -191,8 +191,8 @@ getParameterSet.Erlang <- function(object, shape, rate, scale = NULL) {
       "Scale - Scale Parameter"
     )
   )
-  ps$addDeps("rate", "scale", function(self) self$getParameterValue("rate")^-1)
-  ps$addDeps("scale", "rate", function(self) self$getParameterValue("scale")^-1)
+  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
+  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
 
   return(ps)
 }
@@ -212,8 +212,8 @@ getParameterSet.Exponential <- function(object, rate, scale = NULL) {
     support = list(pos_reals, pos_reals),
     description = list("Arrival Rate", "Scale")
   )
-  ps$addDeps("rate", "scale", function(self) self$getParameterValue("rate")^-1)
-  ps$addDeps("scale", "rate", function(self) self$getParameterValue("scale")^-1)
+  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
+  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
 
   return(ps)
 
@@ -279,24 +279,20 @@ getParameterSet.Gamma <- function(object, shape, rate, scale = NULL, mean = NULL
       "Mean - Mean Parameter"
     )
   )
-  ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
-  ps$addDeps(
-    "rate", "mean",
-    function(self) self$getParameterValue("shape") / self$getParameterValue("rate")
-  )
-  ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
-  ps$addDeps(
-    "scale", "mean",
-    function(self) self$getParameterValue("shape") * self$getParameterValue("scale")
-  )
-  ps$addDeps(
-    "mean", "rate",
-    function(self) self$getParameterValue("shape") / self$getParameterValue("mean")
-  )
-  ps$addDeps(
-    "mean", "scale",
-    function(self) self$getParameterValue("mean") / self$getParameterValue("shape")
-  )
+  ps$addDeps("rate", c("scale", "mean"), function(self) {
+    rate = self$getParameterValue("rate")
+    list(scale = 1 / rate,
+         mean = self$getParameterValue("shape") / rate)
+  })
+  ps$addDeps("scale", c("rate", "mean"), function(self) {
+    scale = self$getParameterValue("scale")
+    list(rate = 1 / scale,
+         mean = self$getParameterValue("shape") * scale)
+  })
+  ps$addDeps("mean", c("rate", "scale"), function(self) {
+    rate = self$getParameterValue("shape") / self$getParameterValue("mean")
+    list(rate, scale = rate^-1)
+  })
 
   return(ps)
 }
@@ -345,8 +341,8 @@ getParameterSet.Geometric <- function(object, prob, qprob = NULL, trials = FALSE
     )
   }
 
-  ps$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
-  ps$addDeps("qprob", "prob", function(self) 1 - self$getParameterValue("qprob"))
+  ps$addDeps("prob", "qprob", function(self) list(qprob = 1 - self$getParameterValue("prob")))
+  ps$addDeps("qprob", "prob", function(self) list(prob = 1 - self$getParameterValue("qprob")))
 
   return(ps)
 }
@@ -393,13 +389,13 @@ getParameterSet.Hypergeometric <- function(object, size, successes, failures = N
   )
 
   ps$addDeps(
-    "successes", "failures",
-    function(self) self$getParameterValue("size") - self$getParameterValue("successes")
-  )
+    "successes", "failures", function(self) {
+      list(failures = self$getParameterValue("size") - self$getParameterValue("successes"))
+    })
   ps$addDeps(
-    "failures", "successes",
-    function(self) self$getParameterValue("size") - self$getParameterValue("failures")
-  )
+    "failures", "successes", function(self){
+      list(successes = self$getParameterValue("size") - self$getParameterValue("failures"))
+    })
 
   return(ps)
 
@@ -432,8 +428,8 @@ getParameterSet.Laplace <- function(object, mean, scale, var = NULL) {
       "Variance - Alternate Scale Parameter"
     )
   )
-  ps$addDeps("scale", "var", function(self) 2 * self$getParameterValue("scale")^2)
-  ps$addDeps("var", "scale", function(self) sqrt(self$getParameterValue("var") / 2))
+  ps$addDeps("scale", "var", function(self) list(var = 2 * self$getParameterValue("scale")^2))
+  ps$addDeps("var", "scale", function(self) list(scale = sqrt(self$getParameterValue("var") / 2)))
 
   return(ps)
 }
@@ -465,8 +461,10 @@ getParameterSet.Logistic <- function(object, mean, scale, sd = NULL) {
       "Standard Deviation - Alternative Scale Parameter"
     )
   )
-  ps$addDeps("scale", "sd", function(self) self$getParameterValue("scale") * pi / sqrt(3))
-  ps$addDeps("sd", "scale", function(self) self$getParameterValue("sd") * sqrt(3) / pi)
+  ps$addDeps("scale", "sd",
+             function(self) list(sd = self$getParameterValue("scale") * pi / sqrt(3)))
+  ps$addDeps("sd", "scale",
+             function(self) list(scale = self$getParameterValue("sd") * sqrt(3) / pi))
 
   return(ps)
 }
@@ -491,22 +489,16 @@ getParameterSet.Loglogistic <- function(object, scale, shape, rate = NULL) {
     )
   )
 
-  ps$addDeps("rate", "scale", function(self) self$getParameterValue("rate")^-1)
-  ps$addDeps("scale", "rate", function(self) self$getParameterValue("scale")^-1)
+  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
+  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
 
   return(ps)
 }
 
-getParameterSet.Lognormal <- function(object, meanlog = NULL, varlog = NULL,
+getParameterSet.Lognormal <- function(object, meanlog = 0, varlog = 1,
                                       sdlog = NULL, preclog = NULL,
                                       mean = NULL, var = NULL, sd = NULL, prec = NULL) {
 
-  # varlog.bool <- sdlog.bool <- preclog.bool <- var.bool <- sd.bool <- prec.bool <- FALSE
-  if (is.null(meanlog) & is.null(mean)) {
-    stop("One of 'meanlog' and 'mean' should be provided.")
-  }
-
-  if (!is.null(meanlog)) {
     ps <- ParameterSet$new(
       id = list("meanlog", "varlog", "sdlog", "preclog", "mean", "var", "sd", "prec"),
       value = list(
@@ -529,158 +521,106 @@ getParameterSet.Lognormal <- function(object, meanlog = NULL, varlog = NULL,
       )
     )
 
-    ps$addDeps("meanlog", "mean", function(self) {
-      exp(self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog") / 2)
-    })
-    ps$addDeps("varlog", "sdlog", function(self) self$getParameterValue("varlog")^0.5)
-    ps$addDeps("varlog", "preclog", function(self) self$getParameterValue("varlog")^-1)
-    ps$addDeps("varlog", "mean", function(self) {
-      exp(self$getParameterValue("meanlog") + self$getParameterValue("varlog") / 2)
-    })
-    ps$addDeps("varlog", "var", function(self) {
-      (exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog"))
-    })
-    ps$addDeps("varlog", "sd", function(self) {
-      sqrt((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))
-    })
-    ps$addDeps("varlog", "prec", function(self) {
-      ((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))^(-1) # nolint
-    })
 
-    ps$addDeps("sdlog", "varlog", function(self) self$getParameterValue("sdlog")^2) # nolint
-    ps$addDeps("sdlog", "preclog", function(self) self$getParameterValue("varlog")^-1) # nolint
-    ps$addDeps("sdlog", "mean", function(self) {
-      exp(self$getParameterValue("meanlog") + self$getParameterValue("varlog") / 2)
-    })
-    ps$addDeps("sdlog", "var", function(self) {
-      (exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog"))
-    })
-    ps$addDeps("sdlog", "sd", function(self) {
-      sqrt((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))
-    })
-    ps$addDeps("sdlog", "prec", function(self) {
-      ((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))^(-1) # nolint
-    })
+    ps$addDeps("varlog", c("sdlog", "preclog", "mean", "var", "sd", "prec"),
+               function(self) {
+                 varlog = self$getParameterValue("varlog")
+                 meanlog = self$getParameterValue("meanlog")
+                 var = (exp(varlog) - 1) * exp(2 * meanlog + varlog)
+                 list(
+                   sdlog = varlog^0.5,
+                   preclog =  varlog^-1,
+                   mean = exp(meanlog + varlog / 2),
+                   var = var,
+                   sd =  sqrt(var),
+                   prec = 1 / var
+                 )
+               })
 
-    ps$addDeps("preclog", "varlog", function(self) self$getParameterValue("preclog")^-1) # nolint
-    ps$addDeps("preclog", "sdlog", function(self) self$getParameterValue("varlog")^0.5) # nolint
-    ps$addDeps("preclog", "mean", function(self) {
-      exp(self$getParameterValue("meanlog") + self$getParameterValue("varlog") / 2)
-    })
-    ps$addDeps("preclog", "var", function(self) {
-      (exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog"))
-    })
-    ps$addDeps("preclog", "sd", function(self) {
-      sqrt((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))
-    })
-    ps$addDeps("preclog", "prec", function(self) {
-      ((exp(self$getParameterValue("varlog")) - 1) * exp(2 * self$getParameterValue("meanlog") +
-        self$getParameterValue("varlog")))^(-1) # nolint
-    })
+    ps$addDeps("sdlog", c("varlog", "preclog", "mean", "var", "sd", "prec"),
+               function(self) {
+                 sdlog = self$getParameterValue("sdlog")
+                 varlog = sdlog^2
+                 meanlog = self$getParameterValue("meanlog")
+                 var = (exp(varlog) - 1) * exp(2 * meanlog + varlog)
+                 list(
+                   varlog = varlog,
+                   preclog =  varlog^-1,
+                   mean = exp(meanlog + varlog / 2),
+                   var = var,
+                   sd =  sqrt(var),
+                   prec = 1 / var
+                 )
+               })
+    ps$addDeps("preclog", c("varlog", "sdlog", "mean", "var", "sd", "prec"),
+               function(self) {
+                 preclog = self$getParameterValue("preclog")
+                 varlog = 1 / preclog
+                 meanlog = self$getParameterValue("meanlog")
+                 var = (exp(varlog) - 1) * exp(2 * meanlog + varlog)
+                 list(
+                   varlog = varlog,
+                   sdlog =  sqrt(varlog),
+                   mean = exp(meanlog + varlog / 2),
+                   var = var,
+                   sd =  sqrt(var),
+                   prec = 1 / var
+                 )
+               })
+    ps$addDeps("var", c("meanlog", "varlog", "sdlog", "preclog", "sd", "prec"),
+               function(self) {
+                 var = self$getParameterValue("var")
+                 mean = self$getParameterValue("mean")
+                 varlog = log(1 + var / mean^2)
+                 list(
+                   meanlog = log(mean / sqrt(1 + var/mean^2)),
+                   varlog = varlog,
+                   sdlog = sqrt(varlog),
+                   preclog = 1 / varlog,
+                   sd = sqrt(var),
+                   prec = 1 / var
+                 )
+               })
 
-  } else {
-    # if (!is.null(prec)) {
-    #   prec.bool <- TRUE
-    # } else if (!is.null(sd)) {
-    #   sd.bool <- TRUE
-    # } else if (!is.null(var)) {
-    #   var.bool <- TRUE
-    # }
+    ps$addDeps("sd", c("var", "meanlog", "varlog", "sdlog", "preclog", "prec"),
+               function(self) {
+                 sd = self$getParameterValue("sd")
+                 var = sd^2
+                 mean = self$getParameterValue("mean")
+                 varlog = log(1 + var / mean^2)
+                 list(
+                   var = var,
+                   meanlog = log(mean / sqrt(1 + var/mean^2)),
+                   varlog = varlog,
+                   sdlog = sqrt(varlog),
+                   preclog = 1 / varlog,
+                   prec = 1 / var
+                 )
+               })
 
-    ps <- ParameterSet$new(
-      id = list("meanlog", "varlog", "sdlog", "preclog", "mean", "var", "sd", "prec"),
-      value = list(log(1 / sqrt(2)), log(2), sqrt(log(2)), 1 / log(2), 1, 1, 1, 1),
-      support = list(
-        reals, pos_reals, pos_reals, pos_reals, pos_reals,
-        pos_reals, pos_reals, pos_reals
-      ),
-      description = list(
-        "meanlog - Location Parameter on log scale",
-        "varlog - Squared Scale Parameter on log scale",
-        "sdlog - Scale Parameter on log scale",
-        "preclog - Inverse Squared Scale Parameter on logscale",
-        "meanlog - Location Parameter",
-        "varlog - Squared Scale Parameter",
-        "sdlog - Scale Parameter",
-        "preclog - Inverse Squared Scale Parameter"
-      )
-    )
-
+    ps$addDeps("prec", c("var", "meanlog", "varlog", "sdlog", "preclog", "sd"),
+               function(self) {
+                 prec = self$getParameterValue("prec")
+                 var = 1 / prec
+                 mean = self$getParameterValue("mean")
+                 varlog = log(1 + var / mean^2)
+                 list(
+                   var = var,
+                   meanlog = log(mean / sqrt(1 + var/mean^2)),
+                   varlog = varlog,
+                   sdlog = sqrt(varlog),
+                   preclog = 1 / varlog,
+                   sd = sqrt(var)
+                 )
+               })
     ps$addDeps("mean", "meanlog", function(self) {
-      log(self$getParameterValue("mean") / sqrt(1 +
-        self$getParameterValue("var") /
-          self$getParameterValue("mean")^2))
+      mean = self$getParameterValue("mean")
+      list(meanlog = log(mean / sqrt(1 + self$getParameterValue("var") / mean^2)))
     })
-
-    ps$addDeps("var", "meanlog", function(self) {
-      log(self$getParameterValue("mean") / sqrt(1 +
-        self$getParameterValue("var") /
-          self$getParameterValue("mean")^2))
+    ps$addDeps("meanlog", "mean", function(self) {
+      list(mean = exp(self$getParameterValue("meanlog") +
+            self$getParameterValue("varlog") / 2))
     })
-    ps$addDeps("var", "varlog", function(self) {
-      log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2)
-    })
-    ps$addDeps("var", "sdlog", function(self) {
-      (log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2))^0.5
-    })
-    ps$addDeps("var", "preclog", function(self) {
-      (log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2))^-1
-    })
-    ps$addDeps("var", "sd", function(self) self$getParameterValue("var")^0.5)
-    ps$addDeps("var", "prec", function(self) self$getParameterValue("var")^-1)
-
-    ps$addDeps("sd", "var", function(self) self$getParameterValue("var")^2)
-    ps$addDeps("sd", "meanlog", function(self) {
-      log(self$getParameterValue("mean") / sqrt(1 +
-        self$getParameterValue("var") /
-          self$getParameterValue("mean")^2))
-    })
-    ps$addDeps("sd", "varlog", function(self) {
-      log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2)
-    })
-    ps$addDeps("sd", "sdlog", function(self) {
-      (log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2))^0.5
-    })
-    ps$addDeps("sd", "preclog", function(self) {
-      (log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2))^-1
-    })
-    ps$addDeps("sd", "prec", function(self) self$getParameterValue("var")^-1)
-
-    ps$addDeps("prec", "var", function(self) self$getParameterValue("prec")^-1)
-    ps$addDeps("prec", "meanlog", function(self) {
-      log(self$getParameterValue("mean") / sqrt(1 +
-        self$getParameterValue("var") /
-          self$getParameterValue("mean")^2))
-    })
-    ps$addDeps("prec", "varlog", function(self) {
-      log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2)
-    })
-    ps$addDeps("prec", "sdlog", function(self) {
-      (log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2))^0.5
-    })
-    ps$addDeps("prec", "preclog", function(self) {
-      (log(1 + self$getParameterValue("var") /
-        self$getParameterValue("mean")^2))^-1
-    })
-    ps$addDeps("prec", "sd", function(self) self$getParameterValue("var")^0.5)
-  }
 
   return(ps)
 }
@@ -735,14 +675,14 @@ getParameterSet.MultivariateNormal <- function(object, mean, cov, prec = NULL) {
   )
 
   ps$addDeps("cov", "prec", function(self) {
-    list(solve(matrix(self$getParameterValue("cov"),
+    list(prec = list(solve(matrix(self$getParameterValue("cov"),
       nrow = length(self$getParameterValue("mean"))
-    )))
+    ))))
   })
   ps$addDeps("prec", "cov", function(self) {
-    list(solve(matrix(self$getParameterValue("prec"),
+   list(cov = list(solve(matrix(self$getParameterValue("prec"),
       nrow = length(self$getParameterValue("mean"))
-    )))
+    ))))
   })
   ps$addChecks(function(self) {
     mean = self$getParameterValue("mean")
@@ -781,7 +721,7 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
 
   ps <- ParameterSet$new(
     id = list("prob", "qprob", "mean", "size", "form"),
-    value = list(0.5, 0.5, 1, 20, form),
+    value = list(0.5, 0.5, 10, 10, form),
     support = list(
       Interval$new(0, 1, type = "()"),
       Interval$new(0, 1, type = "()"),
@@ -797,99 +737,109 @@ getParameterSet.NegativeBinomial <- function(object, size, prob, qprob = NULL, m
     )
   )
 
-  ps$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
-  ps$addDeps("qprob", "prob", function(self) 1 - self$getParameterValue("qprob"))
   if (form == "sbf") {
     ps$addDeps("size", "mean", function(self) {
-      self$getParameterValue("size") *
-        self$getParameterValue("prob") / (1 - self$getParameterValue("prob"))
+      prob = self$getParameterValue("prob")
+      list(mean = self$getParameterValue("size") * prob / (1 - prob))
     })
-    ps$addDeps("prob", "mean", function(self) {
-      self$getParameterValue("size") *
-        self$getParameterValue("prob") / (1 - self$getParameterValue("prob"))
+    ps$addDeps("prob", c("qprob", "mean"), function(self) {
+      prob = self$getParameterValue("prob")
+      list(
+        qprob = 1 - prob,
+        mean = self$getParameterValue("size") * prob / (1 - prob))
     })
-    ps$addDeps("qprob", "mean", function(self) {
-      self$getParameterValue("size") *
-        (1 - self$getParameterValue("qprob")) / self$getParameterValue("qprob")
+    ps$addDeps("qprob", c("prob", "mean"), function(self) {
+      qprob = self$getParameterValue("qprob")
+      list(
+        prob = 1 - qprob,
+        mean = self$getParameterValue("size") * (1 - qprob) / qprob)
     })
-    ps$addDeps("mean", "prob", function(self) {
-      self$getParameterValue("mean") /
-        (self$getParameterValue("size") + self$getParameterValue("mean"))
-    })
-    ps$addDeps("mean", "qprob", function(self) {
-      1 -
-        (self$getParameterValue("mean") / (self$getParameterValue("size") +
-          self$getParameterValue("mean")))
+    ps$addDeps("mean", c("prob", "qprob"), function(self) {
+      mean = self$getParameterValue("mean")
+      prob = mean / (self$getParameterValue("size") + mean)
+      list(
+        prob = prob,
+        qprob = 1 - prob
+      )
     })
   } else if (form == "tbf") {
     ps$addDeps("size", "mean", function(self) {
-      self$getParameterValue("size") /
-        (1 - self$getParameterValue("prob"))
+      list(mean = self$getParameterValue("size") / (1 - self$getParameterValue("prob")))
     })
-    ps$addDeps("prob", "mean", function(self) {
-      self$getParameterValue("size") /
-        (1 - self$getParameterValue("prob"))
+    ps$addDeps("prob", c("qprob", "mean"), function(self) {
+      prob = self$getParameterValue("prob")
+      list(
+        qprob = 1 - prob,
+        mean = self$getParameterValue("size") / (1 - prob)
+        )
     })
-    ps$addDeps("qprob", "mean", function(self) {
-      self$getParameterValue("size") /
-        self$getParameterValue("qprob")
+    ps$addDeps("qprob", c("prob", "mean"), function(self) {
+      qprob = self$getParameterValue("qprob")
+      list(
+        prob = 1 - qprob,
+        mean = self$getParameterValue("size") / qprob)
     })
-    ps$addDeps("mean", "prob", function(self) {
-      (self$getParameterValue("mean") -
-        self$getParameterValue("size")) /
-        self$getParameterValue("mean")
-    })
-    ps$addDeps("mean", "qprob", function(self) {
-      1 - ((self$getParameterValue("mean") -
-        self$getParameterValue("size")) /
-        self$getParameterValue("mean"))
+    ps$addDeps("mean", c("prob", "qprob"), function(self) {
+      mean = self$getParameterValue("mean")
+      prob = (mean - self$getParameterValue("size")) / mean
+      list(
+        prob = prob,
+        qprob = 1 - prob
+      )
     })
     ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
                    unlist(self$getParameterValue("size"))))
   } else if (form == "tbs") {
     ps$addDeps("size", "mean", function(self) {
-      self$getParameterValue("size") /
-        self$getParameterValue("prob")
+      list(mean = self$getParameterValue("size") /
+        self$getParameterValue("prob"))
     })
-    ps$addDeps("prob", "mean", function(self) {
-      self$getParameterValue("size") /
-        self$getParameterValue("prob")
+    ps$addDeps("prob", c("qprob", "mean"), function(self) {
+      prob = self$getParameterValue("prob")
+      list(
+        qprob = 1 - prob,
+        mean = self$getParameterValue("size") / prob
+        )
     })
-    ps$addDeps("qprob", "mean", function(self) {
-      self$getParameterValue("size") /
-        (1 - self$getParameterValue("qprob"))
+    ps$addDeps("qprob", c("prob", "mean"), function(self) {
+      qprob = self$getParameterValue("qprob")
+      list(
+        prob = 1 - qprob,
+        mean = self$getParameterValue("size") / (1 - qprob))
     })
-    ps$addDeps("mean", "prob", function(self) {
-      self$getParameterValue("size") /
-        self$getParameterValue("mean")
-    })
-    ps$addDeps("mean", "qprob", function(self) {
-      1 - (self$getParameterValue("size") /
-        self$getParameterValue("mean"))
+    ps$addDeps("mean", c("prob", "qprob"), function(self) {
+      prob = self$getParameterValue("size") / self$getParameterValue("mean")
+      list(
+        prob = prob,
+        qprob = 1 - prob
+      )
     })
     ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
                                       unlist(self$getParameterValue("size"))))
   } else {
     ps$addDeps("size", "mean", function(self) {
-      self$getParameterValue("size") *
-        (1 - self$getParameterValue("prob")) / self$getParameterValue("prob")
+      prob = self$getParameterValue("prob")
+      list(mean = self$getParameterValue("size") * (1 - prob) / prob)
     })
-    ps$addDeps("prob", "mean", function(self) {
-      self$getParameterValue("size") *
-        (1 - self$getParameterValue("prob")) / self$getParameterValue("prob")
+    ps$addDeps("prob", c("qprob", "mean"), function(self) {
+      prob = self$getParameterValue("prob")
+      list(
+        qprob = 1 - prob,
+        mean = self$getParameterValue("size") * (1 - prob) / prob)
     })
-    ps$addDeps("qprob", "mean", function(self) {
-      self$getParameterValue("size") *
-        self$getParameterValue("qprob") / (1 - self$getParameterValue("qprob"))
+    ps$addDeps("qprob", c("prob", "mean"), function(self) {
+      qprob = self$getParameterValue("qprob")
+      list(
+        prob = 1 - qprob,
+        mean = self$getParameterValue("size") * qprob / (1 - qprob))
     })
-    ps$addDeps("mean", "prob", function(self) {
-      self$getParameterValue("size") /
-        (self$getParameterValue("mean") + self$getParameterValue("size"))
-    })
-    ps$addDeps("mean", "qprob", function(self) {
-      1 -
-        (self$getParameterValue("size") / (self$getParameterValue("mean") +
-          self$getParameterValue("size")))
+    ps$addDeps("mean", c("prob", "qprob"), function(self) {
+      size = self$getParameterValue("size")
+      prob = size / (self$getParameterValue("mean") + size)
+      list(
+        prob = prob,
+        qprob = 1 - prob
+      )
     })
   }
 
@@ -908,12 +858,27 @@ getParameterSet.Normal <- function(object, mean, var, sd = NULL, prec = NULL) {
       "Precision - Inverse Squared Scale Parameter"
     )
   )
-  ps$addDeps("var", "sd", function(self) self$getParameterValue("var")^0.5)
-  ps$addDeps("var", "prec", function(self) self$getParameterValue("var")^-1)
-  ps$addDeps("sd", "var", function(self) self$getParameterValue("sd")^2)
-  ps$addDeps("sd", "prec", function(self) self$getParameterValue("sd")^-2)
-  ps$addDeps("prec", "var", function(self) self$getParameterValue("prec")^-1)
-  ps$addDeps("prec", "sd", function(self) self$getParameterValue("prec")^-0.5)
+  ps$addDeps("var", c("sd", "prec"), function(self) {
+    var = self$getParameterValue("var")
+    list(
+      sd = sqrt(var),
+      prec = 1 / var
+    )
+  })
+  ps$addDeps("sd", c("var", "prec"), function(self) {
+    sd = self$getParameterValue("sd")
+    list(
+      var = sd^2,
+      prec = sd^-2
+    )
+  })
+  ps$addDeps("prec", c("var", "sd"), function(self) {
+    prec = self$getParameterValue("prec")
+    list(
+      var = 1 / prec,
+      sd = prec^-0.5
+    )
+  })
 
   return(ps)
 }
@@ -967,8 +932,8 @@ getParameterSet.ShiftedLoglogistic <- function(object, scale, shape, location, r
     )
   )
 
-  ps$addDeps("rate", "scale", function(self) self$getParameterValue("rate")^-1)
-  ps$addDeps("scale", "rate", function(self) self$getParameterValue("scale")^-1)
+  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
+  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
 
   return(ps)
 }
@@ -1008,12 +973,12 @@ getParameterSet.Triangular <- function(object, lower, upper, mode, symmetric = F
 
   if (symmetric) {
     ps$addDeps("lower", "mode", function(self) {
-      (self$getParameterValue("lower") +
-        self$getParameterValue("upper")) / 2
+      list(mode = (self$getParameterValue("lower") +
+        self$getParameterValue("upper")) / 2)
     })
     ps$addDeps("upper", "mode", function(self) {
-      (self$getParameterValue("lower") +
-        self$getParameterValue("upper")) / 2
+      list(mode = (self$getParameterValue("lower") +
+        self$getParameterValue("upper")) / 2)
     })
   }
 
@@ -1051,14 +1016,6 @@ getParameterSet.Wald <- function(object, mean, shape) {
 
 getParameterSet.Weibull <- function(object, shape, scale, altscale = NULL) {
 
-  # scale.bool <- altscale.bool <- FALSE
-  #
-  # if (!is.null(altscale)) {
-  #   altscale.bool <- TRUE
-  # } else {
-  #   scale.bool <- TRUE
-  # }
-
   ps <- ParameterSet$new(
     id = list("shape", "scale", "altscale"), value = list(1, 1, 1),
     support = list(pos_reals, pos_reals, pos_reals),
@@ -1066,11 +1023,11 @@ getParameterSet.Weibull <- function(object, shape, scale, altscale = NULL) {
   )
 
   ps$addDeps("scale", "altscale", function(self) {
-    self$getParameterValue("scale")^-self$getParameterValue("shape")
+    list(altscale = self$getParameterValue("scale")^-self$getParameterValue("shape"))
   })
   ps$addDeps("altscale", "scale", function(self) {
-    exp(log(self$getParameterValue("altscale")) /
-      (-self$getParameterValue("shape")))
+    list(scale = exp(log(self$getParameterValue("altscale")) /
+      (-self$getParameterValue("shape"))))
   })
 
   return(ps)
@@ -1089,12 +1046,9 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nol
       "Cumulative distribution function."
     )
   )
-  ps$addDeps("pdf", "cdf", function(self) cumsum(self$getParameterValue("pdf")))
+  ps$addDeps("pdf", "cdf", function(self) list(cdf = cumsum(self$getParameterValue("pdf"))))
   ps$addDeps("cdf", "pdf", function(self) {
-    c(
-      self$getParameterValue("cdf")[1],
-      diff(self$getParameterValue("cdf"))
-    )
+    list(pdf = c(self$getParameterValue("cdf")[1], diff(self$getParameterValue("cdf"))))
   })
   ps$addChecks(function(self) {
     all(length(unlist(self$getParameterValue("cdf"))) == length(unlist(self$getParameterValue("x"))))

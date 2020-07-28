@@ -18,6 +18,8 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' where the names are unique and correspond to references for the distributions.
     #' @param lst `(list())`\cr
     #' Alternative constructor by supplying a named list of [ParameterSet]s.
+    #' @param .checks Used internally.
+    #' @param .supports Used internally.
     #' @examples
     #' b = Binomial$new()
     #' g = Geometric$new()

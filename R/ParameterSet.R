@@ -190,6 +190,8 @@ ParameterSet <- R6Class("ParameterSet",
 
     #' @description
     #' Sets the value(s) of the given parameter(s).
+    #' @param .suppressCheck `(logical(1))`\cr
+    #' Should be set internally only.
     #'
     #' @examples
     #' id <- list("rate", "scale")
@@ -354,7 +356,7 @@ ParameterSet <- R6Class("ParameterSet",
     addDeps = function(x, y, fun) {
       checkmate::assertFunction(fun, "self")
       checkmate::assertSubset(c(x, y), unlist(private$.parameters$id))
-      private$.deps <- rbind(self$deps, data.table(x = x, y = y, fun = fun))
+      private$.deps <- rbind(self$deps, data.table(x = x, y = list(y), fun = fun))
       invisible(self)
     },
 
@@ -530,17 +532,18 @@ ParameterSet <- R6Class("ParameterSet",
     .update = function(id) {
       updates <- subset(self$deps, x == id)
       if (nrow(updates)) {
-        for (i in seq(nrow(updates))) {
-          data.table::set(
-            private$.parameters,
-            which(private$.parameters$id == updates$y[[i]]),
-            "value",
-            list(updates$fun[[i]](self))
-          )
-        }
+        # FIXME - need to sort in alphabetical order, this can definitely be improved
+        rows = unlist(private$.parameters$id) %in% unlist(updates$y)
+        rows = which(rows)[order(unlist(private$.parameters$id)[rows])]
+        update = updates$fun[[1]](self)
+        update = update[order(names(update))]
+        data.table::set(
+          private$.parameters,
+          rows,
+          "value",
+          update
+        )
       }
-
-      invisible(self)
     },
     deep_clone = function(name, value) {
       if (name %in% c(".parameters", ".deps", ".checks")) {
@@ -638,6 +641,7 @@ NULL
 #' @param ... named parameters and values to update, see details.
 #' @param lst optional list, see details.
 #' @param error character, value to pass to \code{stopwarn}.
+#' @param .suppressCheck used internally.
 #'
 #' @return An R6 object of class ParameterSet.
 #'

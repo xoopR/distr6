@@ -14,6 +14,8 @@ setParameterValue(object, ..., lst = NULL, error = "warn")
 \item{lst}{optional list, see details.}
 
 \item{error}{character, value to pass to \code{stopwarn}.}
+
+\item{.suppressCheck}{used internally.}
 }
 \value{
 An R6 object of class ParameterSet.

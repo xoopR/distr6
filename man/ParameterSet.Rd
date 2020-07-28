@@ -384,7 +384,12 @@ ps$getParameterValue("prob")
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  .suppressCheck = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -399,6 +404,9 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{.suppressCheck}}{\code{(logical(1))}\cr
+Should be set internally only.}
 }
 \if{html}{\out{</div>}}
 }
@@ -531,19 +539,19 @@ ps$deps
 Add parameter checks for automatic assertions. Note checks are made after
 any transformations.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addChecks(x, fun, dt = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParameterSet$addChecks(fun)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{x}}{\code{(character(1))}\cr
-id of parameter to be checked.}
-
 \item{\code{fun}}{\verb{(function(1))}\cr
 Function used to check \code{x}, must include \verb{x, self} in formal arguments and
 \code{x} in body where \code{x} is the value of the parameter to check. Result should
 be a logical. See first example.}
+
+\item{\code{x}}{\code{(character(1))}\cr
+id of parameter to be checked.}
 
 \item{\code{dt}}{\verb{([data.table::data.table])}\cr
 Alternate method to directly construct \code{data.table} of checks to add.

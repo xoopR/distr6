@@ -1,5 +1,3 @@
-library(testthat)
-
 p <- 0.2
 r <- 10
 
