@@ -135,10 +135,11 @@ ParameterSet <- R6Class("ParameterSet",
     parameters = function(id = NULL) {
       if (!is.null(id)) {
         id0 <- id
-        if (nrow(subset(private$.parameters, id %in% id0)) == 0) {
+        pars = subset(private$.parameters, id %in% id0)
+        if (nrow(pars) == 0) {
           stopf("'%s' is not a parameter in this ParameterSet.", id)
         } else {
-          return(subset(private$.parameters, id %in% id0))
+          return(pars)
         }
       } else {
         return(self)
