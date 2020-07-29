@@ -25,29 +25,13 @@ SDistribution <- R6Class("SDistribution",
       abstract(self, "SDistribution", "listDistributions()")
 
       assert_pkgload(self$packages)
-
-      if (!is.null(decorators)) suppressMessages(decorate(self, decorators))
-
+      if (!is.null(decorators)) {
+        suppressMessages(decorate(self, decorators))
+      }
       private$.traits$type <- assertSet(type)
-
-      kur <- try(self$kurtosis(excess = TRUE), silent = TRUE)
-      skew <- try(self$skewness(), silent = TRUE)
-
       private$.properties <- list(
-        kurtosis = ifnerror(kur, exkurtosisType(kur), "NULL"),
-        skewness = ifnerror(skew, skewType(skew), "NULL"),
         support = assertSet(support),
         symmetry = match.arg(symmetry)
-      )
-
-      sapply(
-        c(names(Binomial$public_fields), names(Binomial$public_methods)),
-        function(x) try(lockBinding(x, self), silent = TRUE)
-      )
-
-      sapply(
-        c(names(Binomial$private_fields), names(Binomial$private_methods)),
-        function(x) try(lockBinding(x, private), silent = TRUE)
       )
 
       invisible(self)

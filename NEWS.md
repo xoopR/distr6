@@ -2,6 +2,7 @@
 
 * Bugfix in `WeightedDiscrete`, `cdf` was previously positive when below distribution support, now zero.
 * Added discrete p-norms in `ExoticStatistics` decorator
+* Removed `suppressMoments` argument in `Distribution`, these are now calculated on call to `$properties` thus improving construction speeds.
 
 # distr6 1.4.2
 

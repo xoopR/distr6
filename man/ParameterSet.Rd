@@ -80,7 +80,8 @@ ps1 <- ParameterSet$new(id = c("prob", "qprob"),
                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
  ps1$addChecks("prob", function(x, self) x > 0)
- ps1$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
+ ps1$addDeps("prob", "qprob", function(self)
+     list(qprob = 1 - self$getParameterValue("prob")))
  ps2 <- ParameterSet$new(id = "size",
                  value = 10,
                  support = set6::Interval$new(0, 10, class = "integer"),
@@ -96,27 +97,16 @@ ps1 <- ParameterSet$new(id = c("prob", "qprob"),
 ## Method `ParameterSet$addDeps`
 ## ------------------------------------------------
 
-id <- list("rate", "scale")
-value <- list(1, 1)
-support <- list(set6::PosReals$new(), set6::PosReals$new())
-settable <- list(TRUE, FALSE)
 ps <- ParameterSet$new(
-  id, value, support, settable
+  id = list("a", "b", "c"),
+  value = list(2, 3, 1/2),
+  support = list(Reals$new(), Reals$new(), Reals$new())
 )
-ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
-ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
-ps$deps
-
-# Alternate method
-ps <- ParameterSet$new(
-  id, value, support, settable
-)
-ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
-                          y = c("rate", "scale"),
-                          fun = c(function(self) 1 / self$getParameterValue("scale"),
-                                  function(self) 1 / self$getParameterValue("rate"))
-                         )
-           )
+ps$addDeps("a", c("b", "c"),
+   function(self) {
+       list(b = self$getParameterValue("a") + 1,
+            c = 1/self$getParameterValue("a"))
+ })
 ps$deps
 
 ## ------------------------------------------------
@@ -456,7 +446,8 @@ Merges multiple parameter sets.
                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
  ps1$addChecks("prob", function(x, self) x > 0)
- ps1$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
+ ps1$addDeps("prob", "qprob", function(self)
+     list(qprob = 1 - self$getParameterValue("prob")))
  ps2 <- ParameterSet$new(id = "size",
                  value = 10,
                  support = set6::Interval$new(0, 10, class = "integer"),
@@ -488,43 +479,27 @@ Add parameter dependencies for automatic updating.
 \item{\code{x}}{\code{(character(1))}\cr
 id of parameter that updates \code{y}.}
 
-\item{\code{y}}{\code{(character(1))}\cr
-id of parameter that is updated by \code{x}.}
+\item{\code{y}}{\code{(character())}\cr
+id of parameter(s) that is/are updated by \code{x}.}
 
 \item{\code{fun}}{\verb{(function(1))}\cr
-Function used to update \code{y}, must include \code{self} in formal arguments and
-\code{self$getParameterValue("<x>")} in body where \code{"<x>"} is the \code{id} supplied to \code{x}.
-See first example.}
-
-\item{\code{dt}}{\verb{([data.table::data.table])}\cr
-Alternate method to directly construct \code{data.table} of dependencies to add.
-See second example.}
+Function used to update \code{y}, must include \code{self} in formal arguments and should return a
+named list with names identical to, and in the same order, as \code{y}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{id <- list("rate", "scale")
-value <- list(1, 1)
-support <- list(set6::PosReals$new(), set6::PosReals$new())
-settable <- list(TRUE, FALSE)
-ps <- ParameterSet$new(
-  id, value, support, settable
+\preformatted{ps <- ParameterSet$new(
+  id = list("a", "b", "c"),
+  value = list(2, 3, 1/2),
+  support = list(Reals$new(), Reals$new(), Reals$new())
 )
-ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
-ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
-ps$deps
-
-# Alternate method
-ps <- ParameterSet$new(
-  id, value, support, settable
-)
-ps$addDeps(dt = data.table::data.table(x = c("scale", "rate"),
-                          y = c("rate", "scale"),
-                          fun = c(function(self) 1 / self$getParameterValue("scale"),
-                                  function(self) 1 / self$getParameterValue("rate"))
-                         )
-           )
+ps$addDeps("a", c("b", "c"),
+   function(self) {
+       list(b = self$getParameterValue("a") + 1,
+            c = 1/self$getParameterValue("a"))
+ })
 ps$deps
 }
 \if{html}{\out{</div>}}

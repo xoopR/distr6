@@ -60,8 +60,6 @@ Distribution <- R6Class("Distribution",
     #' If `NULL`, determined automatically.
     #' @param description `(character(1))` \cr
     #' Optional short description of the distribution.
-    #' @param suppressMoments `(logical(1))` \cr
-    #' If `TRUE` does not calculte skewness and kurtosis types in construction.
     #' @param .suppressChecks `(logical(1))` \cr
     #' Used internally.
     initialize = function(name = NULL, short_name = NULL,
@@ -70,7 +68,7 @@ Distribution <- R6Class("Distribution",
                           pdf = NULL, cdf = NULL, quantile = NULL, rand = NULL,
                           parameters = NULL, decorators = NULL, valueSupport = NULL,
                           variateForm = NULL, description = NULL,
-                          suppressMoments = FALSE, .suppressChecks = FALSE) {
+                          .suppressChecks = FALSE) {
 
       if (.suppressChecks | inherits(self, "DistributionWrapper")) {
 
@@ -206,14 +204,6 @@ Distribution <- R6Class("Distribution",
 
       if (!is.null(decorators)) {
         suppressMessages(decorate(self, decorators))
-      }
-
-      if (!suppressMoments) {
-        # Update skewness and kurtosis
-        kur <- suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
-        skew <- suppressMessages(try(self$skewness(), silent = TRUE))
-        private$.properties$kurtosis <- ifnerror(kur, exkurtosisType(kur), "NULL")
-        private$.properties$skewness <- ifnerror(skew, skewType(skew), "NULL")
       }
 
       lockBinding("name", self)
@@ -389,31 +379,10 @@ Distribution <- R6Class("Distribution",
       if (is.null(lst)) {
         lst <- list(...)
       }
-      if (length(private$.parameters) == 0) {
-        return(NULL)
-      } else {
-        if (length(lst) != 0) {
-
-          self$parameters()$setParameterValue(lst = lst, error = error)
-
-          # Update skewness and kurtosis
-          x <- suppressMessages(try(self$kurtosis(excess = TRUE), silent = TRUE))
-          if (class(x) == "try-error") {
-            private$.properties$kurtosis <- NULL
-          } else {
-            private$.properties$kurtosis <- exkurtosisType(x)
-          }
-
-          x <- suppressMessages(try(self$skewness(), silent = TRUE))
-          if (class(x) == "try-error") {
-            private$.properties$skewness <- NULL
-          } else {
-            private$.properties$skewness <- skewType(x)
-          }
-
-          invisible(self)
-        }
+      if (length(private$.parameters) && length(lst)) {
+        self$parameters()$setParameterValue(lst = lst, error = error)
       }
+      invisible(self)
     },
 
     #' @description
@@ -835,7 +804,15 @@ decorator to numerically estimate this.")
     #' Returns distribution properties, including kurtosis type, skewness type, support, and
     #' symmetry.
     properties = function() {
-      private$.properties
+      kur = self$kurtosis()
+      skew = self$skewness()
+      return(
+        c(private$.properties,
+          list(
+            kurtosis = ifnerror(kur, exkurtosisType(kur), "NULL"),
+            skewness = ifnerror(skew, skewType(skew), "NULL")
+          ))
+      )
     },
 
     #' @field support

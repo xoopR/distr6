@@ -17,14 +17,9 @@ ps <- ParameterSet$new(
   settable = list(TRUE, FALSE, FALSE),
   description = list("Arrival rate", "Scale parameter", "testpar")
 )
-ps$addDeps(dt = data.table(
-  x = c("rate", "scale"),
-  y = c("scale", "rate"),
-  fun = c(
-    function(self) self$getParameterValue("rate")^-1,
-    function(self) self$getParameterValue("scale")^-1
-  )
-))
+ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
+ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
+
 cont_pdf <- Distribution$new("Continuous Test", "ContTest",
   support = PosReals$new(),
   symmetric = TRUE, type = PosReals$new(zero = T),
