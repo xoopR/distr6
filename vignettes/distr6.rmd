@@ -46,7 +46,7 @@ N$parameters()
 ### Parameters in distr6
 Parameters are accessed with getParameterValue and edited with setParameterValue
 ```{r}
-N$setParameterValue(list(prec = 2))
+N$setParameterValue(prec = 2)
 N$getParameterValue("prec")
 ```
 
@@ -63,7 +63,7 @@ N$parameters()$print(hide_cols = NULL)
 The line above introduces 'method chaining', this occurs when one method is added to another.
 As another example, let's edit and then access another parameter in the Normal distribution
 ```{r}
-N$setParameterValue(list(var = 3))$getParameterValue("var")
+N$setParameterValue(var = 3)$getParameterValue("var")
 ```
 
 ### Representing a distribution
@@ -147,7 +147,7 @@ head(listDistributions(simplify = TRUE))
 head(listDistributions(filter = list(valuesupport = "discrete")))
 
 # Multiple filters can be used, note this is case-insensitive
-head(listDistributions(filter = list(VaLueSupport = "continuous", package = "distr6")))
+head(listDistributions(filter = list(VaLueSupport = "continuous", package = "extraDistr")))
 ```
 
 ### R6, S3 and Magrittr
