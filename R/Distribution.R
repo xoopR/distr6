@@ -804,8 +804,8 @@ decorator to numerically estimate this.")
     #' Returns distribution properties, including kurtosis type, skewness type, support, and
     #' symmetry.
     properties = function() {
-      kur = self$kurtosis()
-      skew = self$skewness()
+      kur = try(self$kurtosis(), silent = TRUE)
+      skew = try(self$skewness(), silent = TRUE)
       return(
         c(private$.properties,
           list(
