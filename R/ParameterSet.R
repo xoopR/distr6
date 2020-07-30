@@ -50,6 +50,10 @@ ParameterSet <- R6Class("ParameterSet",
                           updateFunc = NULL,
                           description = NULL) {
 
+      if (missing(id)) {
+        return(invisible(self))
+      }
+
       if (!is.null(updateFunc)) {
         warning("updateFunc is now deprecated, please use $addDeps instead.")
       }
@@ -271,7 +275,7 @@ ParameterSet <- R6Class("ParameterSet",
     #'                  value = c(0.2, 0.8),
     #'                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
     #'  )
-    #'  ps1$addChecks("prob", function(x, self) x > 0)
+    #'  ps1$addChecks(function(self) self$getParameterValue("x") > 0)
     #'  ps1$addDeps("prob", "qprob", function(self)
     #'      list(qprob = 1 - self$getParameterValue("prob")))
     #'  ps2 <- ParameterSet$new(id = "size",
@@ -331,7 +335,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' ps <- ParameterSet$new(
     #'   id = list("a", "b", "c"),
     #'   value = list(2, 3, 1/2),
-    #'   support = list(Reals$new(), Reals$new(), Reals$new())
+    #'   support = list(set6::Reals$new(), set6::Reals$new(), set6::Reals$new())
     #' )
     #' ps$addDeps("a", c("b", "c"),
     #'    function(self) {
@@ -349,15 +353,9 @@ ParameterSet <- R6Class("ParameterSet",
     #' @description
     #' Add parameter checks for automatic assertions. Note checks are made after
     #' any transformations.
-    #' @param x `(character(1))`\cr
-    #' id of parameter to be checked.
     #' @param fun `(function(1))`\cr
-    #' Function used to check `x`, must include `x, self` in formal arguments and
-    #' `x` in body where `x` is the value of the parameter to check. Result should
-    #' be a logical. See first example.
-    #' @param dt `([data.table::data.table])`\cr
-    #' Alternate method to directly construct `data.table` of checks to add.
-    #' See second example.
+    #' Function used to check `ParameterSet`, must include `self` in formal arguments and
+    #' result in a logical.
     #' @examples
     #' id <- list("lower", "upper")
     #' value <- list(1, 3)
@@ -365,22 +363,9 @@ ParameterSet <- R6Class("ParameterSet",
     #' ps <- ParameterSet$new(
     #'   id, value, support
     #' )
-    #' ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
+    #' ps$addChecks(function(self)
+    #'   self$getParameterValue("lower") < self$getParameterValue("upper"))
     #' ps$checks
-    #' \dontrun{
-    #' # errors as check fails
-    #' ps$setParameterValue(lower = 4)
-    #' }
-    #' ps$setParameterValue(lower = 2)
-    #'
-    #' # Alternate method (better with more parameters)
-    #' ps <- ParameterSet$new(
-    #'   id, value, support
-    #' )
-    #' ps$addChecks(dt = data.table::data.table(
-    #'                           x = "lower",
-    #'                           fun = function(x, self) x < self$getParameterValue("upper")
-    #'            ))
     addChecks = function(fun) {
       if (is.null(self$checks)) {
         private$.checks <- checkmate::assertFunction(fun, "self")

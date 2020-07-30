@@ -2,7 +2,9 @@
 
 * Bugfix in `WeightedDiscrete`, `cdf` was previously positive when below distribution support, now zero.
 * Added discrete p-norms in `ExoticStatistics` decorator
-* Removed `suppressMoments` argument in `Distribution`, these are now calculated on call to `$properties` thus improving construction speeds.
+* Removed `suppressMoments` argument in `Distribution`, improving constuction speeds.
+* `kurtosis` and `skewness` type no longer included in properties. The kurtosis and skewness methods are still available as public methods, and the types are still in summary; to manually find these use `exkurtosisType` and `skewType`.
+* Empty `ParameterSet` now allowed
 
 # distr6 1.4.2
 

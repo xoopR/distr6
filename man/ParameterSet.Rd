@@ -79,7 +79,7 @@ ps1 <- ParameterSet$new(id = c("prob", "qprob"),
                  value = c(0.2, 0.8),
                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
- ps1$addChecks("prob", function(x, self) x > 0)
+ ps1$addChecks(function(self) self$getParameterValue("x") > 0)
  ps1$addDeps("prob", "qprob", function(self)
      list(qprob = 1 - self$getParameterValue("prob")))
  ps2 <- ParameterSet$new(id = "size",
@@ -100,7 +100,7 @@ ps1 <- ParameterSet$new(id = c("prob", "qprob"),
 ps <- ParameterSet$new(
   id = list("a", "b", "c"),
   value = list(2, 3, 1/2),
-  support = list(Reals$new(), Reals$new(), Reals$new())
+  support = list(set6::Reals$new(), set6::Reals$new(), set6::Reals$new())
 )
 ps$addDeps("a", c("b", "c"),
    function(self) {
@@ -119,22 +119,9 @@ support <- list(set6::PosReals$new(), set6::PosReals$new())
 ps <- ParameterSet$new(
   id, value, support
 )
-ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
+ps$addChecks(function(self)
+  self$getParameterValue("lower") < self$getParameterValue("upper"))
 ps$checks
-\dontrun{
-# errors as check fails
-ps$setParameterValue(lower = 4)
-}
-ps$setParameterValue(lower = 2)
-
-# Alternate method (better with more parameters)
-ps <- ParameterSet$new(
-  id, value, support
-)
-ps$addChecks(dt = data.table::data.table(
-                          x = "lower",
-                          fun = function(x, self) x < self$getParameterValue("upper")
-           ))
 
 ## ------------------------------------------------
 ## Method `ParameterSet$addTrafos`
@@ -445,7 +432,7 @@ Merges multiple parameter sets.
                  value = c(0.2, 0.8),
                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
- ps1$addChecks("prob", function(x, self) x > 0)
+ ps1$addChecks(function(self) self$getParameterValue("x") > 0)
  ps1$addDeps("prob", "qprob", function(self)
      list(qprob = 1 - self$getParameterValue("prob")))
  ps2 <- ParameterSet$new(id = "size",
@@ -493,7 +480,7 @@ named list with names identical to, and in the same order, as \code{y}.}
 \preformatted{ps <- ParameterSet$new(
   id = list("a", "b", "c"),
   value = list(2, 3, 1/2),
-  support = list(Reals$new(), Reals$new(), Reals$new())
+  support = list(set6::Reals$new(), set6::Reals$new(), set6::Reals$new())
 )
 ps$addDeps("a", c("b", "c"),
    function(self) {
@@ -521,16 +508,8 @@ any transformations.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{fun}}{\verb{(function(1))}\cr
-Function used to check \code{x}, must include \verb{x, self} in formal arguments and
-\code{x} in body where \code{x} is the value of the parameter to check. Result should
-be a logical. See first example.}
-
-\item{\code{x}}{\code{(character(1))}\cr
-id of parameter to be checked.}
-
-\item{\code{dt}}{\verb{([data.table::data.table])}\cr
-Alternate method to directly construct \code{data.table} of checks to add.
-See second example.}
+Function used to check \code{ParameterSet}, must include \code{self} in formal arguments and
+result in a logical.}
 }
 \if{html}{\out{</div>}}
 }
@@ -542,22 +521,9 @@ support <- list(set6::PosReals$new(), set6::PosReals$new())
 ps <- ParameterSet$new(
   id, value, support
 )
-ps$addChecks("lower", function(x, self) x < self$getParameterValue("upper"))
+ps$addChecks(function(self)
+  self$getParameterValue("lower") < self$getParameterValue("upper"))
 ps$checks
-\dontrun{
-# errors as check fails
-ps$setParameterValue(lower = 4)
-}
-ps$setParameterValue(lower = 2)
-
-# Alternate method (better with more parameters)
-ps <- ParameterSet$new(
-  id, value, support
-)
-ps$addChecks(dt = data.table::data.table(
-                          x = "lower",
-                          fun = function(x, self) x < self$getParameterValue("upper")
-           ))
 }
 \if{html}{\out{</div>}}
 

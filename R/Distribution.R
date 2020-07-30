@@ -328,8 +328,8 @@ Distribution <- R6Class("Distribution",
         )
         cat("\n Traits:\t", self$traits$valueSupport, "; ", self$traits$variateForm, sep = "")
         cat("\n Properties:\t", self$properties$symmetry, sep = "")
-        if (!inherits(a_kurt, "try-error")) cat(";", self$properties$kurtosis)
-        if (!inherits(a_skew, "try-error")) cat(";", self$properties$skewness)
+        if (!inherits(a_kurt, "try-error")) cat(";", exkurtosisType(a_kurt))
+        if (!inherits(a_skew, "try-error")) cat(";", skewType(a_skew))
 
         if (length(self$decorators) != 0) {
           cat("\n\n Decorated with: ", paste0(self$decorators, collapse = ", "))
@@ -801,18 +801,9 @@ decorator to numerically estimate this.")
     },
 
     #' @field properties
-    #' Returns distribution properties, including kurtosis type, skewness type, support, and
-    #' symmetry.
+    #' Returns distribution properties, including skewness type and symmetry.
     properties = function() {
-      kur = try(self$kurtosis(), silent = TRUE)
-      skew = try(self$skewness(), silent = TRUE)
-      return(
-        c(private$.properties,
-          list(
-            kurtosis = ifnerror(kur, exkurtosisType(kur), "NULL"),
-            skewness = ifnerror(skew, skewType(skew), "NULL")
-          ))
-      )
+      private$.properties
     },
 
     #' @field support
