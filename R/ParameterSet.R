@@ -201,8 +201,8 @@ ParameterSet <- R6Class("ParameterSet",
     #' ps <- ParameterSet$new(
     #'   id, value, support, settable,
     #' )
-    #' ps$addDeps("scale", "rate", function(self) 1 / self$getParameterValue("scale"))
-    #' ps$addDeps("rate", "scale", function(self) 1 / self$getParameterValue("rate"))
+    #' ps$addDeps("scale", "rate", function(self) list(rate = 1 / self$getParameterValue("scale")))
+    #' ps$addDeps("rate", "scale", function(self) list(scale = 1 / self$getParameterValue("rate")))
     #' ps$getParameterValue(id = "rate")
     #' ps$setParameterValue(rate = 2)
     #' ps$getParameterValue("rate")
