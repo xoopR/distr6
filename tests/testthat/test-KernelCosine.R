@@ -20,5 +20,7 @@ test_that("pdfsquared2norm upper", {
 
 test_that("pdfsquared2norm x", {
   kern <- Cosine$new()
-  expect_rounded_equal(kern$pdfSquared2Norm(x = 2), 2)
+  expect_rounded_equal(kern$pdfSquared2Norm(x = 2), 0)
+  expect_rounded_equal(kern$pdfSquared2Norm(x = 0), 0.6168503)
+  expect_rounded_equal(kern$pdfSquared2Norm(x = -1.2), 0.1104926)
 })
