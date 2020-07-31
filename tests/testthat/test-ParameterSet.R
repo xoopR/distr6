@@ -144,7 +144,7 @@ test_that("c", {
   ps2 <- getParameterSet.Poisson()
   expect_equal(as.data.table(c(ps1, ps2)),
                data.table(id = c("mean", "rate"), value = list(0, 1),
-                          support = list(Reals$new(), PosReals$new()),
+                          support = list(reals, pos_reals),
                           settable = c(TRUE, TRUE),
                           description = c("Location Parameter", "Arrival Rate")))
   ps3 <- getParameterSet.Binomial()
