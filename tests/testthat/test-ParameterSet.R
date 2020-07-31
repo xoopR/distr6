@@ -142,10 +142,11 @@ test_that("deprecated", {
 test_that("c", {
   ps1 <- getParameterSet.Degenerate()
   ps2 <- getParameterSet.Poisson()
-  expect_equal(c(ps1, ps2), ParameterSet$new(id = c("mean", "rate"), value = c(0, 1),
-                                             support = list(Reals$new(), PosReals$new()),
-                                             description = c("Location Parameter",
-                                                             "Arrival Rate")))
+  expect_equal(as.data.table(c(ps1, ps2)),
+               data.table(id = c("mean", "rate"), value = list(0, 1),
+                          support = list(Reals$new(), PosReals$new()),
+                          settable = c(TRUE, TRUE),
+                          description = c("Location Parameter", "Arrival Rate")))
   ps3 <- getParameterSet.Binomial()
   expect_error(c(ps3, ps3))
   expect_error(c(ps3, ps3, prefix.names = "Binom"), "length")

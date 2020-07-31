@@ -606,7 +606,7 @@ NULL
 #' @title Parameter Value Setter
 #' @description Sets the value of the given parameter.
 #'
-#' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
+#' @usage setParameterValue(object, ..., lst = NULL, error = "warn", .suppressCheck = FALSE)
 #'
 #' @param object Distribution or ParameterSet.
 #' @param ... named parameters and values to update, see details.

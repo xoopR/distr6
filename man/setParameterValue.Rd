@@ -4,7 +4,7 @@
 \alias{setParameterValue}
 \title{Parameter Value Setter}
 \usage{
-setParameterValue(object, ..., lst = NULL, error = "warn")
+setParameterValue(object, ..., lst = NULL, error = "warn", .suppressCheck = FALSE)
 }
 \arguments{
 \item{object}{Distribution or ParameterSet.}
