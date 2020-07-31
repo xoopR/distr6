@@ -422,7 +422,7 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   expect_equal(kern$properties$support$strprint(), support$strprint())
   expect_equal(kern$variance(), variance)
   expect_rounded_equal(kern$pdfSquared2Norm(c(0, 1, 3)), pdfSquared2Norm)
-  expect_equal(kern$strprint(), shortname)
+  expect_equal(kern$strprint(), paste0(shortname, "()"))
   expect_output(kern$summary())
   expect_output(kern$summary(F))
 

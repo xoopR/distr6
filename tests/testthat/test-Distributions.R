@@ -134,7 +134,7 @@ test_that("suppress", {
     decorators = "CoreStatistics",
     valueSupport = "continuous",
     variateForm = "univariate", description = "test",
-    suppressMoments = TRUE, .suppressChecks = TRUE
+    .suppressChecks = TRUE
   ))
 })
 

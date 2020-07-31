@@ -379,7 +379,7 @@ Distribution <- R6Class("Distribution",
       if (is.null(lst)) {
         lst <- list(...)
       }
-      if (length(private$.parameters) && length(lst)) {
+      if (private$.parameters$length && length(lst)) {
         self$parameters()$setParameterValue(lst = lst, error = error)
       }
       invisible(self)

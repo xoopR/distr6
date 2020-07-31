@@ -86,8 +86,7 @@ mvn$rand(5)
 
 \item{\code{type}}{Deprecated, use \verb{$traits$type}.}
 
-\item{\code{properties}}{Returns distribution properties, including kurtosis type, skewness type, support, and
-symmetry.}
+\item{\code{properties}}{Returns distribution properties, including skewness type and symmetry.}
 
 \item{\code{support}}{Deprecated, use \verb{$properties$type}.}
 

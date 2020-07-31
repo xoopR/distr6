@@ -59,9 +59,9 @@ test_that("merge", {
 })
 
 test_that("no parameters", {
-  expect_null(UniformKernel$new()$parameters())
-  expect_null(UniformKernel$new()$setParameterValue(lst = list(d = 2)))
-  expect_null(UniformKernel$new()$getParameterValue("d"))
+  expect_equal(UniformKernel$new()$parameters(), ParameterSet$new())
+  expect_equal(UniformKernel$new()$setParameterValue(lst = list(d = 2)), UniformKernel$new())
+  expect_error(UniformKernel$new()$getParameterValue("d"))
 })
 
 test_that("addDeps", {
