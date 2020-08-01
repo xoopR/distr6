@@ -159,7 +159,7 @@ Tricube <- R6Class("Tricube",
                 1085 * x[i]^10) / 6561 + (1295 * x[i]^13) / 312741 - (35 * x[i]^16) / 625482 + (
                   245 * x[i]^19) / 101015343 + fixed3(upper = upper[i], x = x[i])
           } else {ret[i] = 0}
-        } else if (x[i] >= 1 & x[i] <= 2) {
+        } else if (x[i] >= 1 & x[i] < 2) {
           if (upper[i] == Inf | upper[i] > 1) {
             ret[i] = fixed6(x = x[i])
           } else if (upper[i] > (x[i] - 1) & upper[i] <= 1) {
@@ -198,7 +198,7 @@ Tricube <- R6Class("Tricube",
             ret[i] = fixed5(x = x[i])
           } else {ret[i] = 0}
 
-        }
+        } else if (abs(x[i] == 2)) {ret[i] = 0}
       }
       return(ret)
     },

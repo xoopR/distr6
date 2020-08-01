@@ -10,3 +10,18 @@ test_that("autotest", {
     cdf = c(0.3917, 0.5, 0.6083)
   )
 })
+
+
+test_that("pdfsquared2norm upper", {
+  kern <- Triweight$new(decorators = "ExoticStatistics")
+  expect_rounded_equal(kern$pdfPNorm(2, upper = 2)^2, kern$pdfSquared2Norm(upper = 2), 4)
+  expect_rounded_equal(kern$pdfPNorm(2, upper = 0)^2, kern$pdfSquared2Norm(upper = 0), 4)
+  expect_rounded_equal(kern$pdfPNorm(2, upper = -1)^2, kern$pdfSquared2Norm(upper = -1), 4)
+})
+
+test_that("pdfsquared2norm x", {
+  kern <- Triweight$new()
+  expect_rounded_equal(kern$pdfSquared2Norm(x = 2), 0)
+  expect_rounded_equal(kern$pdfSquared2Norm(x = 0), 0.81585082)
+  expect_rounded_equal(kern$pdfSquared2Norm(x = -1.2), 0.02944901)
+})

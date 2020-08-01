@@ -42,11 +42,16 @@ LogisticKernel <- R6Class("LogisticKernel",
             ret[i] = ((x[i] - 2) * exp(2 * x[i]) + (x[i] + 2) * exp(x[i])) /
               (exp(3 * x[i]) - 3 * exp(2 * x[i]) + 3 * exp(x[i]) - 1)
           }
-        } else {ret[i] = ((exp(2 * x[i]) + exp(x[i])) * (log(exp(-upper[i]) + 1) - log(exp(x[i] - upper[i]) + 1) + x[i])) /
-                          (exp(3 * x[i]) - 3 * exp(2 * x[i])+3 * exp(x[i]) - 1) -
-                          (((exp(2 * x[i]) + exp(x[i])) * exp(- upper[i]) + 2 * exp(x[i])) /
-                          ((exp(3 * x[i]) - exp(2 * x[i]) - exp(x[i]) + 1) * exp(- upper[i]) +
-                          (exp(3 * x[i]) - 2 * exp(2 * x[i]) + exp(x[i])) * exp(- 2 * upper[i]) + exp(2 * x[i]) - 2 * exp(x[i]) + 1))}
+        } else {
+          if(x[i] == 0) {
+            ret[i] = ((exp(upper[i])+3)*exp((2*upper[i])))/(6*(exp(upper[i])+1)^3)
+          } else{
+            ret[i] = (exp(x[i])*(exp(2*x[i]+upper[i])*log(exp(x[i])+exp(upper[i]))+exp(x[i]+2*upper[i])*log(exp(x[i])+exp(upper[i]))+2*exp(x[i]+upper[i])*log(exp(x[i])+exp(upper[i]))+
+                                   exp(2*x[i])*log(exp(x[i])+exp(upper[i]))+exp(x[i])*log(exp(x[i])+exp(upper[i]))+exp(2*upper[i])*log(exp(x[i])+exp(upper[i]))+
+                                   exp(upper[i])*log(exp(x[i])+exp(upper[i]))+exp(2*x[i]+upper[i])+2*exp(x[i]+2*upper[i])+(-exp(upper[i])-1)*x[i]*(exp(x[i])+1)*(exp(x[i])+exp(upper[i]))+
+                                   (-exp(upper[i])-1)*log(exp(upper[i])+1)*(exp(x[i])+1)*(exp(x[i])+exp(upper[i]))-2*exp(2*upper[i])-
+                                   exp(upper[i])))/((exp(upper[i])+1)*(exp(x[i])-1)^3*(exp(x[i])+exp(upper[i])))}
+        }
       }
       return(ret)
     },
