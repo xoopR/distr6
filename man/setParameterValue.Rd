@@ -4,7 +4,7 @@
 \alias{setParameterValue}
 \title{Parameter Value Setter}
 \usage{
-setParameterValue(object, ..., lst = NULL, error = "warn", .suppressCheck = FALSE)
+setParameterValue(object, ..., lst = NULL, error = "warn")
 }
 \arguments{
 \item{object}{Distribution or ParameterSet.}
@@ -14,8 +14,6 @@ setParameterValue(object, ..., lst = NULL, error = "warn", .suppressCheck = FALS
 \item{lst}{optional list, see details.}
 
 \item{error}{character, value to pass to \code{stopwarn}.}
-
-\item{.suppressCheck}{used internally.}
 }
 \value{
 An R6 object of class ParameterSet.

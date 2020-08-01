@@ -606,13 +606,12 @@ NULL
 #' @title Parameter Value Setter
 #' @description Sets the value of the given parameter.
 #'
-#' @usage setParameterValue(object, ..., lst = NULL, error = "warn", .suppressCheck = FALSE)
+#' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
 #'
 #' @param object Distribution or ParameterSet.
 #' @param ... named parameters and values to update, see details.
 #' @param lst optional list, see details.
 #' @param error character, value to pass to \code{stopwarn}.
-#' @param .suppressCheck used internally.
 #'
 #' @return An R6 object of class ParameterSet.
 #'
