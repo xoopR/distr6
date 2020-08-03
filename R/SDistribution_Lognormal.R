@@ -71,7 +71,7 @@ Lognormal <- R6Class("Lognormal",
                           decorators = NULL) {
 
       if (!is.null(mean) && (is.null(var) & is.null(sd) & is.null(prec))) {
-        var = 1
+        var <- 1
       }
       if (!is.null(mean) || !is.null(var) || !is.null(sd) || !is.null(prec)) {
         meanlog <- varlog <- sdlog <- preclog <- NULL

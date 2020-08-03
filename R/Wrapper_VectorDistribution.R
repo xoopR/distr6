@@ -132,8 +132,8 @@ or `distlist` should be used.")
           params <- c(params, shared_params)
         }
 
-        support = subset(as.data.table(p), select = c(id, support))
-        support[,support := sapply(support, set6::setpower, power = length(paramlst))]
+        support <- subset(as.data.table(p), select = c(id, support))
+        support[, support := sapply(support, set6::setpower, power = length(paramlst))]
         parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
                                                 .supports = support)$setParameterValue(lst = params)
         shortname <- get(distribution)$public_fields$short_name

@@ -139,7 +139,7 @@ ParameterSet <- R6Class("ParameterSet",
     parameters = function(id = NULL) {
       if (!is.null(id)) {
         id0 <- id
-        pars = subset(private$.parameters, id %in% id0)
+        pars <- subset(private$.parameters, id %in% id0)
         if (nrow(pars) == 0) {
           stopf("'%s' is not a parameter in this ParameterSet.", id)
         } else {
@@ -231,14 +231,14 @@ ParameterSet <- R6Class("ParameterSet",
       }
 
       dt$value <- lst[match(dt$id, names(lst))]
-      dt[,value := Map(private$.trafo, id = id, value = value)]
+      dt[, value := Map(private$.trafo, id = id, value = value)]
 
       if (!.suppressCheck) {
         apply(dt, 1, function(.x) {
-          value = .x[[2]]
-          support = .x[[3]]
+          value <- .x[[2]]
+          support <- .x[[3]]
           if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
-            value = Tuple$new(value)
+            value <- Tuple$new(value)
           }
           assertContains(support, value,
                          sprintf("%s does not lie in the support of %s.",
@@ -504,10 +504,10 @@ ParameterSet <- R6Class("ParameterSet",
       updates <- subset(self$deps, x == id)
       if (nrow(updates)) {
         # FIXME - need to sort in alphabetical order, this can definitely be improved
-        rows = unlist(private$.parameters$id) %in% unlist(updates$y)
-        rows = which(rows)[order(unlist(private$.parameters$id)[rows])]
-        update = updates$fun[[1]](self)
-        update = update[order(names(update))]
+        rows <- unlist(private$.parameters$id) %in% unlist(updates$y)
+        rows <- which(rows)[order(unlist(private$.parameters$id)[rows])]
+        update <- updates$fun[[1]](self)
+        update <- update[order(names(update))]
         data.table::set(
           private$.parameters,
           rows,

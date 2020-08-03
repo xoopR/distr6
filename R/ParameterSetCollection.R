@@ -164,7 +164,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 
       .suppressCheck <- !is.null(self$checks)
       sapply(unique(dist), function(i) {
-        bool = dist == i
+        bool <- dist == i
         newlst <- lst[bool]
         names(newlst) <- param[bool]
         private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = .suppressCheck)
