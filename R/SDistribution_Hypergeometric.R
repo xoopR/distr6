@@ -137,7 +137,9 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$failures)) lst$successes <- NULL
+      super$setParameterValue(lst = lst, error = error)
       size <- self$getParameterValue("size")
 
       private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +

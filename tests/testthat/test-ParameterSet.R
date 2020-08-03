@@ -45,12 +45,12 @@ test_that("setters", {
   expect_error(Binomial$new()$setParameterValue(lst = list(prob = 2)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
   expect_silent(Binomial$new()$setParameterValue(lst = list(prob = 0.6)))
-  expect_warning(expect_null(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa = 2))))
+  expect_error(Binomial$new()$parameters()$setParameterValue(lst = list(sdsa = 2)))
   expect_error(Exponential$new() %>% setParameterValue(rate = 0))
   expect_error(Exponential$new() %>% setParameterValue(rate = Inf))
-  expect_warning(Binomial$new()$setParameterValue(lst = list(2)), "provided")
-  expect_error(ParameterSet$new(id = "a", value = list(c(1, 2)), support = Reals$new()^2)$ # nolint
-                 setParameterValue(a = 1), "does not lie")
+  expect_error(ParameterSet$new(id = "a",
+                                value = list(c(1, 2)),
+                                support = Reals$new()^2)$setParameterValue(a = 1), "does not lie")
 })
 
 test_that("merge", {
@@ -59,9 +59,9 @@ test_that("merge", {
 })
 
 test_that("no parameters", {
-  expect_null(UniformKernel$new()$parameters())
-  expect_null(UniformKernel$new()$setParameterValue(lst = list(d = 2)))
-  expect_null(UniformKernel$new()$getParameterValue("d"))
+  expect_equal(UniformKernel$new()$parameters(), ParameterSet$new())
+  expect_equal(UniformKernel$new()$setParameterValue(lst = list(d = 2)), UniformKernel$new())
+  expect_error(UniformKernel$new()$getParameterValue("d"))
 })
 
 test_that("addDeps", {
@@ -69,16 +69,7 @@ test_that("addDeps", {
     id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
     settable = list(TRUE, FALSE)
   )
-  expect_error(ps$addDeps("a", "c", function(x) x), "'c' is not")
-  expect_error(ps$addDeps("c", "a", function(x) x), "'c' is not")
-})
-
-test_that("addChecks", {
-  ps <- ParameterSet$new(
-    id = list("a", "b"), value = c(0, 1), support = list(Set$new(0, 1), Set$new(0, 1)),
-    settable = list(TRUE, FALSE)
-  )
-  expect_error(ps$addChecks("c", function(x) x), "'c' is not")
+  expect_error(ps$addDeps("a", "c", function(self) x), "subset of")
 })
 
 test_that("addTrafos", {
@@ -151,10 +142,11 @@ test_that("deprecated", {
 test_that("c", {
   ps1 <- getParameterSet.Degenerate()
   ps2 <- getParameterSet.Poisson()
-  expect_equal(c(ps1, ps2), ParameterSet$new(id = c("mean", "rate"), value = c(0, 1),
-                                             support = list(Reals$new(), PosReals$new()),
-                                             description = c("Location Parameter",
-                                                             "Arrival Rate")))
+  expect_equal(as.data.table(c(ps1, ps2)),
+               data.table(id = c("mean", "rate"), value = list(0, 1),
+                          support = list(reals, pos_reals),
+                          settable = c(TRUE, TRUE),
+                          description = c("Location Parameter", "Arrival Rate")))
   ps3 <- getParameterSet.Binomial()
   expect_error(c(ps3, ps3))
   expect_error(c(ps3, ps3, prefix.names = "Binom"), "length")

@@ -1,5 +1,3 @@
-library(testthat)
-
 p <- 0.2
 r <- 10
 
@@ -125,5 +123,5 @@ test_that("manual", {
                "should be used")
   expect_equal(dist$mgf(10), NaN)
   expect_equal(dist$pgf(10), NaN)
-  expect_warning(dist$setParameterValue(form = "tbf"), "settable after")
+  expect_error(dist$setParameterValue(form = "tbf"), "settable after")
 })

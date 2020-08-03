@@ -256,7 +256,14 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' @description
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+      if (is.null(lst)) lst <- list(...)
+      if (!is.null(lst$mean)) {
+        lst$prob <- NULL
+        lst$qprob <- NULL
+      } else if (!is.null(lst$qprob)) {
+        lst$prob <- NULL
+      }
+      super$setParameterValue(lst = lst, error = error)
 
       form <- self$getParameterValue("form")[[1]]
       if (form == "tbf" | form == "tbs") {

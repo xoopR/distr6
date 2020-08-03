@@ -86,8 +86,7 @@ mvn$rand(5)
 
 \item{\code{type}}{Deprecated, use \verb{$traits$type}.}
 
-\item{\code{properties}}{Returns distribution properties, including kurtosis type, skewness type, support, and
-symmetry.}
+\item{\code{properties}}{Returns distribution properties, including skewness type and symmetry.}
 
 \item{\code{support}}{Deprecated, use \verb{$properties$type}.}
 
@@ -153,7 +152,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   valueSupport = NULL,
   variateForm = NULL,
   description = NULL,
-  suppressMoments = FALSE,
   .suppressChecks = FALSE
 )}\if{html}{\out{</div>}}
 }
@@ -207,9 +205,6 @@ If \code{NULL}, determined automatically.}
 
 \item{\code{description}}{\code{(character(1))} \cr
 Optional short description of the distribution.}
-
-\item{\code{suppressMoments}}{\code{(logical(1))} \cr
-If \code{TRUE} does not calculte skewness and kurtosis types in construction.}
 
 \item{\code{.suppressChecks}}{\code{(logical(1))} \cr
 Used internally.}

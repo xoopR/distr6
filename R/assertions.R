@@ -375,7 +375,7 @@ assertNegativeSkew <- function() {}
 
 makeChecks(
   assertionName = "NegativeSkew",
-  cond = object$properties$skewness == "Negative Skew",
+  cond = skewType(object$skewness()) == "Negative Skew",
   defaulterrormsg = paste(object$short_name, "is not negative skew"),
   pos = environment()
 )
@@ -402,7 +402,7 @@ assertPositiveSkew <- function() {}
 
 makeChecks(
   assertionName = "PositiveSkew",
-  cond = object$properties$skewness == "Positive Skew",
+  cond = skewType(object$skewness()) == "Positive Skew",
   defaulterrormsg = paste(object$short_name, "is not positive skew"),
   pos = environment()
 )
@@ -430,7 +430,7 @@ assertNoSkew <- function() {}
 
 makeChecks(
   assertionName = "NoSkew",
-  cond = object$properties$skewness == "No Skew",
+  cond = skewType(object$skewness()) == "No Skew",
   defaulterrormsg = paste(object$short_name, "is not no skew"),
   pos = environment()
 )
@@ -457,7 +457,7 @@ assertPlatykurtic <- function() {}
 
 makeChecks(
   assertionName = "Platykurtic",
-  cond = object$properties$kurtosis == "platykurtic",
+  cond = exkurtosisType(object$kurtosis()) == "platykurtic",
   defaulterrormsg = paste(object$short_name, "is not platykurtic"),
   pos = environment()
 )
@@ -484,7 +484,7 @@ assertMesokurtic <- function() {}
 
 makeChecks(
   assertionName = "Mesokurtic",
-  cond = object$properties$kurtosis == "mesokurtic",
+  cond = exkurtosisType(object$kurtosis()) == "mesokurtic",
   defaulterrormsg = paste(object$short_name, "is not mesokurtic"),
   pos = environment()
 )
@@ -511,7 +511,7 @@ assertLeptokurtic <- function() {}
 
 makeChecks(
   assertionName = "Leptokurtic",
-  cond = object$properties$kurtosis == "leptokurtic",
+  cond = exkurtosisType(object$kurtosis()) == "leptokurtic",
   defaulterrormsg = paste(object$short_name, "is not leptokurtic"),
   pos = environment()
 )
