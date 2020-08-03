@@ -272,7 +272,7 @@ distributions. Generally only need to be constructed internally.</p>
 <hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSetCollection</span>$<span class='fu'>new</span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.checks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.supports</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -282,6 +282,10 @@ where the names are unique and correspond to references for the distributions.</
 
 <dt><code>lst</code></dt><dd><p><code>(list())</code><br />
 Alternative constructor by supplying a named list of <a href='ParameterSet.html'>ParameterSet</a>s.</p></dd>
+
+<dt><code>.checks</code></dt><dd><p>Used internally.</p></dd>
+
+<dt><code>.supports</code></dt><dd><p>Used internally.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>

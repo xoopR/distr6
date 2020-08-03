@@ -351,6 +351,7 @@ Michael P. McLaughlin.</p>
 <li><p><a href='#method-mgf'><code>Logistic$mgf()</code></a></p></li>
 <li><p><a href='#method-cf'><code>Logistic$cf()</code></a></p></li>
 <li><p><a href='#method-pgf'><code>Logistic$pgf()</code></a></p></li>
+<li><p><a href='#method-setParameterValue'><code>Logistic$setParameterValue()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Logistic$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
@@ -368,7 +369,6 @@ Michael P. McLaughlin.</p>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
@@ -500,6 +500,24 @@ where X is the distribution and \(E_X\) is the expectation of the distribution X
 <p><div class="arguments"></p><dl'>
 <dt><code>z</code></dt><dd><p><code>(integer(1))</code> <br />
 z integer to evaluate probability generating function at.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>Logistic</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl'>
+<dt><code>...</code></dt><dd><p><code>ANY</code> <br />
+Named arguments of parameters to set values for. See examples.</p></dd>
+
+<dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.</p></dd>
+
+<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
+If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

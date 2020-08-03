@@ -397,7 +397,12 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <p><hr>
 <a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(
+  <span class='no'>...</span>,
+  <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>,
+  <span class='kw'>.suppressCheck</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
@@ -411,6 +416,9 @@ are the new values to set.</p></dd>
 <dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
 If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
 
+<dt><code>.suppressCheck</code></dt><dd><p><code>(logical(1))</code><br />
+Should be set internally only.</p></dd>
+
 </dl><p></div></p>
 <h3>Examples</h3>
 <p><div class="r example copy"></p><pre><span class='no'>id</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>)
@@ -420,8 +428,8 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <span class='no'>ps</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
   <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>, <span class='no'>settable</span>,
 )
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>))
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
+<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>rate</span> <span class='kw'>=</span> <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>)))
+<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>)))
 <span class='no'>ps</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"rate"</span>)
 <span class='no'>ps</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>rate</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>ps</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>)
@@ -444,8 +452,9 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
                  value = c(0.2, 0.8),
                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
- ps1$addChecks("prob", function(x, self) x &amp;gt; 0)
- ps1$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
+ ps1$addChecks(function(self) self$getParameterValue("x") &amp;gt; 0)
+ ps1$addDeps("prob", "qprob", function(self)
+     list(qprob = 1 - self$getParameterValue("prob")))
  ps2 &amp;lt;- ParameterSet$new(id = "size",
                  value = 10,
                  support = set6::Interval$new(0, 10, class = "integer"),
@@ -461,69 +470,45 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <p><hr>
 <a id="method-addDeps"></a></p><h3>Method <code>addDeps()</code></h3>
 <p>Add parameter dependencies for automatic updating.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'>addDeps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>fun</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'>addDeps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>fun</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>x</code></dt><dd><p><code>(character(1))</code><br />
 id of parameter that updates <code>y</code>.</p></dd>
 
-<dt><code>y</code></dt><dd><p><code>(character(1))</code><br />
-id of parameter that is updated by <code>x</code>.</p></dd>
+<dt><code>y</code></dt><dd><p><code>(character())</code><br />
+id of parameter(s) that is/are updated by <code>x</code>.</p></dd>
 
 <dt><code>fun</code></dt><dd><p><code>(function(1))</code><br />
-Function used to update <code>y</code>, must include <code>self</code> in formal arguments and
-<code>self$getParameterValue("&lt;x&gt;")</code> in body where <code>"&lt;x&gt;"</code> is the <code>id</code> supplied to <code>x</code>.
-See first example.</p></dd>
-
-<dt><code>dt</code></dt><dd><p><code>([data.table::data.table])</code><br />
-Alternate method to directly construct <code>data.table</code> of dependencies to add.
-See second example.</p></dd>
+Function used to update <code>y</code>, must include <code>self</code> in formal arguments and should return a
+named list with names identical to, and in the same order, as <code>y</code>.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>id</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>)
-<span class='no'>value</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>)
-<span class='no'>support</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span>$<span class='fu'>new</span>(), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span>$<span class='fu'>new</span>())
-<span class='no'>settable</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>)
-<span class='no'>ps</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
-  <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>, <span class='no'>settable</span>
+<p><div class="r example copy"></p><pre><span class='no'>ps</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>),
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>/<span class='fl'>2</span>),
+  <span class='kw'>support</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span>$<span class='fu'>new</span>(), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span>$<span class='fu'>new</span>(), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span>$<span class='fu'>new</span>())
 )
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>))
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
-<span class='no'>ps</span>$<span class='no'>deps</span>
-
-<span class='co'># Alternate method</span>
-<span class='no'>ps</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
-  <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>, <span class='no'>settable</span>
-)
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='kw'>dt</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>),
-                          <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>),
-                          <span class='kw'>fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>),
-                                  <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
-                         )
-           )
+<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"a"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"b"</span>, <span class='st'>"c"</span>),
+   <span class='kw'>function</span>(<span class='no'>self</span>) {
+       <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"a"</span>) + <span class='fl'>1</span>,
+            <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"a"</span>))
+ })
 <span class='no'>ps</span>$<span class='no'>deps</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-addChecks"></a></p><h3>Method <code>addChecks()</code></h3>
 <p>Add parameter checks for automatic assertions. Note checks are made after
 any transformations.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'>addChecks</span>(<span class='no'>x</span>, <span class='no'>fun</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ParameterSet</span>$<span class='fu'>addChecks</span>(<span class='no'>fun</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
-<dt><code>x</code></dt><dd><p><code>(character(1))</code><br />
-id of parameter to be checked.</p></dd>
-
 <dt><code>fun</code></dt><dd><p><code>(function(1))</code><br />
-Function used to check <code>x</code>, must include <code>x, self</code> in formal arguments and
-<code>x</code> in body where <code>x</code> is the value of the parameter to check. Result should
-be a logical. See first example.</p></dd>
-
-<dt><code>dt</code></dt><dd><p><code>([data.table::data.table])</code><br />
-Alternate method to directly construct <code>data.table</code> of checks to add.
-See second example.</p></dd>
+Function used to check <code>ParameterSet</code>, must include <code>self</code> in formal arguments and
+result in a logical.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>
@@ -533,22 +518,9 @@ support &amp;lt;- list(set6::PosReals$new(), set6::PosReals$new())
 ps &amp;lt;- ParameterSet$new(
   id, value, support
 )
-ps$addChecks("lower", function(x, self) x &amp;lt; self$getParameterValue("upper"))
+ps$addChecks(function(self)
+  self$getParameterValue("lower") &amp;lt; self$getParameterValue("upper"))
 ps$checks
-\dontrun{
-# errors as check fails
-ps$setParameterValue(lower = 4)
-}
-ps$setParameterValue(lower = 2)
-
-# Alternate method (better with more parameters)
-ps &amp;lt;- ParameterSet$new(
-  id, value, support
-)
-ps$addChecks(dt = data.table::data.table(
-                          x = "lower",
-                          fun = function(x, self) x &amp;lt; self$getParameterValue("upper")
-           ))
 </pre><p></div></p>
 
 <p><hr>
@@ -671,8 +643,8 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
 <span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
   <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>, <span class='no'>settable</span>,
 )
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>))
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
+<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>rate</span> <span class='kw'>=</span> <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>)))
+<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>)))
 <span class='no'>ps</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"rate"</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='no'>ps</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>rate</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>ps</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>)</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='no'>ps</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>) <span class='co'># Auto-updated to 1/2</span></div><div class='output co'>#&gt; [1] 0.5</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
@@ -683,8 +655,9 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
                  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>),
                  <span class='kw'>support</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>))
  )
- <span class='no'>ps1</span>$<span class='fu'>addChecks</span>(<span class='st'>"prob"</span>, <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>self</span>) <span class='no'>x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)
- <span class='no'>ps1</span>$<span class='fu'>addDeps</span>(<span class='st'>"prob"</span>, <span class='st'>"qprob"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> - <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>))
+ <span class='no'>ps1</span>$<span class='fu'>addChecks</span>(<span class='kw'>function</span>(<span class='no'>self</span>) <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"x"</span>) <span class='kw'>&gt;</span> <span class='fl'>0</span>)
+ <span class='no'>ps1</span>$<span class='fu'>addDeps</span>(<span class='st'>"prob"</span>, <span class='st'>"qprob"</span>, <span class='kw'>function</span>(<span class='no'>self</span>)
+     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>qprob</span> <span class='kw'>=</span> <span class='fl'>1</span> - <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)))
  <span class='no'>ps2</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"size"</span>,
                  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>10</span>,
                  <span class='kw'>support</span> <span class='kw'>=</span> <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span>$<span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>10</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"integer"</span>),
@@ -695,38 +668,30 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
 #&gt; 1:  prob   0.2      [0,1]
 #&gt; 2: qprob   0.8      [0,1]
 #&gt; 3:  size    10 {0,...,10}</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>trafos</span></div><div class='output co'>#&gt;       x           fun
-#&gt; 1: size &lt;function[1]&gt;</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>checks</span></div><div class='output co'>#&gt;       x           fun
-#&gt; 1: prob &lt;function[1]&gt;</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;       x     y           fun
+#&gt; 1: size &lt;function[1]&gt;</div><div class='input'> <span class='no'>ps1</span>$<span class='no'>checks</span></div><div class='output co'>#&gt; [[1]]
+#&gt; function(self) self$getParameterValue("x") &gt; 0
+#&gt; &lt;environment: 0x7febfe1f8208&gt;
+#&gt; 
+#&gt; [[2]]
+#&gt; NULL
+#&gt; </div><div class='input'> <span class='no'>ps1</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;       x     y           fun
 #&gt; 1: prob qprob &lt;function[1]&gt;</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addDeps`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>)
-<span class='no'>value</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>)
-<span class='no'>support</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span>$<span class='fu'>new</span>(), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span>$<span class='fu'>new</span>())
-<span class='no'>settable</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>)
 <span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
-  <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>, <span class='no'>settable</span>
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>),
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>/<span class='fl'>2</span>),
+  <span class='kw'>support</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span>$<span class='fu'>new</span>(), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span>$<span class='fu'>new</span>(), <span class='kw pkg'>set6</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span>$<span class='fu'>new</span>())
 )
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>))
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>, <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
-<span class='no'>ps</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;        x     y           fun
-#&gt; 1: scale  rate &lt;function[1]&gt;
-#&gt; 2:  rate scale &lt;function[1]&gt;</div><div class='input'>
-<span class='co'># Alternate method</span>
-<span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
-  <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>, <span class='no'>settable</span>
-)
-<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='kw'>dt</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"scale"</span>, <span class='st'>"rate"</span>),
-                          <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rate"</span>, <span class='st'>"scale"</span>),
-                          <span class='kw'>fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"scale"</span>),
-                                  <span class='kw'>function</span>(<span class='no'>self</span>) <span class='fl'>1</span> / <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>))
-                         )
-           )
-<span class='no'>ps</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;        x     y           fun
-#&gt; 1: scale  rate &lt;function[1]&gt;
-#&gt; 2:  rate scale &lt;function[1]&gt;</div><div class='input'>
+<span class='no'>ps</span>$<span class='fu'>addDeps</span>(<span class='st'>"a"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"b"</span>, <span class='st'>"c"</span>),
+   <span class='kw'>function</span>(<span class='no'>self</span>) {
+       <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"a"</span>) + <span class='fl'>1</span>,
+            <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"a"</span>))
+ })
+<span class='no'>ps</span>$<span class='no'>deps</span></div><div class='output co'>#&gt;    x   y           fun
+#&gt; 1: a b,c &lt;function[1]&gt;</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addChecks`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -737,23 +702,11 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
 <span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
   <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>
 )
-<span class='no'>ps</span>$<span class='fu'>addChecks</span>(<span class='st'>"lower"</span>, <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>self</span>) <span class='no'>x</span> <span class='kw'>&lt;</span> <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"upper"</span>))
-<span class='no'>ps</span>$<span class='no'>checks</span></div><div class='output co'>#&gt;        x           fun
-#&gt; 1: lower &lt;function[1]&gt;</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># errors as check fails</span>
-<span class='no'>ps</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-}
-<span class='no'>ps</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-
-<span class='co'># Alternate method (better with more parameters)</span>
-<span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='no'>ParameterSet</span>$<span class='fu'>new</span>(
-  <span class='no'>id</span>, <span class='no'>value</span>, <span class='no'>support</span>
-)
-<span class='no'>ps</span>$<span class='fu'>addChecks</span>(<span class='kw'>dt</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(
-                          <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"lower"</span>,
-                          <span class='kw'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>self</span>) <span class='no'>x</span> <span class='kw'>&lt;</span> <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"upper"</span>)
-           ))
-
+<span class='no'>ps</span>$<span class='fu'>addChecks</span>(<span class='kw'>function</span>(<span class='no'>self</span>)
+  <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"lower"</span>) <span class='kw'>&lt;</span> <span class='no'>self</span>$<span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"upper"</span>))
+<span class='no'>ps</span>$<span class='no'>checks</span></div><div class='output co'>#&gt; function(self)
+#&gt;   self$getParameterValue("lower") &lt; self$getParameterValue("upper")
+#&gt; &lt;environment: 0x7febfe1f8208&gt;</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addTrafos`</span>
 <span class='co'>## ------------------------------------------------</span>

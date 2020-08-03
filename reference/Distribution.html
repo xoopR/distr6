@@ -260,8 +260,7 @@ as well as serving as the parent class to specific, familiar distributions.</p>
 
 <dt><code>type</code></dt><dd><p>Deprecated, use <code>$traits$type</code>.</p></dd>
 
-<dt><code>properties</code></dt><dd><p>Returns distribution properties, including kurtosis type, skewness type, support, and
-symmetry.</p></dd>
+<dt><code>properties</code></dt><dd><p>Returns distribution properties, including skewness type and symmetry.</p></dd>
 
 <dt><code>support</code></dt><dd><p>Deprecated, use <code>$properties$type</code>.</p></dd>
 
@@ -325,7 +324,6 @@ symmetry.</p></dd>
   <span class='kw'>valueSupport</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variateForm</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>suppressMoments</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>.suppressChecks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre><p></div></p>
 
@@ -377,9 +375,6 @@ If <code>NULL</code>, determined automatically.</p></dd>
 
 <dt><code>description</code></dt><dd><p><code>(character(1))</code> <br />
 Optional short description of the distribution.</p></dd>
-
-<dt><code>suppressMoments</code></dt><dd><p><code>(logical(1))</code> <br />
-If <code>TRUE</code> does not calculte skewness and kurtosis types in construction.</p></dd>
 
 <dt><code>.suppressChecks</code></dt><dd><p><code>(logical(1))</code> <br />
 Used internally.</p></dd>
