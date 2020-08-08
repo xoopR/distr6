@@ -6,12 +6,12 @@
 #' @template method_setParameterValue
 #'
 #' @details
-#' Truncates a distribution at lower and upper limits, using the formulae
+#' Truncates a distribution at lower and upper limits on a left-open interval, using the formulae
 #' \deqn{f_T(x) = f_X(x) / (F_X(upper) - F_X(lower))}
 #' \deqn{F_T(x) = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))}
 #' where \eqn{f_T}/\eqn{F_T} is the pdf/cdf of the truncated distribution
 #' T = Truncate(X, lower, upper) and \eqn{f_X}, \eqn{F_X} is the pdf/cdf of the
-#' original distribution.
+#' original distribution. T is supported on (].
 #'
 #' @export
 TruncatedDistribution <- R6Class("TruncatedDistribution",
