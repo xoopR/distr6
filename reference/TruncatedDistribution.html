@@ -236,12 +236,12 @@
 
     <p>The pdf and cdf of the distribution are required for this wrapper, if unavailable decorate with
 <a href='FunctionImputation.html'>FunctionImputation</a> first.</p>
-<p>Truncates a distribution at lower and upper limits, using the formulae
+<p>Truncates a distribution at lower and upper limits on a left-open interval, using the formulae
 $$f_T(x) = f_X(x) / (F_X(upper) - F_X(lower))$$
 $$F_T(x) = (F_X(x) - F_X(lower)) / (F_X(upper) - F_X(lower))$$
 where \(f_T\)/\(F_T\) is the pdf/cdf of the truncated distribution
 T = Truncate(X, lower, upper) and \(f_X\), \(F_X\) is the pdf/cdf of the
-original distribution.</p>
+original distribution. T is supported on (].</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other wrappers: 
