@@ -22,7 +22,7 @@ articles:
   s3_piping: webs/s3_piping.html
   statistical_methods: webs/statistical_methods.html
   wrappers: webs/wrappers.html
-last_built: 2020-08-12T04:28Z
+last_built: 2020-08-13T04:42Z
 urls:
   reference: https://alan-turing-institute.github.io/distr6/reference
   article: https://alan-turing-institute.github.io/distr6/articles
