@@ -185,67 +185,6 @@ Quartic <- R6Class("Quartic",
 
     },
 
-    cdfSquared2NormInv = function(x = 0, lower = 0) {
-
-      ret <- numeric(length(x))
-
-      for(i in seq_along(x)){
-
-        if (x[i] >= 0 & x[i] <= 2) {
-          if(lower[i] <= -1) {
-            ret[i]= cdfSquared2Norm.Quartic(x = -x[i], upper =  -lower[i])
-          } else if (lower[i] >= -1 & lower[i] <= x[i] - 1) {
-            ret[i] = cdfSquared2Norm.Quartic(x = -x[i], upper =  -lower[i])
-          } else if (lower[i] >= x[i] - 1 & lower[i] <= 1) {
-            ret[i] = cdfSquared2Norm.Quartic(x = -x[i], upper = - lower[i])
-          } else if (lower[i] >= 1 & lower[i] <= x[i] + 1) {
-            ret[i] = 0
-          } else if (lower[i] >= x[i] + 1) {
-            ret[i] = 0
-          }
-        } else if (x[i] >= -2 & x[i] <= 0) {
-          if(lower[i] <= x[i] -1) {
-            ret[i]= cdfSquared2Norm.Quartic(x = -x[i], upper =  -lower[i])
-          } else if (lower[i] >= x[i] -1 & lower[i] <= - 1) {
-            ret[i] = cdfSquared2Norm.Quartic(x = -x[i], upper =  -lower[i])
-          } else if (lower[i] >= - 1 & lower[i] <= - x[i] + 1) {
-            ret[i] =  cdfSquared2Norm.Quartic(x = -x[i], upper =  -lower[i])
-          } else if (lower[i] >= x[i] + 1 & lower[i] <= 1) {
-            ret[i] = 0
-          } else if (lower[i] >= 1) {
-            ret[i] = 0
-          }
-        }  else if (x[i] >= 2) {
-          if (lower[i] <= - 1) {
-            ret[i] =  -lower[i]
-          } else if (lower[i]  >= -1 & lower[i] <= 1){
-            ret[i]=  cdfSquared2Norm.Quartic(x = - x[i], upper = -lower[i])
-          } else if (lower[i] >= 1 & lower[i] <= x[i]- 1) {
-            ret[i] = 0
-          } else if (lower[i] >= x[i] - 1 & lower[i] <= x[i] + 1) {
-            ret[i] = 0
-          } else if (lower[i] >= x[i] + 1) {
-            ret[i] = 0
-          }
-        }  else if (x[i] <= -2) {
-          if (lower[i] <= x[i] - 1) {
-            ret[i] = x[i] -lower[i]
-          } else if (lower[i] >= x[i] - 1 & lower[i] <= x[i] + 1){
-            ret[i] =cdfSquared2Norm.Quartic(x = - x[i], upper = -lower[i] )
-          } else if (lower[i] >= x[i] + 1 & lower[i] <= -1) {
-            ret[i] = 0
-          } else if (lower[i] >= -1 & lower[i] <= 1) {
-            ret[i] = 0
-          } else if (lower[i] >= 1) {
-            ret[i]= 0
-          }
-        }
-      }
-
-      return(ret)
-
-    },
-
     #' @description
     #' The variance of a distribution is defined by the formula
     #' \deqn{var_X = E[X^2] - E[X]^2}
