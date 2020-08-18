@@ -1,4 +1,4 @@
-# distr6 1.4.2.9000
+# distr6 1.4.3
 
 * Bugfix in `WeightedDiscrete`, `cdf` was previously positive when below distribution support, now zero.
 * Added discrete p-norms in `ExoticStatistics` decorator
