@@ -56,8 +56,65 @@ Cosine <- R6Class("Cosine",
     #' \deqn{\int_a^b (F_X(u))^2 du}
     #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    cdfSquared2Norm = function(x = 0, upper = Inf) {
+    cdfSquared2Norm = function(x = 0, upper = 0) {
 
+      ret <- numeric(length(x))
+
+      for(i in seq_along(x)){
+
+        if (x[i] >= 0 & x[i] <= 2) {
+          if(upper[i] <= -1) {
+            ret= 0
+          } else if (upper[i] >= -1 & upper[i] <= x[i] - 1) {
+            ret = 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
+            ret =  (1/(8*pi))*(2*pi + 2*upper[i]*pi - 2*x[i]*pi - 4*cos((upper[i]*pi)/2) + (1 + upper[i] - x[i])*pi*cos((x[i]*pi)/2) -
+                                 4*cos((1/2)*(-upper[i] + x[i])*pi) + 3*sin((x[i]*pi)/2) + sin((1/2)*(-2*upper[i] + x[i])*pi))
+          } else if (upper[i] >= 1 & upper[i] <= x[i] + 1) {
+            ret= (2*(sin((pi*x[i])/2)-cos((pi*(x[i]-upper[i]))/2)))/pi-sin((pi*x[i])/2)/(4*pi)-((x[i]-2)*(cos((pi*x[i])/2)+2))/8+upper[i]-1/2
+          } else if (upper[i] >= x[i] + 1) {
+            ret= (6*sin((pi*x[i])/2)-pi*((x[i]-2)*cos((pi*x[i])/2)+6*x[i]-8*upper[i]+4))/(8*pi)
+          }
+        } else if (x[i] >= -2 & x[i] <= 0) {
+          if(upper[i] <= x[i] -1) {
+            ret= 0
+          } else if (upper[i] >= x[i] -1 & upper[i] <= - 1) {
+            ret = 0
+          } else if (upper[i] >= - 1 & upper[i] <= x[i] + 1) {
+            ret = (-4*cos((pi*(x[i]-upper[i]))/2)+sin((pi*(x[i]-2*upper[i]))/2)-3*sin((pi*x[i])/2)+pi*(upper[i]+1)*
+                     cos((pi*x[i])/2)-4*cos((pi*upper[i])/2)+2*pi*upper[i]+2*pi)/(8*pi)
+          } else if (upper[i] >= x[i] + 1 & upper[i] <= 1) {
+            ret = -(6*sin((pi*x[i])/2)-pi*((x[i]+2)*cos((pi*x[i])/2)-2*x[i]+4*upper[i])+8*cos((pi*upper[i])/2))/(8*pi)
+          } else if (upper[i] >= 1) {
+            ret = (sin((pi*x[i])/2)/pi+((x[i]+2)*cos((pi*x[i])/2))/2+x[i]+2)/4-sin((pi*x[i])/2)/pi-x[i]/2+upper[i]-1
+          }
+        } else if (x[i] >= 2) {
+          if (upper[i] <=  -1) {
+            ret = 0
+          } else if (upper[i] >= -1 & upper[i] <= 1) {
+            ret = 0
+          } else if (upper[i] >= 1 & upper[i] <= x[i] - 1){
+            ret = 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1) {
+            ret = -(2*cos((pi*(x[i]-upper[i]))/2))/pi-x[i]+upper[i]+1/2
+          } else if (upper[i] >= x[i] + 1) {
+            ret= upper[i] - x[i]
+          }
+        } else if (x[i] <= -2) {
+          if (upper[i] <= x[i] - 1) {
+            ret = 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1){
+            ret = 0
+          } else if (upper[i] >= x[i] + 1 & upper[i] <= -1) {
+            ret = 0
+          } else if (upper[i] >= -1 & upper[i] <= 1) {
+            ret = (-(2*cos((pi*upper[i])/2))/pi+upper[i]+1)/2
+          } else if (upper[i] >= 1) {
+            ret= upper[i]
+          }
+        }
+      }
+    return(ret)
     },
 
     #' @description
