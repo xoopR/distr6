@@ -80,6 +80,89 @@ Triweight <- R6Class("Triweight",
     #' are the distribution support limits.
     cdfSquared2Norm = function(x = 0, upper = Inf) {
 
+      ret <- numeric(length(x))
+
+      for(i in seq_along(x)){
+
+        if (x[i] >= 0 & x[i] <= 2) {
+          if(upper[i] <= -1) {
+            ret[i]= 0
+          } else if (upper[i] >= -1 & upper[i] <= x[i] - 1) {
+            ret[i] = 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
+            ret[i] =  (1/10543104) * (8 * (1 + upper[i])^9 * (54740 + 3 * upper[i] * (-54396 + upper[i] * (72924 + 55 * upper[i]*(-1011 + upper[i]*(459 + 13*(-9 + upper[i])*upper[i]))))) -
+                      5148 * (1 + upper[i])^8 * (-16 + upper[i] * (29 + 5 * (-4 + upper[i]) * upper[i]))^2 * x[i] +
+                      840 * (1 + upper[i])^7 * (872 + upper[i] * (-6104 + upper[i] * (14120 + 9 * upper[i] * (-1799 + upper[i] * (1137 + 55 * (-7 + upper[i]) * upper[i])))))*
+                      x[i]^2 - 30030 * (-1 + upper[i])^2 * (1 + upper[i])^6 * (-35 + upper[i] * (-52 + upper[i] * (138 + 25 * (-4 + upper[i]) * upper[i])))*x[i]^3 +
+                      10920 * (1 + upper[i])^5 * (-68 + upper[i] * (340 + upper[i] * (-228 + 5 * upper[i] * (-85 + upper[i] * (137 + 15 * (-5 + upper[i]) * upper[i])))))*x[i]^4 -
+                      18018 * (1 + upper[i])^5 * (35 + upper[i] * (17 + 15 * upper[i] * (-15 + upper[i] * (19 + 2 * (-5 + upper[i]) * upper[i])))) * x[i]^5 +
+                      40040 * (-2 + upper[i]) * (1 + upper[i])^5 * (-4 + upper[i] * (18 + 5 * (-3 + upper[i]) * upper[i])) * x[i]^6 -
+                      6435 * (1 + upper[i])^5 * (-35 + upper[i] * (47 + 5 * (-5 + upper[i]) * upper[i])) * x[i]^7 - 80080 * x[i]^9 +
+                      4368 * x[i]^11 - 210 * x[i]^13 + 5 * x[i]^15)
+          } else if (upper[i] >= 1 & upper[i] <= x[i] + 1) {
+            ret[i] = 1042 / 1287 - x[i] / 2 - (175 * x[i]^2) / 429 + (35 * x[i]^4) / 264 + (7 * x[i]^5) / 16 - (35 * x[i]^6) /
+              72 + (5 * x[i]^7) / 32 - (35 * x[i]^9) / 4608 + (7 * x[i]^11) / 16896 - (35 * x[i]^13) / 1757184 + (5 * x[i]^15) / 10543104 +
+              ((1 / 32) * (-(67 / 2) + 16 * upper[i] + (35 * upper[i]^2) / 2 + (35/4) * (- (upper[i] - x[i])^4 + (-1 + x[i])^4) +
+                         (7 / 2) * ((upper[i] - x[i])^6 - (-1 + x[i])^6) + (5 / 8) * (-(upper[i] - x[i])^8 + (-1 + x[i])^8) + 35 * x[i] - 35 * upper[i] * x[i]))
+          } else if (upper[i] >= x[i] + 1) {
+            ret[i] = 1042 / 1287 - x[i] / 2 - (175 * x[i]^2) / 429 + (35 * x[i]^4) / 264 + (7 * x[i]^5) / 16 - (35 * x[i]^6) / 72 + (5 * x[i]^7) / 32 -
+              (35 * x[i]^9) / 4608 + (7 * x[i]^11) / 16896 - (35 * x[i]^13) / 1757184 + (5 * x[i]^15) / 10543104 +
+              (x[i]- (7 * x[i]^5) / 16 + (7 * x[i]^6) / 16 - (5 * x[i]^7) / 32 + (5 * x[i]^8) / 256) + (upper[i] - x[i] -1)
+          }
+        } else if (x[i] >= -2 & x[i] <= 0) {
+          if(upper[i] <= x[i] -1) {
+            ret[i]= 0
+          } else if (upper[i] >= x[i] -1 & upper[i] <= - 1) {
+            ret[i] = 0
+          } else if (upper[i] >= - 1 & upper[i] <= x[i] + 1) {
+            ret[i] =  (1/10543104) * ((1 + upper[i])^5 * (8 * (1 + upper[i])^4 * (54740 + 3 * upper[i] * (-54396 +
+                      upper[i] * (72924 + 55 * upper[i] * (-1011 + upper[i] * (459 + 13 * (-9 + upper[i]) * upper[i]))))) -
+                      5148 * (1 + upper[i])^3 * (-16 + upper[i] * (29 + 5 * (-4 + upper[i]) * upper[i]))^2 * x[i] +
+                      840 * (1 + upper[i])^2 * (872 + upper[i] * (-6104 + upper[i] * (14120 + 9 * upper[i] * (-1799 + upper[i] * (1137 + 55 * (-7 + upper[i]) * upper[i]))))) *
+                      x[i]^2 - 30030 * (-1 + upper[i])^2 * (1 + upper[i]) * (-35 + upper[i] * (-52 + upper[i] * (138 + 25 * (-4 + upper[i]) * upper[i]))) * x[i]^3 +
+                      10920 * (-68 + upper[i] * (340 + upper[i] * (-228 + 5 * upper[i] * (-85 + upper[i] * (137 + 15 * (-5 + upper[i]) * upper[i]))))) *
+                      x[i]^4 - 18018 * (35 + upper[i] * (17 + 15 * upper[i] * (-15 + upper[i] * (19 + 2 * (-5 + upper[i]) * upper[i]))))*
+                      x[i]^5 + 40040 * (-2 + upper[i]) * (-4 + upper[i] * (18 + 5 * (-3 + upper[i]) * upper[i])) * x[i]^6 -
+                      6435 * (-35 + upper[i] * (47 + 5 * (-5 + upper[i]) * upper[i])) * x[i]^7))
+          } else if (upper[i] >= x[i] + 1 & upper[i] <= 1) {
+            ret[i] = 1042 / 1287 + x[i] / 2 - (175 * x[i]^2) / 429 + (35 * x[i]^4) / 264 - (7 * x[i]^5) / 16 - (35 * x[i]^6) /  72 -
+              (5 * x[i]^7) / 32 + (35 * x[i]^9) / 4608 - (7 * x[i]^11) / 16896 + (35 * x[i]^13) / 1757184 - (5 * x[i]^15) / 10543104 +
+              (-(221/256) + upper[i] / 2 + (35 * upper[i]^2) / 64 - (35 * upper[i]^4) / 128 + (7 * upper[i]^6) / 64 - (5 * upper[i]^8) /
+                 256 - x[i] + (7 * x[i]^5) / 16 + (7 * x[i]^6) / 16 + (5 * x[i]^7) / 32 + (5 * x[i]^8) / 256)
+          } else if (upper[i] >= 1) {
+            ret[i] = 1042 / 1287 + x[i] / 2 - (175 * x[i]^2) / 429 + (35 * x[i]^4) / 264 - (7 * x[i]^5) / 16 - (35 * x[i]^6) / 72 - (5 * x[i]^7) / 32 +
+              (35 * x[i]^9) / 4608 - (7 * x[i]^11) / 16896 + (35 * x[i]^13) / 1757184 - (5 * x[i]^15) / 10543104 +
+              (-x[i] + (7 * x[i]^5) / 16 + (7 * x[i]^6) / 16 + (5 * x[i]^7) / 32 + (5 * x[i]^8) / 256) + (upper[i] - 1)
+          }
+        } else if (x[i] >= 2) {
+          if (upper[i] <=  -1) {
+            ret[i] = 0
+          } else if (upper[i] >= -1 & upper[i] <= 1) {
+            ret[i] = 0
+          } else if (upper[i] >= 1 & upper[i] <= x[i] - 1){
+            ret[i] = 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1) {
+            ret[i] = (-(1 / 256)) * (1 + upper[i] - x[i])^5 * (- 35 + 5 * upper[i]^3 - 47 * x[i] - 25 * x[i]^2 - 5 * x[i]^3 -
+                      5 * upper[i]^2 * (5 + 3 * x[i]) + upper[i] * (47 + 50 * x[i] + 15 * x[i]^2))
+          } else if (upper[i] >= x[i] + 1) {
+            ret[i] = upper[i] - x[i]
+          }
+        } else if (x[i] <= -2) {
+          if (upper[i] <= x[i] - 1) {
+            ret[i] = 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1){
+            ret[i] = 0
+          } else if (upper[i] >= x[i] + 1 & upper[i] <= -1) {
+            ret[i] = 0
+          } else if (upper[i] >= -1 & upper[i] <= 1) {
+            ret[i] = 35 / 256 + upper[i] / 2 + (35 * upper[i]^2) / 64 - (35 * upper[i]^4) / 128 + (7 * upper[i]^6) / 64 -
+              (5 * upper[i]^8) / 256
+          } else if (upper[i] >= 1) {
+            ret[i]= upper[i]
+          }
+        }
+      }
+      return(ret)
     },
 
     #' @description

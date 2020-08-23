@@ -47,9 +47,9 @@ Silverman <- R6Class("Silverman",
             ret[i] = (exp ((2 * upper[i] - x[i]) / sqrt(2)) * (2 * cos(x[i] / sqrt(2)) - sin((2 * upper[i] - x[i]) / sqrt(2)) +
                                                         cos((2 * upper[i] - x[i]) / sqrt(2)))) / 2^(9 / 2)
           } else if (upper[i] >= 0 & upper[i] <= x[i]) {
-            ret[i] = (exp(-x[i]/sqrt(2))*((2*upper[i]+sqrt(2))*sin(x[i]/sqrt(2))+
-                                            sqrt(2)*sin((2*upper[i]-x[i])/sqrt(2))))/16+
-              (exp(-x[i]/sqrt(2))*(sin(x[i]/sqrt(2))+3*cos(x[i]/sqrt(2))))/2^(9/2)
+            ret[i] = (exp(-x[i] / sqrt(2)) * ((2 * upper[i] + sqrt(2)) * sin(x[i] / sqrt(2)) +
+                                            sqrt(2) * sin((2 * upper[i] - x[i]) / sqrt(2)))) / 16 +
+              (exp(-x[i] / sqrt(2)) * (sin(x[i] / sqrt(2)) + 3 * cos(x[i] / sqrt(2)))) / 2^(9 / 2)
           } else if (upper[i] >= x[i]) {
             ret[i] = (exp(- x[i]  / sqrt(2)) / (8 * sqrt(2))) *
               ((3 + sqrt(2) * x[i]) * sin(x[i] / sqrt(2)) + 3 * cos(x[i] / sqrt(2))) +
@@ -66,12 +66,13 @@ Silverman <- R6Class("Silverman",
               (sin((x[i] - 2 * upper[i]) / sqrt(2)) + cos((x[i] - 2 * upper[i]) / sqrt(2)) +
                  2 * cos(x[i] / sqrt(2)))
           } else if (upper[i] >= x[i] & upper[i] <= 0) {
-            ret[i] = -(exp(x[i]/sqrt(2))*(2*sin((x[i]-2*upper[i])/sqrt(2))-
-                                            (2^(3/2)*(x[i]-upper[i])-3)*sin(x[i]/sqrt(2))-3*cos(x[i]/sqrt(2))))/2^(9/2)
+            ret[i] = -(exp(x[i] / sqrt(2)) * (2 * sin((x[i] - 2 * upper[i]) / sqrt(2)) -
+                                            (2^(3 / 2) * (x[i] - upper[i]) - 3) * sin(x[i] / sqrt(2)) -
+                                              3 * cos(x[i] / sqrt(2)))) / 2^(9 / 2)
           } else if (upper[i] >= 0) {
-            ret[i] = (exp((x[i]-2*upper[i])/sqrt(2))*(sin((x[i]-2*upper[i])/sqrt(2))-
-                    cos((x[i]-2*upper[i])/sqrt(2))+exp(sqrt(2)*upper[i])*(2^(3/2)*x[i]-6)*sin(x[i]/sqrt(2))+
-                    2*(3*exp(sqrt(2)*upper[i])-1)*cos(x[i]/sqrt(2))))/2^(9/2)
+            ret[i] = (exp((x[i] - 2 * upper[i]) / sqrt(2)) * (sin((x[i] - 2 * upper[i]) / sqrt(2)) -
+                    cos((x[i] - 2 * upper[i]) / sqrt(2)) + exp(sqrt(2) * upper[i]) * (2^(3/2) * x[i] - 6) * sin(x[i] / sqrt(2)) +
+                    2 * (3 * exp(sqrt(2) * upper[i]) - 1) * cos(x[i] / sqrt(2)))) / 2^(9 / 2)
           }
         }
       }
