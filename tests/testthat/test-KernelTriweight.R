@@ -25,3 +25,10 @@ test_that("pdfsquared2norm x", {
   expect_rounded_equal(kern$pdfSquared2Norm(x = 0), 0.81585082)
   expect_rounded_equal(kern$pdfSquared2Norm(x = -1.2), 0.02944901)
 })
+
+test_that("cdfsquared2norm x", {
+  kern <- Triweight$new()
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 0.5), 0.003222043)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = -0.5), 0.106718607)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 2.5), 0.0000000)
+})

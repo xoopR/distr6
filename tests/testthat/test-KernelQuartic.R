@@ -25,3 +25,11 @@ test_that("pdfsquared2norm x", {
   expect_rounded_equal(kern$pdfSquared2Norm(x = 0), 0.71428571)
   expect_rounded_equal(kern$pdfSquared2Norm(x = -1.2), 0.06180279)
 })
+
+test_that("cdfsquared2norm x", {
+  kern <- Quartic$new()
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 0.5), 0.005709188)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = -0.5), 0.114143405)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 2.5), 0.000000000)
+})
+

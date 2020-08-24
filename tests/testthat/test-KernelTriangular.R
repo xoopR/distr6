@@ -24,3 +24,10 @@ test_that("pdfsquared2norm x", {
   expect_rounded_equal(kern$pdfSquared2Norm(x = 0), 0.66666667)
   expect_rounded_equal(kern$pdfSquared2Norm(x = -1.2), 0.08533333)
 })
+
+test_that("cdfsquared2norm x", {
+  kern <- TriangularKernel$new()
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 0.5), 0.008072917)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = -0.5), 0.117187500)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 2.5), 0.000000000)
+})

@@ -84,18 +84,24 @@ TriangularKernel <- R6Class("TriangularKernel",
             } else if (upper[i] >= -1 & upper[i] <= x[i] -1) {
               ret[i] = 0
             } else if (upper[i] >= x[i] - 1 & upper[i] <= 0) {
-              ret[i] = (-x[i]^5+10*x[i]^2-15*x[i]+6)/120+(upper[i]*(30*x[i]^2-60*x[i]+30))/120+(upper[i]^2*(30*x[i]^2-90*x[i]+60))/120+
-                (upper[i]^3*(10*x[i]^2-60*x[i]+60))/120+(upper[i]^4*(30-15*x[i]))/120+upper[i]^5/20
+              ret[i] = (-x[i]^5 + 10 * x[i]^2 - 15 * x[i] + 6) / 120 + (upper[i] * (30 * x[i]^2 - 60 * x[i] + 30)) / 120 +
+                (upper[i]^2 * (30 * x[i]^2 - 90 * x[i] + 60)) / 120 +
+                (upper[i]^3 * (10 * x[i]^2 - 60 * x[i] + 60)) / 120 + (upper[i]^4 * (30 - 15 * x[i])) / 120 +
+                upper[i]^5 / 20
             } else if (upper[i] >= 0 & upper[i] <= x[i]) {
-              ret[i] = -x[i]^5/120+(upper[i]*(30*x[i]^2-60*x[i]+30))/120+(upper[i]^2*(30*x[i]^2-90*x[i]+60))/120+x[i]^2/12+
-                (upper[i]^3*(-10*x[i]^2-20*x[i]+40))/120+(upper[i]^4*x[i])/8-x[i]/8-upper[i]^5/20+1/20
+              ret[i] = -x[i]^5 / 120 + (upper[i] * (30 * x[i]^2 - 60 * x[i] + 30)) / 120 +
+                (upper[i]^2 * (30 * x[i]^2 - 90 * x[i] + 60)) / 120 + x[i]^2 / 12 +
+                (upper[i]^3 * (-10 * x[i]^2 - 20 * x[i] + 40)) / 120 + (upper[i]^4 * x[i]) / 8 - x[i] / 8 - upper[i]^5 / 20 + 1 / 20
             } else if (upper[i] >= x[i] & upper[i] <= 1) {
-              ret[i] = -x[i]^5/60+(-x[i]^5+40*x[i]^3-30*x[i])/120+x[i]^4/12-x[i]^3/6+(upper[i]^3*(10*x[i]^2+60*x[i]+20))/120+x[i]^2/12+
-                (upper[i]^2*(-30*x[i]^2-30*x[i]+60))/120+(upper[i]*(-30*x[i]^2-60*x[i]+30))/120+x[i]/8+(upper[i]^4*(-15*x[i]-30))/120+upper[i]^5/20+1/20
+              ret[i] = -x[i]^5 / 60 + (-x[i]^5 + 40 * x[i]^3 - 30 * x[i]) / 120 +
+                x[i]^4 / 12 - x[i]^3 / 6 + (upper[i]^3 * (10 * x[i]^2 + 60 * x[i] + 20)) / 120 + x[i]^2 / 12 +
+                (upper[i]^2 * (-30 * x[i]^2-30 * x[i]+60)) / 120 + (upper[i] * (-30 * x[i]^2 - 60 * x[i] + 30)) / 120 +
+                x[i] / 8 + (upper[i]^4 * (-15 * x[i] - 30)) / 120 + upper[i]^5 / 20 + 1 / 20
             } else if (upper[i] >= x[i]  & upper[i] <= x[i] + 1){
-              ret[i] = (-3*x[i]^5+10*x[i]^4+20*x[i]^3+20*x[i]^2-8)/120+(upper[i]*(-60*x[i]^2-120*x[i]+60))/120+(upper[i]^2*(60*x[i]+60))/120-upper[i]^3/6
+              ret[i] = (-3 * x[i]^5 + 10 * x[i]^4 + 20 * x[i]^3 + 20 * x[i]^2 - 8) / 120 + (upper[i] * (-60 * x[i]^2 - 120 * x[i] + 60)) / 120 +
+                (upper[i]^2 * (60 * x[i] + 60)) / 120 - upper[i]^3 / 6
             } else if (upper[i] >= x[i] + 1) {
-              ret[i] = (1/120)*(-28 + 120*upper[i]- 60*x[i] - 40*x[i]^2 + 10*x[i]^4 - 3*x[i]^5)
+              ret[i] = (1 / 120) * (-28 + 120 * upper[i]- 60 * x[i] - 40 * x[i]^2 + 10 * x[i]^4 - 3 * x[i]^5)
             }
           }  else if(x[i] >= 1 & x[i] <= 2) {
             if (upper[i] <= -1) {

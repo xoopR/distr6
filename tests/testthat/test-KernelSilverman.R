@@ -24,3 +24,10 @@ test_that("pdfsquared2norm x", {
   expect_rounded_equal(kern$pdfSquared2Norm(x = 0), 0.2651650)
   expect_rounded_equal(kern$pdfSquared2Norm(x = -1.2), 0.2083717)
 })
+
+test_that("cdfsquared2norm x", {
+  kern <- Silverman$new()
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 0.5), 0.07659512)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = -0.5), 0.19904861)
+  expect_rounded_equal(kern$cdfSquared2Norm(x = 1.3), 0.01805105)
+})

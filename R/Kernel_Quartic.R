@@ -70,7 +70,7 @@ Quartic <- R6Class("Quartic",
     #' \deqn{\int_a^b (F_X(u))^2 du}
     #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    cdfSquared2Norm = function(x = 0, upper = Inf) {
+    cdfSquared2Norm = function(x = 0, upper = 0) {
 
       #when c \in [ 0, 2]
       #i. when a \in [c-1, 1]

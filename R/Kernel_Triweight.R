@@ -78,7 +78,7 @@ Triweight <- R6Class("Triweight",
     #' \deqn{\int_a^b (F_X(u))^2 du}
     #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    cdfSquared2Norm = function(x = 0, upper = Inf) {
+    cdfSquared2Norm = function(x = 0, upper = 0) {
 
       ret <- numeric(length(x))
 
