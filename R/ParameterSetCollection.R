@@ -236,7 +236,10 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     .supports = list(),
     .contains = function() {
       apply(private$.supports, 1, function(x) {
-        assertContains(x[[2]], as.Tuple(unlist(self$getParameterValue(x[[1]]))))
+        assertContains(x[[2]], as.Tuple(unlist(self$getParameterValue(x[[1]]))),
+                       sprintf("%s does not lie in the support of %s",
+                               as.Tuple(unlist(self$getParameterValue(x[[1]])))$strprint(),
+                               x[[2]]$strprint()))
       })
     },
     deep_clone = function(name, value) {
