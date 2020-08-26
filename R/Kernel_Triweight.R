@@ -176,6 +176,7 @@ Triweight <- R6Class("Triweight",
   ),
 
   private = list(
+    .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       C_TriweightKernelPdf(x, log)
     },

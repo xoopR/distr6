@@ -137,6 +137,10 @@ C_SilvermanKernelPdf <- function(x, logp) {
     .Call(`_distr6_C_SilvermanKernelPdf`, x, logp)
 }
 
+C_SilvermanKernelCdf <- function(x, lower, logp) {
+    .Call(`_distr6_C_SilvermanKernelCdf`, x, lower, logp)
+}
+
 C_TriangularKernelPdf <- function(x, logp) {
     .Call(`_distr6_C_TriangularKernelPdf`, x, logp)
 }

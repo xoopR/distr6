@@ -564,6 +564,8 @@ Tricube <- R6Class("Tricube",
   ),
 
   private = list(
+    .isCdf = 0L,
+    .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       C_TricubeKernelPdf(x, log)
     }
