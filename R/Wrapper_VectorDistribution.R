@@ -31,6 +31,7 @@ VectorDistribution <- R6Class("VectorDistribution",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @examples
+    #' \dontrun{
     #' VectorDistribution$new(
     #'   distribution = "Binomial",
     #'   params = list(
@@ -53,6 +54,7 @@ VectorDistribution <- R6Class("VectorDistribution",
     #'   Binomial$new(prob = 0.2, size = 6)
     #'   )
     #' )
+    #' }
     initialize = function(distlist = NULL, distribution = NULL, params = NULL,
                           shared_params = NULL, name = NULL, short_name = NULL,
                           decorators = NULL, ...) {

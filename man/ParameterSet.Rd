@@ -57,24 +57,20 @@ ps$getParameterValue("prob")
 ## Method `ParameterSet$setParameterValue`
 ## ------------------------------------------------
 
-id <- list("rate", "scale")
-value <- list(1, 1)
-support <- list(set6::PosReals$new(), set6::PosReals$new())
-settable <- list(TRUE, FALSE)
+id <- list("rate")
+value <- list(1)
+support <- list(set6::PosReals$new())
 ps <- ParameterSet$new(
-  id, value, support, settable,
+  id, value, support
 )
-ps$addDeps("scale", "rate", function(self) list(rate = 1 / self$getParameterValue("scale")))
-ps$addDeps("rate", "scale", function(self) list(scale = 1 / self$getParameterValue("rate")))
-ps$getParameterValue(id = "rate")
 ps$setParameterValue(rate = 2)
 ps$getParameterValue("rate")
-ps$getParameterValue("scale") # Auto-updated to 1/2
 
 ## ------------------------------------------------
 ## Method `ParameterSet$merge`
 ## ------------------------------------------------
 
+\dontrun{
 ps1 <- ParameterSet$new(id = c("prob", "qprob"),
                  value = c(0.2, 0.8),
                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
@@ -89,14 +85,13 @@ ps1 <- ParameterSet$new(id = c("prob", "qprob"),
  ps2$addTrafos("size", function(x, self) x + 1)
  ps1$merge(ps2)
  ps1$print()
- ps1$trafos
- ps1$checks
- ps1$deps
+ }
 
 ## ------------------------------------------------
 ## Method `ParameterSet$addDeps`
 ## ------------------------------------------------
 
+\dontrun{
 ps <- ParameterSet$new(
   id = list("a", "b", "c"),
   value = list(2, 3, 1/2),
@@ -107,12 +102,13 @@ ps$addDeps("a", c("b", "c"),
        list(b = self$getParameterValue("a") + 1,
             c = 1/self$getParameterValue("a"))
  })
-ps$deps
+}
 
 ## ------------------------------------------------
 ## Method `ParameterSet$addChecks`
 ## ------------------------------------------------
 
+\dontrun{
 id <- list("lower", "upper")
 value <- list(1, 3)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
@@ -121,12 +117,13 @@ ps <- ParameterSet$new(
 )
 ps$addChecks(function(self)
   self$getParameterValue("lower") < self$getParameterValue("upper"))
-ps$checks
+}
 
 ## ------------------------------------------------
 ## Method `ParameterSet$addTrafos`
 ## ------------------------------------------------
 
+\dontrun{
 ps <- ParameterSet$new(
   "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
 )
@@ -143,6 +140,7 @@ ps$addTrafos(dt = data.table::data.table(
                           x = "probs",
                           fun = function(x, self) return(x / sum(x))
            ))
+}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -389,19 +387,14 @@ Should be set internally only.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{id <- list("rate", "scale")
-value <- list(1, 1)
-support <- list(set6::PosReals$new(), set6::PosReals$new())
-settable <- list(TRUE, FALSE)
+\preformatted{id <- list("rate")
+value <- list(1)
+support <- list(set6::PosReals$new())
 ps <- ParameterSet$new(
-  id, value, support, settable,
+  id, value, support
 )
-ps$addDeps("scale", "rate", function(self) list(rate = 1 / self$getParameterValue("scale")))
-ps$addDeps("rate", "scale", function(self) list(scale = 1 / self$getParameterValue("rate")))
-ps$getParameterValue(id = "rate")
 ps$setParameterValue(rate = 2)
 ps$getParameterValue("rate")
-ps$getParameterValue("scale") # Auto-updated to 1/2
 }
 \if{html}{\out{</div>}}
 
@@ -428,7 +421,8 @@ Merges multiple parameter sets.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{ps1 <- ParameterSet$new(id = c("prob", "qprob"),
+\preformatted{\dontrun{
+ps1 <- ParameterSet$new(id = c("prob", "qprob"),
                  value = c(0.2, 0.8),
                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
  )
@@ -442,9 +436,7 @@ Merges multiple parameter sets.
  ps2$addTrafos("size", function(x, self) x + 1)
  ps1$merge(ps2)
  ps1$print()
- ps1$trafos
- ps1$checks
- ps1$deps
+ }
 }
 \if{html}{\out{</div>}}
 
@@ -477,7 +469,8 @@ named list with names identical to, and in the same order, as \code{y}.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{ps <- ParameterSet$new(
+\preformatted{\dontrun{
+ps <- ParameterSet$new(
   id = list("a", "b", "c"),
   value = list(2, 3, 1/2),
   support = list(set6::Reals$new(), set6::Reals$new(), set6::Reals$new())
@@ -487,7 +480,7 @@ ps$addDeps("a", c("b", "c"),
        list(b = self$getParameterValue("a") + 1,
             c = 1/self$getParameterValue("a"))
  })
-ps$deps
+}
 }
 \if{html}{\out{</div>}}
 
@@ -515,7 +508,8 @@ result in a logical.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{id <- list("lower", "upper")
+\preformatted{\dontrun{
+id <- list("lower", "upper")
 value <- list(1, 3)
 support <- list(set6::PosReals$new(), set6::PosReals$new())
 ps <- ParameterSet$new(
@@ -523,7 +517,7 @@ ps <- ParameterSet$new(
 )
 ps$addChecks(function(self)
   self$getParameterValue("lower") < self$getParameterValue("upper"))
-ps$checks
+}
 }
 \if{html}{\out{</div>}}
 
@@ -560,7 +554,8 @@ See second example.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{ps <- ParameterSet$new(
+\preformatted{\dontrun{
+ps <- ParameterSet$new(
   "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
 )
 ps$addTrafos("probs", function(x, self) return(x / sum(x)))
@@ -576,6 +571,7 @@ ps$addTrafos(dt = data.table::data.table(
                           x = "probs",
                           fun = function(x, self) return(x / sum(x))
            ))
+}
 }
 \if{html}{\out{</div>}}
 

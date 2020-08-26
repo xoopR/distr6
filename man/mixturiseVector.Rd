@@ -24,6 +24,7 @@ Let \eqn{v1 = (D11, D12,...,D1N)} and \eqn{v2 = (D21, D22,...,D2N)} then the
 where \code{D3N = m(D1N, D2N, wN)} where \code{m} is a mixture distribution with weights \code{wN}.
 }
 \examples{
+\dontrun{
 v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2))
 v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4))
 mv1 <- mixturiseVector(list(v1, v2))
@@ -36,5 +37,5 @@ mv2 <- VectorDistribution$new(list(
 
 mv1$pdf(1:5)
 mv2$pdf(1:5)
-
+}
 }

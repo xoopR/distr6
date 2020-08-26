@@ -17,6 +17,7 @@ only constructed when methods (e.g. d/p/q/r) are called.
 ## Method `VectorDistribution$new`
 ## ------------------------------------------------
 
+\dontrun{
 VectorDistribution$new(
   distribution = "Binomial",
   params = list(
@@ -39,6 +40,7 @@ VectorDistribution$new(
   Binomial$new(prob = 0.2, size = 6)
   )
 )
+}
 
 ## ------------------------------------------------
 ## Method `VectorDistribution$pdf`
@@ -193,7 +195,8 @@ Named arguments of parameters to set values for. See examples.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{VectorDistribution$new(
+\preformatted{\dontrun{
+VectorDistribution$new(
   distribution = "Binomial",
   params = list(
     list(prob = 0.1, size = 2),
@@ -215,6 +218,7 @@ VectorDistribution$new(
   Binomial$new(prob = 0.2, size = 6)
   )
 )
+}
 }
 \if{html}{\out{</div>}}
 

@@ -13,6 +13,7 @@
 #'
 #'
 #' @examples
+#' \dontrun{
 #' v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2))
 #' v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4))
 #' mv1 <- mixturiseVector(list(v1, v2))
@@ -25,7 +26,7 @@
 #'
 #' mv1$pdf(1:5)
 #' mv2$pdf(1:5)
-#'
+#' }
 #' @export
 mixturiseVector <- function(vecdists, weights = "uniform") {
 

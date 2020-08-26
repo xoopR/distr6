@@ -35,6 +35,7 @@ useful for quickly combining many distributions of the same type. See examples.
 ## Method `ProductDistribution$new`
 ## ------------------------------------------------
 
+\dontrun{
 ProductDistribution$new(list(Binomial$new(
   prob = 0.5,
   size = 10
@@ -54,6 +55,7 @@ ProductDistribution$new(
   distribution = "Binomial",
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )
+}
 
 ## ------------------------------------------------
 ## Method `ProductDistribution$pdf`
@@ -184,7 +186,8 @@ Decorators to add to the distribution during construction.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{ProductDistribution$new(list(Binomial$new(
+\preformatted{\dontrun{
+ProductDistribution$new(list(Binomial$new(
   prob = 0.5,
   size = 10
 ), Normal$new(mean = 15)))
@@ -203,6 +206,7 @@ ProductDistribution$new(
   distribution = "Binomial",
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )
+}
 }
 \if{html}{\out{</div>}}
 

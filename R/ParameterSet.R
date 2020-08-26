@@ -198,19 +198,14 @@ ParameterSet <- R6Class("ParameterSet",
     #' Should be set internally only.
     #'
     #' @examples
-    #' id <- list("rate", "scale")
-    #' value <- list(1, 1)
-    #' support <- list(set6::PosReals$new(), set6::PosReals$new())
-    #' settable <- list(TRUE, FALSE)
+    #' id <- list("rate")
+    #' value <- list(1)
+    #' support <- list(set6::PosReals$new())
     #' ps <- ParameterSet$new(
-    #'   id, value, support, settable,
+    #'   id, value, support
     #' )
-    #' ps$addDeps("scale", "rate", function(self) list(rate = 1 / self$getParameterValue("scale")))
-    #' ps$addDeps("rate", "scale", function(self) list(scale = 1 / self$getParameterValue("rate")))
-    #' ps$getParameterValue(id = "rate")
     #' ps$setParameterValue(rate = 2)
     #' ps$getParameterValue("rate")
-    #' ps$getParameterValue("scale") # Auto-updated to 1/2
     setParameterValue = function(..., lst = NULL, error = "warn", .suppressCheck = FALSE) {
       if (is.null(lst)) {
         lst <- list(...)
@@ -271,6 +266,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' @param y `([ParameterSet])`
     #' @param ... `([ParameterSet]s)`
     #' @examples
+    #' \dontrun{
     #' ps1 <- ParameterSet$new(id = c("prob", "qprob"),
     #'                  value = c(0.2, 0.8),
     #'                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
@@ -285,9 +281,7 @@ ParameterSet <- R6Class("ParameterSet",
     #'  ps2$addTrafos("size", function(x, self) x + 1)
     #'  ps1$merge(ps2)
     #'  ps1$print()
-    #'  ps1$trafos
-    #'  ps1$checks
-    #'  ps1$deps
+    #'  }
     merge = function(y, ...) {
       newsets <- c(list(y), list(...))
       lapply(newsets, function(x) {
@@ -332,6 +326,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' Function used to update `y`, must include `self` in formal arguments and should return a
     #' named list with names identical to, and in the same order, as `y`.
     #' @examples
+    #' \dontrun{
     #' ps <- ParameterSet$new(
     #'   id = list("a", "b", "c"),
     #'   value = list(2, 3, 1/2),
@@ -342,7 +337,7 @@ ParameterSet <- R6Class("ParameterSet",
     #'        list(b = self$getParameterValue("a") + 1,
     #'             c = 1/self$getParameterValue("a"))
     #'  })
-    #' ps$deps
+    #' }
     addDeps = function(x, y, fun) {
       checkmate::assertFunction(fun, "self")
       checkmate::assertSubset(c(x, y), unlist(private$.parameters$id))
@@ -357,6 +352,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' Function used to check `ParameterSet`, must include `self` in formal arguments and
     #' result in a logical.
     #' @examples
+    #' \dontrun{
     #' id <- list("lower", "upper")
     #' value <- list(1, 3)
     #' support <- list(set6::PosReals$new(), set6::PosReals$new())
@@ -365,7 +361,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' )
     #' ps$addChecks(function(self)
     #'   self$getParameterValue("lower") < self$getParameterValue("upper"))
-    #' ps$checks
+    #' }
     addChecks = function(fun) {
       if (is.null(self$checks)) {
         private$.checks <- checkmate::assertFunction(fun, "self")
@@ -393,6 +389,7 @@ ParameterSet <- R6Class("ParameterSet",
     #' Alternate method to directly construct `data.table` of transformations to add.
     #' See second example.
     #' @examples
+    #' \dontrun{
     #' ps <- ParameterSet$new(
     #'   "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
     #' )
@@ -409,6 +406,7 @@ ParameterSet <- R6Class("ParameterSet",
     #'                           x = "probs",
     #'                           fun = function(x, self) return(x / sum(x))
     #'            ))
+    #' }
     addTrafos = function(x, fun, dt = NULL) {
       if (is.null(dt)) {
         dt <- data.table(x = x, fun = fun)

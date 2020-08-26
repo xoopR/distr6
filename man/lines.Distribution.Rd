@@ -28,6 +28,7 @@ Therefore this function assumes that the current plot is of the same value suppo
 \examples{
 plot(Normal$new(mean = 2), "pdf")
 lines(Normal$new(mean = 3), "pdf", col = "red", lwd = 2)
+
 \dontrun{
 # The code below gives examples of how not to use this function.
 # Different value supports

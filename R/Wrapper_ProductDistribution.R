@@ -30,6 +30,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @examples
+    #' \dontrun{
     #' ProductDistribution$new(list(Binomial$new(
     #'   prob = 0.5,
     #'   size = 10
@@ -49,6 +50,7 @@ ProductDistribution <- R6Class("ProductDistribution",
     #'   distribution = "Binomial",
     #'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
     #' )
+    #' }
     initialize = function(distlist = NULL, distribution = NULL, params = NULL,
                           shared_params = NULL,
                           name = NULL, short_name = NULL,

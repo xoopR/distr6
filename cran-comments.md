@@ -1,3 +1,7 @@
+## Comments
+
+Resubmission with further examples added to dontrun in order to speed up check time.
+
 ## Test Results
 
 No new NOTEs, WARNINGs, or ERRORs.
