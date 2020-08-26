@@ -348,28 +348,31 @@ Named arguments of parameters to set values for. See examples.</p></dd>
 
 </dl><p></div></p>
 <h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
-  <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)
+<p><div class="r example copy"></p><pre>\dontrun{
+VectorDistribution$new(
+  distribution = "Binomial",
+  params = list(
+    list(prob = 0.1, size = 2),
+    list(prob = 0.6, size = 4),
+    list(prob = 0.2, size = 6)
   )
 )
 
-<span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
-  <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>))
+VectorDistribution$new(
+  distribution = "Binomial",
+  params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )
 
-<span class='co'># Alternatively</span>
-<span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>),
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>),
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)
+# Alternatively
+VectorDistribution$new(
+  list(
+  Binomial$new(prob = 0.1, size = 2),
+  Binomial$new(prob = 0.6, size = 4),
+  Binomial$new(prob = 0.2, size = 6)
   )
-)</pre><p></div></p>
+)
+}
+</pre><p></div></p>
 
 <p><hr>
 <a id="method-wrappedModels"></a></p><h3>Method <code><a href='wrappedModels.html'>wrappedModels()</a></code></h3>
@@ -649,6 +652,7 @@ data.table::data.table.</p></dd>
 <span class='co'>## Method `VectorDistribution$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
   <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
@@ -656,11 +660,13 @@ data.table::data.table.</p></dd>
     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>),
     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)
   )
-)</div><div class='output co'>#&gt; Binom1 Binom2 Binom3 </div><div class='input'>
+)
+
 <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
   <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>))
-)</div><div class='output co'>#&gt; Binom1 Binom2 Binom3 </div><div class='input'>
+)
+
 <span class='co'># Alternatively</span>
 <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
@@ -668,7 +674,9 @@ data.table::data.table.</p></dd>
   <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>),
   <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)
   )
-)</div><div class='output co'>#&gt; Binom1 Binom2 Binom3 </div><div class='input'>
+)
+}
+
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `VectorDistribution$pdf`</span>
 <span class='co'>## ------------------------------------------------</span>
