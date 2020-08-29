@@ -1,5 +1,7 @@
 .plot_multivariate <- function(dist, fun = c("pdf", "cdf"), npoints) {
 
+  assert_pkgload("plotly")
+
   fun <- match.arg(fun)
   n <- round(sqrt(npoints))
 

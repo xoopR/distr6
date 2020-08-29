@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.4.3
+Version: 1.4.3.9000
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -75,12 +75,10 @@ Suggests:
   GoFKernel,
   knitr,
   testthat,
-  devtools,
   rmarkdown,
   magrittr,
   extraDistr,
   actuar,
-  remotes,
   plotly,
   pracma
 License: MIT + file LICENSE

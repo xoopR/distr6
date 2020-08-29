@@ -14,9 +14,11 @@
 #' @template param_lowertail
 #'
 #' @examples
+#' if (requireNamespace("pracma", quietly = TRUE)) {
 #' decorate(Exponential$new(), "ExoticStatistics")
 #' Exponential$new(decorators = "ExoticStatistics")
 #' ExoticStatistics$new()$decorate(Exponential$new())
+#' }
 #' @export
 ExoticStatistics <- R6Class("ExoticStatistics",
   inherit = DistributionDecorator,

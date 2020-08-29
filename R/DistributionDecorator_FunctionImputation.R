@@ -17,6 +17,8 @@
 #' @template method_decorate
 #'
 #' @examples
+#' if (requireNamespace("GoFKernel", quietly = TRUE) &&
+#'     requireNamespace("pracma", quietly = TRUE)) {
 #' pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1 / 10)
 #'
 #' x <- Distribution$new("Test",
@@ -44,6 +46,7 @@
 #' x$cdf(1:10)
 #' x$quantile(0.42)
 #' x$rand(4)
+#' }
 #' @export
 FunctionImputation <- R6Class("FunctionImputation",
   inherit = DistributionDecorator,
