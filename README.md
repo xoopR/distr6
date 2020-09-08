@@ -7,8 +7,7 @@ distr6
 Badge](https://www.r-pkg.org/badges/version-ago/distr6)](https://cran.r-project.org/package=distr6)
 [![CRAN
 Checks](https://cranchecks.info/badges/worst/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
-[![R CMD
-Check](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)](https://github.com/alan-turing-institute/distr6/actions)
+![R CMD Check (tic)](https://github.com/alan-turing-institute/distr6/workflows/tic/badge.svg)
 
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/alan-turing-institute/distr6)
