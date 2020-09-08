@@ -233,7 +233,7 @@ including: pdf, cdf, quantile, survival, hazard and cumulative hazard.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Distribution</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>x</span>, <span class='no'>fun</span>, <span class='kw'>npoints</span> <span class='kw'>=</span> <span class='fl'>3000</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>x</span>, <span class='kw'>fun</span>, npoints = <span class='fl'>3000</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -265,23 +265,30 @@ Therefore this function assumes that the current plot is of the same value suppo
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot.Distribution.html'>plot.Distribution</a></code> for plotting a <code>distr6</code> object.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Chengyang Gao, Runlong Yu and Shuhan Liu</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='st'>"pdf"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>3</span>), <span class='st'>"pdf"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='lines.Distribution-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>2</span>), <span class='st'>"pdf"</span>)
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>3</span>), <span class='st'>"pdf"</span>, col = <span class='st'>"red"</span>, lwd = <span class='fl'>2</span>)
+</div><div class='img'><img src='lines.Distribution-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># The code below gives examples of how not to use this function.</span>
 <span class='co'># Different value supports</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
 
 <span class='co'># Different functions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='st'>"pdf"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='st'>"pdf"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
 
 <span class='co'># Too many functions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pdf"</span>, <span class='st'>"cdf"</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pdf"</span>, <span class='st'>"cdf"</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='st'>"cdf"</span>)
+}
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -297,7 +304,7 @@ Therefore this function assumes that the current plot is of the same value suppo
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

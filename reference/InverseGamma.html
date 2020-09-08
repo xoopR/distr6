@@ -325,7 +325,7 @@ Michael P. McLaughlin.</p>
     <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='SDistribution.html'>distr6::SDistribution</a></code> -&gt; <code>InverseGamma</code></p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
-    <p><div class="r6-fields"></p><dl'>
+    <p><div class="r6-fields"></p><dl>
 <dt><code>name</code></dt><dd><p>Full name of distribution.</p></dd>
 
 <dt><code>short_name</code></dt><dd><p>Short name of distribution for printing.</p></dd>
@@ -338,7 +338,7 @@ Michael P. McLaughlin.</p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>InverseGamma$new()</code></a></p></li>
@@ -376,12 +376,12 @@ Michael P. McLaughlin.</p>
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'>new</span>(<span class='kw'>shape</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>decorators</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'>new</span>(shape = <span class='fl'>1</span>, scale = <span class='fl'>1</span>, decorators = <span class='kw'>NULL</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>shape</code></dt><dd><p><code>(numeric(1))</code><br />
 Shape parameter, defined on the positive Reals.</p></dd>
 
@@ -393,104 +393,104 @@ Decorators to add to the distribution during construction.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mean"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
+<a id="method-mean"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
 <p>The arithmetic mean of a (discrete) probability distribution X is the expectation
 $$E_X(X) = \sum p_X(x)*x$$
-with an integration analogue for continuous distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
+with an integration analogue for continuous distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-mode"></a></p><h3>Method <code><a href='mode.html'>mode()</a></code></h3>
+<a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mode.html'>mode()</a></code></h3>
 <p>The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
-maxima).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='mode.html'>mode</a></span>(<span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre><p></div></p>
+maxima).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='mode.html'>mode</a></span>(which = <span class='st'>"all"</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>which</code></dt><dd><p><code>(character(1) | numeric(1)</code><br />
 Ignored if distribution is unimodal. Otherwise <code>"all"</code> returns all modes, otherwise specifies
 which mode to return.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
+<a id="method-variance"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='variance.html'>variance()</a></code></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
-covariance matrix is returned.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+covariance matrix is returned.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<a id="method-skewness"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='skewness.html'>skewness()</a></code></h3>
 <p>The skewness of a distribution is defined by the third standardised moment,
 $$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
-distribution and \(\sigma\) is the standard deviation of the distribution.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+distribution and \(\sigma\) is the standard deviation of the distribution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-kurtosis"></a></p><h3>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<a id="method-kurtosis"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
 <p>The kurtosis of a distribution is defined by the fourth standardised moment,
 $$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.
-Excess Kurtosis is Kurtosis - 3.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+Excess Kurtosis is Kurtosis - 3.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(excess = <span class='fl'>TRUE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>excess</code></dt><dd><p><code>(logical(1))</code> <br />
 If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-entropy"></a></p><h3>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<a id="method-entropy"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='entropy.html'>entropy()</a></code></h3>
 <p>The entropy of a (discrete) distribution is defined by
 $$- \sum (f_X)log(f_X)$$
 where \(f_X\) is the pdf of distribution X, with an integration analogue for
-continuous distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='entropy.html'>entropy</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+continuous distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='entropy.html'>entropy</a></span>(base = <span class='fl'>2</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>base</code></dt><dd><p><code>(integer(1))</code> <br />
 Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mgf"></a></p><h3>Method <code><a href='mgf.html'>mgf()</a></code></h3>
+<a id="method-mgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mgf.html'>mgf()</a></code></h3>
 <p>The moment generating function is defined by
 $$mgf_X(t) = E_X[exp(xt)]$$
-where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='kw'>t</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
 t integer to evaluate function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pgf"></a></p><h3>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<a id="method-pgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pgf.html'>pgf()</a></code></h3>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
-where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='no'>z</span>)</pre><p></div></p>
+where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='kw'>z</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>z</code></dt><dd><p><code>(integer(1))</code> <br />
 z integer to evaluate probability generating function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>InverseGamma</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>InverseGamma</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -512,7 +512,7 @@ z integer to evaluate probability generating function at.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

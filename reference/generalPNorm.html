@@ -230,7 +230,7 @@
     <p>Calculate the p-norm of any function between given limits.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generalPNorm</span>(<span class='no'>fun</span>, <span class='no'>p</span>, <span class='no'>lower</span>, <span class='no'>upper</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>generalPNorm</span>(<span class='kw'>fun</span>, <span class='kw'>p</span>, <span class='kw'>lower</span>, <span class='kw'>upper</span>, range = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -271,7 +271,8 @@ where \(i\) is over a given range.</p>
 are approximate only.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>generalPNorm</span>(<span class='no'>Exponential</span>$<span class='fu'>new</span>()$<span class='no'>pdf</span>, <span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 0.7071068</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>generalPNorm</span>(<span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='kw'>pdf</span>, <span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>10</span>)
+</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 0.7071068</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -287,7 +288,7 @@ are approximate only.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

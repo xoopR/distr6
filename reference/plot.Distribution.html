@@ -235,14 +235,14 @@ hazard. By default, the first two are plotted side by side.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Distribution</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pdf"</span>, <span class='st'>"cdf"</span>),
-  <span class='kw'>npoints</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>arrange</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(
+  <span class='kw'>x</span>,
+  fun = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pdf"</span>, <span class='st'>"cdf"</span>),
+  npoints = <span class='fl'>3000</span>,
+  plot = <span class='fl'>TRUE</span>,
+  ask = <span class='fl'>FALSE</span>,
+  arrange = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -297,28 +297,32 @@ a clearer description.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='lines.Distribution.html'>lines.Distribution</a></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Chengyang Gao, Runlong Yu and Shuhan Liu</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Plot pdf and cdf of Normal</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>())
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>())
 
 <span class='co'># Colour both plots red</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(), col = <span class='st'>"red"</span>)
 
 <span class='co'># Change the colours of individual plotted functions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(), <span class='kw'>pdf_col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>cdf_col</span> <span class='kw'>=</span> <span class='st'>"green"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(), pdf_col = <span class='st'>"red"</span>, cdf_col = <span class='st'>"green"</span>)
 
 <span class='co'># Interactive plotting in order - par still works here</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Geometric</span>$<span class='fu'>new</span>(),
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pdf_col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>cdf_col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>quantile_col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>survival_col</span> <span class='kw'>=</span> <span class='st'>"purple"</span>,
-  <span class='kw'>hazard_col</span> <span class='kw'>=</span> <span class='st'>"brown"</span>, <span class='kw'>cumhazard_col</span> <span class='kw'>=</span> <span class='st'>"yellow"</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Geometric</span><span class='op'>$</span><span class='fu'>new</span>(),
+  fun = <span class='st'>"all"</span>, ask = <span class='fl'>TRUE</span>, pdf_col = <span class='st'>"black"</span>,
+  cdf_col = <span class='st'>"red"</span>, quantile_col = <span class='st'>"blue"</span>, survival_col = <span class='st'>"purple"</span>,
+  hazard_col = <span class='st'>"brown"</span>, cumhazard_col = <span class='st'>"yellow"</span>
 )
 
 <span class='co'># Return plotting structure</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Gamma</span>$<span class='fu'>new</span>(), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-}</div></pre>
+<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>Gamma</span><span class='op'>$</span><span class='fu'>new</span>(), plot = <span class='fl'>FALSE</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -334,7 +338,7 @@ a clearer description.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

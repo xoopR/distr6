@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to R6</h1>
             
-            <h4 class="date">2020-09-07</h4>
+            <h4 class="date">2020-09-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/intro_to_r6.rmd"><code>vignettes/webs/intro_to_r6.rmd</code></a></small>
       <div class="hidden name"><code>intro_to_r6.rmd</code></div>
@@ -201,44 +201,60 @@
 <h2 class="hasAnchor">
 <a href="#constructing-a-class" class="anchor"></a>Constructing a Class</h2>
 <p>Every distribution in distr6 is stored as a class, we will take the Normal distribution as an example. Note the R class type is an <code>R6ClassGenerator</code> this tells us that this is a class to be constructed (as opposed to an object that can be manipulated).</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="no">Normal</span>)
-<span class="co">#&gt; [1] "R6ClassGenerator"</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw">Normal</span>)
+<span class="co">#&gt; [1] "R6ClassGenerator"</span>
+</pre></div>
 <p>Constructing a class in R6 is always done using the same syntax <code>$new(...)</code> but the arguments passed to this function depend on the class. Just like functions in R these arguments can be named or un-named and a default may or may not be provided. In this case there is a default so the following does not produce an error</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>()
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()
+<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
+</pre></div>
 <p>But we can also pass arguments in the usual way</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">var</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="co">#&gt; Norm(mean = 0, var = 2, sd = 1.4142135623731, prec = 0.5)</span></pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(var = <span class="fl">2</span>)
+<span class="co">#&gt; Norm(mean = 0, var = 2, sd = 1.4142135623731, prec = 0.5)</span>
+</pre></div>
 <p>See the help documentation for the specific arguments to pass to the constructor.</p>
 </div>
 <div id="methods" class="section level2">
 <h2 class="hasAnchor">
 <a href="#methods" class="anchor"></a>Methods</h2>
 <p>Methods work in the exact same way as functions except that again the dollar sign notation is used, e.g. <code>object$method(...)</code>. Notice that the constructor <code>$new()</code> is used for <em>classes</em> whereas methods are called on <em>objects</em>. For example let’s construct a Normal distribution object and save this</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">N</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>()
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">N</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()
 
 <span class="co"># Notice the R class is now 'Normal'</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="no">N</span>)
-<span class="co">#&gt; [1] "Normal"        "SDistribution" "Distribution"  "R6"</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw">N</span>)
+<span class="co">#&gt; [1] "Normal"        "SDistribution" "Distribution"  "R6"</span>
+</pre></div>
 <p>To call the method <code>mean</code>:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>()
-<span class="co">#&gt; [1] 0</span></pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>()
+<span class="co">#&gt; [1] 0</span>
+</pre></div>
 <p>Or a method with arguments:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="../../reference/kurtosis.html">kurtosis</a></span>(<span class="kw">excess</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="co">#&gt; [1] 3</span></pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/kurtosis.html">kurtosis</a></span>(excess = <span class="fl">FALSE</span>)
+<span class="co">#&gt; [1] 3</span>
+</pre></div>
 <p>A final point about methods is that they act on the object, this means that whilst some will produce an output such as the ones above, others will actually change the object. Whereas to update a variable in R you may run something like <code>y = y + 1</code> in R6 the change is made in the method:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>)
 <span class="co">#&gt; [1] 1</span>
-<span class="no">N</span>$<span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="no">N</span>$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>)
-<span class="co">#&gt; [1] 5</span></pre></body></html></div>
+<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(var = <span class="fl">5</span>)
+<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>)
+<span class="co">#&gt; [1] 5</span>
+</pre></div>
 <p>Don’t worry about the particulars of these methods just yet, we will return to them in later tutorials. For now just remember that <code><a href="../../reference/setParameterValue.html">setParameterValue()</a></code> will update the object <code>N</code> without us having to manually save this.</p>
 <div id="method-chaining" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-chaining" class="anchor"></a>Method Chaining</h3>
 <p>Method chaining is a slightly more advanced topic and therefore we will only very briefly discuss it here. It is essentially the act of combining multiple methods into one line (or chain), for example:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">N</span>$<span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="fl">6</span>)$<span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>)
-<span class="co">#&gt; [1] 6</span></pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(var = <span class="fl">6</span>)<span class="op">$</span><span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"var"</span>)
+<span class="co">#&gt; [1] 6</span>
+</pre></div>
 <p>See how we simply added one method to the end of the other using the same dollar sign syntax. Not all methods can be chained and do not worry if you don’t feel comfortable doing this, we’re just highlighting it for users more familiar with object-oriented programming.</p>
 </div>
 </div>
@@ -246,24 +262,26 @@
 <h2 class="hasAnchor">
 <a href="#active-bindings" class="anchor"></a>Active Bindings</h2>
 <p>Active bindings are similar to public variables, they are accessed using <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code>, and make the R6 object look as if its a list. In <code>distr6</code> all active bindings are read-only, and exist for object properties and traits. They differ from public methods as no <code>()</code> is required.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">b</span> <span class="kw">&lt;-</span> <span class="no">Binomial</span>$<span class="fu">new</span>()
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">b</span> <span class="op">&lt;-</span> <span class="kw">Binomial</span><span class="op">$</span><span class="fu">new</span>()
 
 <span class="co"># public variable</span>
-<span class="no">b</span>$<span class="no">name</span>
+<span class="kw">b</span><span class="op">$</span><span class="kw">name</span>
 <span class="co">#&gt; [1] "Binomial"</span>
 
 <span class="co"># active bindings</span>
-<span class="no">b</span>$<span class="no">kurtosisType</span>
+<span class="kw">b</span><span class="op">$</span><span class="kw">kurtosisType</span>
 <span class="co">#&gt; Deprecated. Use $properties$kurtosis instead.</span>
 <span class="co">#&gt; NULL</span>
-<span class="no">b</span>$<span class="no">inf</span>
+<span class="kw">b</span><span class="op">$</span><span class="kw">inf</span>
 <span class="co">#&gt; [1] 0</span>
 
 <span class="co"># public method</span>
-<span class="no">b</span>$<span class="fu"><a href="../../reference/kurtosis.html">kurtosis</a></span>()
+<span class="kw">b</span><span class="op">$</span><span class="fu"><a href="../../reference/kurtosis.html">kurtosis</a></span>()
 <span class="co">#&gt; [1] -0.2</span>
-<span class="no">b</span>$<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>()
-<span class="co">#&gt; [1] 5</span></pre></body></html></div>
+<span class="kw">b</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>()
+<span class="co">#&gt; [1] 5</span>
+</pre></div>
 <p>In distr6, all mathematical functions are public methods (e.g. mean, variance, kurtosis), whereas all properties and traits are active bindings (e.g. kurtosisType, symmetry, inf, sup).</p>
 </div>
 <div id="cloning" class="section level2">
@@ -271,41 +289,49 @@
 <a href="#cloning" class="anchor"></a>Cloning</h2>
 <p>The final thing we discuss is an advanced topic but is very important in R6. The best way to demonstrate cloning is by example but don’t worry we won’t go into any of the technical details.</p>
 <p>First we create a class called “adder”, again ignore the technicals here. Adder is a class with one method, which adds numbers to itself.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">adder</span> <span class="kw">&lt;-</span> <span class="kw pkg">R6</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/R6/man/R6Class.html">R6Class</a></span>(<span class="st">"adder"</span>,<span class="kw">public</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">add</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">y</span>){
-  <span class="no">self</span>$<span class="no">x</span> <span class="kw">=</span> <span class="no">self</span>$<span class="no">x</span> + <span class="no">y</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span>(<span class="no">self</span>)}, <span class="kw">x</span> <span class="kw">=</span> <span class="fl">0</span>))
-<span class="no">a</span> <span class="kw">=</span> <span class="no">adder</span>$<span class="fu">new</span>()</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="kw">adder</span> <span class="op">&lt;-</span> <span class="kw">R6</span>::<span class="fu"><a href="https://rdrr.io/pkg/R6/man/R6Class.html">R6Class</a></span>(<span class="st">"adder"</span>,public = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(add = <span class="fu">function</span>(<span class="kw">y</span>){
+  <span class="kw">self</span><span class="op">$</span><span class="kw">x</span> <span class="op">=</span> <span class="kw">self</span><span class="op">$</span><span class="kw">x</span> <span class="op">+</span> <span class="kw">y</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span>(<span class="kw">self</span>)}, x = <span class="fl">0</span>))
+<span class="kw">a</span> <span class="op">=</span> <span class="kw">adder</span><span class="op">$</span><span class="fu">new</span>()
+</pre></div>
 <p>Here’s an example of it in action, see how the internal value is automatically updated without the object having to be re-saved.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">a</span>$<span class="no">x</span>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">a</span><span class="op">$</span><span class="kw">x</span>
 <span class="co">#&gt; [1] 0</span>
-<span class="no">a</span>$<span class="fu">add</span>(<span class="fl">2</span>)
-<span class="no">a</span>$<span class="no">x</span>
-<span class="co">#&gt; [1] 2</span></pre></body></html></div>
+<span class="kw">a</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/pkg/magrittr/man/aliases.html">add</a></span>(<span class="fl">2</span>)
+<span class="kw">a</span><span class="op">$</span><span class="kw">x</span>
+<span class="co">#&gt; [1] 2</span>
+</pre></div>
 <p>Now comes the tricky part, watch what happens when we copy the object <code>a</code> via <code>b &lt;- a</code> (equivalently <code>b = a</code>)</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">a</span> <span class="kw">&lt;-</span> <span class="no">adder</span>$<span class="fu">new</span>()
-<span class="no">b</span> <span class="kw">&lt;-</span> <span class="no">a</span>
-<span class="no">a</span>$<span class="no">x</span>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">a</span> <span class="op">&lt;-</span> <span class="kw">adder</span><span class="op">$</span><span class="fu">new</span>()
+<span class="kw">b</span> <span class="op">&lt;-</span> <span class="kw">a</span>
+<span class="kw">a</span><span class="op">$</span><span class="kw">x</span>
 <span class="co">#&gt; [1] 0</span>
-<span class="no">b</span>$<span class="no">x</span>
+<span class="kw">b</span><span class="op">$</span><span class="kw">x</span>
 <span class="co">#&gt; [1] 0</span>
-<span class="no">b</span>$<span class="fu">add</span>(<span class="fl">4</span>)
-<span class="no">b</span>$<span class="no">x</span>
+<span class="kw">b</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/pkg/magrittr/man/aliases.html">add</a></span>(<span class="fl">4</span>)
+<span class="kw">b</span><span class="op">$</span><span class="kw">x</span>
 <span class="co">#&gt; [1] 4</span>
-<span class="no">a</span>$<span class="no">x</span>
-<span class="co">#&gt; [1] 4</span></pre></body></html></div>
+<span class="kw">a</span><span class="op">$</span><span class="kw">x</span>
+<span class="co">#&gt; [1] 4</span>
+</pre></div>
 <p>See what happened? Even though we only called the method on <code>b</code>, the results were copied back to <code>a</code>. Sometimes this can be very useful but often it can cause confusion if used by mistake. To get around this problem and create a completely separate copy, use the <code>$clone()</code> method:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">a</span> <span class="kw">&lt;-</span> <span class="no">adder</span>$<span class="fu">new</span>()
-<span class="no">b</span> <span class="kw">&lt;-</span> <span class="no">a</span>$<span class="fu">clone</span>()
-<span class="no">a</span>$<span class="no">x</span>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="kw">a</span> <span class="op">&lt;-</span> <span class="kw">adder</span><span class="op">$</span><span class="fu">new</span>()
+<span class="kw">b</span> <span class="op">&lt;-</span> <span class="kw">a</span><span class="op">$</span><span class="fu">clone</span>()
+<span class="kw">a</span><span class="op">$</span><span class="kw">x</span>
 <span class="co">#&gt; [1] 0</span>
-<span class="no">b</span>$<span class="no">x</span>
+<span class="kw">b</span><span class="op">$</span><span class="kw">x</span>
 <span class="co">#&gt; [1] 0</span>
-<span class="no">b</span>$<span class="fu">add</span>(<span class="fl">4</span>)
-<span class="no">b</span>$<span class="no">x</span>
+<span class="kw">b</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/pkg/magrittr/man/aliases.html">add</a></span>(<span class="fl">4</span>)
+<span class="kw">b</span><span class="op">$</span><span class="kw">x</span>
 <span class="co">#&gt; [1] 4</span>
-<span class="no">a</span>$<span class="no">x</span>
-<span class="co">#&gt; [1] 0</span></pre></body></html></div>
-<p>This can be a tricky concept to get your head around but try not to worry too much about it and just remember that copying using <code>=</code> or <code>&lt;-</code> will lead to the values of both variables being updated to always be the same; whereas copying using <code>$clone()</code> creates a completely separate object that is identical at the time of cloning but then remains independent.</p>
+<span class="kw">a</span><span class="op">$</span><span class="kw">x</span>
+<span class="co">#&gt; [1] 0</span>
+</pre></div>
+<p>This can be a tricky concept to get your head around but try not to worry too much about it and just remember that copying using <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code> or <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> will lead to the values of both variables being updated to always be the same; whereas copying using <code>$clone()</code> creates a completely separate object that is identical at the time of cloning but then remains independent.</p>
 </div>
   </div>
 
@@ -324,7 +350,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

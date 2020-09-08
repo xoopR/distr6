@@ -251,7 +251,7 @@
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>MixtureDistribution$new()</code></a></p></li>
@@ -291,21 +291,21 @@
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(
-  <span class='kw'>distlist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"uniform"</span>,
-  <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shared_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>short_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>decorators</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+  distlist = <span class='kw'>NULL</span>,
+  weights = <span class='st'>"uniform"</span>,
+  distribution = <span class='kw'>NULL</span>,
+  params = <span class='kw'>NULL</span>,
+  shared_params = <span class='kw'>NULL</span>,
+  name = <span class='kw'>NULL</span>,
+  short_name = <span class='kw'>NULL</span>,
+  decorators = <span class='kw'>NULL</span>
 )</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>distlist</code></dt><dd><p><code>(list())</code><br />
 List of <a href='Distribution.html'>Distribution</a>s.</p></dd>
 
@@ -340,35 +340,36 @@ Optional short name/ID of wrapped distribution.</p></dd>
 Decorators to add to the distribution during construction.</p></dd>
 
 </dl><p></div></p>
-<h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='no'>Binomial</span>$<span class='fu'>new</span>()),
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
-)</pre><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>), <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()),
+  weights = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
+)
+</pre><p></div></p>
 
 <p><hr>
-<a id="method-strprint"></a></p><h3>Method <code><a href='strprint.html'>strprint()</a></code></h3>
-<p>Printable string representation of the <code>MixtureDistribution</code>. Primarily used internally.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'><a href='strprint.html'>strprint</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
+<a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='strprint.html'>strprint()</a></code></h3>
+<p>Printable string representation of the <code>MixtureDistribution</code>. Primarily used internally.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'><a href='strprint.html'>strprint</a></span>(n = <span class='fl'>10</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>n</code></dt><dd><p><code>(integer(1))</code><br />
 Number of distributions to include when printing.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pdf"></a></p><h3>Method <code><a href='pdf.html'>pdf()</a></code></h3>
+<a id="method-pdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pdf.html'>pdf()</a></code></h3>
 <p>Probability density function of the mixture distribution. Computed by
 $$f_M(x) = \sum_i (f_i)(x)*w_i$$
 where \(w_i\) is the vector of weights and \(f_i\) are the pdfs of the wrapped
 distributions.</p>
 <p>Note that as this class inherits from <a href='VectorDistribution.html'>VectorDistribution</a>, it is possible to evaluate
 the distributions at different points, but that this is not the usual use-case for
-mixture distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+mixture distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>...</span>, log = <span class='fl'>FALSE</span>, simplify = <span class='fl'>TRUE</span>, data = <span class='kw'>NULL</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
 Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
@@ -389,31 +390,32 @@ case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariat
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
-<h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>m</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='no'>Binomial</span>$<span class='fu'>new</span>()),
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='kw'>m</span> <span class='op'>&lt;-</span> <span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>), <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()),
+  weights = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
 )
-<span class='no'>m</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
-<span class='no'>m</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>)
+<span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
+<span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>)
 <span class='co'># also possible but unlikely to be used</span>
-<span class='no'>m</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</pre><p></div></p>
+<span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
+</pre><p></div></p>
 
 <p><hr>
-<a id="method-cdf"></a></p><h3>Method <code><a href='cdf.html'>cdf()</a></code></h3>
+<a id="method-cdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cdf.html'>cdf()</a></code></h3>
 <p>Cumulative distribution function of the mixture distribution. Computed by
 $$F_M(x) = \sum_i (F_i)(x)*w_i$$
 where \(w_i\) is the vector of weights and \(F_i\) are the cdfs of the wrapped
-distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(
-  <span class='no'>...</span>,
-  <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(
+  <span class='kw'>...</span>,
+  lower.tail = <span class='fl'>TRUE</span>,
+  log.p = <span class='fl'>FALSE</span>,
+  simplify = <span class='fl'>TRUE</span>,
+  data = <span class='kw'>NULL</span>
 )</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
 Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
@@ -443,18 +445,18 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-quantile"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
-<p>The quantile function is not implemented for mixture distributions.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(
-  <span class='no'>...</span>,
-  <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+<a id="method-quantile"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
+<p>The quantile function is not implemented for mixture distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(
+  <span class='kw'>...</span>,
+  lower.tail = <span class='fl'>TRUE</span>,
+  log.p = <span class='fl'>FALSE</span>,
+  simplify = <span class='fl'>TRUE</span>,
+  data = <span class='kw'>NULL</span>
 )</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
 Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
@@ -479,14 +481,14 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-rand"></a></p><h3>Method <code><a href='rand.html'>rand()</a></code></h3>
+<a id="method-rand"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='rand.html'>rand()</a></code></h3>
 <p>Simulation function for mixture distributions. Samples are drawn from a mixture by first
 sampling Multinomial(probs = weights, size = n), then sampling each distribution according
-to the samples from the Multinomial, and finally randomly permuting these draws.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='no'>n</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+to the samples from the Multinomial, and finally randomly permuting these draws.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'><a href='rand.html'>rand</a></span>(<span class='kw'>n</span>, simplify = <span class='fl'>TRUE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>n</code></dt><dd><p><code>(numeric(1))</code> <br />
 Number of points to simulate from the distribution. If length greater than \(1\), then
 <code>n &lt;- length(n)</code>,</p></dd>
@@ -496,18 +498,19 @@ If <code>TRUE</code> (default) simplifies the return if possible to a <code>nume
 data.table::data.table.</p></dd>
 
 </dl><p></div></p>
-<h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>m</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Normal"</span>,
-<span class='kw'>params</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>), <span class='kw'>shared_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>))
-<span class='no'>m</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)</pre><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='kw'>m</span> <span class='op'>&lt;-</span> <span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(distribution = <span class='st'>"Normal"</span>,
+params = <span class='kw'>data.table</span>::<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(mean = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>), shared_params = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(sd = <span class='fl'>1</span>))
+<span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)
+</pre><p></div></p>
 
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>MixtureDistribution</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -520,25 +523,30 @@ data.table::data.table.</p></dd>
 <span class='co'>## Method `MixtureDistribution$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='no'>Binomial</span>$<span class='fu'>new</span>()),
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
-)</div><div class='output co'>#&gt; Binom1 wX Binom2 </div><div class='input'>
+<span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>), <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()),
+  weights = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
+)
+</div><div class='output co'>#&gt; Binom1 wX Binom2 </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `MixtureDistribution$pdf`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='no'>Binomial</span>$<span class='fu'>new</span>()),
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
+<span class='kw'>m</span> <span class='op'>&lt;-</span> <span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>), <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()),
+  weights = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>)
 )
-<span class='no'>m</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0.009765625 0.043945312 0.117187500 0.205078125 0.246093750</div><div class='input'><span class='no'>m</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 0.009765625</div><div class='input'><span class='co'># also possible but unlikely to be used</span>
-<span class='no'>m</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 0.03710937</div><div class='input'>
+<span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
+</div><div class='output co'>#&gt; [1] 0.009765625 0.043945312 0.117187500 0.205078125 0.246093750</div><div class='input'><span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>)
+</div><div class='output co'>#&gt; [1] 0.009765625</div><div class='input'><span class='co'># also possible but unlikely to be used</span>
+<span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
+</div><div class='output co'>#&gt; [1] 0.03710937</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `MixtureDistribution$rand`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Normal"</span>,
-<span class='kw'>params</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>), <span class='kw'>shared_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>))
-<span class='no'>m</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 1.9146069 0.8518175 1.3770416 2.9416995 1.4957673</div></pre>
+<span class='kw'>m</span> <span class='op'>&lt;-</span> <span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(distribution = <span class='st'>"Normal"</span>,
+params = <span class='kw'>data.table</span>::<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(mean = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>), shared_params = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(sd = <span class='fl'>1</span>))
+<span class='kw'>m</span><span class='op'>$</span><span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>5</span>)
+</div><div class='output co'>#&gt; [1] 1.9146069 0.8518175 1.3770416 2.9416995 1.4957673</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -554,7 +562,7 @@ data.table::data.table.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

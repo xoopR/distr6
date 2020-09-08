@@ -231,18 +231,18 @@
     </div>
 
     <pre class="usage"><span class='fu'>testMatrixvariate</span>(
-  <span class='no'>object</span>,
-  <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>object</span>$<span class='no'>short_name</span>, <span class='st'>"is not matrixvariate"</span>)
+  <span class='kw'>object</span>,
+  errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>short_name</span>, <span class='st'>"is not matrixvariate"</span>)
 )
 
 <span class='fu'>checkMatrixvariate</span>(
-  <span class='no'>object</span>,
-  <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>object</span>$<span class='no'>short_name</span>, <span class='st'>"is not matrixvariate"</span>)
+  <span class='kw'>object</span>,
+  errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>short_name</span>, <span class='st'>"is not matrixvariate"</span>)
 )
 
 <span class='fu'>assertMatrixvariate</span>(
-  <span class='no'>object</span>,
-  <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>object</span>$<span class='no'>short_name</span>, <span class='st'>"is not matrixvariate"</span>)
+  <span class='kw'>object</span>,
+  errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>short_name</span>, <span class='st'>"is not matrixvariate"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -265,7 +265,8 @@ return <code>TRUE</code>. If check fails, <code>assert</code> stops code with er
 an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>testMatrixvariate</span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>()) <span class='co'># FALSE</span></div><div class='output co'>#&gt; [1] FALSE</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>testMatrixvariate</span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()) <span class='co'># FALSE</span>
+</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -281,7 +282,7 @@ an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

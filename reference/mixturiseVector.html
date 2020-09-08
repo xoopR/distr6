@@ -232,7 +232,7 @@ distribution consisting of n mixture distributions mixing the m vectors." />
 distribution consisting of <code>n</code> mixture distributions mixing the <code>m</code> vectors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mixturiseVector</span>(<span class='no'>vecdists</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"uniform"</span>)</pre>
+    <pre class="usage"><span class='fu'>mixturiseVector</span>(<span class='kw'>vecdists</span>, weights = <span class='st'>"uniform"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -257,20 +257,21 @@ Weights passed to <a href='MixtureDistribution.html'>MixtureDistribution</a>. De
 where <code>D3N = m(D1N, D2N, wN)</code> where <code>m</code> is a mixture distribution with weights <code>wN</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>v1</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>))
-<span class='no'>v2</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>4</span>))
-<span class='no'>mv1</span> <span class='kw'>&lt;-</span> <span class='fu'>mixturiseVector</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>v1</span>, <span class='no'>v2</span>))
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>v1</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(distribution = <span class='st'>"Binomial"</span>, params = <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(size = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>))
+<span class='kw'>v2</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(distribution = <span class='st'>"Binomial"</span>, params = <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(size = <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span>))
+<span class='kw'>mv1</span> <span class='op'>&lt;-</span> <span class='fu'>mixturiseVector</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>v1</span>, <span class='kw'>v2</span>))
 
 <span class='co'># equivalently</span>
-<span class='no'>mv2</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))),
-  <span class='no'>MixtureDistribution</span>$<span class='fu'>new</span>(<span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>)))
+<span class='kw'>mv2</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+  <span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(distribution = <span class='st'>"Binomial"</span>, params = <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(size = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))),
+  <span class='kw'>MixtureDistribution</span><span class='op'>$</span><span class='fu'>new</span>(distribution = <span class='st'>"Binomial"</span>, params = <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(size = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>)))
 ))
 
-<span class='no'>mv1</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
-<span class='no'>mv2</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
-}</div></pre>
+<span class='kw'>mv1</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
+<span class='kw'>mv2</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -286,7 +287,7 @@ where <code>D3N = m(D1N, D2N, wN)</code> where <code>m</code> is a mixture distr
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

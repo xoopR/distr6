@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Properties and Traits</h1>
             
-            <h4 class="date">2020-09-07</h4>
+            <h4 class="date">2020-09-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/properties_traits.rmd"><code>vignettes/webs/properties_traits.rmd</code></a></small>
       <div class="hidden name"><code>properties_traits.rmd</code></div>
@@ -197,8 +197,9 @@
 <a href="#traits" class="anchor"></a>Traits</h2>
 <p>In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of “continuous”, “discrete” or “mixture”, this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs, and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then ‘0’ is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html">next tutorial</a>). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).</p>
 <p>To view all the traits of the Normal distribution, call the method <code><a href="../../reference/traits.html">traits()</a></code>,</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">N</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>()
-<span class="no">N</span>$<span class="no">traits</span>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">N</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()
+<span class="kw">N</span><span class="op">$</span><span class="kw">traits</span>
 <span class="co">#&gt; $valueSupport</span>
 <span class="co">#&gt; [1] "continuous"</span>
 <span class="co">#&gt; </span>
@@ -209,7 +210,7 @@
 <span class="co">#&gt; ℝ</span>
 
 <span class="co"># You can also do the above in one line</span>
-<span class="no">Normal</span>$<span class="fu">new</span>()$<span class="no">traits</span>
+<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()<span class="op">$</span><span class="kw">traits</span>
 <span class="co">#&gt; $valueSupport</span>
 <span class="co">#&gt; [1] "continuous"</span>
 <span class="co">#&gt; </span>
@@ -217,7 +218,8 @@
 <span class="co">#&gt; [1] "univariate"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $type</span>
-<span class="co">#&gt; ℝ</span></pre></body></html></div>
+<span class="co">#&gt; ℝ</span>
+</pre></div>
 </div>
 <div id="properties" class="section level2">
 <h2 class="hasAnchor">
@@ -227,23 +229,27 @@
 <p>Skewness is a slightly easier concept to understand. It refers to the shape of the distribution and specifically if a distribution is negative skew (skew &lt; 0) then the ‘tail’ is on the left side of the distribution whereas a positive skew distribution has its ‘tail’ on the right. If a distribution is symmetric there is no skew (although the reverse doesn’t necessarily hold).</p>
 <p>Symmetry is one of ‘symmetric’ or ‘asymmetric’ and is an informal way of identifying if the pdf of the distribution is symmetric about a single point (the median). Informally, the distribution support is the set of values that produce a non-zero results when supplied to the pdf.</p>
 <p>To view properties in distr6, we use the <code><a href="../../reference/properties.html">properties()</a></code> method</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>()$<span class="no">properties</span>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()<span class="op">$</span><span class="kw">properties</span>
 <span class="co">#&gt; $support</span>
 <span class="co">#&gt; ℝ </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $symmetry</span>
-<span class="co">#&gt; [1] "symmetric"</span></pre></body></html></div>
+<span class="co">#&gt; [1] "symmetric"</span>
+</pre></div>
 </div>
 <div id="other-distribution-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-distribution-variables" class="anchor"></a>Other Distribution Variables</h2>
 <p>There are three other variables that can be accessed from a distribution. Once again a variable differs from a method in that it relates to the class and is called without parentheses. These are respectively <code>name</code>, <code>short_name</code> and <code>description</code>, hopefully their output is intuitive</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">N</span>$<span class="no">name</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">N</span><span class="op">$</span><span class="kw">name</span>
 <span class="co">#&gt; [1] "Normal"</span>
-<span class="no">N</span>$<span class="no">short_name</span>
+<span class="kw">N</span><span class="op">$</span><span class="kw">short_name</span>
 <span class="co">#&gt; [1] "Norm"</span>
-<span class="no">N</span>$<span class="no">description</span>
-<span class="co">#&gt; [1] "Normal Probability Distribution."</span></pre></body></html></div>
+<span class="kw">N</span><span class="op">$</span><span class="kw">description</span>
+<span class="co">#&gt; [1] "Normal Probability Distribution."</span>
+</pre></div>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">
@@ -267,7 +273,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

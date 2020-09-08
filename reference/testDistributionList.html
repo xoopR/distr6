@@ -231,18 +231,18 @@
     </div>
 
     <pre class="usage"><span class='fu'>testDistributionList</span>(
-  <span class='no'>object</span>,
-  <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='st'>"One or more items in the list are not Distributions"</span>
+  <span class='kw'>object</span>,
+  errormsg = <span class='st'>"One or more items in the list are not Distributions"</span>
 )
 
 <span class='fu'>checkDistributionList</span>(
-  <span class='no'>object</span>,
-  <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='st'>"One or more items in the list are not Distributions"</span>
+  <span class='kw'>object</span>,
+  errormsg = <span class='st'>"One or more items in the list are not Distributions"</span>
 )
 
 <span class='fu'>assertDistributionList</span>(
-  <span class='no'>object</span>,
-  <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='st'>"One or more items in the list are not Distributions"</span>
+  <span class='kw'>object</span>,
+  errormsg = <span class='st'>"One or more items in the list are not Distributions"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -265,7 +265,9 @@ return <code>TRUE</code>. If check fails, <code>assert</code> stops code with er
 an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>testDistributionList</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='fl'>5</span>)) <span class='co'># FALSE</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testDistributionList</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='no'>Exponential</span>$<span class='fu'>new</span>())) <span class='co'># TRUE</span></div><div class='output co'>#&gt; [1] TRUE</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>testDistributionList</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='fl'>5</span>)) <span class='co'># FALSE</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testDistributionList</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>())) <span class='co'># TRUE</span>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -281,7 +283,7 @@ an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

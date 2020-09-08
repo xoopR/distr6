@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Constructing a Distribution</h1>
             
-            <h4 class="date">2020-09-07</h4>
+            <h4 class="date">2020-09-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/constructing_a_distribution.rmd"><code>vignettes/webs/constructing_a_distribution.rmd</code></a></small>
       <div class="hidden name"><code>constructing_a_distribution.rmd</code></div>
@@ -192,12 +192,17 @@
 <h2 class="hasAnchor">
 <a href="#constructing-a-distribution" class="anchor"></a>Constructing a Distribution</h2>
 <p>All distributions are constructed using the distribution name, followed by <code>$new(...)</code> where <code>...</code> are arguments to the constructor. This is different from base R in which a function is called directly. To construct a Standard Normal distribution,</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">N</span> <span class="kw">&lt;-</span> <span class="no">Normal</span>$<span class="fu">new</span>()</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">N</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()
+</pre></div>
 <p>Printing the distribution shows the distribution name and parameterisation. Notice how printing works the same as always in R, i.e. with <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">N</span>)
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">N</span>)
+<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
+</pre></div>
 <p>To access useful statistics, distr6 includes a summary method</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">N</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">N</span>)
 <span class="co">#&gt; Normal Probability Distribution. Parameterised with:</span>
 <span class="co">#&gt;   mean = 0, var = 1, sd = 1, prec = 1</span>
 <span class="co">#&gt; </span>
@@ -210,26 +215,35 @@
 <span class="co">#&gt;  Support: ℝ  Scientific Type: ℝ </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Traits: continuous; univariate</span>
-<span class="co">#&gt;  Properties: symmetric; mesokurtic; no skew</span></pre></body></html></div>
+<span class="co">#&gt;  Properties: symmetric; mesokurtic; no skew</span>
+</pre></div>
 <p>And a shortened form is available too</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">N</span>, <span class="kw">full</span> <span class="kw">=</span> <span class="no">F</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">N</span>, full = <span class="kw">F</span>)
 <span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
 <span class="co">#&gt; Scientific Type: ℝ    See $traits for more</span>
-<span class="co">#&gt; Support: ℝ    See $properties for more</span></pre></body></html></div>
+<span class="co">#&gt; Support: ℝ    See $properties for more</span>
+</pre></div>
 </div>
 <div id="alternative-parameterisations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#alternative-parameterisations" class="anchor"></a>Alternative Parameterisations</h2>
 <p>The distribution parameterisation refers to the parameters that are used to define the distribution. The choice of parameterisation often depends on how you want to the distribution to be interpreted and if fitting procedures will be utilised.</p>
 <p>In the case of the Normal distribution, several parameterisations are possible. These include with mean and variance, standard deviation or precision. The parameterisation is specified in construction by naming the parameters, for example mean and standard deviation:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="co">#&gt; Norm(mean = 2, var = 4, sd = 2, prec = 0.25)</span></pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(mean = <span class="fl">2</span>, sd = <span class="fl">2</span>)
+<span class="co">#&gt; Norm(mean = 2, var = 4, sd = 2, prec = 0.25)</span>
+</pre></div>
 <p>Or mean and precision:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">prec</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="co">#&gt; Norm(mean = 2, var = 0.5, sd = 0.707106781186548, prec = 2)</span></pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(mean = <span class="fl">2</span>, prec = <span class="fl">2</span>)
+<span class="co">#&gt; Norm(mean = 2, var = 0.5, sd = 0.707106781186548, prec = 2)</span>
+</pre></div>
 <p>Notice how the parameterisation chosen in construction is shown in the print method. Finally be careful not to construct a distribution using conflicting parameterisations. For example:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">Normal</span>$<span class="fu">new</span>(<span class="kw">mean</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">var</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">prec</span> <span class="kw">=</span> <span class="fl">4</span>)
-<span class="co">#&gt; Norm(mean = 2, var = 0.25, sd = 0.5, prec = 4)</span></pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(mean = <span class="fl">2</span>, var = <span class="fl">2</span>, sd = <span class="fl">3</span>, prec = <span class="fl">4</span>)
+<span class="co">#&gt; Norm(mean = 2, var = 0.25, sd = 0.5, prec = 4)</span>
+</pre></div>
 <p>Only the mean and precision arguments are used, if you’re unsure which parameters are conflicting see the help page for the distribution, <code><a href="../../reference/Normal.html">?Normal</a></code>.</p>
 </div>
 <div id="summary" class="section level2">
@@ -254,7 +268,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

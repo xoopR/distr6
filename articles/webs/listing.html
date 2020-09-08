@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Listing</h1>
             
-            <h4 class="date">2020-09-07</h4>
+            <h4 class="date">2020-09-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/listing.rmd"><code>vignettes/webs/listing.rmd</code></a></small>
       <div class="hidden name"><code>listing.rmd</code></div>
@@ -196,20 +196,25 @@
 <h2 class="hasAnchor">
 <a href="#listdistributions" class="anchor"></a>listDistributions</h2>
 <p><code><a href="../../reference/listDistributions.html">listDistributions()</a></code> is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their d/p/q/r methods are implemented in. For example a distribution with package <code>stats</code> means that the d/p/q/r methods interface the R stats functions whereas a distribution with package <code>distr6</code> means the methods are written in distr6. We’ve added the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> method just to save space.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>())
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>())
 <span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span>
 <span class="co">#&gt; 1:       Arc        Arcsine    ℝ   continuous  univariate       - limits</span>
 <span class="co">#&gt; 2:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span>
 <span class="co">#&gt; 3:      Beta           Beta   ℝ+   continuous  univariate   stats       </span>
 <span class="co">#&gt; 4:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span>
 <span class="co">#&gt; 5:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span>
-<span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -</span></pre></body></html></div>
+<span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -</span>
+</pre></div>
 <p>To see a simplified version of the list, add the <code>simplify = TRUE</code> argument</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(simplify = <span class="fl">TRUE</span>))
 <span class="co">#&gt; [1] "Arcsine"        "Bernoulli"      "Beta"           "BetaNoncentral"</span>
-<span class="co">#&gt; [5] "Binomial"       "Categorical"</span></pre></body></html></div>
+<span class="co">#&gt; [5] "Binomial"       "Categorical"</span>
+</pre></div>
 <p>Finally this list can be filtered to help you find a distribution with specific traits, for example for a multivariate distribution</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">variateform</span> <span class="kw">=</span> <span class="st">"multivariate"</span>)))
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(filter = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(variateform = <span class="st">"multivariate"</span>)))
 <span class="co">#&gt;    ShortName          ClassName    Type ValueSupport  VariateForm    Package</span>
 <span class="co">#&gt; 1:      Diri          Dirichlet [0,1]^K   continuous multivariate extraDistr</span>
 <span class="co">#&gt; 2:     EmpMV        EmpiricalMV       ℝ     discrete multivariate          -</span>
@@ -222,7 +227,7 @@
 <span class="co">#&gt; 4: locscale</span>
 
 <span class="co"># The trait name is case-insensitive</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">VaRiAtEfORm</span> <span class="kw">=</span> <span class="st">"multivariate"</span>)))
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(filter = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(VaRiAtEfORm = <span class="st">"multivariate"</span>)))
 <span class="co">#&gt;    ShortName          ClassName    Type ValueSupport  VariateForm    Package</span>
 <span class="co">#&gt; 1:      Diri          Dirichlet [0,1]^K   continuous multivariate extraDistr</span>
 <span class="co">#&gt; 2:     EmpMV        EmpiricalMV       ℝ     discrete multivariate          -</span>
@@ -232,12 +237,15 @@
 <span class="co">#&gt; 1:         </span>
 <span class="co">#&gt; 2:         </span>
 <span class="co">#&gt; 3:   limits</span>
-<span class="co">#&gt; 4: locscale</span></pre></body></html></div>
+<span class="co">#&gt; 4: locscale</span>
+</pre></div>
 <p>Or for multiple filters:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(<span class="kw">filter</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">variateform</span> <span class="kw">=</span> <span class="st">"multivariate"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"extraDistr"</span>)))
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span>(filter = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(variateform = <span class="st">"multivariate"</span>, package = <span class="st">"extraDistr"</span>)))
 <span class="co">#&gt;    ShortName   ClassName    Type ValueSupport  VariateForm    Package   Tags</span>
 <span class="co">#&gt; 1:      Diri   Dirichlet [0,1]^K   continuous multivariate extraDistr       </span>
-<span class="co">#&gt; 2:  Multinom Multinomial    ℕ0^K     discrete multivariate extraDistr limits</span></pre></body></html></div>
+<span class="co">#&gt; 2:  Multinom Multinomial    ℕ0^K     discrete multivariate extraDistr limits</span>
+</pre></div>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">
@@ -261,7 +269,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

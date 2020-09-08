@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>R6 and Design Patterns</h1>
             
-            <h4 class="date">2020-09-07</h4>
+            <h4 class="date">2020-09-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/r6_and_design_patterns.rmd"><code>vignettes/webs/r6_and_design_patterns.rmd</code></a></small>
       <div class="hidden name"><code>r6_and_design_patterns.rmd</code></div>
@@ -226,12 +226,12 @@
 <a href="#abstract-classes" class="anchor"></a>Abstract Classes</h3>
 <p>Abstract classes are classes that cannot be instantiated. They are useful for defining hierarchical structures and inheritance in OOP. As well as for the Abstract Factory design pattern.</p>
 <p>Implementation: In R6, all classes are concrete and by default have an <code>initialize</code> method for construction. Therefore to make a class abstract we overload the <code>initialize</code> method as follows:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r">&gt; AbstractClass$set("public","initialize",function(){
-+   stop(paste(RSmisc::getR6Class(self), "is an abstract class that can't be initialized."))
-+ })
-
-# So on construction
-&gt; AbstractClass$new()</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span>AbstractClass<span class="op">$</span><span class="kw">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(){</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">stop</span>(<span class="kw">paste</span>(RSmisc<span class="op">::</span><span class="kw">getR6Class</span>(self), <span class="st">"is an abstract class that can't be initialized."</span>))</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="op">+</span><span class="st"> </span>})</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># So on construction</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="op">&gt;</span><span class="st"> </span>AbstractClass<span class="op">$</span><span class="kw">new</span>()</span></code></pre></div>
 <pre><code>Error in .subset2(public_bind_env, "initialize")(...) : 
   AbstractClass is an abstract class that can't be initialized.</code></pre>
 <hr>
@@ -245,34 +245,36 @@
 </blockquote>
 <p>Implementation: Decorators are particularly complex in R6 for a number of reasons. Firstly inheritance occurs in the class definition and not object definition, therefore we cannot dynamically choose which class to inherit from. Secondly, methods and variables should only be defined before initializing an object and any defined after do not have access to the object itself (i.e. the ‘self’ and ‘private’ accessors). And finally there is no simple way to reference one object dynamically from another without this being hardcoded. Implementation has two key methods, the first via construction of the class to be decorated and secondly via construction of the decorator assuming an object has already been instantiated to decorate it.</p>
 <p><strong>Method 1)</strong> In the class to decorate we copy every public method from the decorators of interest to the class and we add <code>self</code> as an argument to ensure that the decorator methods have the same access level as ‘standard’ methods.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">decorators</span>)){
-    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">decorators</span>,<span class="kw">function</span>(<span class="no">x</span>){
-      <span class="no">methods</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">x</span>$<span class="no">public_methods</span>, <span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">x</span>$<span class="no">inherit</span>))$<span class="no">public_methods</span>) <span class="co"># Combines decorator methods and any parent methods</span>
-      <span class="no">methods</span> <span class="kw">&lt;-</span> <span class="no">methods</span>[!(<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">methods</span>) <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"initialize"</span>,<span class="st">"clone"</span>))] <span class="co"># Ensures initialize and clone aren't copied</span>
-      <span class="no">aself</span> <span class="kw">&lt;-</span> <span class="no">self</span>
-      <span class="kw">for</span>(<span class="no">i</span> <span class="kw">in</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">methods</span>)){
-          <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="no">methods</span><span class="kw">[[</span><span class="no">i</span>]] ) <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="no">methods</span><span class="kw">[[</span><span class="no">i</span>]]),<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">self</span><span class="kw">=</span><span class="no">aself</span>)) <span class="co"># Adds self as default to every decorator ensuring access to the object</span>
-          <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">methods</span>)<span class="kw">[[</span><span class="no">i</span>]],<span class="no">methods</span><span class="kw">[[</span><span class="no">i</span>]],<span class="kw">envir</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.environment.html">as.environment</a></span>(<span class="no">self</span>)) <span class="co"># Copies every method from the decorator to the object</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co">if</span>(<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="kw">decorators</span>)){
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">decorators</span>,<span class="fu">function</span>(<span class="kw">x</span>){
+      <span class="kw">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">x</span><span class="op">$</span><span class="kw">public_methods</span>, <span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">x</span><span class="op">$</span><span class="kw">inherit</span>))<span class="op">$</span><span class="kw">public_methods</span>) <span class="co"># Combines decorator methods and any parent methods</span>
+      <span class="kw">methods</span> <span class="op">&lt;-</span> <span class="kw">methods</span>[<span class="op">!</span>(<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">methods</span>) <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"initialize"</span>,<span class="st">"clone"</span>))] <span class="co"># Ensures initialize and clone aren't copied</span>
+      <span class="kw">aself</span> <span class="op">&lt;-</span> <span class="kw">self</span>
+      <span class="co">for</span>(<span class="kw">i</span> <span class="co">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">methods</span>)){
+          <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="kw">methods</span>[[<span class="kw">i</span>]] ) <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="kw">methods</span>[[<span class="kw">i</span>]]),<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(self=<span class="kw">aself</span>)) <span class="co"># Adds self as default to every decorator ensuring access to the object</span>
+          <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">methods</span>)[[<span class="kw">i</span>]],<span class="kw">methods</span>[[<span class="kw">i</span>]],envir=<span class="fu"><a href="https://rdrr.io/r/base/as.environment.html">as.environment</a></span>(<span class="kw">self</span>)) <span class="co"># Copies every method from the decorator to the object</span>
       }
     })
   }
-  <span class="no">private</span>$<span class="no">.decorators</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">decorators</span>,<span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span><span class="kw">[[</span><span class="st">"classname"</span>]]))</pre></body></html></div>
+  <span class="kw">private</span><span class="op">$</span><span class="kw">.decorators</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">decorators</span>,<span class="fu">function</span>(<span class="kw">x</span>) <span class="kw">x</span>[[<span class="st">"classname"</span>]]))
+</pre></div>
 <p>where we assume <code>decorators</code> is an argument to the constructor given as a list naming the decorator classes and that a private variable called <code>.decorators</code> is a list of decorators already present in the object.</p>
 <p><strong>Method 2)</strong> On construction of a particular decorator, the original object is overwritten with whichever decorators were already added and the new decorator that is being constructed. The decorator object is not saved to local memory.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r">DistributionDecorator$set("public","initialize",function(distribution){
-  if(getR6Class(self) == "DistributionDecorator")
-    stop(paste(getR6Class(self), "is an abstract class that can't be initialized.")) # Defines the Abstract Decorator parent class as abstract.
-
-  decorators = distribution$decorators() # Gets decorator list from object.
-  if(!is.null(decorators)){
-    decorators = lapply(decorators,get)
-  }
-  decorators = unique(c(decorators,get(getR6Class(self)))) # Combines decorators present in the object with the current decorator to be added.
-
-  assign(paste0(substitute(distribution)), Distribution$new(distribution)), pos = .GlobalEnv) # Constructs a new object via Method 1) and assigns this to the environment with the same name as the undecorated object.
-
-  cat(paste(substitute(distribution),"is now decorated with",getR6Class(self),"\n"))
-})</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>DistributionDecorator<span class="op">$</span><span class="kw">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(distribution){</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="cf">if</span>(<span class="kw">getR6Class</span>(self) <span class="op">==</span><span class="st"> "DistributionDecorator"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="kw">getR6Class</span>(self), <span class="st">"is an abstract class that can't be initialized."</span>)) <span class="co"># Defines the Abstract Decorator parent class as abstract.</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  decorators =<span class="st"> </span>distribution<span class="op">$</span><span class="kw">decorators</span>() <span class="co"># Gets decorator list from object.</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.null</span>(decorators)){</span>
+<span id="cb4-7"><a href="#cb4-7"></a>    decorators =<span class="st"> </span><span class="kw">lapply</span>(decorators,get)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>  }</span>
+<span id="cb4-9"><a href="#cb4-9"></a>  decorators =<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(decorators,<span class="kw">get</span>(<span class="kw">getR6Class</span>(self)))) <span class="co"># Combines decorators present in the object with the current decorator to be added.</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a>  <span class="kw">assign</span>(<span class="kw">paste0</span>(<span class="kw">substitute</span>(distribution)), Distribution<span class="op">$</span><span class="kw">new</span>(distribution)), pos =<span class="st"> </span>.GlobalEnv<span class="er">)</span> <span class="co"># Constructs a new object via Method 1) and assigns this to the environment with the same name as the undecorated object.</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13"></a>  <span class="kw">cat</span>(<span class="kw">paste</span>(<span class="kw">substitute</span>(distribution),<span class="st">"is now decorated with"</span>,<span class="kw">getR6Class</span>(self),<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>))</span>
+<span id="cb4-14"><a href="#cb4-14"></a>})</span></code></pre></div>
 <hr>
 </div>
 <div id="adapters" class="section level3">
@@ -280,60 +282,64 @@
 <a href="#adapters" class="anchor"></a>Adapters</h3>
 <p>For the wrappers in distr6, our code is closer to that of an adapter than decorator pattern as we adapt the interface of an object and in fact the object class is changed in the process. The implementation of these in distr6 is quite simple, wrappers are classes inheriting from <code>Distribution</code> objects that have an additional method that allows the user to view the internally wrapped models (or distributions). Each wrapper has two parts to its constructor: the parent-class method that ensures all parameters are unique, and the child class method that makes any other changes to the object (usually by editing its pdf and/or cdf)</p>
 <p><strong>Parent Class Constructor</strong></p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">DistributionWrapper</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="kw">function</span>(<span class="no">distlist</span>, <span class="no">prefixParams</span> <span class="kw">=</span> <span class="fl">TRUE</span>,<span class="no">...</span>){
-  <span class="kw">if</span>(<span class="fu">getR6Class</span>(<span class="no">self</span>) <span class="kw">==</span> <span class="st">"DistributionWrapper"</span>)
-    <span class="fu"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="fu">getR6Class</span>(<span class="no">self</span>), <span class="st">"is an abstract class that can't be initialized."</span>))
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">DistributionWrapper</span><span class="op">$</span><span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="fu">function</span>(<span class="kw">distlist</span>, <span class="kw">prefixParams</span> = <span class="fl">TRUE</span>,<span class="kw">...</span>){
+  <span class="co">if</span>(<span class="fu">getR6Class</span>(<span class="kw">self</span>) <span class="op">==</span> <span class="st">"DistributionWrapper"</span>)
+    <span class="fu"><a href="https://rdrr.io/r/base/stop.html">stop</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="fu">getR6Class</span>(<span class="kw">self</span>), <span class="st">"is an abstract class that can't be initialized."</span>))
 
-  <span class="fu"><a href="../../reference/testDistributionList.html">assertDistributionList</a></span>(<span class="no">distlist</span>)
+  <span class="fu"><a href="../../reference/testDistributionList.html">assertDistributionList</a></span>(<span class="kw">distlist</span>)
 
-  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">distlist</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span>$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()$<span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>())
-  <span class="no">private</span>$<span class="no">.wrappedModels</span> <span class="kw">&lt;-</span> <span class="no">distlist</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">distlist</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="kw">x</span><span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()<span class="op">$</span><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>())
+  <span class="kw">private</span><span class="op">$</span><span class="kw">.wrappedModels</span> <span class="op">&lt;-</span> <span class="kw">distlist</span>
 
-  <span class="kw">if</span>(<span class="no">prefixParams</span>){
-    <span class="no">params</span> <span class="kw">&lt;-</span> <span class="kw pkg">data.table</span><span class="kw ns">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html">rbindlist</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">distlist</span>, <span class="kw">function</span>(<span class="no">x</span>){
-      <span class="no">params</span> <span class="kw">=</span> <span class="no">x</span><span class="kw">[[</span><span class="st">"parameters"</span>]]()$<span class="fu">as.data.table</span>()
-      <span class="no">params</span>[,<span class="fl">1</span>] <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="no">x</span><span class="kw">[[</span><span class="st">"short_name"</span>]],<span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">params</span>[,<span class="fl">1</span>]),<span class="kw">sep</span><span class="kw">=</span><span class="st">"_"</span>)
-      <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">params</span>)
+  <span class="co">if</span>(<span class="kw">prefixParams</span>){
+    <span class="kw">params</span> <span class="op">&lt;-</span> <span class="kw">data.table</span>::<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html">rbindlist</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">distlist</span>, <span class="fu">function</span>(<span class="kw">x</span>){
+      <span class="kw">params</span> <span class="op">=</span> <span class="kw">x</span>[[<span class="st">"parameters"</span>]]()<span class="op">$</span><span class="fu">as.data.table</span>()
+      <span class="kw">params</span>[,<span class="fl">1</span>] <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="kw">x</span>[[<span class="st">"short_name"</span>]],<span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="kw">params</span>[,<span class="fl">1</span>]),sep=<span class="st">"_"</span>)
+      <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw">params</span>)
     }))
-    <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="no">params</span>) <span class="kw">&lt;-</span> <span class="kw">NULL</span>
-    <span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/as.ParameterSet.html">as.ParameterSet</a></span>(<span class="no">params</span>)
-  } <span class="kw">else</span>{
-    <span class="kw">if</span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">distlist</span>) <span class="kw">==</span> <span class="fl">1</span>)
-      <span class="no">params</span> <span class="kw">&lt;-</span> <span class="no">distlist</span><span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
-    <span class="kw">else</span>
-      <span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">rbind</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">distlist</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span>$<span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()))
+    <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">params</span>) <span class="op">&lt;-</span> <span class="kw">NULL</span>
+    <span class="kw">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/as.ParameterSet.html">as.ParameterSet</a></span>(<span class="kw">params</span>)
+  } <span class="co">else</span>{
+    <span class="co">if</span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">distlist</span>) <span class="op">==</span> <span class="fl">1</span>)
+      <span class="kw">params</span> <span class="op">&lt;-</span> <span class="kw">distlist</span>[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+    <span class="co">else</span>
+      <span class="kw">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="kw">rbind</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">distlist</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="kw">x</span><span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()))
   }
 
-  <span class="no">super</span>$<span class="fu">initialize</span>(<span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>, <span class="no">...</span>)
-})</pre></body></html></div>
+  <span class="kw">super</span><span class="op">$</span><span class="fu">initialize</span>(parameters = <span class="kw">params</span>, <span class="kw">...</span>)
+})
+</pre></div>
 <p><strong>Abridged Child Class Constructor (TruncatedDistribution)</strong></p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">TruncatedDistribution</span>$<span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="kw">function</span>(<span class="no">distribution</span>, <span class="no">lower</span> <span class="kw">=</span> <span class="kw">NULL</span>,
-                                                         <span class="no">upper</span> <span class="kw">=</span> <span class="kw">NULL</span>){
-  <span class="no">pdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>,<span class="no">...</span>) {
-    <span class="kw">if</span>(<span class="no">x1</span> <span class="kw">&lt;=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>() <span class="kw">|</span> <span class="no">x1</span> <span class="kw">&gt;</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>())
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">TruncatedDistribution</span><span class="op">$</span><span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="fu">function</span>(<span class="kw">distribution</span>, <span class="kw">lower</span> = <span class="kw">NULL</span>,
+                                                         <span class="kw">upper</span> = <span class="kw">NULL</span>){
+  <span class="kw">pdf</span> <span class="op">&lt;-</span> <span class="fu">function</span>(<span class="kw">x1</span>,<span class="kw">...</span>) {
+    <span class="co">if</span>(<span class="kw">x1</span> <span class="op">&lt;=</span> <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/inf.html">inf</a></span>() <span class="op">|</span> <span class="kw">x1</span> <span class="op">&gt;</span> <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/sup.html">sup</a></span>())
       <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fl">0</span>)
-    <span class="kw">else</span>
-      <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="no">x1</span>) / (<span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>()))
+    <span class="co">else</span>
+      <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="kw">x1</span>) <span class="op">/</span> (<span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/sup.html">sup</a></span>()) <span class="op">-</span> <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/inf.html">inf</a></span>()))
   }
-  <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="no">pdf</span>)$<span class="no">self</span> <span class="kw">&lt;-</span> <span class="no">self</span>
-  <span class="no">cdf</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x1</span>,<span class="no">...</span>){
-    <span class="no">num</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">x1</span>) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>())
-    <span class="no">den</span> <span class="kw">=</span> <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/sup.html">sup</a></span>()) - <span class="no">self</span>$<span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]$<span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="no">self</span>$<span class="fu"><a href="../../reference/inf.html">inf</a></span>())
-    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="no">num</span>/<span class="no">den</span>)
+  <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="kw">pdf</span>)<span class="op">$</span><span class="kw">self</span> <span class="op">&lt;-</span> <span class="kw">self</span>
+  <span class="kw">cdf</span> <span class="op">&lt;-</span> <span class="fu">function</span>(<span class="kw">x1</span>,<span class="kw">...</span>){
+    <span class="kw">num</span> <span class="op">=</span> <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="kw">x1</span>) <span class="op">-</span> <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/inf.html">inf</a></span>())
+    <span class="kw">den</span> <span class="op">=</span> <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/sup.html">sup</a></span>()) <span class="op">-</span> <span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()[[<span class="fl">1</span>]]<span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="kw">self</span><span class="op">$</span><span class="fu"><a href="../../reference/inf.html">inf</a></span>())
+    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw">num</span><span class="op">/</span><span class="kw">den</span>)
   }
-  <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="no">cdf</span>)$<span class="no">self</span> <span class="kw">&lt;-</span> <span class="no">self</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span>(<span class="kw">cdf</span>)<span class="op">$</span><span class="kw">self</span> <span class="op">&lt;-</span> <span class="kw">self</span>
 
-  <span class="no">name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"Truncated"</span>,<span class="no">distribution</span>$<span class="no">name</span>)
-  <span class="no">short_name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Truncated"</span>,<span class="no">distribution</span>$<span class="no">short_name</span>)
+  <span class="kw">name</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"Truncated"</span>,<span class="kw">distribution</span><span class="op">$</span><span class="kw">name</span>)
+  <span class="kw">short_name</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Truncated"</span>,<span class="kw">distribution</span><span class="op">$</span><span class="kw">short_name</span>)
 
-  <span class="no">distlist</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">distribution</span>)
-  <span class="no">description</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">distribution</span>$<span class="no">description</span>, <span class="st">" Truncated between "</span>,<span class="no">lower</span>,<span class="st">" and "</span>,<span class="no">upper</span>,<span class="st">"."</span>)
+  <span class="kw">distlist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">distribution</span>)
+  <span class="kw">description</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">distribution</span><span class="op">$</span><span class="kw">description</span>, <span class="st">" Truncated between "</span>,<span class="kw">lower</span>,<span class="st">" and "</span>,<span class="kw">upper</span>,<span class="st">"."</span>)
 
-  <span class="no">super</span>$<span class="fu">initialize</span>(<span class="kw">distlist</span> <span class="kw">=</span> <span class="no">distlist</span>, <span class="kw">pdf</span> <span class="kw">=</span> <span class="no">pdf</span>, <span class="kw">cdf</span> <span class="kw">=</span> <span class="no">cdf</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="no">name</span>,
-                   <span class="kw">short_name</span> <span class="kw">=</span> <span class="no">short_name</span>, <span class="kw">support</span> <span class="kw">=</span> <span class="no">support</span>,
-                   <span class="kw">type</span> <span class="kw">=</span> <span class="no">distribution</span>$<span class="fu"><a href="../../reference/type.html">type</a></span>(), <span class="kw">prefixParams</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-                   <span class="kw">description</span> <span class="kw">=</span> <span class="no">description</span>)
-})</pre></body></html></div>
+  <span class="kw">super</span><span class="op">$</span><span class="fu">initialize</span>(distlist = <span class="kw">distlist</span>, pdf = <span class="kw">pdf</span>, cdf = <span class="kw">cdf</span>, name = <span class="kw">name</span>,
+                   short_name = <span class="kw">short_name</span>, support = <span class="kw">support</span>,
+                   type = <span class="kw">distribution</span><span class="op">$</span><span class="fu"><a href="../../reference/type.html">type</a></span>(), prefixParams = <span class="fl">FALSE</span>,
+                   description = <span class="kw">description</span>)
+})
+</pre></div>
 </div>
 </div>
 <div id="references" class="section level2 unnumbered">
@@ -362,7 +368,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

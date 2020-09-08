@@ -257,7 +257,7 @@ where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper)
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>HuberizedDistribution$new()</code></a></p></li>
@@ -288,12 +288,12 @@ where f_H is the pdf of the truncated distribution H = Huberize(X, lower, upper)
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>HuberizedDistribution</span>$<span class='fu'>new</span>(<span class='no'>distribution</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>HuberizedDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>distribution</span>, lower = <span class='kw'>NULL</span>, upper = <span class='kw'>NULL</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>distribution</code></dt><dd><p><code>([Distribution])</code> <br />
 <a href='Distribution.html'>Distribution</a> to wrap.</p></dd>
 
@@ -306,22 +306,23 @@ Upper limit to huberize the distribution at. If <code>NULL</code> then the upper
 the <a href='Distribution.html'>Distribution</a> is used.</p></dd>
 
 </dl><p></div></p>
-<h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>HuberizedDistribution</span>$<span class='fu'>new</span>(
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>),
-  <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>4</span>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='kw'>HuberizedDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+  <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>),
+  lower = <span class='fl'>2</span>, upper = <span class='fl'>4</span>
 )
 
 <span class='co'># alternate constructor</span>
-<span class='fu'><a href='huberize.html'>huberize</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>4</span>)</pre><p></div></p>
+<span class='fu'><a href='huberize.html'>huberize</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), lower = <span class='fl'>2</span>, upper = <span class='fl'>4</span>)
+</pre><p></div></p>
 
 <p><hr>
-<a id="method-setParameterValue"></a></p><h3>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
-<p>Sets the value(s) of the given parameter(s).</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>HuberizedDistribution</span>$<span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='no'>...</span>, <span class='kw'>lst</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='st'>"warn"</span>)</pre><p></div></p>
+<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>HuberizedDistribution</span><span class='op'>$</span><span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>...</span>, lst = <span class='kw'>NULL</span>, error = <span class='st'>"warn"</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p><code>ANY</code> <br />
 Named arguments of parameters to set values for. See examples.</p></dd>
 
@@ -334,12 +335,12 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>HuberizedDistribution</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>HuberizedDistribution</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -352,12 +353,14 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <span class='co'>## Method `HuberizedDistribution$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>HuberizedDistribution</span>$<span class='fu'>new</span>(
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>),
-  <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>4</span>
-)</div><div class='output co'>#&gt; HubBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,hub_lower = 2, hub_upper = 4) </div><div class='input'>
+<span class='kw'>HuberizedDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+  <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>),
+  lower = <span class='fl'>2</span>, upper = <span class='fl'>4</span>
+)
+</div><div class='output co'>#&gt; HubBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,hub_lower = 2, hub_upper = 4) </div><div class='input'>
 <span class='co'># alternate constructor</span>
-<span class='fu'><a href='huberize.html'>huberize</a></span>(<span class='no'>Binomial</span>$<span class='fu'>new</span>(), <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; HubBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,hub_lower = 2, hub_upper = 4) </div></pre>
+<span class='fu'><a href='huberize.html'>huberize</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(), lower = <span class='fl'>2</span>, upper = <span class='fl'>4</span>)
+</div><div class='output co'>#&gt; HubBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,hub_lower = 2, hub_upper = 4) </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -373,7 +376,7 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

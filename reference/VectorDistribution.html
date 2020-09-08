@@ -251,7 +251,7 @@ only constructed when methods (e.g. d/p/q/r) are called.</p>
     <p><code><a href='Distribution.html'>distr6::Distribution</a></code> -&gt; <code><a href='DistributionWrapper.html'>distr6::DistributionWrapper</a></code> -&gt; <code>VectorDistribution</code></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <p><div class="r6-active-bindings"></p><dl'>
+    <p><div class="r6-active-bindings"></p><dl>
 <dt><code>modelTable</code></dt><dd><p>Returns reference table of wrapped <a href='Distribution.html'>Distribution</a>s.</p></dd>
 
 <dt><code>distlist</code></dt><dd><p>Returns list of constructed wrapped <a href='Distribution.html'>Distribution</a>s.</p></dd>
@@ -260,7 +260,7 @@ only constructed when methods (e.g. d/p/q/r) are called.</p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>VectorDistribution$new()</code></a></p></li>
@@ -300,21 +300,21 @@ only constructed when methods (e.g. d/p/q/r) are called.</p>
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
-  <span class='kw'>distlist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shared_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>short_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>decorators</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+  distlist = <span class='kw'>NULL</span>,
+  distribution = <span class='kw'>NULL</span>,
+  params = <span class='kw'>NULL</span>,
+  shared_params = <span class='kw'>NULL</span>,
+  name = <span class='kw'>NULL</span>,
+  short_name = <span class='kw'>NULL</span>,
+  decorators = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>distlist</code></dt><dd><p><code>(list())</code><br />
 List of <a href='Distribution.html'>Distribution</a>s.</p></dd>
 
@@ -347,7 +347,7 @@ Decorators to add to the distribution during construction.</p></dd>
 Named arguments of parameters to set values for. See examples.</p></dd>
 
 </dl><p></div></p>
-<h3>Examples</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
 <p><div class="r example copy"></p><pre>\dontrun{
 VectorDistribution$new(
   distribution = "Binomial",
@@ -375,12 +375,12 @@ VectorDistribution$new(
 </pre><p></div></p>
 
 <p><hr>
-<a id="method-wrappedModels"></a></p><h3>Method <code><a href='wrappedModels.html'>wrappedModels()</a></code></h3>
-<p>Returns model(s) wrapped by this wrapper.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='wrappedModels.html'>wrappedModels</a></span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<a id="method-wrappedModels"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='wrappedModels.html'>wrappedModels()</a></code></h3>
+<p>Returns model(s) wrapped by this wrapper.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='wrappedModels.html'>wrappedModels</a></span>(model = <span class='kw'>NULL</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>model</code></dt><dd><p><code>(character(1))</code> <br />
 id of wrapped <a href='Distribution.html'>Distribution</a>s to return. If <code>NULL</code> (default), a list of all wrapped
 <a href='Distribution.html'>Distribution</a>s is returned; if only one <a href='Distribution.html'>Distribution</a> is matched then this is returned,
@@ -388,110 +388,110 @@ otherwise a list of <a href='Distribution.html'>Distribution</a>s.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-strprint"></a></p><h3>Method <code><a href='strprint.html'>strprint()</a></code></h3>
-<p>Printable string representation of the <code>VectorDistribution</code>. Primarily used internally.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='strprint.html'>strprint</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre><p></div></p>
+<a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='strprint.html'>strprint()</a></code></h3>
+<p>Printable string representation of the <code>VectorDistribution</code>. Primarily used internally.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='strprint.html'>strprint</a></span>(n = <span class='fl'>10</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>n</code></dt><dd><p><code>(integer(1))</code><br />
 Number of distributions to include when printing.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mean"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
-<p>Returns named vector of means from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
+<a id="method-mean"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code></h3>
+<p>Returns named vector of means from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-mode"></a></p><h3>Method <code><a href='mode.html'>mode()</a></code></h3>
-<p>Returns named vector of modes from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='mode.html'>mode</a></span>(<span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre><p></div></p>
+<a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mode.html'>mode()</a></code></h3>
+<p>Returns named vector of modes from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='mode.html'>mode</a></span>(which = <span class='st'>"all"</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>which</code></dt><dd><p><code>(character(1) | numeric(1)</code><br />
 Ignored if distribution is unimodal. Otherwise <code>"all"</code> returns all modes, otherwise specifies
 which mode to return.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-median"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></h3>
-<p>Returns named vector of medians from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>()</pre><p></div></p>
+<a id="method-median"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code></h3>
+<p>Returns named vector of medians from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-variance"></a></p><h3>Method <code><a href='variance.html'>variance()</a></code></h3>
-<p>Returns named vector of variances from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+<a id="method-variance"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='variance.html'>variance()</a></code></h3>
+<p>Returns named vector of variances from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-skewness"></a></p><h3>Method <code><a href='skewness.html'>skewness()</a></code></h3>
-<p>Returns named vector of skewness from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+<a id="method-skewness"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<p>Returns named vector of skewness from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-kurtosis"></a></p><h3>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
-<p>Returns named vector of kurtosis from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(<span class='kw'>excess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+<a id="method-kurtosis"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<p>Returns named vector of kurtosis from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(excess = <span class='fl'>TRUE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>excess</code></dt><dd><p><code>(logical(1))</code> <br />
 If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-entropy"></a></p><h3>Method <code><a href='entropy.html'>entropy()</a></code></h3>
-<p>Returns named vector of entropy from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='entropy.html'>entropy</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+<a id="method-entropy"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<p>Returns named vector of entropy from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='entropy.html'>entropy</a></span>(base = <span class='fl'>2</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>base</code></dt><dd><p><code>(integer(1))</code> <br />
 Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mgf"></a></p><h3>Method <code><a href='mgf.html'>mgf()</a></code></h3>
-<p>Returns named vector of mgf from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+<a id="method-mgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mgf.html'>mgf()</a></code></h3>
+<p>Returns named vector of mgf from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='kw'>t</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
 t integer to evaluate function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-cf"></a></p><h3>Method <code><a href='cf.html'>cf()</a></code></h3>
-<p>Returns named vector of cf from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='cf.html'>cf</a></span>(<span class='no'>t</span>)</pre><p></div></p>
+<a id="method-cf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cf.html'>cf()</a></code></h3>
+<p>Returns named vector of cf from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='cf.html'>cf</a></span>(<span class='kw'>t</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
 t integer to evaluate function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pgf"></a></p><h3>Method <code><a href='pgf.html'>pgf()</a></code></h3>
-<p>Returns named vector of pgf from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='no'>z</span>)</pre><p></div></p>
+<a id="method-pgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<p>Returns named vector of pgf from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='kw'>z</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>z</code></dt><dd><p><code>(integer(1))</code> <br />
 z integer to evaluate probability generating function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pdf"></a></p><h3>Method <code><a href='pdf.html'>pdf()</a></code></h3>
-<p>Returns named vector of pdfs from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='no'>...</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<a id="method-pdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pdf.html'>pdf()</a></code></h3>
+<p>Returns named vector of pdfs from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>...</span>, log = <span class='fl'>FALSE</span>, simplify = <span class='fl'>TRUE</span>, data = <span class='kw'>NULL</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
 Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
@@ -512,51 +512,52 @@ case of VectorDistributions of multivariate distributions, then the third dimens
 to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
-<h3>Examples</h3>
-<p><div class="r example copy"></p><pre><span class='no'>vd</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
- <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
- <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>9</span>:<span class='fl'>10</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>,<span class='fl'>0.6</span>)))
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='kw'>vd</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+ distribution = <span class='st'>"Binomial"</span>,
+ params = <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(size = <span class='fl'>9</span><span class='op'>:</span><span class='fl'>10</span>, prob = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>,<span class='fl'>0.6</span>)))
 
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>)
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>)
 <span class='co'># Equivalently</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>)
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>)
 
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span>)
 <span class='co'># or as a matrix</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>))
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(data = <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, nrow = <span class='fl'>2</span>))
 
 <span class='co'># when wrapping multivariate distributions, arrays are required</span>
-<span class='no'>vd</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
- <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Multinomial"</span>,
- <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.9</span>)),
- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.7</span>))
+<span class='kw'>vd</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+ distribution = <span class='st'>"Multinomial"</span>,
+ params = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+ <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(size = <span class='fl'>5</span>, probs = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.9</span>)),
+ <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(size = <span class='fl'>8</span>, probs = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.7</span>))
  )
  )
 
 <span class='co'># evaluates Multinom1 and Multinom2 at (1, 4)</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>)
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>)
 
 <span class='co'># evaluates Multinom1 at (1, 4) and Multinom2 at (5, 3)</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>), <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(data = <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>), dim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))
 
 <span class='co'># and the same across many samples</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>7</span>), <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))</pre><p></div></p>
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(data = <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>7</span>), dim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))
+</pre><p></div></p>
 
 <p><hr>
-<a id="method-cdf"></a></p><h3>Method <code><a href='cdf.html'>cdf()</a></code></h3>
+<a id="method-cdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cdf.html'>cdf()</a></code></h3>
 <p>Returns named vector of cdfs from each wrapped <a href='Distribution.html'>Distribution</a>.
-Same usage as <code>$pdf.</code></p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='cdf.html'>cdf</a></span>(
-  <span class='no'>...</span>,
-  <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+Same usage as <code>$pdf.</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(
+  <span class='kw'>...</span>,
+  lower.tail = <span class='fl'>TRUE</span>,
+  log.p = <span class='fl'>FALSE</span>,
+  simplify = <span class='fl'>TRUE</span>,
+  data = <span class='kw'>NULL</span>
 )</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
 Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
@@ -581,19 +582,19 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-quantile"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
+<a id="method-quantile"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
 <p>Returns named vector of quantiles from each wrapped <a href='Distribution.html'>Distribution</a>.
-Same usage as <code>$cdf.</code></p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(
-  <span class='no'>...</span>,
-  <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>log.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+Same usage as <code>$cdf.</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(
+  <span class='kw'>...</span>,
+  lower.tail = <span class='fl'>TRUE</span>,
+  log.p = <span class='fl'>FALSE</span>,
+  simplify = <span class='fl'>TRUE</span>,
+  data = <span class='kw'>NULL</span>
 )</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p><code>(numeric())</code> <br />
 Points to evaluate the function at Arguments do not need
 to be named. The length of each argument corresponds to the number of points to evaluate,
@@ -618,12 +619,12 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-rand"></a></p><h3>Method <code><a href='rand.html'>rand()</a></code></h3>
-<p>Returns <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> of draws from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'><a href='rand.html'>rand</a></span>(<span class='no'>n</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
+<a id="method-rand"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='rand.html'>rand()</a></code></h3>
+<p>Returns <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> of draws from each wrapped <a href='Distribution.html'>Distribution</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'><a href='rand.html'>rand</a></span>(<span class='kw'>n</span>, simplify = <span class='fl'>TRUE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>n</code></dt><dd><p><code>(numeric(1))</code> <br />
 Number of points to simulate from the distribution. If length greater than \(1\), then
 <code>n &lt;- length(n)</code>,</p></dd>
@@ -634,12 +635,12 @@ data.table::data.table.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VectorDistribution</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -652,27 +653,27 @@ data.table::data.table.</p></dd>
 <span class='co'>## Method `VectorDistribution$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
-  <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+  distribution = <span class='st'>"Binomial"</span>,
+  params = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(prob = <span class='fl'>0.1</span>, size = <span class='fl'>2</span>),
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(prob = <span class='fl'>0.6</span>, size = <span class='fl'>4</span>),
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(prob = <span class='fl'>0.2</span>, size = <span class='fl'>6</span>)
   )
 )
 
-<span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
-  <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>))
+<span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+  distribution = <span class='st'>"Binomial"</span>,
+  params = <span class='kw'>data.table</span>::<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(prob = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span>), size = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>))
 )
 
 <span class='co'># Alternatively</span>
-<span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
+<span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>),
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span>),
-  <span class='no'>Binomial</span>$<span class='fu'>new</span>(<span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)
+  <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.1</span>, size = <span class='fl'>2</span>),
+  <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.6</span>, size = <span class='fl'>4</span>),
+  <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.2</span>, size = <span class='fl'>6</span>)
   )
 )
 }
@@ -681,37 +682,44 @@ data.table::data.table.</p></dd>
 <span class='co'>## Method `VectorDistribution$pdf`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>vd</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
- <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Binomial"</span>,
- <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>9</span>:<span class='fl'>10</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>,<span class='fl'>0.6</span>)))
+<span class='kw'>vd</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+ distribution = <span class='st'>"Binomial"</span>,
+ params = <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(size = <span class='fl'>9</span><span class='op'>:</span><span class='fl'>10</span>, prob = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>,<span class='fl'>0.6</span>)))
 
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>)</div><div class='output co'>#&gt;       Binom1     Binom2
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>)
+</div><div class='output co'>#&gt;       Binom1     Binom2
 #&gt; 1: 0.0703125 0.01061683</div><div class='input'><span class='co'># Equivalently</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt;       Binom1     Binom2
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>)
+</div><div class='output co'>#&gt;       Binom1     Binom2
 #&gt; 1: 0.0703125 0.01061683</div><div class='input'>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>)</div><div class='output co'>#&gt;        Binom1     Binom2
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span>)
+</div><div class='output co'>#&gt;        Binom1     Binom2
 #&gt; 1: 0.01757813 0.04246733
 #&gt; 2: 0.07031250 0.11147674</div><div class='input'><span class='co'># or as a matrix</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt;        Binom1     Binom2
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(data = <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, nrow = <span class='fl'>2</span>))
+</div><div class='output co'>#&gt;        Binom1     Binom2
 #&gt; 1: 0.01757813 0.04246733
 #&gt; 2: 0.07031250 0.11147674</div><div class='input'>
 <span class='co'># when wrapping multivariate distributions, arrays are required</span>
-<span class='no'>vd</span> <span class='kw'>&lt;-</span> <span class='no'>VectorDistribution</span>$<span class='fu'>new</span>(
- <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"Multinomial"</span>,
- <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.9</span>)),
- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.7</span>))
+<span class='kw'>vd</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
+ distribution = <span class='st'>"Multinomial"</span>,
+ params = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+ <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(size = <span class='fl'>5</span>, probs = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.9</span>)),
+ <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(size = <span class='fl'>8</span>, probs = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.7</span>))
  )
  )
 
 <span class='co'># evaluates Multinom1 and Multinom2 at (1, 4)</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt;    Multinom1 Multinom2
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>)
+</div><div class='output co'>#&gt;    Multinom1 Multinom2
 #&gt; 1:   0.32805         0</div><div class='input'>
 <span class='co'># evaluates Multinom1 at (1, 4) and Multinom2 at (5, 3)</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>), <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))</div><div class='output co'>#&gt;    Multinom1  Multinom2
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(data = <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>), dim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))
+</div><div class='output co'>#&gt;    Multinom1  Multinom2
 #&gt; 1:   0.32805 0.04667544</div><div class='input'>
 <span class='co'># and the same across many samples</span>
-<span class='no'>vd</span>$<span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>7</span>), <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))</div><div class='output co'>#&gt;    Multinom1  Multinom2
+<span class='kw'>vd</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(data = <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>7</span>), dim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)))
+</div><div class='output co'>#&gt;    Multinom1  Multinom2
 #&gt; 1:   0.32805 0.04667544
 #&gt; 2:   0.07290 0.19765032</div></pre>
   </div>
@@ -729,7 +737,7 @@ data.table::data.table.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -234,7 +234,7 @@ empirical distribution to a reference distribution. They can also compare the qu
 reference distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>qqplot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>npoints</span> <span class='kw'>=</span> <span class='fl'>3000</span>, <span class='kw'>idline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>qqplot</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, npoints = <span class='fl'>3000</span>, idline = <span class='fl'>TRUE</span>, plot = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -274,12 +274,18 @@ are equivalent to the the Type 1 method in <code><a href='https://rdrr.io/r/stat
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot.Distribution.html'>plot.Distribution</a></code> for plotting a <code>distr6</code> object.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Chijing Zeng</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>qqplot</span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fl'>30</span>)), <span class='no'>ChiSquared</span>$<span class='fu'>new</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>15</span>))</div><div class='img'><img src='qqplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span>(<span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span>(<span class='fl'>200</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span>(<span class='fl'>300</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>5</span>),
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"QQ-Plot"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"t-200"</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"t-300"</span>
-)</div><div class='img'><img src='qqplot-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span>(<span class='no'>Normal</span>$<span class='fu'>new</span>(<span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>3</span>))</div><div class='img'><img src='qqplot-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>qqplot</span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>15</span>, sd = <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fl'>30</span>)), <span class='kw'>ChiSquared</span><span class='op'>$</span><span class='fu'>new</span>(df = <span class='fl'>15</span>))
+</div><div class='img'><img src='qqplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span>(<span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span>(<span class='fl'>200</span>, df = <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span>(<span class='fl'>300</span>, df = <span class='fl'>5</span>),
+  main = <span class='st'>"QQ-Plot"</span>, xlab = <span class='st'>"t-200"</span>,
+  ylab = <span class='st'>"t-300"</span>
+)
+</div><div class='img'><img src='qqplot-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, mean = <span class='fl'>3</span>))
+</div><div class='img'><img src='qqplot-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -295,7 +301,7 @@ are equivalent to the the Type 1 method in <code><a href='https://rdrr.io/r/stat
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
