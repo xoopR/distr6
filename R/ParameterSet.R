@@ -312,6 +312,11 @@ ParameterSet <- R6Class("ParameterSet",
           private$.deps,
           data.table::rbindlist(lapply(newsets, function(x) x$deps))
         )
+
+        private$.supports <- rbind(
+          private$.supports,
+          data.table::rbindlist(lapply(newsets, function(x) x$.__enclos_env__$private$.supports))
+        )
       }
       invisible(self)
     },

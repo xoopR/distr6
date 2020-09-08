@@ -64,3 +64,12 @@ test_that("multivariate", {
                Multinomial$new(size = 8, probs = c(0.1, 0.9))$pdf(c(1, 2), c(7, 6)) *
                  Multinomial$new(size = 8, probs = c(0.3, 0.7))$pdf(c(1, 2), c(7, 6)))
 })
+
+test_that("vecdist constructor", {
+  v = VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  m = MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  p = ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+
+  expect_equal(as.ProductDistribution(v), p)
+  expect_equal(as.ProductDistribution(m), p)
+})

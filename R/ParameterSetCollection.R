@@ -198,6 +198,12 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       newlst <- c(selflst, mlst)
       checkmate::assertNames(names(newlst), "strict")
       private$.parametersets <- newlst
+
+      selflst <- private$.supports
+      mlst <- data.table::rbindlist(lapply(lst, function(x) x$.__enclos_env__$private$.supports))
+      newlst <- rbind(selflst, mlst)
+      private$.supports <- newlst
+
       invisible(self)
     },
 
