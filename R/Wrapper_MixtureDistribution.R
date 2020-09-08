@@ -9,7 +9,6 @@
 #' @template param_lowertail
 #' @template param_n
 #' @template param_decorators
-#' @template param_vecdist
 #'
 #' @details A mixture distribution is defined by
 #'
@@ -248,7 +247,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
 #' @title Coercion to Mixture Distribution
 #' @description Helper functions to quickly convert compatible objects to
 #' a [MixtureDistribution].
-#' @param object [MixtureDistribution] or [VectorDistribution]
+#' @param object [ProductDistribution] or [VectorDistribution]
 #' @export
 as.MixtureDistribution <- function(object, weights = "uniform") {
   if (checkmate::testClass(object, "VectorDistribution")) {

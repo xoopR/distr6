@@ -7,7 +7,7 @@
 as.MixtureDistribution(object, weights = "uniform")
 }
 \arguments{
-\item{object}{\link{MixtureDistribution} or \link{VectorDistribution}}
+\item{object}{\link{ProductDistribution} or \link{VectorDistribution}}
 }
 \description{
 Helper functions to quickly convert compatible objects to

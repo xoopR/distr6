@@ -9,7 +9,6 @@
 #' @template param_data
 #' @template param_lowertail
 #' @template param_decorators
-#' @template param_vecdist
 #'
 #' @details A product distribution is defined by
 #'

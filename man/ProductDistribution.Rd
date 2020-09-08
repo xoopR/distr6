@@ -176,7 +176,8 @@ Optional short name/ID of wrapped distribution.}
 Decorators to add to the distribution during construction.}
 
 \item{\code{vecdist}}{\link{VectorDistribution} \cr
-Alternative constructor to directly create this object from a \link{VectorDistribution}.}
+Alternative constructor to directly create this object from an object inheriting from
+\link{VectorDistribution}.}
 }
 \if{html}{\out{</div>}}
 }
