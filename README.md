@@ -3,23 +3,26 @@ distr6
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
-[![R CMD Check via
-{tic}](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)](https://github.com/alan-turing-institute/distr6/actions)
-[![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
-[![Repo
-Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/alan-turing-institute/distr6)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/distr6)](https://cran.r-project.org/package=distr6)
 [![CRAN
 Checks](https://cranchecks.info/badges/summary/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
-[![DOI](https://zenodo.org/badge/177962537.svg)](https://zenodo.org/badge/latestdoi/177962537)
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![R CMD
+Check](https://github.com/alan-turing-institute/distr6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)](https://github.com/alan-turing-institute/distr6/actions)
+
+[![Repo
+Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/alan-turing-institute/distr6)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
+
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/distr6)](https://cran.r-project.org/package=distr6)
+[![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
 [![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[![arXiv](https://img.shields.io/badge/arXiv-2009.02993-brightgreen.svg)](https://arxiv.org/abs/2009.02993)
+[![DOI](https://zenodo.org/badge/177962537.svg)](https://zenodo.org/badge/latestdoi/177962537)
 [![Gitter
 chat](https://badges.gitter.im/xoopR/distr6.png)](https://gitter.im/xoopR/distr6)
 
@@ -145,11 +148,9 @@ Additionally [set6](https://CRAN.R-project.org/package=set6) is used for
 symbolic representation of sets for Distribution typing
 
 ``` r
-Binomial$new()$type
-#> Warning in (function () : Deprecated. Use $traits$type instead.
+Binomial$new()$traits$type
 #> ℕ0
-Binomial$new()$support
-#> Warning in (function () : Deprecated. Use $properties$support instead.
+Binomial$new()$properties$support
 #> {0, 1,...,9, 10}
 ```
 
