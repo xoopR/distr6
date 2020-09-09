@@ -239,7 +239,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 
   private = list(
     .parametersets = list(),
-    .supports = list(),
+    .supports = data.table(),
     .contains = function() {
       apply(private$.supports, 1, function(x) {
         assertContains(x[[2]], as.Tuple(unlist(self$getParameterValue(x[[1]]))),
