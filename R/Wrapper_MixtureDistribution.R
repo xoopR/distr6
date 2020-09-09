@@ -248,6 +248,10 @@ MixtureDistribution <- R6Class("MixtureDistribution",
 #' @description Helper functions to quickly convert compatible objects to
 #' a [MixtureDistribution].
 #' @param object [ProductDistribution] or [VectorDistribution]
+#' @param weights `(character(1)|numeric())`\cr
+#' Weights to use in the resulting mixture. If all distributions are weighted equally then
+#' `"uniform"` provides a much faster implementation, otherwise a vector of length equal
+#' to the number of wrapped distributions, this is automatically scaled internally.
 #' @export
 as.MixtureDistribution <- function(object, weights = "uniform") {
   if (checkmate::testClass(object, "VectorDistribution")) {

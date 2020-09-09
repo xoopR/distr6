@@ -1,7 +1,3 @@
-library(testthat)
-
-context("c.Distribution")
-
 test_that("non-distlist", {
   expect_error(c(Binomial$new(), Binomial), "One or more...")
 })

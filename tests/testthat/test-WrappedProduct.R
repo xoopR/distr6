@@ -66,9 +66,9 @@ test_that("multivariate", {
 })
 
 test_that("vecdist constructor", {
-  v = VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  m = MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  p = ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  m <- MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  p <- ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
 
   expect_equal(as.ProductDistribution(v), p)
   expect_equal(as.ProductDistribution(m), p)

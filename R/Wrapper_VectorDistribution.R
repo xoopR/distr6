@@ -67,37 +67,76 @@ VectorDistribution <- R6Class("VectorDistribution",
       }
 
       if (!is.null(vecdist)) {
-        private$.modelTable <- vecdist$modelTable
-        private$.distlist <- vecdist$distlist
-        private$.univariate <- vecdist$.__enclos_env__$private$.univariate
-        private$.pdf <- vecdist$.__enclos_env__$private$.pdf
-        private$.cdf <- vecdist$.__enclos_env__$private$.cdf
-        private$.quantile <- vecdist$.__enclos_env__$private$.quantile
-        private$.rand <- vecdist$.__enclos_env__$private$.rand
 
-        parameters  <- vecdist$parameters()
+        if (checkmate::testList(vecdist)) {
 
-        if (checkmate::testClass(vecdist, "MixtureDistribution")) {
-          parameters$.__enclos_env__$private$.parametersets$mix <- NULL
+          dist = vecdist[[1]]$modelTable[1,1][[1]]
+          ids = paste0(get(dist)$public_fields$short_name,
+                       seq.int(sum(sapply(vecdist, function(.x) nrow(.x$modelTable)))))
+          private$.modelTable <- data.table(Distribution = dist, shortname = ids)
+          private$.distlist <- FALSE
+          private$.univariate <- vecdist[[1]]$.__enclos_env__$private$.univariate
+          private$.pdf <- vecdist[[1]]$.__enclos_env__$private$.pdf
+          private$.cdf <- vecdist[[1]]$.__enclos_env__$private$.cdf
+          private$.quantile <- vecdist[[1]]$.__enclos_env__$private$.quantile
+          private$.rand <- vecdist[[1]]$.__enclos_env__$private$.rand
+
+          parameters  <- unlist(sapply(vecdist, function(.x) .x$parameters()$parameterSets))
+          names(parameters) <- ids
+          support <- subset(as.data.table(parameters[[1]]), select = c(id, support))
+          support[, support := sapply(support, set6::setpower, power = length(ids))]
+          parameters <- ParameterSetCollection$new(lst = parameters,
+                            .checks = vecdist[[1]]$parameters()$.__enclos_env__$private$.checks,
+                            .supports = support)
+
+          super$initialize(
+            distlist = distlist,
+            name = paste0("Vector: ", length(ids), " ", dist, "s"),
+            short_name = paste0("Vec", length(ids), get(dist)$public_fields$short_name),
+            description = paste0("Vector of ", length(ids), " ", dist, "s"),
+            support = do.call(setproduct, lapply(vecdist, function(.x) .x$properties$support)),
+            type = do.call(setproduct, lapply(vecdist, function(.x) .x$traits$type)),
+            valueSupport = vecdist[[1]]$traits$valueSupport,
+            variateForm = "multivariate",
+            parameters = parameters
+          )
+
+          invisible(self)
+
+        } else {
+
+          private$.modelTable <- vecdist$modelTable
+          private$.distlist <- vecdist$distlist
+          private$.univariate <- vecdist$.__enclos_env__$private$.univariate
+          private$.pdf <- vecdist$.__enclos_env__$private$.pdf
+          private$.cdf <- vecdist$.__enclos_env__$private$.cdf
+          private$.quantile <- vecdist$.__enclos_env__$private$.quantile
+          private$.rand <- vecdist$.__enclos_env__$private$.rand
+
+          parameters  <- vecdist$parameters()
+
+          if (checkmate::testClass(vecdist, "MixtureDistribution")) {
+            parameters$.__enclos_env__$private$.parametersets$mix <- NULL
+          }
+
+          super$initialize(
+            distlist = distlist,
+            name = vecdist$name,
+            short_name = vecdist$short_name,
+            description = vecdist$description,
+            support = vecdist$properties$support,
+            type = vecdist$traits$type,
+            valueSupport = vecdist$traits$valueSupport,
+            variateForm = "multivariate",
+            parameters = parameters
+          )
+
+          if (is.null(name)) self$name <- gsub("Product|Mixture", "Vector", self$name)
+          if (is.null(short_name)) self$short_name <- gsub("Prod|Mix", "Vec", self$short_name)
+          self$description <- gsub("Product|Mixture", "Vector", self$description)
+
+          invisible(self)
         }
-
-        super$initialize(
-          distlist = distlist,
-          name = vecdist$name,
-          short_name = vecdist$short_name,
-          description = vecdist$description,
-          support = vecdist$properties$support,
-          type = vecdist$traits$type,
-          valueSupport = vecdist$traits$valueSupport,
-          variateForm = "multivariate",
-          parameters = parameters
-        )
-
-        if (is.null(name)) self$name <- gsub("Product|Mixture", "Vector", self$name)
-        if (is.null(short_name)) self$short_name <- gsub("Prod|Mix", "Vec", self$short_name)
-        self$description <- gsub("Product|Mixture", "Vector", self$description)
-
-        invisible(self)
 
       } else {
 
@@ -172,7 +211,7 @@ or `distlist` should be used.")
           support <- subset(as.data.table(p), select = c(id, support))
           support[, support := sapply(support, set6::setpower, power = length(paramlst))]
           parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
-                                                   .supports = support)$setParameterValue(lst = params)
+                                               .supports = support)$setParameterValue(lst = params)
           shortname <- get(distribution)$public_fields$short_name
 
           # modelTable is for reference and later
