@@ -70,7 +70,7 @@ VectorDistribution <- R6Class("VectorDistribution",
 
         if (checkmate::testList(vecdist)) {
 
-          dist <- vecdist[[1]]$modelTable[1, 1][[1]]
+          dist <- unlist(vecdist[[1]]$modelTable[1, 1][[1]])
           ids <- paste0(get(dist)$public_fields$short_name,
                        seq.int(sum(sapply(vecdist, function(.x) nrow(.x$modelTable)))))
           private$.modelTable <- data.table(Distribution = dist, shortname = ids)
