@@ -1,7 +1,3 @@
-library(testthat)
-
-context("Wrappers")
-
 test_that("constructors", {
   expect_error(DistributionWrapper$new(), "abstract")
 })

@@ -256,9 +256,14 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 as.data.table.ParameterSetCollection <- function(x, ...) {
   paramsets <- x$.__enclos_env__$private$.parametersets
 
-  dt <- data.table::rbindlist(lapply(paramsets, as.data.table))
+  lst <- unlist(lapply(paramsets, function(.x) {
+    r = as.data.table(.x)
+    list(r, nrow(r))
+  }), recursive = FALSE)
+
+  dt <- data.table::rbindlist(lst[seq.int(1, length(lst), 2)])
   dt$id <- paste(rep(names(paramsets),
-                     times = rsapply(paramsets, "length", active = TRUE)),
+                     times = as.numeric(lst[seq.int(2, length(lst), 2)])),
                  dt$id, sep = "_")
 
   return(dt)
