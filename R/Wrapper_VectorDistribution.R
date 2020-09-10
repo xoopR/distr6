@@ -73,7 +73,7 @@ VectorDistribution <- R6Class("VectorDistribution",
           dist <- as.character(unlist(vecdist[[1]]$modelTable$Distribution[[1]]))
           ids <- paste0(get(dist)$public_fields$short_name,
                        seq.int(sum(sapply(vecdist, function(.x) nrow(.x$modelTable)))))
-          private$.modelTable <- data.table(Distribution = dist, shortname = ids)
+          private$.modelTable <- as.data.table(data.frame(Distribution = dist, shortname = ids))
           private$.distlist <- FALSE
           private$.univariate <- vecdist[[1]]$.__enclos_env__$private$.univariate
           private$.pdf <- vecdist[[1]]$.__enclos_env__$private$.pdf
