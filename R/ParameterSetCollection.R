@@ -91,22 +91,21 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' psc$getParameterValue("Binom1_prob")
     #' psc$getParameterValue("prob")
     getParameterValue = function(id, error = "warn") {
-      sep <- gregexpr("_", id)[[1]][[1]]
+      dt <- as.data.table(self)
+      id0 <- id
+      sep <- gregexpr("_", id0)[[1]][[1]]
 
       if (sep == -1) {
-        dt <- as.data.table(self)$id
-        spl <- unlist(strsplit(dt[grepl(paste0("_", id, "$"), dt)], "_"))
-        spl <- spl[!grepl(id, spl)]
-        spl <- spl[spl %in% names(private$.parametersets)]
-        if (length(spl) == 0) {
-          stopf("%s not in this ParameterSetCollection.", id)
+        dt = dt[grepl(paste0("_", id0, "$"), dt$id), c("id", "value")]
+        if (!nrow(dt)) {
+          stopf("%s is not in this ParameterSetCollection.", id)
         } else {
-          return(lapply(private$.parametersets[spl], function(x) x$getParameterValue(id)))
+          lst = as.list(dt$value)
+          names(lst) = substr(dt$id, 1, regexpr("_", dt$id, fixed = TRUE) - 1)
+          return(lst)
         }
       } else {
-        param <- substr(id, sep + 1, 1000)
-        dist <- substr(id, 1, sep - 1)
-        return(private$.parametersets[[dist]]$getParameterValue(param, error = error))
+        return(unname(unlist(subset(dt, id == id0, select = value))))
       }
     },
 
