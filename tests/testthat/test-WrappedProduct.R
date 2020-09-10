@@ -72,4 +72,11 @@ test_that("vecdist constructor", {
 
   expect_equal(as.ProductDistribution(v), p)
   expect_equal(as.ProductDistribution(m), p)
+
+  v <- VectorDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
+  m <- MixtureDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
+  p <- ProductDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
+
+  expect_equal(as.ProductDistribution(v), p)
+  expect_equal(as.ProductDistribution(m), p)
 })

@@ -85,7 +85,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
         private$.rand <- vecdist$.__enclos_env__$private$.rand
 
         super$.__enclos_env__$super$initialize(
-          distlist = distlist,
+          distlist = if (vecdist$distlist) vecdist$wrappedModels() else NULL,
           name = vecdist$name,
           short_name = vecdist$short_name,
           description = vecdist$description,

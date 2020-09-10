@@ -90,7 +90,8 @@ VectorDistribution <- R6Class("VectorDistribution",
                             .supports = support)
 
           super$initialize(
-            distlist = distlist,
+            distlist = if (vecdist[[1]]$distlist)
+              unlist(lapply(vecdist, function(.x) .x$wrappedModels()), recursive = FALSE) else NULL,
             name = paste0("Vector: ", length(ids), " ", dist, "s"),
             short_name = paste0("Vec", length(ids), get(dist)$public_fields$short_name),
             description = paste0("Vector of ", length(ids), " ", dist, "s"),
