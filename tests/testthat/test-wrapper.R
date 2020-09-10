@@ -39,4 +39,8 @@ test_that("wrap a wrapper", {
   expect_equal(x$getParameterValue("Exp_rate"), 2)
   expect_silent(x$setParameterValue(HubTruncNorm_TruncNorm_trunc_upper = 6))
   expect_equal(x$getParameterValue("HubTruncNorm_TruncNorm_trunc_upper"), 6)
+  expect_equal(x$getParameterValue("upper"), list(
+    HubTruncNorm_TruncNorm_trunc = 6,
+    HubTruncNorm_hub = 5
+  ))
 })

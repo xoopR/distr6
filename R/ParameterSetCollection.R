@@ -101,7 +101,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
           stopf("%s is not in this ParameterSetCollection.", id)
         } else {
           lst = as.list(dt$value)
-          names(lst) = substr(dt$id, 1, regexpr("_", dt$id, fixed = TRUE) - 1)
+          names(lst) = unlist(strsplit(dt$id, split = paste0("_", id0)))
           return(lst)
         }
       } else {
