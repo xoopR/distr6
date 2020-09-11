@@ -462,6 +462,7 @@ expect_equal_distribution <- function(d1, d2) {
   expect_equal(d1$description, d2$description)
   expect_equal(d1$pdf(1:5), d2$pdf(1:5))
   expect_equal(d1$cdf(1:5), d2$cdf(1:5))
-  expect_equal(d1$quantile(c(0.1,0.2,0.3)), d2$pdf(c(0.1,0.2,0.3)))
+  if (!checkmate::testClass(d1, "MixtureDistribution"))
+    expect_equal(d1$quantile(c(0.1,0.2,0.3)), d2$pdf(c(0.1,0.2,0.3)))
   expect_equal(as.data.table(d1$parameters()), as.data.table(d2$parameters()))
 }
