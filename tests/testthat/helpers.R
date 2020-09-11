@@ -455,8 +455,14 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
 
 expect_equal_distribution <- function(d1, d2) {
   expect_equal(class(d1), class(d2))
-  expect_equal(d1$traits, d2$traits)
-  expect_equal(d1$properties, d2$properties)
+
+  expect_equal(d1$traits$variateForm, d2$traits$variateForm)
+  expect_equal(d1$traits$valueSupport, d2$traits$valueSupport)
+  expect_equal(d1$traits$type$strprint(), d2$traits$type$strprint())
+
+  expect_equal(d1$properties$support$strprint(), d2$properties$support$strprint())
+  expect_equal(d1$properties$symmetric, d2$properties$symmetric)
+
   expect_equal(d1$name, d2$name)
   expect_equal(d1$short_name, d2$short_name)
   expect_equal(d1$description, d2$description)
