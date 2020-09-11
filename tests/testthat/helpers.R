@@ -452,3 +452,16 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
     }
   }
 }
+
+expect_equal_distribution <- function(d1, d2) {
+  expect_equal(class(d1), class(d2))
+  expect_equal(d1$traits, d2$traits)
+  expect_equal(d1$properties, d2$properties)
+  expect_equal(d1$name, d2$name)
+  expect_equal(d1$short_name, d2$short_name)
+  expect_equal(d1$description, d2$description)
+  expect_equal(d1$pdf(1:5), d2$pdf(1:5))
+  expect_equal(d1$cdf(1:5), d2$cdf(1:5))
+  expect_equal(d1$quantile(c(0.1,0.2,0.3)), d2$pdf(c(0.1,0.2,0.3)))
+  expect_equal(as.data.table(d1$parameters()), as.data.table(d2$parameters()))
+}
