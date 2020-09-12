@@ -310,6 +310,7 @@ only constructed when methods (e.g. d/p/q/r) are called.</p>
   name = <span class='kw'>NULL</span>,
   short_name = <span class='kw'>NULL</span>,
   decorators = <span class='kw'>NULL</span>,
+  vecdist = <span class='kw'>NULL</span>,
   <span class='kw'>...</span>
 )</pre><p></div></p>
 
@@ -342,6 +343,10 @@ Optional short name/ID of wrapped distribution.</p></dd>
 
 <dt><code>decorators</code></dt><dd><p><code>(character())</code> <br />
 Decorators to add to the distribution during construction.</p></dd>
+
+<dt><code>vecdist</code></dt><dd><p>VectorDistribution <br />
+Alternative constructor to directly create this object from an object inheriting from
+VectorDistribution.</p></dd>
 
 <dt><code>...</code></dt><dd><p><code>ANY</code> <br />
 Named arguments of parameters to set values for. See examples.</p></dd>
@@ -737,7 +742,7 @@ data.table::data.table.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

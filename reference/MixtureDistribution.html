@@ -232,13 +232,15 @@
 
 
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns an R6 object of class MixtureDistribution.</p>
+    <p>A mixture distribution is defined by</p>
+<p>$$F_P(x) = w_1 F_{X1}(x) * ... * w_n F_{XN}(x)$$ #nolint
+where \(F_P\) is the cdf of the mixture distribution, \(X1,...,XN\) are
+independent distributions, and \(w1,...,wN\) are weights for the mixture.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='listWrappers.html'>listWrappers</a></code></p>
-<p>Other wrappers: 
+    <div class='dont-index'><p>Other wrappers: 
 <code><a href='Convolution.html'>Convolution</a></code>,
 <code><a href='DistributionWrapper.html'>DistributionWrapper</a></code>,
 <code><a href='HuberizedDistribution.html'>HuberizedDistribution</a></code>,
@@ -301,7 +303,8 @@
   shared_params = <span class='kw'>NULL</span>,
   name = <span class='kw'>NULL</span>,
   short_name = <span class='kw'>NULL</span>,
-  decorators = <span class='kw'>NULL</span>
+  decorators = <span class='kw'>NULL</span>,
+  vecdist = <span class='kw'>NULL</span>
 )</pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -338,6 +341,10 @@ Optional short name/ID of wrapped distribution.</p></dd>
 
 <dt><code>decorators</code></dt><dd><p><code>(character())</code> <br />
 Decorators to add to the distribution during construction.</p></dd>
+
+<dt><code>vecdist</code></dt><dd><p><a href='VectorDistribution.html'>VectorDistribution</a> <br />
+Alternative constructor to directly create this object from an object inheriting from
+<a href='VectorDistribution.html'>VectorDistribution</a>.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
@@ -562,7 +569,7 @@ params = <span class='kw'>data.table</span>::<span class='fu'><a href='https://R
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -220,7 +220,16 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/WeightedDiscrete.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/distr6/reference/as.MixtureDistribution.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/as.ParameterSet.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/distr6/reference/as.ProductDistribution.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/distr6/reference/as.VectorDistribution.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/as.data.table.ParameterSet.html</loc>

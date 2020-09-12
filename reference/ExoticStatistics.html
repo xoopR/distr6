@@ -477,10 +477,12 @@ Upper bounds of integral.</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='st'>"ExoticStatistics"</span>)
-</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>(decorators = <span class='st'>"ExoticStatistics"</span>)
-</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='kw'>ExoticStatistics</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>())
-</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div></pre>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"pracma"</span>, quietly = <span class='fl'>TRUE</span>)) {
+<span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='st'>"ExoticStatistics"</span>)
+<span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>(decorators = <span class='st'>"ExoticStatistics"</span>)
+<span class='kw'>ExoticStatistics</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>())
+}
+</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -496,7 +498,7 @@ Upper bounds of integral.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Distribution Maximum Accessor — dmax • distr6</title>
+<title>Coercion to Product Distribution — as.ProductDistribution • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,10 +52,9 @@
 
 
 
-<meta property="og:title" content="Distribution Maximum Accessor — dmax" />
-<meta property="og:description" content="Returns the distribution maximum as the maximum of the support. If the support is
-not bounded above then maximum is given by
-$$maximum = supremum - 1.1e-15$$" />
+<meta property="og:title" content="Coercion to Product Distribution — as.ProductDistribution" />
+<meta property="og:description" content="Helper functions to quickly convert compatible objects to
+a ProductDistribution." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -223,37 +222,27 @@ $$maximum = supremum - 1.1e-15$$" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Distribution Maximum Accessor</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/Distribution.R'><code>R/Distribution.R</code></a></small>
-    <div class="hidden name"><code>dmax.Rd</code></div>
+    <h1>Coercion to Product Distribution</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/Wrapper_ProductDistribution.R'><code>R/Wrapper_ProductDistribution.R</code></a></small>
+    <div class="hidden name"><code>as.ProductDistribution.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Returns the distribution maximum as the maximum of the support. If the support is
-not bounded above then maximum is given by
-$$maximum = supremum - 1.1e-15$$</p>
+    <p>Helper functions to quickly convert compatible objects to
+a <a href='ProductDistribution.html'>ProductDistribution</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dmax</span>(<span class='kw'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>as.ProductDistribution</span>(<span class='kw'>object</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Distribution.</p></td>
+      <td><p><a href='MixtureDistribution.html'>MixtureDistribution</a> or <a href='VectorDistribution.html'>VectorDistribution</a></p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Maximum as a numeric.</p>
-    <h2 class="hasAnchor" id="r-usage"><a class="anchor" href="#r-usage"></a>R6 Usage</h2>
-
-    <p>$dmax</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='support.html'>support</a></code>, <code><a href='dmin.html'>dmin</a></code>, <code><a href='sup.html'>sup</a></code>, <code><a href='inf.html'>inf</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

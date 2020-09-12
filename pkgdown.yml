@@ -1,8 +1,28 @@
 pandoc: 2.7.3
-pkgdown: 1.6.0
+pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-09-12T04:32Z
+articles:
+  distr6: distr6.html
+  webs/analytic_and_numeric_methods: analytic_and_numeric_methods.html
+  webs/api_lifecycle: api_lifecycle.html
+  webs/constructing_a_distribution: constructing_a_distribution.html
+  webs/create_decorator: create_decorator.html
+  webs/create_kernel: create_kernel.html
+  webs/create_sdistribution: create_sdistribution.html
+  webs/create_wrapper: create_wrapper.html
+  webs/custom_distributions: custom_distributions.html
+  webs/decorators: decorators.html
+  webs/intro_to_r6: intro_to_r6.html
+  webs/listing: listing.html
+  webs/multivariates: multivariates.html
+  webs/parameters: parameters.html
+  webs/preliminaries: preliminaries.html
+  webs/properties_traits: properties_traits.html
+  webs/r6_and_design_patterns: r6_and_design_patterns.html
+  webs/s3_piping: s3_piping.html
+  webs/statistical_methods: statistical_methods.html
+  webs/wrappers: wrappers.html
+last_built: 2020-09-12T09:26Z
 urls:
   reference: https://alan-turing-institute.github.io/distr6/reference
   article: https://alan-turing-institute.github.io/distr6/articles

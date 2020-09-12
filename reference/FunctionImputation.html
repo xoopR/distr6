@@ -311,7 +311,9 @@ means worse accuracy and faster computation.</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>pdf</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>x</span> <span class='op'>&lt;</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>x</span> <span class='op'>&gt;</span> <span class='fl'>10</span>, <span class='fl'>0</span>, <span class='fl'>1</span> <span class='op'>/</span> <span class='fl'>10</span>)
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"GoFKernel"</span>, quietly = <span class='fl'>TRUE</span>) <span class='op'>&amp;&amp;</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"pracma"</span>, quietly = <span class='fl'>TRUE</span>)) {
+<span class='kw'>pdf</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>x</span> <span class='op'>&lt;</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>x</span> <span class='op'>&gt;</span> <span class='fl'>10</span>, <span class='fl'>0</span>, <span class='fl'>1</span> <span class='op'>/</span> <span class='fl'>10</span>)
 
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='kw'>Distribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='st'>"Test"</span>,
   pdf = <span class='kw'>pdf</span>,
@@ -319,7 +321,7 @@ means worse accuracy and faster computation.</p></dd>
   type = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Naturals.html'>Naturals</a></span><span class='op'>$</span><span class='fu'>new</span>()
 )
 <span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='kw'>x</span>, <span class='st'>"FunctionImputation"</span>, n = <span class='fl'>1000</span>)
-</div><div class='output co'>#&gt; <span class='message'>Test is now decorated with FunctionImputation</span></div><div class='output co'>#&gt; Test </div><div class='input'>
+
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='kw'>Distribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='st'>"Test"</span>,
   pdf = <span class='kw'>pdf</span>,
   support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, class = <span class='st'>"integer"</span>),
@@ -333,12 +335,13 @@ means worse accuracy and faster computation.</p></dd>
   type = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Naturals.html'>Naturals</a></span><span class='op'>$</span><span class='fu'>new</span>()
 )
 <span class='kw'>FunctionImputation</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'><a href='decorate.html'>decorate</a></span>(<span class='kw'>x</span>, n = <span class='fl'>1000</span>)
-</div><div class='output co'>#&gt; <span class='message'>Test is now decorated with FunctionImputation.</span></div><div class='input'>
+
 <span class='kw'>x</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
-</div><div class='output co'>#&gt;  [1] 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1</div><div class='input'><span class='kw'>x</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
-</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt;  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</div><div class='input'><span class='kw'>x</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>)
-</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='kw'>x</span><span class='op'>$</span><span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>4</span>)
-</div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 10  8  2  9</div></pre>
+<span class='kw'>x</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
+<span class='kw'>x</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='fl'>0.42</span>)
+<span class='kw'>x</span><span class='op'>$</span><span class='fu'><a href='rand.html'>rand</a></span>(<span class='fl'>4</span>)
+}
+</div><div class='output co'>#&gt; <span class='message'>Test is now decorated with FunctionImputation</span></div><div class='output co'>#&gt; <span class='message'>Test is now decorated with FunctionImputation.</span></div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 10  8  2  9</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -354,7 +357,7 @@ means worse accuracy and faster computation.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
