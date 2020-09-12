@@ -17,5 +17,8 @@
 #' Optional name of wrapped distribution.
 #' @param short_name `(character(1))`\cr
 #' Optional short name/ID of wrapped distribution.
+#' @param vecdist [VectorDistribution] \cr
+#' Alternative constructor to directly create this object from an object inheriting from
+#' [VectorDistribution].
 #'
 #' @family wrappers

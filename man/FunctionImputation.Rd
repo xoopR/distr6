@@ -18,6 +18,8 @@ All methods implemented in decorators try to exploit analytical results where po
 numerical results are used with a message.
 }
 \examples{
+if (requireNamespace("GoFKernel", quietly = TRUE) &&
+    requireNamespace("pracma", quietly = TRUE)) {
 pdf <- function(x) ifelse(x < 1 | x > 10, 0, 1 / 10)
 
 x <- Distribution$new("Test",
@@ -45,6 +47,7 @@ x$pdf(1:10)
 x$cdf(1:10)
 x$quantile(0.42)
 x$rand(4)
+}
 }
 \seealso{
 Other decorators: 

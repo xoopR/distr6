@@ -452,3 +452,29 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
     }
   }
 }
+
+expect_equal_distribution <- function(d1, d2) {
+  expect_equal(class(d1), class(d2))
+
+  expect_equal(d1$traits$variateForm, d2$traits$variateForm)
+  expect_equal(d1$traits$valueSupport, d2$traits$valueSupport)
+  expect_equal(d1$traits$type$strprint(), d2$traits$type$strprint())
+
+  expect_equal(d1$properties$support$strprint(), d2$properties$support$strprint())
+  expect_equal(d1$properties$symmetric, d2$properties$symmetric)
+
+  expect_equal(d1$name, d2$name)
+  expect_equal(d1$short_name, d2$short_name)
+  expect_equal(d1$description, d2$description)
+  expect_equal(d1$pdf(1:5), d2$pdf(1:5))
+  expect_equal(d1$cdf(1:5), d2$cdf(1:5))
+  q = try(d1$quantile(0.1), silent = TRUE)
+  if (class(q)[1] != "try-error")
+    expect_equal(d1$quantile(c(0.1,0.2,0.3)), d2$pdf(c(0.1,0.2,0.3)))
+
+  p1 <- as.data.table(d1$parameters())
+  p1$support <- rsapply(p1$support, "strprint")
+  p2 <- as.data.table(d2$parameters())
+  p2$support <- rsapply(p2$support, "strprint")
+  expect_equal(p1, p2)
+}

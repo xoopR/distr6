@@ -3,11 +3,15 @@
 \name{MixtureDistribution}
 \alias{MixtureDistribution}
 \title{Mixture Distribution Wrapper}
-\value{
-Returns an R6 object of class MixtureDistribution.
-}
 \description{
 Wrapper used to construct a mixture of two or more distributions.
+}
+\details{
+A mixture distribution is defined by
+
+\deqn{F_P(x) = w_1 F_{X1}(x) * ... * w_n F_{XN}(x)}{F_P(x) = w_1 F_X1(x) * ... * w_n F_XN(x)} #nolint
+where \eqn{F_P} is the cdf of the mixture distribution, \eqn{X1,...,XN} are
+independent distributions, and \eqn{w1,...,wN} are weights for the mixture.
 }
 \examples{
 
@@ -40,8 +44,6 @@ params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
 m$rand(5)
 }
 \seealso{
-\code{\link{listWrappers}}
-
 Other wrappers: 
 \code{\link{Convolution}},
 \code{\link{DistributionWrapper}},
@@ -109,7 +111,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   shared_params = NULL,
   name = NULL,
   short_name = NULL,
-  decorators = NULL
+  decorators = NULL,
+  vecdist = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -148,6 +151,10 @@ Optional short name/ID of wrapped distribution.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
+
+\item{\code{vecdist}}{\link{VectorDistribution} \cr
+Alternative constructor to directly create this object from an object inheriting from
+\link{VectorDistribution}.}
 }
 \if{html}{\out{</div>}}
 }

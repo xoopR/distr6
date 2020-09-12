@@ -1,3 +1,8 @@
+# distr6 1.4.3.9000
+
+* Added coercions from Vector/Mixture/ProductDistribution to Mixture/ProductDistribution via `as.MixtureDistribution` and `as.ProductDistribution`
+* Bugfix in `MixtureDistribution` parameter set
+
 # distr6 1.4.3
 
 * Bugfix in `WeightedDiscrete`, `cdf` was previously positive when below distribution support, now zero.

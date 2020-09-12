@@ -407,3 +407,12 @@ test_that("custom single row", {
   p2 <- sapply((1:10) + 10, function(x) Arcsine$new(upper = x)$pdf(x - 10))
   expect_equal(as.numeric(unlist(p1)), p2)
 })
+
+test_that("vecdist constructor", {
+  v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  m <- MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  p <- ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+
+  expect_equal(as.VectorDistribution(p), v)
+  expect_equal(as.VectorDistribution(m), v)
+})

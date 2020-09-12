@@ -153,6 +153,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   name = NULL,
   short_name = NULL,
   decorators = NULL,
+  vecdist = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -187,6 +188,10 @@ Optional short name/ID of wrapped distribution.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
+
+\item{\code{vecdist}}{\link{VectorDistribution} \cr
+Alternative constructor to directly create this object from an object inheriting from
+\link{VectorDistribution}.}
 
 \item{\code{...}}{\code{ANY} \cr
 Named arguments of parameters to set values for. See examples.}
