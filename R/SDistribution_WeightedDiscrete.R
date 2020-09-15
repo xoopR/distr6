@@ -326,6 +326,12 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
       cdf <- self$getParameterValue("cdf")
 
       if (checkmate::testList(data)) {
+        # hacky fix for uneven vectors
+        lng <- min(sapply(data, length))
+        for (i in seq_along(cdf)) {
+          cdf[[i]] <- cdf[[i]][seq.int(lng)]
+          data[[i]] <- data[[i]][seq.int(lng)]
+        }
         cdf <- matrix(unlist(cdf), nrow = length(data[[1]]), ncol = length(data))
         data <- matrix(unlist(data), ncol = ncol(cdf))
         return(C_Vec_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p))

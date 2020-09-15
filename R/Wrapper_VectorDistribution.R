@@ -873,8 +873,7 @@ or `distlist` should be used.")
         if (ncol(data) == 1 & private$.distlist) {
           data <- matrix(rep(data, nrow(private$.modelTable)), nrow = nrow(data))
         }
-      }
-      else {
+      } else {
         if (ncol(data) == 1) {
           stop("Distribution is multivariate but values have only been passed to one argument.")
         } else if (inherits(data, "array") | inherits(data, "matrix")) {
