@@ -2,7 +2,7 @@
 
 * Added coercions from Vector/Mixture/ProductDistribution to Mixture/ProductDistribution via `as.MixtureDistribution` and `as.ProductDistribution`
 * Bugfix in `MixtureDistribution` parameter set
-* Uneven vectors of `WeightedDiscrete` distributions are now truncated at the minimum length in the vector
+* Uneven vectors of `WeightedDiscrete` distributions are now truncated at the minimum length in the vector for `pdf, cdf, quantile`
 
 # distr6 1.4.3
 
