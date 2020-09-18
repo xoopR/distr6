@@ -72,6 +72,7 @@ Imports:
     stats,
     Rcpp
 Suggests:
+  cubature,
   GoFKernel,
   knitr,
   testthat,

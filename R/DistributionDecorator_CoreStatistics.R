@@ -12,9 +12,11 @@
 #' [Distribution]s as well as adding generalised expectation and moments functions.
 #'
 #' @examples
+#' if (requireNamespace("cubature", quietly = TRUE)) {
 #' decorate(Exponential$new(), "CoreStatistics")
 #' Exponential$new(decorators = "CoreStatistics")
 #' CoreStatistics$new()$decorate(Exponential$new())
+#' }
 #' @export
 CoreStatistics <- R6Class("CoreStatistics",
   inherit = DistributionDecorator,

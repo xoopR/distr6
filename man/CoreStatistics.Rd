@@ -15,9 +15,11 @@ All methods implemented in decorators try to exploit analytical results where po
 numerical results are used with a message.
 }
 \examples{
+if (requireNamespace("cubature", quietly = TRUE)) {
 decorate(Exponential$new(), "CoreStatistics")
 Exponential$new(decorators = "CoreStatistics")
 CoreStatistics$new()$decorate(Exponential$new())
+}
 }
 \seealso{
 Other decorators: 
