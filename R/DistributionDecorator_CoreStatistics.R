@@ -1,6 +1,7 @@
 #' @title Core Statistical Methods Decorator
 #'
 #' @template class_decorator
+#' @template field_packages
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -18,6 +19,7 @@
 CoreStatistics <- R6Class("CoreStatistics",
   inherit = DistributionDecorator,
   public = list(
+    packages = "cubature",
     #' @description
     #' Numerically estimates the moment-generating function.
     mgf = function(t) {
@@ -162,12 +164,12 @@ CoreStatistics <- R6Class("CoreStatistics",
         return(sum(pdfs * xs))
       } else {
         message(.distr6$message_numeric)
-        return(suppressMessages(integrate(function(x) {
+        return(suppressMessages(cubature::cubintegrate(function(x) {
           pdfs <- self$pdf(x)
           xs <- trafo(x)
           xs[pdfs == 0] <- 0
           return(xs * pdfs)
-        }, lower = self$inf, upper = self$sup)$value))
+        }, lower = self$inf, upper = self$sup)$integral))
       }
     },
 
