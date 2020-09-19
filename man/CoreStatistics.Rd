@@ -15,11 +15,9 @@ All methods implemented in decorators try to exploit analytical results where po
 numerical results are used with a message.
 }
 \examples{
-if (requireNamespace("cubature", quietly = TRUE)) {
 decorate(Exponential$new(), "CoreStatistics")
 Exponential$new(decorators = "CoreStatistics")
 CoreStatistics$new()$decorate(Exponential$new())
-}
 }
 \seealso{
 Other decorators: 
@@ -29,13 +27,6 @@ Other decorators:
 \concept{decorators}
 \section{Super class}{
 \code{\link[distr6:DistributionDecorator]{distr6::DistributionDecorator}} -> \code{CoreStatistics}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
-}
-\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -68,7 +59,7 @@ Other decorators:
 \subsection{Method \code{mgf()}}{
 Numerically estimates the moment-generating function.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$mgf(t)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$mgf(t, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -76,6 +67,9 @@ Numerically estimates the moment-generating function.
 \describe{
 \item{\code{t}}{\code{(integer(1))} \cr
 t integer to evaluate function at.}
+
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -86,7 +80,7 @@ t integer to evaluate function at.}
 \subsection{Method \code{cf()}}{
 Numerically estimates the characteristic function.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$cf(t)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$cf(t, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -94,6 +88,9 @@ Numerically estimates the characteristic function.
 \describe{
 \item{\code{t}}{\code{(integer(1))} \cr
 t integer to evaluate function at.}
+
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -104,7 +101,7 @@ t integer to evaluate function at.}
 \subsection{Method \code{pgf()}}{
 Numerically estimates the probability-generating function.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$pgf(z)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$pgf(z, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -112,6 +109,9 @@ Numerically estimates the probability-generating function.
 \describe{
 \item{\code{z}}{\code{(integer(1))} \cr
 z integer to evaluate probability generating function at.}
+
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -122,7 +122,7 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{entropy()}}{
 Numerically estimates the entropy function.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$entropy(base = 2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$entropy(base = 2, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -130,6 +130,9 @@ Numerically estimates the entropy function.
 \describe{
 \item{\code{base}}{\code{(integer(1))} \cr
 Base of the entropy logarithm, default = 2 (Shannon entropy)}
+
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -140,9 +143,17 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)}
 \subsection{Method \code{skewness()}}{
 Numerically estimates the distribution skewness.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$skewness()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$skewness(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-kurtosis"></a>}}
@@ -150,7 +161,7 @@ Numerically estimates the distribution skewness.
 \subsection{Method \code{kurtosis()}}{
 Numerically estimates the distribution kurtosis.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$kurtosis(excess = TRUE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -158,6 +169,9 @@ Numerically estimates the distribution kurtosis.
 \describe{
 \item{\code{excess}}{\code{(logical(1))} \cr
 If \code{TRUE} (default) excess kurtosis returned.}
+
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -168,9 +182,17 @@ If \code{TRUE} (default) excess kurtosis returned.}
 \subsection{Method \code{variance()}}{
 Numerically estimates the distribution variance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$variance()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$variance(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-kthmoment"></a>}}
@@ -196,6 +218,9 @@ The \code{k}-th moment to evaluate the distribution at.}
 
 \item{\code{type}}{\code{character(1)} \cr
 Type of moment to evaluate.}
+
+\item{\code{...}}{\code{ANY} \cr
+Passed to \verb{$genExp}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -206,7 +231,7 @@ Type of moment to evaluate.}
 \subsection{Method \code{genExp()}}{
 Numerically estimates \eqn{E[f(X)]} for some function \eqn{f}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$genExp(trafo = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$genExp(trafo = NULL, cubature = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -214,6 +239,12 @@ Numerically estimates \eqn{E[f(X)]} for some function \eqn{f}.
 \describe{
 \item{\code{trafo}}{\verb{function()} \cr
 Transformation function to define the expectation, default is distribution mean.}
+
+\item{\code{cubature}}{\code{logical(1)} \cr
+If \code{TRUE} uses \link[cubature:cubintegrate]{cubature::cubintegrate} for approximation, otherwise \link{integrate}.}
+
+\item{\code{...}}{\code{ANY} \cr
+Passed to \link[cubature:cubintegrate]{cubature::cubintegrate}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -250,7 +281,7 @@ Numerically estimates the distribution mean.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{\code{ANY} \cr
-Ignored, added for consistency.}
+Passed to \verb{$genExp}.}
 }
 \if{html}{\out{</div>}}
 }

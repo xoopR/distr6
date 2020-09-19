@@ -1,7 +1,6 @@
 #' @title Core Statistical Methods Decorator
 #'
 #' @template class_decorator
-#' @template field_packages
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -12,48 +11,41 @@
 #' [Distribution]s as well as adding generalised expectation and moments functions.
 #'
 #' @examples
-#' if (requireNamespace("cubature", quietly = TRUE)) {
 #' decorate(Exponential$new(), "CoreStatistics")
 #' Exponential$new(decorators = "CoreStatistics")
 #' CoreStatistics$new()$decorate(Exponential$new())
-#' }
 #' @export
 CoreStatistics <- R6Class("CoreStatistics",
   inherit = DistributionDecorator,
   public = list(
-    packages = "cubature",
     #' @description
     #' Numerically estimates the moment-generating function.
-    mgf = function(t) {
-      return(self$genExp(trafo = function(x) {
-        return(exp(x * t))
-      }))
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
+    mgf = function(t, ...) {
+      return(self$genExp(trafo = function(x) exp(x * t), ...))
     },
 
     #' @description
     #' Numerically estimates the characteristic function.
-    cf = function(t) {
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
+    cf = function(t, ...) {
       if (testDiscrete(self)) {
-        return(self$genExp(trafo = function(x) {
-          return(exp(x * t * 1i))
-        }))
+        return(self$genExp(trafo = function(x) exp(x * t * 1i), ...))
       } else {
-        return(self$genExp(trafo = function(x) {
-          return(Re(exp(x * t * 1i)))
-        }) +
-          1i * self$genExp(trafo = function(x) {
-            return(Im(exp(x * t * 1i)))
-          }))
+        return(self$genExp(trafo = function(x) Re(exp(x * t * 1i)), ...) +
+          1i * self$genExp(trafo = function(x) Im(exp(x * t * 1i)), ...))
       }
     },
 
     #' @description
     #' Numerically estimates the probability-generating function.
-    pgf = function(z) {
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
+    pgf = function(z, ...) {
       if (testDiscrete(self)) {
-        x <- self$genExp(trafo = function(x) {
-          return(z^x)
-        })
+        x <- self$genExp(trafo = function(x) z^x, ...)
         return(x)
       } else {
         return(NaN)
@@ -62,21 +54,27 @@ CoreStatistics <- R6Class("CoreStatistics",
 
     #' @description
     #' Numerically estimates the entropy function.
-    entropy = function(base = 2) {
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
+    entropy = function(base = 2, ...) {
       message(.distr6$message_numeric)
-      return(suppressMessages(self$genExp(trafo = function(x) -log(self$pdf(x), base))))
+      return(suppressMessages(self$genExp(trafo = function(x) -log(self$pdf(x), base), ...)))
     },
 
     #' @description
     #' Numerically estimates the distribution skewness.
-    skewness = function() {
-      return(self$kthmoment(k = 3, type = "standard"))
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
+    skewness = function(...) {
+      return(self$kthmoment(k = 3, type = "standard", ...))
     },
 
     #' @description
     #' Numerically estimates the distribution kurtosis.
-    kurtosis = function(excess = TRUE) {
-      kurtosis <- suppressMessages(self$kthmoment(k = 4, type = "standard"))
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
+    kurtosis = function(excess = TRUE, ...) {
+      kurtosis <- suppressMessages(self$kthmoment(k = 4, type = "standard", ...))
       if (testContinuous(self)) {
         message(.distr6$message_numeric)
       }
@@ -89,10 +87,12 @@ CoreStatistics <- R6Class("CoreStatistics",
 
     #' @description
     #' Numerically estimates the distribution variance.
-    variance = function() {
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
+    variance = function(...) {
       if (testUnivariate(self)) {
         message(.distr6$message_numeric)
-        return(suppressMessages(self$genExp(trafo = function(x) x^2) - self$genExp()^2))
+        return(suppressMessages(self$genExp(trafo = function(x) x^2, ...) - self$genExp(...)^2))
       }
     },
 
@@ -109,6 +109,8 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' The `k`-th moment to evaluate the distribution at.
     #' @param type `character(1)` \cr
     #' Type of moment to evaluate.
+    #' @param ... `ANY` \cr
+    #' Passed to `$genExp`.
     kthmoment = function(k, type = c("central", "standard", "raw")) {
 
       if (testUnivariate(self)) {
@@ -127,14 +129,11 @@ CoreStatistics <- R6Class("CoreStatistics",
         message(.distr6$message_numeric)
 
         if (type == "raw") {
-          suppressMessages(return(self$genExp(trafo = function(x) {
-            return(x^k)
-          })))
+          suppressMessages(return(self$genExp(trafo = function(x) x^k, ...)))
         }
 
-        centralMoment <- suppressMessages(self$genExp(trafo = function(x) {
-          return((x - self$genExp())^k)
-        }))
+        centralMoment <- suppressMessages(self$genExp(trafo = function(x) (x - self$genExp(...))^k,
+                                                      ...))
 
         if (type == "central") {
           return(centralMoment)
@@ -148,7 +147,11 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' Numerically estimates \eqn{E[f(X)]} for some function \eqn{f}.
     #' @param trafo `function()` \cr
     #' Transformation function to define the expectation, default is distribution mean.
-    genExp = function(trafo = NULL) {
+    #' @param cubature `logical(1)` \cr
+    #' If `TRUE` uses [cubature::cubintegrate] for approximation, otherwise [integrate].
+    #' @param ... `ANY` \cr
+    #' Passed to [cubature::cubintegrate].
+    genExp = function(trafo = NULL, cubature = FALSE) {
       if (is.null(trafo)) {
         trafo <- function() {
           return(x)
@@ -166,12 +169,24 @@ CoreStatistics <- R6Class("CoreStatistics",
         return(sum(pdfs * xs))
       } else {
         message(.distr6$message_numeric)
-        return(suppressMessages(cubature::cubintegrate(function(x) {
-          pdfs <- self$pdf(x)
-          xs <- trafo(x)
-          xs[pdfs == 0] <- 0
-          return(xs * pdfs)
-        }, lower = self$inf, upper = self$sup)$integral))
+        if (cubature) {
+          requireNamespace("cubature")
+          return(suppressMessages(cubature::cubintegrate(function(x) {
+            pdfs <- self$pdf(x)
+            xs <- trafo(x)
+            xs[pdfs == 0] <- 0
+            return(xs * pdfs)
+          }, lower = self$inf,
+          upper = self$sup,
+          ...)$integral))
+        } else {
+          return(suppressMessages(integrate(function(x) {
+            pdfs <- self$pdf(x)
+            xs <- trafo(x)
+            xs[pdfs == 0] <- 0
+            return(xs * pdfs)
+          }, lower = self$inf, upper = self$sup)$value))
+        }
       }
     },
 
@@ -195,9 +210,9 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' @description
     #' Numerically estimates the distribution mean.
     #' @param ... `ANY` \cr
-    #' Ignored, added for consistency.
+    #' Passed to `$genExp`.
     mean = function(...) {
-      return(self$genExp())
+      return(self$genExp(...))
     }
   )
 )

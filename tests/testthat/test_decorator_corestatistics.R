@@ -96,6 +96,8 @@ test_that("mode", {
 test_that("mean", {
   expect_message(expect_equal(continuousTester$mean(), Exponential$new()$mean()))
   expect_equal(discreteTester$mean(), Binomial$new()$mean())
+  expect_equal(discreteTester$mean(cubature = TRUE), Binomial$new()$mean())
+  expect_equal(discreteTester$genExp(cubature = TRUE), Binomial$new()$mean())
 })
 
 
@@ -119,3 +121,5 @@ discreteTester <- Distribution$new("Discrete Test", "TestDistr",
 test_that("rand2mode", {
   expect_equal(discreteTester$mode(), Binomial$new()$mode())
 })
+
+
