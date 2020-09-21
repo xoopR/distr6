@@ -4,12 +4,14 @@
 \alias{cf}
 \title{Characteristic Function}
 \usage{
-cf(object, t)
+cf(object, t, ...)
 }
 \arguments{
 \item{object}{Distribution.}
 
 \item{t}{integer to evaluate characteristic function at.}
+
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 Characteristic function evaluated at t as a numeric.

@@ -111,7 +111,7 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' Type of moment to evaluate.
     #' @param ... `ANY` \cr
     #' Passed to `$genExp`.
-    kthmoment = function(k, type = c("central", "standard", "raw")) {
+    kthmoment = function(k, type = c("central", "standard", "raw"), ...) {
 
       if (testUnivariate(self)) {
 
@@ -151,7 +151,7 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' If `TRUE` uses [cubature::cubintegrate] for approximation, otherwise [integrate].
     #' @param ... `ANY` \cr
     #' Passed to [cubature::cubintegrate].
-    genExp = function(trafo = NULL, cubature = FALSE) {
+    genExp = function(trafo = NULL, cubature = FALSE, ...) {
       if (is.null(trafo)) {
         trafo <- function() {
           return(x)
@@ -223,10 +223,11 @@ CoreStatistics <- R6Class("CoreStatistics",
 #' @name mgf
 #' @description Moment generating function of a distribution
 #'
-#' @usage mgf(object, t)
+#' @usage mgf(object, t, ...)
 #'
 #' @param object Distribution.
 #' @param t integer to evaluate moment generating function at.
+#' @param ... Passed to `$genExp`.
 #'
 #' @return Moment generating function evaluated at t as a numeric.
 #'
@@ -237,10 +238,11 @@ NULL
 #' @name cf
 #' @description Characteristic function of a distribution
 #'
-#' @usage cf(object, t)
+#' @usage cf(object, t, ...)
 #'
 #' @param object Distribution.
 #' @param t integer to evaluate characteristic function at.
+#' @param ... Passed to `$genExp`.
 #'
 #' @return Characteristic function evaluated at t as a numeric.
 #'
@@ -251,10 +253,11 @@ NULL
 #' @name pgf
 #' @description Probability generating function of a distribution
 #'
-#' @usage pgf(object, z)
+#' @usage pgf(object, z, ...)
 #'
 #' @param object Distribution.
 #' @param z integer to evaluate characteristic function at.
+#' @param ... Passed to `$genExp`.
 #'
 #' @return Probability generating function evaluated at z as a numeric if distribution is discrete,
 #' otherwise NaN.
@@ -268,8 +271,9 @@ NULL
 #'
 #' @param object Distribution.
 #' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
+#' @param ... Passed to `$genExp`.
 #'
-#' @usage entropy(object, base = 2)
+#' @usage entropy(object, base = 2, ...)
 #'
 #' @return Entropy with given base as a numeric.
 #'
@@ -280,9 +284,10 @@ NULL
 #' @name skewness
 #' @description Skewness of a distribution
 #'
-#' @usage skewness(object)
+#' @usage skewness(object, ...)
 #'
 #' @param object Distribution.
+#' @param ... Passed to `$genExp`.
 #'
 #' @return Skewness as a numeric.
 #'
@@ -293,10 +298,11 @@ NULL
 #' @name kurtosis
 #' @description Kurtosis of a distribution
 #'
-#' @usage kurtosis(object, excess = TRUE)
+#' @usage kurtosis(object, excess = TRUE, ...)
 #'
 #' @param object Distribution.
-#' @param excess logical, if TRUE (default) excess Kurtosis returned
+#' @param excess logical, if TRUE (default) excess Kurtosis returned.
+#' @param ... Passed to `$genExp`.
 #'
 #' @return Kurtosis as a numeric.
 #'
@@ -308,9 +314,10 @@ NULL
 #' @description The variance or covariance of a distribution, either calculated analytically if
 #' or estimated numerically.
 #'
-#' @usage variance(object)
+#' @usage variance(object, ...)
 #'
 #' @param object Distribution.
+#' @param ... Passed to `$genExp`.
 #'
 #' @return Variance as a numeric.
 #'
@@ -321,11 +328,12 @@ NULL
 #' @name kthmoment
 #' @description Kth standardised or central moment of a distribution
 #'
-#' @usage kthmoment(object, k, type = c("central", "standard", "raw"))
+#' @usage kthmoment(object, k, type = c("central", "standard", "raw"), ...)
 #'
 #' @param object Distribution.
 #' @param k the kth moment to calculate
 #' @param type one of 'central', 'standard' or 'raw', abbreviations allowed
+#' @param ... Passed to `$genExp`.
 #'
 #' @return If univariate, the given k-moment as a numeric, otherwise NULL.
 #'
@@ -335,10 +343,12 @@ NULL
 #' @title Generalised Expectation of a Distribution
 #' @name genExp
 #'
-#' @usage genExp(object, trafo = NULL)
+#' @usage genExp(object, trafo = NULL, cubature = FALSE, ...)
 #'
 #' @param object Distribution.
 #' @param trafo transformation for expectation calculation, see details.
+#' @param cubature If `TRUE` uses [cubature::cubintegrate] for approximation, otherwise [integrate].
+#' @param ... Passed to [cubature::cubintegrate].
 #'
 #' @description A generalised expectation function for distributions, for arithmetic mean and more
 #' complex numeric calculations.
@@ -374,7 +384,7 @@ NULL
 #' @title Distribution Mean
 #'
 #' @param x Distribution.
-#' @param ... Additional arguments.
+#' @param ... Passed to `$genExp`.
 #'
 #' @description Arithmetic mean for the probability distribution.
 #'

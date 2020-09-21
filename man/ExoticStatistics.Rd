@@ -16,11 +16,9 @@ All methods implemented in decorators try to exploit analytical results where po
 numerical results are used with a message.
 }
 \examples{
-if (requireNamespace("pracma", quietly = TRUE)) {
 decorate(Exponential$new(), "ExoticStatistics")
 Exponential$new(decorators = "ExoticStatistics")
 ExoticStatistics$new()$decorate(Exponential$new())
-}
 }
 \seealso{
 Other decorators: 
@@ -30,13 +28,6 @@ Other decorators:
 \concept{decorators}
 \section{Super class}{
 \code{\link[distr6:DistributionDecorator]{distr6::DistributionDecorator}} -> \code{ExoticStatistics}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
-}
-\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{

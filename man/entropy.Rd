@@ -4,12 +4,14 @@
 \alias{entropy}
 \title{Distribution Entropy}
 \usage{
-entropy(object, base = 2)
+entropy(object, base = 2, ...)
 }
 \arguments{
 \item{object}{Distribution.}
 
 \item{base}{base of the entropy logarithm, default = 2 (Shannon entropy)}
+
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 Entropy with given base as a numeric.

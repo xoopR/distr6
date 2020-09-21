@@ -207,7 +207,7 @@ the kth raw moment of a distribution is defined by
 where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
 distribution and \eqn{\sigma} is the standard deviation of the distribution.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$kthmoment(k, type = c("central", "standard", "raw"))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$kthmoment(k, type = c("central", "standard", "raw"), ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -231,7 +231,7 @@ Passed to \verb{$genExp}.}
 \subsection{Method \code{genExp()}}{
 Numerically estimates \eqn{E[f(X)]} for some function \eqn{f}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$genExp(trafo = NULL, cubature = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CoreStatistics$genExp(trafo = NULL, cubature = FALSE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

@@ -4,12 +4,14 @@
 \alias{kurtosis}
 \title{Distribution Kurtosis}
 \usage{
-kurtosis(object, excess = TRUE)
+kurtosis(object, excess = TRUE, ...)
 }
 \arguments{
 \item{object}{Distribution.}
 
-\item{excess}{logical, if TRUE (default) excess Kurtosis returned}
+\item{excess}{logical, if TRUE (default) excess Kurtosis returned.}
+
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 Kurtosis as a numeric.

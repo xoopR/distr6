@@ -4,12 +4,14 @@
 \alias{mgf}
 \title{Moment Generating Function}
 \usage{
-mgf(object, t)
+mgf(object, t, ...)
 }
 \arguments{
 \item{object}{Distribution.}
 
 \item{t}{integer to evaluate moment generating function at.}
+
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 Moment generating function evaluated at t as a numeric.

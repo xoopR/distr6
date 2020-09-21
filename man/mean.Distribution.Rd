@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{Distribution.}
 
-\item{...}{Additional arguments.}
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 Mean as a numeric.

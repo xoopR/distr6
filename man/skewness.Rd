@@ -4,10 +4,12 @@
 \alias{skewness}
 \title{Distribution Skewness}
 \usage{
-skewness(object)
+skewness(object, ...)
 }
 \arguments{
 \item{object}{Distribution.}
+
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 Skewness as a numeric.

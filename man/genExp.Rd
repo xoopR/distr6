@@ -4,12 +4,16 @@
 \alias{genExp}
 \title{Generalised Expectation of a Distribution}
 \usage{
-genExp(object, trafo = NULL)
+genExp(object, trafo = NULL, cubature = FALSE, ...)
 }
 \arguments{
 \item{object}{Distribution.}
 
 \item{trafo}{transformation for expectation calculation, see details.}
+
+\item{cubature}{If \code{TRUE} uses \link[cubature:cubintegrate]{cubature::cubintegrate} for approximation, otherwise \link{integrate}.}
+
+\item{...}{Passed to \link[cubature:cubintegrate]{cubature::cubintegrate}.}
 }
 \value{
 The given expectation as a numeric, otherwise NULL.

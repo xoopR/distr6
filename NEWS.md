@@ -4,6 +4,7 @@
 * Bugfix in `MixtureDistribution` parameter set
 * Uneven vectors of `WeightedDiscrete` distributions are now truncated at the minimum length in the vector for `pdf, cdf, quantile`
 * `CoreStatistics` methods now give the option to use `cubature::cubintegrate` and all associated parameters.
+* Remove `{pracma}` requirement in `ExoticStatistics`
 
 # distr6 1.4.3
 

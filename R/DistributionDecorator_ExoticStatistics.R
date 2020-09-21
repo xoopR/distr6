@@ -5,7 +5,6 @@
 #' exploited, otherwise numerical ones are used with a message.
 #'
 #' @template class_decorator
-#' @template field_packages
 #' @template param_bounds
 #' @template param_log
 #' @template param_logp
@@ -14,16 +13,13 @@
 #' @template param_lowertail
 #'
 #' @examples
-#' if (requireNamespace("pracma", quietly = TRUE)) {
 #' decorate(Exponential$new(), "ExoticStatistics")
 #' Exponential$new(decorators = "ExoticStatistics")
 #' ExoticStatistics$new()$decorate(Exponential$new())
-#' }
 #' @export
 ExoticStatistics <- R6Class("ExoticStatistics",
   inherit = DistributionDecorator,
   public = list(
-    packages = "pracma",
 
     #' @description
     #' The cdf anti-derivative is defined by \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
@@ -138,7 +134,7 @@ ExoticStatistics <- R6Class("ExoticStatistics",
         if (is.null(upper)) upper <- self$sup
         return(generalPNorm(self$pdf, p, lower, upper))
       }
-    }, # NEEDS TESTING
+    },
 
     #' @description
     #' The p-norm of the survival function is defined by

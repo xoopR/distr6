@@ -4,7 +4,7 @@
 \alias{kthmoment}
 \title{Kth Moment}
 \usage{
-kthmoment(object, k, type = c("central", "standard", "raw"))
+kthmoment(object, k, type = c("central", "standard", "raw"), ...)
 }
 \arguments{
 \item{object}{Distribution.}
@@ -12,6 +12,8 @@ kthmoment(object, k, type = c("central", "standard", "raw"))
 \item{k}{the kth moment to calculate}
 
 \item{type}{one of 'central', 'standard' or 'raw', abbreviations allowed}
+
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 If univariate, the given k-moment as a numeric, otherwise NULL.

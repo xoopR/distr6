@@ -4,10 +4,12 @@
 \alias{variance}
 \title{Distribution Variance}
 \usage{
-variance(object)
+variance(object, ...)
 }
 \arguments{
 \item{object}{Distribution.}
+
+\item{...}{Passed to \verb{$genExp}.}
 }
 \value{
 Variance as a numeric.
