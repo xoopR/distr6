@@ -232,7 +232,7 @@ complex numeric calculations." />
 complex numeric calculations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>genExp</span>(<span class='kw'>object</span>, trafo = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>genExp</span>(<span class='kw'>object</span>, trafo = <span class='kw'>NULL</span>, cubature = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,6 +244,14 @@ complex numeric calculations.</p>
     <tr>
       <th>trafo</th>
       <td><p>transformation for expectation calculation, see details.</p></td>
+    </tr>
+    <tr>
+      <th>cubature</th>
+      <td><p>If <code>TRUE</code> uses <a href='https://rdrr.io/pkg/cubature/man/cubintegrate.html'>cubature::cubintegrate</a> for approximation, otherwise <a href='https://rdrr.io/r/stats/integrate.html'>integrate</a>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Passed to <a href='https://rdrr.io/pkg/cubature/man/cubintegrate.html'>cubature::cubintegrate</a>.</p></td>
     </tr>
     </table>
 
