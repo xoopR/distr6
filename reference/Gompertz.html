@@ -370,8 +370,8 @@ Michael P. McLaughlin.</p>
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Gompertz</span><span class='op'>$</span><span class='fu'>new</span>(shape = <span class='fl'>1</span>, scale = <span class='fl'>1</span>, decorators = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Gompertz</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>shape <span class='op'>=</span> <span class='fl'>1</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -390,14 +390,14 @@ Decorators to add to the distribution during construction.</p></dd>
 <p>Returns the median of the distribution. If an analytical expression is available
 returns distribution median, otherwise if symmetric returns <code>self$mean</code>, otherwise
 returns <code>self$quantile(0.5)</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Gompertz</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Gompertz</span><span class='op'>$</span><span class='fu'>median</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-pgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pgf.html'>pgf()</a></code></h3>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Gompertz</span><span class='op'>$</span><span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='kw'>z</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Gompertz</span><span class='op'>$</span><span class='fu'>pgf</span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -408,7 +408,7 @@ z integer to evaluate probability generating function at.</p></dd>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Gompertz</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Gompertz</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

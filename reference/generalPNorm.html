@@ -230,7 +230,7 @@
     <p>Calculate the p-norm of any function between given limits.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>generalPNorm</span>(<span class='kw'>fun</span>, <span class='kw'>p</span>, <span class='kw'>lower</span>, <span class='kw'>upper</span>, range = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>generalPNorm</span><span class='op'>(</span><span class='va'>fun</span>, <span class='va'>p</span>, <span class='va'>lower</span>, <span class='va'>upper</span>, range <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -271,7 +271,7 @@ where \(i\) is over a given range.</p>
 are approximate only.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>generalPNorm</span>(<span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='kw'>pdf</span>, <span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>10</span>)
+    <pre class="examples"><div class='input'><span class='fu'>generalPNorm</span><span class='op'>(</span><span class='va'><a href='Exponential.html'>Exponential</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>pdf</span>, <span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Results from numeric calculations are approximate only. Better results may be available.</span></div><div class='output co'>#&gt; [1] 0.7071068</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

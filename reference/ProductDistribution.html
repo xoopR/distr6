@@ -306,17 +306,17 @@ independent distributions.</p>
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
-  distlist = <span class='kw'>NULL</span>,
-  distribution = <span class='kw'>NULL</span>,
-  params = <span class='kw'>NULL</span>,
-  shared_params = <span class='kw'>NULL</span>,
-  name = <span class='kw'>NULL</span>,
-  short_name = <span class='kw'>NULL</span>,
-  decorators = <span class='kw'>NULL</span>,
-  vecdist = <span class='kw'>NULL</span>
-)</pre><p></div></p>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  distlist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  distribution <span class='op'>=</span> <span class='cn'>NULL</span>,
+  params <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shared_params <span class='op'>=</span> <span class='cn'>NULL</span>,
+  name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  short_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  decorators <span class='op'>=</span> <span class='cn'>NULL</span>,
+  vecdist <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -380,7 +380,7 @@ ProductDistribution$new(
 <p><hr>
 <a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='strprint.html'>strprint()</a></code></h3>
 <p>Printable string representation of the <code>ProductDistribution</code>. Primarily used internally.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'><a href='strprint.html'>strprint</a></span>(n = <span class='fl'>10</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>strprint</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -393,7 +393,7 @@ Number of distributions to include when printing.</p></dd>
 <p>Probability density function of the product distribution. Computed by
 $$f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)$$
 where \(f_{Xi}\) are the pdfs of the wrapped distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='kw'>...</span>, log = <span class='fl'>FALSE</span>, simplify = <span class='fl'>TRUE</span>, data = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='va'>...</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span>, data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -418,12 +418,12 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>),
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()))
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>)
+<p><div class="r example copy"></p><pre><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.5</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
@@ -431,13 +431,13 @@ to the distribution in the vector to evaluate.</p></dd>
 <p>Cumulative distribution function of the product distribution. Computed by
 $$F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)$$
 where \(F_{Xi}\) are the cdfs of the wrapped distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(
-  <span class='kw'>...</span>,
-  lower.tail = <span class='fl'>TRUE</span>,
-  log.p = <span class='fl'>FALSE</span>,
-  simplify = <span class='fl'>TRUE</span>,
-  data = <span class='kw'>NULL</span>
-)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>cdf</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  log.p <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  simplify <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -465,24 +465,24 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>),
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()))
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>)
+<p><div class="r example copy"></p><pre><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.5</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>cdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>cdf</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>cdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-quantile"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code></h3>
 <p>The quantile function is not implemented for product distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(
-  <span class='kw'>...</span>,
-  lower.tail = <span class='fl'>TRUE</span>,
-  log.p = <span class='fl'>FALSE</span>,
-  simplify = <span class='fl'>TRUE</span>,
-  data = <span class='kw'>NULL</span>
-)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>quantile</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  lower.tail <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  log.p <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  simplify <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -512,7 +512,7 @@ to the distribution in the vector to evaluate.</p></dd>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -528,50 +528,50 @@ to the distribution in the vector to evaluate.</p></dd>
 <span class='co'>## Method `ProductDistribution$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(
-  prob = <span class='fl'>0.5</span>,
-  size = <span class='fl'>10</span>
-), <span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>15</span>)))
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  prob <span class='op'>=</span> <span class='fl'>0.5</span>,
+  size <span class='op'>=</span> <span class='fl'>10</span>
+<span class='op'>)</span>, <span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
-  distribution = <span class='st'>"Binomial"</span>,
-  params = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(prob = <span class='fl'>0.1</span>, size = <span class='fl'>2</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(prob = <span class='fl'>0.6</span>, size = <span class='fl'>4</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(prob = <span class='fl'>0.2</span>, size = <span class='fl'>6</span>)
-  )
-)
+<span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  distribution <span class='op'>=</span> <span class='st'>"Binomial"</span>,
+  params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.1</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.6</span>, size <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.2</span>, size <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># Equivalently</span>
-<span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(
-  distribution = <span class='st'>"Binomial"</span>,
-  params = <span class='kw'>data.table</span>::<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(prob = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span>), size = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>))
-)
-}
+<span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  distribution <span class='op'>=</span> <span class='st'>"Binomial"</span>,
+  params <span class='op'>=</span> <span class='fu'>data.table</span><span class='fu'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ProductDistribution$pdf`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>),
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()))
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
-</div><div class='output co'>#&gt; [1] 9.536743e-05 1.931190e-03 1.373291e-02 4.205704e-02 6.056213e-02</div><div class='input'><span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-</div><div class='output co'>#&gt; [1] 0.0004291534</div><div class='input'><span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>)
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.5</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 9.536743e-05 1.931190e-03 1.373291e-02 4.205704e-02 6.056213e-02</div><div class='input'><span class='va'>p</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0004291534</div><div class='input'><span class='va'>p</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 9.536743e-05 1.931190e-03</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ProductDistribution$cdf`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(prob = <span class='fl'>0.5</span>, size = <span class='fl'>10</span>),
-<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()))
-<span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
-</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227 0.0295410156 0.1420936584 0.3881874084</div><div class='input'><span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-</div><div class='output co'>#&gt; [1] 0.0005874634</div><div class='input'><span class='kw'>p</span><span class='op'>$</span><span class='fu'><a href='cdf.html'>cdf</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>)
-</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227</div><div class='input'><span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>() <span class='op'>*</span> <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>ProductDistribution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.5</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+<span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span><span class='op'>$</span><span class='fu'>cdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227 0.0295410156 0.1420936584 0.3881874084</div><div class='input'><span class='va'>p</span><span class='op'>$</span><span class='fu'>cdf</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0005874634</div><div class='input'><span class='va'>p</span><span class='op'>$</span><span class='fu'>cdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0001153946 0.0029907227</div><div class='input'><span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Norm X Binom </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

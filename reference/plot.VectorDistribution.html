@@ -231,7 +231,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for VectorDistribution</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, fun = <span class='st'>"pdf"</span>, <span class='kw'>topn</span>, <span class='kw'>ind</span>, <span class='kw'>cols</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, fun <span class='op'>=</span> <span class='st'>"pdf"</span>, <span class='va'>topn</span>, <span class='va'>ind</span>, <span class='va'>cols</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -272,13 +272,13 @@ in the vector, otherwise the function will error.</p>
     <div class='dont-index'><p><a href='plot.Distribution.html'>plot.Distribution</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Plot pdf of Normal distribution</span>
-<span class='kw'>vd</span> <span class='op'>&lt;-</span> <span class='kw'>VectorDistribution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(), <span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>2</span>)))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>vd</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>vd</span>, fun = <span class='st'>"surv"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>vd</span>, fun = <span class='st'>"quantile"</span>, ylim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>), col = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"blue"</span>, <span class='st'>"purple"</span>))
-}
+<span class='va'>vd</span> <span class='op'>&lt;-</span> <span class='va'><a href='VectorDistribution.html'>VectorDistribution</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, <span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>vd</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>vd</span>, fun <span class='op'>=</span> <span class='st'>"surv"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>vd</span>, fun <span class='op'>=</span> <span class='st'>"quantile"</span>, ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>, col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"blue"</span>, <span class='st'>"purple"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

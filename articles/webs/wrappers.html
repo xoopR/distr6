@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Wrappers</h1>
             
-            <h4 class="date">2020-09-25</h4>
+            <h4 class="date">2020-09-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/wrappers.rmd"><code>vignettes/webs/wrappers.rmd</code></a></small>
       <div class="hidden name"><code>wrappers.rmd</code></div>
@@ -192,12 +192,11 @@
 <a href="#wrappers" class="anchor"></a>Wrappers</h2>
 <p>Just like decorators, wrappers are a design pattern commonly used in object-oriented programming. For people interested in these principles, we are specifically using the ‘Adapter’ pattern from Design Patterns <span class="citation">(Gamma et al. 1994)</span>. Instead of simply adding methods, as decorators do, wrappers also slightly alter the interface of the object and usually result in a slightly different object being created. For example,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>())
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Normal"        "SDistribution" "Distribution"  "R6"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()))
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "TruncatedDistribution" "DistributionWrapper"   "Distribution"         </span>
-<span class="co">#&gt; [4] "R6"</span>
-</pre></div>
+<span class="co">#&gt; [4] "R6"</span></pre></div>
 <p>See how the Normal distribution becomes an object of class <code>TruncatedDistribution</code> which in itself is of class <code>DistributionWrapper</code>. This tells the machine to expect a slightly different interface but it still recognises the original Normal distribution that is being wrapped.</p>
 </div>
 <div id="accessing-wrapped-models" class="section level2">
@@ -205,27 +204,23 @@
 <a href="#accessing-wrapped-models" class="anchor"></a>Accessing Wrapped Models</h2>
 <p>All wrappers share a common method <code><a href="../../reference/wrappedModels.html">wrappedModels()</a></code>. More often than not this is used internally but it’s still useful if you want to remind yourself of the original wrapped model.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(),<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>)<span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>()
+<span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $Norm</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
-</pre></div>
+<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></pre></div>
 <p>You can also specify the name of the internal model to access it,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(),<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>)<span class="op">$</span><span class="fu"><a href="../../reference/wrappedModels.html">wrappedModels</a></span>(<span class="st">"Norm"</span>)
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
-</pre></div>
+<span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="st">"Norm"</span><span class="op">)</span>
+<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></pre></div>
 <p>A slightly quicker approach is to use the <code>description</code> variable which is updated each time a distribution is wrapped</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(),<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>)<span class="op">$</span><span class="kw">description</span>
+<span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">description</span>
 <span class="co">#&gt; [1] "Normal Probability Distribution. Truncated between -1 and 1."</span>
-<span class="fu"><a href="../../reference/huberize.html">huberize</a></span>(<span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(),<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>),<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>)<span class="op">$</span><span class="kw">description</span>
-<span class="co">#&gt; [1] "Normal Probability Distribution. Truncated between -3 and 3. Huberized between -2 and 2."</span>
-</pre></div>
+<span class="fu"><a href="../../reference/huberize.html">huberize</a></span><span class="op">(</span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span>,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">$</span><span class="va">description</span>
+<span class="co">#&gt; [1] "Normal Probability Distribution. Truncated between -3 and 3. Huberized between -2 and 2."</span></pre></div>
 <p>Or finally just look at the new distribution name</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../../reference/huberize.html">huberize</a></span>(<span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(),<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>),<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>)
-<span class="co">#&gt; HubTruncNorm(TruncNorm_Norm_mean = 0, TruncNorm_Norm_var = 1,...,hub_lower = -2, hub_upper = 2)</span>
-</pre></div>
+<span class="fu"><a href="../../reference/huberize.html">huberize</a></span><span class="op">(</span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span>,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; HubTruncNorm(TruncNorm_Norm_mean = 0, TruncNorm_Norm_var = 1,...,hub_lower = -2, hub_upper = 2)</span></pre></div>
 </div>
 <div id="wrappers-in-distr6" class="section level2">
 <h2 class="hasAnchor">
@@ -237,86 +232,80 @@
 <a href="#truncateddistribution" class="anchor"></a>TruncatedDistribution</h3>
 <p>This is perhaps the simplest wrapper in distr6. It can be constructed in one of two ways:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">N</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()
-<span class="kw">TruncatedDistribution</span><span class="op">$</span><span class="fu">new</span>(<span class="kw">N</span>, lower = <span class="op">-</span><span class="fl">2</span>, upper = <span class="fl">2</span>)
+<span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<span class="va"><a href="../../reference/TruncatedDistribution.html">TruncatedDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; TruncNorm(Norm_mean = 0, Norm_var = 1,...,trunc_lower = -2, trunc_upper = 2)</span>
-<span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="kw">N</span>, lower = <span class="op">-</span><span class="fl">2</span>, upper = <span class="fl">2</span>)
-<span class="co">#&gt; TruncNorm(Norm_mean = 0, Norm_var = 1,...,trunc_lower = -2, trunc_upper = 2)</span>
-</pre></div>
+<span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="co">#&gt; TruncNorm(Norm_mean = 0, Norm_var = 1,...,trunc_lower = -2, trunc_upper = 2)</span></pre></div>
 <p>In both cases, the result has to be saved to truncate the distribution as these are not methods in the Normal distribution class, i.e. to use the truncated normal distribution:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="co"># This is a good example of when piping is clean and effective</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">magrittr</span>)
-<span class="kw">tn</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>() <span class="op">%&gt;%</span> <span class="fu"><a href="../../reference/truncate.html">truncate</a></span>(<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw">tn</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
+<span class="va">tn</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">tn</span><span class="op">)</span>
 <span class="co">#&gt; [1] "TruncatedDistribution" "DistributionWrapper"   "Distribution"         </span>
-<span class="co">#&gt; [4] "R6"</span>
-</pre></div>
+<span class="co">#&gt; [4] "R6"</span></pre></div>
 <p>In the example above we are truncating the Normal distribution between the limits -2 and 2, this updates the distribution support accordingly and re-distributes the weights of the pdf and cdf</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">tn</span><span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="op">-</span><span class="fl">3</span>)
+<span class="va">tn</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0</span>
-<span class="kw">tn</span><span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">1</span>)
-<span class="co">#&gt; [1] 0.8576164</span>
-</pre></div>
+<span class="va">tn</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.8576164</span></pre></div>
 </div>
 <div id="productdistribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#productdistribution" class="anchor"></a>ProductDistribution</h3>
 <p>A product distribution is a composite distribution in which two or more independent distributions are combined into a single joint distribution. Details about the maths behind this can be found in <code><a href="../../reference/ProductDistribution.html">?ProductDistribution</a></code>. For now we use this as an example of the composite distributions in distr6. Say we want the product distribution of the binomial and normal distributions,</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="kw">N</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>(mean = <span class="fl">2</span>, var = <span class="fl">1</span>)
-<span class="kw">B</span> <span class="op">&lt;-</span> <span class="kw">Binomial</span><span class="op">$</span><span class="fu">new</span>(size = <span class="fl">5</span>, prob = <span class="fl">0.2</span>)
-<span class="kw">P</span> <span class="op">&lt;-</span> <span class="kw">ProductDistribution</span><span class="op">$</span><span class="fu">new</span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">N</span>, <span class="kw">B</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">P</span>)
+<span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2</span>, var <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, prob <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
+<span class="va">P</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/ProductDistribution.html">ProductDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">N</span>, <span class="va">B</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span>
 <span class="co">#&gt; Norm X Binom</span>
-<span class="kw">P</span><span class="op">$</span><span class="kw">description</span>
+<span class="va">P</span><span class="op">$</span><span class="va">description</span>
 <span class="co">#&gt; [1] "Product of: Norm, Binom"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw">P</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span>
 <span class="co">#&gt; [1] "ProductDistribution" "VectorDistribution"  "DistributionWrapper"</span>
-<span class="co">#&gt; [4] "Distribution"        "R6"</span>
-</pre></div>
+<span class="co">#&gt; [4] "Distribution"        "R6"</span></pre></div>
 <p>Now we can treat <code>P</code> like any other multivariate distribution</p>
 <div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="kw">P</span><span class="op">$</span><span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">1</span>, <span class="fl">2</span>)
+<span class="va">P</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.0495556</span>
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">1</span>) <span class="op">*</span> <span class="kw">B</span><span class="op">$</span><span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fl">2</span>)
+<span class="va">N</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">B</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.0495556</span>
 
-<span class="kw">P</span><span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">1</span>, <span class="fl">2</span>)
+<span class="va">P</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1494659</span>
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">1</span>) <span class="op">*</span> <span class="kw">B</span><span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">2</span>)
+<span class="va">N</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">B</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1494659</span>
 
-<span class="kw">P</span><span class="op">$</span><span class="fu"><a href="../../reference/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">3</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">4</span>))
+<span class="va">P</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.049555604 0.001548613</span>
-<span class="kw">P</span><span class="op">$</span><span class="fu"><a href="../../reference/rand.html">rand</a></span>(<span class="fl">3</span>)
+<span class="va">P</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;        Norm Binom</span>
 <span class="co">#&gt; 1: 3.370958     1</span>
 <span class="co">#&gt; 2: 1.435302     0</span>
-<span class="co">#&gt; 3: 2.363128     1</span>
-</pre></div>
+<span class="co">#&gt; 3: 2.363128     1</span></pre></div>
 </div>
 <div id="mixturedistribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mixturedistribution" class="anchor"></a>MixtureDistribution</h3>
 <p>A mixture distribution is a weighted sum of component distributions. By default the weights are assumed to follow the uniform distribution, i.e. the probability of each distribution is identical, but this can be edited. Below we take the mixture of Binomial, Normal and Exponential distributions.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="kw">N</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()
-<span class="kw">B</span> <span class="op">&lt;-</span> <span class="kw">Binomial</span><span class="op">$</span><span class="fu">new</span>()
-<span class="kw">E</span> <span class="op">&lt;-</span> <span class="kw">Exponential</span><span class="op">$</span><span class="fu">new</span>()
-<span class="kw">M</span> <span class="op">&lt;-</span> <span class="kw">MixtureDistribution</span><span class="op">$</span><span class="fu">new</span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">N</span>, <span class="kw">B</span>, <span class="kw">E</span>), weights = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>,<span class="fl">0.5</span>,<span class="fl">0.4</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">M</span>)
+<span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<span class="va">E</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<span class="va">M</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">N</span>, <span class="va">B</span>, <span class="va">E</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">0.5</span>,<span class="fl">0.4</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span>
 <span class="co">#&gt; Norm wX Binom wX Exp</span>
-<span class="kw">M</span><span class="op">$</span><span class="kw">description</span>
+<span class="va">M</span><span class="op">$</span><span class="va">description</span>
 <span class="co">#&gt; [1] "Mixture of: Norm, Binom, Exp"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="kw">M</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span>
 <span class="co">#&gt; [1] "MixtureDistribution" "VectorDistribution"  "DistributionWrapper"</span>
 <span class="co">#&gt; [4] "Distribution"        "R6"</span>
 
-<span class="kw">M</span><span class="op">$</span><span class="fu"><a href="../../reference/cdf.html">cdf</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)
-<span class="co">#&gt; [1] 0.3423538 0.4709346 0.5658877</span>
-</pre></div>
+<span class="va">M</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.3423538 0.4709346 0.5658877</span></pre></div>
 </div>
 </div>
 <div id="summary" class="section level2">

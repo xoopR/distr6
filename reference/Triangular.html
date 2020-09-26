@@ -378,14 +378,14 @@ Michael P. McLaughlin.</p>
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(
-  lower = <span class='fl'>0</span>,
-  upper = <span class='fl'>1</span>,
-  mode = (<span class='kw'>lower</span> <span class='op'>+</span> <span class='kw'>upper</span>)<span class='op'>/</span><span class='fl'>2</span>,
-  symmetric = <span class='fl'>FALSE</span>,
-  decorators = <span class='kw'>NULL</span>
-)</pre><p></div></p>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  lower <span class='op'>=</span> <span class='fl'>0</span>,
+  upper <span class='op'>=</span> <span class='fl'>1</span>,
+  mode <span class='op'>=</span> <span class='op'>(</span><span class='va'>lower</span> <span class='op'>+</span> <span class='va'>upper</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>,
+  symmetric <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  decorators <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -408,13 +408,13 @@ Decorators to add to the distribution during construction.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>TRUE</span>)
-<span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>FALSE</span>)
-<span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, mode = <span class='fl'>4</span>)
+<p><div class="r example copy"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, mode <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 
 <span class='co'># You can view the type of Triangular distribution with $description</span>
-<span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>TRUE</span>)<span class='op'>$</span><span class='kw'>description</span>
-<span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>FALSE</span>)<span class='op'>$</span><span class='kw'>description</span>
+<span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>description</span>
+<span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>description</span>
 </pre><p></div></p>
 
 <p><hr>
@@ -422,14 +422,14 @@ Decorators to add to the distribution during construction.</p></dd>
 <p>The arithmetic mean of a (discrete) probability distribution X is the expectation
 $$E_X(X) = \sum p_X(x)*x$$
 with an integration analogue for continuous distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>mean</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mode.html'>mode()</a></code></h3>
 <p>The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
 maxima).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='mode.html'>mode</a></span>(which = <span class='st'>"all"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>mode</span><span class='op'>(</span>which <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -443,7 +443,7 @@ which mode to return.</p></dd>
 <p>Returns the median of the distribution. If an analytical expression is available
 returns distribution median, otherwise if symmetric returns <code>self$mean</code>, otherwise
 returns <code>self$quantile(0.5)</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>median</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-variance"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='variance.html'>variance()</a></code></h3>
@@ -451,7 +451,7 @@ returns <code>self$quantile(0.5)</code>.</p><h4 class='hasAnchor' id='arguments'
 $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='variance.html'>variance</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>variance</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-skewness"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='skewness.html'>skewness()</a></code></h3>
@@ -459,7 +459,7 @@ covariance matrix is returned.</p><h4 class='hasAnchor' id='arguments'><a class=
 $$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='skewness.html'>skewness</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>skewness</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-kurtosis"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
@@ -468,7 +468,7 @@ $$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.
 Excess Kurtosis is Kurtosis - 3.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='kurtosis.html'>kurtosis</a></span>(excess = <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>kurtosis</span><span class='op'>(</span>excess <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -482,7 +482,7 @@ If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 $$- \sum (f_X)log(f_X)$$
 where \(f_X\) is the pdf of distribution X, with an integration analogue for
 continuous distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='entropy.html'>entropy</a></span>(base = <span class='fl'>2</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>entropy</span><span class='op'>(</span>base <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -495,7 +495,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 <p>The moment generating function is defined by
 $$mgf_X(t) = E_X[exp(xt)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='mgf.html'>mgf</a></span>(<span class='kw'>t</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>mgf</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -508,7 +508,7 @@ t integer to evaluate function at.</p></dd>
 <p>The characteristic function is defined by
 $$cf_X(t) = E_X[exp(xti)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='cf.html'>cf</a></span>(<span class='kw'>t</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>cf</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -521,7 +521,7 @@ t integer to evaluate function at.</p></dd>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='pgf.html'>pgf</a></span>(<span class='kw'>z</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>pgf</span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -532,7 +532,7 @@ z integer to evaluate probability generating function at.</p></dd>
 <p><hr>
 <a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>...</span>, lst = <span class='kw'>NULL</span>, error = <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -550,7 +550,7 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -566,13 +566,13 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <span class='co'>## Method `Triangular$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5) </div><div class='input'><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5, mode = 3.5) </div><div class='input'><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, mode = <span class='fl'>4</span>)
+<span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5) </div><div class='input'><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Tri(lower = 2, upper = 5, mode = 3.5) </div><div class='input'><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, mode <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Tri(lower = 2, upper = 5, mode = 4) </div><div class='input'>
 <span class='co'># You can view the type of Triangular distribution with $description</span>
-<span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>TRUE</span>)<span class='op'>$</span><span class='kw'>description</span>
-</div><div class='output co'>#&gt; [1] "Symmetric Triangular Probability Distribution."</div><div class='input'><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>(lower = <span class='fl'>2</span>, upper = <span class='fl'>5</span>, symmetric = <span class='fl'>FALSE</span>)<span class='op'>$</span><span class='kw'>description</span>
+<span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>description</span>
+</div><div class='output co'>#&gt; [1] "Symmetric Triangular Probability Distribution."</div><div class='input'><span class='va'>Triangular</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>5</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>description</span>
 </div><div class='output co'>#&gt; [1] "Triangular Probability Distribution."</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

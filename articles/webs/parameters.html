@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting and Setting Parameters</h1>
             
-            <h4 class="date">2020-09-25</h4>
+            <h4 class="date">2020-09-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/parameters.rmd"><code>vignettes/webs/parameters.rmd</code></a></small>
       <div class="hidden name"><code>parameters.rmd</code></div>
@@ -192,63 +192,56 @@
 <a href="#accessing-parameters" class="anchor"></a>Accessing Parameters</h2>
 <p>First we will construct the Standard Normal distribution, the default parameterisation</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">N</span> <span class="op">&lt;-</span> <span class="kw">Normal</span><span class="op">$</span><span class="fu">new</span>()
-</pre></div>
+<span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></pre></div>
 <p>To view all parameters in the distribution we use the <code>parameters</code> method</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;      id value support                                 description</span>
 <span class="co">#&gt; 1: mean     0       ℝ                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var     1      ℝ+          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd     1      ℝ+        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec     1      ℝ+ Precision - Inverse Squared Scale Parameter</span>
-</pre></div>
+<span class="co">#&gt; 4: prec     1      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
 <p>Notice how not only the parameters in the given parameterisation are displayed, but all the ones possible. To filter this table for a specific parameter, add the parameter name as an argument</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>(<span class="st">"var"</span>)
+<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
 <span class="co">#&gt;     id value        support settable                        description</span>
-<span class="co">#&gt; 1: var     1 &lt;PosReals[24]&gt;     TRUE Variance - Squared Scale Parameter</span>
-</pre></div>
+<span class="co">#&gt; 1: var     1 &lt;PosReals[24]&gt;     TRUE Variance - Squared Scale Parameter</span></pre></div>
 <p>Or to only see the value of the parameter</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/getParameterValue.html">getParameterValue</a></span>(<span class="st">"prec"</span>)
-<span class="co">#&gt; [1] 1</span>
-</pre></div>
+<span class="va">N</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"prec"</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1</span></pre></div>
 </div>
 <div id="updating-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#updating-parameters" class="anchor"></a>Updating Parameters</h2>
 <p>Any parameter can be updated in distr6 using the <code>setParameterValue</code> method and all others are updated accordingly. For example,</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(var = <span class="fl">2</span>)
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+<span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;      id    value support                                 description</span>
 <span class="co">#&gt; 1: mean        0       ℝ                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var        2      ℝ+          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd 1.414214      ℝ+        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec      0.5      ℝ+ Precision - Inverse Squared Scale Parameter</span>
-</pre></div>
+<span class="co">#&gt; 4: prec      0.5      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
 <p>Not only has the variance been updated, but so too have the precision and standard deviation parameters. To see the function used for updating you can run <code>N$parameters("prec", update = TRUE)</code> but the output is given in a form that your computer can read, so it may not be straightforward to follow for more complicated functions. See the distribution help page, <code><a href="../../reference/Normal.html">?Normal</a></code> for a more readable version.</p>
 <p>Internal checks ensure that only valid parameter values are allowed, for example setting the variance to a negative number will throw an error. Finally, multiple parameters can be updated at the same time</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(mean = <span class="fl">4</span>, sd = <span class="fl">2</span>)
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+<span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">4</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;      id value support                                 description</span>
 <span class="co">#&gt; 1: mean     4       ℝ                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var     4      ℝ+          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd     2      ℝ+        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec  0.25      ℝ+ Precision - Inverse Squared Scale Parameter</span>
-</pre></div>
+<span class="co">#&gt; 4: prec  0.25      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
 <p>But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will lead to the variance argument being ignored:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/setParameterValue.html">setParameterValue</a></span>(var = <span class="fl">2</span>, prec = <span class="fl">3</span>)
-<span class="kw">N</span><span class="op">$</span><span class="fu"><a href="../../reference/parameters.html">parameters</a></span>()
+<span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span>, prec <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;      id     value support                                 description</span>
 <span class="co">#&gt; 1: mean         4       ℝ                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var 0.3333333      ℝ+          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd 0.5773503      ℝ+        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec         3      ℝ+ Precision - Inverse Squared Scale Parameter</span>
-</pre></div>
+<span class="co">#&gt; 4: prec         3      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">

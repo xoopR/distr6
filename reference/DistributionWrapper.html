@@ -292,19 +292,19 @@ of Reusable Object-Oriented Software.” Addison-Wesley.</p>
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>new</span>(
-  distlist = <span class='kw'>NULL</span>,
-  <span class='kw'>name</span>,
-  <span class='kw'>short_name</span>,
-  <span class='kw'>description</span>,
-  <span class='kw'>support</span>,
-  <span class='kw'>type</span>,
-  <span class='kw'>valueSupport</span>,
-  <span class='kw'>variateForm</span>,
-  parameters = <span class='kw'>NULL</span>,
-  outerID = <span class='kw'>NULL</span>
-)</pre><p></div></p>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  distlist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>name</span>,
+  <span class='va'>short_name</span>,
+  <span class='va'>description</span>,
+  <span class='va'>support</span>,
+  <span class='va'>type</span>,
+  <span class='va'>valueSupport</span>,
+  <span class='va'>variateForm</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  outerID <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -342,7 +342,7 @@ Parameters added by the wrapper.</p></dd>
 <p><hr>
 <a id="method-wrappedModels"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='wrappedModels.html'>wrappedModels()</a></code></h3>
 <p>Returns model(s) wrapped by this wrapper.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>DistributionWrapper</span><span class='op'>$</span><span class='fu'><a href='wrappedModels.html'>wrappedModels</a></span>(model = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>wrappedModels</span><span class='op'>(</span>model <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -355,7 +355,7 @@ otherwise a list of <a href='Distribution.html'>Distribution</a>s.</p></dd>
 <p><hr>
 <a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>DistributionWrapper</span><span class='op'>$</span><span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(<span class='kw'>...</span>, lst = <span class='kw'>NULL</span>, error = <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -373,7 +373,7 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

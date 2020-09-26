@@ -234,7 +234,7 @@ empirical distribution to a reference distribution. They can also compare the qu
 reference distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>qqplot</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, npoints = <span class='fl'>3000</span>, idline = <span class='fl'>TRUE</span>, plot = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>qqplot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, npoints <span class='op'>=</span> <span class='fl'>3000</span>, idline <span class='op'>=</span> <span class='cn'>TRUE</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -279,12 +279,12 @@ are equivalent to the the Type 1 method in <code><a href='https://rdrr.io/r/stat
     <p>Chijing Zeng</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>qqplot</span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>15</span>, sd = <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fl'>30</span>)), <span class='kw'>ChiSquared</span><span class='op'>$</span><span class='fu'>new</span>(df = <span class='fl'>15</span>))
-</div><div class='img'><img src='qqplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span>(<span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span>(<span class='fl'>200</span>, df = <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span>(<span class='fl'>300</span>, df = <span class='fl'>5</span>),
-  main = <span class='st'>"QQ-Plot"</span>, xlab = <span class='st'>"t-200"</span>,
-  ylab = <span class='st'>"t-300"</span>
-)
-</div><div class='img'><img src='qqplot-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span>(<span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, mean = <span class='fl'>3</span>))
+    <pre class="examples"><div class='input'><span class='fu'>qqplot</span><span class='op'>(</span><span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>15</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'><a href='ChiSquared.html'>ChiSquared</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>df <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='qqplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span><span class='op'>(</span><span class='fl'>200</span>, df <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>rt</a></span><span class='op'>(</span><span class='fl'>300</span>, df <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"QQ-Plot"</span>, xlab <span class='op'>=</span> <span class='st'>"t-200"</span>,
+  ylab <span class='op'>=</span> <span class='st'>"t-300"</span>
+<span class='op'>)</span>
+</div><div class='img'><img src='qqplot-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>qqplot</span><span class='op'>(</span><span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, mean <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='qqplot-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

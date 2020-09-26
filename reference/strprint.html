@@ -230,7 +230,7 @@
     <p>Parsable string to be supplied to <code>print</code>, <code>data.frame</code>, etc.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>strprint</span>(<span class='kw'>object</span>, n = <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>strprint</span><span class='op'>(</span><span class='va'>object</span>, n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -255,8 +255,8 @@ methods such as <code>cat</code>, <code>summary</code> and <code>print</code>. A
 parse R6 objects into data-frames, see examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'>strprint</span>()
-</div><div class='output co'>#&gt; [1] "Tri(lower = 0, upper = 1, mode = 0.5)"</div><div class='input'><span class='kw'>Triangular</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'>strprint</span>(<span class='fl'>1</span>)
+    <pre class="examples"><div class='input'><span class='va'><a href='Triangular.html'>Triangular</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>strprint</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "Tri(lower = 0, upper = 1, mode = 0.5)"</div><div class='input'><span class='va'><a href='Triangular.html'>Triangular</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>strprint</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "Tri(lower = 0,...,mode = 0.5)"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

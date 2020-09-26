@@ -230,7 +230,7 @@
     <p>Functionality to decorate R6 Distributions (and child classes) with extra methods.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>decorate</span>(<span class='kw'>distribution</span>, <span class='kw'>decorators</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>decorate</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>decorators</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -272,11 +272,11 @@ of Reusable Object-Oriented Software.” Addison-Wesley.</p>
 class.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>B</span> <span class='op'>&lt;-</span> <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()
-<span class='fu'>decorate</span>(<span class='kw'>B</span>, <span class='st'>"CoreStatistics"</span>)
+    <pre class="examples"><div class='input'><span class='va'>B</span> <span class='op'>&lt;-</span> <span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>decorate</span><span class='op'>(</span><span class='va'>B</span>, <span class='st'>"CoreStatistics"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Binomial is now decorated with CoreStatistics</span></div><div class='output co'>#&gt; Binom(prob = 0.5, qprob = 0.5, size = 10) </div><div class='input'>
-<span class='kw'>E</span> <span class='op'>&lt;-</span> <span class='kw'>Exponential</span><span class='op'>$</span><span class='fu'>new</span>()
-<span class='fu'>decorate</span>(<span class='kw'>E</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CoreStatistics"</span>, <span class='st'>"ExoticStatistics"</span>))
+<span class='va'>E</span> <span class='op'>&lt;-</span> <span class='va'><a href='Exponential.html'>Exponential</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>decorate</span><span class='op'>(</span><span class='va'>E</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"CoreStatistics"</span>, <span class='st'>"ExoticStatistics"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with CoreStatistics, ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

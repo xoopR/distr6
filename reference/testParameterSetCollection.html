@@ -230,20 +230,20 @@
     <p>Validation checks to test if a given object is a <a href='ParameterSetCollection.html'>ParameterSetCollection</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>testParameterSetCollection</span>(
-  <span class='kw'>object</span>,
-  errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span>, <span class='st'>"is not an R6 ParameterSetCollection object"</span>)
-)
+    <pre class="usage"><span class='fu'>testParameterSetCollection</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  errormsg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='st'>"is not an R6 ParameterSetCollection object"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>checkParameterSetCollection</span>(
-  <span class='kw'>object</span>,
-  errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span>, <span class='st'>"is not an R6 ParameterSetCollection object"</span>)
-)
+<span class='fu'>checkParameterSetCollection</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  errormsg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='st'>"is not an R6 ParameterSetCollection object"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>assertParameterSetCollection</span>(
-  <span class='kw'>object</span>,
-  errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span>, <span class='st'>"is not an R6 ParameterSetCollection object"</span>)
-)</pre>
+<span class='fu'>assertParameterSetCollection</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  errormsg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='st'>"is not an R6 ParameterSetCollection object"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -266,9 +266,9 @@ an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># FALSE</span>
-<span class='fu'>testParameterSetCollection</span>(<span class='fl'>5</span>)
+<span class='fu'>testParameterSetCollection</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='co'># TRUE</span>
-<span class='fu'>testParameterSetCollection</span>(<span class='kw'>ParameterSetCollection</span><span class='op'>$</span><span class='fu'>new</span>(Binom = <span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'><a href='parameters.html'>parameters</a></span>()))
+<span class='fu'>testParameterSetCollection</span><span class='op'>(</span><span class='va'><a href='ParameterSetCollection.html'>ParameterSetCollection</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>Binom <span class='op'>=</span> <span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>parameters</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

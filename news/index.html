@@ -235,7 +235,7 @@
 <li>Uneven vectors of <code>WeightedDiscrete</code> distributions are now truncated at the minimum length in the vector for <code>pdf, cdf, quantile</code>
 </li>
 <li>
-<code>CoreStatistics</code> methods now give the option to use <code><a href="https://rdrr.io/pkg/cubature/man/cubintegrate.html">cubature::cubintegrate</a></code> and all associated parameters.</li>
+<code>CoreStatistics</code> methods now give the option to use <code><a href="https://bnaras.github.io/cubature/reference/cubintegrate.html">cubature::cubintegrate</a></code> and all associated parameters.</li>
 <li>Remove <code>{pracma}</code> requirement in <code>ExoticStatistics</code>
 </li>
 </ul>
@@ -284,7 +284,7 @@
 <li>Multivariate functions in <code>VectorDistribution</code> now return arrays</li>
 <li>Analytical <code>median</code> now available for <code>SDistribution</code>s where closed form expressions are known</li>
 <li>Kernels now implemented in <code>Rcpp</code> with analytical log-pdf expressions. Analytical lower.tail and log.p will come in future versions.</li>
-<li>Adding plotting for bivariate distributions using <code>{plotly}</code>
+<li>Adding plotting for bivariate distributions using <a href="https://plotly-r.com">plotly</a>
 </li>
 <li>Added <code>EmpiricalMV</code> for empirical multivariate distributions</li>
 <li>All documentation now uses roxygen R6</li>
@@ -358,7 +358,7 @@
 </li>
 <li>Bugfix in <code>Wald</code>, symmetry was incorrectly flagged as “symmetric”</li>
 <li>Fixed bug in <code>TruncatedDistribution</code> support - previously support interval type was <code>"[]"</code> instead of <code>"(]"</code>. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open.</li>
-<li>Improved speed of assertions by using package <code>{checkmate}</code>
+<li>Improved speed of assertions by using package <a href="https://github.com/mllg/checkmate">checkmate</a>
 </li>
 <li>Bugfix in <code>listDistributions</code> which was overriding filtering with <code>simplify</code>
 </li>
@@ -410,7 +410,7 @@
 <li>
 <code>packages</code> lists all packages required to be installed for a distribution, if <code>NULL</code> only distr6 required</li>
 <li>Abstracted SetInterval and related classes to the <code>set6</code> package</li>
-<li>Deprecated <code>listSpecialSets</code>, use <code><a href="https://rdrr.io/pkg/set6/man/listSpecialSets.html">set6::listSpecialSets</a></code> instead</li>
+<li>Deprecated <code>listSpecialSets</code>, use <code><a href="https://xoopR.github.io/set6/reference/listSpecialSets.html">set6::listSpecialSets</a></code> instead</li>
 <li>Removed secondary checks on <code>update</code> of <code>ParameterSet</code> , any properly defined distributions will have this covered in primary parameter, thus increasing speed.</li>
 </ul>
 </div>

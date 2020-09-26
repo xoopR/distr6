@@ -304,8 +304,8 @@ but only subtraction of continuous distributions.</p>
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Convolution</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>dist1</span>, <span class='kw'>dist2</span>, add = <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Convolution</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>dist1</span>, <span class='va'>dist2</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -322,7 +322,7 @@ If <code>TRUE</code> (default) then adds the distributions together, otherwise s
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Convolution</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Convolution</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -333,12 +333,12 @@ If <code>TRUE</code> (default) then adds the distributions together, otherwise s
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>binom</span> <span class='op'>&lt;-</span> <span class='kw'>Bernoulli</span><span class='op'>$</span><span class='fu'>new</span>() <span class='op'>+</span> <span class='kw'>Bernoulli</span><span class='op'>$</span><span class='fu'>new</span>()
-<span class='kw'>binom</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>)
-</div><div class='output co'>#&gt; [1] 0.25</div><div class='input'><span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>(size = <span class='fl'>2</span>)<span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>2</span>)
-</div><div class='output co'>#&gt; [1] 0.25</div><div class='input'><span class='kw'>norm</span> <span class='op'>&lt;-</span> <span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>3</span>) <span class='op'>-</span> <span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>2</span>)
-<span class='kw'>norm</span><span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>)
-</div><div class='output co'>#&gt; [1] 0.2820948</div><div class='input'><span class='kw'>Normal</span><span class='op'>$</span><span class='fu'>new</span>(mean = <span class='fl'>1</span>, var = <span class='fl'>2</span>)<span class='op'>$</span><span class='fu'><a href='pdf.html'>pdf</a></span>(<span class='fl'>1</span>)
+    <pre class="examples"><div class='input'><span class='va'>binom</span> <span class='op'>&lt;-</span> <span class='va'><a href='Bernoulli.html'>Bernoulli</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Bernoulli.html'>Bernoulli</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>binom</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.25</div><div class='input'><span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.25</div><div class='input'><span class='va'>norm</span> <span class='op'>&lt;-</span> <span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>norm</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.2820948</div><div class='input'><span class='va'><a href='Normal.html'>Normal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>1</span>, var <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>pdf</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.2820948</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

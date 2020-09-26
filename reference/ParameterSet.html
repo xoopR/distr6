@@ -267,15 +267,15 @@ creating a custom probability distribution that takes parameters.</p>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='kw'>id</span>,
-  <span class='kw'>value</span>,
-  <span class='kw'>support</span>,
-  settable = <span class='fl'>TRUE</span>,
-  updateFunc = <span class='kw'>NULL</span>,
-  description = <span class='kw'>NULL</span>
-)</pre><p></div></p>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>id</span>,
+  <span class='va'>value</span>,
+  <span class='va'>support</span>,
+  settable <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  updateFunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  description <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -304,27 +304,27 @@ If arguments are provided as a list, then each argument must be of the same leng
 with values as NULL where appropriate. See examples for more.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"prob"</span>, <span class='st'>"size"</span>)
-<span class='kw'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>0.2</span>, <span class='fl'>5</span>)
-<span class='kw'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span>())
-<span class='kw'>description</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Probability of success"</span>, <span class='kw'>NULL</span>)
-<span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='kw'>id</span>,
-                 value = <span class='kw'>value</span>,
-                 support = <span class='kw'>support</span>,
-                 description = <span class='kw'>description</span>
- )
+<p><div class="r example copy"></p><pre><span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"prob"</span>, <span class='st'>"size"</span><span class='op'>)</span>
+<span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.2</span>, <span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>description</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Probability of success"</span>, <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='va'>id</span>,
+                 value <span class='op'>=</span> <span class='va'>value</span>,
+                 support <span class='op'>=</span> <span class='va'>support</span>,
+                 description <span class='op'>=</span> <span class='va'>description</span>
+ <span class='op'>)</span>
 
-<span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='st'>"prob"</span>,
-                 value = <span class='fl'>0.2</span>,
-                 support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
-                 description = <span class='st'>"Probability of success"</span>
- )
+<span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"prob"</span>,
+                 value <span class='op'>=</span> <span class='fl'>0.2</span>,
+                 support <span class='op'>=</span> <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                 description <span class='op'>=</span> <span class='st'>"Probability of success"</span>
+ <span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Prints the ParameterSet.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(hide_cols = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"settable"</span>), <span class='kw'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span>hide_cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"settable"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -339,7 +339,7 @@ Additional arguments, currently unused.</p></dd>
 <a id="method-parameters"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='parameters.html'>parameters()</a></code></h3>
 <p>Returns the full parameter details for the supplied parameter, or returns <code>self</code>
 if <code>id</code> is <code>NULL</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'><a href='parameters.html'>parameters</a></span>(id = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>parameters</span><span class='op'>(</span>id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -350,7 +350,7 @@ id of parameter to return.</p></dd>
 <p><hr>
 <a id="method-getParameterSupport"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='getParameterSupport.html'>getParameterSupport()</a></code></h3>
 <p>Returns the support of the supplied parameter.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'><a href='getParameterSupport.html'>getParameterSupport</a></span>(<span class='kw'>id</span>, error = <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>getParameterSupport</span><span class='op'>(</span><span class='va'>id</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -362,21 +362,21 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A <a href='https://rdrr.io/pkg/set6/man/Set.html'>set6::Set</a> object.</p>
+<p>A <a href='https://xoopR.github.io/set6/reference/Set.html'>set6::Set</a> object.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='st'>"prob"</span>,
-                 value = <span class='fl'>0.2</span>,
-                 support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
-                 settable = <span class='fl'>TRUE</span>,
-                 description = <span class='st'>"Probability of success"</span>
- )
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='getParameterSupport.html'>getParameterSupport</a></span>(<span class='st'>"prob"</span>)
+<p><div class="r example copy"></p><pre><span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"prob"</span>,
+                 value <span class='op'>=</span> <span class='fl'>0.2</span>,
+                 support <span class='op'>=</span> <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                 settable <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                 description <span class='op'>=</span> <span class='st'>"Probability of success"</span>
+ <span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>getParameterSupport</span><span class='op'>(</span><span class='st'>"prob"</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-getParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='getParameterValue.html'>getParameterValue()</a></code></h3>
 <p>Returns the value of the supplied parameter.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='kw'>id</span>, error = <span class='st'>"warn"</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='va'>id</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -388,24 +388,24 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='st'>"prob"</span>,
-                 value = <span class='fl'>0.2</span>,
-                 support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
-                 settable = <span class='fl'>TRUE</span>,
-                 description = <span class='st'>"Probability of success"</span>
- )
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)
+<p><div class="r example copy"></p><pre><span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"prob"</span>,
+                 value <span class='op'>=</span> <span class='fl'>0.2</span>,
+                 support <span class='op'>=</span> <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                 settable <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                 description <span class='op'>=</span> <span class='st'>"Probability of success"</span>
+ <span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"prob"</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(
-  <span class='kw'>...</span>,
-  lst = <span class='kw'>NULL</span>,
-  error = <span class='st'>"warn"</span>,
-  .suppressCheck = <span class='fl'>FALSE</span>
-)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
+  error <span class='op'>=</span> <span class='st'>"warn"</span>,
+  .suppressCheck <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -424,20 +424,20 @@ Should be set internally only.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"rate"</span>)
-<span class='kw'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>)
-<span class='kw'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span>())
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='kw'>id</span>, <span class='kw'>value</span>, <span class='kw'>support</span>
-)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(rate = <span class='fl'>2</span>)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>)
+<p><div class="r example copy"></p><pre><span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"rate"</span><span class='op'>)</span>
+<span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>id</span>, <span class='va'>value</span>, <span class='va'>support</span>
+<span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>rate <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"rate"</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-merge"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/merge.html'>merge()</a></code></h3>
 <p>Merges multiple parameter sets.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='kw'>y</span>, <span class='kw'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>merge</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -468,7 +468,7 @@ ps1 &lt;- ParameterSet$new(id = c("prob", "qprob"),
 <p><hr>
 <a id="method-addDeps"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>addDeps()</code></h3>
 <p>Add parameter dependencies for automatic updating.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>addDeps</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, <span class='kw'>fun</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>addDeps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>fun</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -502,7 +502,7 @@ ps$addDeps("a", c("b", "c"),
 <a id="method-addChecks"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>addChecks()</code></h3>
 <p>Add parameter checks for automatic assertions. Note checks are made after
 any transformations.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>addChecks</span>(<span class='kw'>fun</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>addChecks</span><span class='op'>(</span><span class='va'>fun</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -529,7 +529,7 @@ ps$addChecks(function(self)
 <p>Transformations to apply to parameter before setting. Note transformations are made before
 checks.
 NOTE: If a transformation for a parameter already exists then this will be overwritten.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>addTrafos</span>(<span class='kw'>x</span>, <span class='kw'>fun</span>, dt = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>addTrafos</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>fun</span>, dt <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -570,7 +570,7 @@ ps$addTrafos(dt = data.table::data.table(
 <p><hr>
 <a id="method-values"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>values()</code></h3>
 <p>Returns parameter set values as a named list.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>values</span>(settable = <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>values</span><span class='op'>(</span>settable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -581,7 +581,7 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -597,137 +597,137 @@ If <code>TRUE</code> (default) only returns values of settable parameters, other
 <span class='co'>## Method `ParameterSet$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"prob"</span>, <span class='st'>"size"</span>)
-<span class='kw'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>0.2</span>, <span class='fl'>5</span>)
-<span class='kw'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span>())
-<span class='kw'>description</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Probability of success"</span>, <span class='kw'>NULL</span>)
-<span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='kw'>id</span>,
-                 value = <span class='kw'>value</span>,
-                 support = <span class='kw'>support</span>,
-                 description = <span class='kw'>description</span>
- )
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"prob"</span>, <span class='st'>"size"</span><span class='op'>)</span>
+<span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.2</span>, <span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>description</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Probability of success"</span>, <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='va'>id</span>,
+                 value <span class='op'>=</span> <span class='va'>value</span>,
+                 support <span class='op'>=</span> <span class='va'>support</span>,
+                 description <span class='op'>=</span> <span class='va'>description</span>
+ <span class='op'>)</span>
 </div><div class='output co'>#&gt;      id value support            description
 #&gt; 1: prob   0.2   [0,1] Probability of success
 #&gt; 2: size     5      ℕ+                   None</div><div class='input'>
-<span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='st'>"prob"</span>,
-                 value = <span class='fl'>0.2</span>,
-                 support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
-                 description = <span class='st'>"Probability of success"</span>
- )
+<span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"prob"</span>,
+                 value <span class='op'>=</span> <span class='fl'>0.2</span>,
+                 support <span class='op'>=</span> <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                 description <span class='op'>=</span> <span class='st'>"Probability of success"</span>
+ <span class='op'>)</span>
 </div><div class='output co'>#&gt;      id value support            description
 #&gt; 1: prob   0.2   [0,1] Probability of success</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$getParameterSupport`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='st'>"prob"</span>,
-                 value = <span class='fl'>0.2</span>,
-                 support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
-                 settable = <span class='fl'>TRUE</span>,
-                 description = <span class='st'>"Probability of success"</span>
- )
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='getParameterSupport.html'>getParameterSupport</a></span>(<span class='st'>"prob"</span>)
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"prob"</span>,
+                 value <span class='op'>=</span> <span class='fl'>0.2</span>,
+                 support <span class='op'>=</span> <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                 settable <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                 description <span class='op'>=</span> <span class='st'>"Probability of success"</span>
+ <span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>getParameterSupport</span><span class='op'>(</span><span class='st'>"prob"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [0,1] </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$getParameterValue`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='st'>"prob"</span>,
-                 value = <span class='fl'>0.2</span>,
-                 support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
-                 settable = <span class='fl'>TRUE</span>,
-                 description = <span class='st'>"Probability of success"</span>
- )
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"prob"</span>,
+                 value <span class='op'>=</span> <span class='fl'>0.2</span>,
+                 support <span class='op'>=</span> <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                 settable <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                 description <span class='op'>=</span> <span class='st'>"Probability of success"</span>
+ <span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"prob"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.2</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$setParameterValue`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"rate"</span>)
-<span class='kw'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>)
-<span class='kw'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span>())
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='kw'>id</span>, <span class='kw'>value</span>, <span class='kw'>support</span>
-)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(rate = <span class='fl'>2</span>)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"rate"</span>)
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"rate"</span><span class='op'>)</span>
+<span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>id</span>, <span class='va'>value</span>, <span class='va'>support</span>
+<span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>rate <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"rate"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 2</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$merge`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>ps1</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"prob"</span>, <span class='st'>"qprob"</span>),
-                 value = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2</span>, <span class='fl'>0.8</span>),
-                 support = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>1</span>))
- )
- <span class='kw'>ps1</span><span class='op'>$</span><span class='fu'>addChecks</span>(<span class='fu'>function</span>(<span class='kw'>self</span>) <span class='kw'>self</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"x"</span>) <span class='op'>&gt;</span> <span class='fl'>0</span>)
- <span class='kw'>ps1</span><span class='op'>$</span><span class='fu'>addDeps</span>(<span class='st'>"prob"</span>, <span class='st'>"qprob"</span>, <span class='fu'>function</span>(<span class='kw'>self</span>)
-     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(qprob = <span class='fl'>1</span> <span class='op'>-</span> <span class='kw'>self</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"prob"</span>)))
- <span class='kw'>ps2</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='st'>"size"</span>,
-                 value = <span class='fl'>10</span>,
-                 support = <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>10</span>, class = <span class='st'>"integer"</span>),
- )
- <span class='kw'>ps2</span><span class='op'>$</span><span class='fu'>addTrafos</span>(<span class='st'>"size"</span>, <span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>self</span>) <span class='kw'>x</span> <span class='op'>+</span> <span class='fl'>1</span>)
- <span class='kw'>ps1</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='kw'>ps2</span>)
- <span class='kw'>ps1</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()
- }
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>ps1</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"prob"</span>, <span class='st'>"qprob"</span><span class='op'>)</span>,
+                 value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.2</span>, <span class='fl'>0.8</span><span class='op'>)</span>,
+                 support <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+ <span class='op'>)</span>
+ <span class='va'>ps1</span><span class='op'>$</span><span class='fu'>addChecks</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>self</span><span class='op'>)</span> <span class='va'>self</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span>
+ <span class='va'>ps1</span><span class='op'>$</span><span class='fu'>addDeps</span><span class='op'>(</span><span class='st'>"prob"</span>, <span class='st'>"qprob"</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>self</span><span class='op'>)</span>
+     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>qprob <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>-</span> <span class='va'>self</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"prob"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+ <span class='va'>ps2</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"size"</span>,
+                 value <span class='op'>=</span> <span class='fl'>10</span>,
+                 support <span class='op'>=</span> <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span>,
+ <span class='op'>)</span>
+ <span class='va'>ps2</span><span class='op'>$</span><span class='fu'>addTrafos</span><span class='op'>(</span><span class='st'>"size"</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>self</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span>
+ <span class='va'>ps1</span><span class='op'>$</span><span class='fu'>merge</span><span class='op'>(</span><span class='va'>ps2</span><span class='op'>)</span>
+ <span class='va'>ps1</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span>
+ <span class='op'>}</span>
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addDeps`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(
-  id = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>),
-  value = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span>),
-  support = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span>(), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span>(), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span>())
-)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'>addDeps</span>(<span class='st'>"a"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"b"</span>, <span class='st'>"c"</span>),
-   <span class='fu'>function</span>(<span class='kw'>self</span>) {
-       <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(b = <span class='kw'>self</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"a"</span>) <span class='op'>+</span> <span class='fl'>1</span>,
-            c = <span class='fl'>1</span><span class='op'>/</span><span class='kw'>self</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"a"</span>))
- })
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span>,
+  value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span>,
+  support <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>addDeps</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span>,
+   <span class='kw'>function</span><span class='op'>(</span><span class='va'>self</span><span class='op'>)</span> <span class='op'>{</span>
+       <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>b <span class='op'>=</span> <span class='va'>self</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"a"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>1</span>,
+            c <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='va'>self</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"a"</span><span class='op'>)</span><span class='op'>)</span>
+ <span class='op'>}</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addChecks`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"lower"</span>, <span class='st'>"upper"</span>)
-<span class='kw'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>)
-<span class='kw'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span>(), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span>())
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='kw'>id</span>, <span class='kw'>value</span>, <span class='kw'>support</span>
-)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'>addChecks</span>(<span class='fu'>function</span>(<span class='kw'>self</span>)
-  <span class='kw'>self</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"lower"</span>) <span class='op'>&lt;</span> <span class='kw'>self</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"upper"</span>))
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"lower"</span>, <span class='st'>"upper"</span><span class='op'>)</span>
+<span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>support</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>id</span>, <span class='va'>value</span>, <span class='va'>support</span>
+<span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>addChecks</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>self</span><span class='op'>)</span>
+  <span class='va'>self</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"lower"</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>self</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"upper"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ParameterSet$addTrafos`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='st'>"probs"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>)), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>,<span class='fl'>1</span>)<span class='op'>^</span><span class='fl'>2</span>
-)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'>addTrafos</span>(<span class='st'>"probs"</span>, <span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='kw'>x</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='kw'>x</span>)))
-<span class='kw'>ps</span><span class='op'>$</span><span class='kw'>trafos</span>
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='setParameterValue.html'>setParameterValue</a></span>(probs = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'><a href='getParameterValue.html'>getParameterValue</a></span>(<span class='st'>"probs"</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='st'>"probs"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
+<span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>addTrafos</span><span class='op'>(</span><span class='st'>"probs"</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>self</span><span class='op'>)</span> <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='va'>trafos</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>probs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='st'>"probs"</span><span class='op'>)</span>
 
 <span class='co'># Alternate method (better with more parameters)</span>
-<span class='kw'>ps</span> <span class='op'>&lt;-</span> <span class='kw'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span>(
-  <span class='st'>"probs"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>)), <span class='kw'>set6</span>::<span class='kw'><a href='https://rdrr.io/pkg/set6/man/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>,<span class='fl'>1</span>)<span class='op'>^</span><span class='fl'>2</span>
-)
-<span class='kw'>ps</span><span class='op'>$</span><span class='fu'>addTrafos</span>(dt = <span class='kw'>data.table</span>::<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(
-                          x = <span class='st'>"probs"</span>,
-                          fun = <span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>self</span>) <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='kw'>x</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='kw'>x</span>))
-           ))
-}
+<span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='va'>ParameterSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='st'>"probs"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, <span class='fu'>set6</span><span class='fu'>::</span><span class='va'><a href='https://xoopR.github.io/set6/reference/Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
+<span class='op'>)</span>
+<span class='va'>ps</span><span class='op'>$</span><span class='fu'>addTrafos</span><span class='op'>(</span>dt <span class='op'>=</span> <span class='fu'>data.table</span><span class='fu'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>
+                          x <span class='op'>=</span> <span class='st'>"probs"</span>,
+                          fun <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>self</span><span class='op'>)</span> <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+           <span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

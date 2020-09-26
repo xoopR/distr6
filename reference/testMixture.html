@@ -230,11 +230,11 @@
     <p>Validation checks to test if Distribution is mixture.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>testMixture</span>(<span class='kw'>object</span>, errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>short_name</span>, <span class='st'>"is not mixture"</span>))
+    <pre class="usage"><span class='fu'>testMixture</span><span class='op'>(</span><span class='va'>object</span>, errormsg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>$</span><span class='va'>short_name</span>, <span class='st'>"is not mixture"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>checkMixture</span>(<span class='kw'>object</span>, errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>short_name</span>, <span class='st'>"is not mixture"</span>))
+<span class='fu'>checkMixture</span><span class='op'>(</span><span class='va'>object</span>, errormsg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>$</span><span class='va'>short_name</span>, <span class='st'>"is not mixture"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>assertMixture</span>(<span class='kw'>object</span>, errormsg = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>short_name</span>, <span class='st'>"is not mixture"</span>))</pre>
+<span class='fu'>assertMixture</span><span class='op'>(</span><span class='va'>object</span>, errormsg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>$</span><span class='va'>short_name</span>, <span class='st'>"is not mixture"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -256,7 +256,7 @@ return <code>TRUE</code>. If check fails, <code>assert</code> stops code with er
 an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>testMixture</span>(<span class='kw'>Binomial</span><span class='op'>$</span><span class='fu'>new</span>()) <span class='co'># FALSE</span>
+    <pre class="examples"><div class='input'><span class='fu'>testMixture</span><span class='op'>(</span><span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># FALSE</span>
 </div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
