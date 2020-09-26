@@ -19,14 +19,3 @@ R62Fun(DistributionWrapper,
   assignEnvir = topenv(), dispatchClasses = list(Distribution),
   scope = c("public", "active")
 )
-
-
-.onAttach <- function(libname, pkgname) {
-  packageStartupMessage("\n-----------------------------")
-  packageStartupMessage(
-    "\tdistr6 v 1.4.3",
-    "\n\nGet started:\t?distr6
-Changelog:\tdistr6News()"
-  )
-  packageStartupMessage("-----------------------------\n")
-}

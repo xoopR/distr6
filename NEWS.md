@@ -1,4 +1,4 @@
-# distr6 1.4.3.9000
+# distr6 1.4.4
 
 * Added coercions from Vector/Mixture/ProductDistribution to Mixture/ProductDistribution via `as.MixtureDistribution` and `as.ProductDistribution`
 * Bugfix in `MixtureDistribution` parameter set
