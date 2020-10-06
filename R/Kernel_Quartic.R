@@ -196,6 +196,7 @@ Quartic <- R6Class("Quartic",
   ),
 
   private = list(
+    .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       C_QuarticKernelPdf(x, log)
     },

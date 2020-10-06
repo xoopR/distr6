@@ -74,6 +74,8 @@ Sigmoid <- R6Class("Sigmoid",
   ),
 
   private = list(
+    .isCdf = 0L,
+    .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       C_SigmoidKernelPdf(x, log)
     }

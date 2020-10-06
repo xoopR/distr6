@@ -149,6 +149,7 @@ Epanechnikov <- R6Class("Epanechnikov",
   ),
 
   private = list(
+    .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       C_EpanechnikovKernelPdf(x, log)
     },

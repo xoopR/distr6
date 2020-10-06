@@ -108,7 +108,7 @@ The squared 2-norm of the cdf is defined by
 where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
 are the distribution support limits.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Epanechnikov$cdfSquared2Norm(x = 0, upper = Inf)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Epanechnikov$cdfSquared2Norm(x = 0, upper = 0)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

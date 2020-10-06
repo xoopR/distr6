@@ -11,6 +11,7 @@
 #' @export
 Kernel <- R6Class("Kernel",
   inherit = Distribution,
+  lock_objects = FALSE,
   public = list(
     package = "This is now deprecated. Use $packages instead.",
     packages = NULL,
@@ -68,6 +69,10 @@ Kernel <- R6Class("Kernel",
   ),
 
   private = list(
+    .isPdf = 1L,
+    .isCdf = 1L,
+    .isQuantile = 1L,
+    .isRand = 1L,
     .log = TRUE,
     .traits = list(valueSupport = "continuous", variateForm = "univariate"),
     .properties = list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"),

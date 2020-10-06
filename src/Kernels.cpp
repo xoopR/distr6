@@ -239,6 +239,28 @@ NumericVector C_SilvermanKernelPdf(NumericVector x, bool logp) {
 }
 
 // [[Rcpp::export]]
+NumericVector C_SilvermanKernelCdf(NumericVector x, bool lower, bool logp) {
+  NumericVector ret(x.size());
+
+  for (int i = 0; i < x.size(); i++){
+    if (x[i] <= 0) {
+      ret[i] = 0.5 * exp(x[i]/sqrt(2)) * cos(x[i]/sqrt(2));
+    } else {
+      ret[i] = 1 - (0.5 * exp(-x[i]/sqrt(2)) * cos(x[i]/sqrt(2)));
+    }
+
+    if (!lower) {
+      ret[i] = 1 - ret[i];
+    }
+    if (logp) {
+      ret[i] = log(ret[i]);
+    }
+  }
+
+  return ret;
+}
+
+// [[Rcpp::export]]
 NumericVector C_TriangularKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
