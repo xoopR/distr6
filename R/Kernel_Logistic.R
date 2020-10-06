@@ -61,8 +61,17 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' \deqn{\int_a^b (F_X(u))^2 du}
     #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    cdfSquared2Norm = function(x = 0, upper = Inf) {
+    cdfSquared2Norm = function(x = 0, upper = 0) {
 
+      ret <- numeric(length(x))
+      for(i in seq_along(x)){
+        if (x[i] == 0) {
+        ret[i] = log(1 + exp(-upper[i])) + upper[i] -  exp(upper[i]) / (exp(upper[i]) + 1)
+        } else {
+          ret[i] = (exp(x[i]) * log((exp(upper[i]) + exp(x[i]))/exp(x[i])) - log(exp(upper[i]) + 1))/(exp(x[i]) - 1)
+        }
+      }
+      return(ret)
     },
 
     #' @description

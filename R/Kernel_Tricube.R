@@ -470,7 +470,7 @@ Tricube <- R6Class("Tricube",
 
       ret = numeric(length(x))
 
-      for (i in seq_along(length(x))) {
+      for (i in seq_along(x)) {
 
         if (x[i] >= 0 & x[i] <= 1) {
           if ( upper[i] <= x[i] - 1) {
@@ -483,20 +483,20 @@ Tricube <- R6Class("Tricube",
             ret[i] = f1(upper  = 0, x = x[i]) + f2(upper = x[i], x = x[i]) + f3(upper = upper[i], x  = x[i])
           } else if (upper[i] >= 1 & upper[i] <= x[i] + 1) {
             ret[i] = f1(upper  = 0, x = x[i]) + f2(upper = x[i], x = x[i]) + f3(upper = 1, x = x[i]) + f4(upper = upper[i], x =x[i])
-          } else if (upper >= x[i] + 1) {
+          } else if (upper[i] >= x[i] + 1) {
             ret[i] = f1(upper  = 0, x = x[i]) + f2(upper = x[i], x = x[i]) + f3(upper = 1, x = x[i]) + f4(upper = x[i] + 1, x = x[i]) +
               (upper[i] - x[i] - 1)
           }
         } else if (x[i] >= 1 & x[i] <= 2) {
-          if (upper <= x[i] - 1) {
+          if (upper[i] <= x[i] - 1) {
             ret[i] = 0
           } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
             ret[i] = f5(upper = upper[i], x = x[i])
           } else if (upper[i] >= 1 & upper[i] <= x[i]) {
             ret[i] = f5(upper = 1, x = x[i]) + f6(upper = upper[i], x= x[i])
-          } else if (upper >= x[i] & upper <= x[i] + 1) {
+          } else if (upper[i] >= x[i] & upper[i] <= x[i] + 1) {
             ret[i] = f5(upper = 1, x = x[i]) + f6(upper = x[i], x= x[i]) + f7(upper = upper[i], x = x[i])
-          } else if (upper >= x[i] + 1) {
+          } else if (upper[i] >= x[i] + 1) {
             ret[i] = f5(upper = 1, x = x[i]) + f6(upper = x[i], x= x[i]) + f7(upper = x[i] + 1, x = x[i])+ (upper[i] - x[i] - 1)
           }
         } else if (x[i] >= 2) {
@@ -523,7 +523,7 @@ Tricube <- R6Class("Tricube",
             ret[i] = f8(upper = x[i], x= x[i]) + f9(upper = 0, x= x[i]) + f10(upper = upper[i], x= x[i])
           } else if (upper[i] >= x[i] + 1 & upper[i] <= 1) {
             ret[i] = f8(upper = x[i], x= x[i]) + f9(upper = 0, x= x[i]) + f10(upper = x[i]+1, x= x[i]) + f11(upper = upper[i], x = x[i])
-          } else if (upper >= 1) {
+          } else if (upper[i] >= 1) {
             ret = f8(upper = x[i], x= x[i]) + f9(upper = 0, x= x[i]) + f10(upper = x[i]+1, x= x[i]) + f11(upper = 1, x = x[i]) + (upper[i] - 1)
           }
         } else if (x[i] >= -2 & x[i] <= -1) {
