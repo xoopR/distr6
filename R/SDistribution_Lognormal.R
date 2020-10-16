@@ -98,7 +98,8 @@ Lognormal <- R6Class("Lognormal",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       unlist(self$getParameterValue("mean"))
     },
 
@@ -106,6 +107,7 @@ Lognormal <- R6Class("Lognormal",
     #' The mode of a probability distribution is the point at which the pdf is
     #' a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
     #' maxima).
+    #' @param ... Unused.
     mode = function(which = "all") {
       exp(unlist(self$getParameterValue("meanlog")) - unlist(self$getParameterValue("varlog")))
     },
@@ -123,7 +125,8 @@ Lognormal <- R6Class("Lognormal",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       unlist(self$getParameterValue("var"))
     },
 
@@ -132,7 +135,8 @@ Lognormal <- R6Class("Lognormal",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       varlog <- unlist(self$getParameterValue("varlog"))
       return(sqrt(exp(varlog) - 1) * (exp(varlog) + 2))
     },
@@ -143,7 +147,8 @@ Lognormal <- R6Class("Lognormal",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       varlog <- unlist(self$getParameterValue("varlog"))
       if (excess) {
         return((exp(4 * varlog) + 2 * exp(3 * varlog) + 3 * exp(2 * varlog) - 6))
@@ -157,7 +162,8 @@ Lognormal <- R6Class("Lognormal",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       log(sqrt(2 * pi) * unlist(self$getParameterValue("sdlog")) *
         exp(unlist(self$getParameterValue("meanlog")) + 0.5), base)
     },
@@ -165,14 +171,16 @@ Lognormal <- R6Class("Lognormal",
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       return(NaN)
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     },
 

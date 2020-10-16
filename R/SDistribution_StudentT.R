@@ -59,7 +59,8 @@ StudentT <- R6Class("StudentT",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       df <- unlist(self$getParameterValue("df"))
       mean <- rep(NaN, length(df))
       mean[df > 1] <- 0
@@ -79,7 +80,8 @@ StudentT <- R6Class("StudentT",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       df <- unlist(self$getParameterValue("df"))
       var <- rep(NaN, length(df))
       var[df > 2] <- df[df > 2] / (df[df > 2] - 2)
@@ -91,7 +93,8 @@ StudentT <- R6Class("StudentT",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       df <- unlist(self$getParameterValue("df"))
       skew <- rep(NaN, length(df))
       skew[df > 3] <- 0
@@ -104,7 +107,8 @@ StudentT <- R6Class("StudentT",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       df <- unlist(self$getParameterValue("df"))
       exkurtosis <- rep(NaN, length(df))
       exkurtosis[df > 4] <- 6 / (df[df > 4] - 4)
@@ -121,7 +125,8 @@ StudentT <- R6Class("StudentT",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       df <- unlist(self$getParameterValue("df"))
       return((((df + 1) / 2) * (digamma((1 + df) / 2) - digamma(df / 2))) +
         (log(sqrt(df) * beta(df / 2, 1 / 2), base)))
@@ -130,14 +135,16 @@ StudentT <- R6Class("StudentT",
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       return(NaN)
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    cf = function(t) {
+    #' @param ... Unused.
+    cf = function(t, ...) {
       df <- self$getParameterValue("df")
       return((besselK(sqrt(df) * abs(t), df / 2) * ((sqrt(df) * abs(t))^(df / 2))) / # nolint
                (gamma(df / 2) * 2^(df / 2 - 1))) # nolint
@@ -146,7 +153,8 @@ StudentT <- R6Class("StudentT",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     }
   ),

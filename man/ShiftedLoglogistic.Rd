@@ -193,9 +193,16 @@ The arithmetic mean of a (discrete) probability distribution X is the expectatio
 \deqn{E_X(X) = \sum p_X(x)*x}
 with an integration analogue for continuous distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$mean()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$mean(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-mode"></a>}}
@@ -239,9 +246,16 @@ The variance of a distribution is defined by the formula
 where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$variance()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$variance(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pgf"></a>}}
@@ -251,7 +265,7 @@ The probability generating function is defined by
 \deqn{pgf_X(z) = E_X[exp(z^x)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$pgf(z)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$pgf(z, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -259,6 +273,8 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 \describe{
 \item{\code{z}}{\code{(integer(1))} \cr
 z integer to evaluate probability generating function at.}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }

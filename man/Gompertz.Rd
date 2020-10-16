@@ -189,7 +189,7 @@ The probability generating function is defined by
 \deqn{pgf_X(z) = E_X[exp(z^x)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Gompertz$pgf(z)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Gompertz$pgf(z, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -197,6 +197,8 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 \describe{
 \item{\code{z}}{\code{(integer(1))} \cr
 z integer to evaluate probability generating function at.}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }

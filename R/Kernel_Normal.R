@@ -59,7 +59,8 @@ NormalKernel <- R6Class("NormalKernel",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       return(1)
     }
   ),

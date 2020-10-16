@@ -60,7 +60,8 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       df <- unlist(self$getParameterValue("df"))
       location <- unlist(self$getParameterValue("location"))
 
@@ -75,7 +76,8 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       df <- unlist(self$getParameterValue("df"))
       mu <- unlist(self$getParameterValue("location"))
       var <- rep(NaN, length(mu))

@@ -558,14 +558,15 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of means from each wrapped [Distribution].
-    mean = function() {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    mean = function(...) {
       if (self$distlist) {
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$mean(), error = NaN)
+          ifnerror(self[i]$mean(...), error = NaN)
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$mean
-        formals(f) <- list(self = self)
+        formals(f) <- c(list(self = self), alist(... = ))
         ret <- f()
       }
 
@@ -615,14 +616,15 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of variances from each wrapped [Distribution].
-    variance = function() {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    variance = function(...) {
       if (self$distlist) {
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$variance(), error = NaN)
+          ifnerror(self[i]$variance(...), error = NaN)
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$variance
-        formals(f) <- list(self = self)
+        formals(f) <- c(list(self = self), alist(... = ))
         ret <- f()
       }
 
@@ -638,14 +640,15 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of skewness from each wrapped [Distribution].
-    skewness = function() {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    skewness = function(...) {
       if (self$distlist) {
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$skewness(), error = NaN)
+          ifnerror(self[i]$skewness(...), error = NaN)
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$skewness
-        formals(f) <- list(self = self)
+        formals(f) <- c(list(self = self), alist(... = ))
         ret <- f()
       }
 
@@ -656,15 +659,16 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of kurtosis from each wrapped [Distribution].
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    kurtosis = function(excess = TRUE, ...) {
 
       if (self$distlist) {
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$kurtosis(excess), error = NaN)
+          ifnerror(self[i]$kurtosis(excess, ...), error = NaN)
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$kurtosis
-        formals(f) <- list(self = self, excess = excess)
+        formals(f) <- c(list(self = self, excess = excess), alist(... = ))
         ret <- f()
       }
 
@@ -675,14 +679,15 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of entropy from each wrapped [Distribution].
-    entropy = function(base = 2) {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    entropy = function(base = 2, ...) {
       if (self$distlist) {
         ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-          ifnerror(self[i]$entropy(base), error = NaN)
+          ifnerror(self[i]$entropy(base, ...), error = NaN)
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$entropy
-        formals(f) <- list(self = self, base = base)
+        formals(f) <- c(list(self = self, base = base), alist(... = ))
         ret <- f()
       }
 
@@ -693,13 +698,14 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of mgf from each wrapped [Distribution].
-    mgf = function(t) {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    mgf = function(t, ...) {
       if (!self$distlist) {
         warning("mgf not currently efficiently vectorised, may be slow.")
       }
 
       ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$mgf(t), error = NaN)
+        ifnerror(self[i]$mgf(t, ...), error = NaN)
       })
 
       # FIXME - VECTORISE PROPERLY
@@ -721,13 +727,14 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of cf from each wrapped [Distribution].
-    cf = function(t) {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    cf = function(t, ...) {
       if (!self$distlist) {
         warning("cf not currently efficiently vectorised, may be slow.")
       }
 
       ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$cf(t), error = NaN)
+        ifnerror(self[i]$cf(t, ...), error = NaN)
       })
 
       # FIXME - VECTORISE PROPERLY
@@ -749,13 +756,14 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns named vector of pgf from each wrapped [Distribution].
-    pgf = function(z) {
+    #' @param ... Passed to [CoreStatistics]`$genExp` if numeric.
+    pgf = function(z, ...) {
       if (!self$distlist) {
         warning("pgf not currently efficiently vectorised, may be slow.")
       }
 
       ret <- sapply(seq(nrow(private$.modelTable)), function(i) {
-        ifnerror(self[i]$pgf(z), error = NaN)
+        ifnerror(self[i]$pgf(z, ...), error = NaN)
       })
 
       # FIXME - VECTORISE PROPERLY

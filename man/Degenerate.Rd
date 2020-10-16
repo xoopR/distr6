@@ -164,9 +164,16 @@ The arithmetic mean of a (discrete) probability distribution X is the expectatio
 \deqn{E_X(X) = \sum p_X(x)*x}
 with an integration analogue for continuous distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$mean()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$mean(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-mode"></a>}}
@@ -198,9 +205,16 @@ The variance of a distribution is defined by the formula
 where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$variance()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$variance(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-skewness"></a>}}
@@ -211,9 +225,16 @@ The skewness of a distribution is defined by the third standardised moment,
 where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
 distribution and \eqn{\sigma} is the standard deviation of the distribution.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$skewness()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$skewness(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-kurtosis"></a>}}
@@ -225,7 +246,7 @@ where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of t
 distribution and \eqn{\sigma} is the standard deviation of the distribution.
 Excess Kurtosis is Kurtosis - 3.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$kurtosis(excess = TRUE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -233,6 +254,8 @@ Excess Kurtosis is Kurtosis - 3.
 \describe{
 \item{\code{excess}}{\code{(logical(1))} \cr
 If \code{TRUE} (default) excess kurtosis returned.}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }
@@ -246,7 +269,7 @@ The entropy of a (discrete) distribution is defined by
 where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
 continuous distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$entropy(base = 2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$entropy(base = 2, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -254,6 +277,8 @@ continuous distributions.
 \describe{
 \item{\code{base}}{\code{(integer(1))} \cr
 Base of the entropy logarithm, default = 2 (Shannon entropy)}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }
@@ -266,7 +291,7 @@ The moment generating function is defined by
 \deqn{mgf_X(t) = E_X[exp(xt)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$mgf(t)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$mgf(t, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -274,6 +299,8 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 \describe{
 \item{\code{t}}{\code{(integer(1))} \cr
 t integer to evaluate function at.}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }
@@ -286,7 +313,7 @@ The characteristic function is defined by
 \deqn{cf_X(t) = E_X[exp(xti)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$cf(t)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$cf(t, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -294,6 +321,8 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 \describe{
 \item{\code{t}}{\code{(integer(1))} \cr
 t integer to evaluate function at.}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }

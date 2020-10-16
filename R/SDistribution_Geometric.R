@@ -74,7 +74,8 @@ Geometric <- R6Class("Geometric",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       if (self$getParameterValue("trials")[[1]]) {
         return(1 / unlist(self$getParameterValue("prob")))
       } else {
@@ -100,7 +101,8 @@ Geometric <- R6Class("Geometric",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       prob <- unlist(self$getParameterValue("prob"))
       return((1 - prob) / (prob^2))
     },
@@ -110,7 +112,8 @@ Geometric <- R6Class("Geometric",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       prob <- unlist(self$getParameterValue("prob"))
       return((2 - prob) / sqrt(1 - prob))
     },
@@ -121,7 +124,8 @@ Geometric <- R6Class("Geometric",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       prob <- unlist(self$getParameterValue("prob"))
       exkurtosis <- 6 + (prob^2 / (1 - prob))
       if (excess) {
@@ -136,7 +140,8 @@ Geometric <- R6Class("Geometric",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       prob <- unlist(self$getParameterValue("prob"))
       return(((-(1 - prob) * log(1 - prob, base)) - (prob * log(prob, base))) / prob) # nolint
     },
@@ -144,7 +149,8 @@ Geometric <- R6Class("Geometric",
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       if (self$getParameterValue("trials")[[1]]) {
         if (t < -log(1 - self$getParameterValue("prob"))) {
           return((self$getParameterValue("prob") * exp(t)) /
@@ -161,7 +167,8 @@ Geometric <- R6Class("Geometric",
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    cf = function(t) {
+    #' @param ... Unused.
+    cf = function(t, ...) {
       if (self$getParameterValue("trials")[[1]]) {
         return((self$getParameterValue("prob") * exp(1i * t)) /
                  (1 - (1 - self$getParameterValue("prob")) * exp(1i * t)))
@@ -174,7 +181,8 @@ Geometric <- R6Class("Geometric",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       if (self$getParameterValue("trials")[[1]]) {
         return((self$getParameterValue("prob") * z) / (1 - z * self$getParameterValue("qprob")))
       } else {

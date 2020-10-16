@@ -58,7 +58,8 @@ Gumbel <- R6Class("Gumbel",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       unlist(self$getParameterValue("location")) -
         digamma(1) * unlist(self$getParameterValue("scale"))
     },
@@ -85,7 +86,8 @@ Gumbel <- R6Class("Gumbel",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       (pi * unlist(self$getParameterValue("scale")))^2 / 6
     },
 
@@ -96,7 +98,8 @@ Gumbel <- R6Class("Gumbel",
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #'
     #' Apery's Constant to 16 significant figures is used in the calculation.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       rep(
         (12 * sqrt(6) * 1.202056903159594285399738161511449990764986292) / pi^3,
         length(self$getParameterValue("scale"))
@@ -109,7 +112,8 @@ Gumbel <- R6Class("Gumbel",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       if (excess) {
         return(rep(2.4, length(self$getParameterValue("scale"))))
       } else {
@@ -122,14 +126,16 @@ Gumbel <- R6Class("Gumbel",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       log(unlist(self$getParameterValue("scale")), base) - digamma(1) + 1
     },
 
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       return(gamma(1 - self$getParameterValue("scale") * t) *
                exp(self$getParameterValue("location") * t))
     },
@@ -138,8 +144,9 @@ Gumbel <- R6Class("Gumbel",
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
     #'
-    #' [pracma::gammaz()] is used in to allow complex inputs.
-    cf = function(t) {
+    #' [pracma::gammaz()] is used in this function to allow complex inputs.
+    #' @param ... Unused.
+    cf = function(t, ...) {
       return(pracma::gammaz(1 - self$getParameterValue("scale") * t * 1i) *
                exp(1i * self$getParameterValue("location") * t))
     },
@@ -147,7 +154,8 @@ Gumbel <- R6Class("Gumbel",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     }
   ),

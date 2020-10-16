@@ -181,9 +181,16 @@ The arithmetic mean of a (discrete) probability distribution X is the expectatio
 \deqn{E_X(X) = \sum p_X(x)*x}
 with an integration analogue for continuous distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StudentTNoncentral$mean()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StudentTNoncentral$mean(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-variance"></a>}}
@@ -194,9 +201,16 @@ The variance of a distribution is defined by the formula
 where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StudentTNoncentral$variance()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StudentTNoncentral$variance(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

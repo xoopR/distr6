@@ -157,9 +157,16 @@ The arithmetic mean of a (discrete) probability distribution X is the expectatio
 \deqn{E_X(X) = \sum p_X(x)*x}
 with an integration analogue for continuous distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$mean()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$mean(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-mode"></a>}}
@@ -191,9 +198,16 @@ The variance of a distribution is defined by the formula
 where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$variance()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$variance(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-entropy"></a>}}
@@ -204,7 +218,7 @@ The entropy of a (discrete) distribution is defined by
 where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
 continuous distributions.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$entropy(base = 2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$entropy(base = 2, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -212,6 +226,8 @@ continuous distributions.
 \describe{
 \item{\code{base}}{\code{(integer(1))} \cr
 Base of the entropy logarithm, default = 2 (Shannon entropy)}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }
@@ -224,7 +240,7 @@ The probability generating function is defined by
 \deqn{pgf_X(z) = E_X[exp(z^x)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$pgf(z)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$pgf(z, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -232,6 +248,8 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 \describe{
 \item{\code{z}}{\code{(integer(1))} \cr
 z integer to evaluate probability generating function at.}
+
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }

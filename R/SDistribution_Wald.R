@@ -70,7 +70,8 @@ Wald <- R6Class("Wald",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       unlist(self$getParameterValue("mean"))
     },
 
@@ -89,7 +90,8 @@ Wald <- R6Class("Wald",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       unlist(self$getParameterValue("mean"))^3 / unlist(self$getParameterValue("shape"))
     },
 
@@ -98,7 +100,8 @@ Wald <- R6Class("Wald",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       3 * (unlist(self$getParameterValue("mean")) / unlist(self$getParameterValue("shape")))^0.5
     },
 
@@ -108,7 +111,8 @@ Wald <- R6Class("Wald",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       if (excess) {
         return(15 * unlist(self$getParameterValue("mean")) /
           unlist(self$getParameterValue("shape")))
@@ -121,7 +125,8 @@ Wald <- R6Class("Wald",
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       mean <- self$getParameterValue("mean")
       shape <- self$getParameterValue("shape")
       return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * t / shape))))
@@ -130,7 +135,8 @@ Wald <- R6Class("Wald",
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    cf = function(t) {
+    #' @param ... Unused.
+    cf = function(t, ...) {
       mean <- self$getParameterValue("mean")
       shape <- self$getParameterValue("shape")
       return(exp(shape / mean * (1 - sqrt(1 - 2 * mean^2 * 1i * t / shape))))
@@ -139,7 +145,8 @@ Wald <- R6Class("Wald",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     }
   ),

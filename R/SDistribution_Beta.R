@@ -61,7 +61,8 @@ Beta <- R6Class("Beta",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       s1 <- unlist(self$getParameterValue("shape1"))
       s2 <- unlist(self$getParameterValue("shape2"))
 
@@ -111,7 +112,8 @@ Beta <- R6Class("Beta",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       shape1 <- unlist(self$getParameterValue("shape1"))
       shape2 <- unlist(self$getParameterValue("shape2"))
       return(shape1 * shape2 * ((shape1 + shape2)^-2) * (shape1 + shape2 + 1)^-1)
@@ -122,7 +124,8 @@ Beta <- R6Class("Beta",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       shape1 <- unlist(self$getParameterValue("shape1"))
       shape2 <- unlist(self$getParameterValue("shape2"))
       return(2 * (shape2 - shape1) * ((shape1 + shape2 + 1)^0.5) * ((shape1 + shape2 + 2)^-1) *
@@ -135,7 +138,8 @@ Beta <- R6Class("Beta",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       shape1 <- unlist(self$getParameterValue("shape1"))
       shape2 <- unlist(self$getParameterValue("shape2"))
 
@@ -156,7 +160,8 @@ Beta <- R6Class("Beta",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       shape1 <- unlist(self$getParameterValue("shape1"))
       shape2 <- unlist(self$getParameterValue("shape2"))
       return(log(beta(shape1, shape2), base) - ((shape1 - 1) * digamma(shape1)) -
@@ -166,7 +171,8 @@ Beta <- R6Class("Beta",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     },
 

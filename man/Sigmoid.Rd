@@ -127,9 +127,16 @@ The variance of a distribution is defined by the formula
 where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Sigmoid$variance()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Sigmoid$variance(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

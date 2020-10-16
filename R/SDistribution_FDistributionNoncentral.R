@@ -68,7 +68,8 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))
       loc <- unlist(self$getParameterValue("location"))
@@ -83,7 +84,8 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       df1 <- unlist(self$getParameterValue("df1"))
       df2 <- unlist(self$getParameterValue("df2"))
       loc <- unlist(self$getParameterValue("location"))

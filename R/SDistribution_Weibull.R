@@ -61,7 +61,8 @@ Weibull <- R6Class("Weibull",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       unlist(self$getParameterValue("scale")) *
         gamma(1 + 1 / unlist(self$getParameterValue("shape")))
     },
@@ -93,7 +94,8 @@ Weibull <- R6Class("Weibull",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))
       return(scale^2 * (gamma(1 + 2 / shape) - gamma(1 + 1 / shape)^2))
@@ -104,7 +106,8 @@ Weibull <- R6Class("Weibull",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))
       mu <- self$mean()
@@ -118,7 +121,8 @@ Weibull <- R6Class("Weibull",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       skew <- self$skewness()
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))
@@ -140,7 +144,8 @@ Weibull <- R6Class("Weibull",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       scale <- unlist(self$getParameterValue("scale"))
       shape <- unlist(self$getParameterValue("shape"))
       return(-digamma(1) * (1 - 1 / shape) + log(scale / shape, base) + 1)
@@ -149,7 +154,8 @@ Weibull <- R6Class("Weibull",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     },
 

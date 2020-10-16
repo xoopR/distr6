@@ -101,7 +101,8 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       return(pi^2 / 3)
     }
   ),

@@ -78,7 +78,8 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       as.numeric(colMeans(self$getParameterValue("data")))
     },
 
@@ -87,7 +88,8 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       data <- self$getParameterValue("data")
       n <- nrow(data)
       as.numeric(apply(data, 2, function(x) var(x) * ((n - 1) / n)))

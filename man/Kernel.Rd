@@ -102,7 +102,7 @@ which mode to return.}
 \subsection{Method \code{mean()}}{
 Calculates the mean (expectation) of the distribution.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kernel$mean()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kernel$mean(...)}\if{html}{\out{</div>}}
 }
 
 }

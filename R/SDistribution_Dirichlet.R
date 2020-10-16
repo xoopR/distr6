@@ -74,7 +74,8 @@ Dirichlet <- R6Class("Dirichlet",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       params <- self$getParameterValue("params")
       if (checkmate::testList(params)) {
         return(t(sapply(params, function(x) x / sum(x))))
@@ -109,7 +110,8 @@ Dirichlet <- R6Class("Dirichlet",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       params <- self$getParameterValue("params")
 
       if (checkmate::testList(params)) {
@@ -138,7 +140,8 @@ Dirichlet <- R6Class("Dirichlet",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       params <- self$getParameterValue("params")
 
       if (checkmate::testList(params)) {
@@ -155,7 +158,8 @@ Dirichlet <- R6Class("Dirichlet",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     }
   ),

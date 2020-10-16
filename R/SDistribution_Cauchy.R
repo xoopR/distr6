@@ -60,7 +60,8 @@ Cauchy <- R6Class("Cauchy",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       rep(NaN, length(self$getParameterValue("location")))
     },
 
@@ -77,7 +78,8 @@ Cauchy <- R6Class("Cauchy",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       rep(NaN, length(self$getParameterValue("location")))
     },
 
@@ -86,7 +88,8 @@ Cauchy <- R6Class("Cauchy",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       rep(NaN, length(self$getParameterValue("location")))
     },
 
@@ -96,7 +99,8 @@ Cauchy <- R6Class("Cauchy",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       rep(NaN, length(self$getParameterValue("location")))
     },
 
@@ -105,21 +109,24 @@ Cauchy <- R6Class("Cauchy",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       return(log(4 * pi * unlist(self$getParameterValue("scale")), base))
     },
 
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       return(NaN)
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    cf = function(t) {
+    #' @param ... Unused.
+    cf = function(t, ...) {
       return(exp((self$getParameterValue("location") * 1i * t) -
         (self$getParameterValue("scale") * abs(t))))
     },
@@ -127,7 +134,8 @@ Cauchy <- R6Class("Cauchy",
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     }
   ),

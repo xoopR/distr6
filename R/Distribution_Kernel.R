@@ -40,7 +40,8 @@ Kernel <- R6Class("Kernel",
 
     #' @description
     #' Calculates the mean (expectation) of the distribution.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       return(0)
     },
 

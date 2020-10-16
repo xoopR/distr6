@@ -58,7 +58,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       shape <- unlist(self$getParameterValue("shape"))
       scale <- unlist(self$getParameterValue("scale"))
       mean <- rep(NaN, length(shape))
@@ -79,7 +80,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       shape <- unlist(self$getParameterValue("shape"))
       scale <- unlist(self$getParameterValue("scale"))
       var <- rep(NaN, length(shape))
@@ -92,7 +94,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       shape <- unlist(self$getParameterValue("shape"))
       skew <- rep(NaN, length(shape))
       skew[shape > 3] <- (4 * sqrt(shape[shape > 3] - 2)) / (shape[shape > 3] - 3)
@@ -105,7 +108,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       shape <- unlist(self$getParameterValue("shape"))
       kur <- rep(NaN, length(shape))
       kur[shape > 4] <- (6 * (5 * shape[shape > 4] - 11)) /
@@ -122,7 +126,8 @@ InverseGamma <- R6Class("InverseGamma",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       shape <- unlist(self$getParameterValue("shape"))
       scale <- unlist(self$getParameterValue("scale"))
 
@@ -132,14 +137,16 @@ InverseGamma <- R6Class("InverseGamma",
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       return(NaN)
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       return(NaN)
     }
   ),

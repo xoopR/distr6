@@ -274,9 +274,16 @@ Number of distributions to include when printing.}
 \subsection{Method \code{mean()}}{
 Returns named vector of means from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$mean()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$mean(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-mode"></a>}}
@@ -313,9 +320,16 @@ Returns named vector of medians from each wrapped \link{Distribution}.
 \subsection{Method \code{variance()}}{
 Returns named vector of variances from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$variance()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$variance(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-skewness"></a>}}
@@ -323,9 +337,16 @@ Returns named vector of variances from each wrapped \link{Distribution}.
 \subsection{Method \code{skewness()}}{
 Returns named vector of skewness from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$skewness()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$skewness(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-kurtosis"></a>}}
@@ -333,7 +354,7 @@ Returns named vector of skewness from each wrapped \link{Distribution}.
 \subsection{Method \code{kurtosis()}}{
 Returns named vector of kurtosis from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$kurtosis(excess = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$kurtosis(excess = TRUE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -341,6 +362,8 @@ Returns named vector of kurtosis from each wrapped \link{Distribution}.
 \describe{
 \item{\code{excess}}{\code{(logical(1))} \cr
 If \code{TRUE} (default) excess kurtosis returned.}
+
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
 }
 \if{html}{\out{</div>}}
 }
@@ -351,7 +374,7 @@ If \code{TRUE} (default) excess kurtosis returned.}
 \subsection{Method \code{entropy()}}{
 Returns named vector of entropy from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$entropy(base = 2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$entropy(base = 2, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -359,6 +382,8 @@ Returns named vector of entropy from each wrapped \link{Distribution}.
 \describe{
 \item{\code{base}}{\code{(integer(1))} \cr
 Base of the entropy logarithm, default = 2 (Shannon entropy)}
+
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
 }
 \if{html}{\out{</div>}}
 }
@@ -369,7 +394,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)}
 \subsection{Method \code{mgf()}}{
 Returns named vector of mgf from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$mgf(t)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$mgf(t, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -377,6 +402,8 @@ Returns named vector of mgf from each wrapped \link{Distribution}.
 \describe{
 \item{\code{t}}{\code{(integer(1))} \cr
 t integer to evaluate function at.}
+
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
 }
 \if{html}{\out{</div>}}
 }
@@ -387,7 +414,7 @@ t integer to evaluate function at.}
 \subsection{Method \code{cf()}}{
 Returns named vector of cf from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$cf(t)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$cf(t, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -395,6 +422,8 @@ Returns named vector of cf from each wrapped \link{Distribution}.
 \describe{
 \item{\code{t}}{\code{(integer(1))} \cr
 t integer to evaluate function at.}
+
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
 }
 \if{html}{\out{</div>}}
 }
@@ -405,7 +434,7 @@ t integer to evaluate function at.}
 \subsection{Method \code{pgf()}}{
 Returns named vector of pgf from each wrapped \link{Distribution}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$pgf(z)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$pgf(z, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -413,6 +442,8 @@ Returns named vector of pgf from each wrapped \link{Distribution}.
 \describe{
 \item{\code{z}}{\code{(integer(1))} \cr
 z integer to evaluate probability generating function at.}
+
+\item{\code{...}}{Passed to \link{CoreStatistics}\verb{$genExp} if numeric.}
 }
 \if{html}{\out{</div>}}
 }

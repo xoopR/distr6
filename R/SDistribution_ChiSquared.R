@@ -63,7 +63,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
-    mean = function() {
+    #' @param ... Unused.
+    mean = function(...) {
       unlist(self$getParameterValue("df"))
     },
 
@@ -80,7 +81,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
-    variance = function() {
+    #' @param ... Unused.
+    variance = function(...) {
       unlist(self$getParameterValue("df")) * 2
     },
 
@@ -89,7 +91,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    skewness = function() {
+    #' @param ... Unused.
+    skewness = function(...) {
       sqrt(8 / unlist(self$getParameterValue("df")))
     },
 
@@ -99,7 +102,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
-    kurtosis = function(excess = TRUE) {
+    #' @param ... Unused.
+    kurtosis = function(excess = TRUE, ...) {
       if (excess) {
         return(12 / unlist(self$getParameterValue("df")))
       } else {
@@ -112,7 +116,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
-    entropy = function(base = 2) {
+    #' @param ... Unused.
+    entropy = function(base = 2, ...) {
       df <- unlist(self$getParameterValue("df"))
       return(df / 2 + log(2 * gamma(df / 2), base) + ((1 - df / 2) * digamma(df / 2)))
     },
@@ -120,7 +125,8 @@ ChiSquared <- R6Class("ChiSquared",
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    mgf = function(t) {
+    #' @param ... Unused.
+    mgf = function(t, ...) {
       if (t < 0.5) {
         return((1 - 2 * t)^(-self$getParameterValue("df") / 2)) # nolint
       } else {
@@ -131,14 +137,16 @@ ChiSquared <- R6Class("ChiSquared",
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    cf = function(t) {
+    #' @param ... Unused.
+    cf = function(t, ...) {
       return((1 - 2i * t)^(-self$getParameterValue("df") / 2)) # nolint
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
-    pgf = function(z) {
+    #' @param ... Unused.
+    pgf = function(z, ...) {
       if (z > 0 & z < sqrt(exp(1))) {
         return((1 - 2 * log(z))^(-self$getParameterValue("df") / 2)) # nolint
       } else {
