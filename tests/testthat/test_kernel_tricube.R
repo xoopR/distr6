@@ -1,5 +1,3 @@
-library(testthat)
-
 test_that("autotest", {
   autotest_kernel(Tricube,
     shortname = "Tric",
