@@ -87,7 +87,7 @@ the pdf, $$f(x) = exp(-x^2/2)/\sqrt{2\pi}$$ over the support \(x \in \R\)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4.9000</span>
       </span>
     </div>
 
@@ -296,6 +296,7 @@ the pdf, $$f(x) = exp(-x^2/2)/\sqrt{2\pi}$$ over the support \(x \in \R\).</p>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href='../../distr6/html/Distribution.html#method-workingSupport'><code>distr6::Distribution$workingSupport()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="cdfSquared2Norm"><a href='../../distr6/html/Kernel.html#method-cdfSquared2Norm'><code>distr6::Kernel$cdfSquared2Norm()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean"><a href='../../distr6/html/Kernel.html#method-mean'><code>distr6::Kernel$mean()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median"><a href='../../distr6/html/Kernel.html#method-median'><code>distr6::Kernel$median()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode"><a href='../../distr6/html/Kernel.html#method-mode'><code>distr6::Kernel$mode()</code></a></span></p></li>
@@ -319,12 +320,15 @@ Decorators to add to the distribution during construction.</p></dd>
 $$\int_a^b (f_X(u))^2 du$$
 where X is the Distribution, \(f_X\) is its pdf and \(a, b\)
 are the distribution support limits.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>NormalKernel</span><span class='op'>$</span><span class='fu'>pdfSquared2Norm</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>NormalKernel</span><span class='op'>$</span><span class='fu'>pdfSquared2Norm</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='cn'>Inf</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><code>(numeric(1))</code> <br />
 Amount to shift the result.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1))</code> <br />
+Upper limit of the integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

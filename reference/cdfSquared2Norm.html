@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cumulative Distribution Function P-Norm — cdfPNorm • distr6</title>
+<title>Squared Cumulative Distribution Function 2-Norm — cdfSquared2Norm • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,8 @@
 
 
 
-<meta property="og:title" content="Cumulative Distribution Function P-Norm — cdfPNorm" />
-<meta property="og:description" content="The p-norm of the cdf evaluated between given limits or over the whole support." />
+<meta property="og:title" content="Squared Cumulative Distribution Function 2-Norm — cdfSquared2Norm" />
+<meta property="og:description" content="The squared 2-norm of the cdf evaluated up to a given limit, possibly shifted." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -221,16 +221,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cumulative Distribution Function P-Norm</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_ExoticStatistics.R'><code>R/DistributionDecorator_ExoticStatistics.R</code></a></small>
-    <div class="hidden name"><code>cdfPNorm.Rd</code></div>
+    <h1>Squared Cumulative Distribution Function 2-Norm</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/Distribution_Kernel.R'><code>R/Distribution_Kernel.R</code></a></small>
+    <div class="hidden name"><code>cdfSquared2Norm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The p-norm of the cdf evaluated between given limits or over the whole support.</p>
+    <p>The squared 2-norm of the cdf evaluated up to a given limit, possibly shifted.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cdfPNorm</span><span class='op'>(</span><span class='va'>object</span>, p <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='cn'>NULL</span>, upper <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cdfSquared2Norm</span><span class='op'>(</span><span class='va'>object</span>, x <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='cn'>Inf</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -240,22 +240,18 @@
       <td><p>Distribution.</p></td>
     </tr>
     <tr>
-      <th>p</th>
-      <td><p>p-norm to calculate.</p></td>
-    </tr>
-    <tr>
-      <th>lower</th>
-      <td><p>lower limit for integration, default is infimum.</p></td>
+      <th>x</th>
+      <td><p>amount to shift the result.</p></td>
     </tr>
     <tr>
       <th>upper</th>
-      <td><p>upper limit for integration, default is supremum.</p></td>
+      <td><p>upper limit of the integral.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Given p-norm of cdf evaluated between limits as a numeric.</p>
+    <p>Squared 2-norm of cdf evaluated between limits as a numeric.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

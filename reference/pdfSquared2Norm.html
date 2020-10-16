@@ -53,8 +53,7 @@
 
 
 <meta property="og:title" content="Squared Probability Density Function 2-Norm — pdfSquared2Norm" />
-<meta property="og:description" content="The squared 2-norm of the pdf evaluated over the whole support by default or given
-limits, possibly shifted." />
+<meta property="og:description" content="The squared 2-norm of the pdf evaluated up to a given limit, possibly shifted." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -87,7 +86,7 @@ limits, possibly shifted." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4.9000</span>
       </span>
     </div>
 
@@ -228,11 +227,10 @@ limits, possibly shifted." />
     </div>
 
     <div class="ref-description">
-    <p>The squared 2-norm of the pdf evaluated over the whole support by default or given
-limits, possibly shifted.</p>
+    <p>The squared 2-norm of the pdf evaluated up to a given limit, possibly shifted.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pdfSquared2Norm</span><span class='op'>(</span><span class='va'>object</span>, x <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>pdfSquared2Norm</span><span class='op'>(</span><span class='va'>object</span>, x <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='cn'>Inf</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,6 +242,10 @@ limits, possibly shifted.</p>
     <tr>
       <th>x</th>
       <td><p>amount to shift the result.</p></td>
+    </tr>
+    <tr>
+      <th>upper</th>
+      <td><p>upper limit of the integral.</p></td>
     </tr>
     </table>
 

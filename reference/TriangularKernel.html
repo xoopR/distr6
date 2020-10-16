@@ -88,7 +88,7 @@ over the support \(x \in (-1,1)\)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4.9000</span>
       </span>
     </div>
 
@@ -269,6 +269,7 @@ over the support \(x \in (-1,1)\).</p>
 
 <ul>
 <li><p><a href='#method-pdfSquared2Norm'><code>TriangularKernel$pdfSquared2Norm()</code></a></p></li>
+<li><p><a href='#method-cdfSquared2Norm'><code>TriangularKernel$cdfSquared2Norm()</code></a></p></li>
 <li><p><a href='#method-variance'><code>TriangularKernel$variance()</code></a></p></li>
 <li><p><a href='#method-clone'><code>TriangularKernel$clone()</code></a></p></li>
 </ul>
@@ -304,12 +305,32 @@ over the support \(x \in (-1,1)\).</p>
 $$\int_a^b (f_X(u))^2 du$$
 where X is the Distribution, \(f_X\) is its pdf and \(a, b\)
 are the distribution support limits.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TriangularKernel</span><span class='op'>$</span><span class='fu'>pdfSquared2Norm</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>TriangularKernel</span><span class='op'>$</span><span class='fu'>pdfSquared2Norm</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='cn'>Inf</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><code>(numeric(1))</code> <br />
 Amount to shift the result.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1))</code> <br />
+Upper limit of the integral.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-cdfSquared2Norm"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cdfSquared2Norm.html'>cdfSquared2Norm()</a></code></h3>
+<p>The squared 2-norm of the cdf is defined by
+$$\int_a^b (F_X(u))^2 du$$
+where X is the Distribution, \(F_X\) is its pdf and \(a, b\)
+are the distribution support limits.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>TriangularKernel</span><span class='op'>$</span><span class='fu'>cdfSquared2Norm</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>x</code></dt><dd><p><code>(numeric(1))</code> <br />
+Amount to shift the result.</p></dd>
+
+<dt><code>upper</code></dt><dd><p><code>(numeric(1))</code> <br />
+Upper limit of the integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
