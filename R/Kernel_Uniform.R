@@ -27,19 +27,31 @@ UniformKernel <- R6Class("UniformKernel",
       for (i in seq_along(x)) {
         if (upper[i] == Inf) {
           if (abs(x[i]) >= 2) {
-            ret[i] = 0
+            ret[i] <- 0
           } else {
-            ret[i] = (1 / 4) * (2 - (abs(x[i])))
+            ret[i] <- (1 / 4) * (2 - (abs(x[i])))
           }
         } else{
           if (x[i] >= 0 & x[i] <= 2) {
-            if (upper[i] >= 1) {ret[i] = 1/4 * (2 - x[i])}
-            else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {ret[i] = 1/4 * (upper[i] - x[i] + 1)}
-            else if (upper[i] <= x[i] -1) {ret[i] = 0}
-          } else if (x[i] >= -2 & x[i] <= 0){
-            if(upper[i] >= (x[i] + 1)) {ret[i] = 1/4 * (2 + x[i])}
-            else if (upper[i] >= -1 & upper[i] <= (x[i] + 1)) {ret[i] = 1/4 * (upper[i] + 1)}
-            else if (upper[i] <= -1) {ret[i] = 0}
+            if (upper[i] >= 1) {
+              ret[i] <- 1 / 4 * (2 - x[i])
+            }
+            else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {
+              ret[i] <- 1 / 4 * (upper[i] - x[i] + 1)
+              }
+            else if (upper[i] <= x[i] - 1) {
+              ret[i] <- 0
+              }
+          } else if (x[i] >= -2 & x[i] <= 0) {
+            if (upper[i] >= (x[i] + 1)) {
+              ret[i] <- 1 / 4 * (2 + x[i])
+              }
+            else if (upper[i] >= -1 & upper[i] <= (x[i] + 1)) {
+              ret[i] <- 1 / 4 * (upper[i] + 1)
+              }
+            else if (upper[i] <= -1) {
+              ret[i] <- 0
+              }
           }
         }
       }
@@ -56,56 +68,59 @@ UniformKernel <- R6Class("UniformKernel",
 
       ret <- numeric(length(x))
 
-      for(i in seq_along(x)){
+      for (i in seq_along(x)) {
 
         if (x[i] >= 0 & x[i] <= 2) {
-          if(upper[i] <= -1) {
-            ret[i]= 0
+          if (upper[i] <= - 1) {
+            ret[i] <- 0
           } else if (upper[i] >= -1 & upper[i] <= x[i] - 1) {
-            ret[i] = 0
+            ret[i] <- 0
           } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
-            ret[i] =  (x[i]^3 + 2 * upper[i]^3 + 3 * upper[i]^2 * (2 - x[i])+ 6 * upper[i] * (1 - x[i]) - 3* x[i] + 2) / 24
+            ret[i] <-  (x[i]^3 + 2 * upper[i]^3 + 3 * upper[i]^2 * (2 - x[i]) +
+                          6 * upper[i] * (1 - x[i]) - 3 * x[i] + 2) / 24
           } else if (upper[i] >= 1 & upper[i] <= x[i] + 1) {
-            ret[i] = (x[i]^3 + 6 * upper[i]^2 + 12 * upper[i] - 12 * upper[i] * x[i] - 2) / 24
+            ret[i] <- (x[i]^3 + 6 * upper[i]^2 + 12 * upper[i] - 12 * upper[i] * x[i] - 2) / 24
           } else if (upper[i] >= x[i] + 1) {
-            ret[i] = (x[i]^3 - 6 * x[i]^2 - 12 * x[i] + 24 * upper[i] - 8) / 24
+            ret[i] <- (x[i]^3 - 6 * x[i]^2 - 12 * x[i] + 24 * upper[i] - 8) / 24
           }
-        } else if (x[i] >= -2 & x[i] <= 0) {
-          if(upper[i] <= x[i] -1) {
-            ret[i]= 0
-          } else if (upper[i] >= x[i] -1 & upper[i] <= - 1) {
-            ret[i] = 0
+        } else if (x[i] >= - 2 & x[i] <= 0) {
+          if (upper[i] <= x[i] - 1) {
+            ret[i] <- 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= - 1) {
+            ret[i] <- 0
           } else if (upper[i] >= - 1 & upper[i] <= x[i] + 1) {
-            ret[i] =  (2 * upper[i]^3 + 3 * upper[i]^2 * (2 - x[i])+ 6 * upper[i] * (1 - x[i]) - 3* x[i] + 2) / 24
+            ret[i] <-  (2 * upper[i]^3 + 3 * upper[i]^2 * (2 - x[i]) +
+                          6 * upper[i] * (1 - x[i]) - 3 * x[i] + 2) / 24
           } else if (upper[i] >= x[i] + 1 & upper[i] <= 1) {
-            ret[i] = (- x[i]^3 + 6 * (upper[i]^2 - x[i]^2) + 12 * (upper[i] -  x[i]) - 2) / 24
+            ret[i] <- (- x[i]^3 + 6 * (upper[i]^2 - x[i]^2) + 12 * (upper[i] -  x[i]) - 2) / 24
           } else if (upper[i] >= 1) {
-            ret[i] = (- x[i]^3 - 6 * x[i]^2 - 12 * x[i] + 24 * upper[i] - 8) / 24
+            ret[i] <- (- x[i]^3 - 6 * x[i]^2 - 12 * x[i] + 24 * upper[i] - 8) / 24
           }
         }
         else if (x[i] >= 2) {
           if (upper[i] <=  -1) {
-            ret[i] = 0
+            ret[i] <- 0
           } else if (upper[i] >= -1 & upper[i] <= 1) {
-            ret[i] = 0
-          } else if (upper[i] >= 1 & upper[i] <= x[i] - 1){
-            ret[i] = 0
+            ret[i] <- 0
+          } else if (upper[i] >= 1 & upper[i] <= x[i] - 1) {
+            ret[i] <- 0
           } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1) {
-            ret[i] = upper[i]^2/4 + (1/4)*upper[i]*(2 - 2*x[i]) + (1/4)*(1 - 2*x[i] + x[i]^2)
+            ret[i] <- upper[i]^2 / 4 + (1 / 4) * upper[i] * (2 - 2 * x[i]) +
+                      (1 / 4) * (1 - 2 * x[i] + x[i]^2)
           } else if (upper[i] >= x[i] + 1) {
-            ret[i] = upper[i] - x[i]
+            ret[i] <- upper[i] - x[i]
           }
         } else if (x[i] <= -2) {
           if (upper[i] <= x[i] - 1) {
-            ret[i] = 0
-          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1){
-            ret[i] = 0
+            ret[i] <- 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1) {
+            ret[i] <- 0
           } else if (upper[i] >= x[i] + 1 & upper[i] <= -1) {
-            ret[i] = 0
+            ret[i] <- 0
           } else if (upper[i] >= -1 & upper[i] <= 1) {
-            ret[i] = 1/4 + upper[i]/2 + upper[i]^2/4
+            ret[i] <- 1 / 4 + upper[i] / 2 + upper[i]^2 / 4
           } else if (upper[i] >= 1) {
-            ret[i]= upper[i]
+            ret[i] <- upper[i]
           }
         }
       }

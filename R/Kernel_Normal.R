@@ -40,19 +40,12 @@ NormalKernel <- R6Class("NormalKernel",
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
         if (upper[i] == Inf) {
-          ret[i] = (1 / (2 * sqrt(pi))) * exp(-(x[i] / 2)^2)
-        } else {ret[i] = exp(-(x[i]^2)/4)/(4 * sqrt(pi)) * (2 * pnorm((upper[i] - x[i]/2) * sqrt(2)) - 1 + 1)}
+          ret[i] <- (1 / (2 * sqrt(pi))) * exp(- (x[i] / 2)^2)
+        } else {
+          ret[i] <- exp(- (x[i]^2) / 4) / (4 * sqrt(pi)) *
+            (2 * pnorm((upper[i] - x[i] / 2) * sqrt(2)) - 1 + 1)}
       }
       return(ret)
-    },
-
-    #' @description
-    #' The squared 2-norm of the cdf is defined by
-    #' \deqn{\int_a^b (F_X(u))^2 du}
-    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
-    #' are the distribution support limits.
-    cdfSquared2Norm = function(x = 0, upper = Inf) {
-
     },
 
     #' @description

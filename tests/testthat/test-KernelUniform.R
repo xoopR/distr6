@@ -39,5 +39,3 @@ test_that("cdfsquared2norm x", {
   expect_rounded_equal(kern$cdfSquared2Norm(x = -0.5), 0.14583333)
   expect_rounded_equal(kern$cdfSquared2Norm(x = 2.5), 0.00000000)
 })
-
-

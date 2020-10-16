@@ -40,40 +40,45 @@ Silverman <- R6Class("Silverman",
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
         if (x[i] >= 0) {
-          if(upper[i] == Inf) {
-            ret[i] = (exp(-x[i] / sqrt(2)) * (3 * sin(x[i] / sqrt(2)) + 3 *
-                                                cos(x[i] / sqrt(2)))) / 2^(7 / 2) +
+          if (upper[i] == Inf) {
+            ret[i] <- (exp(-x[i] / sqrt(2)) * (3 * sin(x[i] / sqrt(2)) + 3 *
+                                                cos(x[i] / sqrt(2)))) / 2^ (7 / 2) +
               (x[i] * exp(-x[i] / sqrt(2)) * sin(x[i] / sqrt(2))) / 8
           } else if (upper[i] <= 0) {
-            ret[i] = (exp ((2 * upper[i] - x[i]) / sqrt(2)) * (2 * cos(x[i] / sqrt(2)) - sin((2 * upper[i] - x[i]) / sqrt(2)) +
-                                                        cos((2 * upper[i] - x[i]) / sqrt(2)))) / 2^(9 / 2)
+            ret[i] <- (exp((2 * upper[i] - x[i]) / sqrt(2)) *
+                         (2 * cos(x[i] / sqrt(2)) - sin((2 * upper[i] - x[i]) / sqrt(2)) +
+                            cos((2 * upper[i] - x[i]) / sqrt(2)))) / 2^ (9 / 2)
           } else if (upper[i] >= 0 & upper[i] <= x[i]) {
-            ret[i] = (exp(-x[i] / sqrt(2)) * ((2 * upper[i] + sqrt(2)) * sin(x[i] / sqrt(2)) +
+            ret[i] <- (exp(-x[i] / sqrt(2)) * ((2 * upper[i] + sqrt(2)) * sin(x[i] / sqrt(2)) +
                                             sqrt(2) * sin((2 * upper[i] - x[i]) / sqrt(2)))) / 16 +
-              (exp(-x[i] / sqrt(2)) * (sin(x[i] / sqrt(2)) + 3 * cos(x[i] / sqrt(2)))) / 2^(9 / 2)
+              (exp(- x[i] / sqrt(2)) * (sin(x[i] / sqrt(2)) + 3 * cos(x[i] / sqrt(2)))) / 2^ (9 / 2)
           } else if (upper[i] >= x[i]) {
-            ret[i] = (exp(- x[i]  / sqrt(2)) / (8 * sqrt(2))) *
+            ret[i] <- (exp(- x[i]  / sqrt(2)) / (8 * sqrt(2))) *
               ((3 + sqrt(2) * x[i]) * sin(x[i] / sqrt(2)) + 3 * cos(x[i] / sqrt(2))) +
               (exp((x[i] - 2 * upper[i]) / sqrt(2)) / (16 * sqrt(2))) *
-              (sin((x[i] - 2 * upper[i]) / sqrt(2)) - cos((x[i] - 2* upper[i]) / sqrt(2)) - 2 * cos(x[i] / sqrt(2)))
+              (sin((x[i] - 2 * upper[i]) / sqrt(2)) -
+                 cos((x[i] - 2 * upper[i]) / sqrt(2)) - 2 * cos(x[i] / sqrt(2)))
           }
         } else if (x[i] <= 0) {
           if (upper[i] == Inf) {
-            ret[i] = (exp(x[i] / sqrt(2)) * (-3 * sin(x[i] / sqrt(2)) + 3 *
-                                               cos(x[i] / sqrt(2)))) / 2^(7 / 2) +
+            ret[i] <- (exp(x[i] / sqrt(2)) * (-3 * sin(x[i] / sqrt(2)) + 3 *
+                                               cos(x[i] / sqrt(2)))) / 2^ (7 / 2) +
               (x[i] * exp(x[i] / sqrt(2)) * sin(x[i] / sqrt(2))) / 8
           } else if (upper[i] <= x[i]) {
-            ret[i] = (exp((2 * upper[i] - x[i]) / sqrt(2)) / (16 * sqrt(2))) *
+            ret[i] <- (exp((2 * upper[i] - x[i]) / sqrt(2)) / (16 * sqrt(2))) *
               (sin((x[i] - 2 * upper[i]) / sqrt(2)) + cos((x[i] - 2 * upper[i]) / sqrt(2)) +
                  2 * cos(x[i] / sqrt(2)))
           } else if (upper[i] >= x[i] & upper[i] <= 0) {
-            ret[i] = -(exp(x[i] / sqrt(2)) * (2 * sin((x[i] - 2 * upper[i]) / sqrt(2)) -
-                                            (2^(3 / 2) * (x[i] - upper[i]) - 3) * sin(x[i] / sqrt(2)) -
-                                              3 * cos(x[i] / sqrt(2)))) / 2^(9 / 2)
+            ret[i] <- (- (exp(x[i] / sqrt(2)) * (2 * sin((x[i] - 2 * upper[i]) / sqrt(2)) -
+                      (2^ (3 / 2) * (x[i] - upper[i]) - 3) * sin(x[i] / sqrt(2)) -
+                      3 * cos(x[i] / sqrt(2))))) / 2^ (9 / 2)
           } else if (upper[i] >= 0) {
-            ret[i] = (exp((x[i] - 2 * upper[i]) / sqrt(2)) * (sin((x[i] - 2 * upper[i]) / sqrt(2)) -
-                    cos((x[i] - 2 * upper[i]) / sqrt(2)) + exp(sqrt(2) * upper[i]) * (2^(3/2) * x[i] - 6) * sin(x[i] / sqrt(2)) +
-                    2 * (3 * exp(sqrt(2) * upper[i]) - 1) * cos(x[i] / sqrt(2)))) / 2^(9 / 2)
+            ret[i] <- (exp((x[i] - 2 * upper[i]) / sqrt(2)) *
+                         (sin((x[i] - 2 * upper[i]) / sqrt(2)) -
+                            cos((x[i] - 2 * upper[i]) / sqrt(2)) +
+                            exp(sqrt(2) * upper[i]) *
+                            (2^ (3 / 2) * x[i] - 6) * sin(x[i] / sqrt(2)) +
+                    2 * (3 * exp(sqrt(2) * upper[i]) - 1) * cos(x[i] / sqrt(2)))) / 2^ (9 / 2)
           }
         }
       }
@@ -89,39 +94,68 @@ Silverman <- R6Class("Silverman",
 
       ret <- numeric(length(x))
 
-      for(i in seq_along(x)){
+      for (i in seq_along(x)) {
 
         if (x[i] >= 0) {
           if (upper[i] >= -Inf & upper[i] <= 0) {
-            ret[i] = (exp((2 * upper[i] - x[i]) / sqrt(2)) * (2 * cos(x[i] / sqrt(2)) + sin((2 * upper[i] - x[i]) / sqrt(2)) +
-                      cos((2 * upper[i] - x[i]) / sqrt(2)))) / (2^(9/2))
+            ret[i] <- (exp((2 * upper[i] - x[i]) / sqrt(2)) *
+                         (2 * cos(x[i] / sqrt(2)) + sin((2 * upper[i] - x[i]) / sqrt(2)) +
+                      cos((2 * upper[i] - x[i]) / sqrt(2)))) / (2^ (9 / 2))
           } else if (upper[i] >= 0 & upper[i] <= x[i]) {
-            ret[i] = (exp(-x[i] / sqrt(2)) * (sqrt(2) * (sin((x[i] - 2 * upper[i]) / sqrt(2)) +
-                  3 * sin(x[i] / sqrt(2))) - 2 * (upper[i] + 2^(3/2)) * cos(x[i] / sqrt(2)) +
-                  2^(5/2) * exp(upper[i] / sqrt(2)) * (sin((upper[i] - x[i]) / sqrt(2)) + cos((upper[i] - x[i]) / sqrt(2))))) / 16 +
-                  (exp(-x[i] / sqrt(2)) * (3 * cos(x[i] / sqrt(2)) - sin(x[i] / sqrt(2)))) / (2^(9/2))
+            ret[i] <- (exp(- x[i] / sqrt(2)) *
+                         (sqrt(2) * (sin((x[i] - 2 * upper[i]) / sqrt(2)) +
+                                       3 * sin(x[i] / sqrt(2))) -
+                            2 * (upper[i] + 2^ (3 / 2)) * cos(x[i] / sqrt(2)) +
+                            2^ (5 / 2) * exp(upper[i] / sqrt(2)) *
+                            (sin((upper[i] - x[i]) / sqrt(2)) +
+                               cos((upper[i] - x[i]) / sqrt(2))))) / 16 +
+              (exp(- x[i] / sqrt(2)) * (3 * cos(x[i] / sqrt(2)) -
+                                          sin(x[i] / sqrt(2)))) / (2^ (9 / 2))
           } else if (upper[i] >= x[i]) {
-            ret[i] = (8 * exp((x[i] - upper[i]) / (sqrt(2))) * (sin((x[i] - upper[i]) / (sqrt(2))) +
-                     cos((x[i] - upper[i]) / (sqrt(2)))) - exp((x[i] - 2 * upper[i]) / (sqrt(2))) * (sin((x[i] - 2 * upper[i]) / (sqrt(2))) +
-                     cos((x[i] - 2 * upper[i]) / (sqrt(2))) + 2 * cos((x[i]) / (sqrt(2))))) / (16 * sqrt(2)) -
+            ret[i] <- (8 * exp((x[i] - upper[i]) / (sqrt(2))) *
+                         (sin((x[i] - upper[i]) / (sqrt(2))) +
+                     cos((x[i] - upper[i]) / (sqrt(2)))) -
+                       exp((x[i] - 2 * upper[i]) / (sqrt(2))) *
+                       (sin((x[i] - 2 * upper[i]) / (sqrt(2))) +
+                     cos((x[i] - 2 * upper[i]) / (sqrt(2))) +
+                       2 * cos((x[i]) / (sqrt(2))))) / (16 * sqrt(2)) -
                     (8 * exp((-upper[i]) / (sqrt(2))) * (sin((upper[i]) / (sqrt(2))) -
-                    cos((upper[i]) / (sqrt(2))))) /(16 * sqrt(2)) + (exp((-x[i]) / (sqrt(2))) * (10 * sin((x[i]) / (sqrt(2))) -
-                    (10 + 2 * sqrt(2) * x [i]) * cos((x[i]) / (sqrt(2)))) - 16 * sqrt(2) * (x[i] - upper[i])) / (16 * sqrt(2))
+                    cos((upper[i]) / (sqrt(2))))) / (16 * sqrt(2)) +
+              (exp((- x[i]) / (sqrt(2))) * (10 * sin((x[i]) / (sqrt(2))) -
+                    (10 + 2 * sqrt(2) * x[i]) * cos((x[i]) / (sqrt(2)))) -
+                 16 * sqrt(2) * (x[i] - upper[i])) / (16 * sqrt(2))
           }
         } else if (x[i] <= 0) {
           if (upper[i] <= x[i]) {
-            ret[i] =  (exp((2 * upper[i] - x[i]) / sqrt(2)) * (2 * cos(x[i] / sqrt(2)) +
-                      sin((2 * upper[i] - x[i]) / sqrt(2)) + cos((2 * upper[i] - x[i]) / sqrt(2)))) / (2^(9/2))
+            ret[i] <-  (exp((2 * upper[i] - x[i]) / sqrt(2)) * (2 * cos(x[i] / sqrt(2)) +
+                      sin((2 * upper[i] - x[i]) / sqrt(2)) +
+                        cos((2 * upper[i] - x[i]) / sqrt(2)))) / (2^ (9 / 2))
           } else if (upper[i] >= x[i]  & upper[i] <= 0) {
-            ret[i] = (exp(x[i] / sqrt(2)) * (sqrt(2) * (sin((x[i] - 2 * upper[i]) / sqrt(2)) - 3 * sin(x[i] / sqrt(2))) -
-                  2 * (-x[i] + upper[i] + 2^(3/2)) * cos(x[i] / sqrt(2))) + 2^(5/2) * exp(upper[i] / sqrt(2)) * (sin(upper[i] / sqrt(2)) +
-                  cos(upper[i] / sqrt(2)))) / 16 +(exp(x[i] / sqrt(2)) * (sin(x[i] / sqrt(2)) + 3 * cos(x[i] / sqrt(2)))) / (2^(9/2))
+            ret[i] <- (exp(x[i] / sqrt(2)) *
+                         (sqrt(2) * (sin((x[i] - 2 * upper[i]) / sqrt(2)) -
+                                       3 * sin(x[i] / sqrt(2))) -
+                            2 * (- x[i] + upper[i] + 2^ (3 / 2)) *
+                            cos(x[i] / sqrt(2))) +
+                         2^ (5 / 2) * exp(upper[i] / sqrt(2)) * (sin(upper[i] / sqrt(2)) +
+                  cos(upper[i] / sqrt(2)))) / 16 +
+              (exp(x[i] / sqrt(2)) * (sin(x[i] / sqrt(2)) +
+                                        3 * cos(x[i] / sqrt(2)))) / (2^ (9 / 2))
           } else if (upper[i] >= 0) {
-            ret[i] = (exp(-upper[i] / sqrt(2)) * (exp(upper[i] / sqrt(2)) * (256 * exp((x[i] - upper[i]) / sqrt(2)) * (sin((x[i] - upper[i]) / sqrt(2)) +
-                    cos((x[i] - upper[i]) / sqrt(2))) - 32 * exp((x[i] - 2 * upper[i]) / sqrt(2)) * sin((x[i] - 2 * upper[i]) / sqrt(2)) -
-                    32 * exp((x[i] - 2 * upper[i]) / sqrt(2)) * cos((x[i] - 2 * upper[i]) / sqrt(2)) - 320 * exp(x[i] / sqrt(2)) * sin(x[i] / sqrt(2)) -
-                    64 * exp((x[i] - 2 * upper[i]) / sqrt(2)) * cos(x[i] / sqrt(2)) + 2^(13/2) * x[i] * exp(x[i] /  sqrt(2)) * cos(x[i] / sqrt(2)) -
-                    320 * exp(x[i] / sqrt(2)) * cos(x[i] / sqrt(2)) + 2^(19/2) * upper[i]) - 256 * sin(upper[i] / sqrt(2)) + 256 * cos(upper[i] / sqrt(2)))) / 2^(19/2)
+            ret[i] <- (exp(- upper[i] / sqrt(2)) *
+                        (exp(upper[i] / sqrt(2)) *
+                           (256 * exp((x[i] - upper[i]) / sqrt(2)) *
+                              (sin((x[i] - upper[i]) / sqrt(2)) +
+                                 cos((x[i] - upper[i]) / sqrt(2))) -
+                              32 * exp((x[i] - 2 * upper[i]) / sqrt(2)) *
+                              sin((x[i] - 2 * upper[i]) / sqrt(2)) -
+                              32 * exp((x[i] - 2 * upper[i]) / sqrt(2)) *
+                              cos((x[i] - 2 * upper[i]) / sqrt(2)) -
+                              320 * exp(x[i] / sqrt(2)) * sin(x[i] / sqrt(2)) -
+                              64 * exp((x[i] - 2 * upper[i]) / sqrt(2)) * cos(x[i] / sqrt(2)) +
+                              2^ (13 / 2) * x[i] * exp(x[i] /  sqrt(2)) * cos(x[i] / sqrt(2)) -
+                              320 * exp(x[i] / sqrt(2)) * cos(x[i] / sqrt(2)) +
+                              2^ (19 / 2) * upper[i]) - 256 * sin(upper[i] / sqrt(2)) +
+                              256 * cos(upper[i] / sqrt(2)))) / 2 ^ (19 / 2)
           }
         }
       }

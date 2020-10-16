@@ -26,25 +26,28 @@ Cosine <- R6Class("Cosine",
 
       ret <- numeric(length(x))
       for (i in seq_along(x)) {
-        if(abs(x[i] >= 2)) {
-          ret[i] = 0
+        if (abs(x[i] >= 2)) {
+          ret[i] <- 0
         } else if (x[i] >= 0 & x[i] <= 2) {
           if (upper[i] == Inf | upper[i] >= 1) {
-            ret[i] = (pi/32) * (2 * sin((pi * x[i]) / 2) - (x[i] - 2) * pi * cos(pi * x[i] /2))
+            ret[i] <- (pi / 32) * (2 * sin((pi * x[i]) / 2) - (x[i] - 2) * pi * cos(pi * x[i] / 2))
           } else if (upper[i] >= (x[i] - 1) & upper[i] <= 1) {
-            ret[i] = (pi)/(32) * (-sin((pi * x[i] - 2 * pi * upper[i]) / (2)) + sin((pi * x[i]) / (2)) -
-                                  (pi * x[i] - pi * upper[i]-pi) * cos((pi * x[i]) / (2)))
-          } else if (upper[i] <= x[i] - 1){
-            ret[i] = 0
+            ret[i] <- (pi) / (32) * (-sin(((pi) * x[i] - 2 * pi * upper[i]) / (2)) +
+                                     sin(((pi) * x[i]) / (2)) -
+                                     (pi * x[i] - pi * upper[i] - pi) * cos((pi * x[i]) / (2)))
+          } else if (upper[i] <= x[i] - 1) {
+            ret[i] <- 0
           }
         } else if (x[i] <= 0 & x[i] >= -2) {
           if (upper[i] == Inf | upper[i] >= x[i] + 1) {
-            ret[i] = (pi) / (32) * (-2 * sin((pi*x[i]) / (2)) + (x[i]+2) * pi * cos((pi * x[i]) / (2)))
+            ret[i] <- (pi) / (32) * (-2 * sin((pi * x[i]) / (2)) +
+                                       (x[i] + 2) * pi * cos((pi * x[i]) / (2)))
           } else if (upper[i] <= x[i] + 1 & upper[i] >= -1) {
-            ret[i] = (pi) / (32) * (-sin((pi * x[i] - 2 * pi * upper[i]) / (2)) + sin((pi * x[i]) / (2)) +
+            ret[i] <- (pi) / (32) * (-sin((pi * x[i] - 2 * pi * upper[i]) / (2)) +
+                                       sin((pi * x[i]) / (2)) +
                                     (pi * upper[i] + pi) * cos((pi * x[i]) / (2)))
           } else if (upper[i] <= -1) {
-            ret[i] = 0
+            ret[i] <- 0
           }
         }
       }
@@ -60,60 +63,70 @@ Cosine <- R6Class("Cosine",
 
       ret <- numeric(length(x))
 
-      for(i in seq_along(x)){
-
+      for (i in seq_along(x)) {
         if (x[i] >= 0 & x[i] <= 2) {
-          if(upper[i] <= -1) {
-            ret[i] = 0
+          if (upper[i] <= -1) {
+            ret[i] <- 0
           } else if (upper[i] >= -1 & upper[i] <= x[i] - 1) {
-            ret[i] = 0
+            ret[i] <- 0
           } else if (upper[i] >= x[i] - 1 & upper[i] <= 1) {
-            ret[i] =  (1/(8 * pi)) * (2 * pi + 2 * upper[i] * pi - 2 * x[i] * pi - 4 * cos((upper[i] * pi) /2 ) + (1 + upper[i] - x[i]) * pi * cos((x[i] * pi) / 2) -
-                    4 * cos((1 / 2) * (-upper[i] + x[i]) * pi) + 3 * sin((x[i] * pi) / 2) + sin((1 / 2) * (-2 * upper[i] + x[i]) * pi))
+            ret[i] <-  (1 / (8 * pi)) *
+              (2 * pi + 2 * upper[i] * pi - 2 * x[i] * pi - 4 * cos((upper[i] * pi) / 2) +
+                                         (1 + upper[i] - x[i]) * pi * cos((x[i] * pi) / 2) -
+                      4 * cos((1 / 2) * (-upper[i] + x[i]) * pi) +
+                      3 * sin((x[i] * pi) / 2) + sin((1 / 2) * (-2 * upper[i] + x[i]) * pi))
           } else if (upper[i] >= 1 & upper[i] <= x[i] + 1) {
-            ret[i] = (2 * (sin((pi * x[i]) / 2) - cos((pi * (x[i] - upper[i])) / 2))) / pi - sin((pi * x[i]) / 2) / (4 * pi) -
-              ((x[i] - 2) * (cos((pi * x[i]) / 2) + 2)) / 8 + upper[i] - 1 / 2
+            ret[i] <- (2 * (sin((pi * x[i]) / 2) - cos((pi * (x[i] - upper[i])) / 2))) / pi -
+                      sin((pi * x[i]) / 2) / (4 * pi) -
+                      ((x[i] - 2) * (cos((pi * x[i]) / 2) + 2)) / 8 + upper[i] - 1 / 2
           } else if (upper[i] >= x[i] + 1) {
-            ret[i] = (6 * sin((pi * x[i]) / 2) - pi * ((x[i] - 2) * cos((pi * x[i]) / 2) + 6 * x[i] - 8 * upper[i] + 4)) / (8 * pi)
+            ret[i] <- (6 * sin((pi * x[i]) / 2) - pi * ((x[i] - 2) * cos((pi * x[i]) / 2) +
+                                                          6 * x[i] - 8 * upper[i] + 4)) / (8 * pi)
           }
         } else if (x[i] >= -2 & x[i] <= 0) {
-          if(upper[i] <= x[i] -1) {
-            ret[i] = 0
-          } else if (upper[i] >= x[i] -1 & upper[i] <= - 1) {
-            ret[i] = 0
+          if (upper[i] <= x[i] - 1) {
+            ret[i] <- 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= - 1) {
+            ret[i] <- 0
           } else if (upper[i] >= - 1 & upper[i] <= x[i] + 1) {
-            ret[i] = (-4 * cos((pi * (x[i] - upper[i])) / 2) + sin((pi * (x[i] - 2 * upper[i])) / 2) - 3 * sin((pi * x[i]) / 2) + pi * (upper[i] + 1) *
-                     cos((pi * x[i]) / 2) - 4 * cos((pi * upper[i]) / 2) + 2 * pi * upper[i] + 2 * pi) / (8 * pi)
+            ret[i] <- (-4 * cos((pi * (x[i] - upper[i])) / 2) +
+                         sin((pi * (x[i] - 2 * upper[i])) / 2) -
+                         3 * sin((pi * x[i]) / 2) + pi * (upper[i] + 1) *
+                     cos((pi * x[i]) / 2) - 4 * cos((pi * upper[i]) / 2) +
+                       2 * pi * upper[i] + 2 * pi) / (8 * pi)
           } else if (upper[i] >= x[i] + 1 & upper[i] <= 1) {
-            ret[i] = - (6 * sin((pi * x[i]) / 2) - pi * ((x[i] + 2) * cos((pi * x[i]) / 2) - 2 * x[i] + 4 * upper[i]) +
+            ret[i] <- - (6 * sin((pi * x[i]) / 2) -
+                          pi * ((x[i] + 2) * cos((pi * x[i]) / 2) -
+                                  2 * x[i] + 4 * upper[i]) +
                        8 * cos((pi * upper[i]) / 2)) / (8 * pi)
           } else if (upper[i] >= 1) {
-            ret[i] = (sin((pi * x[i]) / 2) / pi + ((x[i] + 2) * cos((pi * x[i]) / 2)) / 2 + x[i] + 2) / 4 -
-              sin((pi * x[i]) / 2) / pi - x[i] / 2 + upper[i]-1
+            ret[i] <- (sin((pi * x[i]) / 2) / pi + ((x[i] + 2) * cos((pi * x[i]) / 2)) / 2 +
+                         x[i] + 2) / 4 -
+                         sin((pi * x[i]) / 2) / pi - x[i] / 2 + upper[i] - 1
           }
         } else if (x[i] >= 2) {
           if (upper[i] <=  -1) {
-            ret[i] = 0
+            ret[i] <- 0
           } else if (upper[i] >= -1 & upper[i] <= 1) {
-            ret[i] = 0
-          } else if (upper[i] >= 1 & upper[i] <= x[i] - 1){
-            ret[i] = 0
+            ret[i] <- 0
+          } else if (upper[i] >= 1 & upper[i] <= x[i] - 1) {
+            ret[i] <- 0
           } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1) {
-            ret[i] = (-(2 * cos((pi * (x[i] - upper[i])) / 2)) / pi - x[i] + upper[i] + 1) / 2
+            ret[i] <- (- (2 * cos((pi * (x[i] - upper[i])) / 2)) / pi - x[i] + upper[i] + 1) / 2
           } else if (upper[i] >= x[i] + 1) {
-            ret[i] = upper[i] - x[i]
+            ret[i] <- upper[i] - x[i]
           }
         } else if (x[i] <= -2) {
           if (upper[i] <= x[i] - 1) {
-            ret[i] = 0
-          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1){
-            ret[i] = 0
+            ret[i] <- 0
+          } else if (upper[i] >= x[i] - 1 & upper[i] <= x[i] + 1) {
+            ret[i] <- 0
           } else if (upper[i] >= x[i] + 1 & upper[i] <= -1) {
-            ret[i] = 0
+            ret[i] <- 0
           } else if (upper[i] >= -1 & upper[i] <= 1) {
-            ret[i] = (-(2 * cos((pi * upper[i]) / 2)) / pi + upper[i] + 1) / 2
+            ret[i] <- (- (2 * cos((pi * upper[i]) / 2)) / pi + upper[i] + 1) / 2
           } else if (upper[i] >= 1) {
-            ret[i] = upper[i]
+            ret[i] <- upper[i]
           }
         }
       }
