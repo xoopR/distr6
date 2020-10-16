@@ -11,6 +11,7 @@
 #' @export
 Kernel <- R6Class("Kernel",
   inherit = Distribution,
+  lock_objects = FALSE,
   public = list(
     package = "This is now deprecated. Use $packages instead.",
     packages = NULL,
@@ -54,12 +55,25 @@ Kernel <- R6Class("Kernel",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(NULL) # nocov
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      return(NULL)
+    },
+
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = Inf) {
+      return(NULL)
     }
   ),
 
   private = list(
+    .isPdf = 1L,
+    .isCdf = 1L,
+    .isQuantile = 1L,
+    .isRand = 1L,
     .log = TRUE,
     .traits = list(valueSupport = "continuous", variateForm = "univariate"),
     .properties = list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"),
@@ -69,25 +83,36 @@ Kernel <- R6Class("Kernel",
       } else {
         return(NULL)
       }
-    },
-    .isPdf = 1L,
-    .isCdf = 1L,
-    .isQuantile = 1L,
-    .isRand = 1L
+    }
   )
 )
 
 #' @title Squared Probability Density Function 2-Norm
 #' @name pdfSquared2Norm
-#' @description The squared 2-norm of the pdf evaluated over the whole support by default or given
-#' limits, possibly shifted.
+#' @description The squared 2-norm of the pdf evaluated up to a given limit, possibly shifted.
 #'
-#' @usage pdfSquared2Norm(object, x = 0)
+#' @usage pdfSquared2Norm(object, x = 0, upper = Inf)
 #'
 #' @param object Distribution.
 #' @param x amount to shift the result.
+#' @param upper upper limit of the integral.
 #'
 #' @return Squared 2-norm of pdf evaluated between limits as a numeric.
+#'
+#' @export
+NULL
+
+#' @title Squared Cumulative Distribution Function 2-Norm
+#' @name cdfSquared2Norm
+#' @description The squared 2-norm of the cdf evaluated up to a given limit, possibly shifted.
+#'
+#' @usage cdfSquared2Norm(object, x = 0, upper = Inf)
+#'
+#' @param object Distribution.
+#' @param x amount to shift the result.
+#' @param upper upper limit of the integral.
+#'
+#' @return Squared 2-norm of cdf evaluated between limits as a numeric.
 #'
 #' @export
 NULL

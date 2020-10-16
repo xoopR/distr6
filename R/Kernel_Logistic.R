@@ -32,9 +32,68 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(ifelse(x == 0, 1 / 6, ((x - 2) * exp(2 * x) + (x + 2) * exp(x)) /
-        (exp(3 * x) - 3 * exp(2 * x) + 3 * exp(x) - 1)))
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      xl = length(x)
+      ul = length(upper)
+      len = max(xl, ul)
+
+      ret <- numeric(len)
+      for (i in seq(len)) {
+        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        if (ui == Inf) {
+          if (xi == 0) {
+            ret[i] <- 1 / 6
+          } else {
+            ret[i] <- ((xi - 2) * exp(2 * xi) + (xi + 2) * exp(xi)) /
+              (exp(3 * xi) - 3 * exp(2 * xi) + 3 * exp(xi) - 1)
+          }
+        } else {
+          if (xi == 0) {
+            ret[i] <- ((exp(ui) + 3) * exp((2 * ui))) / (6 * (exp(ui) + 1)^3)
+          } else {
+            ret[i] <- (exp(xi) *
+                         (exp(2 * xi + ui) * log(exp(xi) + exp(ui)) +
+                            exp(xi + 2 * ui) * log(exp(xi) + exp(ui)) +
+                            2 * exp(xi + ui) * log(exp(xi) + exp(ui)) +
+                            exp(2 * xi) * log(exp(xi) + exp(ui)) +
+                            exp(xi) * log(exp(xi) + exp(ui)) +
+                            exp(2 * ui) * log(exp(xi) + exp(ui)) +
+                            exp(ui) * log(exp(xi) + exp(ui)) +
+                            exp(2 * xi + ui) + 2 * exp(xi + 2 * ui) +
+                            (- exp(ui) - 1) * xi * (exp(xi) + 1) *
+                            (exp(xi) + exp(ui)) +
+                            (- exp(ui) - 1) * log(exp(ui) + 1) * (exp(xi) + 1) *
+                            (exp(xi) + exp(ui)) - 2 * exp(2 * ui) - exp(ui))) /
+                            ((exp(ui) + 1) * (exp(xi) - 1)^3 * (exp(xi) + exp(ui)))}
+        }
+      }
+      return(ret)
+    },
+
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = 0) {
+
+      xl = length(x)
+      ul = length(upper)
+      len = max(xl, ul)
+
+      ret <- numeric(len)
+      for (i in seq(len)) {
+        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        if (xi == 0) {
+        ret[i] <- log(1 + exp(-ui)) + ui -  exp(ui) / (exp(ui) + 1)
+        } else {
+          ret[i] <- (exp(xi) * log((exp(ui) + exp(xi)) / exp(xi)) -
+                       log(exp(ui) + 1)) / (exp(xi) - 1)
+        }
+      }
+      return(ret)
     },
 
     #' @description

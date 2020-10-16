@@ -34,8 +34,33 @@ Sigmoid <- R6Class("Sigmoid",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
-      return(ifelse(x == 0, 2 / (pi^2), (4 * x * exp(x)) / (pi^2 * (exp(2 * x) - 1))))
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
+      xl = length(x)
+      ul = length(upper)
+      len = max(xl, ul)
+
+      ret <- numeric(len)
+      for (i in seq(len)) {
+        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        if (ui == Inf) {
+          if (xi == 0) {
+            ret[i] <- 2 / (pi^2)
+          } else {
+            ret[i] <- (4 * xi * exp(xi)) / (pi^2 * (exp(2 * xi) - 1))
+          }
+        } else {
+          if (xi == 0) {
+            ret[i] <- (1 + tanh(ui)) / pi^2
+          } else{
+          ret[i] <- (- (2 * exp(xi) * (log(exp(2 * xi) +
+                                              exp(2 * ui)) - 2 * xi -
+                                              log(exp(2 * ui) + 1)))) /
+                                        ((pi^2) * (exp(xi) - 1) * (exp(xi) + 1))
+          }
+        }
+      }
+      return(ret)
     },
 
     #' @description
@@ -49,11 +74,11 @@ Sigmoid <- R6Class("Sigmoid",
   ),
 
   private = list(
+    .isCdf = 0L,
+    .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       C_SigmoidKernelPdf(x, log)
-    },
-    .isCdf = 0L,
-    .isQuantile = 0L
+    }
   )
 )
 

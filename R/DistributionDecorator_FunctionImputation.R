@@ -151,7 +151,7 @@ FunctionImputation <- R6Class("FunctionImputation",
       } else {
         cdf <- numeric(length(x))
         for (i in seq_along(x)) {
-          cdf[i] <- integrate(self$pdf, 0, x[i])$value
+          cdf[i] <- integrate(self$pdf, self$properties$support$lower, x[i])$value
         }
       }
 

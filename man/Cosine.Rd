@@ -40,6 +40,7 @@ Other kernels:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-pdfSquared2Norm}{\code{Cosine$pdfSquared2Norm()}}
+\item \href{#method-cdfSquared2Norm}{\code{Cosine$cdfSquared2Norm()}}
 \item \href{#method-variance}{\code{Cosine$variance()}}
 \item \href{#method-clone}{\code{Cosine$clone()}}
 }
@@ -80,7 +81,7 @@ The squared 2-norm of the pdf is defined by
 where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
 are the distribution support limits.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Cosine$pdfSquared2Norm(x = 0)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Cosine$pdfSquared2Norm(x = 0, upper = Inf)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -88,6 +89,33 @@ are the distribution support limits.
 \describe{
 \item{\code{x}}{\code{(numeric(1))} \cr
 Amount to shift the result.}
+
+\item{\code{upper}}{\code{(numeric(1))} \cr
+Upper limit of the integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfSquared2Norm}{}}}
+\subsection{Method \code{cdfSquared2Norm()}}{
+The squared 2-norm of the cdf is defined by
+\deqn{\int_a^b (F_X(u))^2 du}
+where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+are the distribution support limits.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cosine$cdfSquared2Norm(x = 0, upper = 0)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{(numeric(1))} \cr
+Amount to shift the result.}
+
+\item{\code{upper}}{\code{(numeric(1))} \cr
+Upper limit of the integral.}
 }
 \if{html}{\out{</div>}}
 }

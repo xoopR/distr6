@@ -69,6 +69,7 @@ Other kernels:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="cdfSquared2Norm">}\href{../../distr6/html/Kernel.html#method-cdfSquared2Norm}{\code{distr6::Kernel$cdfSquared2Norm()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean">}\href{../../distr6/html/Kernel.html#method-mean}{\code{distr6::Kernel$mean()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median">}\href{../../distr6/html/Kernel.html#method-median}{\code{distr6::Kernel$median()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode">}\href{../../distr6/html/Kernel.html#method-mode}{\code{distr6::Kernel$mode()}}\out{</span>}
@@ -102,7 +103,7 @@ The squared 2-norm of the pdf is defined by
 where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
 are the distribution support limits.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Sigmoid$pdfSquared2Norm(x = 0)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Sigmoid$pdfSquared2Norm(x = 0, upper = Inf)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -110,6 +111,9 @@ are the distribution support limits.
 \describe{
 \item{\code{x}}{\code{(numeric(1))} \cr
 Amount to shift the result.}
+
+\item{\code{upper}}{\code{(numeric(1))} \cr
+Upper limit of the integral.}
 }
 \if{html}{\out{</div>}}
 }

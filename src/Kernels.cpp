@@ -245,6 +245,28 @@ NumericVector C_SilvermanKernelPdf(NumericVector x, bool logp) {
 }
 
 // [[Rcpp::export]]
+NumericVector C_SilvermanKernelCdf(NumericVector x, bool lower, bool logp) {
+  NumericVector ret(x.size());
+
+  for (int i = 0; i < x.size(); i++){
+    if (x[i] <= 0) {
+      ret[i] = 0.5 * exp(x[i]/sqrt(2)) * cos(x[i]/sqrt(2));
+    } else {
+      ret[i] = 1 - (0.5 * exp(-x[i]/sqrt(2)) * cos(x[i]/sqrt(2)));
+    }
+
+    if (!lower) {
+      ret[i] = 1 - ret[i];
+    }
+    if (logp) {
+      ret[i] = log(ret[i]);
+    }
+  }
+
+  return ret;
+}
+
+// [[Rcpp::export]]
 NumericVector C_TriangularKernelPdf(NumericVector x, bool logp) {
   NumericVector ret(x.size());
   for (int i = 0; i < x.size(); i++){
@@ -330,6 +352,32 @@ NumericVector C_TricubeKernelPdf(NumericVector x, bool logp) {
       } else {
         ret[i] = 70.0 / 81.0 * pow((1 - pow(fabs(x[i]), 3)), 3);
       }
+    }
+  }
+  return ret;
+}
+
+// [[Rcpp::export]]
+NumericVector C_TricubeKernelCdf(NumericVector x, bool lower, bool logp) {
+  NumericVector ret(x.size());
+  for (int i = 0; i < x.size(); i++){
+    if (x[i] >= 1) {
+      ret[i] = 1;
+    } else if (x[i] <= -1) {
+      ret[i] = 0;
+    } else if (x[i] > -1 & x[i] <= 0) {
+      ret[i] = (81 + 140 * x[i] + 150 * pow(x[i], 4) + 60 * pow(x[i], 7) + 14 * pow(x[i], 10)) /
+        162;
+    } else if (x[i] > 0 & x[i] <= 1) {
+      ret[i] = (81 + 140 * x[i] - 105 * pow(x[i], 4) + 60 * pow(x[i], 7) - 14 * pow(x[i], 10)) /
+        162;
+    }
+
+    if (!lower) {
+      ret[i] = 1 - ret[i];
+    }
+    if (logp) {
+      ret[i] = log(ret[i]);
     }
   }
   return ret;

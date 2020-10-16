@@ -14,7 +14,8 @@
 #'
 #' @export
 Silverman <- R6Class("Silverman",
-  inherit = Kernel, lock_objects = F,
+  inherit = Kernel,
+  lock_objects = FALSE,
   public = list(
     name = "Silverman",
     short_name = "Silv",
@@ -34,14 +35,145 @@ Silverman <- R6Class("Silverman",
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
-    pdfSquared2Norm = function(x = 0) {
+    pdfSquared2Norm = function(x = 0, upper = Inf) {
 
-      cond1 <- (exp(-x / sqrt(2)) * (3 * sin(x / sqrt(2)) + 3 * cos(x / sqrt(2)))) / 2^(7 / 2) + # nolint
-        (x * exp(-x / sqrt(2)) * sin(x / sqrt(2))) / 8
-      cond2 <- (exp(x / sqrt(2)) * (-3 * sin(x / sqrt(2)) + 3 * cos(x / sqrt(2)))) / 2^(7 / 2) + # nolint
-        (x * exp(x / sqrt(2)) * sin(x / sqrt(2))) / 8
+      xl = length(x)
+      ul = length(upper)
+      len = max(xl, ul)
 
-      return(ifelse(x > 0, cond1, cond2))
+      ret <- numeric(len)
+      for (i in seq(len)) {
+
+        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+
+        if (xi >= 0) {
+          if (ui == Inf) {
+            ret[i] <- (exp(-xi / sqrt(2)) * (3 * sin(xi / sqrt(2)) + 3 *
+                                                cos(xi / sqrt(2)))) / 2^ (7 / 2) +
+              (xi * exp(-xi / sqrt(2)) * sin(xi / sqrt(2))) / 8
+          } else if (ui <= 0) {
+            ret[i] <- (exp((2 * ui - xi) / sqrt(2)) *
+                         (2 * cos(xi / sqrt(2)) - sin((2 * ui - xi) / sqrt(2)) +
+                            cos((2 * ui - xi) / sqrt(2)))) / 2^ (9 / 2)
+          } else if (ui >= 0 & ui <= xi) {
+            ret[i] <- (exp(-xi / sqrt(2)) * ((2 * ui + sqrt(2)) * sin(xi / sqrt(2)) +
+                                            sqrt(2) * sin((2 * ui - xi) / sqrt(2)))) / 16 +
+              (exp(- xi / sqrt(2)) * (sin(xi / sqrt(2)) + 3 * cos(xi / sqrt(2)))) / 2^ (9 / 2)
+          } else if (ui >= xi) {
+            ret[i] <- (exp(- xi  / sqrt(2)) / (8 * sqrt(2))) *
+              ((3 + sqrt(2) * xi) * sin(xi / sqrt(2)) + 3 * cos(xi / sqrt(2))) +
+              (exp((xi - 2 * ui) / sqrt(2)) / (16 * sqrt(2))) *
+              (sin((xi - 2 * ui) / sqrt(2)) -
+                 cos((xi - 2 * ui) / sqrt(2)) - 2 * cos(xi / sqrt(2)))
+          }
+        } else if (xi <= 0) {
+          if (ui == Inf) {
+            ret[i] <- (exp(xi / sqrt(2)) * (-3 * sin(xi / sqrt(2)) + 3 *
+                                               cos(xi / sqrt(2)))) / 2^ (7 / 2) +
+              (xi * exp(xi / sqrt(2)) * sin(xi / sqrt(2))) / 8
+          } else if (ui <= xi) {
+            ret[i] <- (exp((2 * ui - xi) / sqrt(2)) / (16 * sqrt(2))) *
+              (sin((xi - 2 * ui) / sqrt(2)) + cos((xi - 2 * ui) / sqrt(2)) +
+                 2 * cos(xi / sqrt(2)))
+          } else if (ui >= xi & ui <= 0) {
+            ret[i] <- (- (exp(xi / sqrt(2)) * (2 * sin((xi - 2 * ui) / sqrt(2)) -
+                      (2^ (3 / 2) * (xi - ui) - 3) * sin(xi / sqrt(2)) -
+                      3 * cos(xi / sqrt(2))))) / 2^ (9 / 2)
+          } else if (ui >= 0) {
+            ret[i] <- (exp((xi - 2 * ui) / sqrt(2)) *
+                         (sin((xi - 2 * ui) / sqrt(2)) -
+                            cos((xi - 2 * ui) / sqrt(2)) +
+                            exp(sqrt(2) * ui) *
+                            (2^ (3 / 2) * xi - 6) * sin(xi / sqrt(2)) +
+                    2 * (3 * exp(sqrt(2) * ui) - 1) * cos(xi / sqrt(2)))) / 2^ (9 / 2)
+          }
+        }
+      }
+      return(ret)
+    },
+
+    #' @description
+    #' The squared 2-norm of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u))^2 du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfSquared2Norm = function(x = 0, upper = 0) {
+
+      xl = length(x)
+      ul = length(upper)
+      len = max(xl, ul)
+
+      ret <- numeric(len)
+      for (i in seq(len)) {
+
+        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+
+        if (xi >= 0) {
+          if (ui >= -Inf & ui <= 0) {
+            ret[i] <- (exp((2 * ui - xi) / sqrt(2)) *
+                         (2 * cos(xi / sqrt(2)) + sin((2 * ui - xi) / sqrt(2)) +
+                      cos((2 * ui - xi) / sqrt(2)))) / (2^ (9 / 2))
+          } else if (ui >= 0 & ui <= xi) {
+            ret[i] <- (exp(- xi / sqrt(2)) *
+                         (sqrt(2) * (sin((xi - 2 * ui) / sqrt(2)) +
+                                       3 * sin(xi / sqrt(2))) -
+                            2 * (ui + 2^ (3 / 2)) * cos(xi / sqrt(2)) +
+                            2^ (5 / 2) * exp(ui / sqrt(2)) *
+                            (sin((ui - xi) / sqrt(2)) +
+                               cos((ui - xi) / sqrt(2))))) / 16 +
+              (exp(- xi / sqrt(2)) * (3 * cos(xi / sqrt(2)) -
+                                          sin(xi / sqrt(2)))) / (2^ (9 / 2))
+          } else if (ui >= xi) {
+            ret[i] <- (8 * exp((xi - ui) / (sqrt(2))) *
+                         (sin((xi - ui) / (sqrt(2))) +
+                     cos((xi - ui) / (sqrt(2)))) -
+                       exp((xi - 2 * ui) / (sqrt(2))) *
+                       (sin((xi - 2 * ui) / (sqrt(2))) +
+                     cos((xi - 2 * ui) / (sqrt(2))) +
+                       2 * cos((xi) / (sqrt(2))))) / (16 * sqrt(2)) -
+                    (8 * exp((-ui) / (sqrt(2))) * (sin((ui) / (sqrt(2))) -
+                    cos((ui) / (sqrt(2))))) / (16 * sqrt(2)) +
+              (exp((- xi) / (sqrt(2))) * (10 * sin((xi) / (sqrt(2))) -
+                    (10 + 2 * sqrt(2) * xi) * cos((xi) / (sqrt(2)))) -
+                 16 * sqrt(2) * (xi - ui)) / (16 * sqrt(2))
+          }
+        } else if (xi <= 0) {
+          if (ui <= xi) {
+            ret[i] <-  (exp((2 * ui - xi) / sqrt(2)) * (2 * cos(xi / sqrt(2)) +
+                      sin((2 * ui - xi) / sqrt(2)) +
+                        cos((2 * ui - xi) / sqrt(2)))) / (2^ (9 / 2))
+          } else if (ui >= xi  & ui <= 0) {
+            ret[i] <- (exp(xi / sqrt(2)) *
+                         (sqrt(2) * (sin((xi - 2 * ui) / sqrt(2)) -
+                                       3 * sin(xi / sqrt(2))) -
+                            2 * (- xi + ui + 2^ (3 / 2)) *
+                            cos(xi / sqrt(2))) +
+                         2^ (5 / 2) * exp(ui / sqrt(2)) * (sin(ui / sqrt(2)) +
+                  cos(ui / sqrt(2)))) / 16 +
+              (exp(xi / sqrt(2)) * (sin(xi / sqrt(2)) +
+                                        3 * cos(xi / sqrt(2)))) / (2^ (9 / 2))
+          } else if (ui >= 0) {
+            ret[i] <- (exp(- ui / sqrt(2)) *
+                        (exp(ui / sqrt(2)) *
+                           (256 * exp((xi - ui) / sqrt(2)) *
+                              (sin((xi - ui) / sqrt(2)) +
+                                 cos((xi - ui) / sqrt(2))) -
+                              32 * exp((xi - 2 * ui) / sqrt(2)) *
+                              sin((xi - 2 * ui) / sqrt(2)) -
+                              32 * exp((xi - 2 * ui) / sqrt(2)) *
+                              cos((xi - 2 * ui) / sqrt(2)) -
+                              320 * exp(xi / sqrt(2)) * sin(xi / sqrt(2)) -
+                              64 * exp((xi - 2 * ui) / sqrt(2)) * cos(xi / sqrt(2)) +
+                              2^ (13 / 2) * xi * exp(xi /  sqrt(2)) * cos(xi / sqrt(2)) -
+                              320 * exp(xi / sqrt(2)) * cos(xi / sqrt(2)) +
+                              2^ (19 / 2) * ui) - 256 * sin(ui / sqrt(2)) +
+                              256 * cos(ui / sqrt(2)))) / 2 ^ (19 / 2)
+          }
+        }
+      }
+      return(ret)
     },
 
     #' @description
@@ -55,11 +187,13 @@ Silverman <- R6Class("Silverman",
   ),
 
   private = list(
+    .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       C_SilvermanKernelPdf(x, log)
     },
-    .isCdf = 0L,
-    .isQuantile = 0L
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_SilvermanKernelCdf(x, lower.tail, log.p)
+    }
   )
 )
 .distr6$kernels <- rbind(

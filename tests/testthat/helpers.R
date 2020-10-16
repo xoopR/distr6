@@ -379,7 +379,8 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   }
 
   # context("public methods")
-  checkmate::expect_subset(names(kern$public_methods), c("clone", "pdfSquared2Norm", "variance",
+  checkmate::expect_subset(names(kern$public_methods), c("clone", "pdfSquared2Norm",
+                                                         "cdfSquared2Norm", "variance",
                                                          "initialize"))
 
   if (!is.null(kern$public_methods$setParameterValue)) {
@@ -387,7 +388,10 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   }
   # expect_equal(formals(kern$public_methods$initialize), pairlist(decorators = NULL))
   if (!is.null(kern$public_methods$pdfSquared2Norm)) {
-    expect_equal(formals(kern$public_methods$pdfSquared2Norm), pairlist(x = 0))
+    expect_equal(formals(kern$public_methods$pdfSquared2Norm), pairlist(x = 0, upper = Inf))
+  }
+  if (!is.null(kern$public_methods$cdfSquared2Norm)) {
+    expect_equal(formals(kern$public_methods$cdfSquared2Norm), pairlist(x = 0, upper = 0))
   }
   if (!is.null(kern$public_methods$variance))
     expect_null(names(formals(kern$public_methods$variance)))

@@ -1,3 +1,7 @@
+# distr6 1.4.4.9000
+
+* Added `cdfSquared2Norm` analytic methods to most kernels
+
 # distr6 1.4.4
 
 * Added coercions from Vector/Mixture/ProductDistribution to Mixture/ProductDistribution via `as.MixtureDistribution` and `as.ProductDistribution`

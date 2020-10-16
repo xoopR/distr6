@@ -9,7 +9,7 @@ Mathematical and statistical functions for the Tricube kernel defined by the pdf
 over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 }
 \details{
-The cdf and quantile functions are omitted as no closed form analytic expressions could
+The quantile function is omitted as no closed form analytic expressions could
 be found, decorate with FunctionImputation for numeric results.
 }
 \seealso{
@@ -44,6 +44,7 @@ Other kernels:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-pdfSquared2Norm}{\code{Tricube$pdfSquared2Norm()}}
+\item \href{#method-cdfSquared2Norm}{\code{Tricube$cdfSquared2Norm()}}
 \item \href{#method-variance}{\code{Tricube$variance()}}
 \item \href{#method-clone}{\code{Tricube$clone()}}
 }
@@ -84,7 +85,7 @@ The squared 2-norm of the pdf is defined by
 where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
 are the distribution support limits.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Tricube$pdfSquared2Norm(x = 0)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Tricube$pdfSquared2Norm(x = 0, upper = Inf)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -92,6 +93,33 @@ are the distribution support limits.
 \describe{
 \item{\code{x}}{\code{(numeric(1))} \cr
 Amount to shift the result.}
+
+\item{\code{upper}}{\code{(numeric(1))} \cr
+Upper limit of the integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfSquared2Norm}{}}}
+\subsection{Method \code{cdfSquared2Norm()}}{
+The squared 2-norm of the cdf is defined by
+\deqn{\int_a^b (F_X(u))^2 du}
+where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+are the distribution support limits.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tricube$cdfSquared2Norm(x = 0, upper = 0)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{(numeric(1))} \cr
+Amount to shift the result.}
+
+\item{\code{upper}}{\code{(numeric(1))} \cr
+Upper limit of the integral.}
 }
 \if{html}{\out{</div>}}
 }

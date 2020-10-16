@@ -453,6 +453,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// C_SilvermanKernelCdf
+NumericVector C_SilvermanKernelCdf(NumericVector x, bool lower, bool logp);
+RcppExport SEXP _distr6_C_SilvermanKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_SilvermanKernelCdf(x, lower, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
 // C_TriangularKernelPdf
 NumericVector C_TriangularKernelPdf(NumericVector x, bool logp);
 RcppExport SEXP _distr6_C_TriangularKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
@@ -500,6 +513,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
     rcpp_result_gen = Rcpp::wrap(C_TricubeKernelPdf(x, logp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_TricubeKernelCdf
+NumericVector C_TricubeKernelCdf(NumericVector x, bool lower, bool logp);
+RcppExport SEXP _distr6_C_TricubeKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_TricubeKernelCdf(x, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -629,10 +655,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_QuarticKernelCdf", (DL_FUNC) &_distr6_C_QuarticKernelCdf, 3},
     {"_distr6_C_SigmoidKernelPdf", (DL_FUNC) &_distr6_C_SigmoidKernelPdf, 2},
     {"_distr6_C_SilvermanKernelPdf", (DL_FUNC) &_distr6_C_SilvermanKernelPdf, 2},
+    {"_distr6_C_SilvermanKernelCdf", (DL_FUNC) &_distr6_C_SilvermanKernelCdf, 3},
     {"_distr6_C_TriangularKernelPdf", (DL_FUNC) &_distr6_C_TriangularKernelPdf, 2},
     {"_distr6_C_TriangularKernelCdf", (DL_FUNC) &_distr6_C_TriangularKernelCdf, 3},
     {"_distr6_C_TriangularKernelQuantile", (DL_FUNC) &_distr6_C_TriangularKernelQuantile, 3},
     {"_distr6_C_TricubeKernelPdf", (DL_FUNC) &_distr6_C_TricubeKernelPdf, 2},
+    {"_distr6_C_TricubeKernelCdf", (DL_FUNC) &_distr6_C_TricubeKernelCdf, 3},
     {"_distr6_C_TriweightKernelPdf", (DL_FUNC) &_distr6_C_TriweightKernelPdf, 2},
     {"_distr6_C_TriweightKernelCdf", (DL_FUNC) &_distr6_C_TriweightKernelCdf, 3},
     {"_distr6_C_UniformKernelPdf", (DL_FUNC) &_distr6_C_UniformKernelPdf, 2},
