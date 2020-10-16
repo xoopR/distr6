@@ -4,7 +4,7 @@
 #' \deqn{f(x) = 70/81(1 - |x|^3)^3}
 #' over the support \eqn{x \in (-1,1)}{x \epsilon (-1,1)}.
 #'
-#' @details The cdf and quantile functions are omitted as no closed form analytic expressions could
+#' @details The quantile function is omitted as no closed form analytic expressions could
 #' be found, decorate with FunctionImputation for numeric results.
 #'
 #' @name Tricube
@@ -19,13 +19,6 @@ Tricube <- R6Class("Tricube",
     name = "Tricube",
     short_name = "Tric",
     description = "Tricube Kernel",
-
-
-    #' @description
-    #' cdf is
-    #' \deqn{\int_-\Inf^u K(t) dt}
-
-
     #' @description
     #' The squared 2-norm of the pdf is defined by
     #' \deqn{\int_a^b (f_X(u))^2 du}
@@ -713,25 +706,8 @@ Tricube <- R6Class("Tricube",
     .pdf = function(x, log = FALSE) {
       C_TricubeKernelPdf(x, log)
     },
-
-    .cdf = function(x) {
-
-        ret <- numeric(length(x))
-        for (i in seq_along(x)) {
-          if (x[i] <= - 1) {
-            ret[i] <- 0
-          }
-           else if (x[i] >= - 1 & x[i] <= 0) {
-            ret[i] <- (81 + 140 * x[i] + 150 * x[i]^4 + 60 * x[i]^7 +
-                         14 * x[i]^10) / 162
-          } else  if (x[i] >= 0 & x[i] <= 1) {
-            ret[i] <- (81 + 140 * x[i] - 105 * x[i]^4 + 60 * x[i]^7 -
-                         14 * x[i]^10) / 162
-          } else {
-            ret[i] <- 1
-            }
-        }
-        return(ret)
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
+      C_TricubeKernelCdf(x, lower.tail, log.p)
     }
   )
 )

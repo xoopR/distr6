@@ -157,6 +157,10 @@ C_TricubeKernelPdf <- function(x, logp) {
     .Call(`_distr6_C_TricubeKernelPdf`, x, logp)
 }
 
+C_TricubeKernelCdf <- function(x, lower, logp) {
+    .Call(`_distr6_C_TricubeKernelCdf`, x, lower, logp)
+}
+
 C_TriweightKernelPdf <- function(x, logp) {
     .Call(`_distr6_C_TriweightKernelPdf`, x, logp)
 }
