@@ -402,8 +402,13 @@ Decorators to add to the distribution during construction.</p></dd>
 <p>The arithmetic mean of a (discrete) probability distribution X is the expectation
 $$E_X(X) = \sum p_X(x)*x$$
 with an integration analogue for continuous distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>mean</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>mean</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mode.html'>mode()</a></code></h3>
 <p>The mode of a probability distribution is the point at which the pdf is
@@ -424,16 +429,26 @@ which mode to return.</p></dd>
 $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>variance</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>variance</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-skewness"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='skewness.html'>skewness()</a></code></h3>
 <p>The skewness of a distribution is defined by the third standardised moment,
 $$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>skewness</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>skewness</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-kurtosis"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
 <p>The kurtosis of a distribution is defined by the fourth standardised moment,
@@ -441,12 +456,14 @@ $$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
 distribution and \(\sigma\) is the standard deviation of the distribution.
 Excess Kurtosis is Kurtosis - 3.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>kurtosis</span><span class='op'>(</span>excess <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>kurtosis</span><span class='op'>(</span>excess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>excess</code></dt><dd><p><code>(logical(1))</code> <br />
 If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -455,12 +472,14 @@ If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 $$- \sum (f_X)log(f_X)$$
 where \(f_X\) is the pdf of distribution X, with an integration analogue for
 continuous distributions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>entropy</span><span class='op'>(</span>base <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>entropy</span><span class='op'>(</span>base <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>base</code></dt><dd><p><code>(integer(1))</code> <br />
 Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
+
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -468,12 +487,14 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 <p>The moment generating function is defined by
 $$mgf_X(t) = E_X[exp(xt)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>mgf</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>mgf</span><span class='op'>(</span><span class='va'>t</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
 t integer to evaluate function at.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -481,12 +502,14 @@ t integer to evaluate function at.</p></dd>
 <p>The characteristic function is defined by
 $$cf_X(t) = E_X[exp(xti)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>cf</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>cf</span><span class='op'>(</span><span class='va'>t</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>t</code></dt><dd><p><code>(integer(1))</code> <br />
 t integer to evaluate function at.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -494,12 +517,14 @@ t integer to evaluate function at.</p></dd>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>pgf</span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Laplace</span><span class='op'>$</span><span class='fu'>pgf</span><span class='op'>(</span><span class='va'>z</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>z</code></dt><dd><p><code>(integer(1))</code> <br />
 z integer to evaluate probability generating function at.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
