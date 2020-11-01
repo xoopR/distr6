@@ -250,9 +250,9 @@ NumericVector C_SilvermanKernelCdf(NumericVector x, bool lower, bool logp) {
 
   for (int i = 0; i < x.size(); i++){
     if (x[i] <= 0) {
-      ret[i] = 0.5 * exp(x[i]/sqrt(2)) * cos(x[i]/sqrt(2));
+      ret[i] = 0.5 * exp(x[i]/sqrt(2.0)) * cos(x[i]/sqrt(2.0));
     } else {
-      ret[i] = 1 - (0.5 * exp(-x[i]/sqrt(2)) * cos(x[i]/sqrt(2)));
+      ret[i] = 1 - (0.5 * exp(-x[i]/sqrt(2.0)) * cos(x[i]/sqrt(2.0)));
     }
 
     if (!lower) {
