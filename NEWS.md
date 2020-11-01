@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 # distr6 1.4.6
 
 * Patch for solaris
+=======
+# distr6 1.4.5.9000
+>>>>>>> master
 
 # distr6 1.4.5
 
