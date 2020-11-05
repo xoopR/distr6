@@ -178,7 +178,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>distr6</h1>
             
-            <h4 class="date">2020-11-04</h4>
+            <h4 class="date">2020-11-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/distr6.rmd"><code>vignettes/distr6.rmd</code></a></small>
       <div class="hidden name"><code>distr6.rmd</code></div>
@@ -196,18 +196,18 @@
 <h3 class="hasAnchor">
 <a href="#construction-and-parameterisation" class="anchor"></a>Construction and Parameterisation</h3>
 <p>All distributions are constructed using R6 dollar sign notation The default Normal distribution is the Standard Normal parameterised with mean and var</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></code></pre></div>
 <p>But we could also parameterise with standard deviation or precision. Note that whichever we choose is clearly printed.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; Norm(mean = 2, var = 4, sd = 2, prec = 0.25)</span>
 <span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">3</span>, prec <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 3, var = 2, sd = 1.4142135623731, prec = 0.5)</span></pre></div>
+<span class="co">#&gt; Norm(mean = 3, var = 2, sd = 1.4142135623731, prec = 0.5)</span></code></pre></div>
 <p>But all parameters are available to us via the parameters method. Note how all available parameters are displayed, but only the ones chosen in construction are shown in the print method.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
@@ -215,47 +215,47 @@
 <span class="co">#&gt; 1: mean     0       ℝ                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var     1      ℝ+          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd     1      ℝ+        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec     1      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
+<span class="co">#&gt; 4: prec     1      ℝ+ Precision - Inverse Squared Scale Parameter</span></code></pre></div>
 </div>
 <div id="parameters-in-distr6" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameters-in-distr6" class="anchor"></a>Parameters in distr6</h3>
 <p>Parameters are accessed with getParameterValue and edited with setParameterValue</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>prec <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>prec <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"prec"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2</span></pre></div>
+<span class="co">#&gt; [1] 2</span></code></pre></div>
 <p>Note how all parameters that are related also update</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;      id     value support                                 description</span>
 <span class="co">#&gt; 1: mean         0       ℝ                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var       0.5      ℝ+          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd 0.7071068      ℝ+        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec         2      ℝ+ Precision - Inverse Squared Scale Parameter</span></pre></div>
+<span class="co">#&gt; 4: prec         2      ℝ+ Precision - Inverse Squared Scale Parameter</span></code></pre></div>
 <p>To view the functions that relate these parameters add the following</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>hide_cols <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>hide_cols <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 <span class="co">#&gt;      id     value support settable                                 description</span>
 <span class="co">#&gt; 1: mean         0       ℝ     TRUE                   Mean - Location Parameter</span>
 <span class="co">#&gt; 2:  var       0.5      ℝ+     TRUE          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd 0.7071068      ℝ+     TRUE        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec         2      ℝ+     TRUE Precision - Inverse Squared Scale Parameter</span></pre></div>
+<span class="co">#&gt; 4: prec         2      ℝ+     TRUE Precision - Inverse Squared Scale Parameter</span></code></pre></div>
 <p>The line above introduces ‘method chaining’, this occurs when one method is added to another. As another example, let’s edit and then access another parameter in the Normal distribution</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 3</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
+<span class="co">#&gt; [1] 3</span></code></pre></div>
 </div>
 <div id="representing-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#representing-a-distribution" class="anchor"></a>Representing a distribution</h3>
 <p>In keeping with R conventions, distributions have a print and summary method to view key details. We have already seen how the print method displays the distribution short_name and the parameterisation.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 3, sd = 1.73205080756888, prec = 0.333333333333333)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Norm(mean = 0, var = 3, sd = 1.73205080756888, prec = 0.333333333333333)</span></code></pre></div>
 <p>The summary method can also show basic statistics and distribution properties and traits. Adding the argument full = F, suppresses the output slightly.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Normal Probability Distribution. Parameterised with:</span>
 <span class="co">#&gt;   mean = 0, var = 3, sd = 1.73205080756888, prec = 0.333333333333333</span>
 <span class="co">#&gt; </span>
@@ -272,10 +272,10 @@
 <span class="va">N</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span>full <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="co">#&gt; Norm(mean = 0, var = 3, sd = 1.73205080756888, prec = 0.333333333333333)</span>
 <span class="co">#&gt; Scientific Type: ℝ    See $traits for more</span>
-<span class="co">#&gt; Support: ℝ    See $properties for more</span></pre></div>
+<span class="co">#&gt; Support: ℝ    See $properties for more</span></code></pre></div>
 <p>All distributions are also comprised of properties and traits. Traits are ways of describing a class whereas properties describe an object. In simpler terms, this means that a trait is present independent of the distribution’s parameterisation whereas a property depends on the constructed parameters.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="va">properties</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="va">properties</span>
 <span class="co">#&gt; $support</span>
 <span class="co">#&gt; ℝ </span>
 <span class="co">#&gt; </span>
@@ -289,24 +289,24 @@
 <span class="co">#&gt; [1] "univariate"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $type</span>
-<span class="co">#&gt; ℝ</span></pre></div>
+<span class="co">#&gt; ℝ</span></code></pre></div>
 </div>
 <div id="dpqr" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dpqr" class="anchor"></a>d/p/q/r</h3>
 <p>distr6 is intended not to replace R stats distributions but to be a different way of interfacing them. All distributions in R stats can be found in distr6 and all their d/p/q/r functions which refer to density/cumulative distribution/quantile/random are all available in distr6. Continuing our Normal distribution example:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># dnorm(2)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># dnorm(2)</span>
 <span class="co">#&gt; [1] 0.1182551</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># pnorm(2)</span>
 <span class="co">#&gt; [1] 0.8758935</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">quantile</span><span class="op">(</span><span class="fl">0.42</span><span class="op">)</span> <span class="co"># qnorm(2)</span>
 <span class="co">#&gt; [1] -0.3496898</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># rnorm(2)</span>
-<span class="co">#&gt; [1]  2.3745697 -0.9780859</span></pre></div>
+<span class="co">#&gt; [1]  2.3745697 -0.9780859</span></code></pre></div>
 <p>distr6 makes it easy to query these results by only requiring the distribution to be constructed once and then the specific parameterisation can be forgotten. In the case of the Normal distribution this may not seem like a big difference to R stats but now look at the difference when we construct a distribution without default parameters</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Beta.html">Beta</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>shape1 <span class="op">=</span> <span class="fl">0.582</span>, shape2 <span class="op">=</span> <span class="fl">1.2490</span><span class="op">)</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Beta.html">Beta</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>shape1 <span class="op">=</span> <span class="fl">0.582</span>, shape2 <span class="op">=</span> <span class="fl">1.2490</span><span class="op">)</span>
 <span class="va">B</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># dbeta(2, 0.582, 1.2490)</span>
 <span class="co">#&gt; [1] 0</span>
 <span class="va">B</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># pbeta(2, 0.582, 1.2490)</span>
@@ -314,18 +314,18 @@
 <span class="va">B</span><span class="op">$</span><span class="fu">quantile</span><span class="op">(</span><span class="fl">0.42</span><span class="op">)</span> <span class="co"># qbeta(2, 0.582, 1.2490)</span>
 <span class="co">#&gt; [1] 0.1790523</span>
 <span class="va">B</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># rbeta(2, 0.582, 1.2490)</span>
-<span class="co">#&gt; [1] 0.14613311 0.07374848</span></pre></div>
+<span class="co">#&gt; [1] 0.14613311 0.07374848</span></code></pre></div>
 <p>Finally distr6 includes log/log.p and lower.tail arguments to be consistent with R stats.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span>, log.p <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">3</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span>, log.p <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span>, log.p <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">3</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span>, log.p <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
 </div>
 <div id="mathematical-and-statistical-results" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mathematical-and-statistical-results" class="anchor"></a>Mathematical and Statistical Results</h3>
 <p>The final part of this tutorial looks at how to access mathematical and statistical results for probability distributions. This is another advantage of distr6 as it collects not only the results for the 17 distributions in R stats but also for all others implemented in distr6. Continuing with the Normal distribution:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">N</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">variance</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 3</span>
@@ -334,15 +334,15 @@
 <span class="va">N</span><span class="op">$</span><span class="fu">mgf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 403.4288</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.2231302+0i</span></pre></div>
+<span class="co">#&gt; [1] 0.2231302+0i</span></code></pre></div>
 <p>For a full list of methods available use the help documentation for any distribution</p>
 </div>
 <div id="listing-in-distr6" class="section level3">
 <h3 class="hasAnchor">
 <a href="#listing-in-distr6" class="anchor"></a>Listing in distr6</h3>
 <p>Instead of having to worry about remembering every distribution in R, distr6 provides a way of listing all of these, and filtering by traits or package. We only show the first 5 rows of this to save space.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span>
 <span class="co">#&gt; 1:       Arc        Arcsine    ℝ   continuous  univariate       - limits</span>
 <span class="co">#&gt; 2:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span>
@@ -371,14 +371,14 @@
 <span class="co">#&gt; 3:      Gumb       Gumbel      ℝ+   continuous   univariate extraDistr locscale</span>
 <span class="co">#&gt; 4:  InvGamma InverseGamma      ℝ+   continuous   univariate extraDistr         </span>
 <span class="co">#&gt; 5:       Lap      Laplace       ℝ   continuous   univariate extraDistr locscale</span>
-<span class="co">#&gt; 6:      Pare       Pareto      ℝ+   continuous   univariate extraDistr</span></pre></div>
+<span class="co">#&gt; 6:      Pare       Pareto      ℝ+   continuous   univariate extraDistr</span></code></pre></div>
 </div>
 <div id="r6-s3-and-magrittr" class="section level3">
 <h3 class="hasAnchor">
 <a href="#r6-s3-and-magrittr" class="anchor"></a>R6, S3 and Magrittr</h3>
 <p>As a final point, distr6 allows the use of R6 or S3 to call methods, which means that the package magrittr can also be used for ‘piping’. Returning to the Normal distribution</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Norm(mean = 0, var = 3, sd = 1.73205080756888, prec = 0.333333333333333)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>
@@ -391,7 +391,7 @@
 <span class="fu"><a href="../reference/pdf.html">pdf</a></span><span class="op">(</span><span class="va">N</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1182551</span>
 <span class="va">N</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/pdf.html">pdf</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.1182551</span></pre></div>
+<span class="co">#&gt; [1] 0.1182551</span></code></pre></div>
 </div>
 </div>
 <div id="further-documentation" class="section level2">

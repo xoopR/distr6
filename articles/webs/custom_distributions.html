@@ -178,7 +178,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Custom Distributions</h1>
             
-            <h4 class="date">2020-11-04</h4>
+            <h4 class="date">2020-11-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/custom_distributions.rmd"><code>vignettes/webs/custom_distributions.rmd</code></a></small>
       <div class="hidden name"><code>custom_distributions.rmd</code></div>
@@ -198,43 +198,43 @@
 <p>The <code>self</code> keyword is used to tell an object that it should call a method on itself. For example we have used the method <code><a href="../../reference/getParameterValue.html">getParameterValue()</a></code> on objects before but often we need the object to use this method on itself, so we use <code>self$getParameterValue()</code> this is especially important when defining d/p/q/r functions.</p>
 <p>The pdf of the Uniform distribution is defined by <span class="math display">\[f(x) = 1/(b - a)\]</span> where <span class="math inline">\(b\)</span> and <span class="math inline">\(a\)</span> are upper and lower limits respectively.</p>
 <p>Hence our pdf function needs to get the values of these limits, and define the distribution support</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># non-vectorised</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># non-vectorised</span>
 <span class="va">pdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
   <span class="va">pdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
   <span class="va">lower</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"lower"</span><span class="op">)</span>
   <span class="va">upper</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"upper"</span><span class="op">)</span>
   <span class="va">pdf</span><span class="op">[</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="va">lower</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="va">upper</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">upper</span> <span class="op">-</span> <span class="va">lower</span><span class="op">)</span>
   <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">pdf</span><span class="op">)</span>
-<span class="op">}</span></pre></div>
+<span class="op">}</span></code></pre></div>
 <p>In distr6, all pdf and cdf functions use the first argument of <code>x</code>, for univariates this is assumed to be a vector and for multivariates a matrix.</p>
 </div>
 <div id="parameterset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameterset" class="anchor"></a>ParameterSet</h3>
 <p>We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we have to first construct a <code>ParameterSet</code> objects. In fact we have seen these objects multiple times throughout these tutorials, they are what we see when we call <code><a href="../../reference/parameters.html">parameters()</a></code> on a distribution. Every time you use the <code>set/getParameterSet()</code> methods these are actually called on the <code>ParameterSet</code>. Constructing a ParameterSet is simple, you just have to remember which arguments are required, and luckily these are all given in <code><a href="../../reference/ParameterSet.html">?ParameterSet</a></code></p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">ps</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/ParameterSet.html">ParameterSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"lower"</span>,<span class="st">"upper"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span>,
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/ParameterSet.html">ParameterSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"lower"</span>,<span class="st">"upper"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span>,
                        support <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Reals.html">Reals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Reals.html">Reals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
                        settable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span>
 <span class="co">#&gt;       id value support</span>
 <span class="co">#&gt; 1: lower     1       ℝ</span>
-<span class="co">#&gt; 2: upper    10       ℝ</span></pre></div>
+<span class="co">#&gt; 2: upper    10       ℝ</span></code></pre></div>
 <p>We have omitted the <code>description</code> argument as this is rarely used in custom distributions. The arguments passed to the constructor above are respectively: a unique ID for the parameter, the starting (or default) value of the parameter, the parameter support (where it can take values), and whether or not the parameter can be machine updated (i.e. can an automated procedure be used to manipulate its value).</p>
 </div>
 <div id="constructing-the-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#constructing-the-distribution" class="anchor"></a>Constructing the Distribution</h3>
 <p>We now have the basics required to construct our custom uniform distribution, the last thing we require is the distribution support. Often the support can be omitted, in which case, the default set of Reals will be used, but in the case of the uniform distribution the support is very important.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">support</span> <span class="op">&lt;-</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">support</span> <span class="op">&lt;-</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="va">type</span> <span class="op">&lt;-</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Reals.html">Reals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va">U</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Distribution.html">Distribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Uniform"</span>, pdf <span class="op">=</span> <span class="va">pdf</span>, parameters <span class="op">=</span> <span class="va">ps</span>, support <span class="op">=</span> <span class="va">support</span>,
-                      type <span class="op">=</span> <span class="va">type</span><span class="op">)</span></pre></div>
+                      type <span class="op">=</span> <span class="va">type</span><span class="op">)</span></code></pre></div>
 <p>Other traits are automatically filled</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">U</span><span class="op">$</span><span class="va">traits</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">U</span><span class="op">$</span><span class="va">traits</span>
 <span class="co">#&gt; $type</span>
 <span class="co">#&gt; ℝ </span>
 <span class="co">#&gt; </span>
@@ -242,10 +242,10 @@
 <span class="co">#&gt; [1] "continuous"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $variateForm</span>
-<span class="co">#&gt; [1] "univariate"</span></pre></div>
+<span class="co">#&gt; [1] "univariate"</span></code></pre></div>
 <p>And now we can use your distribution:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">U</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">U</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1111111</span>
 
 <span class="co"># The log argument can be imputed with decorators</span>
@@ -259,10 +259,10 @@
 <span class="va">U</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0</span>
 <span class="va">U</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">11</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0</span></pre></div>
+<span class="co">#&gt; [1] 0</span></code></pre></div>
 <p>But the cdf returns NULL as we never supplied a function, so we could supply one or we could impute it using the <code>FunctionImputation</code> decorator:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">U</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">U</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; NULL</span>
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">U</span>, <span class="st">"FunctionImputation"</span><span class="op">)</span>
 <span class="co">#&gt; Uniform is now decorated with FunctionImputation</span>
@@ -273,7 +273,7 @@
 
 <span class="co"># The same as expected</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">punif</a></span><span class="op">(</span><span class="fl">5</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.4444444</span></pre></div>
+<span class="co">#&gt; [1] 0.4444444</span></code></pre></div>
 </div>
 <div id="extra-arguments" class="section level3">
 <h3 class="hasAnchor">
@@ -289,8 +289,8 @@
 <div id="putting-everything-together" class="section level2">
 <h2 class="hasAnchor">
 <a href="#putting-everything-together" class="anchor"></a>Putting Everything Together</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">cdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
   <span class="va">cdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
   <span class="va">lower</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"lower"</span><span class="op">)</span>
   <span class="va">upper</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"upper"</span><span class="op">)</span>
@@ -322,7 +322,7 @@
 <span class="co">#&gt; [1] -1.2</span>
 <span class="va">U</span><span class="op">$</span><span class="fu">survivalPNorm</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
-<span class="co">#&gt; [1] 0.5981347</span></pre></div>
+<span class="co">#&gt; [1] 0.5981347</span></code></pre></div>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">
