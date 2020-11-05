@@ -1,5 +1,3 @@
-library(testthat)
-
 dexpo <- function(x) {
   m1 <- self$getParameterValue("rate")
   m2 <- exp(-1 * self$getParameterValue("rate") * x)
@@ -30,7 +28,7 @@ dbin <- function(x) {
 ps <- getParameterSet.Binomial()
 
 discreteTester <- Distribution$new("Discrete Test", "TestDistr",
-  support = Set$new(0:10),
+  support = Set$new(0:10, class = "integer"),
   symmetric = TRUE, type = Naturals$new(),
   pdf = dbin,
   parameters = ps,

@@ -36,7 +36,7 @@ Convolution <- R6Class("Convolution",
       }
 
       private$.outerParameters <- ParameterSet$new(
-        id = "add", value = add, support = LogicalSet$new(),
+        id = "add", value = add, support = Logicals$new(),
         description = "Type of convolution."
       )
 

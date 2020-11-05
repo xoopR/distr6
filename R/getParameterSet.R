@@ -89,7 +89,7 @@ getParameterSet.Categorical <- function(object, probs, elements) {
     id = list("elements", "probs"),
     value = list(rep(1, nCategories), rep(0.5, nCategories)),
     support = list(
-      UniversalSet$new(), setpower(Interval$new(0, 1), "n")
+      Universal$new(), setpower(Interval$new(0, 1), "n")
     ),
     settable = list(TRUE, TRUE),
     description = list("Categories", "Probability of success i")
@@ -314,7 +314,7 @@ getParameterSet.Geometric <- function(object, prob, qprob = NULL, trials = FALSE
       support = list(
         Interval$new(0, 1, type = "()"),
         Interval$new(0, 1, type = "()"),
-        LogicalSet$new()
+        Logicals$new()
       ),
       settable = list(TRUE, TRUE, FALSE),
       description = list(
@@ -330,7 +330,7 @@ getParameterSet.Geometric <- function(object, prob, qprob = NULL, trials = FALSE
       support = list(
         Interval$new(0, 1, type = "(]"),
         Interval$new(0, 1, type = "(]"),
-        LogicalSet$new()
+        Logicals$new()
       ),
       settable = list(TRUE, TRUE, FALSE),
       description = list(
@@ -963,7 +963,7 @@ getParameterSet.Triangular <- function(object, lower, upper, mode, symmetric = F
   ps <- ParameterSet$new(
     id = list("lower", "upper", "mode", "symmetric"),
     value = list(0, 1, 0.5, symmetric),
-    support = list(reals, reals, reals, LogicalSet$new()),
+    support = list(reals, reals, reals, Logicals$new()),
     settable = list(TRUE, TRUE, !symmetric, FALSE),
     description = list(
       "Lower distribution limit.", "Upper distribution limit.",

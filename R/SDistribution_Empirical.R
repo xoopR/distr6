@@ -58,7 +58,7 @@ Empirical <- R6Class("Empirical",
       private$.parameters <- ParameterSet$new(
         id = "data",
         value = list(data),
-        support = UniversalSet$new(),
+        support = Universal$new(),
         settable = FALSE,
         description = "Data"
       )

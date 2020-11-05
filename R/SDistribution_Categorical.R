@@ -77,7 +77,7 @@ Categorical <- R6Class("Categorical",
       super$initialize(
         decorators = decorators,
         support = Set$new(lst = elements),
-        type = UniversalSet$new(),
+        type = Universal$new(),
         symmetry = if (length(unique(self$getParameterValue("probs"))) == 1) "sym" else "asym"
       )
     },

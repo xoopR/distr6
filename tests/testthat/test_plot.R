@@ -1,5 +1,3 @@
-library(testthat)
-
 test_that("missing d/p/q", {
   expect_error(expect_message(
     plot(Distribution$new("s", pdf = function(x) x, type = Reals$new()), fun = "cdf"),

@@ -1,3 +1,7 @@
+# distr6 1.4.7
+
+* Patch for set6
+
 # distr6 1.4.6
 
 * Patch for solaris
