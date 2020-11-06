@@ -74,6 +74,7 @@ Other kernels:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean">}\href{../../distr6/html/Kernel.html#method-mean}{\code{distr6::Kernel$mean()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median">}\href{../../distr6/html/Kernel.html#method-median}{\code{distr6::Kernel$median()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode">}\href{../../distr6/html/Kernel.html#method-mode}{\code{distr6::Kernel$mode()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="skewness">}\href{../../distr6/html/Kernel.html#method-skewness}{\code{distr6::Kernel$skewness()}}\out{</span>}
 }
 \out{</details>}
 }

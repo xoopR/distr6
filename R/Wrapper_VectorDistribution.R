@@ -149,7 +149,8 @@ VectorDistribution <- R6Class("VectorDistribution",
             stop("Either distlist or distribution and params must be provided.")
           }
 
-          distribution <- match.arg(distribution, listDistributions(simplify = TRUE))
+          distribution <- match.arg(distribution, c(listDistributions(simplify = TRUE),
+                                                    listKernels(simplify = TRUE)))
 
           if (grepl("Empirical", distribution)) {
             stop("Empirical and EmpiricalMV not currently available for `distribution/params`
@@ -183,36 +184,44 @@ or `distlist` should be used.")
           }
 
           # create wrapper parameters by cloning distribution parameters and setting by given params
+          # skip if no parameters
           pdist <- get(distribution)
-          p <- do.call(paste0("getParameterSet.", distribution), c(params[[1]], shared_params))
+          p <- try(do.call(paste0("getParameterSet.", distribution), c(params[[1]], shared_params)),
+                   silent = TRUE)
+          if (class(p)[[1]] != "try-error") {
+            paramlst <- vector("list", length(params))
+            for (i in seq_along(params)) {
+              paramlst[[i]] <- p$clone(deep = TRUE)
+            }
 
-          paramlst <- vector("list", length(params))
-          for (i in seq_along(params)) {
-            paramlst[[i]] <- p$clone(deep = TRUE)
+            names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
+            names(params) <- names(paramlst)
+            params <- unlist(params, recursive = FALSE)
+            names(params) <- gsub(".", "_", names(params), fixed = TRUE)
+            if (!is.null(shared_params)) {
+              if (distribution == "Geometric") {
+                shared_params <- shared_params[!(names(shared_params) %in% "trials")]
+              }
+              if (distribution == "NegativeBinomial") {
+                shared_params <- shared_params[!(names(shared_params) %in% "form")]
+              }
+              shared_params <- rep(list(shared_params), length(params))
+              names(shared_params) <- names(paramlst)
+              shared_params <- unlist(shared_params, recursive = FALSE)
+              names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
+              params <- c(params, shared_params)
+            }
+
+            support <- subset(as.data.table(p), select = c(id, support))
+            support[, support := sapply(support, set6::setpower, power = length(paramlst))]
+            parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
+                                                     .supports = support)$setParameterValue(lst = params)
+          } else {
+            paramlst <- vector("list", length(params))
+            names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
+            parameters <- ParameterSetCollection$new()
           }
 
-          names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
-          names(params) <- names(paramlst)
-          params <- unlist(params, recursive = FALSE)
-          names(params) <- gsub(".", "_", names(params), fixed = TRUE)
-          if (!is.null(shared_params)) {
-            if (distribution == "Geometric") {
-              shared_params <- shared_params[!(names(shared_params) %in% "trials")]
-            }
-            if (distribution == "NegativeBinomial") {
-              shared_params <- shared_params[!(names(shared_params) %in% "form")]
-            }
-            shared_params <- rep(list(shared_params), length(params))
-            names(shared_params) <- names(paramlst)
-            shared_params <- unlist(shared_params, recursive = FALSE)
-            names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
-            params <- c(params, shared_params)
-          }
-
-          support <- subset(as.data.table(p), select = c(id, support))
-          support[, support := sapply(support, set6::setpower, power = length(paramlst))]
-          parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
-                                               .supports = support)$setParameterValue(lst = params)
           shortname <- get(distribution)$public_fields$short_name
 
           # modelTable is for reference and later
@@ -223,8 +232,16 @@ or `distlist` should be used.")
 
           # set univariate flag for calling d/p/q/r
           private$.univariate <- pdist$private_fields$.traits$variateForm == "univariate"
+          # inheritance catch
+          if (!length(private$.univariate)) {
+            private$.univariate <- pdist$get_inherit()$private_fields$.trait$variateForm == "univariate"
+          }
           # set valueSupport
           valueSupport <- pdist$private_fields$.traits$valueSupport
+          # inheritance catch
+          if (!length(valueSupport)) {
+            valueSupport <- pdist$get_inherit()$private_fields$.trait$valueSupport
+          }
 
           # set d/p/q/r if non-NULL
           pdist_pri <- pdist[["private_methods"]]
@@ -369,16 +386,22 @@ or `distlist` should be used.")
             stopifnot(distlist[[i]]$traits$variateForm == vf)
             shortname <- c(shortname, distlist[[i]]$short_name)
             distribution <- c(distribution, distlist[[i]]$name)
-            paramlst[[i]] <- distlist[[i]]$parameters()
+            if (!is.null(distlist[[i]]$parameters()))
+              paramlst[[i]] <- distlist[[i]]$parameters()
             vs <- c(vs, distlist[[i]]$traits$valueSupport)
           }
           valueSupport <- if (length(unique(vs)) == 1) vs[[1]] else "mixture"
           shortname <- makeUniqueNames(shortname)
-          names(paramlst) <- shortname
-          names(distlist) <- shortname
 
-          # create parameterset
-          parameters <- ParameterSetCollection$new(lst = paramlst)
+          if (is.null(unlist(paramlst))) {
+            parameters <- ParameterSetCollection$new()
+            paramlst <- NULL
+          } else {
+            names(paramlst) <- shortname
+            parameters <- ParameterSetCollection$new(lst = paramlst)
+          }
+
+          names(distlist) <- shortname
 
           private$.univariate <- vf == "univariate"
 
@@ -451,7 +474,8 @@ or `distlist` should be used.")
 
         # create name, short_name, description, type, support
         dst <- unique(self$modelTable$Distribution)
-        if (length(dst) == 1 & dst[[1]] %in% listDistributions(simplify = TRUE)) {
+        if (length(dst) == 1 & dst[[1]] %in% c(listDistributions(simplify = TRUE),
+                                               listKernels(simplify = TRUE))) {
           distribution <- get(as.character(unlist(self$modelTable[1, 1])))
           if (is.null(name)) {
             name <- paste0(
@@ -498,6 +522,7 @@ or `distlist` should be used.")
           parameters = parameters,
           ...
         )
+
       }
     },
 
@@ -566,8 +591,18 @@ or `distlist` should be used.")
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$mean
+        if (is.null(f)) {
+          f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$get_inherit()$
+            public_methods$mean
+        }
+        if (is.null(f)) {
+          stop("Not implemented for this distribution.")
+        }
         formals(f) <- c(list(self = self), alist(... = ))
         ret <- f()
+        if (length(ret) == 1) {
+          ret <- rep(ret, nrow(self$modelTable))
+        }
       }
 
       if (is.null(dim(ret))) {
@@ -589,8 +624,18 @@ or `distlist` should be used.")
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$mode
+        if (is.null(f)) {
+          f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$get_inherit()$
+            public_methods$mode
+        }
+        if (is.null(f)) {
+          stop("Not implemented for this distribution.")
+        }
         formals(f) <- list(self = self, which = which)
         ret <- f()
+        if (length(ret) == 1) {
+          ret <- rep(ret, nrow(self$modelTable))
+        }
       }
 
       if (is.null(dim(ret))) {
@@ -624,8 +669,18 @@ or `distlist` should be used.")
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$variance
+        if (is.null(f)) {
+          f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$get_inherit()$
+            public_methods$variance
+        }
+        if (is.null(f)) {
+          stop("Not implemented for this distribution.")
+        }
         formals(f) <- c(list(self = self), alist(... = ))
         ret <- f()
+        if (length(ret) == 1) {
+          ret <- rep(ret, nrow(self$modelTable))
+        }
       }
 
       if (is.null(dim(ret))) {
@@ -648,8 +703,18 @@ or `distlist` should be used.")
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$skewness
+        if (is.null(f)) {
+          f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$get_inherit()$
+            public_methods$skewness
+        }
+        if (is.null(f)) {
+          stop("Not implemented for this distribution.")
+        }
         formals(f) <- c(list(self = self), alist(... = ))
         ret <- f()
+        if (length(ret) == 1) {
+          ret <- rep(ret, nrow(self$modelTable))
+        }
       }
 
       names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
@@ -668,8 +733,18 @@ or `distlist` should be used.")
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$kurtosis
+        if (is.null(f)) {
+          f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$get_inherit()$
+            public_methods$kurtosis
+        }
+        if (is.null(f)) {
+          stop("Not implemented for this distribution.")
+        }
         formals(f) <- c(list(self = self, excess = excess), alist(... = ))
         ret <- f()
+        if (length(ret) == 1) {
+          ret <- rep(ret, nrow(self$modelTable))
+        }
       }
 
       names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))
@@ -687,8 +762,15 @@ or `distlist` should be used.")
         })
       } else {
         f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$public_methods$entropy
+        if (is.null(f)) {
+          f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$get_inherit()$
+            public_methods$entropy
+        }
         formals(f) <- c(list(self = self, base = base), alist(... = ))
         ret <- f()
+        if (length(ret) == 1) {
+          ret <- rep(ret, nrow(self$modelTable))
+        }
       }
 
       names(ret) <- as.character(unlist(private$.modelTable[, "shortname"]))

@@ -33,7 +33,7 @@ Kernel <- R6Class("Kernel",
     },
 
     #' @description
-    #' Calculates the mode of the distibution.
+    #' Calculates the mode of the distribution.
     mode = function(which = "all") {
       return(0)
     },
@@ -67,7 +67,15 @@ Kernel <- R6Class("Kernel",
     #' are the distribution support limits.
     cdfSquared2Norm = function(x = 0, upper = Inf) {
       return(NULL)
-    }
+    },
+
+    #' @description
+    #' The skewness of a distribution is defined by the third standardised moment,
+    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' @param ... Unused.
+    skewness = function(...) return(0)
   ),
 
   private = list(
@@ -77,7 +85,7 @@ Kernel <- R6Class("Kernel",
     .isRand = 1L,
     .log = TRUE,
     .traits = list(valueSupport = "continuous", variateForm = "univariate"),
-    .properties = list(kurtosis = NULL, skewness = NULL, symmetric = "symmetric"),
+    .properties = list(kurtosis = NULL, skewness = 0, symmetric = "symmetric"),
     .rand = function(n) {
       if (!is.null(private$.quantile)) {
         return(self$quantile(runif(n)))

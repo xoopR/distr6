@@ -34,15 +34,18 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       if (is.null(lst)) {
         lst <- list(...)
       }
-      checkmate::assertNames(names(lst), type = "strict")
-      assertParameterSetList(lst)
-      private$.parametersets <- lst
-      if (!is.null(.checks)) {
-        private$.checks <- .checks
+      if (length(lst)) {
+        checkmate::assertNames(names(lst), type = "strict")
+        assertParameterSetList(lst)
+        private$.parametersets <- lst
+        if (!is.null(.checks)) {
+          private$.checks <- .checks
+        }
+        if (!is.null(.supports)) {
+          private$.supports <- .supports
+        }
       }
-      if (!is.null(.supports)) {
-        private$.supports <- .supports
-      }
+
       invisible(self)
     },
 
@@ -262,15 +265,20 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
 as.data.table.ParameterSetCollection <- function(x, ...) {
   paramsets <- x$.__enclos_env__$private$.parametersets
 
-  lst <- unlist(lapply(paramsets, function(.x) {
-    r = as.data.table(.x)
-    list(r, nrow(r))
-  }), recursive = FALSE)
+  if (length(paramsets)) {
+    lst <- unlist(lapply(paramsets, function(.x) {
+      r = as.data.table(.x)
+      list(r, nrow(r))
+    }), recursive = FALSE)
 
-  dt <- data.table::rbindlist(lst[seq.int(1, length(lst), 2)])
-  dt$id <- paste(rep(names(paramsets),
-                     times = as.numeric(lst[seq.int(2, length(lst), 2)])),
-                 dt$id, sep = "_")
+    dt <- data.table::rbindlist(lst[seq.int(1, length(lst), 2)])
+    dt$id <- paste(rep(names(paramsets),
+                       times = as.numeric(lst[seq.int(2, length(lst), 2)])),
+                   dt$id, sep = "_")
+  } else {
+    dt <- data.table::data.table(id = character(), value = numeric(), support= list(),
+                                 description = character())
+  }
 
   return(dt)
 }

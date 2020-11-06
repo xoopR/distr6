@@ -30,6 +30,7 @@ Abstract class that cannot be constructed directly.
 \item \href{#method-median}{\code{Kernel$median()}}
 \item \href{#method-pdfSquared2Norm}{\code{Kernel$pdfSquared2Norm()}}
 \item \href{#method-cdfSquared2Norm}{\code{Kernel$cdfSquared2Norm()}}
+\item \href{#method-skewness}{\code{Kernel$skewness()}}
 \item \href{#method-clone}{\code{Kernel$clone()}}
 }
 }
@@ -81,7 +82,7 @@ Support of the distribution.}
 \if{html}{\out{<a id="method-mode"></a>}}
 \if{latex}{\out{\hypertarget{method-mode}{}}}
 \subsection{Method \code{mode()}}{
-Calculates the mode of the distibution.
+Calculates the mode of the distribution.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Kernel$mode(which = "all")}\if{html}{\out{</div>}}
 }
@@ -167,6 +168,26 @@ Amount to shift the result.}
 
 \item{\code{upper}}{\code{(numeric(1))} \cr
 Upper limit of the integral.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-skewness}{}}}
+\subsection{Method \code{skewness()}}{
+The skewness of a distribution is defined by the third standardised moment,
+\deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
+distribution and \eqn{\sigma} is the standard deviation of the distribution.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Kernel$skewness(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }

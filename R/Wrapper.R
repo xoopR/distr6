@@ -75,6 +75,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
         names(params) <- names(distlist)
         paramlst <- c(paramlst, params)
       }
+      if (is.null(unlist(paramlst))) paramlst <- NULL
 
       if (!is.null(private$.outerParameters)) {
         outerlst <- list(private$.outerParameters)

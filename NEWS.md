@@ -1,6 +1,8 @@
 # distr6 1.4.7
 
 * Patch for set6
+* Add `rep.Distribution` for replicating distributions into vectors, mixtures, or products
+* Kernels can now be used with vectors/mixtures/products
 
 # distr6 1.4.6
 

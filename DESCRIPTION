@@ -82,6 +82,8 @@ Suggests:
   actuar,
   plotly,
   pracma
+Remotes:
+  xoopR/set6
 License: MIT + file LICENSE
 LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
@@ -198,6 +200,7 @@ Collate:
     'plot_multivariate.R'
     'plot_vectordistribution.R'
     'qqplot.R'
+    'rep.Distribution.R'
     'sets.R'
     'simulateEmpiricalDistribution.R'
     'skewType.R'
