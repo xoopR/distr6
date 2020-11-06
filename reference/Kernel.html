@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.7</span>
       </span>
     </div>
 
@@ -258,6 +258,7 @@
 <li><p><a href='#method-median'><code>Kernel$median()</code></a></p></li>
 <li><p><a href='#method-pdfSquared2Norm'><code>Kernel$pdfSquared2Norm()</code></a></p></li>
 <li><p><a href='#method-cdfSquared2Norm'><code>Kernel$cdfSquared2Norm()</code></a></p></li>
+<li><p><a href='#method-skewness'><code>Kernel$skewness()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Kernel$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
@@ -298,7 +299,7 @@ Support of the distribution.</p></dd>
 </dl><p></div></p>
 <p><hr>
 <a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mode.html'>mode()</a></code></h3>
-<p>Calculates the mode of the distibution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Calculates the mode of the distribution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Kernel</span><span class='op'>$</span><span class='fu'>mode</span><span class='op'>(</span>which <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -355,6 +356,19 @@ Amount to shift the result.</p></dd>
 
 <dt><code>upper</code></dt><dd><p><code>(numeric(1))</code> <br />
 Upper limit of the integral.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-skewness"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<p>The skewness of a distribution is defined by the third standardised moment,
+$$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
+where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
+distribution and \(\sigma\) is the standard deviation of the distribution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Kernel</span><span class='op'>$</span><span class='fu'>skewness</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Unused.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

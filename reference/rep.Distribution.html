@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cumulative Distribution Function P-Norm — cdfPNorm • distr6</title>
+<title>Replicate Distribution into Vector, Mixture, or Product — rep.Distribution • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,15 @@
 
 
 
-<meta property="og:title" content="Cumulative Distribution Function P-Norm — cdfPNorm" />
-<meta property="og:description" content="The p-norm of the cdf evaluated between given limits or over the whole support." />
+<meta property="og:title" content="Replicate Distribution into Vector, Mixture, or Product — rep.Distribution" />
+<meta property="og:description" content="Replicates a constructed distribution into either a
+VectorDistribution (class = &quot;vector&quot;)
+ProductDistribution (class = &quot;product&quot;)
+MixtureDistribution (class = &quot;mixture&quot;)
+
+
+If the distribution is not a custom Distribution then uses the more efficient
+distribution/params constructor, otherwise uses distlist." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -221,42 +228,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cumulative Distribution Function P-Norm</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_ExoticStatistics.R'><code>R/DistributionDecorator_ExoticStatistics.R</code></a></small>
-    <div class="hidden name"><code>cdfPNorm.Rd</code></div>
+    <h1>Replicate Distribution into Vector, Mixture, or Product</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/rep.Distribution.R'><code>R/rep.Distribution.R</code></a></small>
+    <div class="hidden name"><code>rep.Distribution.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The p-norm of the cdf evaluated between given limits or over the whole support.</p>
+    <p>Replicates a constructed distribution into either a</p><ul>
+<li><p><a href='VectorDistribution.html'>VectorDistribution</a> (<code>class = "vector"</code>)</p></li>
+<li><p><a href='ProductDistribution.html'>ProductDistribution</a> (<code>class = "product"</code>)</p></li>
+<li><p><a href='MixtureDistribution.html'>MixtureDistribution</a> (<code>class = "mixture"</code>)</p></li>
+</ul>
+
+<p>If the distribution is not a custom <a href='Distribution.html'>Distribution</a> then uses the more efficient
+<code>distribution/params</code> constructor, otherwise uses <code>distlist</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cdfPNorm</span><span class='op'>(</span><span class='va'>object</span>, p <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='cn'>NULL</span>, upper <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for Distribution</span>
+<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>times</span>, class <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vector"</span>, <span class='st'>"product"</span>, <span class='st'>"mixture"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Distribution.</p></td>
+      <th>x</th>
+      <td><p><a href='Distribution.html'>Distribution</a></p></td>
     </tr>
     <tr>
-      <th>p</th>
-      <td><p>p-norm to calculate.</p></td>
+      <th>times</th>
+      <td><p><code>(integer(1))</code> Number of times to replicate the distribution</p></td>
     </tr>
     <tr>
-      <th>lower</th>
-      <td><p>lower limit for integration, default is infimum.</p></td>
+      <th>class</th>
+      <td><p><code>(character(1))</code> What type of vector to create, see description.</p></td>
     </tr>
     <tr>
-      <th>upper</th>
-      <td><p>upper limit for integration, default is supremum.</p></td>
+      <th>...</th>
+      <td><p>Additional arguments, currently unused.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Given p-norm of cdf evaluated between limits as a numeric.</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'><a href='Binomial.html'>Binomial</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Binom1 Binom2 ... Binom9 Binom10 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'><a href='Gamma.html'>Gamma</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, <span class='fl'>2</span>, class <span class='op'>=</span> <span class='st'>"product"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Gamma1 X Gamma2 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
