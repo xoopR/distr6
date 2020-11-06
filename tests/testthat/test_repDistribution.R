@@ -6,9 +6,9 @@ test_that("rep custom", {
 })
 
 test_that("rep dist/param", {
-  expect_equal(rep(Binomial$new(size = 2), 2, "mix"),
+  expect_equal(rep(Binomial$new(size = 2, prob = 0.1), 10, "mix")$pdf(1:5),
                MixtureDistribution$new(distribution = "Binomial",
-                                       params = list(list(size = 2), list(size = 2))))
+                                       params = rep(list(list(size = 2, prob = 0.1)), 10))$pdf(1:5))
 })
 
 test_that("rep kernel", {
