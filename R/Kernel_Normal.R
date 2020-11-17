@@ -66,12 +66,6 @@ NormalKernel <- R6Class("NormalKernel",
     #' @param ... Unused.
     variance = function(...) {
       return(1)
-    },
-
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 
