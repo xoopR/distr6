@@ -24,7 +24,11 @@ NormalKernel <- R6Class("NormalKernel",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(decorators = NULL) {
+    initialize = function(decorators = NULL, bw = 1) {
+
+      private$.parameters <- getParameterSet(self, bw)
+      self$setParameterValue(bw = bw)
+
       super$initialize(
         decorators = decorators,
         support = Reals$new()
@@ -62,6 +66,12 @@ NormalKernel <- R6Class("NormalKernel",
     #' @param ... Unused.
     variance = function(...) {
       return(1)
+    },
+
+    setParameterValue = function(..., lst = NULL, error = "warn") {
+      if (is.null(lst)) lst <- list(...)
+      super$setParameterValue(lst = lst, error = error)
+      invisible(self)
     }
   ),
 
@@ -70,7 +80,8 @@ NormalKernel <- R6Class("NormalKernel",
       C_NormalKernelPdf(x, log)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      cdf <- 1 / 2 * (pracma::erf(x / sqrt(2)) + 1)
+      h <- self$getParameterValue("bw")
+      cdf <- 1 / 2 * (pracma::erf((x /h ) / sqrt(2)) + 1)
       if (!lower.tail) {
         cdf <- 1 - cdf
       }
