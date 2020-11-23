@@ -41,6 +41,14 @@ NormalKernel <- R6Class("NormalKernel",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0, upper = Inf) {
+
+      # if (upper == Inf) {
+      #   ret <- (1 / (2 * sqrt(pi))) * exp(- (x / 2)^2)
+      # } else {
+      #   ret <- exp(- (x^2) / 4) / (4 * sqrt(pi)) *
+      #     (2 * pnorm((upper - x / 2) * sqrt(2)) - 1 + 1)}
+
+      h = self$getParameterValue("bw")
       xl = length(x)
       ul = length(upper)
       len = max(xl, ul)
@@ -50,10 +58,10 @@ NormalKernel <- R6Class("NormalKernel",
         xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
         ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
         if (ui == Inf) {
-          ret[i] <- (1 / (2 * sqrt(pi))) * exp(- (xi / 2)^2)
+          ret[i] <- (1 / (2 * sqrt(pi))) * exp(- (xi / (2 * h))^2) * 1 / h
         } else {
-          ret[i] <- exp(- (xi^2) / 4) / (4 * sqrt(pi)) *
-            (2 * pnorm((ui - xi / 2) * sqrt(2)) - 1 + 1)}
+          ret[i] <- exp(- (xi^2) / (h^2 *4)) / (4 * sqrt(pi)) *
+            (2 * pnorm((ui / h  - xi / (2 * h)) * sqrt(2)) - 1 + 1) * 1 / h }
       }
       return(ret)
     },
@@ -66,6 +74,50 @@ NormalKernel <- R6Class("NormalKernel",
     #' @param ... Unused.
     variance = function(...) {
       return(1)
+    },
+
+
+    #' @description
+    #' The integral of the cdf
+    #' \deqn{Int_{-Inf}^{upper} F(x) dx}
+    #' where \eqn{F(x)} is the cdf of the Normal kernel.
+    cdfIntegral = function(lower = -Inf, upper = Inf) {
+      h = self$getParameterValue("bw")
+            cdfInt =  if (lower == -Inf) {
+                (upper * pracma::erf(upper / (h * sqrt(2))) + upper) / 2 + (exp(-upper^2 / (2 * h^2)) * h) / (sqrt(2)*sqrt(pi))
+      } else {
+        (upper*(pracma::erf(upper / (h * sqrt(2))) + 1) - lower * (pracma::erf(lower / (h * sqrt(2))) + 1)) / 2 -
+          (h * (exp(upper^2 / (h^2 * 2)) - exp(lower^2 / (2 * h^2))) * exp(-(upper^2 + lower^2) / (2 * h^2))) / (sqrt(2)*sqrt(pi))
+      }
+      return(cdfInt)
+    },
+
+    #' @description
+    #' The integral of the  1 - cdf
+    #' \deqn{Int_{lower}^{Inf} 1 - F(x) dx}
+    #' where \eqn{F(x)} is the cdf of the Normal kernel.
+
+    ccdfIntegral = function (lower = -Inf, upper = Inf, h= 1) {
+      h = self$getParameterValue("bw")
+      ccdfInt =  if (upper == Inf) {
+        (lower * pracma::erf(lower / (h * sqrt(2))) - lower) / 2 + (exp(-lower^2 / (2 * h^2)) * h) / (sqrt(2) * sqrt(pi))
+      } else {
+        ((exp(upper^2 / 2) - exp(lower^2 / 2)) * exp(- (upper^2 + lower^2) / 2)) / (sqrt(2) * sqrt(pi)) -
+          (upper * (pracma::erf(upper / sqrt(2)) - 1) - lower * (pracma::erf(lower / sqrt(2)) - 1)) /2
+      }
+      return(ccdfInt)
+    },
+
+    #' @description
+    #' The energy Brier function
+    #' \deqn{x erf(x/h) + h sqrt{2/pi} e^{-x^2/2h^2}}
+    #' where \eqn{x} is the mean and \eqn{h} is the bandwidth.
+    energyBrier = function(x) {
+      h = self$getParameterValue("bw")
+      if (x ==0 ) {
+        ret = 2* h / sqrt(pi)
+      } else {ret = x * pracma::erf(x / (sqrt(2) * h)) + h * sqrt(2 / pi) * exp(-1/2 * (x / h)^2) }
+      return(ret)
     }
   ),
 
@@ -74,8 +126,7 @@ NormalKernel <- R6Class("NormalKernel",
       C_NormalKernelPdf(x, log)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      h <- self$getParameterValue("bw")
-      cdf <- 1 / 2 * (pracma::erf((x /h ) / sqrt(2)) + 1)
+      cdf <- 1 / 2 * (pracma::erf(x / (sqrt(2) * self$getParameterValue("bw"))) + 1)
       if (!lower.tail) {
         cdf <- 1 - cdf
       }

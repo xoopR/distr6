@@ -1057,3 +1057,11 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nol
 
   return(ps)
 }
+
+getParameterSet.NormalKernel <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
