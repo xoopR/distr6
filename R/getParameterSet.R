@@ -1065,3 +1065,87 @@ getParameterSet.NormalKernel <- function(object, bw) {
     description = list("bandwdith")
   )
 }
+
+getParameterSet.UniformKernel <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.LogisticKernel <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.Sigmoid <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.Epanechnikov <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(reals),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.Quartic <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.TriangularKernel <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(reals),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.Silverman <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.Cosine <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+getParameterSet.Tricube <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+
+getParameterSet.Triweight <- function(object, bw) {
+  ParameterSet$new(
+    id = list("bw"), value = list(1),
+    support = list(PosReals$new(zero = TRUE)),
+    description = list("bandwdith")
+  )
+}
+
+
+

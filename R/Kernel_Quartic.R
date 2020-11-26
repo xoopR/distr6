@@ -21,6 +21,15 @@ Quartic <- R6Class("Quartic",
     description = "Quartic Kernel",
 
     #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(decorators = NULL, bw = 1) {
+
+      private$.parameters <- getParameterSet(self, bw)
+      self$setParameterValue(bw = bw)
+
+    },
+
+    #' @description
     #' The squared 2-norm of the pdf is defined by
     #' \deqn{\int_a^b (f_X(u))^2 du}
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
@@ -34,46 +43,50 @@ Quartic <- R6Class("Quartic",
       for (i in seq(len)) {
         xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
         ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
-        if (abs(xi) >= 2) {
+
+        xi_h = xi / self$getParameterValue("bw")
+        ui_h = ui / self$getParameterValue("bw")
+
+        if (abs(xi_h) >= 2) {
           ret[i] <- 0
-        } else if (xi >= 0) {
-          if (ui <= xi - 1) {
+        } else if (xi_h >= 0) {
+          if (ui_h <= xi_h - 1) {
             ret[i] <- 0
-          } else if (ui >= xi - 1 & ui <= 1) {
-            ret[i] <- (15 / 16)^2 * (- xi^9 / 630 + (4 * xi^7) / 105 -
-              (8 * xi^5) / 15 + ui * (xi^4 - 2 * xi^2 + 1) +
-              (8 * xi^4) / 15 + ui^5 * (xi^4 / 5 - (14 * xi^2) / 5 + 6 / 5) +
-              ui^3 * (- (2 * xi^4) / 3 + (10 * xi^2) / 3 - 4 / 3) +
-              ui^4 * (2 * xi^3 - 3 * xi) + (2 * xi^3) / 3 +
-              ui^6 * (2 * xi - (2 * xi^3) / 3) +
-              ui^2 * (2 * xi - 2 * xi^3) - (64 * xi^2) / 105 +
-              ui^7 * ((6 * xi^2) / 7 - 4 / 7) - (ui^8 * xi) / 2 - xi / 2 +
-              ui^9 / 9 + 128 / 315)
-          } else if (ui >= 1 | ui == Inf) {
+          } else if (ui_h >= xi_h - 1 & ui_h <= 1) {
+            ret[i] <- (15 / 16)^2 * (- xi_h^9 / 630 + (4 * xi_h^7) / 105 -
+              (8 * xi_h^5) / 15 + ui_h * (xi_h^4 - 2 * xi_h^2 + 1) +
+              (8 * xi_h^4) / 15 + ui_h^5 * (xi_h^4 / 5 - (14 * xi_h^2) / 5 + 6 / 5) +
+              ui_h^3 * (- (2 * xi_h^4) / 3 + (10 * xi_h^2) / 3 - 4 / 3) +
+              ui_h^4 * (2 * xi_h^3 - 3 * xi_h) + (2 * xi_h^3) / 3 +
+              ui_h^6 * (2 * xi_h - (2 * xi_h^3) / 3) +
+              ui_h^2 * (2 * xi_h - 2 * xi_h^3) - (64 * xi_h^2) / 105 +
+              ui_h^7 * ((6 * xi_h^2) / 7 - 4 / 7) - (ui_h^8 * xi_h) / 2 - xi_h / 2 +
+              ui_h^9 / 9 + 128 / 315)
+          } else if (ui_h >= 1 | ui_h == Inf) {
             ret[i] <- (15 / 16)^2 * (1 / 630) *
-              (- xi^9 + 24 * xi^7 - 336 * xi^5 + 672 * xi^4 - 768 * xi^2 + 512)
+              (- xi_h^9 + 24 * xi_h^7 - 336 * xi_h^5 + 672 * xi_h^4 - 768 * xi_h^2 + 512)
           }
-        } else if (xi <= 0) {
-          if (ui <= -1) {
+        } else if (xi_h <= 0) {
+          if (ui_h <= -1) {
             ret[i] <- 0
-          } else if (ui <= xi + 1 & ui >= -1) {
-            ret[i] <- (15 / 16)^2 * (ui * (xi^4 - 2 * xi^2 + 1) + (8 * xi^4) / 15 +
-                                        ui^5 * (xi^4 / 5 - (14 * xi^2) / 5 + 6 / 5) +
-                                        ui^3 * (- (2 * xi^4) / 3 +
-                                                        (10 * xi^2) / 3 - 4 / 3) +
-                                        ui^4 * (2 * xi^3 - 3 * xi) + (2 * xi^3) / 3 +
-                                        ui^6 * (2 * xi - (2 * xi^3) / 3) +
-                                        ui^2 * (2 * xi - 2 * xi^3) - (64 * xi^2) / 105 +
-                                        ui^7 * ((6 * xi^2) / 7 - 4 / 7) -
-                                         (ui^8 * xi) / 2 -
-                                         xi / 2 + ui^9 / 9 + 128 / 315)
-          } else if (ui == Inf | ui >= xi + 1) {
+          } else if (ui_h <= xi_h + 1 & ui_h >= -1) {
+            ret[i] <- (15 / 16)^2 * (ui_h * (xi_h^4 - 2 * xi_h^2 + 1) + (8 * xi_h^4) / 15 +
+                                        ui_h^5 * (xi_h^4 / 5 - (14 * xi_h^2) / 5 + 6 / 5) +
+                                        ui_h^3 * (- (2 * xi_h^4) / 3 +
+                                                        (10 * xi_h^2) / 3 - 4 / 3) +
+                                        ui_h^4 * (2 * xi_h^3 - 3 * xi_h) + (2 * xi_h^3) / 3 +
+                                        ui_h^6 * (2 * xi_h - (2 * xi_h^3) / 3) +
+                                        ui_h^2 * (2 * xi_h - 2 * xi_h^3) - (64 * xi_h^2) / 105 +
+                                        ui_h^7 * ((6 * xi_h^2) / 7 - 4 / 7) -
+                                         (ui_h^8 * xi_h) / 2 -
+                                         xi_h / 2 + ui_h^9 / 9 + 128 / 315)
+          } else if (ui_h == Inf | ui_h >= xi_h + 1) {
             ret[i] <- (15 / 16)^2 * (1 / 630) *
-                       (xi^9 - 24 * xi^7 + 336 * xi^5 + 672 * xi^4 - 768 * xi^2 + 512)
+                       (xi_h^9 - 24 * xi_h^7 + 336 * xi_h^5 + 672 * xi_h^4 - 768 * xi_h^2 + 512)
           }
         }
       }
-      return(ret)
+      return(ret / self$getParameterValue("bw"))
     },
 
     #' @description
@@ -155,58 +168,61 @@ Quartic <- R6Class("Quartic",
         xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
         ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
 
-        if (xi >= 0 & xi <= 2) {
-          if (ui <= -1) {
+        xi_h = xi / self$getParameterValue("bw")
+        ui_h = ui / self$getParameterValue("bw")
+
+        if (xi_h >= 0 & xi_h <= 2) {
+          if (ui_h <= -1) {
             ret[i] <- 0
-          } else if (ui >= -1 & ui <= xi - 1) {
+          } else if (ui_h >= -1 & ui_h <= xi_h - 1) {
             ret[i] <- 0
-          } else if (ui >= xi - 1 & ui <= 1) {
-            ret[i] <-  f1(x = xi, upper = ui)
-          } else if (ui >= 1 & ui <= xi + 1) {
-            ret[i] <- f2(x = xi, upper = ui) + f1(x = xi, upper = 1)
-          } else if (ui >= xi + 1) {
-            ret[i] <- f2(x = xi, upper = xi + 1) + f1(x = xi, upper = 1) +
-              (ui - xi - 1)
+          } else if (ui_h >= xi_h - 1 & ui_h <= 1) {
+            ret[i] <-  f1(x = xi_h, upper = ui_h)
+          } else if (ui_h >= 1 & ui_h <= xi_h + 1) {
+            ret[i] <- f2(x = xi_h, upper = ui_h) + f1(x = xi_h, upper = 1)
+          } else if (ui_h >= xi_h + 1) {
+            ret[i] <- f2(x = xi_h, upper = xi_h + 1) + f1(x = xi_h, upper = 1) +
+              (ui_h - xi_h - 1)
           }
-        } else if (xi >= -2 & xi <= 0) {
-          if (ui <= xi - 1) {
+        } else if (xi_h >= -2 & xi_h <= 0) {
+          if (ui_h <= xi_h - 1) {
             ret[i] <- 0
-          } else if (ui >= xi - 1 & ui <= - 1) {
+          } else if (ui_h >= xi_h - 1 & ui_h <= - 1) {
             ret[i] <- 0
-          } else if (ui >= - 1 & ui <= xi + 1) {
-            ret[i] <-  f4(x = xi, upper = ui)
-          } else if (ui >= xi + 1 & ui <= 1) {
-            ret[i] <- f4(x = xi, upper = ui) + f5(x = xi, upper = xi + 1)
-          } else if (ui >= 1) {
-            ret[i] <- f5(x = xi, upper = 1) + f4(x = xi, upper = xi + 1) + (ui - 1)
+          } else if (ui_h >= - 1 & ui_h <= xi_h + 1) {
+            ret[i] <-  f4(x = xi_h, upper = ui_h)
+          } else if (ui_h >= xi_h + 1 & ui_h <= 1) {
+            ret[i] <- f4(x = xi_h, upper = ui_h) + f5(x = xi_h, upper = xi_h + 1)
+          } else if (ui_h >= 1) {
+            ret[i] <- f5(x = xi_h, upper = 1) + f4(x = xi_h, upper = xi_h + 1) + (ui_h - 1)
           }
-        } else if (xi >= 2) {
-          if (ui <=  -1) {
+        } else if (xi_h >= 2) {
+          if (ui_h <=  -1) {
             ret[i] <- 0
-          } else if (ui >= -1 & ui <= 1) {
+          } else if (ui_h >= -1 & ui_h <= 1) {
             ret[i] <- 0
-          } else if (ui >= 1 & ui <= xi - 1) {
+          } else if (ui_h >= 1 & ui_h <= xi_h - 1) {
             ret[i] <- 0
-          } else if (ui >= xi - 1 & ui <= xi + 1) {
-            ret[i] <- f3(x = xi, upper = ui)
-          } else if (ui >= xi + 1) {
-            ret[i] <- ui - xi
+          } else if (ui_h >= xi_h - 1 & ui_h <= xi_h + 1) {
+            ret[i] <- f3(x = xi_h, upper = ui_h)
+          } else if (ui_h >= xi_h + 1) {
+            ret[i] <- ui_h - xi_h
           }
-        } else if (xi <= -2) {
-          if (ui <= xi - 1) {
+        } else if (xi_h <= -2) {
+          if (ui_h <= xi_h - 1) {
             ret[i] <- 0
-          } else if (ui >= xi - 1 & ui <= xi + 1) {
+          } else if (ui_h >= xi_h - 1 & ui_h <= xi_h + 1) {
             ret[i] <- 0
-          } else if (ui >= xi + 1 & ui <= -1) {
+          } else if (ui_h >= xi_h + 1 & ui_h <= -1) {
             ret[i] <- 0
-          } else if (ui >= -1 & ui <= 1) {
-            ret[i] <- f6(x = xi, upper = ui)
-          } else if (ui >= 1) {
-            ret[i] <- ui
+          } else if (ui_h >= -1 & ui_h <= 1) {
+            ret[i] <- f6(x = xi_h, upper = ui_h)
+          } else if (ui_h >= 1) {
+            ret[i] <- ui_h
           }
         }
       }
-      return(ret)
+      return(ret * self$getParameterValue("bw"))
 
     },
 

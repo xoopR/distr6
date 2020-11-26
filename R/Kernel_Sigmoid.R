@@ -22,11 +22,11 @@ Sigmoid <- R6Class("Sigmoid",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(decorators = NULL) {
-      super$initialize(
-        decorators = decorators,
-        support = Reals$new()
-      )
+    initialize = function(decorators = NULL, bw = 1) {
+
+      private$.parameters <- getParameterSet(self, bw)
+      self$setParameterValue(bw = bw)
+
     },
 
     #' @description
@@ -43,24 +43,28 @@ Sigmoid <- R6Class("Sigmoid",
       for (i in seq(len)) {
         xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
         ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
-        if (ui == Inf) {
-          if (xi == 0) {
+
+        xi_h = xi / self$getParameterValue("bw")
+        ui_h = ui / self$getParameterValue("bw")
+
+        if (ui_h == Inf) {
+          if (xi_h == 0) {
             ret[i] <- 2 / (pi^2)
           } else {
-            ret[i] <- (4 * xi * exp(xi)) / (pi^2 * (exp(2 * xi) - 1))
+            ret[i] <- (4 * xi_h * exp(xi_h)) / (pi^2 * (exp(2 * xi_h) - 1))
           }
         } else {
-          if (xi == 0) {
-            ret[i] <- (1 + tanh(ui)) / pi^2
+          if (xi_h == 0) {
+            ret[i] <- (1 + tanh(ui_h)) / pi^2
           } else{
-          ret[i] <- (- (2 * exp(xi) * (log(exp(2 * xi) +
-                                              exp(2 * ui)) - 2 * xi -
-                                              log(exp(2 * ui) + 1)))) /
-                                        ((pi^2) * (exp(xi) - 1) * (exp(xi) + 1))
+          ret[i] <- (- (2 * exp(xi_h) * (log(exp(2 * xi_h) +
+                                              exp(2 * ui_h)) - 2 * xi_h -
+                                              log(exp(2 * ui_h) + 1)))) /
+                                        ((pi^2) * (exp(xi_h) - 1) * (exp(xi_h) + 1))
           }
         }
       }
-      return(ret)
+      return(ret / self$getParameterValue("bw"))
     },
 
     #' @description

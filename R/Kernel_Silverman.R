@@ -23,11 +23,11 @@ Silverman <- R6Class("Silverman",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(decorators = NULL) {
-      super$initialize(
-        decorators = decorators,
-        support = Reals$new()
-      )
+    initialize = function(decorators = NULL, bw = 1) {
+
+      private$.parameters <- getParameterSet(self, bw)
+      self$setParameterValue(bw = bw)
+
     },
 
     #' @description
@@ -44,8 +44,8 @@ Silverman <- R6Class("Silverman",
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi = (x[ifelse(i %% xl == 0, xl, i %% xl)]) / self$getParameterValue("bw")
+        ui = (upper[ifelse(i %% ul == 0, ul, i %% ul)]) / self$getParameterValue("bw")
 
         if (xi >= 0) {
           if (ui == Inf) {
@@ -90,7 +90,7 @@ Silverman <- R6Class("Silverman",
           }
         }
       }
-      return(ret)
+      return(ret / self$getParameterValue("bw"))
     },
 
     #' @description
@@ -107,8 +107,8 @@ Silverman <- R6Class("Silverman",
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi = (x[ifelse(i %% xl == 0, xl, i %% xl)]) / self$getParameterValue("bw")
+        ui = (upper[ifelse(i %% ul == 0, ul, i %% ul)]) / self$getParameterValue("bw")
 
         if (xi >= 0) {
           if (ui >= -Inf & ui <= 0) {
@@ -173,7 +173,7 @@ Silverman <- R6Class("Silverman",
           }
         }
       }
-      return(ret)
+      return(ret * self$getParameterValue("bw"))
     },
 
     #' @description

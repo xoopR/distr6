@@ -20,6 +20,15 @@ Triweight <- R6Class("Triweight",
     short_name = "Triw",
     description = "Triweight Kernel",
 
+     #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(decorators = NULL, bw = 1) {
+
+      private$.parameters <- getParameterSet(self, bw)
+      self$setParameterValue(bw = bw)
+
+    },
+
     #' @description
     #' The squared 2-norm of the pdf is defined by
     #' \deqn{\int_a^b (f_X(u))^2 du}
@@ -33,8 +42,8 @@ Triweight <- R6Class("Triweight",
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi = x[ifelse(i %% xl == 0, xl, i %% xl)] / self$getParameterValue("bw")
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)] / self$getParameterValue("bw")
 
         if (abs(xi) >= 2) {
           ret[i] <- 0
@@ -89,7 +98,7 @@ Triweight <- R6Class("Triweight",
           }
         }
       }
-      return(ret)
+      return(ret / self$getParameterValue("bw"))
     },
 
     #' @description
@@ -106,8 +115,8 @@ Triweight <- R6Class("Triweight",
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi = x[ifelse(i %% xl == 0, xl, i %% xl)] / self$getParameterValue("bw")
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)] / self$getParameterValue("bw")
 
         if (xi >= 0 & xi <= 2) {
           if (ui <= - 1) {
@@ -249,7 +258,7 @@ Triweight <- R6Class("Triweight",
           }
         }
       }
-      return(ret)
+      return(ret * self$getParameterValue("bw"))
     },
 
     #' @description

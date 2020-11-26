@@ -18,6 +18,16 @@ TriangularKernel <- R6Class("TriangularKernel",
     short_name = "Tri",
     description = "Triangular Kernel",
 
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(decorators = NULL, bw = 1) {
+
+      private$.parameters <- getParameterSet(self, bw)
+      self$setParameterValue(bw = bw)
+
+    },
+
     #' @description
     #' The squared 2-norm of the pdf is defined by
     #' \deqn{\int_a^b (f_X(u))^2 du}
@@ -31,8 +41,8 @@ TriangularKernel <- R6Class("TriangularKernel",
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi = (x[ifelse(i %% xl == 0, xl, i %% xl)]) / self$getParameterValue("bw")
+        ui = (upper[ifelse(i %% ul == 0, ul, i %% ul)]) / self$getParameterValue("bw")
 
         if (xi >= 0 & xi <= 1) {
           if (ui >= (xi - 1) & ui <= 0) {
@@ -88,7 +98,7 @@ TriangularKernel <- R6Class("TriangularKernel",
           }
       }
 
-      return(ret)
+      return(ret / self$getParameterValue("bw"))
     },
 
     #' @description
@@ -105,8 +115,8 @@ TriangularKernel <- R6Class("TriangularKernel",
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi = (x[ifelse(i %% xl == 0, xl, i %% xl)]) / self$getParameterValue("bw")
+        ui = (upper[ifelse(i %% ul == 0, ul, i %% ul)]) / self$getParameterValue("bw")
 
           if (xi >= 0 & xi <= 1) {
             if (ui <= -1) {
@@ -239,7 +249,7 @@ TriangularKernel <- R6Class("TriangularKernel",
             }
           }
         }
-        return(ret)
+        return(ret * self$getParameterValue("bw"))
       },
 
     #' @description
