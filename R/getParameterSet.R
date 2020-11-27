@@ -1146,6 +1146,3 @@ getParameterSet.Triweight <- function(object, bw) {
     description = list("bandwdith")
   )
 }
-
-
-
