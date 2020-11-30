@@ -27,7 +27,6 @@ Kernel <- R6Class("Kernel",
 
       private$.properties$support <- assertSet(support)
       private$.traits$type <- Reals$new()
-      private$.parameters <- ParameterSet$new()
 
       invisible(self)
     },

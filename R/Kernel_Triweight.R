@@ -27,6 +27,11 @@ Triweight <- R6Class("Triweight",
       private$.parameters <- getParameterSet(self, bw)
       self$setParameterValue(bw = bw)
 
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
+
     },
 
     #' @description

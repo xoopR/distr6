@@ -24,6 +24,10 @@ UniformKernel <- R6Class("UniformKernel",
       private$.parameters <- getParameterSet(self, bw)
       self$setParameterValue(bw = bw)
 
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
     },
 
     #' The squared 2-norm of the pdf is defined by

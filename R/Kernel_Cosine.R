@@ -22,6 +22,11 @@ Cosine <- R6Class("Cosine",
       private$.parameters <- getParameterSet(self, bw)
       self$setParameterValue(bw = bw)
 
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
+
     },
 
     #' @description
