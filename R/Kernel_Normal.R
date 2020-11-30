@@ -30,6 +30,9 @@ NormalKernel <- R6Class("NormalKernel",
       self$setParameterValue(bw = bw)
 
       super$initialize(
+        decorators = decorators,
+        support = Reals$new(),
+        type = Reals$new()
       )
 
     },
