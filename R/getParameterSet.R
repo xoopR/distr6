@@ -1061,8 +1061,8 @@ getParameterSet.WeightedDiscrete <- function(object, x, pdf, cdf = NULL) { # nol
 getParameterSet.NormalKernel <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
-    support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    support = list(reals),
+    description = list("bandwidth")
   )
 }
 
@@ -1070,7 +1070,7 @@ getParameterSet.UniformKernel <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1078,7 +1078,7 @@ getParameterSet.LogisticKernel <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1086,7 +1086,7 @@ getParameterSet.Sigmoid <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1094,7 +1094,7 @@ getParameterSet.Epanechnikov <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(reals),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1102,7 +1102,7 @@ getParameterSet.Quartic <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1110,7 +1110,7 @@ getParameterSet.TriangularKernel <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(reals),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1118,7 +1118,7 @@ getParameterSet.Silverman <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1126,7 +1126,7 @@ getParameterSet.Cosine <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
 
@@ -1134,15 +1134,14 @@ getParameterSet.Tricube <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
-
 
 getParameterSet.Triweight <- function(object, bw) {
   ParameterSet$new(
     id = list("bw"), value = list(1),
     support = list(PosReals$new(zero = TRUE)),
-    description = list("bandwdith")
+    description = list("bandwidth")
   )
 }
