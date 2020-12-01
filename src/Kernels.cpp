@@ -169,16 +169,21 @@ NumericVector C_LogisticKernelQuantile(NumericVector x, bool lower, bool logp) {
 }
 
 // [[Rcpp::export]]
-NumericVector C_NormalKernelPdf(NumericVector x, bool logp) {
-  NumericVector ret(x.size());
-  for (int i = 0; i < x.size(); i++){
-    if (logp) {
-      ret[i] = -(log(2*M_PI) + (pow(x[i], 2))) / 2.0;
-    } else {
-      ret[i] = 1.0 / sqrt(2 * M_PI) * exp(-0.5 * pow(x[i], 2));
+NumericVector C_NormalKernelPdf(NumericVector x, NumericVector bw, bool logp) {
+
+  int ParamLength = bw.length();
+  int XLength = x.size();
+  NumericMatrix mat(XLength, ParamLength);
+  for (int i = 0; i < ParamLength; i++) {
+    for (int j = 0; j < XLength; j++) {
+      if (logp) {
+        mat(j, i) = -(log(2*M_PI) + log(bw[i]) + (pow(x[j] / bw[i], 2))) / 2.0;
+      } else {
+        mat(j, i) = 1.0 / (sqrt(2 * M_PI) * bw[i]) * exp(-0.5 * pow((x[j] / bw[i]), 2));
+      }
     }
   }
-  return ret;
+  return mat;
 }
 
 // [[Rcpp::export]]

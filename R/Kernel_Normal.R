@@ -132,7 +132,8 @@ NormalKernel <- R6Class("NormalKernel",
 
   private = list(
     .pdf = function(x, log = FALSE) {
-      C_NormalKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      C_NormalKernelPdf(x, bw, log)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       cdf <- 1 / 2 * (pracma::erf(x / (sqrt(2) * self$getParameterValue("bw"))) + 1)

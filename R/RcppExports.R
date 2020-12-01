@@ -113,8 +113,8 @@ C_LogisticKernelQuantile <- function(x, lower, logp) {
     .Call(`_distr6_C_LogisticKernelQuantile`, x, lower, logp)
 }
 
-C_NormalKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_NormalKernelPdf`, x, logp)
+C_NormalKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_NormalKernelPdf`, x, bw, logp)
 }
 
 C_QuarticKernelPdf <- function(x, logp) {

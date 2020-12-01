@@ -393,14 +393,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_NormalKernelPdf
-NumericVector C_NormalKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_NormalKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericVector C_NormalKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_NormalKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_NormalKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_NormalKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -650,7 +651,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_LogisticKernelPdf", (DL_FUNC) &_distr6_C_LogisticKernelPdf, 2},
     {"_distr6_C_LogisticKernelCdf", (DL_FUNC) &_distr6_C_LogisticKernelCdf, 3},
     {"_distr6_C_LogisticKernelQuantile", (DL_FUNC) &_distr6_C_LogisticKernelQuantile, 3},
-    {"_distr6_C_NormalKernelPdf", (DL_FUNC) &_distr6_C_NormalKernelPdf, 2},
+    {"_distr6_C_NormalKernelPdf", (DL_FUNC) &_distr6_C_NormalKernelPdf, 3},
     {"_distr6_C_QuarticKernelPdf", (DL_FUNC) &_distr6_C_QuarticKernelPdf, 2},
     {"_distr6_C_QuarticKernelCdf", (DL_FUNC) &_distr6_C_QuarticKernelCdf, 3},
     {"_distr6_C_SigmoidKernelPdf", (DL_FUNC) &_distr6_C_SigmoidKernelPdf, 2},
