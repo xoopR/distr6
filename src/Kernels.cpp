@@ -169,7 +169,7 @@ NumericVector C_LogisticKernelQuantile(NumericVector x, bool lower, bool logp) {
 }
 
 // [[Rcpp::export]]
-NumericVector C_NormalKernelPdf(NumericVector x, NumericVector bw, bool logp) {
+NumericMatrix C_NormalKernelPdf(NumericVector x, NumericVector bw, bool logp) {
 
   int ParamLength = bw.length();
   int XLength = x.size();
