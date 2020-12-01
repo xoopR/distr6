@@ -393,7 +393,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_NormalKernelPdf
-NumericVector C_NormalKernelPdf(NumericVector x, NumericVector bw, bool logp);
+NumericMatrix C_NormalKernelPdf(NumericVector x, NumericVector bw, bool logp);
 RcppExport SEXP _distr6_C_NormalKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

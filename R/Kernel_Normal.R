@@ -59,7 +59,7 @@ NormalKernel <- R6Class("NormalKernel",
         xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
         ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
         if (ui == Inf) {
-          ret[i] <- (1 / (2 * sqrt(pi))) * exp(- (xi^2 / (2 * h))^2) * 1 / h
+          ret[i] <- (1 / (2 * sqrt(pi))) * exp(- (xi / (2 * h))^2) * 1 / h
         } else {
           ret[i] <- exp(- (xi^2) / (h^2 * 4)) / (4 * sqrt(pi)) *
             (2 * pnorm((ui / h  - xi / (2 * h)) * sqrt(2)) - 1 + 1) * 1 / h }
@@ -75,59 +75,48 @@ NormalKernel <- R6Class("NormalKernel",
     #' @param ... Unused.
     variance = function(...) {
       return(1)
-    },
-
-
-    #' @description
-    #' The integral of the cdf
-    #' \deqn{Int_{-Inf}^{upper} F(x) dx}
-    #' where \eqn{F(x)} is the cdf of the Normal kernel.
-    cdfIntegral = function(lower = -Inf, upper = Inf) {
-
-      lh <- lower / self$getParameterValue("bw")
-      uh <- upper / self$getParameterValue("bw")
-
-      if (lower == -Inf) {
-          ret <- (uh / 2) * (pracma::erf(uh / sqrt(2)) + 1) + (exp(- uh^2 / 2)) / (sqrt(2 * pi))
-      } else {
-         ret <-  (uh * (pracma::erf(uh / sqrt(2)) + 1) - lh * (pracma::erf(lh / sqrt(2)) + 1)) / 2 -
-          ((exp(uh^2 / (2)) - exp(lh^2 / (2))) * exp(-(uh^2 + lh^2) / (2))) / (sqrt(2 * pi))
-      }
-      return(ret * self$getParameterValue("bw"))
-    },
-
-    #' @description
-    #' The integral of the  1 - cdf
-    #' \deqn{Int_{lower}^{Inf} 1 - F(x) dx}
-    #' where \eqn{F(x)} is the cdf of the Normal kernel.
-
-    ccdfIntegral = function (lower = -Inf, upper = Inf) {
-
-      lh <- lower / self$getParameterValue("bw")
-      uh <- upper / self$getParameterValue("bw")
-
-      if (upper == Inf) {
-        ret <- (lh / 2) * (pracma::erf(lh / sqrt(2)) - 1)  + (exp(- lh^2 / 2)) / (sqrt(2 * pi))
-      } else {
-        ret <- ((exp(uh^2 / 2) - exp(lh^2 / 2)) * exp(- (uh^2 + lh^2) / 2)) / (sqrt(2 * pi)) -
-          (uh * (pracma::erf(uh / sqrt(2)) - 1) - lh * (pracma::erf(lh / sqrt(2)) - 1)) /2
-      }
-      return(ret * self$getParameterValue("bw"))
-    },
-
-    #' @description
-    #' The energy Brier function
-    #' \deqn{x erf(x/h) + h sqrt{2/pi} e^{-x^2/2h^2}}
-    #' where \eqn{x} is the mean and \eqn{h} is the bandwidth.
-    energyBrier = function (x) {
-
-      xh <- x / self$getParameterValue("bw")
-      if (x == 0 ) {
-        ret <- (2 * self$getParameterValue("bw")) / sqrt(pi)
-      } else {ret <- xh * pracma::erf(xh / sqrt(2)) + (sqrt(2 / pi) * exp(- (xh^2) / 2)) }
-
-      return(ret * self$getParameterValue("bw"))
     }
+
+
+#'     cdfIntegral = function(lower = -Inf, upper = Inf) {
+#'
+#'       lh <- lower / self$getParameterValue("bw")
+#'       uh <- upper / self$getParameterValue("bw")
+#'
+#'       if (lower == -Inf) {
+#'           ret <- (uh / 2) * (pracma::erf(uh / sqrt(2)) + 1) + (exp(- uh^2 / 2)) / (sqrt(2 * pi))
+#'       } else {
+#'          ret <-  (uh * (pracma::erf(uh / sqrt(2)) + 1) - lh * (pracma::erf(lh / sqrt(2)) + 1)) / 2 -
+#'           ((exp(uh^2 / (2)) - exp(lh^2 / (2))) * exp(-(uh^2 + lh^2) / (2))) / (sqrt(2 * pi))
+#'       }
+#'       return(ret * self$getParameterValue("bw"))
+#'     },
+#'
+
+#'
+#'     ccdfIntegral = function (lower = -Inf, upper = Inf) {
+#'
+#'       lh <- lower / self$getParameterValue("bw")
+#'       uh <- upper / self$getParameterValue("bw")
+#'
+#'       if (upper == Inf) {
+#'         ret <- (lh / 2) * (pracma::erf(lh / sqrt(2)) - 1)  + (exp(- lh^2 / 2)) / (sqrt(2 * pi))
+#'       } else {
+#'         ret <- ((exp(uh^2 / 2) - exp(lh^2 / 2)) * exp(- (uh^2 + lh^2) / 2)) / (sqrt(2 * pi)) -
+#'           (uh * (pracma::erf(uh / sqrt(2)) - 1) - lh * (pracma::erf(lh / sqrt(2)) - 1)) /2
+#'       }
+#'       return(ret * self$getParameterValue("bw"))
+#'     },
+#'
+#'     energyBrier = function (x) {
+#'
+#'       xh <- x / self$getParameterValue("bw")
+#'       if (x == 0 ) {
+#'         ret <- (2 * self$getParameterValue("bw")) / sqrt(pi)
+#'       } else {ret <- xh * pracma::erf(xh / sqrt(2)) + (sqrt(2 / pi) * exp(- (xh^2) / 2)) }
+#'
+#'       return(ret * self$getParameterValue("bw"))
+#'     }
   ),
 
   private = list(
