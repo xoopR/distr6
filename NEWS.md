@@ -1,3 +1,7 @@
+# distr6 1.4.7.9000
+
+* Minor internal changes
+
 # distr6 1.4.7
 
 * Patch for set6

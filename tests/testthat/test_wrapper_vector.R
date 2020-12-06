@@ -185,12 +185,11 @@ test_that("wrapped models", {
     list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
     list(prob = 0.2, size = 6)
   ))
-  expect_equal(a$wrappedModels("Binom1"), Binomial$new(prob = 0.1, size = 2))
-  expect_equal(a$wrappedModels(), list(
-    Binom1 = Binomial$new(prob = 0.1, size = 2),
-    Binom2 = Binomial$new(prob = 0.6, size = 4),
-    Binom3 = Binomial$new(prob = 0.2, size = 6)
-  ))
+  expect_equal(a$wrappedModels("Binom1")$cdf(1:10), Binomial$new(prob = 0.1, size = 2)$cdf(1:10))
+  expect_equal(a$wrappedModels()[1], Binomial$new(prob = 0.1, size = 2))
+  expect_equal(a$wrappedModels()[2], Binomial$new(prob = 0.6, size = 4))
+  expect_equal(a$wrappedModels()[3], Binomial$new(prob = 0.2, size = 6))
+
   a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
   expect_equal(
     a$wrappedModels(),
@@ -225,11 +224,8 @@ test_that("extract", {
     list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
     list(prob = 0.2, size = 6)
   ))
-  expect_equal(a[1], Binomial$new(prob = 0.1, size = 2))
-  expect_equal(a[1:2]$wrappedModels(), list(
-    Binom1 = Binomial$new(prob = 0.1, size = 2),
-    Binom2 = Binomial$new(prob = 0.6, size = 4)
-  ))
+  expect_equal(a[1]$pdf(1:10), Binomial$new(prob = 0.1, size = 2)$pdf(1:10))
+  expect_equal(namess(a[1:2]$wrappedModels()), c("Binom1", "Binom2"))
   expect_error(a[4], "Index i too large")
   a <- VectorDistribution$new(list(
     Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
@@ -413,6 +409,6 @@ test_that("vecdist constructor", {
   m <- MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
   p <- ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
 
-  expect_equal(as.VectorDistribution(p), v)
-  expect_equal(as.VectorDistribution(m), v)
+  expect_equal(as.VectorDistribution(p)$pdf(1:10), v$pdf(1:10))
+  expect_equal(as.VectorDistribution(m)$cdf(1:10), v$cdf(1:10))
 })
