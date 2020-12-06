@@ -186,9 +186,9 @@ test_that("wrapped models", {
     list(prob = 0.2, size = 6)
   ))
   expect_equal(a$wrappedModels("Binom1")$cdf(1:10), Binomial$new(prob = 0.1, size = 2)$cdf(1:10))
-  expect_equal(a$wrappedModels()[1], Binomial$new(prob = 0.1, size = 2))
-  expect_equal(a$wrappedModels()[2], Binomial$new(prob = 0.6, size = 4))
-  expect_equal(a$wrappedModels()[3], Binomial$new(prob = 0.2, size = 6))
+  expect_equal(a$wrappedModels()[1][[1]]$cdf(1:10), Binomial$new(prob = 0.1, size = 2)$cdf(1:10))
+  expect_equal(a$wrappedModels()[2][[1]]$cdf(1:10), Binomial$new(prob = 0.6, size = 4)$cdf(1:10))
+  expect_equal(a$wrappedModels()[3][[1]]$cdf(1:10), Binomial$new(prob = 0.2, size = 6)$cdf(1:10))
 
   a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
   expect_equal(
@@ -225,7 +225,7 @@ test_that("extract", {
     list(prob = 0.2, size = 6)
   ))
   expect_equal(a[1]$pdf(1:10), Binomial$new(prob = 0.1, size = 2)$pdf(1:10))
-  expect_equal(namess(a[1:2]$wrappedModels()), c("Binom1", "Binom2"))
+  expect_equal(names(a[1:2]$wrappedModels()), c("Binom1", "Binom2"))
   expect_error(a[4], "Index i too large")
   a <- VectorDistribution$new(list(
     Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),

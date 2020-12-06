@@ -20,8 +20,8 @@ test_that("VectorDistributions", {
 
   v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2))
   v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4))
-  expect_equal(c(v1, v2)$pdf(1:10),
-      VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:4))$pdf(1:4))
+  expect_equal(c(v1, v2)$cdf(5),
+      VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:4))$cdf(5))
 
   v2 <- VectorDistribution$new(distribution = "Geometric", params = data.frame(prob = c(0.1, 0.2)))
   expect_equal(c(v1, v2)$pdf(1:10),
