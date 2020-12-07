@@ -69,6 +69,34 @@ Kernel <- R6Class("Kernel",
     },
 
     #' @description
+    #' The integral of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u)) du}
+    #' where X is the Distribution, \eqn{F_X} is its cdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfIntegral = function(lower = -Inf, upper = Inf) {
+      return(NULL)
+    },
+
+    #' @description
+    #' The integral of the ccdf is defined by
+    #' \deqn{\int_a^b (1- F_X(u)) du}
+    #' where X is the Distribution, \eqn{F_X} is its cdf and \eqn{a, b}
+    #' are the distribution support limits.
+    ccdfIntegral = function(lower = -Inf, upper = Inf) {
+      return(NULL)
+    },
+
+
+    #' @description
+    #' The energy function is defined as
+    #' \deqn{E[|X - X']}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    energyBrier = function (x){
+      return(NULL)
+    },
+
+    #' @description
     #' The skewness of a distribution is defined by the third standardised moment,
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the

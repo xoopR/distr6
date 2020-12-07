@@ -280,10 +280,12 @@ Triweight <- R6Class("Triweight",
   private = list(
     .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
-      C_TriweightKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_TriweightKernelPdf(x, bw, log)))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_TriweightKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_TriweightKernelCdf(x, bw, lower.tail, log.p)))
     }
   )
 )

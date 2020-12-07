@@ -26,6 +26,11 @@ TriangularKernel <- R6Class("TriangularKernel",
       private$.parameters <- getParameterSet(self, bw)
       self$setParameterValue(bw = bw)
 
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
+
     },
 
     #' @description
@@ -265,10 +270,12 @@ TriangularKernel <- R6Class("TriangularKernel",
 
   private = list(
     .pdf = function(x, log = FALSE) {
-      C_TriangularKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_TriangularKernelPdf(x, bw, log)))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_TriangularKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_TriangularKernelCdf(x, bw, lower.tail, log.p)))
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       C_TriangularKernelQuantile(p, lower.tail, log.p)

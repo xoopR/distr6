@@ -191,10 +191,12 @@ Epanechnikov <- R6Class("Epanechnikov",
   private = list(
     .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
-      C_EpanechnikovKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_EpanechnikovKernelPdf(x, bw, log)))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_EpanechnikovKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_EpanechnikovKernelCdf(x, bw, lower.tail, log.p)))
     }
   )
 )

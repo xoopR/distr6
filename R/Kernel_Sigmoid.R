@@ -87,7 +87,8 @@ Sigmoid <- R6Class("Sigmoid",
     .isCdf = 0L,
     .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
-      C_SigmoidKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      as.numeric(C_SigmoidKernelPdf(x, bw, log))
     }
   )
 )

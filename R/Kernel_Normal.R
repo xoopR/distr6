@@ -75,48 +75,75 @@ NormalKernel <- R6Class("NormalKernel",
     #' @param ... Unused.
     variance = function(...) {
       return(1)
+    },
+
+    #' @description
+    #' The integral of the cdf is defined by
+    #' \deqn{\int_a^b (F_X(u)) du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    cdfIntegral = function(lower = -Inf, upper = Inf) {
+
+      ll = length(lower)
+      ul = length(upper)
+      len = max(ll, ul)
+
+      ret <- numeric(len)
+      for (i in seq(len)) {
+        li = lower[ifelse(i %% ll == 0, ll, i %% ll)] / self$getParameterValue("bw")
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)] / self$getParameterValue("bw")
+        if (li == -Inf) {
+            ret[i] <- (ui / 2) * (pracma::erf(ui / sqrt(2)) + 1) + (exp(- ui^2 / 2)) / (sqrt(2 * pi))
+        } else {
+          ret[i] <-  (ui * (pracma::erf(ui / sqrt(2)) + 1) - li * (pracma::erf(li / sqrt(2)) + 1)) / 2 -
+            ((exp(ui^2 / (2)) - exp(li^2 / (2))) * exp(-(ui^2 + li^2) / (2))) / (sqrt(2 * pi))
+        }
+      }
+      return(ret * self$getParameterValue("bw"))
+    },
+
+    #' @description
+    #' The integral of the ccdf is defined by
+    #' \deqn{\int_a^b (1  - F_X(u)) du}
+    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
+    #' are the distribution support limits.
+    ccdfIntegral = function (lower = -Inf, upper = Inf) {
+
+      ll = length(lower)
+      ul = length(upper)
+      len = max(ll, ul)
+
+      ret <- numeric(len)
+      for (i in seq(len)) {
+        li = lower[ifelse(i %% ll == 0, ll, i %% ll)] / self$getParameterValue("bw")
+        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)] / self$getParameterValue("bw")
+        if (upper == Inf) {
+          ret[i] <- (li / 2) * (pracma::erf(li / sqrt(2)) - 1)  + (exp(- li^2 / 2)) / (sqrt(2 * pi))
+        } else {
+          ret[i] <- ((exp(ui^2 / 2) - exp(li^2 / 2)) * exp(- (ui^2 + li^2) / 2)) / (sqrt(2 * pi)) -
+            (uh * (pracma::erf(ui / sqrt(2)) - 1) - li * (pracma::erf(li / sqrt(2)) - 1)) /2
+        }
+      }
+      return(ret * self$getParameterValue("bw"))
+    },
+
+    #' @description
+    #' The energy Brier function is defined by
+    #' \deqn{E[|X - X']}
+    #' where \eqn{E|X|} is the mean aboslute deviation of distribution X.
+    energyBrier = function (x) {
+
+      len <- length(x)
+      if (len == 1) {
+          ret <- 2 /sqrt(pi) * self$getParameterValue("bw")
+      } else {
+        x_vec <- sapply(x, function (x, y) (x - y), y = x)
+        bw_vec <- sapply(rep(self$getParameterValue("bw"), len), function (x, y) sqrt(x^2 + y^2),
+                         y = rep(self$getParameterValue("bw"), len))
+        ret <- x_vec * pracma::erf(x_vec/ (sqrt(2) * bw_vec)) + bw_vec * sqrt(2 / pi) * exp(-1/2 * (x_vec / bw_vec)^2)
+        }
+      return(ret)
     }
-
-
-#'     cdfIntegral = function(lower = -Inf, upper = Inf) {
-#'
-#'       lh <- lower / self$getParameterValue("bw")
-#'       uh <- upper / self$getParameterValue("bw")
-#'
-#'       if (lower == -Inf) {
-#'           ret <- (uh / 2) * (pracma::erf(uh / sqrt(2)) + 1) + (exp(- uh^2 / 2)) / (sqrt(2 * pi))
-#'       } else {
-#'          ret <-  (uh * (pracma::erf(uh / sqrt(2)) + 1) - lh * (pracma::erf(lh / sqrt(2)) + 1)) / 2 -
-#'           ((exp(uh^2 / (2)) - exp(lh^2 / (2))) * exp(-(uh^2 + lh^2) / (2))) / (sqrt(2 * pi))
-#'       }
-#'       return(ret * self$getParameterValue("bw"))
-#'     },
-#'
-
-#'
-#'     ccdfIntegral = function (lower = -Inf, upper = Inf) {
-#'
-#'       lh <- lower / self$getParameterValue("bw")
-#'       uh <- upper / self$getParameterValue("bw")
-#'
-#'       if (upper == Inf) {
-#'         ret <- (lh / 2) * (pracma::erf(lh / sqrt(2)) - 1)  + (exp(- lh^2 / 2)) / (sqrt(2 * pi))
-#'       } else {
-#'         ret <- ((exp(uh^2 / 2) - exp(lh^2 / 2)) * exp(- (uh^2 + lh^2) / 2)) / (sqrt(2 * pi)) -
-#'           (uh * (pracma::erf(uh / sqrt(2)) - 1) - lh * (pracma::erf(lh / sqrt(2)) - 1)) /2
-#'       }
-#'       return(ret * self$getParameterValue("bw"))
-#'     },
-#'
-#'     energyBrier = function (x) {
-#'
-#'       xh <- x / self$getParameterValue("bw")
-#'       if (x == 0 ) {
-#'         ret <- (2 * self$getParameterValue("bw")) / sqrt(pi)
-#'       } else {ret <- xh * pracma::erf(xh / sqrt(2)) + (sqrt(2 / pi) * exp(- (xh^2) / 2)) }
-#'
-#'       return(ret * self$getParameterValue("bw"))
-#'     }
   ),
 
   private = list(

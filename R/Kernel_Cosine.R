@@ -169,10 +169,12 @@ Cosine <- R6Class("Cosine",
 
   private = list(
     .pdf = function(x, log = FALSE) {
-      C_CosineKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_CosineKernelPdf(x, bw, log)))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_CosineKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_CosineKernelCdf(x, bw, lower.tail, log.p)))
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       C_CosineKernelQuantile(p, lower.tail, log.p)

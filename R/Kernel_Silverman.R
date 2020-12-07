@@ -195,10 +195,12 @@ Silverman <- R6Class("Silverman",
   private = list(
     .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
-      C_SilvermanKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      as.numeric(C_SilvermanKernelPdf(x, bw, log))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_SilvermanKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      as.numeric(C_SilvermanKernelCdf(x, bw, lower.tail, log.p))
     }
   )
 )

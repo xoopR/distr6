@@ -122,10 +122,12 @@ LogisticKernel <- R6Class("LogisticKernel",
 
   private = list(
     .pdf = function(x, log = FALSE) {
-      C_LogisticKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      as.numeric(C_LogisticKernelPdf(x, bw, log))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_LogisticKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      as.numeric(C_LogisticKernelCdf(x, bw, lower.tail, log.p))
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       C_LogisticKernelQuantile(p, lower.tail, log.p)

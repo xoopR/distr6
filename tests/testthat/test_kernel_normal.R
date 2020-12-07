@@ -23,3 +23,4 @@ test_that("pdfsquared2norm x", {
   expect_rounded_equal(kern$pdfSquared2Norm(x = 0), 0.2820948)
   expect_rounded_equal(kern$pdfSquared2Norm(x = -1.2), 0.1968109)
 })
+

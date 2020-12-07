@@ -736,10 +736,12 @@ Tricube <- R6Class("Tricube",
   private = list(
     .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
-      C_TricubeKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_TricubeKernelPdf(x, bw, log)))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_TricubeKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_TricubeKernelCdf(x, bw, lower.tail, log.p)))
     }
   )
 )

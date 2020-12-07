@@ -166,10 +166,12 @@ UniformKernel <- R6Class("UniformKernel",
 
   private = list(
     .pdf = function(x, log = FALSE) {
-      C_UniformKernelPdf(x, log)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_UniformKernelPdf(x, bw, log)))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_UniformKernelCdf(x, lower.tail, log.p)
+      bw <- self$getParameterValue("bw")
+      return(as.numeric(C_UniformKernelCdf(x, bw, lower.tail, log.p)))
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       C_UniformKernelQuantile(p, lower.tail, log.p)
