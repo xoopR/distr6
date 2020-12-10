@@ -245,11 +245,11 @@ Quartic <- R6Class("Quartic",
     .isQuantile = 0L,
     .pdf = function(x, log = FALSE) {
       bw <- self$getParameterValue("bw")
-      as.numeric(C_QuarticKernelPdf(x, bw, log))
+      return(as.numeric(C_QuarticKernelPdf(x, bw, log)))
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       bw <- self$getParameterValue("bw")
-      as.numeric(C_QuarticKernelCdf(x, bw, lower.tail, log.p))
+      return(as.numeric(C_QuarticKernelCdf(x, bw, lower.tail, log.p)))
     }
   )
 )

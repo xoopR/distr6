@@ -12,7 +12,7 @@ NumericMatrix C_CosineKernelPdf(NumericVector x, NumericVector bw, bool logp) {
     for (int j = 0; j < XLength; j++) {
       if (x[j] / bw[i] >= -1 && x[j] / bw[i] <= 1) {
         if (logp) {
-          mat(j, i) = log(M_PI) - log(4.0) - log(bw[j]) + log(cos(M_PI / 2.0 * x[j] / bw[i]));
+          mat(j, i) = log(M_PI) - log(4.0) - log(bw[i]) + log(cos(M_PI / 2.0 * x[j] / bw[i]));
         } else {
           mat(j, i) = 1 / bw[i] * M_PI / 4.0 * cos(M_PI / 2.0 * x[j] / bw[i]);
           }
@@ -220,7 +220,7 @@ NumericMatrix C_QuarticKernelPdf(NumericVector x, NumericVector bw, bool logp) {
   NumericMatrix mat(XLength, ParamLength);
   for (int i = 0; i < ParamLength; i++) {
     for (int j = 0; j < XLength; j++) {
-      if (x[j] / bw[i] >= -1 && x[j] / bw[j] <= 1) {
+      if (x[j] / bw[i] >= -1 && x[j] / bw[i] <= 1) {
         if (logp) {
           mat(j, i) = log(15.0) - log(16.0)  - log(bw[i]) + 2*log(1 - pow(x[j] / bw[i], 2));
         } else {

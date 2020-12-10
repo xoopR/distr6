@@ -5,7 +5,7 @@ test_that("autotest", {
     shortname = "Cos",
     variance = 1 - (8 / (pi^2)),
     pdfSquared2Norm = c((pi^2) / 16, 0.1963495, 0),
-    support = Interval$new(-1, 1),
+    support = Reals$new(),
     pdf = c(0.7757, 0.7854, 0.7757),
     cdf = c(0.4218, 0.5, 0.5782)
   )

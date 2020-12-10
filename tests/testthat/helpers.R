@@ -371,7 +371,6 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   checkmate::expect_subset(names(kern$public_fields), c("name", "short_name", "description",
                                                         "packages"))
 
-  expect_true("decorators" %in% names(formals(kern$public_methods$initialize)))
   expect_equal(as.character(kern$inherit), "Kernel")
   checkmate::expect_names(c(
     kern$public_fields$name,
