@@ -1,6 +1,6 @@
 # distr6 1.4.8
 
-* Minor internal changes
+* Fixes for R devel
 
 # distr6 1.4.7
 
