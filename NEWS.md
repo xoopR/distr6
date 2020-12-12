@@ -1,4 +1,4 @@
-# distr6 1.4.7.9000
+# distr6 1.4.8
 
 * Minor internal changes
 
