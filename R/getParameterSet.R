@@ -396,6 +396,12 @@ getParameterSet.Hypergeometric <- function(object, size, successes, failures = N
     "failures", "successes", function(self) {
       list(successes = self$getParameterValue("size") - self$getParameterValue("failures"))
     })
+  ps$addChecks(function(self) {
+    successes <- self$getParameterValue("successes")
+    failures <- self$getParameterValue("failures")
+    failures <- self$getParameterValue("size")
+    successes <= size && failures <= size
+  })
 
   return(ps)
 
