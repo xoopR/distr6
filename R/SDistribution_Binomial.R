@@ -157,7 +157,6 @@ Binomial <- R6Class("Binomial",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$qprob)) lst$prob <- NULL
       super$setParameterValue(lst = lst, error = error)
       private$.properties$support <- Set$new(0:self$getParameterValue("size"))
       if (self$getParameterValue("prob") == 0.5) {

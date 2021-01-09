@@ -193,7 +193,6 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$prec)) lst$cov <- NULL
       super$setParameterValue(lst = lst, error = error)
       invisible(self)
     }

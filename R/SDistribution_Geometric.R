@@ -195,7 +195,6 @@ Geometric <- R6Class("Geometric",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$qrob)) lst$prob <- NULL
       super$setParameterValue(lst = lst, error = error)
       invisible(self)
     }

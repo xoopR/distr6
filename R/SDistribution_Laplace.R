@@ -156,7 +156,6 @@ Laplace <- R6Class("Laplace",
     #' Sets the value(s) of the given parameter(s).
     setParameterValue = function(..., lst = NULL, error = "warn") {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$var)) lst$scale <- NULL
       super$setParameterValue(lst = lst, error = error)
       invisible(self)
     }
