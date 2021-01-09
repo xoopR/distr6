@@ -220,9 +220,9 @@ Categorical <- R6Class("Categorical",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
 
-      super$setParameterValue(..., lst = lst, error = error)
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
 
       if (length(unique(self$getParameterValue("probs"))) == 1) {
         private$.properties$symmetry <- "asymmetric"

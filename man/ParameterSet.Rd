@@ -363,7 +363,8 @@ Sets the value(s) of the given parameter(s).
   ...,
   lst = NULL,
   error = "warn",
-  .suppressCheck = FALSE
+  .suppressCheck = FALSE,
+  resolveConflicts = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -382,6 +383,10 @@ If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"sto
 
 \item{\code{.suppressCheck}}{\code{(logical(1))}\cr
 Should be set internally only.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -591,7 +596,7 @@ Returns parameter set values as a named list.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{settable}}{\code{(logical(1))}\cr
-If \code{TRUE} (default) only returns values of settable parameters, otherwise returns all.}
+If \code{TRUE} (default) only returns values of settable parameters.}
 }
 \if{html}{\out{</div>}}
 }

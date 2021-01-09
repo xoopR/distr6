@@ -1025,7 +1025,7 @@ getParameterSet.Weibull <- function(object, shape, scale, altscale = NULL) {
   ps <- ParameterSet$new(
     id = list("shape", "scale", "altscale"), value = list(1, 1, 1),
     support = list(pos_reals, pos_reals, pos_reals),
-    description = list("Shape paramer", "Scale parameter", "Alternate scale parameter")
+    description = list("Shape parameter", "Scale parameter", "Alternate scale parameter")
   )
 
   ps$addDeps("scale", "altscale", function(self) {

@@ -206,7 +206,8 @@ ParameterSet <- R6Class("ParameterSet",
     #' )
     #' ps$setParameterValue(rate = 2)
     #' ps$getParameterValue("rate")
-    setParameterValue = function(..., lst = NULL, error = "warn", .suppressCheck = FALSE) {
+    setParameterValue = function(..., lst = NULL, error = "warn", .suppressCheck = FALSE,
+                                 resolveConflicts = FALSE) {
       if (is.null(lst)) {
         lst <- list(...)
       } else {
@@ -214,15 +215,43 @@ ParameterSet <- R6Class("ParameterSet",
       }
 
       lst <- lst[!sapply(lst, is.null)]
-      sapply(names(lst), function(.x) {
-        check = grepl(.x, self$deps$x)
-        if (any(check)) {
-          if (any(names(lst) %in% self$deps$y[[which(check)]])) {
-            stop(sprintf("Conflicting parametrisations detected. Only one of %s should be given.",
-                         strCollapse(c(.x, self$deps$y[[which(check)]]))))
+
+      if (length(private$.deps)) {
+        if (resolveConflicts) {
+          conflicts = lapply(names(lst), function(.x) {
+            check = self$deps$x %in% .x
+            if (any(check)) {
+              if (any(names(lst) %in% self$deps$y[[which(check)]])) {
+                return(names(lst)[names(lst) %in% self$deps$y[[which(check)]]])
+              }
+            }
+          })
+          names(conflicts) = names(lst)
+          # FIXME - In future this will be resolved in param6 with tags
+          #  Temp hacky fix to remove conflicts by iteratively deleting params that are in
+          #  both x and y of deps
+          for (i in seq.int(length(conflicts), 1, -1)) {
+            if (names(conflicts)[i] %in% unlist(conflicts)) {
+              conflicts = conflicts[i]
+            }
           }
+        } else {
+
+          lapply(names(lst), function(.x) {
+            check = self$deps$x %in% .x
+            if (any(check)) {
+              if (any(names(lst) %in% self$deps$y[[which(check)]])) {
+                if (resolveConflicts) {
+                  return(names(lst)[names(lst) %in% self$deps$y[[which(check)]]])
+                } else {
+                  stop(sprintf("Conflicting parametrisations detected. Only one of %s should be given.",
+                               strCollapse(c(.x, self$deps$y[[which(check)]]))))
+                }
+              }
+            }
+          })
         }
-      })
+      }
 
       orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
 
@@ -443,13 +472,14 @@ ParameterSet <- R6Class("ParameterSet",
     #' @description
     #' Returns parameter set values as a named list.
     #' @param settable `(logical(1))`\cr
-    #' If `TRUE` (default) only returns values of settable parameters, otherwise returns all.
+    #' If `TRUE` (default) only returns values of settable parameters.
     values = function(settable = TRUE) {
       if (settable) {
         pars <- subset(private$.parameters, settable == TRUE)
       } else {
         pars <- private$.parameters
       }
+
       values <- pars$value
       names(values) <- pars$id
       return(values)

@@ -138,8 +138,8 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       if (self$getParameterValue("df") <= 1) {
         private$.properties$support <- PosReals$new(zero = F)
       } else {

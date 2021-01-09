@@ -37,7 +37,8 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   )
 
   if (!is.null(sdist$public_methods$setParameterValue)) {
-    expect_equal(names(formals(sdist$public_methods$setParameterValue)), c("...", "lst", "error"))
+    expect_equal(names(formals(sdist$public_methods$setParameterValue)),
+                 c("...", "lst", "error", "resolveConflicts"))
   }
   expect_true("decorators" %in% names(formals(sdist$public_methods$initialize)))
   if (!is.null(sdist$public_methods$mean))

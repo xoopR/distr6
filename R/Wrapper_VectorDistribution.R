@@ -1090,7 +1090,9 @@ or `distlist` should be used.")
       if (!is.null(decorators)) {
         pars <- c(pars, list(decorators = decorators))
       }
-      return(do.call(get(distribution)$new, pars))
+      dist = do.call(get(distribution)$new, list())
+      do.call(dist$setParameterValue, c(resolveConflicts = TRUE, pars))
+      return(dist)
     } else {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
       pars <- vecdist$parameters()$values()

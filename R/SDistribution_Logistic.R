@@ -157,9 +157,9 @@ Logistic <- R6Class("Logistic",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
       invisible(self)
     }
   ),

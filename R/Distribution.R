@@ -375,12 +375,14 @@ Distribution <- R6Class("Distribution",
     #' b = Binomial$new()
     #' b$setParameterValue(size = 4, prob = 0.4)
     #' b$setParameterValue(lst = list(size = 4, prob = 0.4))
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn",
+                                 resolveConflicts = FALSE) {
       if (is.null(lst)) {
         lst <- list(...)
       }
       if (private$.parameters$length && length(lst)) {
-        self$parameters()$setParameterValue(lst = lst, error = error)
+        self$parameters()$setParameterValue(lst = lst, error = error,
+                                            resolveConflicts = resolveConflicts)
       }
       invisible(self)
     },

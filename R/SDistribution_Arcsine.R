@@ -140,8 +140,8 @@ Arcsine <- R6Class("Arcsine",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       private$.properties$support <- Interval$new(
         self$getParameterValue("lower"),
         self$getParameterValue("upper")

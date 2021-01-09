@@ -2,7 +2,7 @@ library(testthat)
 
 test_that("autottest", {
   autotest_sdistribution(
-    Weibull,
+    sdist = Weibull,
     pars = list(shape = 1, scale = 1),
     traits = list(valueSupport = "continuous", variateForm = "univariate",
                   type = PosReals$new(zero = TRUE)),

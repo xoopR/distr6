@@ -24,10 +24,25 @@ SDistribution <- R6Class("SDistribution",
 
       abstract(self, "SDistribution", "listDistributions()")
 
+      # check required packages are loaded
       assert_pkgload(self$packages)
+
+      # decorate if requested
       if (!is.null(decorators)) {
         suppressMessages(decorate(self, decorators))
       }
+
+      # get call with defaults (excl. decorators)
+      args = getR6DefaultCall()
+      # if all args NULL (except decorators) set defaults
+      if (all(vapply(unlist(args), is.null, logical(1)))) {
+        # set defaults with decorator call
+        args = private$.defaults
+      }
+
+      private$.parameters <- do.call(getParameterSet, c(list(object = self), args))
+      do.call(self$setParameterValue, args)
+
       private$.traits$type <- assertSet(type)
       private$.properties <- list(
         support = assertSet(support),

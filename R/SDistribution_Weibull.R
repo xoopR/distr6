@@ -43,11 +43,7 @@ Weibull <- R6Class("Weibull",
     #' @param altscale `(numeric(1))`\cr
     #' Alternative scale parameter, if given then `scale` is ignored.
     #' `altscale = scale^-shape`.
-    initialize = function(shape = 1, scale = 1, altscale = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, shape, scale, altscale)
-      self$setParameterValue(shape = shape, scale = scale, altscale = altscale)
-
+    initialize = function(shape = NULL, scale = NULL, altscale = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosReals$new(zero = T),
@@ -162,9 +158,9 @@ Weibull <- R6Class("Weibull",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
       invisible(self)
     }
   ),
@@ -232,6 +228,8 @@ Weibull <- R6Class("Weibull",
         vec = test_list(shape)
       )
     },
+
+    .defaults = list(shape = 1, scale = 1),
 
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")

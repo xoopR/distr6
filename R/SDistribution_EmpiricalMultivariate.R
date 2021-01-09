@@ -98,7 +98,7 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       warning("Data cannot be updated after construction.")
       return(NULL)
     }

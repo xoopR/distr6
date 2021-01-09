@@ -153,7 +153,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' # both updated
     #' psc$getParameterValue("Geom_prob")
     #' g$getParameterValue("prob")
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) {
         lst <- list(...)
       } else {
@@ -169,7 +169,8 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
         bool <- dist == i
         newlst <- lst[bool]
         names(newlst) <- param[bool]
-        private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = .suppressCheck)
+        private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = .suppressCheck,
+                                                      resolveConflicts = resolveConflicts)
       })
 
       if (!is.null(self$checks)) {

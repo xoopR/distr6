@@ -262,9 +262,9 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
       form <- self$getParameterValue("form")[[1]]
       if (form == "tbf" | form == "tbs") {
         private$.properties$support <- Interval$new(self$getParameterValue("size"),
