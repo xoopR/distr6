@@ -214,6 +214,15 @@ ParameterSet <- R6Class("ParameterSet",
       }
 
       lst <- lst[!sapply(lst, is.null)]
+      sapply(names(lst), function(.x) {
+        check = grepl(.x, self$deps$x)
+        if (any(check)) {
+          if (any(names(lst) %in% self$deps$y[[which(check)]])) {
+            stop(sprintf("Conflicting parametrisations detected. Only one of %s should be given.",
+                         strCollapse(c(.x, self$deps$y[[which(check)]]))))
+          }
+        }
+      })
 
       orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
 
