@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (1 - p)^{k-1}p}
 #' @templateVar paramsupport probability \eqn{p}
 #' @templateVar distsupport the Naturals (zero is included if modelling number of failures before success)
+#' @templateVar default prob = 0.5, trials = FALSE
 #' @details
 #' The Geometric distribution is used to either refer to modelling the number of trials or number
 #' of failures before the first success.
@@ -48,24 +49,23 @@ Geometric <- R6Class("Geometric",
     #' If `TRUE` then the distribution models the number of trials, \eqn{x}, before the first
     #' success. Otherwise the distribution calculates the probability of \eqn{y} failures before the
     #' first success. Mathematically these are related by \eqn{Y = X - 1}.
-    initialize = function(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, prob = prob, qprob = qprob, trials = trials)
-      self$setParameterValue(prob = prob, qprob = qprob)
-
-      if (!trials) {
-        support <- Naturals$new()
-        self$description <- "Geometric (Failures) Probability Distribution."
-      } else {
-        support <- PosNaturals$new()
-        self$description <- "Geometric (Trials) Probability Distribution."
-      }
+    initialize = function(prob = NULL, qprob = NULL, trials = NULL, decorators = NULL) {
 
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = Set$new(), # temp see below
         type = Naturals$new()
       )
+
+      if (!self$getParameterValue("trials")) {
+        private$.properties$support <- Naturals$new()
+        self$description <- "Geometric (Failures) Probability Distribution."
+      } else {
+        private$.properties$support <- PosNaturals$new()
+        self$description <- "Geometric (Trials) Probability Distribution."
+      }
+
+      invisible(self)
     },
 
     # stats
@@ -188,15 +188,6 @@ Geometric <- R6Class("Geometric",
       } else {
         return(self$getParameterValue("prob") / (1 - z * self$getParameterValue("qprob")))
       }
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
-      invisible(self)
     }
   ),
 

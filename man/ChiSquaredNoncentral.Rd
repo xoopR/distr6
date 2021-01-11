@@ -4,7 +4,7 @@
 \alias{ChiSquaredNoncentral}
 \title{Noncentral Chi-Squared Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Noncentral Chi-Squared distribution, which
@@ -12,9 +12,29 @@ is commonly used to model the sum of independent squared Normal distributions an
 }
 \details{
 The Noncentral Chi-Squared distribution parameterised with  degrees of freedom, \eqn{\nu}, and location, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{(\nu+2r)/2-1}exp(-x/2))/(2^{(\nu+2r)/2}\Gamma((\nu+2r)/2))} for \eqn{\nu \ge 0}, \eqn{\lambda \ge 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Positive Reals.
 }
+
+\section{Default Parameterisation}{
+
+ChiSqNC(df = 1, location = 0)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -159,7 +179,7 @@ Jordan Deenichin
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ChiSquaredNoncentral$new(df = 1, location = 0, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ChiSquaredNoncentral$new(df = NULL, location = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

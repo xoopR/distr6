@@ -4,7 +4,7 @@
 \alias{FDistribution}
 \title{'F' Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the 'F' distribution, which
@@ -12,9 +12,29 @@ is commonly used in ANOVA testing and is the ratio of scaled Chi-Squared distrib
 }
 \details{
 The 'F' distribution parameterised with  two degrees of freedom parameters, \eqn{\mu, \nu}, is defined by the pdf, \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^{\mu/2} x^{\mu/2 - 1} (1 + (\mu/\nu) x)^{-(\mu + \nu)/2}} for \eqn{\mu, \nu > 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Positive Reals.
 }
+
+\section{Default Parameterisation}{
+
+F(df1 = 1, df2 = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -158,7 +178,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FDistribution$new(df1 = 1, df2 = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FDistribution$new(df1 = NULL, df2 = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!}
 #' @templateVar paramsupport \eqn{\lambda} > 0
 #' @templateVar distsupport the Naturals
+#' @templateVar default rate = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -39,11 +40,7 @@ Poisson <- R6Class("Poisson",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(rate = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, rate)
-      self$setParameterValue(rate = rate)
-
+    initialize = function(rate = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Naturals$new(),

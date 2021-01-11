@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = x/\alpha^2 exp(-x^2/(2\alpha^2))}
 #' @templateVar paramsupport \eqn{\alpha > 0}
 #' @templateVar distsupport \eqn{[0, \infty)}
+#' @templateVar default mode = 1
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -40,11 +41,7 @@ Rayleigh <- R6Class("Rayleigh",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param mode `(numeric(1))`\cr
     #' Mode of the distribution, defined on the positive Reals. Scale parameter.
-    initialize = function(mode = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, mode)
-      self$setParameterValue(mode = mode)
-
+    initialize = function(mode = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosReals$new(zero = T),

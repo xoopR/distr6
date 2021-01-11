@@ -4,7 +4,7 @@
 \alias{Rayleigh}
 \title{Rayleigh Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Rayleigh distribution, which
@@ -12,9 +12,29 @@ is commonly used to model random complex numbers..
 }
 \details{
 The Rayleigh distribution parameterised with  mode (or scale), \eqn{\alpha}, is defined by the pdf, \deqn{f(x) = x/\alpha^2 exp(-x^2/(2\alpha^2))} for \eqn{\alpha > 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{[0, \infty)}.
 }
+
+\section{Default Parameterisation}{
+
+Rayl(mode = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -157,7 +177,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Rayleigh$new(mode = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Rayleigh$new(mode = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b-a)}
 #' @templateVar paramsupport \eqn{-\infty < a < b < \infty}
 #' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar default lower = 0, upper = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -41,14 +42,10 @@ Uniform <- R6Class("Uniform",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(lower = 0, upper = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, lower, upper)
-      self$setParameterValue(lower = lower, upper = upper)
-
+    initialize = function(lower = NULL, upper = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Interval$new(lower, upper),
+        support = Interval$new(0, 1),
         symmetry = "sym",
         type = Reals$new()
       )

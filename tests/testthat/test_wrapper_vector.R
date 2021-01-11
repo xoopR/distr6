@@ -209,6 +209,14 @@ test_that("wrapped models", {
   expect_error(mix$wrappedModels("sdsd"), "No distribution called")
   expect_equal(mix$wrappedModels(c("Binom", "Norm")), list(Binom = Binomial$new(),
                                                            Norm = Normal$new()))
+
+  a <- VectorDistribution$new(distribution = "Binomial", params = list(
+    list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
+    list(prob = 0.2, size = 6)
+  ),
+  decorators = "ExoticStatistics")
+  expect_equal(a$wrappedModels()[[1]]$decorators, "ExoticStatistics")
+  expect_equal(a$wrappedModels("Binom1")$decorators, "ExoticStatistics")
 })
 
 # test_that("parameters", {

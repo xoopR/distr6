@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = -\theta^x/xlog(1-\theta)}
 #' @templateVar paramsupport \eqn{0 < \theta < 1}
 #' @templateVar distsupport \eqn{{1,2,3,\ldots}}
+#' @templateVar default theta = 0.5
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -40,11 +41,7 @@ Logarithmic <- R6Class("Logarithmic",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param theta `(numeric(1))`\cr
     #' Theta parameter defined as a probability between `0` and `1`.
-    initialize = function(theta = 0.5, decorators = NULL) {
-
-      private$.parameters <- getParameterSet.Logarithmic(self, theta)
-      self$setParameterValue(theta = theta)
-
+    initialize = function(theta = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosNaturals$new(),

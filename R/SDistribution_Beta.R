@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function
 #' @templateVar distsupport \eqn{[0, 1]}
+#' @templateVar default shape1 = 1, shape2 = 1
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -42,16 +43,12 @@ Beta <- R6Class("Beta",
     #' First shape parameter, `shape1 > 0`.
     #' @param shape2 `(numeric(1))`\cr
     #' Second shape parameter, `shape2 > 0`.
-    initialize = function(shape1 = 1, shape2 = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet.Beta(self, shape1, shape2)
-      self$setParameterValue(shape1 = shape1, shape2 = shape2)
-
+    initialize = function(shape1 = NULL, shape2 = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Interval$new(0, 1),
-        symmetry = if (shape1 == shape2) "sym" else "asym",
-        type = PosReals$new(zero = T)
+        type = PosReals$new(zero = T),
+        symmetry = "sym"
       )
     },
 

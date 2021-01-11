@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x_i) = p_i}
 #' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
+#' @templateVar default elements = 1, probs = 1
 #' @details
 #' Sampling from this distribution is performed with the [sample] function with the elements given
 #' as the support set and the probabilities from the `probs` parameter. The cdf and quantile assumes
@@ -17,7 +18,6 @@
 #' The number of points in the distribution cannot be changed after construction.
 #'
 # nolint end
-#
 #
 #' @template class_distribution
 #' @template method_mode
@@ -67,18 +67,12 @@ Categorical <- R6Class("Categorical",
     #' x$mode()
     #'
     #' summary(x)
-    initialize = function(elements = 1, probs = 1, decorators = NULL) {
-
-      checkmate::assert(length(elements) == length(probs))
-
-      private$.parameters <- getParameterSet(self, probs, elements)
-      self$setParameterValue(probs = probs, elements = elements)
-
+    initialize = function(elements = NULL, probs = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Set$new(lst = elements),
+        support = Set$new(1),
         type = Universal$new(),
-        symmetry = if (length(unique(self$getParameterValue("probs"))) == 1) "sym" else "asym"
+        symmetry = "sym"
       )
     },
 
@@ -225,9 +219,9 @@ Categorical <- R6Class("Categorical",
       super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
 
       if (length(unique(self$getParameterValue("probs"))) == 1) {
-        private$.properties$symmetry <- "asymmetric"
-      } else {
         private$.properties$symmetry <- "symmetric"
+      } else {
+        private$.properties$symmetry <- "asymmetric"
       }
 
       private$.properties$support <- Set$new(elements = self$getParameterValue("elements"))

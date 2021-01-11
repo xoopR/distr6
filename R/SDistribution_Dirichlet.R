@@ -10,6 +10,7 @@
 #' @templateVar paramsupport \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function
 #' @templateVar distsupport \eqn{x_i \ \epsilon \ (0,1), \sum x_i = 1}{x_i \epsilon (0,1), \sum x_i = 1}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
+#' @templateVar default params = c(1, 1)
 # nolint end
 #' @details
 #' Sampling is performed via sampling independent Gamma distributions and normalising the samples
@@ -54,17 +55,11 @@ Dirichlet <- R6Class("Dirichlet",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param params `numeric()`\cr
     #' Vector of concentration parameters of the distribution defined on the positive Reals.
-    initialize = function(params = c(1, 1), decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, params)
-      self$setParameterValue(params = params)
-
-      private$.variates <- length(params)
-
+    initialize = function(params = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = setpower(Interval$new(0, 1, type = "()"), length(params)),
-        type = setpower(Interval$new(0, 1, type = "()"), length(params))
+        support = setpower(Interval$new(0, 1, type = "()"), 2),
+        type = setpower(Interval$new(0, 1, type = "()"), "n")
       )
     },
 
@@ -161,6 +156,18 @@ Dirichlet <- R6Class("Dirichlet",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      if (is.null(lst)) lst <- list(...)
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+      len <- length(self$getParameterValue("params"))
+      private$.variates <- len
+      private$.properties$support <- setpower(Interval$new(0, 1, type = "()"), len)
+      invisible(self)
     }
   ),
 
@@ -196,6 +203,8 @@ Dirichlet <- R6Class("Dirichlet",
         )
       }
     },
+
+    .variates = 2,
 
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "multivariate"),

@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}
 #' @templateVar distsupport the non-negative Reals
+#' @templateVar default scale = 1, shape = 1, location = 0
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -41,30 +42,11 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(scale = 1, shape = 1, location = 0,
+    initialize = function(scale = NULL, shape = NULL, location = NULL,
                           rate = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, scale, shape, location, rate)
-      self$setParameterValue(scale = scale, shape = shape, location = location, rate = rate)
-
-      if (self$getParameterValue("shape") == 0) {
-        support <- Reals$new()
-      } else if (self$getParameterValue("shape") < 0) {
-        support <- Interval$new(-Inf, self$getParameterValue("location") -
-          self$getParameterValue("scale") / self$getParameterValue("shape"),
-        type = "(]"
-        )
-      } else {
-        support <- Interval$new(self$getParameterValue("location") -
-          self$getParameterValue("scale") / self$getParameterValue("shape"),
-        Inf,
-        type = "[)"
-        )
-      }
-
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = Interval$new(-1, Inf, type = "[)"),
         type = Reals$new()
       )
     },

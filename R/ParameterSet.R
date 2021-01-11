@@ -259,40 +259,43 @@ ParameterSet <- R6Class("ParameterSet",
       dt <- subset(private$.parameters, id %in% names(lst))
 
       if (!all(dt$settable)) {
-        stop(sprintf("%s is not settable after construction.",
+        warning(sprintf("%s is not settable after construction, parameter(s) ignored.",
                      strCollapse(unlist(subset(dt, !settable)$id))))
+        dt <- subset(dt, settable)
       }
 
-      dt$value <- lst[match(dt$id, names(lst))]
-      dt[, value := Map(private$.trafo, id = id, value = value)]
+      if (nrow(dt)) {
+        dt$value <- lst[match(dt$id, names(lst))]
+        dt[, value := Map(private$.trafo, id = id, value = value)]
 
-      if (!.suppressCheck) {
-        apply(dt, 1, function(.x) {
-          value <- .x[[2]]
-          support <- .x[[3]]
-          if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
-            value <- Tuple$new(value)
+        if (!.suppressCheck) {
+          apply(dt, 1, function(.x) {
+            value <- .x[[2]]
+            support <- .x[[3]]
+            if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
+              value <- Tuple$new(value)
+            }
+            assertContains(support, value,
+                           sprintf("%s does not lie in the support of %s.",
+                                   strCollapse(value, "()"), .x[[1]]))
+          })
+        }
+
+        data.table::set(
+          private$.parameters,
+          which(private$.parameters$id %in% dt$id),
+          "value",
+          dt$value
+        )
+
+        sapply(unlist(dt$id), private$.update)
+
+        if (!is.null(self$checks) && !.suppressCheck) {
+          x <- try(private$.check(), silent = TRUE)
+          if (class(x) == "try-error") {
+            private$.parameters <- orig
+            stop("ParameterSet checks failed.")
           }
-          assertContains(support, value,
-                         sprintf("%s does not lie in the support of %s.",
-                                 strCollapse(value, "()"), .x[[1]]))
-        })
-      }
-
-      data.table::set(
-        private$.parameters,
-        which(private$.parameters$id %in% dt$id),
-        "value",
-        dt$value
-      )
-
-      sapply(unlist(dt$id), private$.update)
-
-      if (!is.null(self$checks) && !.suppressCheck) {
-        x <- try(private$.check(), silent = TRUE)
-        if (class(x) == "try-error") {
-          private$.parameters <- orig
-          stop(x)
         }
       }
 

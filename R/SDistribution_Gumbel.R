@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-(z + exp(-z)))/\beta}
 #' @templateVar paramsupport \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
+#' @templateVar default location = 0, scale = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -39,12 +40,7 @@ Gumbel <- R6Class("Gumbel",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(location = 0, scale = 1,
-                          decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, location, scale)
-      self$setParameterValue(location = location, scale = scale)
-
+    initialize = function(location = NULL, scale = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new(),

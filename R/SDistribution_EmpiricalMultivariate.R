@@ -7,6 +7,7 @@
 #' @templateVar pdfpmfeq \deqn{p(x) = \sum I(x = x_i) / k}
 #' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
+#' @templateVar default data = data.frame(1, 1)
 #' @details
 #' Sampling from this distribution is performed with the [sample] function with the elements given
 #' as the support set and uniform probabilities. Sampling is performed with replacement, which is
@@ -47,11 +48,9 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     #' to each variable.
     #' @examples
     #' EmpiricalMV$new(MultivariateNormal$new()$rand(100))
-    initialize = function(data = data.frame(1, 1), decorators = NULL) {
+    initialize = function(data = NULL, decorators = NULL) {
 
-      if (ncol(data) == 1) {
-        stop("Number of columns in `data` is '1', use Empirical distribution instead.")
-      }
+      if (is.null(data)) data <- data.frame(1, 1)
 
       support <- do.call(setproduct, as.Tuple(data))
       data <- data.table::as.data.table(data)

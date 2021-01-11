@@ -1,3 +1,17 @@
+# distr6 1.5.0
+
+* Internal changes to how `SDistribution` parameter defaults are set. Previously these were set in the constructor with function defaults, now they are set in the `ParameterSet`. This should not affect backwards compatibility. This should improve speed of distribution construction.
+* Documentation for `SDistribution` objects has been restructured for easier reading, the distribution default is now included.
+* Added sugar function `dstr` to construct distributions more easily, e.g. `dstr("Binom", size = 4)` instead of `Binomial$new(size = 4)`.
+* Added sugar function `dstrs` to construct a `VectorDistribution` of distributions.
+* Minor internal changes to storage method of `SDistribution` `ParameterSet` objects.
+* Multivariate distributions no longer error if constructed with a single variate, though this is still advised against.
+* Minor bug fixes in some distribution properties.
+* Data parameter in `WeightedDiscrete` distribution has now been removed.
+* `MixtureDistribution` now uses `extraDistr::rmnom` for speed improvements.
+* `setParameterValue` in `ParameterSet` no longer errors if a non-settable parameter is updated, instead a `warning` is given and the parameter is ignored.
+* Slight improvement to error messages in `ParameterSet` but these will be improved further in a future update.
+
 # distr6 1.4.8
 
 * Fixes for R devel

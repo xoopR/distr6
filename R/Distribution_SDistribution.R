@@ -32,22 +32,22 @@ SDistribution <- R6Class("SDistribution",
         suppressMessages(decorate(self, decorators))
       }
 
-      # get call with defaults (excl. decorators)
-      args = getR6DefaultCall()
-      # if all args NULL (except decorators) set defaults
-      if (all(vapply(unlist(args), is.null, logical(1)))) {
-        # set defaults with decorator call
-        args = private$.defaults
-      }
-
-      private$.parameters <- do.call(getParameterSet, c(list(object = self), args))
-      do.call(self$setParameterValue, args)
-
       private$.traits$type <- assertSet(type)
       private$.properties <- list(
         support = assertSet(support),
         symmetry = match.arg(symmetry)
       )
+
+      if (!grepl("Empirical", getR6Class(self))) {
+        # get call
+        args = getR6Call()
+        # get ParameterSet
+        private$.parameters <- do.call(getParameterSet, c(list(object = self), args))
+        if (length(args)) {
+          # set non-default parameters
+          suppressWarnings(do.call(self$setParameterValue, args))
+        }
+      }
 
       invisible(self)
     }

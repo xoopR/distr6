@@ -4,7 +4,7 @@
 \alias{Beta}
 \title{Beta Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Beta distribution, which
@@ -12,9 +12,29 @@ is commonly used as the prior in Bayesian modelling.
 }
 \details{
 The Beta distribution parameterised with  two shape parameters, \eqn{\alpha, \beta}, is defined by the pdf, \deqn{f(x) = (x^{\alpha-1}(1-x)^{\beta-1}) / B(\alpha, \beta)} for \eqn{\alpha, \beta > 0}, where \eqn{B} is the Beta function.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{[0, 1]}.
 }
+
+\section{Default Parameterisation}{
+
+Beta(shape1 = 1, shape2 = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -157,7 +177,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Beta$new(shape1 = 1, shape2 = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Beta$new(shape1 = NULL, shape2 = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default shape = 1, scale = 1
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -153,15 +154,6 @@ Weibull <- R6Class("Weibull",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
-      invisible(self)
     }
   ),
 
@@ -228,8 +220,6 @@ Weibull <- R6Class("Weibull",
         vec = test_list(shape)
       )
     },
-
-    .defaults = list(shape = 1, scale = 1),
 
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")

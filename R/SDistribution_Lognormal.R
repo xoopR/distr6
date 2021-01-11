@@ -11,6 +11,7 @@
 #' @templateVar distsupport the Positive Reals
 #' @templateVar aka Log-Gaussian
 #' @aliases Loggaussian
+#' @templateVar default meanlog = 0, varlog = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -66,18 +67,9 @@ Lognormal <- R6Class("Lognormal",
     #' @examples
     #' Lognormal$new(var = 2, mean = 1)
     #' Lognormal$new(meanlog = 2, preclog = 5)
-    initialize = function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
+    initialize = function(meanlog = NULL, varlog = NULL, sdlog = NULL, preclog = NULL,
                           mean = NULL, var = NULL, sd = NULL, prec = NULL,
                           decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, meanlog, varlog, sdlog, preclog,
-                                             mean, var, sd, prec)
-
-      self$setParameterValue(
-        meanlog = meanlog, varlog = varlog, sdlog = sdlog, preclog = preclog,
-        mean = mean, var = var, sd = sd, prec = prec
-      )
-
       super$initialize(
         decorators = decorators,
         support = PosReals$new(),
@@ -175,15 +167,6 @@ Lognormal <- R6Class("Lognormal",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
-      invisible(self)
     }
   ),
 

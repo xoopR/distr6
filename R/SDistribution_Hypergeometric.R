@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)}
 #' @templateVar paramsupport \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}
+#' @templateVar default size = 50, successes = 5, draws = 10
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -47,17 +48,11 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' is ignored. Defined on positive Naturals.
     #' @param draws `(integer(1))`\cr
     #' Number of draws from the distribution, defined on the positive Naturals.
-    initialize = function(size = 50, successes = 5, failures = NULL, draws = 10,
+    initialize = function(size = NULL, successes = NULL, failures = NULL, draws = NULL,
                           decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, size, successes, failures, draws)
-      self$setParameterValue(size = size, successes = successes, failures = failures, draws = draws)
-
-      support <- Set$new(max(0, draws + successes - size):min(draws, successes), class = "integer")
-
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = Set$new(0:5, class = "integer"),
         type = Naturals$new()
       )
     },
@@ -148,13 +143,13 @@ Hypergeometric <- R6Class("Hypergeometric",
       private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
         self$getParameterValue("successes") - size):min(
         self$getParameterValue("draws"),
-        self$getParameterValue("successes")
-      ))
+        self$getParameterValue("successes")),
+        class = "integer")
 
       pparams <- self$parameters()$.__enclos_env__$private
-      pparams$.setParameterSupport(list(successes = Set$new(0:size)))
-      pparams$.setParameterSupport(list(draws = Set$new(0:size)))
-      pparams$.setParameterSupport(list(failures = Set$new(0:size)))
+      pparams$.setParameterSupport(list(successes = Set$new(0:size, class = "integer")))
+      pparams$.setParameterSupport(list(draws = Set$new(0:size, class = "integer")))
+      pparams$.setParameterSupport(list(failures = Set$new(0:size, class = "integer")))
       invisible(self)
     }
   ),

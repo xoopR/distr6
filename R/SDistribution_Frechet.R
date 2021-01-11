@@ -10,6 +10,7 @@
 #' @templateVar paramsupport \eqn{\alpha, \beta \epsilon R^+} and \eqn{\gamma \epsilon R}
 #' @templateVar distsupport \eqn{x > \gamma}
 #' @templateVar aka Inverse Weibull
+#' @templateVar default shape = 1, scale = 1, minimum = 0
 #' @aliases InverseWeibull
 # nolint end
 #' @template class_distribution
@@ -44,15 +45,10 @@ Frechet <- R6Class("Frechet",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param minimum `(numeric(1))`\cr
     #' Minimum of the distribution, defined on the Reals.
-    initialize = function(shape = 1, scale = 1, minimum = 0,
-                          decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, shape, scale, minimum)
-      self$setParameterValue(shape = shape, scale = scale, minimum = minimum)
-
+    initialize = function(shape = NULL, scale = NULL, minimum = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Interval$new(minimum, Inf, type = "()"),
+        support = Interval$new(0, Inf, type = "()"),
         type = Reals$new()
       )
     },

@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \lambda exp(-x\lambda)}
 #' @templateVar paramsupport \eqn{\lambda > 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default rate = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -39,11 +40,7 @@ Exponential <- R6Class("Exponential",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(rate = 1, scale = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, rate, scale)
-      self$setParameterValue(rate = rate, scale = scale)
-
+    initialize = function(rate = NULL, scale = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosReals$new(zero = T),
@@ -149,15 +146,6 @@ Exponential <- R6Class("Exponential",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
-      invisible(self)
     }
   ),
 

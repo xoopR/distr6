@@ -4,7 +4,7 @@
 \alias{WeightedDiscrete}
 \title{WeightedDiscrete Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the WeightedDiscrete distribution, which
@@ -13,14 +13,34 @@ is commonly used in empirical estimators such as Kaplan-Meier.
 \details{
 The WeightedDiscrete distribution   is defined by the pmf, \deqn{f(x_i) = p_i} for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
 
-The distribution is supported on \eqn{x_1,...,x_k}.
-
 Sampling from this distribution is performed with the \link{sample} function with the elements given
 as the x values and the pdf as the probabilities. The cdf and quantile assume that the
 elements are supplied in an indexed order (otherwise the results are meaningless).
 
 The number of points in the distribution cannot be changed after construction.
 }
+\section{Distribution support}{
+
+The distribution is supported on \eqn{x_1,...,x_k}.
+}
+
+\section{Default Parameterisation}{
+
+WeightDisc(x = 1, pdf = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \examples{
 x <- WeightedDiscrete$new(x = 1:3, pdf = c(1 / 5, 3 / 5, 1 / 5))
 WeightedDiscrete$new(x = 1:3, cdf = c(1 / 5, 4 / 5, 1)) # equivalently
@@ -160,23 +180,14 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$new(
-  data = NULL,
-  x = 1,
-  pdf = 1,
-  cdf = NULL,
-  decorators = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$new(x = NULL, pdf = NULL, cdf = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{data}}{\verb{([data.frame])}\cr
-Deprecated. Use \verb{x, pdf, cdf}.}
-
 \item{\code{x}}{\code{numeric()}\cr
-Data samples.}
+Data samples, \emph{must be ordered in ascending order}.}
 
 \item{\code{pdf}}{\code{numeric()}\cr
 Probability mass function for corresponding samples, should be same length \code{x}.

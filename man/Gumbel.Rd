@@ -4,7 +4,7 @@
 \alias{Gumbel}
 \title{Gumbel Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Gumbel distribution, which
@@ -12,9 +12,29 @@ is commonly used to model the maximum (or minimum) of a number of samples of dif
 }
 \details{
 The Gumbel distribution parameterised with  location, \eqn{\mu}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = exp(-(z + exp(-z)))/\beta} for \eqn{z = (x-\mu)/\beta}, \eqn{\mu \epsilon R} and \eqn{\beta > 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Reals.
 }
+
+\section{Default Parameterisation}{
+
+Gumb(location = 0, scale = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -159,7 +179,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Gumbel$new(location = 0, scale = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Gumbel$new(location = NULL, scale = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

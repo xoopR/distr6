@@ -4,7 +4,7 @@
 \alias{StudentTNoncentral}
 \title{Noncentral Student's T Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Noncentral Student's T distribution, which
@@ -12,9 +12,29 @@ is commonly used to estimate the mean of populations with unknown variance from 
 }
 \details{
 The Noncentral Student's T distribution parameterised with  degrees of freedom, \eqn{\nu} and location, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = (\nu^{\nu/2}exp(-(\nu\lambda^2)/(2(x^2+\nu)))/(\sqrt{\pi} \Gamma(\nu/2) 2^{(\nu-1)/2} (x^2+\nu)^{(\nu+1)/2}))\int_{0}^{\infty} y^\nu exp(-1/2(y-x\lambda/\sqrt{x^2+\nu})^2)} for \eqn{\nu > 0}, \eqn{\lambda \epsilon R}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Reals.
 }
+
+\section{Default Parameterisation}{
+
+TNS(df = 1, location = 0)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -155,7 +175,7 @@ Jordan Deenichin
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StudentTNoncentral$new(df = 1, location = 0, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StudentTNoncentral$new(df = NULL, location = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

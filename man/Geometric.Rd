@@ -4,7 +4,7 @@
 \alias{Geometric}
 \title{Geometric Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Geometric distribution, which
@@ -13,11 +13,31 @@ is commonly used to model the number of trials (or number of failures) before th
 \details{
 The Geometric distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = (1 - p)^{k-1}p} for probability \eqn{p}.
 
-The distribution is supported on the Naturals (zero is included if modelling number of failures before success).
-
 The Geometric distribution is used to either refer to modelling the number of trials or number
 of failures before the first success.
 }
+\section{Distribution support}{
+
+The distribution is supported on the Naturals (zero is included if modelling number of failures before success).
+}
+
+\section{Default Parameterisation}{
+
+Geom(prob = 0.5, trials = FALSE)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -110,7 +130,6 @@ Other univariate distributions:
 \item \href{#method-mgf}{\code{Geometric$mgf()}}
 \item \href{#method-cf}{\code{Geometric$cf()}}
 \item \href{#method-pgf}{\code{Geometric$pgf()}}
-\item \href{#method-setParameterValue}{\code{Geometric$setParameterValue()}}
 \item \href{#method-clone}{\code{Geometric$clone()}}
 }
 }
@@ -130,6 +149,7 @@ Other univariate distributions:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
@@ -143,7 +163,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Geometric$new(prob = 0.5, qprob = NULL, trials = FALSE, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Geometric$new(prob = NULL, qprob = NULL, trials = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -355,40 +375,6 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 z integer to evaluate probability generating function at.}
 
 \item{\code{...}}{Unused.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
-\subsection{Method \code{setParameterValue()}}{
-Sets the value(s) of the given parameter(s).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Geometric$setParameterValue(
-  ...,
-  lst = NULL,
-  error = "warn",
-  resolveConflicts = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{ANY} \cr
-Named arguments of parameters to set values for. See examples.}
-
-\item{\code{lst}}{\code{(list(1))} \cr
-Alternative argument for passing parameters. List names should be parameter names and list values
-are the new values to set.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
-
-\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
-If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
-automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

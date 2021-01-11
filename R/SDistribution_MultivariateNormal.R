@@ -10,6 +10,7 @@
 #' @templateVar paramsupport \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}
 #' @templateVar distsupport the Reals and only when the covariance matrix is positive-definite
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
+#' @templateVar default mean = rep(0, 2), cov = c(1, 0, 0, 1)
 # nolint end
 #' @details
 #' Sampling is performed via the Cholesky decomposition using [chol].
@@ -60,18 +61,10 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     #' matrix via `matrix(cov, nrow = K, byrow = FALSE)`. Must be semi-definite.
     initialize = function(mean = rep(0, 2), cov = c(1, 0, 0, 1),
                           prec = NULL, decorators = NULL) {
-
-      if (length(mean) == 1) stop("Length of mean is '1', use Normal distribution instead.")
-
-      private$.parameters <- getParameterSet(self, mean, cov, prec)
-      self$setParameterValue(mean = mean, cov = cov, prec = prec)
-
-      private$.variates <- length(mean)
-
       super$initialize(
         decorators = decorators,
-        support = setpower(Reals$new(), length(mean)),
-        type = setpower(Reals$new(), length(mean))
+        support = setpower(Reals$new(), 2),
+        type = setpower(Reals$new(), "n")
       )
     },
 
@@ -194,6 +187,9 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) lst <- list(...)
       super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+      mean <- self$getParameterValue("mean")
+      private$.variates <- length(mean)
+      private$.properties$support <- setpower(Reals$new(), length(mean))
       invisible(self)
     }
   ),
@@ -268,6 +264,8 @@ MultivariateNormal <- R6Class("MultivariateNormal",
         rmvn(n, cov = cov, mean = mean)
       }
     },
+
+    .variates = 2,
 
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "multivariate"),

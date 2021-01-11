@@ -4,7 +4,7 @@
 \alias{DiscreteUniform}
 \title{Discrete Uniform Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Discrete Uniform distribution, which
@@ -12,9 +12,29 @@ is commonly used as a discrete variant of the more popular Uniform distribution,
 }
 \details{
 The Discrete Uniform distribution parameterised with  lower, \eqn{a}, and upper, \eqn{b}, limits is defined by the pmf, \deqn{f(x) = 1/(b - a + 1)} for \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}.
 }
+
+\section{Default Parameterisation}{
+
+DUnif(lower = 0, upper = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -140,7 +160,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DiscreteUniform$new(lower = 0, upper = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DiscreteUniform$new(lower = NULL, upper = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

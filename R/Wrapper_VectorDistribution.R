@@ -182,6 +182,7 @@ or `distlist` should be used.")
               shared_params <- as.list(shared_params)
             }
           }
+          private$.sharedparams <- shared_params
 
           # create wrapper parameters by cloning distribution parameters and setting by given params
           # skip if no parameters
@@ -215,7 +216,8 @@ or `distlist` should be used.")
             support <- subset(as.data.table(p), select = c(id, support))
             support[, support := sapply(support, set6::setpower, power = length(paramlst))]
             parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
-                                                     .supports = support)$setParameterValue(lst = params)
+                                                     .supports = support)$
+              setParameterValue(lst = params, resolveConflicts = TRUE)
           } else {
             paramlst <- vector("list", length(params))
             names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
@@ -534,10 +536,11 @@ or `distlist` should be used.")
           distlist <- private$.wrappedModels
         } else {
           distlist <- lapply(private$.modelTable$shortname, function(x) {
-            do.call(
-              get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
-              self$parameters()[paste0(x, "_")]$values()
-            )
+            dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
+                            list(decorators = self$decorators))
+            do.call(dist$setParameterValue, c(resolveConflicts = TRUE,
+                                              self$parameters()[paste0(x, "_")]$values()))
+            return(dist)
           })
         }
       } else {
@@ -551,10 +554,11 @@ or `distlist` should be used.")
           distlist <- private$.wrappedModels[models]
         } else {
           distlist <- lapply(models, function(x) {
-            do.call(
-              get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
-              self$parameters()[paste0(x, "_")]$values()
-            )
+            dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
+                            list(decorators = self$decorators))
+            do.call(dist$setParameterValue, c(resolveConflicts = TRUE,
+                                              self$parameters()[paste0(x, "_")]$values()))
+            return(dist)
           })
         }
       }
@@ -1086,11 +1090,11 @@ or `distlist` should be used.")
     distribution <- as.character(unlist(vecdist$modelTable[1, 1]))
     if (length(i) == 1) {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()[paste0(id, "_")]$values(FALSE)
-      if (!is.null(decorators)) {
-        pars <- c(pars, list(decorators = decorators))
-      }
-      dist = do.call(get(distribution)$new, list())
+      pars <- vecdist$parameters()[paste0(id, "_")]$values()
+      shared_pars <-  vecdist$.__enclos_env__$private$.sharedparams
+      pars <- pars[!(names(pars) %in% names(shared_pars))]
+      # construct with shared parameters (no conflicts should be possible here)
+      dist = do.call(get(distribution)$new, c(shared_pars, list(decorators = decorators)))
       do.call(dist$setParameterValue, c(resolveConflicts = TRUE, pars))
       return(dist)
     } else {
@@ -1100,7 +1104,8 @@ or `distlist` should be used.")
 
       return(VectorDistribution$new(
         distribution = distribution, params = pars,
-        decorators = decorators
+        decorators = decorators,
+        shared_params = vecdist$.__enclos_env__$private$.sharedparams
       ))
     }
   } else {

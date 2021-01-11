@@ -8,6 +8,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport \eqn{[\beta, \infty)}
+#' @templateVar default shape = 1, scale = 1
 #' @details
 #' Currently this is implemented as the Type I Pareto distribution, other types
 #' will be added in the future. Characteristic function is omitted as no suitable incomplete
@@ -43,14 +44,10 @@ Pareto <- R6Class("Pareto",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(shape = 1, scale = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, shape, scale)
-      self$setParameterValue(shape = shape, scale = scale)
-
+    initialize = function(shape = NULL, scale = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Interval$new(scale, Inf, type = "[)"),
+        support = Interval$new(1, Inf, type = "[)"),
         type = PosReals$new(zero = T)
       )
     },

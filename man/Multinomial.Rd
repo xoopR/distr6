@@ -4,7 +4,7 @@
 \alias{Multinomial}
 \title{Multinomial Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Multinomial distribution, which
@@ -12,13 +12,30 @@ is commonly used to extend the binomial distribution to multiple variables, for 
 }
 \details{
 The Multinomial distribution parameterised with  number of trials, \eqn{n}, and probabilities of success, \eqn{p_1,...,p_k}, is defined by the pmf, \deqn{f(x_1,x_2,\ldots,x_k) = n!/(x_1! * x_2! * \ldots * x_k!) * p_1^{x_1} * p_2^{x_2} * \ldots * p_k^{x_k}} for \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{\sum x_i = N}.
+}
+
+\section{Default Parameterisation}{
+
+Multinom(size = 10, probs = c(0.5, 0.5))
+}
+
+\section{Omitted Methods}{
 
 \code{cdf} and \code{quantile}
 are
 omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
 }
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -73,6 +90,7 @@ Other multivariate distributions:
 \item \href{#method-mgf}{\code{Multinomial$mgf()}}
 \item \href{#method-cf}{\code{Multinomial$cf()}}
 \item \href{#method-pgf}{\code{Multinomial$pgf()}}
+\item \href{#method-setParameterValue}{\code{Multinomial$setParameterValue()}}
 \item \href{#method-clone}{\code{Multinomial$clone()}}
 }
 }
@@ -92,7 +110,6 @@ Other multivariate distributions:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
@@ -106,7 +123,7 @@ Other multivariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Multinomial$new(size = 10, probs = c(0.5, 0.5), decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Multinomial$new(size = NULL, probs = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -293,6 +310,40 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 z integer to evaluate probability generating function at.}
 
 \item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
+\subsection{Method \code{setParameterValue()}}{
+Sets the value(s) of the given parameter(s).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Multinomial$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{ANY} \cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{lst}}{\code{(list(1))} \cr
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

@@ -4,7 +4,7 @@
 \alias{Empirical}
 \title{Empirical Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Empirical distribution, which
@@ -12,8 +12,6 @@ is commonly used in sampling such as MCMC.
 }
 \details{
 The Empirical distribution   is defined by the pmf, \deqn{p(x) = \sum I(x = x_i) / k} for \eqn{x_i \epsilon R, i = 1,...,k}.
-
-The distribution is supported on \eqn{x_1,...,x_k}.
 
 Sampling from this distribution is performed with the \link{sample} function with the elements given
 as the support set and uniform probabilities. Sampling is performed with replacement, which is
@@ -23,6 +21,28 @@ consistent with other distributions but non-standard for Empirical distributions
 The cdf and quantile assumes that the
 elements are supplied in an indexed order (otherwise the results are meaningless).
 }
+\section{Distribution support}{
+
+The distribution is supported on \eqn{x_1,...,x_k}.
+}
+
+\section{Default Parameterisation}{
+
+Emp(samples = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \examples{
 
 ## ------------------------------------------------
@@ -154,7 +174,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Empirical$new(samples = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Empirical$new(samples = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

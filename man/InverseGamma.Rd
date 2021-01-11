@@ -4,7 +4,7 @@
 \alias{InverseGamma}
 \title{Inverse Gamma Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Inverse Gamma distribution, which
@@ -12,9 +12,29 @@ is commonly used in Bayesian statistics as the posterior distribution from the u
 }
 \details{
 The Inverse Gamma distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{-\alpha-1}exp(-\beta/x)} for \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Positive Reals.
 }
+
+\section{Default Parameterisation}{
+
+InvGamma(shape = 1, scale = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -158,7 +178,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InverseGamma$new(shape = 1, scale = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{InverseGamma$new(shape = NULL, scale = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

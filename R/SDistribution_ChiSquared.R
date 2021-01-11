@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (x^{\nu/2-1} exp(-x/2))/(2^{\nu/2}\Gamma(\nu/2))}
 #' @templateVar paramsupport \eqn{\nu > 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default df = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -39,20 +40,10 @@ ChiSquared <- R6Class("ChiSquared",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(df = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, df)
-      self$setParameterValue(df = df)
-
-      if (df == 1) {
-        support <- PosReals$new(zero = F)
-      } else {
-        support <- PosReals$new(zero = T)
-      }
-
+    initialize = function(df = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = PosReals$new(zero = F),
         type = PosReals$new(zero = TRUE)
       )
     },

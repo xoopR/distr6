@@ -8,6 +8,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(\pi\sqrt{(x-a)(b-x))}}
 #' @templateVar paramsupport \eqn{-\infty < a \le b < \infty}
 #' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar default lower = 0, upper = 1
 #'
 #' @template param_lower
 #' @template param_upper
@@ -36,14 +37,10 @@ Arcsine <- R6Class("Arcsine",
     # initialize
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(lower = 0, upper = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, lower, upper)
-      self$setParameterValue(lower = lower, upper = upper)
-
+    initialize = function(lower = NULL, upper = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Interval$new(lower, upper),
+        support = Interval$new(0, 1),
         symmetry = "sym",
         type = Reals$new()
       )

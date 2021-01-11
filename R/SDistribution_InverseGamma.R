@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{-\alpha-1}exp(-\beta/x)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}, where \eqn{\Gamma} is the gamma function
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default shape = 1, scale = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -40,11 +41,7 @@ InverseGamma <- R6Class("InverseGamma",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(shape = 1, scale = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet.InverseGamma(self, shape, scale)
-      self$setParameterValue(shape = shape, scale = scale)
-
+    initialize = function(shape = NULL, scale = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosReals$new(),

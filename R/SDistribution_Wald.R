@@ -10,6 +10,7 @@
 #' @templateVar paramsupport \eqn{\lambda > 0} and \eqn{\mu > 0}
 #' @templateVar distsupport the Positive Reals
 #' @templateVar omittedDPQR \code{quantile}
+#' @templateVar default mean = 1, shape = 1
 #' @templateVar aka Inverse Normal
 #' @aliases InverseNormal InverseGaussian
 #'
@@ -52,11 +53,7 @@ Wald <- R6Class("Wald",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param mean `(numeric(1))`\cr
     #' Mean of the distribution, location parameter, defined on the positive Reals.
-    initialize = function(mean = 1, shape = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, mean, shape)
-      self$setParameterValue(mean = mean, shape = shape)
-
+    initialize = function(mean = NULL, shape = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosReals$new(),

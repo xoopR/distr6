@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)}
 #' @templateVar paramsupport \eqn{\nu > 0}
 #' @templateVar distsupport the Reals
+#' @templateVar default df = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -40,11 +41,7 @@ StudentT <- R6Class("StudentT",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(df = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, df)
-      self$setParameterValue(df = df)
-
+    initialize = function(df = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new(),

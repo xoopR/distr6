@@ -7,7 +7,7 @@ test_that("autotest", {
     traits = list(
       valueSupport = "continuous",
       variateForm = "multivariate",
-      type = Interval$new(0, 1, type = "()")^2
+      type = Interval$new(0, 1, type = "()")^"n"
     ),
     support = Interval$new(0, 1, type = "()")^2,
     symmetry = "asymmetric",

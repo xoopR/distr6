@@ -4,7 +4,7 @@
 \alias{Dirichlet}
 \title{Dirichlet Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Dirichlet distribution, which
@@ -13,15 +13,32 @@ is commonly used as a prior in Bayesian modelling and is multivariate generalisa
 \details{
 The Dirichlet distribution parameterised with  concentration parameters, \eqn{\alpha_1,...,\alpha_k}, is defined by the pdf, \deqn{f(x_1,...,x_k) = (\prod \Gamma(\alpha_i))/(\Gamma(\sum \alpha_i))\prod(x_i^{\alpha_i - 1})} for \eqn{\alpha = \alpha_1,...,\alpha_k; \alpha > 0}, where \eqn{\Gamma} is the gamma function.
 
+Sampling is performed via sampling independent Gamma distributions and normalising the samples
+(Devroye, 1986).
+}
+\section{Distribution support}{
+
 The distribution is supported on \eqn{x_i \ \epsilon \ (0,1), \sum x_i = 1}{x_i \epsilon (0,1), \sum x_i = 1}.
+}
+
+\section{Default Parameterisation}{
+
+Diri(params = c(1, 1))
+}
+
+\section{Omitted Methods}{
 
 \code{cdf} and \code{quantile}
 are
 omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
-
-Sampling is performed via sampling independent Gamma distributions and normalising the samples
-(Devroye, 1986).
 }
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \examples{
 d <- Dirichlet$new(params = c(2, 5, 6))
 d$pdf(0.1, 0.4, 0.5)
@@ -101,6 +118,7 @@ Other multivariate distributions:
 \item \href{#method-variance}{\code{Dirichlet$variance()}}
 \item \href{#method-entropy}{\code{Dirichlet$entropy()}}
 \item \href{#method-pgf}{\code{Dirichlet$pgf()}}
+\item \href{#method-setParameterValue}{\code{Dirichlet$setParameterValue()}}
 \item \href{#method-clone}{\code{Dirichlet$clone()}}
 }
 }
@@ -120,7 +138,6 @@ Other multivariate distributions:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
@@ -134,7 +151,7 @@ Other multivariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$new(params = c(1, 1), decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$new(params = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -250,6 +267,40 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 z integer to evaluate probability generating function at.}
 
 \item{\code{...}}{Unused.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
+\subsection{Method \code{setParameterValue()}}{
+Sets the value(s) of the given parameter(s).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Dirichlet$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{\code{ANY} \cr
+Named arguments of parameters to set values for. See examples.}
+
+\item{\code{lst}}{\code{(list(1))} \cr
+Alternative argument for passing parameters. List names should be parameter names and list values
+are the new values to set.}
+
+\item{\code{error}}{\code{(character(1))} \cr
+If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = p, \ if \ x = 1}{f(x) = p, if x = 1}\deqn{f(x) = 1 - p, \ if \ x = 0}{f(x) = 1 - p, if x = 0}
 #' @templateVar paramsupport probability \eqn{p}
 #' @templateVar distsupport \eqn{\{0,1\}}{{0,1}}
+#' @templateVar default prob = 0.5
 # nolint end
 #' @template param_prob
 #' @template param_qprob
@@ -41,16 +42,12 @@ Bernoulli <- R6Class("Bernoulli",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(prob = 0.5, qprob = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, prob, qprob)
-      self$setParameterValue(prob = prob, qprob = qprob)
-
+    initialize = function(prob = NULL, qprob = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Set$new(0, 1, class = "integer"),
         type = Naturals$new(),
-        symmetry = if (self$getParameterValue("prob") == 0.5) "symmetric" else "asymmetric"
+        symmetry = "sym"
       )
     },
 
@@ -201,9 +198,9 @@ Bernoulli <- R6Class("Bernoulli",
       if (is.null(lst)) lst <- list(...)
       super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
       if (self$getParameterValue("prob") == 0.5) {
-        private$.properties$symmetry <- "asymmetric"
-      } else {
         private$.properties$symmetry <- "symmetric"
+      } else {
+        private$.properties$symmetry <- "asymmetric"
       }
       invisible(self)
     }

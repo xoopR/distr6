@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt{2\pi\sigma^2}}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}
 #' @templateVar distsupport the Reals
+#' @templateVar default mean = 0, var = 1
 #' @templateVar aka Gaussian
 #' @aliases Gaussian
 # nolint end
@@ -50,12 +51,8 @@ Normal <- R6Class("Normal",
     #' @param prec `(numeric(1))`\cr
     #' Precision of the distribution, defined on the positive Reals. `prec = 1/var`.
     #' If provided then `var` ignored.
-    initialize = function(mean = 0, var = 1, sd = NULL, prec = NULL,
+    initialize = function(mean = NULL, var = NULL, sd = NULL, prec = NULL,
                           decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, mean, var, sd, prec)
-      self$setParameterValue(mean = mean, var = var, sd = sd, prec = prec)
-
       super$initialize(
         decorators = decorators,
         support = Reals$new(),
@@ -152,15 +149,6 @@ Normal <- R6Class("Normal",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
-      invisible(self)
     }
   ),
 

@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b}
 #' @templateVar paramsupport \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}
 #' @templateVar distsupport \eqn{[a, b]}
+#' @templateVar default lower = 0, upper = 1, mode = 0.5, symmetric = FALSE
 # nolint end
 #'
 #' @template param_lower
@@ -57,35 +58,24 @@ Triangular <- R6Class("Triangular",
     #' # You can view the type of Triangular distribution with $description
     #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
     #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
-    initialize = function(lower = 0, upper = 1, mode = (lower + upper) / 2,
-                          symmetric = FALSE,
+    initialize = function(lower = NULL, upper = NULL, mode = NULL, symmetric = NULL,
                           decorators = NULL) {
-
-
-      if (symmetric) {
-        mode <- NULL
-        self$description <- "Symmetric Triangular Probability Distribution."
-        symmetry <- "symmetric"
-      } else {
-        self$description <- "Triangular Probability Distribution."
-        private$.type <- "asymmetric"
-
-        if (mode == (lower + upper) / 2) {
-          symmetry <- "symmetric"
-        } else {
-          symmetry <- "asymmetric"
-        }
-      }
-
-      private$.parameters <- getParameterSet(self, lower, upper, mode, symmetric)
-      self$setParameterValue(lower = lower, upper = upper, mode = mode)
 
       super$initialize(
         decorators = decorators,
-        support = Interval$new(lower, upper),
-        symmetry = symmetry,
-        type = Reals$new()
+        support = Interval$new(0, 1),
+        type = Reals$new(),
+        symmetry = "sym"
       )
+
+      if (self$getParameterValue("symmetric")) {
+        private$.type <- "symmetric"
+        self$description <- "Symmetric Triangular Probability Distribution."
+      } else {
+        self$description <- "Triangular Probability Distribution."
+      }
+
+      invisible(self)
     },
 
     # stats
@@ -332,7 +322,7 @@ Triangular <- R6Class("Triangular",
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate"),
 
-    .type = "symmetric"
+    .type = "asymmetric"
   )
 )
 

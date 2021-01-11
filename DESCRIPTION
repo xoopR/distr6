@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.4.8
+Version: 1.5.0
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -206,6 +206,7 @@ Collate:
     'sets.R'
     'simulateEmpiricalDistribution.R'
     'skewType.R'
+    'sugar.R'
     'zzz.R'
 LinkingTo: 
     Rcpp

@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{\alpha+r-1}(1-x)^{\beta-1})/B(\alpha+r, \beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0, \lambda \ge 0}, where \eqn{B} is the Beta function
 #' @templateVar distsupport \eqn{[0, 1]}
+#' @templateVar default shape1 = 1, shape2 = 1, location = 0
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -44,16 +45,12 @@ BetaNoncentral <- R6Class("BetaNoncentral",
     #' First shape parameter, `shape1 > 0`.
     #' @param shape2 `(numeric(1))`\cr
     #' Second shape parameter, `shape2 > 0`.
-    initialize = function(shape1 = 1, shape2 = 1, location = 0, decorators = NULL) {
-
-      private$.parameters <- getParameterSet.BetaNoncentral(self, shape1, shape2, location)
-      self$setParameterValue(shape1 = shape1, shape2 = shape2, location = location)
-
+    initialize = function(shape1 = NULL, shape2 = NULL, location = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Interval$new(0, 1),
-        symmetry = if (shape1 == shape2) "sym" else "asym",
-        type = PosReals$new(zero = T)
+        type = PosReals$new(zero = T),
+        symmetry = "sym"
       )
     },
 

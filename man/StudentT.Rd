@@ -4,7 +4,7 @@
 \alias{StudentT}
 \title{Student's T Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Student's T distribution, which
@@ -12,9 +12,29 @@ is commonly used to estimate the mean of populations with unknown variance from 
 }
 \details{
 The Student's T distribution parameterised with  degrees of freedom, \eqn{\nu}, is defined by the pdf, \deqn{f(x) = \Gamma((\nu+1)/2)/(\sqrt(\nu\pi)\Gamma(\nu/2)) * (1+(x^2)/\nu)^(-(\nu+1)/2)} for \eqn{\nu > 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Reals.
 }
+
+\section{Default Parameterisation}{
+
+T(df = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -162,7 +182,7 @@ Chijing Zeng
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StudentT$new(df = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StudentT$new(df = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
