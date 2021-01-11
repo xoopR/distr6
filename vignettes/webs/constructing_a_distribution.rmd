@@ -58,11 +58,10 @@ Or mean and precision:
 Normal$new(mean = 2, prec = 2)
 ```
 
-Notice how the parameterisation chosen in construction is shown in the print method. Finally be careful not to construct a distribution using conflicting parameterisations. For example:
-```{r}
+Finally be careful not to construct a distribution using conflicting parameterisations. For example:
+```{r, error = TRUE}
 Normal$new(mean = 2, var = 2, sd = 3, prec = 4)
 ```
-Only the mean and precision arguments are used, if you're unsure which parameters are conflicting see the help page for the distribution, `?Normal`.
 
 ## Summary
 
