@@ -191,17 +191,17 @@ test_that("wrapped models", {
   expect_equal(a$wrappedModels()[3][[1]]$cdf(1:10), Binomial$new(prob = 0.2, size = 6)$cdf(1:10))
 
   a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
-  expect_equal(
-    a$wrappedModels(),
-    list(
-      Binom = Binomial$new(prob = 0.5, size = 10),
-      Gomp = Gompertz$new()
-    )
-  )
-  expect_equal(a$wrappedModels(c("Binom", "Gomp")), list(
-    Binom = Binomial$new(prob = 0.5, size = 10),
-    Gomp = Gompertz$new()
-  ))
+  w <- a$wrappedModels()
+  expect_equal(length(w), 2)
+  expect_equal(names(w), c("Binom", "Gomp"))
+  expect_equal(w[1][[1]]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
+  expect_equal(w[2][[1]]$strprint(), "Gomp(shape = 1, scale = 1)")
+
+  w <- a$wrappedModels(c("Binom", "Gomp"))
+  expect_equal(length(w), 2)
+  expect_equal(names(w), c("Binom", "Gomp"))
+  expect_equal(w[1][[1]]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
+  expect_equal(w[2][[1]]$strprint(), "Gomp(shape = 1, scale = 1)")
 
   mix <- MixtureDistribution$new(list(Binomial$new(), Normal$new()))
   expect_equal(mix$wrappedModels("Binom"), Binomial$new())
@@ -239,11 +239,10 @@ test_that("extract", {
     Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
     Binomial$new(prob = 0.2, size = 6)
   ))
-  expect_equal(a[1], Binomial$new(prob = 0.1, size = 2))
-  expect_equal(a[1:2], VectorDistribution$new(list(
-    Binomial$new(prob = 0.1, size = 2),
-    Binomial$new(prob = 0.6, size = 4)
-  )))
+  expect_equal(a[1]$strprint(), "Binom(prob = 0.1, qprob = 0.9, size = 2)")
+  av <- a[1:2]
+  expect_equal(getR6Class(av), "VectorDistribution")
+  expect_equal(a[1]$strprint(), "Binom(prob = 0.1, qprob = 0.9, size = 2)")
   expect_error(a[4], "Index i too large")
 })
 
