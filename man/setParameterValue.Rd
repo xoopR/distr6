@@ -14,6 +14,10 @@ setParameterValue(object, ..., lst = NULL, error = "warn", resolveConflicts = FA
 \item{lst}{optional list, see details.}
 
 \item{error}{character, value to pass to \code{stopwarn}.}
+
+\item{resolveConflicts}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \value{
 An R6 object of class ParameterSet.

@@ -652,6 +652,9 @@ NULL
 #' @param ... named parameters and values to update, see details.
 #' @param lst optional list, see details.
 #' @param error character, value to pass to \code{stopwarn}.
+#' @param resolveConflicts `(logical(1))`\cr
+#' If `FALSE` (default) throws error if conflicting parameterisations are provided, otherwise
+#' automatically resolves them by removing all conflicting parameters.
 #'
 #' @return An R6 object of class ParameterSet.
 #'
