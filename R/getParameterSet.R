@@ -936,7 +936,7 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
     list(pdf = c(self$getParameterValue("cdf")[1], diff(self$getParameterValue("cdf"))))
   })
   ps$addChecks(function(self) {
-    x = unlist(self$getParameterValue("x"))
+    x <- unlist(self$getParameterValue("x"))
     all(length(unlist(self$getParameterValue("cdf"))) == length(x)) &&
       all(vapply(self$getParameterValue("x"), function(.x) !any(duplicated(.x)), logical(1)))
   })

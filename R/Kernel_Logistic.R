@@ -33,14 +33,14 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0, upper = Inf) {
-      xl = length(x)
-      ul = length(upper)
-      len = max(xl, ul)
+      xl <- length(x)
+      ul <- length(upper)
+      len <- max(xl, ul)
 
       ret <- numeric(len)
       for (i in seq(len)) {
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi <- x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui <- upper[ifelse(i %% ul == 0, ul, i %% ul)]
         if (ui == Inf) {
           if (xi == 0) {
             ret[i] <- 1 / 6
@@ -78,14 +78,14 @@ LogisticKernel <- R6Class("LogisticKernel",
     #' are the distribution support limits.
     cdfSquared2Norm = function(x = 0, upper = 0) {
 
-      xl = length(x)
-      ul = length(upper)
-      len = max(xl, ul)
+      xl <- length(x)
+      ul <- length(upper)
+      len <- max(xl, ul)
 
       ret <- numeric(len)
       for (i in seq(len)) {
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi <- x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui <- upper[ifelse(i %% ul == 0, ul, i %% ul)]
         if (xi == 0) {
         ret[i] <- log(1 + exp(-ui)) + ui -  exp(ui) / (exp(ui) + 1)
         } else {

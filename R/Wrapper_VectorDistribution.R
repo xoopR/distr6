@@ -236,7 +236,8 @@ or `distlist` should be used.")
           private$.univariate <- pdist$private_fields$.traits$variateForm == "univariate"
           # inheritance catch
           if (!length(private$.univariate)) {
-            private$.univariate <- pdist$get_inherit()$private_fields$.trait$variateForm == "univariate"
+            private$.univariate <-
+              pdist$get_inherit()$private_fields$.trait$variateForm == "univariate"
           }
           # set valueSupport
           valueSupport <- pdist$private_fields$.traits$valueSupport
@@ -602,7 +603,7 @@ or `distlist` should be used.")
         if (is.null(f)) {
           stop("Not implemented for this distribution.")
         }
-        formals(f) <- c(list(self = self), alist(... = ))
+        formals(f) <- c(list(self = self), alist(... = )) # nolint
         ret <- f()
         if (length(ret) == 1) {
           ret <- rep(ret, nrow(self$modelTable))
@@ -680,7 +681,7 @@ or `distlist` should be used.")
         if (is.null(f)) {
           stop("Not implemented for this distribution.")
         }
-        formals(f) <- c(list(self = self), alist(... = ))
+        formals(f) <- c(list(self = self), alist(... = )) # nolint
         ret <- f()
         if (length(ret) == 1) {
           ret <- rep(ret, nrow(self$modelTable))
@@ -714,7 +715,7 @@ or `distlist` should be used.")
         if (is.null(f)) {
           stop("Not implemented for this distribution.")
         }
-        formals(f) <- c(list(self = self), alist(... = ))
+        formals(f) <- c(list(self = self), alist(... = )) # nolint
         ret <- f()
         if (length(ret) == 1) {
           ret <- rep(ret, nrow(self$modelTable))
@@ -744,7 +745,7 @@ or `distlist` should be used.")
         if (is.null(f)) {
           stop("Not implemented for this distribution.")
         }
-        formals(f) <- c(list(self = self, excess = excess), alist(... = ))
+        formals(f) <- c(list(self = self, excess = excess), alist(... = )) # nolint
         ret <- f()
         if (length(ret) == 1) {
           ret <- rep(ret, nrow(self$modelTable))
@@ -770,7 +771,7 @@ or `distlist` should be used.")
           f <- get(as.character(unlist(self$modelTable$Distribution[[1]])))$get_inherit()$
             public_methods$entropy
         }
-        formals(f) <- c(list(self = self, base = base), alist(... = ))
+        formals(f) <- c(list(self = self, base = base), alist(... = )) # nolint
         ret <- f()
         if (length(ret) == 1) {
           ret <- rep(ret, nrow(self$modelTable))
@@ -1094,7 +1095,7 @@ or `distlist` should be used.")
       shared_pars <-  vecdist$.__enclos_env__$private$.sharedparams
       pars <- pars[!(names(pars) %in% names(shared_pars))]
       # construct with shared parameters (no conflicts should be possible here)
-      dist = do.call(get(distribution)$new, c(shared_pars, list(decorators = decorators)))
+      dist <- do.call(get(distribution)$new, c(shared_pars, list(decorators = decorators)))
       do.call(dist$setParameterValue, c(resolveConflicts = TRUE, pars))
       return(dist)
     } else {

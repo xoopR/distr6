@@ -40,7 +40,7 @@ SDistribution <- R6Class("SDistribution",
 
       if (!grepl("Empirical", getR6Class(self))) {
         # get call
-        args = getR6Call()
+        args <- getR6Call()
         # get ParameterSet
         private$.parameters <- do.call(getParameterSet, c(list(object = self), args))
         if (length(args)) {

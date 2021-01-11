@@ -73,7 +73,7 @@ NegativeBinomial <- R6Class("NegativeBinomial",
         type = Naturals$new()
       )
 
-      form = self$getParameterValue("form")
+      form <- self$getParameterValue("form")
       if (form == "fbs") {
         private$.properties$support <- Naturals$new()
         self$description <- "Negative Binomial (fbs) Probability Distribution."

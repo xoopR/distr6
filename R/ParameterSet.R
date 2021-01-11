@@ -218,33 +218,33 @@ ParameterSet <- R6Class("ParameterSet",
 
       if (length(private$.deps)) {
         if (resolveConflicts) {
-          conflicts = lapply(names(lst), function(.x) {
-            check = self$deps$x %in% .x
+          conflicts <- lapply(names(lst), function(.x) {
+            check <- self$deps$x %in% .x
             if (any(check)) {
               if (any(names(lst) %in% self$deps$y[[which(check)]])) {
                 return(names(lst)[names(lst) %in% self$deps$y[[which(check)]]])
               }
             }
           })
-          names(conflicts) = names(lst)
+          names(conflicts) <- names(lst)
           # FIXME - In future this will be resolved in param6 with tags
           #  Temp hacky fix to remove conflicts by iteratively deleting params that are in
           #  both x and y of deps
           for (i in seq.int(length(conflicts), 1, -1)) {
             if (names(conflicts)[i] %in% unlist(conflicts)) {
-              conflicts = conflicts[i]
+              conflicts <- conflicts[i]
             }
           }
         } else {
 
           lapply(names(lst), function(.x) {
-            check = self$deps$x %in% .x
+            check <- self$deps$x %in% .x
             if (any(check)) {
               if (any(names(lst) %in% self$deps$y[[which(check)]])) {
                 if (resolveConflicts) {
                   return(names(lst)[names(lst) %in% self$deps$y[[which(check)]]])
                 } else {
-                  stop(sprintf("Conflicting parametrisations detected. Only one of %s should be given.",
+                  stop(sprintf("Conflicting parametrisations detected. Only one of %s should be given.", # nolint
                                strCollapse(c(.x, self$deps$y[[which(check)]]))))
                 }
               }
@@ -646,7 +646,7 @@ NULL
 #' @title Parameter Value Setter
 #' @description Sets the value of the given parameter.
 #'
-#' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
+#' @usage setParameterValue(object, ..., lst = NULL, error = "warn", resolveConflicts = FALSE)
 #'
 #' @param object Distribution or ParameterSet.
 #' @param ... named parameters and values to update, see details.

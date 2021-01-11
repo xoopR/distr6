@@ -26,4 +26,3 @@ test_that("manual", {
   expect_equal(MultivariateNormal$new()$getParameterValue("prec"), matrix(c(1, 0, 0, 1), 2, 2))
   expect_equal(MultivariateNormal$new(cov = c(1, 2, 2, 2))$pdf(2, 2), NaN)
 })
-

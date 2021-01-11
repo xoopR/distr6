@@ -44,6 +44,7 @@ dstr <- function(d, ..., pars = NULL) {
   checkmate::assert_choice(d, c(short, class))
   if (is.null(pars)) pars <- list(...)
 
+  ShortName <- ClassName <- NULL # global binding fix
   if (d %in% short) {
     do.call(get(as.character(unlist(subset(choices, ShortName == d, select = ClassName))))$new,
             pars)
