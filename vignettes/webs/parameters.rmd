@@ -55,11 +55,16 @@ N$setParameterValue(mean = 4, sd = 2)
 N$parameters()
 ```
 
-But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will lead to the variance argument being ignored:
-```{r}
+But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will cause an error:
+```{r, error = TRUE}
 N$setParameterValue(var = 2, prec = 3)
-N$parameters()
 ```
+In rare cases you may want to allow the method to resolve conflicts automatically, but this should be used with care and only with very good reason:
+```{r}
+N$setParameterValue(var = 2, prec = 3, resolveConflicts = TRUE)
+N$print()
+```
+
 
 
 ## Summary
